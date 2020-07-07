@@ -24,7 +24,11 @@ export interface STResetColumnsOption {
   ps?: number;
   columns?: STColumn[];
   /**
-   * Whether to trigger a data load, default: `true`
+   * Whether to pre-clear data, Default: `false`
+   */
+  preClearData?: boolean;
+  /**
+   * Whether to trigger a data load, Default: `true`
    */
   emitReload?: boolean;
 }

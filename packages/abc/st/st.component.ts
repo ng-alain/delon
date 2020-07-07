@@ -760,7 +760,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   resetColumns(options?: STResetColumnsOption): Promise<this> {
-    options = { emitReload: true, ...options };
+    options = { emitReload: true, preClearData: false, ...options };
     if (typeof options.columns !== 'undefined') {
       this.columns = options.columns;
     }
@@ -770,10 +770,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (typeof options.ps !== 'undefined') {
       this.ps = options.ps;
     }
-    this.refreshColumns();
-    if (options.emitReload === true) {
+    if (options.emitReload) {
       // Should clean data, Because of changing columns may cause inaccurate data
+      options.preClearData = true;
+    }
+    if (options.preClearData) {
       this._data = [];
+    }
+    this.refreshColumns();
+    if (options.emitReload) {
       return this.loadPageData();
     } else {
       this.cd();
