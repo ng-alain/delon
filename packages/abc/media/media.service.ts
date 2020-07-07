@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class MediaService {
   private _cog: AlainMediaConfig;
+  private loading = false;
   private loaded = false;
   private notify$ = new Subject<void>();
 
@@ -24,12 +25,17 @@ export class MediaService {
   constructor(private cogSrv: AlainConfigService, private lazySrv: LazyService) {}
 
   load(): this {
-    if (this.loaded) {
-      this.notify$.next();
+    if (this.loading) {
+      if (this.loaded) {
+        this.notify$.next();
+      }
       return this;
     }
-    this.loaded = true;
-    this.lazySrv.load(this.cog.urls!).then(() => this.notify$.next());
+    this.loading = true;
+    this.lazySrv.load(this.cog.urls!).then(() => {
+      this.loaded = true;
+      this.notify$.next();
+    });
     return this;
   }
 
