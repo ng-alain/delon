@@ -9,7 +9,9 @@ import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
 class MockPlyr {
   source: NzSafeAny = {};
-  on() {}
+  on(_key: string, fn: () => void) {
+    fn();
+  }
   destroy() {}
 }
 
@@ -63,6 +65,12 @@ describe('abc: media', () => {
       expect(page.player.source.type).toBe('audio');
     }));
 
+    it('#ready', fakeAsync(() => {
+      spyOn(context, 'ready');
+      page.cd();
+      expect(context.ready).toHaveBeenCalled();
+    }));
+
     it('should be custom vedio dom', fakeAsync(() => {
       const fixture2 = TestBed.createComponent(TestCustomVideoComponent);
       fixture2.detectChanges();
@@ -104,6 +112,6 @@ class TestComponent {
   ready() {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`,
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media> <media [source]="source"></media>`,
 })
 class TestCustomVideoComponent extends TestComponent {}
