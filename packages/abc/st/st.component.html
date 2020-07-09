@@ -87,11 +87,11 @@
 >
   <thead class="st__head">
     <tr *ngFor="let row of _headers; let rowFirst = first">
-      <th *ngIf="rowFirst && expand" nzWidth="50px" [attr.rowspan]="_headers.length"></th>
+      <th *ngIf="rowFirst && expand" nzWidth="50px" [rowspan]="_headers.length"></th>
       <th
         *ngFor="let h of row; let index = index"
-        [attr.colspan]="h.colSpan"
-        [attr.rowspan]="h.rowSpan"
+        [colspan]="h.colSpan"
+        [rowspan]="h.rowSpan"
         [nzWidth]="h.column.width"
         [nzLeft]="!!h.column._left"
         [nzRight]="!!h.column._right"
