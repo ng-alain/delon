@@ -76,9 +76,9 @@ export default {
     },
   },
   onboarding: {
-    skip: `Skip`,
-    prev: `Prev`,
-    next: `Next`,
-    done: `Done`,
+    skip: `Atla`,
+    prev: `Önceki`,
+    next: `Sonraki`,
+    done: `Bitti`,
   },
 } as FullLocaleData;

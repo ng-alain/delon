@@ -76,9 +76,9 @@ export default {
     },
   },
   onboarding: {
-    skip: `Skip`,
-    prev: `Prev`,
-    next: `Next`,
-    done: `Done`,
+    skip: `スキップ`,
+    prev: `前へ`,
+    next: `次`,
+    done: `できた`,
   },
 } as FullLocaleData;

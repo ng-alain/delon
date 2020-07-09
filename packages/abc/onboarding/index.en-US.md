@@ -40,10 +40,10 @@ The components only support the use of `OnboardingService` service to build.
 | `[width]` | Width of the panel | `number` | - |
 | `[title]` | Headline text of the panel | `string, TemplateRef<void>` | - |
 | `[content]` | Detail text of the panel | `string, SafeHtml, TemplateRef<void>` | - | 
-| `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `跳过` |
-| `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `上一项` |
-| `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `下一项` |
-| `[done]` | Done button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `完成` |
+| `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `Skip` |
+| `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `Prev` |
+| `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `Next` |
+| `[done]` | Done button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `Done` |
 | `[url]` | Target router url | `string` | - |
 | `[before]` | Callback before entering, triggered when call `next` operates, `number` indicate delay | `Observable<any>, number` | - |
 | `[after]` | Callback after entering, triggered when call `prev` operates, `number` indicate delay | `Observable<any>, number` | - |

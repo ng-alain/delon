@@ -76,9 +76,9 @@ export default {
     },
   },
   onboarding: {
-    skip: `Skip`,
-    prev: `Prev`,
-    next: `Next`,
-    done: `Done`,
+    skip: `Παραλείπω`,
+    prev: `Προηγ`,
+    next: `Επόμενο`,
+    done: `Ολοκληρώθηκε`,
   },
 } as FullLocaleData;

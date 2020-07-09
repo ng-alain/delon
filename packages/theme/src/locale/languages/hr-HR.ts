@@ -40,9 +40,9 @@ export default {
     checkAllText: 'Označi sve',
   },
   onboarding: {
-    skip: `Skip`,
-    prev: `Prev`,
-    next: `Next`,
-    done: `Done`,
+    skip: `Preskočiti`,
+    prev: `Prethodna`,
+    next: `Sljedeći`,
+    done: `Sastavljeno`,
   },
 } as FullLocaleData;
