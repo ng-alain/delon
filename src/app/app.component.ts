@@ -13,7 +13,7 @@ export class AppComponent {
   @HostBinding('class.mobile')
   isMobile = false;
 
-  private query = 'only screen and (max-width: 767px)';
+  private query = 'only screen and (max-width: 1200px)';
   private prevUrl = '';
 
   constructor(

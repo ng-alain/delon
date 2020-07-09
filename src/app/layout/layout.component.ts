@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
-import { ScrollService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,26 +8,23 @@ import { takeUntil } from 'rxjs/operators';
   selector: 'app-layout',
   template: `
     <app-header></app-header>
-    <div [class.fetching]="isFetching">
-      <nz-spin *ngIf="isFetching" class="fetching-icon" nzSpinning></nz-spin>
-      <router-outlet></router-outlet>
-    </div>
+    <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
+    <router-outlet></router-outlet>
     <nz-back-top></nz-back-top>
     <theme-btn></theme-btn>
   `,
   host: {
-    '[class.page-wrapper]': 'true',
+    '[attr.id]': `'angular-content'`,
   },
 })
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
 
-  constructor(scroll: ScrollService, router: Router, msg: NzMessageService) {
+  constructor(router: Router, msg: NzMessageService) {
     router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
-        scroll.scrollToTop();
       }
       if (evt instanceof NavigationError) {
         this.isFetching = false;
@@ -39,7 +35,6 @@ export class LayoutComponent implements OnDestroy {
         return;
       }
       this.isFetching = false;
-      scroll.scrollToTop();
     });
   }
 

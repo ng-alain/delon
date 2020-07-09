@@ -40,7 +40,7 @@ export const ZHCN = {
   'app.header.menu.cli': 'Cli',
   'app.header.menu.tool': '工具',
   'app.header.menu.upgrade': 'HTML模板升级工具',
-  'app.header.menu.themes': '主题',
+  'app.header.menu.themes': '商业主题',
   'app.header.lang': 'English',
   'app.footer.resources': '相关资源',
   'app.footer.angular': '中文网',
