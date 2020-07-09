@@ -50,27 +50,15 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     if (ret.demo && this.codes && this.codes.length) {
       this.genDemoTitle();
-      const toc = ret.con.toc as any[];
-      const apiPos = toc.findIndex(w => w.title === 'API');
-      toc.splice(
-        apiPos === -1 ? 0 : apiPos,
-        0,
-        ...[
-          {
-            h: 2,
-            id: `${this.demoStr}`,
-            title: this.demoStr,
-          },
-        ].concat(
-          this.codes.map((a: any) => {
-            return {
-              h: 3,
-              id: a.id,
-              title: this.i18n.get(a.meta.title),
-            };
-          }),
-        ),
-      );
+      ret.con.toc = this.codes
+        .map((a: any) => {
+          return {
+            h: 3,
+            id: a.id,
+            title: this.i18n.get(a.meta.title),
+          };
+        })
+        .concat({ id: 'API', title: 'API', h: 2 });
     }
 
     if (ret.con.content) ret.con.content = this.sanitizer.bypassSecurityTrustHtml(ret.con.content);
@@ -84,28 +72,19 @@ export class DocsComponent implements OnInit, OnDestroy {
     // goTo
     setTimeout(() => {
       const toc = this.router.parseUrl(this.router.url).fragment || '';
-      if (toc) this.doc.querySelector(`#${toc}`)!.scrollIntoView();
+      if (toc) {
+        const tocEl = this.doc.querySelector(`#${toc}`)!;
+        if (tocEl) {
+          tocEl.scrollIntoView();
+        }
+      }
     }, 200);
   }
 
-  goTo(e: Event, item: any) {
-    let targetEl: any;
-    const href = '#' + item.id;
-    try {
-      targetEl = this.doc.querySelector(href);
-    } catch (e) {
-      console.warn(`查找目标元素异常：${href}`, e);
+  goLink(link: string): void {
+    if (window) {
+      window.location.hash = link;
     }
-
-    if (targetEl) {
-      targetEl.scrollIntoView();
-      location.hash = href;
-    } else {
-      console.warn(`无法获取目标元素：${item.id}`);
-    }
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
   }
 
   private genDemoTitle() {

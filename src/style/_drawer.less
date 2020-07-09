@@ -1,17 +1,5 @@
 @drawer-width: 60vw;
 
-.mobile {
-  .main-menu {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 101;
-    max-width: 256px;
-    overflow: auto;
-  }
-}
-
 .drawer {
   position: fixed;
   top: 0;
@@ -23,12 +11,12 @@
     transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86),
       box-shaow 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   }
-  &-bg,
+  &-mask,
   &-content-wrapper {
     position: absolute;
     height: 100%;
   }
-  &-bg {
+  &-mask {
     top: 0;
     width: 100%;
     background: #000;
@@ -59,7 +47,7 @@
     text-align: center;
     background: @component-background;
     border-radius: 0 4px 4px 0;
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     pointer-events: auto;
   }
@@ -67,7 +55,7 @@
     transform: translateX(@drawer-width);
     transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86) 0s;
     pointer-events: auto;
-    .drawer-bg {
+    .drawer-mask {
       opacity: 0.3;
     }
   }

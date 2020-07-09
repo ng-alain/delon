@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AppService, SiteTheme } from '@core';
 import { AlainConfigService } from '@delon/util';
 
@@ -11,7 +11,8 @@ import { AlainConfigService } from '@delon/util';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThemeBtnComponent implements OnInit {
+export class ThemeBtnComponent implements OnInit, OnDestroy {
+  private el: HTMLLinkElement;
   theme: SiteTheme = 'default';
 
   constructor(
@@ -48,15 +49,21 @@ export class ThemeBtnComponent implements OnInit {
     }
     localStorage.removeItem('site-theme');
     if (theme !== 'default') {
-      const style = document.createElement('link');
-      style.type = 'text/css';
-      style.rel = 'stylesheet';
-      style.id = 'site-theme';
-      style.href = `assets/${theme}.css`;
+      const el = (this.el = document.createElement('link'));
+      el.type = 'text/css';
+      el.rel = 'stylesheet';
+      el.id = 'site-theme';
+      el.href = `assets/${theme}.css`;
 
       localStorage.setItem('site-theme', theme);
-      document.body.append(style);
+      document.body.append(el);
     }
     this.updateChartTheme();
+  }
+
+  ngOnDestroy(): void {
+    if (this.el) {
+      document.body.removeChild(this.el);
+    }
   }
 }

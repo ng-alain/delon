@@ -1,10 +1,10 @@
 <div nz-row>
-  <div nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
-    <nz-affix *ngIf="isBrowser">
-      <div main-menu (to)="to()"></div>
+  <div nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
+    <nz-affix>
+      <div main-menu (to)="to()" class="main-menu-inner"></div>
     </nz-affix>
   </div>
-  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="19" nzXXl="20">
+  <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="19" nzXXl="20">
     <div class="main-container" [class.pages-container]="meta.isPages">
       <router-outlet></router-outlet>
     </div>
@@ -23,9 +23,9 @@
     <app-footer small></app-footer>
   </div>
 </div>
-<ng-container *ngIf="isMobile">
+<div *ngIf="isMobile" class="drawer-wrapper">
   <div class="drawer drawer-left" [class.drawer-open]="opened">
-    <div class="drawer-bg" [hidden]="!opened" (click)="opened = !opened"></div>
+    <div class="drawer-mask" (click)="opened = !opened"></div>
     <div class="drawer-content-wrapper">
       <div class="drawer-content">
         <main-menu (to)="to()"></main-menu>
@@ -33,4 +33,4 @@
       <div class="drawer-button" (click)="opened = !opened"><i nz-icon nzType="menu-unfold"></i></div>
     </div>
   </div>
-</ng-container>
+</div>

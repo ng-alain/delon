@@ -26,6 +26,7 @@ import { EditButtonComponent } from './components/edit-button/edit-button.compon
 import { FooterComponent } from './components/footer/footer.component';
 import { IconComponent } from './components/icon/icon.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { MatchRouterDirective } from './components/match-router/match-router.directive';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
 import { ThemeBtnComponent } from './components/theme-btn/theme-btn.component';
 
@@ -39,6 +40,7 @@ const COMPONENTS = [
   DocsComponent,
   CodeBoxComponent,
   RouteTransferDirective,
+  MatchRouterDirective,
   ThemeBtnComponent,
   ...DIALOG_COMPONENTS,
 ];

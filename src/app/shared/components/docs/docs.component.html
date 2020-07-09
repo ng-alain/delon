@@ -1,9 +1,7 @@
-<nz-affix [nzOffsetTop]="64" class="toc-affix" *ngIf="isBrowser && data.con.toc?.length">
-  <ul class="toc">
-    <li *ngFor="let t of data.con.toc" class="depth-{{ t.h }}">
-      <a (click)="goTo($event, t)" id="toc-{{ t.id }}" title="{{ t.title }}">{{ t.title }}</a>
-    </li>
-  </ul>
+<nz-affix class="toc-affix" *ngIf="isBrowser && data.con.toc?.length" nzOffsetTop="16">
+  <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
+    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title"></nz-link>
+  </nz-anchor>
 </nz-affix>
 <ng-container *ngIf="meta.item">
   <nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
@@ -12,20 +10,20 @@
       <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
     </ng-template>
   </nz-alert>
-  <section>
-    <h1 class="api-title">
+  <div class="markdown">
+    <h1>
       {{ meta.item.title }}
       <span *ngIf="meta.item.subtitle" class="subtitle">{{ meta.item.subtitle }}</span>
       <edit-button [item]="item"></edit-button>
     </h1>
-    <div *ngIf="data.con.content" class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
-    <div *ngIf="data.con.module" class="highlight">
-      <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
-    </div>
-    <ng-container *ngIf="data.demo">
-      <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
-      <ng-content></ng-content>
-    </ng-container>
-    <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
-  </section>
+  </div>
+  <div *ngIf="data.con.content" class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
+  <div *ngIf="data.con.module" class="highlight">
+    <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
+  </div>
+  <ng-container *ngIf="data.demo">
+    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
+    <ng-content></ng-content>
+  </ng-container>
+  <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
 </ng-container>
