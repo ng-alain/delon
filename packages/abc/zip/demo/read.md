@@ -6,22 +6,24 @@ title: 解压
 读取Zip文件信息（含内容），支持 File、URL 形式
 
 ```ts
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ZipService } from '@delon/abc/zip';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <button nz-button (click)="url()">Via Url</button>
-  <input type="file" (change)="change($event)" multiple="false" class="ml-sm" />
-  <ol>
-    <li *ngFor="let i of data">{{i | json}}</li>
-  </ol>
-  `
+    <button nz-button (click)="url()">Via Url</button>
+    <input type="file" (change)="change($event)" multiple="false" class="ml-sm" />
+    <ol>
+      <li *ngFor="let i of data">{{ i | json }}</li>
+    </ol>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoComponent {
-  constructor(private zip: ZipService) {}
   data: any;
+
+  constructor(private zip: ZipService, private cdr: ChangeDetectorRef) {}
 
   private format(data: any) {
     const files = data.files;
@@ -29,9 +31,10 @@ export class DemoComponent {
       return {
         name: key,
         dir: files[key].dir,
-        date: files[key].date
+        date: files[key].date,
       };
     });
+    this.cdr.detectChanges();
   }
 
   url() {
