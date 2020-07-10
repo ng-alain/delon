@@ -14,6 +14,20 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [9.5.3](https://github.com/ng-alain/delon/compare/9.5.2...9.5.3) (2020-07-10)
+
+### Scaffold
+
+* fix clear token when navigate to any passport pages ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+* clear unnecessary class all modal code ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+
+### Bug Fixes
+
+* **abc:media:** fix loading multiple components at the same time will cause `No window.Plyr found` ([#990](https://github.com/ng-alain/delon/issues/990)) ([c3f29a0](https://github.com/ng-alain/delon/commit/c3f29a0f45d1bc5bda55982d75484f7ed1ca5306))
+* **abc:st:** fix noResult misalignment in grouping header ([#991](https://github.com/ng-alain/delon/issues/991)) ([dc1626e](https://github.com/ng-alain/delon/commit/dc1626ec6b89c578f2e4ed005b1e81956e3da6ce))
+* **abc:st:** fix pre-clear data of `resetColumns` method ([#989](https://github.com/ng-alain/delon/issues/989)) ([15f397c](https://github.com/ng-alain/delon/commit/15f397ceedb514bf6ee22724fa69820c5272f4a5))
+
+
 ## [9.5.2](https://github.com/ng-alain/delon/compare/9.5.1...9.5.2) (2020-07-06)
 
 ### Bug Fixes

@@ -38,11 +38,12 @@ jobs:
           include: '\.html$'
 
       - name: deploy-to-surge
-        uses: yohix/deploy-surge@v1.0.0
+        uses: dswistowski/surge-sh-action@v1
         with:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          DOMAIN_NAME: https://ng-alain-doc.surge.sh
-          BUILD_DIRECTORY: ./src/dist/browser
+          login: ${{ secrets.SURGE_LOGIN }}
+          token: ${{ secrets.SURGE_TOKEN }}
+          domain: https://ng-alain-doc.surge.sh
+          project: ./src/dist/browser
 
       - uses: actions/checkout@v1
       - uses: pixta-dev/repository-mirroring-action@v1
