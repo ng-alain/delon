@@ -14,6 +14,20 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.5.3](https://github.com/ng-alain/delon/compare/9.5.2...9.5.3) (2020-07-10)
+
+### Scaffold
+
+* 修复所有跳转 `/passport` 后都应该清除 Token 值 ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+* 移除不必要在切换路由时全部关闭 `nz-modal` 代码 ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+
+### Bug Fixes
+
+* **abc:media:** 修复同时多个组件时会发生 `No window.Plyr found` 错误 ([#990](https://github.com/ng-alain/delon/issues/990)) ([c3f29a0](https://github.com/ng-alain/delon/commit/c3f29a0f45d1bc5bda55982d75484f7ed1ca5306))
+* **abc:st:** 修复多表头 `noResult` 错位 ([#991](https://github.com/ng-alain/delon/issues/991)) ([dc1626e](https://github.com/ng-alain/delon/commit/dc1626ec6b89c578f2e4ed005b1e81956e3da6ce))
+* **abc:st:** 修复调用 `resetColumns` 方法时可预清除数据 ([#989](https://github.com/ng-alain/delon/issues/989)) ([15f397c](https://github.com/ng-alain/delon/commit/15f397ceedb514bf6ee22724fa69820c5272f4a5))
+
+
 ## [9.5.2](https://github.com/ng-alain/delon/compare/9.5.1...9.5.2) (2020-07-06)
 
 ### Bug Fixes
