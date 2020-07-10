@@ -14,7 +14,7 @@ title:
 Import Excel and output JSON, support File, URL.
 
 ```ts
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { XlsxService } from '@delon/abc/xlsx';
 
 @Component({
@@ -22,19 +22,28 @@ import { XlsxService } from '@delon/abc/xlsx';
   template: `
     <button nz-button (click)="url()">Via Url</button>
     <input type="file" (change)="change($event)" multiple="false" class="ml-sm" />
-    <p class="mt-sm">result: {{data | json}}</p>
-    `,
+    <p class="mt-sm">result: {{ data | json }}</p>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoComponent {
-  constructor(private xlsx: XlsxService) {}
   data: any;
+
+  constructor(private xlsx: XlsxService, private cdr: ChangeDetectorRef) {}
+
   url() {
-    this.xlsx.import(`./assets/demo.xlsx`).then(res => this.data = res);
+    this.xlsx.import(`./assets/demo.xlsx`).then(res => {
+      this.data = res;
+      this.cdr.detectChanges();
+    });
   }
 
   change(e: Event) {
     const node = e.target as HTMLInputElement;
-    this.xlsx.import(node.files![0]).then(res => this.data = res);
+    this.xlsx.import(node.files![0]).then(res => {
+      this.data = res;
+      this.cdr.detectChanges();
+    });
     node.value = '';
   }
 }

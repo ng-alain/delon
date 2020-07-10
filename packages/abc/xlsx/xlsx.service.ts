@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainXlsxConfig, LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -10,7 +10,7 @@ declare var XLSX: any;
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
   private cog: AlainXlsxConfig;
-  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService) {
+  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService, private ngZone: NgZone) {
     this.cog = configSrv.merge('xlsx', {
       url: '//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js',
       modules: [],
@@ -21,11 +21,14 @@ export class XlsxService {
     return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
-  private read(wb: NzSafeAny): { [key: string]: NzSafeAny[][] } {
+  private read(data: NzSafeAny, options: { type: 'array' | 'binary' }): { [key: string]: NzSafeAny[][] } {
     const ret: NzSafeAny = {};
-    wb.SheetNames.forEach((name: string) => {
-      const sheet: NzSafeAny = wb.Sheets[name];
-      ret[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    this.ngZone.runOutsideAngular(() => {
+      const wb = XLSX.read(data, options);
+      wb.SheetNames.forEach((name: string) => {
+        const sheet: NzSafeAny = wb.Sheets[name];
+        ret[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      });
     });
     return ret;
   }
@@ -45,8 +48,7 @@ export class XlsxService {
           if (typeof fileOrUrl === 'string') {
             this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
               (res: ArrayBuffer) => {
-                const wb = XLSX.read(new Uint8Array(res), { type: 'array' });
-                resolve(this.read(wb));
+                this.ngZone.run(() => resolve(this.read(new Uint8Array(res), { type: 'array' })));
               },
               (err: any) => {
                 reject(err);
@@ -57,8 +59,7 @@ export class XlsxService {
           // from file
           const reader: FileReader = new FileReader();
           reader.onload = (e: any) => {
-            const wb: any = XLSX.read(e.target.result, { type: 'binary' });
-            resolve(this.read(wb));
+            this.ngZone.run(() => resolve(this.read(e.target.result, { type: 'binary' })));
           };
           reader[rABS](fileOrUrl);
         })
@@ -69,26 +70,28 @@ export class XlsxService {
   /** 导出 */
   export(options: XlsxExportOptions): Promise<void> {
     return this.init().then(() => {
-      const wb: any = XLSX.utils.book_new();
-      if (Array.isArray(options.sheets)) {
-        (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-          const ws: any = XLSX.utils.aoa_to_sheet(value.data);
-          XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
+      this.ngZone.runOutsideAngular(() => {
+        const wb: any = XLSX.utils.book_new();
+        if (Array.isArray(options.sheets)) {
+          (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
+            const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+            XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
+          });
+        } else {
+          wb.SheetNames = Object.keys(options.sheets);
+          wb.Sheets = options.sheets;
+        }
+
+        if (options.callback) options.callback(wb);
+
+        const wbout: ArrayBuffer = XLSX.write(wb, {
+          bookType: 'xlsx',
+          bookSST: false,
+          type: 'array',
+          ...options.opts,
         });
-      } else {
-        wb.SheetNames = Object.keys(options.sheets);
-        wb.Sheets = options.sheets;
-      }
-
-      if (options.callback) options.callback(wb);
-
-      const wbout: ArrayBuffer = XLSX.write(wb, {
-        bookType: 'xlsx',
-        bookSST: false,
-        type: 'array',
-        ...options.opts,
+        saveAs(new Blob([wbout], { type: 'application/octet-stream' }), options.filename || 'export.xlsx');
       });
-      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), options.filename || 'export.xlsx');
     });
   }
 }
