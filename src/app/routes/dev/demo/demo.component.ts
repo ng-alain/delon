@@ -1,41 +1,40 @@
-import { Component } from '@angular/core';
-import { OnboardingService } from '@delon/abc/onboarding';
-import { _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ZipService } from '@delon/abc/zip';
 
 @Component({
-  selector: 'demo',
+  selector: 'app-demo',
   template: `
-    <div class="mb-md pb-md border-bottom-1">
-      <button class="test1-1" nz-button nzType="primary" (click)="handleClick()">First Button</button>
-      <button class="test1-2" nz-button nzType="link">Second Button</button>
-      <button class="test1-3" nz-button nzType="dashed">Third Button</button>
-    </div>
-    <button nz-button (click)="start()">Start</button>
-    <button nz-button (click)="viaHttp()">Start Via Http</button>
+    <button nz-button (click)="url()">Via Url</button>
+    <input type="file" (change)="change($event)" multiple="false" class="ml-sm" />
+    <ol>
+      <li *ngFor="let i of data">{{ i | json }}</li>
+    </ol>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoComponent {
-  constructor(private srv: OnboardingService, private msg: NzMessageService, private http: _HttpClient) {}
+  data: any;
 
-  handleClick(): void {
-    this.msg.info(`click`);
+  constructor(private zip: ZipService, private cdr: ChangeDetectorRef) {}
+
+  private format(data: any) {
+    const files = data.files;
+    this.data = Object.keys(files).map(key => {
+      return {
+        name: key,
+        dir: files[key].dir,
+        date: files[key].date,
+      };
+    });
+    this.cdr.detectChanges();
   }
 
-  start(): void {
-    this.srv.start({
-      items: [
-        { selectors: '.test1-1', content: 'The user guidance is to help users better understand and use the product', width: 300 },
-        { selectors: '.test1-2', title: 'Test2', content: 'The user guidance is to help users better understand and use the product' },
-        { selectors: '.test1-3', title: 'Test3', content: 'The user guidance is to help users better understand and use the product' },
-      ],
-    });
+  url() {
+    this.zip.read(`./assets/demo.zip`).then(res => this.format(res));
   }
 
-  viaHttp(): void {
-    this.http.get(`./assets/schema/onboarding.json`).subscribe(res => {
-      console.log(res);
-      this.srv.start(res);
-    });
+  change(e: Event) {
+    const file = (e.target as HTMLInputElement).files![0];
+    this.zip.read(file).then(res => this.format(res));
   }
 }

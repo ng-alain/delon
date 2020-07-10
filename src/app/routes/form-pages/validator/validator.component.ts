@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AppService, CodeService, I18NService } from '@core';
 import { SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
@@ -49,6 +49,7 @@ declare var ace: any;
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
@@ -81,6 +82,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     private http: _HttpClient,
     private msg: NzMessageService,
     private appService: AppService,
+    private cdr: ChangeDetectorRef,
   ) {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
@@ -122,6 +124,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     this.schemaData = JSON.parse(this.schema || '{}');
     this.formData = JSON.parse(this.formCode || '{}');
     this.uiSchema = JSON.parse(this.uiCode || '{}');
+    this.cdr.detectChanges();
   }
 
   openOnStackBlitz(): void {

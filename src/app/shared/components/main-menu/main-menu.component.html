@@ -1,6 +1,5 @@
-<ul nz-menu nzMode="inline" [style.margin-top.px]="count > 15 ? 64 : null" [style.margin-bottom.px]="count > 15 ? 64 : null">
-  <li nz-submenu nzOpen *ngFor="let group of meta.menus">
-    <span title>{{ group.title }}</span>
+<ul nz-menu nzMode="inline" class="aside-container">
+  <li nz-menu-group nzOpen *ngFor="let group of menus" [nzTitle]="group.title">
     <ul>
       <li
         nz-menu-item
@@ -11,8 +10,8 @@
         style="padding-left: 54px;"
       >
         <nz-badge [nzDot]="item.hot">
-          {{ item.title }}
-          <span class="chinese">{{ item.subtitle }}</span>
+          <span>{{ item.title }}</span>
+          <span class="subtitle">{{ item.subtitle }}</span>
           <nz-tag *ngIf="item.lib" [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
         </nz-badge>
       </li>
