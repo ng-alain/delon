@@ -87,4 +87,4 @@ NG-ALAIN 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且�
 
 NG-ALAIN 配置了每次对 staged 进行 commit 时会预先做 lint，若发现错误则无法提交。
 
-默认开启了 `*.ts`、`*.less` 的提交过程中强制对代码进行格式化，你可以通过修改 `package.json` 的 `lint-staged` 节点来改变些规则（例如：`prettier --write`）。
+默认开启了 `*.ts`、`*.less` 的提交过程中强制对代码进行格式化，你可以通过修改 `package.json` 的 `husky` 节点来改变些规则（例如：`prettier --write`）。
