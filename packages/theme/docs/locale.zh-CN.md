@@ -51,6 +51,7 @@ switchLanguage() {
 | 朝鲜语 | ko_KR |
 | 克罗地亚 | hr_HR |
 | 日语 | ja_JP |
+| 斯洛文尼亚文 | sl_SI |
 
 ## 增加语言包
 
