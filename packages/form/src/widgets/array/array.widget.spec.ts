@@ -3,8 +3,8 @@ import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
 import { ArrayProperty, FormProperty } from '../../model';
+import { SFSchema } from '../../schema';
 import { SFArrayWidgetSchema } from './schema';
 
 describe('form: widget: array', () => {

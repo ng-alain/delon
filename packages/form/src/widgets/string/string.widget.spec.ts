@@ -1,7 +1,9 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFSchema } from '../../schema';
+import { SFStringWidgetSchema } from './schema';
 
 describe('form: widget: string', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -44,4 +46,35 @@ describe('form: widget: string', () => {
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('#000000');
   });
+
+  it('#event', fakeAsync(() => {
+    const schema: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          ui: {
+            change: jasmine.createSpy('change'),
+            focus: jasmine.createSpy('focus'),
+            blur: jasmine.createSpy('blur'),
+            enter: jasmine.createSpy('enter'),
+          } as SFStringWidgetSchema,
+        },
+      },
+    };
+    page.newSchema(schema);
+    const ui = schema.properties!.a.ui as SFStringWidgetSchema;
+    // change
+    page.typeChar('a');
+    expect(ui.change).toHaveBeenCalled();
+    // focus
+    page.typeEvent('focus');
+    expect((schema.properties!.a.ui as SFStringWidgetSchema).focus).toHaveBeenCalled();
+    // blur
+    page.typeEvent('blur');
+    expect((schema.properties!.a.ui as SFStringWidgetSchema).blur).toHaveBeenCalled();
+    // enter
+    const ev = new KeyboardEvent('keyup', { code: 'Enter', key: 'Enter' });
+    page.typeEvent(ev);
+    expect((schema.properties!.a.ui as SFStringWidgetSchema).enter).toHaveBeenCalled();
+  }));
 });

@@ -1,5 +1,6 @@
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -22,6 +23,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
@@ -64,4 +66,6 @@ export const SHARED_ZORRO_MODULES = [
   NzCardModule,
   NzSpinModule,
   NzDividerModule,
+  NzResizableModule,
+  NzAnchorModule,
 ];

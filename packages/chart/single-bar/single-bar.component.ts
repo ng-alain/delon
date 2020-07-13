@@ -25,7 +25,11 @@ import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -51,7 +55,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
 
   private install() {
     const { el, height, padding, textStyle, line, format, theme } = this;
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
@@ -89,13 +93,13 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, height, padding, value, min, max, plusColor, minusColor, barSize } = this;
-    if (!chart) return;
-    chart.scale({ value: { max, min } });
-    chart.height = height;
-    chart.padding = padding;
-    chart.geometries[0].color('value', (val: number) => (val > 0 ? plusColor : minusColor)).size(barSize);
-    chart.changeData([{ value }]);
+    const { _chart, height, padding, value, min, max, plusColor, minusColor, barSize } = this;
+    if (!_chart) return;
+    _chart.scale({ value: { max, min } });
+    _chart.height = height;
+    _chart.padding = padding;
+    _chart.geometries[0].color('value', (val: number) => (val > 0 ? plusColor : minusColor)).size(barSize);
+    _chart.changeData([{ value }]);
   }
 
   ngOnInit() {
@@ -110,8 +114,8 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

@@ -26,7 +26,11 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -81,7 +85,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
 
     const { el, height, padding, format, theme } = this;
 
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
@@ -118,15 +122,15 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, percent, color, bgColor, title } = this;
-    if (!chart) return;
+    const { _chart, percent, color, bgColor, title } = this;
+    if (!_chart) return;
 
     const data = [{ name: title, value: percent }];
     const val = data[0].value;
-    chart.annotation().clear(true);
-    chart.geometries[0].color(color);
+    _chart.annotation().clear(true);
+    _chart.geometries[0].color(color);
     // 绘制仪表盘背景
-    chart.annotation().arc({
+    _chart.annotation().arc({
       top: false,
       start: [0, 0.95],
       end: [100, 0.95],
@@ -136,7 +140,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
         lineDash: null,
       },
     });
-    chart.annotation().arc({
+    _chart.annotation().arc({
       start: [0, 0.95],
       end: [data[0].value, 0.95],
       style: {
@@ -146,7 +150,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       },
     });
 
-    chart.annotation().text({
+    _chart.annotation().text({
       position: ['50%', '85%'],
       content: title,
       style: {
@@ -155,7 +159,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
         textAlign: 'center',
       },
     });
-    chart.annotation().text({
+    _chart.annotation().text({
       position: ['50%', '90%'],
       content: `${val} %`,
       style: {
@@ -166,7 +170,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       offsetY: 15,
     });
 
-    chart.changeData(data);
+    _chart.changeData(data);
   }
 
   ngOnInit(): void {
@@ -182,8 +186,8 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

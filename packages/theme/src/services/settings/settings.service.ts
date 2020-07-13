@@ -18,14 +18,14 @@ export class SettingsService {
 
   constructor(private platform: Platform) {}
 
-  private get(key: string) {
+  getData(key: string) {
     if (!this.platform.isBrowser) {
       return null;
     }
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
-  private set(key: string, value: any) {
+  setData(key: string, value: any) {
     if (!this.platform.isBrowser) {
       return;
     }
@@ -39,9 +39,9 @@ export class SettingsService {
         collapsed: false,
         boxed: false,
         lang: null,
-        ...this.get(LAYOUT),
+        ...this.getData(LAYOUT),
       };
-      this.set(LAYOUT, this._layout);
+      this.setData(LAYOUT, this._layout);
     }
     return this._layout as Layout;
   }
@@ -50,17 +50,17 @@ export class SettingsService {
     if (!this._app) {
       this._app = {
         year: new Date().getFullYear(),
-        ...this.get(APP),
+        ...this.getData(APP),
       };
-      this.set(APP, this._app);
+      this.setData(APP, this._app);
     }
     return this._app as App;
   }
 
   get user(): User {
     if (!this._user) {
-      this._user = { ...this.get(USER) };
-      this.set(USER, this._user);
+      this._user = { ...this.getData(USER) };
+      this.setData(USER, this._user);
     }
     return this._user as User;
   }
@@ -75,21 +75,21 @@ export class SettingsService {
     } else {
       this._layout = name;
     }
-    this.set(LAYOUT, this._layout);
+    this.setData(LAYOUT, this._layout);
     this.notify$.next({ type: 'layout', name, value } as any);
     return true;
   }
 
   setApp(value: App) {
     this._app = value;
-    this.set(APP, value);
+    this.setData(APP, value);
     this.notify$.next({ type: 'app', value });
     return true;
   }
 
   setUser(value: User) {
     this._user = value;
-    this.set(USER, value);
+    this.setData(USER, value);
     this.notify$.next({ type: 'user', value });
     return true;
   }

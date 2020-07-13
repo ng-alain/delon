@@ -21,6 +21,7 @@ export const LANGS_CONFIG = [
   { langs: ['ko'], zorro: 'ko_KR', delon: 'ko_KR', fileName: 'ko-KR.json' },
   { langs: ['hr'], zorro: 'hr_HR', delon: 'hr_HR', fileName: 'hr-HR.json' },
   { langs: ['ja'], zorro: 'ja_JP', delon: 'ja_JP' },
+  { langs: ['sl'], zorro: 'sl_SI', delon: 'sl_SI', fileName: 'sl-SI.json' },
 ];
 
 export function getLangConfig(lang: string): any {

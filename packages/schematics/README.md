@@ -1,4 +1,4 @@
-# ng-alain module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
+# ng-alain [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
 
 Angular CLI Schematics of ng-alain.
 
@@ -8,7 +8,7 @@ Angular CLI Schematics of ng-alain.
 
 ## Links
 
-+ [Document](https://ng-alain.com) ([Surge Mirror](https://ng-alain-doc.surge.sh))
++ [Document](https://ng-alain.com/cli) ([Surge Mirror](https://ng-alain-doc.surge.sh/cli) - [国内镜像](https://ng-alain.gitee.io/delon/cli))
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 

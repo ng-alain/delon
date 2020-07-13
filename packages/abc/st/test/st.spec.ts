@@ -1535,6 +1535,12 @@ describe('abc: table', () => {
           expect(compAny.loadPageData).not.toHaveBeenCalled();
           page.asyncEnd();
         }));
+        it('should be pre-clear data', fakeAsync(() => {
+          const cls = '.st__body tr[data-index="0"] td';
+          page.updateColumn([{ title: '', index: 'name' }]).expectElCount(cls, 1);
+          comp.resetColumns({ preClearData: true, columns: [{ title: '', index: 'invalid-name' }] });
+          page.cd().expectElContent(cls, '').asyncEnd();
+        }));
       });
       it('#filteredData', fakeAsync(() => {
         page.cd();

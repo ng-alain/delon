@@ -25,7 +25,7 @@ import { merge, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
-import { SFButton, SFLayout } from './interface';
+import { SFButton, SFLayout, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
@@ -72,9 +72,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _item: {};
   private _valid = true;
   private _defUi: SFUISchemaItem;
-  private _inited = false;
   readonly options: AlainSFConfig;
 
+  _inited = false;
   locale: LocaleData = {};
   rootProperty: FormProperty | null = null;
   _formData: {};
@@ -146,13 +146,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() disabled = false;
   @Input() @InputBoolean() noColon = false;
   @Input() @InputBoolean() cleanValue = false;
-  /** 数据变更时回调 */
+  @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
   @Output() readonly formChange = new EventEmitter<{}>();
-  /** 提交表单时回调 */
   @Output() readonly formSubmit = new EventEmitter<{}>();
-  /** 重置表单时回调 */
   @Output() readonly formReset = new EventEmitter<{}>();
-  /** 表单校验结果回调 */
   @Output() readonly formError = new EventEmitter<ErrorData[]>();
   // #endregion
 
@@ -563,13 +560,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.reset();
 
     let isFirst = true;
-    this.rootProperty.valueChanges.subscribe(value => {
-      this._item = { ...(this.cleanValue ? null : this.formData), ...value };
+    this.rootProperty.valueChanges.subscribe(res => {
+      this._item = { ...(this.cleanValue ? null : this.formData), ...res.value };
       if (isFirst) {
         isFirst = false;
         return;
       }
       this.formChange.emit(this._item);
+      this.formValueChange.emit({ value: this._item, path: res.path, pathValue: res.pathValue });
     });
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);

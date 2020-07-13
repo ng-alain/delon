@@ -1,10 +1,10 @@
-# @delon/mock module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg?style=flat-square)](https://www.npmjs.com/package/@delon/mock)
+# @delon/mock [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg?style=flat-square)](https://www.npmjs.com/package/@delon/mock)
 
 Generate random data, intercept http requests.
 
 ## Links
 
-+ [Document](https://ng-alain.com/mock) ([Surge Mirror](https://ng-alain-doc.surge.sh/mock))
++ [Document](https://ng-alain.com/mock) ([Surge Mirror](https://ng-alain-doc.surge.sh/mock) - [国内镜像](https://ng-alain.gitee.io/delon/mock))
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 

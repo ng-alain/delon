@@ -138,6 +138,28 @@ describe('theme: DrawerHelper', () => {
         expect((els[0] as HTMLElement).style.height).toBe(`100px`);
       });
     });
+    it('should be ingore drawer-sm when nzWidth has set', () => {
+      drawer
+        .static(
+          '',
+          TestDrawerComponent,
+          {
+            ret: 'true',
+          },
+          {
+            size: 'sm',
+            drawerOptions: {
+              nzWidth: 100,
+              nzWrapClassName: 'aaa',
+            },
+          },
+        )
+        .subscribe();
+      fixture.detectChanges();
+      const els = document.getElementsByClassName('aaa');
+      expect(els.length).toBe(1);
+      expect((els[0] as HTMLElement).classList).not.toContain('drawer-sm');
+    });
   });
 
   describe('#footer', () => {

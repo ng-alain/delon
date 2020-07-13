@@ -73,7 +73,11 @@ export interface G2TimelineClickItem {
 })
 export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: false }) private node: ElementRef;
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -84,6 +88,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() titleMap: G2TimelineMap;
   @Input() colorMap: G2TimelineMap = { y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' };
   @Input() mask: string = 'HH:mm';
+  @Input() maskSlider: string = 'HH:mm';
   @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() @InputNumber() height = 450;
   @Input() padding: number[] = [40, 8, 64, 40];
@@ -106,8 +111,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, slider, maxAxis, theme, mask } = this;
-    const chart = (this.chart = new Chart({
+    const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
+    const chart = (this._chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -141,12 +146,12 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
           isArea: false,
         },
         minLimit: 2,
-        formatter: (val: Date) => format(val, mask),
+        formatter: (val: Date) => format(val, maskSlider),
       });
     }
 
     chart.on(`plot:click`, (ev: Event) => {
-      const records = this.chart.getSnapRecords({ x: ev.x, y: ev.y });
+      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
@@ -154,13 +159,13 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
+    const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
     let data = [...this.data];
-    if (!chart || !data || data.length <= 0) return;
+    if (!_chart || !data || data.length <= 0) return;
 
     const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
 
-    chart.legend({
+    _chart.legend({
       position,
       custom: true,
       items: arrAxis.map(id => {
@@ -170,11 +175,11 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     // border
-    chart.geometries.forEach((v, idx: number) => {
+    _chart.geometries.forEach((v, idx: number) => {
       v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
     });
-    chart.height = height;
-    chart.padding = padding;
+    _chart.height = height;
+    _chart.padding = padding;
 
     // TODO: compatible
     if (data.find(w => !!w.x) != null) {
@@ -202,7 +207,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         min: 0,
       };
     });
-    chart.scale({
+    _chart.scale({
       time: {
         type: 'time',
         mask,
@@ -216,7 +221,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       end: data[data.length - 1]._time,
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
-    chart.changeData(filterData);
+    console.log(filterData);
+    _chart.changeData(filterData);
   }
 
   ngOnChanges(): void {
@@ -224,8 +230,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

@@ -65,7 +65,7 @@ const MODULES = [
 ];
 
 /**
- * @deprecated Use secondary entry eg: `import { STModule } from 'ng-zorro-antd/st';`.
+ * @deprecated Use secondary entry eg: `import { STModule } from '@delon/abc/st';`.
  */
 @NgModule({ exports: MODULES })
 export class DelonABCModule {

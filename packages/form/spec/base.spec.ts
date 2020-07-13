@@ -45,6 +45,7 @@ export function builder(options?: { detectChanges?: boolean; template?: string; 
   dl = fixture.debugElement;
   context = fixture.componentInstance;
   spyOn(context, 'formChange');
+  spyOn(context, 'formValueChange');
   spyOn(context, 'formSubmit');
   spyOn(context, 'formReset');
   spyOn(context, 'formError');
@@ -76,6 +77,7 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
+    spyOn(context, 'formValueChange');
     spyOn(context, 'formChange');
     spyOn(context, 'formSubmit');
     spyOn(context, 'formReset');
@@ -293,7 +295,7 @@ export class SFPage {
     return this.dc();
   }
 
-  typeEvent(eventName: string, cls = 'input'): this {
+  typeEvent(eventName: string | Event, cls = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {
       expect(true).toBe(false, `won't found '${cls}' class element`);
@@ -343,6 +345,7 @@ export class SFPage {
       [noColon]="noColon"
       [cleanValue]="cleanValue"
       (formChange)="formChange($event)"
+      (formValueChange)="formValueChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
       (formError)="formError($event)"
@@ -367,6 +370,7 @@ export class TestFormComponent {
   cleanValue = false;
 
   formChange() {}
+  formValueChange() {}
   formSubmit() {}
   formReset() {}
   formError() {}

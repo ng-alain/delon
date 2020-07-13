@@ -230,8 +230,9 @@ export class STColumnSource {
     }
   }
 
-  private genHeaders(rootColumns: STColumn[]): STColumn[][] {
+  private genHeaders(rootColumns: STColumn[]): { headers: STColumn[][]; headerWidths: string[] | null } {
     const rows: STColumn[][] = [];
+    const widths: string[] = [];
     const fillRowCells = (columns: STColumn[], colIndex: number, rowIndex = 0): number[] => {
       // Init rows
       rows[rowIndex] = rows[rowIndex] || [];
@@ -249,6 +250,8 @@ export class STColumnSource {
         if (Array.isArray(subColumns) && subColumns.length > 0) {
           colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce((total, count) => total + count, 0);
           cell.hasSubColumns = true;
+        } else {
+          widths.push((cell.column.width as string) || '');
         }
 
         if ('colSpan' in column) {
@@ -283,7 +286,7 @@ export class STColumnSource {
       });
     }
 
-    return rows;
+    return { headers: rows, headerWidths: rowCount > 1 ? widths : null };
   }
 
   private cleanCond(list: STColumn[]): STColumn[] {
@@ -301,7 +304,7 @@ export class STColumnSource {
     return res;
   }
 
-  process(list: STColumn[]): { columns: STColumn[]; headers: STColumn[][] } {
+  process(list: STColumn[]): { columns: STColumn[]; headers: STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
@@ -419,7 +422,7 @@ export class STColumnSource {
 
     this.fixedCoerce(columns);
 
-    return { columns: columns.filter(w => !Array.isArray(w.children)), headers: this.genHeaders(copyList) };
+    return { columns: columns.filter(w => !Array.isArray(w.children)), ...this.genHeaders(copyList) };
   }
 
   restoreAllRender(columns: STColumn[]) {

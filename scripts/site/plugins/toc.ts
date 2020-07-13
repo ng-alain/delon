@@ -1,6 +1,6 @@
 const JsonML = require('jsonml.js/lib/utils');
-import { isHeading, generateSluggedId } from '../utils/utils';
 import { SiteConfig } from '../interfaces';
+import { generateSluggedId, isHeading } from '../utils/utils';
 
 export function toc(markdownData: any, siteConfig: SiteConfig) {
   const maxDepth = siteConfig.tocMaxDepth || 3;

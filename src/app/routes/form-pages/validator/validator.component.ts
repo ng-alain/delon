@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AppService, CodeService, I18NService } from '@core';
 import { SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
@@ -49,6 +49,7 @@ declare var ace: any;
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
@@ -81,6 +82,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     private http: _HttpClient,
     private msg: NzMessageService,
     private appService: AppService,
+    private cdr: ChangeDetectorRef,
   ) {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
@@ -100,7 +102,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  getSchema() {
+  getSchema(): void {
     const item = this.files.find(w => w.name === this.name);
     if (!item) return;
     this.name = item.name;
@@ -118,13 +120,14 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     });
   }
 
-  run() {
+  run(): void {
     this.schemaData = JSON.parse(this.schema || '{}');
     this.formData = JSON.parse(this.formCode || '{}');
     this.uiSchema = JSON.parse(this.uiCode || '{}');
+    this.cdr.detectChanges();
   }
 
-  openOnStackBlitz() {
+  openOnStackBlitz(): void {
     const obj: { [key: string]: NzSafeAny } = {
       schema: this.schema,
       layout: this.layout,
@@ -135,23 +138,27 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     this.codeSrv.openOnStackBlitz(componentCode);
   }
 
-  onCopy() {
+  onCopy(): void {
     copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
-  submit(value: any) {
+  submit(value: any): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: any) {
+  change(value: any): void {
     console.log('formChange', value);
   }
 
-  error(value: any) {
+  valueChange(value: any): void {
+    console.log('formChange', value);
+  }
+
+  error(value: any): void {
     console.log('formError', value);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

@@ -1,10 +1,10 @@
-# @delon/util module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/util.svg?style=flat-square)](https://www.npmjs.com/package/@delon/util)
+# @delon/util [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/util.svg?style=flat-square)](https://www.npmjs.com/package/@delon/util)
 
 Universal toolset of ng-alain.
 
 ## Links
 
-+ [Document](https://ng-alain.com/util) ([Surge Mirror](https://ng-alain-doc.surge.sh/util))
++ [Document](https://ng-alain.com/util) ([Surge Mirror](https://ng-alain-doc.surge.sh/util) - [国内镜像](https://ng-alain.gitee.io/delon/util))
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 

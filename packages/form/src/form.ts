@@ -18,3 +18,4 @@ export * from './widget.factory';
 
 // other
 export * from './validator.factory';
+export * from './utils';

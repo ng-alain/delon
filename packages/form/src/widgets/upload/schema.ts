@@ -1,10 +1,10 @@
 import {
-  ShowUploadListInterface,
-  UploadChangeParam,
-  UploadFile,
+  NzShowUploadListInterface,
+  NzUploadChangeParam,
+  NzUploadFile,
+  NzUploadTransformFileType,
+  NzUploadXHRArgs,
   UploadFilter,
-  UploadTransformFileType,
-  UploadXHRArgs,
 } from 'ng-zorro-antd/upload';
 import { Observable, Subscription } from 'rxjs';
 import { SFSchemaEnumType } from '../../schema';
@@ -44,7 +44,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * **必选参数** 上传的地址
    */
-  action?: string | ((file: UploadFile) => string | Observable<string>);
+  action?: string | ((file: NzUploadFile) => string | Observable<string>);
 
   /**
    * 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)
@@ -69,7 +69,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 文件列表
    */
-  fileList?: UploadFile[];
+  fileList?: NzUploadFile[];
 
   /**
    * 限制文件大小，单位：KB；`0` 表示不限，默认：`0`
@@ -84,7 +84,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 设置上传的请求头部
    */
-  headers?: {} | ((file: UploadFile) => {} | Observable<{}>);
+  headers?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
 
   /**
    * 上传列表的内建样式，默认：`text`
@@ -94,7 +94,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 是否展示列表, 可设为一个对象，用于单独设定 `showPreviewIcon` 和 `showRemoveIcon`，默认：`true`
    */
-  showUploadList?: boolean | ShowUploadListInterface;
+  showUploadList?: boolean | NzShowUploadListInterface;
 
   /**
    * 是否支持多选文件，`IE10+` 支持。开启后按住 `ctrl` 可选择多个文件，默认：`false`
@@ -109,7 +109,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 上传所需参数或返回上传参数的方法
    */
-  data?: {} | ((file: UploadFile) => {} | Observable<{}>);
+  data?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
 
   /**
    * 上传请求时是否携带 cookie，默认：`false`
@@ -129,40 +129,40 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传
    */
-  beforeUpload?: (file: UploadFile, fileList: UploadFile[]) => boolean | Observable<boolean>;
+  beforeUpload?: (file: NzUploadFile, fileList: NzUploadFile[]) => boolean | Observable<boolean>;
 
   /**
    * 通过覆盖默认的上传行为，可以自定义自己的上传实现
    */
-  customRequest?: (item: UploadXHRArgs) => Subscription;
+  customRequest?: (item: NzUploadXHRArgs) => Subscription;
 
   /**
    * 点击移除文件时的回调，返回值为 `false` 时不移除
    */
-  remove?: (file: UploadFile) => boolean | Observable<boolean>;
+  remove?: (file: NzUploadFile) => boolean | Observable<boolean>;
 
   /**
    * 点击文件链接或预览图标时的回调
    */
-  preview?: (file: UploadFile) => void;
+  preview?: (file: NzUploadFile) => void;
 
   /**
    * 自定义文件预览逻辑
    */
-  previewFile?: (file: UploadFile) => Observable<string>;
+  previewFile?: (file: NzUploadFile) => Observable<string>;
 
   /**
    * 点击下载文件时的回调，如果没有指定，则默认跳转到文件 url 对应的标签页
    */
-  download?: (file: UploadFile) => void;
+  download?: (file: NzUploadFile) => void;
 
   /**
    * 在上传之前转换文件。支持返回一个 Observable 对象
    */
-  transformFile?: (file: UploadFile) => UploadTransformFileType;
+  transformFile?: (file: NzUploadFile) => NzUploadTransformFileType;
 
   /**
    * 上传文件改变时的状态
    */
-  change?: (args: UploadChangeParam) => void;
+  change?: (args: NzUploadChangeParam) => void;
 }

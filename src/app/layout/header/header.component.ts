@@ -1,93 +1,68 @@
-import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { I18NService, MetaService, MobileService } from '@core';
+import { I18NService, MobileService } from '@core';
 import { copy } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
-import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
-
-declare const docsearch: any;
+import { MetaSearchGroupItem } from '../../interfaces';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   host: {
     '[attr.id]': '"header"',
+    '[class.clearfix]': `true`,
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements AfterViewInit {
+  private inited = false;
   isMobile: boolean;
-  useDocsearch = true;
   oldVersionList = [`8.x`, `1.x`];
   currentVersion = 'stable';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
-
-  @ViewChild('searchInput', { static: false })
-  searchInput: ElementRef<HTMLInputElement>;
-
   menuVisible = false;
+  showGitee = false;
+  regexs = {
+    docs: { regex: /^\/docs/ },
+    components: { regex: /^\/components/ },
+    cli: { regex: /^\/cli/ },
+    delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ },
+  };
 
-  q: string;
-  list: MetaSearchGroup[] = [];
+  private getWin(): Window {
+    return (this.doc as Document).defaultView || window;
+  }
 
   constructor(
     public i18n: I18NService,
     private router: Router,
     private msg: NzMessageService,
     private mobileSrv: MobileService,
-    private meta: MetaService,
-    private platform: Platform,
+    @Inject(DOCUMENT) private doc: any,
+    private cdr: ChangeDetectorRef,
   ) {
-    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
-    this.mobileSrv.change.subscribe(res => (this.isMobile = res));
+    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
+      this.menuVisible = false;
+    });
+    this.mobileSrv.change.subscribe(res => {
+      this.isMobile = res;
+      if (this.inited) {
+        this.cdr.detectChanges();
+      }
+    });
   }
 
-  ngOnInit(): void {
-    if (!this.useDocsearch) this.changeQ('');
-  }
-
-  ngAfterViewInit() {
-    this.initDocSearch();
+  ngAfterViewInit(): void {
+    this.inited = true;
+    this.showGitee = this.i18n.lang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') !== -1;
   }
 
   toVersion(version: string) {
     if (version !== this.currentVersion) {
-      window.location.href = `https://ng-alain.github.io/${version}-doc/`;
+      this.getWin().location.href = `https://ng-alain.github.io/${version}-doc/`;
     }
-  }
-
-  @HostListener('document:keyup.s', ['$event'])
-  onKeyUp(event: KeyboardEvent) {
-    if (this.useDocsearch && this.searchInput && this.searchInput.nativeElement && event.target === document.body) {
-      this.searchInput.nativeElement.focus();
-    }
-  }
-
-  private initDocSearch() {
-    if (!this.platform.isBrowser || !this.useDocsearch) {
-      return;
-    }
-
-    docsearch({
-      // appId: '2WSH9IUML3',
-      apiKey: 'abc8efef8b964f6ab0629f0ded98ab29',
-      indexName: 'ng-alain',
-      inputSelector: '#search-box input',
-      algoliaOptions: {
-        hitsPerPage: 5,
-        facetFilters: [`tags:${this.i18n.zone}`],
-      },
-      transformData(hits: NzSafeAny[]) {
-        hits.forEach(hit => {
-          hit.url = hit.url.replace('ng.ant.design', location.host);
-          hit.url = hit.url.replace('https:', location.protocol);
-        });
-        return hits;
-      },
-      debug: false,
-    });
   }
 
   langChange(language: 'en' | 'zh') {
@@ -96,9 +71,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   onCopy(value: string) {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
-  }
-  changeQ(value: any) {
-    this.list = this.meta.search(value);
   }
 
   to(item: MetaSearchGroupItem) {
@@ -113,6 +85,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
     this.router.navigateByUrl(`${url}/${this.i18n.zone}`).then(() => {
       this.menuVisible = false;
+      this.cdr.detectChanges();
     });
   }
 }

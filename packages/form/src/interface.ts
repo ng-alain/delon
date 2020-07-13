@@ -4,6 +4,50 @@ export type SFValue = any;
 
 export type SFLayout = 'horizontal' | 'vertical' | 'inline';
 
+export interface SFFormValueChange {
+  path: string | null;
+  pathValue: SFValue;
+  value: SFValue;
+}
+
+export interface SFValueChange {
+  /**
+   * Always return complete data
+   */
+  value: SFValue;
+  /**
+   * Current triggered path
+   */
+  path: string | null;
+  /**
+   * Current path value
+   */
+  pathValue: SFValue;
+}
+
+export interface SFUpdateValueAndValidity {
+  /**
+   * 是否包含上级字段，默认：`false`
+   */
+  onlySelf?: boolean;
+  /**
+   * 是否触发值变更通知，默认：`true`
+   */
+  emitValueEvent?: boolean;
+  /**
+   * 是否触发校验，默认：`true`
+   */
+  emitValidator?: boolean;
+  /**
+   * 当前更新路径
+   */
+  updatePath?: string;
+  /**
+   * 当前更新路径对应值
+   */
+  updateValue?: SFValue | null;
+}
+
 export interface SFButton {
   /** 提交按钮文本，默认：`提交` */
   submit?: string;

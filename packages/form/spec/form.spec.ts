@@ -463,6 +463,11 @@ describe('form: component', () => {
         expect(context.formChange).toHaveBeenCalled();
       });
 
+      it('#formValueChange', () => {
+        page.setValue('/name', 'cipchk');
+        expect(context.formValueChange).toHaveBeenCalled();
+      });
+
       it('#formSubmit', () => {
         page.setValue('/name', 'cipchk').setValue('/pwd', 'asdf').submit();
         expect(context.formSubmit).toHaveBeenCalled();

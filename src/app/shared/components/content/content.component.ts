@@ -1,6 +1,7 @@
-import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MetaService, MobileService } from '@core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-content',
@@ -10,17 +11,27 @@ import { MetaService, MobileService } from '@core';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
   isMobile: boolean;
   opened = false;
-  isBrowser = true;
 
-  constructor(public meta: MetaService, private mobileSrv: MobileService, platform: Platform) {
-    this.isBrowser = platform.isBrowser;
-    this.mobileSrv.change.subscribe(res => (this.isMobile = res));
+  constructor(public meta: MetaService, private mobileSrv: MobileService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.mobileSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
+      this.isMobile = res;
+      this.cdr.detectChanges();
+    });
   }
 
   to() {
     this.opened = false;
+  }
+
+  ngOnDestroy(): void {
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }

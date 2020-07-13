@@ -1,4 +1,4 @@
-# @delon/testing module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/testing.svg?style=flat-square)](https://www.npmjs.com/package/@delon/testing)
+# @delon/testing [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/testing.svg?style=flat-square)](https://www.npmjs.com/package/@delon/testing)
 
 Test suite for ng-alain.
 

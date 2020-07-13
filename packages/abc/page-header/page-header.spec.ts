@@ -192,7 +192,7 @@ describe('abc: page-header', () => {
         });
       });
 
-      xit('shoule be different breadcrumb by paths', fakeAsync(() => {
+      it('shoule be different breadcrumb by paths', fakeAsync(() => {
         context.home = '';
         context.autoBreadcrumb = true;
         const urlSpy = spyOnProperty(router, 'url');
@@ -305,7 +305,7 @@ describe('abc: page-header', () => {
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
 
-    xit('should be refresh title when route changed of auto generate title', fakeAsync(() => {
+    it('should be refresh title when route changed of auto generate title', fakeAsync(() => {
       genModule({ created: false });
       context.title = null;
       context.autoTitle = true;
@@ -386,8 +386,9 @@ describe('abc: page-header', () => {
 
       it('should be auto sync title of document and result-tab', () => {
         const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
-        context.title = 'test';
         fixture.detectChanges();
+        context.comp.inited = false;
+        context.comp.refresh();
         expect(titleSrv.setTitle).toHaveBeenCalled();
         expect(spyReuseTitle).toHaveBeenCalled();
       });

@@ -25,11 +25,11 @@ export class DemoComponent {
   url = `/users?total=2&field=list`;
   params = { a: 1, b: 2 };
   columns: STColumn[] = [
-    { title: '编号', index: 'id', sort: true },
+    { title: '编号', index: 'id', sort: true, width: 100 },
     {
       title: 'Other',
       children: [
-        { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
+        { title: '头像', type: 'img', index: 'picture.thumbnail', width: 60 },
         { title: '邮箱', index: 'email' },
         {
           title: '姓名',

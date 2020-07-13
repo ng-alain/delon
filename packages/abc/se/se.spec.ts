@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
 import { SEModule } from './se.module';
@@ -21,7 +22,7 @@ describe('abc: edit', () => {
 
   const moduleAction = () => {
     TestBed.configureTestingModule({
-      imports: [SEModule, FormsModule, NoopAnimationsModule],
+      imports: [SEModule, FormsModule, NzRadioModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
   };
@@ -438,6 +439,18 @@ describe('abc: edit', () => {
       </form>
       `);
       expect(page.getEl('label').getAttribute('for')).toBe(id);
+    });
+    it(`should be ingored set id when control invalid controlAccessor`, () => {
+      genModule(`
+      <form nz-form se-container>
+        <se label="a">
+          <nz-radio-group [(ngModel)]="val" name="val">
+            <label nz-radio nzValue=""></label>
+          </nz-radio-group>
+        </se>
+      </form>
+      `);
+      expect(page.getEl('nz-radio-group').getAttribute('for')).toBeNull();
     });
     it(`should be keeping placeholder when content is empty`, () => {
       genModule(`

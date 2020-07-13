@@ -151,6 +151,7 @@
 .markdown > table {
   width: 100%;
   margin: 8px 0 16px;
+  table-layout: fixed;
   empty-cells: show;
   border: 1px solid @site-border-color-split;
   border-collapse: collapse;
@@ -160,7 +161,7 @@
 .markdown > table th {
   color: #5c6b77;
   font-weight: 500;
-  white-space: nowrap;
+  // white-space: nowrap;
   background: rgba(0, 0, 0, 0.02);
 }
 
@@ -253,11 +254,13 @@
     font-size: @font-size-base - 1px;
     font-family: @code-family;
     line-height: @line-height-base;
+    table-layout: auto;
     border: 1px solid @border-color-split;
 
     th,
     td {
       padding: 12px;
+      white-space: nowrap;
       border-color: @border-color-split;
       border-width: 1px 0;
     }

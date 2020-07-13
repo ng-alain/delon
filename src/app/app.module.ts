@@ -18,6 +18,7 @@ import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { HeaderSearchComponent } from './layout/header/search-box.component';
 import { LayoutComponent } from './layout/layout.component';
 
 import { GlobalConfigModule } from './global-config.module';
@@ -89,7 +90,7 @@ function registerElements(injector: Injector, platformId: {}) {
       multi: true,
     },
   ],
-  declarations: [AppComponent, LayoutComponent, HeaderComponent],
+  declarations: [AppComponent, LayoutComponent, HeaderComponent, HeaderSearchComponent],
   entryComponents: STWIDGET_COMPONENTS,
   bootstrap: [AppComponent],
 })

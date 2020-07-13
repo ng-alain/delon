@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { deepGet } from '@delon/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { UploadChangeParam, UploadFile } from 'ng-zorro-antd/upload';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { of } from 'rxjs';
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
@@ -16,7 +16,7 @@ import { SFUploadWidgetSchema } from './schema';
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
   i: any;
-  fileList: UploadFile[] = [];
+  fileList: NzUploadFile[] = [];
   btnType = '';
 
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     this.i = res;
   }
 
-  change(args: UploadChangeParam) {
+  change(args: NzUploadChangeParam) {
     if (this.ui.change) this.ui.change(args);
     if (args.type !== 'success') return;
     this._setValue(args.fileList);
@@ -86,18 +86,18 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
   reset(value: SFValue) {
     const { fileList } = this.ui;
     (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(list => {
-      this.fileList = list as UploadFile[];
+      this.fileList = list as NzUploadFile[];
       this.formProperty._value = this.pureValue(list);
-      this.formProperty.updateValueAndValidity(false, false, false);
+      this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: false });
       this.detectChanges();
     });
   }
 
-  private _getValue(file: UploadFile) {
+  private _getValue(file: NzUploadFile) {
     return deepGet(file.response, this.i.resReName, file.response);
   }
 
-  private pureValue(fileList: UploadFile[]) {
+  private pureValue(fileList: NzUploadFile[]) {
     fileList
       .filter(file => !file.url)
       .forEach(file => {
@@ -107,7 +107,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return this.i.multiple === true ? res : res.pop();
   }
 
-  private _setValue(fileList: UploadFile[]) {
+  private _setValue(fileList: NzUploadFile[]) {
     this.setValue(this.pureValue(fileList));
   }
 
@@ -116,7 +116,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return true;
   };
 
-  handlePreview = (file: UploadFile) => {
+  handlePreview = (file: NzUploadFile) => {
     if (this.ui.preview) {
       this.ui.preview(file);
       return;

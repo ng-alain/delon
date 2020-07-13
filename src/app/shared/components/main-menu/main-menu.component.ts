@@ -7,9 +7,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'main-menu, [main-menu]',
   templateUrl: './main-menu.component.html',
-  host: {
-    '[class.main-menu-inner]': `true`,
-  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
@@ -18,7 +15,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   @Output() readonly to = new EventEmitter<string>();
 
-  constructor(public meta: MetaService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService, private cdr: ChangeDetectorRef) {}
+  get menus(): any[] {
+    return this.meta.menus!;
+  }
+
+  constructor(private meta: MetaService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.cdr.markForCheck());

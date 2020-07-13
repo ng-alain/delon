@@ -7,15 +7,13 @@ import { Router } from '@angular/router';
 export class RouteTransferDirective {
   constructor(private router: Router) {}
 
-  private clickToc(id: string, e: Event) {
-    const tocEl = document.querySelector(`#toc-${id}`) as HTMLElement;
-    if (tocEl) {
-      tocEl.click();
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
+  private clickToc(id: string) {
+    const link = `#${id}`;
+    const el = document.querySelector(link) as HTMLElement;
+    if (el) {
+      el.scrollIntoView();
+      // window.location.hash = link;
     }
-    return true;
   }
 
   @HostListener('click', ['$event'])
@@ -28,15 +26,15 @@ export class RouteTransferDirective {
 
     const url = targetEl.dataset.url;
 
-    if (targetEl.dataset.toc || url!.startsWith('#')) {
-      this.clickToc(targetEl.dataset.toc || url!.substr(1).replace(/ /g, '-'), e);
+    if (targetEl.dataset.toc || (url && url!.startsWith('#'))) {
+      this.clickToc(targetEl.dataset.toc || url!.substr(1).replace(/ /g, '-'));
+      e.preventDefault();
+      e.stopPropagation();
       return false;
     }
 
     if (url && url.startsWith('/') && !url.startsWith('//')) {
       this.router.navigateByUrl(url);
-      e.preventDefault();
-      e.stopPropagation();
       return false;
     }
 

@@ -38,6 +38,6 @@ Select.
 | `[onSearch]` | Callback when search content is changed, parameter is search content, must return `Promise` object | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[tokenSeparators]` | Separator for automatic word segmentation when it is tags and multiple mode | `string[]` | `[]` |
 | `[maxTagCount]` | Maximum count of tag | `number` | - |
-| `[change]` | Callback function when selected nz-option is changed | `(ngModel:any丨any[])=>void` | - |
+| `[change]` | Callback function when selected nz-option is changed | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |
 | `[openChange]` | Callback function when dropdown list is open or closed | `(status: boolean) => void` | - |
 | `[scrollToBottom]` | Callback function when dropdown list is scrolled to bottom, can be used to trigger dynamic load | `() => void` | - |

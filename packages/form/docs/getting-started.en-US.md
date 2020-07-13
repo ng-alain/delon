@@ -133,6 +133,7 @@ export class HomeComponent {
 | `[compact]` | Whether compact style | `boolean` | `false` |
 | `[cleanValue]` | Whether to clean up data for undefined Schema | `boolean` | `false` |
 | `(formChange)` | Callback when data changes | `EventEmitter<{}>` | - |
+| `(formValueChange)` | Callback when value changes | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | Callback when submitting the form | `EventEmitter<{}>` | - |
 | `(formReset)` | Callback when resetting the form | `EventEmitter<{}>` | - |
 | `(formError)` | Callback when form check | `EventEmitter<ErrorData[]>` | - |
@@ -150,6 +151,14 @@ export class HomeComponent {
 | `[search]` | Search text of button | `string` | `搜索` |
 | `[edit]` | Edit text of button | `string` | `保存` |
 | `[render]` | Button layout | `SFRenderButton` | - |
+
+### SFValueChange
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[value]` | Always return complete data | `SFValue` | - |
+| `[path]` | Current triggered path | `string, null` | `null` |
+| `[pathValue]` | Current path value | `SFValue` | - |
 
 ### Methods
 
