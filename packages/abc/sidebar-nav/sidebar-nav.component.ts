@@ -18,7 +18,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Nav } from './sidebar-nav.types';
 
 const SHOWCLS = 'sidebar-nav__floating-show';
@@ -71,7 +71,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return node.nodeName !== 'A' ? null : node;
   }
 
-  private floatingAreaClickHandle(e: MouseEvent) {
+  private floatingClickHandle(e: MouseEvent) {
     e.stopPropagation();
     const linkNode = this.getLinkNode(e.target as HTMLElement);
     if (linkNode == null) {
@@ -95,9 +95,9 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  clearFloating(): void {
+  private clearFloating(): void {
     if (!this.floatingEl) return;
-    this.floatingEl.removeEventListener('click', this.floatingAreaClickHandle.bind(this));
+    this.floatingEl.removeEventListener('click', this.floatingClickHandle.bind(this));
     // fix ie: https://github.com/ng-alain/delon/issues/52
     if (this.floatingEl.hasOwnProperty('remove')) {
       this.floatingEl.remove();
@@ -110,7 +110,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.clearFloating();
     this.floatingEl = this.render.createElement('div');
     this.floatingEl.classList.add(FLOATINGCLS + '-container');
-    this.floatingEl.addEventListener('click', this.floatingAreaClickHandle.bind(this), false);
+    this.floatingEl.addEventListener('click', this.floatingClickHandle.bind(this), false);
     this.bodyEl.appendChild(this.floatingEl);
   }
 
@@ -231,7 +231,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const { doc, router, unsubscribe$, menuSrv, cdr } = this;
+    const { doc, router, unsubscribe$, menuSrv, settings, cdr } = this;
     this.bodyEl = doc.querySelector('body');
     this.openedByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloating());
@@ -260,6 +260,12 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }
     });
+    settings.notify
+      .pipe(
+        takeUntil(unsubscribe$),
+        filter(t => t.type === 'layout' && t.name === 'collapsed'),
+      )
+      .subscribe(() => this.clearFloating());
     this.underPad();
   }
 
