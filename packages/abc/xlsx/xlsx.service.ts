@@ -67,7 +67,6 @@ export class XlsxService {
     });
   }
 
-  /** 导出 */
   async export(options: XlsxExportOptions): Promise<XlsxExportResult> {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()

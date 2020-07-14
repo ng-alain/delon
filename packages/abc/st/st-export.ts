@@ -67,12 +67,15 @@ export class STExport {
     return sheets;
   }
 
-  export(opt: STExportOptions) {
+  async export(opt: STExportOptions): Promise<boolean> {
     const sheets = this.genSheet(opt);
-    return this.xlsxSrv.export({
-      sheets,
-      filename: opt.filename,
-      callback: opt.callback,
-    });
+    return this.xlsxSrv
+      .export({
+        sheets,
+        filename: opt.filename,
+        callback: opt.callback,
+      })
+      .then(() => true)
+      .catch(() => false);
   }
 }
