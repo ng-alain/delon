@@ -8,6 +8,9 @@ class MockXlsxService {
   export(options: XlsxExportOptions) {
     return options;
   }
+  numberToSchema(val: number): string {
+    return String.fromCharCode(64 + val);
+  }
 }
 const columns: STColumn[] = [
   { title: 'id', index: ['id'], type: 'checkbox' },
@@ -15,18 +18,18 @@ const columns: STColumn[] = [
   { title: 'img', index: ['img'], type: 'img', exported: false },
   { title: 'currency', index: ['currency'], type: 'currency' },
   { title: 'date', index: ['date'], type: 'date' },
-  { title: 'status', index: ['status'], type: 'yn', ynTruth: true },
+  { title: 'status', index: ['status'], type: 'yn', yn: { truth: true } },
   { title: 'format', index: ['status'], format: a => a.id },
   { title: 'invalid_index' },
   { title: 'null', index: 'null' },
-  { title: 'customYN', index: ['status'], type: 'yn', ynTruth: true, ynYes: 'Y', ynNo: 'N' },
+  { title: 'customYN', index: 'customYn', type: 'yn', yn: { truth: 'Y', yes: 'Y', no: 'N' } },
   {
     title: '',
     index: 'id',
     buttons: [{ text: '' }],
   },
 ];
-const data: any[] = [
+const data = [
   {
     id: 1,
     name: 'n1',
@@ -35,6 +38,7 @@ const data: any[] = [
     date: '2018-1-1',
     status: true,
     null: null,
+    customYn: 'Y',
   },
   {
     id: 2,
@@ -44,6 +48,7 @@ const data: any[] = [
     date: '2018-1-2',
     status: false,
     null: null,
+    customYn: 'N',
   },
   {
     id: 3,
@@ -53,6 +58,7 @@ const data: any[] = [
     date: '2018-1-3',
     status: false,
     null: null,
+    customYn: 'Y',
   },
   {
     id: 4,
@@ -62,6 +68,7 @@ const data: any[] = [
     date: '2018-1-4',
     status: true,
     null: null,
+    customYn: 'Y',
   },
 ];
 
@@ -78,8 +85,8 @@ describe('abc: table: export', () => {
 
     it('should be export a excel', () => {
       const ret: any = srv.export({
-        _d: data,
-        _c: columns,
+        data,
+        columens: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
         callback: () => {},
@@ -97,8 +104,8 @@ describe('abc: table: export', () => {
 
     it('should auto specify sheet name [Sheet1]', () => {
       const ret: any = srv.export({
-        _d: data,
-        _c: columns,
+        data,
+        columens: columns,
         filename: 'filename.xlsx',
         callback: () => {},
       });
@@ -108,8 +115,8 @@ describe('abc: table: export', () => {
 
     it('should be generate empty sheet', () => {
       const ret: any = srv.export({
-        _d: [],
-        _c: [],
+        data: [],
+        columens: [],
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);

@@ -27,6 +27,7 @@ yarn add file-saver
 |----|----|----|-----|
 | `import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | - |
 | `export(options: XlsxExportOptions)` | 导出Excel | `Promise<void>` | - |
+| `numberToSchema(val: number)` | 数值转符号名 | `string` | - |
 
 ### XlsxExportOptions
 

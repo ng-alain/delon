@@ -27,6 +27,7 @@ The sheetjs script file takes the form of lazy loading，you can change the defa
 |----------|-------------|------|---------|
 | `import(fileOrUrl: File | string)` | Import Excel, return JSON | `Promise<{ [key: string]: any[][] }>` | - |
 | `export(options: XlsxExportOptions)` | Export Excel | `Promise<void>` | - |
+| `numberToSchema(val: number)` | Numeric to schema name | `string` | - |
 
 ### XlsxExportOptions
 
