@@ -29,7 +29,7 @@ const columns: STColumn[] = [
     buttons: [{ text: '' }],
   },
 ];
-const data: any[] = [
+const data = [
   {
     id: 1,
     name: 'n1',
@@ -85,8 +85,8 @@ describe('abc: table: export', () => {
 
     it('should be export a excel', () => {
       const ret: any = srv.export({
-        _d: data,
-        _c: columns,
+        data,
+        columens: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
         callback: () => {},
@@ -104,8 +104,8 @@ describe('abc: table: export', () => {
 
     it('should auto specify sheet name [Sheet1]', () => {
       const ret: any = srv.export({
-        _d: data,
-        _c: columns,
+        data,
+        columens: columns,
         filename: 'filename.xlsx',
         callback: () => {},
       });
@@ -115,8 +115,8 @@ describe('abc: table: export', () => {
 
     it('should be generate empty sheet', () => {
       const ret: any = srv.export({
-        _d: [],
-        _c: [],
+        data: [],
+        columens: [],
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);

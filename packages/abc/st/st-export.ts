@@ -16,7 +16,7 @@ export class STExport {
     } else {
       const val = deepGet(item, col.index as string[], '');
       ret.v = val;
-      if (val) {
+      if (val != null) {
         switch (col.type) {
           case 'currency':
             ret.t = 'n';
@@ -40,9 +40,9 @@ export class STExport {
   private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
     const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
-    const colData = opt._c!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
+    const colData = opt.columens!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
     const colLen = colData.length;
-    const dataLen = opt._d!.length;
+    const dataLen = opt.data!.length;
 
     // column
     for (let i = 0; i < colLen; i++) {
@@ -56,7 +56,7 @@ export class STExport {
     // content
     for (let i = 0; i < dataLen; i++) {
       for (let j = 0; j < colLen; j++) {
-        sheet[`${this.xlsxSrv.numberToSchema(j + 1)}${i + 2}`] = this._stGet(opt._d![i], colData[j], i);
+        sheet[`${this.xlsxSrv.numberToSchema(j + 1)}${i + 2}`] = this._stGet(opt.data![i], colData[j], i);
       }
     }
 
