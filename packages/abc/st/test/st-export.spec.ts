@@ -83,8 +83,8 @@ describe('abc: table: export', () => {
       srv = TestBed.inject<STExport>(STExport);
     });
 
-    it('should be export a excel', () => {
-      const ret: any = srv.export({
+    it('should be export a excel', async () => {
+      const ret: any = await srv.export({
         data,
         columens: columns,
         sheetname: 'sn',
@@ -102,8 +102,8 @@ describe('abc: table: export', () => {
       );
     });
 
-    it('should auto specify sheet name [Sheet1]', () => {
-      const ret: any = srv.export({
+    it('should auto specify sheet name [Sheet1]', async () => {
+      const ret: any = await srv.export({
         data,
         columens: columns,
         filename: 'filename.xlsx',
@@ -113,8 +113,8 @@ describe('abc: table: export', () => {
       expect(Object.keys(ret.sheets)).toContain('Sheet1');
     });
 
-    it('should be generate empty sheet', () => {
-      const ret: any = srv.export({
+    it('should be generate empty sheet', async () => {
+      const ret: any = await srv.export({
         data: [],
         columens: [],
       });
