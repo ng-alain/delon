@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { XlsxService } from '@delon/abc/xlsx';
+import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumn, STExportOptions } from './st.interfaces';
@@ -67,15 +67,12 @@ export class STExport {
     return sheets;
   }
 
-  async export(opt: STExportOptions): Promise<boolean> {
+  async export(opt: STExportOptions): Promise<XlsxExportResult> {
     const sheets = this.genSheet(opt);
-    return this.xlsxSrv
-      .export({
-        sheets,
-        filename: opt.filename,
-        callback: opt.callback,
-      })
-      .then(() => true)
-      .catch(() => false);
+    return this.xlsxSrv.export({
+      sheets,
+      filename: opt.filename,
+      callback: opt.callback,
+    });
   }
 }
