@@ -94,4 +94,23 @@ export class XlsxService {
       });
     });
   }
+
+  /**
+   * 数据转符号名
+   * - `1` => `A`
+   * - `27` => `AA`
+   * - `703` => `AAA`
+   */
+  numberToSchema(val: number): string {
+    const startCode = 'A'.charCodeAt(0);
+    let res = '';
+
+    do {
+      --val;
+      res = String.fromCharCode(startCode + (val % 26)) + res;
+      val = (val / 26) >> 0;
+    } while (val > 0);
+
+    return res;
+  }
 }

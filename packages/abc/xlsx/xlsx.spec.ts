@@ -187,6 +187,17 @@ describe('abc: xlsx', () => {
       expect(srv.export).toHaveBeenCalled();
     });
   });
+
+  describe('[#numberToSchema]', () => {
+    beforeEach(() => genModule());
+
+    it('should be working', () => {
+      expect(srv.numberToSchema(1)).toBe('A');
+      expect(srv.numberToSchema(27)).toBe('AA');
+      expect(srv.numberToSchema(28)).toBe('AB');
+      expect(srv.numberToSchema(53)).toBe('BA');
+    });
+  });
 });
 
 @Component({
