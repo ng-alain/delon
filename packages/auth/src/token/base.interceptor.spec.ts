@@ -239,7 +239,7 @@ describe('auth: base.interceptor', () => {
 
     it('shoul working', done => {
       otherRes = new HttpResponse({ body: { a: 1 } });
-      const url = '/to-test';
+      const url = '/to-test?a=1';
       http.get(url, { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);
