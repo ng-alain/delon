@@ -154,7 +154,6 @@
     "xlsx": "^0.16.1",
     "screenfull": "^5.0.2",
     "less-bundle-promise": "^1.0.7",
-    "lint-staged": "^10.2.4",
     "ng-alain-codelyzer": "^0.0.1",
     "ng-alain-sts": "^0.0.1",
     "tsconfig-paths": "^3.9.0",

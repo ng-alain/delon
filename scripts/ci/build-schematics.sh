@@ -53,7 +53,7 @@ DEPENDENCIES=$(node -p "
     '@ngx-translate/http-loader',
     'tslint-config-prettier',
     'tslint-language-service',
-    'lint-staged',
+    'pretty-quick',
     'husky',
     'stylelint-config-prettier',
     'stylelint-config-rational-order',
