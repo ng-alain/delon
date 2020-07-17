@@ -514,6 +514,16 @@ describe('st: column-source', () => {
         expect(res[2]._right).toBe('0px');
       });
     });
+    describe('[grouping-columns]', () => {
+      it('should be working', () => {
+        const res = srv.process([{ title: '1', index: 'id', children: [{ index: 'id' }] }]);
+        expect(res.headers.length).toBe(2);
+      });
+      it('should be ingored grouping columns when children when is empty', () => {
+        const res = srv.process([{ title: '1', index: 'id', children: [] }]);
+        expect(res.headers.length).toBe(1);
+      });
+    });
   });
 
   describe('[acl]', () => {
