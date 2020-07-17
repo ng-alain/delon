@@ -249,12 +249,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.columnSource.setCog(cog);
   }
 
-  cd() {
+  cd(): this {
     this.cdr.detectChanges();
     return this;
   }
 
-  renderTotal(total: string, range: string[]) {
+  renderTotal(total: string, range: string[]): string {
     return this.totalTpl
       ? this.totalTpl.replace('{{total}}', total).replace('{{range[0]}}', range[0]).replace('{{range[1]}}', range[1])
       : '';
@@ -268,7 +268,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return column.className || (this.isTruncate(column) ? 'text-truncate' : null);
   }
 
-  private changeEmit(type: STChangeType, data?: any) {
+  private changeEmit(type: STChangeType, data?: any): void {
     const res: STChange = {
       type,
       pi: this.pi,
