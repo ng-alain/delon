@@ -14,6 +14,24 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.5.4](https://github.com/ng-alain/delon/compare/9.5.3...9.5.4) (2020-07-17)
+
+### Scaffold
+
+* **search.component.ts** 顶部菜单搜索增加网络请求示例 ([#1775](https://github.com/ng-alain/ng-alain/pull/1775/files))
+* **default.interceptor.ts** 增加 Token 过期时自动调用刷新 Token 接口（后端支持的情况下），使用户无须再次登录 ([#1763](https://github.com/ng-alain/ng-alain/pull/1763/files))
+* **package.json** `pretty-quick` 替换 `lint-staged` ([#1760](https://github.com/ng-alain/ng-alain/pull/1760/files))
+
+### Bug Fixes
+
+* **abc:sidebar:** 修复切换收缩时不能关闭子菜单区域 ([#998](https://github.com/ng-alain/delon/issues/998)) ([29045d7](https://github.com/ng-alain/delon/commit/29045d7108057655e8552d32d739c287c8530e40))
+* **abc:st:** 修复当 `children` 应忽略表头分组的计算 ([#1003](https://github.com/ng-alain/delon/issues/1003)) ([aa7e750](https://github.com/ng-alain/delon/commit/aa7e75070bbcc65a1c0859ff2c70eab6cd9b3637))
+* **abc:st:** 修复超过26列导出失败 ([#997](https://github.com/ng-alain/delon/issues/997)) ([a8a2814](https://github.com/ng-alain/delon/commit/a8a2814e1221019f3df4b7cdffd20916bd5557a6))
+* **auth:** 修复 `_allow_anonymous` 参数在真实请求时应被移除 ([#1002](https://github.com/ng-alain/delon/issues/1002)) ([d5e6056](https://github.com/ng-alain/delon/commit/d5e6056a33b5d12c73b343f2c7a9051fe351845b))
+* **theme:layout:default:** 修复不支持 `nz-autocomplete` 组件 ([#1004](https://github.com/ng-alain/delon/issues/1004)) ([8f0a5bd](https://github.com/ng-alain/delon/commit/8f0a5bdd3ceed2e7e2edf3b572e940923048a67c))
+* 新增斯洛文尼亚文语言 ([#996](https://github.com/ng-alain/delon/issues/996)) ([63073bc](https://github.com/ng-alain/delon/commit/63073bcdafd93a79b6acfce7f937c329c6ad8553))
+
+
 ## [9.5.3](https://github.com/ng-alain/delon/compare/9.5.2...9.5.3) (2020-07-10)
 
 ### Scaffold
