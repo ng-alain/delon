@@ -14,6 +14,38 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [9.5.4](https://github.com/ng-alain/delon/compare/9.5.3...9.5.4) (2020-07-17)
+
+### Scaffold
+
+* add search network request demo in top header menu ([#1775](https://github.com/ng-alain/ng-alain/pull/1775/files))
+* add auto refresh token ([#1763](https://github.com/ng-alain/ng-alain/pull/1763/files))
+* `pretty-quick` instead `lint-staged` ([#1760](https://github.com/ng-alain/ng-alain/pull/1760/files))
+
+### Bug Fixes
+
+* **abc:sidebar:** fix closed floating when toggle `collapsed` ([#998](https://github.com/ng-alain/delon/issues/998)) ([29045d7](https://github.com/ng-alain/delon/commit/29045d7108057655e8552d32d739c287c8530e40))
+* **abc:st:** fix ingore group column when `children` is empty array ([#1003](https://github.com/ng-alain/delon/issues/1003)) ([aa7e750](https://github.com/ng-alain/delon/commit/aa7e75070bbcc65a1c0859ff2c70eab6cd9b3637))
+* **abc:st:** fix over 26 columns export failure ([#997](https://github.com/ng-alain/delon/issues/997)) ([a8a2814](https://github.com/ng-alain/delon/commit/a8a2814e1221019f3df4b7cdffd20916bd5557a6))
+* **auth:** fix should removed `_allow_anonymous` property in truth request ([#1002](https://github.com/ng-alain/delon/issues/1002)) ([d5e6056](https://github.com/ng-alain/delon/commit/d5e6056a33b5d12c73b343f2c7a9051fe351845b))
+* **theme:layout:default:** fix non-support `nz-autocomplete` ([#1004](https://github.com/ng-alain/delon/issues/1004)) ([8f0a5bd](https://github.com/ng-alain/delon/commit/8f0a5bdd3ceed2e7e2edf3b572e940923048a67c))
+* add sl_SI locale ([#996](https://github.com/ng-alain/delon/issues/996)) ([63073bc](https://github.com/ng-alain/delon/commit/63073bcdafd93a79b6acfce7f937c329c6ad8553))
+
+
+## [9.5.3](https://github.com/ng-alain/delon/compare/9.5.2...9.5.3) (2020-07-10)
+
+### Scaffold
+
+* fix clear token when navigate to any passport pages ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+* clear unnecessary class all modal code ([#1756](https://github.com/ng-alain/ng-alain/pull/1756/files))
+
+### Bug Fixes
+
+* **abc:media:** fix loading multiple components at the same time will cause `No window.Plyr found` ([#990](https://github.com/ng-alain/delon/issues/990)) ([c3f29a0](https://github.com/ng-alain/delon/commit/c3f29a0f45d1bc5bda55982d75484f7ed1ca5306))
+* **abc:st:** fix noResult misalignment in grouping header ([#991](https://github.com/ng-alain/delon/issues/991)) ([dc1626e](https://github.com/ng-alain/delon/commit/dc1626ec6b89c578f2e4ed005b1e81956e3da6ce))
+* **abc:st:** fix pre-clear data of `resetColumns` method ([#989](https://github.com/ng-alain/delon/issues/989)) ([15f397c](https://github.com/ng-alain/delon/commit/15f397ceedb514bf6ee22724fa69820c5272f4a5))
+
+
 ## [9.5.2](https://github.com/ng-alain/delon/compare/9.5.1...9.5.2) (2020-07-06)
 
 ### Bug Fixes

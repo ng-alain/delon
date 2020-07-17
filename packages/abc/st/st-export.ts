@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { XlsxService } from '@delon/abc/xlsx';
+import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumn, STExportOptions } from './st.interfaces';
@@ -16,16 +16,19 @@ export class STExport {
     } else {
       const val = deepGet(item, col.index as string[], '');
       ret.v = val;
-      switch (col.type) {
-        case 'currency':
-          ret.t = 'n';
-          break;
-        case 'date':
-          ret.t = 'd';
-          break;
-        case 'yn':
-          ret.v = ret.v === col.ynTruth ? col.ynYes || '是' : col.ynNo || '否';
-          break;
+      if (val != null) {
+        switch (col.type) {
+          case 'currency':
+            ret.t = 'n';
+            break;
+          case 'date':
+            ret.t = 'd';
+            break;
+          case 'yn':
+            const yn = col.yn!;
+            ret.v = ret.v === yn.truth ? yn.yes || '是' : yn.no || '否';
+            break;
+        }
       }
     }
 
@@ -37,34 +40,34 @@ export class STExport {
   private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
     const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
-    const colData = opt._c!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
-    const cc = colData.length;
-    const dc = opt._d!.length;
+    const colData = opt.columens!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
+    const colLen = colData.length;
+    const dataLen = opt.data!.length;
 
     // column
-    for (let i = 0; i < cc; i++) {
+    for (let i = 0; i < colLen; i++) {
       const tit = colData[i].title;
-      sheet[`${String.fromCharCode(i + 65)}1`] = {
+      sheet[`${this.xlsxSrv.numberToSchema(i + 1)}1`] = {
         t: 's',
         v: typeof tit === 'object' ? tit.text : tit,
       };
     }
 
     // content
-    for (let i = 0; i < dc; i++) {
-      for (let j = 0; j < cc; j++) {
-        sheet[`${String.fromCharCode(j + 65)}${i + 2}`] = this._stGet(opt._d![i], colData[j], i);
+    for (let i = 0; i < dataLen; i++) {
+      for (let j = 0; j < colLen; j++) {
+        sheet[`${this.xlsxSrv.numberToSchema(j + 1)}${i + 2}`] = this._stGet(opt.data![i], colData[j], i);
       }
     }
 
-    if (cc > 0 && dc > 0) {
-      sheet['!ref'] = `A1:${String.fromCharCode(cc + 65 - 1)}${dc + 1}`;
+    if (colLen > 0 && dataLen > 0) {
+      sheet['!ref'] = `A1:${this.xlsxSrv.numberToSchema(colLen)}${dataLen + 1}`;
     }
 
     return sheets;
   }
 
-  export(opt: STExportOptions) {
+  async export(opt: STExportOptions): Promise<XlsxExportResult> {
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

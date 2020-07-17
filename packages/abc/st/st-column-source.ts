@@ -421,8 +421,7 @@ export class STColumnSource {
     }
 
     this.fixedCoerce(columns);
-
-    return { columns: columns.filter(w => !Array.isArray(w.children)), ...this.genHeaders(copyList) };
+    return { columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0), ...this.genHeaders(copyList) };
   }
 
   restoreAllRender(columns: STColumn[]) {

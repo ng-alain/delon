@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainXlsxConfig, LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { XlsxExportOptions, XlsxExportSheet } from './xlsx.types';
+import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
 declare var XLSX: any;
 
@@ -67,31 +67,56 @@ export class XlsxService {
     });
   }
 
-  /** 导出 */
-  export(options: XlsxExportOptions): Promise<void> {
-    return this.init().then(() => {
-      this.ngZone.runOutsideAngular(() => {
-        const wb: any = XLSX.utils.book_new();
-        if (Array.isArray(options.sheets)) {
-          (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-            const ws: any = XLSX.utils.aoa_to_sheet(value.data);
-            XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
+  async export(options: XlsxExportOptions): Promise<XlsxExportResult> {
+    return new Promise<XlsxExportResult>((resolve, reject) => {
+      this.init()
+        .then(() => {
+          this.ngZone.runOutsideAngular(() => {
+            const wb: any = XLSX.utils.book_new();
+            if (Array.isArray(options.sheets)) {
+              (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
+                const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+                XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
+              });
+            } else {
+              wb.SheetNames = Object.keys(options.sheets);
+              wb.Sheets = options.sheets;
+            }
+
+            if (options.callback) options.callback(wb);
+
+            const wbout: ArrayBuffer = XLSX.write(wb, {
+              bookType: 'xlsx',
+              bookSST: false,
+              type: 'array',
+              ...options.opts,
+            });
+            const filename = options.filename || 'export.xlsx';
+            saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);
+
+            resolve({ filename, wb });
           });
-        } else {
-          wb.SheetNames = Object.keys(options.sheets);
-          wb.Sheets = options.sheets;
-        }
-
-        if (options.callback) options.callback(wb);
-
-        const wbout: ArrayBuffer = XLSX.write(wb, {
-          bookType: 'xlsx',
-          bookSST: false,
-          type: 'array',
-          ...options.opts,
-        });
-        saveAs(new Blob([wbout], { type: 'application/octet-stream' }), options.filename || 'export.xlsx');
-      });
+        })
+        .catch(err => reject(err));
     });
+  }
+
+  /**
+   * 数据转符号名
+   * - `1` => `A`
+   * - `27` => `AA`
+   * - `703` => `AAA`
+   */
+  numberToSchema(val: number): string {
+    const startCode = 'A'.charCodeAt(0);
+    let res = '';
+
+    do {
+      --val;
+      res = String.fromCharCode(startCode + (val % 26)) + res;
+      val = (val / 26) >> 0;
+    } while (val > 0);
+
+    return res;
   }
 }
