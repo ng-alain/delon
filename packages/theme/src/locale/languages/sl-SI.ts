@@ -16,7 +16,6 @@ export default {
     close: 'Zapri zavihek',
     closeOther: 'Zaprite druge zavihke',
     closeRight: 'Zaprite zavihke na desni',
-    clear: 'Počisti zavihke',
   },
   tagSelect: {
     expand: 'Razširi',
@@ -74,5 +73,11 @@ export default {
       formatExclusiveMinimum: `formatExclusiveMinimum naj bo boolean`,
       if: `Naj se ujema s shemo "{failingKeyword}"`,
     },
+  },
+  onboarding: {
+    skip: `Preskoči`,
+    prev: `Prejšnje`,
+    next: `Naslednji`,
+    done: `Končano`,
   },
 } as FullLocaleData;
