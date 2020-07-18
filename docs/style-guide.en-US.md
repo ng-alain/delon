@@ -89,4 +89,4 @@ It is recommended to install several plugins for more friendly development in vs
 
 NG-ALAIN is configured to do lint each time you commit to staged and you can't commit if you find an error.
 
-By default, the `*.ts`, `*.less` commit process forces the formatting of the code. You can change the rules by modifying the `lint-staged` node of `package.json` (for example: `prettier --write`)
+By default, the `*.ts`, `*.less` commit process forces the formatting of the code. You can change the rules by modifying the `husky` node of `package.json` (for example: `prettier --write`)

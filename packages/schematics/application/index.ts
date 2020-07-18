@@ -156,7 +156,7 @@ function addCodeStylesToPackageJson() {
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
-    json.scripts['lint-staged'] = `lint-staged`;
+    json.scripts['pretty-quick'] = `pretty-quick`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     overwritePackage(host, json);
     // dependencies
@@ -165,7 +165,7 @@ function addCodeStylesToPackageJson() {
       [
         `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
         `tslint-language-service@DEP-0.0.0-PLACEHOLDER`,
-        `lint-staged@DEP-0.0.0-PLACEHOLDER`,
+        `pretty-quick@DEP-0.0.0-PLACEHOLDER`,
         `husky@DEP-0.0.0-PLACEHOLDER`,
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
