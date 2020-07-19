@@ -26,6 +26,5 @@
     "packageGroup": [
       "ng-alain"
     ]
-  },
-  "sideEffects": false
+  }
 }

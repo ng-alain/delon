@@ -27,6 +27,5 @@
   ],
   "dependencies": {
     "@delon/util": "PEER-0.0.0-PLACEHOLDER"
-  },
-  "sideEffects": false
+  }
 }

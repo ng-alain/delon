@@ -24,5 +24,7 @@
     "angular",
     "component"
   ],
-  "sideEffects": false
+  "dependencies": {
+    "@delon/util": "PEER-0.0.0-PLACEHOLDER"
+  }
 }
