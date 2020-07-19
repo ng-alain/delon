@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { deepMergeKey } from '../other/other';
+import { deepMergeKey } from '../other/deep';
 import { AlainConfig, AlainConfigKey, ALAIN_CONFIG } from './config.types';
 
 @Injectable({ providedIn: 'root' })
@@ -8,7 +8,7 @@ export class AlainConfigService {
   private config: AlainConfig;
 
   constructor(@Optional() @Inject(ALAIN_CONFIG) defaultConfig?: AlainConfig) {
-    this.config = defaultConfig || {};
+    this.config = { ...defaultConfig };
   }
 
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
