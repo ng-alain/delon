@@ -89,10 +89,9 @@ export class DocsComponent implements OnInit, OnDestroy {
 
   private genDemoTitle() {
     this.demoStr = this.i18n.fanyi('app.component.examples');
-    this.demoContent = this.sanitizer.bypassSecurityTrustHtml(`
-            ${this.demoStr}
-            <a onclick="window.location.hash='${this.demoStr}'" class="anchor">#</a>
-        `);
+    this.demoContent = this.sanitizer.bypassSecurityTrustHtml(
+      `<a class="lake-link"><i data-anchor="${this.demoStr}"></i></a>${this.demoStr}`,
+    );
   }
 
   private init() {

@@ -54,9 +54,14 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
+  private updateGitee(): void {
+    this.showGitee = this.i18n.lang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') === -1;
+    this.cdr.detectChanges();
+  }
+
   ngAfterViewInit(): void {
     this.inited = true;
-    this.showGitee = this.i18n.lang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') !== -1;
+    this.updateGitee();
   }
 
   toVersion(version: string) {
@@ -66,7 +71,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   langChange(language: 'en' | 'zh') {
-    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`);
+    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => this.updateGitee());
   }
 
   onCopy(value: string) {

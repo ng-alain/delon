@@ -56,6 +56,7 @@ export const ENUS = {
   'app.footer.primary-color-changed': 'Change primary color successfully!',
   'app.content.edit-page': 'Edit this page on GitHub!',
   'app.content.edit-demo': 'Edit this demo on GitHub!',
+  'app.content.link.copied': 'Copy paragraph link successfully!',
   'app.component.examples': 'Examples',
   'app.component.refer.title': 'Usage:',
   'app.component.refer.desc': 'Learning more to visit: ',

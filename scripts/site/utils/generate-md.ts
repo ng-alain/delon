@@ -6,31 +6,34 @@ let headingList: any[] = [];
 const converters = [highlight()].concat([
   [
     (node: any) => typeof node === 'string',
-    (node: any) => {
-      if (node === '(deprecated)') {
-        return `<i class="deprecated" title="已过期(Deprecated)"></i>`;
+    (node: string) => {
+      if (node.includes('(deprecated)')) {
+        node = node.replace('(deprecated)', `<i class="deprecated" title="已过期(Deprecated)"></i>`);
       }
       return node;
     },
   ],
   [
     (node: any) => JsonML.isElement(node) && isHeading(node),
-    (node: any, index: number) => {
-      const tagName = JsonML.getTagName(node);
+    (node: any) => {
+      const tagName = JsonML.getTagName(node) as string;
       const children = JsonML.getChildren(node);
       const sluggedId = generateSluggedId(children).id;
       // <a href="#${sluggedId}" class="anchor">#</a>
-      return `<${tagName} id="${sluggedId}">${children
-        .map(toHtml)
-        .join('')}<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a></${tagName}>`;
+      const childrenHtml = children.map(toHtml).join('');
+      // const goTo = tagName === 'h2' ? `<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a>` : '';
+      const copy =
+        /h[0-9]{1}/g.test(tagName) && +tagName.substr(1) > 1 ? `<a class="lake-link"><i data-anchor="${sluggedId}"></i></a>` : ``;
+      return `<${tagName} id="${sluggedId}">${copy}${childrenHtml}</${tagName}>`;
     },
   ],
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'img',
-    (node: any, index: number) => {
+    (node: any) => {
       const attrs = JsonML.getAttributes(node);
       const ret: any[] = [];
       if (attrs) {
+        // tslint:disable-next-line: forin
         for (const key in attrs) {
           let value = attrs[key];
           if (key === 'src' && ~value.indexOf(' | ')) {

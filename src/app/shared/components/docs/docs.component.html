@@ -22,7 +22,7 @@
     <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
   </div>
   <ng-container *ngIf="data.demo">
-    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
+    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent" routeTransfer></h2>
     <ng-content></ng-content>
   </ng-container>
   <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
