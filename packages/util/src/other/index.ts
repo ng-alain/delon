@@ -1,3 +1,4 @@
 export * from './check';
-export * from './other';
+export * from './deep';
+export * from './copy';
 export * from './style';

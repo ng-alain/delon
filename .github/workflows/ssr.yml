@@ -15,6 +15,5 @@ jobs:
 
       - name: build
         run: |
-          node scripts/ci/build-no-lvy
           npm run ssr:build
           ls -al ./src/dist

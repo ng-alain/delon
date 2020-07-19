@@ -32,7 +32,7 @@
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "analyze": "npm run ng-high-memory build -- --prod --stats-json",
     "site:gen": "node scripts/site/main init && node scripts/site/scripts/color.js && node scripts/site/scripts/theme.js",
-    "site:build": "npm run site:gen && node scripts/ci/build-no-lvy && npm run ng-high-memory build -- --prod",
+    "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
     "publish:next": "bash scripts/publish/publish.sh -next",

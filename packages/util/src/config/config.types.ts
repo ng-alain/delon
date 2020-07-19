@@ -52,4 +52,11 @@ export interface AlainConfig {
 
 export type AlainConfigKey = keyof AlainConfig;
 
-export const ALAIN_CONFIG = new InjectionToken<AlainConfig>('alain-config');
+export const ALAIN_CONFIG = new InjectionToken<AlainConfig>('alain-config', {
+  providedIn: 'root',
+  factory: ALAIN_CONFIG_FACTORY,
+});
+
+export function ALAIN_CONFIG_FACTORY(): AlainConfig {
+  return {};
+}

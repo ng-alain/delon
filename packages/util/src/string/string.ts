@@ -1,5 +1,5 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { deepGet } from '../other/other';
+import { deepGet } from '../other/deep';
 
 /**
  * 字符串格式化

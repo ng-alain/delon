@@ -21,6 +21,5 @@
   ],
   "dependencies": {
     "extend": "^3.0.0"
-  },
-  "sideEffects": false
+  }
 }
