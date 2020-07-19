@@ -56,6 +56,7 @@ export const ZHCN = {
   'app.footer.primary-color-changed': '修改主题色成功！',
   'app.content.edit-page': '在 Github 上编辑此页！',
   'app.content.edit-demo': '在 Github 上编辑此示例！',
+  'app.content.link.copied': '复制段落链接成功！',
   'app.component.examples': '代码演示',
   'app.component.refer.title': '引用方式：',
   'app.component.refer.desc': '详细使用方式请参照：',
