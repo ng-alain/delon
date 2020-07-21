@@ -3,6 +3,8 @@ import { Schema as ApplicationOptions } from '../application/schema';
 import { getJSON } from '../utils/json';
 import { Schema as NgAddOptions } from './schema';
 
+const V = 10;
+
 function genRules(options: NgAddOptions): Rule {
   const rules: Rule[] = [];
 
@@ -57,9 +59,9 @@ export default function (options: NgAddOptions): Rule {
     if (/^[\^|\~]/g.test(ngCoreVersion)) {
       ngCoreVersion = ngCoreVersion.substr(1);
     }
-    if (!ngCoreVersion.startsWith('9.')) {
+    if (!ngCoreVersion.startsWith(V + '.')) {
       throw new Error(
-        `Sorry, the current version only supports angular 9.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@9.x] (or via npm: [npm install -g @angular/cli@9.x])`,
+        `Sorry, the current version only supports angular ${V}.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@${V}.x] (or via npm: [npm install -g @angular/cli@${V}.x])`,
       );
     }
 
