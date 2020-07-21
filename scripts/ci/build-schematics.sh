@@ -117,7 +117,6 @@ copyFiles() {
     "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
-    "${1}.lintstagedrc.js|${2}application/files/root"
     "${1}.nvmrc|${2}application/files/root"
     "${1}tslint.json|${2}application/files/root"
     "${1}proxy.conf.json|${2}application/files/root"
