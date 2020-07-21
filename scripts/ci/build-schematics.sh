@@ -64,6 +64,7 @@ DEPENDENCIES=$(node -p "
     'prettier',
     '@antv/data-set',
     '@antv/g2',
+    'ngx-countdown',
     '@angularclass/hmr',
     'ng-alain-codelyzer',
     'ng-alain-sts',
