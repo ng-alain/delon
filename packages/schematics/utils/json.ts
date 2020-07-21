@@ -120,3 +120,35 @@ export function scriptsToAngularJson(
   overwriteAngular(host, json);
   return host;
 }
+
+export function addAllowedCommonJsDependencies(host: Tree): void {
+  const json = getAngular(host);
+  const project = getProjectFromWorkspace(json);
+  let list = project.architect.build.options.allowedCommonJsDependencies as string[];
+  if (!Array.isArray(list)) {
+    list = [];
+  }
+
+  const result = new Set<string>(...list);
+  // in angular.json
+  [
+    // 'codesandbox/lib/api/define',
+    'hammerjs',
+    '@angularclass/hmr',
+    'file-saver',
+    '@ant-design/colors',
+    '@antv/path-util',
+    '@antv/g-canvas',
+    '@antv/g-base',
+    '@antv/g-svg',
+    '@antv/g-math',
+    '@antv/attr',
+    '@antv/adjust',
+    '@antv/component',
+    '@antv/util',
+  ].forEach(key => result.add(key));
+
+  project.architect.build.options.allowedCommonJsDependencies = Array.from(result).sort();
+
+  overwriteAngular(host, json);
+}
