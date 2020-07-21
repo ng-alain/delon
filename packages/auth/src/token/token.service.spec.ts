@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { AlainAuthConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
@@ -82,5 +83,26 @@ describe('auth: token.service', () => {
       done();
     });
     service.set(VALUE);
+  });
+
+  describe('#refresh', () => {
+    function updateConfig(config?: AlainAuthConfig): void {
+      const srvAny: NzSafeAny = service;
+      srvAny._options = { ...srvAny._options, enabledRefresh: true, ...config } as AlainAuthConfig;
+    }
+
+    beforeEach(() => updateConfig());
+
+    afterEach(() => (service as NzSafeAny).ngOnDestroy());
+
+    it('should be working', done => {
+      updateConfig({ refreshTime: 1, refreshOffset: 1 });
+      service.refresh.subscribe(() => {
+        expect(true).toBe(true);
+        done();
+      });
+      const expired = +new Date() + 20;
+      service.set({ token: 'a', expired });
+    });
   });
 });

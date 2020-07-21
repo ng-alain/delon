@@ -5,4 +5,6 @@ export class SimpleTokenModel implements ITokenModel {
   [key: string]: NzSafeAny;
 
   token: string;
+
+  expired?: number;
 }

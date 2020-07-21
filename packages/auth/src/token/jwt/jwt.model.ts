@@ -41,6 +41,8 @@ export class JWTTokenModel implements ITokenModel {
 
   token: string | null | undefined;
 
+  expired?: number;
+
   /**
    * 获取载荷信息
    */

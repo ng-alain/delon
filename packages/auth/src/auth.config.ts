@@ -12,6 +12,8 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   ignores: [/\/login/, /assets\//, /passport\//],
   allow_anonymous_key: `_allow_anonymous`,
   executeOtherInterceptors: true,
+  refreshTime: 3000,
+  refreshOffset: 6000,
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainAuthConfig {
