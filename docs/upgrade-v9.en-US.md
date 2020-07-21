@@ -1,8 +1,7 @@
 ---
-order: 11
-type: Basic
+order: 1000
+type: Other
 title: Upgrade to version 9.0
-hot: true
 ---
 
 This description refers to the description of the upgrade from `8.9.x' to `9'; NG-ALAIN still needs to be upgraded from three parts.
