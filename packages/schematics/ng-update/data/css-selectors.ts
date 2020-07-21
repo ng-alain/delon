@@ -6,7 +6,6 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { TargetVersion } from '../target-version';
 import { VersionChanges } from '../upgrade-data';
 
 export interface CssSelectorUpgradeData {
@@ -25,20 +24,4 @@ export interface CssSelectorUpgradeData {
   };
 }
 
-export const cssSelectors: VersionChanges<CssSelectorUpgradeData> = {
-  [TargetVersion.V2]: [
-    {
-      pr: '',
-      changes: [
-        {
-          replace: 'content__title',
-          replaceWith: 'alain-default__content-title',
-          whitelist: {
-            html: true,
-            strings: true,
-          },
-        },
-      ],
-    },
-  ],
-};
+export const cssSelectors: VersionChanges<CssSelectorUpgradeData> = {};

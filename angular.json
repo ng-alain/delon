@@ -7,6 +7,14 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -16,9 +24,10 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
+            "aot": true,
             "assets": ["src/assets"],
             "styles": [
-              "node_modules/ngx-simplemde/lib/index.less",
+              "node_modules/ngx-simplemde/index.less",
               "node_modules/aos/dist/aos.css",
               "node_modules/docsearch.js/dist/cdn/docsearch.css",
               "src/styles.less"
@@ -28,6 +37,22 @@
               "node_modules/simplemde-antd/dist/simplemde.min.js",
               "node_modules/ajv/dist/ajv.bundle.js",
               "node_modules/docsearch.js/dist/cdn/docsearch.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "codesandbox/lib/api/define",
+              "hammerjs",
+              "@angularclass/hmr",
+              "file-saver",
+              "@ant-design/colors",
+              "@antv/path-util",
+              "@antv/g-canvas",
+              "@antv/g-base",
+              "@antv/g-svg",
+              "@antv/g-math",
+              "@antv/attr",
+              "@antv/adjust",
+              "@antv/component",
+              "@antv/util"
             ]
           },
           "configurations": {
@@ -37,7 +62,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

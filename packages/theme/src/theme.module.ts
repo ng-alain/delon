@@ -44,14 +44,14 @@ export class AlainThemeModule {
     iconSrv.addIcon(...ICONS);
   }
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<AlainThemeModule> {
     return {
       ngModule: AlainThemeModule,
       providers: [...HELPERS],
     };
   }
 
-  static forChild(): ModuleWithProviders {
+  static forChild(): ModuleWithProviders<AlainThemeModule> {
     return {
       ngModule: AlainThemeModule,
       providers: [...HELPERS],

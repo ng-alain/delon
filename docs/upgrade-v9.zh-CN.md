@@ -1,8 +1,7 @@
 ---
-order: 11
-type: Basic
+order: 1000
+type: Other
 title: 升级到 9.0 版本
-hot: true
 ---
 
 本文描述是指从 `8.9.x` 升级至 `9` 的描述说明；NG-ALAIN 依然需要从三个部分来升级：

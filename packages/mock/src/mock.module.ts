@@ -4,14 +4,14 @@ import { MockInterceptor } from './mock.interceptor';
 
 @NgModule({})
 export class DelonMockModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<DelonMockModule> {
     return {
       ngModule: DelonMockModule,
       providers: [{ provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true }],
     };
   }
 
-  static forChild(): ModuleWithProviders {
+  static forChild(): ModuleWithProviders<DelonMockModule> {
     return {
       ngModule: DelonMockModule,
       providers: [{ provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true }],

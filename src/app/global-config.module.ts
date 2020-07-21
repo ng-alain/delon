@@ -57,7 +57,7 @@ const zorroProvides = [{ provide: NZ_CONFIG, useValue: ngZorroConfig }];
   imports: [...alainModules],
 })
 export class GlobalConfigModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<GlobalConfigModule> {
     return {
       ngModule: GlobalConfigModule,
       providers: [...alainProvides, ...zorroProvides],

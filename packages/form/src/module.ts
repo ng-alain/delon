@@ -125,7 +125,7 @@ const WIDGETS = [
   exports: [...COMPONENTS],
 })
 export class DelonFormModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<DelonFormModule> {
     return {
       ngModule: DelonFormModule,
       providers: [

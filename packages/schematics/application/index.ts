@@ -21,6 +21,7 @@ import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
+  addAllowedCommonJsDependencies,
   addPackageToPackageJson,
   getAngular,
   getJSON,
@@ -115,6 +116,9 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     if (options.i18n) {
       addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
+    // Configuring CommonJS dependencies
+    // https://angular.io/guide/build#configuring-commonjs-dependencies
+    addAllowedCommonJsDependencies(host);
     return host;
   };
 }
@@ -136,7 +140,7 @@ function addRunScriptToPackageJson() {
 
 function addPathsToTsConfig() {
   return (host: Tree) => {
-    const json = getJSON(host, 'tsconfig.json', 'compilerOptions');
+    const json = getJSON(host, 'tsconfig.base.json', 'compilerOptions');
     if (json == null) return host;
     if (!json.compilerOptions) json.compilerOptions = {};
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
@@ -144,7 +148,7 @@ function addPathsToTsConfig() {
     paths['@shared'] = ['src/app/shared/index'];
     paths['@core'] = ['src/app/core/index'];
     paths['@env/*'] = ['src/environments/*'];
-    overwriteJSON(host, 'tsconfig.json', json);
+    overwriteJSON(host, 'tsconfig.base.json', json);
     return host;
   };
 }
