@@ -70,7 +70,9 @@ export function v10Rule(): Rule {
     addAllowedCommonJsDependencies(tree);
 
     context.logger.info(
-      colors.green(`  ✓  Congratulations, Please refer to https://github.com/ng-alain/ng-alain/issues/1783 for upgrade guide`),
+      colors.green(
+        `  ✓  Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/1783`,
+      ),
     );
   };
 }
