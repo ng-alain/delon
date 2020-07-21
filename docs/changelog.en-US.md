@@ -14,6 +14,14 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [9.5.5](https://github.com/ng-alain/delon/compare/9.5.4...9.5.5) (2020-07-21)
+
+### Bug Fixes
+
+* **cli:** fix header ([#1008](https://github.com/ng-alain/delon/issues/1008)) ([2ae877c](https://github.com/ng-alain/delon/commit/2ae877cbce756fbd1082f04d4f7a82a842c2d486))
+* **cli:** `pretty-quick` instead `lint-staged` ([#995](https://github.com/ng-alain/delon/issues/995)) ([1374070](https://github.com/ng-alain/delon/commit/1374070f85555e78d37b542d162e855e45413ff4))
+
+
 ## [9.5.4](https://github.com/ng-alain/delon/compare/9.5.3...9.5.4) (2020-07-17)
 
 ### Scaffold
