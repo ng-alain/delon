@@ -136,7 +136,7 @@ function addRunScriptToPackageJson() {
 
 function addPathsToTsConfig() {
   return (host: Tree) => {
-    const json = getJSON(host, 'tsconfig.json', 'compilerOptions');
+    const json = getJSON(host, 'tsconfig.base.json', 'compilerOptions');
     if (json == null) return host;
     if (!json.compilerOptions) json.compilerOptions = {};
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
@@ -144,7 +144,7 @@ function addPathsToTsConfig() {
     paths['@shared'] = ['src/app/shared/index'];
     paths['@core'] = ['src/app/core/index'];
     paths['@env/*'] = ['src/environments/*'];
-    overwriteJSON(host, 'tsconfig.json', json);
+    overwriteJSON(host, 'tsconfig.base.json', json);
     return host;
   };
 }

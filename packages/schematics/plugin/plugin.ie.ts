@@ -29,12 +29,12 @@ function setAngularJson(host: Tree, options: PluginOptions) {
 }
 
 function setBrowserslist(host: Tree, options: PluginOptions) {
-  const filePath = `${options.root}/browserslist`;
+  const filePath = `${options.root}/.browserslistrc`;
   let content = readContent(host, filePath);
   if (options.type === 'add') {
-    content = content.replace(`not IE 9-11`, `not IE 9-10`);
+    content = content.replace(`not IE 11`, `IE 11`);
   } else {
-    content = content.replace(`not IE 9-10`, `not IE 9-11`);
+    content = content.replace(`IE 11`, `not IE 11`);
   }
   overwriteFile(host, filePath, content, true, true);
 }

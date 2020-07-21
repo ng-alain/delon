@@ -14,7 +14,7 @@ describe('NgAlainSchematic: plugin: ie', () => {
     it(`should be working`, () => {
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.app.json`)).toBe(true);
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.spec.json`)).toBe(true);
-      expect(tree.readContent(`/projects/${APPNAME}/browserslist`).includes(`not IE 9-10`)).toBe(true);
+      expect(tree.readContent(`/projects/${APPNAME}/.browserslistrc`).includes(`IE 11`)).toBe(true);
     });
   });
 
@@ -23,7 +23,7 @@ describe('NgAlainSchematic: plugin: ie', () => {
     it(`should be working`, () => {
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.app.json`)).toBe(false);
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.spec.json`)).toBe(false);
-      expect(tree.readContent(`/projects/${APPNAME}/browserslist`).includes(`not IE 9-11`)).toBe(true);
+      expect(tree.readContent(`/projects/${APPNAME}/.browserslistrc`).includes(`not IE 11`)).toBe(true);
     });
   });
 });
