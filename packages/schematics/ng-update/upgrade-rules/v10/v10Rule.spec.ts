@@ -15,11 +15,9 @@ describe('Schematic: ng-update: v10Rule', () => {
     await runner.runSchematicAsync('migration-v10', {}, tree).toPromise();
   }
 
-  it('should dependencies @delon of an application', async () => {
-    let content = tree.readContent('angular.json');
-    expect(content.includes('allowedCommonJsDependencies')).toBe(false);
+  it('should working', async () => {
     await runMigration();
-    content = tree.readContent('angular.json');
+    const content = tree.readContent('angular.json');
     expect(content.includes('allowedCommonJsDependencies')).toBe(true);
   });
 });

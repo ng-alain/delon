@@ -69,6 +69,8 @@ export function v10Rule(): Rule {
     updateBrowserslistrc(tree, context);
     addAllowedCommonJsDependencies(tree);
 
-    context.logger.info(colors.green(`  ✓  Congratulations`));
+    context.logger.info(
+      colors.green(`  ✓  Congratulations, Please refer to https://github.com/ng-alain/ng-alain/issues/1783 for upgrade guide`),
+    );
   };
 }
