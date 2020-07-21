@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     { type: 'ms', url: 'https://e.ng-alain.com/theme/ms' },
     { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' },
   ];
+  themes = ['pro', 'ms', 'yun'];
   get isBrowser(): boolean {
     return this.platform.isBrowser;
   }

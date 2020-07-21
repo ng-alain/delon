@@ -30,6 +30,7 @@ import { TagSelectModule } from '@delon/abc/tag-select';
 import { MediaModule } from '@delon/abc/media';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
+import { OnboardingModule } from '@delon/abc/onboarding';
 
 const MODULES = [
   ErrorCollectModule,
@@ -61,6 +62,7 @@ const MODULES = [
   DatePickerModule,
   LoadingModule,
   MediaModule,
+  OnboardingModule,
 ];
 
 @NgModule({ exports: MODULES })

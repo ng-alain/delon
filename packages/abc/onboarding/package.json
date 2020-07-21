@@ -1,0 +1,18 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "onboarding",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@angular/cdk/overlay": "ng.cdk.overlay",
+        "@angular/cdk/portal": "ng.cdk.portal",
+        "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
+        "ng-zorro-antd/popover": "ng-zorro-antd/popover",
+        "ng-zorro-antd/button": "ng-zorro-antd/button",
+        "ng-zorro-antd/core/no-animation": "ng-zorro-antd/core/no-animation",
+        "@delon/theme": "delon.theme",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

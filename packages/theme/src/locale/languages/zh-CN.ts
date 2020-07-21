@@ -75,4 +75,10 @@ export default {
       if: `应当匹配模式 "{failingKeyword}"`,
     },
   },
+  onboarding: {
+    skip: `跳过`,
+    prev: `上一项`,
+    next: `下一项`,
+    done: `完成`,
+  },
 } as FullLocaleData;

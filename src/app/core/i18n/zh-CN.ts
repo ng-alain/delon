@@ -19,6 +19,7 @@ export const ZHCN = {
   'app.home.feature.demo': '示例页',
   'app.home.feature.demo.desc': '大量示例页可直接参考与使用',
   'app.home.theme': '商业主题',
+  'app.home.theme.pro': 'Pro',
   'app.home.theme.pro.desc': '提炼自企业级中后台产品的交互语言和视觉风格',
   'app.home.theme.ms': '微服务',
   'app.home.theme.ms.desc': '面向微服务开发风格的主题',

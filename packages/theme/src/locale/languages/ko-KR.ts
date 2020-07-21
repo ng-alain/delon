@@ -75,4 +75,10 @@ export default {
       if: `Should match "{failingKeyword}" schema`,
     },
   },
+  onboarding: {
+    skip: `건너 뛰기`,
+    prev: `이전`,
+    next: `다음`,
+    done: `끝난`,
+  },
 } as FullLocaleData;
