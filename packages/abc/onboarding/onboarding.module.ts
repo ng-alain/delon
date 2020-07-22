@@ -9,9 +9,12 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 import { OnboardingComponent } from './onboarding.component';
 
+const COMPONENTS = [OnboardingComponent];
+
 @NgModule({
   imports: [CommonModule, DelonLocaleModule, DelonUtilModule, NzPopoverModule, NzOutletModule, NzButtonModule, NzNoAnimationModule],
-  declarations: [OnboardingComponent],
-  entryComponents: [OnboardingComponent],
+  declarations: COMPONENTS,
+  entryComponents: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class OnboardingModule {}

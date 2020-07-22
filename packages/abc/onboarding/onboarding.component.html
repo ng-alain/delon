@@ -3,15 +3,16 @@
   *ngIf="item"
   class="onboarding__light"
   [class.onboarding__light-hide]="running"
+  [attr.style]="item.lightStyle"
   nz-popover
   [nzPopoverTitle]="item.title"
   [nzPopoverContent]="content"
-  [nzVisible]="!running"
+  [nzPopoverVisible]="!running"
   [nzPopoverTrigger]="null"
   [nzPopoverPlacement]="item.position"
+  [nzPopoverOverlayClassName]="item.className"
+  [nzPopoverOverlayStyle]="{ 'max-width.px': item.width }"
   [nzNoAnimation]="true"
-  [nzOverlayClassName]="item.className"
-  [nzOverlayStyle]="{ 'max-width.px': item.width }"
 ></div>
 <ng-template #content>
   <ng-container *nzStringTemplateOutlet="item.content">

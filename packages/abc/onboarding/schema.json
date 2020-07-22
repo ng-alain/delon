@@ -44,6 +44,10 @@
             "description": "Class name of the panel",
             "type": "string"
           },
+          "lightStyle": {
+            "description": "Light style",
+            "type": "string"
+          },
           "width": {
             "description": "Width of the panel",
             "type": "number"
