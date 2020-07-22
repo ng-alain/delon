@@ -44,12 +44,12 @@ export interface AlainAuthConfig {
    */
   executeOtherInterceptors?: boolean;
   /**
-   * 刷新时长（单位：ms），默认：`3000`
+   * 刷新间隔时长（单位：ms），默认：`3000`
    */
   refreshTime?: number;
   /**
-   * 偏移值（单位：ms），默认：`6000`
-   * - 建议根据 `refreshTime` 倍数来设置
+   * 过期计算偏移值（单位：ms），默认：`6000`
+   * - **建议**根据 `refreshTime` 倍数来设置
    */
   refreshOffset?: number;
 }
