@@ -6,10 +6,6 @@ import { filter, share } from 'rxjs/operators';
 
 export interface LazyResult {
   path: string;
-  /**
-   * @deprecated Used `status === 'ok'`, This is deprecated and going to be removed in 10.0.0.
-   */
-  loaded: boolean;
   status: 'ok' | 'error' | 'loading';
   error?: {};
 }
@@ -85,7 +81,6 @@ export class LazyService {
             node.onreadystatechange = null;
             onSuccess({
               path,
-              loaded: true,
               status: 'ok',
             });
           }
@@ -94,14 +89,12 @@ export class LazyService {
         node.onload = () =>
           onSuccess({
             path,
-            loaded: true,
             status: 'ok',
           });
       }
       node.onerror = (error: {}) =>
         onSuccess({
           path,
-          loaded: false,
           status: 'error',
           error,
         });
@@ -128,7 +121,6 @@ export class LazyService {
       this.doc.getElementsByTagName('head')[0].appendChild(node);
       const item: LazyResult = {
         path,
-        loaded: true,
         status: 'ok',
       };
       this.cached[path] = item;
