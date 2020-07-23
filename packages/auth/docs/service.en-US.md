@@ -14,19 +14,26 @@ constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
 }
 ```
 
+## Expired refresh
+
+After subscribing to `refresh`, the token will be automatically triggered when it expires. When the backend supports Token refresh, the token can be refreshed before expiration to extend the user authorization period.
+
+> **Recommendation** `refresh` only subscribe once in the application.
+
 ## API
 
 ### Property
 
-| Name          | Type           | Description                                              |
-|---------------|----------------|----------------------------------------------------------|
-| `[login_url]` | `string`       | Get the login address of `DelonAuthConfig` configuration |
-| `[referrer]`  | `AuthReferrer` | Get routing before authorization failure                 |
+| Name | Type | Description |
+|------|------|-------------|
+| `[login_url]` | `string` | Get the login address of `DelonAuthConfig` configuration |
+| `[referrer]` | `AuthReferrer` | Get routing before authorization failure |
+| `[refresh]` | `Observable<ITokenModel>` | Subscription refresh, automatically triggered when expired; **Note** It will be triggered multiple times, please make business process |
 
 ### Method
 
 | Name | Return Type | Description |
-| ----- | --- | --- |
+|------|-------------|-------------|
 | `change()` | `Observable<ITokenModel>` | Token changed callback |
 | `set(data: ITokenModel)` | `boolean` | Set Token |
 | `get(type?: any)` | `ITokenModel` | Get Token |

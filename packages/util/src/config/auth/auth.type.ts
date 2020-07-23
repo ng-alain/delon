@@ -43,4 +43,13 @@ export interface AlainAuthConfig {
    * 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法，默认：`true`
    */
   executeOtherInterceptors?: boolean;
+  /**
+   * 刷新间隔时长（单位：ms），默认：`3000`
+   */
+  refreshTime?: number;
+  /**
+   * 过期计算偏移值（单位：ms），默认：`6000`
+   * - **建议**根据 `refreshTime` 倍数来设置
+   */
+  refreshOffset?: number;
 }
