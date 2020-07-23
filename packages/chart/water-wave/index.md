@@ -8,6 +8,8 @@ module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 
 水波图是一种比例的展示方式，可以更直观的展示关键值的占比。
 
+> 默认不支持父元素自适应，可以监听父元素的变化并使用 `render()` 方法来重置渲染。
+
 ## API
 
 ### g2-water-wave
