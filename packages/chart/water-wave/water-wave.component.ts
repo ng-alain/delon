@@ -51,7 +51,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private platform: Platform,
   ) {}
 
-  private renderChart(isUpdate: boolean) {
+  private renderChart(isUpdate: boolean): void {
     if (!this.resize$) return;
 
     this.updateRadio();
@@ -200,13 +200,17 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     // drawSin();
   }
 
-  updateRadio() {
+  private updateRadio(): void {
     const { offsetWidth } = this.el.nativeElement.parentNode;
     const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
     this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);
   }
 
-  private installResizeEvent() {
+  render(): void {
+    this.renderChart(false);
+  }
+
+  private installResizeEvent(): void {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.updateRadio());
@@ -217,7 +221,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       return;
     }
     this.installResizeEvent();
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(false), this.delay));
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.render(), this.delay));
   }
 
   ngOnChanges(): void {
