@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import DataSet from '@antv/data-set';
 import { Chart, Event, registerShape, Types, Util } from '@antv/g2';
-import { AlainConfigService, deprecation10, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -22,14 +22,6 @@ import { debounceTime, filter } from 'rxjs/operators';
 export interface G2TagCloudData {
   value?: number;
   name?: string;
-  /**
-   * @deprecated Use `name` instead
-   */
-  x?: string;
-  /**
-   * @deprecated 10.0.0. This is deprecated and going to be removed in 10.0.0.
-   */
-  category?: any;
   [key: string]: any;
 }
 
@@ -149,17 +141,6 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private attachChart() {
     const { _chart, padding, data } = this;
     if (!_chart || !data || data.length <= 0) return;
-
-    // TODO: compatible
-    if (data.find(w => !!w.x) != null) {
-      deprecation10('g2-tag-cloud', 'x', 'name');
-      data.forEach(item => {
-        item.name = item.x;
-      });
-    }
-    if (data.find(w => !!w.category) != null) {
-      deprecation10('g2-tag-cloud', 'category');
-    }
 
     _chart.height = this.height;
     _chart.width = this.width;

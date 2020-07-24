@@ -16,16 +16,11 @@ import {
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2Time } from '@delon/chart/core';
-import { AlainConfigService, deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber, toDate } from '@delon/util';
 import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
-  /**
-   * 时间值
-   * @deprecated Use `time` instead
-   */
-  x?: G2Time;
   /**
    * 时间值
    */
@@ -181,13 +176,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     _chart.height = height;
     _chart.padding = padding;
 
-    // TODO: compatible
-    if (data.find(w => !!w.x) != null) {
-      deprecation10('g2-timeline', 'x', 'time');
-      data.forEach(item => {
-        item.time = new Date(item.x!);
-      });
-    }
     // 转换成日期类型
     data = data
       .map(item => {

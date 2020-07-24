@@ -68,7 +68,7 @@
     "file-saver": "^2.0.2",
     "marked": "^1.1.1",
     "ng-github-button": "^10.0.0",
-    "ng-zorro-antd": "^10.0.0-beta.0",
+    "ng-zorro-antd": "^10.0.0-beta.1",
     "ngx-color": "^6.0.0",
     "ngx-countdown": "^10.0.0",
     "ngx-highlight-js": "^10.0.0",
@@ -79,7 +79,7 @@
     "@webcomponents/custom-elements": "^1.4.2",
     "aos": "^3.0.0-beta.6",
     "docsearch.js": "^2.6.3",
-    "@ng-util/monaco-editor": "^10.2.1",
+    "@ng-util/monaco-editor": "^10.2.2",
     "@nguniversal/express-engine": "^10.0.1",
     "express": "^4.17.1"
   },

@@ -26,8 +26,8 @@ function consoleCommonBehavior(consoleFunc: (...args: NzSafeAny) => void, ...arg
 // Warning should only be printed in dev mode and only once.
 export const warn = (...args: NzSafeAny[]) => consoleCommonBehavior((...arg: NzSafeAny[]) => console.warn(PREFIX, ...arg), ...args);
 
-export const deprecation10 = (comp: string, from: string, to?: string) => {
-  warnDeprecation(`${comp} => '${from}' is going to be removed in 10.0.0${to ? `, Please use '${to}' instead` : ``}.`);
+export const deprecation11 = (comp: string, from: string, to?: string) => {
+  warnDeprecation(`${comp} => '${from}' is going to be removed in 11.0.0${to ? `, Please use '${to}' instead` : ``}.`);
 };
 
 export const warnDeprecation = (...args: NzSafeAny[]) => {
