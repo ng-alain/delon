@@ -34,6 +34,10 @@ export class _HttpClient {
 
   parseParams(params: NzSafeAny): HttpParams {
     const newParams: NzSafeAny = {};
+    if (params instanceof HttpParams) {
+      return params;
+    }
+
     Object.keys(params).forEach(key => {
       let _data = params[key];
       // 忽略空值
