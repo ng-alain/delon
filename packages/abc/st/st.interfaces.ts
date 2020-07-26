@@ -844,6 +844,12 @@ export interface STMultiSort {
   /** 列名与状态间分隔符，默认：`.` */
   nameSeparator?: string;
   /**
+   * 是否以数组的形式传递参数，默认：`false`
+   * - `true` 表示使用 `url?sort=name.asc&sort=age.desc` 形式
+   * - `false` 表示使用 `url?sort=name.asc-age.desc` 形式
+   */
+  arrayParam?: boolean;
+  /**
    * 是否保持空值的键名，默认：`true`
    * - `true` 表示不管是否有排序都会发送 `key` 键名
    * - `false` 表示无排序动作时不会发送 `key` 键名
@@ -858,6 +864,8 @@ export interface STMultiSort {
    */
   global?: boolean;
 }
+
+export type STMultiSortResultType = { [key: string]: string | string[] };
 
 /**
  * 徽标信息

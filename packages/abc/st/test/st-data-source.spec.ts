@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -276,26 +277,26 @@ describe('abc: table: data-souce', () => {
       });
       it('should be re-name pi & ps', done => {
         options.req.reName = { pi: 'PI', ps: 'PS' };
-        let resParams: any = {};
+        let resParams: HttpParams;
         spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
         srv.process(options).subscribe(() => {
-          expect(resParams.PI).toBe(options.pi);
-          expect(resParams.PS).toBe(options.ps);
+          expect(+resParams.get('PI')!).toBe(options.pi);
+          expect(+resParams.get('PS')!).toBe(options.ps);
           done();
         });
       });
       it('should be zero indexed of start index', done => {
         options.page.zeroIndexed = true;
-        let resParams: any = {};
+        let resParams: HttpParams;
         spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
         srv.process(options).subscribe(() => {
-          expect(resParams.pi).toBe(options.pi - 1);
+          expect(+resParams.get('pi')!).toBe(options.pi - 1);
           done();
         });
       });
@@ -331,27 +332,27 @@ describe('abc: table: data-souce', () => {
         beforeEach(() => (options.req.type = 'skip'));
         it('should be re-name skip & limit', done => {
           options.req.reName = { skip: 'SKIP', limit: 'LIMIT' };
-          let resParams: any = {};
+          let resParams: HttpParams;
           spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
             resParams = opt.params;
             return of([]);
           });
           srv.process(options).subscribe(() => {
-            expect(resParams.SKIP).toBe(0);
-            expect(resParams.LIMIT).toBe(options.ps);
+            expect(+resParams.get('SKIP')!).toBe(0);
+            expect(+resParams.get('LIMIT')!).toBe(options.ps);
             done();
           });
         });
         it('should be changed next page', done => {
           options.pi = 2;
-          let resParams: any = {};
+          let resParams: HttpParams;
           spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
             resParams = opt.params;
             return of([]);
           });
           srv.process(options).subscribe(() => {
-            expect(resParams.skip).toBe(options.ps);
-            expect(resParams.limit).toBe(options.ps);
+            expect(+resParams.get('skip')!).toBe(options.ps);
+            expect(+resParams.get('limit')!).toBe(options.ps);
             done();
           });
         });
@@ -435,7 +436,7 @@ describe('abc: table: data-souce', () => {
       });
     });
     describe('[sort]', () => {
-      let resParams: any;
+      let resParams: HttpParams;
       beforeEach(() => {
         genModule();
         options.data = '/mockurl';
@@ -451,14 +452,14 @@ describe('abc: table: data-souce', () => {
       it(`should be decremented`, done => {
         options.columns[0]._sort!.default = 'descend';
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('descend');
+          expect(resParams.get('id')!).toBe('descend');
           done();
         });
       });
       it(`should be incremented`, done => {
         options.columns[0]._sort!.default = 'ascend';
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('ascend');
+          expect(resParams.get('id')!).toBe('ascend');
           done();
         });
       });
@@ -466,7 +467,7 @@ describe('abc: table: data-souce', () => {
         options.columns[0]._sort!.default = 'ascend';
         options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('A');
+          expect(resParams.get('id')!).toBe('A');
           done();
         });
       });
@@ -474,7 +475,7 @@ describe('abc: table: data-souce', () => {
         options.columns[0]._sort!.default = 'ascend';
         options.columns[0]._sort!.reName = {};
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('ascend');
+          expect(resParams.get('id')!).toBe('ascend');
           done();
         });
       });
@@ -500,14 +501,14 @@ describe('abc: table: data-souce', () => {
         });
         it(`should be`, done => {
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBe('id1.descend-id2.ascend');
+            expect(resParams.get('SORT')).toBe('id1.descend-id2.ascend');
             done();
           });
         });
         it(`should be re-name`, done => {
           options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBe('id1.D-id2.ascend');
+            expect(resParams.get('SORT')).toBe('id1.D-id2.ascend');
             done();
           });
         });
@@ -529,14 +530,14 @@ describe('abc: table: data-souce', () => {
             },
           ];
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBeUndefined();
+            expect(resParams.has('SORT')).toBe(false);
             done();
           });
         });
         it(`should be used default key when invalid re-name paraments`, done => {
           options.columns[0]._sort!.reName = {};
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBe('id1.descend-id2.ascend');
+            expect(resParams.get('SORT')).toBe('id1.descend-id2.ascend');
             done();
           });
         });
@@ -544,7 +545,17 @@ describe('abc: table: data-souce', () => {
           options.columns[1]._sort!.tick = srv.nextSortTick;
           options.columns[0]._sort!.tick = srv.nextSortTick;
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBe('id2.ascend-id1.descend');
+            expect(resParams.get('SORT')).toBe('id2.ascend-id1.descend');
+            done();
+          });
+        });
+        it(`#arrayParam`, done => {
+          options.multiSort = {
+            ...options.multiSort,
+            arrayParam: true,
+          };
+          srv.process(options).subscribe(() => {
+            expect(resParams.toString()).toContain(`SORT=id1.descend&SORT=id2.ascend`);
             done();
           });
         });
@@ -554,7 +565,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0]._sort!.default = 'ascend';
           options.singleSort = {};
           srv.process(options).subscribe(() => {
-            expect(resParams.sort).toBe('id.ascend');
+            expect(resParams.get('sort')).toBe('id.ascend');
             done();
           });
         });
@@ -562,14 +573,14 @@ describe('abc: table: data-souce', () => {
           options.columns[0]._sort!.default = 'ascend';
           options.singleSort = { key: 'SORT', nameSeparator: '-' };
           srv.process(options).subscribe(() => {
-            expect(resParams.SORT).toBe('id-ascend');
+            expect(resParams.get('SORT')).toBe('id-ascend');
             done();
           });
         });
       });
     });
     describe('[filter]', () => {
-      let resParams: any;
+      let resParams: HttpParams;
       beforeEach(() => {
         genModule();
         options.data = '/mockurl';
@@ -589,7 +600,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be mulit field`, done => {
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('a,b');
+          expect(resParams.get('id')).toBe('a,b');
           done();
         });
       });
@@ -598,14 +609,14 @@ describe('abc: table: data-souce', () => {
           return { id: list.map(i => i.value + '1').join(',') };
         };
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('a1,b1');
+          expect(resParams.get('id')).toBe('a1,b1');
           done();
         });
       });
       it('should be always return first value when type with keyword', done => {
         options.columns[0].filter!.type = 'keyword';
         srv.process(options).subscribe(() => {
-          expect(resParams.id).toBe('a');
+          expect(resParams.get('id')).toBe('a');
           done();
         });
       });

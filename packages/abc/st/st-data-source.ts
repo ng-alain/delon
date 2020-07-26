@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CNCurrencyPipe, DatePipe, YNPipe, _HttpClient } from '@delon/theme';
@@ -11,6 +12,7 @@ import {
   STColumnFilter,
   STData,
   STMultiSort,
+  STMultiSortResultType,
   STPage,
   STReq,
   STReqReNameType,
@@ -256,7 +258,7 @@ export class STDataSource {
     };
 
     let reqOptions: STRequestOptions = {
-      params,
+      params: new HttpParams({ fromObject: params }),
       body: req.body,
       headers: req.headers,
     };
@@ -320,38 +322,39 @@ export class STDataSource {
     return ++this.sortTick;
   }
 
-  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: STColumn[]): { [key: string]: string } {
-    let ret: { [key: string]: string } = {};
+  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: STColumn[]): STMultiSortResultType {
+    let ret: STMultiSortResultType = {};
     const sortList = this.getValidSort(columns);
-    if (!multiSort && sortList.length === 0) return ret;
 
     if (multiSort) {
-      const ms = {
+      const ms: STMultiSort = {
         key: 'sort',
         separator: '-',
         nameSeparator: '.',
+        keepEmptyKey: true,
+        arrayParam: false,
         ...multiSort,
       };
 
-      ret = {
-        [ms.key]: sortList
-          .sort((a, b) => a.tick - b.tick)
-          .map(item => item.key + ms.nameSeparator + ((item.reName || {})[item.default!] || item.default))
-          .join(ms.separator),
-      };
-      if (multiSort.keepEmptyKey === false && ret[ms.key].length === 0) {
-        ret = {};
-      }
-    } else {
-      const mapData = sortList[0];
-      let sortFiled = mapData.key;
-      let sortValue = (sortList[0].reName || {})[mapData.default!] || mapData.default;
-      if (singleSort) {
-        sortValue = sortFiled + (singleSort.nameSeparator || '.') + sortValue;
-        sortFiled = singleSort.key || 'sort';
-      }
-      ret[sortFiled as string] = sortValue as string;
+      const sortMap = sortList
+        .sort((a, b) => a.tick - b.tick)
+        .map(item => item.key! + ms.nameSeparator + ((item.reName || {})[item.default!] || item.default));
+
+      ret = { [ms.key!]: ms.arrayParam ? sortMap : sortMap.join(ms.separator) };
+
+      return sortMap.length === 0 && ms.keepEmptyKey === false ? {} : ret;
     }
+
+    if (sortList.length === 0) return ret;
+
+    const mapData = sortList[0];
+    let sortFiled = mapData.key;
+    let sortValue = (sortList[0].reName || {})[mapData.default!] || mapData.default;
+    if (singleSort) {
+      sortValue = sortFiled + (singleSort.nameSeparator || '.') + sortValue;
+      sortFiled = singleSort.key || 'sort';
+    }
+    ret[sortFiled as string] = sortValue as string;
     return ret;
   }
 
