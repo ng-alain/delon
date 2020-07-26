@@ -97,8 +97,8 @@ export class MockInterceptor implements HttpInterceptor {
     }
 
     if (config.log) {
-      console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
-      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', res);
+      console.log(`%c👽${req.method}->${req.urlWithParams}->request`, 'background:#000;color:#bada55', req);
+      console.log(`%c👽${req.method}->${req.urlWithParams}->response`, 'background:#000;color:#bada55', res);
     }
 
     const res$ = res instanceof HttpErrorResponse ? throwError(res) : of(res);
