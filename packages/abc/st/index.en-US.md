@@ -223,6 +223,7 @@ class TestComponent {
 | `[key]` | Request parameter name | `string` | `sort` |
 | `[separator]` | Separator between attributes | `string` | `-` |
 | `[nameSeparator]` | Column name and state separator | `string` | `.` |
+| `[arrayParam]` | Whether to pass parameters as an array<br>`true` Indicates the use of `url?sort=name.asc&sort=age.desc`<br>`false` Indicates the use of `url?sort=name.asc-age.desc` | `boolean` | `false` |
 | `[keepEmptyKey]` | Whether to keep send empty key<br>`true` send the `key` name anyway<br>`false` don't send `key` when not sorting | `boolean` | `true` |
 | `[global]` | **Only global config**, Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true` |
 
