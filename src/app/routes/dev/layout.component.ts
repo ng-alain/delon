@@ -85,6 +85,10 @@ export class DevLayoutComponent implements OnInit {
           badge: 5,
           disabled: true,
         },
+        { text: '测试1', link: '/dev/lazy/p1' },
+        { text: '测试2', link: '/dev/lazy/p2' },
+        { text: '测试view1-id', link: '/dev/lazy/1/view' },
+        { text: '测试view2-id', link: '/dev/lazy/2/view' },
         {
           text: 'Level1',
           link: '#',

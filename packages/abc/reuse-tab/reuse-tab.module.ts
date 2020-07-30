@@ -17,6 +17,6 @@ const NOEXPORTS = [ReuseTabContextMenuComponent, ReuseTabContextComponent, Reuse
 @NgModule({
   imports: [CommonModule, RouterModule, DelonLocaleModule, NzMenuModule, NzTabsModule, NzIconModule, OverlayModule],
   declarations: [...COMPONENTS, ...NOEXPORTS],
-  exports: [...COMPONENTS],
+  exports: COMPONENTS,
 })
 export class ReuseTabModule {}

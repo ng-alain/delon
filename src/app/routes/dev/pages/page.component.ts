@@ -5,12 +5,13 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'dev-page',
   template: `
     <page-header></page-header>
-    <p>now: {{ now | json }}</p>
+    <p>first: {{ first | json }}，now: {{ now | json }}</p>
     page: {{ router.url | json }}
   `,
 })
 export class DevPageComponent implements OnInit {
   now = +new Date();
+  first = +new Date();
 
   constructor(public router: ActivatedRoute) {}
 

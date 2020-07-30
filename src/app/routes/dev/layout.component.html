@@ -23,7 +23,7 @@
 <div class="alain-default__aside">
   <div class="alain-default__aside-inner">
     <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
-      <nz-avatar class="alain-default__aside-user-avatar" [nzSize]="'large'" nzIcon="anticon anticon-user"></nz-avatar>
+      <nz-avatar class="alain-default__aside-user-avatar" [nzSize]="'large'" nzIcon="user"></nz-avatar>
       <div class="alain-default__aside-user-info">
         <strong>{{ settings.user.name }}</strong>
         <p class="text-truncate mb0">{{ settings.user.email }}</p>
@@ -40,6 +40,6 @@
   </div>
 </div>
 <section class="alain-default__content">
-  <reuse-tab [mode]="2" [customContextMenu]="customContextMenu"></reuse-tab>
-  <router-outlet></router-outlet>
+  <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
+  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 </section>
