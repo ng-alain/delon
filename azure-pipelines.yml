@@ -104,6 +104,8 @@ stages:
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: npm run site:build
             displayName: 'Build sites'
+          - script: npm run site:helper
+            displayName: 'Build helper'
           - script: ls -al src/dist/browser/
             displayName: 'List build'
           - script: |

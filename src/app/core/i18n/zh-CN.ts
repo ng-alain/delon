@@ -52,6 +52,7 @@ export const ZHCN = {
   'app.footer.change-log': '更新记录',
   'app.footer.faq': '常见问题',
   'app.footer.issues': '讨论列表',
+  'app.footer.issue-help': '报告 Bug',
   'app.footer.qqgroup': 'QQ群',
   'app.footer.qqgroup.full': '(满)',
   'app.footer.primary-color-changed': '修改主题色成功！',
