@@ -6,9 +6,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { LoadingDefaultComponent } from './loading.component';
 
+const COMPONENTS = [LoadingDefaultComponent];
+
 @NgModule({
   imports: [CommonModule, OverlayModule, PortalModule, NzIconModule, NzSpinModule],
-  declarations: [LoadingDefaultComponent],
-  exports: [LoadingDefaultComponent],
+  declarations: COMPONENTS,
+  entryComponents: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class LoadingModule {}
