@@ -3340,6 +3340,16 @@ this.tinycolor = tinycolor;
 @loading-icon-color: @primary-color;
 @loading-text-color: @primary-color;
 
+// onboarding
+// --
+@onboarding-mask-opacity: 0.5;
+@onboarding-mask-background-color: #000;
+@onboarding-light-background-color: rgba(255, 255, 255, 0.9);
+@onboarding-light-ant: 2500ms cubic-bezier(0.55, 0.05, 0.6, 0.2) 0s infinite normal none running onboardingAnt;
+@onboarding-light-ant-color: rgb(255, 255, 255);
+@onboarding-changing-ant: all 0.3s ease-out;
+@onboarding-zindex: 99999;
+
 // Just keep the file structure
 
 
@@ -11982,6 +11992,15 @@ textarea.ant-input::-webkit-scrollbar-thumb {
 }
 .loading-default__text {
   color: @primary-color;
+}
+.onboarding__mask {
+  background-color: #000;
+}
+.onboarding__light {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.onboarding__total {
+  color: @text-color;
 }
 .g2-card__meta {
   color: @text-color-secondary;
@@ -24001,6 +24020,15 @@ textarea.ant-input::-webkit-scrollbar-thumb {
 }
 .loading-default__text {
   color: @primary-color;
+}
+.onboarding__mask {
+  background-color: #000;
+}
+.onboarding__light {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.onboarding__total {
+  color: @text-color;
 }
 .g2-card__meta {
   color: @text-color-secondary;

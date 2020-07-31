@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../node_modules/@delon/abc/onboarding/schema.json",
+  "maskClosable": false,
+  "items": [
+    {
+      "selectors": ".test1-1",
+      "title": "This is title",
+      "content": "This is content"
+    },
+    {
+      "selectors": ".test1-2",
+      "title": "This is second title",
+      "content": "This is second content",
+      "width": 200
+    }
+  ]
+}

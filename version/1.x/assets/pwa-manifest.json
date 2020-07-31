@@ -1,0 +1,20 @@
+{
+    "short_name": "NgAlain",
+    "name": "NgAlain",
+    "icons": [
+      {
+        "src":"img/logo-color.png",
+        "sizes": "194x194 512x512",
+        "type": "image/png"
+      },
+      {
+        "src":"img/logo-color.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/?utm_source=homescreen",
+    "background_color": "#F0776F",
+    "theme_color": "#F0776F",
+    "display": "standalone"
+}
