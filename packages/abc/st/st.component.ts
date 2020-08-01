@@ -574,6 +574,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #region filter
 
   private handleFilter(col: STColumn) {
+    // 过滤表示一种数据的变化应重置页码为 `1`
+    this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
     this.loadPageData();
     this.changeEmit('filter', col);
