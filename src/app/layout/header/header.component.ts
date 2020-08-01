@@ -66,7 +66,7 @@ export class HeaderComponent implements AfterViewInit {
 
   toVersion(version: string) {
     if (version !== this.currentVersion) {
-      this.getWin().location.href = `https://ng-alain.github.io/${version}-doc/`;
+      this.getWin().location.href = `https://ng-alain.com/version/${version}/`;
     }
   }
 

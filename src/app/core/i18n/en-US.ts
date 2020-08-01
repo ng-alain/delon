@@ -52,6 +52,7 @@ export const ENUS = {
   'app.footer.change-log': 'Change Log',
   'app.footer.faq': 'FAQ',
   'app.footer.issues': 'Issues',
+  'app.footer.issue-help': 'Bug Report',
   'app.footer.qqgroup': 'QQ Group',
   'app.footer.qqgroup.full': '(Full)',
   'app.footer.primary-color-changed': 'Change primary color successfully!',

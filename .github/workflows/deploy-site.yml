@@ -17,6 +17,7 @@ jobs:
         run: |
           npm run site:gen
           node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
+          npm run site:helper
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
 
       - name: deploy-to-gh-pages

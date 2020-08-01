@@ -6,6 +6,7 @@ yarn-error.log
 /coverage
 /coverage-report
 /junit
+/archive-docs
 
 .tmp
 .lib
