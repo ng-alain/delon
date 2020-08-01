@@ -1,26 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import format from 'date-fns/format';
 
 @Component({
   selector: 'dev-page',
   template: `
     <page-header></page-header>
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
-    page: {{ router.url | json }}
+    <p>id: {{ id | json }}</p>
+    page: {{ route.url | json }}
   `,
 })
 export class DevPageComponent implements OnInit {
-  now = +new Date();
-  first = +new Date();
+  first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  id = 0;
 
-  constructor(public router: ActivatedRoute) {}
+  constructor(public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     console.log('ngoninit');
+    this.route.params.subscribe(params => (this.id = +params.id));
   }
 
   _onReuseInit(): void {
-    this.now = +new Date();
-    console.log('by _onReuseInit', this.router.snapshot.url.toString());
+    this.now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    console.log('by _onReuseInit', this.route.snapshot.url.toString());
   }
 }

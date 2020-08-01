@@ -7,7 +7,8 @@ import format from 'date-fns/format';
   template: `
     <h3>Lazy child component</h3>
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
-    id: {{ id | json }} page: {{ route.url | json }}
+    <p>id: {{ id | json }}</p>
+    page: {{ route.url | json }}
   `,
 })
 export class DevLazyPageComponent implements OnInit {

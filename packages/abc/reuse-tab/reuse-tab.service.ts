@@ -11,7 +11,15 @@ import {
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-import { ReuseComponentRef, ReuseHookTypes, ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
+import {
+  ReuseComponentRef,
+  ReuseHookTypes,
+  ReuseTabCached,
+  ReuseTabMatchMode,
+  ReuseTabNotify,
+  ReuseTabRouteParamMatchMode,
+  ReuseTitle,
+} from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口
@@ -32,6 +40,7 @@ export class ReuseTabService implements OnDestroy {
   private positionBuffer: { [url: string]: [number, number] } = {};
   componentRef: ReuseComponentRef;
   debug = false;
+  routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
   excludes: RegExp[] = [];
@@ -466,9 +475,11 @@ export class ReuseTabService implements OnDestroy {
 
     const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
     if (path.length > 0 && ~path.indexOf(':')) {
-      const futureUrl = this.getUrl(future);
-      const currUrl = this.getUrl(curr);
-      ret = futureUrl === currUrl;
+      if (this.routeParamMatchMode === 'strict') {
+        ret = this.getUrl(future) === this.getUrl(curr);
+      } else {
+        ret = path === ((curr.routeConfig && curr.routeConfig.path) || '');
+      }
     }
     this.di('=====================');
     this.di('#shouldReuseRoute', ret, `${this.getUrl(curr)}=>${this.getUrl(future)}`, future, curr);

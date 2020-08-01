@@ -32,6 +32,7 @@ import {
   ReuseTabCached,
   ReuseTabMatchMode,
   ReuseTabNotify,
+  ReuseTabRouteParamMatchMode,
   ReuseTitle,
 } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
@@ -78,6 +79,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarGutter: number;
   @Input() tabBarStyle: { [key: string]: string };
   @Input() tabType: 'line' | 'card' = 'line';
+  @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<ReuseItem>();
   // tslint:disable-next-line:no-output-native
@@ -283,6 +285,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;
+    if (changes.routeParamMatchMode) this.srv.routeParamMatchMode = this.routeParamMatchMode;
     if (changes.keepingScroll) {
       this.srv.keepingScroll = this.keepingScroll;
       this.srv.keepingScrollContainer = this._keepingScrollContainer;

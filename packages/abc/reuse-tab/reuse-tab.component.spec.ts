@@ -8,7 +8,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseCustomContextMenu, ReuseTabMatchMode } from './reuse-tab.interfaces';
+import { ReuseCustomContextMenu, ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -240,6 +240,15 @@ describe('abc: reuse-tab', () => {
           const el = page.getEl('.reuse-tab__name-width');
           expect(el != null).toBe(true);
           expect(el.style.maxWidth).toBe(`100px`);
+        });
+      });
+      describe('#routeParamMatchMode', () => {
+        describe('with loos', () => {
+          it('should be only one tab', fakeAsync(() => {
+            layoutComp.routeParamMatchMode = 'loose';
+            fixture.detectChanges();
+            page.to('#b').to('#b2').to('#b3').expectCount(2);
+          }));
         });
       });
     });
@@ -761,6 +770,8 @@ describe('abc: reuse-tab', () => {
   template: `
     <a id="a" [routerLink]="['/a']">a</a>
     <a id="b" [routerLink]="['/b/1']">b1</a>
+    <a id="b2" [routerLink]="['/b/2']">b2</a>
+    <a id="b3" [routerLink]="['/b/3']">b3</a>
     <a id="c" [routerLink]="['/c']">c</a>
     <a id="d" [routerLink]="['/d']">d</a>
     <a id="e" [routerLink]="['/e']">e</a>
@@ -785,6 +796,7 @@ class AppComponent {}
       [customContextMenu]="customContextMenu"
       [tabType]="tabType"
       [tabMaxWidth]="tabMaxWidth"
+      [routeParamMatchMode]="routeParamMatchMode"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -805,6 +817,7 @@ class LayoutComponent {
   customContextMenu: ReuseCustomContextMenu[] = [];
   tabType: 'line' | 'card' = 'line';
   tabMaxWidth: number;
+  routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   change() {}
   close() {}
 }
