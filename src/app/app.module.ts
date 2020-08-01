@@ -52,6 +52,9 @@ function registerElements(injector: Injector, platformId: {}) {
   customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
 }
 
+// import { RouteReuseStrategy } from '@angular/router';
+// import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -81,6 +84,11 @@ function registerElements(injector: Injector, platformId: {}) {
     }),
   ],
   providers: [
+    // {
+    //   provide: RouteReuseStrategy,
+    //   useClass: ReuseTabStrategy,
+    //   deps: [ReuseTabService],
+    // },
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     StartupService,
     {

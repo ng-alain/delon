@@ -5,13 +5,13 @@ import format from 'date-fns/format';
 @Component({
   selector: 'dev-page',
   template: `
-    <page-header></page-header>
+    <h3>Lazy child component</h3>
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
     <p>id: {{ id | json }}</p>
     page: {{ route.url | json }}
   `,
 })
-export class DevPageComponent implements OnInit {
+export class DevLazyPageComponent implements OnInit {
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   id = 0;

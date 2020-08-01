@@ -28,24 +28,28 @@
         }
       }
     }
+    > .@{ant-prefix}-tabs-nav {
+      margin: 0;
+    }
   }
   &__line {
     padding: @reuse-tab-padding;
     border-bottom: 1px solid @reuse-tab-border-color;
     .@{ant-prefix}-tabs {
-      &-bar {
-        margin-bottom: 0;
-        border-bottom: none;
-      }
-      &-nav .@{ant-prefix}-tabs-tab {
-        padding: 0;
-        @{reuse-tab-prefix}__op {
-          top: 12px;
-          right: 2px;
+      &-nav {
+        &::before {
+          border-bottom: none;
         }
-        @{reuse-tab-prefix}__name {
-          display: inline-block;
-          padding: 8px 20px;
+        .@{ant-prefix}-tabs-tab {
+          padding: 0;
+          @{reuse-tab-prefix}__op {
+            top: 12px;
+            right: 2px;
+          }
+          @{reuse-tab-prefix}__name {
+            display: inline-block;
+            padding: 8px 20px;
+          }
         }
       }
     }

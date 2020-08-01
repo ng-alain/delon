@@ -33,6 +33,8 @@ export enum ReuseTabMatchMode {
   URL,
 }
 
+export type ReuseTabRouteParamMatchMode = 'strict' | 'loose';
+
 export interface ReuseTitle {
   text?: string;
   i18n?: string;

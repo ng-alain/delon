@@ -27,6 +27,8 @@ const routes: Routes = [
       { path: 'l7', component: DevPageComponent },
       { path: 'l8', component: DevPageComponent },
       { path: 'login', component: DevPageComponent },
+      { path: 'view/:id', component: DevPageComponent },
+      { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.DevLazyModule) },
     ],
   },
 ];
