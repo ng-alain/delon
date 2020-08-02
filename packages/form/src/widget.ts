@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injector } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocaleData } from '@delon/theme';
 import { takeUntil } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { SFComponent } from './sf.component';
 import { di } from './utils';
 import { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
 
+@Directive()
 export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem> implements AfterViewInit {
   formProperty: T;
   error: string;
@@ -98,16 +99,19 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   abstract afterViewInit(): void;
 }
 
+@Directive()
 export class ControlWidget extends Widget<FormProperty, SFUISchemaItem> {
   reset(_value: SFValue): void {}
   afterViewInit(): void {}
 }
 
+@Directive()
 export class ControlUIWidget<UIT extends SFUISchemaItem> extends Widget<FormProperty, UIT> {
   reset(_value: SFValue): void {}
   afterViewInit(): void {}
 }
 
+@Directive()
 export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema> implements AfterViewInit {
   reset(_value: SFValue): void {}
   afterViewInit(): void {}
@@ -117,6 +121,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
   }
 }
 
+@Directive()
 export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSchema> implements AfterViewInit {
   reset(_value: SFValue): void {}
   afterViewInit(): void {}

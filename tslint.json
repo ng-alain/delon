@@ -9,7 +9,7 @@
     },
     "component-class-suffix": [true, "Component", "Widget"],
     "contextual-lifecycle": true,
-    "directive-class-suffix": true,
+    "directive-class-suffix": false,
     "directive-selector": [false, "attribute", "app", "camelCase"],
     "component-selector": [false, "element", "app", "kebab-case"],
     "import-blacklist": [true, "rxjs/Rx", "ng-zorro-antd"],
