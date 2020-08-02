@@ -19,7 +19,7 @@ describe('abc: trend', () => {
     fixture.detectChanges();
   });
 
-  function isExists(cls: string, stauts: boolean = true) {
+  function isExists(cls: string, stauts: boolean = true): void {
     if (stauts) {
       expect(dl.query(By.css(cls))).not.toBeNull();
     } else {

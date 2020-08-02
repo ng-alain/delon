@@ -60,7 +60,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
     return this;
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.inited) this.setClass();
   }
 

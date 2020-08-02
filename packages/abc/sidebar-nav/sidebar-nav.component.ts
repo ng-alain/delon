@@ -50,7 +50,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<Menu>();
 
-  get collapsed() {
+  get collapsed(): boolean {
     return this.settings.layout.collapsed;
   }
 
@@ -71,7 +71,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return node.nodeName !== 'A' ? null : node;
   }
 
-  private floatingClickHandle(e: MouseEvent) {
+  private floatingClickHandle(e: MouseEvent): boolean {
     e.stopPropagation();
     const linkNode = this.getLinkNode(e.target as HTMLElement);
     if (linkNode == null) {
@@ -106,7 +106,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  private genFloating() {
+  private genFloating(): void {
     this.clearFloating();
     this.floatingEl = this.render.createElement('div');
     this.floatingEl.classList.add(FLOATINGCLS + '-container');
@@ -131,7 +131,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return node;
   }
 
-  private hideAll() {
+  private hideAll(): void {
     const allNode = this.floatingEl.querySelectorAll('.' + FLOATINGCLS);
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < allNode.length; i++) {
@@ -140,7 +140,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   // calculate the node position values.
-  private calPos(linkNode: HTMLLinkElement, node: HTMLUListElement) {
+  private calPos(linkNode: HTMLLinkElement, node: HTMLUListElement): void {
     const rect = linkNode.getBoundingClientRect();
     // bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/14721015/
     const scrollTop = Math.max(this.doc.documentElement.scrollTop, this.bodyEl.scrollTop);
@@ -211,7 +211,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openedByUrl(url: string | null) {
+  private openedByUrl(url: string | null): void {
     const { menuSrv, recursivePath, openStrictly } = this;
     let findItem: Nav | null = menuSrv.getHit(this.menuSrv.menus, url!, recursivePath, (i: Nav) => {
       i._selected = false;
@@ -282,13 +282,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return window.innerWidth < 768;
   }
 
-  private underPad() {
+  private underPad(): void {
     if (this.autoCloseUnderPad && this.isPad && !this.collapsed) {
       setTimeout(() => this.openAside(true));
     }
   }
 
-  private openAside(status: boolean) {
+  private openAside(status: boolean): void {
     this.settings.setLayout('collapsed', status);
   }
 

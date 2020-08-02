@@ -11,7 +11,7 @@ import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 import { SimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
 
-function genModel(token: string = `123`) {
+function genModel(token: string = `123`): SimpleTokenModel {
   const model = new SimpleTokenModel();
   model.token = token;
   model.uid = 1;
@@ -33,10 +33,10 @@ class MockTokenService implements ITokenService {
   change(): any {
     return null;
   }
-  clear() {
+  clear(): void {
     this._data = null;
   }
-  get login_url() {
+  get login_url(): string {
     return '/login';
   }
 }
@@ -51,7 +51,7 @@ describe('auth: simple.interceptor', () => {
     }),
   };
 
-  function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel) {
+  function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [

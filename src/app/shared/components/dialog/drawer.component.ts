@@ -22,12 +22,12 @@ export class DemoDrawerComponent {
 
   constructor(private ref: NzDrawerRef) {}
 
-  ok() {
+  ok(): void {
     this.ref.close(`new time: ${+new Date()}`);
     this.cancel();
   }
 
-  cancel() {
+  cancel(): void {
     this.ref.close();
   }
 }

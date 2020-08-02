@@ -22,7 +22,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
       ...value,
     };
   }
-  get i18n() {
+  get i18n(): ReuseContextI18n {
     return this._i18n;
   }
   @Input() item: ReuseItem;
@@ -31,13 +31,13 @@ export class ReuseTabContextMenuComponent implements OnInit {
   // tslint:disable-next-line:no-output-native
   @Output() readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
-  get includeNonCloseable() {
+  get includeNonCloseable(): boolean {
     return this.event.ctrlKey;
   }
 
   constructor(private i18nSrv: DelonLocaleService) {}
 
-  private notify(type: CloseType) {
+  private notify(type: CloseType): void {
     this.close.next({
       type,
       item: this.item,
@@ -49,7 +49,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     if (this.includeNonCloseable) this.item.closable = true;
   }
 
-  click(e: MouseEvent, type: CloseType, custom?: ReuseCustomContextMenu) {
+  click(e: MouseEvent, type: CloseType, custom?: ReuseCustomContextMenu): void {
     e.preventDefault();
     e.stopPropagation();
     if (type === 'close' && !this.item.closable) return;

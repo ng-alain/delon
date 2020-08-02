@@ -71,18 +71,18 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this._desc = this.dom.bypassSecurityTrustHtml(value);
   }
 
-  checkContent() {
+  checkContent(): void {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
   constructor(private i18n: DelonLocaleService, private dom: DomSanitizer) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.i18n$ = this.i18n.change.subscribe(() => (this.locale = this.i18n.getData('exception')));
     this.checkContent();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.i18n$.unsubscribe();
   }
 }

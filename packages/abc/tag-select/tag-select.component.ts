@@ -38,19 +38,19 @@ export class TagSelectComponent implements OnInit, OnDestroy {
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.i18n$ = this.i18n.change.subscribe(() => {
       this.locale = this.i18n.getData('tagSelect');
       this.cdr.detectChanges();
     });
   }
 
-  trigger() {
+  trigger(): void {
     this.expand = !this.expand;
     this.change.emit(this.expand);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.i18n$.unsubscribe();
   }
 }

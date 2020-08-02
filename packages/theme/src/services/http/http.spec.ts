@@ -14,7 +14,7 @@ describe('theme: http.client', () => {
   const PARAMS: { [key: string]: string } = { a: `1` };
   const BODY = 'body data';
 
-  function createModule(config?: AlainThemeHttpClientConfig) {
+  function createModule(config?: AlainThemeHttpClientConfig): void {
     const providers: any[] = [_HttpClient];
     if (config) {
       providers.push({ provide: ALAIN_CONFIG, useValue: { themeHttp: config } });

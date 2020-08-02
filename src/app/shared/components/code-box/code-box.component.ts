@@ -39,7 +39,7 @@ export class CodeBoxComponent implements OnDestroy {
     };
     this._item = ret;
   }
-  get item() {
+  get item(): any {
     return this._item;
   }
 
@@ -73,7 +73,7 @@ export class CodeBoxComponent implements OnDestroy {
     this.cdr.markForCheck();
   }
 
-  handle() {
+  handle(): void {
     this.expand = !this.expand;
     this.check();
   }
@@ -86,7 +86,7 @@ export class CodeBoxComponent implements OnDestroy {
     }
   }
 
-  onCopy(value: string) {
+  onCopy(value: string): void {
     copy(value).then(() => {
       this.msg.success(this.i18n.fanyi('app.demo.copied'));
       this.copied = true;
@@ -98,7 +98,7 @@ export class CodeBoxComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

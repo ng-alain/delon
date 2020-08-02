@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DecimalPipe, DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
@@ -103,7 +104,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
   @Input()
-  get req() {
+  get req(): STReq {
     return this._req;
   }
   set req(value: STReq) {
@@ -111,7 +112,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   /** 返回体配置 */
   @Input()
-  get res() {
+  get res(): STRes {
     return this._res;
   }
   set res(value: STRes) {
@@ -122,7 +123,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._res = item;
   }
   @Input()
-  get page() {
+  get page(): STPage {
     return this._page;
   }
   set page(value: STPage) {
@@ -143,7 +144,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() singleSort: STSingleSort;
   private _multiSort?: STMultiSort;
   @Input()
-  get multiSort() {
+  get multiSort(): NzSafeAny {
     return this._multiSort;
   }
   set multiSort(value: NzSafeAny) {
@@ -160,7 +161,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set widthMode(value: STWidthMode) {
     this._widthMode = { ...this.cog.widthMode, ...value };
   }
-  get widthMode() {
+  get widthMode(): STWidthMode {
     return this._widthMode;
   }
   @Input() header: string | TemplateRef<void>;
@@ -199,7 +200,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._data;
   }
 
-  private get routerState() {
+  private get routerState(): { pi: number; ps: number; total: number } {
     const { pi, ps, total } = this;
     return { pi, ps, total };
   }
@@ -376,7 +377,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   /** 清空所有数据 */
-  clear(cleanStatus = true): this {
+  clear(cleanStatus: boolean = true): this {
     if (cleanStatus) {
       this.clearStatus();
     }
@@ -396,7 +397,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param extraParams 重新指定 `extraParams` 值
    * @param options 选项
    */
-  load(pi = 1, extraParams?: {}, options?: STLoadOptions) {
+  load(pi: number = 1, extraParams?: {}, options?: STLoadOptions): this {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
       this.req.params = options && options.merge ? { ...this.req.params, ...extraParams } : extraParams;
@@ -409,7 +410,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * 重新刷新当前页
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: {}, options?: STLoadOptions) {
+  reload(extraParams?: {}, options?: STLoadOptions): this {
     return this.load(-1, extraParams, options);
   }
 
@@ -422,12 +423,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: {}, options?: STLoadOptions) {
+  reset(extraParams?: {}, options?: STLoadOptions): this {
     this.clearStatus().load(1, extraParams, options);
     return this;
   }
 
-  private _toTop(enforce?: boolean) {
+  private _toTop(enforce?: boolean): void {
     if (!(enforce == null ? this.page.toTop : enforce)) return;
     const el = this.el.nativeElement as HTMLElement;
     if (this.scroll) {
@@ -439,7 +440,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
   }
 
-  _change(type: 'pi' | 'ps', options?: STLoadOptions) {
+  _change(type: 'pi' | 'ps', options?: STLoadOptions): void {
     if (type === 'pi' || (type === 'ps' && this.pi <= Math.ceil(this.total / this.ps))) {
       this.loadPageData().then(() => this._toTop(options?.toTop));
     }
@@ -447,7 +448,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: STData, col: STColumn) {
+  _click(e: Event, item: STData, col: STColumn): boolean {
     e.preventDefault();
     e.stopPropagation();
     const res = col.click!(item, this);
@@ -456,11 +457,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     return false;
   }
-  private closeOtherExpand(item: STData) {
+  private closeOtherExpand(item: STData): void {
     if (this.expandAccordion === false) return;
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
-  _rowClick(e: Event, item: STData, index: number) {
+  _rowClick(e: Event, item: STData, index: number): void {
     if ((e.target as HTMLElement).nodeName === 'INPUT') return;
     const { expand, expandRowByClick, rowClickTime } = this;
     if (!!expand && item.showExpand !== false && expandRowByClick) {
@@ -499,7 +500,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * this.st.removeRow(stDataItem)
    * ```
    */
-  removeRow(data: STData | STData[] | number) {
+  removeRow(data: STData | STData[] | number): this {
     if (typeof data === 'number') {
       this._data.splice(data, 1);
     } else {
@@ -547,7 +548,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region sort
 
-  sort(col: STColumn, idx: number, value: any) {
+  sort(col: STColumn, idx: number, value: any): void {
     if (this.multiSort) {
       col._sort!.default = value;
       col._sort!.tick = this.dataSource.nextSortTick;
@@ -564,7 +565,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('sort', res);
   }
 
-  clearSort() {
+  clearSort(): this {
     this._columns.forEach(item => (item._sort!.default = null));
     return this;
   }
@@ -573,7 +574,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region filter
 
-  private handleFilter(col: STColumn) {
+  private handleFilter(col: STColumn): void {
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
@@ -581,21 +582,21 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('filter', col);
   }
 
-  _filterConfirm(col: STColumn) {
+  _filterConfirm(col: STColumn): void {
     this.handleFilter(col);
   }
 
-  _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean) {
+  _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean): void {
     col.filter!.menus!.forEach(i => (i.checked = false));
     item.checked = checked;
   }
 
-  _filterClear(col: STColumn) {
+  _filterClear(col: STColumn): void {
     this.columnSource.cleanFilter(col);
     this.handleFilter(col);
   }
 
-  clearFilter() {
+  clearFilter(): this {
     this._columns.filter(w => w.filter && w.filter.default === true).forEach(col => this.columnSource.cleanFilter(col));
     return this;
   }
@@ -628,7 +629,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._refCheck()._checkNotify();
   }
 
-  _checkSelection(i: STData, value: boolean) {
+  _checkSelection(i: STData, value: boolean): this {
     i.checked = value;
     return this._refCheck()._checkNotify();
   }
@@ -667,7 +668,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region buttons
 
-  _btnClick(record: STData, btn: STColumnButton, e?: Event) {
+  _btnClick(record: STData, btn: STColumnButton, e?: Event): void {
     // should be stop propagation when expandRowByClick is true
     if (e && this.expandRowByClick === true) {
       e.stopPropagation();
@@ -706,7 +707,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  private btnCallback(record: STData, btn: STColumnButton, modal?: any) {
+  private btnCallback(record: STData, btn: STColumnButton, modal?: any): any {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
       switch (btn.click) {
@@ -722,7 +723,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  _btnText(record: STData, btn: STColumnButton) {
+  _btnText(record: STData, btn: STColumnButton): string {
     return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 
@@ -745,7 +746,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param newData 重新指定数据；若为 `true` 表示使用 `filteredData` 数据
    * @param opt 额外参数
    */
-  export(newData?: STData[] | true, opt?: STExportOptions) {
+  export(newData?: STData[] | true, opt?: STExportOptions): void {
     (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
         ...opt,
@@ -757,7 +758,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  get cdkVirtualScrollViewport() {
+  get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {
     return this.orgTable.cdkVirtualScrollViewport!;
   }
 
@@ -802,7 +803,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.columnSource.restoreAllRender(this._columns);
   }
 

@@ -179,7 +179,7 @@ class TestComponent {
   count = 10;
   loading = false;
   popoverVisible: boolean;
-  select() {}
-  clear() {}
-  popupVisibleChange() {}
+  select(): void {}
+  clear(): void {}
+  popupVisibleChange(): void {}
 }

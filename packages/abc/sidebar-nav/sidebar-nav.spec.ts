@@ -62,14 +62,14 @@ const MOCKOPENSTRICTLY = [
 ] as Nav[];
 
 class MockACLService {
-  can(val: string) {
+  can(val: string): boolean {
     return val === 'admin';
   }
 }
 
 class MockWindow {
   location = new MockLocation();
-  open() {}
+  open(): void {}
 }
 class MockLocation {
   private url: string;
@@ -91,7 +91,7 @@ describe('abc: sidebar-nav', () => {
   let page: PageObject;
   let doc: Document;
 
-  function createModule() {
+  function createModule(): void {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), AlainThemeModule, HttpClientTestingModule, SidebarNavModule],
       declarations: [TestComponent],
@@ -102,7 +102,7 @@ describe('abc: sidebar-nav', () => {
     });
   }
 
-  function createComp(needMockNavigateByUrl = true, callback?: () => void) {
+  function createComp(needMockNavigateByUrl: boolean = true, callback?: () => void): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
@@ -213,7 +213,7 @@ describe('abc: sidebar-nav', () => {
     });
 
     describe('#icon', () => {
-      function updateIcon(icon: string | MenuIcon) {
+      function updateIcon(icon: string | MenuIcon): void {
         createComp();
 
         menuSrv.add([
@@ -527,20 +527,20 @@ describe('abc: sidebar-nav', () => {
   });
 
   class PageObject {
-    getEl<T>(cls: string, body = false) {
+    getEl<T>(cls: string, body: boolean = false): T | null {
       const el = body ? document.querySelector(cls) : dl.query(By.css(cls)) ? dl.query(By.css(cls)).nativeElement : null;
       return el ? (el as T) : null;
     }
-    checkText(cls: string, value: any) {
+    checkText(cls: string, value: any): void {
       const el = this.getEl<HTMLElement>(cls);
       expect(el ? el.innerText.trim() : '').toBe(value);
     }
-    checkCount(cls: string, count = 1) {
+    checkCount(cls: string, count: number = 1): this {
       expect(dl.queryAll(By.css(cls)).length).toBe(count);
       return this;
     }
     /** 期望显示子菜单，默认：`true` */
-    showSubMenu(resultExpectShow = true) {
+    showSubMenu(resultExpectShow: boolean = true): void {
       let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
       const subTitleEl = this.getEl<HTMLElement>('.sidebar-nav__item-link');
@@ -554,7 +554,7 @@ describe('abc: sidebar-nav', () => {
       }
     }
     /** 期望隐藏子菜单，默认：`true` */
-    hideSubMenu(resultExpectHide = true) {
+    hideSubMenu(resultExpectHide: boolean = true): void {
       const containerEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(containerEl).not.toBeNull();
       containerEl!.querySelector(resultExpectHide ? 'a' : 'li')!.click();
@@ -585,7 +585,7 @@ class TestComponent {
   autoCloseUnderPad = false;
   recursivePath = false;
   openStrictly = false;
-  select() {}
+  select(): void {}
 }
 
 @Component({ template: `` })

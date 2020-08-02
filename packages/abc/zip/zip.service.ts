@@ -22,7 +22,7 @@ export class ZipService {
     return this.lazy.load([this.cog.url!].concat(this.cog.utils!));
   }
 
-  private check(zip: any) {
+  private check(zip: any): void {
     if (!zip) throw new Error('get instance via `ZipService.create()`');
   }
 

@@ -28,7 +28,7 @@ export function getLangConfig(lang: string): any {
   return LANGS_CONFIG.find(w => w.langs.includes(lang));
 }
 
-export function getLangData(lang: string) {
+export function getLangData(lang: string): any {
   let langCog = getLangConfig(lang);
   if (!langCog || !langCog.fileName) {
     langCog = getLangConfig('zh');

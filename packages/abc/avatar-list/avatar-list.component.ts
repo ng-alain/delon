@@ -50,7 +50,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  private gen() {
+  private gen(): void {
     const { _items } = this;
     const maxLength = this.maxLength > 0 ? this.maxLength : _items.length;
     const numOfChildren = _items.length;
@@ -60,12 +60,12 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.gen();
     this.inited = true;
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.inited) {
       this.gen();
     }

@@ -7,16 +7,16 @@ import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
-export function isBlank(o: any) {
+export function isBlank(o: any): boolean {
   return o == null;
 }
 
-export function toBool(value: any, defaultValue: boolean) {
+export function toBool(value: any, defaultValue: boolean): boolean {
   value = toBoolean(value, true);
   return value == null ? defaultValue : value;
 }
 
-export function di(ui: SFUISchema, ...args: NzSafeAny[]) {
+export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {
   if (ui.debug) {
     // tslint:disable-next-line:no-console
     console.warn(...args);
@@ -24,7 +24,7 @@ export function di(ui: SFUISchema, ...args: NzSafeAny[]) {
 }
 
 /** 根据 `$ref` 查找 `definitions` */
-function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition) {
+function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition): any {
   const match = /^#\/definitions\/(.*)$/.exec($ref);
   if (match && match[1]) {
     // parser JSON Pointer
@@ -87,7 +87,7 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | n
   return schema;
 }
 
-function detectKey(keys: string[], detectKeys: string[]) {
+function detectKey(keys: string[], detectKeys: string[]): void {
   detectKeys.forEach(key => {
     if (!keys.includes(key)) {
       throw new Error(`if: properties does not contain '${key}'`);
@@ -95,7 +95,7 @@ function detectKey(keys: string[], detectKeys: string[]) {
   });
 }
 
-export function orderProperties(properties: string[], order: string[]) {
+export function orderProperties(properties: string[], order: string[]): string[] {
   if (!Array.isArray(order)) return properties;
   const arrayToHash = (arr: NzSafeAny) =>
     arr.reduce((prev: NzSafeAny, curr: NzSafeAny) => {
@@ -146,7 +146,7 @@ export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchema
   return list;
 }
 
-export function getCopyEnum(list: any[], formData: any, readOnly: boolean) {
+export function getCopyEnum(list: any[], formData: any, readOnly: boolean): SFSchemaEnum[] {
   return getEnum(deepCopy(list || []), formData, readOnly);
 }
 

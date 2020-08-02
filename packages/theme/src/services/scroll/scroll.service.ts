@@ -48,7 +48,7 @@ export class ScrollService {
    * @param element 指定元素，默认 `document.body`
    * @param topOffset 偏移值，默认 `0`
    */
-  scrollToElement(element?: Element | null, topOffset = 0) {
+  scrollToElement(element?: Element | null, topOffset: number = 0): void {
     if (!this.platform.isBrowser) {
       return;
     }
@@ -72,7 +72,7 @@ export class ScrollService {
    * 滚动至顶部
    * @param topOffset 偏移值，默认 `0`
    */
-  scrollToTop(topOffset = 0) {
+  scrollToTop(topOffset: number = 0): void {
     if (!this.platform.isBrowser) {
       return;
     }

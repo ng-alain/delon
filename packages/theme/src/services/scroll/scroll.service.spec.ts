@@ -25,8 +25,8 @@ describe('Service: Scroll', () => {
 
   describe('[default]', () => {
     class MockWindow {
-      scrollBy() {}
-      scrollTo() {}
+      scrollBy(): void {}
+      scrollTo(): void {}
     }
     beforeEach(() => {
       const providers = [

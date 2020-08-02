@@ -9,11 +9,11 @@ export interface AppResult {
   tree: UnitTestTree;
 }
 
-export function createNgRunner() {
+export function createNgRunner(): SchematicTestRunner {
   return new SchematicTestRunner('schematics', join('./node_modules/@schematics/angular/collection.json'));
 }
 
-export function createAlainRunner() {
+export function createAlainRunner(): SchematicTestRunner {
   return new SchematicTestRunner('schematics', join(__dirname, '../collection.json'));
 }
 
@@ -55,7 +55,7 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
   return { runner: alainRunner, tree };
 }
 
-export async function createAlainAndModuleApp(name = 'trade', ngAddOptions?: object): Promise<AppResult> {
+export async function createAlainAndModuleApp(name: string = 'trade', ngAddOptions?: object): Promise<AppResult> {
   const res = await createAlainApp(ngAddOptions);
   res.tree = await res.runner.runSchematicAsync('module', { name, project: APPNAME, routing: true }, res.tree).toPromise();
   return res;

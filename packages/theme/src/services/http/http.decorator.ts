@@ -1,4 +1,4 @@
-// tslint:disable: only-arrow-functions
+// tslint:disable: only-arrow-functions typedef
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ACLService } from '@delon/acl';
@@ -36,7 +36,7 @@ interface ParamType {
 
 const paramKey = `__api_params`;
 
-function setParam(target: any, key = paramKey) {
+function setParam(target: any, key: string = paramKey): any {
   let params = target[key];
   if (typeof params === 'undefined') {
     params = target[key] = {};

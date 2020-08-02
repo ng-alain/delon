@@ -9,7 +9,7 @@ import stWidgetModuleTS from './files-tpl/st-widget.module';
 
 let project: Project;
 
-function fixVersion(tree: Tree, context: SchematicContext) {
+function fixVersion(tree: Tree, context: SchematicContext): void {
   addPackageToPackageJson(
     tree,
     ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(name => `@delon/${name}@${VERSION}`),
@@ -17,7 +17,7 @@ function fixVersion(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade @delon/* version number`);
 }
 
-function fixThirdVersion(tree: Tree, context: SchematicContext) {
+function fixThirdVersion(tree: Tree, context: SchematicContext): void {
   // dependencies
   addPackageToPackageJson(
     tree,
@@ -46,7 +46,7 @@ function fixThirdVersion(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade third libs version number`);
 }
 
-function fixScripts(tree: Tree, context: SchematicContext) {
+function fixScripts(tree: Tree, context: SchematicContext): void {
   const json = getJSON(tree, 'package.json');
   json.scripts['lint:ts'] = `ng lint --fix`;
   delete json['lint-staged'];
@@ -55,7 +55,7 @@ function fixScripts(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade [lint:ts] script`);
 }
 
-function fixG2Scripts(tree: Tree, context: SchematicContext) {
+function fixG2Scripts(tree: Tree, context: SchematicContext): void {
   const typingsPath = '/src/typings.d.ts';
   if (!tree.exists(typingsPath)) {
     tree.create(typingsPath, '');
@@ -81,12 +81,12 @@ function fixG2Scripts(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Removed g2 script in angular.json & declaration in /src/typings.d.ts`);
 }
 
-function addStWidgetModule(tree: Tree, context: SchematicContext) {
+function addStWidgetModule(tree: Tree, context: SchematicContext): void {
   overwriteFile(tree, `${project.sourceRoot}/app/shared/st-widget/st-widget.module.ts`, stWidgetModuleTS, true, true);
   context.logger.info(colors.red(`  ⚠  Add [st-widget.module.ts], But you must manually import in [app.module.ts] to take effect.`));
 }
 
-function addGlobalConfigModule(tree: Tree, context: SchematicContext) {
+function addGlobalConfigModule(tree: Tree, context: SchematicContext): void {
   overwriteFile(tree, `${project.sourceRoot}/app/global-config.module.ts`, stWidgetModuleTS, true, true);
   context.logger.info(
     colors.red(

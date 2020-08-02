@@ -33,7 +33,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
     return value;
   };
 
-  _afterChange(value: NzSliderValue) {
+  _afterChange(value: NzSliderValue): void {
     const { afterChange } = this.ui;
     if (afterChange) return afterChange(value);
   }

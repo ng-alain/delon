@@ -14,7 +14,7 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   return model != null && !!model.token && !model.isExpired(offset);
 }
 
-export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: string) {
+export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: string): void {
   const router = injector.get<Router>(Router);
   (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url || router.url;
   if (options.token_invalid_redirect === true) {

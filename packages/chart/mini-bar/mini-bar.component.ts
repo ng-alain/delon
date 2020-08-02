@@ -64,7 +64,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private install() {
+  private install(): void {
     const { el, height, padding, yTooltipSuffix, tooltipType, theme } = this;
     const chart = (this._chart = new Chart({
       container: el.nativeElement,
@@ -115,7 +115,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, height, padding, data, color, borderWidth } = this;
     if (!_chart || !data || data.length <= 0) return;
     _chart.geometries[0].size(borderWidth).color(color);
@@ -124,7 +124,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.changeData(data);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.platform.isBrowser) {
       return;
     }

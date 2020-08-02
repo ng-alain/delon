@@ -5,7 +5,7 @@ import { addPackageToPackageJson, getAngular, getJSON, overwriteAngular, overwri
 import { getProjectFromWorkspace } from '../utils/project';
 import { PluginOptions } from './interface';
 
-function configToAngularJson(host: Tree, options: PluginOptions) {
+function configToAngularJson(host: Tree, options: PluginOptions): void {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, options.project);
   // add build config
@@ -26,7 +26,7 @@ function configToAngularJson(host: Tree, options: PluginOptions) {
   overwriteAngular(host, json);
 }
 
-function envConfig(host: Tree, options: PluginOptions) {
+function envConfig(host: Tree, options: PluginOptions): void {
   const defEnvPath = `${options.sourceRoot}/environments/environment.ts`;
   const defContent = host.get(defEnvPath)!.content;
   if (!host.exists(defEnvPath)) return;
@@ -40,7 +40,7 @@ function envConfig(host: Tree, options: PluginOptions) {
   addValueToVariable(host, hmrEnvPath, 'environment', 'hmr: true');
 }
 
-function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
+function addNodeTypeToTsconfig(host: Tree, options: PluginOptions): void {
   const tsConfigPath = `${options.root}/tsconfig.app.json`;
   if (!host.exists(tsConfigPath)) {
     console.warn(`Not found ${tsConfigPath} file`);

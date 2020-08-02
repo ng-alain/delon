@@ -44,7 +44,7 @@ export function runPostScheduledTasks(runner: SchematicTestRunner, taskName: str
   );
 }
 
-export async function createTestApp(runner: SchematicTestRunner, appOptions = {}): Promise<UnitTestTree> {
+export async function createTestApp(runner: SchematicTestRunner, appOptions: {} = {}): Promise<UnitTestTree> {
   const workspaceTree = await runner.runExternalSchematicAsync('@schematics/angular', 'workspace', {
     name: 'workspace',
     version: '6.0.0',
@@ -73,7 +73,7 @@ export function readFileContent(filePath: string): string {
  * that the files are being copied over to the Bazel bin output. Bazel just patches the NodeJS
  * resolve function and maps the module paths to the original file location.
  */
-export function resolveBazelDataFile(filePath: string) {
+export function resolveBazelDataFile(filePath: string): string {
   return require.resolve(`./${filePath}`);
   // Only for bazel
   return require.resolve(`${bazelModuleSuffix}/${filePath}`);
@@ -99,7 +99,7 @@ export async function createFileSystemTestApp(runner: SchematicTestRunner): Prom
   return { tree, tempPath };
 }
 
-export async function runTestCases(migrationName: string, inputs: { [name: string]: string }) {
+export async function runTestCases(migrationName: string, inputs: { [name: string]: string }): Promise<{ tempPath: string; logOutput: string; appTree: UnitTestTree; }> {
   const runner = new SchematicTestRunner('schematics', migrationCollection);
   const inputNames = Object.keys(inputs);
   const initialWorkingDir = process.cwd();

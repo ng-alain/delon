@@ -23,7 +23,7 @@ describe('form: widget: mention', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  function getWidget() {
+  function getWidget(): MentionWidget {
     return page.getWidget<MentionWidget>('sf-' + widget);
   }
 

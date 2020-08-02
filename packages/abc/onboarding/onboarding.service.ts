@@ -92,7 +92,7 @@ export class OnboardingService implements OnDestroy {
     }
   }
 
-  private showItem(isStart = false): void {
+  private showItem(isStart: boolean = false): void {
     const items = this.config.items!;
     const item = {
       position: 'bottomLeft',

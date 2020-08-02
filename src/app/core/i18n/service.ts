@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
@@ -57,11 +57,11 @@ export class I18NService implements AlainI18NService {
     return this.getFullLang(browserLang);
   }
 
-  get change() {
+  get change(): Observable<LangType> {
     return this.change$.asObservable();
   }
 
-  use(lang: LangType, emit = true) {
+  use(lang: LangType, emit: boolean = true): void {
     this.translate.use(lang);
     this.zorroI18n.setLocale(lang === 'en-US' ? en_US : zh_CN);
     this.delonI18n.setLocale(lang === 'en-US' ? delonEnUS : delonZhCn);
@@ -76,19 +76,19 @@ export class I18NService implements AlainI18NService {
     return 'zh-CN';
   }
 
-  get lang() {
+  get lang(): string {
     return this.translate.currentLang;
   }
 
-  get zone() {
+  get zone(): string {
     return this.translate.currentLang.split('-')[0];
   }
 
-  get langs() {
+  get langs(): string[] {
     return ['zh-CN', 'en-US'];
   }
 
-  fanyi(key: string, interpolateParams?: {}, isSafe?: boolean) {
+  fanyi(key: string, interpolateParams?: {}, isSafe?: boolean): any {
     const res = this.translate.instant(key, interpolateParams);
     if (isSafe === true) {
       return this.dom.bypassSecurityTrustHtml(res);
@@ -96,16 +96,16 @@ export class I18NService implements AlainI18NService {
     return res;
   }
 
-  get(i: any) {
+  get(i: any): string {
     return typeof i === 'string' ? i : i[this.lang] || i[this.defaultLang] || '';
   }
 
-  getFullLang(lang: string) {
+  getFullLang(lang: string): string {
     const res = this._langs.filter(l => l.code.split('-')[0] === lang);
     return res.length > 0 ? res[0].code : this.defaultLang;
   }
 
-  getRealUrl(url: string) {
+  getRealUrl(url: string): string {
     const arr = url.split('#')[0].split('?')[0].split('/');
     arr.splice(-1);
     return arr.join('/');

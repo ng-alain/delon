@@ -28,13 +28,13 @@ export class Walker extends ComponentWalker {
   /** Change data that upgrades to the specified target version. */
   data = getUpgradeDataFromWalker(this, 'cssSelectors');
 
-  visitInlineTemplate(node: ts.StringLiteralLike) {
+  visitInlineTemplate(node: ts.StringLiteralLike): void {
     this._createReplacementsForContent(node, node.getText()).forEach(data => {
       this.addFailureAtReplacement(data.failureMessage, data.replacement);
     });
   }
 
-  visitExternalTemplate(node: ExternalResource) {
+  visitExternalTemplate(node: ExternalResource): void {
     this._createReplacementsForContent(node, node.getText()).forEach(data => {
       this.addExternalFailureAtReplacement(node, data.failureMessage, data.replacement);
     });
@@ -44,7 +44,13 @@ export class Walker extends ComponentWalker {
    * Searches for outdated css selectors in the specified content and creates replacements
    * with the according messages that can be added to a rule failure.
    */
-  private _createReplacementsForContent(node: ts.Node, templateContent: string) {
+  private _createReplacementsForContent(
+    node: ts.Node,
+    templateContent: string,
+  ): {
+    failureMessage: string;
+    replacement: Replacement;
+  }[] {
     const replacements: Array<{ failureMessage: string; replacement: Replacement }> = [];
 
     this.data.forEach(data => {

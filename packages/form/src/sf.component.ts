@@ -35,9 +35,11 @@ import { di, resolveIf, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService) {
+export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService): FormPropertyFactory {
   return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
 }
+
+export type SFMode = 'default' | 'search' | 'edit';
 
 @Component({
   selector: 'sf, [sf]',
@@ -114,7 +116,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() compact = false;
   /** 表单模式 */
   @Input()
-  set mode(value: 'default' | 'search' | 'edit') {
+  set mode(value: SFMode) {
     switch (value) {
       case 'search':
         this.layout = 'inline';
@@ -135,10 +137,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     }
     this._mode = value;
   }
-  get mode() {
+  get mode(): SFMode {
     return this._mode;
   }
-  private _mode: 'default' | 'search' | 'edit';
+  private _mode: SFMode;
   /**
    * Whether to load status，when `true` reset button is disabled status, submit button is loading status
    */
@@ -193,7 +195,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  onSubmit(e: Event) {
+  onSubmit(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
     if (!this.liveValidate) this.validator();
@@ -246,7 +248,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     ['optionalHelp'].filter(key => !!this._defUi[key]).forEach(key => (ui[key] = { ...this._defUi[key], ...ui[key] }));
   }
 
-  private coverProperty() {
+  private coverProperty(): void {
     const isHorizontal = this.layout === 'horizontal';
     const _schema = deepCopy(this.schema);
     const { definitions } = _schema;
@@ -423,7 +425,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     di(this._ui, 'cover schema & ui', this._ui, _schema);
   }
 
-  private coverButtonProperty() {
+  private coverButtonProperty(): void {
     this._btn = {
       render: { size: 'default' },
       ...this.locale,
@@ -475,7 +477,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** @internal */
-  _addTpl(path: string, templateRef: TemplateRef<void>) {
+  _addTpl(path: string, templateRef: TemplateRef<void>): void {
     if (this._renders.has(path)) {
       console.warn(`Duplicate definition "${path}" custom widget`);
       return;
@@ -484,7 +486,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.attachCustomRender();
   }
 
-  private attachCustomRender() {
+  private attachCustomRender(): void {
     this._renders.forEach((tpl, path) => {
       const property = this.rootProperty!.searchProperty(path);
       if (property == null) {
@@ -582,7 +584,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * 重置表单
    * @param [emit] 是否触发 `formReset` 事件，默认：`false`
    */
-  reset(emit = false): this {
+  reset(emit: boolean = false): this {
     if (!this.platform.isBrowser) {
       return this;
     }
@@ -594,7 +596,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  private cleanRootSub() {
+  private cleanRootSub(): void {
     if (!this.rootProperty) return;
     this.rootProperty.errorsChanges.unsubscribe();
     this.rootProperty.valueChanges.unsubscribe();

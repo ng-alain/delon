@@ -16,7 +16,7 @@ export const collectionPath = join(__dirname, '..', 'collection.json');
 export const migrationCollection = join(__dirname, '..', 'migration.json');
 
 /** Create a base app used for testing. */
-export async function createTestAppAsync(appOptions = {}): Promise<UnitTestTree> {
+export async function createTestAppAsync(appOptions: {} = {}): Promise<UnitTestTree> {
   const baseRunner = new SchematicTestRunner('ng-alain', collectionPath);
 
   const workspaceTree = await baseRunner

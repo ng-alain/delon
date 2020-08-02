@@ -24,11 +24,11 @@ export class DemoModalComponent {
 
   constructor(private modal: NzModalRef) {}
 
-  ok() {
+  ok(): void {
     this.modal.destroy(`new time: ${+new Date()}`);
   }
 
-  cancel() {
+  cancel(): void {
     this.modal.destroy();
   }
 }

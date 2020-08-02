@@ -7,7 +7,7 @@ import { Menu } from './interface';
 import { MenuService } from './menu.service';
 
 class MockACLService {
-  can(val: string) {
+  can(val: string): boolean {
     return val === 'admin';
   }
 }

@@ -74,11 +74,11 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private getHeight() {
+  private getHeight(): number {
     return this.title ? this.height - TITLE_HEIGHT : this.height;
   }
 
-  private install() {
+  private install(): void {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
@@ -126,7 +126,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, padding, data } = this;
     if (!_chart || !data || data.length <= 0) return;
     this.installResizeEvent();
@@ -140,14 +140,14 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.render();
   }
 
-  private updatelabel() {
+  private updatelabel(): void {
     const { node, data, _chart } = this;
     const canvasWidth = node.nativeElement.clientWidth;
     const minWidth = data.length * 30;
     _chart.axis('x', canvasWidth > minWidth).render();
   }
 
-  private installResizeEvent() {
+  private installResizeEvent(): void {
     if (!this.autoLabel || this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')
@@ -158,7 +158,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.platform.isBrowser) {
       return;
     }

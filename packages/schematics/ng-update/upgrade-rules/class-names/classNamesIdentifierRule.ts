@@ -38,7 +38,7 @@ export class Walker extends RuleWalker {
   trustedNamespaces: Set<string> = new Set();
 
   /** Method that is called for every identifier inside of the specified project. */
-  visitIdentifier(identifier: ts.Identifier) {
+  visitIdentifier(identifier: ts.Identifier): void {
     // For identifiers that aren't listed in the className data, the whole check can be
     // skipped safely.
     if (!this.data.some(data => data.replace === identifier.text)) {
@@ -83,7 +83,7 @@ export class Walker extends RuleWalker {
   }
 
   /** Creates a failure and replacement for the specified identifier. */
-  private _createFailureWithReplacement(identifier: ts.Identifier) {
+  private _createFailureWithReplacement(identifier: ts.Identifier): void {
     const classData = this.data.find(data => data.replace === identifier.text);
 
     if (!classData) {

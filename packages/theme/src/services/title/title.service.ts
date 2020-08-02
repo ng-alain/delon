@@ -85,7 +85,7 @@ export class TitleService implements OnDestroy {
     return title || item.text!;
   }
 
-  private _setTitle(title?: string | string[]) {
+  private _setTitle(title?: string | string[]): void {
     if (!title) {
       title = this.getByRoute() || this.getByMenu() || this.getByElement() || this.default;
     }
@@ -110,14 +110,14 @@ export class TitleService implements OnDestroy {
   /**
    * Set the document title, will be delay `25ms`, pls refer to [#1261](https://github.com/ng-alain/ng-alain/issues/1261)
    */
-  setTitle(title?: string | string[]) {
+  setTitle(title?: string | string[]): void {
     setTimeout(() => this._setTitle(title), this.DELAY_TIME);
   }
 
   /**
    * Set i18n key of the document title
    */
-  setTitleByI18n(key: string, params?: {}) {
+  setTitleByI18n(key: string, params?: {}): void {
     this.setTitle(this.i18nSrv.fanyi(key, params));
   }
 

@@ -19,7 +19,7 @@ export class SessionStorageStore implements IStore {
     return true;
   }
 
-  remove(key: string) {
+  remove(key: string): void {
     sessionStorage.removeItem(key);
   }
 }

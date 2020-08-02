@@ -21,7 +21,7 @@ export class CookieStorageStore implements IStore {
     return true;
   }
 
-  remove(key: string) {
+  remove(key: string): void {
     Cookies.remove(key);
   }
 }

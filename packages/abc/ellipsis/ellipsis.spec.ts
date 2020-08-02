@@ -11,7 +11,7 @@ describe('abc: ellipsis', () => {
   let context: TestBaseComponent;
   let page: PageObject;
 
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [EllipsisModule],
       declarations: [TestLengthComponent, TestLineComponent],
@@ -146,7 +146,7 @@ describe('abc: ellipsis', () => {
       return this.root.querySelector(cls);
     }
 
-    checkCls(cls: string, count = 1): this {
+    checkCls(cls: string, count: number = 1): this {
       expect(this.root.querySelectorAll(cls).length).toBe(count);
       return this;
     }
@@ -164,7 +164,7 @@ describe('abc: ellipsis', () => {
       return this.text.substring(0, this.comp.targetCount);
     }
 
-    hasTooltip(result = true): this {
+    hasTooltip(result: boolean = true): this {
       const list = dl.queryAll(By.directive(NzTooltipDirective));
       if (result) {
         expect(list.length).toBeGreaterThan(0);

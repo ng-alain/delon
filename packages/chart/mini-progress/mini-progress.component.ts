@@ -19,11 +19,11 @@ export class G2MiniProgressComponent implements OnChanges {
 
   constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
-  private fixNum(value: number) {
+  private fixNum(value: number): number {
     return Math.min(Math.max(toNumber(value), 0), 100);
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.target = this.fixNum(this.target);
     this.percent = this.fixNum(this.percent);
     this.cdr.detectChanges();

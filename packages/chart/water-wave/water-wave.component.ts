@@ -96,7 +96,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     ctx.strokeStyle = color;
     ctx.moveTo(cStartPoint[0], cStartPoint[1]);
 
-    function drawSin() {
+    function drawSin(): void {
       ctx.beginPath();
       ctx.save();
 
@@ -126,7 +126,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       ctx.restore();
     }
 
-    function render() {
+    function render(): void {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       if (circleLock && !isUpdate) {
         if (arcStack!.length) {

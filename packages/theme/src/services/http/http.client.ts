@@ -51,7 +51,7 @@ export class _HttpClient {
     return new HttpParams({ fromObject: newParams });
   }
 
-  appliedUrl(url: string, params?: NzSafeAny) {
+  appliedUrl(url: string, params?: NzSafeAny): string {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];
@@ -62,11 +62,11 @@ export class _HttpClient {
     return url + arr.join('&');
   }
 
-  begin() {
+  begin(): void {
     Promise.resolve(null).then(() => (this._loading = true));
   }
 
-  end() {
+  end(): void {
     Promise.resolve(null).then(() => (this._loading = false));
   }
 

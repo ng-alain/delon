@@ -14,7 +14,7 @@ export function parseDocument(html: string): any {
   }) as DefaultTreeDocument;
 }
 
-export function findElementsWithTagName(html: string, tagName: string) {
+export function findElementsWithTagName(html: string, tagName: string): DefaultTreeElement[] {
   const document = parseDocument(html);
   const elements: DefaultTreeElement[] = [];
 
@@ -39,7 +39,7 @@ export function findElementsWithTagName(html: string, tagName: string) {
  * Parses a HTML fragment and traverses all AST nodes in order find elements that
  * include the specified attribute.
  */
-export function findElementsWithAttribute(html: string, attributeName: string) {
+export function findElementsWithAttribute(html: string, attributeName: string): DefaultTreeElement[] {
   const document = parseDocument(html);
   const elements: DefaultTreeElement[] = [];
 
@@ -64,7 +64,7 @@ export function findElementsWithAttribute(html: string, attributeName: string) {
  * Finds elements with explicit tag names that also contain the specified attribute. Returns the
  * attribute start offset based on the specified HTML.
  */
-export function findAttributeOnElementWithTag(html: string, name: string, tagNames: string[]) {
+export function findAttributeOnElementWithTag(html: string, name: string, tagNames: string[]): number[] {
   return findElementsWithAttribute(html, name)
     .filter(element => tagNames.includes(element.tagName))
     .map(element => getStartOffsetOfAttribute(element, name));
@@ -74,7 +74,7 @@ export function findAttributeOnElementWithTag(html: string, name: string, tagNam
  * Finds elements that contain the given attribute and contain at least one of the other
  * specified attributes. Returns the primary attribute's start offset based on the specified HTML.
  */
-export function findAttributeOnElementWithAttrs(html: string, name: string, attrs: string[]) {
+export function findAttributeOnElementWithAttrs(html: string, name: string, attrs: string[]): number[] {
   return findElementsWithAttribute(html, name)
     .filter(element => attrs.some(attr => hasElementAttribute(element, attr)))
     .map(element => getStartOffsetOfAttribute(element, name));

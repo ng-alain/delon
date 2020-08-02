@@ -19,7 +19,7 @@ describe('form: widget: tag', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  function getComp() {
+  function getComp(): NzTagComponent {
     return page.getWidget<NzTagComponent>('nz-tag');
   }
 

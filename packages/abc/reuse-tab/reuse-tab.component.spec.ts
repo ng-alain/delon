@@ -8,7 +8,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseCustomContextMenu, ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
+import { ReuseCustomContextMenu, ReuseItem, ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -16,7 +16,7 @@ import { ReuseTabStrategy } from './reuse-tab.strategy';
 let i18nResult = 'zh';
 @Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string) {
+  fanyi(_key: string): string {
     return i18nResult;
   }
 }
@@ -29,7 +29,7 @@ describe('abc: reuse-tab', () => {
   let srv: ReuseTabService;
   let page: PageObject;
 
-  function genModule(needI18n = false) {
+  function genModule(needI18n: boolean = false): void {
     TestBed.configureTestingModule({
       declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
@@ -85,7 +85,7 @@ describe('abc: reuse-tab', () => {
     });
   }
 
-  function createComp(layoutTemplate?: string) {
+  function createComp(layoutTemplate?: string): void {
     if (layoutTemplate) TestBed.overrideTemplate(LayoutComponent, layoutTemplate);
     fixture = TestBed.createComponent(AppComponent);
     dl = fixture.debugElement;
@@ -680,7 +680,7 @@ describe('abc: reuse-tab', () => {
     getEl(cls: string): HTMLElement {
       return dl.query(By.css(cls)).nativeElement as HTMLElement;
     }
-    cd(time = 101): this {
+    cd(time: number = 101): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();
@@ -691,7 +691,7 @@ describe('abc: reuse-tab', () => {
       this.cd();
       return this;
     }
-    get list() {
+    get list(): ReuseItem[] {
       return rtComp.list;
     }
     get count(): number {
@@ -758,7 +758,7 @@ describe('abc: reuse-tab', () => {
       (el as HTMLElement).click();
       return this.cd();
     }
-    end() {
+    end(): void {
       flush();
       discardPeriodicTasks();
     }
@@ -818,8 +818,8 @@ class LayoutComponent {
   tabType: 'line' | 'card' = 'line';
   tabMaxWidth: number;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
-  change() {}
-  close() {}
+  change(): void {}
+  close(): void {}
 }
 
 @Component({
@@ -831,8 +831,8 @@ class LayoutComponent {
 })
 class AComponent {
   time = +new Date();
-  _onReuseInit() {}
-  _onReuseDestroy() {}
+  _onReuseInit(): void {}
+  _onReuseDestroy(): void {}
 }
 
 @Component({
@@ -846,8 +846,8 @@ class AComponent {
 })
 class BComponent {
   time = +new Date();
-  _onReuseInit() {}
-  _onReuseDestroy() {}
+  _onReuseInit(): void {}
+  _onReuseDestroy(): void {}
 }
 
 @Component({
@@ -863,8 +863,8 @@ class CComponent {
   constructor(private srv: ReuseTabService) {
     this.srv.title = 'new c title';
   }
-  _onReuseInit() {}
-  _onReuseDestroy() {}
+  _onReuseInit(): void {}
+  _onReuseDestroy(): void {}
 }
 
 @Component({
@@ -877,8 +877,8 @@ class CComponent {
 })
 class DComponent {
   time = +new Date();
-  _onReuseInit() {}
-  _onReuseDestroy() {}
+  _onReuseInit(): void {}
+  _onReuseDestroy(): void {}
 }
 
 @Component({
@@ -893,6 +893,6 @@ class EComponent {
   constructor(reuse: ReuseTabService) {
     reuse.closable = false;
   }
-  _onReuseInit() {}
-  _onReuseDestroy() {}
+  _onReuseInit(): void {}
+  _onReuseDestroy(): void {}
 }

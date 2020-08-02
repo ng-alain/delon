@@ -41,7 +41,7 @@ export interface CommonSchema {
   withoutPrefix?: boolean;
 }
 
-function buildSelector(schema: CommonSchema, projectPrefix: string) {
+function buildSelector(schema: CommonSchema, projectPrefix: string): string {
   const ret: string[] = [];
   if (!schema.withoutPrefix) {
     if (schema.prefix) {
@@ -63,7 +63,7 @@ function buildSelector(schema: CommonSchema, projectPrefix: string) {
   return ret.join('-');
 }
 
-function buildComponentName(schema: CommonSchema, _projectPrefix: string) {
+function buildComponentName(schema: CommonSchema, _projectPrefix: string): string {
   const ret: string[] = [schema.module!];
   if (schema.target && schema.target.length > 0) {
     ret.push(...schema.target.split('/'));
@@ -73,7 +73,7 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string) {
   return strings.classify(ret.join('-'));
 }
 
-function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
+function resolveSchema(host: Tree, project: Project, schema: CommonSchema): void {
   // module name
   if (!schema.module) {
     throw new SchematicsException(`Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`);
@@ -121,7 +121,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   validateHtmlSelector(schema.selector);
 }
 
-function addImportToModule(host: Tree, filePath: string, symbolName: string, fileName: string) {
+function addImportToModule(host: Tree, filePath: string, symbolName: string, fileName: string): void {
   const source = getSourceFile(host, filePath);
   const change = insertImport(source, filePath, symbolName, fileName) as InsertChange;
   const declarationRecorder = host.beginUpdate(filePath);
@@ -129,7 +129,7 @@ function addImportToModule(host: Tree, filePath: string, symbolName: string, fil
   host.commitUpdate(declarationRecorder);
 }
 
-export function addValueToVariable(host: Tree, filePath: string, variableName: string, text: string, needWrap = true) {
+export function addValueToVariable(host: Tree, filePath: string, variableName: string, text: string, needWrap: boolean = true): void {
   const source = getSourceFile(host, filePath);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
@@ -148,14 +148,14 @@ export function addValueToVariable(host: Tree, filePath: string, variableName: s
   host.commitUpdate(declarationRecorder);
 }
 
-function getRelativePath(filePath: string, schema: CommonSchema) {
+function getRelativePath(filePath: string, schema: CommonSchema): string {
   const importPath = `/${schema.path}/${schema.flat ? '' : strings.dasherize(schema.name!) + '/'}${strings.dasherize(
     schema.name!,
   )}.component`;
   return buildRelativePath(filePath, importPath);
 }
 
-function addDeclaration(schema: CommonSchema) {
+function addDeclaration(schema: CommonSchema): (host: Tree) => Tree {
   return (host: Tree) => {
     if (schema.skipImport || !schema.module) {
       return host;
@@ -206,13 +206,13 @@ export function buildAlain(schema: CommonSchema): Rule {
   };
 }
 
-export function tryDelFile(host: Tree, filePath: string) {
+export function tryDelFile(host: Tree, filePath: string): void {
   if (host.exists(filePath)) {
     host.delete(filePath);
   }
 }
 
-export function tryAddFile(host: Tree, filePath: string, content: string) {
+export function tryAddFile(host: Tree, filePath: string, content: string): void {
   tryDelFile(host, filePath);
   host.create(filePath, content);
 }

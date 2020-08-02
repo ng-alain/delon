@@ -46,13 +46,13 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private renderChart() {
+  private renderChart(): void {
     this.el.nativeElement.innerHTML = '';
     this.render.emit(this.el);
     this.installResizeEvent();
   }
 
-  private installResizeEvent() {
+  private installResizeEvent(): void {
     if (this.resizeTime <= 0 || this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')

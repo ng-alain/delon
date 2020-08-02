@@ -100,7 +100,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }
 
-  private get curUrl() {
+  private get curUrl(): string {
     return this.srv.getUrl(this.route.snapshot);
   }
 
@@ -172,7 +172,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   // #region UI
 
-  contextMenuChange(res: ReuseContextCloseEvent) {
+  contextMenuChange(res: ReuseContextCloseEvent): void {
     let fn: (() => void) | null = null;
     switch (res.type) {
       case 'refresh':
@@ -204,7 +204,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  _to(index: number, cb?: () => void) {
+  _to(index: number, cb?: () => void): void {
     index = Math.max(0, Math.min(index, this.list.length - 1));
     const item = this.list[index];
     this.router.navigateByUrl(item.url).then(res => {
@@ -217,7 +217,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  _close(e: Event | null, idx: number, includeNonCloseable: boolean) {
+  _close(e: Event | null, idx: number, includeNonCloseable: boolean): boolean {
     if (e != null) {
       e.preventDefault();
       e.stopPropagation();

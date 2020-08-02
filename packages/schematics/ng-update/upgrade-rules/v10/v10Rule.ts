@@ -8,7 +8,7 @@ import browserslistrcContent from './files-tpl/browserslistrc';
 
 let project: Project;
 
-function fixVersion(tree: Tree, context: SchematicContext) {
+function fixVersion(tree: Tree, context: SchematicContext): void {
   addPackageToPackageJson(
     tree,
     ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(name => `@delon/${name}@${VERSION}`),
@@ -16,7 +16,7 @@ function fixVersion(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade @delon/* version number`);
 }
 
-function fixThirdVersion(tree: Tree, context: SchematicContext) {
+function fixThirdVersion(tree: Tree, context: SchematicContext): void {
   // dependencies
   addPackageToPackageJson(
     tree,
@@ -53,7 +53,7 @@ function fixThirdVersion(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade third libs version number`);
 }
 
-function updateBrowserslistrc(tree: Tree, context: SchematicContext) {
+function updateBrowserslistrc(tree: Tree, context: SchematicContext): void {
   overwriteFile(tree, '/.browserslistrc', browserslistrcContent, true);
   context.logger.info(
     `  ✓  Upgrade browserslistrc, (NOTICE: If you are using the ie plugin, please make sure to manually modify 'not IE 11' to 'IE11' in '.browserslistrc')`,

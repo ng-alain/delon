@@ -4,7 +4,7 @@ import { Change, InsertChange, RemoveChange, ReplaceChange } from '@schematics/a
 import * as ts from 'typescript';
 
 /** Reads file given path and returns TypeScript source file. */
-export function getSourceFile(host: Tree, path: string) {
+export function getSourceFile(host: Tree, path: string): ts.SourceFile {
   const buffer = host.read(path);
   if (!buffer) {
     throw new SchematicsException(`Could not find file for path: ${path}`);
@@ -13,7 +13,7 @@ export function getSourceFile(host: Tree, path: string) {
   return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
 }
 
-export function commitChanges(host: Tree, src: string, changes: Change[]) {
+export function commitChanges(host: Tree, src: string, changes: Change[]): void {
   if (!changes || changes.length <= 0) return;
 
   const recorder = host.beginUpdate(src);
@@ -44,7 +44,7 @@ export function commitChanges(host: Tree, src: string, changes: Change[]) {
   host.commitUpdate(recorder);
 }
 
-export function updateComponentMetadata(host: Tree, src: string, callback: (node: ts.Node) => Change[], propertyName?: string) {
+export function updateComponentMetadata(host: Tree, src: string, callback: (node: ts.Node) => Change[], propertyName?: string): void {
   const source = getSourceFile(host, src);
 
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');

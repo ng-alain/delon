@@ -7,7 +7,7 @@ export class TerminatorService {
     this.onDestroy = new Subject();
   }
 
-  destroy() {
+  destroy(): void {
     this.onDestroy.next(true);
   }
 }

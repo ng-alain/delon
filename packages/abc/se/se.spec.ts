@@ -27,7 +27,7 @@ describe('abc: edit', () => {
     });
   };
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
@@ -39,7 +39,7 @@ describe('abc: edit', () => {
     page = new PageObject();
   }
 
-  function createComp() {
+  function createComp(): void {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     page = new PageObject();
@@ -469,7 +469,7 @@ describe('abc: edit', () => {
     getEls(cls: string): DebugElement[] {
       return dl.queryAll(By.css(cls));
     }
-    expect(cls: string, count = 1): this {
+    expect(cls: string, count: number = 1): this {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }
@@ -477,7 +477,7 @@ describe('abc: edit', () => {
       expect(this.getEl(cls).textContent?.trim()).toBe(text);
       return this;
     }
-    cd(time = 0): this {
+    cd(time: number = 0): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();

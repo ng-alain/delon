@@ -64,7 +64,7 @@ describe('util.#InputBoolean', () => {
       @InputBoolean() set val(val: any) {
         this._val = val;
       }
-      get val() {
+      get val(): any {
         return this._val;
       }
     }
@@ -169,7 +169,7 @@ describe('util.#InputNumber', () => {
       set val(val: any) {
         this._val = val;
       }
-      get val() {
+      get val(): any {
         return this._val;
       }
     }

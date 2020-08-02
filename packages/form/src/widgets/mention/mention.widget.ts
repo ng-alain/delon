@@ -47,18 +47,18 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
     }
   }
 
-  reset(_value: SFValue) {
+  reset(_value: SFValue): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
-  _select(options: any) {
+  _select(options: any): void {
     if (this.ui.select) this.ui.select(options);
   }
 
-  _search(option: MentionOnSearchTypes) {
+  _search(option: MentionOnSearchTypes): void {
     if (typeof this.ui.loadData !== 'function') return;
 
     this.loading = true;

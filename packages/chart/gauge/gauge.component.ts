@@ -50,9 +50,10 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private install() {
+  private install(): void {
     // 自定义Shape 部分
     registerShape('point', 'pointer', {
+      // tslint:disable-next-line: typedef
       draw(cfg, container) {
         const group = container.addGroup({});
         // 获取极坐标系下画布中心点
@@ -121,7 +122,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, percent, color, bgColor, title } = this;
     if (!_chart) return;
 

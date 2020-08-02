@@ -13,7 +13,7 @@ import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginSTS } from './plugin.sts';
 import { Schema as PluginSchema } from './schema';
 
-function installPackages() {
+function installPackages(): (_host: Tree, context: SchematicContext) => void {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
   };

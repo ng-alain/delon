@@ -29,7 +29,7 @@ export class LodopService implements OnDestroy {
    *
    * **注：**重新设置会倒置重新加载脚本资源
    */
-  get cog() {
+  get cog(): AlainLodopConfig {
     return this._cog;
   }
   set cog(value: AlainLodopConfig) {
@@ -65,7 +65,7 @@ export class LodopService implements OnDestroy {
     return ret;
   }
 
-  private check() {
+  private check(): void {
     if (!this._lodop) throw new Error(`请务必先调用 lodop 获取对象`);
   }
 
@@ -115,7 +115,7 @@ export class LodopService implements OnDestroy {
   }
 
   /** 重置 lodop 对象 */
-  reset() {
+  reset(): void {
     this._lodop = null;
     this.pending = false;
     this.request();
@@ -173,7 +173,7 @@ export class LodopService implements OnDestroy {
       };
     });
   }
-  private printDo() {
+  private printDo(): void {
     const data = this.printBuffer.shift();
     if (!data) return;
     this.attachCode(data.code, data.item, data.parser);

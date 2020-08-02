@@ -18,14 +18,14 @@ export class SettingsService {
 
   constructor(private platform: Platform) {}
 
-  getData(key: string) {
+  getData(key: string): any {
     if (!this.platform.isBrowser) {
       return null;
     }
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
-  setData(key: string, value: any) {
+  setData(key: string, value: any): void {
     if (!this.platform.isBrowser) {
       return;
     }
@@ -80,17 +80,15 @@ export class SettingsService {
     return true;
   }
 
-  setApp(value: App) {
+  setApp(value: App): void {
     this._app = value;
     this.setData(APP, value);
     this.notify$.next({ type: 'app', value });
-    return true;
   }
 
-  setUser(value: User) {
+  setUser(value: User): void {
     this._user = value;
     this.setData(USER, value);
     this.notify$.next({ type: 'user', value });
-    return true;
   }
 }

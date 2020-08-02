@@ -12,19 +12,26 @@ export class Rule extends Rules.AbstractRule {
 }
 
 export class Walker extends ComponentWalker {
-  visitInlineTemplate(node: ts.StringLiteralLike) {
+  visitInlineTemplate(node: ts.StringLiteralLike): void {
     this._createFailuresForContent(node, node.getText()).forEach(data => {
       this.addFailureFromStartToEnd(data.start, data.end, data.message);
     });
   }
 
-  visitExternalTemplate(node: ExternalResource) {
+  visitExternalTemplate(node: ExternalResource): void {
     this._createFailuresForContent(node, node.getText()).forEach(data => {
       this.addExternalFailureFromStartToEnd(node, data.start, data.end, data.message);
     });
   }
 
-  private _createFailuresForContent(node: ts.Node, content: string) {
+  private _createFailuresForContent(
+    node: ts.Node,
+    content: string,
+  ): {
+    message: string;
+    start: number;
+    end: number;
+  }[] {
     const failures: Array<{ message: string; start: number; end: number }> = [];
 
     findElementHasAttributes(content, 'st', [

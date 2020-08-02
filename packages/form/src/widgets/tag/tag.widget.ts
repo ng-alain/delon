@@ -14,14 +14,14 @@ import { SFTagWidgetSchema } from './schema';
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   data: SFSchemaEnum[];
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
-  onChange(item: SFSchemaEnum) {
+  onChange(item: SFSchemaEnum): void {
     item.checked = !item.checked;
     this.updateValue();
     if (this.ui.checkedChange) {
@@ -29,11 +29,11 @@ export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
     }
   }
 
-  _close(e: MouseEvent) {
+  _close(e: MouseEvent): void {
     if (this.ui.onClose) this.ui.onClose(e);
   }
 
-  private updateValue() {
+  private updateValue(): void {
     this.formProperty.setValue(
       this.data.filter(w => w.checked).map(i => i.value),
       false,

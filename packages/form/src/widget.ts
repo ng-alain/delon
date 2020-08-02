@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injector } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocaleData } from '@delon/theme';
 import { takeUntil } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { SFComponent } from './sf.component';
 import { di } from './utils';
 import { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
 
+@Directive()
 export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem> implements AfterViewInit {
   formProperty: T;
   error: string;
@@ -24,7 +25,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   firstVisual = false;
 
   @HostBinding('class')
-  get cls() {
+  get cls(): string | string[] {
     return this.ui.class || '';
   }
 
@@ -40,7 +41,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     return this.formProperty.root.widget.sfComp!.locale;
   }
 
-  get oh() {
+  get oh(): SFOptionalHelp {
     return this.ui.optionalHelp as SFOptionalHelp;
   }
 
@@ -76,16 +77,16 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     this.afterViewInit();
   }
 
-  setValue(value: SFValue) {
+  setValue(value: SFValue): void {
     this.formProperty.setValue(value, false);
     di(this.ui, 'valueChanges', this.formProperty.path, this.formProperty);
   }
 
-  get value() {
+  get value(): any {
     return this.formProperty.value;
   }
 
-  detectChanges(onlySelf = false) {
+  detectChanges(onlySelf: boolean = false): void {
     if (onlySelf) {
       this.cd.markForCheck();
     } else {
@@ -98,30 +99,34 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   abstract afterViewInit(): void;
 }
 
+@Directive()
 export class ControlWidget extends Widget<FormProperty, SFUISchemaItem> {
-  reset(_value: SFValue) {}
-  afterViewInit() {}
+  reset(_value: SFValue): void {}
+  afterViewInit(): void {}
 }
 
+@Directive()
 export class ControlUIWidget<UIT extends SFUISchemaItem> extends Widget<FormProperty, UIT> {
-  reset(_value: SFValue) {}
-  afterViewInit() {}
+  reset(_value: SFValue): void {}
+  afterViewInit(): void {}
 }
 
+@Directive()
 export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) {}
-  afterViewInit() {}
+  reset(_value: SFValue): void {}
+  afterViewInit(): void {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
   }
 }
 
+@Directive()
 export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) {}
-  afterViewInit() {}
+  reset(_value: SFValue): void {}
+  afterViewInit(): void {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
   }
 }

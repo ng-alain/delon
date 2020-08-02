@@ -22,7 +22,7 @@ import tsconfigJSON from './files/tsconfig.json';
 export class CodeService {
   private document: Document;
 
-  private get dependencies() {
+  private get dependencies(): { [key: string]: string } {
     const NGALAIN_VERSION = `~${pkg.version}`;
     return {
       '@angular/animations': '^9.1.4',
@@ -75,7 +75,7 @@ export class CodeService {
     return { '_mock/user.ts': require('!!raw-loader!../../../../_mock/user.ts').default, '_mock/index.ts': `export * from './user';` };
   }
 
-  private parseCode(code: string) {
+  private parseCode(code: string): { selector: string; componentName: string; html: string } {
     let selector = '';
     let componentName = '';
     const selectorRe = /selector:[ ]?(['|"|`])([^'"`]+)/g.exec(code);
@@ -97,7 +97,7 @@ export class CodeService {
     };
   }
 
-  openOnStackBlitz(appComponentCode: string) {
+  openOnStackBlitz(appComponentCode: string): void {
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
@@ -132,7 +132,7 @@ export class CodeService {
     );
   }
 
-  openOnCodeSandbox(appComponentCode: string) {
+  openOnCodeSandbox(appComponentCode: string): void {
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
     const json = deepCopy(dotAngularCliJSON);

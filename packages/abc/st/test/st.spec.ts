@@ -41,7 +41,7 @@ const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
 const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
-function genData(count: number) {
+function genData(count: number): any[] {
   return Array(count)
     .fill({})
     .map((_item: any, idx: number) => {
@@ -70,13 +70,13 @@ const USERS: any[] = genData(DEFAULTCOUNT);
 const i18nResult = 'zh';
 @Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string) {
+  fanyi(_key: string): string {
     return i18nResult;
   }
 }
 
 class MockNzI18nService {
-  getDateLocale() {
+  getDateLocale(): null {
     return null;
   }
 }
@@ -90,7 +90,7 @@ describe('abc: table', () => {
   let i18nSrv: AlainI18NService;
   let registerWidget: STWidgetRegistry;
 
-  function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }) {
+  function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }): void {
     other = {
       template: '',
       i18n: false,
@@ -134,7 +134,7 @@ describe('abc: table', () => {
     }
   }
 
-  function createComp<T extends TestComponent>(minColumn = false, type: Type<T>) {
+  function createComp<T extends TestComponent>(minColumn: boolean = false, type: Type<T>): void {
     fixture = TestBed.createComponent(type);
     dl = fixture.debugElement;
     context = dl.componentInstance;
@@ -1826,7 +1826,7 @@ describe('abc: table', () => {
     /**
      * 获取单元格，下标从 `1` 开始
      */
-    getCell(row: number = 1, column: number = 1) {
+    getCell(row: number = 1, column: number = 1): HTMLElement {
       const cell = (dl.nativeElement as HTMLElement).querySelector(
         `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`,
       ) as HTMLElement;
@@ -1835,7 +1835,7 @@ describe('abc: table', () => {
     /**
      * 单击单元格，下标从 `1` 开始
      */
-    clickCell(rowOrCls: number | string = 1, column: number = 1, cls?: string) {
+    clickCell(rowOrCls: number | string = 1, column: number = 1, cls?: string): this {
       if (typeof rowOrCls === 'string') {
         cls = rowOrCls.toString();
         rowOrCls = 1;
@@ -1870,7 +1870,7 @@ describe('abc: table', () => {
       return this;
     }
     /** 获取标头 */
-    getHead(name: string) {
+    getHead(name: string): HTMLElement {
       const el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th[data-col="${name}"]`) as HTMLElement;
       return el;
     }
@@ -1907,11 +1907,11 @@ describe('abc: table', () => {
       return this;
     }
     /** 切换分页 */
-    go(pi: number = 2) {
+    go(pi: number = 2): this {
       this.getEl(`.ant-pagination [title="${pi}"]`).click();
       return this.cd();
     }
-    cd(time = 1000): this {
+    cd(time: number = 1000): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();
@@ -1921,7 +1921,7 @@ describe('abc: table', () => {
       context.data = data;
       return this.cd();
     }
-    updateColumn(columns: STColumn[], pi = 1, ps = PS): this {
+    updateColumn(columns: STColumn[], pi: number = 1, ps: number = PS): this {
       context.columns = columns;
       context.pi = pi;
       context.ps = ps;
@@ -1962,7 +1962,7 @@ describe('abc: table', () => {
       }
       return this;
     }
-    expectChangeType(type: STChangeType, called = true) {
+    expectChangeType(type: STChangeType, called: boolean = true): this {
       const callAll = this.changeSpy.calls.all();
       const args = callAll[callAll.length - 1].args[0];
       if (called) {
@@ -1977,12 +1977,12 @@ describe('abc: table', () => {
       fixture.detectChanges();
       return this;
     }
-    openDropDownInRow(row: number = 1) {
+    openDropDownInRow(row: number = 1): this {
       dispatchDropDown(dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)), 'mouseleave');
       fixture.detectChanges();
       return this;
     }
-    asyncEnd() {
+    asyncEnd(): this {
       flush();
       discardPeriodicTasks();
       return this;
@@ -2048,8 +2048,8 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
 
-  error() {}
-  change() {}
+  error(): void {}
+  change(): void {}
 }
 
 @Component({

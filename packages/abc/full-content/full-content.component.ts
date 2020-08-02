@@ -63,7 +63,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     @Inject(DOCUMENT) private doc: any,
   ) {}
 
-  private updateCls() {
+  private updateCls(): void {
     const clss = this.bodyEl.classList;
     if (this.fullscreen) {
       clss.add(openedCls);
@@ -78,19 +78,19 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     }
   }
 
-  private update() {
+  private update(): void {
     this.updateCls();
     this.updateHeight();
     this.fullscreenChange.emit(this.fullscreen);
   }
 
-  private updateHeight() {
+  private updateHeight(): void {
     this._height =
       this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
     this.cdr.detectChanges();
   }
 
-  private removeInBody() {
+  private removeInBody(): void {
     this.bodyEl.classList.remove(wrapCls, openedCls, hideTitleCls);
   }
 
@@ -126,13 +126,13 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
       });
   }
 
-  toggle() {
+  toggle(): void {
     this.fullscreen = !this.fullscreen;
     this.update();
     this.updateHeight();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     setTimeout(() => this.updateHeight());
   }
 

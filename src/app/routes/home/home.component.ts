@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ngZone.runOutsideAngular(() => AOS.init());
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.body.classList.add(`index-page`);
   }
 

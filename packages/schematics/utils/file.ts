@@ -2,7 +2,7 @@ import { Tree } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import { join } from 'path';
 
-export function readContent(host: Tree, filePath: string) {
+export function readContent(host: Tree, filePath: string): string {
   if (!host.exists(filePath)) return '';
   return host.read(filePath).toString('utf-8');
 }
@@ -12,7 +12,13 @@ export function readContent(host: Tree, filePath: string) {
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function overwriteFile(host: Tree, filePath: string, sourcePath?: string, overwrite = false, sourcePathIsString = false): Tree {
+export function overwriteFile(
+  host: Tree,
+  filePath: string,
+  sourcePath?: string,
+  overwrite: boolean = false,
+  sourcePathIsString: boolean = false,
+): Tree {
   const isExists = host.exists(filePath);
   if (overwrite || isExists) {
     try {
@@ -41,7 +47,7 @@ export function overwriteFile(host: Tree, filePath: string, sourcePath?: string,
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function overwriteFiles(host: Tree, files: string[], _filePath: string, overwrite = false): Tree {
+export function overwriteFiles(host: Tree, files: string[], _filePath: string, overwrite: boolean = false): Tree {
   files.forEach(p => overwriteFile(host, p, join(_filePath, p), overwrite));
   return host;
 }
@@ -51,7 +57,7 @@ export function overwriteFiles(host: Tree, files: string[], _filePath: string, o
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function addFiles(host: Tree, files: string[], _filePath: string, overwrite = false): Tree {
+export function addFiles(host: Tree, files: string[], _filePath: string, overwrite: boolean = false): Tree {
   files.filter(p => overwrite || !host.exists(p)).forEach(p => overwriteFile(host, p, join(_filePath, p), true));
   return host;
 }

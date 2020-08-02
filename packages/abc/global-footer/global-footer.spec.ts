@@ -10,7 +10,7 @@ import { GlobalFooterLink } from './global-footer.types';
 
 class MockWindow {
   location = new MockLocation();
-  open() {}
+  open(): void {}
 }
 class MockLocation {
   private url: string;
@@ -40,7 +40,7 @@ describe('abc: global-footer', () => {
     });
   });
 
-  function createComp() {
+  function createComp(): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;

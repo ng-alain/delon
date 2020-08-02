@@ -29,16 +29,16 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
 
   constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: any) {}
 
-  private get bodyCls() {
-    return this.doc.querySelector('body').classList;
+  private get bodyCls(): DOMTokenList {
+    return (this.doc.querySelector('body') as HTMLElement).classList;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.renderer.addClass(this.el.nativeElement, 'footer-toolbar');
     this.bodyCls.add(CLSBODY);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.bodyCls.remove(CLSBODY);
   }
 }

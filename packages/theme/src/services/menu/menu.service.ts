@@ -28,7 +28,7 @@ export class MenuService implements OnDestroy {
     return this._change$.pipe(share());
   }
 
-  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void) {
+  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
     const inFn = (list: Menu[], parentMenu: Menu | null, depth: number) => {
       for (const item of list) {
         callback(item, parentMenu, depth);
@@ -43,7 +43,7 @@ export class MenuService implements OnDestroy {
     inFn(data, null, 0);
   }
 
-  add(items: Menu[]) {
+  add(items: Menu[]): void {
     this.data = items;
     this.resume();
   }
@@ -51,7 +51,7 @@ export class MenuService implements OnDestroy {
   /**
    * 重置菜单，可能I18N、用户权限变动时需要调用刷新
    */
-  resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void) {
+  resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
     let i = 1;
     const shortcuts: Menu[] = [];
     this.visit(this.data, (item, parent, depth) => {
@@ -127,7 +127,7 @@ export class MenuService implements OnDestroy {
    *      2、否则查找带有【dashboard】字样链接，若存在则在此菜单的下方创建快捷入口
    *      3、否则放在0节点位置
    */
-  private loadShortcut(shortcuts: Menu[]) {
+  private loadShortcut(shortcuts: Menu[]): void {
     if (shortcuts.length === 0 || this.data.length === 0) {
       return;
     }
@@ -161,19 +161,19 @@ export class MenuService implements OnDestroy {
     });
   }
 
-  get menus() {
+  get menus(): Menu[] {
     return this.data;
   }
 
   /**
    * 清空菜单
    */
-  clear() {
+  clear(): void {
     this.data = [];
     this._change$.next(this.data);
   }
 
-  getHit(data: Menu[], url: string, recursive = false, cb: ((i: Menu) => void) | null = null): Menu | null {
+  getHit(data: Menu[], url: string, recursive: boolean = false, cb: ((i: Menu) => void) | null = null): Menu | null {
     let item: Menu | null = null;
 
     while (!item && url) {
@@ -203,7 +203,7 @@ export class MenuService implements OnDestroy {
    * - 若 `recursive: true` 则会自动向上递归查找
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
-  openedByUrl(url: string | null, recursive = false) {
+  openedByUrl(url: string | null, recursive: boolean = false): void {
     if (!url) return;
 
     let findItem = this.getHit(this.data, url, recursive, i => {
@@ -224,7 +224,7 @@ export class MenuService implements OnDestroy {
    * - 若 `recursive: true` 则会自动向上递归查找
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
-  getPathByUrl(url: string, recursive = false): Menu[] {
+  getPathByUrl(url: string, recursive: boolean = false): Menu[] {
     const ret: Menu[] = [];
     let item = this.getHit(this.data, url, recursive);
 

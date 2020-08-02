@@ -63,7 +63,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
   }
 
-  private initDelay() {
+  private initDelay(): void {
     this.ngZone.runOutsideAngular(() => {
       this.time = setTimeout(() => this.init(), this.delay);
     });
@@ -89,7 +89,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.uploadSource();
   }
 
-  private ensureElement() {
+  private ensureElement(): void {
     const { type } = this;
     let el = this.el.nativeElement.querySelector(type) as HTMLElement;
     if (!el) {

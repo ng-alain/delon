@@ -7,7 +7,7 @@ import { AlainThemeModule } from '../../theme.module';
 describe('Pipe: keys', () => {
   let fixture: ComponentFixture<TestComponent>;
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
       declarations: [TestComponent],

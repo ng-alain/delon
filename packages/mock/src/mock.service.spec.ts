@@ -25,7 +25,7 @@ const DATA = {
 describe('mock: service', () => {
   let srv: MockService;
 
-  function genModule(options: AlainMockConfig) {
+  function genModule(options: AlainMockConfig): void {
     TestBed.configureTestingModule({
       imports: [DelonMockModule.forRoot()],
       providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }],

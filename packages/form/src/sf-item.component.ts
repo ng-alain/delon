@@ -37,7 +37,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 
-  onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>) {
+  onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>): void {
     this.widget = widget;
     const id = `_sf-${nextUniqueId++}`;
 

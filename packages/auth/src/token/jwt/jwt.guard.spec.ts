@@ -81,6 +81,7 @@ describe('auth: JWTGuard', () => {
   });
 
   it(`should be support lazy module route`, fakeAsync(() => {
+    // tslint:disable-next-line: deprecation
     const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
     loader.stubbedModules = { expected: AModule };
     router.navigateByUrl('/lazy').then(res => {

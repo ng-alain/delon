@@ -62,8 +62,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private initTagCloud() {
+  private initTagCloud(): void {
     registerShape('point', 'cloud', {
+      // tslint:disable-next-line: typedef
       draw(cfg, container) {
         const data = cfg.data as NzSafeAny;
         const textShape = container.addShape({
@@ -89,7 +90,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     });
   }
 
-  private install() {
+  private install(): void {
     const { el, padding, theme } = this;
     if (this.height === 0) {
       this.height = this.el.nativeElement.clientHeight;
@@ -138,7 +139,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, padding, data } = this;
     if (!_chart || !data || data.length <= 0) return;
 
@@ -159,6 +160,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       size: [this.width, this.height], // 宽高设置最好根据 imageMask 做调整
       padding: 0,
       timeInterval: 5000, // max execute time
+      // tslint:disable-next-line: typedef
       rotate() {
         let random = ~~(Math.random() * 4) % 4;
         if (random === 2) {
@@ -166,6 +168,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         }
         return random * 90; // 0, 90, 270
       },
+      // tslint:disable-next-line: typedef
       fontSize(d: NzSafeAny) {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
       },
@@ -174,11 +177,11 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     _chart.render();
   }
 
-  private _attachChart() {
+  private _attachChart(): void {
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
-  private installResizeEvent() {
+  private installResizeEvent(): void {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
         filter(() => !!this._chart),

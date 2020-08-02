@@ -9,32 +9,32 @@
 import * as ts from 'typescript';
 
 /** Checks whether the given node is part of an import specifier node. */
-export function isImportSpecifierNode(node: ts.Node) {
+export function isImportSpecifierNode(node: ts.Node): boolean {
   return isPartOfKind(node, ts.SyntaxKind.ImportSpecifier);
 }
 
 /** Checks whether the given node is part of an export specifier node. */
-export function isExportSpecifierNode(node: ts.Node) {
+export function isExportSpecifierNode(node: ts.Node): boolean {
   return isPartOfKind(node, ts.SyntaxKind.ExportSpecifier);
 }
 
 /** Checks whether the given node is part of a namespace import. */
-export function isNamespaceImportNode(node: ts.Node) {
+export function isNamespaceImportNode(node: ts.Node): boolean {
   return isPartOfKind(node, ts.SyntaxKind.NamespaceImport);
 }
 
 /** Finds the parent import declaration of a given TypeScript node. */
-export function getImportDeclaration(node: ts.Node) {
+export function getImportDeclaration(node: ts.Node): ts.ImportDeclaration {
   return findDeclaration(node, ts.SyntaxKind.ImportDeclaration) as ts.ImportDeclaration;
 }
 
 /** Finds the parent export declaration of a given TypeScript node */
-export function getExportDeclaration(node: ts.Node) {
+export function getExportDeclaration(node: ts.Node): ts.ExportDeclaration {
   return findDeclaration(node, ts.SyntaxKind.ExportDeclaration) as ts.ExportDeclaration;
 }
 
 /** Finds the specified declaration for the given node by walking up the TypeScript nodes. */
-function findDeclaration<T extends ts.SyntaxKind>(node: ts.Node, kind: T) {
+function findDeclaration<T extends ts.SyntaxKind>(node: ts.Node, kind: T): ts.Node {
   while (node.kind !== kind) {
     node = node.parent;
   }

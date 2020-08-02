@@ -7,7 +7,7 @@ describe('Schematic: tpl', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  async function run() {
+  async function run(): Promise<void> {
     tree = await runner.runSchematicAsync('tpl', { name: 'edit', module: 'trade', modal: true }, tree).toPromise();
   }
 

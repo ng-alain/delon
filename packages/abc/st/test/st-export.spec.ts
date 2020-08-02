@@ -5,7 +5,7 @@ import { STExport } from '../st-export';
 import { STColumn } from '../st.interfaces';
 
 class MockXlsxService {
-  export(options: XlsxExportOptions) {
+  export(options: XlsxExportOptions): XlsxExportOptions {
     return options;
   }
   numberToSchema(val: number): string {

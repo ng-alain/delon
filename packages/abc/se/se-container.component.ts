@@ -46,7 +46,7 @@ export class SEContainerComponent {
   private _gutter: number;
 
   @Input()
-  get nzLayout() {
+  get nzLayout(): SELayout {
     return this._nzLayout;
   }
   set nzLayout(value: SELayout) {

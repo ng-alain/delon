@@ -36,7 +36,7 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule(options?: AlainCacheConfig) {
+  function genModule(options?: AlainCacheConfig): void {
     const providers: any[] = [];
     if (options) {
       providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });

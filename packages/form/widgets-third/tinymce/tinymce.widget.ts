@@ -21,7 +21,7 @@ export class TinymceWidget extends ControlWidget implements OnInit {
     this.config = this.ui.config || {};
   }
 
-  change(value: string) {
+  change(value: string): void {
     if (this.ui.change) this.ui.change(value);
     this.setValue(value);
   }

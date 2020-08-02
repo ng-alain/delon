@@ -46,7 +46,7 @@ const MockAuth0 = {
 describe('auth: social.service', () => {
   let srv: SocialService;
 
-  function genModule(tokenData?: SimpleTokenModel) {
+  function genModule(tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [SocialService, { provide: DOCUMENT, useClass: MockDocument }, { provide: Router, useValue: mockRouter }],

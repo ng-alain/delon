@@ -20,7 +20,7 @@ describe('form: component', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  function genModule(options: { acl?: boolean; i18n?: boolean } = {}) {
+  function genModule(options: { acl?: boolean; i18n?: boolean } = {}): void {
     options = { acl: false, i18n: false, ...options };
     const imports = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule.forRoot()];
     if (options.i18n) {
@@ -35,7 +35,7 @@ describe('form: component', () => {
     });
   }
 
-  function createComp() {
+  function createComp(): void {
     fixture.detectChanges();
     page = new SFPage(context.comp);
     page.prop(dl, context, fixture);

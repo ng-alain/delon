@@ -15,14 +15,14 @@ export class ReuseTabContextService {
 
   constructor(private overlay: Overlay) {}
 
-  remove() {
+  remove(): void {
     if (!this.ref) return;
     this.ref.detach();
     this.ref.dispose();
     this.ref = null;
   }
 
-  open(context: ReuseContextEvent) {
+  open(context: ReuseContextEvent): void {
     this.remove();
     const { event, item, customContextMenu } = context;
     const fakeElement = new ElementRef({

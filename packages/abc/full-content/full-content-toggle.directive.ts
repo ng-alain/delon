@@ -11,7 +11,7 @@ import { FullContentComponent } from './full-content.component';
 export class FullContentToggleDirective {
   constructor(private parent: FullContentComponent) {}
 
-  _click() {
+  _click(): void {
     this.parent.toggle();
   }
 }

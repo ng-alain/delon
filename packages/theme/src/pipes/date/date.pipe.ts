@@ -9,7 +9,7 @@ import { NzI18nService } from 'ng-zorro-antd/i18n';
 export class DatePipe implements PipeTransform {
   constructor(private nzI18n: NzI18nService) {}
 
-  transform(value: Date | string | number, formatString = 'yyyy-MM-dd HH:mm'): string {
+  transform(value: Date | string | number, formatString: string = 'yyyy-MM-dd HH:mm'): string {
     value = toDate(value);
     if (isNaN(value as NzSafeAny)) return '';
 

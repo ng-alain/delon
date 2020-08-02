@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, Menu } from '@delon/theme';
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -54,9 +54,9 @@ export class MetaService {
   private _data: any;
   private _isPages = false;
 
-  private getCatgory(url: string) {
+  private getCatgory(url: string): Menu | undefined {
     const arr = url.split('?')[0].split('/');
-    if (arr.length <= 2) return false;
+    if (arr.length <= 2) return;
 
     let categoryName = arr[1].toLowerCase().trim();
     let category = FULLMETAS.find(w => w.name === categoryName);
@@ -70,7 +70,7 @@ export class MetaService {
     return category;
   }
 
-  private getPageName(url: string) {
+  private getPageName(url: string): string {
     return url.split('?')[0].split('/')[2].toLowerCase().trim();
   }
 
@@ -79,7 +79,7 @@ export class MetaService {
     const category = this.getCatgory(url);
     if (!category) return false;
     const name = this.getPageName(url);
-    const data = category.list!.find(w => w.name === name) || null;
+    const data = category.list!.find((w: { name: string }) => w.name === name) || null;
     if (!data) return true;
     this._data = {
       ...data.meta![this.i18n.defaultLang],
@@ -100,7 +100,7 @@ export class MetaService {
     return false;
   }
 
-  get item() {
+  get item(): any {
     return this._data || null;
   }
 
@@ -112,19 +112,19 @@ export class MetaService {
     return this._data.list;
   }
 
-  get isPages() {
+  get isPages(): boolean {
     return this._isPages;
   }
 
-  get menus() {
+  get menus(): any {
     return this._menus;
   }
 
-  get type() {
+  get type(): string {
     return this._type;
   }
 
-  clearMenu() {
+  clearMenu(): void {
     this._menus = null;
   }
 
@@ -133,7 +133,7 @@ export class MetaService {
     return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
   }
 
-  refMenu(url: string) {
+  refMenu(url: string): void {
     if (!this.menus) {
       this.genMenus(url);
       return;
@@ -159,7 +159,7 @@ export class MetaService {
     });
     category.list!.forEach((item: any) => {
       const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex(w => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
+      let typeIdx = category.types!.findIndex((w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
@@ -206,7 +206,7 @@ export class MetaService {
     return ret;
   }
 
-  private refPage(url: string) {
+  private refPage(url: string): void {
     this.next = null;
     this.prev = null;
     if (!this._menus) this.genMenus(url);
@@ -216,7 +216,7 @@ export class MetaService {
     if (idx + 1 <= this._platMenus.length) this.next = this._platMenus[idx + 1];
   }
 
-  search(q: string, childrenMax = 5): MetaSearchGroup[] {
+  search(q: string, childrenMax: number = 5): MetaSearchGroup[] {
     const zone = this.i18n.zone;
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {

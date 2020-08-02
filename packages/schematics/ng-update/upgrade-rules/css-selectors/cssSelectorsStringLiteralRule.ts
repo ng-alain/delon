@@ -28,7 +28,7 @@ export class Walker extends RuleWalker {
   /** Change data that upgrades to the specified target version. */
   data = getUpgradeDataFromWalker(this, 'cssSelectors');
 
-  visitStringLiteral(node: ts.StringLiteral) {
+  visitStringLiteral(node: ts.StringLiteral): void {
     if (node.parent && node.parent.kind !== ts.SyntaxKind.CallExpression) {
       return;
     }
@@ -48,7 +48,7 @@ export class Walker extends RuleWalker {
   }
 
   /** Adds a css selector failure with the given replacement at the specified node. */
-  private _addFailureWithReplacement(node: ts.Node, replacement: Replacement, data: CssSelectorUpgradeData) {
+  private _addFailureWithReplacement(node: ts.Node, replacement: Replacement, data: CssSelectorUpgradeData): void {
     this.addFailureAtNode(
       node,
       `Found deprecated CSS selector "${chalk.red(data.replace)}" which has ` + `been renamed to "${chalk.green(data.replaceWith)}"`,

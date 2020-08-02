@@ -25,7 +25,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  to() {
+  to(): void {
     this.opened = false;
   }
 

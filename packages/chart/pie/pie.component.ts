@@ -77,7 +77,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  get block() {
+  get block(): boolean {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
 
@@ -95,7 +95,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private fixData() {
+  private fixData(): void {
     const { percent, color } = this;
     this.isPercent = percent != null;
     if (this.isPercent) {
@@ -115,7 +115,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private install() {
+  private install(): void {
     const { node, height, padding, tooltip, inner, hasLegend, interaction, theme } = this;
     const chart = (this._chart = new Chart({
       container: node.nativeElement,
@@ -155,7 +155,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
     if (!_chart) return;
 
@@ -179,7 +179,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     this.ngZone.run(() => this.genLegend());
   }
 
-  private genLegend() {
+  private genLegend(): void {
     const { hasLegend, isPercent, cdr, _chart } = this;
     if (!hasLegend || isPercent) return;
 
@@ -194,7 +194,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     cdr.detectChanges();
   }
 
-  _click(i: number) {
+  _click(i: number): void {
     const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
     _chart.render();

@@ -1,6 +1,6 @@
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -19,7 +19,7 @@ describe('abc: error-collect', () => {
     });
   });
 
-  function getPropertiesAndCreate() {
+  function getPropertiesAndCreate(): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
@@ -104,7 +104,7 @@ class TestComponent implements OnInit {
     });
   }
 
-  get email() {
+  get email(): AbstractControl {
     return this.validateForm.controls.email;
   }
 

@@ -55,7 +55,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     };
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
       this.data = list;
@@ -64,7 +64,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     });
   }
 
-  change(values: SFValue) {
+  change(values: SFValue): void {
     if (this.ui.change) {
       this.ui.change(values, this.getOrgData(values));
     }
@@ -84,13 +84,13 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     });
   }
 
-  openChange(status: boolean) {
+  openChange(status: boolean): void {
     if (this.ui.openChange) {
       this.ui.openChange(status);
     }
   }
 
-  searchChange(text: string) {
+  searchChange(text: string): void {
     if (this.ui.onSearch) {
       this.ui.onSearch(text).then((list: SFSchemaEnum[]) => {
         this.data = list;
@@ -102,7 +102,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     this.detectChanges();
   }
 
-  scrollToBottom() {
+  scrollToBottom(): void {
     if (this.ui.scrollToBottom) {
       this.ui.scrollToBottom();
     }

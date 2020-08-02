@@ -9,13 +9,13 @@ import { STColumn, STColumnButtonPop, STIcon } from '../st.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string) {
+  fanyi(_key: string): string {
     return i18nResult;
   }
 }
 
 class MockDomSanitizer {
-  bypassSecurityTrustHtml(text: string) {
+  bypassSecurityTrustHtml(text: string): string {
     return text;
   }
 }
@@ -28,7 +28,7 @@ describe('st: column-source', () => {
   let stWidgetRegistry: STWidgetRegistry;
   let page: PageObject;
 
-  function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
+  function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }): void {
     aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
@@ -628,19 +628,19 @@ describe('st: column-source', () => {
   });
 
   class PageObject {
-    expectValue(columns: STColumn[], value: any, path = 'indexKey'): this {
+    expectValue(columns: STColumn[], value: any, path: string = 'indexKey'): this {
       const newColumns = srv.process(columns).columns;
       expect(newColumns.length).toBeGreaterThan(0);
       expect(deepGet(newColumns[0], path)).toBe(value);
       return this;
     }
-    expectBtnValue(columns: STColumn[], value: any, path = 'indexKey'): this {
+    expectBtnValue(columns: STColumn[], value: any, path: string = 'indexKey'): this {
       const newColumns = srv.process(columns).columns;
       expect(newColumns.length).toBeGreaterThan(0);
       expect(deepGet(newColumns[0].buttons![0], path)).toBe(value);
       return this;
     }
-    expectCount(columns: STColumn[], count = 1, type = ''): this {
+    expectCount(columns: STColumn[], count: number = 1, type: string = ''): this {
       const newColumns = srv.process(columns).columns;
       if (type) {
         expect(newColumns.length).toBe(1);

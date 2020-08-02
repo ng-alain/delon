@@ -20,12 +20,12 @@ describe('abc: result', () => {
     fixture.detectChanges();
   });
 
-  function isText(cls: string, value: any) {
+  function isText(cls: string, value: any): void {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
     expect(el ? el.innerText.trim() : '').toBe(value);
   }
 
-  function isExists(cls: string, stauts: boolean = true) {
+  function isExists(cls: string, stauts: boolean = true): void {
     const res = dl.query(By.css(cls));
     if (stauts) {
       expect(res).not.toBeNull();

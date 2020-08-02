@@ -24,7 +24,7 @@ describe('abc: loading', () => {
     }
   });
 
-  function check(cls: string, count: number) {
+  function check(cls: string, count: number): void {
     tick();
     fixture.detectChanges();
     expect(srv.instance != null).toBe(true);

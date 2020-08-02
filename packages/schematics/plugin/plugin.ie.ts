@@ -9,7 +9,7 @@ import { PluginOptions } from './interface';
 
 let project: Project;
 
-function setAngularJson(host: Tree, options: PluginOptions) {
+function setAngularJson(host: Tree, options: PluginOptions): void {
   const json = getAngular(host);
   const p = getProjectFromWorkspace(json, options.project);
   if (options.type === 'add') {
@@ -28,7 +28,7 @@ function setAngularJson(host: Tree, options: PluginOptions) {
   overwriteAngular(host, json);
 }
 
-function setBrowserslist(host: Tree, options: PluginOptions) {
+function setBrowserslist(host: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/.browserslistrc`;
   let content = readContent(host, filePath);
   if (options.type === 'add') {
@@ -39,7 +39,7 @@ function setBrowserslist(host: Tree, options: PluginOptions) {
   overwriteFile(host, filePath, content, true, true);
 }
 
-function setPackage(host: Tree, options: PluginOptions) {
+function setPackage(host: Tree, options: PluginOptions): void {
   // libs
   (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(
     host,
@@ -54,7 +54,7 @@ function setPackage(host: Tree, options: PluginOptions) {
   );
 }
 
-function setPolyfills(host: Tree, options: PluginOptions) {
+function setPolyfills(host: Tree, options: PluginOptions): void {
   const filePath = `${project.sourceRoot}/polyfills.ts`;
   let content = '';
   if (options.type === 'add') {
@@ -68,7 +68,7 @@ import 'zone.js/dist/zone';`;
   overwriteFile(host, filePath, content, true, true);
 }
 
-function setTsConfig(host: Tree, options: PluginOptions) {
+function setTsConfig(host: Tree, options: PluginOptions): void {
   // build
   const buildFilePath = `${options.root}/tsconfig-es5.app.json`;
   if (host.exists(buildFilePath)) host.delete(buildFilePath);

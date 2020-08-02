@@ -9,7 +9,7 @@ export const DROPDOWN_MIN_TIME = 1000;
 /**
  * 触发 dropdown
  */
-export function dispatchDropDown(dl: DebugElement, trigger: 'mouseleave' | 'click', allowNull = true) {
+export function dispatchDropDown(dl: DebugElement, trigger: 'mouseleave' | 'click', allowNull: boolean = true): boolean {
   const directive = dl.query(By.directive(NzDropDownDirective));
   if (allowNull && directive == null) {
     return false;

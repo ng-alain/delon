@@ -14,7 +14,7 @@ describe('abc: onboarding', () => {
   let srv: OnboardingService;
   let page: PageObject;
 
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [OnboardingModule, NoopAnimationsModule, RouterTestingModule],
       declarations: [TestComponent],
@@ -127,7 +127,7 @@ describe('abc: onboarding', () => {
       return this.el.querySelector(cls) as HTMLElement;
     }
 
-    checkActive(active = 0): this {
+    checkActive(active: number = 0): this {
       expect(parseInt(this.el.dataset.onboardingActive?.toString()!, 10)).toBe(active);
       return this;
     }
@@ -144,7 +144,7 @@ describe('abc: onboarding', () => {
       return this.cd();
     }
 
-    checkDone(done = true): this {
+    checkDone(done: boolean = true): this {
       expect(this.el == null).toBe(done);
       return this.cd();
     }
@@ -176,7 +176,7 @@ describe('abc: onboarding', () => {
       return this.cd();
     }
 
-    cd(time = 301): this {
+    cd(time: number = 301): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();

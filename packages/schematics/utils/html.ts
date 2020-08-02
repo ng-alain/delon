@@ -17,7 +17,7 @@ export function getIndexHtmlPath(_host: Tree, project: Project): string {
 /**
  * Parses the index.html file to get the HEAD tag position.
  */
-export function getTag(host: Tree, src: string, tagName: string) {
+export function getTag(host: Tree, src: string, tagName: string): { startOffset: any; endOffset: any } {
   if ((parse5 as any).treeAdapters) {
     return getTagInV4(host, src, tagName);
   }
@@ -51,7 +51,7 @@ export function getTag(host: Tree, src: string, tagName: string) {
   };
 }
 
-export function getTagInV4(_host: Tree, src: string, tagName: string) {
+export function getTagInV4(_host: Tree, src: string, tagName: string): { startOffset: any; endOffset: any } {
   const document: any = parse5.parse(src, {
     locationInfo: true,
   } as any);
@@ -85,7 +85,7 @@ export function getTagInV4(_host: Tree, src: string, tagName: string) {
 /**
  * Get index.html content
  */
-export function getIndexHtmlContent(host: Tree, project: Project) {
+export function getIndexHtmlContent(host: Tree, project: Project): { indexPath: string; src: string } {
   const indexPath = getIndexHtmlPath(host, project);
   const buffer = host.read(indexPath);
   if (!buffer) {
@@ -101,7 +101,7 @@ export function getIndexHtmlContent(host: Tree, project: Project) {
 /**
  * Adds a link to the index.html head tag
  */
-export function addHeadLink(host: Tree, project: Project, link: string) {
+export function addHeadLink(host: Tree, project: Project, link: string): void {
   const { indexPath, src } = getIndexHtmlContent(host, project);
 
   if (src.indexOf(link) === -1) {
@@ -116,7 +116,7 @@ export function addHeadLink(host: Tree, project: Project, link: string) {
 /**
  * Adds a style to the index.html head end tag
  */
-export function addHeadStyle(host: Tree, project: Project, style: string) {
+export function addHeadStyle(host: Tree, project: Project, style: string): void {
   const { indexPath, src } = getIndexHtmlContent(host, project);
 
   if (src.indexOf(style) === -1) {
@@ -131,7 +131,7 @@ export function addHeadStyle(host: Tree, project: Project, style: string) {
 /**
  * Adds a html to the index.html body end tag
  */
-export function addHtmlToBody(host: Tree, project: Project, html: string) {
+export function addHtmlToBody(host: Tree, project: Project, html: string): void {
   const { indexPath, src } = getIndexHtmlContent(host, project);
 
   if (src.indexOf(html) === -1) {

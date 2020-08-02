@@ -15,7 +15,7 @@ export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   data: SFSchemaEnum[] = [];
   styleType: boolean;
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     this.styleType = (this.ui.styleType || 'default') === 'default';
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list.map(i => {
@@ -26,7 +26,7 @@ export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
     });
   }
 
-  _setValue(value: SFValue) {
+  _setValue(value: SFValue): void {
     this.setValue(value);
     if (this.ui.change) this.ui.change(value);
   }

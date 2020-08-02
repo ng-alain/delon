@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import {
   STColumn,
   STColumnFilter,
+  STColumnFilterMenu,
   STData,
   STMultiSort,
   STMultiSortResultType,
@@ -295,7 +296,7 @@ export class STDataSource {
     return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
   }
 
-  private getSorterFn(columns: STColumn[]) {
+  private getSorterFn(columns: STColumn[]): ((a: STData, b: STData) => number) | void {
     const sortList = this.getValidSort(columns);
     if (sortList.length === 0) {
       return;
@@ -362,7 +363,7 @@ export class STDataSource {
 
   // #region filter
 
-  private getFilteredData(filter: STColumnFilter) {
+  private getFilteredData(filter: STColumnFilter): STColumnFilterMenu[] {
     return filter.type === 'default' ? filter.menus!.filter(f => f.checked === true) : filter.menus!.slice(0, 1);
   }
 

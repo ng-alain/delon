@@ -23,7 +23,7 @@ export class HeaderSearchComponent implements AfterViewInit {
     this.initDocSearch();
   }
 
-  private initDocSearch() {
+  private initDocSearch(): void {
     if (!this.platform.isBrowser) {
       return;
     }

@@ -40,7 +40,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private genData() {
+  private genData(): void {
     const item = deepCopy(this.item);
     const ret: any = {
       demo: item.demo,
@@ -87,14 +87,14 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private genDemoTitle() {
+  private genDemoTitle(): void {
     this.demoStr = this.i18n.fanyi('app.component.examples');
     this.demoContent = this.sanitizer.bypassSecurityTrustHtml(
       `<a class="lake-link"><i data-anchor="${this.demoStr}"></i></a>${this.demoStr}`,
     );
   }
 
-  private init() {
+  private init(): void {
     this.genData();
     this.genDemoTitle();
     if (!this.isBrowser) {

@@ -83,5 +83,5 @@ class TestComponent {
     { id: 12, text: '类目十二', value: false },
   ];
   expandable = true;
-  change() {}
+  change(): void {}
 }
