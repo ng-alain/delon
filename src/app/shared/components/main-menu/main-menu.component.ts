@@ -23,7 +23,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.cdr.markForCheck());
-    this.count = this.meta.menus?.reduce((p, c) => (p += c.list.length), 0);
+    this.count = this.meta.menus?.reduce((p: number, c: any) => (p += c.list.length), 0);
   }
 
   ngOnDestroy(): void {
