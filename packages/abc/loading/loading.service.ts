@@ -16,7 +16,7 @@ export class LoadingService implements OnDestroy {
   private n$ = new Subject();
   private loading$: Subscription;
 
-  get instance() {
+  get instance(): LoadingDefaultComponent | null {
     return this.compRef != null ? this.compRef.instance : null;
   }
 
@@ -37,7 +37,7 @@ export class LoadingService implements OnDestroy {
       .subscribe(() => this.create());
   }
 
-  private create() {
+  private create(): void {
     if (this.opt == null) return;
 
     this._close(false);
@@ -48,8 +48,7 @@ export class LoadingService implements OnDestroy {
       hasBackdrop: true,
       backdropClass: 'loading-backdrop',
     });
-    const comp = new ComponentPortal(LoadingDefaultComponent);
-    this.compRef = this._overlayRef.attach(comp);
+    this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
     Object.assign(this.instance, { options: this.opt });
     this.compRef.changeDetectorRef.markForCheck();
   }

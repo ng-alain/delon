@@ -8,6 +8,7 @@ import { ExceptionModule } from '@delon/abc/exception';
 import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { ImageModule } from '@delon/abc/image';
+import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
@@ -50,6 +51,7 @@ export const SHARED_DELON_MODULES = [
   SEModule,
   SGModule,
   ImageModule,
+  LoadingModule,
   QRModule,
   NumberToChineseModule,
   OnboardingModule,
