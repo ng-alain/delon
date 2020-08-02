@@ -2,7 +2,7 @@ import { Rule, Tree } from '@angular-devkit/schematics';
 import { tryAddFile, tryDelFile } from '../utils/alain';
 import { PluginOptions } from './interface';
 
-function setIgnore(host: Tree, options: PluginOptions) {
+function setIgnore(host: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/.dockerignore`;
   if (options.type === 'add') {
     tryAddFile(
@@ -24,7 +24,7 @@ LICENSE
   }
 }
 
-function setCompose(host: Tree, options: PluginOptions) {
+function setCompose(host: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/docker-compose.yml`;
   if (options.type === 'add') {
     tryAddFile(
@@ -47,7 +47,7 @@ services:
   }
 }
 
-function setDockerfile(host: Tree, options: PluginOptions) {
+function setDockerfile(host: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/Dockerfile`;
   if (options.type === 'add') {
     tryAddFile(
@@ -87,7 +87,7 @@ CMD [ "nginx", "-g", "daemon off;"]
   }
 }
 
-function setNginx(host: Tree, options: PluginOptions) {
+function setNginx(host: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/_nginx/default.conf`;
   if (options.type === 'add' && !host.exists(filePath)) {
     host.create(

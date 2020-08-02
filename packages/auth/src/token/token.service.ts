@@ -53,7 +53,7 @@ export class TokenService implements ITokenService, OnDestroy {
     return type ? (Object.assign(new type(), data) as T) : (data as T);
   }
 
-  clear(options: { onlyToken: boolean } = { onlyToken: false }) {
+  clear(options: { onlyToken: boolean } = { onlyToken: false }): void {
     let data: ITokenModel | null = null;
     if (options.onlyToken === true) {
       data = this.get() as ITokenModel;

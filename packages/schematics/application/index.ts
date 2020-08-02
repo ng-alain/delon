@@ -39,7 +39,7 @@ const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
 
 /** Remove files to be overwrite */
-function removeOrginalFiles() {
+function removeOrginalFiles(): (host: Tree) => void {
   return (host: Tree) => {
     [
       `${project.root}/README.md`,
@@ -59,14 +59,14 @@ function removeOrginalFiles() {
   };
 }
 
-function fixMain() {
+function fixMain(): (host: Tree) => void {
   return (host: Tree) => {
     // fix: main.ts using no hmr file
     tryAddFile(host, `${project.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
   };
 }
 
-function fixAngularJson(options: ApplicationOptions) {
+function fixAngularJson(options: ApplicationOptions): (host: Tree) => void {
   return (host: Tree) => {
     const json = getAngular(host);
     const _project = getProjectFromWorkspace(json, options.project);
@@ -79,7 +79,7 @@ function fixAngularJson(options: ApplicationOptions) {
   };
 }
 
-function addDependenciesToPackageJson(options: ApplicationOptions) {
+function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree) => void {
   return (host: Tree) => {
     // 3rd
     addPackageToPackageJson(host, [
@@ -123,7 +123,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
   };
 }
 
-function addRunScriptToPackageJson() {
+function addRunScriptToPackageJson(): (host: Tree) => void {
   return (host: Tree) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
@@ -138,7 +138,7 @@ function addRunScriptToPackageJson() {
   };
 }
 
-function addPathsToTsConfig() {
+function addPathsToTsConfig(): (host: Tree) => Tree {
   return (host: Tree) => {
     const json = getJSON(host, 'tsconfig.base.json', 'compilerOptions');
     if (json == null) return host;
@@ -153,7 +153,7 @@ function addPathsToTsConfig() {
   };
 }
 
-function addCodeStylesToPackageJson() {
+function addCodeStylesToPackageJson(): (host: Tree) => Tree {
   return (host: Tree) => {
     const json = getPackage(host);
     if (json == null) return host;
@@ -185,7 +185,7 @@ function addCodeStylesToPackageJson() {
   };
 }
 
-function addSchematics() {
+function addSchematics(): (host: Tree) => Tree {
   return (host: Tree) => {
     const angularJsonFile = 'angular.json';
     const json = getJSON(host, angularJsonFile, 'schematics');
@@ -228,13 +228,13 @@ function addSchematics() {
   };
 }
 
-function forceLess() {
+function forceLess(): (host: Tree) => void {
   return (host: Tree) => {
     scriptsToAngularJson(host, ['src/styles.less'], 'add', ['build'], null!, true);
   };
 }
 
-function addStyle() {
+function addStyle(): (host: Tree) => Tree {
   return (host: Tree) => {
     addHeadStyle(
       host,
@@ -253,7 +253,7 @@ function addStyle() {
   };
 }
 
-function mergeFiles(options: ApplicationOptions, from: string, to: string) {
+function mergeFiles(options: ApplicationOptions, from: string, to: string): Rule {
   return mergeWith(
     apply(url(from), [
       options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
@@ -270,7 +270,7 @@ function mergeFiles(options: ApplicationOptions, from: string, to: string) {
   );
 }
 
-function addCliTpl() {
+function addCliTpl(): (host: Tree) => void {
   const TPLS = {
     '__name@dasherize__.component.html': `<page-header></page-header>`,
     '__name@dasherize__.component.ts': `import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
@@ -331,7 +331,7 @@ export class <%= componentName %> implements OnInit {
   };
 }
 
-function addFilesToRoot(options: ApplicationOptions) {
+function addFilesToRoot(options: ApplicationOptions): Rule {
   return chain([
     mergeWith(
       apply(url('./files/src'), [
@@ -365,7 +365,7 @@ function addFilesToRoot(options: ApplicationOptions) {
   ]);
 }
 
-function fixLang(options: ApplicationOptions) {
+function fixLang(options: ApplicationOptions): (host: Tree) => void {
   return (host: Tree) => {
     if (options.i18n) return;
     const langs = getLangData(options.defaultLanguage!);
@@ -381,7 +381,7 @@ function fixLang(options: ApplicationOptions) {
   };
 }
 
-function fixLangInHtml(host: Tree, p: string, langs: {}) {
+function fixLangInHtml(host: Tree, p: string, langs: {}): void {
   let html = host.get(p)!.content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
@@ -421,7 +421,7 @@ function fixLangInHtml(host: Tree, p: string, langs: {}) {
   }
 }
 
-function fixVsCode() {
+function fixVsCode(): (host: Tree) => void {
   return (host: Tree) => {
     const filePath = '.vscode/extensions.json';
     let json = getJSON(host, filePath);
@@ -434,13 +434,13 @@ function fixVsCode() {
   };
 }
 
-function installPackages() {
+function installPackages(): (_host: Tree, context: SchematicContext) => void {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
   };
 }
 
-function tips() {
+function tips(): (_host: Tree) => void {
   return (_host: Tree) => {
     console.warn(``);
     console.warn(`Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);

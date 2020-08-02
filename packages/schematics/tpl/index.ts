@@ -6,7 +6,7 @@ import { Schema } from './schema';
 
 const REFER = `, please refer to: https://ng-alain.com/cli/generate/en#Custom-template-page`;
 
-function genFiles(options: Schema) {
+function genFiles(options: Schema): void {
   options._tplDir = path.join(process.cwd(), './_cli-tpl');
   try {
     fs.accessSync(options._tplDir);
@@ -21,7 +21,7 @@ function genFiles(options: Schema) {
   options._filesPath = path.relative(__dirname, path.join(options._tplDir, options.tplName!));
 }
 
-function parseExtraArgs(options: Schema) {
+function parseExtraArgs(options: Schema): void {
   const org = options['--'] as string[];
   if (!org || !Array.isArray(org)) {
     return;
@@ -35,7 +35,7 @@ function parseExtraArgs(options: Schema) {
   });
 }
 
-function runFixJS(options: Schema) {
+function runFixJS(options: Schema): Promise<any> {
   parseExtraArgs(options);
   const fixScriptPath = path.join(options._tplDir, '_fix.js');
   if (fs.existsSync(fixScriptPath)) {

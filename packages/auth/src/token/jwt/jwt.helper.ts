@@ -48,7 +48,7 @@ function b64decode(str: string): string {
 }
 
 // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
-function b64DecodeUnicode(str: string) {
+function b64DecodeUnicode(str: string): string {
   return decodeURIComponent(
     Array.prototype.map
       .call(b64decode(str), (c: string) => {

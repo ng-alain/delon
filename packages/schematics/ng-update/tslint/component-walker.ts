@@ -17,20 +17,19 @@ import { ExternalFailureWalker } from './external-failure-walker';
  * the component metadata.
  */
 export class ComponentWalker extends ExternalFailureWalker {
-
   /**
    * We keep track of all visited stylesheet files because we allow manually reporting external
    * stylesheets which couldn't be detected by the component walker. Reporting these files multiple
    * times will result in duplicated TSLint failures and replacements.
    */
   private _visitedStylesheetFiles = new Set<string>();
-  visitInlineTemplate(_template: ts.StringLiteralLike) { }
-  visitInlineStylesheet(_stylesheet: ts.StringLiteralLike) { }
+  visitInlineTemplate(_template: ts.StringLiteralLike): void {}
+  visitInlineStylesheet(_stylesheet: ts.StringLiteralLike): void {}
 
-  visitExternalTemplate(_template: ExternalResource) { }
-  visitExternalStylesheet(_stylesheet: ExternalResource) { }
+  visitExternalTemplate(_template: ExternalResource): void {}
+  visitExternalStylesheet(_stylesheet: ExternalResource): void {}
 
-  visitNode(node: ts.Node) {
+  visitNode(node: ts.Node): void {
     if (node.kind === ts.SyntaxKind.CallExpression) {
       const callExpression = node as ts.CallExpression;
       const callExpressionName = callExpression.expression.getText();
@@ -43,7 +42,7 @@ export class ComponentWalker extends ExternalFailureWalker {
     super.visitNode(node);
   }
 
-  private _visitDirectiveCallExpression(callExpression: ts.CallExpression) {
+  private _visitDirectiveCallExpression(callExpression: ts.CallExpression): void {
     // If the call expressions does not have the correct amount of arguments, we can assume that
     // this call expression is not related to Angular and just uses a similar decorator name.
     if (callExpression.arguments.length !== 1) {
@@ -77,7 +76,7 @@ export class ComponentWalker extends ExternalFailureWalker {
     }
   }
 
-  private _reportExternalTemplate(node: ts.StringLiteralLike) {
+  private _reportExternalTemplate(node: ts.StringLiteralLike): void {
     const templatePath = resolve(dirname(this.getSourceFile().fileName), node.text);
 
     // Check if the external template file exists before proceeding.
@@ -92,7 +91,7 @@ export class ComponentWalker extends ExternalFailureWalker {
     this.visitExternalTemplate(templateFile);
   }
 
-  private _reportInlineStyles(expression: ts.ArrayLiteralExpression) {
+  private _reportInlineStyles(expression: ts.ArrayLiteralExpression): void {
     expression.elements.forEach(node => {
       if (ts.isStringLiteralLike(node)) {
         this.visitInlineStylesheet(node);
@@ -100,7 +99,7 @@ export class ComponentWalker extends ExternalFailureWalker {
     });
   }
 
-  private _visitExternalStylesArrayLiteral(expression: ts.ArrayLiteralExpression) {
+  private _visitExternalStylesArrayLiteral(expression: ts.ArrayLiteralExpression): void {
     expression.elements.forEach(node => {
       if (ts.isStringLiteralLike(node)) {
         const stylePath = resolve(dirname(this.getSourceFile().fileName), node.text);
@@ -115,7 +114,7 @@ export class ComponentWalker extends ExternalFailureWalker {
     });
   }
 
-  private _reportExternalStyle(stylePath: string) {
+  private _reportExternalStyle(stylePath: string): void {
     // Keep track of all reported external stylesheets because we allow reporting additional
     // stylesheet files which couldn't be detected by the component walker. This allows us to
     // ensure that no stylesheet files are visited multiple times.
@@ -152,15 +151,12 @@ export class ComponentWalker extends ExternalFailureWalker {
    * Creates a TSLint failure that reports that the resource file that belongs to the specified
    * TypeScript node could not be resolved in the file system.
    */
-  private _createResourceNotFoundFailure(node: ts.Node, resourceUrl: string) {
-    this.addFailureAtNode(
-      node,
-      `Could not resolve resource file: "${resourceUrl}". ` + `Skipping automatic upgrade for this file.`,
-    );
+  private _createResourceNotFoundFailure(node: ts.Node, resourceUrl: string): void {
+    this.addFailureAtNode(node, `Could not resolve resource file: "${resourceUrl}". ` + `Skipping automatic upgrade for this file.`);
   }
 
   /** Reports the specified additional stylesheets. */
-  _reportExtraStylesheetFiles(filePaths: string[]) {
+  _reportExtraStylesheetFiles(filePaths: string[]): void {
     filePaths.forEach(filePath => this._reportExternalStyle(resolve(filePath)));
   }
 }

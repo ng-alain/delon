@@ -20,15 +20,15 @@ export function getJSON(host: Tree, jsonFile: string, type?: string): any {
   }
 }
 
-export function overwriteJSON(host: Tree, jsonFile: string, json: any) {
+export function overwriteJSON(host: Tree, jsonFile: string, json: any): void {
   host.overwrite(jsonFile, JSON.stringify(json, null, 2));
 }
 
-export function getPackage(host: Tree, type?: string) {
+export function getPackage(host: Tree, type?: string): any {
   return getJSON(host, 'package.json', type);
 }
 
-export function overwritePackage(host: Tree, json: any) {
+export function overwritePackage(host: Tree, json: any): any {
   return overwriteJSON(host, 'package.json', json);
 }
 
@@ -83,11 +83,11 @@ export function removePackageFromPackageJson(
   return host;
 }
 
-export function getAngular(host: Tree, type?: string) {
+export function getAngular(host: Tree, type?: string): any {
   return getJSON(host, 'angular.json', type);
 }
 
-export function overwriteAngular(host: Tree, json: any) {
+export function overwriteAngular(host: Tree, json: any): void {
   return overwriteJSON(host, 'angular.json', json);
 }
 
@@ -97,7 +97,7 @@ export function scriptsToAngularJson(
   behavior: 'add' | 'delete',
   types: string[] = ['build', 'test'],
   projectName?: string,
-  clean = false,
+  clean: boolean = false,
 ): Tree {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, projectName);

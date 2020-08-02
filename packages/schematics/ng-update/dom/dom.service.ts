@@ -9,7 +9,7 @@ export class DomService {
   private ingoreClosedTag = ['input', 'img', 'br', 'hr', 'col'];
   private count = 0;
 
-  replace(html: string, rules: ConvertAction[], callback: (dom: VDom[], count: number) => void) {
+  replace(html: string, rules: ConvertAction[], callback: (dom: VDom[], count: number) => void): void {
     this.rules = rules;
     this.count = 0;
     const handler = new DomHandler((error, dom) => {
@@ -34,7 +34,7 @@ export class DomService {
     parser.done();
   }
 
-  private parseRule() {
+  private parseRule(): void {
     const inFn = (list: VDom[]) => {
       for (const item of list) {
         if (item.type === 'text' && (!item.next || item.data!.trim().length === 0)) {
@@ -53,7 +53,7 @@ export class DomService {
     inFn(this.dom);
   }
 
-  private resolveTagName(dom: VDom) {
+  private resolveTagName(dom: VDom): void {
     if (!dom.name) return;
     const action = this.rules.find(w => w.type === 'tag' && w.name === dom.name);
     if (!action) return;
@@ -69,7 +69,7 @@ export class DomService {
     }
   }
 
-  private resolveTagAttr(dom: VDom) {
+  private resolveTagAttr(dom: VDom): void {
     if (!dom.attribs) return;
     const keys = Object.keys(dom.attribs);
     if (keys.length === 0) return;
@@ -81,7 +81,7 @@ export class DomService {
     }
   }
 
-  private resolveRule(dom: VDom, rule: ConvertRule, action: ConvertAction) {
+  private resolveRule(dom: VDom, rule: ConvertRule, action: ConvertAction): void {
     switch (rule.type) {
       case 'name':
         this.resolveName(dom, rule);
@@ -125,12 +125,12 @@ export class DomService {
     }
   }
 
-  private resolveName(dom: VDom, rule: ConvertRule) {
+  private resolveName(dom: VDom, rule: ConvertRule): void {
     dom.name = rule.value;
     this.resolveExtra(dom, rule);
   }
 
-  private resolveAttrName(el: VDom, rule: ConvertRule) {
+  private resolveAttrName(el: VDom, rule: ConvertRule): void {
     Object.keys(el.attribs!)
       .filter(w => w === rule.value)
       .forEach(key => {
@@ -146,20 +146,20 @@ export class DomService {
     this.resolveExtra(el, rule);
   }
 
-  private resolveRemoveChild(dom: VDom, name: string) {
+  private resolveRemoveChild(dom: VDom, name: string): void {
     if (!dom.children || dom.children.length === 0) return;
     const has = dom.children.find(w => w.name === name);
     if (has) dom.children = has.children;
   }
 
-  private resolveRemoveWrapElementByClass(dom: VDom, name: string) {
+  private resolveRemoveWrapElementByClass(dom: VDom, name: string): void {
     // tslint:disable-next-line:no-string-literal
     const classes = (dom.attribs!['class'] || '').split(' ') as string[];
     if (!classes.includes(name)) return;
     this.dom = dom.children!;
   }
 
-  private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string) {
+  private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string): void {
     if (!dom.children || dom.children.length === 0) return;
     const idx = dom.children.findIndex(w => w.name === 'ng-template' && typeof w.attribs![attrName] !== 'undefined');
     if (idx !== -1) {
@@ -168,7 +168,7 @@ export class DomService {
     }
   }
 
-  private resolveChangeTagToText(dom: VDom, clearTagName: string) {
+  private resolveChangeTagToText(dom: VDom, clearTagName: string): void {
     if (!dom.children || dom.children.length === 0) return;
     const has = dom.children.find(w => w.name === clearTagName);
     if (has) {
@@ -177,21 +177,21 @@ export class DomService {
     }
   }
 
-  private resolveNameToAttr(dom: VDom, tagName: string, rule: ConvertRule) {
+  private resolveNameToAttr(dom: VDom, tagName: string, rule: ConvertRule): void {
     dom.attribs![dom.name!] = '';
     dom.name = tagName;
     this.resolveExtra(dom, rule);
   }
 
   /** 将属性转化为元素 */
-  private resolveAttrToName(dom: VDom, tagName: string, rule: ConvertRule) {
+  private resolveAttrToName(dom: VDom, tagName: string, rule: ConvertRule): void {
     dom.name = tagName;
     delete dom.attribs![tagName];
     this.resolveExtra(dom, rule);
   }
 
   /** 添加未指定属性名的 ng-template */
-  private resolveAddTemplateAtrr(dom: VDom, _attrName: string, rule: ConvertRule) {
+  private resolveAddTemplateAtrr(dom: VDom, _attrName: string, rule: ConvertRule): void {
     const ngDom = dom.children!.find(
       w => w.type === 'tag' && w.name === 'ng-template' && typeof w.attribs![`#${rule.value}`] !== 'undefined',
     );
@@ -202,7 +202,7 @@ export class DomService {
   }
 
   /** 除 ng-template 以外所有子项都应该包裹至 rule.value 下面 */
-  private resolveAddContentToTemplate(dom: VDom, _attrName: string, rule: ConvertRule) {
+  private resolveAddContentToTemplate(dom: VDom, _attrName: string, rule: ConvertRule): void {
     if (dom.children!.length === 0) return;
 
     const contentList = dom.children!.filter(w => w.name !== 'ng-template');
@@ -224,7 +224,7 @@ export class DomService {
   }
 
   /** 为所有 ng-template 名称增加一个前缀 */
-  private resolveAddPrefixToTemplate(dom: VDom, _attrName: string, rule: ConvertRule) {
+  private resolveAddPrefixToTemplate(dom: VDom, _attrName: string, rule: ConvertRule): void {
     Object.keys(dom.attribs!).forEach(k => {
       const ngDom = dom.children!.find(
         s => s.type === 'tag' && s.name === 'ng-template' && typeof s.attribs![`#${dom.attribs![k]}`] !== 'undefined',
@@ -241,7 +241,7 @@ export class DomService {
     });
   }
 
-  private resolveClassName(dom: VDom, rule: ConvertRule) {
+  private resolveClassName(dom: VDom, rule: ConvertRule): void {
     let classes = (dom.attribs!['class'] || '').split(' ') as string[];
     const idx = classes.indexOf(rule.value!);
     if (idx !== -1) {
@@ -255,7 +255,7 @@ export class DomService {
     }
   }
 
-  private resolveExtra(dom: VDom, rule: ConvertRule) {
+  private resolveExtra(dom: VDom, rule: ConvertRule): void {
     if (rule.extra_insert_attrs) {
       dom.attribs = { ...dom.attribs, ...rule.extra_insert_attrs };
     }

@@ -1,5 +1,6 @@
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlSegment } from '@angular/router';
+import { AlainAuthConfig } from '@delon/util';
 import { CheckJwt, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { JWTTokenModel } from './jwt.model';
@@ -25,7 +26,7 @@ import { JWTTokenModel } from './jwt.model';
 export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   private url: string | undefined;
 
-  private get cog() {
+  private get cog(): AlainAuthConfig {
     return this.srv.options;
   }
 

@@ -58,5 +58,5 @@ describe('abc: count-down', () => {
 class TestComponent {
   config: CountdownConfig;
   target: number | Date;
-  handleEvent() {}
+  handleEvent(): void {}
 }

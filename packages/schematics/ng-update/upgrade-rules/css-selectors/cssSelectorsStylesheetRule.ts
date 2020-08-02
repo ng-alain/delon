@@ -33,13 +33,13 @@ export class Walker extends ComponentWalker {
     this._reportExtraStylesheetFiles(options.ruleArguments[2]);
   }
 
-  visitInlineStylesheet(node: ts.StringLiteralLike) {
+  visitInlineStylesheet(node: ts.StringLiteralLike): void {
     this._createReplacementsForContent(node, node.getText()).forEach(data => {
       this.addFailureAtReplacement(data.failureMessage, data.replacement);
     });
   }
 
-  visitExternalStylesheet(node: ExternalResource) {
+  visitExternalStylesheet(node: ExternalResource): void {
     this._createReplacementsForContent(node, node.getText()).forEach(data => {
       this.addExternalFailureAtReplacement(node, data.failureMessage, data.replacement);
     });
@@ -49,7 +49,13 @@ export class Walker extends ComponentWalker {
    * Searches for outdated CSS selectors in the specified content and creates replacements
    * with the according messages that can be added to a rule failure.
    */
-  private _createReplacementsForContent(node: ts.Node, stylesheetContent: string) {
+  private _createReplacementsForContent(
+    node: ts.Node,
+    stylesheetContent: string,
+  ): {
+    failureMessage: string;
+    replacement: Replacement;
+  }[] {
     const replacements: Array<{ failureMessage: string; replacement: Replacement }> = [];
 
     this.data.forEach(data => {

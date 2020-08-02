@@ -52,7 +52,13 @@ const ruleDirectories = globSync('./**/', { cwd: __dirname, absolute: true });
  * @param config Configuration object that can be specified to add additional rules or
  * specify additional external stylesheets which are not referenced by Angular.
  */
-export function createTslintConfig(target: TargetVersion, config: UpgradeTSLintConfig) {
+export function createTslintConfig(
+  target: TargetVersion,
+  config: UpgradeTSLintConfig,
+): {
+  rulesDirectory: string[];
+  rules: {};
+} {
   const configuredRules = baseUpgradeRules.concat(config.extraUpgradeRules || []);
   const configuredRuleDirs = ruleDirectories.concat(config.extraRuleDirectories || []);
 

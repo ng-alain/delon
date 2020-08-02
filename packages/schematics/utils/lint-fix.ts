@@ -8,7 +8,7 @@
 import { DirEntry, Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { TslintFixTask } from '@angular-devkit/schematics/tasks';
 
-export function applyLintFix(path = '/'): Rule {
+export function applyLintFix(path: string = '/'): Rule {
   return (tree: Tree, context: SchematicContext) => {
     // Find the closest tslint.json or tslint.yaml
     let dir: DirEntry | null = tree.getDir(path.substr(0, path.lastIndexOf('/')));
