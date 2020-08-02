@@ -75,7 +75,9 @@
         "property-declaration": "nospace",
         "variable-declaration": "nospace"
       }
-    ]
+    ],
+    "use-isnan": true,
+    "unified-signatures": true
   },
   "linterOptions": {
     "exclude": [
