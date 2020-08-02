@@ -1,3 +1,4 @@
+// tslint:disable: deprecation
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
@@ -9,7 +10,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DownFileDirective } from './down-file.directive';
 import { DownFileModule } from './down-file.module';
 
-function genFile(isRealFile = true): Blob {
+function genFile(isRealFile: boolean = true): Blob {
   const blob = new Blob([
     isRealFile ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==` : '',
   ]);
@@ -22,7 +23,7 @@ describe('abc: down-file', () => {
   let context: TestComponent;
   let httpBed: HttpTestingController;
 
-  function createComp() {
+  function createComp(): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, DownFileModule],
       declarations: [TestComponent],
@@ -195,7 +196,7 @@ class TestComponent {
 
   fileName: string | ((rep: HttpResponse<Blob>) => string) | null = 'demo中文';
 
-  success() {}
+  success(): void {}
 
-  error() {}
+  error(): void {}
 }

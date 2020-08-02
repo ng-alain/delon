@@ -15,7 +15,7 @@ let isErrRequest = false;
 let loadCount = 0;
 let isNullLodop = false;
 class MockLazyService {
-  loadScript() {
+  loadScript(): Promise<{ status: string }> {
     ++loadCount;
     if (isErrRequest) return Promise.resolve({ status: 'error' });
 
@@ -27,11 +27,11 @@ class MockLazyService {
 describe('abc: lodop', () => {
   let srv: LodopService;
 
-  function fnLodopConfig() {
+  function fnLodopConfig(): AlainConfig {
     return cog;
   }
 
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [LodopModule],
       providers: [
@@ -200,7 +200,7 @@ describe('abc: lodop', () => {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
         // tslint:disable-next-line: only-arrow-functions
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function () {
+        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function (): void {
           mockRes = arguments[4];
         }),
         webskt: {
@@ -226,7 +226,7 @@ describe('abc: lodop', () => {
         `;
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function () {
+      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function (): number {
         const that = this;
         setTimeout(() => that.On_Return(0, code), 30);
         setTimeout(() => that.On_Return(1, code), 31);
@@ -256,7 +256,7 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
-        PRINT: jasmine.createSpy('PRINT').and.callFake(function () {
+        PRINT: jasmine.createSpy('PRINT').and.callFake(function (): number {
           const that = this;
           if (isPrintError) {
             setTimeout(() => that.On_Return(0, '缺纸'), 10);

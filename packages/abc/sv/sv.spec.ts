@@ -22,7 +22,7 @@ describe('abc: view', () => {
     });
   };
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
@@ -223,7 +223,7 @@ describe('abc: view', () => {
     getEls(cls: string): DebugElement[] {
       return dl.queryAll(By.css(cls));
     }
-    expect(cls: string, count = 1): this {
+    expect(cls: string, count: number = 1): this {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }

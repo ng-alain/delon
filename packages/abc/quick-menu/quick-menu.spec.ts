@@ -25,7 +25,7 @@ describe('abc: quick-menu', () => {
     return dl.query(By.css(cls)).nativeElement as HTMLElement;
   }
 
-  function style(name: string, value: string) {
+  function style(name: string, value: string): void {
     const el = getEl();
     expect((el.style as NzSafeAny)[name]).toBe(value);
   }

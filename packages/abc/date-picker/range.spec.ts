@@ -133,7 +133,7 @@ describe('abc: date-picker: range', () => {
     return el;
   }
 
-  function timeEnd() {
+  function timeEnd(): void {
     fixture.detectChanges();
     tick(500);
     fixture.detectChanges();
@@ -161,7 +161,7 @@ class TestComponent {
   @ViewChild('comp', { static: true }) comp: RangePickerComponent;
   i: any = {};
   shortcut: boolean | AlainDateRangePickerShortcut | null = false;
-  _nzOnOpenChange() {}
-  _nzOnPanelChange() {}
-  _nzOnOk() {}
+  _nzOnOpenChange(): void {}
+  _nzOnPanelChange(): void {}
+  _nzOnOk(): void {}
 }

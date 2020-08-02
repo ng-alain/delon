@@ -43,7 +43,7 @@ describe('util: style', () => {
       return this;
     }
 
-    has(clsName: string, result = true): this {
+    has(clsName: string, result: boolean = true): this {
       expect(this.fakeEl.hasOwnProperty(clsName)).toBe(result);
       return this;
     }

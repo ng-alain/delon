@@ -12,7 +12,7 @@ import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderModule } from './page-header.module';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(key: string) {
+  fanyi(key: string): string {
     return key;
   }
 }
@@ -24,7 +24,7 @@ describe('abc: page-header', () => {
   let context: TestComponent;
   let router: Router;
 
-  function genModule(other: { template?: string; providers?: any[]; created?: boolean }) {
+  function genModule(other: { template?: string; providers?: any[]; created?: boolean }): void {
     const imports = [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
@@ -44,7 +44,7 @@ describe('abc: page-header', () => {
     router = TestBed.inject<Router>(Router);
   }
 
-  function isExists(cls: string, stauts: boolean = true) {
+  function isExists(cls: string, stauts: boolean = true): void {
     if (stauts) {
       expect(dl.query(By.css(cls))).not.toBeNull();
     } else {
@@ -52,7 +52,7 @@ describe('abc: page-header', () => {
     }
   }
 
-  function checkValue(cls: string, value: any) {
+  function checkValue(cls: string, value: any): void {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
     expect(el.textContent!.trim()).toBe(value);
   }

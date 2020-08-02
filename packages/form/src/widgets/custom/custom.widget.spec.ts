@@ -10,7 +10,7 @@ describe('form: widget: custom', () => {
     properties: { a: { type: 'string', ui: { widget: 'custom' } } },
   };
 
-  function detectChanges(path = '/a') {
+  function detectChanges(path: string = '/a'): SFPage {
     context.comp.rootProperty!.searchProperty(path)!.widget.detectChanges();
     fixture.detectChanges();
     return page;

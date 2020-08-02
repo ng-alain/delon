@@ -53,7 +53,7 @@ describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(options: AlainMockConfig, imports: any[] = [], spyConsole = true, providers?: any[]) {
+  function genModule(options: AlainMockConfig, imports: any[] = [], spyConsole: boolean = true, providers?: any[]): void {
     TestBed.configureTestingModule({
       declarations: [RootComponent],
       imports: [
@@ -219,6 +219,7 @@ describe('mock: interceptor', () => {
     beforeEach(() => genModule({ data: DATA, delay: 1 }));
 
     it('should work', fakeAsync(() => {
+      // tslint:disable-next-line: deprecation
       const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
       const router = TestBed.inject<Router>(Router);
       @Component({

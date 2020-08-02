@@ -15,7 +15,7 @@ function genModel(
   token:
     | string
     | null = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`,
-) {
+): JWTTokenModel {
   const model = new JWTTokenModel();
   // from: https://jwt.io/
   model.token = token;
@@ -26,7 +26,7 @@ describe('auth: jwt.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
 
-  function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel) {
+  function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel): void {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
       imports: [

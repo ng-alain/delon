@@ -404,11 +404,11 @@ describe('form: schema', () => {
   });
 
   describe('[order]', () => {
-    function genKeys() {
+    function genKeys(): string {
       return JSON.stringify(Object.keys((context.comp.rootProperty as ObjectProperty).properties!));
     }
 
-    function checkOrderKeys(arr: string[]) {
+    function checkOrderKeys(arr: string[]): void {
       expect(genKeys()).toBe(JSON.stringify(arr));
     }
 

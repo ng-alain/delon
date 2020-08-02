@@ -10,7 +10,7 @@ describe('Schematic: ng-update: v10Rule', () => {
     ({ runner, tree } = await createAlainApp());
   });
 
-  async function runMigration() {
+  async function runMigration(): Promise<void> {
     runner = new SchematicTestRunner('schematics', migrationCollection);
     await runner.runSchematicAsync('migration-v10', {}, tree).toPromise();
   }

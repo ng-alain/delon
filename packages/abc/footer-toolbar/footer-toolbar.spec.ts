@@ -16,7 +16,7 @@ describe('abc: footer-toolbar', () => {
     });
   });
 
-  function create() {
+  function create(): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;

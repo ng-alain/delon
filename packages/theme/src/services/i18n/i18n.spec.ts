@@ -27,14 +27,14 @@ describe('theme: i18n', () => {
     @Injectable()
     class MockI18NService extends AlainI18NServiceFake {
       data: any = {};
-      use(_lang: string) {
+      use(_lang: string): void {
         this.data = {
           simple: 'a',
           param: 'a-{{value}}',
           html: '<i>asdf</i>',
         };
       }
-      fanyi(key: string, data?: { [key: string]: string }, _isSafe?: boolean) {
+      fanyi(key: string, data?: { [key: string]: string }, _isSafe?: boolean): string {
         let res = this.data[key] || '';
         if (data) {
           Object.keys(data).forEach(k => (res = res.replace(new RegExp(`{{${k}}}`, 'g'), data[k])));
@@ -43,7 +43,7 @@ describe('theme: i18n', () => {
       }
     }
 
-    function genModule() {
+    function genModule(): void {
       TestBed.configureTestingModule({
         imports: [AlainThemeModule.forRoot()],
         declarations: [TestComponent],
@@ -61,7 +61,7 @@ describe('theme: i18n', () => {
       fixture.detectChanges();
     }
 
-    function check(result: string, id = 'simple') {
+    function check(result: string, id: string = 'simple'): void {
       const el = fixture.debugElement.query(By.css('#' + id)).nativeElement as HTMLElement;
 
       expect(el.textContent!.trim()).toBe(result);

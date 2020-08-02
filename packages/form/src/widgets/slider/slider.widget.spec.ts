@@ -21,11 +21,11 @@ describe('form: widget: slider', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  function getWidget() {
+  function getWidget(): SliderWidget {
     return page.getWidget<SliderWidget>('sf-' + widget);
   }
 
-  function getComp() {
+  function getComp(): NzSliderComponent {
     return page.getWidget<NzSliderComponent>('nz-slider');
   }
 

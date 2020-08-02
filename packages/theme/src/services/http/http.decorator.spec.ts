@@ -139,7 +139,7 @@ describe('theme: http.decorator', () => {
   let tokens: any;
 
   class MockInjector {
-    get(token: any, notFoundValue = null) {
+    get(token: any, notFoundValue: null = null): any {
       const tokenStr = token + '';
       if (tokenStr.includes('_HttpClient')) {
         return tokens._HttpClient;

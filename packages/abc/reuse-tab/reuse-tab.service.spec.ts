@@ -8,13 +8,13 @@ import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 class MockMenuService {
-  getPathByUrl(url: string) {
+  getPathByUrl(url: string): Array<{ text: string }> {
     return url === '/a/0' ? [] : [{ text: `标题` }];
   }
 }
 class MockRouter {
   navigateByUrl = jasmine.createSpy();
-  get events() {
+  get events(): any {
     return {
       subscribe: () => {
         return { unsubscribe: () => {} };
@@ -30,7 +30,7 @@ describe('abc: reuse-tab(service)', () => {
 
   afterEach(() => srv.ngOnDestroy());
 
-  function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]) {
+  function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]): void {
     TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
@@ -48,7 +48,7 @@ describe('abc: reuse-tab(service)', () => {
     router = TestBed.inject<Router>(Router) as NzSafeAny;
   }
 
-  function genCached(count: number, urlTpl: string = `a/{index}`) {
+  function genCached(count: number, urlTpl: string = `a/{index}`): void {
     srv.clear();
     Array(count)
       .fill({})
@@ -61,7 +61,7 @@ describe('abc: reuse-tab(service)', () => {
    * 模拟 Snapshot
    * - 1 => a/1
    */
-  function getSnapshot(index: number, urlTpl: string = `a/{index}`) {
+  function getSnapshot(index: number, urlTpl: string = `a/{index}`): any {
     return {
       routeConfig: {},
       url: [urlTpl.replace(`{index}`, index + '')],

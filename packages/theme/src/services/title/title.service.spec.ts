@@ -23,7 +23,7 @@ describe('Service: Title', () => {
   }
 
   class TestDocument {
-    querySelector() {
+    querySelector(): any {
       return {
         childNodes: [],
         firstChild: {
@@ -39,7 +39,7 @@ describe('Service: Title', () => {
   const alain = 'Alain';
   const notPageName = 'Not Page Name';
 
-  function genModule(providers: any[] = [], loadI18n = true) {
+  function genModule(providers: any[] = [], loadI18n: boolean = true): void {
     const i18nProvider: any[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
     TestBed.configureTestingModule({
       imports: [AlainThemeModule, RouterTestingModule],

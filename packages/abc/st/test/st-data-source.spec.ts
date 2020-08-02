@@ -16,7 +16,7 @@ const DEFAULT = {
 };
 DEFAULT.maxPi = Math.ceil(DEFAULT.total / DEFAULT.ps);
 
-function genData(count = DEFAULT.total, whetherRandom = false) {
+function genData(count: number = DEFAULT.total, whetherRandom: boolean = false): any[] {
   return Array(count)
     .fill({})
     .map((_item: any, idx: number) => {
@@ -40,23 +40,23 @@ describe('abc: table: data-souce', () => {
   let httpResponse: any;
 
   class MockHttpClient {
-    request(_method: string, _url: string, _opt: any) {
+    request(_method: string, _url: string, _opt: any): any {
       return of(httpResponse);
     }
   }
 
   class MockDomSanitizer {
-    bypassSecurityTrustHtml(val: any) {
+    bypassSecurityTrustHtml(val: any): any {
       return val;
     }
   }
   class MockNzI18nService {
-    getDateLocale() {
+    getDateLocale(): null {
       return null;
     }
   }
 
-  function genModule() {
+  function genModule(): void {
     options = {
       pi: DEFAULT.pi,
       ps: DEFAULT.ps,

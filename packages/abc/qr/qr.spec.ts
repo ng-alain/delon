@@ -14,22 +14,22 @@ describe('abc: qr', () => {
   const win: any = window;
 
   class MockQRious {
-    set() {
+    set(): jasmine.Spy<jasmine.Func> {
       return jasmine.createSpy('set');
     }
-    toDataURL() {
+    toDataURL(): jasmine.Spy<jasmine.Func> {
       return jasmine.createSpy('toDataURL');
     }
   }
 
-  function createModule() {
+  function createModule(): void {
     TestBed.configureTestingModule({
       imports: [QRModule],
       declarations: [TestComponent],
     });
   }
 
-  function mockQRious() {
+  function mockQRious(): void {
     win.QRious = MockQRious;
   }
 
@@ -48,7 +48,7 @@ describe('abc: qr', () => {
       tick(100);
     }));
 
-    function getDataURL() {
+    function getDataURL(): string {
       return (dl.query(By.css('img')).nativeElement as HTMLImageElement).src;
     }
 
@@ -115,5 +115,5 @@ class TestComponent {
   padding = 10;
   size = 220;
 
-  change() {}
+  change(): void {}
 }

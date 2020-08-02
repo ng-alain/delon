@@ -22,11 +22,11 @@ describe('form: widget: upload', () => {
     page.prop(dl, context, fixture);
   });
 
-  function getComp() {
+  function getComp(): UploadWidget {
     return page.getWidget<UploadWidget>('sf-upload');
   }
 
-  function getUpload() {
+  function getUpload(): NzUploadComponent {
     return dl.query(By.directive(NzUploadComponent)).injector.get<NzUploadComponent>(NzUploadComponent);
   }
 

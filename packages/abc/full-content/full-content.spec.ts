@@ -26,7 +26,7 @@ describe('abc: full-content', () => {
     });
   });
 
-  function createComp() {
+  function createComp(): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
@@ -171,5 +171,5 @@ class TestComponent {
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;
-  change() {}
+  change(): void {}
 }

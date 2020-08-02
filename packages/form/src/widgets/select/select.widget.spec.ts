@@ -21,7 +21,7 @@ describe('form: widget: select', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  function getWidget() {
+  function getWidget(): SelectWidget {
     return page.getWidget<SelectWidget>('sf-' + widget);
   }
 

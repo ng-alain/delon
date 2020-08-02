@@ -5,27 +5,27 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { LazyService } from '@delon/util';
 import * as fs from 'file-saver';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
 
 class MockLazyService {
-  load() {
+  load(): Promise<void> {
     return Promise.resolve();
   }
 }
 
 let isErrorRequest = false;
 class MockHttpClient {
-  request() {
+  request(): Observable<null> {
     return isErrorRequest ? throwError(null) : of(null);
   }
 }
 
 describe('abc: xlsx', () => {
   let srv: XlsxService;
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [XlsxModule, HttpClientTestingModule],
       declarations: [TestComponent],
@@ -135,6 +135,7 @@ describe('abc: xlsx', () => {
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
         } as XlsxExportOptions)
         .then(() => {
+          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
@@ -147,6 +148,7 @@ describe('abc: xlsx', () => {
           },
         } as XlsxExportOptions)
         .then(() => {
+          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
