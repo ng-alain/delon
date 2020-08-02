@@ -1,10 +1,10 @@
-export function preloaderFinished() {
+export function preloaderFinished(): void {
   const body = document.querySelector('body')!;
   const preloader = document.querySelector('.preloader')!;
 
   body.style.overflow = 'hidden';
 
-  function remove() {
+  function remove(): void {
     // preloader value null when running --hmr
     if (!preloader) return;
     preloader.addEventListener('transitionend', () => {

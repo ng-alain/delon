@@ -69,7 +69,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
     this.el = el.nativeElement;
   }
 
-  private setClass() {
+  private setClass(): void {
     const { el, ren, col, clsMap, type, rep } = this;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
@@ -80,16 +80,16 @@ export class SVComponent implements AfterViewInit, OnChanges {
     clsMap.forEach(cls => ren.addClass(el, cls));
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setClass();
     this.checkContent();
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.setClass();
   }
 
-  checkContent() {
+  checkContent(): void {
     const { conEl } = this;
     const def = this.default;
     if (!(def != null ? def : this.parent.default)) return;

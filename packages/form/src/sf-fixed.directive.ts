@@ -8,7 +8,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
 
   @Input('fixed-label') @InputNumber() num: number;
 
-  private init() {
+  private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;
     const widgetEl = this.el.querySelector('.ant-row') || this.el;
     this.render.addClass(widgetEl, 'sf__fixed');

@@ -77,13 +77,13 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     this.i = res;
   }
 
-  change(args: NzUploadChangeParam) {
+  change(args: NzUploadChangeParam): void {
     if (this.ui.change) this.ui.change(args);
     if (args.type !== 'success') return;
     this._setValue(args.fileList);
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     const { fileList } = this.ui;
     (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(list => {
       this.fileList = list as NzUploadFile[];
@@ -93,11 +93,11 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     });
   }
 
-  private _getValue(file: NzUploadFile) {
+  private _getValue(file: NzUploadFile): any {
     return deepGet(file.response, this.i.resReName, file.response);
   }
 
-  private pureValue(fileList: NzUploadFile[]) {
+  private pureValue(fileList: NzUploadFile[]): void {
     fileList
       .filter(file => !file.url)
       .forEach(file => {
@@ -107,7 +107,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return this.i.multiple === true ? res : res.pop();
   }
 
-  private _setValue(fileList: NzUploadFile[]) {
+  private _setValue(fileList: NzUploadFile[]): void {
     this.setValue(this.pureValue(fileList));
   }
 

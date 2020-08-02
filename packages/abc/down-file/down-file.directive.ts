@@ -61,7 +61,7 @@ export class DownFileDirective {
     el.classList[status ? 'add' : 'remove'](`down-file__disabled`);
   }
 
-  _click() {
+  _click(): void {
     if (!this.isFileSaverSupported) {
       return;
     }

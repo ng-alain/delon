@@ -19,7 +19,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   labelTitle: string = ``;
   inited = false;
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     this.inited = false;
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
@@ -35,24 +35,24 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
     });
   }
 
-  _setValue(value: SFValue) {
+  _setValue(value: SFValue): void {
     this.setValue(value);
     this.detectChanges();
     this.notifyChange(value);
   }
 
-  notifySet() {
+  notifySet(): void {
     const checkList = this.data.filter(w => w.checked);
     this.updateAllChecked().setValue(checkList.map(item => item.value));
     this.notifyChange(checkList);
   }
 
-  groupInGridChange(values: SFValue[]) {
+  groupInGridChange(values: SFValue[]): void {
     this.data.forEach(item => (item.checked = values.indexOf(item.value) !== -1));
     this.notifySet();
   }
 
-  onAllChecked() {
+  onAllChecked(): void {
     this.data.forEach(item => (item.checked = this.allChecked));
     this.notifySet();
   }
@@ -71,7 +71,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
     return this;
   }
 
-  private notifyChange(res: boolean | SFSchemaEnum[]) {
+  private notifyChange(res: boolean | SFSchemaEnum[]): void {
     if (this.ui.change) this.ui.change(res);
   }
 }

@@ -29,7 +29,7 @@ export class CountDownComponent {
 
   @Output() readonly event = new EventEmitter<CountdownEvent>();
 
-  handleEvent(e: CountdownEvent) {
+  handleEvent(e: CountdownEvent): void {
     this.event.emit(e);
   }
 }

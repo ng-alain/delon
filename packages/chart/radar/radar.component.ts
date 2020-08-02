@@ -70,11 +70,11 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private getHeight() {
+  private getHeight(): number {
     return this.height - (this.hasLegend ? 80 : 22);
   }
 
-  private install() {
+  private install(): void {
     const { node, padding, theme } = this;
 
     const chart = (this._chart = new Chart({
@@ -132,7 +132,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, padding, data, colors, tickCount } = this;
     if (!_chart || !data || data.length <= 0) return;
 
@@ -151,7 +151,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     this.ngZone.run(() => this.genLegend());
   }
 
-  private genLegend() {
+  private genLegend(): void {
     const { hasLegend, cdr, _chart } = this;
     if (!hasLegend) return;
 
@@ -170,7 +170,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     cdr.detectChanges();
   }
 
-  _click(i: number) {
+  _click(i: number): void {
     const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
     _chart.render();

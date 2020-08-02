@@ -1,7 +1,7 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NumberToChineseOptions } from './number-to-chinese.interfaces';
 
-export function numberToChinese(value: number | string, rmb = true, options?: NumberToChineseOptions): string {
+export function numberToChinese(value: number | string, rmb: boolean = true, options?: NumberToChineseOptions): string {
   options = {
     minusSymbol: '负',
     validThrow: false,

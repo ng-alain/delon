@@ -32,11 +32,11 @@ import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widge
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { IconComponent } from './shared/components/icon/icon.component';
 
-export function StartupServiceFactory(startupService: StartupService) {
+export function StartupServiceFactory(startupService: StartupService): () => Promise<any> {
   return () => startupService.load();
 }
 
-function registerElements(injector: Injector, platformId: {}) {
+function registerElements(injector: Injector, platformId: {}): void {
   // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
   if (!isPlatformBrowser(platformId)) {
     return;

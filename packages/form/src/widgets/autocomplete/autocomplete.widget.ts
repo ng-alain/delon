@@ -24,7 +24,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   private isAsync = false;
   private fixData: SFSchemaEnum[] = [];
 
-  updateValue(item: NzAutocompleteOptionComponent) {
+  updateValue(item: NzAutocompleteOptionComponent): void {
     this.typing = item.nzLabel!;
     const data: SFSchemaEnum = item.nzValue;
     this.setValue(data.value);
@@ -67,7 +67,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     );
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     this.typing = this.value;
     if (this.isAsync) return;
     switch (this.ui.type) {
@@ -80,7 +80,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     }
   }
 
-  private filterData(input: string) {
+  private filterData(input: string): Observable<SFSchemaEnum[]> | Observable<string[]> {
     switch (this.ui.type) {
       case 'email':
         return this.addEmailSuffix(input);
@@ -89,7 +89,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     }
   }
 
-  private addEmailSuffix(value: string) {
+  private addEmailSuffix(value: string): Observable<string[]> {
     return of(!value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`));
   }
 }

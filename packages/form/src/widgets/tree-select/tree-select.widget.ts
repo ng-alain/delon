@@ -36,19 +36,19 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
     this.asyncData = typeof ui.expandChange === 'function';
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
-  change(value: string[] | string) {
+  change(value: string[] | string): void {
     if (this.ui.change) this.ui.change(value);
     this.setValue(value);
   }
 
-  expandChange(e: NzFormatEmitEvent) {
+  expandChange(e: NzFormatEmitEvent): void {
     const { ui } = this;
     if (typeof ui.expandChange !== 'function') return;
     ui.expandChange(e).subscribe(res => {

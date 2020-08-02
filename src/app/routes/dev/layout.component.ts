@@ -58,15 +58,15 @@ const ICONS = [
 })
 export class DevLayoutComponent implements OnInit {
   @HostBinding('class.alain-default__fixed')
-  get isFixed() {
+  get isFixed(): boolean {
     return this.settings.layout.fixed;
   }
   @HostBinding('class.alain-default__boxed')
-  get isBoxed() {
+  get isBoxed(): boolean {
     return this.settings.layout.boxed;
   }
   @HostBinding('class.alain-default__collapsed')
-  get isCollapsed() {
+  get isCollapsed(): boolean {
     return this.settings.layout.collapsed;
   }
 
@@ -169,11 +169,11 @@ export class DevLayoutComponent implements OnInit {
   //   fn(0);
   // }
 
-  toggleCollapsedSideabar() {
+  toggleCollapsedSideabar(): void {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
   }
 
-  toggleLang() {
+  toggleLang(): void {
     this.lang = this.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
     this.i18n.use(this.lang);
   }

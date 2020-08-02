@@ -31,31 +31,31 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     }
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, {}, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
-  _visibleChange(status: boolean) {
+  _visibleChange(status: boolean): void {
     if (this.ui.visibleChange) this.ui.visibleChange(status);
   }
 
-  _change(value: any[] | null) {
+  _change(value: any[] | null): void {
     this.setValue(value);
     if (this.ui.change) {
       this.ui.change(value);
     }
   }
 
-  _selectionChange(options: NzCascaderOption[]) {
+  _selectionChange(options: NzCascaderOption[]): void {
     if (this.ui.selectionChange) {
       this.ui.selectionChange(options);
     }
   }
 
-  _clear() {
+  _clear(): void {
     if (this.ui.clear) this.ui.clear();
   }
 }

@@ -28,7 +28,7 @@ export class CacheService implements OnDestroy {
     this.startExpireNotify();
   }
 
-  private deepGet(obj: NzSafeAny, path: string[], defaultValue?: NzSafeAny) {
+  private deepGet(obj: NzSafeAny, path: string[], defaultValue?: NzSafeAny): NzSafeAny {
     if (!obj) return defaultValue;
     if (path.length <= 1) {
       const checkObj = path.length ? obj[path[0]] : obj;
@@ -39,32 +39,32 @@ export class CacheService implements OnDestroy {
 
   // #region meta
 
-  private pushMeta(key: string) {
+  private pushMeta(key: string): void {
     if (this.meta.has(key)) return;
     this.meta.add(key);
     this.saveMeta();
   }
 
-  private removeMeta(key: string) {
+  private removeMeta(key: string): void {
     if (!this.meta.has(key)) return;
     this.meta.delete(key);
     this.saveMeta();
   }
 
-  private loadMeta() {
+  private loadMeta(): void {
     const ret = this.store.get(this.cog.meta_key!);
     if (ret && ret.v) {
       (ret.v as string[]).forEach(key => this.meta.add(key));
     }
   }
 
-  private saveMeta() {
+  private saveMeta(): void {
     const metaData: string[] = [];
     this.meta.forEach(key => metaData.push(key));
     this.store.set(this.cog.meta_key!, { v: metaData, e: 0 });
   }
 
-  getMeta() {
+  getMeta(): Set<string> {
     return this.meta;
   }
 
@@ -132,7 +132,7 @@ export class CacheService implements OnDestroy {
     );
   }
 
-  private save(type: 'm' | 's', key: string, value: ICache) {
+  private save(type: 'm' | 's', key: string, value: ICache): void {
     if (type === 'm') {
       this.memory.set(key, value);
     } else {
@@ -260,7 +260,7 @@ export class CacheService implements OnDestroy {
 
   // #region remove
 
-  private _remove(key: string, needNotify: boolean) {
+  private _remove(key: string, needNotify: boolean): void {
     if (needNotify) this.runNotify(key, 'remove');
     if (this.memory.has(key)) {
       this.memory.delete(key);
@@ -271,12 +271,12 @@ export class CacheService implements OnDestroy {
   }
 
   /** 移除缓存 */
-  remove(key: string) {
+  remove(key: string): void {
     this._remove(key, true);
   }
 
   /** 清空所有缓存 */
-  clear() {
+  clear(): void {
     this.notifyBuffer.forEach((_v, k) => this.runNotify(k, 'remove'));
     this.memory.clear();
     this.meta.forEach(key => this.store.remove(this.cog.prefix + key));
@@ -295,19 +295,19 @@ export class CacheService implements OnDestroy {
     this.startExpireNotify();
   }
 
-  private startExpireNotify() {
+  private startExpireNotify(): void {
     this.checkExpireNotify();
     this.runExpireNotify();
   }
 
-  private runExpireNotify() {
+  private runExpireNotify(): void {
     this.freqTime = setTimeout(() => {
       this.checkExpireNotify();
       this.runExpireNotify();
     }, this.freqTick);
   }
 
-  private checkExpireNotify() {
+  private checkExpireNotify(): void {
     const removed: string[] = [];
     this.notifyBuffer.forEach((_v, key) => {
       if (this.has(key) && this.getNone(key) === null) removed.push(key);
@@ -318,11 +318,11 @@ export class CacheService implements OnDestroy {
     });
   }
 
-  private abortExpireNotify() {
+  private abortExpireNotify(): void {
     clearTimeout(this.freqTime);
   }
 
-  private runNotify(key: string, type: CacheNotifyType) {
+  private runNotify(key: string, type: CacheNotifyType): void {
     if (!this.notifyBuffer.has(key)) return;
     this.notifyBuffer.get(key)!.next({ type, value: this.getNone(key) });
   }

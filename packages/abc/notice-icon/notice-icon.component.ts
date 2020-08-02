@@ -41,30 +41,30 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
-  onVisibleChange(result: boolean) {
+  onVisibleChange(result: boolean): void {
     this.popoverVisibleChange.emit(result);
   }
 
-  onSelect(i: NoticeIconSelect) {
+  onSelect(i: NoticeIconSelect): void {
     this.select.emit(i);
   }
 
-  onClear(title: string) {
+  onClear(title: string): void {
     this.clear.emit(title);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.i18n$ = this.i18n.change.subscribe(() => {
       this.locale = this.i18n.getData('noticeIcon');
       this.cdr.markForCheck();
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.cdr.markForCheck();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.i18n$.unsubscribe();
   }
 }

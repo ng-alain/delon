@@ -38,7 +38,7 @@ export class LayoutComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     const { unsubscribe$ } = this;
     unsubscribe$.next();
     unsubscribe$.complete();

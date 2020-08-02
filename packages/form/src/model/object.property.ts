@@ -11,7 +11,7 @@ import { FormPropertyFactory } from './form.property.factory';
 export class ObjectProperty extends PropertyGroup {
   private _propertiesId: string[] = [];
 
-  get propertiesId() {
+  get propertiesId(): string[] {
     return this._propertiesId;
   }
 
@@ -29,7 +29,7 @@ export class ObjectProperty extends PropertyGroup {
     this.createProperties();
   }
 
-  private createProperties() {
+  private createProperties(): void {
     this.properties = {};
     this._propertiesId = [];
     let orderedProperties: string[];
@@ -50,7 +50,7 @@ export class ObjectProperty extends PropertyGroup {
     });
   }
 
-  setValue(value: SFValue, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean): void {
     const properties = this.properties as { [key: string]: FormProperty };
     for (const propertyId in value) {
       if (value.hasOwnProperty(propertyId) && properties[propertyId]) {
@@ -60,7 +60,7 @@ export class ObjectProperty extends PropertyGroup {
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
-  resetValue(value: SFValue, onlySelf: boolean) {
+  resetValue(value: SFValue, onlySelf: boolean): void {
     value = value || this.schema.default || {};
     const properties = this.properties as { [key: string]: FormProperty };
     // tslint:disable-next-line: forin
@@ -74,7 +74,7 @@ export class ObjectProperty extends PropertyGroup {
     return this.value != null && !!Object.keys(this.value).length;
   }
 
-  _updateValue() {
+  _updateValue(): void {
     const value: SFValue = {};
     this.forEachChild((property, propertyId) => {
       if (property.visible && property._hasValue()) {

@@ -53,7 +53,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
-  private install() {
+  private install(): void {
     const { el, height, padding, textStyle, line, format, theme } = this;
     const chart = (this._chart = new Chart({
       container: el.nativeElement,
@@ -92,7 +92,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, height, padding, value, min, max, plusColor, minusColor, barSize } = this;
     if (!_chart) return;
     _chart.scale({ value: { max, min } });
@@ -102,7 +102,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.changeData([{ value }]);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.platform.isBrowser) {
       return;
     }

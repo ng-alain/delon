@@ -96,7 +96,7 @@ export class FormPropertyFactory {
     return newProperty;
   }
 
-  private initializeRoot(rootProperty: PropertyGroup) {
+  private initializeRoot(rootProperty: PropertyGroup): void {
     // rootProperty.init();
     rootProperty._bindVisibility();
   }

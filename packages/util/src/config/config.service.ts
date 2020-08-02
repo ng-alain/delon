@@ -20,11 +20,11 @@ export class AlainConfigService {
     return deepMergeKey({}, true, ...defaultValues, this.get(componentName));
   }
 
-  attach<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: AlainConfig[T]) {
+  attach<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: AlainConfig[T]): void {
     Object.assign(componentThis, this.merge(componentName, defaultValues));
   }
 
-  attachKey<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, key: string) {
+  attachKey<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, key: string): void {
     Object.assign(componentThis, this.get(componentName, key));
   }
 

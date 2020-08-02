@@ -43,12 +43,12 @@ export class QuickMenuComponent implements OnInit, OnChanges {
 
   private initFlag = false;
 
-  _click() {
+  _click(): void {
     this.show = !this.show;
     this.setStyle();
   }
 
-  private setStyle() {
+  private setStyle(): void {
     this.ctrlStyle = {
       'background-color': this.bgColor,
       'border-color': this.borderColor,

@@ -16,11 +16,11 @@ export class NoticeIconTabComponent {
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
 
-  onClick(item: NoticeItem) {
+  onClick(item: NoticeItem): void {
     this.select.emit({ title: this.data.title, item });
   }
 
-  onClear() {
+  onClear(): void {
     this.clear.emit(this.data.title);
   }
 }

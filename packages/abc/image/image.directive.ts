@@ -40,7 +40,7 @@ export class ImageDirective implements OnChanges, OnInit {
     }
   }
 
-  private update() {
+  private update(): void {
     const { size, imgEl, useHttp } = this;
     if (useHttp) {
       this.getByHttp();
@@ -78,9 +78,9 @@ export class ImageDirective implements OnChanges, OnInit {
     );
   }
 
-  private updateError() {
+  private updateError(): void {
     const { imgEl, error } = this;
-    // tslint:disable-next-line: only-arrow-functions
+    // tslint:disable-next-line: only-arrow-functions, typedef
     imgEl.onerror = function () {
       this.onerror = null;
       this.src = error;

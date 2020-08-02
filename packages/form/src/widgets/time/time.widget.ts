@@ -36,7 +36,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
     this.i = opt;
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     if (value instanceof Date) {
       this.displayValue = value;
       this.detectChanges();
@@ -55,7 +55,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
     this.detectChanges();
   }
 
-  _change(value: Date | null) {
+  _change(value: Date | null): void {
     if (this.ui.change) {
       this.ui.change(value);
     }
@@ -70,7 +70,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
     this.setValue(format(value, this.valueFormat!));
   }
 
-  _openChange(status: boolean) {
+  _openChange(status: boolean): void {
     if (this.ui.openChange) {
       this.ui.openChange(status);
     }

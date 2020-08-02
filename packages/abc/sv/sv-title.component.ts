@@ -21,14 +21,14 @@ export class SVTitleComponent implements OnInit {
     this.el = el.nativeElement;
   }
 
-  private setClass() {
+  private setClass(): void {
     const { gutter } = this.parent;
     const { el } = this;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setClass();
   }
 }

@@ -35,7 +35,7 @@ export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTrans
   factory: ALAIN_I18N_TOKEN_FACTORY,
 });
 
-export function ALAIN_I18N_TOKEN_FACTORY() {
+export function ALAIN_I18N_TOKEN_FACTORY(): AlainI18NServiceFake {
   return new AlainI18NServiceFake();
 }
 
@@ -55,7 +55,7 @@ export class AlainI18NServiceFake implements AlainI18NService {
     return [];
   }
 
-  fanyi(key: string) {
+  fanyi(key: string): string {
     return key;
   }
 }

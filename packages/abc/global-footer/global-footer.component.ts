@@ -22,7 +22,7 @@ export class GlobalFooterComponent {
     val.forEach(i => (i._title = this.dom.bypassSecurityTrustHtml(i.title)));
     this._links = val;
   }
-  get links() {
+  get links(): GlobalFooterLink[] {
     return this._links;
   }
 
@@ -30,7 +30,7 @@ export class GlobalFooterComponent {
 
   constructor(private router: Router, @Inject(WINDOW) private win: Window, private dom: DomSanitizer) {}
 
-  to(item: GlobalFooterLink) {
+  to(item: GlobalFooterLink): void {
     if (!item.href) {
       return;
     }

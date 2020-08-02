@@ -32,7 +32,7 @@ export class FooterComponent implements OnInit {
     private platform: Platform,
   ) {}
 
-  onCopy(value: string) {
+  onCopy(value: string): void {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 

@@ -19,7 +19,7 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
       : '';
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     if (!value && this.schema.format === 'color') {
       this.setValue('#000000');
     }

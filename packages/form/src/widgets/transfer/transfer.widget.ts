@@ -28,7 +28,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     };
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       let formData = value;
       if (!Array.isArray(formData)) {
@@ -46,7 +46,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     });
   }
 
-  private notify() {
+  private notify(): void {
     this.formProperty.setValue(
       this._data.map(i => i.value),
       false,
@@ -57,7 +57,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     return this.ui.canMove ? this.ui.canMove(arg) : of(arg.list);
   };
 
-  _change(options: TransferChange) {
+  _change(options: TransferChange): void {
     if (options.to === 'right') {
       this._data = this._data.concat(...options.list);
     } else {
@@ -67,12 +67,12 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     this.notify();
   }
 
-  _searchChange(options: TransferSearchChange) {
+  _searchChange(options: TransferSearchChange): void {
     if (this.ui.searchChange) this.ui.searchChange(options);
     this.detectChanges();
   }
 
-  _selectChange(options: TransferSelectChange) {
+  _selectChange(options: TransferSelectChange): void {
     if (this.ui.selectChange) this.ui.selectChange(options);
     this.detectChanges();
   }

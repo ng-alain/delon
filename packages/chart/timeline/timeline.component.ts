@@ -105,7 +105,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
-  private install() {
+  private install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
     const chart = (this._chart = new Chart({
       container: node.nativeElement,
@@ -153,7 +153,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart() {
+  private attachChart(): void {
     const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
     let data = [...this.data];
     if (!_chart || !data || data.length <= 0) return;

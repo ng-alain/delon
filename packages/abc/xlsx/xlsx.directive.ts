@@ -14,7 +14,7 @@ export class XlsxDirective {
 
   constructor(private srv: XlsxService) {}
 
-  _click() {
+  _click(): void {
     this.srv.export(this.data);
   }
 }

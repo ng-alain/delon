@@ -8,19 +8,19 @@ export class WidgetRegistry {
 
   private defaultWidget: Widget<FormProperty, SFUISchemaItem>;
 
-  get widgets() {
+  get widgets(): { [type: string]: Widget<FormProperty, SFUISchemaItem> } {
     return this._widgets;
   }
 
-  setDefault(widget: any) {
+  setDefault(widget: any): void {
     this.defaultWidget = widget;
   }
 
-  register(type: string, widget: any) {
+  register(type: string, widget: any): void {
     this._widgets[type] = widget;
   }
 
-  has(type: string) {
+  has(type: string): boolean {
     return this._widgets.hasOwnProperty(type);
   }
 

@@ -64,27 +64,27 @@ export class HeaderComponent implements AfterViewInit {
     this.updateGitee();
   }
 
-  toVersion(version: string) {
+  toVersion(version: string): void {
     if (version !== this.currentVersion) {
       this.getWin().location.href = `https://ng-alain.com/version/${version}/`;
     }
   }
 
-  langChange(language: 'en' | 'zh') {
+  langChange(language: 'en' | 'zh'): void {
     this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => this.updateGitee());
   }
 
-  onCopy(value: string) {
+  onCopy(value: string): void {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
-  to(item: MetaSearchGroupItem) {
+  to(item: MetaSearchGroupItem): void {
     if (item.url) {
       this.router.navigateByUrl(item.url);
     }
   }
 
-  toViaMobile(url: string) {
+  toViaMobile(url: string): void {
     if (url.indexOf('/') === -1) {
       url = `/${url}/getting-started`;
     }

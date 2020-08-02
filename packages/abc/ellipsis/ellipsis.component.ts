@@ -70,7 +70,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, 0);
   }
 
-  private cutStrByFullLength(str: string, maxLength: number) {
+  private cutStrByFullLength(str: string, maxLength: number): string {
     let showLength = 0;
     return str.split('').reduce((pre, cur) => {
       const charCode = cur.charCodeAt(0);
@@ -114,7 +114,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     return this.bisection(targetHeight, mid, begin, end, text, node);
   }
 
-  private genType() {
+  private genType(): void {
     const { lines, length, isSupportLineClamp } = this;
     this.cls = {
       ellipsis: true,
@@ -132,7 +132,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  private gen() {
+  private gen(): void {
     const { type, lines, length, fullWidthRecognition, tail, orgEl, cdr, ngZone } = this;
     if (type === 'length') {
       const el = orgEl.nativeElement as HTMLElement;

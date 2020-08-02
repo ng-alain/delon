@@ -56,7 +56,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     };
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     value = toDate(value, { formatString: this.startFormat, defaultValue: null });
     if (this.flatRange) {
       this.displayValue =
@@ -76,7 +76,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
   }
 
-  _change(value: Date | Date[] | null, emitModelChange = true) {
+  _change(value: Date | Date[] | null, emitModelChange: boolean = true): void {
     if (emitModelChange && this.ui.change) {
       this.ui.change(value);
     }
@@ -98,11 +98,11 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
   }
 
-  _openChange(status: boolean) {
+  _openChange(status: boolean): void {
     if (this.ui.onOpenChange) this.ui.onOpenChange(status);
   }
 
-  _ok(value: any) {
+  _ok(value: any): void {
     if (this.ui.onOk) this.ui.onOk(value);
   }
 
@@ -110,7 +110,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     return (this.formProperty.parent!.properties as { [key: string]: FormProperty })[this.ui.end!];
   }
 
-  private setEnd(value: string | null) {
+  private setEnd(value: string | null): void {
     if (!this.flatRange) return;
 
     this.endProperty.setValue(value, true);

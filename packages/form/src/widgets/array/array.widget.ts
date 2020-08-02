@@ -15,12 +15,14 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   removeTitle: string | null;
   arraySpan = 8;
 
-  get addDisabled() {
-    return this.disabled || (this.schema.maxItems && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems);
+  get addDisabled(): boolean {
+    return (
+      this.disabled || (this.schema.maxItems != null && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems!)
+    );
   }
 
-  get showRemove() {
-    return !this.disabled && this.removeTitle;
+  get showRemove(): boolean {
+    return !this.disabled && !!this.removeTitle;
   }
 
   ngOnInit(): void {
@@ -34,14 +36,14 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
   }
 
-  addItem() {
+  addItem(): void {
     const property = this.formProperty.add({});
     if (this.ui.add) {
       this.ui.add(property);
     }
   }
 
-  removeItem(index: number) {
+  removeItem(index: number): void {
     this.formProperty.remove(index);
     if (this.ui.remove) {
       this.ui.remove(index);

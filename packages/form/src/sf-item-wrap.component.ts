@@ -19,11 +19,11 @@ export class SFItemWrapComponent {
   @Input() showTitle: boolean;
   @Input() title: string | null = null;
 
-  get t() {
-    return this.title === null ? this.schema.title : this.title;
+  get t(): string {
+    return this.title === null ? this.schema.title! : this.title;
   }
 
-  get oh() {
+  get oh(): SFOptionalHelp {
     return this.ui.optionalHelp as SFOptionalHelp;
   }
 }

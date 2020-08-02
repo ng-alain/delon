@@ -104,7 +104,7 @@ export class STColumnSource {
     return ret;
   }
 
-  private btnCoerceIf(list: STColumnButton[]) {
+  private btnCoerceIf(list: STColumnButton[]): void {
     for (const item of list) {
       if (!item.iif) item.iif = () => true;
       item.iifBehavior = item.iifBehavior || this.cog.iifBehavior;
@@ -116,7 +116,7 @@ export class STColumnSource {
     }
   }
 
-  private fixedCoerce(list: STColumn[]) {
+  private fixedCoerce(list: STColumn[]): void {
     const countReduce = (a: number, b: STColumn) => a + +b.width!.toString().replace('px', '');
     // left width
     list
@@ -213,7 +213,7 @@ export class STColumnSource {
     return res;
   }
 
-  private restoreRender(item: STColumn) {
+  private restoreRender(item: STColumn): void {
     if (item.renderTitle) {
       item.__renderTitle = this.rowSource.getTitle(item.renderTitle);
     }
@@ -424,7 +424,7 @@ export class STColumnSource {
     return { columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0), ...this.genHeaders(copyList) };
   }
 
-  restoreAllRender(columns: STColumn[]) {
+  restoreAllRender(columns: STColumn[]): void {
     columns.forEach(i => this.restoreRender(i));
   }
 

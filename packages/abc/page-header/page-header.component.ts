@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { AlainI18NService, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { AlainConfigService, InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
@@ -44,7 +44,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
   isBrowser = true;
 
-  private get menus() {
+  private get menus(): Menu[] {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
   }
 
@@ -122,12 +122,12 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       .subscribe(() => this.refresh());
   }
 
-  refresh() {
+  refresh(): void {
     this.setTitle().genBreadcrumb();
     this.cdr.detectChanges();
   }
 
-  private genBreadcrumb() {
+  private genBreadcrumb(): void {
     if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) {
       this.paths = [];
       return;
@@ -147,10 +147,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       });
     }
     this.paths = paths;
-    return this;
   }
 
-  private setTitle() {
+  private setTitle(): this {
     if (this._title == null && this._titleTpl == null && this.autoTitle && this.menus.length > 0) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
@@ -172,7 +171,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     return this;
   }
 
-  checkContent() {
+  checkContent(): void {
     if (isEmpty(this.conTpl.nativeElement)) {
       this.renderer.setAttribute(this.conTpl.nativeElement, 'hidden', '');
     } else {
@@ -180,7 +179,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.refresh();
     this.inited = true;
   }

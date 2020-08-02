@@ -17,7 +17,7 @@ export class MockService implements OnDestroy {
 
   // #region parse rule
 
-  private applyMock() {
+  private applyMock(): void {
     this.cached = [];
     try {
       this.realApplyMock();
@@ -26,7 +26,7 @@ export class MockService implements OnDestroy {
     }
   }
 
-  private realApplyMock() {
+  private realApplyMock(): void {
     const data = this.config.data;
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
@@ -88,7 +88,7 @@ export class MockService implements OnDestroy {
     };
   }
 
-  private outputError(error: NzSafeAny) {
+  private outputError(error: NzSafeAny): void {
     const filePath = error.message.split(': ')[0];
     const errors = (error.stack as string)
       .split('\n')
@@ -126,11 +126,11 @@ export class MockService implements OnDestroy {
     };
   }
 
-  clearCache() {
+  clearCache(): void {
     this.cached = [];
   }
 
-  get rules() {
+  get rules(): MockCachedRule[] {
     return this.cached;
   }
 

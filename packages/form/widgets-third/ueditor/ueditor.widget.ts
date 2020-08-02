@@ -30,7 +30,7 @@ export class UeditorWidget extends ControlWidget implements OnInit {
     this.delay = this.ui.delay || 300;
   }
 
-  change(value: string) {
+  change(value: string): void {
     if (this.ui.change) this.ui.change(value);
     this.setValue(value);
   }

@@ -140,7 +140,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     return this;
   }
 
-  private bindModel() {
+  private bindModel(): void {
     if (!this.ngControl || this.isBindModel) return;
 
     this.isBindModel = true;
@@ -193,7 +193,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.checkContent();
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.onceFlag = this.parent.firstVisual;
     if (this.inited) {
       this.setClass().bindModel();
