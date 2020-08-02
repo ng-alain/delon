@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { LoadingShowOptions } from './loading.types';
+import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types';
 
 @Component({
   selector: 'loading-default',
@@ -14,11 +14,11 @@ import { LoadingShowOptions } from './loading.types';
 export class LoadingDefaultComponent {
   options: LoadingShowOptions;
 
-  get icon() {
+  get icon(): LoadingIcon {
     return this.options.icon!;
   }
 
-  get custom() {
+  get custom(): LoadingCustom {
     return this.options.custom!;
   }
 }
