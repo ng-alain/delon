@@ -13,9 +13,7 @@ hot: true
 ng update @angular/core @angular/cli ng-alain@next
 ```
 
-**注意：** 当前 `ng-zorro-antd` 还是 Beta 版本，我们无法保证完整可用性，目前已知存在的问题：
-
-- `nz-tabset` 更换滚动方式，当前未修复，同样会影响 `reuse-tab`
+**注意：** 当前 `ng-zorro-antd` 还是 Beta 版本，我们无法保证完整可用性。
 
 ## 移除过期
 
