@@ -114,8 +114,10 @@ export interface ReuseComponentRef {
 
 export type ReuseHookTypes = '_onReuseInit' | '_onReuseDestroy';
 
+export type ReuseHookOnReuseInitType = 'init' | 'refresh';
+
 export interface ReuseComponentInstance {
-  _onReuseInit: () => void;
+  _onReuseInit: (type: ReuseHookOnReuseInitType) => void;
   _onReuseDestroy: () => void;
   destroy: () => void;
 }
