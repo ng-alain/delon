@@ -1,8 +1,6 @@
 ---
 order: 40
-title:
-  en-US: Work with Server
-  zh-CN: 和服务端进行交互
+title: 和服务端进行交互
 type: Dev
 ---
 
@@ -43,11 +41,11 @@ NG-ALAIN 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 正常情况下开发环境和生产环境不是同一个后端请求源，实际可以通过配置 [environment](https://github.com/ng-alain/ng-alain/tree/master/src/environments) 目录下 [environment.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.ts) 和 [environment.prod.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.prod.ts) 改变不同环境的请求源。
 
-> environment 实际是一个JSON对象，你可以组织不同形式来满足多请求源的问题。
+> environment 实际是一个JSON对象，可以组织不同形式来满足多请求源的问题。
 
 ## Mock
 
-有时候希望优先开发前端时，可以利用 @delon/mock 来模拟请求数据，实际原理是利用拦截器，对匹配的URL直接返回数据，而不是发送一个HTTP请求，默认情况下只对测试环境有效。当然通常情况下你需要确保 Mock 接口的数据与后端保持一致，你可以在 `_mock` 目录下创建相应的 Mock 接口：
+有时候希望优先开发前端时，可以利用 [@delon/mock](/mock) 来模拟请求数据，实际原理是利用拦截器，对匹配的URL直接返回数据，而不是发送一个HTTP请求，默认情况下只对测试环境有效。当然通常情况下你需要确保 Mock 接口的数据与后端保持一致，你可以在 `_mock` 目录下创建相应的 Mock 接口：
 
 ```ts
 export const USERS = {
@@ -58,6 +56,44 @@ export const USERS = {
 因此对于测试环境下当遇到 `/users` 请求直接返回 `{ users: [1, 2], total: 2 }` 数据。有关更多 Mock 语法和使用方式参考[这里](/mock)。
 
 **注：** 当你不需要某个请求的 Mock 接口时，务必要注释掉或移除它。
+
+## 跨域
+
+大部分应用都会前后端分离进行开发，这导致当对后端发起一个请求时会受跨域（CORS）的因素，例如：
+
+```ts
+http.get(`http://192.168.1.100/api/app`).subscribe();
+```
+
+> 注：如果非 `http` 开头的请求，会在每个请求都会加上 `environment.SERVER_URL` 作为请求 URL 的前缘。
+
+直接返回以下错误：
+
+```
+Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+```
+
+而正常解决跨域问题有两种方法，一是让后端开发环境直接支持跨域请求（不推荐，但最简单），二是利用 Angular Cli 提供[代理支持](https://webpack.js.org/configuration/dev-server/#devserver-proxy)，开发代理服务器会将 Angular 发送的请求的域和端口转发给后端服务器，CORS 是浏览器的安全限制，在代理服务器与后端服务器之前并不存在 CORS 的问题，这也就是为什么很多人会尝试明明在 Postman 能请求，而在 Angular 下无法请求的原因所在。
+
+假定所有后端请求都是以 `/api` 为前缀时，就可以在 `proxy.conf.json` 配置所有这个前缀都转向新的后端，例如：
+
+```json
+{
+  "/api": {
+    "target": "http://192.168.1.100/api",
+    "secure": false
+  }
+}
+```
+
+- `/api` 代理路径，不支持域
+- `target` 代理目标地址
+- `secure` 代理目标地址如果是 `https` 应该设置为 `true`，反之为 `false`
+- `pathRewrite` 重写地址，例如 `pathRewrite: {'^/api': '/'}` 将前缀 `/api` 转为 `/`
+- `changeOrigin` 将主机标头的 `host` 更改为目标URL，有些后端会根据其值来判断是否有效，可能需要通过设置 `true`
+- `logLevel` 设置为 `debug` 可以终端显示代理转发的消息
+
+更多使用说明请参考[代理到后端服务器](https://angular.cn/guide/build#proxying-to-a-backend-server)，以及配置描述请参考[http-proxy-middleware options](https://github.com/chimurai/http-proxy-middleware#options)。
 
 ## 常见问题
 

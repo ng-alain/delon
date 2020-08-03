@@ -11,17 +11,42 @@
       "x-prompt": {
         "message": "Which default language would you like to use?",
         "type": "list",
-        "items": [{
-            "value": "zh",
-            "label": "简体中文"
-          },
+        "items": [
           {
-            "value": "zh-Hant",
-            "label": "繁体中文"
+            "value": "zh",
+            "label": "简体中文 (zh)"
           },
           {
             "value": "en",
-            "label": "English"
+            "label": "English (en)"
+          },
+          {
+            "value": "zh-Hant",
+            "label": "繁体中文 (zh-Hant)"
+          },
+          {
+            "value": "tr-TR",
+            "label": "Turkish (tr-TR)"
+          },
+          {
+            "value": "pl-PL",
+            "label": "Polish (pl-PL)"
+          },
+          {
+            "value": "el-GR",
+            "label": "Greek (el-GR)"
+          },
+          {
+            "value": "ko-KR",
+            "label": "Korean (ko-KR)"
+          },
+          {
+            "value": "hr-HR",
+            "label": "Croatian (hr-HR)"
+          },
+          {
+            "value": "sl-SI",
+            "label": "Slovenian (sl-SI)"
           }
         ]
       }
