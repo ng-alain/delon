@@ -167,7 +167,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private refresh(item: ReuseItem): void {
-    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index);
+    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index, 'refresh');
   }
 
   // #region UI

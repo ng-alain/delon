@@ -13,6 +13,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 import {
   ReuseComponentRef,
+  ReuseHookOnReuseInitType,
   ReuseHookTypes,
   ReuseTabCached,
   ReuseTabMatchMode,
@@ -368,16 +369,22 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number): void {
+  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number, type: ReuseHookOnReuseInitType = 'init'): void {
     if (typeof comp === 'number') {
       const item = this._cached[comp];
       comp = item._handle.componentRef;
     }
-    if (comp == null) {
+    if (comp == null || !comp.instance) {
       return;
     }
-    if (comp.instance && typeof comp.instance[method] === 'function') {
-      comp.instance[method]();
+    const fn = comp.instance[method];
+    if (typeof fn !== 'function') {
+      return;
+    }
+    if (method === '_onReuseInit') {
+      fn(type);
+    } else {
+      (fn as () => void)();
     }
   }
 

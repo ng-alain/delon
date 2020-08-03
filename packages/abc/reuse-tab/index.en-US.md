@@ -114,9 +114,12 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 Route reusing does not touch the Angular component lifecycle hooks (eg: `ngOnInit`, etc.), but often requires data to be refreshed during the reuse process, so two new lifecycle hooks are provided to temporarily resolve such problems.
 
-**_onReuseInit()**
+**_onReuseInit(type: ReuseHookOnReuseInitType)**
 
-Triggered when the current route is in the reusing process.
+Triggered when the current route is in the reusing process, The values of `type` are:
+
+-`init` when routing process
+-`refresh` when refresh action via tab
 
 **_onReuseDestroy()**
 
@@ -127,8 +130,8 @@ A simple example:
 ```ts
 @Component()
 export class DemoComponent {
-  _onReuseInit() {
-    console.log('_onReuseInit');
+  _onReuseInit(type: ReuseHookOnReuseInitType) {
+    console.log('_onReuseInit', type);
   }
   _onReuseDestroy() {
     console.log('_onReuseDestroy');
