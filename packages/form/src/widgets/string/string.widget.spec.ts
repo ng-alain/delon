@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
@@ -76,5 +76,25 @@ describe('form: widget: string', () => {
     const ev = new KeyboardEvent('keyup', { code: 'Enter', key: 'Enter' });
     page.typeEvent(ev);
     expect((schema.properties!.a.ui as SFStringWidgetSchema).enter).toHaveBeenCalled();
+  }));
+
+  it('[autofocus]', fakeAsync(() => {
+    const schema: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          ui: {
+            autofocus: true,
+            focus: jasmine.createSpy('focus'),
+          } as SFStringWidgetSchema,
+        },
+      },
+    };
+    page.newSchema(schema);
+    const el = page.getEl('.ant-input') as HTMLInputElement;
+    spyOn(el, 'focus');
+    tick(21);
+    fixture.detectChanges();
+    expect(el.focus).toHaveBeenCalled();
   }));
 });
