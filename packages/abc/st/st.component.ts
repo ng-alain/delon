@@ -91,6 +91,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _res: STRes;
   private _page: STPage;
   private _widthMode: STWidthMode;
+  private customWidthConfig: boolean = false;
+  _widthConfig: string[] = [];
   locale: LocaleData = {};
   _loading = false;
   _data: STData[] = [];
@@ -164,6 +166,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get widthMode(): STWidthMode {
     return this._widthMode;
   }
+  @Input()
+  set widthConfig(val: string[]) {
+    this._widthConfig = val;
+    this.customWidthConfig = val && val.length > 0;
+  }
   @Input() header: string | TemplateRef<void>;
   @Input() footer: string | TemplateRef<void>;
   @Input() bodyHeader: TemplateRef<STStatisticalResults>;
@@ -172,7 +179,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
   @Input() noResult: string | TemplateRef<void>;
-  @Input() widthConfig: string[] = [];
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
@@ -793,8 +799,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const res = this.columnSource.process(this.columns);
     this._columns = res.columns;
     this._headers = res.headers;
-    if (this.widthConfig.length === 0 && res.headerWidths != null) {
-      this.widthConfig = res.headerWidths;
+    if (this.customWidthConfig === false && res.headerWidths != null) {
+      this._widthConfig = res.headerWidths;
     }
     return this;
   }
