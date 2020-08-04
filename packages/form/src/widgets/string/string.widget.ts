@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { ControlUIWidget } from '../../widget';
 import { SFStringWidgetSchema } from './schema';
@@ -13,10 +13,15 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
   type: string;
 
   ngOnInit(): void {
-    const { addOnAfter, addOnAfterIcon, addOnBefore, addOnBeforeIcon, prefix, prefixIcon, suffix, suffixIcon } = this.ui;
+    const { addOnAfter, addOnAfterIcon, addOnBefore, addOnBeforeIcon, prefix, prefixIcon, suffix, suffixIcon, autofocus } = this.ui;
     this.type = !!(addOnAfter || addOnBefore || addOnAfterIcon || addOnBeforeIcon || prefix || prefixIcon || suffix || suffixIcon)
       ? 'addon'
       : '';
+    if (autofocus === true) {
+      setTimeout(() => {
+        ((this.injector.get(ElementRef).nativeElement as HTMLElement).querySelector(`#${this.id}`) as HTMLElement).focus();
+      }, 20);
+    }
   }
 
   reset(value: SFValue): void {
