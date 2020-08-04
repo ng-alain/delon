@@ -786,6 +786,18 @@ describe('abc: table', () => {
           ]);
           page.expectElCount('.ant-table-thead .ant-table-row', 2).expectElCount('.ant-table-thead .ant-table-cell', 3).asyncEnd();
         }));
+        it('should be auto set widthConfig when column has width value', fakeAsync(() => {
+          page.updateColumn([
+            {
+              title: 'user',
+              children: [
+                { title: 'name', index: 'name' },
+                { title: 'age', index: 'age', width: 100 },
+              ],
+            },
+          ]);
+          page.expectElCount('.ant-table-thead .ant-table-row', 2).expectElCount('.ant-table-thead .ant-table-cell', 3).asyncEnd();
+        }));
       });
     });
     describe('[data source]', () => {

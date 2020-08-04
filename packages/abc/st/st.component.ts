@@ -169,7 +169,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   set widthConfig(val: string[]) {
     this._widthConfig = val;
-    this.customWidthConfig = true;
+    this.customWidthConfig = val && val.length > 0;
   }
   @Input() header: string | TemplateRef<void>;
   @Input() footer: string | TemplateRef<void>;
