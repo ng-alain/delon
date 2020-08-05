@@ -63,8 +63,11 @@
     <div nz-col nzXs="24" nzSm="24" nzLg="6">
       <div class="footer__center">
         Copyright &copy; 2020 <a href="https://github.com/cipchk" target="_blank">&copy;卡色</a>
-        <div style="margin-top: 20px;">
-          <div class="theme-color" nz-popover [nzPopoverContent]="colorTpl" nzPopoverTrigger="click" nzTooltipOverlayClassName="theme-color-content">
+        <p class="mt-sm">
+          <a href="http://www.beian.miit.gov.cn" target="_blank" class="text-grey">闽ICP备18008195号</a>
+        </p>
+        <div class="mt-lg">
+          <div class="theme-color" nz-popover [nzPopoverContent]="colorTpl" nzPopoverTrigger="click" nzPopoverOverlayClassName="theme-color-content">
             <div class="theme-color-value" [ngStyle]="{ background: color }"></div>
           </div>
           <ng-template #colorTpl>
