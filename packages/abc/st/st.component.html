@@ -213,7 +213,7 @@
                   (ngModelChange)="_checkSelection(i, $event)"
                 ></label>
                 <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio($event, i)"></label>
-                <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text"></a>
+                <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text" [attr.title]="i._values[cIdx].text"></a>
                 <ng-container *ngIf="i._values[cIdx].text">
                   <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
                     <span [innerHTML]="i._values[cIdx]._text"></span>
