@@ -8,7 +8,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
   selector: '[down-file]',
   exportAs: 'downFile',
   host: {
-    '(click)': '_click()',
+    '(click)': '_click($event)',
   },
 })
 export class DownFileDirective {
@@ -23,6 +23,8 @@ export class DownFileDirective {
   @Input('http-url') httpUrl: string;
   /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
   @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
+  /** 下载前回调 */
+  @Input() pre: (ev: MouseEvent) => Promise<boolean>;
   /** 成功回调 */
   // tslint:disable-next-line:no-output-native
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
@@ -61,8 +63,10 @@ export class DownFileDirective {
     el.classList[status ? 'add' : 'remove'](`down-file__disabled`);
   }
 
-  _click(): void {
-    if (!this.isFileSaverSupported) {
+  async _click(ev: MouseEvent): Promise<void> {
+    if (!this.isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
+      ev.stopPropagation();
+      ev.preventDefault();
       return;
     }
     this.setDisabled(true);
