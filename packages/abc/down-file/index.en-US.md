@@ -25,6 +25,7 @@ yarn add file-saver
 | `[http-method]` | Method of request | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` |
 | `[http-url]` | Url of request | `string` | - |
 | `[file-name]` | Specify a file name | `string, (rep: HttpResponse<Blob>) => string` | - |
+| `[pre]` | Callback of download | `(ev: MouseEvent) => Promise<boolean>` | - |
 | `(success)` | Success callback | `EventEmitter<HttpResponse<Blob>>` | - |
 | `(error)` | Error callback | `EventEmitter<any>` | - |
 
