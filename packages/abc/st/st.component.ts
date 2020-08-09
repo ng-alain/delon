@@ -63,6 +63,7 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
+import { _STColumn } from './st.types';
 
 @Component({
   selector: 'st',
@@ -102,7 +103,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allCheckedDisabled = false;
   _indeterminate = false;
   _headers: STColumn[][] = [];
-  _columns: STColumn[] = [];
+  _columns: _STColumn[] = [];
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
   @Input()
@@ -265,14 +266,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.totalTpl
       ? this.totalTpl.replace('{{total}}', total).replace('{{range[0]}}', range[0]).replace('{{range[1]}}', range[1])
       : '';
-  }
-
-  isTruncate(column: STColumn): boolean {
-    return !!column.width && this.widthMode.strictBehavior === 'truncate' && column.type !== 'img';
-  }
-
-  columnClass(column: STColumn): string | null {
-    return column.className == null ? (this.isTruncate(column) ? 'text-truncate' : null) : null;
   }
 
   private changeEmit(type: STChangeType, data?: any): void {
@@ -554,10 +547,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region sort
 
-  sort(col: STColumn, idx: number, value: any): void {
+  sort(col: _STColumn, idx: number, value: any): void {
     if (this.multiSort) {
-      col._sort!.default = value;
-      col._sort!.tick = this.dataSource.nextSortTick;
+      col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
       this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
     }
@@ -588,16 +581,16 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('filter', col);
   }
 
-  _filterConfirm(col: STColumn): void {
+  _filterConfirm(col: _STColumn): void {
     this.handleFilter(col);
   }
 
-  _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean): void {
+  _filterRadio(col: _STColumn, item: STColumnFilterMenu, checked: boolean): void {
     col.filter!.menus!.forEach(i => (i.checked = false));
     item.checked = checked;
   }
 
-  _filterClear(col: STColumn): void {
+  _filterClear(col: _STColumn): void {
     this.columnSource.cleanFilter(col);
     this.handleFilter(col);
   }
@@ -796,7 +789,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns);
+    const res = this.columnSource.process(this.columns as _STColumn[], this.widthMode);
     this._columns = res.columns;
     this._headers = res.headers;
     if (this.customWidthConfig === false && res.headerWidths != null) {

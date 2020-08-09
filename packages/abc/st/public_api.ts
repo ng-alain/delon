@@ -1,4 +1,5 @@
 export * from './st.interfaces';
+export * from './st.types';
 export * from './st-column-source';
 export * from './st-data-source';
 export * from './st-export';
