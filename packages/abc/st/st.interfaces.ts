@@ -220,7 +220,7 @@ export interface STColumn {
    * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
    * - `widget` 使用自定义小部件动态创建
    */
-  type?: 'checkbox' | 'link' | 'badge' | 'tag' | 'enum' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
+  type?: '' | 'checkbox' | 'link' | 'badge' | 'tag' | 'enum' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
@@ -274,9 +274,9 @@ export interface STColumn {
    * - `text-center` 居中
    * - `text-right` 居右
    * - `text-success` 成功色
-   * - `text-danger` 异常色
+   * - `text-error` 异常色
    */
-  className?: string;
+  className?: string | string[] | Set<string> | { [klass: string]: any };
   /**
    * 合并列
    */
@@ -348,10 +348,9 @@ export interface STColumn {
    */
   children?: STColumn[];
 
-  /** @ignore internal property */
-  _sort?: STSortMap;
+  rowSpan?: number;
 
-  [key: string]: any;
+  // [key: string]: any;
 }
 
 export interface STWidgetColumn {
@@ -635,6 +634,13 @@ export interface STColumnButton {
   iifBehavior?: IifBehaviorType;
 
   tooltip?: string;
+
+  /**
+   * 按钮 `class` 属性值（注：无须 `.` 点）多个用空格隔开，例如：
+   * - `text-success` 成功色
+   * - `text-error` 错误色
+   */
+  className?: string | string[] | Set<string> | { [klass: string]: any };
 
   [key: string]: any;
 }

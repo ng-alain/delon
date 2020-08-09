@@ -8,7 +8,6 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  STColumn,
   STColumnFilter,
   STColumnFilterMenu,
   STData,
@@ -27,6 +26,7 @@ import {
   STStatisticalResults,
   STStatisticalType,
 } from './st.interfaces';
+import { _STColumn } from './st.types';
 
 export interface STDataSourceOptions {
   pi: number;
@@ -37,7 +37,7 @@ export interface STDataSourceOptions {
   req: STReq;
   res: STRes;
   page: STPage;
-  columns: STColumn[];
+  columns: _STColumn[];
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
@@ -119,7 +119,7 @@ export class STDataSource {
         map((result: STData[]) => {
           rawData = result;
           let copyResult = deepCopy(result);
-          const sorterFn = this.getSorterFn(columns);
+          const sorterFn = this.getSorterFn(columns as _STColumn[]);
           if (sorterFn) {
             copyResult = copyResult.sort(sorterFn);
           }
@@ -175,14 +175,14 @@ export class STDataSource {
           ps: retPs,
           total: retTotal,
           list: retList,
-          statistical: this.genStatistical(columns, retList, rawData),
+          statistical: this.genStatistical(columns as _STColumn[], retList, rawData),
           pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
         } as STDataSourceResult;
       }),
     );
   }
 
-  private get(item: STData, col: STColumn, idx: number): { text: any; _text: SafeHtml; org?: any; color?: string } {
+  private get(item: STData, col: _STColumn, idx: number): { text: any; _text: SafeHtml; org?: any; color?: string } {
     if (col.format) {
       const formatRes = col.format(item, col, idx) || '';
       if (formatRes && ~formatRes.indexOf('</')) {
@@ -275,7 +275,7 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => this.get(result[i], c, i));
@@ -286,17 +286,17 @@ export class STDataSource {
     return result;
   }
 
-  getNoIndex(item: STData, col: STColumn, idx: number): number {
+  getNoIndex(item: STData, col: _STColumn, idx: number): number {
     return typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex! + idx;
   }
 
   // #region sort
 
-  private getValidSort(columns: STColumn[]): STSortMap[] {
+  private getValidSort(columns: _STColumn[]): STSortMap[] {
     return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
   }
 
-  private getSorterFn(columns: STColumn[]): ((a: STData, b: STData) => number) | void {
+  private getSorterFn(columns: _STColumn[]): ((a: STData, b: STData) => number) | void {
     const sortList = this.getValidSort(columns);
     if (sortList.length === 0) {
       return;
@@ -323,7 +323,7 @@ export class STDataSource {
     return ++this.sortTick;
   }
 
-  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: STColumn[]): STMultiSortResultType {
+  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: _STColumn[]): STMultiSortResultType {
     let ret: STMultiSortResultType = {};
     const sortList = this.getValidSort(columns);
 
@@ -367,7 +367,7 @@ export class STDataSource {
     return filter.type === 'default' ? filter.menus!.filter(f => f.checked === true) : filter.menus!.slice(0, 1);
   }
 
-  private getReqFilterMap(columns: STColumn[]): { [key: string]: string } {
+  private getReqFilterMap(columns: _STColumn[]): { [key: string]: string } {
     let ret = {};
     columns
       .filter(w => w.filter && w.filter.default === true)
@@ -389,7 +389,7 @@ export class STDataSource {
 
   // #region statistical
 
-  private genStatistical(columns: STColumn[], list: STData[], rawData: any): STStatisticalResults {
+  private genStatistical(columns: _STColumn[], list: STData[], rawData: any): STStatisticalResults {
     const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
       res[col.key || col.indexKey || index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
@@ -397,7 +397,7 @@ export class STDataSource {
     return res;
   }
 
-  private getStatistical(col: STColumn, index: number, list: STData[], rawData: any): STStatisticalResult {
+  private getStatistical(col: _STColumn, index: number, list: STData[], rawData: any): STStatisticalResult {
     const val = col.statistical;
     const item: STStatistical = {
       digits: 2,

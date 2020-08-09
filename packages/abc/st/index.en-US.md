@@ -251,7 +251,7 @@ class TestComponent {
 | `[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | - |
 | `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | - |
 | `[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | - |
-| `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-danger`, pls refer to [Style Tools](/theme/tools) | `string` | - |
+| `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
 | `[colSpan]` | Span of this column's title | `number` | - |
 | `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |
@@ -342,6 +342,7 @@ class TestComponent {
 | `[iif]` | Custom conditional expression | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true` |
 | `[iifBehavior]` | Render button mode when the conditional expression `false` value | `hide,disabled` | `hide` |
 | `[tooltip]` | Button popup tip | `string` | - |
+| `[className]` | Class name of this button, e.g: `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
 
 ### STColumnButtonModal
 

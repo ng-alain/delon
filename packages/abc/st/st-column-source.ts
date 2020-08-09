@@ -6,7 +6,17 @@ import { AlainSTConfig, deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';
-import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STColumnGroupType, STIcon, STSortMap } from './st.interfaces';
+import {
+  STColumn,
+  STColumnButton,
+  STColumnButtonPop,
+  STColumnFilter,
+  STColumnGroupType,
+  STIcon,
+  STSortMap,
+  STWidthMode,
+} from './st.interfaces';
+import { _STColumn } from './st.types';
 
 @Injectable()
 export class STColumnSource {
@@ -116,8 +126,8 @@ export class STColumnSource {
     }
   }
 
-  private fixedCoerce(list: STColumn[]): void {
-    const countReduce = (a: number, b: STColumn) => a + +b.width!.toString().replace('px', '');
+  private fixedCoerce(list: _STColumn[]): void {
+    const countReduce = (a: number, b: _STColumn) => a + +b.width!.toString().replace('px', '');
     // left width
     list
       .filter(w => w.fixed && w.fixed === 'left' && w.width)
@@ -129,7 +139,7 @@ export class STColumnSource {
       .forEach((item, idx) => (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'));
   }
 
-  private sortCoerce(item: STColumn): STSortMap {
+  private sortCoerce(item: _STColumn): STSortMap {
     const res = this.fixSortCoerce(item);
     res.reName = {
       ...this.cog.sortReName,
@@ -138,7 +148,7 @@ export class STColumnSource {
     return res;
   }
 
-  private fixSortCoerce(item: STColumn): STSortMap {
+  private fixSortCoerce(item: _STColumn): STSortMap {
     if (typeof item.sort === 'undefined') {
       return { enabled: false };
     }
@@ -150,7 +160,7 @@ export class STColumnSource {
     } else if (typeof item.sort !== 'boolean') {
       res = item.sort;
     } else if (typeof item.sort === 'boolean') {
-      res.compare = (a, b) => a[item.indexKey] - b[item.indexKey];
+      res.compare = (a, b) => a[item.indexKey!] - b[item.indexKey!];
     }
 
     if (!res.key) {
@@ -162,7 +172,7 @@ export class STColumnSource {
     return res;
   }
 
-  private filterCoerce(item: STColumn): STColumnFilter | null {
+  private filterCoerce(item: _STColumn): STColumnFilter | null {
     if (item.filter == null) {
       return null;
     }
@@ -213,7 +223,7 @@ export class STColumnSource {
     return res;
   }
 
-  private restoreRender(item: STColumn): void {
+  private restoreRender(item: _STColumn): void {
     if (item.renderTitle) {
       item.__renderTitle = this.rowSource.getTitle(item.renderTitle);
     }
@@ -222,7 +232,7 @@ export class STColumnSource {
     }
   }
 
-  private widgetCoerce(item: STColumn): void {
+  private widgetCoerce(item: _STColumn): void {
     if (item.type !== 'widget') return;
     if (item.widget == null || !this.stWidgetRegistry.has(item.widget.type)) {
       delete item.type;
@@ -230,10 +240,10 @@ export class STColumnSource {
     }
   }
 
-  private genHeaders(rootColumns: STColumn[]): { headers: STColumn[][]; headerWidths: string[] | null } {
-    const rows: STColumn[][] = [];
+  private genHeaders(rootColumns: _STColumn[]): { headers: _STColumn[][]; headerWidths: string[] | null } {
+    const rows: _STColumn[][] = [];
     const widths: string[] = [];
-    const fillRowCells = (columns: STColumn[], colIndex: number, rowIndex = 0): number[] => {
+    const fillRowCells = (columns: _STColumn[], colIndex: number, rowIndex = 0): number[] => {
       // Init rows
       rows[rowIndex] = rows[rowIndex] || [];
 
@@ -242,6 +252,7 @@ export class STColumnSource {
         const cell: STColumnGroupType = {
           column,
           colStart: currentColIndex,
+          hasSubColumns: false,
         };
 
         let colSpan: number = 1;
@@ -264,7 +275,7 @@ export class STColumnSource {
 
         cell.colSpan = colSpan;
         cell.colEnd = cell.colStart + colSpan - 1;
-        rows[rowIndex].push(cell);
+        rows[rowIndex].push(cell as NzSafeAny);
 
         currentColIndex += colSpan;
 
@@ -289,8 +300,8 @@ export class STColumnSource {
     return { headers: rows, headerWidths: rowCount > 1 ? widths : null };
   }
 
-  private cleanCond(list: STColumn[]): STColumn[] {
-    const res: STColumn[] = [];
+  private cleanCond(list: _STColumn[]): _STColumn[] {
+    const res: _STColumn[] = [];
     const copyList = deepCopy(list);
     for (const item of copyList) {
       if (item.iif && !item.iif(item)) {
@@ -304,16 +315,16 @@ export class STColumnSource {
     return res;
   }
 
-  process(list: STColumn[]): { columns: STColumn[]; headers: STColumn[][]; headerWidths: string[] | null } {
+  process(list: STColumn[], widthMode: STWidthMode): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;
     let point = 0;
-    const columns: STColumn[] = [];
+    const columns: _STColumn[] = [];
 
-    const processItem = (item: STColumn): STColumn => {
+    const processItem = (item: _STColumn): _STColumn => {
       // index
       if (item.index) {
         if (!Array.isArray(item.index)) {
@@ -370,8 +381,9 @@ export class STColumnSource {
         (item.type === 'tag' && item.tag == null) ||
         (item.type === 'enum' && item.enum == null)
       ) {
-        (item as any).type = '';
+        item.type = '';
       }
+      item._isTruncate = !!item.width && widthMode.strictBehavior === 'truncate' && item.type !== 'img';
       // className
       if (!item.className) {
         item.className = ({
@@ -380,6 +392,7 @@ export class STColumnSource {
           date: 'text-center',
         } as NzSafeAny)[item.type!];
       }
+      item._className = item.className || (item._isTruncate ? 'text-truncate' : null);
       // width
       if (typeof item.width === 'number') {
         item.width = `${item.width}px`;
@@ -401,7 +414,7 @@ export class STColumnSource {
       return item;
     };
 
-    const processList = (data: STColumn[]): void => {
+    const processList = (data: _STColumn[]): void => {
       for (const item of data) {
         columns.push(processItem(item));
         if (Array.isArray(item.children)) {
@@ -410,7 +423,7 @@ export class STColumnSource {
       }
     };
 
-    const copyList = this.cleanCond(list);
+    const copyList = this.cleanCond(list as _STColumn[]);
     processList(copyList);
 
     if (checkboxCount > 1) {
@@ -420,11 +433,11 @@ export class STColumnSource {
       throw new Error(`[st]: just only one column radio`);
     }
 
-    this.fixedCoerce(columns);
+    this.fixedCoerce(columns as _STColumn[]);
     return { columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0), ...this.genHeaders(copyList) };
   }
 
-  restoreAllRender(columns: STColumn[]): void {
+  restoreAllRender(columns: _STColumn[]): void {
     columns.forEach(i => this.restoreRender(i));
   }
 
@@ -437,7 +450,7 @@ export class STColumnSource {
     return this;
   }
 
-  cleanFilter(col: STColumn): this {
+  cleanFilter(col: _STColumn): this {
     const f = col.filter!;
     f.default = false;
     if (f.type === 'default') {

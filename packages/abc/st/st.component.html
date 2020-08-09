@@ -18,10 +18,11 @@
     [nzOkType]="btn.pop.okType"
     (nzOnConfirm)="_btnClick(i, btn, $event)"
     class="st__btn-text"
+    [ngClass]="btn.className"
   >
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
   </a>
-  <a *ngIf="!btn.pop" (click)="_btnClick(i, btn, $event)" class="st__btn-text">
+  <a *ngIf="!btn.pop" (click)="_btnClick(i, btn, $event)" class="st__btn-text" [ngClass]="btn.className">
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
   </a>
 </ng-template>
@@ -197,7 +198,7 @@
           (nzExpandChange)="_expandChange(i, $event)"
           nzWidth="50px"
         ></td>
-        <td *ngFor="let c of _columns; let cIdx = index" [nzLeft]="!!c._left" [nzRight]="!!c._right" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
+        <td *ngFor="let c of _columns; let cIdx = index" [nzLeft]="!!c._left" [nzRight]="!!c._right" [ngClass]="c._className" [attr.colspan]="c.colSpan">
           <span *ngIf="responsive" class="ant-table-rep__title">
             <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: c.title }"></ng-template>
           </span>
@@ -221,7 +222,7 @@
                   <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text"></nz-badge>
                 </ng-container>
                 <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
-                <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
+                <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
               </ng-container>
               <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last = last">
                 <a *ngIf="btn.children.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
