@@ -160,7 +160,7 @@ export class STColumnSource {
     } else if (typeof item.sort !== 'boolean') {
       res = item.sort;
     } else if (typeof item.sort === 'boolean') {
-      res.compare = (a, b) => a[item.indexKey] - b[item.indexKey];
+      res.compare = (a, b) => a[item.indexKey!] - b[item.indexKey!];
     }
 
     if (!res.key) {
@@ -257,7 +257,7 @@ export class STColumnSource {
 
         let colSpan: number = 1;
 
-        const subColumns = column.children as _STColumn[];
+        const subColumns = column.children;
         if (Array.isArray(subColumns) && subColumns.length > 0) {
           colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce((total, count) => total + count, 0);
           cell.hasSubColumns = true;
