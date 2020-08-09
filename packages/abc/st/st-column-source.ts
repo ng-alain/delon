@@ -6,7 +6,16 @@ import { AlainSTConfig, deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';
-import { STColumnButton, STColumnButtonPop, STColumnFilter, STColumnGroupType, STIcon, STSortMap, STWidthMode } from './st.interfaces';
+import {
+  STColumn,
+  STColumnButton,
+  STColumnButtonPop,
+  STColumnFilter,
+  STColumnGroupType,
+  STIcon,
+  STSortMap,
+  STWidthMode,
+} from './st.interfaces';
 import { _STColumn } from './st.types';
 
 @Injectable()
@@ -306,7 +315,7 @@ export class STColumnSource {
     return res;
   }
 
-  process(list: _STColumn[], widthMode: STWidthMode): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
+  process(list: STColumn[], widthMode: STWidthMode): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;

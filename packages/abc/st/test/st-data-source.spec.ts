@@ -7,6 +7,7 @@ import { of, throwError } from 'rxjs';
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
 import { ST_DEFULAT_CONFIG } from '../st.config';
 import { STColumnFilterMenu, STData } from '../st.interfaces';
+import { _STColumn } from '../st.types';
 
 const DEFAULT = {
   pi: 1,
@@ -65,7 +66,7 @@ describe('abc: table: data-souce', () => {
       req: deepCopy(ST_DEFULAT_CONFIG.req),
       res: deepCopy(ST_DEFULAT_CONFIG.res),
       page: deepCopy(ST_DEFULAT_CONFIG.page),
-      columns: [{ title: '', index: 'id' }],
+      columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
     };
     currentyPipe = new CNCurrencyPipe('zh-CN');

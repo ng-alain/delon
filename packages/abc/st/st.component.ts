@@ -515,7 +515,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point!] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
 
     return this.cd();
   }
@@ -549,8 +549,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   sort(col: _STColumn, idx: number, value: any): void {
     if (this.multiSort) {
-      col._sort.default = value;
-      col._sort.tick = this.dataSource.nextSortTick;
+      col._sort!.default = value;
+      col._sort!.tick = this.dataSource.nextSortTick;
     } else {
       this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
     }

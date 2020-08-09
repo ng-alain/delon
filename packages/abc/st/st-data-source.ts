@@ -119,7 +119,7 @@ export class STDataSource {
         map((result: STData[]) => {
           rawData = result;
           let copyResult = deepCopy(result);
-          const sorterFn = this.getSorterFn(columns);
+          const sorterFn = this.getSorterFn(columns as _STColumn[]);
           if (sorterFn) {
             copyResult = copyResult.sort(sorterFn);
           }
@@ -175,7 +175,7 @@ export class STDataSource {
           ps: retPs,
           total: retTotal,
           list: retList,
-          statistical: this.genStatistical(columns, retList, rawData),
+          statistical: this.genStatistical(columns as _STColumn[], retList, rawData),
           pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
         } as STDataSourceResult;
       }),
