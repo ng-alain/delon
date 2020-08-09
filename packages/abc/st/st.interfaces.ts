@@ -276,7 +276,7 @@ export interface STColumn {
    * - `text-success` 成功色
    * - `text-error` 异常色
    */
-  className?: string;
+  className?: string | string[] | Set<string> | { [klass: string]: any };
   /**
    * 合并列
    */
@@ -641,7 +641,7 @@ export interface STColumnButton {
    * - `text-success` 成功色
    * - `text-error` 错误色
    */
-  className?: string;
+  className?: string | string[] | Set<string> | { [klass: string]: any };
 
   [key: string]: any;
 }
