@@ -272,7 +272,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   columnClass(column: STColumn): string | null {
-    return column.className || (this.isTruncate(column) ? 'text-truncate' : null);
+    return column.className == null ? (this.isTruncate(column) ? 'text-truncate' : null) : null;
   }
 
   private changeEmit(type: STChangeType, data?: any): void {
