@@ -7,7 +7,7 @@ title: 基础
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-demo',
@@ -32,7 +32,7 @@ export class DemoComponent implements OnInit {
     });
   }
 
-  get name() {
+  get name(): AbstractControl {
     return this.form.controls.name;
   }
 

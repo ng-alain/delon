@@ -60,7 +60,7 @@ export class DemoComponent implements OnInit {
     this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
   }
 
-  format(val: number) {
+  format(val: number): string {
     return `&yen ${val.toFixed(2)}`;
   }
 

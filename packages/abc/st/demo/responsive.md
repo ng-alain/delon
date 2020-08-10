@@ -19,9 +19,14 @@ import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <st [data]="url" [req]="{params: params}" [columns]="columns"
-    header="The header" footer="The footer" responsiveHideHeaderFooter>
+  template: ` <st
+    [data]="url"
+    [req]="{ params: params }"
+    [columns]="columns"
+    header="The header"
+    footer="The footer"
+    responsiveHideHeaderFooter
+  >
   </st>`,
 })
 export class DemoComponent {

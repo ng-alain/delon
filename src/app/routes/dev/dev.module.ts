@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DemoComponent } from '../../../demo.component';
 import { SharedModule } from '../../shared/shared.module';
-import { DemoComponent } from './demo/demo.component';
 import { DevHomeComponent } from './home/home.component';
 import { DevLayoutComponent } from './layout.component';
 import { DevPageComponent } from './pages/page.component';

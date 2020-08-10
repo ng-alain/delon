@@ -15,7 +15,7 @@ Support `count`, `distinctCount`, `sum`, `average`, `max`, `min` or custom funct
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
@@ -45,15 +45,13 @@ import { STColumn } from '@delon/abc/st';
   `,
 })
 export class DemoComponent {
-  data: any[] = Array(100)
+  data: STData[] = Array(100)
     .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        price: ~~(Math.random() * 100),
-        age: ~~(Math.random() * 100) > 50 ? '女' : '男',
-      };
-    });
+    .map((_, idx) => ({
+      id: idx + 1,
+      price: ~~(Math.random() * 100),
+      age: ~~(Math.random() * 100) > 50 ? '女' : '男',
+    }));
   columns: STColumn[] = [
     { title: '行号', type: 'no' },
     { title: '编号', index: 'id', statistical: 'count', key: 'len' },

@@ -9,14 +9,13 @@ title: 管道
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-demo',
-    template: `
+  selector: 'app-demo',
+  template: `
     <p>100.12 | n2c => {{ 100.12 | n2c }}</p>
-    <p>100 | n2c:false => {{ 100 | n2c:false }}</p>
+    <p>100 | n2c:false => {{ 100 | n2c: false }}</p>
     <p>-100.56 | n2c => {{ -100.56 | n2c }}</p>
-    <p>-100.56 | n2c:true:'欠' => {{ -100.56 | n2c:true:'欠' }}</p>
-    `
+    <p>-100.56 | n2c:true:'欠' => {{ -100.56 | n2c: true:'欠' }}</p>
+  `,
 })
-export class DemoComponent {
-}
+export class DemoComponent {}
 ```

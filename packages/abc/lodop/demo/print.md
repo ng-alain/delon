@@ -15,8 +15,8 @@ Get print server information (including: remote).
 
 ```ts
 import { Component } from '@angular/core';
+import { Lodop, LodopService } from '@delon/abc/lodop';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { LodopService, Lodop } from '@delon/abc/lodop';
 
 @Component({
   selector: 'app-demo',
@@ -80,6 +80,18 @@ import { LodopService, Lodop } from '@delon/abc/lodop';
   `,
 })
 export class DemoComponent {
+  constructor(private lodopSrv: LodopService, private msg: NzMessageService) {
+    this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
+      if (!ok) {
+        this.error = true;
+        return;
+      }
+      this.error = false;
+      this.msg.success(`打印机加载成功`);
+      this.lodop = lodop as Lodop;
+      this.pinters = this.lodopSrv.printer;
+    });
+  }
   cog: any = {
     url: 'https://localhost:8443/CLodopfuncs.js',
     printer: '',
@@ -97,36 +109,24 @@ export class DemoComponent {
   lodop: Lodop | null = null;
   pinters: any[] = [];
   papers: string[] = [];
-  constructor(public lodopSrv: LodopService, private msg: NzMessageService) {
-    this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
-      if (!ok) {
-        this.error = true;
-        return;
-      }
-      this.error = false;
-      this.msg.success(`打印机加载成功`);
-      this.lodop = lodop as Lodop;
-      this.pinters = this.lodopSrv.printer;
-    });
-  }
 
-  reload(options: any = { url: 'https://localhost:8443/CLodopfuncs.js' }) {
+  printing = false;
+
+  reload(options: any = { url: 'https://localhost:8443/CLodopfuncs.js' }): void {
     this.pinters = [];
     this.papers = [];
     this.cog.printer = '';
     this.cog.paper = '';
 
-    this.lodopSrv.cog = Object.assign({}, this.cog, options);
+    this.lodopSrv.cog = { ...this.cog, ...options };
     this.error = false;
     if (options === null) this.lodopSrv.reset();
   }
 
-  changePinter(name: string) {
+  changePinter(name: string): void {
     this.papers = this.lodop!.GET_PAGESIZES_LIST(name, '\n').split('\n');
   }
-
-  printing = false;
-  print(isPrivew = false) {
+  print(isPrivew: boolean = false): void {
     const LODOP = this.lodop!;
     LODOP.PRINT_INITA(10, 20, 810, 610, '测试C-Lodop远程打印四步骤');
     LODOP.SET_PRINTER_INDEXA(this.cog.printer);

@@ -40,7 +40,11 @@ export class DemoComponent {
       title: '国家',
       index: 'nat',
       filter: {
-        menus: [{ text: '中国', value: 'CH' }, { text: '美国', value: 'US' }, { text: '德国', value: 'DE' }],
+        menus: [
+          { text: '中国', value: 'CH' },
+          { text: '美国', value: 'US' },
+          { text: '德国', value: 'DE' },
+        ],
       },
       sort: true,
     },
@@ -48,7 +52,10 @@ export class DemoComponent {
       title: '性别',
       index: 'gender',
       filter: {
-        menus: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
+        menus: [
+          { text: 'male', value: 'male' },
+          { text: 'female', value: 'female' },
+        ],
         multiple: false,
       },
       sort: true,

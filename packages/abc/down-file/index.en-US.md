@@ -20,8 +20,8 @@ yarn add file-saver
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[http-data]` | Parameter of request | `any` | - |
-| `[http-body]` | Body of request | `any` | - |
+| `[http-data]` | Parameter of request | `{}` | - |
+| `[http-body]` | Body of request | `{}` | - |
 | `[http-method]` | Method of request | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` |
 | `[http-url]` | Url of request | `string` | - |
 | `[file-name]` | Specify a file name | `string, (rep: HttpResponse<Blob>) => string` | - |

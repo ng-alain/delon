@@ -17,6 +17,7 @@ import { Component } from '@angular/core';
 export class DemoComponent {
   percent = 36;
   color = '#2f9cff';
+
   constructor() {
     setInterval(() => {
       this.percent = parseInt((Math.random() * 100).toString(), 10);

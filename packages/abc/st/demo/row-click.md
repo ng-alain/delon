@@ -19,19 +19,15 @@ Use `(change)` to implement click line callback, because DOM events can't distin
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STChange } from '@delon/abc/st';
+import { STChange, STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <st [data]="url"
-    [req]="{params: params}" [columns]="columns"
-    (change)="_click($event)"></st>`,
+  template: ` <st [data]="url" [req]="{ params: params }" [columns]="columns" (change)="_click($event)"></st>`,
 })
 export class DemoComponent {
   url = `/users?results=3`;
   params = { a: 1, b: 2 };
-  // mock
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '邮箱', index: 'email' },
@@ -42,14 +38,14 @@ export class DemoComponent {
         {
           text: 'btn',
           type: 'link',
-          click: (e: any) => console.log('btn click', e),
+          click: e => console.log('btn click', e),
         },
       ],
     },
   ];
 
-  _click(e: STChange) {
-    console.log(e);
+  _click(e: STChange): void {
+    console.log('click', e);
   }
 }
 ```

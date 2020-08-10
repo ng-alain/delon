@@ -24,18 +24,18 @@ import { Chart } from '@antv/g2';
 export class DemoComponent {
   constructor(private ngZone: NgZone) {}
 
-  render(el: ElementRef<HTMLDivElement>) {
+  render(el: ElementRef<HTMLDivElement>): void {
     this.ngZone.runOutsideAngular(() => this.init(el.nativeElement));
   }
 
-  private init(el: HTMLElement) {
-    const data: any[] = [
-      { action: '浏览网站', pv: 50000 },
-      { action: '放入购物车', pv: 35000 },
-      { action: '生成订单', pv: 25000 },
-      { action: '支付订单', pv: 15000 },
-      { action: '完成交易', pv: 8000 },
-    ].map((row: any) => {
+  private init(el: HTMLElement): void {
+    const data: Array<{ action: string; pv: number; percent: number }> = [
+      { action: '浏览网站', pv: 50000, percent: 0 },
+      { action: '放入购物车', pv: 35000, percent: 0 },
+      { action: '生成订单', pv: 25000, percent: 0 },
+      { action: '支付订单', pv: 15000, percent: 0 },
+      { action: '完成交易', pv: 8000, percent: 0 },
+    ].map(row => {
       row.percent = row.pv / 50000;
       return row;
     });

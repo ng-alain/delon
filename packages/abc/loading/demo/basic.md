@@ -26,7 +26,7 @@ import { LoadingService, LoadingType } from '@delon/abc/loading';
   `,
 })
 export class DemoComponent {
-  constructor(private loadingSrv: LoadingService) { }
+  constructor(private loadingSrv: LoadingService) {}
 
   show(type: LoadingType): void {
     this.loadingSrv.open({ type });
