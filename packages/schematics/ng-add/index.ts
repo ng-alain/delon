@@ -1,4 +1,6 @@
 import { chain, Rule, schematic, Tree } from '@angular-devkit/schematics';
+import { readdirSync, statSync } from 'fs';
+import { join } from 'path';
 import { Schema as ApplicationOptions } from '../application/schema';
 import { getJSON } from '../utils/json';
 import { Schema as NgAddOptions } from './schema';
@@ -52,8 +54,24 @@ function genRules(options: NgAddOptions): Rule {
   return chain(rules);
 }
 
+function getFiles(): string[] {
+  const nodeModulesPath = join(process.cwd(), 'node_modules');
+  if (!statSync(nodeModulesPath).isDirectory()) return [];
+  return readdirSync(nodeModulesPath) || [];
+}
+
+function isUseCNPM(): boolean {
+  const names = getFiles();
+  const res = ['_@angular', '_ng-zorro-antd'].every(prefix => names.findIndex(w => w.startsWith(prefix)) !== -1);
+  return res;
+}
+
 export default function (options: NgAddOptions): Rule {
   return (host: Tree) => {
+    if (isUseCNPM()) {
+      throw new Error(`Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);
+    }
+
     const pkg = getJSON(host, `package.json`);
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
     if (/^[\^|\~]/g.test(ngCoreVersion)) {
