@@ -73,7 +73,7 @@ export class DemoComponent implements OnInit {
     };
   }
 
-  submit(value: any) {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

@@ -64,13 +64,13 @@ export class FormDateSimpleComponent {
     },
   };
 
-  constructor(public msg: NzMessageService) {}
+  constructor(private msg: NzMessageService) {}
 
-  submit(value: any) {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: {}) {
+  change(value: {}): void {
     console.log('change', value);
   }
 }

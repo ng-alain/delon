@@ -15,8 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { SFSchema, SFStringWidgetSchema, SFValueChange } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
@@ -40,25 +40,25 @@ export class DemoComponent {
       mobile: {
         type: 'string',
         format: 'mobile',
-        title: '手机号'
+        title: '手机号',
       },
       sfz: {
         type: 'string',
         format: 'id-card',
-        title: '身份证号'
+        title: '身份证号',
       },
       color: {
         type: 'string',
         format: 'color',
-        title: '颜色'
+        title: '颜色',
       },
     },
     required: ['name'],
   };
 
-  constructor(public msg: NzMessageService) {}
+  constructor(private msg: NzMessageService) {}
 
-  submit(value: any): void {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 

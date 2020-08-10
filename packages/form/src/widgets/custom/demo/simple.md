@@ -15,8 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { SFSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
@@ -50,8 +50,10 @@ export class DemoComponent {
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

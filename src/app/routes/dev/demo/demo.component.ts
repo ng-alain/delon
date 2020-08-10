@@ -1,112 +1,54 @@
-import { Component, ElementRef, NgZone } from '@angular/core';
-import { Chart } from '@antv/g2';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'chart-custom-basic',
-  template: ` <g2-custom delay="100" (render)="render($event)"></g2-custom> `,
+  selector: 'app-demo',
+  template: `
+    <nz-table #basicTable [nzData]="dataSet" nzTitle="This is title" class="ant-table-rep__hide-header-footer">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>
+            <span class="ant-table-rep__title">Name</span>
+            {{ data.name }}
+          </td>
+          <td>
+            <span class="ant-table-rep__title">Age</span>
+            {{ data.age }}
+          </td>
+          <td>
+            <span class="ant-table-rep__title">Address</span>
+            {{ data.address }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  `,
 })
 export class DemoComponent {
-  constructor(private ngZone: NgZone) {}
-
-  render(el: ElementRef<HTMLDivElement>): void {
-    this.ngZone.runOutsideAngular(() => this.init(el.nativeElement));
-  }
-
-  private init(el: HTMLElement): void {
-    const data: Array<{ action: string; pv: number; percent: number }> = [
-      { action: '浏览网站', pv: 50000, percent: 0 },
-      { action: '放入购物车', pv: 35000, percent: 0 },
-      { action: '生成订单', pv: 25000, percent: 0 },
-      { action: '支付订单', pv: 15000, percent: 0 },
-      { action: '完成交易', pv: 8000, percent: 0 },
-    ].map(row => {
-      row.percent = row.pv / 50000;
-      return row;
-    });
-    const chart = new Chart({
-      container: el,
-      autoFit: true,
-      height: 500,
-      width: el.clientWidth,
-      padding: [20, 120, 95],
-    });
-    chart.data(data);
-    chart.axis(false);
-    chart.tooltip({
-      showTitle: false,
-      showMarkers: false,
-      itemTpl:
-        '<li style="margin-bottom:4px;list-style-type:none;padding: 0;">' +
-        '<span style="background-color:{color};" class="g2-tooltip-marker"></span>' +
-        '{name}<br/>' +
-        '<span style="padding-left: 16px;line-height: 16px;">浏览人数：{pv}</span><br/>' +
-        '<span style="padding-left: 16px;line-height: 16px;">占比：{percent}</span><br/>' +
-        '</li>',
-    });
-
-    chart.coordinate('rect').transpose().scale(1, -1);
-    chart
-      .interval()
-      .adjust('symmetric')
-      .position('action*percent')
-      .shape('funnel')
-      .color('action', ['#0050B3', '#1890FF', '#40A9FF', '#69C0FF', '#BAE7FF'])
-      .label(
-        'action*pv',
-        (action, pv) => {
-          return {
-            content: `${action} ${pv}`,
-          };
-        },
-        {
-          offset: 35,
-          labelLine: {
-            style: {
-              lineWidth: 1,
-              stroke: 'rgba(0, 0, 0, 0.15)',
-            },
-          },
-        },
-      )
-      .tooltip('action*pv*percent', (action, pv, percent) => {
-        return {
-          name: action,
-          percent: +percent * 100 + '%',
-          pv,
-        };
-      })
-      .animate({
-        appear: {
-          animation: 'fade-in',
-        },
-        update: {
-          // annotation: 'fade-in'
-        },
-      });
-
-    chart.interaction('element-active');
-
-    chart.on('beforepaint', () => {
-      chart.annotation().clear(true);
-      const chartData = chart.getData();
-      // 中间标签文本
-      chartData.forEach(obj => {
-        chart.annotation().text({
-          top: true,
-          position: {
-            action: obj.action,
-            percent: 'median',
-          },
-          content: +obj.percent * 100 + '%', // 显示的文本内容
-          style: {
-            stroke: null,
-            fill: '#fff',
-            textAlign: 'center',
-          },
-        });
-      });
-    });
-
-    chart.render();
-  }
+  dataSet = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
+    },
+  ];
 }

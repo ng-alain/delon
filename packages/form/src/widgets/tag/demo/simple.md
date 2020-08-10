@@ -22,9 +22,7 @@ import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -32,7 +30,11 @@ export class DemoComponent {
       like: {
         type: 'number',
         title: '兴趣',
-        enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+        enum: [
+          { value: 1, label: '电影' },
+          { value: 2, label: '书' },
+          { value: 3, label: '旅行' },
+        ],
         ui: {
           widget: 'tag',
         } as SFTagWidgetSchema,
@@ -43,14 +45,21 @@ export class DemoComponent {
         title: '兴趣',
         ui: {
           widget: 'tag',
-          asyncData: () => of([{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }]).pipe(delay(10)),
+          asyncData: () =>
+            of([
+              { value: 1, label: '电影' },
+              { value: 2, label: '书' },
+              { value: 3, label: '旅行' },
+            ]).pipe(delay(10)),
         } as SFTagWidgetSchema,
         default: [1, 2],
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

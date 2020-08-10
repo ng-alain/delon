@@ -15,10 +15,10 @@ The `name` element uses built-in i18n method; `password` uses external i18n meth
 
 ```ts
 import { Component, Inject, ViewChild } from '@angular/core';
-import { SFSchema, SFComponent } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core';
+import { SFComponent, SFSchema } from '@delon/form';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
@@ -58,16 +58,16 @@ export class DemoComponent {
     };
   }
 
-  constructor(public msg: NzMessageService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {}
+  constructor(private msg: NzMessageService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {}
 
-  changeLang(type: 'srv' | 'ref') {
+  changeLang(type: 'srv' | 'ref'): void {
     this.i18n.use(this.i18n.zone === 'zh' ? 'en-US' : 'zh-CN');
     if (type === 'ref') {
       this.comp.refreshSchema(this.i18nSchema);
     }
   }
 
-  submit(value: any) {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

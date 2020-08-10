@@ -22,9 +22,7 @@ import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -62,8 +60,10 @@ export class DemoComponent {
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }
