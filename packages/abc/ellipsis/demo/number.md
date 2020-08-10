@@ -19,12 +19,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <ellipsis length="100">{{ article }}</ellipsis>
-  <h4 class="mt-lg">Show Tooltip</h4>
-  <ellipsis length="100" tooltip>{{ article }}</ellipsis>
+    <ellipsis length="100">{{ article }}</ellipsis>
+    <h4 class="mt-lg">Show Tooltip</h4>
+    <ellipsis length="100" tooltip>{{ article }}</ellipsis>
   `,
 })
 export class DemoComponent {
-  article = 'There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.';
+  article =
+    'There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.';
 }
 ```

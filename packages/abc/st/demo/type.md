@@ -52,7 +52,7 @@ export class DemoComponent {
     { title: 'yn', index: 'yn', type: 'yn' },
   ];
 
-  reload() {
+  reload(): void {
     this.users = Array(10)
       .fill({})
       .map((_item: any, idx: number) => {

@@ -15,7 +15,7 @@ Support `count`, `distinctCount`, `sum`, `average`, `max`, `min` or custom funct
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
@@ -45,7 +45,7 @@ import { STColumn } from '@delon/abc/st';
   `,
 })
 export class DemoComponent {
-  data: any[] = Array(100)
+  data: STData[] = Array(100)
     .fill({})
     .map((_item: any, idx: number) => {
       return {

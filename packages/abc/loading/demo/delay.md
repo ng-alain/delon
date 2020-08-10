@@ -33,7 +33,7 @@ export class DemoComponent {
     setTimeout(() => this.loadingSrv.close(), 1000 * 5);
   }
 
-  close() {
+  close(): void {
     this.loadingSrv.close();
   }
 }

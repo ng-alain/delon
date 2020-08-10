@@ -15,7 +15,7 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { STColumn, STChange } from '@delon/abc/st';
+import { STChange, STColumn, STData } from '@delon/abc/st';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
@@ -31,7 +31,7 @@ import { delay } from 'rxjs/operators';
   `,
 })
 export class DemoComponent implements OnInit {
-  users: any[] = [];
+  users: STData[] = [];
   columns: STColumn[] = [
     {
       title: '编号',
@@ -66,7 +66,11 @@ export class DemoComponent implements OnInit {
         compare: (a, b) => a.age - b.age,
       },
       filter: {
-        menus: [{ text: '20岁以下', value: [0, 20] }, { text: '20-25岁', value: [20, 25] }, { text: '25岁以上', value: [25, 100] }],
+        menus: [
+          { text: '20岁以下', value: [0, 20] },
+          { text: '20-25岁', value: [20, 25] },
+          { text: '25岁以上', value: [25, 100] },
+        ],
         fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
         multiple: false,
       },
@@ -86,23 +90,20 @@ export class DemoComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    of(
-      Array(100)
-        .fill({})
-        .map((_item: any, idx: number) => {
-          return {
-            id: idx + 1,
-            name: `name ${idx + 1}`,
-            age: Math.ceil(Math.random() * 10) + 20,
-            status: Math.floor(Math.random() * 5) + 1,
-          };
-        }),
-    )
+    const data = Array(100)
+      .fill({})
+      .map((_: {}, idx: number) => ({
+        id: idx + 1,
+        name: `name ${idx + 1}`,
+        age: Math.ceil(Math.random() * 10) + 20,
+        status: Math.floor(Math.random() * 5) + 1,
+      }));
+    of(data)
       .pipe(delay(500))
       .subscribe(res => (this.users = res));
   }
 
-  change(e: STChange) {
+  change(e: STChange): void {
     console.log(e);
   }
 }

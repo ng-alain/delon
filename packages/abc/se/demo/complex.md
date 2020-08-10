@@ -75,10 +75,16 @@ import { Component } from '@angular/core';
   `,
 })
 export class DemoComponent {
-  i: any = {
-    phoneNumberPrefix: '+86',
-    agree: true,
+  i = {
+    user_name: '',
     user_age: 3,
+    user_birthday: '',
+    ak: '',
+    sk: '',
+    phoneNumberPrefix: '+86',
+    phoneNumber: '',
+    agree: true,
+    comment: '',
   };
 }
 ```

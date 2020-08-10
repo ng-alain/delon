@@ -7,7 +7,7 @@ title: 带浮层卡片
 
 ```ts
 import { Component } from '@angular/core';
-import { NoticeIconList, NoticeItem } from '@delon/abc/notice-icon';
+import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import add from 'date-fns/add';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import parse from 'date-fns/parse';
@@ -85,7 +85,7 @@ export class DemoComponent {
     return data;
   }
 
-  loadData() {
+  loadData(): void {
     if (this.loading) return;
     this.loading = true;
     setTimeout(() => {
@@ -189,11 +189,11 @@ export class DemoComponent {
     }, 500);
   }
 
-  clear(type: string) {
+  clear(type: string): void {
     this.msg.success(`清空了 ${type}`);
   }
 
-  select(res: any) {
+  select(res: NoticeIconSelect): void {
     this.msg.success(`点击了 ${res.title} 的 ${res.item.title}`);
   }
 }

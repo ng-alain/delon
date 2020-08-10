@@ -14,8 +14,8 @@ title:
 Virtual scrolling combine with [cdk scrolling](https://material.angular.io/cdk/scrolling/overview) used to display large data, you can get `cdkVirtualScrollViewport` in `STComponent` and find more API [here](https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport).
 
 ```ts
-import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc/st';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { STColumn, STComponent, STPage } from '@delon/abc/st';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

@@ -20,9 +20,7 @@ import { LoadingService } from '@delon/abc/loading';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <button *ngFor="let i of customs" nz-button (click)="show(i)">{{ i.name }}</button>
-  `,
+  template: ` <button *ngFor="let i of customs" nz-button (click)="show(i)">{{ i.name }}</button> `,
 })
 export class DemoComponent {
   customs = [
@@ -34,16 +32,16 @@ export class DemoComponent {
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <path transform="translate(-8 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12"> 
+        <path transform="translate(-8 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12">
           <animateTransform attributeName="transform" type="translate" values="-8 0; 2 0; 2 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.25;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(2 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12"> 
+        <path transform="translate(2 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12">
           <animateTransform attributeName="transform" type="translate" values="2 0; 12 0; 12 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.35;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(12 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12"> 
+        <path transform="translate(12 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12">
           <animateTransform attributeName="transform" type="translate" values="12 0; 22 0; 22 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.45;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(24 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12"> 
+        <path transform="translate(24 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12">
           <animateTransform attributeName="transform" type="translate" values="22 0; 32 0; 32 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.55;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
       </svg>`),
@@ -55,7 +53,7 @@ export class DemoComponent {
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <path transform="translate(2)" d="M0 12 V20 H4 V12z"> 
+        <path transform="translate(2)" d="M0 12 V20 H4 V12z">
           <animate attributeName="d" values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z" dur="1.2s" repeatCount="indefinite" begin="0" keytimes="0;.2;.5;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"  />
         </path>
         <path transform="translate(8)" d="M0 12 V20 H4 V12z">
@@ -80,15 +78,15 @@ export class DemoComponent {
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <circle transform="translate(8 0)" cx="0" cy="16" r="0"> 
+        <circle transform="translate(8 0)" cx="0" cy="16" r="0">
           <animate attributeName="r" values="0; 4; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0"
             keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
         </circle>
-        <circle transform="translate(16 0)" cx="0" cy="16" r="0"> 
+        <circle transform="translate(16 0)" cx="0" cy="16" r="0">
           <animate attributeName="r" values="0; 4; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.3"
             keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
         </circle>
-        <circle transform="translate(24 0)" cx="0" cy="16" r="0"> 
+        <circle transform="translate(24 0)" cx="0" cy="16" r="0">
           <animate attributeName="r" values="0; 4; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.6"
             keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
         </circle>
@@ -102,16 +100,16 @@ export class DemoComponent {
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <path transform="translate(-8 0)" d="M0 12 V20 H8 V12z"> 
+        <path transform="translate(-8 0)" d="M0 12 V20 H8 V12z">
           <animateTransform attributeName="transform" type="translate" values="-8 0; 2 0; 2 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.25;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(2 0)" d="M0 12 V20 H8 V12z"> 
+        <path transform="translate(2 0)" d="M0 12 V20 H8 V12z">
           <animateTransform attributeName="transform" type="translate" values="2 0; 12 0; 12 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.35;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(12 0)" d="M0 12 V20 H8 V12z"> 
+        <path transform="translate(12 0)" d="M0 12 V20 H8 V12z">
           <animateTransform attributeName="transform" type="translate" values="12 0; 22 0; 22 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.45;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-        <path transform="translate(24 0)" d="M0 12 V20 H8 V12z"> 
+        <path transform="translate(24 0)" d="M0 12 V20 H8 V12z">
           <animateTransform attributeName="transform" type="translate" values="22 0; 32 0; 32 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.55;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
       </svg>`),
@@ -219,7 +217,7 @@ export class DemoComponent {
     },
   ];
 
-  constructor(private loadingSrv: LoadingService, private dom: DomSanitizer) { }
+  constructor(private loadingSrv: LoadingService, private dom: DomSanitizer) {}
 
   show(custom: any): void {
     this.loadingSrv.open({

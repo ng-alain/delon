@@ -33,6 +33,6 @@ import { Component } from '@angular/core';
   </form>`,
 })
 export class DemoComponent {
-  i: any = {};
+  i: { ak?: string; sk?: string } = {};
 }
 ```

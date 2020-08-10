@@ -21,28 +21,24 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
+import { DemoDrawerComponent, DemoModalComponent } from '@shared';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { DemoModalComponent, DemoDrawerComponent } from '@shared';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <st [data]="users" [columns]="columns"></st>
-  `,
+  template: ` <st [data]="users" [columns]="columns"></st> `,
 })
 export class DemoComponent {
   constructor(private message: NzMessageService) {}
 
-  users: any[] = Array(10)
+  users: STData[] = Array(10)
     .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
-      };
-    });
+    .map((_: {}, idx: number) => ({
+      id: idx + 1,
+      name: `name ${idx + 1}`,
+      age: Math.ceil(Math.random() * 10) + 20,
+    }));
   columns: STColumn[] = [
     { title: '序号', type: 'no' },
     { title: '编号', index: 'id' },

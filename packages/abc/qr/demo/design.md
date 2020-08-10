@@ -117,7 +117,7 @@ export class DemoComponent {
   padding = 10;
   size = 220;
 
-  change(dataURL: string) {
+  change(dataURL: string): void {
     console.log(dataURL);
   }
 }

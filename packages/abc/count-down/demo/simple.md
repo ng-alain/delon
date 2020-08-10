@@ -31,7 +31,7 @@ import { CountdownEvent } from 'ngx-countdown';
 export class DemoComponent {
   constructor(private msg: NzMessageService) {}
 
-  handleEvent(e: CountdownEvent) {
+  handleEvent(e: CountdownEvent): void {
     if (e.action === 'done') {
       this.msg.success('finised');
     }

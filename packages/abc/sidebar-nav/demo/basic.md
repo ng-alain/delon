@@ -80,18 +80,18 @@ export class DemoComponent {
     },
   ];
 
-  constructor(menuSrv: MenuService, public settingsSrv: SettingsService, iconService: NzIconService) {
+  constructor(menuSrv: MenuService, private settingsSrv: SettingsService, iconService: NzIconService) {
     menuSrv.add(this.menus);
     iconService.fetchFromIconfont({
       scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
     });
   }
 
-  get collapsed() {
+  get collapsed(): boolean {
     return this.settingsSrv.layout.collapsed;
   }
 
-  toggleCollapsed() {
+  toggleCollapsed(): void {
     this.settingsSrv.setLayout('collapsed', !this.collapsed);
   }
 }

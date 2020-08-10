@@ -19,9 +19,7 @@ import { CountdownConfig } from 'ngx-countdown';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <count-down [config]="config"></count-down>
-  `,
+  template: ` <count-down [config]="config"></count-down> `,
 })
 export class DemoComponent {
   config: CountdownConfig = {
