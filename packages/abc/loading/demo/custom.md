@@ -14,16 +14,16 @@ title:
 Set `type: 'custom'` custom load indicator icon.
 
 ```ts
-import { DomSanitizer } from '@angular/platform-browser';
 import { Component } from '@angular/core';
-import { LoadingService } from '@delon/abc/loading';
+import { DomSanitizer } from '@angular/platform-browser';
+import { LoadingCustom, LoadingService } from '@delon/abc/loading';
 
 @Component({
   selector: 'app-demo',
   template: ` <button *ngFor="let i of customs" nz-button (click)="show(i)">{{ i.name }}</button> `,
 })
 export class DemoComponent {
-  customs = [
+  customs: LoadingCustom[] = [
     {
       name: 'Balls',
       style: {
@@ -219,7 +219,7 @@ export class DemoComponent {
 
   constructor(private loadingSrv: LoadingService, private dom: DomSanitizer) {}
 
-  show(custom: any): void {
+  show(custom: LoadingCustom): void {
     this.loadingSrv.open({
       type: 'custom',
       custom,

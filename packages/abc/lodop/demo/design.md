@@ -58,7 +58,7 @@ export class DemoComponent {
   doing = false;
   error = false;
   lodop: Lodop | null = null;
-  context: any = {
+  context: { 标题: string; 费用: string } = {
     标题: '自定义标题',
     费用: '100.00 元',
   };

@@ -61,7 +61,7 @@ schema: SFSchema = {
 };
 
 ngOnInit() {
-  this.http.get('/apps').subscribe((res: any) => {
+  this.http.get('/apps').subscribe(res => {
     this.schema.properties.app.enum = res;
     this.sf.refreshSchema();
   });
@@ -76,7 +76,7 @@ schema: SFSchema = {
 };
 
 ngOnInit() {
-  this.http.get('/schema').subscribe((res: any) => this.sf.refreshSchema(res));
+  this.http.get('/schema').subscribe(res => this.sf.refreshSchema(res));
 }
 ```
 
