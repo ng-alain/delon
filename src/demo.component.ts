@@ -1,82 +1,158 @@
-import { Component } from '@angular/core';
-import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { SFObjectWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <h3>asdf</h3>
+    <sf [schema]="schema2" (formSubmit)="submit($event)"></sf>
+    <ng-template #extra>
+      <a (click)="msg.success('Success')">More</a>
+    </ng-template>`,
 })
 export class DemoComponent {
+  @ViewChild('extra', { static: true }) private extra: TemplateRef<void>;
   schema: SFSchema = {
     properties: {
-      static: {
-        type: 'number',
-        title: 'Static',
-        enum: [
-          {
-            value: 110000,
-            label: '北京',
-            parent: 0,
-            children: [
-              {
-                value: 110100,
-                label: '北京市',
-                parent: 110000,
-                children: [
-                  {
-                    value: 110101,
-                    label: '东城区',
-                    parent: 110100,
-                    isLeaf: true,
-                  },
-                  {
-                    value: 110105,
-                    label: '朝阳区',
-                    parent: 110100,
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
+      name: { type: 'string' },
+      age: { type: 'number' },
+      address1: {
+        title: '地址1',
+        type: 'object',
+        properties: {
+          country: {
+            type: 'string',
+            ui: {
+              grid: { span: 24 },
+            },
           },
-        ],
-        ui: 'cascader',
-        default: [110000, 110100, 110105],
-      },
-      async: {
-        type: 'number',
-        title: 'RealTime',
+          city: {
+            type: 'string',
+            ui: {
+              grid: { span: 24 },
+            },
+          },
+          zone: {
+            type: 'string',
+            ui: {
+              grid: { span: 24 },
+            },
+          },
+        },
         ui: {
-          widget: 'cascader',
-          asyncData: (node, index) => {
-            return new Promise(resolve => {
-              setTimeout(() => {
-                (node as any).children = [
-                  { value: 110000, label: '北京', parent: 0 },
-                  { value: 110100, label: '北京市', parent: 110000 },
-                  { value: 110101, label: '东城区', parent: 110100 },
-                  { value: 110105, label: '朝阳区', parent: 110100 },
-                  { value: 310000, label: '上海', parent: 0 },
-                  { value: 310100, label: '上海市', parent: 310000 },
-                  { value: 310101, label: '黄浦区', parent: 310100 },
-                  { value: 310104, label: '徐汇区', parent: 310100 },
-                ].filter((w: any) => {
-                  w.isLeaf = index === 1;
-                  return w.parent === (node.value || 0);
-                });
-                resolve();
-              }, 300);
-            });
+          type: 'card',
+          spanLabelFixed: 150,
+          grid: { span: 24 },
+        } as SFObjectWidgetSchema,
+      },
+      address2: {
+        title: '地址2',
+        type: 'object',
+        properties: {
+          country: {
+            type: 'string',
+            ui: {
+              grid: { span: 12 },
+            },
           },
-        } as SFCascaderWidgetSchema,
-        default: [110000, 110100, 110105],
+          city: {
+            type: 'string',
+            ui: {
+              grid: { span: 12 },
+            },
+          },
+          zone: {
+            type: 'string',
+            ui: {
+              grid: { span: 24 },
+            },
+          },
+        },
+        ui: {
+          type: 'default',
+          spanLabelFixed: 150,
+          grid: { span: 24 },
+        } as SFObjectWidgetSchema,
+      },
+    },
+    required: ['name', 'age'],
+    ui: {
+      spanLabelFixed: 150,
+      grid: { span: 24 },
+    },
+  };
+  schema2: SFSchema = {
+    ui: { grid: { span: 8 }, spanLabelFixed: 100 },
+    properties: {
+      status: {
+        type: 'string',
+        title: '状态',
+        enum: [
+          { label: '待支付待支付待支付待支付待支付待支付待支付待支付待支付待支付待支付', value: 'WAIT_BUYER_PAY' },
+          { label: '已支付', value: 'TRADE_SUCCESS' },
+          { label: '交易完成', value: 'TRADE_FINISHED' },
+        ],
+        default: 'WAIT_BUYER_PAY',
+        ui: {
+          widget: 'select',
+        },
+      },
+      status2: {
+        type: 'string',
+        title: '状态',
+        enum: [
+          { label: '待支付', value: 'WAIT_BUYER_PAY' },
+          { label: '已支付', value: 'TRADE_SUCCESS' },
+          { label: '交易完成', value: 'TRADE_FINISHED' },
+        ],
+        default: 'WAIT_BUYER_PAY',
+        ui: {
+          widget: 'select',
+        },
+      },
+      datetime: {
+        type: 'string',
+        format: 'date-time',
+      },
+      date: {
+        type: 'string',
+        format: 'date',
+      },
+      date_number: {
+        type: 'number',
+        ui: { widget: 'date' } as SFDateWidgetSchema,
+      },
+      year: {
+        type: 'number',
+        ui: { widget: 'date', mode: 'year', format: 'yyyy' } as SFDateWidgetSchema,
+      },
+      month: {
+        type: 'string',
+        format: 'month',
+      },
+      week: {
+        type: 'string',
+        format: 'week',
+      },
+      range: {
+        type: 'string',
+        ui: { widget: 'date', mode: 'range' } as SFDateWidgetSchema,
+      },
+      start: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
+      },
+      end: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
       },
     },
   };
 
-  constructor(private msg: NzMessageService) {}
+  constructor(public msg: NzMessageService) {}
 
-  submit(value: {}): void {
+  submit(value: any) {
     this.msg.success(JSON.stringify(value));
   }
 }
