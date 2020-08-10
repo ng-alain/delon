@@ -92,7 +92,7 @@ export class DemoComponent implements OnInit {
   ngOnInit(): void {
     const data = Array(100)
       .fill({})
-      .map((_: {}, idx: number) => ({
+      .map((_, idx) => ({
         id: idx + 1,
         name: `name ${idx + 1}`,
         age: Math.ceil(Math.random() * 10) + 20,

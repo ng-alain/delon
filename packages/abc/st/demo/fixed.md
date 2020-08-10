@@ -32,7 +32,7 @@ import { STColumn, STData } from '@delon/abc/st';
 export class DemoComponent {
   users: STData[] = Array(10)
     .fill({})
-    .map((_: number, idx: number) => {
+    .map((_, idx) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,

@@ -30,7 +30,7 @@ import { STColumn, STData } from '@delon/abc/st';
 export class DemoComponent {
   users: STData[] = Array(10)
     .fill({})
-    .map((_: {}, idx: number) => ({
+    .map((_, idx) => ({
       id: idx + 1,
       name: `name ${idx + 1}`,
       age: Math.ceil(Math.random() * 10) + 20,

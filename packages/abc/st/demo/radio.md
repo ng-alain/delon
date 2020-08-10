@@ -43,7 +43,7 @@ export class DemoComponent {
   }
 
   dataChange(data: STData[]): STData[] {
-    return data.map((i: STData, index: number) => {
+    return data.map((i, index) => {
       i.disabled = index === 0;
       i.hidden = index === 1;
       return i;

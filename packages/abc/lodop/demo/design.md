@@ -101,7 +101,7 @@ LODOP.ADD_PRINT_TEXT(260,520,58,24,"合计：");`;
 
   printBatch(): void {
     this.doing = true;
-    const data = new Array(3).fill({}).map((_item, index) => ({ index: index + 1, ...this.context }));
+    const data = new Array(3).fill({}).map((_, index) => ({ index: index + 1, ...this.context }));
     this.lodopSrv.print(
       this.code +
         `

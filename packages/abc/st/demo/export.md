@@ -30,7 +30,7 @@ export class DemoComponent {
   @ViewChild('st', { static: false }) st: STComponent;
   data: STData[] = Array(10000)
     .fill({})
-    .map((_item: any, index: number) => ({
+    .map((_, index) => ({
       id: index + 1,
       picture: {
         thumbnail: `https://randomuser.me/api/portraits/thumb/women/${Math.min(index + 1, 30)}.jpg`,

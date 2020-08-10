@@ -47,13 +47,11 @@ import { STColumn, STData } from '@delon/abc/st';
 export class DemoComponent {
   data: STData[] = Array(100)
     .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        price: ~~(Math.random() * 100),
-        age: ~~(Math.random() * 100) > 50 ? '女' : '男',
-      };
-    });
+    .map((_, idx) => ({
+      id: idx + 1,
+      price: ~~(Math.random() * 100),
+      age: ~~(Math.random() * 100) > 50 ? '女' : '男',
+    }));
   columns: STColumn[] = [
     { title: '行号', type: 'no' },
     { title: '编号', index: 'id', statistical: 'count', key: 'len' },

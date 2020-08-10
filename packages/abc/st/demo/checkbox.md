@@ -41,7 +41,7 @@ export class DemoComponent {
     console.log('change', e);
   }
   dataProcess(data: STData[]): STData[] {
-    return data.map((i: STData, index: number) => {
+    return data.map((i, index) => {
       i.disabled = index === 0;
       return i;
     });

@@ -34,14 +34,12 @@ export class DemoComponent implements AfterViewInit, OnDestroy {
     front: false,
     show: false,
   };
-  data: any[] = Array(2000)
+  data: Array<{ id: number; price: number }> = Array(2000)
     .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        price: ~~(Math.random() * 100),
-      };
-    });
+    .map((_, idx) => ({
+      id: idx + 1,
+      price: ~~(Math.random() * 100),
+    }));
   columns: STColumn[] = [
     { title: '编号', index: 'id', width: 100 },
     { title: '价格1', index: 'price', width: 100 },

@@ -54,7 +54,7 @@ export class ComponentsStRenderComponent {
   searchValue: string;
   users: STData[] = Array(10)
     .fill({})
-    .map((_item: any, idx: number) => {
+    .map((_, idx) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,

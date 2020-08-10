@@ -55,17 +55,15 @@ export class DemoComponent {
   reload(): void {
     this.users = Array(10)
       .fill({})
-      .map((_item: any, idx: number) => {
-        return {
-          id: idx + 1,
-          name: `name ${idx + 1}`,
-          age: r(10, 50),
-          tag: r(1, 5),
-          badge: r(1, 5),
-          enum: r(1, 3),
-          yn: [true, false][r(1, 5) % 2],
-        };
-      });
+      .map((_, idx) => ({
+        id: idx + 1,
+        name: `name ${idx + 1}`,
+        age: r(10, 50),
+        tag: r(1, 5),
+        badge: r(1, 5),
+        enum: r(1, 3),
+        yn: [true, false][r(1, 5) % 2],
+      }));
   }
 
   constructor() {
