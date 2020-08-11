@@ -14,7 +14,7 @@ To select or input a date.
   - `date-time` default is `yyyy-MM-ddTHH:mm:ssZ`
   - `date`, `full-date` default is `yyyy-MM-dd`
   - `time`, `full-time` default is `HH:mm:ss`
-  - *Non-standard:* `week` default is `yyyy-WW`
+  - *Non-standard:* `week` default is `yyyy-ww`
   - *Non-standard:* `month` default is `yyyy-MM`
 - When `schema.format` is not specified, the data formatting (Allows you to reassign default values via [Global Configuration](/docs/global-config)) is determined by the `schema.type` type:
   - `string` default is `yyyy-MM-dd HH:mm:ss`

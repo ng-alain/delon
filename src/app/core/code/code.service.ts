@@ -23,40 +23,53 @@ export class CodeService {
   private document: Document;
 
   private get dependencies(): { [key: string]: string } {
-    const NGALAIN_VERSION = `~${pkg.version}`;
-    return {
-      '@angular/animations': '^9.1.4',
-      '@angular/compiler': '^9.1.4',
-      '@angular/cdk': '^9.2.4',
-      '@angular/common': '^9.1.4',
-      '@angular/core': '^9.1.4',
-      '@angular/forms': '^9.1.4',
-      '@angular/platform-browser': '^9.1.4',
-      '@angular/platform-browser-dynamic': '^9.1.4',
-      '@angular/router': '^9.1.4',
-      '@ant-design/icons-angular': '^9.0.1',
-      'core-js': '^3.6.4',
-      rxjs: '^6.5.5',
-      tslib: '^1.11.1',
-      'zone.js': '^0.10.3',
-      '@antv/g2': '*',
-      '@antv/data-set': '*',
-      'date-fns': '*',
-      'file-saver': '*',
-      'ngx-countdown': '*',
-      extend: '*',
-      qrious: '*',
-      'ng-zorro-antd': '*',
-      '@delon/theme': NGALAIN_VERSION,
-      '@delon/abc': NGALAIN_VERSION,
-      '@delon/chart': NGALAIN_VERSION,
-      '@delon/acl': NGALAIN_VERSION,
-      '@delon/auth': NGALAIN_VERSION,
-      '@delon/cache': NGALAIN_VERSION,
-      '@delon/mock': NGALAIN_VERSION,
-      '@delon/form': NGALAIN_VERSION,
-      '@delon/util': NGALAIN_VERSION,
-    };
+    const res: { [key: string]: string } = {};
+    [
+      '@angular/animations',
+      '@angular/compiler',
+      '@angular/common',
+      '@angular/core',
+      '@angular/forms',
+      '@angular/platform-browser',
+      '@angular/platform-browser-dynamic',
+      '@angular/router',
+      '@ant-design/icons-angular@^10.0.0-beta.0',
+      'core-js@^3.6.4',
+      'rxjs',
+      'tslib',
+      'zone.js',
+      '@antv/g2',
+      '@antv/data-set',
+      'date-fns@^2.10.0',
+      'file-saver',
+      'ngx-countdown',
+      'extend',
+      'qrious',
+      '@angular/cdk@^10.0.2',
+      'ng-zorro-antd',
+      '@delon/theme',
+      '@delon/abc',
+      '@delon/chart',
+      '@delon/acl',
+      '@delon/auth',
+      '@delon/cache',
+      '@delon/mock',
+      '@delon/form',
+      '@delon/util',
+    ].forEach(key => {
+      const includeVersion = key.indexOf(`@^`);
+      if (includeVersion !== -1) {
+        res[key.substr(0, includeVersion)] = key.substr(includeVersion + 1);
+        return;
+      }
+      const version = key.startsWith('@delon')
+        ? `~${pkg.version}`
+        : ((pkg.dependencies || pkg.devDependencies) as {
+            [key: string]: string;
+          })[key];
+      res[key] = version || '*';
+    });
+    return res;
   }
 
   private get themePath(): string {
@@ -72,7 +85,10 @@ export class CodeService {
   }
 
   private get genMock(): { [key: string]: string } {
-    return { '_mock/user.ts': require('!!raw-loader!../../../../_mock/user.ts').default, '_mock/index.ts': `export * from './user';` };
+    return {
+      '_mock/user.ts': require('!!raw-loader!../../../../_mock/user.ts').default,
+      '_mock/index.ts': `export * from './user';`,
+    };
   }
 
   private parseCode(code: string): { selector: string; componentName: string; html: string } {

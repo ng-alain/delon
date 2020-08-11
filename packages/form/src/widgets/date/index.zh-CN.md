@@ -14,7 +14,7 @@ type: Widgets
   - `date-time` 默认 `yyyy-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
   - `date`、`full-date` 默认 `yyyy-MM-dd`
   - `time`、`full-time` 默认 `HH:mm:ss`
-  - 非标准：`week` 默认 `yyyy-WW`
+  - 非标准：`week` 默认 `yyyy-ww`
   - 非标准：`month` 默认 `yyyy-MM`
 - 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过[全局配置](/docs/global-config)替换）数据格式化：
   - `string` 默认 `yyyy-MM-dd HH:mm:ss`
