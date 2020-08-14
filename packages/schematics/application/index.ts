@@ -102,13 +102,11 @@ function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree)
       [
         `ng-alain@${VERSION}`,
         `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
+        `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
         // color-less
         // TODO: https://github.com/mzohaibqc/antd-theme-generator/issues/42
         `antd-theme-generator@1.2.2`,
-        // theme
-        `less-plugin-clean-css@DEP-0.0.0-PLACEHOLDER`,
-        `less-plugin-npm-import@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
@@ -133,6 +131,7 @@ function addRunScriptToPackageJson(): (host: Tree) => void {
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
+    json.scripts.theme = `ng-alain-plugin-theme`;
     overwritePackage(host, json);
     return host;
   };
