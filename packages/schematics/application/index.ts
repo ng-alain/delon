@@ -104,9 +104,6 @@ function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree)
         `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
         `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
-        // color-less
-        // TODO: https://github.com/mzohaibqc/antd-theme-generator/issues/42
-        `antd-theme-generator@1.2.2`,
       ],
       'devDependencies',
     );

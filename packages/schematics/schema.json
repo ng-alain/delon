@@ -9,6 +9,9 @@
     },
     "theme": {
       "$ref": "#/definitions/theme"
+    },
+    "colorLess": {
+      "$ref": "#/definitions/colorLess"
     }
   },
   "definitions": {
@@ -39,8 +42,15 @@
           "type": "string",
           "default": "src/styles.less"
         },
-        "extraLibraries": {
-          "description": "List of additional library style entries",
+        "additionalLibraries": {
+          "description": "Additional library style entries",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalThemeVars": {
+          "description": "Additional theme variables entries",
           "type": "array",
           "items": {
             "type": "string"
@@ -87,6 +97,39 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "colorLess": {
+      "type": "object",
+      "properties": {
+        "variables": {
+          "description": "Specify the name of the theme variables to be changed, default is `[ '@primary-color' ]`, Can be set all antd & ng-alain custom theme variables",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["@primary-color"]
+        },
+        "ngZorroAntd": {
+          "description": "Specify the ng-zorro-antd directory, defualt: `./node_modules/ng-zorro-antd/`",
+          "type": "string",
+          "default": "./node_modules/ng-zorro-antd/"
+        },
+        "styleFilePath": {
+          "description": "Project style entry, default: `./src/styles.less`",
+          "type": "string",
+          "default": "./src/styles.less"
+        },
+        "themeFilePath": {
+          "description": "Theme variable entry (muse includes `ng-zorro-antd` and user custom), default: `./src/styles/theme.less`",
+          "type": "string",
+          "default": "./src/styles/theme.less"
+        },
+        "outputFilePath": {
+          "description": "Specify output file path, default: `./src/assets/color.less`",
+          "type": "string",
+          "default": "./src/assets/color.less"
         }
       }
     }

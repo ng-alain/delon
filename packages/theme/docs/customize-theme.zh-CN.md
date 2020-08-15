@@ -25,22 +25,17 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 
 ### 方式一
 
-在样式文件 `src/styles.less` 全量引入 `theme-dark.less` 或 `theme-compact.less` 覆盖主题变量。
+在样式文件 `src/styles/theme.less` 更改 `default` 为 `dark` 或 `compact` 覆盖主题变量。
 
 ```less
-@import '~@delon/theme/system/index';
-@import '~@delon/abc/index';
-@import '~@delon/chart/index';
-@import '~@delon/theme/layout/default/index';
-@import '~@delon/theme/layout/fullscreen/index';
-
-@import './styles/index';
-@import './styles/theme';
-
-// 可以替换 dark, compact
+// - `default` 默认主题
 // - `dark` 🌑 暗黑主题（9+ 支持）
 // - `compact` 📦 紧凑主题（9+ 支持）
-// @import '~@delon/theme/theme-compact.less';
+@import '~@delon/theme/theme-default.less';
+
+// ==========Custom brand visual color==========
+
+// ==========Custom brand visual color==========
 ```
 
 ### 方式二
@@ -53,7 +48,7 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 @import "~@delon/theme/dark.css";
 ```
 
-angular.json 中
+`angular.json` 中
 
 ```json
 {
@@ -76,47 +71,44 @@ angular.json 中
 1. 安装依赖
 
 ```bash
-# yarn
-yarn add less -D less-plugin-clean-css -D less-plugin-npm-import -D
-# npm
-# npm i less -D less-plugin-clean-css -D less-plugin-npm-import -D
+# via yarn
+yarn add ng-alain-plugin-theme -D
+# via npm
+# npm i less -D ng-alain-plugin-theme
 ```
 
-2. 编写脚本
+> [ng-alain-plugin-theme](https://github.com/ng-alain/plugin-theme) 是专门针对 NG-ALAIN 生成 `color.less` 及主题CSS文件。
 
-以黑暗主题为例，使用 `less` 编译应用的样式入口文件，并且在 `modifyVars` 参数中替换样式变量，并输出到目标位置。
+在 `ng-alain.json` 内新增 `theme` 节点：
 
-> 完整代码请参考 [theme.js](https://github.com/ng-alain/ng-alain/blob/master/scripts/theme.js)。
-
-```js
-const less = require('less');
-const LessPluginCleanCSS = require('less-plugin-clean-css');
-const LessPluginNpmImport = require('less-plugin-npm-import');
-const fs = require('fs');
-const darkThemeVars = require('@delon/theme/theme-dark');
-
-const appStyles = 'src/styles.less'; // 应用的样式入口文件
-const themeContent = `@import '${appStyles}';`;
-
-less.render(themeContent, {
-  javascriptEnabled: true,
-  plugins: [new LessPluginNpmImport({ prefix: '~' }), new LessPluginCleanCSS({ advanced: true })],
-  modifyVars: {
-    ...darkThemeVars
+```json
+{
+  "$schema": "./node_modules/ng-alain/schema.json",
+  "theme": {
+    "list": [
+      {
+        "theme": "dark"
+      },
+      {
+        "key": "dust",
+        "modifyVars": {
+          "@primary-color": "#F5222D"
+        }
+      }
+    ]
   }
-}).then(data => {
-  fs.writeFileSync(
-    // 主题样式的输出文件
-    'src/assets/style.dark.css',
-    data.css
-  )
-}).catch(e => {
-  // 记录渲染错误
-  console.error(e);
-});
+}
 ```
 
-3. 运行时切换样式
+最后运行以下命令：
+
+```bash
+npx ng-alain-plugin-theme -t=themeCss
+```
+
+会在 `src/assets/style.dark.css` 和 `src/assets/style.dust.css` 生成两个样式文件。
+
+2. 运行时切换样式
 
 动态创建 `link` 标签，将样式文件动态加载在应用中，反之移除。
 
