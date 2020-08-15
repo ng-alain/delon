@@ -108,3 +108,17 @@ services:
       - 80:80
 `,
 };
+
+export const NG_ALAIN_JSON = `{
+  "$schema": "./node_modules/ng-alain/schema.json",
+  "theme": {
+    "list": [
+      {
+        "theme": "dark"
+      },
+      {
+        "theme": "compact"
+      }
+    ]
+  }
+}`;
