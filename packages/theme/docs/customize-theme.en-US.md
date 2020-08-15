@@ -32,6 +32,9 @@ In the style file `src/styles/theme.less`, change `default` to `dark` or `compac
 // - `dark` 🌑 Dark Theme (supported in 9+)
 // - `compact` 📦 Compact Theme (supported in 9+)
 @import '~@delon/theme/theme-default.less';
+
+// ==========The following is the custom theme variable area==========
+// @primary-color: #f50;
 ```
 
 ### Method 2

@@ -33,9 +33,8 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 // - `compact` 📦 紧凑主题（9+ 支持）
 @import '~@delon/theme/theme-default.less';
 
-// ==========Custom brand visual color==========
-
-// ==========Custom brand visual color==========
+// ==========The following is the custom theme variable area==========
+// @primary-color: #f50;
 ```
 
 ### 方式二
