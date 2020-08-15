@@ -1,7 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as colors from 'ansi-colors';
 import { tryAddFile } from '../../../utils/alain';
-import { NG_ALAIN_JSON } from '../../../utils/contents';
 import { overwriteFile, readContent } from '../../../utils/file';
 import {
   addAllowedCommonJsDependencies,
@@ -49,7 +48,23 @@ function fixPluginTheme(tree: Tree, context: SchematicContext): void {
   json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
   overwritePackage(tree, json);
   // add ng-alain.json
-  tryAddFile(tree, `ng-alain.json`, NG_ALAIN_JSON);
+  tryAddFile(
+    tree,
+    `ng-alain.json`,
+    `{
+  "$schema": "./node_modules/ng-alain/schema.json",
+  "theme": {
+    "list": [
+      {
+        "theme": "dark"
+      },
+      {
+        "theme": "compact"
+      }
+    ]
+  }
+}`,
+  );
   // fix .gitignore
   const gitignorePath = `.gitignore`;
   const gitignoreContent = readContent(tree, gitignorePath).replace(`/src/assets/alain-*.less`, `/src/assets/color.less`);
