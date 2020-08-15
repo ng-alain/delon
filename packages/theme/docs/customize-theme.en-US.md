@@ -70,7 +70,7 @@ Note: Make sure theme variables exist in global styles, not in component scope s
 # via yarn
 yarn add ng-alain-plugin-theme -D
 # via npm
-# npm i less -D ng-alain-plugin-theme
+# npm i --save-dev less ng-alain-plugin-theme
 ```
 
 > [ng-alain-plugin-theme](https://github.com/ng-alain/plugin-theme) is to generate `color.less` and theme CSS files for NG-ALAIN.

@@ -74,7 +74,7 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 # via yarn
 yarn add ng-alain-plugin-theme -D
 # via npm
-# npm i less -D ng-alain-plugin-theme
+# npm i --save-dev less ng-alain-plugin-theme
 ```
 
 > [ng-alain-plugin-theme](https://github.com/ng-alain/plugin-theme) 是专门针对 NG-ALAIN 生成 `color.less` 及主题CSS文件。
