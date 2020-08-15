@@ -49,7 +49,7 @@ function setPackage(host: Tree, options: PluginOptions): void {
   // scripts
   (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(
     host,
-    ['ie:start@npm run color-less && ng serve -o --configuration es5', 'ie:hmr@npm run color-less && ng serve -c=hmr --configuration es5'],
+    ['ie:start@ng serve -o --configuration es5', 'ie:hmr@ng serve -c=hmr --configuration es5'],
     'scripts',
   );
 }

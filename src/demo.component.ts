@@ -1,60 +1,27 @@
 import { Component } from '@angular/core';
-import { SFDateWidgetSchema, SFSchema } from '@delon/form';
+import { ModalHelper } from '@delon/theme';
+import { DemoModalComponent } from '@shared';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'form-date-simple',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" (formChange)="change($event)"></sf> `,
+  selector: 'app-demo',
+  template: `
+    <button nz-button (click)="open()">Open</button>
+    <button nz-button (click)="static()">Static</button>
+  `,
 })
 export class DemoComponent {
-  schema: SFSchema = {
-    properties: {
-      datetime: {
-        type: 'string',
-        format: 'date-time',
-      },
-      date: {
-        type: 'string',
-        format: 'date',
-      },
-      date_number: {
-        type: 'number',
-        ui: { widget: 'date' } as SFDateWidgetSchema,
-      },
-      year: {
-        type: 'number',
-        ui: { widget: 'date', mode: 'year', format: 'yyyy' } as SFDateWidgetSchema,
-      },
-      month: {
-        type: 'string',
-        format: 'month',
-      },
-      week: {
-        type: 'string',
-        format: 'week',
-      },
-      range: {
-        type: 'string',
-        ui: { widget: 'date', mode: 'range' } as SFDateWidgetSchema,
-      },
-      start: {
-        type: 'string',
-        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
-      },
-      end: {
-        type: 'string',
-        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
-      },
-    },
-  };
+  constructor(private modalHelper: ModalHelper, private msg: NzMessageService) {}
 
-  constructor(public msg: NzMessageService) {}
-
-  submit(value: any): void {
-    this.msg.success(JSON.stringify(value));
+  open(): void {
+    this.modalHelper.create(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
+      this.msg.info(res);
+    });
   }
 
-  change(value: {}): void {
-    console.log('change', value);
+  static(): void {
+    this.modalHelper.static(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
+      this.msg.info(res);
+    });
   }
 }

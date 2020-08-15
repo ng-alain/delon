@@ -68,9 +68,7 @@ DEPENDENCIES=$(node -p "
     '@angularclass/hmr',
     'ng-alain-codelyzer',
     'ng-alain-sts',
-    'antd-theme-generator',
-    'less-plugin-clean-css',
-    'less-plugin-npm-import'
+    'ng-alain-plugin-theme'
   ].map(key => key.replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
@@ -120,11 +118,10 @@ copyFiles() {
     "${1}.nvmrc|${2}application/files/root"
     "${1}tslint.json|${2}application/files/root"
     "${1}proxy.conf.json|${2}application/files/root"
-    # cli
-    # "${1}_cli-tpl|${2}application/files/root/"
+    # ng-alain.json
+    "${1}ng-alain.json|${2}application/files/root/"
     # ci
     "${1}.vscode|${2}application/files/root/__dot__vscode"
-    "${1}scripts/color-less.js|${2}application/files/root/scripts/"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"

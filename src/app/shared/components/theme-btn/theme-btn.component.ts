@@ -53,7 +53,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
       el.type = 'text/css';
       el.rel = 'stylesheet';
       el.id = 'site-theme';
-      el.href = `assets/${theme}.css`;
+      el.href = `assets/style.${theme}.css`;
 
       localStorage.setItem('site-theme', theme);
       document.body.append(el);

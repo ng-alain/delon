@@ -1,0 +1,13 @@
+{
+  "$schema": "./packages/schematics/schema.json",
+  "theme": {
+    "list": [
+      {
+        "theme": "dark"
+      },
+      {
+        "theme": "compact"
+      }
+    ]
+  }
+}
