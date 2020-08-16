@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
@@ -52,6 +52,12 @@ import { ReuseTabService } from './reuse-tab.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_debug: BooleanInput;
+  static ngAcceptInputType_max: NumberInput;
+  static ngAcceptInputType_tabMaxWidth: NumberInput;
+  static ngAcceptInputType_allowClose: BooleanInput;
+  static ngAcceptInputType_keepingScroll: BooleanInput;
+
   @ViewChild('tabset') private tabset: NzTabSetComponent;
   private unsubscribe$ = new Subject<void>();
   private updatePos$ = new Subject<void>();

@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2InteractionType } from '@delon/chart/core';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
@@ -46,6 +46,16 @@ export interface G2PieClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_animate: BooleanInput;
+  static ngAcceptInputType_hasLegend: BooleanInput;
+  static ngAcceptInputType_percent: NumberInput;
+  static ngAcceptInputType_tooltip: BooleanInput;
+  static ngAcceptInputType_lineWidth: NumberInput;
+  static ngAcceptInputType_blockMaxWidth: NumberInput;
+  static ngAcceptInputType_select: BooleanInput;
+
   @ViewChild('container', { static: true }) private node: ElementRef;
   private _chart: Chart;
   private percentColor: (value: string) => string;

@@ -16,7 +16,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Nav } from './sidebar-nav.types';
@@ -37,6 +37,12 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   encapsulation: ViewEncapsulation.None,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
+  static ngAcceptInputType_disabledAcl: BooleanInput;
+  static ngAcceptInputType_autoCloseUnderPad: BooleanInput;
+  static ngAcceptInputType_recursivePath: BooleanInput;
+  static ngAcceptInputType_openStrictly: BooleanInput;
+  static ngAcceptInputType_maxLevelIcon: NumberInput;
+
   private bodyEl: HTMLBodyElement;
   private unsubscribe$ = new Subject<void>();
   private floatingEl: HTMLDivElement;

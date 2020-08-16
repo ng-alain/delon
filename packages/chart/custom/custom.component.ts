@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Types } from '@antv/g2';
-import { AlainConfigService, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -27,6 +27,10 @@ import { debounceTime } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2CustomComponent implements AfterViewInit, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_resizeTime: NumberInput;
+
   private resize$: Subscription | null = null;
 
   // #region fields

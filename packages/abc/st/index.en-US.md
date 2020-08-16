@@ -43,45 +43,45 @@ If the component has been rendered, this error may appear when `columns` is chan
 
 ### st
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[columns]` | Columns description | `STColumn[]` | - |
-| `[data]` | Data source | `string, STData[], Observable<STData[]>` | - |
-| `[req]` | Http request configuration | `STReq` | - |
-| `[res]` | Http response configuration | `STRes` | - |
-| `[pi]` | Page index | `number` | `1` |
-| `[ps]` | Page size, `0` is no page, default is `10` | `number` | `10` |
-| `[total]` | Total data count, should set when nzServerRender is true, default is `0` | `number` | `0` |
-| `[page]` | Pager configuration | `STPage` | - |
-| `[noResult]` | Custom no result content | `string,TemplateRef<void>` | - |
-| `[bordered]` | Whether to show all table borders | `boolean` | `false` |
-| `[size]` | Size of table | `'small','middle','default'` | `'default'` |
-| `[widthMode]` | Set the table width mode | `STWidthMode` | - |
-| `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | - |
-| `[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null` |
-| `[loadingIndicator]` | The spinning indicator | `TemplateRef<void>` | - |
-| `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0` |
-| `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | - |
-| `[virtualScroll]` | Enable virtual scroll mode，work with `[nzScroll]` | `boolean` | `false` |
-| `[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `54` |
-| `[virtualMaxBufferPx]` | The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `200` |
-| `[virtualMinBufferPx]` | The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `100` |
-| `[virtualForTrackBy]` | The TrackByFunction to use for tracking changes. | `TrackByFunction<T>` | - |
-| `[singleSort]` | Single sort config<br>If not specified, return: `columnName=ascend|descend`<br>If specified, return: `sort=columnName.(ascend|descend)` | `STSingleSort` | `null` |
-| `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false` |
-| `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200` |
-| `[header]` | Table header renderer | `string,TemplateRef<void>` | - |
-| `[footer]` | Table footer renderer | `string,TemplateRef<void>` | - |
-| `[bodyHeader]` | Table extra body renderer in header, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - |
-| `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - |
-| `[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | - |
-| `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false` |
-| `[expandAccordion]` | Accordion mode | `boolean` | `false` |
-| `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - |
-| `[responsive]` | Whether to turn on responsive | `boolean` | `true` |
-| `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` |
-| `(change)` | Events | `EventEmitter<STChange>` | - |
-| `(error)` | Error event | `EventEmitter<STError>` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[columns]` | Columns description | `STColumn[]` | - | - |
+| `[data]` | Data source | `string, STData[], Observable<STData[]>` | - | - |
+| `[req]` | Http request configuration | `STReq` | - | ✅ |
+| `[res]` | Http response configuration | `STRes` | - | ✅ |
+| `[pi]` | Page index | `number` | `1` | ✅ |
+| `[ps]` | Page size, `0` is no page, default is `10` | `number` | `10` | ✅ |
+| `[total]` | Total data count, should set when nzServerRender is true, default is `0` | `number` | `0` | - |
+| `[page]` | Pager configuration | `STPage` | - | ✅ |
+| `[noResult]` | Custom no result content | `string,TemplateRef<void>` | - | ✅ |
+| `[bordered]` | Whether to show all table borders | `boolean` | `false` | ✅ |
+| `[size]` | Size of table | `'small','middle','default'` | `'default'` | ✅ |
+| `[widthMode]` | Set the table width mode | `STWidthMode` | - | ✅ |
+| `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | - | ✅ |
+| `[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null` | - |
+| `[loadingIndicator]` | The spinning indicator | `TemplateRef<void>` | - | ✅ |
+| `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0` | ✅ |
+| `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | - | - |
+| `[virtualScroll]` | Enable virtual scroll mode，work with `[nzScroll]` | `boolean` | `false` | ✅ |
+| `[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `54` | ✅ |
+| `[virtualMaxBufferPx]` | The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `200` | ✅ |
+| `[virtualMinBufferPx]` | The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `100` | ✅ |
+| `[virtualForTrackBy]` | The TrackByFunction to use for tracking changes. | `TrackByFunction<T>` | - | ✅ |
+| `[singleSort]` | Single sort config<br>If not specified, return: `columnName=ascend|descend`<br>If specified, return: `sort=columnName.(ascend|descend)` | `STSingleSort` | `null` | ✅ |
+| `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false` | ✅ |
+| `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200` | ✅ |
+| `[header]` | Table header renderer | `string,TemplateRef<void>` | - | - |
+| `[footer]` | Table footer renderer | `string,TemplateRef<void>` | - | - |
+| `[bodyHeader]` | Table extra body renderer in header, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
+| `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
+| `[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | - | - |
+| `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false` | ✅ |
+| `[expandAccordion]` | Accordion mode | `boolean` | `false` | ✅ |
+| `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - | - |
+| `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
+| `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
+| `(change)` | Events | `EventEmitter<STChange>` | - | - |
+| `(error)` | Error event | `EventEmitter<STError>` | - | - |
 
 ### Properties & Methods
 
@@ -126,40 +126,40 @@ class TestComponent {
 
 ### STReq
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[type]` | Pagination type, `page` used `pi`, `ps`; `skip` used `skip`, `limit` | `page,skip` | `page` |
-| `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | - |
-| `[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` |
-| `[body]` | Request body (only method is POST) | `any` | - |
-| `[headers]` | Request header | `any` | - |
-| `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` |
-| `[allInBody]` | Whether to request all parameter data into `body` (except `url` itself parameter) | `boolean` | `false` |
-| `[lazyLoad]` | Whether to dealy loading data in first render `st` component | `boolean` | `false` |
-| `[process]` | Pre-request data processing | `(requestOptions: STRequestOptions) => STRequestOptions` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[type]` | Pagination type, `page` used `pi`, `ps`; `skip` used `skip`, `limit` | `page,skip` | `page` | ✅ |
+| `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | - | - |
+| `[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` | ✅ |
+| `[body]` | Request body (only method is POST) | `any` | - | - |
+| `[headers]` | Request header | `any` | - | ✅ |
+| `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
+| `[allInBody]` | Whether to request all parameter data into `body` (except `url` itself parameter) | `boolean` | `false` | ✅ |
+| `[lazyLoad]` | Whether to dealy loading data in first render `st` component | `boolean` | `false` | ✅ |
+| `[process]` | Pre-request data processing | `(requestOptions: STRequestOptions) => STRequestOptions` | - | ✅ |
 
 ### STRes
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[reName]` | Map name `total`、`list`, could be set like `a.b.c` | `{total:string;list:string}` | - |
-| `[process]` | Data preprocessing | `(data: STData[], rawData?: any) => STData[]` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[reName]` | Map name `total`、`list`, could be set like `a.b.c` | `{total:string;list:string}` | - | ✅ |
+| `[process]` | Data preprocessing | `(data: STData[], rawData?: any) => STData[]` | - | ✅ |
 
 ### STPage
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[front]` | Front paging when `data` is `any[]` or `Observable<any[]>` | `boolean` | `true` |
-| `[zeroIndexed]` | Whether the backend paging uses the `0` base index (only data is url) | `boolean` | `false` |
-| `[position]` | Specify the position of Pagination | `top,bottom,both` | `bottom` |
-| `[placement]` | Specify the direction of Pagination | `left,center,right` | `right` |
-| `[show]` | Whether to show pager | `boolean` | `true` |
-| `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false` |
-| `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]` |
-| `[showQuickJumper]` | Determine whether you can jump to pages directly | `boolean` | `false` |
-| `[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double curly braces wrapper) | `boolean, string` | `false` |
-| `[toTop]` | To top when pager changed | `boolean` | `true` |
-| `[toTopOffset]` | To top offset value | `number` | `100` |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[front]` | Front paging when `data` is `any[]` or `Observable<any[]>` | `boolean` | `true` | ✅ |
+| `[zeroIndexed]` | Whether the backend paging uses the `0` base index (only data is url) | `boolean` | `false` | ✅ |
+| `[position]` | Specify the position of Pagination | `top,bottom,both` | `bottom` | ✅ |
+| `[placement]` | Specify the direction of Pagination | `left,center,right` | `right` | ✅ |
+| `[show]` | Whether to show pager | `boolean` | `true` | ✅ |
+| `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false` | ✅ |
+| `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]` | ✅ |
+| `[showQuickJumper]` | Determine whether you can jump to pages directly | `boolean` | `false` | ✅ |
+| `[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double curly braces wrapper) | `boolean, string` | `false` | ✅ |
+| `[toTop]` | To top when pager changed | `boolean` | `true` | ✅ |
+| `[toTopOffset]` | To top offset value | `number` | `100` | ✅ |
 
 ### STError
 
@@ -211,21 +211,21 @@ class TestComponent {
 
 ### STSingleSort
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[key]` | Request parameter name | `string` | `sort` |
-| `[nameSeparator]` | Column name and state separator | `string` | `.` |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[key]` | Request parameter name | `string` | `sort` | ✅ |
+| `[nameSeparator]` | Column name and state separator | `string` | `.` | ✅ |
 
 ### STMultiSort
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[key]` | Request parameter name | `string` | `sort` |
-| `[separator]` | Separator between attributes | `string` | `-` |
-| `[nameSeparator]` | Column name and state separator | `string` | `.` |
-| `[arrayParam]` | Whether to pass parameters as an array<br>`true` Indicates the use of `url?sort=name.asc&sort=age.desc`<br>`false` Indicates the use of `url?sort=name.asc-age.desc` | `boolean` | `false` |
-| `[keepEmptyKey]` | Whether to keep send empty key<br>`true` send the `key` name anyway<br>`false` don't send `key` when not sorting | `boolean` | `true` |
-| `[global]` | **Only global config**, Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true` |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[key]` | Request parameter name | `string` | `sort` | ✅ |
+| `[separator]` | Separator between attributes | `string` | `-` | ✅ |
+| `[nameSeparator]` | Column name and state separator | `string` | `.` | ✅ |
+| `[arrayParam]` | Whether to pass parameters as an array<br>`true` Indicates the use of `url?sort=name.asc&sort=age.desc`<br>`false` Indicates the use of `url?sort=name.asc-age.desc` | `boolean` | `false` | ✅ |
+| `[keepEmptyKey]` | Whether to keep send empty key<br>`true` send the `key` name anyway<br>`false` don't send `key` when not sorting | `boolean` | `true` | ✅ |
+| `[global]` | **Only global config**, Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true` | ✅ |
 
 ### STData
 
@@ -257,7 +257,7 @@ class TestComponent {
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
-| `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` |  |
+| `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` | - |
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
@@ -315,13 +315,13 @@ class TestComponent {
 
 ### STIcon
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[type]` | Type of the ant design icon | `string` | - |
-| `[theme]` | Type of the ant design icon | `outline | twotone | fill` | `outline` |
-| `[spin]` | Rotate icon with animation | `boolean` | `false` |
-| `[twoToneColor]` | Only support the two-tone icon. Specific the primary color. | `string` | - |
-| `[iconfont]` | Type of the icon from iconfont | `string` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[type]` | Type of the ant design icon | `string` | - | - |
+| `[theme]` | Type of the ant design icon | `outline | twotone | fill` | `outline` | ✅ |
+| `[spin]` | Rotate icon with animation | `boolean` | `false` | ✅ |
+| `[twoToneColor]` | Only support the two-tone icon. Specific the primary color. | `string` | - | v |
+| `[iconfont]` | Type of the icon from iconfont | `string` | - | ✅ |
 
 ### STColumnButton
 
@@ -346,26 +346,28 @@ class TestComponent {
 
 ### STColumnButtonModal
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[component]` | Modal component class | `any` | - |
-| `[params]` | Dialog parameter | `(record: STData) => Object` | - |
-| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | record |
-| `[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'` |
-| `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
-| `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | - |
-| `[modalOptions]` | nz-modal raw parameters [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) | `any` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[component]` | Modal component class | `any` | - | - |
+| `[params]` | Dialog parameter | `(record: STData) => Object` | - | - |
+| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | `record` | ✅ |
+| `[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'` | ✅ |
+| `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` | ✅ |
+| `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | - | - |
+| `[modalOptions]` | nz-modal raw parameters [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) | `any` | - | ✅ |
 
 ### STColumnButtonDrawer
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[title]` | Title of drawer | `string` | - |
-| `[component]` | Drawer component class | `any` | - |
-| `[params]` | Dialog parameter | `(record: STData) => Object` | - |
-| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | record |
-| `[size]` | Size of drawer, support number type | `'sm','md','lg','xl'` | `'md'` |
-| `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[title]` | Title of drawer | `string` | - | - |
+| `[component]` | Drawer component class | `any` | - | - |
+| `[params]` | Dialog parameter | `(record: STData) => Object` | - | - |
+| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | `record` | ✅ |
+| `[size]` | Size of drawer, support number type | `'sm','md','lg','xl'` | `'md'` | ✅ |
+| `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | - | ✅ |
+| `[footer]` | Whether to include the bottom toolbar | `boolean` | `true` | ✅ |
+| `[footerHeight]` | Height of bottom toolbar | `number` | `55` | ✅ |
 
 ### STColumnSelection
 
@@ -407,10 +409,10 @@ class TestComponent {
 
 ### STWidthMode
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[type]` | Type of width mode | `strict,default` | `default` |
-| `[strictBehavior]` | Behavior type of `strict` | `wrap,truncate` | `truncate` |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[type]` | Type of width mode | `strict,default` | `default` | ✅ |
+| `[strictBehavior]` | Behavior type of `strict` | `wrap,truncate` | `truncate` | ✅ |
 
 ### STStatistical
 

@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -25,6 +25,11 @@ import { take } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
+  static ngAcceptInputType_tooltip: BooleanInput;
+  static ngAcceptInputType_length: NumberInput;
+  static ngAcceptInputType_lines: NumberInput;
+  static ngAcceptInputType_fullWidthRecognition: BooleanInput;
+
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
   @ViewChild('orgEl', { static: false }) private orgEl: ElementRef;

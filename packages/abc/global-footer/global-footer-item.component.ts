@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'global-footer-item',
@@ -10,6 +10,8 @@ import { InputBoolean } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterItemComponent {
+  static ngAcceptInputType_blankTarget: BooleanInput;
+
   @ViewChild('host', { static: true }) host: ElementRef;
 
   @Input() href: string;

@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2InteractionType } from '@delon/chart/core';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -47,6 +47,10 @@ export interface G2BarClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_autoLabel: BooleanInput;
+
   private resize$: Subscription;
   private _chart: Chart;
   @ViewChild('container', { static: true }) private node: ElementRef;

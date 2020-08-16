@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -28,6 +28,11 @@ import { debounceTime } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
+  static ngAcceptInputType_animate: BooleanInput;
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_percent: NumberInput;
+
   private resize$: Subscription | null = null;
   @ViewChild('container', { static: true }) private node: ElementRef;
   private timer: number;

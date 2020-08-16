@@ -16,6 +16,8 @@ export type ExceptionType = 403 | 404 | 500;
   encapsulation: ViewEncapsulation.None,
 })
 export class ExceptionComponent implements OnInit, OnDestroy {
+  static ngAcceptInputType_type: ExceptionType | string;
+
   private i18n$: Subscription;
   @ViewChild('conTpl', { static: true }) private conTpl: ElementRef;
 

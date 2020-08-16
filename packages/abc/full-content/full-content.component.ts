@@ -15,7 +15,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
@@ -37,6 +37,10 @@ const hideTitleCls = `full-content__hidden-title`;
   encapsulation: ViewEncapsulation.None,
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_fullscreen: BooleanInput;
+  static ngAcceptInputType_hideTitle: BooleanInput;
+  static ngAcceptInputType_padding: NumberInput;
+
   private bodyEl: HTMLElement;
   private inited = false;
   private srv$: Subscription;

@@ -43,45 +43,45 @@ module: import { STModule } from '@delon/abc/st';
 
 ### st
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[columns]` | 列描述 | `STColumn[]` | - |
-| `[data]` | 数据源 | `string, STData[], Observable<STData[]>` | - |
-| `[req]` | 请求体配置 | `STReq` | - |
-| `[res]` | 返回体配置 | `STRes` | - |
-| `[pi]` | 当前页码 | `number` | `1` |
-| `[ps]` | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10` |
-| `[total]` | 当前总数据，在服务器渲染时需要传入，默认：`0` | `number` | `0` |
-| `[page]` | 分页器配置 | `STPage` | - |
-| `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | - |
-| `[bordered]` | 是否显示边框 | `boolean` | `false` |
-| `[size]` | table大小 | `'small','middle','default'` | `'default'` |
-| `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | - |
-| `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | - |
-| `[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null` |
-| `[loadingIndicator]` | 加载指示符 | `TemplateRef<void>` | - |
-| `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0` |
-| `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | - |
-| `[virtualScroll]` | 是否启用虚拟滚动模式，与 `[nzScroll]` 配合使用 | `boolean` | `false` |
-| `[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `54` |
-| `[virtualMaxBufferPx]` | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `200` |
-| `[virtualMinBufferPx]` | 缓冲区最小像素高度，低于该值时将加载新结构，与 [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `100` |
-| `[virtualForTrackBy]` | 虚拟滚动数据 `TrackByFunction` 函数 | `TrackByFunction<T>` | - |
-| `[singleSort]` | 单排序规则<br>若不指定，则返回：`columnName=ascend|descend`<br>若指定，则返回：`sort=columnName.(ascend|descend)` | `STSingleSort` | `null` |
-| `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false` |
-| `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200` |
-| `[header]` | 表格标题 | `string,TemplateRef<void>` | - |
-| `[footer]` | 表格底部 | `string,TemplateRef<void>` | - |
-| `[bodyHeader]` | 表格顶部额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - |
-| `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - |
-| `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | - |
-| `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false` |
-| `[expandAccordion]` | 手风琴模式 | `boolean` | `false` |
-| `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | - |
-| `[responsive]` | 是否开启响应式 | `boolean` | `true` |
-| `[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false` |
-| `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | - |
-| `(error)` | 异常时回调 | `EventEmitter<STError>` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[columns]` | 列描述 | `STColumn[]` | - | - |
+| `[data]` | 数据源 | `string, STData[], Observable<STData[]>` | - | - |
+| `[req]` | 请求体配置 | `STReq` | - | ✅ |
+| `[res]` | 返回体配置 | `STRes` | - | ✅ |
+| `[pi]` | 当前页码 | `number` | `1` | ✅ |
+| `[ps]` | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10` | ✅ |
+| `[total]` | 当前总数据，在服务器渲染时需要传入，默认：`0` | `number` | `0` | - |
+| `[page]` | 分页器配置 | `STPage` | - | ✅ |
+| `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | - | ✅ |
+| `[bordered]` | 是否显示边框 | `boolean` | `false` | ✅ |
+| `[size]` | table大小 | `'small','middle','default'` | `'default'` | ✅ |
+| `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | - | ✅ |
+| `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | - | ✅ |
+| `[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null` | - |
+| `[loadingIndicator]` | 加载指示符 | `TemplateRef<void>` | - | ✅ |
+| `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0` | ✅ |
+| `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | - | - |
+| `[virtualScroll]` | 是否启用虚拟滚动模式，与 `[nzScroll]` 配合使用 | `boolean` | `false` | ✅ |
+| `[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `54` | ✅ |
+| `[virtualMaxBufferPx]` | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `200` | ✅ |
+| `[virtualMinBufferPx]` | 缓冲区最小像素高度，低于该值时将加载新结构，与 [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `100` | ✅ |
+| `[virtualForTrackBy]` | 虚拟滚动数据 `TrackByFunction` 函数 | `TrackByFunction<T>` | - | ✅ |
+| `[singleSort]` | 单排序规则<br>若不指定，则返回：`columnName=ascend|descend`<br>若指定，则返回：`sort=columnName.(ascend|descend)` | `STSingleSort` | `null` | ✅ |
+| `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false` | ✅ |
+| `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200` | ✅ |
+| `[header]` | 表格标题 | `string,TemplateRef<void>` | - | - |
+| `[footer]` | 表格底部 | `string,TemplateRef<void>` | - | - |
+| `[bodyHeader]` | 表格顶部额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
+| `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
+| `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | - | - |
+| `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false` | ✅ |
+| `[expandAccordion]` | 手风琴模式 | `boolean` | `false` | ✅ |
+| `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | - | - |
+| `[responsive]` | 是否开启响应式 | `boolean` | `true` | ✅ |
+| `[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false` | ✅ |
+| `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | - | - |
+| `(error)` | 异常时回调 | `EventEmitter<STError>` | - | - |
 
 ### 组件属性与方法
 
@@ -126,40 +126,40 @@ class TestComponent {
 
 ### STReq
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[type]` | 分页类型，`page` 使用 `pi`，`ps` 组合；`skip` 使用 `skip`，`limit` 组合 | `page,skip` | `page` |
-| `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | - |
-| `[method]` | 请求方法 | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` |
-| `[body]` | 请求体 `body`，当 `method: POST` 时有效 | `any` | - |
-| `[headers]` | 请求体 `headers` | `any` | - |
-| `[reName]` | 重命名请求参数 `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` |
-| `[allInBody]` | 是否将请求所有参数数据都放入 `body` 当中（`url` 地址本身参数除外），仅当 `method: 'POST'` 时有效 | `boolean` | `false` |
-| `[lazyLoad]` | 是否延迟加载数据，即渲染结束后不会主动发起请求 | `boolean` | `false` |
-| `[process]` | 请求前数据处理 | `(requestOptions: STRequestOptions) => STRequestOptions` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[type]` | 分页类型，`page` 使用 `pi`，`ps` 组合；`skip` 使用 `skip`，`limit` 组合 | `page,skip` | `page` | ✅ |
+| `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | - | - |
+| `[method]` | 请求方法 | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` | ✅ |
+| `[body]` | 请求体 `body`，当 `method: POST` 时有效 | `any` | - | - |
+| `[headers]` | 请求体 `headers` | `any` | - | ✅ |
+| `[reName]` | 重命名请求参数 `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
+| `[allInBody]` | 是否将请求所有参数数据都放入 `body` 当中（`url` 地址本身参数除外），仅当 `method: 'POST'` 时有效 | `boolean` | `false` | ✅ |
+| `[lazyLoad]` | 是否延迟加载数据，即渲染结束后不会主动发起请求 | `boolean` | `false` | ✅ |
+| `[process]` | 请求前数据处理 | `(requestOptions: STRequestOptions) => STRequestOptions` | - | ✅ |
 
 ### STRes
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[reName]` | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | - |
-| `[process]` | 数据预处理 | `(data: STData[], rawData?: any) => STData[]` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[reName]` | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | - | ✅ |
+| `[process]` | 数据预处理 | `(data: STData[], rawData?: any) => STData[]` | - | ✅ |
 
 ### STPage
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true` |
-| `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false` |
-| `[position]` | 指定分页显示的位置 | `top,bottom,both` | `bottom` |
-| `[placement]` | 指定分页分页方向 | `left,center,right` | `right` |
-| `[show]` | 是否显示分页器 | `boolean` | `true` |
-| `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false` |
-| `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]` |
-| `[showQuickJumper]` | 是否显示分页器中快速跳转 | `boolean` | `false` |
-| `[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双花括号包裹） | `boolean, string` | `false` |
-| `[toTop]` | 切换分页时返回顶部 | `boolean` | `true` |
-| `[toTopOffset]` | 返回顶部偏移值 | `number` | `100` |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true` | ✅ |
+| `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false` | ✅ |
+| `[position]` | 指定分页显示的位置 | `top,bottom,both` | `bottom` | ✅ |
+| `[placement]` | 指定分页分页方向 | `left,center,right` | `right` | ✅ |
+| `[show]` | 是否显示分页器 | `boolean` | `true` | ✅ |
+| `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false` | ✅ |
+| `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]` | ✅ |
+| `[showQuickJumper]` | 是否显示分页器中快速跳转 | `boolean` | `false` | ✅ |
+| `[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双花括号包裹） | `boolean, string` | `false` | ✅ |
+| `[toTop]` | 切换分页时返回顶部 | `boolean` | `true` | ✅ |
+| `[toTopOffset]` | 返回顶部偏移值 | `number` | `100` | ✅ |
 
 ### STError
 
@@ -209,16 +209,23 @@ class TestComponent {
 | `[filename]` | 保存的文件名 | `string` | `export.xslx` |
 | `[callback]` | 保存前的回调 | `(wb: WorkBook) => void` | - |
 
+### STSingleSort
+
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[key]` | 请求参数名 | `string` | `sort` | ✅ |
+| `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.` | ✅ |
+
 ### STMultiSort
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[key]` | 请求参数名 | `string` | `sort` |
-| `[separator]` | 不同属性间分隔符 | `string` | `-` |
-| `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.` |
-| `[arrayParam]` | 是否以数组的形式传递参数<br>`true` 表示使用 `url?sort=name.asc&sort=age.desc` 形式<br>`false` 表示使用 `url?sort=name.asc-age.desc` 形式 | `boolean` | `false` |
-| `[keepEmptyKey]` | 是否保持空值的键名<br>`true` 表示不管是否有排序都会发送 `key` 键名<br>`false` 表示无排序动作时不会发送 `key` 键名 | `boolean` | `true` |
-| `[global]` | **仅限全局配置项有效**，是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true` |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[key]` | 请求参数名 | `string` | `sort` | ✅ |
+| `[separator]` | 不同属性间分隔符 | `string` | `-` | ✅ |
+| `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.` | ✅ |
+| `[arrayParam]` | 是否以数组的形式传递参数<br>`true` 表示使用 `url?sort=name.asc&sort=age.desc` 形式<br>`false` 表示使用 `url?sort=name.asc-age.desc` 形式 | `boolean` | `false` | ✅ |
+| `[keepEmptyKey]` | 是否保持空值的键名<br>`true` 表示不管是否有排序都会发送 `key` 键名<br>`false` 表示无排序动作时不会发送 `key` 键名 | `boolean` | `true` | ✅ |
+| `[global]` | **仅限全局配置项有效**，是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true` | ✅ |
 
 ### STData
 
@@ -329,36 +336,38 @@ class TestComponent {
 
 ### STIcon
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[type]` | 图标类型 | `string` | - |
-| `[theme]` | 图标主题风格 | `outline | twotone | fill` | `outline` |
-| `[spin]` | 是否有旋转动画 | `boolean` | `false` |
-| `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | - |
-| `[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[type]` | 图标类型 | `string` | - | - |
+| `[theme]` | 图标主题风格 | `outline | twotone | fill` | `outline` | ✅ |
+| `[spin]` | 是否有旋转动画 | `boolean` | `false` | ✅ |
+| `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | - | ✅ |
+| `[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | - | ✅ |
 
 ### STColumnButtonModal
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[component]` | 目标组件对象 | `any` | - |
-| `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | - |
-| `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) 全局设置 | `string` | record |
-| `[size]` | 对话框大小，支持数字类型 | `'sm','md','lg','xl'` | `'lg'` |
-| `[exact]` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true` |
-| `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | - |
-| `[modalOptions]` | 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 | `any` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[component]` | 目标组件对象 | `any` | - | - |
+| `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | - | - |
+| `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) 全局设置 | `string` | `record` | ✅ |
+| `[size]` | 对话框大小，支持数字类型 | `'sm','md','lg','xl'` | `'lg'` | ✅ |
+| `[exact]` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true` | ✅ |
+| `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | - | - |
+| `[modalOptions]` | 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 | `any` | - | ✅ |
 
 ### STColumnButtonDrawer
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[title]` | 标题 | `any` | - |
-| `[component]` | 目标组件对象 | `any` | - |
-| `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | - |
-| `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) 全局设置 | `string` | record |
-| `[size]` | 抽屉大小，支持数字类型 | `'sm','md','lg','xl'` | `'md'` |
-| `[drawerOptions]` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `any` | - |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[title]` | 标题 | `any` | - | - |
+| `[component]` | 目标组件对象 | `any` | - | - |
+| `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | - | - |
+| `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) 全局设置 | `string` | `record` | ✅ |
+| `[size]` | 抽屉大小，支持数字类型 | `'sm','md','lg','xl'` | `'md'` | ✅ |
+| `[drawerOptions]` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `any` | - | ✅ |
+| `[footer]` | 是否包含底部工具条 | `boolean` | `true` | ✅ |
+| `[footerHeight]` | 底部工具条高度 | `number` | `55` | ✅ |
 
 ### STColumnSelection
 
@@ -401,10 +410,10 @@ class TestComponent {
 
 ### STWidthMode
 
-| 成员 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[type]` | 类型 | `strict,default` | `default` |
-| `[strictBehavior]` | `strict` 的行为类型 | `wrap,truncate` | `truncate` |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[type]` | 类型 | `strict,default` | `default` | ✅ |
+| `[strictBehavior]` | `strict` 的行为类型 | `wrap,truncate` | `truncate` | ✅ |
 
 ### STStatistical
 

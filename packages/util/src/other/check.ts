@@ -80,3 +80,6 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
 export function InputNumber(defaultValue: number | null = 0): NzSafeAny {
   return propDecoratorFactory('InputNumber', toNumber, defaultValue);
 }
+
+export type BooleanInput = boolean | string | undefined | null;
+export type NumberInput = number | string | undefined | null;

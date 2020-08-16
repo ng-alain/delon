@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 @Component({
   selector: 'g2-single-bar',
@@ -25,6 +25,14 @@ import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_barSize: NumberInput;
+  static ngAcceptInputType_min: NumberInput;
+  static ngAcceptInputType_max: NumberInput;
+  static ngAcceptInputType_value: NumberInput;
+  static ngAcceptInputType_line: BooleanInput;
+
   private _chart: Chart;
 
   get chart(): Chart {

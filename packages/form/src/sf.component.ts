@@ -19,7 +19,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
-import { AlainConfigService, AlainSFConfig, deepCopy, InputBoolean } from '@delon/util';
+import { AlainConfigService, AlainSFConfig, BooleanInput, deepCopy, InputBoolean } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -69,6 +69,15 @@ export type SFMode = 'default' | 'search' | 'edit';
   encapsulation: ViewEncapsulation.None,
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_liveValidate: BooleanInput;
+  static ngAcceptInputType_firstVisual: BooleanInput;
+  static ngAcceptInputType_onlyVisual: BooleanInput;
+  static ngAcceptInputType_compact: BooleanInput;
+  static ngAcceptInputType_loading: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
+  static ngAcceptInputType_cleanValue: BooleanInput;
+
   private unsubscribe$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item: {};
