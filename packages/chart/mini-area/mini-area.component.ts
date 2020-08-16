@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber, NumberInput, BooleanInput } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 export interface G2MiniAreaData {
   x: any;
