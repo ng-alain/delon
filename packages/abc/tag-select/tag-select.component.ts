@@ -10,7 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,6 +27,8 @@ import { Subscription } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
+  static ngAcceptInputType_expandable: BooleanInput;
+
   private i18n$: Subscription;
   locale: LocaleData = {};
   expand = false;

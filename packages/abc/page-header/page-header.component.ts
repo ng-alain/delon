@@ -19,7 +19,7 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
-import { AlainConfigService, InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -38,6 +38,15 @@ interface PageHeaderPath {
   encapsulation: ViewEncapsulation.None,
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  static ngAcceptInputType_loading: BooleanInput;
+  static ngAcceptInputType_wide: BooleanInput;
+  static ngAcceptInputType_autoBreadcrumb: BooleanInput;
+  static ngAcceptInputType_autoTitle: BooleanInput;
+  static ngAcceptInputType_syncTitle: BooleanInput;
+  static ngAcceptInputType_fixed: BooleanInput;
+  static ngAcceptInputType_fixedOffsetTop: NumberInput;
+  static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
+
   inited = false;
   private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;

@@ -14,7 +14,7 @@ import {
   SimpleChange,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subscription } from 'rxjs';
 import { MediaService } from './media.service';
@@ -34,6 +34,8 @@ declare const Plyr: NzSafeAny;
   encapsulation: ViewEncapsulation.None,
 })
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+
   private _p: NzSafeAny;
   private videoEl: HTMLElement;
   private time: NzSafeAny;

@@ -11,7 +11,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util';
 
 const CLSBODY = 'footer-toolbar__body';
 
@@ -24,6 +24,8 @@ const CLSBODY = 'footer-toolbar__body';
   encapsulation: ViewEncapsulation.None,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
+  static ngAcceptInputType_errorCollect: BooleanInput;
+
   @Input() @InputBoolean() errorCollect = false;
   @Input() extra: string | TemplateRef<void>;
 

@@ -32,7 +32,16 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import { AlainConfigService, AlainSTConfig, deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
+import {
+  AlainConfigService,
+  AlainSTConfig,
+  BooleanInput,
+  deepMergeKey,
+  InputBoolean,
+  InputNumber,
+  NumberInput,
+  toBoolean,
+} from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';
@@ -83,6 +92,21 @@ import { _STColumn } from './st.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_ps: NumberInput;
+  static ngAcceptInputType_pi: NumberInput;
+  static ngAcceptInputType_total: NumberInput;
+  static ngAcceptInputType_loadingDelay: NumberInput;
+  static ngAcceptInputType_bordered: BooleanInput;
+  static ngAcceptInputType_expandRowByClick: BooleanInput;
+  static ngAcceptInputType_expandAccordion: BooleanInput;
+  static ngAcceptInputType_rowClickTime: NumberInput;
+  static ngAcceptInputType_responsive: BooleanInput;
+  static ngAcceptInputType_responsiveHideHeaderFooter: BooleanInput;
+  static ngAcceptInputType_virtualScroll: BooleanInput;
+  static ngAcceptInputType_virtualItemSize: NumberInput;
+  static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
+  static ngAcceptInputType_virtualMinBufferPx: NumberInput;
+
   private unsubscribe$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;

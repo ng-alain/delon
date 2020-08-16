@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular/forms';
 import { ResponsiveService } from '@delon/theme';
-import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
@@ -45,6 +45,11 @@ let nextUniqueId = 0;
   encapsulation: ViewEncapsulation.None,
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_required: BooleanInput;
+  static ngAcceptInputType_line: BooleanInput;
+  static ngAcceptInputType_labelWidth: NumberInput;
+
   private el: HTMLElement;
   private unsubscribe$ = new Subject<void>();
   @ContentChild(NgModel, { static: true }) private readonly ngModel: NgModel;

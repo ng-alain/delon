@@ -11,7 +11,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, AlainQRConfig, InputNumber, LazyService } from '@delon/util';
+import { AlainConfigService, AlainQRConfig, InputNumber, LazyService, NumberInput } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { QR_DEFULAT_CONFIG } from './qr.config';
@@ -31,6 +31,10 @@ import { QROptions } from './qr.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
+  static ngAcceptInputType_padding: NumberInput;
+  static ngAcceptInputType_size: NumberInput;
+  static ngAcceptInputType_delay: NumberInput;
+
   private lazy$: Subscription;
   private qr: any;
   private cog: AlainQRConfig;

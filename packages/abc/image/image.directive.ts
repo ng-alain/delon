@@ -1,13 +1,16 @@
 import { Platform } from '@angular/cdk/platform';
 import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 @Directive({
   selector: '[_src]',
   exportAs: '_src',
 })
 export class ImageDirective implements OnChanges, OnInit {
+  static ngAcceptInputType_size: NumberInput;
+  static ngAcceptInputType_useHttp: BooleanInput;
+
   @Input('_src') src: string;
   @Input() @InputNumber() size: number;
   @Input() error: string;

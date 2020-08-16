@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 export interface G2MiniAreaData {
   x: any;
@@ -38,6 +38,13 @@ export interface G2MiniAreaClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_borderWidth: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_fit: BooleanInput;
+  static ngAcceptInputType_line: BooleanInput;
+  static ngAcceptInputType_animate: BooleanInput;
+
   private _chart: Chart;
 
   get chart(): Chart {

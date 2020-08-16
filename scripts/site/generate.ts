@@ -213,4 +213,4 @@ if (exampleModules.list.length > 0) {
   generateExampleModule(rootDir, siteConfig, exampleModules);
 }
 
-console.log('site generate finished!');
+console.log(`✅ Site generated successfully`);

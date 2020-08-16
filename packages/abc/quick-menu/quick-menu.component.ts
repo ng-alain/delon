@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util';
 
 @Component({
   selector: 'quick-menu',
@@ -26,12 +26,11 @@ import { InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
-  // #endregion
+  static ngAcceptInputType_top: NumberInput;
+  static ngAcceptInputType_width: NumberInput;
 
   constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
   ctrlStyle: { [key: string]: string } = {};
-
-  // #region fields
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;

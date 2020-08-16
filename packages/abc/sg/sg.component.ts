@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util';
 import { SGContainerComponent } from './sg-container.component';
 
 const prefixCls = `sg`;
@@ -29,6 +29,8 @@ const prefixCls = `sg`;
   encapsulation: ViewEncapsulation.None,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
+  static ngAcceptInputType_col: NumberInput;
+
   private el: HTMLElement;
   private clsMap: string[] = [];
   private inited = false;

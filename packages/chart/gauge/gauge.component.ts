@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, registerShape, Types } from '@antv/g2';
-import { AlainConfigService, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
@@ -26,6 +26,10 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_percent: NumberInput;
+
   private _chart: Chart;
 
   get chart(): Chart {

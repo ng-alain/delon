@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
@@ -39,6 +39,10 @@ export interface G2MiniBarClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_borderWidth: NumberInput;
+
   private _chart: Chart;
 
   get chart(): Chart {

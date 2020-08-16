@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;
@@ -31,6 +31,9 @@ const prefixCls = `sv`;
   encapsulation: ViewEncapsulation.None,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_default: BooleanInput;
+
   @ViewChild('conEl', { static: false })
   private conEl: ElementRef;
   private el: HTMLElement;

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util';
 
 @Component({
   selector: 'number-info',
@@ -15,6 +15,8 @@ import { InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class NumberInfoComponent {
+  static ngAcceptInputType_gap: NumberInput;
+
   /** 标题 */
   @Input() title: string | TemplateRef<void>;
   /** 子标题 */

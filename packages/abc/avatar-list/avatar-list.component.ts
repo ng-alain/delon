@@ -9,7 +9,7 @@ import {
   QueryList,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util';
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
@@ -22,6 +22,8 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class AvatarListComponent implements AfterViewInit, OnChanges {
+  static ngAcceptInputType_maxLength: NumberInput;
+
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
   private _items!: QueryList<AvatarListItemComponent>;

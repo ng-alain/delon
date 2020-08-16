@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
-import { InputNumber, toNumber } from '@delon/util';
+import { InputNumber, NumberInput, toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -12,6 +12,10 @@ import { InputNumber, toNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniProgressComponent implements OnChanges {
+  static ngAcceptInputType_target: NumberInput;
+  static ngAcceptInputType_percent: NumberInput;
+  static ngAcceptInputType_strokeWidth: NumberInput;
+
   @Input() color = '#1890FF';
   @Input() @InputNumber() target: number;
   @Input() @InputNumber() percent: number;

@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import DataSet from '@antv/data-set';
 import { Chart, Event, registerShape, Types, Util } from '@antv/g2';
-import { AlainConfigService, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -39,6 +39,10 @@ export interface G2TagCloudClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_width: NumberInput;
+
   private resize$: Subscription;
   private _chart: Chart;
 

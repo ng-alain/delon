@@ -16,7 +16,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 export interface G2RadarData {
   name: string;
@@ -43,6 +43,11 @@ export interface G2RadarClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_hasLegend: BooleanInput;
+  static ngAcceptInputType_tickCount: NumberInput;
+
   @ViewChild('container', { static: true }) private node: ElementRef;
   private _chart: Chart;
   legendData: any[] = [];

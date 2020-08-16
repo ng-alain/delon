@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'trend',
@@ -15,6 +15,9 @@ import { InputBoolean } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class TrendComponent {
+  static ngAcceptInputType_colorful: BooleanInput;
+  static ngAcceptInputType_reverseColor: BooleanInput;
+
   /** 上升下降标识 */
   @Input() flag: 'up' | 'down';
   /** 是否彩色标记 */

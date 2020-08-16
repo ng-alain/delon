@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
-import { AlainConfigService, InputBoolean, InputNumber, toNumber } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -30,6 +30,10 @@ import { SEErrorRefresh, SELayout } from './se.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class SEContainerComponent {
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_colInCon: NumberInput;
+  static ngAcceptInputType_labelWidth: NumberInput;
+
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;

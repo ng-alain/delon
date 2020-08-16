@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2Time } from '@delon/chart/core';
-import { AlainConfigService, InputBoolean, InputNumber, toDate } from '@delon/util';
+import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput, toDate } from '@delon/util';
 import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -67,6 +67,12 @@ export interface G2TimelineClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_maxAxis: NumberInput;
+  static ngAcceptInputType_borderWidth: NumberInput;
+  static ngAcceptInputType_slider: BooleanInput;
+
   @ViewChild('container', { static: false }) private node: ElementRef;
   private _chart: Chart;
 
