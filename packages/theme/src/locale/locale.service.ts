@@ -7,7 +7,7 @@ import { FullLocaleData, LocaleData } from './locale.types';
 
 @Injectable()
 export class DelonLocaleService {
-  private _locale: FullLocaleData;
+  private _locale: FullLocaleData = zhCN;
   private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
   constructor(@Inject(DELON_LOCALE) locale: FullLocaleData | null) {

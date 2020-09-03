@@ -19,8 +19,8 @@ import { MetaSearchGroupItem } from '../../interfaces';
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
   isMobile: boolean;
-  oldVersionList = [`8.x`, `1.x`];
-  currentVersion = 'stable';
+  oldVersionList = [`9.x`, `8.x`, `1.x`];
+  currentVersion = 'next';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
   menuVisible = false;
   showGitee = false;
