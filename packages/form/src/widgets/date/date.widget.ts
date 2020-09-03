@@ -59,13 +59,11 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   reset(value: SFValue): void {
     value = toDate(value, { formatString: this.startFormat, defaultValue: null });
     if (this.flatRange) {
-      this.displayValue =
-        value == null
-          ? []
-          : [
-              value,
-              toDate(this.endProperty.formData as NzSafeAny, { formatString: this.endFormat || this.startFormat, defaultValue: null }),
-            ];
+      const endValue = toDate(this.endProperty.formData as NzSafeAny, {
+        formatString: this.endFormat || this.startFormat,
+        defaultValue: null,
+      });
+      this.displayValue = value == null || endValue == null ? [] : [value, endValue];
     } else {
       this.displayValue = value;
     }

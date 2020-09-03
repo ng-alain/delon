@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AlainConfig, ALAIN_CONFIG, LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { concat } from 'rxjs';
-import { filter, flatMap, tap } from 'rxjs/operators';
+import { filter, mergeMap, tap } from 'rxjs/operators';
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';
 import { Lodop } from './lodop.types';
@@ -276,7 +276,7 @@ describe('abc: lodop', () => {
         .pipe(
           filter(w => w.ok),
           tap(() => srv.print(code, {})),
-          flatMap(() => srv.events),
+          mergeMap(() => srv.events),
           filter(w => w.ok),
         )
         .subscribe(() => {
@@ -289,7 +289,7 @@ describe('abc: lodop', () => {
         .pipe(
           filter(w => w.ok),
           tap(() => srv.print(code, [{ index: 0 }, { index: 1 }])),
-          flatMap(() => srv.events),
+          mergeMap(() => srv.events),
           filter(w => w.ok && w.item.index === 1),
         )
         .subscribe(() => {
@@ -316,7 +316,7 @@ describe('abc: lodop', () => {
             isPrintError = true;
             srv.print(code, {});
           }),
-          flatMap(() => srv.events),
+          mergeMap(() => srv.events),
         )
         .subscribe(res => {
           expect(mockLodop.PRINT).toHaveBeenCalled();

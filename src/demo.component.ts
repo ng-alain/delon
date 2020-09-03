@@ -1,27 +1,31 @@
 import { Component } from '@angular/core';
-import { ModalHelper } from '@delon/theme';
-import { DemoModalComponent } from '@shared';
+import { SFDateWidgetSchema, SFSchema } from '@delon/form';
+import subWeeks from 'date-fns/subWeeks';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <button nz-button (click)="open()">Open</button>
-    <button nz-button (click)="static()">Static</button>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
-  constructor(private modalHelper: ModalHelper, private msg: NzMessageService) {}
+  schema: SFSchema = {
+    properties: {
+      start: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
+        default: new Date(),
+      },
+      end: {
+        type: 'string',
+        default: subWeeks(new Date(), 6),
+      },
+    },
+    required: ['start'],
+  };
 
-  open(): void {
-    this.modalHelper.create(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
-      this.msg.info(res);
-    });
-  }
+  constructor(private msg: NzMessageService) {}
 
-  static(): void {
-    this.modalHelper.static(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
-      this.msg.info(res);
-    });
+  submit(value: {}): void {
+    this.msg.success(JSON.stringify(value));
   }
 }

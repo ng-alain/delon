@@ -170,7 +170,12 @@ describe('abc: down-file', () => {
   });
 
   it('should be down-file__not-support when not supoort fileSaver', () => {
-    spyOn(window, 'Blob').and.callThrough();
+    class MockBlob {
+      constructor() {
+        throw new Error('');
+      }
+    }
+    spyOn(window, 'Blob').and.callFake(() => new MockBlob() as NzSafeAny);
     createComp();
     fixture.detectChanges();
     const el = dl.query(By.css('#down-xlsx')).nativeElement as HTMLButtonElement;
