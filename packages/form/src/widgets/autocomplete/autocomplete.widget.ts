@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
-import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
+import { debounceTime, map, mergeMap, startWith } from 'rxjs/operators';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -62,7 +62,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     this.list = this.ngModel.valueChanges!.pipe(
       debounceTime(time),
       startWith(''),
-      flatMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
+      mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
       map(res => getEnum(res, null, this.schema.readOnly!)),
     );
   }
