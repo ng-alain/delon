@@ -48,6 +48,58 @@ export class MenuService implements OnDestroy {
     this.resume();
   }
 
+  private fixItem(item: Menu): void {
+    item._aclResult = true;
+
+    if (!item.link) item.link = '';
+    if (!item.externalLink) item.externalLink = '';
+
+    // badge
+    if (item.badge) {
+      if (item.badgeDot !== true) {
+        item.badgeDot = false;
+      }
+      if (!item.badgeStatus) {
+        item.badgeStatus = 'error';
+      }
+    }
+
+    if (!Array.isArray(item.children)) {
+      item.children = [];
+    }
+
+    // icon
+    if (typeof item.icon === 'string') {
+      let type = 'class';
+      let value = item.icon;
+      // compatible `anticon anticon-user`
+      if (~item.icon.indexOf(`anticon-`)) {
+        type = 'icon';
+        value = value.split('-').slice(1).join('-');
+      } else if (/^https?:\/\//.test(item.icon)) {
+        type = 'img';
+      }
+      item.icon = { type, value } as any;
+    }
+    if (item.icon != null) {
+      item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
+    }
+
+    item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
+
+    // group
+    item.group = item.group !== false;
+
+    // hidden
+    item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
+
+    // disabled
+    item.disabled = typeof item.disabled === 'undefined' ? false : item.disabled;
+
+    // acl
+    item._aclResult = item.acl && this.aclService ? this.aclService.can(item.acl) : true;
+  }
+
   /**
    * 重置菜单，可能I18N、用户权限变动时需要调用刷新
    */
@@ -55,58 +107,10 @@ export class MenuService implements OnDestroy {
     let i = 1;
     const shortcuts: Menu[] = [];
     this.visit(this.data, (item, parent, depth) => {
-      item._aclResult = true;
       item._id = i++;
       item._parent = parent;
       item._depth = depth;
-
-      if (!item.link) item.link = '';
-      if (!item.externalLink) item.externalLink = '';
-
-      // badge
-      if (item.badge) {
-        if (item.badgeDot !== true) {
-          item.badgeDot = false;
-        }
-        if (!item.badgeStatus) {
-          item.badgeStatus = 'error';
-        }
-      }
-
-      if (!Array.isArray(item.children)) {
-        item.children = [];
-      }
-
-      // icon
-      if (typeof item.icon === 'string') {
-        let type = 'class';
-        let value = item.icon;
-        // compatible `anticon anticon-user`
-        if (~item.icon.indexOf(`anticon-`)) {
-          type = 'icon';
-          value = value.split('-').slice(1).join('-');
-        } else if (/^https?:\/\//.test(item.icon)) {
-          type = 'img';
-        }
-        item.icon = { type, value } as any;
-      }
-      if (item.icon != null) {
-        item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
-      }
-
-      item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
-
-      // group
-      item.group = item.group !== false;
-
-      // hidden
-      item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
-
-      // disabled
-      item.disabled = typeof item.disabled === 'undefined' ? false : item.disabled;
-
-      // acl
-      item._aclResult = item.acl && this.aclService ? this.aclService.can(item.acl) : true;
+      this.fixItem(item);
 
       // shortcut
       if (parent && item.shortcut === true && parent.shortcutRoot !== true) {
@@ -261,6 +265,7 @@ export class MenuService implements OnDestroy {
     Object.keys(value).forEach(k => {
       item[k] = value[k];
     });
+    this.fixItem(item);
 
     this._change$.next(this.data);
   }
