@@ -151,9 +151,9 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     // bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/14721015/
     const scrollTop = Math.max(this.doc.documentElement.scrollTop, this.bodyEl.scrollTop);
     const docHeight = Math.max(this.doc.documentElement.clientHeight, this.bodyEl.clientHeight);
-    let offsetHeight = 0;
+    let offsetHeight = -5;
     if (docHeight < rect.top + node.clientHeight) {
-      offsetHeight = rect.top + node.clientHeight - docHeight;
+      offsetHeight = rect.top + node.clientHeight - docHeight + 5;
     }
     node.style.top = `${rect.top + scrollTop - offsetHeight}px`;
     node.style.left = `${rect.right + 5}px`;
