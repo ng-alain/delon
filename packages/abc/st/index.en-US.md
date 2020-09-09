@@ -50,7 +50,7 @@ If the component has been rendered, this error may appear when `columns` is chan
 | `[req]` | Http request configuration | `STReq` | - | ✅ |
 | `[res]` | Http response configuration | `STRes` | - | ✅ |
 | `[pi]` | Page index | `number` | `1` | ✅ |
-| `[ps]` | Page size, `0` is no page, default is `10` | `number` | `10` | ✅ |
+| `[ps]` | Page size, default is `10` | `number` | `10` | ✅ |
 | `[total]` | Total data count, should set when nzServerRender is true, default is `0` | `number` | `0` | - |
 | `[page]` | Pager configuration | `STPage` | - | ✅ |
 | `[noResult]` | Custom no result content | `string,TemplateRef<void>` | - | ✅ |
