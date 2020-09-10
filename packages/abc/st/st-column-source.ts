@@ -13,6 +13,7 @@ import {
   STColumnFilter,
   STColumnGroupType,
   STIcon,
+  STResizable,
   STSortMap,
   STWidthMode,
 } from './st.interfaces';
@@ -315,13 +316,22 @@ export class STColumnSource {
     return res;
   }
 
-  process(list: STColumn[], widthMode: STWidthMode): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
+  private fixResizable(resizable: STResizable | boolean): STResizable {
+    return typeof resizable === 'boolean' ? ({ disabled: !resizable } as STResizable) : resizable;
+  }
+
+  process(
+    list: STColumn[],
+    widthMode: STWidthMode,
+    resizable: STResizable | boolean,
+  ): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;
     let point = 0;
+    const validRootResizable = this.fixResizable(resizable);
     const columns: _STColumn[] = [];
 
     const processItem = (item: _STColumn): _STColumn => {
@@ -408,6 +418,16 @@ export class STColumnSource {
       this.widgetCoerce(item);
       // restore custom row
       this.restoreRender(item);
+      // resizable
+      item.resizable = {
+        disabled: true,
+        bounds: 'window',
+        minWidth: 60,
+        maxWidth: 360,
+        preview: true,
+        ...validRootResizable,
+        ...this.fixResizable(item.resizable!),
+      };
 
       item.__point = point++;
 
