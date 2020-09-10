@@ -320,11 +320,9 @@ class TestComponent {
 | `[text]` | 文本与图标共存 | `string | (record: STData, btn: STColumnButton) => string` | - |
 | `[icon]` | 图标与文本共存 | `string | STIcon` | - |
 | `[i18n]` | 文本i18n | `string` | - |
-| (deprecated) `[format]` | 格式化文本 | `(record: STData, btn: STColumnButton) => string` | - |
 | `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | - |
 | `[click]` | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | - |
 | `[pop]` | 是否需要气泡确认框 | `boolean, string, STColumnButtonPop` | `false` |
-| (deprecated) `[popTitle]` | 气泡确认框内容 | `string` | 确认删除吗？ |
 | `[modal]` | 模态框配置 | `STColumnButtonModal` | - |
 | `[drawer]` | 抽屉配置 | `STColumnButtonDrawer` | - |
 | `[children]` | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `STColumnButton[]` | - |
