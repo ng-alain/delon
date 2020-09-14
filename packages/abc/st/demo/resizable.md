@@ -30,7 +30,7 @@ import { STChange, STColumn } from '@delon/abc/st';
       [data]="url"
       [columns]="columns"
       [widthMode]="{ type: 'strict' }"
-      [resizable]="{ disabled: false }"
+      resizable
       (change)="onChange($event)"
     ></st>
   `,

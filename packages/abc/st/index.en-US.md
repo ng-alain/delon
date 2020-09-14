@@ -80,7 +80,7 @@ If the component has been rendered, this error may appear when `columns` is chan
 | `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - | - |
 | `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
-| `[resizable]` | Resize header | `STResizable, boolean` | - | - |
+| `[resizable]` | Resize header of the current table, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `(change)` | Events | `EventEmitter<STChange>` | - | - |
 | `(error)` | Error event | `EventEmitter<STError>` | - | - |
 

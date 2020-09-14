@@ -316,14 +316,10 @@ export class STColumnSource {
     return res;
   }
 
-  private fixResizable(resizable: STResizable | boolean): STResizable {
-    return typeof resizable === 'boolean' ? ({ disabled: !resizable } as STResizable) : resizable;
-  }
-
   process(
     list: STColumn[],
     widthMode: STWidthMode,
-    resizable: STResizable | boolean,
+    resizable: STResizable,
   ): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
@@ -331,7 +327,6 @@ export class STColumnSource {
     let checkboxCount = 0;
     let radioCount = 0;
     let point = 0;
-    const validRootResizable = this.fixResizable(resizable);
     const columns: _STColumn[] = [];
 
     const processItem = (item: _STColumn): _STColumn => {
@@ -425,8 +420,8 @@ export class STColumnSource {
         minWidth: 60,
         maxWidth: 360,
         preview: true,
-        ...validRootResizable,
-        ...this.fixResizable(item.resizable!),
+        ...resizable,
+        ...(typeof item.resizable === 'boolean' ? ({ disabled: !item.resizable } as STResizable) : item.resizable),
       };
 
       item.__point = point++;

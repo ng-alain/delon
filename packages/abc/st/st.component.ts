@@ -198,7 +198,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._widthConfig = val;
     this.customWidthConfig = val && val.length > 0;
   }
-  @Input() resizable: STResizable | boolean;
+  private _resizable: STResizable;
+  @Input()
+  set resizable(val: STResizable | boolean) {
+    this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
+  }
   @Input() header: string | TemplateRef<void>;
   @Input() footer: string | TemplateRef<void>;
   @Input() bodyHeader: TemplateRef<STStatisticalResults>;
@@ -825,7 +829,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns as _STColumn[], this.widthMode, this.resizable);
+    const res = this.columnSource.process(this.columns as _STColumn[], this.widthMode, this._resizable);
     this._columns = res.columns;
     this._headers = res.headers;
     if (this.customWidthConfig === false && res.headerWidths != null) {
