@@ -80,6 +80,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | - | - |
 | `[responsive]` | 是否开启响应式 | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false` | ✅ |
+| `[resizable]` | 当前表格所有列的调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
 | `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | - | - |
 | `(error)` | 异常时回调 | `EventEmitter<STError>` | - | - |
 
@@ -269,6 +270,7 @@ class TestComponent {
 | `[noIndex]` | 行号索引开始值 | `number,(item: STData, col: STColumn, idx: number) => number` | `1` |
 | `[iif]` | 条件表达式<br>1、仅赋值 `columns` 时执行一次<br>2、可调用 `resetColumns()` 再一次触发 | `(item: STColumn) => boolean` | - |
 | `[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | - |
+| `[resizable]` | 调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
 | `[children]` | 多表头 | `STColumn[]` | - |
 
 ### STColumnTitle
@@ -431,3 +433,13 @@ class TestComponent {
   rawData?: any,
 ) => STStatisticalResult
 ```
+
+### STResizable
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----------|-------------|------|---------|
+| `[disabled]` | Disable resize | `boolean` | `true` |
+| `[bounds]` | 调整尺寸的边界 | `window, parent, ElementRef<HTMLElement>` | `window` |
+| `[maxWidth]` | 最大宽度(超过边界部分忽略) | `number` | `360` |
+| `[minWidth]` | 最小宽度 | `number` | `60` |
+| `[preview]` | 开启预览 | `boolean` | `true` |

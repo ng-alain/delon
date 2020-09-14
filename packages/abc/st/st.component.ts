@@ -43,6 +43,7 @@ import {
   toBoolean,
 } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -67,6 +68,7 @@ import {
   STReq,
   STRes,
   STResetColumnsOption,
+  STResizable,
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
@@ -195,6 +197,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set widthConfig(val: string[]) {
     this._widthConfig = val;
     this.customWidthConfig = val && val.length > 0;
+  }
+  private _resizable: STResizable;
+  @Input()
+  set resizable(val: STResizable | boolean) {
+    this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;
   @Input() footer: string | TemplateRef<void>;
@@ -781,6 +788,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #endregion
 
+  // #region resizable
+
+  colResize({ width }: NzResizeEvent, column: _STColumn): void {
+    column.width = `${width}px`;
+    this.changeEmit('resize', column);
+  }
+
+  // #endregion
+
   get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {
     return this.orgTable.cdkVirtualScrollViewport!;
   }
@@ -813,7 +829,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns as _STColumn[], this.widthMode);
+    const res = this.columnSource.process(this.columns as _STColumn[], { widthMode: this.widthMode, resizable: this._resizable });
     this._columns = res.columns;
     this._headers = res.headers;
     if (this.customWidthConfig === false && res.headerWidths != null) {

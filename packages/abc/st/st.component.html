@@ -90,7 +90,7 @@
     <tr *ngFor="let row of _headers; let rowFirst = first">
       <th *ngIf="rowFirst && expand" nzWidth="50px" [rowSpan]="_headers.length"></th>
       <th
-        *ngFor="let h of row; let index = index"
+        *ngFor="let h of row; let index = index; let last = last"
         [colSpan]="h.colSpan"
         [rowSpan]="h.rowSpan"
         [nzWidth]="h.column.width"
@@ -102,7 +102,15 @@
         [nzSortOrder]="h.column._sort.default"
         (nzSortOrderChange)="sort(h.column, index, $event)"
         [nzCustomFilter]="h.column.filter"
+        nz-resizable
+        [nzDisabled]="last || h.column.resizable.disabled"
+        [nzMaxWidth]="h.column.resizable.maxWidth"
+        [nzMinWidth]="h.column.resizable.minWidth"
+        [nzBounds]="h.column.resizable.bounds"
+        [nzPreview]="h.column.resizable.preview"
+        (nzResizeEnd)="colResize($event, h.column)"
       >
+        <nz-resize-handle *ngIf="!last && !h.column.resizable.disabled" nzDirection="right"><i></i></nz-resize-handle>
         <ng-template #renderTitle [ngTemplateOutlet]="h.column.__renderTitle" [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"></ng-template>
         <ng-container *ngIf="!h.column.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="h.column.type">

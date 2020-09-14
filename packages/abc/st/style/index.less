@@ -31,6 +31,21 @@
       }
     }
   }
+  // 调整表头宽度
+  .nz-resizable-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > i {
+      width: 1px;
+      height: 60%;
+      background: @border-color-split;
+    }
+  }
+  .nz-resizable-preview {
+    border-width: 0;
+    border-right-width: 1px;
+  }
   // 清除页码底部间距，在大部分列表中会包裹 `nz-card` 导致底部间距过大，若有需求可自行使用 `mb-md` 来调整
   .@{ant-prefix}-table ~ nz-pagination > .@{ant-prefix}-pagination {
     margin-bottom: 0;

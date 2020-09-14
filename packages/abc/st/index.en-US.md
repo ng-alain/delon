@@ -80,6 +80,7 @@ If the component has been rendered, this error may appear when `columns` is chan
 | `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - | - |
 | `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
+| `[resizable]` | Resize header of the current table, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `(change)` | Events | `EventEmitter<STChange>` | - | - |
 | `(error)` | Error event | `EventEmitter<STError>` | - | - |
 
@@ -269,6 +270,7 @@ class TestComponent {
 | `[noIndex]` | Line number index start value | `number,(item: STData, col: STColumn, idx: number) => number` | `1` |
 | `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | - |
 | `[statistical]` | Statistics | `STStatisticalType,STStatistical` | - |
+| `[resizable]` | Resize header, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `[children]` | Group columns | `STColumn[]` | - |
 
 ### STColumnTitle
@@ -430,3 +432,13 @@ class TestComponent {
   rawData?: any,
 ) => STStatisticalResult
 ```
+
+### STResizable
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[disabled]` | Disable resize | `boolean` | `true` |
+| `[bounds]` | Specifies resize boundaries | `window, parent, ElementRef<HTMLElement>` | `window` |
+| `[maxWidth]` | Maximum width of resizable elemen | `number` | `360` |
+| `[minWidth]` | Minimum width of resizable element | `number` | `60` |
+| `[preview]` | Enable preview when resizing | `boolean` | `true` |

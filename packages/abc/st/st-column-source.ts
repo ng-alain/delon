@@ -13,10 +13,16 @@ import {
   STColumnFilter,
   STColumnGroupType,
   STIcon,
+  STResizable,
   STSortMap,
   STWidthMode,
 } from './st.interfaces';
 import { _STColumn } from './st.types';
+
+export interface STColumnSourceProcessOptions {
+  widthMode: STWidthMode;
+  resizable: STResizable;
+}
 
 @Injectable()
 export class STColumnSource {
@@ -315,7 +321,10 @@ export class STColumnSource {
     return res;
   }
 
-  process(list: STColumn[], widthMode: STWidthMode): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
+  process(
+    list: STColumn[],
+    options: STColumnSourceProcessOptions,
+  ): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
@@ -383,7 +392,7 @@ export class STColumnSource {
       ) {
         item.type = '';
       }
-      item._isTruncate = !!item.width && widthMode.strictBehavior === 'truncate' && item.type !== 'img';
+      item._isTruncate = !!item.width && options.widthMode.strictBehavior === 'truncate' && item.type !== 'img';
       // className
       if (!item.className) {
         item.className = ({
@@ -408,6 +417,16 @@ export class STColumnSource {
       this.widgetCoerce(item);
       // restore custom row
       this.restoreRender(item);
+      // resizable
+      item.resizable = {
+        disabled: true,
+        bounds: 'window',
+        minWidth: 60,
+        maxWidth: 360,
+        preview: true,
+        ...options.resizable,
+        ...(typeof item.resizable === 'boolean' ? ({ disabled: !item.resizable } as STResizable) : item.resizable),
+      };
 
       item.__point = point++;
 

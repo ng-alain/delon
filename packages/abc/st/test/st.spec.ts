@@ -1723,6 +1723,26 @@ describe('abc: table', () => {
           .asyncEnd();
       }));
     });
+    describe('#resizable', () => {
+      it('should be working', fakeAsync(() => {
+        page.updateColumn([
+          { index: 'id', resizable: true },
+          { index: 'id', resizable: true },
+        ]);
+        comp.colResize({ width: 100 }, { width: 10 });
+        expect(page._changeData.type).toBe('resize');
+        page.asyncEnd();
+      }));
+      it('should be ingore resize hanle of last column', fakeAsync(() => {
+        page
+          .updateColumn([
+            { index: 'id', resizable: true },
+            { index: 'id', resizable: true },
+          ])
+          .expectElCount('nz-resize-handle', 1)
+          .asyncEnd();
+      }));
+    });
   });
 
   describe('#multiSort', () => {
