@@ -829,7 +829,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns as _STColumn[], this.widthMode, this._resizable);
+    const res = this.columnSource.process(this.columns as _STColumn[], { widthMode: this.widthMode, resizable: this._resizable });
     this._columns = res.columns;
     this._headers = res.headers;
     if (this.customWidthConfig === false && res.headerWidths != null) {
