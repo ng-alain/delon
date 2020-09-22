@@ -1,4 +1,4 @@
-import { Host, Inject, Injectable, Optional } from '@angular/core';
+import { Host, Inject, Injectable, Optional, TemplateRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -231,10 +231,11 @@ export class STColumnSource {
 
   private restoreRender(item: _STColumn): void {
     if (item.renderTitle) {
-      item.__renderTitle = this.rowSource.getTitle(item.renderTitle);
+      item.__renderTitle =
+        typeof item.renderTitle === 'string' ? this.rowSource.getTitle(item.renderTitle) : (item.renderTitle as TemplateRef<void>);
     }
     if (item.render) {
-      item.__render = this.rowSource.getRow(item.render);
+      item.__render = typeof item.render === 'string' ? this.rowSource.getRow(item.render) : (item.render as TemplateRef<void>);
     }
   }
 
