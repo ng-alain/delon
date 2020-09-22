@@ -1,5 +1,5 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { ElementRef } from '@angular/core';
+import { ElementRef, TemplateRef } from '@angular/core';
 import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
@@ -237,7 +237,7 @@ export interface STColumn {
    *  {{ c.title }}
    * </ng-template>
    */
-  render?: string;
+  render?: string | TemplateRef<void> | TemplateRef<{ $implicit: STData; index: number }>;
   /**
    * 标题自定义渲染ID
    * @example
@@ -245,7 +245,7 @@ export interface STColumn {
    *  {{ item | json }}
    * </ng-template>
    */
-  renderTitle?: string;
+  renderTitle?: string | TemplateRef<void> | TemplateRef<{ $implicit: STColumn; index: number }>;
   /**
    * 列宽（数字型表示 `px` 值），例如：`100`、`10%`、`100px`
    *

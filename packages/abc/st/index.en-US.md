@@ -245,8 +245,8 @@ class TestComponent {
 | `[i18n]` | I18n key of this column | `string` | - |
 | `[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn)<br>`widget` Custom widgets to render columns | `string` | - |
 | `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | - |
-| `[render]` | Custom render template ID | `string` | - |
-| `[renderTitle]` | Title custom render template ID | `string` | - |
+| `[render]` | Custom render template ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STData; index: number }>` | - |
+| `[renderTitle]` | Title custom render template ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STColumn; index: number }>` | - |
 | `[default]` | Replace with default value when no data exists (value typeof is `undefined`) | `string` | - |
 | `[buttons]` | Buttons of this column | `STColumnButton[]` | - |
 | `[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | - |

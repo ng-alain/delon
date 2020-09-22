@@ -1,6 +1,7 @@
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumnSource, STColumnSourceProcessOptions } from '../st-column-source';
 import { STRowSource } from '../st-row.directive';
 import { STWidgetRegistry } from '../st-widget';
@@ -526,6 +527,16 @@ describe('st: column-source', () => {
         srv.restoreAllRender([{ title: '', render: 'a', renderTitle: 'b' }] as _STColumn[]);
         expect(rowSrv.getRow).toHaveBeenCalled();
         expect(rowSrv.getTitle).toHaveBeenCalled();
+      });
+      it('should be template ref', () => {
+        const mockTemplateRef: NzSafeAny = {};
+        expect(rowSrv.getRow).not.toHaveBeenCalled();
+        expect(rowSrv.getTitle).not.toHaveBeenCalled();
+        const columns: _STColumn[] = [{ title: '', render: mockTemplateRef, renderTitle: mockTemplateRef }];
+        srv.restoreAllRender(columns);
+        expect(rowSrv.getRow).not.toHaveBeenCalled();
+        expect(rowSrv.getTitle).not.toHaveBeenCalled();
+        expect(columns[0].render).toBe(mockTemplateRef);
       });
     });
     describe('[fixed]', () => {
