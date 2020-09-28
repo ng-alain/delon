@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 
 import { SharedModule } from '@shared';
 import { RouteRoutingModule } from './routes-routing.module';
@@ -12,7 +12,7 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 
-const COMPONENTS = [
+const COMPONENTS: Type<void>[] = [
   DashboardComponent,
   // passport pages
   UserLoginComponent,
@@ -22,7 +22,7 @@ const COMPONENTS = [
   CallbackComponent,
   UserLockComponent,
 ];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT: Type<void>[] = [];
 
 @NgModule({
   imports: [ SharedModule, RouteRoutingModule ],
