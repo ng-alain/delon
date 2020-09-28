@@ -24,7 +24,7 @@ describe('Schematic: view', () => {
   });
 
   it('should not be imported into COMPONENTS', () => {
-    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS = []`);
+    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS: Type<void>[] = []`);
   });
 
   it('should support a.b.c module name', async () => {

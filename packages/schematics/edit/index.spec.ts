@@ -23,6 +23,6 @@ describe('Schematic: edit', () => {
   });
 
   it('Should not be imported into COMPONENTS', () => {
-    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS = []`);
+    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS: Type<void>[] = []`);
   });
 });
