@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { SharedModule } from '@shared';
 <% if (routing) { %>import { <%= classify(name) %>RoutingModule } from './<%= dasherize(name) %>-routing.module';<% } %>
 
-const COMPONENTS = [];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS: Type<void>[] = [];
+const COMPONENTS_NOROUNT: Type<void>[] = [];
 
 @NgModule({
   imports: [
