@@ -224,6 +224,22 @@ function addSchematics(): (host: Tree) => Tree {
   };
 }
 
+function addNzLintRules(): (host: Tree) => void {
+  return (host: Tree) => {
+    addPackageToPackageJson(host, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
+
+    const json = getJSON(host, 'tslint.json');
+    if (json == null) return host;
+
+    json.rulesDirectory.push(`nz-tslint-rules`);
+    json.rules['nz-secondary-entry-imports'] = true;
+
+    overwriteJSON(host, 'tslint.json', json);
+
+    return host;
+  };
+}
+
 function forceLess(): (host: Tree) => void {
   return (host: Tree) => {
     scriptsToAngularJson(host, ['src/styles.less'], 'add', ['build'], null!, true);
@@ -449,6 +465,7 @@ export default function (options: ApplicationOptions): Rule {
       // code style
       addCodeStylesToPackageJson(),
       addSchematics(),
+      addNzLintRules(),
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),

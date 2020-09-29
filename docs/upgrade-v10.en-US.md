@@ -5,17 +5,23 @@ title: Upgrade to version 10.0
 hot: true
 ---
 
-## Upgrade
+## Note: This article only describes the NG-ALAIN part. For details about the NG-ZORRO part, please refer to [#5775](https://github.com/NG-ZORRO/ng-zorro-antd/issues/5775).
 
-This description refers to the description of the upgrade from `9.5.x` to `10`; NG-ALAIN only needs one lines of commands:
+## Before upgrade
+
+1. Make sure `Node.js` >= `10.13`.
+2. Create a new branch, or use other methods to back up the current project.
+3. Delete the `package-lock.json` or `yarn.lock` file.
+
+## 1. Upgrade
+
+This description refers to the description of the upgrade from `9.x` to `10`; NG-ALAIN only needs one lines of commands:
 
 ```bash
-ng update @angular/core @angular/cli ng-alain@next
+ng update @angular/core @angular/cli ng-zorro-antd ng-alain
 ```
 
-**Note:** Currently `ng-zorro-antd` is still in Beta version, we cannot guarantee full availability.
-
-## Remove deprecation
+## 2. Remove deprecation
 
 Remove all deprecation items declared in `9.x`, including the following:
 
