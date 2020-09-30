@@ -1075,6 +1075,17 @@ describe('abc: table', () => {
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
+      it('should be working in virtual scroll', fakeAsync(() => {
+        context.page.toTop = true;
+        context.virtualScroll = true;
+        context.scroll = { x: '100px', y: '100px' };
+        page.cd();
+        expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
+        spyOn(context.comp.cdkVirtualScrollViewport, 'checkViewportSize');
+        page.cd().go(2);
+        expect(context.comp.cdkVirtualScrollViewport.checkViewportSize).toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
@@ -1573,16 +1584,6 @@ describe('abc: table', () => {
         expect(comp.list.length).toBe(PS);
         page.asyncEnd();
       }));
-      // it('#cdkVirtualScrollViewport', done => {
-      //   context.virtualScroll = true;
-      //   context.data = genData(10);
-      //   fixture.detectChanges();
-      //   fixture.whenStable().then(() => {
-      //     fixture.detectChanges();
-      //     expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-      //     done();
-      //   });
-      // });
     });
     describe('#export', () => {
       let exportSrv: STExport;

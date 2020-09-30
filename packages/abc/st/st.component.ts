@@ -395,6 +395,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this._data = result.list as STData[];
       this._statistical = result.statistical as STStatisticalResults;
       this.changeEmit('loaded', result.list);
+      // Should be re-render in next tike when using virtual scroll
+      // https://github.com/ng-alain/ng-alain/issues/1836
+      if (this.cdkVirtualScrollViewport) {
+        Promise.resolve().then(() => this.cdkVirtualScrollViewport.checkViewportSize());
+      }
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
@@ -462,7 +467,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (!(enforce == null ? this.page.toTop : enforce)) return;
     const el = this.el.nativeElement as HTMLElement;
     if (this.scroll) {
-      el.querySelector('.ant-table-body')!.scrollTo(0, 0);
+      if (this.cdkVirtualScrollViewport) {
+        this.cdkVirtualScrollViewport.scrollTo({
+          top: 0,
+          left: 0,
+        });
+      } else {
+        el.querySelector('.ant-table-body')!.scrollTo(0, 0);
+      }
       return;
     }
     el.scrollIntoView();
