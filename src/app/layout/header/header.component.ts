@@ -20,7 +20,7 @@ export class HeaderComponent implements AfterViewInit {
   private inited = false;
   isMobile: boolean;
   oldVersionList = [`9.x`, `8.x`, `1.x`];
-  currentVersion = 'next';
+  currentVersion = 'stable';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
   menuVisible = false;
   showGitee = false;
