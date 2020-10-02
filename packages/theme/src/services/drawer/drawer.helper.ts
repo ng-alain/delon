@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 import { deepMerge } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { Observable, Observer } from 'rxjs';
 
@@ -53,7 +54,7 @@ export class DrawerHelper {
   /**
    * 构建一个抽屉
    */
-  create(title: string, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
+  create(title: string | TemplateRef<{}> | undefined | null, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
     options = deepMerge(
       {
         size: 'md',
@@ -72,7 +73,7 @@ export class DrawerHelper {
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
         nzContentParams: params,
-        nzTitle: title,
+        nzTitle: title as NzSafeAny,
       };
 
       if (typeof size === 'number') {
@@ -109,7 +110,7 @@ export class DrawerHelper {
   /**
    * 构建一个抽屉，点击蒙层不允许关闭
    */
-  static(title: string, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
+  static(title: string | TemplateRef<{}> | undefined | null, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
     const drawerOptions = {
       nzMaskClosable: false,
       ...(options && options.drawerOptions),
