@@ -374,17 +374,18 @@ export class ReuseTabService implements OnDestroy {
       const item = this._cached[comp];
       comp = item._handle.componentRef;
     }
-    if (comp == null || !comp.instance) {
+    const compThis = comp.instance;
+    if (comp == null || !compThis) {
       return;
     }
-    const fn = comp.instance[method];
+    const fn = compThis[method];
     if (typeof fn !== 'function') {
       return;
     }
     if (method === '_onReuseInit') {
-      fn(type);
+      fn.call(compThis, type);
     } else {
-      (fn as () => void)();
+      (fn as () => void).call(compThis);
     }
   }
 
