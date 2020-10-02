@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef, Type } from '@angular/core';
 import { deepMerge } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';
 
@@ -37,7 +38,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  create(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+  create(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'lg',
@@ -46,7 +47,7 @@ export class ModalHelper {
       },
       options,
     );
-    return new Observable((observer: Observer<any>) => {
+    return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, includeTabs, modalOptions } = options as ModalHelperOptions;
       let cls = '';
       let width = '';
@@ -102,7 +103,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  createStatic(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+  createStatic(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<any> {
     const modalOptions = {
       nzMaskClosable: false,
       ...(options && options.modalOptions),
@@ -125,7 +126,12 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  open(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
+  open(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
+    options?: ModalOptions,
+  ): Observable<any> {
     return this.create(comp, params, {
       size,
       modalOptions: options,
@@ -148,7 +154,12 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  static(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
+  static(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
+    options?: ModalOptions,
+  ): Observable<any> {
     return this.open(comp, params, size, {
       nzMaskClosable: false,
       ...options,
