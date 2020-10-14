@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema, SFTagWidgetSchema } from '@delon/form';
+import { SFIcon, SFSchema, SFTagWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -53,6 +53,17 @@ export class DemoComponent {
             ]).pipe(delay(10)),
         } as SFTagWidgetSchema,
         default: [1, 2],
+      },
+      icon: {
+        type: 'number',
+        title: '兴趣',
+        enum: [
+          { value: 1, label: 'Twitter', prefixIcon: { type: 'twitter' } as SFIcon },
+          { value: 2, label: 'Facebook', suffixIcon: { type: 'facebook' } as SFIcon },
+        ],
+        ui: {
+          widget: 'tag',
+        } as SFTagWidgetSchema,
       },
     },
   };

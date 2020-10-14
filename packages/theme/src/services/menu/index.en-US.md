@@ -16,7 +16,7 @@ This is because menus it's essential part of the applications, And it can be use
 ### MenuService
 
 | Method | Parameter | Description |
-| ----- | --- | ---- |
+|--------|-----------|-------------|
 | `add` | `items: Menu[]` | Setting menu data |
 | `clear` | - | Clear menu data |
 | `resume` | `callback: Funection` | Reset menu, may need call when I18N, user acl changed |
@@ -29,36 +29,37 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 
 ### Menu
 
-Property | Description  | Type  | Default
-----|------|-----|------
-`text` | Text of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | -
-`i18n` | I18n key of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | -
-`group` | Whether to display the group name | `boolean` | `true`
-`link` | Routing for the menu item, can be choose one of `link` or `externalLink` | `string` | -
-`externalLink` | External link for the menu item, can be choose one of `link` or `externalLink` | `string` | -
-`target` | Specifies `externalLink` where to display the linked URL | `_blank,_self,_parent,_top` | -
-`icon` | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | -
-`badge` | Badget for the menu item when `group` is `true` | `number` | -
-`badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | -
-`badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
-`disabled` | Whether disable for the menu item | `boolean` | `false`
-`hide` | Whether hidden for the menu item | `boolean` | `false`
-`hideInBreadcrumb` | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | -
-`acl` | ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value | `any` | -
-`shortcut` | Whether shortcut menu item | `boolean` | -
-`shortcutRoot` | Wheter shortcut menu root node | `boolean` | -
-`reuse` | Whether to allow reuse, need to cooperate with the `reuse-tab` component | `boolean` | -
-`open` | Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component | `boolean` | -
-`key` | Unique identifier of the menu item, can be used in `getItem`, `setItem` to update a menu | `string` | -
-`children` | Children for the menu item | `Menu[]` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `text` | Text of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | - |
+| `i18n` | I18n key of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | - |
+| `group` | Whether to display the group name | `boolean` | `true` |
+| `link` | Routing for the menu item, can be choose one of `link` or `externalLink` | `string` | - |
+| `externalLink` | External link for the menu item, can be choose one of `link` or `externalLink` | `string` | - |
+| `target` | Specifies `externalLink` where to display the linked URL | `_blank,_self,_parent,_top` | - |
+| `icon` | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | - |
+| `badge` | Badget for the menu item when `group` is `true` | `number` | - |
+| `badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | - |
+| `badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | - |
+| `disabled` | Whether disable for the menu item | `boolean` | `false` |
+| `hide` | Whether hidden for the menu item | `boolean` | `false` |
+| `hideInBreadcrumb` | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | - |
+| `acl` | ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value | `any` | - |
+| `shortcut` | Whether shortcut menu item | `boolean` | - |
+| `shortcutRoot` | Wheter shortcut menu root node | `boolean` | - |
+| `reuse` | Whether to allow reuse, need to cooperate with the `reuse-tab` component | `boolean` | - |
+| `open` | Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component | `boolean` | - |
+| `key` | Unique identifier of the menu item, can be used in `getItem`, `setItem` to update a menu | `string` | - |
+| `children` | Children for the menu item | `Menu[]` | - |
 
 ### MenuIcon
 
-Property | Description  | Type  | Default
-----|------|-----|------
-`[type]` | Type for icon | `class,icon,iconfont,img` | `icon`
-`[value]` | Value for the icon, can be set Class Name, nz-icon of `nzType`, image | `string` | -
-`[theme]` | Type of the ant design icon | `outline,twotone,fill` | `outline`
-`[spin]` | Rotate icon with animation | `boolean` | `false`
-`[twoToneColor]` | Only support the two-tone icon. Specific the primary color | `string` | -
-`[iconfont]` | Type of the icon from iconfont | `string` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[type]` | Type for icon | `class,icon,iconfont,img` | `icon` |
+| `[value]` | Value for the icon, can be set Class Name, nz-icon of `nzType`, image | `string` | - |
+| `[theme]` | Type of the ant design icon | `outline,twotone,fill` | `outline` |
+| `[spin]` | Rotate icon with animation | `boolean` | `false` |
+| `[twoToneColor]` | Only support the two-tone icon. Specific the primary color | `string` | - |
+| `[iconfont]` | Type of the icon from iconfont | `string` | - |
+| `[rotate]` | Rotate degrees | `number` | - |

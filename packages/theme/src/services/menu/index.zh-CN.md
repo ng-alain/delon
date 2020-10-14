@@ -14,7 +14,7 @@ type: Service
 ### MenuService
 
 | 方法 | 参数 | 描述 |
-| ----- | --- | ---- |
+|----|----|----|
 | `add` | `items: Menu[]` | 设置菜单数据 |
 | `clear` | - | 清空菜单数据 |
 | `resume` | `callback: Funection` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
@@ -27,37 +27,38 @@ type: Service
 
 ### Menu
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`text` | 文本（支持HTML），**必填项** | `string` | -
-`i18n` | i18n主键（支持HTML） | `string` | -
-`group` | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true`
-`link` | 路由，`link`、`externalLink` 二选其一 | `string` | -
-`externalLink` | 外部链接，`link`、`externalLink` 二选其一 | `string` | -
-`target` | 链接 target | `_blank,_self,_parent,_top` | -
-`icon` | 图标，指[示例](//ng-alain.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效 | `string | MenuIcon` | -
-`badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | -
-`badgeDot` | 徽标数，显示小红点 | `boolean` | -
-`badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
-`disabled` | 是否禁用菜单 | `boolean` | `false`
-`hide` | 是否隐藏菜单 | `boolean` | `false`
-`hideInBreadcrumb` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | -
-`acl` | ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any` | -
-`shortcut` | 是否快捷菜单项 | `boolean` | -
-`shortcutRoot` | 快捷菜单根节点 | `boolean` | -
-`reuse` | 是否允许复用，需配合 `reuse-tab` 组件 | `boolean` | -
-`key` | 菜单项唯一标识符，可用于 `getItem`、`setItem` 来更新某个菜单 | `string` | -
-`children` | 子菜单 | `Menu[]` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `text` | 文本（支持HTML），**必填项** | `string` | - |
+| `i18n` | i18n主键（支持HTML） | `string` | - |
+| `group` | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true` |
+| `link` | 路由，`link`、`externalLink` 二选其一 | `string` | - |
+| `externalLink` | 外部链接，`link`、`externalLink` 二选其一 | `string` | - |
+| `target` | 链接 target | `_blank,_self,_parent,_top` | - |
+| `icon` | 图标，指[示例](//ng-alain.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效 | `string | MenuIcon` | - |
+| `badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | - |
+| `badgeDot` | 徽标数，显示小红点 | `boolean` | - |
+| `badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `string` | - |
+| `disabled` | 是否禁用菜单 | `boolean` | `false` |
+| `hide` | 是否隐藏菜单 | `boolean` | `false` |
+| `hideInBreadcrumb` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | - |
+| `acl` | ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any` | - |
+| `shortcut` | 是否快捷菜单项 | `boolean` | - |
+| `shortcutRoot` | 快捷菜单根节点 | `boolean` | - |
+| `reuse` | 是否允许复用，需配合 `reuse-tab` 组件 | `boolean` | - |
+| `key` | 菜单项唯一标识符，可用于 `getItem`、`setItem` 来更新某个菜单 | `string` | - |
+| `children` | 子菜单 | `Menu[]` | - |
 
 ### MenuIcon
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[type]` | 类型 | `class,icon,iconfont,img` | `icon`
-`[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | -
-`[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline`
-`[spin]` | 是否有旋转动画 | `boolean` | `false`
-`[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | -
-`[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[type]` | 类型 | `class,icon,iconfont,img` | `icon` |
+| `[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | - |
+| `[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline` |
+| `[spin]` | 是否有旋转动画 | `boolean` | `false` |
+| `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | - |
+| `[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | - |
+| `[rotate]` | 图标旋转角度 | `number` | - |
 
 > 使用 `iconfont` 类型必须先加载 `NzIconService.fetchFromIconfont`，建议在根模块中执行。
