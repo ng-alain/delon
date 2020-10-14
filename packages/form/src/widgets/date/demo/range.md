@@ -35,6 +35,33 @@ export class DemoComponent {
         type: 'string',
         default: subWeeks(new Date(), 6),
       },
+      startWeek: {
+        type: 'string',
+        ui: { widget: 'date', rangeMode: 'week', end: 'endWeek' } as SFDateWidgetSchema,
+        default: new Date(),
+      },
+      endWeek: {
+        type: 'string',
+        default: subWeeks(new Date(), 6),
+      },
+      startMonth: {
+        type: 'string',
+        ui: { widget: 'date', rangeMode: 'month', end: 'endMonth' } as SFDateWidgetSchema,
+        default: new Date(),
+      },
+      endMonth: {
+        type: 'string',
+        default: subWeeks(new Date(), 6),
+      },
+      startYear: {
+        type: 'string',
+        ui: { widget: 'date', rangeMode: 'year', end: 'endYear' } as SFDateWidgetSchema,
+        default: new Date(),
+      },
+      endYear: {
+        type: 'string',
+        default: subWeeks(new Date(), 6),
+      },
     },
     required: ['start'],
   };

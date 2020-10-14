@@ -34,6 +34,7 @@ type: Widgets
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[mode]` | 渲染模式 | `date,week,month,year` | `date` |
+| `[rangeMode]` | 范围选择器的选择模式 | `date,week,month,year` | `date` |
 | `[size]` | 大小，等同 `nzSize` | `default,large,small` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[format]` | 数据格式化 | `string` | - |
