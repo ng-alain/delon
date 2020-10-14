@@ -67,6 +67,7 @@
   [nzShowPagination]="_isPagination"
   [nzFrontPagination]="false"
   [nzBordered]="bordered"
+  [nzOutBordered]="outBordered"
   [nzSize]="size"
   [nzLoading]="_loading"
   [nzLoadingDelay]="loadingDelay"
@@ -83,6 +84,8 @@
   [nzShowQuickJumper]="page.showQuickJumper"
   [nzShowSizeChanger]="page.showSize"
   [nzPaginationPosition]="page.position"
+  [nzItemRender]="page.itemRender"
+  [nzSimple]="page.simple"
   [nzShowTotal]="totalTpl"
   [nzWidthConfig]="_widthConfig"
 >

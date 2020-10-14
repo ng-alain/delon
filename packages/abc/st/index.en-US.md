@@ -55,6 +55,7 @@ If the component has been rendered, this error may appear when `columns` is chan
 | `[page]` | Pager configuration | `STPage` | - | ✅ |
 | `[noResult]` | Custom no result content | `string,TemplateRef<void>` | - | ✅ |
 | `[bordered]` | Whether to show all table borders | `boolean` | `false` | ✅ |
+| `[outBordered]` | Whether to show table outer borders | `boolean` | `false` | - |
 | `[size]` | Size of table | `'small','middle','default'` | `'default'` | ✅ |
 | `[widthMode]` | Set the table width mode | `STWidthMode` | - | ✅ |
 | `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | - | ✅ |
@@ -161,6 +162,8 @@ class TestComponent {
 | `[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double curly braces wrapper) | `boolean, string` | `false` | ✅ |
 | `[toTop]` | To top when pager changed | `boolean` | `true` | ✅ |
 | `[toTopOffset]` | To top offset value | `number` | `100` | ✅ |
+| `[itemRender]` | To customize Pagination item, same as Pagination | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
+| `[simple]` | Whether to use simple mode | `boolean` | - | ✅ |
 
 ### STError
 

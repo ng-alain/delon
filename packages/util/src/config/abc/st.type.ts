@@ -2,6 +2,7 @@ import { TemplateRef, TrackByFunction } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
+import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import { NzTableData } from 'ng-zorro-antd/table';
 
 export interface AlainSTConfig {
@@ -124,6 +125,14 @@ export interface AlainSTConfig {
      *  - `{{range[1]}}` 表示当前页结束数量值
      */
     total?: string | boolean;
+    /**
+     * 用于自定义页码的结构，用法参照 Pagination 组件
+     */
+    itemRender?: TemplateRef<PaginationItemRenderContext> | null;
+    /**
+     * 当添加该属性时，显示为简单分页，默认：`false`
+     */
+    simple?: boolean;
     /**
      * 切换分页时返回顶部，默认：`true`
      */

@@ -55,6 +55,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[page]` | 分页器配置 | `STPage` | - | ✅ |
 | `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | - | ✅ |
 | `[bordered]` | 是否显示边框 | `boolean` | `false` | ✅ |
+| `[outBordered]` | 是否显示外边框 | `boolean` | `false` | - |
 | `[size]` | table大小 | `'small','middle','default'` | `'default'` | ✅ |
 | `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | - | ✅ |
 | `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | - | ✅ |
@@ -161,6 +162,8 @@ class TestComponent {
 | `[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双花括号包裹） | `boolean, string` | `false` | ✅ |
 | `[toTop]` | 切换分页时返回顶部 | `boolean` | `true` | ✅ |
 | `[toTopOffset]` | 返回顶部偏移值 | `number` | `100` | ✅ |
+| `[itemRender]` | 用于自定义页码的结构，用法参照 Pagination 组件 | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
+| `[simple]` | 当添加该属性时，显示为简单分页 | `boolean` | - | ✅ |
 
 ### STError
 
