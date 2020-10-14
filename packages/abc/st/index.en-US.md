@@ -55,7 +55,6 @@ If the component has been rendered, this error may appear when `columns` is chan
 | `[page]` | Pager configuration | `STPage` | - | ✅ |
 | `[noResult]` | Custom no result content | `string,TemplateRef<void>` | - | ✅ |
 | `[bordered]` | Whether to show all table borders | `boolean` | `false` | ✅ |
-| `[outBordered]` | Whether to show table outer borders | `boolean` | `false` | - |
 | `[size]` | Size of table | `'small','middle','default'` | `'default'` | ✅ |
 | `[widthMode]` | Set the table width mode | `STWidthMode` | - | ✅ |
 | `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | - | ✅ |

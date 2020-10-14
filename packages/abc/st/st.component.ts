@@ -99,7 +99,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_total: NumberInput;
   static ngAcceptInputType_loadingDelay: NumberInput;
   static ngAcceptInputType_bordered: BooleanInput;
-  static ngAcceptInputType_outBordered: BooleanInput;
   static ngAcceptInputType_expandRowByClick: BooleanInput;
   static ngAcceptInputType_expandAccordion: BooleanInput;
   static ngAcceptInputType_rowClickTime: NumberInput;
@@ -169,7 +168,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() loadingDelay = 0;
   @Input() loadingIndicator: TemplateRef<void>;
   @Input() @InputBoolean() bordered = false;
-  @Input() @InputBoolean() outBordered = false;
   @Input() size: 'small' | 'middle' | 'default';
   @Input() scroll: { y?: string; x?: string };
   @Input() singleSort: STSingleSort;
