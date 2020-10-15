@@ -14,6 +14,13 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [10.0.2](https://github.com/ng-alain/delon/compare/10.0.1...10.0.2) (2020-10-15)
+
+### Bug Fixes
+
+* **abc:st:** 修复 `process` 的 `params` 不应该始终为 `HttpParsm` 类型 ([#1059](https://github.com/ng-alain/delon/issues/1059)) ([4d2dd0a](https://github.com/ng-alain/delon/commit/4d2dd0aadade43857e875562b26e7052ce54f1ba))
+
+
 ## [10.0.1](https://github.com/ng-alain/delon/compare/10.0.0...10.0.1) (2020-10-02)
 
 ### Bug Fixes
