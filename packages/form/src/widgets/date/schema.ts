@@ -56,6 +56,11 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   dropdownClassName?: string;
 
   /**
+   * Set picker mode of range picker, default: `date`
+   */
+  rangeMode?: 'date' | 'week' | 'month' | 'year';
+
+  /**
    * A callback emitter, can be executed whether the popup calendar is popped up or closed
    */
   onOpenChange?: (status: boolean) => void;

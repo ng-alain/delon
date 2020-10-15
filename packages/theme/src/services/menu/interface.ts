@@ -11,6 +11,8 @@ export interface MenuIcon {
   twoToneColor?: string;
   /** Type of the icon from iconfont */
   iconfont?: string;
+  /** Rotate degrees */
+  rotate?: number;
 }
 
 export interface Menu {

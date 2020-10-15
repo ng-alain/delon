@@ -27,6 +27,6 @@ type: Widgets
 | `[type]` | 渲染类型 | `card, default` | `default` |
 | `[cardSize]` | 等同 `nzSize` 属性 | `small, default` | `small` |
 | `[cardBodyStyle]` | 等同 `nzBodyStyle` 属性 | `{ [key: string]: string }` | - |
-| `[cardBordered]` | 等同 `nzBordered` 属性 | `boolean` | `true` |
+| `[cardBorderless]` | 等同 `nzBorderless` 属性 | `boolean` | `false` |
 | `[cardExtra]` | 等同 `nzExtra` 属性 | `string, TemplateRef<void>` | - |
 | `[cardActions]` | 等同 `nzActions` 属性 | `Array<TemplateRef<void>>` | - |

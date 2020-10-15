@@ -3,6 +3,7 @@ import { ElementRef, TemplateRef } from '@angular/core';
 import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
+import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import { STComponent } from './st.component';
 
 export interface STWidthMode {
@@ -143,6 +144,14 @@ export interface STPage {
    * 是否显示分页器中快速跳转，默认：`false`
    */
   showQuickJumper?: boolean;
+  /**
+   * 用于自定义页码的结构，用法参照 Pagination 组件
+   */
+  itemRender?: TemplateRef<PaginationItemRenderContext> | null;
+  /**
+   * 当添加该属性时，显示为简单分页，默认：`false`
+   */
+  simple?: boolean;
   /**
    * 是否显示总数据量
    * - `boolean` 类型显示与否，默认模板：`共 {{total}} 条`

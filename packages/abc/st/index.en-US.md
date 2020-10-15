@@ -161,6 +161,8 @@ class TestComponent {
 | `[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double curly braces wrapper) | `boolean, string` | `false` | ✅ |
 | `[toTop]` | To top when pager changed | `boolean` | `true` | ✅ |
 | `[toTopOffset]` | To top offset value | `number` | `100` | ✅ |
+| `[itemRender]` | To customize Pagination item, same as Pagination | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
+| `[simple]` | Whether to use simple mode | `boolean` | - | ✅ |
 
 ### STError
 

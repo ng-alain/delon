@@ -62,6 +62,11 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
   suffixIcon?: string;
 
   /**
+   * Whether hide border, Default: `false`
+   */
+  borderless?: boolean;
+
+  /**
    * 内容变更事件
    */
   change?: (val: string) => void;

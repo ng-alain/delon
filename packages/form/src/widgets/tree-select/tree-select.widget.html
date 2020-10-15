@@ -25,6 +25,10 @@
     [nzDefaultExpandAll]="i.defaultExpandAll"
     [nzDisplayWith]="i.displayWith"
     [ngModel]="value"
+    [nzVirtualHeight]="ui.virtualHeight"
+    [nzVirtualItemSize]="ui.virtualItemSize || 28"
+    [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx || 500"
+    [nzVirtualMinBufferPx]="ui.virtualMinBufferPx || 28"
     (ngModelChange)="change($event)"
     (nzExpandChange)="expandChange($event)"
   >

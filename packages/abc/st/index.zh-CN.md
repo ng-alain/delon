@@ -161,6 +161,8 @@ class TestComponent {
 | `[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双花括号包裹） | `boolean, string` | `false` | ✅ |
 | `[toTop]` | 切换分页时返回顶部 | `boolean` | `true` | ✅ |
 | `[toTopOffset]` | 返回顶部偏移值 | `number` | `100` | ✅ |
+| `[itemRender]` | 用于自定义页码的结构，用法参照 Pagination 组件 | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
+| `[simple]` | 当添加该属性时，显示为简单分页 | `boolean` | - | ✅ |
 
 ### STError
 

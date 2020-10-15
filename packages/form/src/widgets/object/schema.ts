@@ -34,8 +34,13 @@ export interface SFObjectWidgetSchema extends SFUISchemaItem {
   cardBodyStyle?: { [key: string]: string };
   /**
    * 等同 `nzBordered` 属性，默认：`true`
+   * @deprecated 使用 `cardBorderless` 替代
    */
   cardBordered?: boolean;
+  /**
+   * 等同 `nzBorderless` 属性，是否移除边框，默认：`false`
+   */
+  cardBorderless?: boolean;
   /**
    * 等同 `nzExtra` 属性
    */

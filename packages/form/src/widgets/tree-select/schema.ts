@@ -100,6 +100,26 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   treeTemplate?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
 
   /**
+   * The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualItemSize?: number;
+
+  /**
+   *  The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualMaxBufferPx?: number;
+
+  /**
+   * The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualMinBufferPx?: number;
+
+  /**
+   * The height of virtual scroll
+   */
+  virtualHeight?: string | null;
+
+  /**
    * 如何在输入框显示所选的节点值的方法
    */
   displayWith?: (node: NzTreeNode) => string | undefined;

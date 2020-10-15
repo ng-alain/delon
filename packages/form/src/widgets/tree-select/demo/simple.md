@@ -2,7 +2,7 @@
 title:
   zh-CN: 基础样例
   en-US: Basic Usage
-order: 0
+order: 1
 ---
 
 ## zh-CN

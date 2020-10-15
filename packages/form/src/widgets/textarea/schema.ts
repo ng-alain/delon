@@ -13,4 +13,9 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
    * 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`
    */
   autosize?: boolean | AutoSizeType;
+
+  /**
+   * Whether hide border, Default: `false`
+   */
+  borderless?: boolean;
 }

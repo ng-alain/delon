@@ -28,6 +28,8 @@ export const ST_DEFULAT_CONFIG: AlainSTConfig = {
     total: true,
     toTop: true,
     toTopOffset: 100,
+    itemRender: null,
+    simple: false,
   },
   modal: {
     paramsName: 'record',
