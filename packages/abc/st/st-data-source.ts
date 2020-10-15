@@ -259,7 +259,7 @@ export class STDataSource {
     };
 
     let reqOptions: STRequestOptions = {
-      params: new HttpParams({ fromObject: params }),
+      params,
       body: req.body,
       headers: req.headers,
     };
@@ -271,6 +271,9 @@ export class STDataSource {
     }
     if (typeof req.process === 'function') {
       reqOptions = req.process(reqOptions);
+    }
+    if (!(reqOptions.params instanceof HttpParams)) {
+      reqOptions.params = new HttpParams({ fromObject: reqOptions.params });
     }
     return this.http.request(method, url, reqOptions);
   }

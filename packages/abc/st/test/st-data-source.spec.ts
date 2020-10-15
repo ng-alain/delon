@@ -316,16 +316,16 @@ describe('abc: table: data-souce', () => {
       });
       it('should be process', done => {
         options.req.process = a => {
-          (a.params as NzSafeAny)!.PI = 2;
+          (a.params as NzSafeAny)!.pi = 2;
           return a;
         };
-        let resParams: any = {};
+        let resParams!: HttpParams;
         spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
         srv.process(options).subscribe(() => {
-          expect(resParams.PI).toBe(2);
+          expect(resParams.get('pi')?.toString()).toBe('2');
           done();
         });
       });
