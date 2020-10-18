@@ -1,3 +1,9 @@
+/**
+ * NOTE：`ACLType` 类型可能会被其他类库所引用，为了减少类库间彼此的依赖性，其他类库会以复制的形式存在
+ * 当这里有变化时，请务必同步更新，涉及：`MenuService.acl`
+ * TODO: 尝试增加 `@delon/core` 类库用于处理这种通用型
+ */
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface ACLType {

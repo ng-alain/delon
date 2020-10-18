@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ElementRef, TemplateRef } from '@angular/core';
+import { ACLCanType } from '@delon/acl';
 import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
@@ -310,7 +311,7 @@ export interface STColumn {
   /**
    * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
    */
-  acl?: any;
+  acl?: ACLCanType;
   /** 当不存在数据时以默认值替代 */
   default?: string;
   /**
@@ -527,7 +528,7 @@ export interface STColumnFilterMenu {
   /**
    * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
    */
-  acl?: any;
+  acl?: ACLCanType;
 
   [key: string]: any;
 }
@@ -542,7 +543,7 @@ export interface STColumnSelection {
    */
   select: (data: STData[]) => void;
   /** 权限，等同 `can()` 参数值 */
-  acl?: any;
+  acl?: ACLCanType;
 }
 
 /** 当 `type=yn` 有效 */
@@ -638,7 +639,7 @@ export interface STColumnButton {
   /**
    * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
    */
-  acl?: any;
+  acl?: ACLCanType;
   /**
    * Conditional expression
    *

@@ -44,7 +44,33 @@ export interface Menu {
   /** Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs */
   hideInBreadcrumb?: boolean;
   /** ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value */
-  acl?: any;
+  acl?:
+    | number
+    | number[]
+    | string
+    | string[]
+    | {
+        /**
+         * 角色
+         */
+        role?: string[];
+        /**
+         * 权限点
+         */
+        ability?: number[] | string[];
+
+        /**
+         * 校验模式，默认：`oneOf`
+         * - `allOf` 表示必须满足所有角色或权限点数组算有效
+         * - `oneOf` 表示只须满足角色或权限点数组中的一项算有效
+         */
+        mode?: 'allOf' | 'oneOf';
+
+        /**
+         * 是否取反，即结果为 `true` 时表示未授权
+         */
+        except?: boolean;
+      };
   /** Whether shortcut menu item */
   shortcut?: boolean;
   /** Wheter shortcut menu root node */
