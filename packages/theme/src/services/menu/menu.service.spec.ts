@@ -3,7 +3,7 @@ import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util';
 import { filter } from 'rxjs/operators';
 import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
-import { Menu } from './interface';
+import { Menu, MenuInner } from './interface';
 import { MenuService } from './menu.service';
 
 class MockACLService {
@@ -80,8 +80,8 @@ describe('Service: Menu', () => {
     it('should be hidden item when setting [hide] property', () => {
       const newMenus = [{ text: 'new menu' }, { text: 'new menu', hide: true }];
       srv.add(newMenus);
-      expect(srv.menus[0]._hidden).toBe(false);
-      expect(srv.menus[1]._hidden).toBe(true);
+      expect((srv.menus[0] as MenuInner)._hidden).toBe(false);
+      expect((srv.menus[1] as MenuInner)._hidden).toBe(true);
     });
 
     it('should be hidden group name when setting [group] property', () => {
@@ -102,22 +102,22 @@ describe('Service: Menu', () => {
       it('with url', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(`/dashboard/v1`);
-        expect(srv.menus[0]._open).toBe(true);
+        expect((srv.menus[0] as MenuInner)._open).toBe(true);
       });
       it('not found', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(`/notfound`);
-        expect(srv.menus.filter(w => w._open === false).length).toBe(srv.menus.length);
+        expect(srv.menus.filter((w: MenuInner) => w._open === false).length).toBe(srv.menus.length);
       });
       it('invalid url', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(null);
-        expect(srv.menus.filter(w => w._open === false).length).toBe(0);
+        expect(srv.menus.filter((w: MenuInner) => w._open === false).length).toBe(0);
       });
       it('recursive up find', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(`/dashboard/v1/1`, true);
-        expect(srv.menus[0]._open).toBe(true);
+        expect((srv.menus[0] as MenuInner)._open).toBe(true);
       });
     });
 
@@ -212,7 +212,7 @@ describe('Service: Menu', () => {
         srv.add(newMenus);
         const shortcutList = srv.menus[0].children![2].children;
         expect(shortcutList!.length).toBe(1);
-        expect(shortcutList![0]._parent).toBe(srv.menus[0].children![2]);
+        expect((shortcutList![0] as MenuInner)._parent).toBe(srv.menus[0].children![2]);
       });
     });
 
@@ -222,8 +222,8 @@ describe('Service: Menu', () => {
         { text: 'new menu', acl: 'user' },
       ];
       srv.add(newMenus);
-      expect(srv.menus[0]._aclResult).toBe(true);
-      expect(srv.menus[1]._aclResult).toBe(false);
+      expect((srv.menus[0] as MenuInner)._aclResult).toBe(true);
+      expect((srv.menus[1] as MenuInner)._aclResult).toBe(false);
     });
 
     it('#change', (done: () => void) => {

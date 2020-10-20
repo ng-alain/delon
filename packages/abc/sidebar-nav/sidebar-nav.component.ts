@@ -90,7 +90,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
 
     let item: Nav;
-    this.menuSrv.visit(this.list, i => {
+    this.menuSrv.visit(this.list, (i: Nav) => {
       if (!item && i._id === id) {
         item = i;
       }
@@ -257,7 +257,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
           i._open = i.open != null ? i.open : false;
         }
       });
-      this.list = menuSrv.menus.filter(w => w._hidden !== true);
+      this.list = menuSrv.menus.filter((w: Nav) => w._hidden !== true);
       cdr.detectChanges();
     });
     router.events.pipe(takeUntil(unsubscribe$)).subscribe(e => {

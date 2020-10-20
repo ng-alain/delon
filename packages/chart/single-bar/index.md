@@ -19,8 +19,8 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 | `[minusColor]` | 负值图表颜色 | `string` | `#ff4d4f` |
 | `[height]` | 图表高度 | `number` | `60` |
 | `[barSize]` | 柱状高度 | `number` | `30` |
-| `[min]` | 最大值，若小于0表示显示负值 | `number` | `0` |
-| `[max]` | 最小值 | `number` | `100` |
+| `[min]` | 最小值 | `number` | `0` |
+| `[max]` | 最大值，若小于0表示显示负值 | `number` | `100` |
 | `[padding]` | 图表内部间距 | `any` | `0` |
 | `[value]` | 值 | `number` | `0` |
 | `[format]` | 显示值格式 | `(value: number) => string` | - |

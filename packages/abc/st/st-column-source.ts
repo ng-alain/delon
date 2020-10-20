@@ -219,7 +219,7 @@ export class STColumnSource {
     this.updateDefault(res);
 
     if (this.acl) {
-      res.menus = res.menus!.filter(w => this.acl.can(w.acl));
+      res.menus = res.menus!.filter(w => this.acl.can(w.acl!));
     }
 
     if (res.menus!.length <= 0) {
@@ -371,7 +371,7 @@ export class STColumnSource {
         }
       }
       if (this.acl) {
-        item.selections = item.selections.filter(w => this.acl.can(w.acl));
+        item.selections = item.selections.filter(w => this.acl.can(w.acl!));
       }
       // radio
       if (item.type === 'radio') {
