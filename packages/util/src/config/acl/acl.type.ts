@@ -23,9 +23,9 @@ export interface AlainACLType {
   ability?: number[] | string[];
 
   /**
-   * 校验模式，默认：`oneOf`
-   * - `allOf` 表示必须满足所有角色或权限点数组算有效
-   * - `oneOf` 表示只须满足角色或权限点数组中的一项算有效
+   * Validated against, default: `oneOf`
+   * - `allOf` the value validates against all the roles or abilities
+   * - `oneOf` the value validates against exactly one of the roles or abilities
    */
   mode?: 'allOf' | 'oneOf';
 

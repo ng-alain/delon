@@ -3,7 +3,7 @@ import { ACLService } from '@delon/acl';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
-import { Menu, MenuIcon } from './interface';
+import { Menu, MenuIcon, MenuInner } from './interface';
 
 /**
  * 菜单服务，[在线文档](https://ng-alain.com/theme/menu)
@@ -48,7 +48,7 @@ export class MenuService implements OnDestroy {
     this.resume();
   }
 
-  private fixItem(item: Menu): void {
+  private fixItem(item: MenuInner): void {
     item._aclResult = true;
 
     if (!item.link) item.link = '';
@@ -106,7 +106,7 @@ export class MenuService implements OnDestroy {
   resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
     let i = 1;
     const shortcuts: Menu[] = [];
-    this.visit(this.data, (item, parent, depth) => {
+    this.visit(this.data, (item: MenuInner, parent, depth) => {
       item._id = i++;
       item._parent = parent;
       item._depth = depth;
@@ -131,12 +131,12 @@ export class MenuService implements OnDestroy {
    *      2、否则查找带有【dashboard】字样链接，若存在则在此菜单的下方创建快捷入口
    *      3、否则放在0节点位置
    */
-  private loadShortcut(shortcuts: Menu[]): void {
+  private loadShortcut(shortcuts: MenuInner[]): void {
     if (shortcuts.length === 0 || this.data.length === 0) {
       return;
     }
 
-    const ls = this.data[0].children as Menu[];
+    const ls = this.data[0].children as MenuInner[];
     let pos = ls.findIndex(w => w.shortcutRoot === true);
     if (pos === -1) {
       pos = ls.findIndex(w => w.link!.includes('dashboard'));
@@ -146,7 +146,7 @@ export class MenuService implements OnDestroy {
         i18n: 'shortcut',
         icon: 'icon-rocket',
         children: [],
-      } as Menu;
+      } as MenuInner;
       this.data[0].children!.splice(pos, 0, shortcutMenu);
     }
     let _data = this.data[0].children![pos];
@@ -157,7 +157,7 @@ export class MenuService implements OnDestroy {
       _id: -1,
       _parent: null,
       _depth: 1,
-    } as Menu);
+    } as MenuInner);
     _data.children = shortcuts.map(i => {
       i._depth = 2;
       i._parent = _data;
@@ -210,10 +210,10 @@ export class MenuService implements OnDestroy {
   openedByUrl(url: string | null, recursive: boolean = false): void {
     if (!url) return;
 
-    let findItem = this.getHit(this.data, url, recursive, i => {
+    let findItem = this.getHit(this.data, url, recursive, (i: MenuInner) => {
       i._selected = false;
       i._open = false;
-    });
+    }) as MenuInner;
     if (findItem == null) return;
 
     do {
@@ -230,7 +230,7 @@ export class MenuService implements OnDestroy {
    */
   getPathByUrl(url: string, recursive: boolean = false): Menu[] {
     const ret: Menu[] = [];
-    let item = this.getHit(this.data, url, recursive);
+    let item = this.getHit(this.data, url, recursive) as MenuInner;
 
     if (!item) return ret;
 

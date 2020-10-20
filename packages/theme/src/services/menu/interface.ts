@@ -60,9 +60,9 @@ export interface Menu {
         ability?: number[] | string[];
 
         /**
-         * 校验模式，默认：`oneOf`
-         * - `allOf` 表示必须满足所有角色或权限点数组算有效
-         * - `oneOf` 表示只须满足角色或权限点数组中的一项算有效
+         * Validated against, default: `oneOf`
+         * - `allOf` the value validates against all the roles or abilities
+         * - `oneOf` the value validates against exactly one of the roles or abilities
          */
         mode?: 'allOf' | 'oneOf';
 
@@ -83,18 +83,15 @@ export interface Menu {
   key?: string;
   /** Children menu of menu item */
   children?: Menu[];
-  /** @inner Not recommended */
+}
+
+/** @inner Just only inner type */
+export interface MenuInner extends Menu {
   _id?: number;
-  /** @inner Not recommended */
   _parent?: Menu | null;
-  /** @inner Not recommended */
   _depth?: number;
-  /** @inner Not recommended */
   _hidden?: boolean;
-  /** @inner Not recommended */
   _selected?: boolean;
-  /** @inner Not recommended */
   _open?: boolean;
-  /** @inner Not recommended */
   _aclResult?: boolean;
 }

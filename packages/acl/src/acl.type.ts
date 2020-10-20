@@ -1,6 +1,6 @@
 /**
  * NOTE：`ACLType` 类型可能会被其他类库所引用，为了减少类库间彼此的依赖性，其他类库会以复制的形式存在
- * 当这里有变化时，请务必同步更新，涉及：`MenuService.acl`
+ * 当这里有变化时，请务必同步更新，涉及：`MenuService.acl`、`util.AlainACLType`
  * TODO: 尝试增加 `@delon/core` 类库用于处理这种通用型
  */
 
@@ -17,9 +17,9 @@ export interface ACLType {
   ability?: number[] | string[];
 
   /**
-   * 校验模式，默认：`oneOf`
-   * - `allOf` 表示必须满足所有角色或权限点数组算有效
-   * - `oneOf` 表示只须满足角色或权限点数组中的一项算有效
+   * Validated against, default: `oneOf`
+   * - `allOf` the value validates against all the roles or abilities
+   * - `oneOf` the value validates against exactly one of the roles or abilities
    */
   mode?: 'allOf' | 'oneOf';
 
