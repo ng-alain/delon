@@ -229,6 +229,8 @@ export class MenuService implements OnDestroy {
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
   getPathByUrl(url: string, recursive: boolean = false): Menu[] {
+    url = url.match(/.+(?=;|\?.+=.+$)/) === null ? url : url.match(/.+(?=;|\?.+=.+$)/)[0];
+    
     const ret: Menu[] = [];
     let item = this.getHit(this.data, url, recursive) as MenuInner;
 
