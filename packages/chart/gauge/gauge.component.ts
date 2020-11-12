@@ -176,6 +176,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     _chart.changeData(data);
+    _chart.render();
   }
 
   ngOnInit(): void {

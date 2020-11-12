@@ -152,6 +152,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
     _chart.geometries.forEach(g => g.color('name', colors));
     _chart.changeData(data);
+    _chart.render();
 
     this.ngZone.run(() => this.genLegend());
   }

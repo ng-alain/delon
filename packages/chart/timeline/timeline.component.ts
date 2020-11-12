@@ -216,6 +216,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
     _chart.changeData(filterData);
+    _chart.render();
   }
 
   ngOnChanges(): void {

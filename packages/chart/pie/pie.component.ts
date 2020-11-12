@@ -185,6 +185,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
       item.percent = totalSum === 0 ? 0 : item.y / totalSum;
     }
     _chart.changeData(data);
+    _chart.render();
 
     this.ngZone.run(() => this.genLegend());
   }
