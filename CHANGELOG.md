@@ -1,3 +1,17 @@
+## [10.0.3](https://github.com/ng-alain/delon/compare/10.0.2...10.0.3) (2020-11-12)
+
+
+### Bug Fixes
+
+* **g2:*:** fix view can't be refresh when the data structure changed ([#1063](https://github.com/ng-alain/delon/issues/1063)) ([ff14726](https://github.com/ng-alain/delon/commit/ff14726d3cd28345a079bb5bc38d309292148c99))
+
+
+### Performance Improvements
+
+* optimize `acl` type ([#1061](https://github.com/ng-alain/delon/issues/1061)) ([93068fc](https://github.com/ng-alain/delon/commit/93068fc5c5ad30abdd1f0b013dba0c33be3ed7bc))
+
+
+
 ## [10.0.2](https://github.com/ng-alain/delon/compare/10.0.1...10.0.2) (2020-10-15)
 
 
