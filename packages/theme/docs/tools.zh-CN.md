@@ -54,19 +54,19 @@ Ant Design 并没有按钮色这一说，而是以视觉效果为基准。默认
 而 ng-alain 依然不会破坏这种规则，但依 [色彩](//ant.design/docs/spec/colors-cn) 章节，产生了一种运用于文本、背景的色系类。
 
 | 名称 | 基本色 | 说明 |
-| ---- | --- | --- |
-| `red` | `#f5222d` | 薄暮：斗志、奔放 |
-| `volcano` | `#fa541c` | 火山：醒目、澎湃 |
-| `orange` | `#fa8c16` | 日暮：温暖、欢快 |
-| `gold` | `#faad14` | 金盏花：活力、积极 |
-| `yellow` | `#fadb14` | 日出：出生、阳光 |
-| `lime` | `#a0d911` | 青柠：自然、生机 |
-| `green` | `#52c41a` |  极光绿：健康、创新 |
-| `cyan` | `#13c2c2` | 明青：希望、坚强 |
-| `blue` | `#1890ff` | 拂晓蓝：包容、科技、普惠 |
-| `geekblue` | `#2f54eb` | 极客蓝：探索、钻研 |
-| `purple` | `#722ed1` | 酱紫：优雅、浪漫 |
-| `magenta` | `#eb2f96` | 法式洋红：平稳、中性 |
+|---|---|---|
+| `red`      | <div style="background-color:#f5222d;color:#fff;">#f5222d</div> | 薄暮：斗志、奔放        |
+| `volcano`  | <div style="background-color:#fa541c;color:#fff;">#fa541c</div> | 火山：醒目、澎湃        |
+| `orange`   | <div style="background-color:#fa8c16;color:#fff;">#fa8c16</div> | 日暮：温暖、欢快        |
+| `gold`     | <div style="background-color:#faad14;color:#fff;">#faad14</div> | 金盏花：活力、积极      |
+| `yellow`   | <div style="background-color:#fadb14;color:#fff;">#fadb14</div> | 日出：出生、阳光        |
+| `lime`     | <div style="background-color:#a0d911;color:#fff;">#a0d911</div> | 青柠：自然、生机        |
+| `green`    | <div style="background-color:#52c41a;color:#fff;">#f5222d</div> | 极光绿：健康、创新      |
+| `cyan`     | <div style="background-color:#13c2c2;color:#fff;">#13c2c2</div> | 明青：希望、坚强        |
+| `blue`     | <div style="background-color:#1890ff;color:#fff;">#1890ff</div> | 拂晓蓝：包容、科技、普惠 |
+| `geekblue` | <div style="background-color:#2f54eb;color:#fff;">#2f54eb</div> | 极客蓝：探索、钻研      |
+| `purple`   | <div style="background-color:#722ed1;color:#fff;">#722ed1</div> | 酱紫：优雅、浪漫        |
+| `magenta`  | <div style="background-color:#eb2f96;color:#fff;">#eb2f96</div> | 法式洋红：平稳、中性    |
 
 Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生色。这些颜色基本可以满足中后台设计中对于颜色的需求。
 
