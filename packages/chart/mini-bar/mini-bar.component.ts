@@ -126,6 +126,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.height = height;
     _chart.padding = padding;
     _chart.changeData(data);
+    _chart.render();
   }
 
   ngOnInit(): void {

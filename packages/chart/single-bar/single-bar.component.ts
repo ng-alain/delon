@@ -108,6 +108,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.padding = padding;
     _chart.geometries[0].color('value', (val: number) => (val > 0 ? plusColor : minusColor)).size(barSize);
     _chart.changeData([{ value }]);
+    _chart.render();
   }
 
   ngOnInit(): void {

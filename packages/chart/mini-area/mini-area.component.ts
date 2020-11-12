@@ -159,6 +159,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     _chart.padding = padding;
 
     _chart.changeData(data);
+    _chart.render();
   }
 
   ngOnInit(): void {
