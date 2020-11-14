@@ -15,7 +15,7 @@
       <ng-content></ng-content>
     </div>
   </div>
-  <div class="ant-form-item-explain" *ngIf="showErr">
+  <div class="ant-form-item-explain ant-form-item-explain-error" *ngIf="showErr">
     <div @helpMotion>
       <ng-container *nzStringTemplateOutlet="_error">{{ _error }}</ng-container>
     </div>
