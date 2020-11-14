@@ -16,6 +16,7 @@
       [nzDropdownClassName]="ui.dropdownClassName"
       (nzOnOpenChange)="_openChange($event)"
       [nzRenderExtraFooter]="ui.renderExtraFooter"
+      [nzInputReadOnly]="ui.inputReadOnly"
     ></nz-year-picker>
 
     <nz-month-picker
@@ -34,6 +35,7 @@
       [nzDropdownClassName]="ui.dropdownClassName"
       (nzOnOpenChange)="_openChange($event)"
       [nzRenderExtraFooter]="ui.renderExtraFooter"
+      [nzInputReadOnly]="ui.inputReadOnly"
     ></nz-month-picker>
 
     <nz-week-picker
@@ -50,6 +52,7 @@
       [nzPlaceHolder]="ui.placeholder"
       [nzPopupStyle]="ui.popupStyle"
       [nzDropdownClassName]="ui.dropdownClassName"
+      [nzInputReadOnly]="ui.inputReadOnly"
       (nzOnOpenChange)="_openChange($event)"
     ></nz-week-picker>
 
@@ -73,6 +76,7 @@
       [nzRanges]="ui.ranges"
       [nzShowTime]="ui.showTime"
       [nzMode]="ui.rangeMode"
+      [nzInputReadOnly]="ui.inputReadOnly"
       (nzOnOk)="_ok($event)"
     ></nz-range-picker>
 
@@ -95,6 +99,7 @@
       [nzRenderExtraFooter]="ui.renderExtraFooter"
       [nzShowTime]="ui.showTime"
       [nzShowToday]="i.showToday"
+      [nzInputReadOnly]="ui.inputReadOnly"
       (nzOnOk)="_ok($event)"
     ></nz-date-picker>
   </ng-container>
