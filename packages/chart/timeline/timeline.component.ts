@@ -156,6 +156,15 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
+    chart.on(`legend-item:click`, (ev: Event) => {
+      const item = ev?.target?.get('delegateObject').item;
+      const id = item?.id;
+      const line = chart.geometries.find(w => w.getAttribute('position').getFields()[1] === id);
+      if (line) {
+        line.changeVisible(!item.unchecked);
+      }
+    });
+
     this.attachChart();
   }
 
@@ -171,7 +180,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       custom: true,
       items: arrAxis.map(id => {
         const key = `y${id}`;
-        return { name: titleMap[key], value: titleMap[key], marker: { style: { fill: colorMap[key] } } } as Types.LegendItem;
+        return { id: key, name: titleMap[key], value: key, marker: { style: { fill: colorMap[key] } } } as Types.LegendItem;
       }),
     });
 
