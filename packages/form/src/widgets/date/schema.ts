@@ -91,6 +91,11 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   showToday?: boolean;
 
   /**
+   * Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices), default: `false`
+   */
+  inputReadOnly?: boolean;
+
+  /**
    * Callback when click ok button
    */
   onOk?: (data: Date | Date[]) => void;
