@@ -14,6 +14,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [10.1.0](https://github.com/ng-alain/delon/compare/10.0.3...10.1.0) (2020-11-17)
+
+### Bug Fixes
+
+* **abc:se:** 修复异常样式 ([#1067](https://github.com/ng-alain/delon/issues/1067)) ([d8c1cee](https://github.com/ng-alain/delon/commit/d8c1cee92d6505cde2f7e97c08ee7e194723d249))
+* **chart:timeline:** 修复点击图例无法隐藏 ([#1068](https://github.com/ng-alain/delon/issues/1068)) ([ba6f9b3](https://github.com/ng-alain/delon/commit/ba6f9b37cba0eb9836467431ed9d8b85166062a0))
+* **form:** 修复内联模式部分小部件错位 ([#1069](https://github.com/ng-alain/delon/issues/1069)) ([18bb8a8](https://github.com/ng-alain/delon/commit/18bb8a8488facda4757e7ffcfa3022c9b4a4cd61))
+
+### Features
+
+* **abc:se,sv,form:** 新增 `optionalHelpColor` 属性 ([#1070](https://github.com/ng-alain/delon/issues/1070)) ([125606c](https://github.com/ng-alain/delon/commit/125606cff431203de7f5f640cb4479ad1a6cc19e))
+* **module:sf:date:** 新增 `nzInputReadOnly` 属性 ([#1066](https://github.com/ng-alain/delon/issues/1066)) ([c3b6b87](https://github.com/ng-alain/delon/commit/c3b6b878ec3cbc0f53e30fa1db3cf98b47733259))
+
 ## [10.0.3](https://github.com/ng-alain/delon/compare/10.0.2...10.0.3) (2020-11-12)
 
 ### Bug Fixes
