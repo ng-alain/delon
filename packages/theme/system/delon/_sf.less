@@ -105,6 +105,9 @@
     sf-item {
       display: inline-block;
       margin-bottom: 8px;
+      sf-object {
+        display: flex;
+      }
     }
     .@{ant-prefix}-form-inline {
       > sf-item {
@@ -120,6 +123,9 @@
     @media (max-width: @mobile-max) {
       sf-item {
         display: block;
+        sf-object {
+          display: inline;
+        }
         .@{ant-prefix}-form-item {
           display: block !important;
           width: initial !important;
