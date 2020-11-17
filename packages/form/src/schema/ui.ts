@@ -89,6 +89,8 @@ export interface SFRenderSchema {
 export interface SFOptionalHelp {
   text?: string;
   i18n?: string;
+  /** 文字提示背景颜色 */
+  bgColor?: string;
   /** 图标，默认：`question-circle` */
   icon?: string;
   placement?: SFPlacement;

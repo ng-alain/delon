@@ -58,6 +58,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[labelWidth]` | label text of width, unit is `px` (Inherited from `se-container`) | `number` | - |
 | `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |
 | `[error]` | validation error message | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | - |
 | `[extra]` | The extra prompt message. It is similar to help. | `string, TemplateRef<void>` | - |
 | `[required]` | Whether required identifier, if not set, the value is automatically set according to whether the form element has `RequiredValidator` validation | `string` | - |

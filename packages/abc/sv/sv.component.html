@@ -4,7 +4,7 @@
   </span>
   <span *ngIf="optional || optionalHelp" class="sv__label-optional" [class.sv__label-optional-no-text]="!optional">
     <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
-    <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
+    <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" [nzTooltipColor]="optionalHelpColor" nz-icon nzType="question-circle"></i>
   </span>
 </div>
 <div class="sv__detail">
