@@ -69,6 +69,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
+  @Input() optionalHelpColor: string;
   @Input()
   set error(val: SEErrorType) {
     this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;

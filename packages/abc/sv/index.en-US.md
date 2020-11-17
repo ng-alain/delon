@@ -34,6 +34,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[type]` | type of view | `'primary','success','danger','warning'` | - |
 | `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |
 
 ### sv-title
 

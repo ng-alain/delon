@@ -51,6 +51,12 @@ export class DemoComponent {
         type: 'string',
         format: 'color',
         title: '颜色',
+        ui: {
+          optionalHelp: {
+            text: '我是有背景颜色的喔',
+            bgColor: '#f50',
+          },
+        },
       },
     },
     required: ['name'],

@@ -23,11 +23,9 @@ import { Component } from '@angular/core';
       <se-title>Title 1</se-title>
       <se label="ID" col="1" [optionalHelp]="optionalHelpTpl">
         1000
-        <ng-template #optionalHelpTpl>
-          Via by ng-template
-        </ng-template>
+        <ng-template #optionalHelpTpl> Via by ng-template </ng-template>
       </se>
-      <se label="Name" required col="3">
+      <se label="Name" required col="3" optionalHelp="The background color is #f50" optionalHelpColor="#f50">
         <input type="text" nz-input [(ngModel)]="i.user_name" name="user_name" required />
       </se>
       <se label="Age" required col="3">

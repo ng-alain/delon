@@ -58,6 +58,7 @@ module: import { SEModule } from '@delon/abc/se';
 | `[labelWidth]` | 标签文本宽度，单位：`px`（继承于 `se-container`） | `number` | - |
 | `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |
 | `[error]` | 错误描述 | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | - |
 | `[extra]` | 额外提示信息 | `string, TemplateRef<void>` | - |
 | `[required]` | 是否必填项标识符，若不设置自动根据表单元素是否有 `RequiredValidator` 校验来设置值 | `string` | - |

@@ -43,6 +43,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
+  @Input() optionalHelpColor: string;
   @Input() label: string | TemplateRef<void>;
   @Input() unit: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;

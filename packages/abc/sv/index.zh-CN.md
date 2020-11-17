@@ -34,6 +34,7 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[type]` | 类型 | `'primary','success','danger','warning'` | - |
 | `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |
 
 ### sv-title
 
