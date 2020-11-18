@@ -57,9 +57,26 @@ export function retrieveSchema(schema: SFSchema, definitions: SFSchemaDefinition
   return schema;
 }
 
-export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
-  if (!(schema.hasOwnProperty('if') && schema.hasOwnProperty('then'))) return null;
+export function resolveIfSchema(_schema: SFSchema, _ui: SFUISchemaItemRun): void {
+  const fn = (schema: SFSchema, ui: SFUISchemaItemRun) => {
+    resolveIf(schema, ui);
 
+    Object.keys(schema.properties!).forEach(key => {
+      const property = schema.properties![key];
+      const uiKey = `$${key}`;
+      if (property.items) {
+        fn(property.items, ui[uiKey].$items);
+      }
+      if (property.properties) {
+        fn(property, ui[uiKey]);
+      }
+    });
+  };
+  fn(_schema, _ui);
+}
+
+function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
+  if (!(schema.hasOwnProperty('if') && schema.hasOwnProperty('then'))) return null;
   if (!schema.if!.properties) throw new Error(`if: does not contain 'properties'`);
 
   const allKeys = Object.keys(schema.properties!);
@@ -82,7 +99,9 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | n
   });
 
   schema.then!.required!.forEach(key => (ui[`$${key}`].visibleIf = visibleIf));
-  if (hasElse) schema.else!.required!.forEach(key => (ui[`$${key}`].visibleIf = visibleElse));
+  if (hasElse) {
+    schema.else!.required!.forEach(key => (ui[`$${key}`].visibleIf = visibleElse));
+  }
 
   return schema;
 }

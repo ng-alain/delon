@@ -31,7 +31,7 @@ import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
 import { SFOptionalHelp, SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { TerminatorService } from './terminator.service';
-import { di, resolveIf, retrieveSchema } from './utils';
+import { di, resolveIfSchema, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
@@ -388,20 +388,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       });
     };
 
-    const inIfFn = (schema: SFSchema, ui: SFUISchemaItemRun) => {
-      Object.keys(schema.properties!).forEach(key => {
-        const property = schema.properties![key];
-        const uiKey = `$${key}`;
-        resolveIf(property, ui[uiKey]);
-        if (property.items) {
-          inIfFn(property.items, ui[uiKey].$items);
-        }
-        if (property.properties) {
-          inIfFn(property, ui[uiKey]);
-        }
-      });
-    };
-
     if (this.ui == null) this.ui = {};
     this._defUi = {
       onlyVisual: this.options.onlyVisual,
@@ -426,8 +412,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     inFn(_schema, _schema, this.ui, this.ui, this._ui);
 
     // cond
-    resolveIf(_schema, this._ui);
-    inIfFn(_schema, this._ui);
+    resolveIfSchema(_schema, this._ui);
+    console.log(_schema, this._ui);
 
     this._schema = _schema;
 
