@@ -23,7 +23,7 @@ export class CountDownComponent {
   set target(value: number | Date) {
     this.config = {
       format: `HH:mm:ss`,
-      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : +format(value, 'x'),
+      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : +format(value, 't'),
     };
   }
 
