@@ -6,6 +6,7 @@ import { ArrayLayoutWidget } from '../../widget';
 @Component({
   selector: 'sf-array',
   templateUrl: './array.widget.html',
+  host: { '[class.sf__array]': 'true' },
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })

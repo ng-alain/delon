@@ -21,6 +21,7 @@ let nextUniqueId = 0;
 @Component({
   selector: 'sf-item',
   exportAs: 'sfItem',
+  host: { '[class.sf__item]': 'true' },
   template: ` <ng-template #target></ng-template> `,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
