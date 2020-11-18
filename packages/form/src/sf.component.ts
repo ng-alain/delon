@@ -413,7 +413,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     // cond
     resolveIfSchema(_schema, this._ui);
-    console.log(_schema, this._ui);
 
     this._schema = _schema;
 
