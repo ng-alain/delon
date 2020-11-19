@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { STWidgetRegistry } from '@delon/abc';
+import { STWidgetRegistry } from '@delon/abc/st';
 import { SharedModule } from '../shared.module';
 import { STImgWidget } from './img.widget';
 
