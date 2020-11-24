@@ -182,55 +182,61 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: _STColumn, idx: number): { text: any; _text: SafeHtml; org?: any; color?: string } {
-    if (col.format) {
-      const formatRes = col.format(item, col, idx) || '';
-      if (formatRes && ~formatRes.indexOf('</')) {
-        return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
-      }
-      return { text: formatRes, _text: formatRes, org: formatRes };
-    }
-
-    const value = deepGet(item, col.index as string[], col.default);
-
-    let text = value;
-    let color: string | undefined;
-    switch (col.type) {
-      case 'no':
-        text = this.getNoIndex(item, col, idx);
-        break;
-      case 'img':
-        text = value ? `<img src="${value}" class="img">` : '';
-        break;
-      case 'number':
-        text = this.numberPipe.transform(value, col.numberDigits);
-        break;
-      case 'currency':
-        text = this.currentyPipe.transform(value);
-        break;
-      case 'date':
-        text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
-        break;
-      case 'yn':
-        text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);
-        break;
-      case 'enum':
-        text = col.enum![value];
-        break;
-      case 'tag':
-      case 'badge':
-        const data = col.type === 'tag' ? col.tag : col.badge;
-        if (data && data[text]) {
-          const dataItem = data[text];
-          text = dataItem.text;
-          color = dataItem.color;
-        } else {
-          text = '';
+  private get(item: STData, col: _STColumn, idx: number): { text: string; _text: SafeHtml; org?: any; color?: string } {
+    try {
+      if (col.format) {
+        const formatRes = col.format(item, col, idx) || '';
+        if (formatRes && ~formatRes.indexOf('</')) {
+          return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
         }
-        break;
+        return { text: formatRes, _text: formatRes, org: formatRes };
+      }
+
+      const value = deepGet(item, col.index as string[], col.default);
+
+      let text = value;
+      let color: string | undefined;
+      switch (col.type) {
+        case 'no':
+          text = this.getNoIndex(item, col, idx);
+          break;
+        case 'img':
+          text = value ? `<img src="${value}" class="img">` : '';
+          break;
+        case 'number':
+          text = this.numberPipe.transform(value, col.numberDigits);
+          break;
+        case 'currency':
+          text = this.currentyPipe.transform(value);
+          break;
+        case 'date':
+          text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
+          break;
+        case 'yn':
+          text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);
+          break;
+        case 'enum':
+          text = col.enum![value];
+          break;
+        case 'tag':
+        case 'badge':
+          const data = col.type === 'tag' ? col.tag : col.badge;
+          if (data && data[text]) {
+            const dataItem = data[text];
+            text = dataItem.text;
+            color = dataItem.color;
+          } else {
+            text = '';
+          }
+          break;
+      }
+      if (text == null) text = '';
+      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
+    } catch (ex) {
+      const text = `INVALID DATA`;
+      console.error(`Failed to get data`, item, col, ex);
+      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: text };
     }
-    if (text == null) text = '';
-    return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
   }
 
   private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {

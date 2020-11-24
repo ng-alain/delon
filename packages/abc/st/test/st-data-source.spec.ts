@@ -815,6 +815,16 @@ describe('abc: table: data-souce', () => {
         done();
       });
     });
+    it('should be throw error when is invalid data', done => {
+      options.data = [{ age: 'invalid-number' }];
+      options.columns = [{ title: '', index: 'age', type: 'number' }];
+      spyOn(console, 'error');
+      srv.process(options).subscribe(res => {
+        expect(console.error).toHaveBeenCalled();
+        expect(res.list[0]._values[0].text).toBe('INVALID DATA');
+        done();
+      });
+    });
   });
 
   describe('[statistical]', () => {
