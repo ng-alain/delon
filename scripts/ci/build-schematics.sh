@@ -65,7 +65,6 @@ DEPENDENCIES=$(node -p "
     '@antv/data-set',
     '@antv/g2',
     'ngx-countdown',
-    '@angularclass/hmr',
     'ng-alain-codelyzer',
     'ng-alain-sts',
     'ng-alain-plugin-theme',
@@ -250,7 +249,7 @@ integrationCli() {
   echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running ng g ng-alain:ng-add"
-  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true
+  ng g ng-alain:ng-add --defaultLanguage=en --codeStyle=true --form=true --mock=true --i18n=true
   echo ">>> Install dependencies"
   npm i
   echo ">>> Copy again ng-alain"

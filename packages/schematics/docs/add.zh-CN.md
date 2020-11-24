@@ -19,7 +19,6 @@ ng add ng-alain --defaultLanguage=en
 | ------------------- | ------- | ----------------------------------------------------- |
 | `--form`            | `true`  | 是否需要动态表单                                      |
 | `--mock`            | `true`  | 是否需要 mock 功能                                    |
-| `--hmr`             | `true`  | 是否需要 hmr 热替换                                   |
 | `--defaultLanguage` | `zh`    | 默认语言，[支持语言列表](/cli/plugin/zh#支持语言列表) |
 | `--codeStyle`       | `false` | 是否需要代码风格                                      |
 | `--i18n`            | `false` | 是否需要国际化支持                                    |

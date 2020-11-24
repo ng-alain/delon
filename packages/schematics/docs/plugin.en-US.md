@@ -44,23 +44,6 @@ ng g ng-alain:plugin codeStyle
 ng g ng-alain:plugin codeStyle -t=remove
 ```
 
-### hmr
-
-Support HMR.
-
-```bash
-# add
-ng g ng-alain:plugin hmr
-# remove
-ng g ng-alain:plugin hmr -t=remove
-```
-
-After installation, you can start HMR in the development environment:
-
-```bash
-npm run hmr
-```
-
 ### ie
 
 IE browser can only be used under ES5. For more details, please refer to [Support IE11](/docs/ie11).
@@ -72,7 +55,7 @@ ng g ng-alain:plugin ie
 ng g ng-alain:plugin ie -t=remove
 ```
 
-After installation, you can use `npm run ie: start` or` npm run ie: hmr` to enter IE11 development environment.
+After installation, you can use `npm run ie: start` to enter IE11 development environment.
 
 ### docker
 

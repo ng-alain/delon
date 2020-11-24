@@ -134,7 +134,6 @@ export function addAllowedCommonJsDependencies(host: Tree): void {
   [
     // 'codesandbox/lib/api/define',
     'hammerjs',
-    '@angularclass/hmr',
     'file-saver',
     '@ant-design/colors',
     '@antv/path-util',
