@@ -39,6 +39,10 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
 
 If the component has been rendered, this error may appear when `columns` is changed again. This is because `st` will only process the data according to `columns` each time. When the column definition changes, it may be because of the column definition. Unable to match with existing data, you may need to use `this.st.resetColumns({ columns: [], emitReload: true })` to update the column definition and reload the data.
 
+**Show INVALID DATA**
+
+When an exception is thrown when parsing column data, *INVALID DATA* will be forced to display. For example, when a column is specified `type:'number'`, an exception will be thrown when the actual value obtained is not a valid number type.
+
 ## API
 
 ### st
