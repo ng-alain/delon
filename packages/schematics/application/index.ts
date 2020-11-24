@@ -477,7 +477,6 @@ export default function (options: ApplicationOptions): Rule {
       fixVsCode(),
       fixAngularJson(options),
       installPackages(),
-      // applyLintFix(),
     ])(host, context);
   };
 }
