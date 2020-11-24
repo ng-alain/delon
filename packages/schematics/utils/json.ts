@@ -121,12 +121,15 @@ export function scriptsToAngularJson(
   return host;
 }
 
-export function addAllowedCommonJsDependencies(host: Tree): void {
+export function addAllowedCommonJsDependencies(host: Tree, items?: string[]): void {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json);
   let list = project.architect.build.options.allowedCommonJsDependencies as string[];
   if (!Array.isArray(list)) {
     list = [];
+  }
+  if (Array.isArray(items)) {
+    list = [...list, ...items];
   }
 
   const result = new Set<string>(...list);
@@ -148,6 +151,24 @@ export function addAllowedCommonJsDependencies(host: Tree): void {
   ].forEach(key => result.add(key));
 
   project.architect.build.options.allowedCommonJsDependencies = Array.from(result).sort();
+
+  overwriteAngular(host, json);
+}
+
+export function removeAllowedCommonJsDependencies(host: Tree, key: string): void {
+  const json = getAngular(host);
+  const project = getProjectFromWorkspace(json);
+  const list = project.architect.build.options.allowedCommonJsDependencies as string[];
+  if (!Array.isArray(list)) {
+    return;
+  }
+
+  const pos = list.indexOf(key);
+  if (pos === -1) return;
+
+  list.splice(pos, 1);
+
+  project.architect.build.options.allowedCommonJsDependencies = list.sort();
 
   overwriteAngular(host, json);
 }

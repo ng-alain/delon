@@ -6,6 +6,10 @@
       "schema": "./ng-add/schema.json",
       "aliases": ["alain-shell"]
     },
+    "ng-update": {
+      "factory": "./ng-update/index#updateToV11",
+      "description": "Create an Alain workspace."
+    },
     "application": {
       "factory": "./application",
       "schema": "./application/schema.json",
