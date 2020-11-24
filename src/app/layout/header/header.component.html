@@ -35,9 +35,7 @@
       </a>
     </li>
     <li *ngIf="showGitee" nz-menu-item>
-      <a href="https://ng-alain.gitee.io/delon/" target="_blank">
-        国内镜像
-      </a>
+      <a href="https://ng-alain.gitee.io/delon/" target="_blank"> 国内镜像 </a>
     </li>
     <ng-container *ngIf="isMobile">
       <a nz-menu-item href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a>
@@ -56,15 +54,15 @@
   nzPopoverPlacement="bottomRight"
   [nzPopoverContent]="menu"
   nzPopoverTrigger="click"
-  [(nzVisible)]="menuVisible"
+  [(nzPopoverVisible)]="menuVisible"
   [nzPopoverTitle]="null"
   class="nav-phone-icon"
 ></i>
-<div nz-row style="flex-flow: nowrap; height: 64px;">
+<div nz-row style="flex-flow: nowrap; height: 64px">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="5" nzXXl="4">
     <h1>
       <a routerLink="/{{ i18n.zone }}" nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | translate }}: 316911865" (click)="onCopy('316911865')" id="logo">
-        <img src="./assets/img/logo-color.svg" style="max-height: 32px;" />
+        <img src="./assets/img/logo-color.svg" style="max-height: 32px" />
         NG-ALAIN
       </a>
     </h1>
