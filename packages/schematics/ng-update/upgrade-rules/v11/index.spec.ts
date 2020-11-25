@@ -15,7 +15,7 @@ describe('Schematic: ng-update: v11Rule', () => {
     await runner.runSchematicAsync('migration-v11', {}, tree).toPromise();
   }
 
-  xit(`should be can't migrate when 'hmr.ts' not found`, async () => {
+  it(`should be can't migrate when 'hmr.ts' not found`, async () => {
     const hmrTsPath = `${FILE_PREFIX}/src/hmr.ts`;
     expect(tree.exists(hmrTsPath)).toBe(false);
     await runMigration();
