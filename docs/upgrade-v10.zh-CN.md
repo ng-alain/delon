@@ -18,7 +18,7 @@ hot: true
 本文描述是指从 `9.x` 升级至 `10` 的描述说明；NG-ALAIN 只需一行命令即可：
 
 ```bash
-ng update @angular/core @angular/cli ng-zorro-antd ng-alain
+ng update @angular/core@10 @angular/cli@10 ng-zorro-antd@10 ng-alain@10
 ```
 
 ## 二、移除过期

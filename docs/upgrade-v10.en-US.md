@@ -18,7 +18,7 @@ hot: true
 This description refers to the description of the upgrade from `9.x` to `10`; NG-ALAIN only needs one lines of commands:
 
 ```bash
-ng update @angular/core @angular/cli ng-zorro-antd ng-alain
+ng update @angular/core@10 @angular/cli@10 ng-zorro-antd@10 ng-alain@10
 ```
 
 ## 2. Remove deprecation
