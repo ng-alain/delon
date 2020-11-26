@@ -44,6 +44,7 @@ ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
 npm start
+# 或者使用 HMR 模式启用 npm run hmr
 ```
 
 > 请参考[命令行工具](/cli)了解更多细节。
@@ -55,6 +56,7 @@ git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
 yarn
 npm start
+# 或者使用 HMR 模式启用 npm run hmr
 ```
 
 > 注：使用CLI安装，是一个干净的脚手架；使用克隆代码会包含所有示例。
