@@ -1,6 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-import { createAlainApp } from '../../../utils/testing';
-import { migrationCollection } from '../../test-cases/index.spec';
+import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
 describe('Schematic: ng-update: v10Rule', () => {
   let runner: SchematicTestRunner;

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,14 +12,14 @@ import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 // #region third libs
 
-const THIRDMODULES = [ ];
+const THIRDMODULES: Type<any>[] = [ ];
 
 // #endregion
 
 // #region your componets & directives
 
-const COMPONENTS = [];
-const DIRECTIVES = [];
+const COMPONENTS: Type<any>[] = [];
+const DIRECTIVES: Type<any>[] = [];
 
 // #endregion
 

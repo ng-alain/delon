@@ -15,7 +15,6 @@ package.json
 src/app/routes/gen/
 src/templates/
 packages/schematics/**/files/
-packages/schematics/**/test-cases/
 packages/theme/system/mixins/_freak.less
 packages/theme/system/mixins/_functions.less
 theme-default.less

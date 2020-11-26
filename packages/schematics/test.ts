@@ -13,9 +13,7 @@ const Jasmine = require('jasmine');
 const runner = new Jasmine({ projectBaseDir });
 
 // const files = `packages/schematics/**/*.spec.ts`;
-const files = `packages/schematics/application/index.spec.ts`;
-// const files = `packages/schematics/ng-update/test-cases/v2-test-cases.spec.ts`;
-// const files = `packages/schematics/ng-update/test-cases/misc/deprecated-property-checks.spec.ts`;
+const files = `packages/schematics/ng-update/upgrade-rules/v11/index.spec.ts`;
 
 const tests = glob.sync(files).map(p => relative(projectBaseDir, p));
 

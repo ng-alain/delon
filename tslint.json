@@ -80,11 +80,6 @@
     "unified-signatures": true
   },
   "linterOptions": {
-    "exclude": [
-      "packages/schematics/**/files/**/*",
-      "packages/schematics/**/test-cases/misc/**/*",
-      "packages/schematics/**/test-cases/v2/**/*",
-      "src/app/routes/gen/**/*"
-    ]
+    "exclude": ["packages/schematics/**/files/**/*", "src/app/routes/gen/**/*"]
   }
 }

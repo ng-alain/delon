@@ -38,7 +38,7 @@ export function StartupServiceFactory(startupService: StartupService): () => Pro
 
 function registerElements(injector: Injector, platformId: {}): void {
   // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
-  if (!isPlatformBrowser(platformId)) {
+  if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
     return;
   }
   const { createCustomElement } = require('@angular/elements');

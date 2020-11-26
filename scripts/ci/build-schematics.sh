@@ -65,7 +65,6 @@ DEPENDENCIES=$(node -p "
     '@antv/data-set',
     '@antv/g2',
     'ngx-countdown',
-    '@angularclass/hmr',
     'ng-alain-codelyzer',
     'ng-alain-sts',
     'ng-alain-plugin-theme',
@@ -159,6 +158,7 @@ copyFiles() {
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
+    "${1}src/app/layout/default/theme-btn|${2}application/files/src/app/layout/default/"
     # "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
@@ -193,7 +193,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 -b issues-ng11 https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -250,7 +250,7 @@ integrationCli() {
   echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running ng g ng-alain:ng-add"
-  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true
+  ng g ng-alain:ng-add --defaultLanguage=en --codeStyle=true --form=true --mock=true --i18n=true
   echo ">>> Install dependencies"
   npm i
   echo ">>> Copy again ng-alain"
@@ -297,7 +297,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain-8/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng11-strict/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

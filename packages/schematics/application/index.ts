@@ -16,8 +16,6 @@ import {
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
 import { getLangData } from '../core/lang.config';
-import { tryAddFile } from '../utils/alain';
-import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
@@ -56,13 +54,6 @@ function removeOrginalFiles(): (host: Tree) => void {
     ]
       .filter(p => host.exists(p))
       .forEach(p => host.delete(p));
-  };
-}
-
-function fixMain(): (host: Tree) => void {
-  return (host: Tree) => {
-    // fix: main.ts using no hmr file
-    tryAddFile(host, `${project.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
   };
 }
 
@@ -123,6 +114,7 @@ function addRunScriptToPackageJson(): (host: Tree) => void {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
     json.scripts.start = `ng s -o`;
+    json.scripts.hmr = `ng s -o --hmr`;
     json.scripts.build = `node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod`;
     json.scripts.analyze = `node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
@@ -470,14 +462,12 @@ export default function (options: ApplicationOptions): Rule {
       removeOrginalFiles(),
       addFilesToRoot(options),
       addCliTpl(),
-      fixMain(),
       forceLess(),
       addStyle(),
       fixLang(options),
       fixVsCode(),
       fixAngularJson(options),
       installPackages(),
-      // applyLintFix(),
     ])(host, context);
   };
 }

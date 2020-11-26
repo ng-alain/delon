@@ -2,7 +2,14 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 import { join } from 'path';
 import { Schema as NgAddSchema } from '../ng-add/schema';
 
+/** Path to the collection file for the Material schematics */
+export const collectionPath = join(__dirname, '..', 'collection.json');
+
+/** Path to the migration file for the Material update schematics */
+export const migrationCollection = join(__dirname, '..', 'migration.json');
+
 export const APPNAME = 'foo';
+export const FILE_PREFIX = `/projects/${APPNAME}`;
 
 export interface AppResult {
   runner: SchematicTestRunner;
@@ -14,7 +21,7 @@ export function createNgRunner(): SchematicTestRunner {
 }
 
 export function createAlainRunner(): SchematicTestRunner {
-  return new SchematicTestRunner('schematics', join(__dirname, '../collection.json'));
+  return new SchematicTestRunner('schematics', collectionPath);
 }
 
 export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppResult> {

@@ -41,7 +41,6 @@
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
               "hammerjs",
-              "@angularclass/hmr",
               "file-saver",
               "@ant-design/colors",
               "@antv/path-util",
@@ -60,7 +59,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -69,14 +67,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                }
-              ]
-            },
-            "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
                 }
               ]
             }
@@ -90,10 +80,6 @@
           "configurations": {
             "production": {
               "browserTarget": "site:build:production"
-            },
-            "hmr": {
-              "browserTarget": "site:build:hmr",
-              "hmr": true
             }
           }
         },

@@ -12,11 +12,5 @@
     "target": "es6",
     "types": ["jasmine", "node"]
   },
-  "exclude": [
-    "test.ts",
-    "*/files/**/*",
-    "test-setup/**/*",
-    "**/*.spec.ts",
-    "ng-update/test-cases/**/*"
-  ]
+  "exclude": ["test.ts", "*/files/**/*", "**/*.spec.ts"]
 }

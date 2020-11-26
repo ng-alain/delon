@@ -6,7 +6,6 @@ import { pluginAsdf } from './plugin.asdf';
 import { pluginCodeStyle } from './plugin.code-style';
 import { pluginDefaultLanguage } from './plugin.default-language';
 import { pluginDocker } from './plugin.docker';
-import { pluginHmr } from './plugin.hmr';
 import { pluginIcon } from './plugin.icon';
 import { pluginIE } from './plugin.ie';
 import { pluginNetworkEnv } from './plugin.network-env';
@@ -38,9 +37,6 @@ export default function (options: PluginSchema): Rule {
         break;
       case 'networkEnv':
         rules.push(pluginNetworkEnv({ ...pluginOptions, packageManager: options.packageManager }));
-        break;
-      case 'hmr':
-        rules.push(pluginHmr(pluginOptions), installPackages());
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));

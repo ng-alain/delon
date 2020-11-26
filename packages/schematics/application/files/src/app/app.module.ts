@@ -1,6 +1,6 @@
 // tslint:disable: no-duplicate-imports
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -69,13 +69,13 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MODULES = [
+const GLOBAL_THIRD_MODULES: Type<any>[] = [
 ];
 // #endregion
 
 // #region Startup Service
 import { StartupService } from '@core';
-export function StartupServiceFactory(startupService: StartupService) {
+export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
 }
 const APPINIT_PROVIDES = [

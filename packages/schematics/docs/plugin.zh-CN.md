@@ -46,23 +46,6 @@ ng g ng-alain:plugin codeStyle
 ng g ng-alain:plugin codeStyle -t=remove
 ```
 
-### hmr
-
-支持 HMR 热替换。
-
-```bash
-# add
-ng g ng-alain:plugin hmr
-# remove
-ng g ng-alain:plugin hmr -t=remove
-```
-
-安装后可使用启用 HMR 模式进入开发环境：
-
-```bash
-npm run hmr
-```
-
 ### ie
 
 IE 浏览器只能在 ES5 下使用，有关更多细节请参考[支持IE11](/docs/ie11)。
@@ -74,7 +57,7 @@ ng g ng-alain:plugin ie
 ng g ng-alain:plugin ie -t=remove
 ```
 
-安装后可使用 `npm run ie:start` 或 `npm run ie:hmr` 进入IE11的开发环境。
+安装后可使用 `npm run ie:start` 进入IE11的开发环境。
 
 ### docker
 
