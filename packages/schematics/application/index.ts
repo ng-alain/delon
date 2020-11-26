@@ -16,8 +16,6 @@ import {
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
 import { getLangData } from '../core/lang.config';
-import { tryAddFile } from '../utils/alain';
-import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
@@ -44,7 +42,6 @@ function removeOrginalFiles(): (host: Tree) => void {
     [
       `${project.root}/README.md`,
       `${project.root}/tslint.json`,
-      `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
       `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
@@ -56,12 +53,6 @@ function removeOrginalFiles(): (host: Tree) => void {
     ]
       .filter(p => host.exists(p))
       .forEach(p => host.delete(p));
-  };
-}
-
-function fixMain(): (host: Tree) => void {
-  return (host: Tree) => {
-    tryAddFile(host, `${project.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
   };
 }
 
@@ -469,7 +460,6 @@ export default function (options: ApplicationOptions): Rule {
       removeOrginalFiles(),
       addFilesToRoot(options),
       addCliTpl(),
-      fixMain(),
       forceLess(),
       addStyle(),
       fixLang(options),
