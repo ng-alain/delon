@@ -14,6 +14,15 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+### Bug Fixes
+
+* **abc:st:** 修复获取无效数据时不会中断渲染 ([#1079](https://github.com/ng-alain/delon/issues/1079)) ([d25996c](https://github.com/ng-alain/delon/commit/d25996c30b36ad2efadd0a564b849f6d5ec4d2d2))
+
+### Performance Improvements
+
+* **abc:st:** 优化提示文本 ([#1081](https://github.com/ng-alain/delon/issues/1081)) ([0917357](https://github.com/ng-alain/delon/commit/0917357263917ff64a40337f89ced08e17b342ac))
+
+
 ## [10.1.1](https://github.com/ng-alain/delon/compare/10.1.0...10.1.1) (2020-11-18)
 
 ### Bug Fixes
