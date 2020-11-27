@@ -120,6 +120,14 @@ describe('utils: array', () => {
       page = new PageTreeNode(res);
       page.check('0', 'id', 2).check('0/0', 'id', 4);
     });
+    it('should be null root parent_id value', () => {
+      const res = srv.arrToTree([
+        { id: 2, parent_id: 4, title: 'c1' },
+        { id: 4, parent_id: null, title: 't1' },
+      ]);
+      page = new PageTreeNode(res);
+      page.check('0', 'id', 4).check('0/0', 'id', 2);
+    });
   });
 
   describe('[NzTreeNode]', () => {

@@ -139,8 +139,8 @@ export class ArrayService {
     let rootPid = opt.rootParentIdValue;
     if (!rootPid) {
       const pids = arr.map(i => i[opt.parentIdMapName!]);
-      const emptyPid = pids.find(w => w == null);
-      rootPid = emptyPid ? emptyPid : pids.sort()[0];
+      const emptyPid = pids.findIndex(w => w == null);
+      rootPid = emptyPid !== -1 ? pids[emptyPid] : pids.sort()[0];
     }
     for (const item of arr) {
       const id = item[opt.idMapName!];
