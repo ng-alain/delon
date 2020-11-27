@@ -21,6 +21,18 @@ export interface ArrayServiceArrToTreeOptions {
   idMapName?: string;
   /** 父编号项名，默认：`'parent_id'` */
   parentIdMapName?: string;
+  /**
+   * 根父值，默认会自动计算得到最合适的根父值，例如：
+   * @example
+   * ```ts
+   * const res = srv.arrToTree([
+   *    { id: 2, parent_id: 'a', title: 'c1' },
+   *    { id: 4, parent_id: 2, title: 't1' },
+   *  ],
+   *  { rootParentValue: 'a' });
+   * ```
+   */
+  rootParentValue?: any;
   /** 子项名，默认：`'children'` */
   childrenMapName?: string;
   /** 转换成树数据时回调 */
@@ -119,8 +131,17 @@ export class ArrayService {
       cb: null,
       ...options,
     } as ArrayServiceArrToTreeOptions;
+    if (arr.length === 0) {
+      return [];
+    }
     const tree: NzSafeAny[] = [];
     const childrenOf: NzSafeAny = {};
+    let rootPid = opt.rootParentValue;
+    if (!rootPid) {
+      const pids = arr.map(i => i[opt.parentIdMapName!]);
+      const emptyPid = pids.find(w => w == null);
+      rootPid = emptyPid ? emptyPid : pids.sort()[0];
+    }
     for (const item of arr) {
       const id = item[opt.idMapName!];
       const pid = item[opt.parentIdMapName!];
@@ -129,7 +150,7 @@ export class ArrayService {
       if (opt.cb) {
         opt.cb(item);
       }
-      if (pid) {
+      if (pid !== rootPid) {
         childrenOf[pid] = childrenOf[pid] || [];
         childrenOf[pid].push(item);
       } else {

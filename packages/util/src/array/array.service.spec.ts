@@ -75,6 +75,9 @@ describe('utils: array', () => {
       });
       srv = TestBed.inject<ArrayService>(ArrayService);
     });
+    it('should be empty array to tree', () => {
+      expect(srv.arrToTree([]).length).toBe(0);
+    });
     it('should be array to tree', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: 1, title: 'c1' },
@@ -97,6 +100,25 @@ describe('utils: array', () => {
       ]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 1).check('0/0', 'id', 2);
+    });
+    it('should be support greater than 0 parent_id', () => {
+      const res = srv.arrToTree([
+        { id: 2, parent_id: 4, title: 'c1' },
+        { id: 4, parent_id: 3, title: 't1' },
+      ]);
+      page = new PageTreeNode(res);
+      page.check('0', 'id', 4).check('0/0', 'id', 2);
+    });
+    it('should be specify root parent_id value', () => {
+      const res = srv.arrToTree(
+        [
+          { id: 2, parent_id: 'a', title: 'c1' },
+          { id: 4, parent_id: 2, title: 't1' },
+        ],
+        { rootParentValue: 'a' },
+      );
+      page = new PageTreeNode(res);
+      page.check('0', 'id', 2).check('0/0', 'id', 4);
     });
   });
 
