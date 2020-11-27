@@ -32,7 +32,7 @@ Convert array structure to tree structure.
 |----------|-------------|------|---------|
 | `idMapName` | Id map name | `string` | `id` |
 | `parentIdMapName` | Parent id map name | `string` | `parent_id` |
-| `rootParentValue` | Root parent value, the most suitable root parent value will be automatically calculated by default | `any` | - |
+| `rootParentIdValue` | Root parent id value, the most suitable root parent id value will be automatically calculated by default | `any` | - |
 | `childrenMapName` | Children map name | `string` | `children` |
 | `cb` | Callback event | `(item: any) => void` | - |
 

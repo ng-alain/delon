@@ -22,7 +22,7 @@ export interface ArrayServiceArrToTreeOptions {
   /** 父编号项名，默认：`'parent_id'` */
   parentIdMapName?: string;
   /**
-   * 根父值，默认会自动计算得到最合适的根父值，例如：
+   * 根父编号值，默认会自动计算得到最合适的根父编号值，例如：
    * @example
    * ```ts
    * const res = srv.arrToTree([
@@ -32,7 +32,7 @@ export interface ArrayServiceArrToTreeOptions {
    *  { rootParentValue: 'a' });
    * ```
    */
-  rootParentValue?: any;
+  rootParentIdValue?: any;
   /** 子项名，默认：`'children'` */
   childrenMapName?: string;
   /** 转换成树数据时回调 */
@@ -136,7 +136,7 @@ export class ArrayService {
     }
     const tree: NzSafeAny[] = [];
     const childrenOf: NzSafeAny = {};
-    let rootPid = opt.rootParentValue;
+    let rootPid = opt.rootParentIdValue;
     if (!rootPid) {
       const pids = arr.map(i => i[opt.parentIdMapName!]);
       const emptyPid = pids.find(w => w == null);

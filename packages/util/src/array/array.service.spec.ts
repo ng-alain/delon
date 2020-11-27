@@ -115,7 +115,7 @@ describe('utils: array', () => {
           { id: 2, parent_id: 'a', title: 'c1' },
           { id: 4, parent_id: 2, title: 't1' },
         ],
-        { rootParentValue: 'a' },
+        { rootParentIdValue: 'a' },
       );
       page = new PageTreeNode(res);
       page.check('0', 'id', 2).check('0/0', 'id', 4);

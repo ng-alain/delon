@@ -32,7 +32,7 @@ type: Type
 |----|----|----|-----|
 | `idMapName` | 编号项名 | `string` | `id` |
 | `parentIdMapName` | 父编号项名 | `string` | `parent_id` |
-| `rootParentValue` | 根父编号值，默认会自动计算得到最合适的根父编号值 | `any` | - |
+| `rootParentIdValue` | 根父编号值，默认会自动计算得到最合适的根父编号值 | `any` | - |
 | `childrenMapName` | 子项名 | `string` | `children` |
 | `cb` | 转换成树数据时回调 | `(item: any) => void` | - |
 
