@@ -20,7 +20,43 @@ To create a page, you need to create a module first. If you need a system to set
 ng g ng-alain:module sys
 ```
 
-The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file. Of course, in order to make the module contact with the main module, you need to register the new business module in the `src/app/routes/routes-routing.module.ts` file:
+The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file. 
+
+```ts
+// sys.module.ts
+import { NgModule, Type } from '@angular/core';
+import { SharedModule } from '@shared';
+import { SysRoutingModule } from './sys-routing.module';
+
+const COMPONENTS: Type<void>[] = [];
+const COMPONENTS_NOROUNT: Type<void>[] = [];
+
+@NgModule({
+  imports: [SharedModule, SysRoutingModule],
+  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
+})
+export class SysModule {}
+```
+
+The function of the module is to import the modules we need. All NG-ZORRO, @delon/abc, @delon/chart, etc. are loaded on demand. The external components are imported wherever the current business page needs. In order to reduce these import actions, NG -ALAIN has refined two files `shared-delon.module.ts` and `shared-zorro.module.ts` to merge some modules frequently used throughout the project into a module called `SharedModule`, which is why it is necessary Import it in the business module for the first time. Note: It is not recommended to put all the components in `SharedModule`, as far as possible, put the modules that need to be used two or three times or more.
+
+And the routing configuration module:
+
+```ts
+// sys-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class SysRoutingModule {}
+```
+
+Of course, in order to make the module contact with the main module, you need to register the new business module in the `src/app/routes/routes-routing.module.ts` file:
 
 ```ts
 {
