@@ -7,10 +7,11 @@ cols: 1
 module: import { PdfModule } from '@delon/abc/pdf';
 ---
 
-Generate a QR code based on [qrious](https://neocotic.com/qrious).
+Pdf view based on [pdf.js](https://neocotic.com/qrious).
 
+pdf.js libary is lazy loading by default，you can change the default root CDN path (or use the local path) via [Global Configuration](/docs/global-config).
 
-Qr libary is lazy loading by default，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`. Or install dependence via `npm i --save qrious`, and import script path in `angular.json`.
+> The component inspired by [ng2-pdf-viewer](https://github.com/VadimDez/ng2-pdf-viewer).
 
 ## API
 
@@ -18,20 +19,25 @@ Qr libary is lazy loading by default，you can change the default CDN path (or u
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
-| `[value]` | Value encoded within the QR code | `string` | - |  |
-| `[background]` | Background colour of the QR code | `string` | `white` | ✅ |
-| `[backgroundAlpha]` | Background alpha of the QR code | `number` | `1` | ✅ |
-| `[foreground]` | Foreground colour of the QR code | `string` | `white` | ✅ |
-| `[foregroundAlpha]` | Foreground alpha of the QR code | `number` | `1` | ✅ |
-| `[level]` | Error correction level of the QR code | `'L','M','Q','H'` | `'L'` | ✅ |
-| `[mime]` | MIME type used to render the image for the QR code | `string` | `image/png` | ✅ |
-| `[padding]` | Padding for the QR code (pixels) | `number` | `10` | ✅ |
-| `[size]` | Size of the QR code (pixels) | `number` | `220` | ✅ |
-| `[delay]` | Delayed rendering, unit: ms | `number` | `0` | ✅ |
-| `(change)` | change event | `EventEmitter<string>` | - |  |
+| `[src]` | Specify path of the pdf | `string, object, UInt8Array` | - | - |
+| `[pi]` | Current page | `number` | `1` | - |
+| `[showAll]` | Whether to show all pages | `boolean` | `true` | ✅ |
+| `[renderText]` | Enable text rendering, allows to select text | `boolean` | `true` | ✅ |
+| `[textLayerMode]` | Text rendering mode | `PdfTextLayerMode` | `ENABLE` | - |
+| `[showBorders]` | Show page borders | `boolean` | `false` | ✅ |
+| `[stickToPage]` | Sticks view to the page | `boolean` | `false` | - |
+| `[originalSize]` | Control document display size, `true` size will be as same as original document, `false` size will be as same as container block | `boolean` | `true` | ✅ |
+| `[fitToPage]` | Works in combination with `originalSize`. You can show your document in original size, and make sure that it's not bigger then container block. | `boolean` | `false` | ✅ |
+| `[zoom]` | Zoom pdf | `number` | `1` | - |
+| `[zoomScale]` | Defines how the Zoom scale is computed | `PdfZoomScale` | `page-width` | - |
+| `[rotation]` | Rotate PDF, Allowed step is 90 degree, ex. 0, 90, 180 | `number` | `0` | - |
+| `[autoReSize]` | Turn on or off auto resize | `boolean` | `true` | ✅ |
+| `[externalLinkTarget]` | Link target of the external | `PdfExternalLinkTarget` | `BLANK` | - |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` | - |
+| `(change)` | change event | `EventEmitter<PdfChangeEvent>` | - | - |
 
 ## FAQ
 
-### Custom LOGO
+### Why need to specify the height of the pdf component
 
-Refer to [#100](https://github.com/neocotic/qrious/issues/100#issuecomment-308249343).
+When `showAll` is enabled, if you want to make the page number control effective, you need to ensure that the height of the component is a valid value.

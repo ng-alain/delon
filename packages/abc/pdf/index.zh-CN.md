@@ -7,30 +7,37 @@ cols: 1
 module: import { PdfModule } from '@delon/abc/pdf';
 ---
 
-基于 [pdf.js](https://neocotic.com/qrious) 生成二维码。
+基于 [pdf.js](https://neocotic.com/qrious) 的PDF预览组件。
 
-默认二维码的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用本地路径），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`。或安装 `npm i --save qrious` 依赖包并在 `angular.json` 的 `scripts` 引用 `"node_modules/qrious/dist/qrious.min.js"`。
+默认PDF预览并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 pdf.js 类库的根路径（或使用本地路径）。
+
+> 组件也是受 [ng2-pdf-viewer](https://github.com/VadimDez/ng2-pdf-viewer) 启发。
 
 ## API
 
-### qr
+### pdf
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
-| `[value]` | 值 | `string` | - |  |
-| `[background]` | 背景 | `string` | `white` | ✅ |
-| `[backgroundAlpha]` | 背景透明级别，范围：`0-1` 之间 | `number` | `1` | ✅ |
-| `[foreground]` | 前景 | `string` | `white` | ✅ |
-| `[foregroundAlpha]` | 前景透明级别，范围：`0-1` 之间 | `number` | `1` | ✅ |
-| `[level]` | 误差校正级别 | `'L','M','Q','H'` | `'L'` | ✅ |
-| `[mime]` | 二维码输出图片MIME类型 | `string` | `image/png` | ✅ |
-| `[padding]` | 内边距（单位：px） | `number` | `10` | ✅ |
-| `[size]` | 大小（单位：px） | `number` | `220` | ✅ |
-| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` | ✅ |
-| `(change)` | 变更时回调，返回二维码dataURL值 | `EventEmitter<string>` | - |  |
+| `[src]` | 指定文档路径 | `string, object, UInt8Array` | - | - |
+| `[pi]` | 当前页 | `number` | `1` | - |
+| `[showAll]` | 是否显示全部页 | `boolean` | `true` | ✅ |
+| `[renderText]` | 是否启用文字层，开启后允许文字选择 | `boolean` | `true` | ✅ |
+| `[textLayerMode]` | 文字层渲染模式 | `PdfTextLayerMode` | `ENABLE` | - |
+| `[showBorders]` | 是否显示页面边框 | `boolean` | `false` | ✅ |
+| `[stickToPage]` | 是否视野保持在 `pi` 页上 | `boolean` | `false` | - |
+| `[originalSize]` | 控制文档显示大小，`true` 按原始大小，`false` 按容器大小 | `boolean` | `true` | ✅ |
+| `[fitToPage]` | 控制原始尺寸不会超出容器大小 | `boolean` | `false` | ✅ |
+| `[zoom]` | 控制缩放文档 | `number` | `1` | - |
+| `[zoomScale]` | 缩放文档的计算方式 | `PdfZoomScale` | `page-width` | - |
+| `[rotation]` | 旋转文档 | `number` | `0` | - |
+| `[autoReSize]` | 是否自动缩放 | `boolean` | `true` | ✅ |
+| `[externalLinkTarget]` | 外部链接打开形式 | `PdfExternalLinkTarget` | `BLANK` | - |
+| `[delay]` | 延迟初始化，单位：毫秒 | `number` | - | - |
+| `(change)` | 变更时回调 | `EventEmitter<PdfChangeEvent>` | - | - |
 
 ## 常见问题
 
-### 自定义LOGO
+### 为什么有时需要指定高度
 
-参考 [#100](https://github.com/neocotic/qrious/issues/100#issuecomment-308249343) 的写法。
+当启用显示全部页时，如果要让页码的控制产生有效，需要确保组件的高度是一个有效值。

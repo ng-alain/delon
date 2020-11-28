@@ -50,14 +50,14 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private cog: AlainPdfConfig;
   private loadingTask: any;
   private inited = false;
-  private _src: string;
+  private _src: any;
   private lastSrc: string;
   private _pi = 1;
   private _total = 0;
-  private _showAllPages = true;
+  private _showAll = true;
   private _rotation = 0;
   private _zoom = 1;
-  private _disableTextLayer = false;
+  private _renderText = true;
 
   private multiPageViewer: any;
   private multiPageLinkService: any;
@@ -66,8 +66,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private singlePageLinkService: any;
   private singlePageFindController: any;
 
-  @Input() set src(data: string) {
-    this._src = data;
+  @Input() set src(dataOrBuffer: any) {
+    this._src = dataOrBuffer;
     this.load();
   }
   @Input()
@@ -78,28 +78,27 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.pageViewer.scrollPageIntoView({ pageNumber: this._pi });
     }
   }
-  @Input() @InputBoolean() set showAllPages(val: boolean) {
-    this._showAllPages = val;
+  @Input() @InputBoolean() set showAll(val: boolean) {
+    this._showAll = val;
     this.resetDoc();
   }
-  @Input() @InputBoolean() set disableTextLayer(val: boolean) {
-    this._disableTextLayer = val;
+  @Input() @InputBoolean() set renderText(val: boolean) {
+    this._renderText = val;
     if (this._pdf) {
       this.pageViewer.textLayerMode = this._textLayerMode;
       this.resetDoc();
     }
   }
-  @Input() @InputBoolean() removePageBorders = true;
+  @Input() textLayerMode: PdfTextLayerMode = PdfTextLayerMode.ENABLE;
+  @Input() @InputBoolean() showBorders = false;
   @Input() @InputBoolean() stickToPage = false;
   @Input() @InputBoolean() originalSize = true;
+  @Input() @InputBoolean() fitToPage = false;
   @Input() @InputNumber() set zoom(val: number) {
     if (val <= 0) return;
     this._zoom = val;
   }
   @Input() zoomScale: PdfZoomScale = 'page-width';
-  @Input() @InputBoolean() fitToPage = false;
-  @Input() textLayerMode: PdfTextLayerMode = PdfTextLayerMode.ENABLE;
-  @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
   @Input() @InputNumber() set rotation(val: number) {
     if (val % 90 !== 0) {
       console.warn(`Invalid rotation angle, shoule be divisible by 90.`);
@@ -107,7 +106,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     this._rotation = val;
   }
-  @Input() @InputBoolean() autoresize = true;
+  @Input() @InputBoolean() autoReSize = true;
+  @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
   @Input() @InputNumber() delay: number;
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
@@ -117,19 +117,19 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   get findController(): any {
-    return this._showAllPages ? this.multiPageFindController : this.singlePageFindController;
+    return this._showAll ? this.multiPageFindController : this.singlePageFindController;
   }
 
   get pageViewer(): any {
-    return this._showAllPages ? this.multiPageViewer : this.singlePageViewer;
+    return this._showAll ? this.multiPageViewer : this.singlePageViewer;
   }
 
   get linkService(): any {
-    return this._showAllPages ? this.multiPageLinkService : this.singlePageLinkService;
+    return this._showAll ? this.multiPageLinkService : this.singlePageLinkService;
   }
 
   private get _textLayerMode(): PdfTextLayerMode {
-    return this._disableTextLayer ? PdfTextLayerMode.DISABLE : this.textLayerMode;
+    return this._renderText ? this.textLayerMode : PdfTextLayerMode.DISABLE;
   }
 
   constructor(
@@ -277,7 +277,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private getScale(viewportWidth: number, viewportHeight: number): number {
-    const borderSize = !this.removePageBorders ? 2 * BORDER_WIDTH : 0;
+    const borderSize = this.showBorders ? 2 * BORDER_WIDTH : 0;
     const el = this.el.nativeElement;
     const containerWidth = el.clientWidth - borderSize;
     const containerHeight = el.clientHeight - borderSize;
@@ -318,7 +318,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setupPageViewer(): void {
-    win.pdfjsLib.disableTextLayer = this._disableTextLayer;
+    win.pdfjsLib.disableTextLayer = !this._renderText;
     win.pdfjsLib.externalLinkTarget = this.externalLinkTarget;
 
     this.setupMultiPageViewer();
@@ -361,7 +361,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     const viewer = (this.multiPageViewer = new VIEWER.PDFViewer({
       eventBus,
       container: this.el.nativeElement,
-      removePageBorders: this.removePageBorders,
+      removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
       findController,
@@ -384,7 +384,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     const pageViewer = (this.singlePageViewer = new VIEWER.PDFSinglePageViewer({
       eventBus,
       container: this.el.nativeElement,
-      removePageBorders: this.removePageBorders,
+      removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
       findController,
@@ -414,7 +414,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     fromEvent(win, 'resize')
       .pipe(
         debounceTime(100),
-        filter(() => this.autoresize),
+        filter(() => this.autoReSize),
         takeUntil(this.unsubscribe$),
       )
       .subscribe(() => this.updateSize());

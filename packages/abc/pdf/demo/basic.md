@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: ` <pdf src="/assets/demo.pdf"></pdf> `,
+  template: ` <pdf src="/assets/demo.pdf" style="height: 300px"></pdf> `,
 })
 export class DemoComponent {}
 ```

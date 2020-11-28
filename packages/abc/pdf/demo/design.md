@@ -41,10 +41,10 @@ import { Subject } from 'rxjs';
             <nz-switch [(ngModel)]="fitToPage"></nz-switch>
           </se>
           <se label="Auto size">
-            <nz-switch [(ngModel)]="autoresize"></nz-switch>
+            <nz-switch [(ngModel)]="autoReSize"></nz-switch>
           </se>
           <se label="Show All Pages">
-            <nz-switch [(ngModel)]="showAllPages" (ngModelChange)="changeShowAllPages($event)"></nz-switch>
+            <nz-switch [(ngModel)]="showAll" (ngModelChange)="changeShowAllPages($event)"></nz-switch>
           </se>
           <se *ngIf="!originalSize" label="Zoom Scale">
             <nz-select [(ngModel)]="zoomScale">
@@ -56,7 +56,7 @@ import { Subject } from 'rxjs';
           <se label="Zoom">
             <nz-input-number [(ngModel)]="zoom" [nzStep]="0.1"></nz-input-number>
           </se>
-          <se *ngIf="showAllPages" label="Stick to page ">
+          <se *ngIf="showAll" label="Stick to page ">
             <nz-switch [(ngModel)]="stickToPage"></nz-switch>
           </se>
           <se *ngIf="stickToPage" label="Page">
@@ -92,14 +92,14 @@ import { Subject } from 'rxjs';
           #pdf
           [src]="src"
           [pi]="pi"
-          [showAllPages]="showAllPages"
+          [showAll]="showAll"
           [originalSize]="originalSize"
           [fitToPage]="fitToPage"
           [stickToPage]="stickToPage"
           [zoomScale]="zoomScale"
           [zoom]="zoom"
           [rotation]="rotation"
-          [autoresize]="autoresize"
+          [autoReSize]="autoReSize"
           (change)="change($event)"
           style="height: 600px"
         ></pdf>
@@ -115,11 +115,11 @@ export class DemoComponent implements OnInit {
   stickToPage = true;
   originalSize = true;
   fitToPage = false;
-  showAllPages = true;
+  showAll = true;
   zoomScale: PdfZoomScale = 'page-width';
   rotation = 0;
   zoom = 1;
-  autoresize = true;
+  autoReSize = true;
   outline = false;
   outlineList: any;
   q = '';
