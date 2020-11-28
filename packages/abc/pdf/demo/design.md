@@ -109,7 +109,7 @@ import { Subject } from 'rxjs';
 })
 export class DemoComponent implements OnInit {
   @ViewChild('pdf') private comp: PdfComponent;
-  src = `/assets/demo.pdf`;
+  src = `./assets/demo.pdf`;
   pi = 1;
   total = 0;
   stickToPage = true;
