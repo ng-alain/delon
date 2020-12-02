@@ -14,14 +14,13 @@ title:
 Provide rich interfaces for customization.
 
 ```ts
-
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { PdfChangeEvent, PdfComponent, PdfZoomScale } from '@delon/abc/pdf';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-demo',
+  selector: 'components-pdf-design',
   template: `
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
@@ -33,6 +32,9 @@ import { Subject } from 'rxjs';
             <nz-upload nzAccept=".pdf" [nzBeforeUpload]="beforeUpload">
               <button nz-button><i nz-icon nzType="upload"></i>Select File</button>
             </nz-upload>
+          </se>
+          <se label="Render Text">
+            <nz-switch [(ngModel)]="renderText"></nz-switch>
           </se>
           <se label="Original size">
             <nz-switch [(ngModel)]="originalSize"></nz-switch>
@@ -92,6 +94,7 @@ import { Subject } from 'rxjs';
           #pdf
           [src]="src"
           [pi]="pi"
+          [renderText]="renderText"
           [showAll]="showAll"
           [originalSize]="originalSize"
           [fitToPage]="fitToPage"
@@ -112,6 +115,7 @@ export class DemoComponent implements OnInit {
   src = `https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf`;
   pi = 1;
   total = 0;
+  renderText = true;
   stickToPage = true;
   originalSize = true;
   fitToPage = false;
@@ -124,6 +128,8 @@ export class DemoComponent implements OnInit {
   outlineList: any;
   q = '';
   search$ = new Subject<string>();
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.search$.subscribe((q: string) => {
@@ -168,6 +174,7 @@ export class DemoComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.src = e.target.result;
+      this.cdr.detectChanges();
     };
     reader.readAsArrayBuffer(file as any);
     return false;
