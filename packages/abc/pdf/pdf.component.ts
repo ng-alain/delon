@@ -27,7 +27,10 @@ const BORDER_WIDTH: number = 9;
 @Component({
   selector: 'pdf',
   exportAs: 'pdf',
-  template: `<div class="pdfViewer"></div>`,
+  template: `
+    <nz-skeleton *ngIf="!inited"></nz-skeleton>
+    <div class="pdfViewer"></div>
+  `,
   host: {
     '[class.pdf-container]': `true`,
   },
@@ -45,8 +48,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_disableTextLayer: BooleanInput;
   static ngAcceptInputType_removePageBorders: BooleanInput;
 
+  inited = false;
   private unsubscribe$ = new Subject<void>();
-  private inited = false;
   private lib: string = '';
   private _pdf: NzSafeAny;
   private loadingTask: NzSafeAny;

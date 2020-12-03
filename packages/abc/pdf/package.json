@@ -4,6 +4,7 @@
       "flatModuleFile": "pdf",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
+        "ng-zorro-antd/skeleton": "ng-zorro-antd/skeleton",
         "@delon/util": "delon.util"
       }
     }
