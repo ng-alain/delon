@@ -62,11 +62,19 @@ describe('abc: xlsx', () => {
       },
       write: () => {},
     };
+    (window as any).cptable = {
+      utils: {
+        decode: (data: any) => {
+          return data;
+        },
+      },
+    };
     isErrorRequest = false;
   });
 
   afterEach(() => {
     delete (window as any).XLSX;
+    delete (window as any).cptable;
   });
 
   describe('[#import]', () => {
@@ -111,7 +119,7 @@ describe('abc: xlsx', () => {
 
     it('should be load xlsx via file object', (done: () => void) => {
       genModule();
-      srv.import(new File([], '1.xlsx'), 'readAsArrayBuffer').then(
+      srv.import(new File([], '1.xlsx')).then(
         () => {
           expect(true).toBe(true);
           done();
