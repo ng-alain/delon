@@ -1,3 +1,4 @@
+import { Spinner } from '@angular-devkit/build-angular/src/utils/spinner';
 import { strings } from '@angular-devkit/core';
 import {
   apply,
@@ -35,6 +36,7 @@ import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
+const spinner = new Spinner();
 
 /** Remove files to be overwrite */
 function removeOrginalFiles(): (host: Tree) => void {
@@ -375,7 +377,7 @@ function fixLang(options: ApplicationOptions): (host: Tree) => void {
     const langs = getLangData(options.defaultLanguage!);
     if (!langs) return;
 
-    console.log(`Translating, please wait...`);
+    spinner.text = `Translating template into ${options.defaultLanguage} language, please wait...`;
 
     host.visit(p => {
       if (~p.indexOf(`/node_modules/`)) return;
@@ -438,16 +440,17 @@ function fixVsCode(): (host: Tree) => void {
   };
 }
 
-function installPackages(): (_host: Tree, context: SchematicContext) => void {
+function finished(): (_host: Tree, context: SchematicContext) => void {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
+    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete. For better use, please continue reading `);
   };
 }
 
 export default function (options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
-
+    spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
@@ -467,7 +470,7 @@ export default function (options: ApplicationOptions): Rule {
       fixLang(options),
       fixVsCode(),
       fixAngularJson(options),
-      installPackages(),
+      finished(),
     ])(host, context);
   };
 }
