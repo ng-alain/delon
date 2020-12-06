@@ -443,7 +443,7 @@ function fixVsCode(): (host: Tree) => void {
 function finished(): (_host: Tree, context: SchematicContext) => void {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
-    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete. For better use, please continue reading `);
+    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
   };
 }
 
