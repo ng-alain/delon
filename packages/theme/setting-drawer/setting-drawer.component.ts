@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, isDevMode, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, isDevMode, NgZone, OnInit } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
-import { copy, deepCopy, LazyService } from '@delon/util';
+import { copy, deepCopy, InputBoolean, LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -206,12 +206,12 @@ const DEFAULT_VARS: { [key: string]: NzSafeAny } = {
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingDrawerComponent {
-  private loadedLess = false;
-
-  isDev = isDevMode();
+export class SettingDrawerComponent implements OnInit {
+  @Input() @InputBoolean() autoApplyColor = true;
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
 
+  private loadedLess = false;
+  isDev = isDevMode();
   collapse = false;
   get layout(): Layout {
     return this.settingSrv.layout;
@@ -240,7 +240,14 @@ export class SettingDrawerComponent {
     return DEFAULT_VARS['primary-color'].default;
   }
 
-  private loadLess(): Promise<void> {
+  ngOnInit(): void {
+    if (this.autoApplyColor && this.color !== this.DEFAULT_PRIMARY) {
+      this.changeColor(this.color);
+      this.runLess();
+    }
+  }
+
+  private async loadLess(): Promise<void> {
     if (this.loadedLess) {
       return Promise.resolve();
     }

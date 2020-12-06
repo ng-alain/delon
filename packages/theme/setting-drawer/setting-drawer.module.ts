@@ -7,6 +7,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -29,6 +30,7 @@ const COMPONENTS = [SettingDrawerItemComponent, SettingDrawerComponent];
     NzSwitchModule,
     NzAlertModule,
     NzIconModule,
+    NzInputModule,
     NzInputNumberModule,
     NzButtonModule,
   ],
