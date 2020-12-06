@@ -21,3 +21,6 @@ export { HTMLPipe } from './src/pipes/safe/html.pipe';
 export { URLPipe } from './src/pipes/safe/url.pipe';
 export { AlainThemeModule } from './src/theme.module';
 export { VERSION } from './src/version';
+
+export * from '@delon/theme/theme-btn';
+export * from '@delon/theme/setting-drawer';
