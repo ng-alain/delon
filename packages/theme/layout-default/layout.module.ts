@@ -5,6 +5,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { LayoutDefaultHeaderItemTriggerDirective } from './layout-header-item-trigger.directive';
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultHeaderComponent } from './layout-header.component';
 
@@ -18,6 +19,7 @@ const COMPONENTS = [
   LayoutDefaultSideComponent,
   LayoutDefaultHeaderComponent,
   LayoutDefaultHeaderItemComponent,
+  LayoutDefaultHeaderItemTriggerDirective,
 ];
 
 @NgModule({

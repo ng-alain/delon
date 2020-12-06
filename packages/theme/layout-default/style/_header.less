@@ -31,16 +31,20 @@
     }
   }
   &__nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+
+    &-middle {
+      flex: 1;
+    }
+
     &-wrap {
       display: flex;
       flex: 1;
       justify-content: space-between;
     }
-
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
     > li {
       display: inline-block;
       vertical-align: middle;

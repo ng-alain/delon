@@ -3,11 +3,11 @@ import { App, SettingsService } from '@delon/theme';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LayoutDefaultComponent } from './layout.component';
-import { LayoutDefaultHeaderItemDirection, LayoutDefaultOptions } from './types';
+import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
 interface LayoutDefaultHeaderItem {
   host: ElementRef;
-  hiddenMobile?: boolean;
+  hidden?: LayoutDefaultHeaderItemHidden;
   direction?: LayoutDefaultHeaderItemDirection;
 }
 
@@ -15,7 +15,7 @@ interface LayoutDefaultHeaderItem {
   selector: 'layout-default-header',
   template: `
     <ng-template #render let-ls>
-      <li *ngFor="let i of ls" [class.hidden-mobile]="i.hiddenMobile">
+      <li *ngFor="let i of ls" [class.hidden-mobile]="i.hidden === 'mobile'" [class.hidden-pc]="i.hidden === 'pc'">
         <ng-container *ngTemplateOutlet="i.host"></ng-container>
       </li>
     </ng-template>
@@ -39,9 +39,9 @@ interface LayoutDefaultHeaderItem {
         </li>
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }"></ng-template>
       </ul>
-      <ul *ngIf="middle.length > 0">
-        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: middle }"></ng-template>
-      </ul>
+      <div *ngIf="middle.length > 0" class="alain-default__nav alain-default__nav-middle">
+        <ng-container *ngTemplateOutlet="middle[0].host"></ng-container>
+      </div>
       <ul class="alain-default__nav">
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }"></ng-template>
       </ul>
@@ -79,7 +79,6 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     this.middle = arr.filter(i => i.direction === 'middle');
     this.right = arr.filter(i => i.direction === 'right');
     this.cdr.detectChanges();
-    console.log(this.left, this.middle, this.right);
   }
 
   ngAfterViewInit(): void {

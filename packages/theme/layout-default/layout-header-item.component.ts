@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util';
-import { LayoutDefaultHeaderItemDirection } from './types';
+import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from './types';
 
 @Component({
   selector: 'layout-default-header-item',
@@ -11,10 +10,8 @@ import { LayoutDefaultHeaderItemDirection } from './types';
   `,
 })
 export class LayoutDefaultHeaderItemComponent {
-  static ngAcceptInputType_hiddenMobile: BooleanInput;
-
   @ViewChild('host', { static: true }) host: ElementRef;
 
-  @Input() @InputBoolean() hiddenMobile = false;
+  @Input() hidden: LayoutDefaultHeaderItemHidden = 'none';
   @Input() direction: LayoutDefaultHeaderItemDirection = 'right';
 }
