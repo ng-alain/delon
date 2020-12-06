@@ -157,7 +157,61 @@ schema: SFSchema = {
 
 For above configuraion, eventual behavior is showing `mobile` and `code` in UI when login method is `mobile`, otherwise, showing `name` and `pwd`.
 
-Actually, condition type is eventually parsed to `ui.visibleIf`, more information maybe added into condition type in the future.
+Actually, condition type is eventually parsed to `ui.visibleIf`, Convert it to the following:
+
+```ts
+{
+  properties: {
+    login_type: {
+      type: "string",
+      title: "登录方式",
+      enum: [
+        { label: "手机", value: "mobile" },
+        { label: "账密", value: "account" }
+      ],
+      default: "mobile",
+      ui: {
+        widget: "radio",
+        styleType: "button"
+      }
+    },
+    mobile: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    code: {
+      type: "number",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    name: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    },
+    pwd: {
+      type: "string",
+      ui: {
+        type: "password",
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    }
+  },
+  required: ["login_type"]
+};
+```
 
 ### Logic Type
 

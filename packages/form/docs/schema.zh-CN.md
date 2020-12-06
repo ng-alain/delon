@@ -157,7 +157,61 @@ schema: SFSchema = {
 
 上述的最终行为是当登录方式为 `mobile` 时UI显示 `mobile` 和 `code`，反之UI显示 `name` 和 `pwd`。
 
-其实条件类最终被解析成 `ui.visibleIf`，在未来可能会增加条件类的处理。
+其实条件类最终被解析成 `ui.visibleIf`，将其转换成如下：
+
+```ts
+{
+  properties: {
+    login_type: {
+      type: "string",
+      title: "登录方式",
+      enum: [
+        { label: "手机", value: "mobile" },
+        { label: "账密", value: "account" }
+      ],
+      default: "mobile",
+      ui: {
+        widget: "radio",
+        styleType: "button"
+      }
+    },
+    mobile: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    code: {
+      type: "number",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    name: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    },
+    pwd: {
+      type: "string",
+      ui: {
+        type: "password",
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    }
+  },
+  required: ["login_type"]
+};
+```
 
 ### 逻辑类
 
