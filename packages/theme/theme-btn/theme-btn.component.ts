@@ -8,11 +8,14 @@ import { AlainConfigService } from '@delon/util';
 type SiteTheme = 'default' | 'dark' | 'compact';
 
 @Component({
-  selector: 'layout-theme-btn',
+  selector: 'theme-btn',
   templateUrl: './theme-btn.component.html',
+  host: {
+    '[class.theme-btn]': `true`,
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutThemeBtnComponent implements OnInit, OnDestroy {
+export class ThemeBtnComponent implements OnInit, OnDestroy {
   theme: SiteTheme = 'default';
   private el!: HTMLLinkElement;
 
