@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: `<setting-drawer></setting-drawer>`,
 })
 export class DemoComponent {
   schema: SFSchema = {

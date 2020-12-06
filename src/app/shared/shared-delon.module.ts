@@ -39,6 +39,8 @@ import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { G2TimelineModule } from '@delon/chart/timeline';
 import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
+import { SettingDrawerModule } from '@delon/theme/setting-drawer';
+import { ThemeBtnModule } from '@delon/theme/theme-btn';
 
 export const SHARED_DELON_MODULES = [
   AvatarListModule,
@@ -83,4 +85,6 @@ export const SHARED_DELON_MODULES = [
   TrendModule,
   ReuseTabModule,
   MediaModule,
+  ThemeBtnModule,
+  SettingDrawerModule,
 ];

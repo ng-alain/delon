@@ -10,15 +10,17 @@ function copyLess(name) {
   let sourcePath = path.join(root, `packages/${name}`);
   let targetPath = path.join(root, `dist/@delon/${name}`);
   // index.less
-  [`index.less`, `theme-default.less`, `theme-dark.less`, `theme-compact.less`].forEach(fileName => {
-    fse.copySync(`${sourcePath}/${fileName}`, `${targetPath}/${fileName}`);
-  });
+  [`index.less`, `theme-default.less`, `theme-dark.less`, `theme-compact.less`]
+    .filter(fileName => fse.existsSync(`${sourcePath}/${fileName}`))
+    .forEach(fileName => {
+      fse.copySync(`${sourcePath}/${fileName}`, `${targetPath}/${fileName}`);
+    });
   // modules less
-  fs.readdirSync(targetPath).forEach(name => {
-    if (fs.existsSync(`${sourcePath}/${name}/style/index.less`)) {
+  fs.readdirSync(targetPath)
+    .filter(name => fs.existsSync(`${sourcePath}/${name}/style/index.less`))
+    .forEach(name => {
       fse.copySync(`${sourcePath}/${name}/style`, `${targetPath}/${name}/style`);
-    }
-  });
+    });
 }
 
 // copy theme
@@ -38,5 +40,6 @@ function copyTheme() {
   });
 }
 
-['abc', 'chart'].forEach(name => copyLess(name));
+['theme', 'abc', 'chart', 'acl', 'form'].forEach(name => copyLess(name));
+
 copyTheme();

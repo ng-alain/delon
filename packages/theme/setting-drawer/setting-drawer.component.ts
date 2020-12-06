@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, isDevMode, NgZone } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
 import { copy, deepCopy, LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -208,6 +208,9 @@ const DEFAULT_VARS: { [key: string]: NzSafeAny } = {
 })
 export class SettingDrawerComponent {
   private loadedLess = false;
+
+  isDev = isDevMode();
+  @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
 
   collapse = false;
   get layout(): Layout {

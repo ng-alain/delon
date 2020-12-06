@@ -1,5 +1,5 @@
-<div class="ant-avatar ant-avatar-circle ant-avatar-icon" nz-dropdown nzPlacement="topCenter" [nzDropdownMenu]="menu">
-  <svg class="anticon" role="img" width="21" height="21" viewBox="0 0 21 21" fill="currentColor">
+<div class="ant-avatar ant-avatar-circle ant-avatar-icon" nz-dropdown nzPlacement="topCenter" [nzDropdownMenu]="types.length > 0 ? menu : null">
+  <svg nz-tooltip [nzTooltipTitle]="isDev ? devTips : null" class="anticon" role="img" width="21" height="21" viewBox="0 0 21 21" fill="currentColor">
     <g fill-rule="evenodd">
       <g fill-rule="nonzero">
         <path
@@ -10,9 +10,7 @@
   </svg>
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu nzSelectable>
-      <li nz-menu-item (click)="onThemeChange('default')">Default Theme</li>
-      <li nz-menu-item (click)="onThemeChange('dark')">Dark Theme</li>
-      <li nz-menu-item (click)="onThemeChange('compact')">Compact Theme</li>
+      <li nz-menu-item *ngFor="let i of types" (click)="onThemeChange(i.key)">{{ i.text }}</li>
     </ul>
   </nz-dropdown-menu>
 </div>

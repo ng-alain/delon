@@ -1,11 +1,14 @@
-/**
- * TIPS: When it does not take effect, you need to run it once: npm run theme
- */
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject, Input, isDevMode, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AlainConfigService } from '@delon/util';
 
-type SiteTheme = 'default' | 'dark' | 'compact';
+export const ThemeBtnStorageKey = `site-theme`;
+
+export interface ThemeBtnType {
+  key: string;
+  text: string;
+}
 
 @Component({
   selector: 'theme-btn',
@@ -16,10 +19,22 @@ type SiteTheme = 'default' | 'dark' | 'compact';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
-  theme: SiteTheme = 'default';
+  private theme = 'default';
+  isDev = isDevMode();
+  @Input() types: ThemeBtnType[] = [
+    { key: 'default', text: 'Default Theme' },
+    { key: 'dark', text: 'Dark Theme' },
+    { key: 'compact', text: 'Compact Theme' },
+  ];
+  @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   private el!: HTMLLinkElement;
 
-  constructor(private renderer: Renderer2, private configSrv: AlainConfigService, private platform: Platform) {}
+  constructor(
+    private renderer: Renderer2,
+    private configSrv: AlainConfigService,
+    private platform: Platform,
+    @Inject(DOCUMENT) private doc: any,
+  ) {}
 
   ngOnInit(): void {
     this.initTheme();
@@ -29,7 +44,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.theme = (localStorage.getItem('site-theme') as SiteTheme) || 'default';
+    this.theme = localStorage.getItem(ThemeBtnStorageKey) || 'default';
     this.updateChartTheme();
     this.onThemeChange(this.theme);
   }
@@ -38,33 +53,33 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     this.configSrv.set('chart', { theme: this.theme === 'dark' ? 'dark' : '' });
   }
 
-  onThemeChange(theme: SiteTheme): void {
+  onThemeChange(theme: string): void {
     if (!this.platform.isBrowser) {
       return;
     }
     this.theme = theme;
-    this.renderer.setAttribute(document.body, 'data-theme', theme);
-    const dom = document.getElementById('site-theme');
+    this.renderer.setAttribute(this.doc.body, 'data-theme', theme);
+    const dom = this.doc.getElementById(ThemeBtnStorageKey);
     if (dom) {
       dom.remove();
     }
-    localStorage.removeItem('site-theme');
+    localStorage.removeItem(ThemeBtnStorageKey);
     if (theme !== 'default') {
-      const el = (this.el = document.createElement('link'));
+      const el = (this.el = this.doc.createElement('link'));
       el.type = 'text/css';
       el.rel = 'stylesheet';
-      el.id = 'site-theme';
+      el.id = ThemeBtnStorageKey;
       el.href = `assets/style.${theme}.css`;
 
-      localStorage.setItem('site-theme', theme);
-      document.body.append(el);
+      localStorage.setItem(ThemeBtnStorageKey, theme);
+      this.doc.body.append(el);
     }
     this.updateChartTheme();
   }
 
   ngOnDestroy(): void {
     if (this.el) {
-      document.body.removeChild(this.el);
+      this.doc.body.removeChild(this.el);
     }
   }
 }
