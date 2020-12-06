@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutDefaultModule } from '@delon/theme/layout-default';
 import { DemoComponent } from '../../../demo.component';
 import { SharedModule } from '../../shared/shared.module';
 import { DevHomeComponent } from './home/home.component';
@@ -34,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, RouterModule.forChild(routes), LayoutDefaultModule],
   declarations: COMPONENTS,
 })
 export class DevTestModule {}

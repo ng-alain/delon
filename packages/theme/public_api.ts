@@ -3,7 +3,7 @@ export { preloaderFinished } from './src/services/preloader/preloader';
 export * from './src/services/menu/interface';
 export * from './src/services/menu/menu.service';
 export * from './src/services/scroll/scroll.service';
-export * from './src/services/settings/interface';
+export * from './src/services/settings/types';
 export * from './src/services/settings/settings.service';
 export * from './src/services/responsive/responsive';
 export { TitleService } from './src/services/title/title.service';

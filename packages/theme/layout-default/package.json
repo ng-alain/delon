@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "setting-drawer",
+      "entryFile": "public_api.ts"
+    }
+  }
+}

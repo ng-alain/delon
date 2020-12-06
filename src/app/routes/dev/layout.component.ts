@@ -1,4 +1,4 @@
-import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 // import { Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd/icon';
@@ -26,6 +26,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { I18NService, LangType } from '@core';
 import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
+import { LayoutDefaultOptions } from '@delon/theme/layout-default';
 
 const ICONS = [
   MenuFoldOutline,
@@ -50,25 +51,30 @@ const ICONS = [
 
 @Component({
   selector: 'dev-layout',
-  templateUrl: './layout.component.html',
+  template: `
+    <layout-default [options]="options">
+      <layout-default-header-item direction="left">
+        <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
+          <i nz-icon nzType="github"></i>
+        </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="right">
+        <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank"> githbu </a>
+      </layout-default-header-item>
+      <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
+      <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+    </layout-default>
+  `,
   host: {
     '[class.alain-default]': 'true',
   },
   preserveWhitespaces: false,
 })
 export class DevLayoutComponent implements OnInit {
-  @HostBinding('class.alain-default__fixed')
-  get isFixed(): boolean {
-    return this.settings.layout.fixed;
-  }
-  @HostBinding('class.alain-default__boxed')
-  get isBoxed(): boolean {
-    return this.settings.layout.boxed;
-  }
-  @HostBinding('class.alain-default__collapsed')
-  get isCollapsed(): boolean {
-    return this.settings.layout.collapsed;
-  }
+  options: LayoutDefaultOptions = {
+    logoExpanded: `./assets/logo-full.svg`,
+    logoCollapsed: `./assets/logo.svg`,
+  };
 
   lang: LangType = 'zh-CN';
 
