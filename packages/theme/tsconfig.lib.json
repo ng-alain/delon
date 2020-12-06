@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "@delon/theme/*": ["../../dist/@delon/theme/*"],
       "@delon/acl": ["../../dist/@delon/acl"],
       "@delon/util": ["../../dist/@delon/util"]
     }
