@@ -9,7 +9,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private http: _HttpClient) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }
