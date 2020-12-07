@@ -112,11 +112,11 @@ In the upper-left-right layout mode, it is applied to the development of the **b
 + Turn the side navigation to the `fixed` state when the screen is below `1140px` wide
 + Mainly includes a [sidebar-nav (click to view API)](/components/sidebar-nav) component
 
-> Parameters are adjustable as needed by the `src/styles/_alain-custom-variables.less` file.
+> Parameters are adjustable as needed by the `src/styles/theme.less` file.
 
 **Top area**
 
-location：*src/app/layout/default/header*
+location：*src/app/layout/base/header*
 
 Scaffolding provides some regular top-level components by default, which are stored in the *components* directory. At the same time `@delon/abc` also provides several top components (eg：[notice-icon](/components/notice-icon) Notification menu component. You can build it yourself or develop it yourself based on the components provided.
 

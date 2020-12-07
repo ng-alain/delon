@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SimpleGuard } from '@delon/auth';
 import { environment } from '@env/environment';
 // layout
-import { LayoutDefaultComponent } from '../layout/default/default.component';
-import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.component';
+import { LayoutBasicComponent } from '../layout/basic/basic.component';
+import { LayoutBlankComponent } from '../layout/blank/blank.component';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,7 +19,7 @@ import { UserLockComponent } from './passport/lock/lock.component';
 const routes: Routes = [
   {
     path: '',
-    component: LayoutDefaultComponent,
+    component: LayoutBasicComponent,
     canActivate: [SimpleGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -29,10 +29,10 @@ const routes: Routes = [
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]
   },
-  // 全屏布局
+  // 空白布局
   // {
-  //     path: 'fullscreen',
-  //     component: LayoutFullScreenComponent,
+  //     path: 'blank',
+  //     component: LayoutBlankComponent,
   //     children: [
   //     ]
   // },

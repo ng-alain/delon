@@ -32,13 +32,12 @@ alainProvides.push({
 
 **添加组件**
 
-> 位置 `src/app/layout/default/default.component.html`
+> 位置 `src/app/layout/base/base.component.ts`
 
-```html
-<section class="alain-default__content">
-  <reuse-tab #reuseTab></reuse-tab>
-  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
-</section>
+```diff
+- <router-outlet></router-outlet>
++ <reuse-tab #reuseTab></reuse-tab>
++ <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**

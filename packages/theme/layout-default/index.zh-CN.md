@@ -48,5 +48,5 @@ title: 默认布局
 在 `src/styles.less` 引入：
 
 ```less
-@import '~@delon/theme/styles/layout/default/index';
+@import '~@delon/theme/layout-default/style/index';
 ```

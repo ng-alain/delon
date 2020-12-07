@@ -111,11 +111,11 @@ Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时�
     + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
     + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
 
-> 参数是指可以通过 `src/styles/_alain-custom-variables.less` 文件按需要调整。
+> 参数是指可以通过 `src/styles/theme.less` 文件按需要调整。
 
 **顶部区域**
 
-位置：*src/app/layout/default/header*。
+位置：*src/app/layout/base/widgets*。
 
 脚手架默认提供了一些常规顶部区域组件，这些组件都存放于 *components* 目录中。同时 `@delon/abc` 也提供若干顶部组件（例如：[notice-icon](/components/notice-icon) 通知菜单组件）。你可以根据提供的组件自行组合或自行开发。
 
