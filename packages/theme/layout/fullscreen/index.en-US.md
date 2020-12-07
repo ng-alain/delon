@@ -20,6 +20,6 @@ The fullscreen layout all parameters are prefixed with `@alain-fullscreen-`.
 Import in `src/styles.less`:
 
 ```less
-@import '~@delon/theme/styles/layout/fullscreen/index';
+@import '~@delon/theme/layout-blank/style/index';
 ```
 

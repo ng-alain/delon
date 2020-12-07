@@ -35,7 +35,7 @@ buildLess() {
   echo 'fix zorro path...'
   node ./scripts/build/fix-zorro-path.js
   echo 'build full css...'
-  node ./scripts/build/generate-css.js
+  # node ./scripts/build/generate-css.js
 }
 
 containsElement () {
@@ -118,8 +118,8 @@ echo 'FINISHED!'
 # clear | bash ./scripts/ci/build-delon.sh -n chart -debug
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/dist/@delon/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/@delon/
+  DEBUG_FROM=${PWD}/work/delon/dist/@delon/theme/*
+  DEBUG_TO=${PWD}/work/ng-alain/node_modules/@delon/theme
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

@@ -97,8 +97,8 @@ Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时�
 
 | 类型 | 位置 | 描述 |
 | ---- | --- | ---- |
-| 基础 | [LayoutDefaultComponent](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default) | - |
-| 全屏 | [LayoutFullScreenComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/fullscreen) | - |
+| 基础 | [LayoutBasicComponent](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/basic) | - |
+| 空白 | [LayoutBlankComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/blank) | - |
 | 用户授权 | [LayoutPassportComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/passport) | - |
 
 ### 基础布局

@@ -20,5 +20,5 @@ title: 全屏布局
 在 `src/styles.less` 引入：
 
 ```less
-@import '~@delon/theme/styles/layout/fullscreen/index';
+@import '~@delon/theme/layout-blank/style/index';
 ```

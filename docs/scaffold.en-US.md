@@ -98,8 +98,8 @@ Scaffolding provides three overall layout options by default:
 
 | Type | Location | Description |
 | ---- | -------- | ----------- |
-| Base | [LayoutDefaultComponent](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default) | - |
-| Full screen | [LayoutFullScreenComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/fullscreen) | - |
+| Basic | [LayoutBasicComponent](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/basic) | - |
+| Blank | [LayoutBlankComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/blank) | - |
 | User authorization | [LayoutPassportComponent](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/passport) | - |
 
 ### Basic layout
