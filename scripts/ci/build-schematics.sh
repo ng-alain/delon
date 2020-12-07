@@ -157,7 +157,6 @@ copyFiles() {
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
-    "${1}src/app/layout/basic/basic.component.ts|${2}application/files/src/app/layout/basic/"
     "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
     "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"

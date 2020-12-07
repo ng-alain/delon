@@ -69,6 +69,11 @@ export default function (options: NgAddOptions): Rule {
     }
 
     const pkg = getJSON(host, `package.json`);
+
+    if (pkg.devDependencies['ng-alain']) {
+      throw new Error(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
+    }
+
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
     if (/^[\^|\~]/g.test(ngCoreVersion)) {
       ngCoreVersion = ngCoreVersion.substr(1);

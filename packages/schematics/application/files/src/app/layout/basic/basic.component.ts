@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'layout-basic',
@@ -44,8 +45,12 @@ import { LayoutDefaultOptions } from '@delon/theme/layout-default';
       <layout-default-header-item direction="right">
         <header-user></header-user>
       </layout-default-header-item>
+
       <router-outlet></router-outlet>
     </layout-default>
+
+    <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
+    <theme-btn></theme-btn>
   `,
 })
 export class LayoutBasicComponent {
@@ -54,4 +59,5 @@ export class LayoutBasicComponent {
     logoCollapsed: `./assets/logo.svg`,
   };
   searchToggleStatus = false;
+  showSettingDrawer = !environment.production;
 }
