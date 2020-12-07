@@ -31,7 +31,7 @@ function fixThirdVersion(tree: Tree, context: SchematicContext): void {
     'dependencies',
   );
   // dependencies
-  addPackageToPackageJson(tree, [`webpack-bundle-analyzer@^4.1.0`], 'devDependencies');
+  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@^11.0.0`, `webpack-bundle-analyzer@^3.6.1`], 'devDependencies');
   logStart(context, `Upgrade third libs version number`);
 }
 
