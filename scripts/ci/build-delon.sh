@@ -35,7 +35,7 @@ buildLess() {
   echo 'fix zorro path...'
   node ./scripts/build/fix-zorro-path.js
   echo 'build full css...'
-  # node ./scripts/build/generate-css.js
+  node ./scripts/build/generate-css.js
 }
 
 containsElement () {

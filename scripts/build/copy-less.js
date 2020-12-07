@@ -27,7 +27,6 @@ function copyLess(name) {
 function copyTheme() {
   [
     'system',
-    'layout',
     'index.less',
     'default.less',
     'dark.less',
