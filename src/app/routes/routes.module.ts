@@ -39,7 +39,7 @@ const routes: Route[] = [
   },
   {
     path: 'dev',
-    loadChildren: () => import('./dev/dev.module').then(m => m.DevTestModule),
+    loadChildren: () => import('../../dev/dev.module').then(m => m.DevTestModule),
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
