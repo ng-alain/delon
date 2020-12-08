@@ -10,6 +10,7 @@
     "file-saver",
     "date-fns",
     "qrious",
+    "isutf8",
     "ngx-countdown",
     "@delon/theme",
     "@delon/util",

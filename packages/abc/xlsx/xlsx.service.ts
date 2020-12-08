@@ -2,28 +2,41 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainXlsxConfig, LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
+import isUtf8 from 'isutf8';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
 declare var XLSX: any;
+declare var cptable: any;
 
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
-  private cog: AlainXlsxConfig;
   constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService, private ngZone: NgZone) {
     this.cog = configSrv.merge('xlsx', {
-      url: '//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js',
-      modules: [],
+      url: 'https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js',
+      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`],
     })!;
   }
+  private cog: AlainXlsxConfig;
 
   private init(): Promise<LazyResult[]> {
     return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
-  private read(data: NzSafeAny, options: { type: 'array' | 'binary' }): { [key: string]: NzSafeAny[][] } {
+  private read(data: NzSafeAny, options: { type: 'array' | 'binary' | 'string' }): { [key: string]: NzSafeAny[][] } {
     const ret: NzSafeAny = {};
     this.ngZone.runOutsideAngular(() => {
+      if (options.type === 'binary') {
+        const buf = new Uint8Array(data);
+        if (!isUtf8(buf)) {
+          try {
+            data = cptable.utils.decode(936, buf);
+            options.type = 'string';
+          } catch {
+            options.type = 'array';
+          }
+        }
+      }
       const wb = XLSX.read(data, options);
       wb.SheetNames.forEach((name: string) => {
         const sheet: NzSafeAny = wb.Sheets[name];
@@ -35,11 +48,21 @@ export class XlsxService {
 
   /**
    * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
-   * @param rABS 加载数据方式 `readAsBinaryString` （默认） 或 `readAsArrayBuffer`，[更多细节](http://t.cn/R3n63A0)
    */
+  import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }>;
+
+  /**
+   * @deprecated 无须指定 `rABS` 参数，从12.x后将移除
+   *
+   * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
+   * @param rABS 加载数据方式 `readAsBinaryString` 或 `readAsArrayBuffer` （默认），[更多细节](http://t.cn/R3n63A0)
+   */
+  // tslint:disable-next-line: unified-signatures
+  import(fileOrUrl: File | string, rABS: 'readAsBinaryString' | 'readAsArrayBuffer'): Promise<{ [key: string]: any[][] }>;
+
   import(
     fileOrUrl: File | string,
-    rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
+    _rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
   ): Promise<{ [key: string]: any[][] }> {
     return new Promise<{ [key: string]: any[][] }>((resolve, reject) => {
       this.init()
@@ -61,7 +84,7 @@ export class XlsxService {
           reader.onload = (e: any) => {
             this.ngZone.run(() => resolve(this.read(e.target.result, { type: 'binary' })));
           };
-          reader[rABS](fileOrUrl);
+          reader.readAsArrayBuffer(fileOrUrl);
         })
         .catch(() => reject(`Unable to load xlsx.js`));
     });
