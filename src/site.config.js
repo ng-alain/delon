@@ -566,14 +566,16 @@ module.exports = {
           template: {
             content: './src/templates/content.ts',
           },
-          hasSubDir: true,
+          reName: 'layout-default',
+          hasSubDir: false,
         },
         {
           src: ['./packages/theme/layout-blank'],
           template: {
             content: './src/templates/content.ts',
           },
-          hasSubDir: true,
+          reName: 'layout-blank',
+          hasSubDir: false,
         },
         {
           src: ['./packages/theme/src/pipes'],

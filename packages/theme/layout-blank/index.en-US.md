@@ -4,7 +4,7 @@ order: 110
 title: Blank Layout
 ---
 
-The fullscreen layout all parameters are prefixed with `@alain-blank-`.
+The blank layout all parameters are prefixed with `@alain-blank-`.
 
 ## Parameters
 

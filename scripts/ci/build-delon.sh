@@ -119,7 +119,7 @@ echo 'FINISHED!'
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/@delon/theme/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/@delon/theme
+  DEBUG_TO=${PWD}/work/ng11-strict/node_modules/@delon/theme
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

@@ -114,10 +114,10 @@ const routes: Routes = [
       // { path: 'trade', loadChildren: './trade/trade.module#TradeModule' }
     ]
   },
-  // 全屏布局
+  // 空白布局
   {
-    path: 'fullscreen',
-    component: LayoutFullScreenComponent,
+    path: 'blank',
+    component: LayoutBlankComponent,
     children: [
     ]
   },
