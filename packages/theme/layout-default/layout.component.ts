@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ContentChildren, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, Renderer2 } from '@angular/core';
+import { Component, ContentChildren, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util';
@@ -14,7 +14,12 @@ import { LayoutDefaultOptions } from './types';
   template: `
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
     <layout-default-header></layout-default-header>
-    <layout-default-side></layout-default-side>
+    <div class="alain-default__aside">
+      <div class="alain-default__aside-inner">
+        <ng-container *ngTemplateOutlet="asideUser"></ng-container>
+        <layout-default-nav class="d-block py-lg"></layout-default-nav>
+      </div>
+    </div>
     <section class="alain-default__content">
       <ng-content></ng-content>
     </section>
@@ -25,6 +30,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
   @Input() options: LayoutDefaultOptions;
+  @Input() asideUser: TemplateRef<void>;
 
   private unsubscribe$ = new Subject<void>();
   isFetching = false;

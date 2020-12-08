@@ -10,13 +10,11 @@ import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component
 import { LayoutDefaultHeaderComponent } from './layout-header.component';
 
 import { LayoutDefaultNavComponent } from './layout-nav.component';
-import { LayoutDefaultSideComponent } from './layout-side.component';
 import { LayoutDefaultComponent } from './layout.component';
 
 const COMPONENTS = [
   LayoutDefaultComponent,
   LayoutDefaultNavComponent,
-  LayoutDefaultSideComponent,
   LayoutDefaultHeaderComponent,
   LayoutDefaultHeaderItemComponent,
   LayoutDefaultHeaderItemTriggerDirective,

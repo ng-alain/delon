@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 // import { Router } from '@angular/router';
-import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, User } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -52,7 +52,7 @@ const ICONS = [
 @Component({
   selector: 'dev-layout',
   template: `
-    <layout-default [options]="options">
+    <layout-default [options]="options" [asideUser]="asideUserTpl">
       <layout-default-header-item direction="left">
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
@@ -61,6 +61,21 @@ const ICONS = [
       <layout-default-header-item direction="right">
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank"> githbu </a>
       </layout-default-header-item>
+      <ng-template #asideUserTpl>
+        <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
+          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
+          <div class="alain-default__aside-user-info">
+            <strong>{{ user.name }}</strong>
+            <p class="mb0">{{ user.email }}</p>
+          </div>
+        </div>
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' }}</li>
+            <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' }}</li>
+          </ul>
+        </nz-dropdown-menu>
+      </ng-template>
       <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
       <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
     </layout-default>
@@ -77,6 +92,10 @@ export class DevLayoutComponent implements OnInit {
   };
 
   lang: LangType = 'zh-CN';
+
+  get user(): User {
+    return this.settings.user;
+  }
 
   menus: Menu[] = [
     {
