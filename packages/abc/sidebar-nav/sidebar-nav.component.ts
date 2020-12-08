@@ -24,6 +24,9 @@ import { Nav } from './sidebar-nav.types';
 const SHOWCLS = 'sidebar-nav__floating-show';
 const FLOATINGCLS = 'sidebar-nav__floating';
 
+/**
+ * @deprecated Will be removed in 12.0.0, Pls used `layout-default` instead
+ */
 @Component({
   selector: 'sidebar-nav',
   exportAs: 'sidebarNav',
