@@ -111,7 +111,7 @@ Two style files will be generated in `src/assets/style.dark.css` and `src/assets
 
 Dynamically create a `link` tag, dynamically load style files into the application, and remove them otherwise.
 
-> A complete code, please refer to [theme-btn](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default/theme-btn)。
+> A complete code, please refer to [theme-btn](https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/)。
 
 ```ts
 changeTheme(theme: 'default' | 'dark'): void {

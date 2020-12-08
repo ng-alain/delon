@@ -114,10 +114,10 @@ const routes: Routes = [
       // { path: 'trade', loadChildren: './trade/trade.module#TradeModule' }
     ]
   },
-  // Full screen layout
+  // Blank layout
   {
-    path: 'fullscreen',
-    component: LayoutFullScreenComponent,
+    path: 'blank',
+    component: LayoutBlankComponent,
     children: [
     ]
   },

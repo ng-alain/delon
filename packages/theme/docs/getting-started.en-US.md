@@ -12,7 +12,7 @@ ng-alain defaults to using less as the style language, we recommend that you lea
 
 ## Layout
 
-Scaffolding include two layouts: [default layout](/theme/default), [fullscreen layout](/theme/fullscreen), scaffolding does not contain these style files, it's in the `@delon/theme` library.
+Scaffolding include two layouts: [default layout](/theme/default), [blank layout](/theme/blank), scaffolding does not contain these style files, it's in the `@delon/theme` library.
 
 ## Scaffold Style
 
@@ -49,6 +49,6 @@ The changes parameters put into the [theme.less](https://github.com/ng-alain/ng-
 
 - [Global Parameters](/theme/global)
 - [Default Layout](/theme/default)
-- [Fullscreen Layout](/theme/fullscreen)
+- [Blank Layout](/theme/blank)
 
 Please report an issue if the existing list of variables is not enough for you.

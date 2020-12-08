@@ -154,7 +154,7 @@
     "less-bundle-promise": "^1.0.7",
     "ng-alain-codelyzer": "^0.0.1",
     "ng-alain-sts": "^0.0.1",
-    "ng-alain-plugin-theme": "^10.0.3",
+    "ng-alain-plugin-theme": "^11.0.0",
     "nz-tslint-rules": "^0.901.2",
     "tsconfig-paths": "^3.9.0",
     "@nguniversal/builders": "^11.0.0",
