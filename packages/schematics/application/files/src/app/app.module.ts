@@ -35,7 +35,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core';
 
-export function I18nHttpLoaderFactory(http: HttpClient) {
+export function I18nHttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
 }
 

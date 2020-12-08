@@ -45,6 +45,7 @@ function removeOrginalFiles(): (host: Tree) => void {
       `${project.root}/README.md`,
       `${project.root}/tslint.json`,
       `${project.sourceRoot}/main.ts`,
+      `${project.sourceRoot}/test.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
       `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
@@ -65,9 +66,22 @@ function fixAngularJson(options: ApplicationOptions): (host: Tree) => void {
   return (host: Tree) => {
     const json = getAngular(host);
     const _project = getProjectFromWorkspace(json, options.project);
-
+    const architect = (_project.targets || _project.architect)!;
     // Add proxy.conf.json
-    (_project.targets || _project.architect)!.serve!.options.proxyConfig = 'proxy.conf.json';
+    architect.serve!.options.proxyConfig = 'proxy.conf.json';
+    // 调整budgets
+    const budgets = architect.build.configurations.production.budgets as Array<{
+      type: string;
+      maximumWarning: string;
+      maximumError: string;
+    }>;
+    if (budgets && budgets.length > 0) {
+      const initial = budgets.find(w => w.type === 'initial');
+      if (initial) {
+        initial.maximumWarning = '2mb';
+        initial.maximumError = '3mb';
+      }
+    }
 
     overwriteAngular(host, json);
     return host;

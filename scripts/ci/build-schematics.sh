@@ -134,6 +134,7 @@ copyFiles() {
     "${1}src/environments|${2}application/files/src/"
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
+    "${1}src/test.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
     "${1}src/style-icons-auto.ts|${2}application/files/src/"
     "${1}src/style-icons.ts|${2}application/files/src/"
