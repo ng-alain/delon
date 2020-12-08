@@ -21,6 +21,7 @@ import { LayoutDefaultOptions } from './types';
       </div>
     </div>
     <section class="alain-default__content">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
       <ng-content></ng-content>
     </section>
   `,
@@ -31,6 +32,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
 
   @Input() options: LayoutDefaultOptions;
   @Input() asideUser: TemplateRef<void>;
+  @Input() content: TemplateRef<void>;
 
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
