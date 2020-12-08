@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MenuService, SettingsService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';<% } %>
@@ -34,7 +34,7 @@ export class StartupService {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
-  private viaHttp(resolve: any, reject: any) {
+  private viaHttp(resolve: any, reject: any): void {
     zip(<% if (i18n) { %>
       this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),<% } %>
       this.httpClient.get('assets/tmp/app-data.json')
@@ -68,7 +68,7 @@ export class StartupService {
     });
   }
   <% if (i18n) { %>
-  private viaMockI18n(resolve: any, reject: any) {
+  private viaMockI18n(resolve: any, reject: any): void {
     this.httpClient
       .get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`)
       .subscribe(langData => {
@@ -79,7 +79,7 @@ export class StartupService {
       });
   }
   <% } %>
-  private viaMock(resolve: any, reject: any) {
+  private viaMock(resolve: any, reject: any): void {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
     //   this.injector.get(Router).navigateByUrl('/passport/login');
@@ -113,11 +113,6 @@ export class StartupService {
             text: 'Dashboard',
             link: '/dashboard',
             icon: { type: 'icon', value: 'appstore' }
-          },
-          {
-            text: 'Quick Menu',
-            icon: { type: 'icon', value: 'rocket' },
-            shortcutRoot: true
           }
         ]
       }

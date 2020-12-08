@@ -12,7 +12,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 ## 布局
 
-脚手架提供两种布局：[默认布局](/theme/default)、[全屏布局](/theme/fullscreen)，脚手架并不包含两种布局样式文件，它位于 `@delon/theme` 类库当中。
+脚手架提供两种布局：[默认布局](/theme/default)、[空白布局](/theme/blank)，脚手架并不包含两种布局样式文件，它位于 `@delon/theme` 类库当中。
 
 ## 脚手架样式
 
@@ -49,6 +49,6 @@ ng-alain 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并
 
 - [全局参数](/theme/global)
 - [默认布局](/theme/default)
-- [全屏布局](/theme/fullscreen)
+- [空白布局](/theme/blank)
 
 如果以上变量不能满足你的定制需求，可以给我们提 issue。

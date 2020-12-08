@@ -53,6 +53,7 @@ export interface ModuleDirConfig {
   template: TemplateConfig;
   /** 是否包含子目录 */
   hasSubDir: boolean;
+  reName?: string;
 }
 
 export interface Langs {

@@ -14,8 +14,7 @@
       "ng-zorro-antd/i18n": "ng-zorro-antd/i18n",
       "date-fns": "DateFns",
       "@delon/acl": "delon.acl",
-      "@delon/util": "delon.util",
-      "@delon/chart": "delon.chart"
+      "@delon/util": "delon.util"
     }
   },
   "whitelistedNonPeerDependencies": [
@@ -25,7 +24,6 @@
     "ng-zorro-antd",
     "@delon/acl",
     "@delon/util",
-    "@delon/chart",
     "@ant-design/icons-angular"
   ]
 }

@@ -129,16 +129,18 @@ copyFiles() {
     # mock
     "${1}_mock/_user.ts|${2}application/files/root/_mock/"
     # src
+    "${1}src/favicon.ico|${2}application/files/src/"
     "${1}src/typings.d.ts|${2}application/files/src/"
     "${1}src/environments|${2}application/files/src/"
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
+    "${1}src/test.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
     "${1}src/style-icons-auto.ts|${2}application/files/src/"
     "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
     "${1}src/assets/*.svg|${2}application/files/src/assets/"
-    "${1}src/assets/tmp/img/*|${2}application/files/src/assets/tmp/img/"
+    "${1}src/assets/tmp/img/avatar.jpg|${2}application/files/src/assets/tmp/img/"
     "${1}src/assets/tmp/i18n/*|${2}application/files/src/assets/tmp/i18n/"
     "${1}src/assets/tmp/app-data.json|${2}application/files/src/assets/tmp/"
     # core
@@ -154,19 +156,16 @@ copyFiles() {
     "${1}src/app/global-config.module.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
-    "${1}src/app/layout/fullscreen|${2}application/files/src/app/layout/"
+    "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
-    "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/theme-btn|${2}application/files/src/app/layout/default/"
-    # "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/components|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/header.component.ts|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/sidebar|${2}application/files/src/app/layout/default/"
+    "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
+    "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/user.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/clear-storage.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/fullscreen.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     # router
-    "${1}src/app/routes/callback|${2}application/files/src/app/routes/"
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
     "${1}src/app/routes/passport|${2}application/files/src/app/routes/"
   )

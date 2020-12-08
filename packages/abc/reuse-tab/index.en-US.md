@@ -32,13 +32,12 @@ alainProvides.push({
 
 **Add Component**
 
-> In `src/app/layout/default/default.component.html`
+> In `src/app/layout/base/base.component.ts`
 
-```html
-<section class="alain-default__content">
-  <reuse-tab #reuseTab></reuse-tab>
-  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
-</section>
+```diff
+- <router-outlet></router-outlet>
++ <reuse-tab #reuseTab></reuse-tab>
++ <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**

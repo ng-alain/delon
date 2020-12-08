@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { App, Layout, SettingsNotify, User } from './interface';
+import { App, Layout, SettingsNotify, User } from './types';
 
 export const LAYOUT = 'layout';
 

@@ -111,7 +111,7 @@ npx ng-alain-plugin-theme -t=themeCss
 
 动态创建 `link` 标签，将样式文件动态加载在应用中，反之移除。
 
-> 完整代码请参考 [theme-btn](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default/theme-btn)。
+> 完整代码请参考 [theme-btn](https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/)。
 
 ```ts
 changeTheme(theme: 'default' | 'dark'): void {
