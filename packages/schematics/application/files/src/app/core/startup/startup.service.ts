@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MenuService, SettingsService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { MenuService, SettingsService, TitleService } from '@delon/theme';
 import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';<% } %>
@@ -113,11 +113,6 @@ export class StartupService {
             text: 'Dashboard',
             link: '/dashboard',
             icon: { type: 'icon', value: 'appstore' }
-          },
-          {
-            text: 'Quick Menu',
-            icon: { type: 'icon', value: 'rocket' },
-            shortcutRoot: true
           }
         ]
       }
