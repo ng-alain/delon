@@ -164,7 +164,6 @@ copyFiles() {
     "${1}src/app/layout/basic/widgets/clear-storage.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     "${1}src/app/layout/basic/widgets/fullscreen.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     # router
-    "${1}src/app/routes/callback|${2}application/files/src/app/routes/"
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
     "${1}src/app/routes/passport|${2}application/files/src/app/routes/"
   )

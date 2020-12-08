@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 // #region default language
 // Reference: https://ng-alain.com/docs/i18n
@@ -110,7 +111,8 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     SharedModule,
     LayoutModule,
     RoutesModule,
-    STWidgetModule,<% if (i18n) { %>
+    STWidgetModule,
+    NzNotificationModule,<% if (i18n) { %>
     ...I18NSERVICE_MODULES,<% } %><% if (form) { %>
     ...FORM_MODULES,<% } %>
     ...GLOBAL_THIRD_MODULES
