@@ -1,3 +1,4 @@
+import { Spinner } from '@angular-devkit/build-angular/src/utils/spinner';
 import { strings } from '@angular-devkit/core';
 import {
   apply,
@@ -16,7 +17,7 @@ import {
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
 import { getLangData } from '../core/lang.config';
-import { addFiles } from '../utils/file';
+import { addFiles, overwriteFile } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
   addAllowedCommonJsDependencies,
@@ -35,6 +36,7 @@ import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
+const spinner = new Spinner();
 
 /** Remove files to be overwrite */
 function removeOrginalFiles(): (host: Tree) => void {
@@ -274,67 +276,6 @@ function mergeFiles(options: ApplicationOptions, from: string, to: string): Rule
   );
 }
 
-function addCliTpl(): (host: Tree) => void {
-  const TPLS = {
-    '__name@dasherize__.component.html': `<page-header></page-header>`,
-    '__name@dasherize__.component.ts': `import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
-
-@Component({
-  selector: '<%= selector %>',
-  templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
-  styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %><% if(!!viewEncapsulation) { %>,
-  encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
-  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
-})
-export class <%= componentName %> implements OnInit {
-
-  constructor(private http: _HttpClient, private msg: NzMessageService) { }
-
-  ngOnInit() { }
-
-}
-`,
-    '__name@dasherize__.component.spec.ts': `import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-  import { <%= componentName %> } from './<%= dasherize(name) %>.component';
-
-  describe('<%= componentName %>', () => {
-    let component: <%= componentName %>;
-    let fixture: ComponentFixture<<%= componentName %>>;
-
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        declarations: [ <%= componentName %> ]
-      })
-      .compileComponents();
-    }));
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(<%= componentName %>);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
-  });
-  `,
-  };
-  return (host: Tree) => {
-    const prefix = `${project.root}/_cli-tpl/test/__path__/__name@dasherize@if-flat__/`;
-    Object.keys(TPLS).forEach(name => {
-      const realPath = prefix + name;
-      if (host.exists(realPath)) {
-        host.overwrite(realPath, TPLS[name]);
-      } else {
-        host.create(realPath, TPLS[name]);
-      }
-    });
-  };
-}
-
 function addFilesToRoot(options: ApplicationOptions): Rule {
   return chain([
     mergeWith(
@@ -375,7 +316,7 @@ function fixLang(options: ApplicationOptions): (host: Tree) => void {
     const langs = getLangData(options.defaultLanguage!);
     if (!langs) return;
 
-    console.log(`Translating, please wait...`);
+    spinner.text = `Translating template into ${options.defaultLanguage} language, please wait...`;
 
     host.visit(p => {
       if (~p.indexOf(`/node_modules/`)) return;
@@ -438,16 +379,17 @@ function fixVsCode(): (host: Tree) => void {
   };
 }
 
-function installPackages(): (_host: Tree, context: SchematicContext) => void {
+function finished(): (_host: Tree, context: SchematicContext) => void {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
+    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
   };
 }
 
 export default function (options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
-
+    spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
@@ -461,13 +403,12 @@ export default function (options: ApplicationOptions): Rule {
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),
-      addCliTpl(),
       forceLess(),
       addStyle(),
       fixLang(options),
       fixVsCode(),
       fixAngularJson(options),
-      installPackages(),
+      finished(),
     ])(host, context);
   };
 }

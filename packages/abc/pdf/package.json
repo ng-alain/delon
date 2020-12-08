@@ -1,11 +1,10 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "xlsx",
+      "flatModuleFile": "pdf",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "isutf8": "isUtf8",
-        "file-saver": "saveAs",
+        "ng-zorro-antd/skeleton": "ng-zorro-antd/skeleton",
         "@delon/util": "delon.util"
       }
     }

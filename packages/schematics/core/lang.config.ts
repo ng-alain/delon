@@ -34,8 +34,6 @@ export function getLangData(lang: string): any {
     langCog = getLangConfig('zh');
   }
 
-  console.log(`Currently using translation files: ${langCog.fileName}`);
-
   const langFilePath = path.join(__dirname, `../application/files/i18n/${langCog.fileName}`);
   if (!fs.existsSync(langFilePath)) {
     console.log(`No found language files`);
