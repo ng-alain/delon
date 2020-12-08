@@ -6,6 +6,8 @@ cols: 1
 module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 ---
 
+**将会在 12.0.0 时被移除，它已经集成在 `@delon/theme/layout-default` 里面。**
+
 NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 
 组件的数据来自 `MenuService`（其结构为 [Menu](/theme/menu#Menu)）， `MenuService` 的操作会自动同步至该组件。

@@ -6,6 +6,8 @@ cols: 1
 module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 ---
 
+**Will be removed in 12.0.0, it has been integrated in `@delon/theme/layout-default`.**
+
 NG-ALAIN The left main menu depends on `@delon/theme`.
 
 The component data comes from `MenuService` (which is structured as [Menu](/theme/menu#Menu)), and the operation of `MenuService` is auto synchronized to the component.
