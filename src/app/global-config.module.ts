@@ -16,6 +16,7 @@ const alainConfig: AlainConfig = {
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
   },
   mock: { data: MOCKDATA },
+  pdf: {},
 };
 
 const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];

@@ -82,7 +82,8 @@
     "docsearch.js": "^2.6.3",
     "@ng-util/monaco-editor": "^10.2.2",
     "@nguniversal/express-engine": "^10.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "isutf8": "^3.1.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.2",
