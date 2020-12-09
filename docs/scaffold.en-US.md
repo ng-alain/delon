@@ -3,7 +3,7 @@ order: 30
 title:
   en-US: Scaffold
   zh-CN: 脚手架结构
-type: Basic
+type: Basic-REMOVE
 ---
 
 ## Directory Structure

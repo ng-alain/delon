@@ -3,7 +3,7 @@ order: 30
 title:
   en-US: Scaffold
   zh-CN: 脚手架结构
-type: Basic
+type: Basic-REMOVE
 ---
 
 ## 目录结构
@@ -107,9 +107,9 @@ Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时�
 
 + 顶部区域高度 `64px`（参数：`@header-hg`）
 + 侧边区域宽度 `200px`（参数：`@aside-wd`）
-    + 当屏幕低于 `1140px` 宽时隐藏侧边导航
-    + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
-    + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
+  + 当屏幕低于 `1140px` 宽时隐藏侧边导航
+  + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
+  + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
 
 > 参数是指可以通过 `src/styles/theme.less` 文件按需要调整。
 

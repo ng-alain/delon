@@ -1,6 +1,6 @@
 ---
-order: 11
-type: Basic
+order: 1000
+type: Other
 title: 升级到 10.0 版本
 hot: true
 ---

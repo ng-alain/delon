@@ -1,16 +1,15 @@
 ---
 order: 20
-title:
-  en-US: Architecture
-  zh-CN: 体系结构
+title: 体系结构
 type: Basic
+i18n: need-update
 ---
 
-NG-ALAIN 脚手架是基于 Angular 和 NG-ZORRO（Ant Design 的 Angular 版本） 基础组件库的中后台前端解决方案。脚手架包含着一套通用的功能和业务组件库，它们可以极大地减少一些基础建设开发工作。
+在开始进行业务开发前，有必要了解整个 NG-ALAIN 的体系结构，这有助于你先从整体上了解 NG-ALAIN 包含了哪些东西。它是基于 Angular 和 [NG-ZORRO](https://ng.ant.design/)（Ant Design 的 Angular 版本） 基础组件库的中后台前端解决方案。脚手架包含着一套通用的功能和业务组件库，它们可以极大地减少一些基础建设开发工作。
 
 ## 结构图
 
-![](https://github.com/ng-alain/delon/raw/master/_screenshot/architecture.png | width=700)
+![](./assets/screenshot/architecture.png | width=700)
 
 **@delon/theme**
 
@@ -58,8 +57,83 @@ NG-ALAIN 脚手架是基于 Angular 和 NG-ZORRO（Ant Design 的 Angular 版本
 
 [命令行工具](/cli)。
 
-## 文档和反馈
+## 目录结构
 
-你可以在 [ng-alain.com](https://ng-alain.com) 找到所有的文档。
+以下脚手架目录结构概略图：
 
-随着脚手架的更新而不断迭代（[更新日志](https://github.com/ng-alain/ng-alain/releases)），有任何问题和需求可以反馈到 [这里](https://github.com/ng-alain/ng-alain/issues)。
+```
+├── _mock                                       # Mock 数据规则目录
+├── src
+│   ├── app
+│   │   ├── core                                # 核心模块
+│   │   │   ├── i18n
+│   │   │   ├── net
+│   │   │   │   └── default.interceptor.ts      # 默认HTTP拦截器
+│   │   │   ├── services
+│   │   │   │   └── startup.service.ts          # 初始化项目配置
+│   │   │   └── core.module.ts                  # 核心模块文件
+│   │   ├── layout                              # 通用布局
+│   │   ├── routes
+│   │   │   ├── **                              # 业务目录
+│   │   │   ├── routes.module.ts                # 业务路由模块
+│   │   │   └── routes-routing.module.ts        # 业务路由注册口
+│   │   ├── shared                              # 共享模块
+│   │   │   ├── shared-delon.module.ts          # @Delon/* 次级共享模块导入
+│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO 次级共享模块导入
+│   │   │   └── shared.module.ts                # 共享模块文件
+│   │   ├── app.component.ts                    # 根组件
+│   │   └── app.module.ts                       # 根模块
+│   │   └── global-config.module.ts             # @delon & ng-zorro 全局配置项
+│   ├── assets                                  # 本地静态资源
+│   ├── environments                            # 环境变量配置
+│   ├── styles                                  # 样式目录
+└── └── style.less                              # 样式引导入口
+```
+
+以下是针对各个目录及文件说明及使用目的。
+
+**_mock**
+
+Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时可以指定 `--mock` 参数决定是否需要 Mock 功能。
+
+**src/app/core/core.module.ts**
+
+核心模块，只会导入一次。因此，针对整个**业务模块都需要**使用的纯服务类（例如：消息、数据访问等），都应该存在这里。
+
+**src/app/core/i18n**
+
+[国际化](/docs/i18n)数据加载及处理相关类，若你通过 [命令行工具](/cli) 创建项目时可以指定 `-di` 参数决定是否需要国际化支持。
+
+**src/app/core/net**
+
+默认拦截器，你可以在这里统一处理请求参数、请求异常、业务异常等动作。
+
+**src/app/core/services/startup.service.ts**
+
+当你需要在 Angular 启动前执行一些远程数据（例如：应用信息、用户信息等）时非常有用。
+
+> 它是一个单纯的方法且返回一个 `Promise` 对象，除非明确执行 `resolve(null)` 否则 Angular 将会中止启动。
+
+**src/app/layout**
+
+布局文件代码，参考页面结构小节。
+
+**src/app/routes**
+
+业务模块，你的所有业务代码都将在这里。
+
+**src/app/shared/shared.module.ts**
+
+共享模块，指当你需要针对整个**业务模块都需要**使用的一些第三方模块、自定义组件、自定义指令，都应该存在这里。除此之外，针对 @delon & NG-ZORRO 分别构建了 `shared-delon.module.ts`、`shared-zorro.module.ts` 两种次级共享模块的导入。
+
+**src/app/global-config.module.ts**
+
+针对 @delon & NG-ZORRO 的全局配置项。
+
+**src/environments**
+
+应用环境变量，包含以下值：
+
+- `SERVER_URL` 所有HTTP请求的前缀
+- `production` 是否生产环境
+- `useHash` 路由是否useHash模式
