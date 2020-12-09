@@ -39,7 +39,7 @@ cp -r ${DIST}/ng-alain ${buildDir}/ng-alain
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")
-branchName=${TRAVIS_BRANCH:-'master'}
+branchName=${TRAVIS_BRANCH:-'10.x'}
 
 buildVersionName="${buildVersion}-${commitSha}"
 buildTagName="${branchName}-${commitSha}"

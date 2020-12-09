@@ -122,7 +122,11 @@ describe('util: time', () => {
     it('with type is string', () => {
       expect(toDate(`2020-12-12`) instanceof Date).toBe(true);
     });
-    it('should be specify format when parseISO return invalid date', () => {
+    it('should be timestamp', () => {
+      // 946684800 => 2000-1-1
+      expect(toDate(`946684800`, { formatString: 't' }).getFullYear()).toBe(2000);
+    });
+    it('should be specify format', () => {
       expect(toDate(`12/12/2020`, 'MM/dd/yyyy') instanceof Date).toBe(true);
     });
     it('should be return default value', () => {
