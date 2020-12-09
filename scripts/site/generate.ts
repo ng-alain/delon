@@ -206,6 +206,7 @@ function generateModule(config: ModuleConfig) {
 }
 
 for (const m of siteConfig.modules) {
+  // if (m.module !== 'docs') continue;
   generateModule(m);
 }
 

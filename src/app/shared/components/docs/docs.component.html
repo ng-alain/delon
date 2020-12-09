@@ -1,6 +1,10 @@
 <nz-affix class="toc-affix" *ngIf="isBrowser && data.con.toc?.length" nzOffsetTop="16">
   <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
-    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title"></nz-link>
+    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title">
+      <ng-container *ngIf="t.children && t.children.length > 0">
+        <nz-link *ngFor="let t2 of t.children" [nzHref]="'#' + t2.id" [nzTitle]="t2.title"></nz-link>
+      </ng-container>
+    </nz-link>
   </nz-anchor>
 </nz-affix>
 <ng-container *ngIf="meta.item">
@@ -22,7 +26,7 @@
     <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
   </div>
   <ng-container *ngIf="data.demo">
-    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent" routeTransfer></h2>
+    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0" [innerHTML]="demoContent" routeTransfer></h2>
     <ng-content></ng-content>
   </ng-container>
   <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
