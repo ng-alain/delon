@@ -10,11 +10,11 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ## 前序准备
 
-你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
+我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。
 
 ## 环境搭建
 
-Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，如果你习惯使用 [Yarn](https://yarnpkg.com/) 需要单独安装）、[VSCode](https://code.visualstudio.com/)，其中 Node.js 建议安装 LTS 版本，安装完成后可以通过终端窗口中运行：
+Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，如果习惯使用 [Yarn](https://yarnpkg.com/) 需要单独额外安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
 
 ```bash
 node -v # 查看 Node.js 当前版本
@@ -38,7 +38,7 @@ npm config delete sass_binary_site
 
 ### 全局 Angular Cli
 
-安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端内执行 `ng` 命令，可以通过终端窗口中运行：
+安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
 
 ```bash
 npm install -g @angular/cli
@@ -52,18 +52,17 @@ NG-ALAIN 必须先创建一个全新的 Angular 项目，可以通过终端窗�
 ng new my-project --style less --routing
 ```
 
-> 如果你想了解 `--style`、`--routing` 参数，请参考[ng new](https://angular.io/cli/new#options)文档。
+> 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
 
-当提示 `Packages installed successfully.` 表示成功，接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，通过终端窗口分别执行以下三行命令：
+当提示 `Packages installed successfully.` 表示创建成功，接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
 
 ```bash
-cd my-project
 ng add ng-alain
 ```
 
 NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一路回车，这些插件都是可插拔，后期可以自行添加与移除。
 
-> 以上只会生成干净的项目，可以直接用于生产环境中，NG-ALAIN 开发了一些示例页面，我们建议有需要参考的可以通过 [Github](https://github.com/ng-alain/ng-alain) 上拷贝。当然也可以通过克隆代码的方式获得：
+> 以上只会生成干净的项目，可以直接用于生产环境中。你可能在[预览](https://ng-alain.gitee.io/)上看到许多示例页，它们全都可以在 [Github](https://github.com/ng-alain/ng-alain) 查看到源代码，当然也可以通过 Git 克隆代码的形式获得：
 > ```bash
 > git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 > cd my-project
