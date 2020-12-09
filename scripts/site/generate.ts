@@ -151,6 +151,7 @@ function generateModule(config: ModuleConfig) {
           urls,
           content,
           demo: isDemo,
+          // i18n: meta.i18n,
         } as any,
         demos: '',
         demo: isDemo,
