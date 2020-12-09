@@ -112,6 +112,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree)
         `ng-alain@${VERSION}`,
         `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
         `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
+        `source-map-explorer@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
       ],
       'devDependencies',
@@ -131,10 +132,12 @@ function addRunScriptToPackageJson(): (host: Tree) => void {
   return (host: Tree) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
+    json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
     json.scripts.start = `ng s -o`;
     json.scripts.hmr = `ng s -o --hmr`;
-    json.scripts.build = `node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod`;
-    json.scripts.analyze = `node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json`;
+    json.scripts.build = `npm run ng-high-memory build -- --prod`;
+    json.scripts.analyze = `npm run ng-high-memory build -- --prod --source-map`;
+    json.scripts['analyze:view'] = `source-map-explorer dist/**/*.js`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
     json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
