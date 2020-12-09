@@ -80,13 +80,18 @@ export type ToDateOptions = string | { formatString?: string; defaultValue?: NzS
 export function toDate(value: Date | string | number, options?: ToDateOptions): Date {
   if (typeof options === 'string') options = { formatString: options };
   const { formatString, defaultValue } = { formatString: 'yyyy-MM-dd HH:mm:ss', defaultValue: new Date(NaN), ...options };
-  if (value == null) return defaultValue;
-  if (value instanceof Date) return value;
-  if (typeof value === 'number') return new Date(value);
-
-  let tryDate = !isNaN(+value) ? new Date(+value) : parseISO(value);
+  if (value == null) {
+    return defaultValue;
+  }
+  if (value instanceof Date) {
+    return value;
+  }
+  if (typeof value === 'number') {
+    return new Date(value);
+  }
+  let tryDate = parseISO(value);
   if (isNaN(tryDate as NzSafeAny)) {
-    tryDate = parse(value, formatString!, defaultValue);
+    tryDate = parse(value, formatString!, new Date());
   }
 
   return isNaN(tryDate as NzSafeAny) ? defaultValue : tryDate;
