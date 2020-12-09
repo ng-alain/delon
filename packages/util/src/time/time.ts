@@ -86,8 +86,8 @@ export function toDate(value: Date | string | number, options?: ToDateOptions): 
   if (value instanceof Date) {
     return value;
   }
-  if (typeof value === 'number') {
-    return new Date(value);
+  if (typeof value === 'number' || (typeof value === 'string' && /[0-9]{10,13}/.test(value))) {
+    return new Date(+value);
   }
   let tryDate = parseISO(value);
   if (isNaN(tryDate as NzSafeAny)) {
