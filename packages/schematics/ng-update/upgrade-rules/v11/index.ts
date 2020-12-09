@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { colors } from '@angular/cli/utilities/color';
-import { addPackageToPackageJson } from '../../../utils/json';
+import { addPackageToPackageJson, getPackage } from '../../../utils/json';
 import { VERSION } from '../../../utils/lib-versions';
 import { logStart } from '../../../utils/log';
 import { getProjectFromWorkspace, getWorkspace, Project } from '../../../utils/project';
@@ -31,8 +31,19 @@ function fixThirdVersion(tree: Tree, context: SchematicContext): void {
     'dependencies',
   );
   // dependencies
-  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@^11.0.0`, `webpack-bundle-analyzer@^3.6.1`], 'devDependencies');
+  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@^11.0.0`], 'devDependencies');
   logStart(context, `Upgrade third libs version number`);
+}
+
+function fixAnalyze(tree: Tree, context: SchematicContext): void {
+  const packageJson = getPackage(tree);
+  delete packageJson.devDependencies['webpack-bundle-analyzer'];
+  packageJson.devDependencies['source-map-explorer'] = '^2.5.1';
+  if (packageJson.scripts.analyze) {
+    packageJson.scripts.analyze = (packageJson.scripts.analyze as string).replace(`--stats-json`, `--source-map`);
+    packageJson.scripts['analyze:view'] = `source-map-explorer dist/**/*.js`;
+  }
+  logStart(context, `Usd source-map-explorer instead of webpack-bundle-analyzer`);
 }
 
 export function v11Rule(): Rule {
@@ -41,6 +52,7 @@ export function v11Rule(): Rule {
 
     fixVersion(tree, context);
     fixThirdVersion(tree, context);
+    fixAnalyze(tree, context);
     fixHmr(project.sourceRoot, tree, context);
     fixLayout(project, tree, context);
 

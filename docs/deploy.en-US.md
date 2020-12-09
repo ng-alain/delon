@@ -34,33 +34,19 @@ When you need to distinguish between development and deployment, and test enviro
 
 ### Analyze the build file volume
 
-**Method 1**
-
 If the build file is large, you can optimize your code by building and analyzing the volume distribution of dependent modules with the `analyze` command.
 
 ```bash
 npm run analyze
 ```
 
-Limited by [#10589](https://github.com/angular/angular-cli/issues/10589), you need to install the global `webpack-bundle-analyzer` package:
+View the analyze page:
 
 ```bash
-npm i -g webpack-bundle-analyzer@latest
-cd dist/<project name>
-webpack-bundle-analyzer stats.json
+npm run analyze:view
 ```
 
-![](./assets/screenshot/analyzer.png)
-
-**Method 2**
-
-Package with the following command:
-
-```bash
-ng build --prod --sourcemaps
-```
-
-Then use [source-map-explorer](https://github.com/danvk/source-map-explorer/blob/master/README.md) to help you explore the JavaScript package after the production environment is built to analyze each module by their volume size.
+![](./assets/screenshot/bundle-size.png)
 
 ## Release
 
