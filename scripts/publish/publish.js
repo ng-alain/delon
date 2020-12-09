@@ -35,9 +35,9 @@ checkout();
 
 function fetchOlderVersions() {
   log.info('Fetching older versions...');
-  execSync('git checkout master');
-  execSync('git pull upstream master');
-  execSync('git fetch upstream master --prune --tags');
+  execSync('git checkout 10.x');
+  execSync('git pull upstream 10.x');
+  execSync('git fetch upstream 10.x --prune --tags');
   log.success('Older versions fetched!');
 }
 
@@ -49,11 +49,7 @@ function generatingPublishNote() {
   let completeEditing = false;
 
   while (!completeEditing) {
-    const result = read.question(
-      chalk.bgYellow.black(
-        'Please manually update docs/changelog. Press [Y] if you are done:',
-      ) + '  ',
-    );
+    const result = read.question(chalk.bgYellow.black('Please manually update docs/changelog. Press [Y] if you are done:') + '  ');
     if (result.trim().toLowerCase() === 'y') {
       completeEditing = true;
     }
@@ -67,13 +63,15 @@ function fixDependenciePath() {
   const packageData = fs.readJSONSync(path.join(root, 'package.json'));
   const versionData = {
     ...packageData.dependencies,
-    ...packageData.devDependencies
+    ...packageData.devDependencies,
   };
   log.info('>> fix ajv version path in code service');
   const codeServicePath = path.join(root, 'src/app/core/code.service.ts');
-  fs.writeFileSync(codeServicePath,
-    fs.readFileSync(codeServicePath, 'utf-8')
-    .replace(/\/ajv\/[^\/]+\//g, `/ajv/${versionData['ajv'].replace(/\^/g, '').replace(/\~/g, '')}/`)
+  fs.writeFileSync(
+    codeServicePath,
+    fs
+      .readFileSync(codeServicePath, 'utf-8')
+      .replace(/\/ajv\/[^\/]+\//g, `/ajv/${versionData['ajv'].replace(/\^/g, '').replace(/\~/g, '')}/`),
   );
 }
 

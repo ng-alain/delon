@@ -49,7 +49,7 @@ npm start
 ### Clone the Git Repository
 
 ```bash
-git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
+git clone --depth=1 -b 10.x https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
 yarn
 npm start
