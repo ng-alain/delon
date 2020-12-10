@@ -31,6 +31,8 @@ import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widge
 
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { IconComponent } from './shared/components/icon/icon.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<any> {
   return () => startupService.load();
@@ -82,6 +84,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     SimplemdeModule.forRoot({
       delay: 300,
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     // {
