@@ -156,6 +156,13 @@
   border: 1px solid @site-border-color-split;
   border-collapse: collapse;
   border-spacing: 0;
+
+  tbody tr {
+    transition: all 0.3s;
+    &:hover {
+      background: rgba(60, 90, 100, 0.04);
+    }
+  }
 }
 
 .markdown > table th {
@@ -268,13 +275,6 @@
       padding-top: 14px;
       white-space: nowrap;
       border-width: 0 0 2px 0;
-    }
-
-    tbody tr {
-      transition: all 0.3s;
-      &:hover {
-        background: rgba(60, 90, 100, 0.04);
-      }
     }
 
     td {

@@ -2,6 +2,7 @@
 order: 20
 title: Architecture
 type: Basic
+i18n: need-update
 ---
 
 NG-ALAIN scaffold is a front-end solution to support middleware and back-end application. It is based on [Angular](https://angular.io/) and [ng-zorro-antd](https://ng.ant.design/docs/introduce/en)(Angular implementation of Ant Design). The scaffold includes a set of common functionalities and business component libraries. It reduces lots of infrastructure development overwhelmingly and let you focus on business logic development.

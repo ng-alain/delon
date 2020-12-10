@@ -1,9 +1,8 @@
 ---
-order: 1
-title:
-  en-US: How to start
-  zh-CN: 如何开始
-type: Dev
+order: 30
+title: How to start
+type: Basic
+i18n: need-update
 ---
 
 ## First, pre-order preparation

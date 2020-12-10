@@ -1,21 +1,30 @@
 ---
-order: 1
-title:
-  en-US: How to start
-  zh-CN: 如何开始
-type: Dev
+order: 30
+title: 如何开始
+type: Basic
+i18n: need-update
 ---
 
-## 一、前序准备
+## 前序准备
 
-当你开始着手在 NG-ALAIN 基础上进行业务开发时，我建议你先了解一下以下文档，这对于团队中每个成员都非常有帮助。
+NG-ALAIN 技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[图表G2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [NG-ZORRO](https://ng.ant.design/)，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。如果你是一名 Java 或 C# 后端开发人员，那么恭喜你，你所见到的不管是结构、代码、开发体验等都是你所想的那样。但不管怎么样，想写好 Angular 代码，以下这些文章及社区是你必须要知道的：
 
-+ [Ant Design 指引文章](//ant.design/docs/spec/introduce-cn)
-+ [Ant Design for Angular](//ng.ant.design/)
-+ [Antv 图表](//antv.alipay.com/zh-cn/index.html)
-+ [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh#博客及网站)
+- 文档类
+  - [Angular中文文档](https://angular.cn/docs)，建议一定要花时间阅读文档部分，透过它基本上就可以学会 Angular；同时，也是 Angular API 接口文档
+  - [NG-ZORRO中文文档](https://ng.ant.design/docs/introduce/zh)，NG-ZORRO 作为 NG-ALAIN 的基础组件库，当你不懂某个组件时，它就是最好的文档，包含组件用法及API说明
+  - [NG-ALAIN中文文档](https://ng-alain.com/)，包含所有 `@delon/*` 类型的用法及API说明
+  - [G2图表中文文档](https://g2.antv.vision/zh)，如果需要图表开发，则这份文档是必备
+- 辅助类
+  - [Ant Design 指引文章](https://ant.design/docs/spec/introduce-cn)，学习 Ant Design 的设计理念，非常值得阅读的部分
+  - [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh)，一份非常值得学习的清单
 
-NG-ALAIN 的基础组件库来自 NG-ZORRO，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 NG-ALAIN 提供的组件则通过[组件页](/components)获取。
+## 写在前面
+
+很多人在学习一项新东西时，无外乎写个 Hello World 或是写一个 Http 请求，然后慢慢开始辐射所需要的技术知识。一个 HTTP 请求对中后台而言便是涵盖了 CURD 主要任务，甚至可以说90%时间及功能都在做这项工作。在[介绍](/docs/getting-started)章节中已经描述创建一个 NG-ALAIN 项目并如何运行它，如果此时你也想要写个 Hello World，那么只需要利用 VSCode 打开这个项目，并在 `dashboard.component.html` 文件内输入文本，500ms 后就会在页面上立即呈现。
+
+回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。
+
+首先，我们需要知道什么样的用户进入系统后
 
 ## 二、启动流程
 
