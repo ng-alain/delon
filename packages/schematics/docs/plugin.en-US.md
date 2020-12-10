@@ -94,6 +94,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | Korean | ko | ko | ko_KR | ko_KR |
 | Croatian | hr | hr | hr_HR | hr_HR |
 | Slovenian | sl | sl | sl_SI | sl_SI |
+| French | fr | fr | fr_FR | fr_FR |
 
 ### networkEnv
 
