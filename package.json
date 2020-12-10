@@ -57,6 +57,7 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2",
+    "@angular/service-worker": "~11.0.1",
     "@angular/platform-server": "~11.0.2",
     "@angular/elements": "~11.0.2",
     "@antv/data-set": "^0.11.7",

@@ -20,7 +20,7 @@ export const USERS = {
       res.list.push({
         id: i + 1,
         picture: {
-          thumbnail: `https://randomuser.me/api/portraits/thumb/${r(0, 1) === 0 ? 'men' : 'women'}/${r(1, 50)}.jpg`,
+          thumbnail: `https://dummyimage.com/100x100&text=${r(1, 50)}`,
         },
         name: {
           last: `last-${r(1, 10)}`,
