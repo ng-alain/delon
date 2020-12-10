@@ -7,9 +7,10 @@ i18n: need-update
 
 ## 前序准备
 
-NG-ALAIN 技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[图表G2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [NG-ZORRO](https://ng.ant.design/)，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。如果你是一名 Java 或 C# 后端开发人员，那么恭喜你，你所见到的不管是结构、代码、开发体验等都是你所想的那样。但不管怎么样，想写好 Angular 代码，以下这些文章及社区是你必须要知道的：
+NG-ALAIN 技术栈基于 Typescript、Angular、图表G2、[@delon](https://github.com/ng-alain/delon) 和 [NG-ZORRO](https://ng.ant.design/)，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。如果你是一名 Java 或 C# 后端开发人员，那么恭喜你，你所见到的不管是结构、代码、开发体验等都是你所想的那样。但不管怎么样，想写好 Angular 代码，以下这些文章及社区是你必须要知道的：
 
 - 文档类
+  - [TypeScript中文文档](https://www.tslang.cn/)，虽然 TypeScript 跟 Java、C# 语法很像，这是语法基础需要认真阅读
   - [Angular中文文档](https://angular.cn/docs)，建议一定要花时间阅读文档部分，透过它基本上就可以学会 Angular；同时，也是 Angular API 接口文档
   - [NG-ZORRO中文文档](https://ng.ant.design/docs/introduce/zh)，NG-ZORRO 作为 NG-ALAIN 的基础组件库，当你不懂某个组件时，它就是最好的文档，包含组件用法及API说明
   - [NG-ALAIN中文文档](https://ng-alain.com/)，包含所有 `@delon/*` 类型的用法及API说明
@@ -22,7 +23,9 @@ NG-ALAIN 技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https:
 
 很多人在学习一项新东西时，无外乎写个 Hello World 或是写一个 Http 请求，然后慢慢开始辐射所需要的技术知识。一个 HTTP 请求对中后台而言便是涵盖了 CURD 主要任务，甚至可以说90%时间及功能都在做这项工作。在[介绍](/docs/getting-started)章节中已经描述创建一个 NG-ALAIN 项目并如何运行它，如果此时你也想要写个 Hello World，那么只需要利用 VSCode 打开这个项目，并在 `dashboard.component.html` 文件内输入文本，500ms 后就会在页面上立即呈现。
 
-回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。
+## 流程
+
+回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。无外乎项目启动时应该加载点什么系统配置项（例如：菜单数据、用户信息数据、字典数据等），哪些页面用户无权进入。把粒度再想细一点，同一个页面不同的按钮给不同的人用，HTTP请求若产生错误是不是得每次都做代码响应等等。
 
 首先，我们需要知道什么样的用户进入系统后
 
