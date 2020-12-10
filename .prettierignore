@@ -2,6 +2,7 @@
 **/*.svg
 # **/*.html
 **/test.ts
+src/index.html
 
 .stylelintrc
 .prettierrc
