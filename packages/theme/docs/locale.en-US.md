@@ -52,6 +52,7 @@ Note: `en_US` is the package name, follow below.
 | Croatian | hr_HR |
 | Japanese | ja_JP |
 | Slovenian | sl_SI |
+| French | fr_FR |
 
 ## Add a new language
 
