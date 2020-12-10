@@ -25,7 +25,7 @@
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "aot": true,
-            "assets": ["src/assets"],
+            "assets": ["src/assets", "src/manifest.webmanifest"],
             "styles": [
               "node_modules/ngx-simplemde/index.less",
               "node_modules/aos/dist/aos.css",
@@ -68,7 +68,9 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },

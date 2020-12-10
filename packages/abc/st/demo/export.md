@@ -33,7 +33,7 @@ export class DemoComponent {
     .map((_, index) => ({
       id: index + 1,
       picture: {
-        thumbnail: `https://randomuser.me/api/portraits/thumb/women/${Math.min(index + 1, 30)}.jpg`,
+        thumbnail: `https://dummyimage.com/100x100&text=${Math.min(index + 1, 30)}`,
       },
       email: `e${index + 1}@qq.com`,
       phone: `phone - ${index + 1}`,
