@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "resources": {
         "files": ["/favicon.ico", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"],
-        "urls": ["https://gw.alipayobjects.com/**", "https://img.alicdn.com/**", "https://randomuser.me/**"]
+        "urls": ["https://gw.alipayobjects.com/**", "https://img.alicdn.com/**"]
       }
     },
     {
