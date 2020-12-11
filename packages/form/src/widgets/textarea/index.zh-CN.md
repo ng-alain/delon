@@ -23,3 +23,6 @@ type: Widgets
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[autosize]` | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | `Boolean|Object` | `true` |
 | `[borderless]` | 是否隐藏边框 | `boolean` | `false` |
+| `[change]` | 内容变更事件 | `(val: string) => void` | - |
+| `[focus]` | 焦点事件 | `(e: FocusEvent) => void` | - |
+| `[blur]` | 失焦事件 | `(e: FocusEvent) => void` | - |
