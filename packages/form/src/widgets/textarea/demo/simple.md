@@ -31,6 +31,9 @@ export class DemoComponent {
         ui: {
           widget: 'textarea',
           autosize: { minRows: 2, maxRows: 6 },
+          change: val => console.log('change', val),
+          focus: ev => console.log('focus', ev),
+          blur: ev => console.log('blur', ev),
         } as SFTextareaWidgetSchema,
       },
     },
