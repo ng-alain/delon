@@ -7,7 +7,7 @@ i18n: need-update
 
 ## 前序准备
 
-NG-ALAIN 技术栈基于 Typescript、Angular、图表G2、[@delon](https://github.com/ng-alain/delon) 和 [NG-ZORRO](https://ng.ant.design/)，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。如果你是一名 Java 或 C# 后端开发人员，那么恭喜你，你所见到的不管是结构、代码、开发体验等都是你所想的那样。但不管怎么样，想写好 Angular 代码，以下这些文章及社区是你必须要知道的：
+NG-ALAIN 技术栈基于 Typescript、Angular、图表G2 和 NG-ZORRO，在开始尝试使用 NG-ALAIN 脚手架前，请先提前了解和学习这些知识会非常有帮助。如果你是一名 Java 或 C# 后端开发人员，那么恭喜你，你所见到的不管是结构、代码、开发体验等都是你所想的那样。但不管怎么样，想写好 Angular 代码，以下这些文章及社区是你必须要知道的：
 
 - 文档类
   - [TypeScript中文文档](https://www.tslang.cn/)，虽然 TypeScript 跟 Java、C# 语法很像，这是语法基础需要认真阅读
@@ -18,6 +18,8 @@ NG-ALAIN 技术栈基于 Typescript、Angular、图表G2、[@delon](https://gith
 - 辅助类
   - [Ant Design 指引文章](https://ant.design/docs/spec/introduce-cn)，学习 Ant Design 的设计理念，非常值得阅读的部分
   - [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh)，一份非常值得学习的清单
+  - NG-ALAIN 入门视频（[YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[腾讯视频](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[B站](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
+  - [NG-ALAIN 知乎专栏](https://zhuanlan.zhihu.com/ng-alain)
 
 ## 写在前面
 
@@ -25,16 +27,119 @@ NG-ALAIN 技术栈基于 Typescript、Angular、图表G2、[@delon](https://gith
 
 ## 流程
 
-回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。无外乎项目启动时应该加载点什么系统配置项（例如：菜单数据、用户信息数据、字典数据等），哪些页面用户无权进入。把粒度再想细一点，同一个页面不同的按钮给不同的人用，HTTP请求若产生错误是不是得每次都做代码响应等等。
+回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。无外乎项目启动时应该加载点什么系统配置项，哪些页面用户无权进入；把粒度再想细一点，同一个页面不同的按钮给不同的人用，HTTP请求若产生错误是不是得每次都写相同的处理代码等等。
 
-首先，我们需要知道什么样的用户进入系统后
+当我们在思考这些问题时，Angular 已经提供大部分解决方案的接口：
+
+### 项目初始化
+
+Angular 提供一个DI（依赖注入）令牌 `APP_INITIALIZER` 让应用启动时可以做一些会影响渲染结果的数据，比如：语言数据、菜单数据、用户信息数据、字典数据等，并且必须返回一个 `Promise` 异步函数，异步意味者可以做很多有趣的事，比如数据来自远程。`APP_INITIALIZER` 只会执行一次，只需要在 `AppModule` 模块注册它就行了。
+
+```ts
+export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
+  return () => startupService.load();
+}
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule]
+  providers: [{
+    StartupService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [StartupService],
+      multi: true,
+    },
+  }],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+而 `StartupService` 如下：
+
+```ts
+@Injectable()
+export class StartupService {
+  constructor(private httpClient: HttpClient) {}
+
+  load(): Promise<void> { 
+    return new Promise((resolve) => {
+      this.httpClient.get(``).subscribe(() => {
+        resolve();
+      });
+    });
+  }
+}
+```
+
+哪怕 Http 请求失败，这里也必须执行 `resolve()`，否则应用就无法启动。而 NG-ALAIN 提供的 [startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts) 内容更加丰富一点，对于完整的中后台而言，大多数项目中以下这些信息都可以必备的：
+
+**应用信息**
+
+包括：应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+
+```ts
+this.settingService.setApp(res.app);
+```
+
+**用户信息**
+
+包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+
+```ts
+this.settingService.setUser(res.user);
+```
+
+**布局信息**
+
+包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+
+```ts
+// 是否固定顶部菜单
+this.settingService.setLayout(`fixed`, false);
+// 是否折叠右边菜单
+this.settingService.setLayout(`collapsed`, false);
+```
+
+**菜单数据**
+
+NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
+
+菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。
+
+```ts
+this.menuService.add(res.menu);
+```
+
+**页面标题**
+
+若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。
+
+```ts
+// 设置页面标题的后缀
+this.titleService.suffix = res.app.name;
+```
+
+**ACL**
+
+```ts
+this.aclService.setFull(true);
+```
+
+建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。
+
+**国际化**
+
+建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
+
+
+--------
 
 ## 二、启动流程
 
 NG-ALAIN 是一个可直接用于生产环境脚手架，要了解这些细节的前提条件是你对 Angular 有一定的知识储备，在开始之前下列文档可能对你有帮助：
-
-- **NG-ALAIN 入门视频（[YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[腾讯视频](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[B站](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）**
-- [知乎专栏](https://zhuanlan.zhihu.com/ng-alain)
 
 当通过 `ng serve` 运行应用后，一个完整的 Angular 启动流程大概是这样：
 
