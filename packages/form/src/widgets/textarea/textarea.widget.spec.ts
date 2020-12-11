@@ -49,9 +49,9 @@ describe('form: widget: textarea', () => {
     expect(ui.change).toHaveBeenCalled();
     // focus
     page.typeEvent('focus', 'textarea');
-    expect((schema.properties!.a.ui as SFTextareaWidgetSchema).focus).toHaveBeenCalled();
+    expect(ui.focus).toHaveBeenCalled();
     // blur
     page.typeEvent('blur', 'textarea');
-    expect((schema.properties!.a.ui as SFTextareaWidgetSchema).blur).toHaveBeenCalled();
+    expect(ui.blur).toHaveBeenCalled();
   }));
 });
