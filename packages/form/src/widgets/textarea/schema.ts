@@ -18,4 +18,19 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
    * Whether hide border, Default: `false`
    */
   borderless?: boolean;
+
+  /**
+   * 内容变更事件
+   */
+  change?: (val: string) => void;
+
+  /**
+   * 焦点事件
+   */
+  focus?: (e: FocusEvent) => void;
+
+  /**
+   * 失焦事件
+   */
+  blur?: (e: FocusEvent) => void;
 }
