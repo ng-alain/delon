@@ -8,11 +8,104 @@ title: 默认布局
 
 ## 使用方式
 
+### 1、导入样式
+
 在 `src/styles.less` 引入：
 
 ```less
 @import '~@delon/theme/layout-default/style/index';
 ```
+
+### 2、使用 `layout-default` 组件
+
+在 `src/app/layout/basic/basic.component.ts` 创建一个新的布局：
+
+```ts
+import { Component } from '@angular/core';
+import { SettingsService, User } from '@delon/theme';
+import { LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { environment } from '@env/environment';
+
+@Component({
+  selector: 'layout-basic',
+  template: `
+    <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl">
+      <layout-default-header-item direction="left">
+        <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
+          <i nz-icon nzType="github"></i>
+        </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="left" hidden="pc">
+        <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
+          <i nz-icon nzType="search"></i>
+        </div>
+      </layout-default-header-item>
+      <layout-default-header-item direction="middle">
+        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
+      </layout-default-header-item>
+      <layout-default-header-item direction="right" hidden="mobile">
+        <header-task></header-task>
+      </layout-default-header-item>
+      <ng-template #asideUserTpl>
+        <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
+          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
+          <div class="alain-default__aside-user-info">
+            <strong>{{ user.name }}</strong>
+            <p class="mb0">{{ user.email }}</p>
+          </div>
+        </div>
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' | translate }}</li>
+            <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | translate }}</li>
+          </ul>
+        </nz-dropdown-menu>
+      </ng-template>
+      <ng-template #contentTpl>
+        <router-outlet></router-outlet>
+      </ng-template>
+    </layout-default>
+
+    <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
+    <theme-btn></theme-btn>
+  `,
+})
+export class LayoutBasicComponent {
+  options: LayoutDefaultOptions = {
+    logoExpanded: `./assets/logo-full.svg`,
+    logoCollapsed: `./assets/logo.svg`,
+  };
+  searchToggleStatus = false;
+  showSettingDrawer = !environment.production;
+  get user(): User {
+    return this.settings.user;
+  }
+
+  constructor(private settings: SettingsService) {}
+}
+```
+
+## API
+
+### layout-default
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[options]` | 选项 | `LayoutDefaultOptions` | `-` |
+| `[asideUser]` | 侧边用户信息 | `TemplateRef<void>` | `-` |
+| `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
+| `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
+
+### layout-default-header-item
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[hidden]` | 隐藏行为 | `pc, mobile, none` | `nones` |
+| `[direction]` | 方向 | `left, middle, right` | `right` |
+
+### layout-default-header-item-trigger
+
+头部项的触发样式。
 
 ## 布局说明
 
@@ -20,9 +113,9 @@ title: 默认布局
 
 + 顶部区域高度 `64px`（参数：`@header-hg`）
 + 侧边区域宽度 `200px`（参数：`@aside-wd`）
-    + 当屏幕低于 `1140px` 宽时隐藏侧边导航
-    + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
-    + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
+  + 当屏幕低于 `1140px` 宽时隐藏侧边导航
+  + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
+  + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
 
 > 参数是指可以通过 `src/styles/theme.less` 文件按需要调整。
 
@@ -46,7 +139,7 @@ title: 默认布局
 
 + 内容距离页面标准、侧边、右边滚动条、底部，这四边距依一个标准Dashboard的Gutter宽度 `24px`。
 
-## 参数
+## 样式参数
 
 | 名称 | 默认值 | 功能 |
 |----|-----|----|
