@@ -56,19 +56,7 @@ const routes: Routes = [];
 export class SysRoutingModule {}
 ```
 
-当然为了使模块跟主模块产生联系，还需要至 `src/app/routes/routes-routing.module.ts` 文件内注册新建的业务模块：
-
-```ts
-{
-  path: '',
-  component: LayoutDefaultComponent,
-  children: [
-    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
-  ]
-}
-```
-
-这样，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
+至此，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
 
 
 

@@ -56,19 +56,7 @@ const routes: Routes = [];
 export class SysRoutingModule {}
 ```
 
-Of course, in order to make the module contact with the main module, you need to register the new business module in the `src/app/routes/routes-routing.module.ts` file:
-
-```ts
-{
-  path: '',
-  component: LayoutDefaultComponent,
-  children: [
-    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
-  ]
-}
-```
-
-This way, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
+By now, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
 
 ## Second, the page
 
