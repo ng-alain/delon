@@ -183,3 +183,20 @@ const routes: Routes = [
 网络请求是一项非常频繁的工作，如果想优雅的在业务组件内使用网络请求动作的话，那么将服务端URL前缀、异常处理、Token 刷新等操作集中处理是必不可少的，NG-ALAIN 脚手架提供一个 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。它会利用令牌 `HTTP_INTERCEPTORS` 起到一种拦截器的效果。
 
 有关以上集中处理的动作细节，请参考 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。
+
+
+## IDE
+
+“工欲善其事，必先利其器是”，NG-ALAIN 脚手架推荐使用 [Visual Studio Code](https://code.visualstudio.com/) IDE，因为 NG-ALAIN 针对 VSCode 增加一些额外的特性，可以更好的帮助你开发。
+
+> 或者直接使用 [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) 套件。
+
+### 代码片断
+
+- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+
+### Class样式智能提醒
+
+ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
+
+- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)

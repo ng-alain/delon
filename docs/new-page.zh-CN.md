@@ -58,8 +58,6 @@ export class SysRoutingModule {}
 
 至此，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
 
-
-
 ## 二、页面
 
 利用 `ng generate`（可简写为：`ng g`） 命令在 `sys` 目录下创建一个日志列表页：
@@ -79,19 +77,3 @@ ng g ng-alain:view view -m=sys -t=log
 ```
 
 `-t=log` 表示希望把创建的文件放进至 `sys/log/view` 下面。
-
-## 三、IDE
-
-除了 ng-alain 提供的 cli 命令行以外，推荐使用 [Visual Studio Code](https://code.visualstudio.com/) IDE，因为 ng-alain 针对 VSCode 增加一些额外的特性，可以更好的帮助你开发。
-
-> 或者直接使用 [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) 套件。
-
-### 代码片断
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### Class样式智能提醒
-
-ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)

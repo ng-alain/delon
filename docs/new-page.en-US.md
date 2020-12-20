@@ -77,19 +77,3 @@ ng g ng-alain:view view -m=sys -t=log
 ```
 
 `-t=log` indicates that you want to put the created file under `sys/log/view`.
-
-## Third, IDE
-
-In addition to the cli command line provided by ng-alain, it is recommended to use the [Visual Studio Code](https://code.visualstudio.com/) IDE, because ng-alain adds some extra features to VSCode to better help you. Development.
-
-> Or use the [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) suite directly.
-
-### Code fragment
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### Class style smart reminder
-
-ng-alain has a lot of built-in toolkit styles ([API](/theme/tools)), and the following plugins can be installed directly into the HTML template.
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
