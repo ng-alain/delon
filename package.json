@@ -71,7 +71,7 @@
     "file-saver": "^2.0.2",
     "marked": "^1.1.1",
     "ng-github-button": "^10.0.0",
-    "ng-zorro-antd": "^10.1.1",
+    "ng-zorro-antd": "^11.0.0-rc.0",
     "ngx-color": "^6.0.1",
     "ngx-countdown": "^11.0.0",
     "ngx-highlight-js": "^11.0.0",

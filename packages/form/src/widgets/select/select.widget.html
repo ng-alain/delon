@@ -30,16 +30,19 @@
     [nzOptionHeightPx]="i.optionHeightPx"
     [nzOptionOverflowSize]="i.optionOverflowSize"
     (nzOpenChange)="openChange($event)"
-    (nzOnSearch)="searchChange($event)"
+    (nzOnSearch)="onSearch($event)"
     (nzScrollToBottom)="scrollToBottom()"
   >
-    <ng-container *ngIf="!hasGroup">
+    <ng-container *ngIf="!isLoading && !hasGroup">
       <nz-option *ngFor="let o of data" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
     </ng-container>
-    <ng-container *ngIf="hasGroup">
+    <ng-container *ngIf="!isLoading && hasGroup">
       <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
         <nz-option *ngFor="let o of i.children" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
       </nz-option-group>
     </ng-container>
+    <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+      <i nz-icon nzType="loading"></i>
+    </nz-option>
   </nz-select>
 </sf-item-wrap>

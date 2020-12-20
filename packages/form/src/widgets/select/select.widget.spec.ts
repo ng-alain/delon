@@ -91,7 +91,8 @@ describe('form: widget: select', () => {
       expect(item.openChange).toHaveBeenCalled();
       selectWidget.scrollToBottom();
       expect(item.scrollToBottom).toHaveBeenCalled();
-      selectWidget.searchChange('1');
+      selectWidget.onSearch('1');
+      page.time(500);
       expect(item.onSearch).toHaveBeenCalled();
     }));
     it('#change, when values is multiple', fakeAsync(() => {
