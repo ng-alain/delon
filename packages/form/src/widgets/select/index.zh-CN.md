@@ -31,11 +31,12 @@ type: Widgets
 | `[dropdownMatchSelectWidth]` | 下拉菜单和选择器同宽 | `boolean` | `true` |
 | `[dropdownStyle]` | 下拉菜单的 style 属性 | `object` | - |
 | `[serverSearch]` | 是否使用服务端搜索，当为 true 时，将不再在前端对 nz-option 进行过滤 | `boolean` | `false` |
+| `[searchDebounceTime]` | 搜索抖动时间 | `number` | `300` |
+| `[onSearch]` | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[maxMultipleCount]` | 最多选中多少个标签 | `number` | `Infinity` |
 | `[mode]` | 设置 nz-select 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签。 | `multiple,tags,default` | `default` |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[showSearch]` | 使单选模式可搜索 | `boolean` | `false` |
-| `[onSearch]` | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[tokenSeparators]` | 在 tags 和 multiple 模式下自动分词的分隔符 | `string[]` | `[]` |
 | `[maxTagCount]` | 最多显示多少个 tag | `number` | - |
 | `[change]` | 选中的 nz-option 发生变化时，调用此函数 | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |

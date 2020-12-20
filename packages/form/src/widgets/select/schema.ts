@@ -89,6 +89,9 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
    */
   onSearch?: (text: string) => Promise<SFSchemaEnum[]>;
 
+  /** 搜索抖动时间，默认：`300` */
+  searchDebounceTime?: number;
+
   /**
    * 在 `tags` 和 `multiple` 模式下自动分词的分隔符
    */
