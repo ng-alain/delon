@@ -43,8 +43,6 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   dataURL: string;
 
-  // #region fields
-
   @Input() background: string;
   @Input() backgroundAlpha: number;
   @Input() foreground: string;
@@ -56,8 +54,6 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() value = '';
   @Input() @InputNumber() delay: number;
   @Output() readonly change = new EventEmitter<string>();
-
-  // #endregion
 
   constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService, private platform: Platform) {
     this.cog = configSrv.merge('qr', QR_DEFULAT_CONFIG)!;

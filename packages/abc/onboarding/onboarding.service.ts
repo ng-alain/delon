@@ -30,6 +30,11 @@ export class OnboardingService implements OnDestroy {
     return this.doc;
   }
 
+  /**
+   * Get whether it is booting
+   *
+   * 获取是否正在引导中
+   */
   get running(): boolean {
     return this._running;
   }
@@ -123,6 +128,11 @@ export class OnboardingService implements OnDestroy {
       );
   }
 
+  /**
+   * Start a new user guidance
+   *
+   * 开启新的用户引导流程
+   */
   start(config: OnboardingConfig): void {
     if (this.running) {
       return;
@@ -141,6 +151,11 @@ export class OnboardingService implements OnDestroy {
     this.showItem(true);
   }
 
+  /**
+   * Next
+   *
+   * 下一步
+   */
   next(): void {
     if (this._running || this.active + 1 >= this.config.items!.length) {
       this.done();
@@ -151,6 +166,11 @@ export class OnboardingService implements OnDestroy {
     this.showItem();
   }
 
+  /**
+   * Prev
+   *
+   * 上一步
+   */
   prev(): void {
     if (this._running || this.active - 1 < 0) {
       return;
@@ -160,6 +180,11 @@ export class OnboardingService implements OnDestroy {
     this.showItem();
   }
 
+  /**
+   * Done
+   *
+   * 完成
+   */
   done(): void {
     this.type = 'done';
     this.destroy();

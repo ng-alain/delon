@@ -22,11 +22,6 @@ import {
   ReuseTitle,
 } from './reuse-tab.interfaces';
 
-/**
- * 路由复用类，提供复用所需要一些基本接口
- *
- * **注：** 所有缓存数据来源于路由离开后才会产生
- */
 @Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
   private _inited = false;
@@ -52,16 +47,27 @@ export class ReuseTabService implements OnDestroy {
 
   // #region public
 
+  /**
+   * Get init status
+   *
+   * 是否已经初始化完成
+   */
   get inited(): boolean {
     return this._inited;
   }
 
-  /** 当前路由地址 */
+  /**
+   * Current routing address
+   *
+   * 当前路由地址
+   */
   get curUrl(): string {
     return this.getUrl(this.snapshot);
   }
 
-  /** 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件 */
+  /**
+   * 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件
+   */
   set max(value: number) {
     this._max = Math.min(Math.max(value, 2), 100);
     for (let i = this._cached.length; i > this._max; i--) {
