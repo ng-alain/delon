@@ -214,9 +214,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly error = new EventEmitter<STError>();
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<STChange>();
   @Input() @InputBoolean() virtualScroll = false;
   @Input() @InputNumber() virtualItemSize = 54;

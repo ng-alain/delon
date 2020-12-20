@@ -41,15 +41,11 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   private time: NzSafeAny;
   private notify$: Subscription;
 
-  // #region fields
-
   @Input() type: PlyrMediaType = 'video';
   @Input() source: string | PlyrMediaSource;
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
   @Output() readonly ready = new EventEmitter<NzSafeAny>();
-
-  // #endregion
 
   get player(): NzSafeAny {
     return this._p;

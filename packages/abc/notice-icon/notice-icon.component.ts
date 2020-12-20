@@ -38,7 +38,6 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() popoverVisible = false;
   @Input() btnClass = '';
   @Input() btnIconClass = '';
-  // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();

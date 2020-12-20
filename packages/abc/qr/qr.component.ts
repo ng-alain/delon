@@ -55,7 +55,6 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputNumber() size: number;
   @Input() value = '';
   @Input() @InputNumber() delay: number;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<string>();
 
   // #endregion

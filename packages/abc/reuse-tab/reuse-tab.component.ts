@@ -86,9 +86,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarStyle: { [key: string]: string };
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<ReuseItem>();
-  // tslint:disable-next-line:no-output-native
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
   // #endregion

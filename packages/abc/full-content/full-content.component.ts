@@ -50,17 +50,13 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   _height = 0;
 
-  // #region fields
-
   @Input() @InputBoolean() fullscreen: boolean;
   @Input() @InputBoolean() hideTitle = true;
   @Input() @InputNumber() padding = 24;
   @Output() readonly fullscreenChange = new EventEmitter<boolean>();
 
-  // #endregion
-
   constructor(
-    private el: ElementRef,
+    private el: ElementRef<HTMLElement>,
     private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
@@ -89,8 +85,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   private updateHeight(): void {
-    this._height =
-      this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
+    this._height = this.bodyEl.getBoundingClientRect().height - this.el.nativeElement.getBoundingClientRect().top - this.padding;
     this.cdr.detectChanges();
   }
 
@@ -102,7 +97,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     this.inited = true;
     this.bodyEl = this.doc.querySelector('body');
     this.bodyEl.classList.add(wrapCls);
-    (this.el.nativeElement as HTMLElement).id = this.id;
+    this.el.nativeElement.id = this.id;
 
     this.updateCls();
 

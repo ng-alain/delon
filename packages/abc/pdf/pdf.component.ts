@@ -112,7 +112,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputBoolean() autoReSize = true;
   @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
   @Input() @InputNumber() delay: number;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
 
   get pdf(): NzSafeAny {
