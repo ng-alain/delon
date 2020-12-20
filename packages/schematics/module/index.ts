@@ -14,7 +14,7 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { addImportToModule } from '@schematics/angular/utility/ast-utils';
+import { addImportToModule, findNode } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
@@ -42,7 +42,6 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
     );
     const relativeDir = relative(dirname(modulePath), dirname(importModulePath));
 
-    // tslint:disable-next-line:prefer-template
     const relativePath = `${relativeDir.startsWith('.') ? relativeDir : './' + relativeDir}/${basename(importModulePath)}`;
     const changes = addImportToModule(source, modulePath, strings.classify(`${options.name}Module`), relativePath);
 
@@ -54,6 +53,37 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
     }
     host.commitUpdate(recorder);
 
+    return host;
+  };
+}
+
+function addRoutingModuleToTop(options: ModuleSchema): Rule {
+  return (host: Tree) => {
+    const modulePath = normalize(`${options.path}/routes-routing.module.ts`);
+    if (!host.exists(modulePath)) {
+      return host;
+    }
+    const sourceText = host.read(modulePath).toString('utf-8');
+    const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
+    const routesNode = findNode(source, ts.SyntaxKind.Identifier, 'routes');
+    if (routesNode == null || routesNode.parent == null) {
+      return host;
+    }
+    const parentNode = routesNode.parent as ts.PropertyAssignment;
+    if (parentNode.initializer.kind !== ts.SyntaxKind.ArrayLiteralExpression || parentNode.initializer.getChildCount() === 0) {
+      return host;
+    }
+    const childrenNode = findNode(parentNode.initializer, ts.SyntaxKind.Identifier, 'children');
+    if (childrenNode == null || childrenNode.parent == null) {
+      return host;
+    }
+    const recorder = host.beginUpdate(modulePath);
+    const moduleName = strings.classify(`${options.name}Module`);
+    const code = `{ path: '${options.name}', loadChildren: () => import('./${options.name}/${options.name}.module').then((m) => m.${moduleName}) },`;
+    let pos = childrenNode.parent.end;
+    // Insert it just before the `]`.
+    recorder.insertRight(--pos, code);
+    host.commitUpdate(recorder);
     return host;
   };
 }
@@ -91,6 +121,9 @@ export default function (schema: ModuleSchema): Rule {
       move(parsedPath.path),
     ]);
 
-    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), mergeWith(templateSource)]))])(host, context);
+    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)]))])(
+      host,
+      context,
+    );
   };
 }

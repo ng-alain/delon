@@ -20,19 +20,7 @@ To create a page, you need to create a module first. If you need a system to set
 ng g ng-alain:module sys
 ```
 
-The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file. Of course, in order to make the module contact with the main module, you need to register the new business module in the `src/app/routes/routes-routing.module.ts` file:
-
-```ts
-{
-  path: '',
-  component: LayoutDefaultComponent,
-  children: [
-    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
-  ]
-}
-```
-
-This way, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
+The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file.
 
 ## Second, the page
 
