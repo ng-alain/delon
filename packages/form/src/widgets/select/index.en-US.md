@@ -31,11 +31,12 @@ Select.
 | `[dropdownMatchSelectWidth]` | Dropdown list and select have same width | `boolean` | `true` |
 | `[dropdownStyle]` | style property of dropdown list | `object` | - |
 | `[serverSearch]` | Whether using server search, won't fliter nz-option in frontend when it is true | `boolean` | `false` |
+| `[searchDebounceTime]` | Debounce time of server search | `number` | `300` |
+| `[onSearch]` | Callback when search content is changed, parameter is search content, must return `Promise` object | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[maxMultipleCount]` | Maximum selected labels | `number` | `Infinity` |
 | `[mode]` | Set mode for nz-select, suggest to add `default: null` for `tags`, otherwise, it would initialize an empty label. | `multiple,tags,default` | `default` |
 | `[notFoundContent]` | Content when dropdown list is empty | `string` | - |
 | `[showSearch]` | Enable search for signle select mode | `boolean` | `false` |
-| `[onSearch]` | Callback when search content is changed, parameter is search content, must return `Promise` object | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[tokenSeparators]` | Separator for automatic word segmentation when it is tags and multiple mode | `string[]` | `[]` |
 | `[maxTagCount]` | Maximum count of tag | `number` | - |
 | `[change]` | Callback function when selected nz-option is changed | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |
