@@ -20,17 +20,7 @@ NG-ALAIN 提供一套非常丰富的 Schematics 模板，可以快速创建符�
 ng g ng-alain:module sys
 ```
 
-CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing.module.ts` 文件，前者是系统设置模块组件定义文件；后者是系统设置模块路由配置文件。当然为了使模块跟主模块产生联系，还需要至 `src/app/routes/routes-routing.module.ts` 文件内注册新建的业务模块：
-
-```ts
-{
-  path: '',
-  component: LayoutDefaultComponent,
-  children: [
-    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
-  ]
-}
-```
+CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing.module.ts` 文件，前者是系统设置模块组件定义文件；后者是系统设置模块路由配置文件。
 
 这样，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
 
