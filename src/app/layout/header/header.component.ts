@@ -22,7 +22,7 @@ export class HeaderComponent implements AfterViewInit {
   isMobile: boolean;
   oldVersionList = [`9.x`, `8.x`, `1.x`];
   currentVersion = VERSION.full;
-  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
+  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
   menuVisible = false;
   showGitee = false;
   regexs = {

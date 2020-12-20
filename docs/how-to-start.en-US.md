@@ -1,7 +1,7 @@
 ---
-order: 30
+order: 0
 title: How to start
-type: Basic
+type: Dev
 i18n: need-update
 ---
 

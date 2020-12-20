@@ -1,7 +1,7 @@
 ---
-order: 30
+order: 0
 title: 如何开始
-type: Basic
+type: Dev
 i18n: need-update
 ---
 
@@ -29,9 +29,7 @@ NG-ALAIN 技术栈基于 Typescript、Angular、图表G2 和 NG-ZORRO，在开�
 
 回过头来我们试着回想一下，一个中后台项目，从启动再到呈现一份订单列表的功能，对于开发者而言包含了哪些事件。无外乎项目启动时应该加载点什么系统配置项，哪些页面用户无权进入；把粒度再想细一点，同一个页面不同的按钮给不同的人用，HTTP请求若产生错误是不是得每次都写相同的处理代码等等。
 
-当我们在思考这些问题时，Angular 已经提供大部分解决方案的接口：
-
-### 项目初始化
+### 初始化项目数据
 
 Angular 提供一个DI（依赖注入）令牌 `APP_INITIALIZER` 让应用启动时可以做一些会影响渲染结果的数据，比如：语言数据、菜单数据、用户信息数据、字典数据等，并且必须返回一个 `Promise` 异步函数，异步意味者可以做很多有趣的事，比如数据来自远程。`APP_INITIALIZER` 只会执行一次，只需要在 `AppModule` 模块注册它就行了。
 
@@ -76,154 +74,25 @@ export class StartupService {
 
 哪怕 Http 请求失败，这里也必须执行 `resolve()`，否则应用就无法启动。而 NG-ALAIN 提供的 [startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts) 内容更加丰富一点，对于完整的中后台而言，大多数项目中以下这些信息都可以必备的：
 
-**应用信息**
+| 数据类型 | 描述 |
+|------|----|
+| 应用信息 | 应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。<br>例如：`this.settingService.setApp(res.app);` |
+| 用户信息 | 当前用户的姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。<br>例如：`this.settingService.setUser(res.user);` |
+| 布局信息 | 调整主题配置，例如：固定顶部菜单、折叠菜单等。<br>例如：`this.settingService.setLayout("fixed", false);` 或 `this.settingService.setLayout("collapsed", false);` |
+| 菜单数据 | NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。<br>菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。<br>例如：`this.menuService.add(res.menu);` |
+| 页面标题 | 若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。<br>例如设置页面标题的后缀：`this.titleService.suffix = res.app.name;` |
+| ACL | 访问控制列表数据，建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。 <br>例如设置全量权限：`this.aclService.setFull(true);` |
+| 国际化 | 建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。 |
 
-包括：应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+### 业务路由
 
-```ts
-this.settingService.setApp(res.app);
-```
-
-**用户信息**
-
-包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
-
-```ts
-this.settingService.setUser(res.user);
-```
-
-**布局信息**
-
-包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
-
-```ts
-// 是否固定顶部菜单
-this.settingService.setLayout(`fixed`, false);
-// 是否折叠右边菜单
-this.settingService.setLayout(`collapsed`, false);
-```
-
-**菜单数据**
-
-NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
-
-菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。
-
-```ts
-this.menuService.add(res.menu);
-```
-
-**页面标题**
-
-若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。
-
-```ts
-// 设置页面标题的后缀
-this.titleService.suffix = res.app.name;
-```
-
-**ACL**
-
-```ts
-this.aclService.setFull(true);
-```
-
-建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。
-
-**国际化**
-
-建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
-
-
---------
-
-## 二、启动流程
-
-NG-ALAIN 是一个可直接用于生产环境脚手架，要了解这些细节的前提条件是你对 Angular 有一定的知识储备，在开始之前下列文档可能对你有帮助：
-
-当通过 `ng serve` 运行应用后，一个完整的 Angular 启动流程大概是这样：
-
-1. 触发 `APP_INITIALIZER`（脚手架具体实现在 `StartupService.load`） 获取应用信息
-2. 触发业务路由（脚手架的 `src/app/routes/routes-routing.module.ts`）
-3. 渲染组件
-
-### 1) APP_INITIALIZER
-
-以中后台角度出发，NG-ALAIN 始终认为在 Angular 启动之前需要一次网络请求来获取一些应用信息（例如：菜单数据、用户数据等），具体实现细节[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，不管怎么样始终都需要调用：`resolve()` 才能确保 Angular 正常启动。
-
-> 网络请求可能会遇到 403 错误，这是因为脚手架默认使用了用户认证模块，并始终认为所有请求务必是一个有效用户授权，更多文档见：
-> - [和服务端进行交互](/docs/server)
-> - [Auth 用户认证](/auth)
-
-当获取应用信息后，需要对脚手架内置的一些服务做赋值，包含：
-
-**应用信息**
-
-包括：应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
-
-```ts
-this.settingService.setApp(res.app);
-```
-
-**用户信息**
-
-包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
-
-```ts
-this.settingService.setUser(res.user);
-```
-
-**布局信息**
-
-包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
-
-```ts
-// 是否固定顶部菜单
-this.settingService.setLayout(`fixed`, false);
-// 是否折叠右边菜单
-this.settingService.setLayout(`collapsed`, false);
-```
-
-**菜单数据**
-
-NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
-
-菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。
-
-```ts
-this.menuService.add(res.menu);
-```
-
-**页面标题**
-
-若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。
-
-```ts
-// 设置页面标题的后缀
-this.titleService.suffix = res.app.name;
-```
-
-**ACL**
-
-```ts
-this.aclService.setFull(true);
-```
-
-建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。
-
-**国际化**
-
-建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
-
-### 2) 业务路由
-
-脚手架顶层路由从 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
+当 Angular 项目正式启动后会进入渲染动作，根据当前的路由地址来决定一个页面如何渲染，从最顶层路由 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始一层层寻找，其结构如下：
 
 ```ts
 const routes: Routes = [
   {
     path: '',
-    component: LayoutDefaultComponent,
+    component: LayoutBasicComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
@@ -244,27 +113,73 @@ const routes: Routes = [
     component: LayoutPassportComponent,
     children: [
       { path: 'login', component: UserLoginComponent },
-      { path: 'register', component: UserRegisterComponent },
-      { path: 'register-result', component: UserRegisterResultComponent }
     ]
   },
   // 单页不包裹Layout
-  { path: 'callback/:type', component: CallbackComponent },
-  { path: '403', component: Exception403Component },
-  { path: '404', component: Exception404Component },
-  { path: '500', component: Exception500Component },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: 'passport/callback/:type', component: CallbackComponent },
+  { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
+  // 未命中路由全部跳转至 `exception/404` 页面上
+  { path: '**', redirectTo: 'exception/404' },
 ];
 ```
 
-上述我们在业务模块中使用了 `LayoutDefaultComponent` 基础布局、用户授权使用了 `LayoutPassportComponent` 用户授权布局以及全屏布局。
+> 上述在业务模块中使用了 `LayoutBasicComponent` 基础布局、用户授权使用了 `LayoutPassportComponent` 用户授权布局以及 `LayoutBlankComponent` 空白布局，以上三种布局都可以在 [layout](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout) 目录下找得到。
 
-建议所有子模块都使用懒模块加载，例如 `TradeModule` 订单模块，这种方式可以更有效地组织代码结构。
+例如当用户访问 `/dashboard` 路由时，会先经过 `LayoutBasicComponent` -> `DashboardComponent`，最终换形成一个庞大的组件树来表示一个具体的页面。NG-ALAIN 脚手架帮助你完成大多数工作，而一个新入门的人更多只需要关心 `DashboardComponent` 业务组件该如何实现。
 
-### 什么情况下不使用懒加载？
+**什么情况下不使用懒加载？**
 
 Angular 启动是从顶层组件开始向下渲染，当遇到懒模块时会先发起脚本请求，此时会因为网络请求导致仪表盘或登录页短暂的空白，这对体验并不好。
 
-### 路由权限控制
+### 用户认证与授权
 
-路由URL可能会受浏览器自身历史记忆的原因，导致用户可能会访问至无权限路由时，若你希望有更好的体验，则需要在路由上配置 `canActivate` 选项，当用户无权限时会自动跳转至相关页；有关细节见[ACL路由守卫](/acl/guard)章节。
+页面能否访问取决于用户是否登录、已经登录还得判断否有授权，而这两项工作分别交给 `@delon/auth` 与 `@delon/acl` 来完成。
+
+#### 用户认证
+
+首先用户访问页面时是由顶层路由开始寻找命中后进行渲染，要想让所有未登录用户跳转到登录页面，可以配置 `canActivate` 选项，`@delon/auth` 已经提供了具体的实现，例如：
+
+```ts
+const routes: Routes = [
+  {
+    path: '',
+    component: LayoutBasicComponent,
+    canActivate: [SimpleGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
+    ]
+  },
+];
+```
+
+> 这里的 `SimpleGuard` 是因为采用基于 Simple Web Token 认证风格，其他认证方式请参考[用户认证](/auth)章节。
+
+当用户未登录时会直接跳转至 `/passport/login` 页面，如果采用的是 JWT 认证方式，还会对 Token 是否有效进行检验。
+
+#### 用户授权
+
+接者用户访问的页面还需要取决于授权程度，例如系统配置页普通用户肯定无法进入。在初始化项目数据小节里会根据当前用户的 Token 来获得授权的数据，并将数据交给 `@delon/acl`，同时它也提供一组路由守卫的具体实现 `ACLGuard` 类，例如希望整个系统配置模块都必须是 `admin` 角色才能访问，则：
+
+```ts
+const routes: Routes = [
+  {
+    path: 'sys',
+    canActivate: [ACLGuard],
+    data: { guard: 'admin' },
+    children: [
+      { path: 'config', component: ConfigComponent },
+    ]
+  },
+];
+```
+
+此时，当一个未授权 `admin` 角色的用户尝试访问 `/sys/config` 页面时会被跳转至未授权错误页上。
+
+当然还支持粒度有更细操作，比如某个按钮，请参考[ACL](/acl)章节。
+
+### 拦截网络请求
+
+网络请求是一项非常频繁的工作，如果想优雅的在业务组件内使用网络请求动作的话，那么将服务端URL前缀、异常处理、Token 刷新等操作集中处理是必不可少的，NG-ALAIN 脚手架提供一个 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。它会利用令牌 `HTTP_INTERCEPTORS` 起到一种拦截器的效果。
+
+有关以上集中处理的动作细节，请参考 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。
