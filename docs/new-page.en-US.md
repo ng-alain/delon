@@ -22,6 +22,8 @@ ng g ng-alain:module sys
 
 The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file.
 
+This way, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
+
 ## Second, the page
 
 Use the `ng generate` (abbreviated as: `ng g`) command to create a log list page in the `sys` directory:

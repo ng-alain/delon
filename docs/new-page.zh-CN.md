@@ -22,6 +22,8 @@ ng g ng-alain:module sys
 
 CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing.module.ts` 文件，前者是系统设置模块组件定义文件；后者是系统设置模块路由配置文件。
 
+这样，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
+
 ## 二、页面
 
 利用 `ng generate`（可简写为：`ng g`） 命令在 `sys` 目录下创建一个日志列表页：
