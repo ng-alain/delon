@@ -17,6 +17,7 @@ import { LayoutDefaultOptions } from './types';
     <div class="alain-default__aside">
       <div class="alain-default__aside-inner">
         <ng-container *ngTemplateOutlet="asideUser"></ng-container>
+        <ng-container *ngTemplateOutlet="nav"></ng-container>
         <layout-default-nav class="d-block py-lg"></layout-default-nav>
       </div>
     </div>
@@ -32,6 +33,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
 
   @Input() options: LayoutDefaultOptions;
   @Input() asideUser: TemplateRef<void>;
+  @Input() nav: TemplateRef<void>;
   @Input() content: TemplateRef<void>;
 
   private unsubscribe$ = new Subject<void>();
