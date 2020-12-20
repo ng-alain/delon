@@ -6,6 +6,46 @@ title: 默认布局
 
 默认布局所有参数都以 `@alain-default-` 开头。
 
+## 使用方式
+
+在 `src/styles.less` 引入：
+
+```less
+@import '~@delon/theme/layout-default/style/index';
+```
+
+## 布局说明
+
+按上-左-右布局方式，运用于**业务页**的开发。其规范细节：
+
++ 顶部区域高度 `64px`（参数：`@header-hg`）
++ 侧边区域宽度 `200px`（参数：`@aside-wd`）
+    + 当屏幕低于 `1140px` 宽时隐藏侧边导航
+    + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
+    + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
+
+> 参数是指可以通过 `src/styles/theme.less` 文件按需要调整。
+
+**顶部区域**
+
+位置：*src/app/layout/base/widgets*。
+
+脚手架默认提供了一些常规顶部区域组件，这些组件都存放于 *components* 目录中。同时 `@delon/abc` 也提供若干顶部组件（例如：[notice-icon](/components/notice-icon) 通知菜单组件）。你可以根据提供的组件自行组合或自行开发。
+
+> 脚手架支持响应式布局，对于顶部区域可能会是在小屏幕下需要隐藏一些组件，因此你可以在对应的DOM节点上加上 `hidden-xs` 表示当屏幕小于 `768px` 时自动隐藏。
+
+**侧边区域**
+
+位置：*src/app/layout/default/sidebar*。
+
+只包括一个用户信息和主菜单。主菜单是一个 [sidebar-nav](/components/sidebar-nav) 组件，具体使用细节请至[业务组件](/components/sidebar-nav)中查询。
+
+**内部区域**
+
+内容区域是业务页区域，规范细节：
+
++ 内容距离页面标准、侧边、右边滚动条、底部，这四边距依一个标准Dashboard的Gutter宽度 `24px`。
+
 ## 参数
 
 | 名称 | 默认值 | 功能 |
@@ -42,11 +82,3 @@ title: 默认布局
 | `@alain-default-content-bg` | `#f5f7fa` | 内容区域背景色 |
 | `@alain-default-widget-app-icons-enabled` | `true` | 是否 app-icon 小部件样式 |
 | `@alain-default-aside-user-enabled` | `true` | 是否侧边栏用户信息样式 |
-
-## 使用方式
-
-在 `src/styles.less` 引入：
-
-```less
-@import '~@delon/theme/layout-default/style/index';
-```
