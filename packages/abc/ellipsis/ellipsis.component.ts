@@ -42,15 +42,11 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   text = '';
   targetCount = 0;
 
-  // #region fields
-
   @Input() @InputBoolean() tooltip = false;
   @Input() @InputNumber(null) length: number;
   @Input() @InputNumber(null) lines: number;
   @Input() @InputBoolean() fullWidthRecognition = false;
   @Input() tail = '...';
-
-  // #endregion
 
   get linsWord(): string {
     const { targetCount, text, tail } = this;

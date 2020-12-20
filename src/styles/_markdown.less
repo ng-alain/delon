@@ -151,11 +151,26 @@
 .markdown > table {
   width: 100%;
   margin: 8px 0 16px;
-  table-layout: fixed;
+  table-layout: auto;
   empty-cells: show;
   border: 1px solid @site-border-color-split;
   border-collapse: collapse;
   border-spacing: 0;
+
+  tbody tr {
+    transition: all 0.3s;
+    &:hover {
+      background: rgba(60, 90, 100, 0.04);
+    }
+  }
+
+  th {
+    &:nth-child(1),
+    &:nth-child(2) {
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+  }
 }
 
 .markdown > table th {
@@ -268,18 +283,19 @@
       padding-top: 14px;
       white-space: nowrap;
       border-width: 0 0 2px 0;
-    }
-
-    tbody tr {
-      transition: all 0.3s;
-      &:hover {
-        background: rgba(60, 90, 100, 0.04);
+      &:nth-child(2) {
+        white-space: normal;
+        word-break: normal;
+      }
+      &:nth-child(4),
+      &:nth-child(5) {
+        white-space: nowrap;
+        word-break: keep-all;
       }
     }
 
     td {
       &:first-child {
-        width: 20%;
         color: @gray-8;
         font-weight: 600;
       }
@@ -290,7 +306,6 @@
         word-break: break-all;
       }
       &:nth-child(4) {
-        width: 16%;
         font-size: @font-size-base - 1px;
       }
     }

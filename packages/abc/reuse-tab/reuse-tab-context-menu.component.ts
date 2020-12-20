@@ -28,7 +28,6 @@ export class ReuseTabContextMenuComponent implements OnInit {
   @Input() item: ReuseItem;
   @Input() event: MouseEvent;
   @Input() customContextMenu: ReuseCustomContextMenu[];
-  // tslint:disable-next-line:no-output-native
   @Output() readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable(): boolean {

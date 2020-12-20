@@ -1,6 +1,6 @@
 ---
-order: 11
-type: Basic
+order: 1000
+type: Other
 title: Upgrade to version 10.0
 hot: true
 ---

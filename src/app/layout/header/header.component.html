@@ -6,9 +6,6 @@
     <li nz-menu-item routerLink="/components/sv/{{ i18n.zone }}" [matchRouter]="regexs.components">
       {{ 'app.header.menu.components' | translate }}
     </li>
-    <li nz-menu-item routerLink="/cli/getting-started/{{ i18n.zone }}" [matchRouter]="regexs.cli">
-      {{ 'app.header.menu.cli' | translate }}
-    </li>
     <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | translate">
       <ul>
         <li *ngFor="let i of delon" nz-menu-item routerLink="/{{ i }}/getting-started/{{ i18n.zone }}">

@@ -24,6 +24,8 @@ The core module will only be imported once. It is equivalent to `AppModule`, but
 
 We call it a shared module. It should not have `providers` because `ShareModule` will be imported in all business modules. Which will cause the service to be overwritten.
 
+NG-ZORRO, @delon/abc, @delon/chart, etc. have changed from all import to on-demand import since version 11. For this reason, NG-ALAIN has refined two files `shared-delon.module.ts` and `shared -zorro.module.ts` merges some modules frequently used throughout the project into a module called `SharedModule`, which is why it is necessary to import it in the business module for the first time. Although this method can reduce unnecessary import code, it will also cause compilation speed. Therefore, it is not recommended to put all components into `SharedModule`, and try to put the modules that need to be used more than three times before putting them here; Otherwise, you must import it yourself in the business module.
+
 ## 2) Recommendation
 
 ------------

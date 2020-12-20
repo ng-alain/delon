@@ -31,13 +31,11 @@ import { AlainConfigService, InputNumber } from '@delon/util';
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time: any | null = null;
   private formEl: HTMLFormElement | null;
+  _hiden = true;
+  count = 0;
 
   @Input() @InputNumber() freq: number;
   @Input() @InputNumber() offsetTop: number;
-
-  _hiden = true;
-
-  count = 0;
 
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any, configSrv: AlainConfigService) {
     configSrv.attach(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });

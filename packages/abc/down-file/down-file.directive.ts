@@ -13,23 +13,13 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 })
 export class DownFileDirective {
   private isFileSaverSupported = true;
-  /** URL请求参数 */
   @Input('http-data') httpData: {};
-  /** URL请求参数 */
   @Input('http-body') httpBody: {};
-  /** 请求类型 */
   @Input('http-method') httpMethod: string = 'get';
-  /** 下载地址 */
   @Input('http-url') httpUrl: string;
-  /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
   @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
-  /** 下载前回调 */
   @Input() pre: (ev: MouseEvent) => Promise<boolean>;
-  /** 成功回调 */
-  // tslint:disable-next-line:no-output-native
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
-  /** 错误回调 */
-  // tslint:disable-next-line:no-output-native
   @Output() readonly error = new EventEmitter<any>();
 
   private getDisposition(data: string | null): NzSafeAny {

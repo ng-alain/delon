@@ -1,7 +1,7 @@
 module.exports = {
   defaultLang: 'zh-CN',
   langs: ['zh-CN', 'en-US'],
-  tocMaxDepth: 2, // toc max depth
+  tocMaxDepth: 3, // toc max depth
   template: {
     examples: './src/templates/examples.ts',
     examples_index: './src/templates/examples_index.ts',

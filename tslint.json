@@ -44,7 +44,7 @@
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-inputs-metadata-property": true,
-    "no-output-native": true,
+    "no-output-native": false,
     "no-output-on-prefix": true,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,

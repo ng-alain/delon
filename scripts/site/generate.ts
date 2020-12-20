@@ -151,6 +151,7 @@ function generateModule(config: ModuleConfig) {
           urls,
           content,
           demo: isDemo,
+          // i18n: meta.i18n,
         } as any,
         demos: '',
         demo: isDemo,
@@ -206,6 +207,7 @@ function generateModule(config: ModuleConfig) {
 }
 
 for (const m of siteConfig.modules) {
+  // if (m.module !== 'docs') continue;
   generateModule(m);
 }
 

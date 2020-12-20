@@ -1,100 +1,72 @@
 ---
 order: 10
-title: 开始使用
+title: 介绍
 type: Basic
+i18n: need-update
 ---
 
-## 写在前面
+## 什么是NG-ALAIN
 
 NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们秉承 [Ant Design](https://ant.design/) 的设计价值观，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
 
-**如何阅读文档**
+## 环境搭建
 
-在开始之前有一些文档描述约定说明，这有助于更好的阅读：
+Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，如果习惯使用 [Yarn](https://yarnpkg.com/) 需要单独额外安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
 
-- API相关
-  - `[]` 表示属性
-  - `()` 表示事件
-  - `[()]` 表示双向绑定
-  - `ng-content` 表示组件内容占位符
-  - `#tpl` 开头表示 `〈ng-template #tpl〉`
+```bash
+node -v # 查看 Node.js 当前版本
+npm -v  # 查看 Npm 当前版本
+```
 
-## 前序准备
+Npm 默认从国外源来下载包信息，鉴于国内环境因素，在开始下一步前先设定淘宝提供 Npm 源镜像：
 
-你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
+```bash
+# 设置淘宝源
+npm config set registry https://registry.npm.taobao.org
+npm config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
+# 恢复默认源
+npm config delete registry
+npm config delete sass_binary_site
+```
+
+> 也可以使用 [nrm](https://www.npmjs.com/package/nrm) 包，可以快速切换不同国内镜像源。
 
 ## 安装
 
-### CLI（推荐）
+### 全局 Angular Cli
 
-请先通过 `ng version` 命令确认全局 Angular Cli 版本为 `9.x`，有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
+安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
 
 ```bash
-# 安装 9.x 版本的全局Angluar Cli版本
-# 使用 yarn
-yarn global add @angular/cli@9.x
-# 或使用 npm
-# npm install -g @angular/cli@9.x
+npm install -g @angular/cli
 ```
 
-> 注意：Angular Cli 默认会使用 npm install 来安装依赖，可能会比较慢，请参考 [如何正确使用淘宝源？](/docs/faq/zh#%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%B7%98%E5%AE%9D%E6%BA%90%EF%BC%9F) 解决安装依赖慢的问题。
+### 创建NG-ALAIN项目
+
+NG-ALAIN 必须先创建一个全新的 Angular 项目，可以通过终端窗口中运行：
 
 ```bash
 ng new my-project --style less --routing
-cd my-project
-ng add ng-alain
-npm start
-# 或者使用 HMR 模式启用 npm run hmr
 ```
 
-> 请参考[命令行工具](/cli)了解更多细节。
+> 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
 
-### 克隆代码
+当提示 `Packages installed successfully.` 表示创建成功，接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
 
 ```bash
-git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
-cd my-project
-yarn
-npm start
-# 或者使用 HMR 模式启用 npm run hmr
+ng add ng-alain
 ```
 
-> 注：使用CLI安装，是一个干净的脚手架；使用克隆代码会包含所有示例。
+NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一路回车，这些插件都是可插拔，后期可以自行添加与移除。
 
-## 目录结构
+> 以上只会生成干净的项目，可以直接用于生产环境中。你可能在[预览](https://ng-alain.gitee.io/)上看到许多示例页，它们全都可以在 [Github](https://github.com/ng-alain/ng-alain) 查看到源代码，当然也可以通过 Git 克隆代码的形式获得：
+> ```bash
+> git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
+> cd my-project
+> npm install
+> ```
 
-NG-ALAIN 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。
-
-```
-├── _mock                                       # Mock 数据规则
-├── src
-│   ├── app
-│   │   ├── core                                # 核心模块
-│   │   │   ├── i18n
-│   │   │   ├── net
-│   │   │   │   └── default.interceptor.ts      # 默认HTTP拦截器
-│   │   │   ├── services
-│   │   │   │   └── startup.service.ts          # 初始化项目配置
-│   │   │   └── core.module.ts                  # 核心模块文件
-│   │   ├── layout                              # 通用布局
-│   │   ├── routes
-│   │   │   ├── **                              # 业务目录
-│   │   │   ├── routes.module.ts                # 业务路由模块
-│   │   │   └── routes-routing.module.ts        # 业务路由注册口
-│   │   ├── shared                              # 共享模块
-│   │   │   ├── shared-delon.module.ts          # @Delon/* 次级共享模块导入
-│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO 次级共享模块导入
-│   │   │   └── shared.module.ts                # 共享模块文件
-│   │   ├── app.component.ts                    # 根组件
-│   │   └── app.module.ts                       # 根模块
-│   │   └── global-config.module.ts             # @delon & ng-zorro 全局配置项
-│   ├── assets                                  # 本地静态资源
-│   ├── environments                            # 环境变量配置
-│   ├── styles                                  # 样式目录
-└── └── style.less                              # 样式引导入口
-```
-
-## 本地开发
+### 运行
 
 ```bash
 npm start
@@ -102,10 +74,9 @@ npm start
 
 启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。
 
-![](./assets/screenshot/desktop.png | width=700)
+![](./assets/screenshot/start.png | width=700)
 
-
-如果您使用方法一安装，则右边只有部分菜单。
+恭喜你，你已经成功部署一个 NG-ALAIN 项目。
 
 ## 如何贡献
 

@@ -40,7 +40,6 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   @Input() @InputNumber() resizeTime = 0;
   @Input() theme: string | Types.LooseObject;
   @Output() readonly render = new EventEmitter<ElementRef>();
-  // tslint:disable-next-line:no-output-native
   @Output() readonly resize = new EventEmitter<ElementRef>();
   @Output() readonly destroy = new EventEmitter<ElementRef>();
 

@@ -53,6 +53,11 @@ export class LoadingService implements OnDestroy {
     this.compRef.changeDetectorRef.markForCheck();
   }
 
+  /**
+   * Open a new loading indicator
+   *
+   * 打开一个新加载指示符
+   */
   open(options?: LoadingShowOptions): void {
     this.opt = { ...this.cog, ...options };
     this.n$.next();
@@ -65,6 +70,11 @@ export class LoadingService implements OnDestroy {
     this.compRef = null;
   }
 
+  /**
+   * Turn off a loading indicator
+   *
+   * 关闭一个加载指示符
+   */
   close(): void {
     this._close(true);
   }

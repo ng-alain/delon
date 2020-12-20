@@ -15,8 +15,8 @@ module: import { LoadingModule } from '@delon/abc/loading';
 
 | 名称 | 说明 |
 |----|----|
-| `open(options?: LoadingShowOptions)` | 打开 |
-| `close()` | 关闭 |
+| `open(options?: LoadingShowOptions)` | 打开一个新加载指示符 |
+| `close()` | 关闭一个加载指示符 |
 
 ### LoadingShowOptions
 

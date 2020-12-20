@@ -35,6 +35,10 @@ export function getCode(node: any) {
   return JsonML.getChildren(JsonML.getChildren(node)[0] || '')[0] || '';
 }
 
+export function genValidId(id: string): string {
+  return id.replace(/[() `?]*/g, '');
+}
+
 export function generateSluggedId(children: any): { id: string; text: string } {
   const headingText = children
     .map((node: any) => {
@@ -47,9 +51,8 @@ export function generateSluggedId(children: any): { id: string; text: string } {
       return node;
     })
     .join('');
-  const sluggedId = headingText.trim().replace(/\s+/g, '-');
   return {
-    id: sluggedId,
+    id: genValidId(headingText.trim()),
     text: headingText,
   };
 }

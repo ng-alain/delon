@@ -15,7 +15,6 @@ export class ReuseTabContextComponent implements OnDestroy {
     this.srv.i18n = value;
   }
 
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<ReuseContextCloseEvent>();
 
   constructor(private srv: ReuseTabContextService) {

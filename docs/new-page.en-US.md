@@ -20,9 +20,43 @@ To create a page, you need to create a module first. If you need a system to set
 ng g ng-alain:module sys
 ```
 
-The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file.
+The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` files under `src/app/routes/sys`, the former is the system setup module component definition file; the latter is the system setup module routing Configuration file. 
 
-This way, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
+```ts
+// sys.module.ts
+import { NgModule, Type } from '@angular/core';
+import { SharedModule } from '@shared';
+import { SysRoutingModule } from './sys-routing.module';
+
+const COMPONENTS: Type<void>[] = [];
+const COMPONENTS_NOROUNT: Type<void>[] = [];
+
+@NgModule({
+  imports: [SharedModule, SysRoutingModule],
+  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
+})
+export class SysModule {}
+```
+
+The function of the module is to import the modules we need. All NG-ZORRO, @delon/abc, @delon/chart, etc. are loaded on demand. The external components are imported wherever the current business page needs. In order to reduce these import actions, NG -ALAIN has refined two files `shared-delon.module.ts` and `shared-zorro.module.ts` to merge some modules frequently used throughout the project into a module called `SharedModule`, which is why it is necessary Import it in the business module for the first time. Note: It is not recommended to put all the components in `SharedModule`, as far as possible, put the modules that need to be used two or three times or more.
+
+And the routing configuration module:
+
+```ts
+// sys-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class SysRoutingModule {}
+```
+
+By now, you can safely start developing business pages like menu management, logging, system configuration, etc. in the `sys` directory.
 
 ## Second, the page
 
@@ -43,19 +77,3 @@ ng g ng-alain:view view -m=sys -t=log
 ```
 
 `-t=log` indicates that you want to put the created file under `sys/log/view`.
-
-## Third, IDE
-
-In addition to the cli command line provided by ng-alain, it is recommended to use the [Visual Studio Code](https://code.visualstudio.com/) IDE, because ng-alain adds some extra features to VSCode to better help you. Development.
-
-> Or use the [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) suite directly.
-
-### Code fragment
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### Class style smart reminder
-
-ng-alain has a lot of built-in toolkit styles ([API](/theme/tools)), and the following plugins can be installed directly into the HTML template.
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)

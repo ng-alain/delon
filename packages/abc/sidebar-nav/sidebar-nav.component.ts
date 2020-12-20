@@ -56,7 +56,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() recursivePath = true;
   @Input() @InputBoolean() openStrictly = false;
   @Input() @InputNumber() maxLevelIcon = 3;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<Menu>();
 
   get collapsed(): boolean {
