@@ -21,13 +21,7 @@ function fixThirdVersion(tree: Tree, context: SchematicContext): void {
   // dependencies
   addPackageToPackageJson(
     tree,
-    [
-      // TODO: Wating ng-zorro-antd upgrade to 11
-      // `ng-zorro-antd@^10.0.0-beta.4`,
-      `ngx-ueditor@^11.0.0`,
-      `ngx-tinymce@^11.0.0`,
-      `ngx-ueditor@^11.0.0`,
-    ],
+    [`ng-zorro-antd@^11.0.0`, `ngx-ueditor@^11.0.0`, `ngx-tinymce@^11.0.0`, `ngx-countdown@^11.0.0`, `ajv@^7.0.2`],
     'dependencies',
   );
   // dependencies
