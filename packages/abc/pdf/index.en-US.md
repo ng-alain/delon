@@ -15,7 +15,7 @@ pdf.js libary is lazy loading by default，you can change the default root CDN p
 
 ## API
 
-### qr
+### pdf
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
