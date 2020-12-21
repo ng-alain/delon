@@ -31,7 +31,7 @@ function fixThirdVersion(tree: Tree, context: SchematicContext): void {
     'dependencies',
   );
   // dependencies
-  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`], 'devDependencies');
+  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`, `ng-alain-sts@DEP-0.0.0-PLACEHOLDER`], 'devDependencies');
   logStart(context, `Upgrade third libs version number`);
 }
 
