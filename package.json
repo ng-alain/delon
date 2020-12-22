@@ -33,7 +33,7 @@
     "analyze": "npm run ng-high-memory build -- --prod --source-map",
     "analyze:view": "source-map-explorer src/dist/browser/*.js",
     "site:gen": "node scripts/site/main init && ng-alain-plugin-theme -t=themeCss && ng-alain-plugin-theme -t=colorLess",
-    "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod && npm run site:helper",
+    "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod && npm run site:helper && node scripts/build/minify.js",
     "site:helper": "bash scripts/ci/helper.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
@@ -43,7 +43,6 @@
     "ssr": "npm run ng-high-memory run site:serve-ssr",
     "ssr:serve": "node src/dist/server/main.js",
     "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
-    "ssr:ci": "npm run ssr:build && bash ./scripts/ci/build-artifacts-site-ssr.sh",
     "ssr:prerender": "npm run site:build && npm run ng-high-memory run site:prerender"
   },
   "dependencies": {
@@ -71,7 +70,7 @@
     "extend": "^3.0.2",
     "file-saver": "^2.0.2",
     "marked": "^1.1.1",
-    "ng-github-button": "^10.0.0",
+    "ng-github-button": "^11.0.1",
     "ng-zorro-antd": "^11.0.0",
     "ngx-color": "^6.2.0",
     "ngx-countdown": "^11.0.1",
@@ -160,7 +159,9 @@
     "nz-tslint-rules": "^0.901.2",
     "tsconfig-paths": "^3.9.0",
     "@nguniversal/builders": "^11.0.1",
-    "@types/express": "^4.17.9"
+    "@types/express": "^4.17.9",
+    "html-minifier-terser": "^5.1.1",
+    "terser": "^5.5.1"
   },
   "husky": {
     "hooks": {

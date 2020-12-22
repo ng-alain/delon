@@ -458,11 +458,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this._inited = true;
     this.validator();
+    this._inited = true;
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     if (Object.keys(changes).length === 1 && (changes.loading || changes.disabled)) {
       this.cdr.detectChanges();
       return;
@@ -472,6 +475,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** @internal */
   _addTpl(path: string, templateRef: TemplateRef<void>): void {
+    if (!this._inited) {
+      return;
+    }
     if (this._renders.has(path)) {
       console.warn(`Duplicate definition "${path}" custom widget`);
       return;

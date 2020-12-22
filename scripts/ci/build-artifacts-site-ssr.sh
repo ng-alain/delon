@@ -19,8 +19,6 @@ echo "Current commit author name: ${commitAuthorName}"
 #   exit 0
 # fi
 
-# echo "ACCESS_TOKEN: ${ACCESS_TOKEN}.."
-
 if [ -z ${ACCESS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
        "Please set the environment variable 'ACCESS_TOKEN'."
@@ -36,6 +34,7 @@ rm -rf ${buildDir}
 mkdir -p ${buildDir}
 cp -r ${DIST}/browser ${buildDir}/browser
 cp -r ${DIST}/server ${buildDir}/server
+cp ./Dockerfile.docs ${buildDir}/Dockerfile.docs
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")

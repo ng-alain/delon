@@ -32,6 +32,7 @@
  */
 import '@webcomponents/custom-elements'; //  Custom Elements Polyfill
 import '@webcomponents/custom-elements/src/native-shim';
+import './zone-flags';
 import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
