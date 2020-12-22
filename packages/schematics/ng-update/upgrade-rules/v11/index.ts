@@ -22,16 +22,16 @@ function fixThirdVersion(tree: Tree, context: SchematicContext): void {
   addPackageToPackageJson(
     tree,
     [
-      // TODO: Wating ng-zorro-antd upgrade to 11
-      // `ng-zorro-antd@^10.0.0-beta.4`,
-      `ngx-ueditor@^11.0.0`,
-      `ngx-tinymce@^11.0.0`,
-      `ngx-ueditor@^11.0.0`,
+      `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
+      `ngx-ueditor@DEP-0.0.0-PLACEHOLDER`,
+      `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`,
+      `ngx-countdown@DEP-0.0.0-PLACEHOLDER`,
+      'ajv@DEP-0.0.0-PLACEHOLDER',
     ],
     'dependencies',
   );
   // dependencies
-  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@^11.0.0`], 'devDependencies');
+  addPackageToPackageJson(tree, [`ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`, `ng-alain-sts@DEP-0.0.0-PLACEHOLDER`], 'devDependencies');
   logStart(context, `Upgrade third libs version number`);
 }
 

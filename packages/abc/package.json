@@ -23,7 +23,7 @@
   "dependencies": {
     "isutf8": "^3.0.0",
     "file-saver": "^2.0.2",
-    "ngx-countdown": "^10.0.0",
+    "ngx-countdown": "^11.0.0",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
