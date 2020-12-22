@@ -458,8 +458,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this._inited = true;
     this.validator();
+    this._inited = true;
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
