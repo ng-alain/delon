@@ -16,3 +16,5 @@ jobs:
       - name: build
         run: |
           npm run ssr:ci
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
