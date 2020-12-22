@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Ng Alain - 一个基于 Antd 中后台前端解决方案</title>
+  <base href="/version/10.x/">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="manifest" href="./assets/pwa-manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
+  <link rel="shortcut icon" href="./assets/img/logo-color.png">
+  <link rel="icon" type="image/x-icon" href="./assets/img/logo-color.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./assets/img/logo-color.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/img/logo-color.png">
+<link rel="stylesheet" href="styles.19fafa8c605e60d80adb.css"></head>
+
+<body ontouchstart>
+  <app-root>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;font-size:14px;font-family:Helvetica;">loading...</div>
+  </app-root>
+  <div id="_ie" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;text-align:center;padding-top:32px;background:#fff;font-size:22px;z-index:9999;">
+    Your browser is not supported for NG-ALAIN document site
+  </div>
+  <div id="_slow" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;text-align:center;justify-content:center;align-items:center;background:#fff;z-index:9999;">
+    <div>
+      <h1 style="font-size:22px;">KEEPING LOAD...</h1>
+      <p style="margin: 0; font-size: 16px;">The network is slow, please try to access the <a href="https://ng-alain-doc.surge.sh/" style="padding: 0 4px;">Surge</a> mirror!</p>
+    </div>
+  </div>
+  <script>
+    if (!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) {
+      document.querySelector('#_ie').style.display = 'block';
+    }
+
+  </script>
+  <script>
+    if (location.host !== 'ng-alain-doc.surge.sh') {
+      setTimeout(() => {
+        var el = document.querySelector('#_slow');
+        if (el) {
+          el.style.display = 'flex';
+        }
+      }, 1000 * 8);
+    }
+
+  </script>
+  <script src="./assets/highlight.pack.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120202005-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-120202005-1');
+
+  </script>
+  <!-- Hotjar Tracking Code for www.ng-alain.com -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () {
+        (h.hj.q = h.hj.q || []).push(arguments)
+      };
+      h._hjSettings = {
+        hjid: 920546,
+        hjsv: 6
+      };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script');
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      setTimeout(function() { a.appendChild(r); }, 500);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+
+  </script>
+<script src="runtime-es2015.dca8be3a10803883a242.js" type="module"></script><script src="runtime-es5.dca8be3a10803883a242.js" nomodule defer></script><script src="polyfills-es5.8e04257b1d44fb6ad7a6.js" nomodule defer></script><script src="polyfills-es2015.f6aab0f3344cb356103a.js" type="module"></script><script src="scripts.4080e135a4678c225fbe.js" defer></script><script src="main-es2015.b29fc854401806089e37.js" type="module"></script><script src="main-es5.b29fc854401806089e37.js" nomodule defer></script></body>
+
+</html>

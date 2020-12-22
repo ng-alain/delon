@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "ui": {
+        "errors": {
+          "required": "姓名不能为空",
+          "minLength": "姓名至少3个字符以上"
+        },
+        "_validator": "无法模拟，请参考https://ng-alain.com/form/error"
+      }
+    }
+  },
+  "required": [ "name" ]
+}
