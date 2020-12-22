@@ -9,6 +9,7 @@ hot: true
 > If you encounter problems during the upgrade process, feel free to comment here.
 > If you find any errors in this guide, please point out
 > Or you have encountered a new problem and solved it, welcome to comment here.
+> If you encounter problems please go to [NG-ALAIN V11 Upgrade Guide](https://github.com/ng-alain/ng-alain/issues/1863) for feedback.
 
 
 ## Before upgrade

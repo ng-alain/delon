@@ -9,6 +9,7 @@ hot: true
 > 如果在升级过程中遇到问题，欢迎提出。提问前请阅读 [如何向开源社区提问题](https://github.com/seajs/seajs/issues/545)
 > 如果发现本指南存在遗漏/错误，请指出!
 > 或者你遇到了新的问题并解决了，欢迎补充!
+> 如果升级中遇到问题请前往 [NG-ALAIN V11 Upgrade Guide](https://github.com/ng-alain/ng-alain/issues/1863) 反馈。
 
 ## 开始之前
 
