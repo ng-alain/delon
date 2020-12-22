@@ -22,7 +22,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-demo',
   template: `
     <sf [schema]="schema" (formSubmit)="submit($event)">
-      <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
+      <ng-template sf-template="myCustomWidget" let-me let-ui="ui" let-schema="schema">
         自定义内容:
         <input
           nz-input
@@ -40,7 +40,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
-      custom: {
+      myCustomWidget: {
         type: 'string',
         title: '自定义内容',
         ui: {

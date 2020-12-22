@@ -1,14 +1,17 @@
 import { Platform } from '@angular/cdk/platform';
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
+  Optional,
   Output,
   SimpleChange,
   ViewEncapsulation,
@@ -20,7 +23,6 @@ import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { PDF_DEFULAT_CONFIG } from './pdf.config';
 import { PdfChangeEvent, PdfChangeEventType, PdfExternalLinkTarget, PdfTextLayerMode, PdfZoomScale } from './pdf.types';
 
-const win: NzSafeAny = window;
 const CSS_UNITS: number = 96.0 / 72.0;
 const BORDER_WIDTH: number = 9;
 
@@ -134,12 +136,17 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._renderText ? this.textLayerMode : PdfTextLayerMode.DISABLE;
   }
 
+  private get win(): NzSafeAny {
+    return this.doc.defaultView || window;
+  }
+
   constructor(
     private ngZone: NgZone,
     configSrv: AlainConfigService,
     private lazySrv: LazyService,
     private platform: Platform,
     private el: ElementRef<HTMLElement>,
+    @Optional() @Inject(DOCUMENT) private doc: Document,
   ) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
@@ -168,7 +175,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private initDelay(): void {
     this.inited = true;
-    win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
+    this.win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
 
     setTimeout(() => this.load(), this.delay);
   }
@@ -186,7 +193,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.ngZone.runOutsideAngular(() => {
       this.destroy();
-      const loadingTask = (this.loadingTask = win.pdfjsLib.getDocument(_src));
+      const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
       loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
       loadingTask.promise.then(
         (pdf: NzSafeAny) => {
@@ -322,15 +329,15 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setupPageViewer(): void {
-    win.pdfjsLib.disableTextLayer = !this._renderText;
-    win.pdfjsLib.externalLinkTarget = this.externalLinkTarget;
+    this.win.pdfjsLib.disableTextLayer = !this._renderText;
+    this.win.pdfjsLib.externalLinkTarget = this.externalLinkTarget;
 
     this.setupMultiPageViewer();
     this.setupSinglePageViewer();
   }
 
   private createEventBus(): NzSafeAny {
-    const eventBus = new win.pdfjsViewer.EventBus();
+    const eventBus = new this.win.pdfjsViewer.EventBus();
     eventBus.on(`pagesinit`, (ev: NzSafeAny) => {
       this.emit('pages-init', { ev });
     });
@@ -351,7 +358,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setupMultiPageViewer(): void {
-    const VIEWER = win.pdfjsViewer;
+    const VIEWER = this.win.pdfjsViewer;
 
     const eventBus = this.createEventBus();
     const linkService = (this.multiPageLinkService = new VIEWER.PDFLinkService({
@@ -374,7 +381,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setupSinglePageViewer(): void {
-    const VIEWER = win.pdfjsViewer;
+    const VIEWER = this.win.pdfjsViewer;
 
     const eventBus = this.createEventBus();
     const linkService = (this.singlePageLinkService = new VIEWER.PDFLinkService({
@@ -401,7 +408,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    if (win.pdfjsLib) {
+    if (this.win.pdfjsLib) {
       this.initDelay();
       return;
     }
@@ -415,7 +422,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private initResize(): void {
-    fromEvent(win, 'resize')
+    fromEvent(this.win, 'resize')
       .pipe(
         debounceTime(100),
         filter(() => this.autoReSize && this._pdf),

@@ -43,6 +43,7 @@
     "ssr": "npm run ng-high-memory run site:serve-ssr",
     "ssr:serve": "node src/dist/server/main.js",
     "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
+    "ssr:ci": "npm run ssr:build && bash ./scripts/ci/build-artifacts-site-ssr.sh",
     "ssr:prerender": "npm run site:build && npm run ng-high-memory run site:prerender"
   },
   "dependencies": {
