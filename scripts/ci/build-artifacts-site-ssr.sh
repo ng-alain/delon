@@ -4,13 +4,7 @@ set -e
 
 readonly thisDir=$(cd $(dirname $0); pwd)
 
-cp ./src/dist/browser/index.html ./src/dist/browser/404.html
-cp -r ./_nginx/ ./src/dist/browser/_nginx
-ls -al ./src/dist
-
 cd $(dirname $0)/../..
-
-DIST="$(pwd)/dist"
 
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
@@ -33,11 +27,15 @@ if [ -z ${ACCESS_TOKEN} ]; then
   exit 0
 fi
 
+DIST="$(pwd)/src/dist"
+# 修复404文件
+cp ${DIST}/browser/index.html ${DIST}/browser/404.html
+
 buildDir=${DIST}/publish
 rm -rf ${buildDir}
 mkdir -p ${buildDir}
-cp -r ${DIST}/@delon ${buildDir}/@delon
-cp -r ${DIST}/ng-alain ${buildDir}/ng-alain
+cp -r ${DIST}/browser ${buildDir}/browser
+cp -r ${DIST}/server ${buildDir}/server
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")
