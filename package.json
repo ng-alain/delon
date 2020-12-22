@@ -33,7 +33,7 @@
     "analyze": "npm run ng-high-memory build -- --prod --source-map",
     "analyze:view": "source-map-explorer src/dist/browser/*.js",
     "site:gen": "node scripts/site/main init && ng-alain-plugin-theme -t=themeCss && ng-alain-plugin-theme -t=colorLess",
-    "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod && npm run site:helper",
+    "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod && npm run site:helper && node scripts/build/minify.js",
     "site:helper": "bash scripts/ci/helper.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
@@ -159,7 +159,9 @@
     "nz-tslint-rules": "^0.901.2",
     "tsconfig-paths": "^3.9.0",
     "@nguniversal/builders": "^11.0.1",
-    "@types/express": "^4.17.9"
+    "@types/express": "^4.17.9",
+    "html-minifier-terser": "^5.1.1",
+    "terser": "^5.5.1"
   },
   "husky": {
     "hooks": {
