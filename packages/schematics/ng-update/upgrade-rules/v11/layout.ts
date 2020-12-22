@@ -15,10 +15,10 @@ function upgradeStylePath(): void {
   }
 
   // 更新样式引入路径
-  const content = readContent(tree, stylesLessPath)
-    .replace(`@import '~@delon/theme/layout/default/index';`, `@import '~@delon/theme/layout-default/style/index';`)
-    .replace(`@import '~@delon/theme/layout/fullscreen/index';`, `@import '~@delon/theme/layout-blank/style/index';`);
-  overwriteFile(tree, stylesLessPath, content, true);
+  const stylesLessContent = readContent(tree, stylesLessPath)
+    .replace(`~@delon/theme/layout/default/index`, `~@delon/theme/layout-default/style/index`)
+    .replace(`~@delon/theme/layout/fullscreen/index`, `~@delon/theme/layout-blank/style/index`);
+  tree.overwrite(stylesLessPath, stylesLessContent);
   logInfo(context, `Update style import path`);
 
   // 修改 fullscreen 的样式
@@ -26,8 +26,8 @@ function upgradeStylePath(): void {
   if (!tree.exists(fullscreenComponentPath)) {
     return;
   }
-  const content1 = readContent(tree, stylesLessPath).replace(`alain-fullscreen`, `alain-blank`);
-  overwriteFile(tree, stylesLessPath, content1, true);
+  const fullscreenComponentContent = readContent(tree, fullscreenComponentPath).replace(`alain-fullscreen`, `alain-blank`);
+  tree.overwrite(fullscreenComponentPath, fullscreenComponentContent);
   logInfo(context, `Update alain-fullscreen to alain-blank`);
 }
 
