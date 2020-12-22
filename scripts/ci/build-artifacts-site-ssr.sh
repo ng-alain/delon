@@ -75,17 +75,9 @@ fi
 
 rm -rf ./*
 cp -r ${buildDir}/* ./
+ls
 
 echo "Removed everything from ${packageRepo}#${branchName} and added the new build output."
-
-# 替换版本号
-if [[ $commitMessageCheck =~ "release(" ]]; then
-  echo "===== Release version does not need to change version ====="
-else
-  echo "Replace build version..."
-  sed -i "s/${buildVersion}/${buildVersionName}/g" $(find . -type f -not -path '*\/.*' -name 'theme.js' -o -name 'package.json')
-fi
-
 echo "Updated the build version in every file to include the SHA of the latest commit."
 
 # Prepare Git for pushing the artifacts to the repository.
