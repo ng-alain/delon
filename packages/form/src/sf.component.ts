@@ -475,6 +475,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** @internal */
   _addTpl(path: string, templateRef: TemplateRef<void>): void {
+    if (!this._inited) {
+      return;
+    }
     if (this._renders.has(path)) {
       console.warn(`Duplicate definition "${path}" custom widget`);
       return;
