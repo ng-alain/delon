@@ -28,13 +28,13 @@ fi
 DIST="$(pwd)/src/dist"
 # 修复404文件
 cp ${DIST}/browser/index.html ${DIST}/browser/404.html
-cp ./Dockerfile.docs ${DIST}/Dockerfile.docs
 
 buildDir=${DIST}/publish
 rm -rf ${buildDir}
 mkdir -p ${buildDir}
 cp -r ${DIST}/browser ${buildDir}/browser
 cp -r ${DIST}/server ${buildDir}/server
+cp ./Dockerfile.docs ${buildDir}/Dockerfile.docs
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")
