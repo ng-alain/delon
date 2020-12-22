@@ -56,14 +56,19 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.ref = this.widgetFactory.createWidget(this.container, (this.formProperty.ui.widget || this.formProperty.schema.type) as string);
-    this.onWidgetInstanciated(this.ref.instance);
+    const p = this.formProperty;
+    if (p && p.ui && p.schema) {
+      this.ref = this.widgetFactory.createWidget(this.container, (p.ui.widget || p.schema.type) as string);
+      this.onWidgetInstanciated(this.ref.instance);
+    }
   }
 
   ngOnDestroy(): void {
     const { unsubscribe$ } = this;
     unsubscribe$.next();
     unsubscribe$.complete();
-    this.ref.destroy();
+    if (this.ref) {
+      this.ref.destroy();
+    }
   }
 }
