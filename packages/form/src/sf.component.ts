@@ -463,6 +463,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     if (Object.keys(changes).length === 1 && (changes.loading || changes.disabled)) {
       this.cdr.detectChanges();
       return;
