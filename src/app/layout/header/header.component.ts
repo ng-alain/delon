@@ -2,11 +2,11 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18NService, MobileService } from '@core';
-import { VERSION } from '@delon/theme';
 import { copy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
 import { MetaSearchGroupItem } from '../../interfaces';
+const pkg = require('../../../../package.json');
 
 @Component({
   selector: 'app-header',
@@ -20,8 +20,8 @@ import { MetaSearchGroupItem } from '../../interfaces';
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
   isMobile: boolean;
-  oldVersionList = [`9.x`, `8.x`, `1.x`];
-  currentVersion = VERSION.full;
+  oldVersionList = [`10.x`, `9.x`, `8.x`, `1.x`];
+  currentVersion = pkg.version;
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
   menuVisible = false;
   showGitee = false;
