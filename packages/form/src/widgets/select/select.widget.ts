@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil, catchError } from 'rxjs/operators';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -58,13 +58,14 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
     };
 
-    if (this.ui.onSearch) {
+    const onSearch = this.ui.onSearch!;
+    if (onSearch) {
       this.search$
         .pipe(
           takeUntil(this.sfItemComp!.unsubscribe$),
           distinctUntilChanged(),
           debounceTime(this.ui.searchDebounceTime || 300),
-          switchMap(text => this.ui.onSearch!(text)),
+          switchMap(text => onSearch(text)),
           catchError(() => []),
         )
         .subscribe(list => {
@@ -118,7 +119,9 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   onSearch(value: string): void {
-    this.loading = true;
-    this.search$.next(value);
+    if (this.ui.onSearch) {
+      this.loading = true;
+      this.search$.next(value);
+    }
   }
 }
