@@ -57,9 +57,9 @@ export class DelonModule {
 
 ### API
 
-| 参数                | 说明       | 类型               | 默认值      |
-| ------------------- | ---------- | ------------------ | ----------- |
-| `nullValueHandling` | 空值处理   | `include,ignore`   | `include`   |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `nullValueHandling` | 空值处理 | `include,ignore` | `include` |
 | `dateValueHandling` | 时间值处理 | `timestamp,ignore` | `timestamp` |
 
 ## 使用修饰器
@@ -136,13 +136,13 @@ class RestService extends BaseApi {
 
 #### HttpOptions
 
-| 参数              | 说明                                                                                                | 类型                         | 默认值 |
-| ----------------- | --------------------------------------------------------------------------------------------------- | ---------------------------- | ------ |
-| `acl`             | ACL 配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any`                        | -      |
-| `observe`         | 指定响应内容                                                                                        | `body,events,response`       | -      |
-| `responseType`    | 指定内容格式                                                                                        | `arraybuffer,blob,json,text` | -      |
-| `reportProgress`  | 是否监听进度事件                                                                                    | `boolean`                    | -      |
-| `withCredentials` | 设置 withCredentials                                                                                | `boolean`                    | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `acl` | ACL 配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any` | - |
+| `observe` | 指定响应内容 | `body,events,response` | - |
+| `responseType` | 指定内容格式 | `arraybuffer,blob,json,text` | - |
+| `reportProgress` | 是否监听进度事件 | `boolean` | - |
+| `withCredentials` | 设置 withCredentials | `boolean` | - |
 
 ### 参数
 

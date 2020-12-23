@@ -1,8 +1,8 @@
 // tslint:disable:no-string-literal
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlainThemeModule, _HttpClient } from '@delon/theme';
+import { TestBed } from '@angular/core/testing';
 import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
@@ -42,7 +42,7 @@ describe('cache: service', () => {
       providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
     }
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, AlainThemeModule.forRoot(), DelonCacheModule],
+      imports: [HttpClientTestingModule, DelonCacheModule],
       providers,
     });
 
@@ -190,14 +190,16 @@ describe('cache: service', () => {
           done();
         });
       });
-      it('should be return value via http request', fakeAsync(() => {
-        const http = TestBed.inject(_HttpClient);
-        const get$ = srv.tryGet(KEY, http.get('/'));
-        expect(http.loading).toBeFalsy();
-        get$.subscribe();
-        tick();
-        expect(http.loading).toBeTruthy();
-      }));
+      it('should be return value via http request', done => {
+        const http = TestBed.inject(HttpClient);
+        srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
+          expect(ret.a).toBe(1);
+          done();
+        });
+        TestBed.inject(HttpTestingController as Type<HttpTestingController>)
+          .expectOne(() => true)
+          .flush({ a: 1 });
+      });
     });
 
     describe('#has', () => {

@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AlainThemeHttpClientConfig, ALAIN_CONFIG, deepCopy } from '@delon/util';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { _HttpClient } from './http.client';
 
 describe('theme: http.client', () => {
@@ -31,14 +33,42 @@ describe('theme: http.client', () => {
   describe('[property]', () => {
     beforeEach(() => createModule());
 
-    it('#loading', fakeAsync(() => {
-      http.get(URL).subscribe(() => {});
-      tick();
-      expect(http.loading).toBeTruthy();
-      backend.expectOne(() => true).flush(OK);
-      tick();
-      expect(http.loading).toBeFalsy();
-    }));
+    describe('#loading', () => {
+      it('should be working', () => {
+        http.get(URL).subscribe(() => {});
+        expect(http.loading).toBeTruthy();
+        backend.expectOne(() => true).flush(OK);
+        expect(http.loading).toBeFalsy();
+      });
+
+      it('should be loading is true when multiple requests are not over', () => {
+        http.get('/1').subscribe();
+        http.get('/2').subscribe();
+        backend.expectOne(req => req.url === '/1').flush(OK);
+        expect(http.loadingCount).toBe(1);
+        backend.expectOne(req => req.url === '/2').flush(OK);
+        expect(http.loadingCount).toBe(0);
+      });
+
+      it('should be loading is false when request throw error', () => {
+        http
+          .get('/error-url')
+          .pipe(catchError(_err => of(null)))
+          .subscribe();
+        backend.expectOne(() => true).error(new ErrorEvent('404'));
+        expect(http.loading).toBe(false);
+      });
+
+      it('#cleanLoading', fakeAsync(() => {
+        http.get(URL).subscribe(() => {});
+        expect(http.loading).toBeTruthy();
+        http.cleanLoading();
+        tick();
+        expect(http.loading).toBeFalsy();
+        // tslint:disable-next-line: deprecation
+        http.end();
+      }));
+    });
 
     describe('#params', () => {
       it(`specified params`, done => {

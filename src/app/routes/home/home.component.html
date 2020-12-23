@@ -13,7 +13,7 @@
       <github-button *ngIf="isBrowser" type="stargazers" size="large" namespace="ng-alain" repo="ng-alain"></github-button>
     </div>
   </div>
-  <nz-carousel class="page-banner__img" nzAutoPlay nzEffect="fade">
+  <nz-carousel class="page-banner__img" nzAutoPlay>
     <div nz-carousel-content *ngFor="let i of list">
       <a href="{{ i.url }}" target="_blank">
         <img src="./assets/screenshot/{{ i.type }}.png" />
