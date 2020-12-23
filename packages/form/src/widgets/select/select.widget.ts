@@ -20,7 +20,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   data: SFSchemaEnum[];
   _value: NzSafeAny;
   hasGroup = false;
-  isLoading = false;
+  loading = false;
 
   private checkGroup(list: SFSchemaEnum[]): void {
     this.hasGroup = (list || []).filter(w => w.group === true).length > 0;
@@ -70,7 +70,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
         .subscribe(list => {
           this.data = list;
           this.checkGroup(list);
-          this.isLoading = false;
+          this.loading = false;
           this.detectChanges();
         });
     }
@@ -118,7 +118,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   onSearch(value: string): void {
-    this.isLoading = true;
+    this.loading = true;
     this.search$.next(value);
   }
 }

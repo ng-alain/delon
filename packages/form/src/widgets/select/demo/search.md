@@ -34,6 +34,7 @@ export class DemoComponent {
           widget: 'select',
           serverSearch: true,
           searchDebounceTime: 300,
+          searchLoadingText: '搜索中...',
           onSearch: q => {
             return this.http
               .get(`https://api.randomuser.me/?results=5&q=${q}`)
