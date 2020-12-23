@@ -2,8 +2,8 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@a
 import { Injectable } from '@angular/core';
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { finalize, switchMap } from 'rxjs/operators';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -25,11 +25,24 @@ export class _HttpClient {
     })!;
   }
 
-  private _loading = false;
+  private lc = 0;
 
-  /** 是否正在加载中 */
+  /**
+   * Get whether it's loading
+   *
+   * 获取是否正在加载中
+   */
   get loading(): boolean {
-    return this._loading;
+    return this.lc > 0;
+  }
+
+  /**
+   * Get the currently loading count
+   *
+   * 获取当前加载中的数量
+   */
+  get loadingCount(): number {
+    return this.lc;
   }
 
   parseParams(params: NzSafeAny): HttpParams {
@@ -62,18 +75,38 @@ export class _HttpClient {
     return url + arr.join('&');
   }
 
-  begin(): void {
-    Promise.resolve(null).then(() => (this._loading = true));
+  private setCount(count: number): void {
+    Promise.resolve(null).then(() => (this.lc = count <= 0 ? 0 : count));
   }
 
+  private push(): void {
+    this.setCount(++this.lc);
+  }
+
+  private pop(): void {
+    this.setCount(--this.lc);
+  }
+
+  /**
+   * @deprecated Will be removed in 12.0.0, Pls used `cleanLoading` instead
+   */
   end(): void {
-    Promise.resolve(null).then(() => (this._loading = false));
+    this.cleanLoading();
+  }
+
+  /**
+   * Clean loading count
+   *
+   * 清空加载中
+   */
+  cleanLoading(): void {
+    this.setCount(0);
   }
 
   // #region get
 
   /**
-   * GET：返回一个 `string` 类型
+   * **GET Request** Return a `string` type / 返回一个 `string` 类型
    */
   get(
     url: string,
@@ -88,7 +121,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * GET：返回一个 `HttpEvent<T>` 类型
+   * **GET Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   get<T>(
     url: string,
@@ -103,7 +136,7 @@ export class _HttpClient {
   ): Observable<HttpEvent<T>>;
 
   /**
-   * GET：返回一个 `HttpResponse<any>` 类型
+   * **GET Request** Return a `HttpResponse<any>` type / 返回一个 `HttpResponse<any>` 类型
    */
   get(
     url: string,
@@ -118,7 +151,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<any>>;
 
   /**
-   * GET：返回一个 `HttpResponse<T>` 类型
+   * **GET Request** Return a `HttpResponse<T>` type / 返回一个 `HttpResponse<T>` 类型
    */
   get<T>(
     url: string,
@@ -133,7 +166,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<T>>;
 
   /**
-   * GET：返回一个 `any` 类型
+   * **GET Request** Return a `any` type / 返回一个 `any` 类型
    */
   get(
     url: string,
@@ -148,7 +181,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * GET：返回一个泛类型
+   * **GET Request** Return a generic type / 返回一个泛类型
    */
   get<T>(
     url: string,
@@ -162,9 +195,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * GET 请求
-   */
   get(
     url: string,
     params: any,
@@ -187,7 +217,7 @@ export class _HttpClient {
   // #region post
 
   /**
-   * POST：返回一个 `string` 类型
+   * **POST Request** Return a `string` type / 返回一个 `string` 类型
    */
   post(
     url: string,
@@ -203,7 +233,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * POST：返回一个 `HttpEvent<T>` 类型
+   * **POST Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   post<T>(
     url: string,
@@ -219,7 +249,7 @@ export class _HttpClient {
   ): Observable<HttpEvent<T>>;
 
   /**
-   * POST：返回一个 `HttpResponse<JSON>` 类型
+   * **POST Request** Return a `HttpResponse<any>` type / 返回一个 `HttpResponse<any>` 类型
    */
   post(
     url: string,
@@ -235,7 +265,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<any>>;
 
   /**
-   * POST：返回一个 `any` 类型
+   * **POST Request** Return a `any` type / 返回一个 `any` 类型
    */
   post(
     url: string,
@@ -251,7 +281,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * POST：返回一个 `JSON` 类型
+   * **POST Request** Return a JSON type / 返回一个 `JSON` 类型
    */
   post<T>(
     url: string,
@@ -266,9 +296,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * POST 请求
-   */
   post(
     url: string,
     body: any,
@@ -293,7 +320,7 @@ export class _HttpClient {
   // #region delete
 
   /**
-   * DELETE：返回一个 `string` 类型
+   * **DELETE Request** Return a `string` type / 返回一个 `string` 类型
    */
   delete(
     url: string,
@@ -308,7 +335,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * DELETE：返回一个 `JSON` 类型
+   * **DELETE Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   delete(
     url: string,
@@ -323,7 +350,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * DELETE：返回一个 `any` 类型
+   * **DELETE Request** Return a `any` type / 返回一个 `any` 类型
    */
   delete(
     url: string,
@@ -338,7 +365,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * DELETE：返回一个泛类型
+   * c返回一个泛类型
    */
   delete<T>(
     url: string,
@@ -352,9 +379,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * DELETE 请求
-   */
   delete(
     url: string,
     params: any,
@@ -377,21 +401,13 @@ export class _HttpClient {
   // #region jsonp
 
   /**
-   * `jsonp` 请求
+   * **JSONP Request**
    *
-   * @param url URL地址
-   * @param params 请求参数
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
   jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
-    this.begin();
-    return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(
-      tap(() => this.end()),
-      catchError(res => {
-        this.end();
-        return throwError(res);
-      }),
-    );
+    this.push();
+    return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(finalize(() => this.pop()));
   }
 
   // #endregion
@@ -399,7 +415,7 @@ export class _HttpClient {
   // #region patch
 
   /**
-   * PATCH：返回一个 `string` 类型
+   * **PATCH Request** Return a `string` type / 返回一个 `string` 类型
    */
   patch(
     url: string,
@@ -415,7 +431,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * PATCH：返回一个 `HttpResponse<JSON>` 类型
+   * **PATCH Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   patch(
     url: string,
@@ -431,7 +447,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * PATCH：返回一个 `any` 类型
+   * **PATCH Request** Return a `any` type / 返回一个 `any` 类型
    */
   patch(
     url: string,
@@ -447,7 +463,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * PATCH：返回一个 `JSON` 类型
+   * **PATCH Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   patch<T>(
     url: string,
@@ -462,9 +478,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * PATCH 请求
-   */
   patch(
     url: string,
     body: any,
@@ -489,7 +502,7 @@ export class _HttpClient {
   // #region put
 
   /**
-   * PUT：返回一个 `string` 类型
+   * **PUT Request** Return a `string` type / 返回一个 `string` 类型
    */
   put(
     url: string,
@@ -505,7 +518,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * PUT：返回一个 `HttpResponse<JSON>` 类型
+   * **PUT Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   put(
     url: string,
@@ -521,7 +534,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * PUT：返回一个 `any` 类型
+   * **PUT Request** Return a `any` type / 返回一个 `any` 类型
    */
   put(
     url: string,
@@ -537,7 +550,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * PUT：返回一个 `JSON` 类型
+   * **PUT Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   put<T>(
     url: string,
@@ -552,9 +565,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * PUT 请求
-   */
   put(
     url: string,
     body: any,
@@ -579,7 +589,7 @@ export class _HttpClient {
   // #region form
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `string` 类型
+   * **Form Request** Return a `string` type / 返回一个 `string` 类型
    */
   form(
     url: string,
@@ -595,7 +605,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpEvent<T>` 类型
+   * **Form Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   form<T>(
     url: string,
@@ -611,7 +621,7 @@ export class _HttpClient {
   ): Observable<HttpEvent<T>>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpResponse<JSON>` 类型
+   * **Form Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   form(
     url: string,
@@ -627,7 +637,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<any>>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `any` 类型
+   * **Form Request** Return a `any` type / 返回一个 `any` 类型
    */
   form(
     url: string,
@@ -643,7 +653,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `JSON` 类型
+   * **Form Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   form<T>(
     url: string,
@@ -658,9 +668,6 @@ export class _HttpClient {
     },
   ): Observable<T>;
 
-  /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）
-   */
   form(
     url: string,
     body: any,
@@ -687,7 +694,9 @@ export class _HttpClient {
 
   // #region request
 
-  /** 返回一个 `arraybuffer` 类型 */
+  /**
+   * **Request** Return a `ArrayBuffer` type / 返回一个 `ArrayBuffer` 类型
+   */
   request(
     method: string,
     url: string,
@@ -702,6 +711,9 @@ export class _HttpClient {
     },
   ): Observable<ArrayBuffer>;
 
+  /**
+   * **Request** Return a `Blob` type / 返回一个 `Blob` 类型
+   */
   request(
     method: string,
     url: string,
@@ -716,6 +728,9 @@ export class _HttpClient {
     },
   ): Observable<Blob>;
 
+  /**
+   * **Request** Return a `string` type / 返回一个 `string` 类型
+   */
   request(
     method: string,
     url: string,
@@ -730,6 +745,9 @@ export class _HttpClient {
     },
   ): Observable<string>;
 
+  /**
+   * **Request** Return a `HttpEvent<ArrayBuffer>` type / 返回一个 `HttpEvent<ArrayBuffer>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -744,6 +762,9 @@ export class _HttpClient {
     },
   ): Observable<HttpEvent<ArrayBuffer>>;
 
+  /**
+   * **Request** Return a `HttpEvent<Blob>` type / 返回一个 `HttpEvent<Blob>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -758,6 +779,9 @@ export class _HttpClient {
     },
   ): Observable<HttpEvent<Blob>>;
 
+  /**
+   * **Request** Return a `HttpEvent<string>` type / 返回一个 `HttpEvent<string>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -772,6 +796,9 @@ export class _HttpClient {
     },
   ): Observable<HttpEvent<string>>;
 
+  /**
+   * **Request** Return a `HttpEvent<any>` type / 返回一个 `HttpEvent<any>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -786,6 +813,9 @@ export class _HttpClient {
     },
   ): Observable<HttpEvent<any>>;
 
+  /**
+   * **Request** Return a `HttpEvent<R>` type / 返回一个 `HttpEvent<R>` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -800,6 +830,9 @@ export class _HttpClient {
     },
   ): Observable<HttpEvent<R>>;
 
+  /**
+   * **Request** Return a `HttpResponse<ArrayBuffer>` type / 返回一个 `HttpResponse<ArrayBuffer>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -814,6 +847,9 @@ export class _HttpClient {
     },
   ): Observable<HttpResponse<ArrayBuffer>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Blob>` type / 返回一个 `HttpResponse<Blob>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -828,6 +864,9 @@ export class _HttpClient {
     },
   ): Observable<HttpResponse<Blob>>;
 
+  /**
+   * **Request** Return a `HttpResponse<string>` type / 返回一个 `HttpResponse<string>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -842,6 +881,9 @@ export class _HttpClient {
     },
   ): Observable<HttpResponse<string>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Object>` type / 返回一个 `HttpResponse<Object>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -854,9 +896,12 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-    // tslint:disable-next-line: ban-types
-  ): Observable<HttpResponse<Object>>;
+  ): // tslint:disable-next-line: ban-types
+  Observable<HttpResponse<Object>>;
 
+  /**
+   * **Request** Return a `HttpResponse<R>` type / 返回一个 `HttpResponse<R>` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -871,6 +916,9 @@ export class _HttpClient {
     },
   ): Observable<HttpResponse<R>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Object>` type / 返回一个 `HttpResponse<Object>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -883,9 +931,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       withCredentials?: boolean;
     },
-    // tslint:disable-next-line: ban-types
-  ): Observable<Object>;
+  ): // tslint:disable-next-line: ban-types
+  Observable<Object>;
 
+  /**
+   * **Request** Return a `R` type / 返回一个 `R` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -900,6 +951,9 @@ export class _HttpClient {
     },
   ): Observable<R>;
 
+  /**
+   * **Request** Return a `any` type / 返回一个 `any` 类型
+   */
   request(
     method: string,
     url: string,
@@ -927,16 +981,11 @@ export class _HttpClient {
       withCredentials?: boolean;
     } = {},
   ): Observable<any> {
-    this.begin();
+    this.push();
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
-      tap(() => this.begin()),
       switchMap(() => this.http.request(method, url, options)),
-      tap(() => this.end()),
-      catchError(res => {
-        this.end();
-        return throwError(res);
-      }),
+      finalize(() => this.pop()),
     );
   }
 
