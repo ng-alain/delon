@@ -65,6 +65,8 @@ describe('theme: http.client', () => {
         http.cleanLoading();
         tick();
         expect(http.loading).toBeFalsy();
+        // tslint:disable-next-line: deprecation
+        http.end();
       }));
     });
 
