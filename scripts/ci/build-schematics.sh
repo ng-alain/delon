@@ -142,6 +142,9 @@ copyFiles() {
     "${1}src/style-icons-auto.ts|${2}application/files/src/"
     "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
+    "${1}src/assets/color.less|${2}application/files/src/assets/"
+    "${1}src/assets/style.compact.css|${2}application/files/src/assets/"
+    "${1}src/assets/style.dark.css|${2}application/files/src/assets/"
     "${1}src/assets/*.svg|${2}application/files/src/assets/"
     "${1}src/assets/tmp/img/avatar.jpg|${2}application/files/src/assets/tmp/img/"
     "${1}src/assets/tmp/i18n/*|${2}application/files/src/assets/tmp/i18n/"
