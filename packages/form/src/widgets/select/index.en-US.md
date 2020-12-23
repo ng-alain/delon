@@ -32,6 +32,7 @@ Select.
 | `[dropdownStyle]` | style property of dropdown list | `object` | - |
 | `[serverSearch]` | Whether using server search, won't fliter nz-option in frontend when it is true | `boolean` | `false` |
 | `[searchDebounceTime]` | Debounce time of server search | `number` | `300` |
+| `[searchLoadingText]` | Loading text of searching | `string` | - |
 | `[onSearch]` | Callback when search content is changed, parameter is search content, must return `Promise` object | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[maxMultipleCount]` | Maximum selected labels | `number` | `Infinity` |
 | `[mode]` | Set mode for nz-select, suggest to add `default: null` for `tags`, otherwise, it would initialize an empty label. | `multiple,tags,default` | `default` |

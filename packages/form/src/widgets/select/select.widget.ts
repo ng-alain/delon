@@ -20,7 +20,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   data: SFSchemaEnum[];
   _value: NzSafeAny;
   hasGroup = false;
-  isLoading = false;
+  loading = false;
 
   private checkGroup(list: SFSchemaEnum[]): void {
     this.hasGroup = (list || []).filter(w => w.group === true).length > 0;
@@ -58,19 +58,20 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
     };
 
-    if (this.ui.onSearch) {
+    const onSearch = this.ui.onSearch!;
+    if (onSearch) {
       this.search$
         .pipe(
           takeUntil(this.sfItemComp!.unsubscribe$),
           distinctUntilChanged(),
           debounceTime(this.ui.searchDebounceTime || 300),
-          switchMap(text => this.ui.onSearch!(text)),
+          switchMap(text => onSearch(text)),
           catchError(() => []),
         )
         .subscribe(list => {
           this.data = list;
           this.checkGroup(list);
-          this.isLoading = false;
+          this.loading = false;
           this.detectChanges();
         });
     }
@@ -118,7 +119,9 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   onSearch(value: string): void {
-    this.isLoading = true;
-    this.search$.next(value);
+    if (this.ui.onSearch) {
+      this.loading = true;
+      this.search$.next(value);
+    }
   }
 }

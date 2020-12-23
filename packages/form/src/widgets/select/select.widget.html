@@ -33,16 +33,17 @@
     (nzOnSearch)="onSearch($event)"
     (nzScrollToBottom)="scrollToBottom()"
   >
-    <ng-container *ngIf="!isLoading && !hasGroup">
+    <ng-container *ngIf="!loading && !hasGroup">
       <nz-option *ngFor="let o of data" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
     </ng-container>
-    <ng-container *ngIf="!isLoading && hasGroup">
+    <ng-container *ngIf="!loading && hasGroup">
       <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
         <nz-option *ngFor="let o of i.children" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
       </nz-option-group>
     </ng-container>
-    <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+    <nz-option *ngIf="loading" nzDisabled nzCustomContent>
       <i nz-icon nzType="loading"></i>
+      {{ ui.searchLoadingText }}
     </nz-option>
   </nz-select>
 </sf-item-wrap>

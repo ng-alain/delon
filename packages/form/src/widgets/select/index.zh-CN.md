@@ -32,6 +32,7 @@ type: Widgets
 | `[dropdownStyle]` | 下拉菜单的 style 属性 | `object` | - |
 | `[serverSearch]` | 是否使用服务端搜索，当为 true 时，将不再在前端对 nz-option 进行过滤 | `boolean` | `false` |
 | `[searchDebounceTime]` | 搜索抖动时间 | `number` | `300` |
+| `[searchLoadingText]` | 搜索加载中文本 | `string` | - |
 | `[onSearch]` | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[maxMultipleCount]` | 最多选中多少个标签 | `number` | `Infinity` |
 | `[mode]` | 设置 nz-select 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签。 | `multiple,tags,default` | `default` |
