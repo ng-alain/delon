@@ -55,18 +55,18 @@ Ant Design 并没有按钮色这一说，而是以视觉效果为基准。默认
 
 | 名称 | 基本色 | 说明 |
 |---|---|---|
-| `red`      | <div style="background-color:#f5222d;color:#fff;">#f5222d</div> | 薄暮：斗志、奔放        |
-| `volcano`  | <div style="background-color:#fa541c;color:#fff;">#fa541c</div> | 火山：醒目、澎湃        |
-| `orange`   | <div style="background-color:#fa8c16;color:#fff;">#fa8c16</div> | 日暮：温暖、欢快        |
-| `gold`     | <div style="background-color:#faad14;color:#fff;">#faad14</div> | 金盏花：活力、积极      |
-| `yellow`   | <div style="background-color:#fadb14;color:#fff;">#fadb14</div> | 日出：出生、阳光        |
-| `lime`     | <div style="background-color:#a0d911;color:#fff;">#a0d911</div> | 青柠：自然、生机        |
-| `green`    | <div style="background-color:#52c41a;color:#fff;">#f5222d</div> | 极光绿：健康、创新      |
-| `cyan`     | <div style="background-color:#13c2c2;color:#fff;">#13c2c2</div> | 明青：希望、坚强        |
-| `blue`     | <div style="background-color:#1890ff;color:#fff;">#1890ff</div> | 拂晓蓝：包容、科技、普惠 |
-| `geekblue` | <div style="background-color:#2f54eb;color:#fff;">#2f54eb</div> | 极客蓝：探索、钻研      |
-| `purple`   | <div style="background-color:#722ed1;color:#fff;">#722ed1</div> | 酱紫：优雅、浪漫        |
-| `magenta`  | <div style="background-color:#eb2f96;color:#fff;">#eb2f96</div> | 法式洋红：平稳、中性    |
+| `red`      | <div style="color:#fff;background-color:#f5222d;">#f5222d</div> | 薄暮：斗志、奔放        |
+| `volcano`  | <div style="color:#fff;background-color:#fa541c;">#fa541c</div> | 火山：醒目、澎湃        |
+| `orange`   | <div style="color:#fff;background-color:#fa8c16;">#fa8c16</div> | 日暮：温暖、欢快        |
+| `gold`     | <div style="color:#fff;background-color:#faad14;">#faad14</div> | 金盏花：活力、积极      |
+| `yellow`   | <div style="color:#fff;background-color:#fadb14;">#fadb14</div> | 日出：出生、阳光        |
+| `lime`     | <div style="color:#fff;background-color:#a0d911;">#a0d911</div> | 青柠：自然、生机        |
+| `green`    | <div style="color:#fff;background-color:#52c41a;">#f5222d</div> | 极光绿：健康、创新      |
+| `cyan`     | <div style="color:#fff;background-color:#13c2c2;">#13c2c2</div> | 明青：希望、坚强        |
+| `blue`     | <div style="color:#fff;background-color:#1890ff;">#1890ff</div> | 拂晓蓝：包容、科技、普惠 |
+| `geekblue` | <div style="color:#fff;background-color:#2f54eb;">#2f54eb</div> | 极客蓝：探索、钻研      |
+| `purple`   | <div style="color:#fff;background-color:#722ed1;">#722ed1</div> | 酱紫：优雅、浪漫        |
+| `magenta`  | <div style="color:#fff;background-color:#eb2f96;">#eb2f96</div> | 法式洋红：平稳、中性    |
 
 Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生色。这些颜色基本可以满足中后台设计中对于颜色的需求。
 
@@ -110,10 +110,14 @@ Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生
 
 | 别名 | 色系 |
 | ---- | --- |
-| `primary` | `blue` |
-| `success` | `green` |
-| `error` | `red` |
-| `warning` | `yellow` |
+| `primary` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `success` | `@green-6` <div style="color:#fff;background-color:#52c41a;">#52c41a</div> |
+| `error` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `warning` | `@gold-6` <div style="color:#fff;background-color:#faad14;">#faad14</div> |
+| `info` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `processing` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `highlight` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `normal` | `#d9d9d9` <div style="color:#fff;background-color:#d9d9d9;">#d9d9d9</div> |
 
 示例：
 

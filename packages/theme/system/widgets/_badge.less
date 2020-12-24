@@ -1,11 +1,8 @@
-// Badges
-@badge-enabled: true;
-@badge-color: @white;
-@badge-font-size: @font-size-base;
-@badge-padding: 0 8px;
-
 .widget-badge-mixin(@enabled) when(@enabled=true) {
   .badge {
+    /**
+     * @deprecated Will be removed in 12.0.0, Pls used `nz-badge` instead
+     */
     display: inline-block;
     padding: @badge-padding;
     font-size: @badge-font-size;
@@ -45,15 +42,17 @@
 
   .for-each(@colors, {
     .badge-@{adKey} {
-      .badge-variant(extract(@adItem, @color-basic-position));
+      @colors-badge-color: extract(@adItem, @color-basic-position);
+      e(~`genCommentColor('@{colors-badge-color}', 'Set the badge background color to {0}', '设置微标背景颜色为 {0}')`);
+      .badge-variant(color(@colors-badge-color));
     }
   });
 
   .for-each(@aliasColors, {
-      @aliasColor: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})`;
-      .badge-@{adKey} {
-          .badge-variant(color(@aliasColor))
-      }
+    .badge-@{adKey} {
+      e(~`genCommentColor('@{adValue}', 'Set the badge background color to {0}', '设置微标背景颜色为 {0}')`);
+      .badge-variant(color(@adValue));
+    }
   });
 }
 

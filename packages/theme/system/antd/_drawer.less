@@ -54,8 +54,15 @@
 .drawer {
   &-footer {
     /**
-      * 抽屉底部区域，用于抽屉目标组件内使用
       * Drawer bottom area for use in drawer target components
+      *
+      * 抽屉底部区域，用于抽屉目标组件内使用，一般完整用法：
+      * ```html
+      * <div class="drawer-footer">
+      *   <button nz-button (click)="cancel()">Cancel</button>
+      *   <button nz-button nzType="primary" (click)="ok()">OK</button>
+      * </div>
+      * ```
       */
     position: absolute;
     bottom: 0;

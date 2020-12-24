@@ -31,7 +31,7 @@ this.subject.destroy();
 
 ```html
 <div class="modal-header">
-    <div class="modal-title">Title</div>
+  <div class="modal-title">Title</div>
 </div>
 
 Your body content

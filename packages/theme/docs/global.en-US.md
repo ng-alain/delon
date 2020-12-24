@@ -30,7 +30,7 @@ title: Global Parameters
 | `@h4-font-size` | `16px` | h4 font size |
 | `@h5-font-size` | `14px` | h5 font size |
 | `@h6-font-size` | `12px` | h6 font size |
-| `@enable-all-colors` | `true` | Turn on background, text color<br>eg: `.bg-teal`、`.text-teal` |
+| `@enable-all-colors` | `false` | Turn on background, text color<br>eg: `.bg-teal`、`.text-teal` |
 | `@modal-sm` | `300px` | Small modal |
 | `@modal-md` | `500px` | Medium modal |
 | `@modal-lg` | `900px` | Large modal |
@@ -109,5 +109,4 @@ By `nz-table`。
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |
 | `@setting-drawer-enabled` | `true` | Whether setting drawer css |
-| `@search-form-enabled` | `true` | Simple style search form, [DEMO](https://ng-alain.surge.sh/) |
 | `@search__form-enabled` | `true` | Pro style search form, [DEMO](https://ng-alain.surge.sh/) |
