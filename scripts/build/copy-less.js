@@ -39,6 +39,6 @@ function copyTheme() {
   });
 }
 
-['theme', 'abc', 'chart', 'acl', 'form'].forEach(name => copyLess(name));
+['theme', 'abc', 'chart', 'acl', 'form', 'theme/src/pipes'].forEach(name => copyLess(name));
 
 copyTheme();
