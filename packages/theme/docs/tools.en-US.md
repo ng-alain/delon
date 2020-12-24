@@ -55,18 +55,18 @@ ng-alain still does not break this rule, building a set of color classes for tex
 
 | Name | Primary Color | Description |
 | ---- | --- | --- |
-| `red` | <div style="background-color:#f5222d;color:#fff;">#f5222d</div> | Dust Red: Fighting, unrestrained |
-| `volcano` | <div style="background-color:#fa541c;color:#fff;">#fa541c</div> | Volcano: Eye-catching |
-| `orange` | <div style="background-color:#fa8c16;color:#fff;">#fa8c16</div> | Sunset Orange: Warm and cheerful |
-| `gold` | <div style="background-color:#faad14;color:#fff;">#faad14</div> | Calendula Gold: Vital and active |
-| `yellow` | <div style="background-color:#fadb14;color:#fff;">#fadb14</div> | Sunrise Yellow: Birth, sunshine |
-| `lime` | <div style="background-color:#a0d911;color:#fff;">#a0d911</div> | Lime: Natural, vital |
-| `green` | <div style="background-color:#52c41a;color:#fff;">#f5222d</div> | Polar Green: Health, innovation |
-| `cyan` | <div style="background-color:#13c2c2;color:#fff;">#13c2c2</div> | Cyan: Hope, strong |
-| `blue` | <div style="background-color:#1890ff;color:#fff;">#1890ff</div> | Daybreak Blue: Inclusive, technology, Pratt & Whitney |
-| `geekblue` | <div style="background-color:#2f54eb;color:#fff;">#2f54eb</div> | Geek Blue: Explore and delve into |
-| `purple` | <div style="background-color:#722ed1;color:#fff;">#722ed1</div> | Golden Purple: Elegant, romantic |
-| `magenta` | <div style="background-color:#eb2f96;color:#fff;">#eb2f96</div> | Magenta: Smooth, neutral |
+| `red` | <div style="color:#fff;background-color:#f5222d;">#f5222d</div> | Dust Red: Fighting, unrestrained |
+| `volcano` | <div style="color:#fff;background-color:#fa541c;">#fa541c</div> | Volcano: Eye-catching |
+| `orange` | <div style="color:#fff;background-color:#fa8c16;">#fa8c16</div> | Sunset Orange: Warm and cheerful |
+| `gold` | <div style="color:#fff;background-color:#faad14;">#faad14</div> | Calendula Gold: Vital and active |
+| `yellow` | <div style="color:#fff;background-color:#fadb14;">#fadb14</div> | Sunrise Yellow: Birth, sunshine |
+| `lime` | <div style="color:#fff;background-color:#a0d911;">#a0d911</div> | Lime: Natural, vital |
+| `green` | <div style="color:#fff;background-color:#52c41a;">#f5222d</div> | Polar Green: Health, innovation |
+| `cyan` | <div style="color:#fff;background-color:#13c2c2;">#13c2c2</div> | Cyan: Hope, strong |
+| `blue` | <div style="color:#fff;background-color:#1890ff;">#1890ff</div> | Daybreak Blue: Inclusive, technology, Pratt & Whitney |
+| `geekblue` | <div style="color:#fff;background-color:#2f54eb;">#2f54eb</div> | Geek Blue: Explore and delve into |
+| `purple` | <div style="color:#fff;background-color:#722ed1;">#722ed1</div> | Golden Purple: Elegant, romantic |
+| `magenta` | <div style="color:#fff;background-color:#eb2f96;">#eb2f96</div> | Magenta: Smooth, neutral |
 
 Ant Design's base color palette totals 120 colors, including 12 primary colors and their derivative colors. These colors can basically include the need for color in background applications design.
 
@@ -110,10 +110,14 @@ DEMO:
 
 | Aliase | Color Name |
 | ---- | --- |
-| `primary` | `blue` |
-| `success` | `green` |
-| `error` | `red` |
-| `warning` | `yellow` |
+| `primary` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `success` | `@green-6` <div style="color:#fff;background-color:#52c41a;">#52c41a</div> |
+| `error` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `warning` | `@gold-6` <div style="color:#fff;background-color:#faad14;">#faad14</div> |
+| `info` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `processing` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `highlight` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `normal` | `#d9d9d9` <div style="color:#fff;background-color:#d9d9d9;">#d9d9d9</div> |
 
 DEMO:
 

@@ -3,8 +3,9 @@
 @border-grids: sm @border-radius-sm, md @border-radius-md, lg @border-radius-lg;
 
 /**
- * `1px` 边框
- * `1px` Border
+ * Set the four border to `1px`
+ *
+ * 设置四个边框为 `1px`
  */
 .border {
   border: 1px solid @border-color !important;
@@ -13,57 +14,114 @@
 @border-width-list: 0, 1;
 .for(@border-width-list, {
   .border-css-mixin(@i) when(@i > 0) {
+    @css-value-comment: ~'1px';
     @css-value: ~'@{i}px solid @{border-color}';
   }
   .border-css-mixin(@i) when(default()) {
+    @css-value-comment: ~'0px';
     @css-value: 0;
   }
   .border-css-mixin(@adIndex);
-  .border-@{adIndex}        { border: @css-value !important; }
-  .border-top-@{adIndex}    { border-top: @css-value !important; }
-  .border-right-@{adIndex}  { border-right: @css-value !important; }
-  .border-bottom-@{adIndex} { border-bottom: @css-value !important; }
-  .border-left-@{adIndex}   { border-left: @css-value !important; }
+
+  .border-@{adIndex} {
+    e(~`genComment('@{css-value-comment}', 'Set the border size to {0}', '设置边框大小为 {0}')`);
+    border: @css-value !important;
+  }
+  .border-top-@{adIndex} {
+    e(~`genComment('@{css-value-comment}', 'Set the top border size to {0}', '设置上边框大小为 {0}')`);
+    border-top: @css-value !important;
+  }
+  .border-right-@{adIndex} {
+    e(~`genComment('@{css-value-comment}', 'Set the right border size to {0}', '设置右边框大小为 {0}')`);
+    border-right: @css-value !important;
+  }
+  .border-bottom-@{adIndex} {
+    e(~`genComment('@{css-value-comment}', 'Set the bottom border size to {0}', '设置下边框大小为 {0}')`);
+    border-bottom: @css-value !important;
+  }
+  .border-left-@{adIndex} {
+    e(~`genComment('@{css-value-comment}', 'Set the left border size to {0}', '设置左边框大小为 {0}')`);
+    border-left: @css-value !important;
+  }
 });
 
 // color
 .for-each(@colors, {
   .border-@{adKey} {
-    border-color: extract(@adItem, @color-basic-position) !important;
+    @border-colors-color: extract(@adItem, @color-basic-position);
+    e(~`genCommentColor('@{border-colors-color}', 'Set the border color to {0}', '设置边框颜色为 {0}')`);
+    border-color: @border-colors-color !important;
   }
 });
 
 .for-each(@aliasColors, {
   .border-@{adKey} {
-    border-color: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})` !important;
+    e(~`genComment('@{adValue}', 'Set the border color to {0}', '设置边框颜色为 {0}')`);
+    border-color: @adValue !important;
   }
 });
 
-.border-white {
-  border-color: #fff !important;
-}
-
 // Border-radius
 .for-each(@border-grids, {
-  .rounded-@{adKey}                 { border-radius: @adValue !important; }
-  .rounded-top-left-@{adKey}        { border-top-left-radius: @adValue !important; }
-  .rounded-top-right-@{adKey}       { border-top-right-radius: @adValue !important; }
-  .rounded-bottom-left-@{adKey}     { border-bottom-left-radius: @adValue !important; }
-  .rounded-bottom-right-@{adKey}    { border-bottom-right-radius: @adValue !important; }
+  .rounded-@{adKey} {
+    e(~`genComment('@{adValue}', 'Set the border radius to {0}', '设置边框圆角为 {0}')`);
+    border-radius: @adValue;
+  }
+  .rounded-top-left-@{adKey} {
+    e(~`genComment('@{adValue}', 'Set the border top-left corner to {0}', '设置左上角边框圆角为 {0}')`);
+    border-top-left-radius: @adValue;
+  }
+  .rounded-top-right-@{adKey} {
+    e(~`genComment('@{adValue}', 'Set the border top-right corner to {0}', '设置右上角边框圆角为 {0}')`);
+    border-top-right-radius: @adValue;
+  }
+  .rounded-bottom-left-@{adKey} {
+    e(~`genComment('@{adValue}', 'Set the border bottom-left corner to {0}', '设置左下角边框圆角为 {0}')`);
+    border-bottom-left-radius: @adValue;
+  }
+  .rounded-bottom-right-@{adKey} {
+    e(~`genComment('@{adValue}', 'Set the border bottom-right corner to {0}', '设置右下角边框圆角为 {0}')`);
+    border-bottom-right-radius: @adValue;
+  }
 });
 
 /**
- * 圆框
- * Rounded circle
+ * Set circular border
+ *
+ * 设置圆形边框
  */
 .rounded-circle {
   border-radius: 50%;
 }
 
 /**
- * 无框
- * Rounded empty
+ * Set frameless
+ *
+ * 设置无框
  */
 .rounded-0 {
   border-radius: 0;
 }
+
+/**
+ * Set the border color to white
+ *
+ * 设置边框颜色为白色
+ */
+.border-white {
+  border-color: #fff !important;
+}
+
+/**
+ * TODO: 旋转，无法理解只能放在这里，否则 stylelint 无法通过
+ */
+.rotate-loop(@i) when (@i > 0) {
+  @num: @i * 15;
+  .rotate-@{num} {
+    e(~`genComment('@{num}', 'Element transform to {0} degree', '元素旋转 {0} 度')`);
+    transform: rotate(~'@{num}deg');
+  }
+  .rotate-loop(@i - 1);
+}
+
+.rotate-loop(@rotate-count);

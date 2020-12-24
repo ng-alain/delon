@@ -16,6 +16,10 @@
 @grey-9:  #262626;
 @grey-10: #000000;
 
+@color-light-index:      5;
+@color-basic-index:      6;
+@color-dark-index:       7;
+
 @color-light-position:      2;
 @color-basic-position:      3;
 @color-dark-position:       4;
@@ -38,10 +42,14 @@
 
 // Alias
 @aliasColors:
-    primary    blue,
-    success    green,
-    error      red,
-    warning    yellow;
+    primary    @primary-color,
+    success    @success-color,
+    error      @error-color,
+    warning    @warning-color,
+    info       @info-color,
+    processing @processing-color,
+    highlight  @highlight-color,
+    normal     @normal-color;
 
 // Grey patch
 @greyColorer: lighter @grey-3,
@@ -148,7 +156,7 @@
 @h5-font-size:            @font-size-base + 2;  // 14px
 @h6-font-size:            @font-size-base;      // 12px
 
-@enable-all-colors:           true;
+@enable-all-colors:           false;
 
 // Code
 @code-border-color:           #eee;
@@ -164,6 +172,14 @@
 @modal-md: 600px;
 @modal-sm: 300px;
 
+// router ant
+@router-animation-name: antFadeIn;
+@router-animation-duration: 1s;
+
+// 生成旋转数量
+@rotate-count: 24;
+
+// COMPONENTS
 @preserve-white-spaces-enabled: true;
 // 搜索框与表格
 @preserve-sf-and-st-spaces: @layout-gutter * 2;
@@ -203,3 +219,21 @@
 @setting-drawer-width: 500px;
 
 @theme-btn-enabled: true;
+
+// Badges
+@badge-enabled: true;
+@badge-color: @white;
+@badge-font-size: @font-size-base;
+@badge-padding: 0 8px;
+// 中心元素
+@abs-enabled: false;
+// 搜索表单
+@search__form-enabled: true;
+@search-form-bg: #fbfbfb;
+@search-form-radius: 4px;
+// 半图
+@hafl-enabled: true;
+@hafl-float-size: sm @layout-gutter * 8, md @layout-gutter * 10, lg @layout-gutter * 12;
+// 瀑布流
+@masonry-enabled: true;
+@masonry-column-gap: @layout-gutter * 2;

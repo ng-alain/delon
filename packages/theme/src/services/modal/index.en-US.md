@@ -31,7 +31,7 @@ There are includes `create` & `createStatic` methods to open the normal & static
 
 ```html
 <div class="modal-header">
-    <div class="modal-title">Title</div>
+  <div class="modal-title">Title</div>
 </div>
 
 Your body content
