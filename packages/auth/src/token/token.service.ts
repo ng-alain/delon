@@ -76,7 +76,7 @@ export class TokenService implements ITokenService, OnDestroy {
       .pipe(
         map(() => {
           const item = this.get() as ITokenModel;
-          const expired = item.expired || 0;
+          const expired = item.expired || item.exp || 0;
           if (expired <= 0) {
             return null;
           }
