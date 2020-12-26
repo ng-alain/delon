@@ -114,5 +114,18 @@ describe('auth: token.service', () => {
       const exp = +new Date() + 20;
       service.set({ token: 'a', exp } as JWTTokenModel);
     });
+
+    it('should be can not trigger refresh when expired is not present', done => {
+      updateConfig({ refreshTime: 1, refreshOffset: 1 });
+      service.refresh.subscribe(() => {
+        expect(true).toBe(false);
+        done();
+      });
+      service.set({ token: 'a', expired: 0 });
+      setTimeout(() => {
+        expect(true).toBe(true);
+        done();
+      });
+    });
   });
 });
