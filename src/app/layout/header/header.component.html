@@ -65,7 +65,7 @@
     </h1>
   </div>
   <div nz-col nz-col nzXs="0" nzSm="0" nzMd="0" nzLg="0" nzXl="19" nzXXl="20" class="menu-row">
-    <header-search></header-search>
+    <header-search *ngIf="showSearch"></header-search>
     <ng-container *ngIf="!isMobile">
       <ng-template [ngTemplateOutlet]="menu"></ng-template>
       <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
