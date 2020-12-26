@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Direction, Directionality } from '@angular/cdk/bidi';
+import { ChangeDetectionStrategy, Component, Optional, ViewEncapsulation } from '@angular/core';
 import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types';
 
 @Component({
@@ -6,6 +7,7 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
   templateUrl: './loading.component.html',
   host: {
     '[class.loading-default]': 'true',
+    '[class.loading-default-rtl]': `dir === 'rtl'`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,6 +15,7 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
 })
 export class LoadingDefaultComponent {
   options: LoadingShowOptions;
+  dir: Direction = 'ltr';
 
   get icon(): LoadingIcon {
     return this.options.icon!;
@@ -20,5 +23,9 @@ export class LoadingDefaultComponent {
 
   get custom(): LoadingCustom {
     return this.options.custom!;
+  }
+
+  constructor(@Optional() directionality: Directionality) {
+    this.dir = directionality.value;
   }
 }

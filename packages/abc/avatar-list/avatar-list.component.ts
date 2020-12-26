@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -11,10 +12,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber, NumberInput } from '@delon/util';
-import { AvatarListItemComponent } from './avatar-list-item.component';
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
   selector: 'avatar-list',
