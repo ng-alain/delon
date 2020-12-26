@@ -29,10 +29,10 @@ import { UEditorModule } from 'ngx-ueditor';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
 
-import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
-import { IconComponent } from './shared/components/icon/icon.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
+import { IconComponent } from './shared/components/icon/icon.component';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<any> {
   return () => startupService.load();

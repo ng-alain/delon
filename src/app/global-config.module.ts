@@ -35,6 +35,18 @@ const zorroProvides = [{ provide: NZ_CONFIG, useValue: ngZorroConfig }];
 
 // #endregion
 
+// #region reuse-tab
+
+// import { RouteReuseStrategy } from '@angular/router';
+// import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+// alainProvides.push({
+//   provide: RouteReuseStrategy,
+//   useClass: ReuseTabStrategy,
+//   deps: [ReuseTabService],
+// } as any);
+
+// #endregion
+
 @NgModule({
   imports: [...alainModules],
 })
