@@ -2,9 +2,9 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18NService, MetaService, MobileService } from '@core';
-import { ALAIN_I18N_TOKEN, SettingsService, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   template: ` <router-outlet></router-outlet>`,
@@ -22,11 +22,9 @@ export class AppComponent {
     @Inject(ALAIN_I18N_TOKEN) i18n: I18NService,
     meta: MetaService,
     title: TitleService,
-    private router: Router,
+    router: Router,
     mobileSrv: MobileService,
     breakpointObserver: BreakpointObserver,
-    private location: Location,
-    private settingsSrv: SettingsService,
   ) {
     renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
     renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
@@ -38,8 +36,6 @@ export class AppComponent {
 
     router.events.subscribe(evt => {
       if (!(evt instanceof NavigationEnd)) return;
-
-      this.fixDirection();
 
       const url = evt.url.split('#')[0].split('?')[0];
       if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
@@ -80,13 +76,5 @@ export class AppComponent {
       const item = meta.getPathByUrl(url);
       title.setTitle(item ? item.title || item.subtitle : '');
     });
-  }
-
-  private fixDirection(): void {
-    // 修正rtl的query状态
-    var direction = this.settingsSrv.layout.direction;
-    if (direction === 'rtl') {
-      this.location.replaceState(this.router.url.split('?')[0], `?direction=rtl`);
-    }
   }
 }

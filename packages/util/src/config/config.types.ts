@@ -6,6 +6,7 @@ import {
   AlainLoadingConfig,
   AlainLodopConfig,
   AlainMediaConfig,
+  AlainOnboardingConfig,
   AlainPageHeaderConfig,
   AlainPdfConfig,
   AlainQRConfig,
@@ -30,6 +31,7 @@ export interface AlainConfig {
   errorCollect?: AlainErrorCollectConfig;
   image?: AlainImageConfig;
   loading?: AlainLoadingConfig;
+  onboarding?: AlainOnboardingConfig;
   lodop?: AlainLodopConfig;
   pageHeader?: AlainPageHeaderConfig;
   qr?: AlainQRConfig;

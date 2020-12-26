@@ -11,7 +11,7 @@
   [nzPopoverTrigger]="null"
   [nzPopoverPlacement]="item.position"
   [nzPopoverOverlayClassName]="item.className"
-  [nzPopoverOverlayStyle]="{ 'max-width.px': item.width }"
+  [nzPopoverOverlayStyle]="{ 'max-width.px': item.width, direction: dir }"
   [nzNoAnimation]="true"
 ></div>
 <ng-template #content>

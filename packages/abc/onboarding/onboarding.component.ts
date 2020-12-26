@@ -1,3 +1,4 @@
+import { Direction } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -28,6 +29,7 @@ interface OnboardingLightData {
   templateUrl: './onboarding.component.html',
   host: {
     '[class.onboarding]': `true`,
+    '[class.onboarding-rtl]': `dir === 'rtl'`,
     '[attr.data-onboarding-active]': `active`,
   },
   preserveWhitespaces: false,
@@ -43,6 +45,7 @@ export class OnboardingComponent implements OnDestroy {
   max = 0;
   readonly op = new EventEmitter<OnboardingOpType>();
   running = false;
+  dir: Direction = 'ltr';
 
   get first(): boolean {
     return this.active === 0;

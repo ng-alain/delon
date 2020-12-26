@@ -1,5 +1,5 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, Optional, ViewEncapsulation } from '@angular/core';
+import { Direction } from '@angular/cdk/bidi';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types';
 
 @Component({
@@ -23,9 +23,5 @@ export class LoadingDefaultComponent {
 
   get custom(): LoadingCustom {
     return this.options.custom!;
-  }
-
-  constructor(@Optional() directionality: Directionality) {
-    this.dir = directionality.value;
   }
 }

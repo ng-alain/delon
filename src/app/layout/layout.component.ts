@@ -1,10 +1,11 @@
 import { DOCUMENT } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { LayoutDirection, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { delay, filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-layout',
@@ -26,7 +27,14 @@ export class LayoutComponent implements OnDestroy {
   isFetching = false;
   direction: LayoutDirection = 'ltr';
 
-  constructor(router: Router, msg: NzMessageService, route: ActivatedRoute, settingsSrv: SettingsService, @Inject(DOCUMENT) doc: any) {
+  constructor(
+    private router: Router,
+    msg: NzMessageService,
+    private route: ActivatedRoute,
+    private settingsSrv: SettingsService,
+    @Inject(DOCUMENT) doc: any,
+    private location: Location,
+  ) {
     this.direction = (route.snapshot.queryParams.direction || 'ltr') === 'rtl' ? 'rtl' : 'ltr';
     settingsSrv.notify
       .pipe(
@@ -41,6 +49,7 @@ export class LayoutComponent implements OnDestroy {
           htmlEl.classList.remove('rtl', 'ltr');
           htmlEl.classList.add(res.value);
         }
+        this.fixDirection();
       });
     settingsSrv.setLayout('direction', this.direction);
     router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
@@ -57,6 +66,28 @@ export class LayoutComponent implements OnDestroy {
       }
       this.isFetching = false;
     });
+    router.events
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(ev => ev instanceof NavigationEnd),
+        delay(100),
+      )
+      .subscribe(() => {
+        this.fixDirection();
+      });
+  }
+
+  private fixDirection(): void {
+    // 修正rtl的query状态
+    const direction = this.settingsSrv.layout.direction;
+    const path = this.router.url.split('?')[0];
+    let fragment = this.route.snapshot.fragment as string;
+    if (fragment != null && fragment.length > 0) {
+      fragment = `#${fragment}`;
+    } else {
+      fragment = '';
+    }
+    this.location.replaceState(path, (direction === 'rtl' ? `?direction=rtl` : '') + fragment);
   }
 
   ngOnDestroy(): void {
