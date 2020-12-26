@@ -16,6 +16,8 @@ export interface User {
   email?: string;
 }
 
+export type LayoutDirection = 'ltr' | 'rtl';
+
 export interface Layout {
   [key: string]: any;
   /** Whether to fold menu */
@@ -24,6 +26,7 @@ export interface Layout {
   lang: string;
   /** Color weak */
   colorWeak: boolean;
+  direction: LayoutDirection;
 }
 
 export interface SettingsNotify {

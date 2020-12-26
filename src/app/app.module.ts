@@ -4,6 +4,7 @@ import { APP_INITIALIZER, Inject, Injector, NgModule, PLATFORM_ID } from '@angul
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { BidiModule } from '@angular/cdk/bidi';
 
 // angular i18n
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
@@ -62,6 +63,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     HttpClientModule,
+    BidiModule,
     GlobalConfigModule.forRoot(),
     LayoutModule,
     SharedModule,
