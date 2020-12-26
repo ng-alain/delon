@@ -146,6 +146,14 @@ export class DevLayoutComponent implements OnInit {
             { text: 'Ellipsis', link: '/dev/l8' },
           ],
         },
+        {
+          text: 'LIST',
+          icon: 'anticon anticon-appstore',
+          children: [
+            { text: 'list', link: '/dev/list' },
+            { text: 'list/item', link: '/dev/list/item' },
+          ],
+        },
       ],
     },
   ];

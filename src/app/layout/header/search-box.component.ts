@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18NService } from '@core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -12,6 +12,7 @@ declare const docsearch: any;
   host: {
     '[attr.id]': '"search-box"',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderSearchComponent implements AfterViewInit {
   @ViewChild('searchInput', { static: false })

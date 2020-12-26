@@ -30,6 +30,7 @@ const routes: Routes = [
       { path: 'login', component: DevPageComponent },
       { path: 'view/:id', component: DevPageComponent },
       { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.DevLazyModule) },
+      { path: 'list', loadChildren: () => import('./list/list.module').then(m => m.DevListModule) },
     ],
   },
 ];

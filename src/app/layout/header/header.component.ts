@@ -31,6 +31,7 @@ export class HeaderComponent implements AfterViewInit {
     cli: { regex: /^\/cli/ },
     delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ },
   };
+  showSearch = true;
 
   private getWin(): Window {
     return (this.doc as Document).defaultView || window;
@@ -72,7 +73,16 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   langChange(language: 'en' | 'zh'): void {
-    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => this.updateGitee());
+    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => {
+      this.updateGitee();
+      // fix header-search
+      this.showSearch = false;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.showSearch = true;
+        this.cdr.detectChanges();
+      }, 100);
+    });
   }
 
   onCopy(value: string): void {
