@@ -1,27 +1,48 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import { LayoutDirection, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-layout',
   template: `
-    <app-header></app-header>
-    <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
-    <router-outlet></router-outlet>
-    <nz-back-top></nz-back-top>
-    <theme-btn></theme-btn>
+    <div [dir]="direction">
+      <app-header></app-header>
+      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
+      <router-outlet></router-outlet>
+      <nz-back-top></nz-back-top>
+      <theme-btn></theme-btn>
+    </div>
   `,
   host: {
-    '[attr.id]': `'angular-content'`,
+    '[attr.id]': `'ng-content'`,
   },
 })
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
+  direction: LayoutDirection = 'ltr';
 
-  constructor(router: Router, msg: NzMessageService) {
+  constructor(router: Router, msg: NzMessageService, route: ActivatedRoute, settingsSrv: SettingsService, @Inject(DOCUMENT) doc: any) {
+    this.direction = (route.snapshot.queryParams.direction || 'ltr') === 'rtl' ? 'rtl' : 'ltr';
+    settingsSrv.notify
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(w => w.name === 'direction'),
+      )
+      .subscribe(res => {
+        this.direction = res.value;
+        const htmlEl = doc.querySelector('html') as HTMLElement;
+        if (htmlEl) {
+          htmlEl.dataset.direction = res.value;
+          htmlEl.classList.remove('rtl', 'ltr');
+          htmlEl.classList.add(res.value);
+        }
+      });
+    settingsSrv.setLayout('direction', this.direction);
     router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;

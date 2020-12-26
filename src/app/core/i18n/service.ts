@@ -108,6 +108,7 @@ export class I18NService implements AlainI18NService {
   getRealUrl(url: string): string {
     const arr = url.split('#')[0].split('?')[0].split('/');
     arr.splice(-1);
-    return arr.join('/');
+    url = arr.join('/');
+    return url === '' ? '/' : url;
   }
 }
