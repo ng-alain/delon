@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,7 +14,6 @@ import {
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean } from '@delon/util';
 import { Subject } from 'rxjs';
-import { Direction, Directionality } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
