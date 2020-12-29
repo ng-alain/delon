@@ -8,19 +8,24 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   ViewEncapsulation,
 } from '@angular/core';
 import { AlainConfigService, InputNumber } from '@delon/util';
+import { Direction, Directionality } from '@angular/cdk/bidi';
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'error-collect, [error-collect]',
   exportAs: 'errorCollect',
   template: `
     <i nz-icon nzType="exclamation-circle"></i>
-    <span class="pl-sm">{{ count }}</span>
+    <span class="error-collect__count">{{ count }}</span>
   `,
   host: {
     '[class.error-collect]': 'true',
+    '[class.error-collect-rtl]': `dir === 'rtl'`,
     '[class.d-none]': '_hiden',
     '(click)': '_click()',
   },
@@ -29,15 +34,23 @@ import { AlainConfigService, InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
-  private $time: any | null = null;
   private formEl: HTMLFormElement | null;
+  private destroy$ = new Subject<void>();
+
   _hiden = true;
   count = 0;
+  dir: Direction = 'ltr';
 
   @Input() @InputNumber() freq: number;
   @Input() @InputNumber() offsetTop: number;
 
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any, configSrv: AlainConfigService) {
+  constructor(
+    private el: ElementRef,
+    private cdr: ChangeDetectorRef,
+    @Inject(DOCUMENT) private doc: any,
+    configSrv: AlainConfigService,
+    @Optional() private directionality: Directionality,
+  ) {
     configSrv.attach(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });
   }
 
@@ -65,13 +78,14 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   }
 
   private install(): void {
-    this.uninstall();
-    this.$time = setInterval(() => this.update(), this.freq);
+    this.dir = this.directionality.value;
+    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+      this.dir = direction;
+    });
+    interval(this.freq)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.update());
     this.update();
-  }
-
-  private uninstall(): void {
-    clearInterval(this.$time!);
   }
 
   private findParent(el: Element, selector: string): HTMLFormElement | null {
@@ -93,6 +107,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.uninstall();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
