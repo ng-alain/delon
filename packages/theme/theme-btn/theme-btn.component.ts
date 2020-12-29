@@ -1,7 +1,10 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, isDevMode, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, isDevMode, OnDestroy, OnInit, Optional, Renderer2 } from '@angular/core';
 import { AlainConfigService } from '@delon/util';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export const ThemeBtnStorageKey = `site-theme`;
 
@@ -15,6 +18,7 @@ export interface ThemeBtnType {
   templateUrl: './theme-btn.component.html',
   host: {
     '[class.theme-btn]': `true`,
+    '[class.theme-btn-rtl]': `dir === 'rtl'`,
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -28,15 +32,22 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   private el!: HTMLLinkElement;
+  private destroy$ = new Subject<void>();
+  dir: Direction = 'ltr';
 
   constructor(
     private renderer: Renderer2,
     private configSrv: AlainConfigService,
     private platform: Platform,
     @Inject(DOCUMENT) private doc: any,
+    @Optional() private directionality: Directionality,
   ) {}
 
   ngOnInit(): void {
+    this.dir = this.directionality.value;
+    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+      this.dir = direction;
+    });
     this.initTheme();
   }
 
@@ -81,5 +92,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (this.el) {
       this.doc.body.removeChild(this.el);
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

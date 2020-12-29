@@ -80,3 +80,12 @@ body {
     }
   }
 }
+
+[dir='rtl'] {
+  @media (min-width: @mobile-min) {
+    @{alain-default-prefix}__content {
+      margin-right: (@alain-default-aside-wd + @alain-default-content-padding);
+      margin-left: 0;
+    }
+  }
+}
