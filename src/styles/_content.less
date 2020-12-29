@@ -11,7 +11,7 @@
   background: @component-background;
 
   .ant-row-rtl & {
-    padding: 0 64px 144px 170px;
+    padding: 0 64px 144px 186px;
   }
 }
 
@@ -133,6 +133,11 @@
   .main-container {
     padding-right: 48px;
     padding-left: 48px;
+
+    .ant-row-rtl & {
+      padding-right: 24px;
+      padding-left: 24px;
+    }
 
     .toc-affix {
       display: none;
