@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -12,7 +13,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AlainConfigService, InputNumber } from '@delon/util';
-import { Direction, Directionality } from '@angular/cdk/bidi';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

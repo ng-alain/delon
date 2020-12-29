@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,7 +14,6 @@ import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util';
 import { Subject } from 'rxjs';
-import { Direction, Directionality } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
 
 export type ExceptionType = 403 | 404 | 500;

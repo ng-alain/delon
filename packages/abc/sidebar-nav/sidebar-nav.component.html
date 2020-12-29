@@ -53,7 +53,7 @@
     </li>
   </ng-container>
 </ng-template>
-<ul class="sidebar-nav">
+<ul class="sidebar-nav" [class.sidebar-nav-rtl]="dir === 'rtl'">
   <ng-container *ngFor="let group of list">
     <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group">
       <span [innerHTML]="group._text"></span>

@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,6 +10,7 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   Renderer2,
   ViewEncapsulation,
@@ -47,9 +49,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_maxLevelIcon: NumberInput;
 
   private bodyEl: HTMLBodyElement;
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private floatingEl: HTMLDivElement;
   list: Nav[] = [];
+  dir: Direction = 'ltr';
 
   @Input() @InputBoolean() disabledAcl = false;
   @Input() @InputBoolean() autoCloseUnderPad = true;
@@ -72,6 +75,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
+    @Optional() private directionality: Directionality,
   ) {}
 
   private getLinkNode(node: HTMLElement): HTMLElement | null {
@@ -240,11 +244,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const { doc, router, unsubscribe$, menuSrv, settings, cdr } = this;
+    const { doc, router, destroy$, menuSrv, settings, cdr } = this;
     this.bodyEl = doc.querySelector('body');
     this.openedByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloating());
-    menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
+    menuSrv.change.pipe(takeUntil(destroy$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav, _p, depth) => {
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
         i._needIcon = depth! <= this.maxLevelIcon && !!i.icon;
@@ -262,7 +266,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       this.list = menuSrv.menus.filter((w: Nav) => w._hidden !== true);
       cdr.detectChanges();
     });
-    router.events.pipe(takeUntil(unsubscribe$)).subscribe(e => {
+    router.events.pipe(takeUntil(destroy$)).subscribe(e => {
       if (e instanceof NavigationEnd) {
         this.openedByUrl(e.urlAfterRedirects);
         this.underPad();
@@ -271,17 +275,21 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     });
     settings.notify
       .pipe(
-        takeUntil(unsubscribe$),
+        takeUntil(destroy$),
         filter(t => t.type === 'layout' && t.name === 'collapsed'),
       )
       .subscribe(() => this.clearFloating());
     this.underPad();
+
+    this.dir = this.directionality.value;
+    this.directionality.change?.pipe(takeUntil(destroy$)).subscribe((direction: Direction) => {
+      this.dir = direction;
+    });
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.clearFloating();
   }
 

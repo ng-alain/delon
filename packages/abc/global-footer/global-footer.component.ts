@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,11 +14,10 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { WINDOW } from '@delon/theme';
-import { GlobalFooterItemComponent } from './global-footer-item.component';
-import { GlobalFooterLink } from './global-footer.types';
-import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { GlobalFooterItemComponent } from './global-footer-item.component';
+import { GlobalFooterLink } from './global-footer.types';
 
 @Component({
   selector: 'global-footer',

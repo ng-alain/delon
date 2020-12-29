@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
@@ -23,7 +24,6 @@ import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, isEmpty, N
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { Direction, Directionality } from '@angular/cdk/bidi';
 
 interface PageHeaderPath {
   title?: string;
