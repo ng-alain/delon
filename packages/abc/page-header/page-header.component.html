@@ -2,7 +2,7 @@
   <ng-template [ngTemplateOutlet]="phTpl"></ng-template>
 </nz-affix>
 <ng-template #phTpl>
-  <div class="page-header">
+  <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
     <div [ngClass]="{ 'page-header__wide': wide }">
       <nz-skeleton [nzLoading]="loading" [nzTitle]="false" [nzActive]="true" [nzParagraph]="{ rows: 3 }" [nzAvatar]="{ size: 'large', shape: 'circle' }">
         <ng-container *ngIf="!breadcrumb; else breadcrumb">

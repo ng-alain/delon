@@ -1,0 +1,35 @@
+@{page-header-prefix}-rtl {
+  direction: rtl;
+  @{page-header-prefix} {
+    &__logo {
+      margin-right: 0;
+      margin-left: @margin-md;
+    }
+    &__title {
+      small {
+        padding-right: @layout-gutter;
+        padding-left: 0;
+      }
+    }
+    &__action {
+      margin-right: 56px;
+      margin-left: 0;
+    }
+    &__extra {
+      margin-right: 88px;
+      margin-left: 0;
+    }
+    @media screen and (max-width: @screen-xl) {
+      &__extra {
+        margin-right: 44px;
+        margin-left: 0;
+      }
+    }
+    @media screen and (max-width: @screen-lg) {
+      &__extra {
+        margin-right: 20px;
+        margin-left: 0;
+      }
+    }
+  }
+}
