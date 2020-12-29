@@ -38,15 +38,47 @@
   .loop-mp(@infix, @adKey, @adValue, @i + 1);
 }
 
-.for-each(@spacings, {
-  .infix-mixin(@adKey) when(@adKey = 0) {
-    @infix: 0;
+.loop-mp-rtl(@infix, @adKey, @adValue, @i: 1) when (@i =< length(@mp-list)) {
+  @item: extract(@mp-list, @i);
+  @abbrev: extract(@item, 2);
+  @prop: extract(@item, 1);
+  // 无须设置注释
+  [dir="rtl"] {
+    .@{abbrev}r@{infix} {
+      @{prop}-left: @adValue !important;
+      @{prop}-right: inherit !important;
+    }
+    .@{abbrev}l@{infix} {
+      @{prop}-right: @adValue !important;
+      @{prop}-left: inherit !important;
+    }
   }
-  .infix-mixin(@adKey) when(default()) {
-    @infix: ~'-@{adKey}';
-  }
-  .infix-mixin(@adKey);
 
-  .loop-mp(@infix, @adKey, @adValue, 1);
+  .loop-mp-rtl(@infix, @adKey, @adValue, @i + 1);
+}
 
-});
+.spacings-loop(@type) {
+  .for-each(@spacings, {
+    .infix-mixin(@adKey) when(@adKey = 0) {
+      @infix: 0;
+    }
+    .infix-mixin(@adKey) when(default()) {
+      @infix: ~'-@{adKey}';
+    }
+    .infix-mixin(@adKey);
+
+    .loop-mp-fn-mixin(@type) when(@type = 'lrt') {
+      .loop-mp(@infix, @adKey, @adValue, 1);
+    }
+    .loop-mp-fn-mixin(@type) when(default()) {
+      .loop-mp-rtl(@infix, @adKey, @adValue, 1);
+    }
+    .loop-mp-fn-mixin(@type);
+  });
+}
+
+.spacings-loop('lrt');
+.spacings-rtl-mixin(@enabled) when(@enabled=true) {
+  .spacings-loop('rtl');
+}
+.spacings-rtl-mixin(@spacings-rtl);
