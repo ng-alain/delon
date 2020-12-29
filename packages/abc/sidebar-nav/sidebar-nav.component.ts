@@ -163,7 +163,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       offsetHeight = rect.top + node.clientHeight - docHeight + spacing;
     }
     node.style.top = `${rect.top + scrollTop - offsetHeight}px`;
-    node.style.left = `${rect.right + spacing}px`;
+    if (this.dir === 'rtl') {
+      node.style.right = `${rect.width + spacing}px`;
+    } else {
+      node.style.left = `${rect.right + spacing}px`;
+    }
   }
 
   showSubMenu(e: MouseEvent, item: Nav): void {

@@ -87,5 +87,13 @@ body {
       margin-right: (@alain-default-aside-wd + @alain-default-content-padding);
       margin-left: 0;
     }
+    @{alain-default-prefix}__collapsed {
+      @{alain-default-prefix} {
+        &__content {
+          margin-right: (@alain-default-aside-collapsed-wd + @alain-default-content-padding);
+          margin-left: 0;
+        }
+      }
+    }
   }
 }

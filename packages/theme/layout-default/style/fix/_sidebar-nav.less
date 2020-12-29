@@ -275,3 +275,31 @@
     }
   }
 }
+
+[dir='rtl'] {
+  @{sidebar-nav-prefix} {
+    &__item {
+      &-icon {
+        margin-right: 0;
+        margin-left: @layout-gutter;
+      }
+    }
+    .badge {
+      right: inherit;
+      left: @layout-gutter * 2;
+    }
+  }
+  @media (min-width: @mobile-min) {
+    @{alain-default-prefix}__collapsed {
+      @{sidebar-nav-prefix}:not(@{sidebar-nav-prefix}__sub) {
+        @{sidebar-nav-prefix}__item {
+          &-link {
+            @{sidebar-nav-prefix}__item-icon {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
