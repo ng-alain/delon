@@ -29,22 +29,25 @@
     }
   }
 
-  [dir='rtl'] {
-    // button + button
-    .@{ant-prefix}-btn + .@{ant-prefix}-btn,
-    .@{ant-prefix}-btn + nz-popconfirm,
-    nz-popconfirm + .@{ant-prefix}-btn,
-    nz-popconfirm + nz-popconfirm,
-    .@{ant-prefix}-btn + nz-button-group,
-    nz-button-group + .@{ant-prefix}-btn,
-    .@{ant-prefix}-btn + nz-dropdown,
-    nz-dropdown + .@{ant-prefix}-btn,
-    nz-popconfirm + nz-button-group,
-    nz-button-group + nz-popconfirm {
-      margin-right: @preserve-buttons-spaces;
-      margin-left: inherit;
+  .preserve-white-spaces-rtl-mixin(@enabled) when(@enabled=true) {
+    [dir='rtl'] {
+      // button + button
+      .@{ant-prefix}-btn + .@{ant-prefix}-btn,
+      .@{ant-prefix}-btn + nz-popconfirm,
+      nz-popconfirm + .@{ant-prefix}-btn,
+      nz-popconfirm + nz-popconfirm,
+      .@{ant-prefix}-btn + nz-button-group,
+      nz-button-group + .@{ant-prefix}-btn,
+      .@{ant-prefix}-btn + nz-dropdown,
+      nz-dropdown + .@{ant-prefix}-btn,
+      nz-popconfirm + nz-button-group,
+      nz-button-group + nz-popconfirm {
+        margin-right: @preserve-buttons-spaces;
+        margin-left: inherit;
+      }
     }
   }
+  .preserve-white-spaces-rtl-mixin(@rtl-enabled);
 }
 
 .preserve-white-spaces-mixin(@preserve-white-spaces-enabled);

@@ -168,3 +168,16 @@
 .text-xxl {
   font-size: @text-xxl !important;
 }
+
+.text-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    .text-left {
+      text-align: right !important;
+    }
+
+    .text-right {
+      text-align: left !important;
+    }
+  }
+}
+.text-rtl-mixin(@rtl-enabled);
