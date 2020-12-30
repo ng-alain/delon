@@ -1,8 +1,8 @@
-import { DOCUMENT } from '@angular/common';
-import { Location } from '@angular/common';
+import { Direction } from '@angular/cdk/bidi';
+import { DOCUMENT, Location } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
-import { LayoutDirection, SettingsService } from '@delon/theme';
+import { SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil } from 'rxjs/operators';
@@ -25,7 +25,7 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
-  direction: LayoutDirection = 'ltr';
+  direction: Direction = 'ltr';
 
   constructor(
     private router: Router,

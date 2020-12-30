@@ -1,8 +1,9 @@
+import { Direction } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18NService, MobileService } from '@core';
-import { LayoutDirection, SettingsService } from '@delon/theme';
+import { SettingsService } from '@delon/theme';
 import { AlainConfigService, copy } from '@delon/util';
 import { NzConfigService } from 'ng-zorro-antd/core/config';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -34,13 +35,13 @@ export class HeaderComponent implements AfterViewInit {
     delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ },
   };
   showSearch = true;
-  nextDirection: LayoutDirection = 'ltr';
+  nextDirection: Direction = 'ltr';
 
   private getWin(): Window {
     return (this.doc as Document).defaultView || window;
   }
 
-  get direction(): LayoutDirection {
+  get direction(): Direction {
     return this.nextDirection === 'ltr' ? 'rtl' : 'ltr';
   }
 
