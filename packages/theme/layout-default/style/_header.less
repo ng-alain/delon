@@ -192,13 +192,16 @@
   }
 }
 
-[dir='rtl'] {
-  @{alain-default-prefix} {
-    &__header {
-      &-logo {
-        margin-right: -@alain-default-header-padding;
-        margin-left: 0;
+.layout-default-header-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    @{alain-default-prefix} {
+      &__header {
+        &-logo {
+          margin-right: -@alain-default-header-padding;
+          margin-left: 0;
+        }
       }
     }
   }
 }
+.layout-default-header-rtl-mixin(@rtl-enabled);

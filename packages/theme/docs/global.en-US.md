@@ -51,6 +51,7 @@ title: Global Parameters
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | Scrollbar track color |
 | `@scrollbar-thumb-color` | `#6e6e6e` | Scrollbar thumb color |
 | `@scrollbar-table-enabled` | `false` | Enable landscaping scrollbars of nz-table |
+| `@rtl-enabled` | `false` | Wheter support RTL |
 
 ## Ng patch
 

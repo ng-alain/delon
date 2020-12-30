@@ -33,6 +33,14 @@ function fixImport(): (host: Tree) => Tree {
       addImportToModule(host, appModulePath, bidiModuleName, '@angular/cdk/bidi');
       addValueToVariable(host, appModulePath, 'GLOBAL_THIRD_MODULES', bidiModuleName);
     }
+    // src/styles/theme.less
+    const themeLessPath = normalize(`${project.sourceRoot}/styles/theme.less`);
+    if (host.exists(themeLessPath)) {
+      const content = readContent(host, themeLessPath);
+      if (!content.includes(`@rtl-enabled: true;`)) {
+        host.overwrite(themeLessPath, content + `\n@rtl-enabled: true;\n`);
+      }
+    }
 
     return host;
   };
