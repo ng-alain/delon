@@ -9,3 +9,12 @@
     margin-left: @layout-gutter;
   }
 }
+
+[dir='rtl'] {
+  .@{ant-prefix}-form-item-control {
+    em {
+      margin-right: @layout-gutter;
+      margin-left: inherit;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
@@ -47,11 +48,12 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   static ngAcceptInputType_fixedOffsetTop: NumberInput;
   static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
 
-  inited = false;
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
+  inited = false;
   isBrowser = true;
+  dir: Direction = 'ltr';
 
   private get menus(): Menu[] {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
@@ -107,6 +109,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     private cdr: ChangeDetectorRef,
     configSrv: AlainConfigService,
     platform: Platform,
+    @Optional() private directionality: Directionality,
   ) {
     this.isBrowser = platform.isBrowser;
     configSrv.attach(this, 'pageHeader', {
@@ -121,13 +124,13 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     });
     settings.notify
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
     merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.refresh());
   }
 
@@ -189,6 +192,11 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnInit(): void {
+    this.dir = this.directionality.value;
+    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
     this.refresh();
     this.inited = true;
   }
@@ -204,8 +212,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

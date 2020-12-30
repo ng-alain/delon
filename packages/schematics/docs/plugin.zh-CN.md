@@ -165,3 +165,13 @@ export class StartupService {
 <i nz-icon nzType="filter" theme="outline"></i>
 <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
 ```
+
+### rtl
+
+支持 RTL 插件，即文本方向设置为“从右向左”。
+
+```bash
+ng g ng-alain:plugin rtl
+```
+
+> 该插件不支持移除功能，需要自行手动移除相关代码。

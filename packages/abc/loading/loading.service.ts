@@ -1,6 +1,7 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ComponentRef, Injectable, OnDestroy } from '@angular/core';
+import { ComponentRef, Injectable, OnDestroy, Optional } from '@angular/core';
 import { AlainConfigService, AlainLoadingConfig } from '@delon/util';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
@@ -20,7 +21,7 @@ export class LoadingService implements OnDestroy {
     return this.compRef != null ? this.compRef.instance : null;
   }
 
-  constructor(private overlay: Overlay, configSrv: AlainConfigService) {
+  constructor(private overlay: Overlay, private configSrv: AlainConfigService, @Optional() private directionality: Directionality) {
     this.cog = configSrv.merge('loading', {
       type: 'spin',
       text: '加载中...',
@@ -49,7 +50,8 @@ export class LoadingService implements OnDestroy {
       backdropClass: 'loading-backdrop',
     });
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
-    Object.assign(this.instance, { options: this.opt });
+    const dir = this.configSrv.get('loading')!.direction || this.directionality.value;
+    Object.assign(this.instance, { options: this.opt, dir });
     this.compRef.changeDetectorRef.markForCheck();
   }
 

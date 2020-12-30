@@ -12,6 +12,18 @@
   }
 }
 
+[dir='rtl'] {
+  .@{ant-prefix}-table {
+    td {
+      > img,
+      .img {
+        margin-right: inherit;
+        margin-left: @nz-table-img-margin-right;
+      }
+    }
+  }
+}
+
 // 表格响应式
 .@{ant-prefix}-table-rep {
   &__title {

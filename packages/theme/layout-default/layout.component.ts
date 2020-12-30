@@ -55,7 +55,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
         this.isFetching = false;
         if (evt instanceof NavigationError) {
-          msgSrv.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+          msgSrv.error(`Could not load ${evt.url} route`, { nzDuration: 1000 * 3 });
         }
         return;
       }

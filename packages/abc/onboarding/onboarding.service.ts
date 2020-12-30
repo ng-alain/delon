@@ -1,3 +1,4 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
@@ -8,9 +9,11 @@ import {
   Injectable,
   Injector,
   OnDestroy,
+  Optional,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DelonLocaleService } from '@delon/theme';
+import { AlainConfigService } from '@delon/util';
 import { of, pipe, Subscription } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { OnboardingComponent } from './onboarding.component';
@@ -46,6 +49,8 @@ export class OnboardingService implements OnDestroy {
     private router: Router,
     private injector: Injector,
     @Inject(DOCUMENT) private doc: any,
+    private configSrv: AlainConfigService,
+    @Optional() private directionality: Directionality,
   ) {}
 
   private attach(): void {
@@ -106,7 +111,8 @@ export class OnboardingService implements OnDestroy {
       ...this.i18n.getData('onboarding'),
       ...items[this.active],
     } as OnboardingItem;
-    Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length });
+    const dir = this.configSrv.get('onboarding')!.direction || this.directionality.value;
+    Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length, dir });
     const pipes = [
       switchMap(() => (item.url ? this.router.navigateByUrl(item.url) : of(true))),
       switchMap(() => {

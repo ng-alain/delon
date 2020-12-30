@@ -80,3 +80,23 @@ body {
     }
   }
 }
+
+.layout-default-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    @media (min-width: @mobile-min) {
+      @{alain-default-prefix}__content {
+        margin-right: (@alain-default-aside-wd + @alain-default-content-padding);
+        margin-left: 0;
+      }
+      @{alain-default-prefix}__collapsed {
+        @{alain-default-prefix} {
+          &__content {
+            margin-right: (@alain-default-aside-collapsed-wd + @alain-default-content-padding);
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+.layout-default-rtl-mixin(@rtl-enabled);

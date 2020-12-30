@@ -1,0 +1,14 @@
+@{setting-drawer-prefix}-rtl {
+  direction: rtl;
+  @{setting-drawer-prefix} {
+    &__handle {
+      right: inherit;
+      left: 0;
+      border-radius: 0 4px 4px 0;
+      &-opened {
+        right: inherit;
+        left: @setting-drawer-width;
+      }
+    }
+  }
+}

@@ -25,4 +25,7 @@ export interface AlainLoadingConfig {
    * 延迟，默认：`0`
    */
   delay?: number;
+
+  /** 文字方向 */
+  direction?: 'ltr' | 'rtl';
 }

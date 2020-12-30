@@ -75,3 +75,15 @@
     }
   }
 }
+
+.layout-default-aside-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    @{alain-default-prefix}__aside {
+      &::after {
+        right: inherit;
+        left: 0;
+      }
+    }
+  }
+}
+.layout-default-aside-rtl-mixin(@rtl-enabled);
