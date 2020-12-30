@@ -1,4 +1,4 @@
-import { Tree } from '@angular-devkit/schematics';
+import { forEach, Rule, Tree } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import { join } from 'path';
 
@@ -60,4 +60,14 @@ export function overwriteFiles(host: Tree, files: string[], _filePath: string, o
 export function addFiles(host: Tree, files: string[], _filePath: string, overwrite: boolean = false): Tree {
   files.filter(p => overwrite || !host.exists(p)).forEach(p => overwriteFile(host, p, join(_filePath, p), true));
   return host;
+}
+
+export function overwriteIfExists(host: Tree): Rule {
+  return forEach(fileEntry => {
+    if (host.exists(fileEntry.path)) {
+      host.overwrite(fileEntry.path, fileEntry.content);
+      return null;
+    }
+    return fileEntry;
+  });
 }

@@ -9,6 +9,7 @@ import { pluginDocker } from './plugin.docker';
 import { pluginIcon } from './plugin.icon';
 import { pluginIE } from './plugin.ie';
 import { pluginNetworkEnv } from './plugin.network-env';
+import { pluginRTL } from './plugin.rtl';
 import { pluginSTS } from './plugin.sts';
 import { Schema as PluginSchema } from './schema';
 
@@ -57,6 +58,9 @@ export default function (options: PluginSchema): Rule {
         break;
       case 'ie':
         rules.push(pluginIE(pluginOptions));
+        break;
+      case 'rtl':
+        rules.push(pluginRTL(pluginOptions));
         break;
       case 'asdf':
         rules.push(pluginAsdf());

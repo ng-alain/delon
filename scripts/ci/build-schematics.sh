@@ -160,7 +160,7 @@ copyFiles() {
     "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
     "${1}src/app/global-config.module.ts|${2}application/files/src/app/"
-    "${1}src/app/app.component.ts|${2}application/files/src/app/"
+    # "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
@@ -174,6 +174,9 @@ copyFiles() {
     # router
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
     "${1}src/app/routes/passport|${2}application/files/src/app/routes/"
+    # plugin
+    "${1}src/app/app.component.ts|${2}plugin/files/rtl/"
+    "${1}src/app/layout/basic/widgets/rtl.component.ts|${2}plugin/files/rtl/layout/basic/widgets/"
   )
   local from to
   for fields in ${paths[@]}

@@ -121,7 +121,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema): void
   validateHtmlSelector(schema.selector);
 }
 
-function addImportToModule(host: Tree, filePath: string, symbolName: string, fileName: string): void {
+export function addImportToModule(host: Tree, filePath: string, symbolName: string, fileName: string): void {
   const source = getSourceFile(host, filePath);
   const change = insertImport(source, filePath, symbolName, fileName) as InsertChange;
   const declarationRecorder = host.beginUpdate(filePath);
