@@ -570,10 +570,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * ```
    * this.st.setRow(0, { price: 100 })
    * this.st.setRow(0, { price: 100, name: 'asdf' })
+   * this.st.setRow(item, { price: 100 })
    * ```
    */
-  setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
+  setRow(index: number | STData, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
     options = { refreshSchema: false, emitReload: false, ...options };
+    if (typeof index !== 'number') {
+      index = this._data.indexOf(index);
+    }
     this._data[index] = deepMergeKey(this._data[index], false, item);
     this.optimizeData();
     if (options.refreshSchema) {
