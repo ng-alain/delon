@@ -11,6 +11,6 @@ describe('NgAlainSchematic: plugin: rtl', () => {
   });
 
   it(`should be working`, () => {
-    expect(tree.exists(`/projects/foo/src/app/layout/basic/widgets/rtl.component.ts`)).toBe(true);
+    expect(tree.readContent(`/projects/foo/src/app/layout/layout.module.ts`)).toContain(`HeaderRTLComponent`);
   });
 });
