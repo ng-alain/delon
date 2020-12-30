@@ -1491,6 +1491,15 @@ describe('abc: table', () => {
           expect(comp.resetColumns).toHaveBeenCalled();
           page.asyncEnd();
         }));
+        it('should be support data of index', fakeAsync(() => {
+          page.cd();
+          page.expectData(1, 'name', `name 1`);
+          spyOn(comp, 'resetColumns');
+          comp.setRow(comp.list[0], { name: 'new name' });
+          expect(comp.resetColumns).not.toHaveBeenCalled();
+          page.expectData(1, 'name', `new name`);
+          page.asyncEnd();
+        }));
       });
       describe('#clean', () => {
         beforeEach(fakeAsync(() => {

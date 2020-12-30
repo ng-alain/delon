@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
 import { STColumn, STData } from '@delon/abc/st';
 
 @Component({
-  selector: 'components-st-render',
+  selector: 'app-demo',
   template: `
     <div class="mb-md">
       <nz-checkbox-group
@@ -50,7 +50,7 @@ import { STColumn, STData } from '@delon/abc/st';
     </st>
   `,
 })
-export class ComponentsStRenderComponent {
+export class DemoComponent {
   searchValue: string;
   users: STData[] = Array(10)
     .fill({})
