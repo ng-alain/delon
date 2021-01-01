@@ -1,13 +1,10 @@
-import { Platform } from '@angular/cdk/platform';
-import { DOCUMENT } from '@angular/common';
-import { Injector, StaticProvider } from '@angular/core';
-import { AlainConfigService } from '@delon/util';
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { SettingsService } from '../settings/settings.service';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { AlainThemeModule } from '../../theme.module';
 import { LTR, RTL, RTLService } from './rtl.service';
 
 describe('Service: RTL', () => {
-  let injector: Injector;
   let srv: RTLService;
 
   function getHtmlDir(): string | null {
@@ -15,16 +12,12 @@ describe('Service: RTL', () => {
   }
 
   beforeEach(() => {
-    const providers = [
-      SettingsService,
-      NzConfigService,
-      AlainConfigService,
-      { provide: RTLService, useClass: RTLService, deps: [SettingsService, NzConfigService, AlainConfigService, Platform, DOCUMENT] },
-      { provide: Platform, useValue: { isBrowser: true } },
-      { provide: DOCUMENT, useValue: document },
-    ] as StaticProvider[];
-    injector = Injector.create({ providers });
-    srv = injector.get(RTLService);
+    @NgModule({
+      imports: [CommonModule, AlainThemeModule.forChild()],
+    })
+    class TestModule {}
+    const injector = TestBed.configureTestingModule({ imports: [TestModule] });
+    srv = injector.inject<RTLService>(RTLService);
     srv.dir = LTR;
   });
 
@@ -45,7 +38,7 @@ describe('Service: RTL', () => {
     });
     it('should be update dir attribute of html element', () => {
       expect(srv.dir).toBe(LTR);
-      srv.dir = RTL;
+      srv.toggle();
       expect(srv.dir).toBe(RTL);
       expect(getHtmlDir()).toBe(RTL);
     });

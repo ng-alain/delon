@@ -14,3 +14,5 @@ RTL service control.
 |--------|----------|-------------|
 | `dir` | `Direction` | Get or Set the current text direction |
 | `nextDir` | `Direction` | Get the next text direction |
+| `change` | `Observable<Direction>` | Subscription change notification |
+| `toggle()` | - | Toggle text direction |

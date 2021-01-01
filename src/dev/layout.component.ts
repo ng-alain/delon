@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 // import { Router } from '@angular/router';
-import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, User } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -57,6 +57,9 @@ const ICONS = [
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
         </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="right">
+        <a class="alain-default__nav-item" (click)="rtl.toggle()">{{ rtl.nextDir | uppercase }}</a>
       </layout-default-header-item>
       <layout-default-header-item direction="right">
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank"> githbu </a>
@@ -183,6 +186,7 @@ export class DevLayoutComponent implements OnInit {
     public msgSrv: NzMessageService,
     // private router: Router,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    public rtl: RTLService,
   ) {
     iconSrv.addIcon(...ICONS);
     // this.testReuse();
