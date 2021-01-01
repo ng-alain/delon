@@ -2,7 +2,7 @@
 type: Service
 order: 6
 title: RTLService
-subtitle: Responsive Service
+subtitle: RTL Service
 ---
 
 
