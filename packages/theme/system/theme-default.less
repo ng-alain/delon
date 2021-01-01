@@ -58,10 +58,12 @@
 // Layout Gutter
 @layout-gutter: 8px;
 
-@xs:    @layout-gutter / 2;
-@sm:    @layout-gutter;
-@md:    @layout-gutter * 2;
-@lg:    @layout-gutter * 3;
+@xs:    @layout-gutter / 2; // 4px
+@sm:    @layout-gutter;     // 8px
+@md:    @layout-gutter * 2; // 16px
+@lg:    @layout-gutter * 3; // 24px
+@xl:    @layout-gutter * 4; // 32px
+@xxl:   @layout-gutter * 6; // 48px
 
 @grid-breakpoints:
     xs @screen-xs,
@@ -79,7 +81,9 @@
     xs @xs,
     sm @sm,
     md @md,
-    lg @lg;
+    lg @lg,
+    xl @xl,
+    xxl @xxl;
 
 // 是否启用RTL支持
 @rtl-enabled: true;

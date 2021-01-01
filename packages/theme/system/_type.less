@@ -63,3 +63,17 @@ fieldset {
 .display-3 {
   font-size: 20px;
 }
+
+.type-rtl-mixin(@enabled) when(@enabled=true) {
+  // List
+  .list-styled {
+    padding-right: @ul-ol-margin;
+    padding-left: 0;
+  }
+
+  .list-unstyled {
+    padding-right: 0;
+    padding-left: inherit;
+  }
+}
+.type-rtl-mixin(@rtl-enabled);
