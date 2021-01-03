@@ -61,7 +61,6 @@ DEPENDENCIES=$(node -p "
     'stylelint-order',
     'stylelint',
     'prettier',
-    '@antv/data-set',
     '@antv/g2',
     'ng-zorro-antd',
     'ngx-ueditor',

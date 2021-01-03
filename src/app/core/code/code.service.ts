@@ -39,7 +39,6 @@ export class CodeService {
       'tslib',
       'zone.js',
       '@antv/g2',
-      '@antv/data-set',
       'date-fns@^2.10.0',
       'file-saver',
       'ngx-countdown',

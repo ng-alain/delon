@@ -12,12 +12,12 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import DataSet from '@antv/data-set';
 import { Chart, Event, registerShape, Types, Util } from '@antv/g2';
 import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
+import tagCloud from './tag-cloud.data';
 
 export interface G2TagCloudData {
   value?: number;
@@ -45,6 +45,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private resize$: Subscription;
   private _chart: Chart;
+  private _h: number = 0;
+  private _w: number = 0;
 
   get chart(): Chart {
     return this._chart;
@@ -64,6 +66,12 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
+  }
+
+  private fixWH(): void {
+    const { height, width, el } = this;
+    this._h = height <= 0 ? el.nativeElement.clientHeight : height;
+    this._w = width <= 0 ? el.nativeElement.clientWidth : width;
   }
 
   private initTagCloud(): void {
@@ -96,19 +104,14 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private install(): void {
     const { el, padding, theme } = this;
-    if (this.height === 0) {
-      this.height = this.el.nativeElement.clientHeight;
-    }
-    if (this.width === 0) {
-      this.width = this.el.nativeElement.clientWidth;
-    }
 
+    this.fixWH();
     const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: false,
+      height: this._h,
+      width: this._w,
       padding,
-      height: this.height,
-      width: this.width,
       theme,
     }));
     chart.scale({
@@ -143,41 +146,77 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     this.attachChart();
   }
 
-  private attachChart(): void {
-    const { _chart, padding, data } = this;
-    if (!_chart || !data || data.length <= 0) return;
-
-    _chart.height = this.height;
-    _chart.width = this.width;
-    _chart.padding = padding;
-
-    const dv = new DataSet.View().source(data);
-    const range = dv.range('value');
-    const min = range[0];
-    const max = range[1];
-
-    dv.transform({
-      type: 'tag-cloud',
+  private transform(): any {
+    const statisticData = this.data.map(i => i.value!);
+    const min = Math.min(...statisticData);
+    const max = Math.max(...statisticData);
+    const options = {
       fields: ['name', 'value'],
       // imageMask,
       font: 'Verdana',
-      size: [this.width, this.height], // 宽高设置最好根据 imageMask 做调整
-      padding: 0,
+      padding: 1,
+      size: [this._w, this._h], // 宽高设置最好根据 imageMask 做调整
       timeInterval: 5000, // max execute time
-      // tslint:disable-next-line: typedef
-      rotate() {
+      rotate: () => {
         let random = ~~(Math.random() * 4) % 4;
         if (random === 2) {
           random = 0;
         }
         return random * 90; // 0, 90, 270
       },
-      // tslint:disable-next-line: typedef
-      fontSize(d: NzSafeAny) {
-        return ((d.value - min) / (max - min)) * (32 - 8) + 8;
+      fontSize: (d: G2TagCloudData) => {
+        return ((d.value! - min) / (max - min)) * (32 - 8) + 8;
       },
-    } as NzSafeAny);
-    _chart.data(dv.rows);
+    };
+    const layout = tagCloud();
+    ['font', 'fontSize', 'fontWeight', 'padding', 'rotate', 'size', 'spiral', 'timeInterval'].forEach(key => {
+      // @ts-ignore
+      if (options[key]) {
+        // @ts-ignore
+        layout[key](options[key]);
+      }
+    });
+    const words = this.data.map(i => ({ ...i, text: i.name }));
+    layout.words(words);
+    const result = layout.start();
+    const tags: any[] = result._tags;
+    const bounds = result._bounds || [
+      { x: 0, y: 0 },
+      { x: options.size[0], y: options.size[1] },
+    ];
+    tags.forEach(tag => {
+      tag.x += options.size[0] / 2;
+      tag.y += options.size[1] / 2;
+    });
+    const [w, h] = options.size;
+    const hasImage = result.hasImage;
+    tags.push({
+      text: '',
+      value: 0,
+      x: hasImage ? 0 : bounds[0].x,
+      y: hasImage ? 0 : bounds[0].y,
+      opacity: 0,
+    });
+    tags.push({
+      text: '',
+      value: 0,
+      x: hasImage ? w : bounds[1].x,
+      y: hasImage ? h : bounds[1].y,
+      opacity: 0,
+    });
+    return tags;
+  }
+
+  private attachChart(): void {
+    const { _chart, padding, data } = this;
+    if (!_chart || !data || data.length <= 0) return;
+
+    this.fixWH();
+    _chart.changeSize(this._w, this._h);
+    _chart.padding = padding;
+
+    const rows = this.transform();
+    _chart.data(rows);
     _chart.render();
   }
 
