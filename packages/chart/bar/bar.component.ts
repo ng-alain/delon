@@ -1,11 +1,9 @@
-import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -14,11 +12,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { G2InteractionType, G2Service } from '@delon/chart/core';
+import { Chart, Event } from '@antv/g2';
+import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { fromEvent, Subject, Subscription } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
@@ -38,7 +36,13 @@ export interface G2BarClickItem {
 @Component({
   selector: 'g2-bar',
   exportAs: 'g2Bar',
-  templateUrl: './bar.component.html',
+  template: `
+    <ng-container *nzStringTemplateOutlet="title">
+      <h4 style="margin-bottom: 20px;">{{ title }}</h4>
+    </ng-container>
+    <nz-skeleton *ngIf="!loaded"></nz-skeleton>
+    <div #container></div>
+  `,
   host: {
     '[style.height.px]': 'height',
   },
@@ -46,24 +50,14 @@ export interface G2BarClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_delay: NumberInput;
+export class G2BarComponent extends G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_autoLabel: BooleanInput;
 
-  private resize$: Subscription;
-  private destroy$ = new Subject<void>();
-  private _chart: Chart;
-  private _install = false;
   @ViewChild('container', { static: true }) private node: ElementRef;
-
-  get chart(): Chart {
-    return this._chart;
-  }
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() @InputNumber() height = 0;
@@ -71,26 +65,15 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
   @Input() interaction: G2InteractionType = 'none';
-  @Input() theme: string | Types.LooseObject;
   @Output() clickItem = new EventEmitter<G2BarClickItem>();
 
   // #endregion
-
-  constructor(private srv: G2Service, private ngZone: NgZone, private platform: Platform) {
-    this.theme = srv.cog.theme!;
-    this.srv.notify
-      .pipe(
-        takeUntil(this.destroy$),
-        filter(() => !this._install),
-      )
-      .subscribe(() => this.load());
-  }
 
   private getHeight(): number {
     return this.title ? this.height - TITLE_HEIGHT : this.height;
   }
 
-  private install(): void {
+  install(): void {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
@@ -138,7 +121,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart(): void {
+  attachChart(): void {
     const { _chart, padding, data } = this;
     if (!_chart || !data || data.length <= 0) return;
     this.installResizeEvent();
@@ -169,36 +152,5 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
         debounceTime(200),
       )
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
-  }
-
-  private load(): void {
-    this._install = true;
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    if ((window as any).G2.Chart) {
-      this.load();
-    } else {
-      this.srv.libLoad();
-    }
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this.resize$) {
-      this.resize$.unsubscribe();
-    }
-    this.destroy$.next();
-    this.destroy$.complete();
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }
