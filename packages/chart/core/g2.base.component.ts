@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Directive, Input, NgZone, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
 import { InputNumber, NumberInput } from '@delon/util';
 import { Subject, Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { G2Service } from './g2.servicce';
 export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
 
+  @ViewChild('container', { static: true }) protected node: ElementRef;
   protected resize$: Subscription;
   protected destroy$ = new Subject<void>();
   protected _chart: Chart;
@@ -26,7 +27,17 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   abstract attachChart(): void;
 
-  constructor(protected srv: G2Service, protected ngZone: NgZone, protected platform: Platform, private cdr: ChangeDetectorRef) {
+  onInit(): void {}
+
+  onChanges(): void {}
+
+  constructor(
+    protected srv: G2Service,
+    protected el: ElementRef<HTMLElement>,
+    protected ngZone: NgZone,
+    protected platform: Platform,
+    protected cdr: ChangeDetectorRef,
+  ) {
     this.theme = srv.cog.theme!;
     this.srv.notify
       .pipe(
@@ -48,6 +59,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
+    this.onInit();
     if ((window as any).G2) {
       this.load();
     } else {
@@ -56,6 +68,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
+    this.onChanges();
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 

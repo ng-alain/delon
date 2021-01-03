@@ -1,26 +1,13 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
-import { Chart, Types } from '@antv/g2';
-import { G2Service } from '@delon/chart/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { Chart } from '@antv/g2';
+import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'g2-gauge',
   exportAs: 'g2Gauge',
-  template: ``,
+  template: `<nz-skeleton *ngIf="!loaded"></nz-skeleton>`,
   host: {
     '[class.g2-gauge]': 'true',
   },
@@ -28,22 +15,12 @@ import { filter, takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
-  static ngAcceptInputType_delay: NumberInput;
+export class G2GaugeComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_percent: NumberInput;
 
-  private destroy$ = new Subject<void>();
-  private _chart: Chart;
-  private _install = false;
-
-  get chart(): Chart {
-    return this._chart;
-  }
-
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() title: string;
   @Input() @InputNumber() height: number;
   @Input() color = '#2f9cff';
@@ -51,26 +28,10 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
-  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 
-  constructor(private srv: G2Service, private el: ElementRef, private ngZone: NgZone, private platform: Platform) {
-    this.theme = srv.cog.theme!;
-    this.srv.notify
-      .pipe(
-        takeUntil(this.destroy$),
-        filter(() => !this._install),
-      )
-      .subscribe(() => this.load());
-  }
-
-  private load(): void {
-    this._install = true;
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  private install(): void {
+  install(): void {
     // 自定义Shape 部分
     (window as any).G2.registerShape('point', 'pointer', {
       // tslint:disable-next-line: typedef
@@ -142,7 +103,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart(): void {
+  attachChart(): void {
     const { _chart, percent, color, bgColor, title } = this;
     if (!_chart) return;
 
@@ -193,28 +154,5 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
 
     _chart.changeData(data);
     _chart.render();
-  }
-
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    if ((window as any).G2.Chart) {
-      this.load();
-    } else {
-      this.srv.libLoad();
-    }
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

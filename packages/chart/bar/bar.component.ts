@@ -1,17 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
@@ -50,11 +37,9 @@ export interface G2BarClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2BarComponent extends G2BaseComponent implements OnInit, OnChanges, OnDestroy {
+export class G2BarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_autoLabel: BooleanInput;
-
-  @ViewChild('container', { static: true }) private node: ElementRef;
 
   // #region fields
 
