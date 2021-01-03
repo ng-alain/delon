@@ -59,6 +59,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   @Input() @InputNumber() height = 200;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
+  @Input() spiral: 'archimedean' | 'rectangular' = 'rectangular';
   @Input() theme: string | Types.LooseObject;
   @Output() clickItem = new EventEmitter<G2TagCloudClickItem>();
 
@@ -156,6 +157,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       font: 'Verdana',
       padding: 1,
       size: [this._w, this._h], // 宽高设置最好根据 imageMask 做调整
+      spiral: this.spiral,
       timeInterval: 5000, // max execute time
       rotate: () => {
         let random = ~~(Math.random() * 4) % 4;

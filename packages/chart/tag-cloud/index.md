@@ -17,6 +17,7 @@ module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `200` |
 | `[height]` | 高度值 | `number` | `200` |
 | `[width]` | 宽度值，若不指定自动按宿主元素的宽度 | `number` | `0` |
+| `[spiral]` | 图形 | `archimedean, rectangular` | `rectangular` |
 | `[data]` | 数据 | `G2TagCloudData[]` | `[]` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `EventEmitter<G2TagCloudClickItem>` | - |
