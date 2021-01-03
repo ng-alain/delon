@@ -7,11 +7,11 @@
         (click)="to.emit(item.url)"
         [routerLink]="item.url"
         [routerLinkActive]="['ant-menu-item-selected']"
-        style="padding-left: 54px;"
+        style="padding-left: 54px"
       >
         <nz-badge [nzDot]="item.hot">
           <span>{{ item.title }}</span>
-          <span class="subtitle">{{ item.subtitle }}</span>
+          <span class="chinese">{{ item.subtitle }}</span>
           <nz-tag *ngIf="item.lib" [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
         </nz-badge>
       </li>

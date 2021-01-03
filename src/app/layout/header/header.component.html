@@ -75,8 +75,8 @@
       <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')" class="header-button header-lang-button">
         {{ 'app.header.lang' | translate }}
       </button>
-      <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="toggleDirection()">
-        {{ nextDirection | uppercase }}
+      <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">
+        {{ rtl.nextDir | uppercase }}
       </button>
       <github-button type="stargazers" size="small" namespace="ng-alain" repo="ng-alain"></github-button>
     </ng-container>

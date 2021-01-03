@@ -1,8 +1,7 @@
-import { Direction } from '@angular/cdk/bidi';
-import { DOCUMENT, Location } from '@angular/common';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
-import { SettingsService } from '@delon/theme';
+import { RTL, RTLService, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil } from 'rxjs/operators';
@@ -10,13 +9,11 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-layout',
   template: `
-    <div [dir]="direction">
-      <app-header></app-header>
-      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
-      <router-outlet></router-outlet>
-      <nz-back-top></nz-back-top>
-      <theme-btn></theme-btn>
-    </div>
+    <app-header></app-header>
+    <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
+    <router-outlet></router-outlet>
+    <nz-back-top></nz-back-top>
+    <theme-btn></theme-btn>
   `,
   host: {
     '[attr.id]': `'ng-content'`,
@@ -25,33 +22,16 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
-  direction: Direction = 'ltr';
 
   constructor(
     private router: Router,
     msg: NzMessageService,
     private route: ActivatedRoute,
     private settingsSrv: SettingsService,
-    @Inject(DOCUMENT) doc: any,
     private location: Location,
+    rtl: RTLService,
   ) {
-    this.direction = (route.snapshot.queryParams.direction || 'ltr') === 'rtl' ? 'rtl' : 'ltr';
-    settingsSrv.notify
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter(w => w.name === 'direction'),
-      )
-      .subscribe(res => {
-        this.direction = res.value;
-        const htmlEl = doc.querySelector('html') as HTMLElement;
-        if (htmlEl) {
-          htmlEl.dataset.direction = res.value;
-          htmlEl.classList.remove('rtl', 'ltr');
-          htmlEl.classList.add(res.value);
-        }
-        this.fixDirection();
-      });
-    settingsSrv.setLayout('direction', this.direction);
+    rtl.change.subscribe(() => this.fixDirection());
     router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
@@ -87,7 +67,7 @@ export class LayoutComponent implements OnDestroy {
     } else {
       fragment = '';
     }
-    this.location.replaceState(path, (direction === 'rtl' ? `?direction=rtl` : '') + fragment);
+    this.location.replaceState(path, (direction === RTL ? `?direction=` + RTL : '') + fragment);
   }
 
   ngOnDestroy(): void {

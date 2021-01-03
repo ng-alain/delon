@@ -34,7 +34,7 @@ interface LayoutDefaultHeaderItem {
       <ul class="alain-default__nav">
         <li>
           <div class="alain-default__nav-item" (click)="toggleCollapsed()">
-            <i nz-icon nzType="menu-{{ collapsed ? 'unfold' : 'fold' }}"></i>
+            <i nz-icon [nzType]="collapsedIcon"></i>
           </div>
         </li>
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }"></ng-template>
@@ -53,7 +53,7 @@ interface LayoutDefaultHeaderItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   left: LayoutDefaultHeaderItem[] = [];
   middle: LayoutDefaultHeaderItem[] = [];
@@ -71,6 +71,14 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     return this.settings.layout.collapsed;
   }
 
+  get collapsedIcon(): string {
+    let type = this.collapsed ? 'unfold' : 'fold';
+    if (this.settings.layout.direction === 'rtl') {
+      type = this.collapsed ? 'fold' : 'unfold';
+    }
+    return `menu-${type}`;
+  }
+
   constructor(private settings: SettingsService, private parent: LayoutDefaultComponent, private cdr: ChangeDetectorRef) {}
 
   private refresh(): void {
@@ -82,7 +90,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.parent.headerItems.changes.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.refresh());
+    this.parent.headerItems.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
     this.refresh();
   }
 
@@ -91,8 +99,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

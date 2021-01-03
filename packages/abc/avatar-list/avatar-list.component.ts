@@ -7,6 +7,7 @@ import {
   ContentChildren,
   Input,
   OnChanges,
+  OnDestroy,
   Optional,
   QueryList,
   ViewEncapsulation,
@@ -28,7 +29,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AvatarListComponent implements AfterViewInit, OnChanges {
+export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_maxLength: NumberInput;
 
   private inited = false;
@@ -84,6 +85,9 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
     if (this.inited) {
       this.gen();
     }
+  }
+
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

@@ -36,7 +36,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   @Input() nav: TemplateRef<void>;
   @Input() content: TemplateRef<void>;
 
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isFetching = false;
 
   constructor(
@@ -48,7 +48,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {
     // scroll to top in change page
-    router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
+    router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -86,14 +86,13 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     if (this.options == null) {
       throw new Error(`Please specify the [options] parameter, otherwise the layout display cannot be completed`);
     }
-    const { settings, unsubscribe$ } = this;
-    settings.notify.pipe(takeUntil(unsubscribe$)).subscribe(() => this.setClass());
+    const { settings, destroy$ } = this;
+    settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
     this.setClass();
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

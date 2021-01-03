@@ -203,25 +203,27 @@
   }
 }
 
-.index-page [dir='rtl'] {
-  .page-banner__slogan .ant-btn {
-    margin-right: 0;
-    margin-left: 16px;
-  }
-  .page-banner__img {
-    right: initial;
-    left: 0;
-  }
-  .page-feature__bg {
-    transform: skewY(4.5deg);
-  }
-  .page-feature .anticon {
-    margin-right: 0;
-    margin-left: 16px;
-  }
-  @media (max-width: @screen-md-max) {
-    #logo {
-      float: left;
+[dir='rtl'] {
+  .index-page {
+    .page-banner__slogan .ant-btn {
+      margin-right: 0;
+      margin-left: 16px;
+    }
+    .page-banner__img {
+      right: initial;
+      left: 0;
+    }
+    .page-feature__bg {
+      transform: skewY(4.5deg);
+    }
+    .page-feature .anticon {
+      margin-right: 0;
+      margin-left: 16px;
+    }
+    @media (max-width: @screen-md-max) {
+      #logo {
+        float: left;
+      }
     }
   }
 }
