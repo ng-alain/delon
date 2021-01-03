@@ -20,6 +20,41 @@ type: Documents
 
 ## 如何使用
 
+### G2类库加载
+
+默认情况下，在[全局配置](/docs/global-config)已经指定类库 CDN 地址：
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    // 以下是默认配置，如果项目无法外网访问，可以根据 `angular.json` 配置将依赖包直接使用 `./assets***` 路径
+    libs: [
+      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
+      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+    ],
+  },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```
+
+当然也可以在 `index.html` 直接引入 CDN 地址，例如：
+
+```html
+<!-- 引入在线资源，选择你需要的 g2 版本以替换 version 变量 -->
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
+```
+
 ### 导入模块
 
 ```ts

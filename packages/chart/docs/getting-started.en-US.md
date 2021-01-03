@@ -8,6 +8,41 @@ Chart provides the well-designed abstract chart components based on the [G2](htt
 
 ## Usage
 
+### G2 class library loading
+
+By default, the class library CDN address has been specified in [Global Configuration](/docs/global-config):
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    // The following is the default configuration. If the project cannot be accessed from the Internet, you can directly use the `./assets***` path for the dependent package according to the `angular.json` configuration
+    libs: [
+      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
+      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+    ],
+  },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```
+
+Of course, you can also directly import the CDN address in `index.html`, for example:
+
+```html
+<!-- Introduce online resources, select the g2 version you need and replace the version variable -->
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
+```
+
 ### Import module
 
 ```ts
