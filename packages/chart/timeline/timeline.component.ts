@@ -15,10 +15,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { G2Time } from '@delon/chart/core';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput, toDate } from '@delon/util';
+import { G2Service, G2Time } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, toDate } from '@delon/util';
 import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export interface G2TimelineData {
   /**
@@ -75,6 +77,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('container', { static: false }) private node: ElementRef;
   private _chart: Chart;
+  private destroy$ = new Subject<void>();
+  private _install = false;
 
   get chart(): Chart {
     return this._chart;
@@ -100,20 +104,35 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
+  constructor(private srv: G2Service, private ngZone: NgZone, private platform: Platform) {
+    this.theme = srv.cog.theme!;
+    this.srv.notify
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(() => !this._install),
+      )
+      .subscribe(() => this.load());
+  }
+
+  private load(): void {
+    this._install = true;
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnInit(): void {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+    if ((window as any).G2.Chart) {
+      this.load();
+    } else {
+      this.srv.libLoad();
+    }
   }
 
   private install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -236,5 +255,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     if (this._chart) {
       this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

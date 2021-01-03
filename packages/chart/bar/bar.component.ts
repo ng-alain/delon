@@ -15,11 +15,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { G2InteractionType } from '@delon/chart/core';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { G2InteractionType, G2Service } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { fromEvent, Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
 
@@ -52,7 +52,9 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_autoLabel: BooleanInput;
 
   private resize$: Subscription;
+  private destroy$ = new Subject<void>();
   private _chart: Chart;
+  private _install = false;
   @ViewChild('container', { static: true }) private node: ElementRef;
 
   get chart(): Chart {
@@ -74,8 +76,14 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  constructor(private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
+  constructor(private srv: G2Service, private ngZone: NgZone, private platform: Platform) {
+    this.theme = srv.cog.theme!;
+    this.srv.notify
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(() => !this._install),
+      )
+      .subscribe(() => this.load());
   }
 
   private getHeight(): number {
@@ -86,7 +94,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container,
       autoFit: true,
       height: this.getHeight(),
@@ -156,17 +164,27 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
+        takeUntil(this.destroy$),
         filter(() => !!this._chart),
         debounceTime(200),
       )
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
   }
 
+  private load(): void {
+    this._install = true;
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+  }
+
   ngOnInit(): void {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+    if ((window as any).G2.Chart) {
+      this.load();
+    } else {
+      this.srv.libLoad();
+    }
   }
 
   ngOnChanges(): void {
@@ -177,6 +195,8 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     if (this.resize$) {
       this.resize$.unsubscribe();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this._chart) {
       this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }

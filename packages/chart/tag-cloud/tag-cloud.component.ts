@@ -12,12 +12,12 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import DataSet from '@antv/data-set';
-import { Chart, Event, registerShape, Types, Util } from '@antv/g2';
-import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
+import { Chart, Event, Types } from '@antv/g2';
+import { G2Service } from '@delon/chart/core';
+import { InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { fromEvent, Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 export interface G2TagCloudData {
   value?: number;
@@ -44,6 +44,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   static ngAcceptInputType_width: NumberInput;
 
   private resize$: Subscription;
+  private destroy$ = new Subject<void>();
+  private _install = false;
   private _chart: Chart;
 
   get chart(): Chart {
@@ -62,14 +64,25 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
+  constructor(private srv: G2Service, private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, private platform: Platform) {
+    this.theme = srv.cog.theme!;
+    this.srv.notify
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(() => !this._install),
+      )
+      .subscribe(() => this.load());
+  }
+
+  private load(): void {
+    this._install = true;
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   private initTagCloud(): void {
-    registerShape('point', 'cloud', {
+    (window as any).G2.registerShape('point', 'cloud', {
       // tslint:disable-next-line: typedef
-      draw(cfg, container) {
+      draw(cfg: any, container: any) {
         const data = cfg.data as NzSafeAny;
         const textShape = container.addShape({
           type: 'text',
@@ -87,7 +100,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
           } as NzSafeAny,
         });
         if (data.rotate) {
-          Util.rotate(textShape, (data.rotate * Math.PI) / 180);
+          (window as any).G2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
         }
         return textShape;
       },
@@ -103,7 +116,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       this.width = this.el.nativeElement.clientWidth;
     }
 
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: false,
       padding,
@@ -151,7 +164,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     _chart.width = this.width;
     _chart.padding = padding;
 
-    const dv = new DataSet.View().source(data);
+    const dv = new (window as any).DataSet.View().source(data);
     const range = dv.range('value');
     const min = range[0];
     const max = range[1];
@@ -200,7 +213,11 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     }
     this.initTagCloud();
     this.installResizeEvent();
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+    if ((window as any).G2.Chart) {
+      this.load();
+    } else {
+      this.srv.libLoad();
+    }
   }
 
   ngOnChanges(): void {
@@ -214,5 +231,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     if (this._chart) {
       this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

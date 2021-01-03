@@ -13,7 +13,10 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { G2Service } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export interface G2MiniAreaData {
   x: any;
@@ -45,7 +48,9 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_line: BooleanInput;
   static ngAcceptInputType_animate: BooleanInput;
 
+  private destroy$ = new Subject<void>();
   private _chart: Chart;
+  private _install = false;
 
   get chart(): Chart {
     return this._chart;
@@ -72,13 +77,24 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
+  constructor(private srv: G2Service, private el: ElementRef, private ngZone: NgZone, private platform: Platform) {
+    this.theme = srv.cog.theme!;
+    this.srv.notify
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(() => !this._install),
+      )
+      .subscribe(() => this.load());
+  }
+
+  private load(): void {
+    this._install = true;
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   private install(): void {
     const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line, theme } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
@@ -166,7 +182,11 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+    if ((window as any).G2.Chart) {
+      this.load();
+    } else {
+      this.srv.libLoad();
+    }
   }
 
   ngOnChanges(): void {
@@ -177,5 +197,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     if (this._chart) {
       this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
