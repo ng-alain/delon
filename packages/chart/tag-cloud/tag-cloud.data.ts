@@ -1,3 +1,4 @@
+// tslint:disable: one-variable-per-declaration typedef no-conditional-assignment only-arrow-functions ban-comma-operator no-shadowed-variable
 /*
  * Synchronous version of d3-cloud
  */
