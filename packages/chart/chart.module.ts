@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { warnDeprecation } from '@delon/util';
 
 // #region all modules
 
@@ -38,5 +39,14 @@ const MODULES = [
 
 // #endregion
 
+/**
+ * @deprecated Use secondary entry eg: `import { G2BarModule } from '@delon/chart/bar';`.
+ */
 @NgModule({ exports: MODULES })
-export class DelonChartModule {}
+export class DelonChartModule {
+  constructor() {
+    warnDeprecation(
+      "The `DelonChartModule` has been deprecated and will be removed in 12.0.0. Please use secondary entry instead.\ne.g. `import { G2BarModule } from '@delon/chart/bar';`",
+    );
+  }
+}

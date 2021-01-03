@@ -20,6 +20,6 @@
     "angular"
   ],
   "dependencies": {
-    "extend": "^3.0.0"
+    "extend": "@LIB-PLACEHOLDER"
   }
 }
