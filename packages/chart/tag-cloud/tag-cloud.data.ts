@@ -233,7 +233,7 @@ export default function () {
     fontWeight = cloudFontNormal,
     rotate = cloudRotate,
     padding = cloudPadding,
-    spiral = archimedeanSpiral,
+    spiral = rectangularSpiral,
     words: any = [],
     timeInterval = Infinity,
     random = Math.random,
