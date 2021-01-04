@@ -9,7 +9,7 @@ const COMPONENTS = [G2TagCloudComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NzSkeletonModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2TagCloudModule {}

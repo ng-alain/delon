@@ -11,7 +11,7 @@ const COMPONENTS = [G2PieComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NzDividerModule, NzOutletModule, NzSkeletonModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2PieModule {}

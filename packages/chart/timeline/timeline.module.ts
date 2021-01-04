@@ -10,7 +10,7 @@ const COMPONENTS = [G2TimelineComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NzOutletModule, NzSkeletonModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2TimelineModule {}

@@ -11,7 +11,7 @@ const COMPONENTS = [G2RadarComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NzGridModule, NzOutletModule, NzSkeletonModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2RadarModule {}
