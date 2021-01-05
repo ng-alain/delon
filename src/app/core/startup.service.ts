@@ -1,10 +1,10 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS } from '../../style-icons';
-import { Platform } from '@angular/cdk/platform';
 
 @Injectable()
 export class StartupService {
