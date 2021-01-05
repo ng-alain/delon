@@ -36,6 +36,7 @@ import {
   AlainConfigService,
   AlainSTConfig,
   BooleanInput,
+  deepCopy,
   deepMergeKey,
   InputBoolean,
   InputNumber,
@@ -854,6 +855,23 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private optimizeData(): void {
     this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+  }
+
+  /**
+   * Return pure data, `st` internally maintains a set of data for caching, this part of data may affect the backend
+   *
+   * 返回纯净数据，`st` 内部会维护一组用于缓存的数据，这部分数据可能会影响后端
+   */
+  pureItem(itemOrIndex: STData | number): STData | null {
+    if (typeof itemOrIndex === 'number') {
+      itemOrIndex = this._data[itemOrIndex];
+    }
+    if (!itemOrIndex) {
+      return null;
+    }
+    const copyItem = deepCopy(itemOrIndex);
+    delete copyItem._values;
+    return copyItem;
   }
 
   ngAfterViewInit(): void {
