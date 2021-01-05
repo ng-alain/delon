@@ -36,6 +36,7 @@ export class StartupService {
     const win = this.doc.defaultView as any;
     win.hj =
       win.hj ||
+      // tslint:disable-next-line: only-arrow-functions typedef
       function () {
         (win.hj.q = win.hj.q || []).push(arguments);
       };
