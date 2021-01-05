@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "11.0.2",
+  "version": "11.1.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -152,8 +152,8 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.1.0",
     "source-map-explorer": "^2.5.1",
-    "xlsx": "^0.16.7",
-    "screenfull": "^5.0.2",
+    "xlsx": "^0.16.9",
+    "screenfull": "^5.1.0",
     "less-bundle-promise": "^1.0.7",
     "ng-alain-codelyzer": "^0.0.1",
     "ng-alain-sts": "^0.0.1",

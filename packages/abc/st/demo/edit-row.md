@@ -16,7 +16,6 @@ Table with editable rows.
 ```ts
 import { Component, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STData } from '@delon/abc/st';
-import { deepCopy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -82,10 +81,7 @@ export class DemoComponent {
   constructor(private msg: NzMessageService) {}
 
   private submit(i: STData): void {
-    // Remove _values
-    const copyI = deepCopy(i);
-    delete copyI._values;
-    this.msg.success(JSON.stringify(copyI));
+    this.msg.success(JSON.stringify(this.st.pureItem(i)));
     this.updateEdit(i, false);
   }
 

@@ -101,6 +101,7 @@ module: import { STModule } from '@delon/abc/st';
 | `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除） |
 | `removeRow(data: STData | STData[] | number)` | 移除行 |
 | `setRow(index: number | STData, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean })` | 修改行数据，支持部分字段更新 |
+| `pureItem(itemOrIndex: STData | number)` | 返回纯净数据，`st` 内部会维护一组用于缓存的数据，这部分数据可能会影响后端 |
 | `clear(cleanStatus = true)` | 清空所有数据 |
 | `clearStatus()` | 清空所有状态（包含单多选、排序、过滤状态） |
 | `clearCheck()` | 清除所有 `checkbox` |
