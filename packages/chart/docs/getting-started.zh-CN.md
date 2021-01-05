@@ -55,7 +55,7 @@ export class DelonModule {
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
 ```
 
-也可以在 `angular.json` 配置 `assets` 选项，从 `node_modules` 来获得G2类库，例如：
+也可以在 `angular.json` 配置 `assets` 选项（有关 [assets](https://angular.cn/guide/workspace-config#assets-configuration) 文档），从 `node_modules` 来获得G2类库，例如：
 
 ```json
 "assets": [

@@ -43,7 +43,7 @@ Of course, you can also directly import the CDN address in `index.html`, for exa
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
 ```
 
-You can also configure the `assets` option in `angular.json` to obtain the G2 library from `node_modules`, for example:
+You can also configure the `assets` (About [assets](https://angular.io/guide/workspace-config#assets-configuration) Document) option in `angular.json` to obtain the G2 library from `node_modules`, for example:
 
 ```json
 "assets": [
