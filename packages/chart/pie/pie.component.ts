@@ -1,23 +1,7 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { G2InteractionType } from '@delon/chart/core';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Chart, Event } from '@antv/g2';
+import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
@@ -45,8 +29,7 @@ export interface G2PieClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
-  static ngAcceptInputType_delay: NumberInput;
+export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_animate: BooleanInput;
   static ngAcceptInputType_hasLegend: BooleanInput;
@@ -56,15 +39,12 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   static ngAcceptInputType_blockMaxWidth: NumberInput;
   static ngAcceptInputType_select: BooleanInput;
 
-  @ViewChild('container', { static: true }) private node: ElementRef;
-  private _chart: Chart;
   private percentColor: (value: string) => string;
   legendData: NzSafeAny[] = [];
   isPercent: boolean;
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() @InputBoolean() animate = true;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() subTitle: string | TemplateRef<void>;
@@ -82,27 +62,12 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
   @Input() interaction: G2InteractionType = 'none';
-  @Input() theme: string | Types.LooseObject;
   @Output() clickItem = new EventEmitter<G2PieClickItem>();
 
   // #endregion
 
   get block(): boolean {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
-  }
-
-  get chart(): Chart {
-    return this._chart;
-  }
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-    configSrv: AlainConfigService,
-    private platform: Platform,
-  ) {
-    configSrv.attachKey(this, 'chart', 'theme');
   }
 
   private fixData(): void {
@@ -125,9 +90,9 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private install(): void {
+  install(): void {
     const { node, height, padding, tooltip, inner, hasLegend, interaction, theme } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -165,7 +130,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     this.attachChart();
   }
 
-  private attachChart(): void {
+  attachChart(): void {
     const { _chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
     if (!_chart) return;
 
@@ -211,21 +176,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     _chart.render();
   }
 
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
+  onChanges(): void {
     this.fixData();
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

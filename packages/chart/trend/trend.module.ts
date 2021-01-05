@@ -9,7 +9,7 @@ const COMPONENTS = [TrendComponent];
 
 @NgModule({
   imports: [CommonModule, NzIconModule, DelonUtilModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class TrendModule {}

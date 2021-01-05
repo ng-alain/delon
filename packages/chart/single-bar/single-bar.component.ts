@@ -1,17 +1,7 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
-import { Chart, Types } from '@antv/g2';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { Chart } from '@antv/g2';
+import { G2BaseComponent } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 @Component({
   selector: 'g2-single-bar',
@@ -24,8 +14,7 @@ import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInpu
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_delay: NumberInput;
+export class G2SingleBarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_barSize: NumberInput;
   static ngAcceptInputType_min: NumberInput;
@@ -33,15 +22,8 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_value: NumberInput;
   static ngAcceptInputType_line: BooleanInput;
 
-  private _chart: Chart;
-
-  get chart(): Chart {
-    return this._chart;
-  }
-
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() plusColor = '#40a9ff';
   @Input() minusColor = '#ff4d4f';
   @Input() @InputNumber() height = 60;
@@ -53,17 +35,12 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() format: (value: number, item: {}, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() textStyle: any = { fontSize: 12, color: '#595959' };
-  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
-
-  private install(): void {
+  install(): void {
     const { el, height, padding, textStyle, line, format, theme } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
@@ -100,7 +77,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart(): void {
+  attachChart(): void {
     const { _chart, height, padding, value, min, max, plusColor, minusColor, barSize } = this;
     if (!_chart) return;
     _chart.scale({ value: { max, min } });
@@ -109,22 +86,5 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
     _chart.geometries[0].color('value', (val: number) => (val > 0 ? plusColor : minusColor)).size(barSize);
     _chart.changeData([{ value }]);
     _chart.render();
-  }
-
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

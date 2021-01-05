@@ -1,19 +1,7 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { G2BaseComponent } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
 
 export interface G2MiniAreaData {
   x: any;
@@ -37,23 +25,15 @@ export interface G2MiniAreaClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_delay: NumberInput;
+export class G2MiniAreaComponent extends G2BaseComponent {
   static ngAcceptInputType_borderWidth: NumberInput;
   static ngAcceptInputType_height: NumberInput;
   static ngAcceptInputType_fit: BooleanInput;
   static ngAcceptInputType_line: BooleanInput;
   static ngAcceptInputType_animate: BooleanInput;
 
-  private _chart: Chart;
-
-  get chart(): Chart {
-    return this._chart;
-  }
-
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() color = 'rgba(24, 144, 255, 0.2)';
   @Input() borderColor = '#1890FF';
   @Input() @InputNumber() borderWidth = 2;
@@ -67,18 +47,13 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Input() theme: string | Types.LooseObject;
   @Output() clickItem = new EventEmitter<G2MiniAreaClickItem>();
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
-
-  private install(): void {
+  install(): void {
     const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line, theme } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
@@ -141,7 +116,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     this.attachChart();
   }
 
-  private attachChart(): void {
+  attachChart(): void {
     const { _chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
     if (!_chart || !data || data.length <= 0) {
       return;
@@ -160,22 +135,5 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
     _chart.changeData(data);
     _chart.render();
-  }
-
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

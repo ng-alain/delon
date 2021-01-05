@@ -9,7 +9,7 @@ const COMPONENTS = [G2WaterWaveComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NzOutletModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2WaterWaveModule {}

@@ -10,7 +10,7 @@ const COMPONENTS = [NumberInfoComponent];
 
 @NgModule({
   imports: [CommonModule, NzIconModule, DelonUtilModule, NzOutletModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class NumberInfoModule {}

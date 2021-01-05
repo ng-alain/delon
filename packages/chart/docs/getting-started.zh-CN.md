@@ -20,6 +20,72 @@ type: Documents
 
 ## 如何使用
 
+### G2类库加载
+
+默认情况下，在[全局配置](/docs/global-config)已经指定类库 CDN 地址：
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    // 以下是默认配置，如果项目无法外网访问，可以根据 `angular.json` 配置将依赖包直接使用 `./assets***` 路径
+    libs: [
+      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
+      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+    ],
+  },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```
+
+当然也可以在 `index.html` 直接引入 CDN 地址，例如：
+
+```html
+<!-- 引入在线资源，选择你需要的 g2 版本以替换 version 变量 -->
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
+```
+
+也可以在 `angular.json` 配置 `assets` 选项（有关 [assets](https://angular.cn/guide/workspace-config#assets-configuration) 文档），从 `node_modules` 来获得G2类库，例如：
+
+```json
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/g2/dist",
+    "output": "/@antv/g2/"
+  },
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/data-set/dist",
+    "output": "/@antv/data-set/"
+  }
+]
+```
+
+最后修改全局配置的 `libs` 参数为：
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    libs: [
+      './assets/@antv/g2/g2.min.js',
+      './assets/@antv/data-set/data-set.js',
+    ],
+  },
+};
+```
+
 ### 导入模块
 
 ```ts
@@ -35,3 +101,25 @@ import { G2BarModule } from '@delon/chart/bar';
 ## 自定义 G2 组件
 
 使用 [g2-chart](/chart/custom) 组件快速自定义一个图表，可以减少不必要的组件渲染过程中所产生的奇怪问题。
+
+## 配置图表主题
+
+对所有 G2 进行配置图表主题，但只提供接口，有关配置图表主题参数，请参考[G2官网](https://g2.antv.vision/zh/docs/manual/tutorial/theme)。
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { theme: 'dark' },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```

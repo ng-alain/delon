@@ -8,7 +8,7 @@ const COMPONENTS = [G2SingleBarComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class G2SingleBarModule {}
