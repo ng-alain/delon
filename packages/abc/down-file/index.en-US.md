@@ -8,12 +8,6 @@ module: import { DownFileModule } from '@delon/abc/down-file';
 
 A file download based on `blob`.
 
-## Dependencies
-
-```
-yarn add file-saver
-```
-
 ## API
 
 ### [down-file]
