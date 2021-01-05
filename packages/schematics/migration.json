@@ -1,16 +1,6 @@
 {
   "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "migration-v9": {
-      "version": "9",
-      "description": "Updates ng-alain to v9 [https://github.com/ng-alain/ng-alain/issues/1569]",
-      "factory": "./ng-update/index#updateToV9"
-    },
-    "migration-v10": {
-      "version": "10",
-      "description": "Updates ng-alain to v10 [https://github.com/ng-alain/ng-alain/issues/1783]",
-      "factory": "./ng-update/index#updateToV10"
-    },
     "migration-v11": {
       "version": "11",
       "description": "Updates NG-ALAIN to v11 [https://github.com/ng-alain/ng-alain/issues/1863]",
