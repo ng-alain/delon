@@ -11,10 +11,6 @@ A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
 
 ## Dependencies
 
-```
-yarn add file-saver
-```
-
 The jszip script file takes the form of lazy loading，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `//cdn.bootcss.com/jszip/3.3.0/jszip.min.js`.
 
 ## API
