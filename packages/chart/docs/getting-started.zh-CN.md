@@ -70,3 +70,25 @@ import { G2BarModule } from '@delon/chart/bar';
 ## 自定义 G2 组件
 
 使用 [g2-chart](/chart/custom) 组件快速自定义一个图表，可以减少不必要的组件渲染过程中所产生的奇怪问题。
+
+## 配置图表主题
+
+对所有 G2 进行配置图表主题，但只提供接口，有关配置图表主题参数，请参考[G2官网](https://g2.antv.vision/zh/docs/manual/tutorial/theme)。
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { theme: 'dark' },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```

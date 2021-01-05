@@ -58,3 +58,25 @@ import { G2BarModule } from '@delon/chart/bar';
 ## Custom G2 components
 
 Use the [g2-chart](/chart/custom) component to better implement custom charts.
+
+## Configure chart theme
+
+Configure the chart theme for all G2, but only provide interfaces. For the configuration chart theme parameters, please refer to [G2 website](https://g2.antv.vision/zh/docs/manual/tutorial/theme).
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { theme: 'dark' },
+};
+
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: ALAIN_CONFIG, useValue: alainConfig }
+      ]
+    };
+  }
+}
+```
