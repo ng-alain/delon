@@ -161,6 +161,7 @@ export class StartupService {
 <i nz-icon nzType="align-{{type ? 'left' : 'right'}}"></i>
 <i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
 <i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
+<i nz-icon [nzType]="d.status === 'NORMAL' ? 'close1' : 'close2'"></i>
 <i nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
 <i nz-icon nzType="filter" theme="outline"></i>
 <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
