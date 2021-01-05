@@ -21,9 +21,9 @@
     "component"
   ],
   "dependencies": {
-    "isutf8": "^3.0.0",
-    "file-saver": "^2.0.2",
-    "ngx-countdown": "^11.0.0",
+    "isutf8": "@LIB-PLACEHOLDER",
+    "file-saver": "@LIB-PLACEHOLDER",
+    "ngx-countdown": "@LIB-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
