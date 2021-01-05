@@ -7,7 +7,8 @@ DEPENDENCIES=$(node -p "
   const dvs = require('./package.json').devDependencies;
   [
     'extend',
-    'screenfull',
+    'isutf8',
+    'file-saver',
     'ajv',
     '@ngx-translate/core',
     '@ngx-translate/http-loader',
