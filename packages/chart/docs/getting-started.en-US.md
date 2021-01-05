@@ -43,6 +43,37 @@ Of course, you can also directly import the CDN address in `index.html`, for exa
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
 ```
 
+You can also configure the `assets` option in `angular.json` to obtain the G2 library from `node_modules`, for example:
+
+```json
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/g2/dist",
+    "output": "/@antv/g2/"
+  },
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/data-set/dist",
+    "output": "/@antv/data-set/"
+  }
+]
+```
+
+Finally modify the `libs` parameter of the global configuration:
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    libs: [
+      './assets/@antv/g2/g2.min.js',
+      './assets/@antv/data-set/data-set.js',
+    ],
+  },
+};
+```
+
 ### Import module
 
 ```ts

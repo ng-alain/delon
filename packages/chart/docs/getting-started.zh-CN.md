@@ -55,6 +55,37 @@ export class DelonModule {
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/{{version}}/dist/g2.min.js"></script>
 ```
 
+也可以在 `angular.json` 配置 `assets` 选项，从 `node_modules` 来获得G2类库，例如：
+
+```json
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/g2/dist",
+    "output": "/@antv/g2/"
+  },
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@antv/data-set/dist",
+    "output": "/@antv/data-set/"
+  }
+]
+```
+
+最后修改全局配置的 `libs` 参数为：
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  chart: { 
+    libs: [
+      './assets/@antv/g2/g2.min.js',
+      './assets/@antv/data-set/data-set.js',
+    ],
+  },
+};
+```
+
 ### 导入模块
 
 ```ts
