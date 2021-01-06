@@ -93,12 +93,12 @@ For example, to create a custom edit page template, you only need to create the 
 
 ```
 └── _cli-tpl
-│   └── edit                                              // Your template name
-│       └── __path__                                      // (name fixed value)
-│           └── __name@dasherize@if-flat__                // (name fixed value)
-│               ├── __name@dasherize__.component.ts       // Component class file (name fixed value)
-│               ├── __name@dasherize__.component.html     // Component html file (name fixed value)
-│               └── __name@dasherize__.component.spec.ts  // Component spec file (name fixed value)
+│   └── edit                                                       // Your template name
+│       └── __path__                                               // (name fixed value)
+│           └── __name@dasherize@if-flat__                         // (name fixed value)
+│               ├── __name@dasherize__.component.ts.template       // Component class file (name fixed value)
+│               ├── __name@dasherize__.component.html.template     // Component html file (name fixed value)
+│               └── __name@dasherize__.component.spec.ts.template  // Component spec file (name fixed value)
 └── src
 ```
 

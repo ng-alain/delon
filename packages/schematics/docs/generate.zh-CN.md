@@ -90,12 +90,12 @@ ng g ng-alain:edit [page name] --modal=false
 
 ```
 └── _cli-tpl
-│   └── edit                                              // 模板名称
-│       └── __path__                                      // （名称固定值）
-│           └── __name@dasherize@if-flat__                // （名称固定值）
-│               ├── __name@dasherize__.component.ts       // 组件类文件（名称固定值）
-│               ├── __name@dasherize__.component.html     // 组件模板文件（名称固定值）
-│               └── __name@dasherize__.component.spec.ts  // 组件测试文件（名称固定值）
+│   └── edit                                                       // 模板名称
+│       └── __path__                                               // （名称固定值）
+│           └── __name@dasherize@if-flat__                         // （名称固定值）
+│               ├── __name@dasherize__.component.ts.template       // 组件类文件（名称固定值）
+│               ├── __name@dasherize__.component.html.template     // 组件模板文件（名称固定值）
+│               └── __name@dasherize__.component.spec.ts.template  // 组件测试文件（名称固定值）
 └── src
 ```
 
