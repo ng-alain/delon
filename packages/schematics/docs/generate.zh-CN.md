@@ -86,7 +86,7 @@ ng g ng-alain:edit [page name] --modal=false
 
 ## 自定义页
 
-除上述默认业务页以外，也可以自定义属于项目级别业务页，例如我们创建一个自己的编辑页模板，则只需要在项目的根目录创建以下目录结构：
+除上述默认业务页以外，也可以自定义属于项目级别业务页，例如我们创建一个自己的编辑页模板，则只需要在项目的根目录创建以下目录结构（你可以通过 [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl) 上来获取）：
 
 ```
 └── _cli-tpl
