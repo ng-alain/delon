@@ -4,7 +4,7 @@ import * as path from 'path';
 import { buildAlain } from '../utils/alain';
 import { Schema } from './schema';
 
-const REFER = `, please refer to: https://ng-alain.com/cli/generate/en#Custom-template-page`;
+const REFER = `, please refer to: https://ng-alain.com/cli/generate#Customtemplatepage`;
 
 function genFiles(options: Schema): void {
   options._tplDir = path.join(process.cwd(), './_cli-tpl');
