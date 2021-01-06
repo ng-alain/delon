@@ -138,10 +138,9 @@
       "prefix": "",
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["packages/tsconfig.lint.json"],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": ["packages/**/*.ts", "packages/**/*.html", "src/**/*.ts", "src/**/*.html"]
           }
         },
         "test": {
@@ -162,5 +161,8 @@
       }
     }
   },
-  "defaultProject": "site"
+  "defaultProject": "site",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
