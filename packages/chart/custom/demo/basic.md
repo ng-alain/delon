@@ -39,7 +39,7 @@ export class DemoComponent {
       row.percent = row.pv / 50000;
       return row;
     });
-    const chart: Chart = new (window as any).G2.Chart({
+    const chart: Chart = new Chart({
       container: el,
       autoFit: true,
       height: 500,
