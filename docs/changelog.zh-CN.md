@@ -14,6 +14,22 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [11.2.0](https://github.com/ng-alain/delon/compare/11.1.0...11.2.0) (2021-01-13)
+
+### Bug Fixes
+
+* **cli:** 修复 `ng add ng-alain` 时 `screenfull` 无效版本问题 ([#1129](https://github.com/ng-alain/delon/issues/1129)) ([f9291c9](https://github.com/ng-alain/delon/commit/f9291c9852fd769d91c8f395b5462aac110d8e1a))
+* **theme:** 修复路由切换时动画失效 ([#1134](https://github.com/ng-alain/delon/issues/1134)) ([dcb6284](https://github.com/ng-alain/delon/commit/dcb628495a52e4a0b61ee4ad7a692243f29c90c7))
+
+### Features
+
+* **chart:number-info:** 新增多个相同 `number-info` 时显示分隔线 ([#1133](https://github.com/ng-alain/delon/issues/1133)) ([876d4db](https://github.com/ng-alain/delon/commit/876d4db798dfc4cd1ee077324fe3a459bc6fff72))
+
+### BREAKING CHANGES
+
+* **cli:** 将.template后缀用于原理图模板文件，需要对 `_cli-tpl` 目录下的文件手动添加 `.template` 后缀 ([#1128](https://github.com/ng-alain/delon/issues/1128)) ([0ac979e](https://github.com/ng-alain/delon/commit/0ac979e4cc7dcbdfba923be6327e414f3991b2d7))
+
+
 # [11.1.0](https://github.com/ng-alain/delon/compare/11.0.2...11.1.0) (2021-01-05)
 
 ### Scaffold
