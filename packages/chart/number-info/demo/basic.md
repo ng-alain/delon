@@ -1,6 +1,8 @@
 ---
 order: 0
-title: 演示
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
 各种数据文案的展现方式。
