@@ -89,16 +89,16 @@ ng g ng-alain:edit [page name] --modal=false
 
 In addition to the default, you can also customize the project-level business page.
 
-For example, to create a custom edit page template, you only need to create the following directory structure in the project's root directory:
+For example, to create a custom edit page template, you only need to create the following directory structure in the project's root directory (You can get it via [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl)):
 
 ```
 └── _cli-tpl
-│   └── edit                                              // Your template name
-│       └── __path__                                      // (name fixed value)
-│           └── __name@dasherize@if-flat__                // (name fixed value)
-│               ├── __name@dasherize__.component.ts       // Component class file (name fixed value)
-│               ├── __name@dasherize__.component.html     // Component html file (name fixed value)
-│               └── __name@dasherize__.component.spec.ts  // Component spec file (name fixed value)
+│   └── edit                                                       // Your template name
+│       └── __path__                                               // (name fixed value)
+│           └── __name@dasherize@if-flat__                         // (name fixed value)
+│               ├── __name@dasherize__.component.ts.template       // Component class file (name fixed value)
+│               ├── __name@dasherize__.component.html.template     // Component html file (name fixed value)
+│               └── __name@dasherize__.component.spec.ts.template  // Component spec file (name fixed value)
 └── src
 ```
 

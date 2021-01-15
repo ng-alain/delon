@@ -62,6 +62,7 @@ title: 全局参数
 | `@preserve-white-spaces-enabled` | `true` | 解决开启 [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) 时按钮间可能会出现无缝  |
 | `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
 | `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
+| `@router-animation-enabled` | `false` | 是否启用路由切换动画 |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
 | `@router-animation-duration` | `1s` | 路由切换动画时长 |
 

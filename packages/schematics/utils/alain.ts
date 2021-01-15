@@ -99,7 +99,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema): void
     // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
     if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
       const overrideDir = '/' + [project.root, `_cli-tpl/_${schema.schematicName}`].filter(i => !!i).join('/');
-      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
+      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template`;
       if (host.exists(overridePath)) {
         // 所在目录与命令目录同属一个目录结构，因此无须特殊处理
         schema._filesPath = path.relative(__dirname, process.cwd()) + overrideDir;

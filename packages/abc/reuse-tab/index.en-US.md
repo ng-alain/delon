@@ -34,10 +34,9 @@ alainProvides.push({
 
 > In `src/app/layout/base/base.component.ts`
 
-```diff
-- <router-outlet></router-outlet>
-+ <reuse-tab #reuseTab></reuse-tab>
-+ <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+```html
+<reuse-tab #reuseTab></reuse-tab>
+<router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**

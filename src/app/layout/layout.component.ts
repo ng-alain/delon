@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { RTL, RTLService, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
@@ -26,7 +26,6 @@ export class LayoutComponent implements OnDestroy {
   constructor(
     private router: Router,
     msg: NzMessageService,
-    private route: ActivatedRoute,
     private settingsSrv: SettingsService,
     private location: Location,
     rtl: RTLService,
@@ -60,8 +59,9 @@ export class LayoutComponent implements OnDestroy {
   private fixDirection(): void {
     // 修正rtl的query状态
     const direction = this.settingsSrv.layout.direction;
-    const path = this.router.url.split('?')[0];
-    let fragment = this.route.snapshot.fragment as string;
+    const path = this.router.url.split(/[?#|?|#]/)[0];
+    const urlTree = this.router.parseUrl(this.router.url);
+    let fragment = urlTree.fragment;
     if (fragment != null && fragment.length > 0) {
       fragment = `#${fragment}`;
     } else {

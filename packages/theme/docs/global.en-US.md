@@ -62,6 +62,7 @@ title: Global Parameters
 | `@preserve-white-spaces-enabled` | `true` | Fixed between buttons spacing when enabled [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) is true |
 | `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
 | `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
+| `@router-animation-enabled` | `false` | Whether to enable animation when route changing |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
 | `@router-animation-duration` | `1s` | Animation duration |
 
