@@ -19,3 +19,5 @@ module: import { QuickMenuModule } from '@delon/abc/quick-menu';
 | `[width]` | 打开后宽度 | `number` | `200` |
 | `[bgColor]` | 背景 | `string` | - |
 | `[borderColor]` | 边框颜色 | `string` | - |
+| `[expand]` | 当前展开状态，可双向绑定 | `boolean` | - |
+| `(expandChange)` | 当前展开状态改变回调函数 | `EventEmitter<boolean>` | - |
