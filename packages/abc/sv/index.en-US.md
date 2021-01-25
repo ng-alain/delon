@@ -39,3 +39,14 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 ### sv-title
 
 Display title.
+
+### sv-value
+
+值展示。
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[prefix]` | Prefix of value | `string` | - |
+| `[unit]` | Unit of value | `string` | - |
+| `[tooltip]` | Tooltip text of value | `string` | - |
+| `[size]` | Size of value | `'large','small','default'` | `default` |

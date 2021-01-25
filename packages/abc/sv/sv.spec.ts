@@ -255,6 +255,10 @@ describe('abc: view', () => {
       >
         {{ content }}
       </sv>
+      <sv-value>10</sv-value>
+      <sv-value prefix="prefix" unit="unit" tooltip="tooltip" size="large">large</sv-value>
+      <sv-value size="small">small</sv-value>
+      <sv-value size="default">default</sv-value>
     </sv-container>
   `,
 })
