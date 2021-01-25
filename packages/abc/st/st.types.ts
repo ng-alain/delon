@@ -25,4 +25,6 @@ export interface _STColumn extends STColumn {
   __point?: number;
   __renderTitle?: TemplateRef<void>;
   __render?: TemplateRef<void>;
+
+  column?: _STColumn;
 }
