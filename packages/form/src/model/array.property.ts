@@ -53,7 +53,7 @@ export class ArrayProperty extends PropertyGroup {
   _updateValue(): void {
     const value: any[] = [];
     this.forEachChild((property: FormProperty) => {
-      if (property.visible && property._hasValue()) {
+      if (property.visible) {
         value.push({ ...(this.widget?.cleanValue ? null : property.formData), ...property.value });
       }
     });
