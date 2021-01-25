@@ -37,8 +37,13 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
   }
 
+  private reValid(): void {
+    this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: true });
+  }
+
   addItem(): void {
     const property = this.formProperty.add({});
+    this.reValid();
     if (this.ui.add) {
       this.ui.add(property);
     }
@@ -46,6 +51,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
 
   removeItem(index: number): void {
     this.formProperty.remove(index);
+    this.reValid();
     if (this.ui.remove) {
       this.ui.remove(index);
     }
