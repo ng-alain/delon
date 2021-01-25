@@ -1,10 +1,17 @@
 ---
 order: 1
-title: 演示
-bg: f2f4f5
+title:
+  zh-CN: 基础样例
+  en-US: Basic Usage
 ---
 
-点击右侧问号打开菜单。
+## zh-CN
+
+点击右侧问号切换状态菜单。
+
+## en-US
+
+Click the question icon on the right to switch the status menu.
 
 ```ts
 import { Component } from '@angular/core';
@@ -12,7 +19,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-    <quick-menu>
+    <button nz-button type="button" (click)="expand = !expand">{{ expand ? '收缩' : '展开' }}</button>
+    <quick-menu [(expand)]="expand">
       <nz-list [nzBordered]="false" [nzSplit]="false">
         <nz-list-item><a href="#">Link1</a></nz-list-item>
         <nz-list-item><a href="#">Link2</a></nz-list-item>
@@ -23,5 +31,7 @@ import { Component } from '@angular/core';
     </quick-menu>
   `,
 })
-export class DemoComponent {}
+export class DemoComponent {
+  expand = false;
+}
 ```
