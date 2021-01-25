@@ -39,3 +39,14 @@ module: import { SVModule } from '@delon/abc/sv';
 ### sv-title
 
 用于展示标题，单独一行。
+
+### sv-value
+
+值展示。
+
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[prefix]` | 前缀 | `string` | - |
+| `[unit]` | 单位 | `string` | - |
+| `[tooltip]` | 文字提示内容 | `string` | - |
+| `[size]` | 大小 | `'large','small','default'` | `default` |

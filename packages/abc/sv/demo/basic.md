@@ -33,6 +33,18 @@ import { Component } from '@angular/core';
       <sv label="Default"></sv>
       <sv label="Unit" unit="个">10</sv>
       <sv label="Unit" unit="个"></sv>
+      <sv label="Value">
+        <sv-value prefix="约" unit="亿" tooltip="5,011,000,000">50.11</sv-value>
+      </sv>
+      <sv label="Mulit Value">
+        <sv-value>10</sv-value>
+        <sv-value>3</sv-value>
+      </sv>
+      <sv label="Value Size">
+        <sv-value>Default</sv-value>
+        <sv-value size="small">Samll</sv-value>
+        <sv-value size="large">Large</sv-value>
+      </sv>
     </sv-container>
   `,
 })

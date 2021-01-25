@@ -7,9 +7,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { SVContainerComponent } from './sv-container.component';
 import { SVTitleComponent } from './sv-title.component';
+import { SVValueComponent } from './sv-value.component';
 import { SVComponent } from './sv.component';
 
-const COMPONENTS = [SVContainerComponent, SVComponent, SVTitleComponent];
+const COMPONENTS = [SVContainerComponent, SVComponent, SVTitleComponent, SVValueComponent];
 
 @NgModule({
   imports: [CommonModule, ObserversModule, DelonUtilModule, NzToolTipModule, NzIconModule, NzOutletModule],

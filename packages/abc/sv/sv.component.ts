@@ -96,7 +96,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
   checkContent(): void {
     const { conEl } = this;
     const def = this.default;
-    if (!(def != null ? def : this.parent.default)) return;
+    if (!(def != null ? def : this.parent.default)) {
+      return;
+    }
     const el = conEl.nativeElement as HTMLElement;
     const cls = `sv__default`;
     if (el.classList.contains(cls)) {
