@@ -129,7 +129,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: STColumn[][] = [];
+  _headers: _STColumn[][] = [];
   _columns: _STColumn[] = [];
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
@@ -472,7 +472,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           left: 0,
         });
       } else {
-        el.querySelector('.ant-table-body')!.scrollTo(0, 0);
+        el.querySelector('.ant-table-content')!.scrollTo(0, 0);
       }
       return;
     }

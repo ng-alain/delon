@@ -1045,7 +1045,7 @@ describe('abc: table', () => {
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
-      it('should scroll to .ant-table-body when used scroll', fakeAsync(() => {
+      it('should scroll to .ant-table-content when used scroll', fakeAsync(() => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
         page.cd();

@@ -83,6 +83,7 @@
   [nzShowQuickJumper]="page.showQuickJumper"
   [nzShowSizeChanger]="page.showSize"
   [nzPaginationPosition]="page.position"
+  [nzPaginationType]="page.type"
   [nzItemRender]="page.itemRender"
   [nzSimple]="page.simple"
   [nzShowTotal]="totalTpl"
@@ -254,11 +255,6 @@
                 </span>
                 <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
               </ng-container>
-              <ng-template
-                [ngIf]="!c.__renderExpanded"
-                [ngTemplateOutlet]="c.__renderExpanded"
-                [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }"
-              ></ng-template>
             </ng-container>
           </span>
         </td>

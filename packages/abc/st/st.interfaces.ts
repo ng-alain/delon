@@ -5,6 +5,7 @@ import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
+import { NzTablePaginationType } from 'ng-zorro-antd/table';
 import { STComponent } from './st.component';
 
 export interface STWidthMode {
@@ -125,6 +126,10 @@ export interface STPage {
    * 指定分页显示的位置，默认：`bottom`
    */
   position?: 'top' | 'bottom' | 'both';
+  /**
+   * 指定分页显示的尺寸，默认：`default`
+   */
+  type?: NzTablePaginationType;
   /**
    * 指定分页分页方向，默认：`right`
    */
