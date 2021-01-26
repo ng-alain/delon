@@ -16,7 +16,7 @@ import {
 } from '@angular-devkit/schematics';
 import { addImportToModule, findNode } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
-import { getWorkspace } from '@schematics/angular/utility/config';
+import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
@@ -89,8 +89,8 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
 }
 
 export default function (schema: ModuleSchema): Rule {
-  return (host: Tree, context: SchematicContext) => {
-    const workspace = getWorkspace(host);
+  return async (host: Tree, context: SchematicContext) => {
+    const workspace = await getWorkspace(host);
     if (!schema.project) {
       throw new SchematicsException('Option (project) is required.');
     }
@@ -121,9 +121,6 @@ export default function (schema: ModuleSchema): Rule {
       move(parsedPath.path),
     ]);
 
-    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)]))])(
-      host,
-      context,
-    );
+    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)]))]);
   };
 }
