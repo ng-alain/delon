@@ -38,6 +38,7 @@ Select.
 | `[mode]` | Set mode for nz-select, suggest to add `default: null` for `tags`, otherwise, it would initialize an empty label. | `multiple,tags,default` | `default` |
 | `[notFoundContent]` | Content when dropdown list is empty | `string` | - |
 | `[showSearch]` | Enable search for signle select mode | `boolean` | `false` |
+| `[showArrow]` | Whether to show the drop-down arrow | `boolean` | `true`(for single select), `false`(for multiple select) |
 | `[tokenSeparators]` | Separator for automatic word segmentation when it is tags and multiple mode | `string[]` | `[]` |
 | `[maxTagCount]` | Maximum count of tag | `number` | - |
 | `[change]` | Callback function when selected nz-option is changed | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |

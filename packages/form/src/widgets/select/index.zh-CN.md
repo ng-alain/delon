@@ -38,6 +38,7 @@ type: Widgets
 | `[mode]` | 设置 nz-select 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签。 | `multiple,tags,default` | `default` |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[showSearch]` | 使单选模式可搜索 | `boolean` | `false` |
+| `[showArrow]` | 是否显示下拉小箭头 | `boolean` | 单选为 `true`，多选为 `false` |
 | `[tokenSeparators]` | 在 tags 和 multiple 模式下自动分词的分隔符 | `string[]` | `[]` |
 | `[maxTagCount]` | 最多显示多少个 tag | `number` | - |
 | `[change]` | 选中的 nz-option 发生变化时，调用此函数 | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |
