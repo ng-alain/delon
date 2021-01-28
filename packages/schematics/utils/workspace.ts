@@ -79,7 +79,6 @@ export function addAllowedCommonJsDependencies(items: string[], projectName?: st
     }
 
     const result = new Set<string>(...list);
-    // in angular.json
     [
       // 'codesandbox/lib/api/define',
       'hammerjs',

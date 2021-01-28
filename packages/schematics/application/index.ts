@@ -29,6 +29,7 @@ import {
   BUILD_TARGET_SERVE,
   BUILD_TARGET_TEST,
   getProject,
+  getProjectFromWorkspace,
   getProjectTarget,
   overwriteFile,
   readJSON,
@@ -70,7 +71,7 @@ function removeOrginalFiles(): Rule {
 
 function fixAngularJson(options: ApplicationOptions): Rule {
   return updateWorkspace(async workspace => {
-    const p = workspace.projects.get(options.project);
+    const p = getProjectFromWorkspace(workspace, options.project);
     // Add proxy.conf.json
     getProjectTarget(p, BUILD_TARGET_SERVE).proxyConfig = 'proxy.conf.json';
     // 调整budgets
@@ -94,10 +95,10 @@ function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
     // 3rd
     addPackage(tree, [
       // allow ignore ng-zorro-antd becauce of @delon/theme dependency
-      `ng-zorro-antd@${ZORROVERSION}`,
+      // `ng-zorro-antd@${ZORROVERSION}`,
       // ng-zorro-antd need
       'screenfull@DEP-0.0.0-PLACEHOLDER',
-      'ajv@DEP-0.0.0-PLACEHOLDER',
+      // 'ajv@DEP-0.0.0-PLACEHOLDER',
     ]);
     // add ajv
     addAssetsToTarget([{ type: 'script', value: 'node_modules/ajv/dist/ajv.bundle.js' }], 'add', [BUILD_TARGET_BUILD, BUILD_TARGET_TEST]);
@@ -122,9 +123,6 @@ function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
     if (options.i18n) {
       addPackage(tree, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
-    // Configuring CommonJS dependencies
-    // https://angular.io/guide/build#configuring-commonjs-dependencies
-    addAllowedCommonJsDependencies([]);
     return tree;
   };
 }
@@ -194,47 +192,46 @@ function addCodeStylesToPackageJson(): Rule {
   };
 }
 
-function addSchematics(): Rule {
-  return (tree: Tree) => {
-    const angularJsonFile = 'angular.json';
-    const json = readJSON(tree, angularJsonFile, 'schematics');
-    if (json == null) return tree;
-    json.schematics['ng-alain:module'] = {
+function addSchematics(options: ApplicationOptions): Rule {
+  return updateWorkspace(async workspace => {
+    const p = getProjectFromWorkspace(workspace, options.project);
+    const schematics = p.extensions.schematics;
+    schematics['ng-alain:module'] = {
       routing: true,
       spec: false,
     };
-    json.schematics['ng-alain:list'] = {
+    schematics['ng-alain:list'] = {
       spec: false,
     };
-    json.schematics['ng-alain:edit'] = {
-      spec: false,
-      modal: true,
-    };
-    json.schematics['ng-alain:view'] = {
+    schematics['ng-alain:edit'] = {
       spec: false,
       modal: true,
     };
-    json.schematics['ng-alain:curd'] = {
+    schematics['ng-alain:view'] = {
+      spec: false,
+      modal: true,
+    };
+    schematics['ng-alain:curd'] = {
       spec: false,
     };
-    json.schematics['@schematics/angular:module'] = {
+    schematics['@schematics/angular:module'] = {
       routing: true,
       spec: false,
     };
-    json.schematics['@schematics/angular:component'] = {
+    schematics['@schematics/angular:component'] = {
       spec: false,
       flat: false,
       inlineStyle: true,
       inlineTemplate: false,
+      ...schematics['@schematics/angular:component'],
     };
-    json.schematics['@schematics/angular:directive'] = {
+    schematics['@schematics/angular:directive'] = {
       spec: false,
     };
-    json.schematics['@schematics/angular:service'] = {
+    schematics['@schematics/angular:service'] = {
       spec: false,
     };
-    writeJSON(tree, angularJsonFile, json);
-  };
+  });
 }
 
 function addNzLintRules(): Rule {
@@ -390,7 +387,7 @@ function install(): Rule {
 }
 
 function finished(): Rule {
-  return (_host: Tree, _context: SchematicContext) => {
+  return () => {
     spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
   };
 }
@@ -402,12 +399,15 @@ export default function (options: ApplicationOptions): Rule {
     return chain([
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
+      // Configuring CommonJS dependencies
+      // https://angular.io/guide/build#configuring-commonjs-dependencies
+      addAllowedCommonJsDependencies([]),
       // ci
       addRunScriptToPackageJson(),
       addPathsToTsConfig(),
       // code style
       addCodeStylesToPackageJson(),
-      addSchematics(),
+      addSchematics(options),
       addNzLintRules(),
       // files
       removeOrginalFiles(),
