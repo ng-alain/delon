@@ -264,10 +264,7 @@ describe('abc: table', () => {
                 event: jasmine.createSpy(),
               },
             ];
-            page
-              .updateColumn(columns as any)
-              .expectCell('1', 1, 1, 'a')
-              .clickCell('a');
+            page.updateColumn(columns).expectCell('1', 1, 1, 'a').clickCell('a');
             expect(columns[0].event).toHaveBeenCalled();
             page.asyncEnd();
           }));
@@ -295,20 +292,13 @@ describe('abc: table', () => {
         });
         describe('with img', () => {
           it(`should be render img`, fakeAsync(() => {
-            const columns = [{ title: '', index: 'img', type: 'img' }];
-            page
-              .updateColumn(columns as any)
-              .expectCell('', 1, 1, 'img')
-              .asyncEnd();
+            const columns: STColumn[] = [{ title: '', index: 'img', type: 'img' }];
+            page.updateColumn(columns).expectCell('', 1, 1, 'img').asyncEnd();
           }));
           it('should not render img when is empty data', fakeAsync(() => {
-            const columns = [{ title: '', index: 'img', type: 'img' }];
+            const columns: STColumn[] = [{ title: '', index: 'img', type: 'img' }];
             context.data = [{ img: MOCKIMG }, { img: '' }];
-            page
-              .updateColumn(columns as any)
-              .expectCell('', 1, 1, 'img')
-              .expectCell(null, 2, 1, 'img')
-              .asyncEnd();
+            page.updateColumn(columns).expectCell('', 1, 1, 'img').expectCell(null, 2, 1, 'img').asyncEnd();
           }));
         });
         describe('with currency', () => {
