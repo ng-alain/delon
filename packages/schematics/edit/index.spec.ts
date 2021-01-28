@@ -21,8 +21,4 @@ describe('Schematic: edit', () => {
   it('should be has import code', () => {
     expect(tree.readContent(modulePath)).toContain(`import { TradeEditComponent } from './edit/edit.component';`);
   });
-
-  it('Should not be imported into COMPONENTS', () => {
-    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS: Type<void>[] = []`);
-  });
 });

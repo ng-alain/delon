@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
+import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';<% } %><% if(modal) { %>
-import { NzModalRef } from 'ng-zorro-antd/modal';<% } %>
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { _HttpClient } from '@delon/theme';
+import { Location } from '@angular/common';<% } %>
 import { SFSchema, SFUISchema } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';<% if(modal) { %>
+import { NzModalRef } from 'ng-zorro-antd/modal';<% } %>
 
 @Component({
   selector: '<%= selector %>',
@@ -57,14 +57,14 @@ export class <%= componentName %> implements OnInit {
     this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
   }
 
-  save(value: any) {
+  save(value: any): void {
     this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });
   }<% if(modal) { %>
 
-  close() {
+  close(): void {
     this.modal.destroy();
   }<% } %>
 }

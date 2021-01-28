@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc/st';
 import { SFSchema } from '@delon/form';
+import { ModalHelper, _HttpClient } from '@delon/theme';
 
 @Component({
   selector: '<%= selector %>',
@@ -20,7 +20,7 @@ export class <%= componentName %> implements OnInit {
       }
     }
   };
-  @ViewChild('st', { static: false }) st: STComponent;
+  @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'no' },
     { title: '调用次数', type: 'number', index: 'callNo' },
@@ -37,9 +37,9 @@ export class <%= componentName %> implements OnInit {
 
   constructor(private http: _HttpClient, private modal: ModalHelper) { }
 
-  ngOnInit() { }
+  ngOnInit(): void { }
 
-  add() {
+  add(): void {
     // this.modal
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());

@@ -59,10 +59,28 @@ describe('abc: quick-menu', () => {
       style('width', '200px');
     });
   });
+
+  it('#expand', () => {
+    spyOn(context, 'expandChange');
+    context.expand = true;
+    fixture.detectChanges();
+    getEl().click();
+    fixture.detectChanges();
+    expect(context.expandChange).toHaveBeenCalled();
+  });
 });
 
 @Component({
-  template: ` <quick-menu #comp [width]="width" [bgColor]="bgColor" [borderColor]="borderColor"></quick-menu> `,
+  template: `
+    <quick-menu
+      #comp
+      [width]="width"
+      [bgColor]="bgColor"
+      [borderColor]="borderColor"
+      [expand]="expand"
+      (expandChange)="expandChange()"
+    ></quick-menu>
+  `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -70,4 +88,6 @@ class TestComponent {
   width = 200;
   bgColor: string;
   borderColor: string;
+  expand = false;
+  expandChange(): void {}
 }

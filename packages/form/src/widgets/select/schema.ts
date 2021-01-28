@@ -101,6 +101,11 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   tokenSeparators?: string[];
 
   /**
+   * 是否显示箭头，默认：单选为 `true`，多选为 `false`
+   */
+  showArrow?: boolean;
+
+  /**
    * 最多显示多少个 tag
    */
   maxTagCount?: number;

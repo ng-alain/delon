@@ -14,13 +14,11 @@ export interface ZipSaveOptions {
    */
   filename?: string;
   /**
-   * JSZip `generateAsync` 方法的 `options` 选项
-   * @see https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html
+   * JSZip [generateAsync](https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html) 方法的 `options` 选项
    */
   options?: any;
   /**
-   * JSZip `generateAsync` 方法的 `onUpdate` 回调
-   * @see https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html
+   * JSZip [generateAsync](https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html) 方法的 `onUpdate` 回调
    */
   update?: (percent: number, currentFile: string) => void;
   /**

@@ -1,5 +1,6 @@
 <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
   <nz-input-number
+    [nzId]="id"
     [ngModel]="value"
     (ngModelChange)="_setValue($event)"
     [nzDisabled]="disabled"

@@ -6,7 +6,7 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   /**
    * 异步静态数据源
    */
-  asyncData?: (node: NzCascaderOption, index: number, me?: CascaderWidget) => PromiseLike<any>;
+  asyncData?: (node: NzCascaderOption, index: number, me?: CascaderWidget) => PromiseLike<void>;
   /**
    * 在文字框中显示提示讯息
    */
