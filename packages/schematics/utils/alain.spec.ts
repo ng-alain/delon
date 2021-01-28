@@ -21,6 +21,5 @@ const COMPONENTS = [Components...];
     addValueToVariable(tree, fileName, 'COMPONENTS', newComponentName, false);
     const content = tree.readContent(fileName);
     expect(content.includes(`Components...,AComponent`)).toBe(true);
-    expect(content.includes(`Noroute Components...,AComponent`)).toBe(true);
   });
 });

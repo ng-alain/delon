@@ -22,10 +22,6 @@ describe('Schematic: view', () => {
     expect(tree.readContent(modulePath)).toContain(`import { TradeViewComponent } from './view/view.component';`);
   });
 
-  it('should not be imported into COMPONENTS', () => {
-    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS: Type<void>[] = []`);
-  });
-
   it('should support a.b.c module name', async () => {
     tree = await runner.runSchematicAsync('view', { name: 'view', module: 'trade', target: 'list' }, tree).toPromise();
     expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
