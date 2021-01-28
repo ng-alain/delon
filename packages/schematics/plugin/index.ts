@@ -69,6 +69,6 @@ export default function (options: PluginSchema): Rule {
         throw new SchematicsException(`Could not find plugin name: ${options.name}`);
     }
 
-    return chain(rules)(host, context);
+    return chain(rules);
   };
 }

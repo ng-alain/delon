@@ -1,5 +1,5 @@
-import { JsonParseMode, normalize, parseJson } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { parse } from 'jsonc-parser';
 
 export const ANGULAR_CLI_WORKSPACE_PATH = '/angular.json';
 
@@ -90,7 +90,7 @@ export function getWorkspace(host: Tree): Workspace {
     throw new SchematicsException('Could not find angular.json');
   }
 
-  return (parseJson(configBuffer.toString(), JsonParseMode.Json5) as unknown) as Workspace;
+  return (parse(configBuffer.toString()) as unknown) as Workspace;
 }
 
 /**

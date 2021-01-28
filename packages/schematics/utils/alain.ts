@@ -202,7 +202,7 @@ export function buildAlain(schema: CommonSchema): Rule {
       move(null!, schema.path + '/'),
     ]);
 
-    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(host, context);
+    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))]);
   };
 }
 

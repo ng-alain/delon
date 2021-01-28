@@ -16,10 +16,10 @@ import {
 } from '@angular-devkit/schematics';
 import { addImportToModule, findNode } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
-import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
+import { getWorkspace } from '../utils/project';
 import { Schema as ModuleSchema } from './schema';
 
 function addDeclarationToNgModule(options: ModuleSchema): Rule {
@@ -89,8 +89,8 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
 }
 
 export default function (schema: ModuleSchema): Rule {
-  return async (host: Tree, context: SchematicContext) => {
-    const workspace = await getWorkspace(host);
+  return (host: Tree, context: SchematicContext) => {
+    const workspace = getWorkspace(host);
     if (!schema.project) {
       throw new SchematicsException('Option (project) is required.');
     }

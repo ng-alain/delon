@@ -1,5 +1,5 @@
-import { JsonParseMode, parseJson } from '@angular-devkit/core/src/json';
 import { Tree } from '@angular-devkit/schematics';
+import { parse } from 'jsonc-parser';
 import { getProjectFromWorkspace } from './project';
 
 export function getJSON(host: Tree, jsonFile: string, type?: string): any {
@@ -7,7 +7,7 @@ export function getJSON(host: Tree, jsonFile: string, type?: string): any {
 
   const sourceText = host.read(jsonFile)!.toString('utf-8');
   try {
-    const json = parseJson(sourceText, JsonParseMode.Loose);
+    const json = parse(sourceText);
     if (type && !json[type]) {
       json[type] = {};
     }
