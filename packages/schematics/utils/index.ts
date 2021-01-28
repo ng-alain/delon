@@ -1,6 +1,4 @@
-import { from } from 'rxjs';
-
-export * from './_json';
+export * from './json';
 export * from './package';
 export * from './file';
 export * from './workspace';

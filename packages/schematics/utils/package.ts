@@ -1,5 +1,5 @@
 import { Tree } from '@angular-devkit/schematics';
-import { readJSON, writeJSON } from './_json';
+import { readJSON, writeJSON } from './json';
 
 export const PACCKAGE_PATH = 'package.json';
 
