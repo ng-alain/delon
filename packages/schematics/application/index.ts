@@ -1,5 +1,6 @@
 import { Spinner } from '@angular-devkit/build-angular/src/utils/spinner';
-import { strings } from '@angular-devkit/core';
+import { JsonObject, strings } from '@angular-devkit/core';
+import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import {
   apply,
   chain,
@@ -15,32 +16,38 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import * as path from 'path';
 import { getLangData } from '../core/lang.config';
-import { addFiles, overwriteFile } from '../utils/file';
-import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
   addAllowedCommonJsDependencies,
-  addPackageToPackageJson,
-  getAngular,
-  getJSON,
-  getPackage,
-  overwriteAngular,
-  overwriteJSON,
-  overwritePackage,
-  scriptsToAngularJson,
-} from '../utils/json';
-import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
+  addAssetsToTarget,
+  addHeadStyle,
+  addHtmlToBody,
+  addPackage,
+  BUILD_TARGET_BUILD,
+  BUILD_TARGET_SERVE,
+  BUILD_TARGET_TEST,
+  getProject,
+  getProjectFromWorkspace,
+  getProjectTarget,
+  overwriteFile,
+  readJSON,
+  readPackage,
+  VERSION,
+  writeJSON,
+  writePackage,
+  ZORROVERSION,
+} from '../utils';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
-let project: Project;
+let project: ProjectDefinition;
 const spinner = new Spinner();
 
 /** Remove files to be overwrite */
-function removeOrginalFiles(): (host: Tree) => void {
-  return (host: Tree) => {
+function removeOrginalFiles(): Rule {
+  return (tree: Tree) => {
     [
       `${project.root}/README.md`,
       `${project.root}/tslint.json`,
@@ -57,20 +64,18 @@ function removeOrginalFiles(): (host: Tree) => void {
       `${project.sourceRoot}/app/app.component.less`,
       `${project.sourceRoot}/app/app-routing.module.ts`,
     ]
-      .filter(p => host.exists(p))
-      .forEach(p => host.delete(p));
+      .filter(p => tree.exists(p))
+      .forEach(p => tree.delete(p));
   };
 }
 
-function fixAngularJson(options: ApplicationOptions): (host: Tree) => void {
-  return (host: Tree) => {
-    const json = getAngular(host);
-    const _project = getProjectFromWorkspace(json, options.project);
-    const architect = (_project.targets || _project.architect)!;
+function fixAngularJson(options: ApplicationOptions): Rule {
+  return updateWorkspace(async workspace => {
+    const p = getProjectFromWorkspace(workspace, options.project);
     // Add proxy.conf.json
-    architect.serve!.options.proxyConfig = 'proxy.conf.json';
+    getProjectTarget(p, BUILD_TARGET_SERVE).proxyConfig = 'proxy.conf.json';
     // 调整budgets
-    const budgets = architect.build.configurations.production.budgets as Array<{
+    const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject).budgets as Array<{
       type: string;
       maximumWarning: string;
       maximumError: string;
@@ -82,32 +87,29 @@ function fixAngularJson(options: ApplicationOptions): (host: Tree) => void {
         initial.maximumError = '3mb';
       }
     }
-
-    overwriteAngular(host, json);
-    return host;
-  };
+  });
 }
 
-function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree) => void {
-  return (host: Tree) => {
+function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
+  return (tree: Tree) => {
     // 3rd
-    addPackageToPackageJson(host, [
+    addPackage(tree, [
       // allow ignore ng-zorro-antd becauce of @delon/theme dependency
-      `ng-zorro-antd@${ZORROVERSION}`,
+      // `ng-zorro-antd@${ZORROVERSION}`,
       // ng-zorro-antd need
       'screenfull@DEP-0.0.0-PLACEHOLDER',
-      'ajv@DEP-0.0.0-PLACEHOLDER',
+      // 'ajv@DEP-0.0.0-PLACEHOLDER',
     ]);
     // add ajv
-    scriptsToAngularJson(host, ['node_modules/ajv/dist/ajv.bundle.js'], 'add', ['build', 'test']);
+    addAssetsToTarget([{ type: 'script', value: 'node_modules/ajv/dist/ajv.bundle.js' }], 'add', [BUILD_TARGET_BUILD, BUILD_TARGET_TEST]);
     // @delon/*
-    addPackageToPackageJson(
-      host,
+    addPackage(
+      tree,
       ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(pkg => `@delon/${pkg}@${VERSION}`),
     );
     // ng-alain
-    addPackageToPackageJson(
-      host,
+    addPackage(
+      tree,
       [
         `ng-alain@${VERSION}`,
         `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
@@ -119,19 +121,16 @@ function addDependenciesToPackageJson(options: ApplicationOptions): (host: Tree)
     );
     // i18n
     if (options.i18n) {
-      addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
+      addPackage(tree, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
-    // Configuring CommonJS dependencies
-    // https://angular.io/guide/build#configuring-commonjs-dependencies
-    addAllowedCommonJsDependencies(host);
-    return host;
+    return tree;
   };
 }
 
-function addRunScriptToPackageJson(): (host: Tree) => void {
-  return (host: Tree) => {
-    const json = getPackage(host, 'scripts');
-    if (json == null) return host;
+function addRunScriptToPackageJson(): Rule {
+  return (tree: Tree) => {
+    const json = readPackage(tree, 'scripts');
+    if (json == null) return tree;
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
     json.scripts.start = `ng s -o`;
     json.scripts.hmr = `ng s -o --hmr`;
@@ -142,39 +141,39 @@ function addRunScriptToPackageJson(): (host: Tree) => void {
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
     json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
-    overwritePackage(host, json);
-    return host;
+    writePackage(tree, json);
+    return tree;
   };
 }
 
-function addPathsToTsConfig(): (host: Tree) => Tree {
-  return (host: Tree) => {
-    const json = getJSON(host, 'tsconfig.json', 'compilerOptions');
-    if (json == null) return host;
+function addPathsToTsConfig(): Rule {
+  return (tree: Tree) => {
+    const json = readJSON(tree, 'tsconfig.json', 'compilerOptions');
+    if (json == null) return tree;
     if (!json.compilerOptions) json.compilerOptions = {};
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
     const paths = json.compilerOptions.paths;
     paths['@shared'] = ['src/app/shared/index'];
     paths['@core'] = ['src/app/core/index'];
     paths['@env/*'] = ['src/environments/*'];
-    overwriteJSON(host, 'tsconfig.json', json);
-    return host;
+    writeJSON(tree, 'tsconfig.json', json);
+    return tree;
   };
 }
 
-function addCodeStylesToPackageJson(): (host: Tree) => Tree {
-  return (host: Tree) => {
-    const json = getPackage(host);
-    if (json == null) return host;
+function addCodeStylesToPackageJson(): Rule {
+  return (tree: Tree) => {
+    const json = readPackage(tree);
+    if (json == null) return tree;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['pretty-quick'] = `pretty-quick`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
-    overwritePackage(host, json);
+    writePackage(tree, json);
     // dependencies
-    addPackageToPackageJson(
-      host,
+    addPackage(
+      tree,
       [
         `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
         `pretty-quick@DEP-0.0.0-PLACEHOLDER`,
@@ -189,109 +188,93 @@ function addCodeStylesToPackageJson(): (host: Tree) => Tree {
       ],
       'devDependencies',
     );
-    return host;
+    return tree;
   };
 }
 
-function addSchematics(): (host: Tree) => Tree {
-  return (host: Tree) => {
-    const angularJsonFile = 'angular.json';
-    const json = getJSON(host, angularJsonFile, 'schematics');
-    if (json == null) return host;
-    json.schematics['ng-alain:module'] = {
+function addSchematics(options: ApplicationOptions): Rule {
+  return updateWorkspace(async workspace => {
+    const p = getProjectFromWorkspace(workspace, options.project);
+    const schematics = p.extensions.schematics;
+    schematics['ng-alain:module'] = {
       routing: true,
       spec: false,
     };
-    json.schematics['ng-alain:list'] = {
+    schematics['ng-alain:list'] = {
       spec: false,
     };
-    json.schematics['ng-alain:edit'] = {
-      spec: false,
-      modal: true,
-    };
-    json.schematics['ng-alain:view'] = {
+    schematics['ng-alain:edit'] = {
       spec: false,
       modal: true,
     };
-    json.schematics['ng-alain:curd'] = {
+    schematics['ng-alain:view'] = {
+      spec: false,
+      modal: true,
+    };
+    schematics['ng-alain:curd'] = {
       spec: false,
     };
-    json.schematics['@schematics/angular:module'] = {
+    schematics['@schematics/angular:module'] = {
       routing: true,
       spec: false,
     };
-    json.schematics['@schematics/angular:component'] = {
+    schematics['@schematics/angular:component'] = {
       spec: false,
       flat: false,
       inlineStyle: true,
       inlineTemplate: false,
+      ...schematics['@schematics/angular:component'],
     };
-    json.schematics['@schematics/angular:directive'] = {
+    schematics['@schematics/angular:directive'] = {
       spec: false,
     };
-    json.schematics['@schematics/angular:service'] = {
+    schematics['@schematics/angular:service'] = {
       spec: false,
     };
-    overwriteJSON(host, angularJsonFile, json);
-  };
+  });
 }
 
-function addNzLintRules(): (host: Tree) => void {
-  return (host: Tree) => {
-    addPackageToPackageJson(host, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
+function addNzLintRules(): Rule {
+  return (tree: Tree) => {
+    addPackage(tree, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
 
-    const json = getJSON(host, 'tslint.json');
-    if (json == null) return host;
+    const json = readJSON(tree, 'tslint.json');
+    if (json == null) return tree;
 
     json.rulesDirectory.push(`nz-tslint-rules`);
     json.rules['nz-secondary-entry-imports'] = true;
 
-    overwriteJSON(host, 'tslint.json', json);
+    writeJSON(tree, 'tslint.json', json);
 
-    return host;
+    return tree;
   };
 }
 
-function forceLess(): (host: Tree) => void {
-  return (host: Tree) => {
-    scriptsToAngularJson(host, ['src/styles.less'], 'add', ['build'], null!, true);
+function forceLess(): Rule {
+  return () => {
+    addAssetsToTarget([{ type: 'style', value: 'src/styles.less' }], 'add', [BUILD_TARGET_BUILD], null!, true);
   };
 }
 
-function addStyle(): (host: Tree) => Tree {
-  return (host: Tree) => {
+function addStyle(): Rule {
+  return (tree: Tree) => {
     addHeadStyle(
-      host,
+      tree,
       project,
       `  <style type="text/css">.preloader{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;background:#49a9ee;z-index:9999;transition:opacity .65s}.preloader-hidden-add{opacity:1;display:block}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}.cs-loader{position:absolute;top:0;left:0;height:100%;width:100%}.cs-loader-inner{transform:translateY(-50%);top:50%;position:absolute;width:100%;color:#fff;text-align:center}.cs-loader-inner label{font-size:20px;opacity:0;display:inline-block}@keyframes lol{0%{opacity:0;transform:translateX(-300px)}33%{opacity:1;transform:translateX(0)}66%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(300px)}}.cs-loader-inner label:nth-child(6){animation:lol 3s infinite ease-in-out}.cs-loader-inner label:nth-child(5){animation:lol 3s .1s infinite ease-in-out}.cs-loader-inner label:nth-child(4){animation:lol 3s .2s infinite ease-in-out}.cs-loader-inner label:nth-child(3){animation:lol 3s .3s infinite ease-in-out}.cs-loader-inner label:nth-child(2){animation:lol 3s .4s infinite ease-in-out}.cs-loader-inner label:nth-child(1){animation:lol 3s .5s infinite ease-in-out}</style>`,
     );
     addHtmlToBody(
-      host,
+      tree,
       project,
       `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div></div>\n`,
     );
     // add styles
-    addFiles(host, [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`], overwriteDataFileRoot);
+    [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`].forEach(p => {
+      overwriteFile({ tree, filePath: p, content: path.join(overwriteDataFileRoot, p), overwrite: true });
+    });
 
-    return host;
+    return tree;
   };
-}
-
-function mergeFiles(options: ApplicationOptions, from: string, to: string): Rule {
-  return mergeWith(
-    apply(url(from), [
-      options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
-      options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
-      template({
-        utils: strings,
-        ...options,
-        dot: '.',
-        VERSION,
-        ZORROVERSION,
-      }),
-      move(to),
-    ]),
-  );
 }
 
 function addFilesToRoot(options: ApplicationOptions): Rule {
@@ -328,24 +311,24 @@ function addFilesToRoot(options: ApplicationOptions): Rule {
   ]);
 }
 
-function fixLang(options: ApplicationOptions): (host: Tree) => void {
-  return (host: Tree) => {
+function fixLang(options: ApplicationOptions): Rule {
+  return (tree: Tree) => {
     if (options.i18n) return;
     const langs = getLangData(options.defaultLanguage!);
     if (!langs) return;
 
     spinner.text = `Translating template into ${options.defaultLanguage} language, please wait...`;
 
-    host.visit(p => {
+    tree.visit(p => {
       if (~p.indexOf(`/node_modules/`)) return;
 
-      fixLangInHtml(host, p, langs);
+      fixLangInHtml(tree, p, langs);
     });
   };
 }
 
-function fixLangInHtml(host: Tree, p: string, langs: {}): void {
-  let html = host.get(p)!.content.toString('utf8');
+function fixLangInHtml(tree: Tree, p: string, langs: {}): void {
+  let html = tree.get(p)!.content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
   // {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
@@ -380,48 +363,51 @@ function fixLangInHtml(host: Tree, p: string, langs: {}): void {
     html = html.replace(`<header-i18n [showLang]="false" class="langs"></header-i18n>`, ``);
   }
   if (matchCount > 0) {
-    host.overwrite(p, html);
+    tree.overwrite(p, html);
   }
 }
 
-function fixVsCode(): (host: Tree) => void {
-  return (host: Tree) => {
+function fixVsCode(): Rule {
+  return (tree: Tree) => {
     const filePath = '.vscode/extensions.json';
-    let json = getJSON(host, filePath);
+    let json = readJSON(tree, filePath);
     if (json == null) {
-      host.create(filePath, '');
+      tree.create(filePath, '');
       json = {};
     }
     json.recommendations = ['cipchk.ng-alain-extension-pack'];
-    overwriteJSON(host, filePath, json);
+    writeJSON(tree, filePath, json);
   };
 }
 
-function install(): (_host: Tree, context: SchematicContext) => void {
+function install(): Rule {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
   };
 }
 
-function finished(): (_host: Tree, context: SchematicContext) => void {
-  return (_host: Tree, _context: SchematicContext) => {
+function finished(): Rule {
+  return () => {
     spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
   };
 }
 
 export default function (options: ApplicationOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
-    project = getProject(host, options.project);
+  return async (tree: Tree) => {
+    project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
+      // Configuring CommonJS dependencies
+      // https://angular.io/guide/build#configuring-commonjs-dependencies
+      addAllowedCommonJsDependencies([]),
       // ci
       addRunScriptToPackageJson(),
       addPathsToTsConfig(),
       // code style
       addCodeStylesToPackageJson(),
-      addSchematics(),
+      addSchematics(options),
       addNzLintRules(),
       // files
       removeOrginalFiles(),
@@ -433,6 +419,6 @@ export default function (options: ApplicationOptions): Rule {
       fixAngularJson(options),
       install(),
       finished(),
-    ])(host, context);
+    ]);
   };
 }

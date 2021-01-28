@@ -1,10 +1,9 @@
 import { normalize } from '@angular-devkit/core';
-import { SchematicContext, Tree } from '@angular-devkit/schematics';
-import { overwriteFile, readContent } from '../../../utils/file';
-import { logInfo, logStart } from '../../../utils/log';
-import { Project } from '../../../utils/project';
+import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { logInfo, logStart, readContent } from '../../../utils';
 
-let project: Project;
+let project: ProjectDefinition;
 let tree: Tree;
 let context: SchematicContext;
 
@@ -31,12 +30,14 @@ function upgradeStylePath(): void {
   logInfo(context, `Update alain-fullscreen to alain-blank`);
 }
 
-export function fixLayout(p: Project, t: Tree, c: SchematicContext): void {
-  project = p;
-  tree = t;
-  context = c;
+export function fixLayout(p: ProjectDefinition): Rule {
+  return (t: Tree, c: SchematicContext) => {
+    project = p;
+    tree = t;
+    context = c;
 
-  logStart(context, `Use @delon/theme/layout instead`);
+    logStart(context, `Use @delon/theme/layout instead`);
 
-  upgradeStylePath();
+    upgradeStylePath();
+  };
 }

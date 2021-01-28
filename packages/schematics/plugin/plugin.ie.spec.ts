@@ -7,7 +7,7 @@ describe('NgAlainSchematic: plugin: ie', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
-    tree = await runner.runSchematicAsync('plugin', { name: 'ie', type: 'add' }, tree).toPromise();
+    tree = await runner.runSchematicAsync('plugin', { name: 'ie', type: 'add', project: APPNAME }, tree).toPromise();
   });
 
   describe('when add', () => {
@@ -19,7 +19,9 @@ describe('NgAlainSchematic: plugin: ie', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(async () => (tree = await runner.runSchematicAsync('plugin', { name: 'ie', type: 'remove' }, tree).toPromise()));
+    beforeEach(
+      async () => (tree = await runner.runSchematicAsync('plugin', { name: 'ie', type: 'remove', project: APPNAME }, tree).toPromise()),
+    );
     it(`should be working`, () => {
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.app.json`)).toBe(false);
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.spec.json`)).toBe(false);

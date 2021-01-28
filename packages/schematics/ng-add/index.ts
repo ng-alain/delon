@@ -2,7 +2,7 @@ import { chain, Rule, schematic, Tree } from '@angular-devkit/schematics';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { Schema as ApplicationOptions } from '../application/schema';
-import { getJSON } from '../utils/json';
+import { readPackage } from '../utils';
 import { Schema as NgAddOptions } from './schema';
 
 const V = 11;
@@ -63,12 +63,12 @@ function isUseCNPM(): boolean {
 }
 
 export default function (options: NgAddOptions): Rule {
-  return (host: Tree) => {
+  return (tree: Tree) => {
     if (isUseCNPM()) {
       throw new Error(`Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);
     }
 
-    const pkg = getJSON(host, `package.json`);
+    const pkg = readPackage(tree);
 
     if (pkg.devDependencies['ng-alain']) {
       throw new Error(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
