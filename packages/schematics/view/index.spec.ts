@@ -11,7 +11,6 @@ describe('Schematic: view', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
-
     tree = await runner.runSchematicAsync('view', { name: 'view', module: 'trade' }, tree).toPromise();
   });
 

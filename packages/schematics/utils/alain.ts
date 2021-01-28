@@ -1,4 +1,5 @@
 import { strings } from '@angular-devkit/core';
+import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import {
   apply,
   branchAndMerge,
@@ -8,7 +9,6 @@ import {
   move,
   noop,
   Rule,
-  SchematicContext,
   SchematicsException,
   template,
   Tree,
@@ -23,7 +23,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
 import { getSourceFile } from './ast';
-import { getProject, Project } from './project';
+import { getProject } from './workspace';
 
 export interface CommonSchema {
   [key: string]: any;
@@ -39,6 +39,7 @@ export interface CommonSchema {
   selector?: string;
   prefix?: string;
   withoutPrefix?: boolean;
+  project?: string;
 }
 
 function buildSelector(schema: CommonSchema, projectPrefix: string): string {
@@ -73,15 +74,14 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string): strin
   return strings.classify(ret.join('-'));
 }
 
-function resolveSchema(host: Tree, project: Project, schema: CommonSchema): void {
+function resolveSchema(host: Tree, project: ProjectDefinition, schema: CommonSchema): void {
   // module name
   if (!schema.module) {
     throw new SchematicsException(`Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`);
   }
   // path
   if (schema.path === undefined) {
-    const projectDirName = project.projectType === 'application' ? 'app' : 'lib';
-    schema.path = `/${project.sourceRoot}/${projectDirName}/routes`;
+    schema.path = `/${project.sourceRoot}/app/routes`;
   }
 
   schema.path += `/${schema.module}`;
@@ -115,7 +115,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema): void
   schema.routerModulePath = schema.importModulePath!.replace('.module.ts', '-routing.module.ts');
 
   // html selector
-  schema.selector = schema.selector || buildSelector(schema, (project as any).prefix);
+  schema.selector = schema.selector || buildSelector(schema, project.prefix);
 
   validateName(schema.name);
   validateHtmlSelector(schema.selector);
@@ -179,12 +179,15 @@ function addDeclaration(schema: CommonSchema): (host: Tree) => Tree {
 }
 
 export function buildAlain(schema: CommonSchema): Rule {
-  return (host: Tree, context: SchematicContext) => {
-    const project = getProject(host, schema.project);
+  return async (tree: Tree) => {
+    const res = await getProject(tree, schema.project);
+    if (schema.project && res.name !== schema.project) {
+      throw new Error(`The specified project does not match '${schema.project}', current: ${res.name}`);
+    }
+    const project = res.project;
+    resolveSchema(tree, project, schema);
 
-    resolveSchema(host, project, schema);
-
-    schema.componentName = buildComponentName(schema, (project as any).prefix);
+    schema.componentName = buildComponentName(schema, project.prefix);
 
     // Don't support inline
     schema.inlineTemplate = false;

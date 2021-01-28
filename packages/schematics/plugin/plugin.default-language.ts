@@ -1,17 +1,17 @@
-import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getLangConfig } from '../core/lang.config';
-import { getProject } from '../utils/project';
+import { getProject } from '../utils';
 import { PluginOptions } from './interface';
 
 export function pluginDefaultLanguage(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return async (host: Tree) => {
     if (options.type !== 'add') {
       throw new SchematicsException(`Can't be specified the "type" parameter`);
     }
     if (options.defaultLanguage == null) {
       throw new SchematicsException(`Must be specified the "defaultLanguage" parameter`);
     }
-    const project = getProject(host, options.project);
+    const project = (await getProject(host, options.project)).project;
     const modulePath = `${project.sourceRoot}/app/app.module.ts`;
     if (!host.exists(modulePath)) {
       throw new SchematicsException(`AppModule file (${modulePath}) not found`);

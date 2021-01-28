@@ -1,10 +1,10 @@
 import { normalize } from '@angular-devkit/core';
+import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
-import { addImportToModule, addValueToVariable, overwriteIfExists, readContent } from '../utils';
-import { getProject, Project } from '../utils/project';
+import { addImportToModule, addValueToVariable, getProject, overwriteIfExists, readContent } from '../utils';
 import { PluginOptions } from './interface';
 
-let project: Project;
+let project: ProjectDefinition;
 
 function fixImport(): (host: Tree) => Tree {
   return (host: Tree) => {
@@ -38,12 +38,12 @@ function fixImport(): (host: Tree) => Tree {
 }
 
 export function pluginRTL(options: PluginOptions): Rule {
-  return (host: Tree) => {
+  return async (host: Tree) => {
     if (options.type !== 'add') {
       throw new SchematicsException(`Sorry, the plug-in does not support hot swap, if you need to remove it, please handle it manually`);
     }
 
-    project = getProject(host, options.project);
+    project = (await getProject(host, options.project)).project;
 
     return chain([mergeWith(apply(url('./files/rtl'), [move(`${project.sourceRoot}/app`), overwriteIfExists(host)])), fixImport()]);
   };
