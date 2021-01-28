@@ -386,7 +386,7 @@ export class STColumnSource {
         item.yn = { truth: true, ...item.yn };
       }
       if (
-        (item.type === 'link' && typeof item.click !== 'function') ||
+        (item.type === 'link' && (typeof item.click !== 'function' || typeof item.event !== 'function')) ||
         (item.type === 'badge' && item.badge == null) ||
         (item.type === 'tag' && item.tag == null) ||
         (item.type === 'enum' && item.enum == null)

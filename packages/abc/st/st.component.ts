@@ -58,6 +58,7 @@ import {
   STChangeType,
   STColumn,
   STColumnButton,
+  STColumnButtonEventOptions,
   STColumnFilterMenu,
   STColumnSelection,
   STData,
@@ -489,10 +490,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: STData, col: STColumn): boolean {
+  _click(e: Event, item: STData, column: STColumn, index: number): boolean {
     e.preventDefault();
     e.stopPropagation();
-    const res = col.click!(item, this);
+    const res = column.click ? column.click!(item, this) : column.event!({ record: item, instance: this, event: e, column, index });
     if (typeof res === 'string') {
       this.router.navigateByUrl(res, { state: this.routerState });
     }
@@ -502,6 +503,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (this.expandAccordion === false) return;
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
+
   _rowClick(e: Event, item: STData, index: number): void {
     if ((e.target as HTMLElement).nodeName === 'INPUT') return;
     const { expand, expandRowByClick, rowClickTime } = this;
@@ -727,7 +729,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         deepMergeKey({}, true, this.cog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
+        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, e, res));
       return;
     } else if (btn.type === 'drawer') {
       const { drawer } = btn;
@@ -740,22 +742,23 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           deepMergeKey({}, true, this.cog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe(res => this.btnCallback(record, btn, res));
+        .subscribe(res => this.btnCallback(record, btn, e, res));
       return;
     } else if (btn.type === 'link') {
-      const clickRes = this.btnCallback(record, btn);
+      const clickRes = this.btnCallback(record, btn, e);
       if (typeof clickRes === 'string') {
         this.router.navigateByUrl(clickRes, { state: this.routerState });
       }
       return;
     }
-    this.btnCallback(record, btn);
+    this.btnCallback(record, btn, e);
   }
 
-  private btnCallback(record: STData, btn: STColumnButton, modal?: any): any {
-    if (!btn.click) return;
-    if (typeof btn.click === 'string') {
-      switch (btn.click) {
+  private btnCallback(record: STData, btn: STColumnButton, event?: Event, modal?: any): any {
+    const fn = btn.click || btn.event;
+    if (!fn) return;
+    if (typeof fn === 'string') {
+      switch (fn) {
         case 'load':
           this.load();
           break;
@@ -764,7 +767,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           break;
       }
     } else {
-      return btn.click(record, modal, this);
+      if (btn.click) {
+        return (btn.click as (record: STData, modal?: any, instance?: STComponent) => any)(record, modal, this);
+      } else {
+        return (btn.event as (options: STColumnButtonEventOptions) => any)({ record, modal, instance: this, event, btn });
+      }
     }
   }
 

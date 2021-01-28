@@ -269,7 +269,7 @@ class TestComponent {
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
-| `[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | - |
+| `[event]` | Callback of type is link | `(options: STColumnEventOptions) => any` | - |
 | `[badge]` | Config of type is badge | `STColumnBadge` | - |
 | `[tag]` | Config of type is tag | `STColumnTag` | - |
 | `[enum]` | Config of type is enum | `{ [key: string]: string; [key: number]: string }` | - |
@@ -340,7 +340,7 @@ class TestComponent {
 | `[icon]` | Icon of button, coexist with text | `string | STIcon` | - |
 | `[i18n]` | I18n key of button | `string` | - |
 | `[type]` | Type of button | `none,del,modal,static,drawer,link` | - |
-| `[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | - |
+| `[event]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `'reload' | 'load' | ((options: STColumnButtonEventOptions) => any)` | - |
 | `[pop]` | Whether to pop confirm | `boolean, string, STColumnButtonPop` | `false` |
 | `[modal]` | Config of type is modal or static | `STColumnButtonModal` | - |
 | `[drawer]` | Config of type is drawer | `STColumnButtonDrawer` | - |

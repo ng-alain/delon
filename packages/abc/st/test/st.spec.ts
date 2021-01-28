@@ -256,19 +256,19 @@ describe('abc: table', () => {
         });
         describe('with link', () => {
           it(`should be render anchor link`, fakeAsync(() => {
-            const columns = [
+            const columns: STColumn[] = [
               {
                 title: '',
                 index: 'id',
                 type: 'link',
-                click: jasmine.createSpy(),
+                event: jasmine.createSpy(),
               },
             ];
             page
               .updateColumn(columns as any)
               .expectCell('1', 1, 1, 'a')
               .clickCell('a');
-            expect(columns[0].click).toHaveBeenCalled();
+            expect(columns[0].event).toHaveBeenCalled();
             page.asyncEnd();
           }));
           it(`should be text when not specify click`, fakeAsync(() => {
@@ -285,7 +285,7 @@ describe('abc: table', () => {
                   title: '',
                   index: 'link',
                   type: 'link',
-                  click: (item: any) => item.link,
+                  event: ({ record }) => record.link,
                 },
               ])
               .clickCell('a');
@@ -505,7 +505,7 @@ describe('abc: table', () => {
                 { text: 'del', type: 'del' },
                 {
                   type: 'del',
-                  click: jasmine.createSpy(),
+                  event: jasmine.createSpy(),
                   popTitle: 'confirm?',
                 },
               ],
@@ -514,9 +514,9 @@ describe('abc: table', () => {
           page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]');
           // mock trigger
           comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
-          expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
+          expect(columns[0].buttons![1].event).not.toHaveBeenCalled();
           comp._btnClick(comp._data[0], comp._columns[0].buttons![1]);
-          expect(columns[0].buttons![1].click).toHaveBeenCalled();
+          expect(columns[0].buttons![1].event).toHaveBeenCalled();
           page.asyncEnd();
         }));
         it('should custom render text via format', fakeAsync(() => {
@@ -554,7 +554,7 @@ describe('abc: table', () => {
                 {
                   text: 'del',
                   type: 'del',
-                  click: jasmine.createSpy(),
+                  event: jasmine.createSpy(),
                   popTitle: 'confirm?',
                 },
               ],
@@ -582,7 +582,7 @@ describe('abc: table', () => {
             const columns: STColumn[] = [
               {
                 title: '',
-                buttons: [{ text: 'a', click: 'reload' }],
+                buttons: [{ text: 'a', event: 'reload' }],
               },
             ];
             spyOn(comp, 'reload');
@@ -596,7 +596,7 @@ describe('abc: table', () => {
             const columns: STColumn[] = [
               {
                 title: '',
-                buttons: [{ text: 'a', click: 'load' }],
+                buttons: [{ text: 'a', event: 'load' }],
               },
             ];
             spyOn(comp, 'load');
@@ -615,7 +615,7 @@ describe('abc: table', () => {
                     {
                       text: 'a',
                       type: 'modal',
-                      click: jasmine.createSpy(),
+                      event: jasmine.createSpy(),
                       modal: {
                         component: {},
                         params: () => ({ aa: 1 }),
@@ -631,9 +631,9 @@ describe('abc: table', () => {
               expect(modalHelp.create).not.toHaveBeenCalled();
               page.clickCell('a');
               expect(modalHelp.create).toHaveBeenCalled();
-              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).not.toHaveBeenCalled();
               mock$.next({});
-              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).toHaveBeenCalled();
               mock$.unsubscribe();
               page.asyncEnd();
             }));
@@ -645,7 +645,7 @@ describe('abc: table', () => {
                     {
                       text: 'a',
                       type: 'static',
-                      click: jasmine.createSpy(),
+                      event: jasmine.createSpy(),
                       modal: {
                         component: {},
                         params: () => ({ aa: 1 }),
@@ -661,9 +661,9 @@ describe('abc: table', () => {
               expect(modalHelp.createStatic).not.toHaveBeenCalled();
               page.clickCell('a');
               expect(modalHelp.createStatic).toHaveBeenCalled();
-              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).not.toHaveBeenCalled();
               mock$.next({});
-              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).toHaveBeenCalled();
               mock$.unsubscribe();
               page.asyncEnd();
             }));
@@ -677,7 +677,7 @@ describe('abc: table', () => {
                     {
                       text: 'a',
                       type: 'drawer',
-                      click: jasmine.createSpy(),
+                      event: jasmine.createSpy(),
                       drawer: {
                         component: {},
                         params: () => ({ aa: 1 }),
@@ -693,19 +693,19 @@ describe('abc: table', () => {
               expect(drawerHelp.create).not.toHaveBeenCalled();
               page.clickCell('a');
               expect(drawerHelp.create).toHaveBeenCalled();
-              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).not.toHaveBeenCalled();
               mock$.next({});
-              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              expect(columns[0].buttons![0].event).toHaveBeenCalled();
               mock$.unsubscribe();
               page.asyncEnd();
             }));
           });
           describe('#link', () => {
-            it('should be trigger click', fakeAsync(() => {
+            it('should be trigger event', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => null }],
+                  buttons: [{ text: 'a', type: 'link', event: () => null }],
                 },
               ];
               const router = TestBed.inject<Router>(Router);
@@ -720,7 +720,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
+                  buttons: [{ text: 'a', type: 'link', event: () => '/a' }],
                 },
               ];
               const router = TestBed.inject<Router>(Router);
@@ -735,7 +735,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
+                  buttons: [{ text: 'a', type: 'link', event: () => '/a' }],
                 },
               ];
               const router = TestBed.inject<Router>(Router);
@@ -1723,7 +1723,7 @@ describe('abc: table', () => {
             .updateColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }],
+                buttons: [{ text: 'a', event: () => 'load', iif: () => false, iifBehavior: 'hide' }],
               },
             ])
             .expectElCount('.st__body tr td a', 0)
@@ -1734,7 +1734,7 @@ describe('abc: table', () => {
             .updateColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
+                buttons: [{ text: 'a', event: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
               },
             ])
             .expectElCount('.st__btn-disabled', PS)
@@ -1746,7 +1746,7 @@ describe('abc: table', () => {
           .updateColumn([
             {
               title: '',
-              buttons: [{ text: 'a', click: () => 'load', tooltip: 't' }],
+              buttons: [{ text: 'a', event: () => 'load', tooltip: 't' }],
             },
           ])
           .expectElCount('.st__body [nz-tooltip]', PS)

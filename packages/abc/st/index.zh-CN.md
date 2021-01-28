@@ -269,7 +269,7 @@ class TestComponent {
 | `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | - |
 | `[exported]` | 是否允许导出 | `boolean` | `true` |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
-| `[click]` | 链接回调 | `(record: STData, instance?: STComponent) => void` | - |
+| `[event]` | 链接回调 | `(options: STColumnEventOptions) => any` | - |
 | `[badge]` | 徽标配置项 | `STColumnBadge` | - |
 | `[tag]` | 徽标配置项 | `STColumnTag` | - |
 | `[enum]` | 枚举配置项 | `{ [key: string]: string; [key: number]: string }` | - |
@@ -330,7 +330,7 @@ class TestComponent {
 | `[icon]` | 图标与文本共存 | `string | STIcon` | - |
 | `[i18n]` | 文本i18n | `string` | - |
 | `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | - |
-| `[click]` | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | - |
+| `[event]` | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `'reload' | 'load' | ((options: STColumnButtonEventOptions) => any)` | - |
 | `[pop]` | 是否需要气泡确认框 | `boolean, string, STColumnButtonPop` | `false` |
 | `[modal]` | 模态框配置 | `STColumnButtonModal` | - |
 | `[drawer]` | 抽屉配置 | `STColumnButtonDrawer` | - |
