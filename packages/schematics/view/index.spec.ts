@@ -11,7 +11,6 @@ describe('Schematic: view', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
-
     tree = await runner.runSchematicAsync('view', { name: 'view', module: 'trade' }, tree).toPromise();
   });
 
@@ -21,10 +20,6 @@ describe('Schematic: view', () => {
 
   it('should be has import code', () => {
     expect(tree.readContent(modulePath)).toContain(`import { TradeViewComponent } from './view/view.component';`);
-  });
-
-  it('should not be imported into COMPONENTS', () => {
-    expect(tree.readContent(modulePath)).toContain(`const COMPONENTS: Type<void>[] = []`);
   });
 
   it('should support a.b.c module name', async () => {

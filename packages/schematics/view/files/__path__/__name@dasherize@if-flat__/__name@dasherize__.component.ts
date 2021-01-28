@@ -1,8 +1,8 @@
 import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
 import { ActivatedRoute } from '@angular/router';<% } %>
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';<% if(modal) { %>
+import { NzModalRef } from 'ng-zorro-antd/modal';<% } %>
 
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
@@ -20,8 +20,8 @@ export class <%= componentName %> implements OnInit {
   constructor(<% if(modal) { %>
     private modal: NzModalRef,<% } else { %>
     private route: ActivatedRoute,<% } %>
-    public msgSrv: NzMessageService,
-    public http: _HttpClient
+    private msgSrv: NzMessageService,
+    private http: _HttpClient
   ) { }
 
   ngOnInit(): void {<% if(modal) { %>
@@ -29,7 +29,7 @@ export class <%= componentName %> implements OnInit {
     this.http.get(`/user/${this.id}`).subscribe(res => this.i = res);<% } %>
   }<% if(modal) { %>
 
-  close() {
+  close(): void {
     this.modal.destroy();
   }<% } %>
 }
