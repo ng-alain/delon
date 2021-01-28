@@ -1,8 +1,8 @@
 import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
 import { ActivatedRoute } from '@angular/router';<% } %>
 import { _HttpClient } from '@delon/theme';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzMessageService } from 'ng-zorro-antd/message';<% if(modal) { %>
+import { NzModalRef } from 'ng-zorro-antd/modal';<% } %>
 
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
