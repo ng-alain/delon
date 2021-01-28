@@ -6,45 +6,45 @@ import { PluginOptions } from './interface';
 
 let project: ProjectDefinition;
 
-function fixImport(): (host: Tree) => Tree {
-  return (host: Tree) => {
+function fixImport(): Rule {
+  return (tree: Tree) => {
     const basicComponentPath = normalize(`${project.sourceRoot}/app/layout/basic/basic.component.ts`);
-    if (host.exists(basicComponentPath)) {
-      const content = readContent(host, basicComponentPath).replace(
+    if (tree.exists(basicComponentPath)) {
+      const content = readContent(tree, basicComponentPath).replace(
         `<div nz-menu style="width: 200px;">`,
         `<div nz-menu style="width: 200px;"><div nz-menu-item><header-rtl></header-rtl></div>`,
       );
-      host.overwrite(basicComponentPath, content);
+      tree.overwrite(basicComponentPath, content);
     }
 
     // src/app/layout/layout.module.ts
     const layoutModulePath = normalize(`${project.sourceRoot}/app/layout/layout.module.ts`);
-    if (host.exists(layoutModulePath)) {
+    if (tree.exists(layoutModulePath)) {
       const rtlComponentName = 'HeaderRTLComponent';
-      addImportToModule(host, layoutModulePath, rtlComponentName, './basic/widgets/rtl.component');
-      addValueToVariable(host, layoutModulePath, 'HEADERCOMPONENTS', rtlComponentName);
+      addImportToModule(tree, layoutModulePath, rtlComponentName, './basic/widgets/rtl.component');
+      addValueToVariable(tree, layoutModulePath, 'HEADERCOMPONENTS', rtlComponentName);
     }
 
     // src/app/app.module.ts
     const appModulePath = normalize(`${project.sourceRoot}/app/app.module.ts`);
-    if (host.exists(appModulePath)) {
+    if (tree.exists(appModulePath)) {
       const bidiModuleName = 'BidiModule';
-      addImportToModule(host, appModulePath, bidiModuleName, '@angular/cdk/bidi');
-      addValueToVariable(host, appModulePath, 'GLOBAL_THIRD_MODULES', bidiModuleName);
+      addImportToModule(tree, appModulePath, bidiModuleName, '@angular/cdk/bidi');
+      addValueToVariable(tree, appModulePath, 'GLOBAL_THIRD_MODULES', bidiModuleName);
     }
 
-    return host;
+    return tree;
   };
 }
 
 export function pluginRTL(options: PluginOptions): Rule {
-  return async (host: Tree) => {
+  return async (tree: Tree) => {
     if (options.type !== 'add') {
       throw new SchematicsException(`Sorry, the plug-in does not support hot swap, if you need to remove it, please handle it manually`);
     }
 
-    project = (await getProject(host, options.project)).project;
+    project = (await getProject(tree, options.project)).project;
 
-    return chain([mergeWith(apply(url('./files/rtl'), [move(`${project.sourceRoot}/app`), overwriteIfExists(host)])), fixImport()]);
+    return chain([mergeWith(apply(url('./files/rtl'), [move(`${project.sourceRoot}/app`), overwriteIfExists(tree)])), fixImport()]);
   };
 }

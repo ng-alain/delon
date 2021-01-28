@@ -1,7 +1,7 @@
 import { strings } from '@angular-devkit/core';
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import { findNodes } from '@schematics/angular/utility/ast-utils';
-import { Attribute, DefaultTreeDocument, DefaultTreeElement, DefaultTreeNode, parseFragment } from 'parse5';
+import { Attribute, Element, parseFragment } from 'parse5';
 import * as ts from 'typescript';
 import { getSourceFile, updateComponentMetadata } from '../utils';
 import { PluginOptions } from './interface';
@@ -9,6 +9,7 @@ import { PluginOptions } from './interface';
 // includes ng-zorro-antd & @delon/*
 const WHITE_ICONS = [
   // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/icons.ts
+  // new Array(...new Set([...document.querySelectorAll('.pl-smi')].map(el => el.innerText).filter(val => /(Fill|Outline)$/g.test(val))))
   'BarsOutline',
   'CalendarOutline',
   'CaretDownFill',
@@ -77,9 +78,9 @@ ATTRIBUTE_NAMES.forEach(key => {
 
 function findIcons(html: string): string[] {
   const res: string[] = [];
-  const doc = parseFragment(html) as DefaultTreeDocument;
-  const visitNodes = (nodes: DefaultTreeNode[]) => {
-    nodes.forEach((node: DefaultTreeElement) => {
+  const doc = parseFragment(html);
+  const visitNodes = (nodes: Element[]) => {
+    nodes.forEach(node => {
       if (node.attrs) {
         const classIcon = genByClass(node);
         if (classIcon) res.push(classIcon);
@@ -90,16 +91,16 @@ function findIcons(html: string): string[] {
       }
 
       if (node.childNodes) {
-        visitNodes(node.childNodes);
+        visitNodes(node.childNodes as Element[]);
       }
     });
   };
 
-  visitNodes(doc.childNodes);
+  visitNodes(doc.childNodes as Element[]);
   return res;
 }
 
-function genByClass(node: DefaultTreeElement): string | null {
+function genByClass(node: Element): string | null {
   const attr = node.attrs.find(a => a.name === 'class');
   if (!attr || !attr.value) return null;
   const match = attr.value.match(/anticon(-\w+)+/g);
@@ -107,7 +108,7 @@ function genByClass(node: DefaultTreeElement): string | null {
   return match[0];
 }
 
-function genByComp(node: DefaultTreeElement): string[] | null {
+function genByComp(node: Element): string[] | null {
   if (!node.attrs.find(attr => attr.name === 'nz-icon')) return null;
 
   const type = node.attrs.find(attr => ['type', '[type]', 'nztype', '[nztype]'].includes(attr.name));
@@ -123,7 +124,7 @@ function genByComp(node: DefaultTreeElement): string[] | null {
   return [].concat(...types.map(a => themes.map(b => `${a}#${b}`)));
 }
 
-function genByAttribute(node: DefaultTreeElement): string[] | null {
+function genByAttribute(node: Element): string[] | null {
   if (!ATTRIBUTE_NAMES.includes(node.nodeName)) return null;
 
   const attributes = ATTRIBUTES[node.nodeName];
@@ -178,10 +179,10 @@ function fixValue(str: string, prefix: string): string[] {
   return null;
 }
 
-function fixTs(host: Tree, path: string): string[] {
+function fixTs(tree: Tree, path: string): string[] {
   let res: string[] = [];
   updateComponentMetadata(
-    host,
+    tree,
     path,
     (node: ts.PropertyAssignment) => {
       if (!ts.isStringLiteralLike(node.initializer)) return;
@@ -222,18 +223,18 @@ function getIconNameByClassName(value: string): string | null {
   return strings.classify(res);
 }
 
-function getIcons(options: PluginOptions, host: Tree): string[] {
+function getIcons(options: PluginOptions, tree: Tree): string[] {
   const iconClassList: string[] = [];
 
-  host.visit(path => {
+  tree.visit(path => {
     if (~path.indexOf(`/node_modules/`) || !path.startsWith(`/${options.sourceRoot}`)) return;
     let res: string[] = [];
     try {
       if (path.endsWith('.ts')) {
-        res = fixTs(host, path);
+        res = fixTs(tree, path);
       }
       if (path.endsWith('.html')) {
-        res = findIcons(host.read(path)!.toString());
+        res = findIcons(tree.read(path)!.toString());
       }
     } catch (ex) {
       console.warn(`Skip file "${path}" because parsing error: ${ex}`);
@@ -253,10 +254,10 @@ function getIcons(options: PluginOptions, host: Tree): string[] {
   return Array.from(iconSet).sort() as string[];
 }
 
-function genCustomIcons(options: PluginOptions, host: Tree): void {
+function genCustomIcons(options: PluginOptions, tree: Tree): void {
   const path = options.sourceRoot + `/style-icons.ts`;
-  if (!host.exists(path)) {
-    host.create(
+  if (!tree.exists(path)) {
+    tree.create(
       path,
       `// Custom icon static resources
 
@@ -267,7 +268,7 @@ export const ICONS = [ ];
     );
     return;
   }
-  const source = getSourceFile(host, path);
+  const source = getSourceFile(tree, path);
   const allImports = findNodes(source as any, ts.SyntaxKind.ImportDeclaration);
   const iconImport = allImports.find((w: ts.ImportDeclaration) =>
     w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons'),
@@ -276,7 +277,7 @@ export const ICONS = [ ];
   (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v => WHITE_ICONS.push(v.getText().trim()));
 }
 
-function genIconFile(options: PluginOptions, host: Tree, icons: string[]): void {
+function genIconFile(options: PluginOptions, tree: Tree, icons: string[]): void {
   const content = `/*
 * Automatically generated by 'ng g ng-alain:plugin icon'
 */
@@ -290,19 +291,19 @@ export const ICONS_AUTO = [
 ];
 `;
   const savePath = options.sourceRoot + `/style-icons-auto.ts`;
-  if (host.exists(savePath)) {
-    host.overwrite(savePath, content);
+  if (tree.exists(savePath)) {
+    tree.overwrite(savePath, content);
   } else {
-    host.create(savePath, content);
+    tree.create(savePath, content);
   }
 }
 
 export function pluginIcon(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return (tree: Tree) => {
     console.log(`Analyzing files...`);
-    genCustomIcons(options, host);
-    const icons = getIcons(options, host);
-    genIconFile(options, host, icons);
+    genCustomIcons(options, tree);
+    const icons = getIcons(options, tree);
+    genIconFile(options, tree, icons);
     console.log(`\n\n`);
     console.log(`生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
     console.log(`Finished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);

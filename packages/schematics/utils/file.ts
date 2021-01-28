@@ -1,15 +1,15 @@
 import { forEach, Rule, Tree } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 
-export function tryDelFile(host: Tree, filePath: string): void {
-  if (host.exists(filePath)) {
-    host.delete(filePath);
+export function tryDelFile(tree: Tree, filePath: string): void {
+  if (tree.exists(filePath)) {
+    tree.delete(filePath);
   }
 }
 
-export function tryAddFile(host: Tree, filePath: string, content: string): void {
-  tryDelFile(host, filePath);
-  host.create(filePath, content);
+export function tryAddFile(tree: Tree, filePath: string, content: string): void {
+  tryDelFile(tree, filePath);
+  tree.create(filePath, content);
 }
 
 export function readContent(tree: Tree, filePath: string): string {

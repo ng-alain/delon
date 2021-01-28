@@ -3,8 +3,8 @@ import { readPackage, writePackage } from '../utils';
 import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
-  return (host: Tree) => {
-    const json = readPackage(host);
+  return (tree: Tree) => {
+    const json = readPackage(tree);
     if (json == null) return;
 
     if (options.type === 'add') {
@@ -17,6 +17,6 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
       delete json.husky;
     }
 
-    writePackage(host, json);
+    writePackage(tree, json);
   };
 }

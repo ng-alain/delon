@@ -20,8 +20,8 @@ function installPackages(): (_host: Tree, context: SchematicContext) => void {
 }
 
 export default function (options: PluginSchema): Rule {
-  return async (host: Tree) => {
-    const res = await getProject(host, options.project);
+  return async (tree: Tree) => {
+    const res = await getProject(tree, options.project);
     const project = res.project;
     const pluginOptions: PluginOptions = {
       type: options.type,

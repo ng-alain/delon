@@ -2,11 +2,11 @@ import { Rule, Tree } from '@angular-devkit/schematics';
 import { tryAddFile, tryDelFile } from '../utils';
 import { PluginOptions } from './interface';
 
-function setIgnore(host: Tree, options: PluginOptions): void {
+function setIgnore(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/.dockerignore`;
   if (options.type === 'add') {
     tryAddFile(
-      host,
+      tree,
       filePath,
       `node_modules
 npm-debug.log
@@ -20,15 +20,15 @@ LICENSE
 .vscode`,
     );
   } else {
-    tryDelFile(host, filePath);
+    tryDelFile(tree, filePath);
   }
 }
 
-function setCompose(host: Tree, options: PluginOptions): void {
+function setCompose(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/docker-compose.yml`;
   if (options.type === 'add') {
     tryAddFile(
-      host,
+      tree,
       filePath,
       `version: '2.1'
 
@@ -43,15 +43,15 @@ services:
 `,
     );
   } else {
-    tryDelFile(host, filePath);
+    tryDelFile(tree, filePath);
   }
 }
 
-function setDockerfile(host: Tree, options: PluginOptions): void {
+function setDockerfile(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/Dockerfile`;
   if (options.type === 'add') {
     tryAddFile(
-      host,
+      tree,
       filePath,
       `# STEP 1: Build
 FROM node:10 as builder
@@ -83,14 +83,14 @@ CMD [ "nginx", "-g", "daemon off;"]
 `,
     );
   } else {
-    tryDelFile(host, filePath);
+    tryDelFile(tree, filePath);
   }
 }
 
-function setNginx(host: Tree, options: PluginOptions): void {
+function setNginx(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/_nginx/default.conf`;
-  if (options.type === 'add' && !host.exists(filePath)) {
-    host.create(
+  if (options.type === 'add' && !tree.exists(filePath)) {
+    tree.create(
       filePath,
       `server {
   listen       80;
@@ -125,14 +125,14 @@ function setNginx(host: Tree, options: PluginOptions): void {
 }
 
 export function pluginDocker(options: PluginOptions): Rule {
-  return (host: Tree) => {
+  return (tree: Tree) => {
     // 1. ignore file
-    setIgnore(host, options);
+    setIgnore(tree, options);
     // 2. docker-compose
-    setCompose(host, options);
+    setCompose(tree, options);
     // 3. Dockerfile
-    setDockerfile(host, options);
+    setDockerfile(tree, options);
     // 4. nginx config
-    setNginx(host, options);
+    setNginx(tree, options);
   };
 }

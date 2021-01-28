@@ -4,8 +4,8 @@ import { Change, InsertChange, RemoveChange, ReplaceChange } from '@schematics/a
 import * as ts from 'typescript';
 
 /** Reads file given path and returns TypeScript source file. */
-export function getSourceFile(host: Tree, path: string): ts.SourceFile {
-  const buffer = host.read(path);
+export function getSourceFile(tree: Tree, path: string): ts.SourceFile {
+  const buffer = tree.read(path);
   if (!buffer) {
     throw new SchematicsException(`Could not find file for path: ${path}`);
   }
@@ -13,10 +13,10 @@ export function getSourceFile(host: Tree, path: string): ts.SourceFile {
   return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
 }
 
-export function commitChanges(host: Tree, src: string, changes: Change[]): void {
+export function commitChanges(tree: Tree, src: string, changes: Change[]): void {
   if (!changes || changes.length <= 0) return;
 
-  const recorder = host.beginUpdate(src);
+  const recorder = tree.beginUpdate(src);
 
   changes.forEach(change => {
     if (change instanceof InsertChange) {
@@ -41,11 +41,11 @@ export function commitChanges(host: Tree, src: string, changes: Change[]): void 
     }
   });
 
-  host.commitUpdate(recorder);
+  tree.commitUpdate(recorder);
 }
 
-export function updateComponentMetadata(host: Tree, src: string, callback: (node: ts.Node) => Change[], propertyName?: string): void {
-  const source = getSourceFile(host, src);
+export function updateComponentMetadata(tree: Tree, src: string, callback: (node: ts.Node) => Change[], propertyName?: string): void {
+  const source = getSourceFile(tree, src);
 
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
   if (nodes.length === 0) return;
@@ -61,6 +61,6 @@ export function updateComponentMetadata(host: Tree, src: string, callback: (node
   }
 
   if (changes && changes.length > 0) {
-    commitChanges(host, src, changes);
+    commitChanges(tree, src, changes);
   }
 }
