@@ -12,6 +12,6 @@ export class <%= componentName %> implements OnInit {
 
   constructor(private http: _HttpClient) { }
 
-  ngOnInit() { }
+  ngOnInit(): void { }
 
 }

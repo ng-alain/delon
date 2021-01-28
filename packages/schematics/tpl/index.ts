@@ -15,7 +15,7 @@ function genFiles(options: Schema): void {
   }
   const names = fs.readdirSync(options._tplDir);
   if (names.indexOf(options.tplName!) === -1) {
-    throw new SchematicsException(`Could not find name [${options.tplName}] templates${REFER}`);
+    throw new SchematicsException(`Could not find name [${options.tplName}] templates in ${options._tplDir}${REFER}`);
   }
 
   options._filesPath = path.relative(__dirname, path.join(options._tplDir, options.tplName!));
