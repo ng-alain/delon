@@ -163,12 +163,10 @@ function addDeclaration(schema: CommonSchema): (host: Tree) => Tree {
 
     // imports
     addImportToModule(host, schema.importModulePath!, schema.componentName!, getRelativePath(schema.importModulePath!, schema));
+    addValueToVariable(host, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
 
     // component
-    if (schema.modal === true) {
-      addValueToVariable(host, schema.importModulePath!, 'COMPONENTS_NOROUNT', schema.componentName!);
-    } else {
-      addValueToVariable(host, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
+    if (schema.modal !== true) {
       // routing
       addImportToModule(host, schema.routerModulePath!, schema.componentName!, getRelativePath(schema.routerModulePath!, schema));
       addValueToVariable(host, schema.routerModulePath!, 'routes', `{ path: '${schema.name}', component: ${schema.componentName} }`);

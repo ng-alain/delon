@@ -29,7 +29,7 @@ ng g ng-alain:module trade
 
 Will be generated `trade.module.ts`, `trade-routing.module.ts` in the `routes/trade` directory.
 
-The module imports `SharedModule` and some import and export specifications, and you can't destroy these variable names (like this: `COMPONENTS`, `COMPONENTS_NOROUNT`, `routes`).
+The module imports `SharedModule` and some import and export specifications, and you can't destroy these variable names (like this: `COMPONENTS`, `routes`).
 
 ## Business page
 
