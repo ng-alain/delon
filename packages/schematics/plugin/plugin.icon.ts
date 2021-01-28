@@ -1,9 +1,9 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, Tree } from '@angular-devkit/schematics';
-import { findNodes } from '@schematics/angular/utility/ast-utils';
+import { findNodes, getDecoratorMetadata } from '@schematics/angular/utility/ast-utils';
 import { Attribute, Element, parseFragment } from 'parse5';
 import * as ts from 'typescript';
-import { getSourceFile, updateComponentMetadata } from '../utils';
+import { getSourceFile } from '../utils';
 import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*
@@ -180,18 +180,19 @@ function fixValue(str: string, prefix: string): string[] {
 }
 
 function fixTs(tree: Tree, path: string): string[] {
-  let res: string[] = [];
-  updateComponentMetadata(
-    tree,
-    path,
-    (node: ts.PropertyAssignment) => {
-      if (!ts.isStringLiteralLike(node.initializer)) return;
-      res = findIcons(node.initializer.getText());
-      return [];
-    },
-    `template`,
-  );
-  return res;
+  const source = getSourceFile(tree, path);
+  const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
+  if (nodes.length === 0) {
+    return [];
+  }
+  const templateNode = (nodes[0] as ts.ObjectLiteralExpression).properties.find(
+    p => p.name!.getText() === `template`,
+  ) as ts.PropertyAssignment;
+  if (!templateNode || !ts.isStringLiteralLike(templateNode.initializer)) {
+    return [];
+  }
+
+  return findIcons(templateNode.initializer.getText());
 }
 
 function getIconNameByClassName(value: string): string | null {
