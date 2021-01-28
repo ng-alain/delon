@@ -3,7 +3,7 @@ import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { findNodes } from '@schematics/angular/utility/ast-utils';
 import { Attribute, DefaultTreeDocument, DefaultTreeElement, DefaultTreeNode, parseFragment } from 'parse5';
 import * as ts from 'typescript';
-import { getSourceFile, updateComponentMetadata } from '../utils/ast';
+import { getSourceFile, updateComponentMetadata } from '../utils';
 import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*

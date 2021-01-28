@@ -1,10 +1,10 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
-import { getJSON, overwritePackage } from '../utils/json';
+import { readPackage, writePackage } from '../utils';
 import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
   return (host: Tree) => {
-    const json = getJSON(host, 'package.json');
+    const json = readPackage(host);
     if (json == null) return;
 
     if (options.type === 'add') {
@@ -17,6 +17,6 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
       delete json.husky;
     }
 
-    overwritePackage(host, json);
+    writePackage(host, json);
   };
 }

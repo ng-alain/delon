@@ -1,5 +1,5 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
-import { tryAddFile, tryDelFile } from '../utils/alain';
+import { tryAddFile, tryDelFile } from '../utils';
 import { PluginOptions } from './interface';
 
 function setIgnore(host: Tree, options: PluginOptions): void {

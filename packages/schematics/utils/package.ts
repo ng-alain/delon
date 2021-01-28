@@ -15,8 +15,8 @@ export function writePackage(tree: Tree, json: any): any {
  * Adds a package to the package.json
  *
  * ```
- * addPackageToPackageJson(host, [ '＠delon/abc＠^1.0.0' ])
- * addPackageToPackageJson(host, [ '＠delon/abc＠^1.0.0' ], 'devDependencies')
+ * addPackage(host, [ '＠delon/abc＠^1.0.0' ])
+ * addPackage(host, [ '＠delon/abc＠^1.0.0' ], 'devDependencies')
  * ```
  */
 export function addPackage(
@@ -43,8 +43,8 @@ export function addPackage(
  * Removes a package to the package.json
  *
  * ```
- * addPackageToPackageJson(host, [ '＠delon/abc' ])
- * addPackageToPackageJson(host, [ '＠delon/abc' ], 'devDependencies')
+ * removePackage(host, [ '＠delon/abc' ])
+ * removePackage(host, [ '＠delon/abc' ], 'devDependencies')
  * ```
  */
 export function removePackage(

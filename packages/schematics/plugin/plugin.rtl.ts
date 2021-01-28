@@ -1,7 +1,6 @@
 import { normalize } from '@angular-devkit/core';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
-import { addImportToModule, addValueToVariable } from '../utils/alain';
-import { overwriteIfExists, readContent } from '../utils/file';
+import { addImportToModule, addValueToVariable, overwriteIfExists, readContent } from '../utils';
 import { getProject, Project } from '../utils/project';
 import { PluginOptions } from './interface';
 

@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as colors from 'ansi-colors';
-import { overwriteFile, readContent } from '../utils/file';
+import { overwriteFile, readContent } from '../utils';
 import { addPackageToPackageJson, getAngular, overwriteAngular, removePackageFromPackageJson } from '../utils/json';
 import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
 import tsConfigEs5App from './files/ie/tsconfig-es5.app';
@@ -28,15 +28,15 @@ function setAngularJson(host: Tree, options: PluginOptions): void {
   overwriteAngular(host, json);
 }
 
-function setBrowserslist(host: Tree, options: PluginOptions): void {
+function setBrowserslist(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/.browserslistrc`;
-  let content = readContent(host, filePath);
+  let content = readContent(tree, filePath);
   if (options.type === 'add') {
     content = content.replace(`not IE 11`, `IE 11`);
   } else {
     content = content.replace(`IE 11`, `not IE 11`);
   }
-  overwriteFile(host, filePath, content, true, true);
+  overwriteFile({ tree, filePath, content, overwrite: true, contentIsString: true });
 }
 
 function setPackage(host: Tree, options: PluginOptions): void {
@@ -54,7 +54,7 @@ function setPackage(host: Tree, options: PluginOptions): void {
   );
 }
 
-function setPolyfills(host: Tree, options: PluginOptions): void {
+function setPolyfills(tree: Tree, options: PluginOptions): void {
   const filePath = `${project.sourceRoot}/polyfills.ts`;
   let content = '';
   if (options.type === 'add') {
@@ -65,21 +65,33 @@ import 'zone.js/dist/zone';`;
   } else {
     content = `import 'zone.js/dist/zone';`;
   }
-  overwriteFile(host, filePath, content, true, true);
+  overwriteFile({ tree, filePath, content, overwrite: true, contentIsString: true });
 }
 
-function setTsConfig(host: Tree, options: PluginOptions): void {
+function setTsConfig(tree: Tree, options: PluginOptions): void {
   // build
   const buildFilePath = `${options.root}/tsconfig-es5.app.json`;
-  if (host.exists(buildFilePath)) host.delete(buildFilePath);
+  if (tree.exists(buildFilePath)) tree.delete(buildFilePath);
   if (options.type === 'add') {
-    overwriteFile(host, buildFilePath, JSON.stringify(tsConfigEs5App, null, 2), true, true);
+    overwriteFile({
+      tree,
+      filePath: buildFilePath,
+      content: JSON.stringify(tsConfigEs5App, null, 2),
+      overwrite: true,
+      contentIsString: true,
+    });
   }
   // spec
   const specFilePath = `${options.root}/tsconfig-es5.spec.json`;
-  if (host.exists(specFilePath)) host.delete(specFilePath);
+  if (tree.exists(specFilePath)) tree.delete(specFilePath);
   if (options.type === 'add') {
-    overwriteFile(host, specFilePath, JSON.stringify(tsConfigEs5Spec, null, 2), true, true);
+    overwriteFile({
+      tree,
+      filePath: specFilePath,
+      content: JSON.stringify(tsConfigEs5Spec, null, 2),
+      overwrite: true,
+      contentIsString: true,
+    });
   }
 }
 

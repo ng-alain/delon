@@ -23,15 +23,20 @@ import { getLangData } from '../core/lang.config';
 import {
   addAllowedCommonJsDependencies,
   addAssetsToTarget,
+  addHeadStyle,
+  addHtmlToBody,
   addPackage,
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
   getProject,
+  overwriteFile,
+  readJSON,
+  readPackage,
+  VERSION,
+  writeJSON,
+  writePackage,
+  ZORROVERSION,
 } from '../utils';
-import { addFiles } from '../utils/file';
-import { addHeadStyle, addHtmlToBody } from '../utils/html';
-import { getJSON, getPackage, overwriteJSON, overwritePackage } from '../utils/json';
-import { VERSION, ZORROVERSION } from '../utils/lib-versions';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
@@ -126,7 +131,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
 
 function addRunScriptToPackageJson(): Rule {
   return (host: Tree) => {
-    const json = getPackage(host, 'scripts');
+    const json = readPackage(host, 'scripts');
     if (json == null) return host;
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
     json.scripts.start = `ng s -o`;
@@ -138,14 +143,14 @@ function addRunScriptToPackageJson(): Rule {
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
     json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
-    overwritePackage(host, json);
+    writePackage(host, json);
     return host;
   };
 }
 
 function addPathsToTsConfig(): Rule {
   return (host: Tree) => {
-    const json = getJSON(host, 'tsconfig.json', 'compilerOptions');
+    const json = readJSON(host, 'tsconfig.json', 'compilerOptions');
     if (json == null) return host;
     if (!json.compilerOptions) json.compilerOptions = {};
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
@@ -153,21 +158,21 @@ function addPathsToTsConfig(): Rule {
     paths['@shared'] = ['src/app/shared/index'];
     paths['@core'] = ['src/app/core/index'];
     paths['@env/*'] = ['src/environments/*'];
-    overwriteJSON(host, 'tsconfig.json', json);
+    writeJSON(host, 'tsconfig.json', json);
     return host;
   };
 }
 
 function addCodeStylesToPackageJson(): Rule {
   return (host: Tree) => {
-    const json = getPackage(host);
+    const json = readPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['pretty-quick'] = `pretty-quick`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
-    overwritePackage(host, json);
+    writePackage(host, json);
     // dependencies
     addPackage(
       host,
@@ -192,7 +197,7 @@ function addCodeStylesToPackageJson(): Rule {
 function addSchematics(): Rule {
   return (host: Tree) => {
     const angularJsonFile = 'angular.json';
-    const json = getJSON(host, angularJsonFile, 'schematics');
+    const json = readJSON(host, angularJsonFile, 'schematics');
     if (json == null) return host;
     json.schematics['ng-alain:module'] = {
       routing: true,
@@ -228,7 +233,7 @@ function addSchematics(): Rule {
     json.schematics['@schematics/angular:service'] = {
       spec: false,
     };
-    overwriteJSON(host, angularJsonFile, json);
+    writeJSON(host, angularJsonFile, json);
   };
 }
 
@@ -236,13 +241,13 @@ function addNzLintRules(): Rule {
   return (host: Tree) => {
     addPackage(host, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
 
-    const json = getJSON(host, 'tslint.json');
+    const json = readJSON(host, 'tslint.json');
     if (json == null) return host;
 
     json.rulesDirectory.push(`nz-tslint-rules`);
     json.rules['nz-secondary-entry-imports'] = true;
 
-    overwriteJSON(host, 'tslint.json', json);
+    writeJSON(host, 'tslint.json', json);
 
     return host;
   };
@@ -255,21 +260,23 @@ function forceLess(): Rule {
 }
 
 function addStyle(): Rule {
-  return (host: Tree) => {
+  return (tree: Tree) => {
     addHeadStyle(
-      host,
+      tree,
       project,
       `  <style type="text/css">.preloader{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;background:#49a9ee;z-index:9999;transition:opacity .65s}.preloader-hidden-add{opacity:1;display:block}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}.cs-loader{position:absolute;top:0;left:0;height:100%;width:100%}.cs-loader-inner{transform:translateY(-50%);top:50%;position:absolute;width:100%;color:#fff;text-align:center}.cs-loader-inner label{font-size:20px;opacity:0;display:inline-block}@keyframes lol{0%{opacity:0;transform:translateX(-300px)}33%{opacity:1;transform:translateX(0)}66%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(300px)}}.cs-loader-inner label:nth-child(6){animation:lol 3s infinite ease-in-out}.cs-loader-inner label:nth-child(5){animation:lol 3s .1s infinite ease-in-out}.cs-loader-inner label:nth-child(4){animation:lol 3s .2s infinite ease-in-out}.cs-loader-inner label:nth-child(3){animation:lol 3s .3s infinite ease-in-out}.cs-loader-inner label:nth-child(2){animation:lol 3s .4s infinite ease-in-out}.cs-loader-inner label:nth-child(1){animation:lol 3s .5s infinite ease-in-out}</style>`,
     );
     addHtmlToBody(
-      host,
+      tree,
       project,
       `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div></div>\n`,
     );
     // add styles
-    addFiles(host, [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`], overwriteDataFileRoot);
+    [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`].forEach(p => {
+      overwriteFile({ tree, filePath: p, content: path.join(overwriteDataFileRoot, p), overwrite: true });
+    });
 
-    return host;
+    return tree;
   };
 }
 
@@ -366,13 +373,13 @@ function fixLangInHtml(host: Tree, p: string, langs: {}): void {
 function fixVsCode(): Rule {
   return (host: Tree) => {
     const filePath = '.vscode/extensions.json';
-    let json = getJSON(host, filePath);
+    let json = readJSON(host, filePath);
     if (json == null) {
       host.create(filePath, '');
       json = {};
     }
     json.recommendations = ['cipchk.ng-alain-extension-pack'];
-    overwriteJSON(host, filePath, json);
+    writeJSON(host, filePath, json);
   };
 }
 
@@ -389,8 +396,8 @@ function finished(): Rule {
 }
 
 export default function (options: ApplicationOptions): Rule {
-  return async (host: Tree) => {
-    project = await getProject(host, options.project);
+  return async (tree: Tree) => {
+    project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
       // @delon/* dependencies

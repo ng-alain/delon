@@ -24,15 +24,14 @@ function getProjectName(workspace: WorkspaceDefinition, name?: string): string |
   return null;
 }
 
-export async function getProject(tree: Tree, projectName?: string): Promise<ProjectDefinition> {
+export async function getProject(tree: Tree, projectName?: string): Promise<{ project: ProjectDefinition; name: string }> {
   const workspace = await getWorkspace(tree);
   projectName = getProjectName(workspace, projectName);
   if (!projectName || !workspace.projects.has(projectName)) {
     throw new SchematicsException(`No project named "${projectName}" exists.`);
   }
   const project = getProjectFromWorkspace(workspace, projectName);
-  Object.defineProperty(project, 'name', { enumerable: false, value: projectName });
-  return project;
+  return { project, name: projectName };
 }
 
 export function addAssetsToTarget(

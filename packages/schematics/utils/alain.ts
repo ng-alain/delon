@@ -205,14 +205,3 @@ export function buildAlain(schema: CommonSchema): Rule {
     return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))]);
   };
 }
-
-export function tryDelFile(host: Tree, filePath: string): void {
-  if (host.exists(filePath)) {
-    host.delete(filePath);
-  }
-}
-
-export function tryAddFile(host: Tree, filePath: string, content: string): void {
-  tryDelFile(host, filePath);
-  host.create(filePath, content);
-}
