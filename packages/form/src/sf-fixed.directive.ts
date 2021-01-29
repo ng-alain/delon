@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputNumber } from '@delon/util/other';
 
 @Directive({ selector: '[fixed-label]' })
 export class SFFixedDirective implements AfterViewInit, OnChanges {

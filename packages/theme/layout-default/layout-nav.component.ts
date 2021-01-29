@@ -18,7 +18,7 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuInner, MenuService, SettingsService, WINDOW } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

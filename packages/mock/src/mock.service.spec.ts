@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';
 import { MockRequest, MockRule } from './interface';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainThemeResponsiveConfig } from '@delon/util';
+import { AlainConfigService, AlainThemeResponsiveConfig } from '@delon/util/config';
 
 export const REP_MAX = 6;
 

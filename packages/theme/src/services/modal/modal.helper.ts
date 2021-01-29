@@ -1,5 +1,5 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util';
+import { deepMerge } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';

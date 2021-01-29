@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, ContentChildren, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
-import { updateHostClass } from '@delon/util';
+import { updateHostClass } from '@delon/util/browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
