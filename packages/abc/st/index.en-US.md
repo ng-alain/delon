@@ -75,6 +75,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false` | ✅ |
 | `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200` | ✅ |
 | `[header]` | Table header renderer | `string,TemplateRef<void>` | - | - |
+| `[showHeader]` | Whether show the head of the columns of the table | `boolean` | `true` | - |
 | `[footer]` | Table footer renderer | `string,TemplateRef<void>` | - | - |
 | `[bodyHeader]` | Table extra body renderer in header, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
 | `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
