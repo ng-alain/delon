@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "format-number",
+      "entryFile": "index.ts"
+    }
+  }
+}

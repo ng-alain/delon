@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "pipes",
+      "entryFile": "index.ts"
+    }
+  }
+}

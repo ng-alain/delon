@@ -1,3 +1,8 @@
+---
+type: example
+---
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -18,3 +23,4 @@ export class DemoComponent {
   value = 10000;
   precision = 1;
 }
+```

@@ -21,6 +21,23 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 - `obj: {}` Data Object
 - `needDeepGet = false` Whether deep get item, like this: `${user.address.city}`.
 
+## commasNumber
+
+Format a number with commas as thousands separators.
+
+```ts
+10000 => `10,000`
+```
+
+## megaNumber
+
+Large number format filter.
+
+```ts
+1000 => { value: '1', unit: 'K', unitI18n: '千' }
+12456 => { value: '12.46', unit: 'K', unitI18n: '千' }
+```
+
 ## num
 
 Wheter is number.

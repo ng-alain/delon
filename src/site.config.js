@@ -356,6 +356,10 @@ module.exports = {
           'zh-CN': '类型',
           'en-US': 'Type',
         },
+        {
+          'zh-CN': '管道',
+          'en-US': 'Pipes',
+        },
       ],
       module: '@delon/util',
       defaultRoute: 'getting-started',
