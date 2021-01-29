@@ -56,6 +56,7 @@ export const ZHCN = {
   'app.footer.qqgroup': 'QQ群',
   'app.footer.qqgroup.full': '(满)',
   'app.footer.primary-color-changed': '修改主题色成功！',
+  'app.content.copy-import-module': '复制导入模块代码：',
   'app.content.edit-page': '在 Github 上编辑此页！',
   'app.content.edit-demo': '在 Github 上编辑此示例！',
   'app.content.link.copied': '复制段落链接成功！',

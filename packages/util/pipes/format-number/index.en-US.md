@@ -2,6 +2,7 @@
 title: format-number
 subtitle: Format Number
 type: Pipes
+module: import { FormatNumberPipeModule } from '@delon/util/pipes/format-number';
 ---
 
 ## commasNumber

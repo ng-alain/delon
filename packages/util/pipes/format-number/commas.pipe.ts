@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { commasNumber } from '@delon/util/format/number';
+import { commasNumber } from '@delon/util/format';
 
 @Pipe({ name: 'commasNumber' })
 export class CommasNumberPipe implements PipeTransform {

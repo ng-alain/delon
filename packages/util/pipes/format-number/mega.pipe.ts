@@ -1,5 +1,5 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
-import { megaNumber } from '@delon/util/format/number';
+import { megaNumber } from '@delon/util/format';
 
 @Pipe({ name: 'megaNumber' })
 export class MegaNumberPipe implements PipeTransform {
