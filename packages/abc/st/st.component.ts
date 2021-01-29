@@ -205,6 +205,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;
+  @Input() @InputBoolean() showHeader = true;
   @Input() footer: string | TemplateRef<void>;
   @Input() bodyHeader: TemplateRef<STStatisticalResults>;
   @Input() body: TemplateRef<STStatisticalResults>;
@@ -472,7 +473,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           left: 0,
         });
       } else {
-        el.querySelector('.ant-table-content')!.scrollTo(0, 0);
+        el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
       }
       return;
     }

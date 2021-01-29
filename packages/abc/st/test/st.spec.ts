@@ -1773,6 +1773,12 @@ describe('abc: table', () => {
           .asyncEnd();
       }));
     });
+    it('#showHeader', () => {
+      context.showHeader = false;
+      fixture.detectChanges();
+      page.expectElCount('.st__head', 0);
+      page.expectElCount('.st__body', 1);
+    });
   });
 
   describe('#multiSort', () => {
@@ -2077,6 +2083,7 @@ describe('abc: table', () => {
       [noResult]="noResult"
       [widthConfig]="widthConfig"
       [rowClickTime]="rowClickTime"
+      [showHeader]="showHeader"
       (change)="change($event)"
       (error)="error()"
     >
@@ -2109,6 +2116,7 @@ class TestComponent {
   expandAccordion = false;
   widthMode: STWidthMode = {};
   virtualScroll = false;
+  showHeader = true;
 
   error(): void {}
   change(): void {}

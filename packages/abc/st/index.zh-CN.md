@@ -75,6 +75,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false` | ✅ |
 | `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200` | ✅ |
 | `[header]` | 表格标题 | `string,TemplateRef<void>` | - | - |
+| `[showHeader]` | 是否显示列头行 | `boolean` | `true` | - |
 | `[footer]` | 表格底部 | `string,TemplateRef<void>` | - | - |
 | `[bodyHeader]` | 表格顶部额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
 | `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
