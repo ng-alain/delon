@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "forms",
+      "entryFile": "public_api.ts"
+    }
+  }
+}

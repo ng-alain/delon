@@ -14,19 +14,6 @@ type: Documents
 yarn add @delon/util
 ```
 
-导入 `DelonUtilModule` 模块：
-
-```typescript
-import { DelonUtilModule } from '@delon/util';
-
-@NgModule({
-  imports: [
-    DelonUtilModule
-  ]
-})
-export class AppModule { }
-```
-
 ## 参数
 
 可以通过[全局配置](/docs/global-config)覆盖 `ArrayService` 设置映射名称。

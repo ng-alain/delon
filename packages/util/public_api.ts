@@ -1,15 +1,8 @@
-export * from './src/string/string';
-
-export * from './src/time/time';
-
-export * from './src/lazy/lazy.service';
-
-export * from './src/validate/validate';
-export * from './src/validate/validators';
-
-export * from './src/other/index';
-export * from './src/array/array.service';
-export * from './src/logger/index';
-export * from './src/config/index';
-
-export * from './src/util.module';
+export * from '@delon/util/array';
+export * from '@delon/util/browser';
+export * from '@delon/util/config';
+export * from '@delon/util/date-time';
+export * from '@delon/util/form';
+export * from '@delon/util/format';
+export * from '@delon/util/math';
+export * from '@delon/util/other';

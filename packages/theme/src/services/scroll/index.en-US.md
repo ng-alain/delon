@@ -5,6 +5,8 @@ subtitle: Scroll Service
 type: Service
 ---
 
+**NOTE:** Will be removed in 12.0.0, Pls used `import { ScrollService } from '@delon/util/browser';` instead
+
 Scrollbar control allows scrolling to where the specified element.
 
 ## API

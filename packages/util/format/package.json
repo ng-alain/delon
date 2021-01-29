@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "money",
+      "entryFile": "public_api.ts"
+    }
+  }
+}
