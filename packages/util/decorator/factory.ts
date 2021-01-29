@@ -1,5 +1,5 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { warn } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export function propDecoratorFactory<T, D>(
   name: string,
