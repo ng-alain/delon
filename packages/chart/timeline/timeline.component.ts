@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, toDate } from '@delon/util';
+import { toDate } from '@delon/util/date-time';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 

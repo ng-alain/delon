@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlainAuthConfig } from '@delon/util';
+import { AlainAuthConfig } from '@delon/util/config';
 import { DA_SERVICE_TOKEN, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 import { SimpleTokenModel } from './simple/simple.model';

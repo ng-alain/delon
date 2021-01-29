@@ -16,7 +16,8 @@ import {
   SimpleChange,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, LazyService, NumberInput } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, LazyService, NumberInput } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';

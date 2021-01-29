@@ -20,7 +20,9 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
-import { AlainConfigService, BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
+import { isEmpty } from '@delon/util/browser';
+import { AlainConfigService } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';

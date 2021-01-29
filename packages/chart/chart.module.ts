@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { warnDeprecation } from '@delon/util';
+import { warnDeprecation } from '@delon/util/config';
 
 // #region all modules
 

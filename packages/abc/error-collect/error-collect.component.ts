@@ -12,7 +12,8 @@ import {
   Optional,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, InputNumber } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
+import { InputNumber } from '@delon/util/other';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

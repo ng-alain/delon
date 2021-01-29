@@ -13,7 +13,7 @@ import { Component, NgModule, NgModuleFactoryLoader, Type } from '@angular/core'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
 import * as Mock from 'mockjs';
 import { Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';

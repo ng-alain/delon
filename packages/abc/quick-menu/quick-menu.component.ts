@@ -12,7 +12,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 
 @Component({
   selector: 'quick-menu',

@@ -82,7 +82,7 @@ Copy text to clipboard.
 `LazyService` delay loading JS or CSS files.
 
 ```ts
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 
 export class AppComponent {
   constructor(private lazy: LazyService) {}

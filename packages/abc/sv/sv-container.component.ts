@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { AlainConfigService, InputNumber, NumberInput } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
+import { InputNumber, NumberInput } from '@delon/util/other';
 
 @Component({
   selector: 'sv-container, [sv-container]',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util/other';
 
 @Component({
   selector: 'global-footer-item',

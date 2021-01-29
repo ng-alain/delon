@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { G2BaseComponent } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/other';
 import { fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 

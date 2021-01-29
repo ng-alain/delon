@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 import { Subscription } from 'rxjs';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 

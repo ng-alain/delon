@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { ArrayProperty, FormProperty } from '../../model';
 import { SFSchema } from '../../schema';

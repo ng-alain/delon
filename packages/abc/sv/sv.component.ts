@@ -13,7 +13,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
+import { isEmpty } from '@delon/util/browser';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;

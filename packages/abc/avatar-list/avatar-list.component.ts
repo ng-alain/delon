@@ -12,7 +12,7 @@ import {
   QueryList,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber, NumberInput } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/other';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AvatarListItemComponent } from './avatar-list-item.component';

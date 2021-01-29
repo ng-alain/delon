@@ -11,7 +11,8 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, AlainQRConfig, InputNumber, LazyService, NumberInput } from '@delon/util';
+import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
+import { InputNumber, LazyService, NumberInput } from '@delon/util/other';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { QR_DEFULAT_CONFIG } from './qr.config';

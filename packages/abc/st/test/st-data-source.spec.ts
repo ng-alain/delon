@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { of, throwError } from 'rxjs';
 import { STDataSource, STDataSourceOptions } from '../st-data-source';

@@ -11,7 +11,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util/other';
 
 const CLSBODY = 'footer-toolbar__body';
 

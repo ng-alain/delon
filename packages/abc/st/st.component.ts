@@ -32,17 +32,8 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import {
-  AlainConfigService,
-  AlainSTConfig,
-  BooleanInput,
-  deepCopy,
-  deepMergeKey,
-  InputBoolean,
-  InputNumber,
-  NumberInput,
-  toBoolean,
-} from '@delon/util';
+import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
+import { BooleanInput, deepCopy, deepMergeKey, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';

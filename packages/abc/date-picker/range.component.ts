@@ -1,15 +1,9 @@
 import { Component, EventEmitter, forwardRef, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  AlainConfigService,
-  AlainDateRangePickerShortcut,
-  AlainDateRangePickerShortcutItem,
-  deepMergeKey,
-  fixEndTimeOfRange,
-  getTimeDistance,
-  InputBoolean,
-} from '@delon/util';
+import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
+import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
+import { deepMergeKey, InputBoolean } from '@delon/util/other';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 

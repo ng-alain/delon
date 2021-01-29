@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 import * as fs from 'file-saver';
 import { Observable, of, throwError } from 'rxjs';
 import { ZipModule } from './zip.module';
