@@ -13,8 +13,8 @@ import {
   Optional,
 } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
-import { InputBoolean } from '@delon/util/decorator';
 import { copy } from '@delon/util/browser';
+import { InputBoolean } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
