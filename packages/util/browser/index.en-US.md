@@ -25,6 +25,10 @@ updateHostClass(
 )
 ```
 
+## copy
+
+Copy text to clipboard.
+
 ## ScrollService
 
 Scrollbar control allows scrolling to where the specified element.

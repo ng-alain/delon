@@ -14,7 +14,8 @@ import {
 } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
 import { InputBoolean } from '@delon/util/decorator';
-import { copy, deepCopy, LazyService } from '@delon/util/other';
+import { copy } from '@delon/util/browser';
+import { deepCopy, LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';

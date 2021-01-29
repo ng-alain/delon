@@ -25,6 +25,10 @@ updateHostClass(
 )
 ```
 
+## copy
+
+复制字符串文档至剪贴板。
+
 ## ScrollService
 
 滚动条控制，允许滚动至指定元素所处位置。

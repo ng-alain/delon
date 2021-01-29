@@ -40,10 +40,6 @@ deepMerge(original, { b: { d: 'd' }, arr: [ 1 ] });
 // output: { a: 1, b: { c: 'c', d: 'd' }, arr: [ 1 ] }
 ```
 
-## copy
-
-Copy text to clipboard.
-
 ## LazyService
 
 `LazyService` delay loading JS or CSS files.
