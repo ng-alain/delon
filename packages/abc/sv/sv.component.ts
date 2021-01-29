@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;

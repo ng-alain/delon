@@ -22,7 +22,7 @@ import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';

@@ -1,4 +1,5 @@
-import { InputBoolean, InputNumber, toBoolean, toNumber } from './check';
+import { InputBoolean, toBoolean } from './boolean-property';
+import { InputNumber, toNumber } from './number-property';
 
 describe('util.#toBoolean', () => {
   [

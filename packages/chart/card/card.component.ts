@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util/other';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Component({
   selector: 'g2-card',

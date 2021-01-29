@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util/other';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';

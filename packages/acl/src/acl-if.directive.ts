@@ -1,5 +1,5 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
-import { InputBoolean } from '@delon/util/other';
+import { InputBoolean } from '@delon/util/decorator';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ACLService } from './acl.service';

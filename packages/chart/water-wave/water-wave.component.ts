@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

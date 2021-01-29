@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/other';
+import { InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';

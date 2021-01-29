@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "decorator",
+      "entryFile": "public_api.ts"
+    }
+  }
+}

@@ -15,7 +15,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';

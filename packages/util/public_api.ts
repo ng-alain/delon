@@ -5,4 +5,5 @@ export * from '@delon/util/date-time';
 export * from '@delon/util/form';
 export * from '@delon/util/format';
 export * from '@delon/util/math';
+export * from '@delon/util/decorator';
 export * from '@delon/util/other';

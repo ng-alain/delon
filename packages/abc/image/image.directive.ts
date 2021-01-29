@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/other';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Directive({
   selector: '[_src]',
