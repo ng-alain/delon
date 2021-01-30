@@ -1,6 +1,6 @@
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import addDays from 'date-fns/addDays';
 import addSeconds from 'date-fns/addSeconds';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import format from 'date-fns/format';
 import { DisabledDateFn, DisabledTimeConfig, DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 
@@ -35,7 +35,7 @@ export class DateTimePickerUtil {
    *
    * 格式化日期
    */
-  format(d: number | Date, formatString = 'yyyy-MM-dd HH:mm:ss'): string {
+  format(d: number | Date, formatString: string = 'yyyy-MM-dd HH:mm:ss'): string {
     return format(d, formatString);
   }
   private genTick(count: number): number[] {
