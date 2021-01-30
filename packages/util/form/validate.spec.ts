@@ -1,19 +1,11 @@
 import { FormControl } from '@angular/forms';
-import { isDecimal, isIdCard, isInt, isMobile, isNum, isUrl } from '@delon/util/format';
+import { isDecimal, isIdCard, isInt, isIp4, isMobile, isNum, isUrl } from '@delon/util/format';
+import { TEST_DATA } from '../format/validate.spec';
 import { _Validators } from './validators';
 
 describe('utils: validate', () => {
   it('#isNum', () => {
-    const data = [
-      { k: '123', v: true },
-      { k: '12.3', v: true },
-      { k: '12.', v: false },
-      { k: '-12', v: true },
-      { k: 123, v: true },
-      { k: '123.1.2', v: false },
-      { k: '123a', v: false },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.num) {
       expect(isNum(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
@@ -26,13 +18,7 @@ describe('utils: validate', () => {
   });
 
   it('#isInt', () => {
-    const data = [
-      { k: '123', v: true },
-      { k: 123, v: true },
-      { k: '123.1', v: false },
-      { k: '123.123', v: false },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.int) {
       expect(isInt(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
@@ -45,17 +31,7 @@ describe('utils: validate', () => {
   });
 
   it('#isDecimal', () => {
-    const data = [
-      { k: '12.3', v: true },
-      { k: '-12.3', v: true },
-      { k: '123', v: false },
-      { k: '12.', v: false },
-      { k: '-12', v: false },
-      { k: 123, v: false },
-      { k: '123.1.2', v: false },
-      { k: '123a', v: false },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.decimal) {
       expect(isDecimal(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
       const ctr = new FormControl(item.k);
       if (item.v) {
@@ -67,11 +43,7 @@ describe('utils: validate', () => {
   });
 
   it('#isIdCard', () => {
-    const data = [
-      { k: '610102198006042614', v: true },
-      { k: '61010219800604261', v: false },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.idCard) {
       expect(isIdCard(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
@@ -84,14 +56,7 @@ describe('utils: validate', () => {
   });
 
   it('#isMobile', () => {
-    const data = [
-      { k: '15900000000', v: true },
-      { k: '17000000000', v: true },
-      { k: '14700000000', v: true },
-      { k: '1590000000', v: false },
-      { k: '+8615900000000', v: true },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.mobile) {
       expect(isMobile(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
@@ -104,14 +69,7 @@ describe('utils: validate', () => {
   });
 
   it('#isUrl', () => {
-    const data = [
-      { k: 'http://ng-alain.com', v: true },
-      { k: 'https://ng-alain.com', v: true },
-      { k: '//ng-alain.com', v: false },
-      { k: 'ng-alain.com', v: false },
-      { k: '中国.com', v: false },
-    ];
-    for (const item of data) {
+    for (const item of TEST_DATA.url) {
       expect(isUrl(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
@@ -119,6 +77,19 @@ describe('utils: validate', () => {
         expect(_Validators.url(ctr)).toBeNull();
       } else {
         expect(_Validators.url(ctr)).toEqual({ url: true });
+      }
+    }
+  });
+
+  it('#isIp4', () => {
+    for (const item of TEST_DATA.ip4) {
+      expect(isIp4(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
+
+      const ctr = new FormControl(item.k);
+      if (item.v) {
+        expect(_Validators.ip4(ctr)).toBeNull();
+      } else {
+        expect(_Validators.ip4(ctr)).toEqual({ ip4: true });
       }
     }
   });

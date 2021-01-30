@@ -61,3 +61,7 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 ## isUrl
 
 是否URL地址。
+
+## isIp4
+
+是否IP4地址。

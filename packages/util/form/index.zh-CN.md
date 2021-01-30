@@ -12,5 +12,6 @@ type: Tools
 - `_Validators.int` 是否为整数
 - `_Validators.decimal` 是否为小数点数值
 - `_Validators.idCard` 是否为中华人民共和国居民身份证
-- `_Validators.isMobile` 是否为手机号（中国）
-- `_Validators.isUrl` 是否URL地址
+- `_Validators.mobile` 是否为手机号（中国）
+- `_Validators.url` 是否URL地址
+- `_Validators.ip4` 是否IP4地址

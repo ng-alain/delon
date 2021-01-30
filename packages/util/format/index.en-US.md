@@ -61,3 +61,7 @@ Wheter is mobile (China).
 ## isUrl
 
 Wheter is url address.
+
+## isIp4
+
+Wheter is IPv4 address.

@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { isDecimal, isIdCard, isInt, isMobile, isNum, isUrl } from '@delon/util/format';
+import { isDecimal, isIdCard, isInt, isIp4, isMobile, isNum, isUrl } from '@delon/util/format';
 
 /**
  * A set of validators for reactive forms
@@ -60,5 +60,14 @@ export class _Validators {
    */
   static url(control: AbstractControl): ValidationErrors | null {
     return isUrl(control.value) ? null : { url: true };
+  }
+
+  /**
+   * Wheter is IPv4 address
+   *
+   * 是否IP4地址
+   */
+  static ip4(control: AbstractControl): ValidationErrors | null {
+    return isIp4(control.value) ? null : { ip4: true };
   }
 }

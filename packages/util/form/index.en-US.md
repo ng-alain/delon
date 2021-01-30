@@ -12,5 +12,6 @@ A set of validators for reactive forms, including:
 - `_Validators.int` Wheter is integer
 - `_Validators.decimal` Wheter is decimal
 - `_Validators.idCard` Wheter is People's Republic of China identity card
-- `_Validators.isMobile` Wheter is mobile (China)
-- `_Validators.isUrl` Wheter is url address
+- `_Validators.mobile` Wheter is mobile (China)
+- `_Validators.url` Wheter is url address
+- `_Validators.ip4` Wheter is IPv4 address
