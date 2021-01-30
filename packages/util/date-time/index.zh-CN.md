@@ -4,6 +4,25 @@ subtitle: 日期与时间
 type: Tools
 ---
 
+## dateTimePickerUtil
+
+一组针对 [DatePicker](https://ng.ant.design/components/date-picker/en) 的工具类。
+
+- `now` 当前本地时间
+- `date` 当前本地日期（不包含时间部分）
+- `removeTime` 移除日期的时间部分
+- `format` 格式化日期
+- `getDiffDays` 计算两个日期相差天数，`0` 表示同一天
+- `disabledBeforeDate` 禁用之前日期（默认：今天），一般服务于 `nzDisabledDate`
+- `disabledAfterDate` 禁用之后日期（默认：今天），一般服务于 `nzDisabledDate`
+- `disabledBeforeTime` 禁用之前时间（默认：现在），一般服务于 `nzDisabledTime`
+- `disabledAfterTime` 禁用之后时间（默认：现在），一般服务于 `nzDisabledTime`
+
+```ts
+disabledDate = dateTimePickerUtil.disabledBeforeDate();
+disabledDateTime = dateTimePickerUtil.disabledBeforeTime({ offsetSeconds: 60 * 5 });
+```
+
 ## getTimeDistance
 
 获取时间范围，返回 `[ Date, Date]` 表示开始与结束日期，例如：获取本周时间：

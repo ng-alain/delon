@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { getTimeDistance, toDate } from './time';
 
-describe('util: time', () => {
+describe('util: date-time', () => {
   describe('#getTimeDistance', () => {
     let time: Date;
     const FORMAT = 'yyyy-MM-dd';

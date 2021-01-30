@@ -1,20 +1,38 @@
 import { Component } from '@angular/core';
+import { dateTimePickerUtil } from '@delon/util/date-time';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <p class="mb-md">
-      {{<span> {{ value }} | megaNumber: {{ precision }} </span>}} = {{ value | megaNumber: precision }}
-    </p>
-    <nz-input-group nzAddOnBefore="Value" class="mb-md">
-      <input type="text" nz-input [(ngModel)]="value" />
-    </nz-input-group>
-    <nz-input-group nzAddOnBefore="Precision"
-      ><nz-input-number [(ngModel)]="precision" nzMin="0" nzMax="292"></nz-input-number>
-    </nz-input-group>
+    <p>value: {{ value | _date }}</p>
+    <nz-date-picker
+      [(ngModel)]="value"
+      nzFormat="yyyy-MM-dd HH:mm:ss"
+      [nzDisabledDate]="disabledDate"
+      [nzDisabledTime]="disabledDateTime"
+      nzShowTime
+    ></nz-date-picker>
+    <br />
+    <nz-date-picker nzMode="month" [nzDisabledDate]="disabledDate"></nz-date-picker>
+    <br />
+    <nz-date-picker nzMode="year" [nzDisabledDate]="disabledDate"></nz-date-picker>
+    <br />
+    <p>values: {{ values }}</p>
+    <nz-range-picker
+      [(ngModel)]="values"
+      [nzDisabledDate]="disabledDate"
+      [nzDisabledTime]="disabledDateTime"
+      nzShowTime
+      nzShowNow
+      nzFormat="yyyy-MM-dd HH:mm:ss"
+    ></nz-range-picker>
   `,
 })
 export class DemoComponent {
-  value = 10000;
-  precision = 1;
+  value: Date;
+  values: Date[];
+  disabledDate = dateTimePickerUtil.disabledBeforeDate();
+  disabledDateTime = dateTimePickerUtil.disabledBeforeTime({ offsetSeconds: 60 * 5 });
+  // disabledDate = dateTimePickerUtil.disabledAfterDate();
+  // disabledDateTime = dateTimePickerUtil.disabledAfterTime();
 }

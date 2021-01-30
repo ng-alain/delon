@@ -16,7 +16,9 @@ function addClass(el: HTMLElement, classMap: any, renderer: Renderer2): void {
 }
 
 /**
- * 更新宿主组件样式 `class`，例如：
+ * Update host component style `class`
+ *
+ * 更新宿主组件样式 `class`
  *
  * ```ts
  * updateHostClass(
@@ -29,11 +31,9 @@ function addClass(el: HTMLElement, classMap: any, renderer: Renderer2): void {
  *    [ `a-${this.cls}` ]: true
  *  })
  * ```
- *
- * @param [cleanAll] 是否先清理所有 `class` 值，默认：`false`
  */
-export function updateHostClass(el: HTMLElement, renderer: Renderer2, classMap: object, cleanAll: boolean = false): void {
-  if (cleanAll === true) {
+export function updateHostClass(el: HTMLElement, renderer: Renderer2, classMap: object, preClean: boolean = false): void {
+  if (preClean === true) {
     renderer.removeAttribute(el, 'class');
   } else {
     removeClass(el, classMap, renderer);

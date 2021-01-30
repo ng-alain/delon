@@ -15,12 +15,6 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 // output: this is asdf
 ```
 
-**参数**
-
-- `str: string` 模板
-- `obj: {}` 数据对象
-- `needDeepGet = false` 是否需要深度获取，支持 `${user.address.city}` 写法。
-
 ## commasNumber
 
 用逗号将数字格式化为千位分隔符。
