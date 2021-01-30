@@ -16,3 +16,4 @@ A set of validators for reactive forms, including:
 - `_Validators.url` Wheter is url address
 - `_Validators.ip4` Wheter is IP address (Support v4, v6)
 - `_Validators.color` Wheter is color
+- `_Validators.chinese` Wheter is chinese

@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { isColor, isDecimal, isIdCard, isInt, isIp, isMobile, isNum, isUrl } from '@delon/util/format';
+import { isChinese, isColor, isDecimal, isIdCard, isInt, isIp, isMobile, isNum, isUrl } from '@delon/util/format';
 
 /**
  * A set of validators for reactive forms
@@ -78,5 +78,14 @@ export class _Validators {
    */
   static color(control: AbstractControl): ValidationErrors | null {
     return isColor(control.value) ? null : { color: true };
+  }
+
+  /**
+   * Wheter is chinese
+   *
+   * 是否中文
+   */
+  static chinese(control: AbstractControl): ValidationErrors | null {
+    return isChinese(control.value) ? null : { chinese: true };
   }
 }

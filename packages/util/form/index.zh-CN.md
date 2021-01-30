@@ -16,3 +16,4 @@ type: Tools
 - `_Validators.url` 是否URL地址
 - `_Validators.ip4` 是否IP地址（支持v4、v6）
 - `_Validators.color` 是否颜色代码值
+- `_Validators.chinese` 是否中文

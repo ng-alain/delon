@@ -25,4 +25,5 @@ describe('utils: form-validate', () => {
   it('#url', () => process('url', TEST_DATA.url as any[]));
   it('#ip', () => process('ip', TEST_DATA.ip as any[]));
   it('#color', () => process('color', TEST_DATA.color as any[]));
+  it('#chinese', () => process('chinese', TEST_DATA.chinese as any[]));
 });

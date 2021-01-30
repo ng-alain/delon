@@ -40,7 +40,7 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 
 ## REGEX
 
-一组常见的正则表达式。
+一组常见的正则表达式。也可以通过 `REGEX_STR` 来获取它们的正则字符串格式，配合 `new RegExp` 完成一些额外的处理。
 
 ## num
 
@@ -73,3 +73,7 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 ## isColor
 
 是否颜色代码值。
+
+## isChinese
+
+是否中文。

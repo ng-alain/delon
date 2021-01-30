@@ -40,7 +40,7 @@ Large number format filter.
 
 ## REGEX
 
-A set of common regular expressions.
+A set of common regular expressions. You can also get their regular string format through `REGEX_STR`, and cooperate with `new RegExp` to complete some additional processing.
 
 ## num
 
@@ -73,3 +73,7 @@ Wheter is IP address (Support v4, v6).
 ## isColor
 
 Wheter is color.
+
+## isChinese
+
+Wheter is chinese.

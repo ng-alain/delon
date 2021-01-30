@@ -71,6 +71,10 @@ export const TEST_DATA = {
     { k: 'black', v: false },
     { k: '#f2ewq', v: false },
   ],
+  chinese: [
+    { k: '中国', v: true },
+    { k: '中国a', v: false },
+  ],
 };
 
 describe('utils: format-validate', () => {
@@ -88,4 +92,5 @@ describe('utils: format-validate', () => {
   it('#isUrl', () => process('isUrl', TEST_DATA.url as any));
   it('#isIp', () => process('isIp', TEST_DATA.ip as any));
   it('#isColor', () => process('isColor', TEST_DATA.color as any));
+  it('#isChinese', () => process('isChinese', TEST_DATA.chinese as any));
 });
