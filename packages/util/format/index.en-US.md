@@ -38,6 +38,10 @@ Large number format filter.
 12456 => { value: '12.46', unit: 'K', unitI18n: '千' }
 ```
 
+## REGEX
+
+A set of common regular expressions.
+
 ## num
 
 Wheter is number.
@@ -62,6 +66,10 @@ Wheter is mobile (China).
 
 Wheter is url address.
 
-## isIp4
+## isIp
 
-Wheter is IPv4 address.
+Wheter is IP address (Support v4, v6).
+
+## isColor
+
+Wheter is color.

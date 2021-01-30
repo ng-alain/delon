@@ -14,4 +14,5 @@ A set of validators for reactive forms, including:
 - `_Validators.idCard` Wheter is People's Republic of China identity card
 - `_Validators.mobile` Wheter is mobile (China)
 - `_Validators.url` Wheter is url address
-- `_Validators.ip4` Wheter is IPv4 address
+- `_Validators.ip4` Wheter is IP address (Support v4, v6)
+- `_Validators.color` Wheter is color

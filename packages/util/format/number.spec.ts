@@ -1,7 +1,7 @@
 import { commasNumber, megaNumber } from './number';
 
 describe('util: number', () => {
-  xdescribe('#commasNumber', () => {
+  describe('#commasNumber', () => {
     it('should be working', () => {
       expect(commasNumber(10000)).toBe('10,000');
     });

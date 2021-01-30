@@ -1,4 +1,4 @@
-import { isDecimal, isIdCard, isInt, isIp4, isMobile, isNum, isUrl } from './validate';
+import * as v from './validate';
 
 export const TEST_DATA = {
   num: [
@@ -44,7 +44,7 @@ export const TEST_DATA = {
     { k: 'ng-alain.com', v: false },
     { k: '中国.com', v: false },
   ],
-  ip4: [
+  ip: [
     { k: '0.0.0.0', v: true },
     { k: '172.26.168.134', v: true },
     { k: '46.51.197.88', v: true },
@@ -52,49 +52,40 @@ export const TEST_DATA = {
     { k: '.100.100.100.100', v: false },
     { k: 'http://123.123.123', v: false },
     { k: '999.2.3.4', v: false },
+    { k: '::', v: true },
+    { k: '1::', v: true },
+    { k: '::1', v: true },
+    { k: '1:2:3:4:5:6:7:8', v: true },
+    { k: '2001:0000:1234:0000:0000:C1C0:ABCD:0876', v: true },
+    { k: ':', v: false },
+    { k: '1:', v: false },
+    { k: ':1', v: false },
+  ],
+  color: [
+    { k: '#ffffff', v: true },
+    { k: '#fff', v: true },
+    { k: 'rgb(255,0,24)', v: true },
+    { k: 'rgba(255, 0, 24, 0.5)', v: true },
+    { k: 'hsla(170, 23%, 25%, 0.2 )', v: true },
+    { k: '0x00ffff', v: true },
+    { k: 'black', v: false },
+    { k: '#f2ewq', v: false },
   ],
 };
 
-describe('utils: validate', () => {
-  it('#isNum', () => {
-    for (const item of TEST_DATA.num) {
-      expect(isNum(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
+describe('utils: format-validate', () => {
+  function process(methodName: keyof typeof v, data: Array<{ k: string; v: boolean }>): void {
+    for (const item of data) {
+      expect((v[methodName] as any)(item.k)).toBe(item.v, `[${methodName}] ${item.k} must be ${item.v}`);
     }
-  });
+  }
 
-  it('#isInt', () => {
-    for (const item of TEST_DATA.int) {
-      expect(isInt(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
-
-  it('#isDecimal', () => {
-    for (const item of TEST_DATA.decimal) {
-      expect(isDecimal(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
-
-  it('#isIdCard', () => {
-    for (const item of TEST_DATA.idCard) {
-      expect(isIdCard(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
-
-  it('#isMobile', () => {
-    for (const item of TEST_DATA.mobile) {
-      expect(isMobile(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
-
-  it('#isUrl', () => {
-    for (const item of TEST_DATA.url) {
-      expect(isUrl(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
-
-  it('#isIp4', () => {
-    for (const item of TEST_DATA.ip4) {
-      expect(isIp4(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
-    }
-  });
+  it('#isNum', () => process('isNum', TEST_DATA.num as any));
+  it('#isInt', () => process('isInt', TEST_DATA.int as any));
+  it('#isDecimal', () => process('isDecimal', TEST_DATA.decimal as any));
+  it('#isIdCard', () => process('isIdCard', TEST_DATA.idCard as any));
+  it('#isMobile', () => process('isMobile', TEST_DATA.mobile as any));
+  it('#isUrl', () => process('isUrl', TEST_DATA.url as any));
+  it('#isIp', () => process('isIp', TEST_DATA.ip as any));
+  it('#isColor', () => process('isColor', TEST_DATA.color as any));
 });

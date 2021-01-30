@@ -31,7 +31,7 @@ export class HeaderComponent implements AfterViewInit {
     { name: 'cache' },
     { name: 'chart' },
     { name: 'mock' },
-    { name: 'util', default: 'array' },
+    { name: 'util' },
     { name: 'cli' },
   ];
   menuVisible = false;

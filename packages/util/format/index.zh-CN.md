@@ -38,6 +38,10 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 12456 => { value: '12.46', unit: 'K', unitI18n: '千' }
 ```
 
+## REGEX
+
+一组常见的正则表达式。
+
 ## num
 
 是否为数字。
@@ -62,6 +66,10 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 
 是否URL地址。
 
-## isIp4
+## isIp
 
-是否IP4地址。
+是否IP地址（支持v4、v6）。
+
+## isColor
+
+是否颜色代码值。

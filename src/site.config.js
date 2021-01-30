@@ -371,7 +371,15 @@ module.exports = {
       },
       dir: [
         {
+          src: ['./packages/util/docs'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: false,
+        },
+        {
           src: ['./packages/util'],
+          ignores: ['docs'],
           template: {
             content: './src/templates/content.ts',
           },

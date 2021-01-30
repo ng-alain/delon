@@ -14,4 +14,5 @@ type: Tools
 - `_Validators.idCard` 是否为中华人民共和国居民身份证
 - `_Validators.mobile` 是否为手机号（中国）
 - `_Validators.url` 是否URL地址
-- `_Validators.ip4` 是否IP4地址
+- `_Validators.ip4` 是否IP地址（支持v4、v6）
+- `_Validators.color` 是否颜色代码值
