@@ -1,7 +1,7 @@
 ---
 title: decorator
 subtitle: Decorator
-type: Type
+type: Tools
 ---
 
 ## toBoolean, @InputBoolean

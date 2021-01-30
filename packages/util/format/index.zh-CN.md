@@ -1,7 +1,7 @@
 ---
 title: format
 subtitle: 格式化，含货币
-type: Type
+type: Tools
 ---
 
 ## format

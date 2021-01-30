@@ -1,7 +1,7 @@
 ---
 title: browser
 subtitle: 浏览器、DOM 等
-type: Type
+type: Tools
 ---
 
 ## isEmpty
@@ -32,8 +32,6 @@ updateHostClass(
 ## ScrollService
 
 滚动条控制，允许滚动至指定元素所处位置。
-
-## API
 
 | 接口名 | 参数 | 描述 |
 |-----|----|----|

@@ -1,7 +1,7 @@
 ---
 title: other
 subtitle: 其他
-type: Type
+type: Tools
 ---
 
 ## deepGet

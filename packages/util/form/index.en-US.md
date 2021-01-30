@@ -1,7 +1,7 @@
 ---
 title: form
 subtitle: Form
-type: Type
+type: Tools
 ---
 
 ## _Validators

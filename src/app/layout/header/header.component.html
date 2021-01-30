@@ -8,8 +8,8 @@
     </li>
     <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | translate">
       <ul>
-        <li *ngFor="let i of delon" nz-menu-item routerLink="/{{ i }}/getting-started/{{ i18n.zone }}">
-          {{ 'app.header.menu.' + i | translate }}
+        <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+          {{ 'app.header.menu.' + i.name | translate }}
         </li>
       </ul>
     </li>
@@ -20,8 +20,8 @@
       </div>
       <nz-dropdown-menu #delonMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li *ngFor="let i of delon" nz-menu-item routerLink="/{{ i }}/getting-started/{{ i18n.zone }}">
-            {{ 'app.header.menu.' + i | translate }}
+          <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+            {{ 'app.header.menu.' + i.name | translate }}
           </li>
         </ul>
       </nz-dropdown-menu>

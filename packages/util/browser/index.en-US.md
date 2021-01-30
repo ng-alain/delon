@@ -1,7 +1,7 @@
 ---
 title: browser
 subtitle: Browser, Dom etc
-type: Type
+type: Tools
 ---
 
 ## isEmpty
@@ -32,8 +32,6 @@ Copy text to clipboard.
 ## ScrollService
 
 Scrollbar control allows scrolling to where the specified element.
-
-## API
 
 | Method | Property | Description |
 |--------|----------|-------------|

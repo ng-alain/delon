@@ -1,7 +1,7 @@
 ---
 title: decorator
 subtitle: 装饰器
-type: Type
+type: Tools
 ---
 
 ## toBoolean, @InputBoolean

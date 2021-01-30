@@ -1,7 +1,7 @@
 ---
 title: format
 subtitle: Format, Currency
-type: Type
+type: Tools
 ---
 
 ## format

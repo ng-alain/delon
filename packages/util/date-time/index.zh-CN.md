@@ -1,7 +1,7 @@
 ---
 title: date-time
 subtitle: 日期与时间
-type: Type
+type: Tools
 ---
 
 ## getTimeDistance

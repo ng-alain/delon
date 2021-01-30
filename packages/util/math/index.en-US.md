@@ -1,7 +1,7 @@
 ---
 title: math
 subtitle: Math
-type: Type
+type: Tools
 ---
 
 ## inRange

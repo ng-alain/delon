@@ -1,7 +1,7 @@
 ---
 title: form
 subtitle: 表单
-type: Type
+type: Tools
 ---
 
 ## _Validators

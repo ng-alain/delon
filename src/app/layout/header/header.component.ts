@@ -23,7 +23,17 @@ export class HeaderComponent implements AfterViewInit {
   isMobile: boolean;
   oldVersionList = [`10.x`, `9.x`, `8.x`, `1.x`];
   currentVersion = pkg.version;
-  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
+  delonLibs: Array<{ name: string; default?: string }> = [
+    { name: 'theme' },
+    { name: 'auth' },
+    { name: 'acl' },
+    { name: 'form' },
+    { name: 'cache' },
+    { name: 'chart' },
+    { name: 'mock' },
+    { name: 'util', default: 'array' },
+    { name: 'cli' },
+  ];
   menuVisible = false;
   showGitee = false;
   regexs = {

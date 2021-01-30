@@ -1,18 +1,18 @@
 ---
 title: array
 subtitle: Array
-type: Type
+type: Tools
 ---
 
 ## ArrayService
 
 Used for conversion and access between arrays and trees. It is generally used with `nz-tree`.
 
+> You can override [ArrayService] to set the mapping name through [Global Configuration](/docs/global-config).
+
 ### treeToArr
 
 Convert tree structure to array structure.
-
-**options**
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -28,8 +28,6 @@ Convert array structure to tree structure.
 
 > If `parent_id` is a string, the root value **Make Sure** is an empty string.
 
-**options**
-
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `idMapName` | Id map name | `string` | `id` |
@@ -41,8 +39,6 @@ Convert array structure to tree structure.
 ### arrToTreeNode
 
 Convert array structure to `nz-tree` data structure.
-
-**options**
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -60,8 +56,6 @@ Convert array structure to `nz-tree` data structure.
 
 Recursive access tree.
 
-**options**
-
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `childrenMapName` | Children map name | `string` | `children` |
@@ -69,8 +63,6 @@ Recursive access tree.
 ### getKeysByTreeNode
 
 Get all the selected `key` values.
-
-**options**
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

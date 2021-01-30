@@ -1,18 +1,18 @@
 ---
 title: array
 subtitle: 数组
-type: Type
+type: Tools
 ---
 
 ## ArrayService
 
 `ArrayService` 用于数组与树之间的转化、访问等，一般配合 `nz-tree` 一起使用。
 
+> 可以通过[全局配置](/docs/global-config)覆盖 `ArrayService` 设置映射名称。
+
 ### treeToArr
 
 将树结构转换成数组结构。
-
-**options**
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -28,8 +28,6 @@ type: Type
 
 > 若 `parent_id` 为字符串，则根值**务必**为空字符串。
 
-**options**
-
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `idMapName` | 编号项名 | `string` | `id` |
@@ -41,8 +39,6 @@ type: Type
 ### arrToTreeNode
 
 数组转换成 `nz-tree` 数据源，通过 `options` 转化项名，也可以使用 `options.cb` 更高级决定数据项。
-
-**options**
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -60,8 +56,6 @@ type: Type
 
 递归访问整个树。
 
-**options**
-
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `childrenMapName` | 子项名 | `string` | `children` |
@@ -69,8 +63,6 @@ type: Type
 ### getKeysByTreeNode
 
 获取所有已经选中的 `key` 值。
-
-**options**
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

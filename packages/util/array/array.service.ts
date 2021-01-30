@@ -71,6 +71,7 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
 @Injectable({ providedIn: 'root' })
 export class ArrayService {
   private c: AlainUtilArrayConfig;
+
   constructor(cog: AlainConfigService) {
     this.c = cog.merge('utilArray', {
       deepMapName: 'deep',
@@ -85,6 +86,7 @@ export class ArrayService {
       disabledMapname: 'disabled',
     })!;
   }
+
   /**
    * 将树结构转换成数组结构
    */

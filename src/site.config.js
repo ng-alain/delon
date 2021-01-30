@@ -353,8 +353,8 @@ module.exports = {
           'en-US': 'Documents',
         },
         {
-          'zh-CN': '类型',
-          'en-US': 'Type',
+          'zh-CN': '工具类',
+          'en-US': 'Tools',
         },
         {
           'zh-CN': '管道',
@@ -362,7 +362,7 @@ module.exports = {
         },
       ],
       module: '@delon/util',
-      defaultRoute: 'getting-started',
+      defaultRoute: 'array',
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
@@ -371,15 +371,7 @@ module.exports = {
       },
       dir: [
         {
-          src: ['./packages/util/docs'],
-          template: {
-            content: './src/templates/content.ts',
-          },
-          hasSubDir: false,
-        },
-        {
           src: ['./packages/util'],
-          ignores: ['docs'],
           template: {
             content: './src/templates/content.ts',
           },
