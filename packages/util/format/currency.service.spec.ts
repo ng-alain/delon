@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { FormatCurrencyService } from './currency.service';
+import { CurrencyService } from './currency.service';
 
 describe('util: FormatCurrencyService', () => {
-  let srv: FormatCurrencyService;
+  let srv: CurrencyService;
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    srv = TestBed.inject<FormatCurrencyService>(FormatCurrencyService);
+    srv = TestBed.inject<CurrencyService>(CurrencyService);
   });
 
   describe('#commas', () => {
@@ -39,6 +39,56 @@ describe('util: FormatCurrencyService', () => {
 
     it('should be powerI18n', () => {
       expect(srv.mega(10100, { precision: 1, unitI18n: { K: 'Qiang' } as any }).unitI18n).toBe('Qiang');
+    });
+  });
+
+  describe('#cny', () => {
+    [
+      { inWords: false, num: 0.123456789, value: '零点一二三四五六七八九' },
+      { inWords: true, num: 0.123456789, value: '零元壹角贰分叁厘肆毫' },
+      { inWords: false, num: 20000000000000000, value: '两兆' },
+      { inWords: true, num: 20000000000000000, value: '贰兆元整' },
+      { inWords: false, num: 0, value: '零' },
+      { inWords: true, num: 0, value: '零元整' },
+      { inWords: false, num: '1.0', value: '一点零' },
+      { inWords: true, num: '1.0', value: '壹元整' },
+      { inWords: false, num: '1.0001', value: '一点零零零一' },
+      { inWords: true, num: '1.0001', value: '壹元零角零分零厘壹毫' },
+      { inWords: false, num: 10.34, value: '十点三四' },
+      { inWords: false, num: 1.34, value: '一点三四' },
+      { inWords: true, num: 1.34, value: '壹元叁角肆分' },
+      { inWords: false, num: 1000.34, value: '一千点三四' },
+      { inWords: true, num: 1000.34, value: '壹仟元叁角肆分' },
+      { inWords: false, num: -1202030, value: '负一百二十万零两千零三十' },
+      { inWords: true, num: -1202030, value: '负壹佰贰拾万零贰仟零叁拾元整' },
+      {
+        inWords: false,
+        num: -1202030,
+        value: '欠一百二十万零两千零三十',
+        options: { minusSymbol: '欠' },
+      },
+      {
+        inWords: true,
+        num: -1202030,
+        value: '欠壹佰贰拾万零贰仟零叁拾元整',
+        options: { minusSymbol: '欠' },
+      },
+    ].forEach((item: any) => {
+      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.inWords ? 'RMB:' : ''}${item.num} muse be ${item.value}`, () => {
+        expect(srv.cny(item.num, { inWords: item.inWords, ...item.options })).toBe(item.value);
+      });
+    });
+
+    it('should be throw when validThrow: true', () => {
+      expect(() => {
+        srv.cny('asdf', {
+          validThrow: true,
+        });
+      }).toThrow();
+    });
+
+    it('should be simple', () => {
+      expect(srv.cny('1')).toBe('壹元整');
     });
   });
 });

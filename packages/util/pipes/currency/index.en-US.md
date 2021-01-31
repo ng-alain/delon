@@ -16,3 +16,9 @@ Format a number with commas as thousands separators.
 Large number format filter.
 
 [comment]: <demo(currency-mega)>
+
+## currencyCNY
+
+Converted into RMB notation.
+
+[comment]: <demo(currency-cny)>

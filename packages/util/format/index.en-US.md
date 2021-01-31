@@ -15,7 +15,7 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 // output: this is asdf
 ```
 
-## FormatCurrencyService
+## CurrencyService
 
 ### commas
 
@@ -32,6 +32,15 @@ Large number format filter.
 ```ts
 1000 => { value: '1', unit: 'K', unitI18n: '千' }
 12456 => { value: '12.46', unit: 'K', unitI18n: '千' }
+```
+
+### cny
+
+Converted into RMB notation.
+
+```ts
+1 => 壹元整
+1.34 => 壹元叁角肆分
 ```
 
 ## REGEX

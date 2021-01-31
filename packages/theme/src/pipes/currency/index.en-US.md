@@ -5,6 +5,8 @@ subtitle: Currenty
 type: Pipe
 ---
 
+**Will be removed in 13.0.0, please use [currencyCNY](/util/pipes-currency/en) pipeline instead.**
+
 `_currency` currency formatting, simplifying the original `currency` for **Chinese currency**, the same way as `currency`.
 
 ```html

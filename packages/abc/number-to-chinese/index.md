@@ -7,6 +7,8 @@ cols: 1
 module: import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 ---
 
+**将会在 13.0.0 时被移除，请使用 [CurrencyService](/util/format/zh#CurrencyService) 替代。**
+
 常用在数值转化为人民币大写。
 
 ## API

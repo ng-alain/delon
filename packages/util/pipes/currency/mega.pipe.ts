@@ -1,10 +1,10 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
-import { FormatCurrencyService } from '@delon/util/format';
+import { CurrencyService } from '@delon/util/format';
 
 @Pipe({ name: 'currencyMega' })
 export class CurrencyMegaPipe implements PipeTransform {
   private isCN = false;
-  constructor(private srv: FormatCurrencyService, @Inject(LOCALE_ID) locale: string) {
+  constructor(private srv: CurrencyService, @Inject(LOCALE_ID) locale: string) {
     this.isCN = locale.startsWith('zh');
   }
 
