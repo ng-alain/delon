@@ -1,16 +1,23 @@
-import { commasNumber, megaNumber } from './number';
+import { TestBed } from '@angular/core/testing';
+import { FormatCurrencyService } from './currency.service';
 
-describe('util: number', () => {
-  describe('#commasNumber', () => {
+describe('util: FormatCurrencyService', () => {
+  let srv: FormatCurrencyService;
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    srv = TestBed.inject<FormatCurrencyService>(FormatCurrencyService);
+  });
+
+  describe('#commas', () => {
     it('should be working', () => {
-      expect(commasNumber(10000)).toBe('10,000');
+      expect(srv.commas(10000)).toBe('10,000');
     });
     it('should be thousands separators', () => {
-      expect(commasNumber(10000, '-')).toBe('10-000');
+      expect(srv.commas(10000, { separator: '-' })).toBe('10-000');
     });
   });
 
-  describe('#megaNumber', () => {
+  describe('#mega', () => {
     const data: Array<{ value: number | string; return: string; returnType?: 'default' | 'i18n' }> = [
       { value: 10000, return: '10K' },
       { value: 12456, return: '12.46K' },
@@ -21,17 +28,17 @@ describe('util: number', () => {
     ];
     data.forEach(i => {
       it(`should be ${i.value} return ${i.return}${i.returnType === 'i18n' ? ' via i18n' : ''}`, () => {
-        const res = megaNumber(i.value);
+        const res = srv.mega(i.value);
         expect(res.value + (i.returnType === 'i18n' ? res.unitI18n : res.unit)).toBe(i.return);
       });
     });
 
     it('should be precision', () => {
-      expect(megaNumber(10100, 1).value).toBe('10.1');
+      expect(srv.mega(10100, { precision: 1 }).value).toBe('10.1');
     });
 
     it('should be powerI18n', () => {
-      expect(megaNumber(10100, 1, { K: 'Qiang' } as any).unitI18n).toBe('Qiang');
+      expect(srv.mega(10100, { precision: 1, unitI18n: { K: 'Qiang' } as any }).unitI18n).toBe('Qiang');
     });
   });
 });

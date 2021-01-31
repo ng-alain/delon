@@ -1,3 +1,3 @@
 export * from './string';
 export * from './validate';
-export * from './number';
+export * from './currency.service';

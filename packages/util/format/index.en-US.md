@@ -15,7 +15,9 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 // output: this is asdf
 ```
 
-## commasNumber
+## FormatCurrencyService
+
+### commas
 
 Format a number with commas as thousands separators.
 
@@ -23,7 +25,7 @@ Format a number with commas as thousands separators.
 10000 => `10,000`
 ```
 
-## megaNumber
+### mega
 
 Large number format filter.
 

@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ value }} | commasNumber </span>}} = {{ value | commasNumber }}
+      {{<span> {{ value }} | currencyCommas </span>}} = {{ value | currencyCommas }}
     </p>
     <nz-input-group nzAddOnBefore="Value">
       <input type="text" nz-input [(ngModel)]="value" />

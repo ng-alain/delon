@@ -15,7 +15,9 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 // output: this is asdf
 ```
 
-## commasNumber
+## FormatCurrencyService
+
+### commas
 
 用逗号将数字格式化为千位分隔符。
 
@@ -23,7 +25,7 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 10000 => `10,000`
 ```
 
-## megaNumber
+### mega
 
 大数据格式化。
 

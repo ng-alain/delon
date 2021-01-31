@@ -1,1 +1,1 @@
-export * from '@delon/util/pipes/format-number';
+export * from '@delon/util/pipes/currency';
