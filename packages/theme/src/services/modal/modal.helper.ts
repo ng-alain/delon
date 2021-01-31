@@ -112,7 +112,7 @@ export class ModalHelper {
   }
 
   /**
-   * @deprecated Will be removed in 13.0.0, Pls used `create` instead
+   * @deprecated Will be removed in 12.0.0, Pls used `create` instead
    *
    * 打开对话框
    *
@@ -139,7 +139,7 @@ export class ModalHelper {
   }
 
   /**
-   * @deprecated Will be removed in 13.0.0, Pls used `createStatic` instead
+   * @deprecated Will be removed in 12.0.0, Pls used `createStatic` instead
    *
    * 静态框，点击蒙层不允许关闭
    *

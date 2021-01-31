@@ -3,6 +3,7 @@ order: 5
 title: ScrollService
 subtitle: Scroll Service
 type: Service
+deprecated: 12.0.0
 ---
 
 **NOTE:** Will be removed in 12.0.0, Pls used `import { ScrollService } from '@delon/util/browser';` instead

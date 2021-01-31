@@ -5,10 +5,10 @@ title: number-to-chinese
 subtitle: 人民币大写
 cols: 1
 module: import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
-deprecated: 13.0.0
+deprecated: 12.0.0
 ---
 
-**将会在 13.0.0 时被移除，请使用 [CurrencyService](/util/format/zh#CurrencyService) 替代。**
+**将会在 12.0.0 时被移除，请使用 [CurrencyService](/util/format/zh#CurrencyService) 替代。**
 
 常用在数值转化为人民币大写。
 

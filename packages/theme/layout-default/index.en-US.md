@@ -85,6 +85,8 @@ export class LayoutBasicComponent {
 }
 ```
 
+In addition, in layout operations, you can subscribe to layout changes through `SettingsService.notify` (for example: sidebar show and hide, etc.). Note that all layout-related changes will pass through this interface, so you need to do `filter` operation.
+
 ## API
 
 ### layout-default
