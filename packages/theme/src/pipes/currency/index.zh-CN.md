@@ -3,6 +3,7 @@ order: 1
 title: _currency
 subtitle: 货币
 type: Pipe
+deprecated: 13.0.0
 ---
 
 **将会在 13.0.0 时被移除，请使用 [currencyCNY](/util/pipes-currency/zh) 管道替代。**
