@@ -36,7 +36,7 @@ import { STColumn, STData } from '@delon/abc/st';
           </tr>
           <tr class="bg-grey-lighter">
             <td colspan="3">性别平均值</td>
-            <td class="text-right">{{ s.sum.value / s.dc.value | _currency }}</td>
+            <td class="text-right">{{ s.sum.value / s.dc.value | price }}</td>
             <td colspan="4"></td>
           </tr>
         </ng-container>
