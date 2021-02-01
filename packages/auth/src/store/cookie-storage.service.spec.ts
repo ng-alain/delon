@@ -3,21 +3,21 @@ import { ITokenModel } from '../token/interface';
 import { CookieStorageStore } from './cookie-storage.service';
 
 describe('auth: cookie-storage', () => {
-  const store = new CookieStorageStore();
+  let data: { [key: string]: NzSafeAny } = {};
+  const store = new CookieStorageStore({
+    put: jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value as string)),
+    get: jasmine.createSpy('get').and.callFake((key: string) => data[key] || null),
+    remove: jasmine.createSpy('remove').and.callFake((key: string) => {
+      delete data[key];
+    }),
+  } as any);
   const KEY = 'token';
   const VALUE: ITokenModel = {
     token: 'token data',
   } as ITokenModel;
 
   beforeEach(() => {
-    const data: { [key: string]: NzSafeAny } = {};
-    (window as any).Cookies = {
-      set: jasmine.createSpy('set').and.callFake((key: string, value: string) => (data[key] = value as string)),
-      get: jasmine.createSpy('get').and.callFake((key: string) => data[key] || null),
-      remove: jasmine.createSpy('remove').and.callFake((key: string) => {
-        delete data[key];
-      }),
-    };
+    data = {};
   });
 
   it('should be never return null', () => {

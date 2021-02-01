@@ -41,7 +41,7 @@ npm run dev:ssr
 
 服务端是无状态的，因此判断请求是否有效授权，目前通用的做法是将 Token 存储在 Cookie 下，在服务端接收请求时再根据 Cookies 来获取 Token 信息。
 
-虽然 NG-ALAIN 提供 `CookieStorageStore` 但它并不支持 SSR，因为它所依赖的 [js-cookie](https://github.com/js-cookie/js-cookie) 第三类库并不支持，因此需要手动构建针对 SSR 的 Token 持久化存储。
+虽然 NG-ALAIN 提供 `CookieStorageStore` 但它并不支持服务端 SSR 访问 Cookie，因此需要手动构建针对 SSR 的 Token 持久化存储。
 
 推荐使用 [@ngx-utils/cookies](https://github.com/ngx-utils/cookies) 来处理 Cookies，它同时支持客户端与服务端。
 

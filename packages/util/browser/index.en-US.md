@@ -4,6 +4,17 @@ subtitle: Browser, Dom etc
 type: Tools
 ---
 
+## CookieService
+
+A set of simple Cookie manipulation classes.
+
+- `cookie` Original cookie value
+- `getAll` Get all cookie key-value pairs
+- `get` Get the value of given cookie `key`
+- `put` Sets a value for given cookie key
+
+[comment]: <demo(cookie)>
+
 ## isEmpty
 
 Used to verify `<ng-content></ng-content>` is empty, useful for custom components.

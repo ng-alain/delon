@@ -4,6 +4,17 @@ subtitle: 浏览器、DOM 等
 type: Tools
 ---
 
+## CookieService
+
+一组简单的 Cookie 操作类。
+
+- `cookie` 原始Cookie值
+- `getAll` 获取所有Cookie键值对
+- `get` 获取指定 `key` 的值
+- `put` 设置指定 Cookie 键的值
+
+[comment]: <demo(cookie)>
+
 ## isEmpty
 
 用于校验 `<ng-content></ng-content>` 是否为空，自定义组件时蛮有用。
