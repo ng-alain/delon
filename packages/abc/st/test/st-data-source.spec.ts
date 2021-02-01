@@ -39,7 +39,6 @@ describe('abc: table: data-souce', () => {
   let currencySrv: MockCurrencyService;
   // tslint:disable-next-line:prefer-const
   let httpResponse: any;
-  let commasResponse: string;
 
   class MockHttpClient {
     request(_method: string, _url: string, _opt: any): any {
@@ -49,7 +48,7 @@ describe('abc: table: data-souce', () => {
 
   class MockCurrencyService {
     commas(): string {
-      return commasResponse;
+      return '';
     }
   }
 
@@ -80,6 +79,7 @@ describe('abc: table: data-souce', () => {
     ynPipe = new YNPipe(new MockDomSanitizer() as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
+    currencySrv = new MockCurrencyService();
     srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, new MockDomSanitizer() as any);
   }
 

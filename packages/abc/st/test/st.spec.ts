@@ -316,7 +316,7 @@ describe('abc: table', () => {
           it(`should be render currency`, fakeAsync(() => {
             page
               .updateColumn([{ title: '', index: 'id', type: 'currency' }])
-              .expectCell('￥1.00')
+              .expectCell('1')
               .asyncEnd();
           }));
           it(`should be text right`, fakeAsync(() => {
