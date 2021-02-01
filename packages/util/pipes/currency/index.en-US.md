@@ -5,19 +5,19 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
-## commasNumber
+## _currency2
 
 Format a number with commas as thousands separators.
 
-[comment]: <demo(currency-commas)>
+[comment]: <demo(currency-format)>
 
-## megaNumber
+## mega
 
 Large number format filter.
 
 [comment]: <demo(currency-mega)>
 
-## currencyCNY
+## cny
 
 Converted into RMB notation.
 

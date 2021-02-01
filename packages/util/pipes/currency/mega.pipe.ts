@@ -1,7 +1,7 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 import { CurrencyMegaOptions, CurrencyService } from '@delon/util/format';
 
-@Pipe({ name: 'currencyMega' })
+@Pipe({ name: 'mega' })
 export class CurrencyMegaPipe implements PipeTransform {
   private isCN = false;
   constructor(private srv: CurrencyService, @Inject(LOCALE_ID) locale: string) {

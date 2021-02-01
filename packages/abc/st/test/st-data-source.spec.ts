@@ -47,7 +47,7 @@ describe('abc: table: data-souce', () => {
   }
 
   class MockCurrencyService {
-    commas(): string {
+    format(): string {
       return '';
     }
   }
@@ -738,9 +738,9 @@ describe('abc: table: data-souce', () => {
       });
       it('via currency', done => {
         options.columns[0].type = 'currency';
-        spyOn(currencySrv, 'commas');
+        spyOn(currencySrv, 'format');
         srv.process(options).subscribe(() => {
-          expect(currencySrv.commas).toHaveBeenCalled();
+          expect(currencySrv.format).toHaveBeenCalled();
           done();
         });
       });
@@ -838,7 +838,7 @@ describe('abc: table: data-souce', () => {
       genModule();
       options.pi = 1;
       options.ps = 100;
-      spyOn(currencySrv, 'commas');
+      spyOn(currencySrv, 'format');
     });
 
     it('should be use key instead of index as result key', done => {
@@ -907,10 +907,10 @@ describe('abc: table: data-souce', () => {
       it('should working', done => {
         options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: true } }];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
-        expect(currencySrv.commas).not.toHaveBeenCalled();
+        expect(currencySrv.format).not.toHaveBeenCalled();
 
         srv.process(options).subscribe(() => {
-          expect(currencySrv.commas).toHaveBeenCalled();
+          expect(currencySrv.format).toHaveBeenCalled();
           done();
         });
       });

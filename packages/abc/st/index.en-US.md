@@ -267,7 +267,7 @@ class TestComponent {
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
 | `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` | - |
-| `[currency]` | Currency format option, `type=currency` is valid, see [CurrencyService.commas](https://ng-alain.com/util/format/en#commas). | `CurrencyCommasOptions` | - |
+| `[currency]` | Currency format option, `type=currency` is valid | `STcolumnCurrency` | - |
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
@@ -394,6 +394,13 @@ class TestComponent {
 | `[yes]` | Badge `true` text | `string` | `是` |
 | `[no]` | Badge `false` text | `string` | `否` |
 | `[mode]` | Display mode for yn | `full,icon,text` | `icon` |
+
+### STcolumnCurrency
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[type]` | Currency rendering type | `commas, mega` | `commas` |
+| `[format]` | See [CurrencyService.format](https://ng-alain.com/util/format/en#format) | `CurrencyFormatOptions` | - |
 
 ### STColumnBadge
 

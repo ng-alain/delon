@@ -1,13 +1,6 @@
 export type CurrencyStartingUnit = 'yuan' | 'cent';
 
-export interface CurrencyCommasOptions {
-  /**
-   * Thousands separator, default: `,`
-   *
-   * 千位分隔符，默认：`,`
-   */
-  separator?: string;
-
+export interface CurrencyStartingUnitOptions {
   /**
    * Starting unit, default: `yuan`
    *
@@ -16,7 +9,14 @@ export interface CurrencyCommasOptions {
   startingUnit?: CurrencyStartingUnit;
 }
 
-export interface CurrencyMegaOptions {
+export interface CurrencyFormatOptions extends CurrencyStartingUnitOptions {
+  /**
+   * 精度，默认：`2`
+   */
+  precision?: number;
+}
+
+export interface CurrencyMegaOptions extends CurrencyStartingUnitOptions {
   /**
    * 精度，默认：`2`
    */
@@ -26,13 +26,6 @@ export interface CurrencyMegaOptions {
    * 单位国际化，默认：`{Q: '京', T: '兆', B: '亿', M: '万', K: '千',}`
    */
   unitI18n?: CurrencyMegaUnitI18n;
-
-  /**
-   * Starting unit, default: `yuan`
-   *
-   * 起始单位，默认：`yuan`
-   */
-  startingUnit?: CurrencyStartingUnit;
 }
 
 export interface CurrencyMegaResult {
@@ -58,7 +51,7 @@ export interface CurrencyMegaUnitI18n {
   K: string;
 }
 
-export interface CurrencyCNYOptions {
+export interface CurrencyCNYOptions extends CurrencyStartingUnitOptions {
   /**
    * Whether to return to uppercase notation, default: `true`
    *
@@ -71,10 +64,4 @@ export interface CurrencyCNYOptions {
    * 指定负数符号，默认：`负`
    */
   minusSymbol?: string;
-  /**
-   * Starting unit, default: `yuan`
-   *
-   * 起始单位，默认：`yuan`
-   */
-  startingUnit?: CurrencyStartingUnit;
 }

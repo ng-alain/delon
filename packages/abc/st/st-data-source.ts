@@ -208,7 +208,7 @@ export class STDataSource {
           text = this.numberPipe.transform(value, col.numberDigits);
           break;
         case 'currency':
-          text = this.currencySrv.commas(value, col.currency);
+          text = this.currencySrv.format(value, col.currency?.format);
           break;
         case 'date':
           text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
@@ -446,7 +446,7 @@ export class STDataSource {
       }
     }
     if (item.currency === true || (item.currency == null && currency === true)) {
-      res.text = this.currencySrv.commas(res.value, col.currency) as string;
+      res.text = this.currencySrv.format(res.value, col.currency?.format) as string;
     } else {
       res.text = String(res.value);
     }

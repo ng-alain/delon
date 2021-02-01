@@ -8,12 +8,13 @@ type: Tools
 
 > 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit` 等参数。
 
-### commas
+### format
 
-用逗号将数字格式化为千位分隔符。
+格式化货币，用逗号将数字格式化为千位分隔符。
 
 ```ts
 10000 => `10,000`
+10000.567 => `10,000.57`
 ```
 
 ### mega

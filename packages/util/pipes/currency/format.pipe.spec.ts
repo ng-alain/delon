@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CurrencyCommasOptions } from '@delon/util/format';
+import { CurrencyFormatOptions } from '@delon/util/format';
 import { CurrencyPipeModule } from './module';
 
-describe('Pipe: currencyCommas', () => {
+describe('Pipe: _currency2', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
@@ -20,17 +20,17 @@ describe('Pipe: currencyCommas', () => {
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10,000');
   });
   it('should be thousands separators', () => {
-    fixture.componentInstance.value = 10000;
-    fixture.componentInstance.options.separator = '-';
+    fixture.componentInstance.value = 10000.16;
+    fixture.componentInstance.options.precision = 1;
     fixture.detectChanges();
-    expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10-000');
+    expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10,000.2');
   });
 });
 
 @Component({
-  template: ` <p id="result">{{ value | currencyCommas: options }}</p> `,
+  template: ` <p id="result">{{ value | _currency2: options }}</p> `,
 })
 class TestComponent {
   value: number;
-  options: CurrencyCommasOptions = {};
+  options: CurrencyFormatOptions = {};
 }

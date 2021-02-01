@@ -1,3 +1,3 @@
 export * from './mega.pipe';
-export * from './commas.pipe';
+export * from './format.pipe';
 export * from './module';

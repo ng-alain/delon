@@ -5,19 +5,19 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
-## commasNumber
+## _currency2
 
 用逗号将数字格式化为千位分隔符。
 
-[comment]: <demo(currency-commas)>
+[comment]: <demo(currency-format)>
 
-## currencyMega
+## mega
 
 大数据格式化。
 
 [comment]: <demo(currency-mega)>
 
-## currencyCNY
+## cny
 
 转化成人民币表示法。
 

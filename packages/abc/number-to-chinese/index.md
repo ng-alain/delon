@@ -33,6 +33,8 @@ deprecated: 12.0.0
 
 ## Pipe管道
 
+请使用 [cny](/util/pipes-currency/zh#cny) 管道替代。
+
 使用 `n2c` 便于直接在模板中渲染，例如：
 
 ```html

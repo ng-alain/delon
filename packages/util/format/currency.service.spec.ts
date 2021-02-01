@@ -8,18 +8,16 @@ describe('util: FormatCurrencyService', () => {
     srv = TestBed.inject<CurrencyService>(CurrencyService);
   });
 
-  describe('#commas', () => {
+  describe('#format', () => {
     it('should be working', () => {
-      expect(srv.commas(10000)).toBe('10,000');
-    });
-    it('should be thousands separators', () => {
-      expect(srv.commas(10000, { separator: '-' })).toBe('10-000');
+      expect(srv.format(10000)).toBe('10,000');
+      expect(srv.format(10000.567, { precision: 2 })).toBe('10,000.57');
     });
     it('should be / 100 when staring unit is cent', () => {
-      expect(srv.commas(100, { startingUnit: 'cent' })).toBe('1');
+      expect(srv.format(100, { startingUnit: 'cent' })).toBe('1');
     });
     it('should be return empty when is NaN', () => {
-      expect(srv.commas(undefined!)).toBe('');
+      expect(srv.format(undefined!)).toBe('');
     });
   });
 

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { CurrencyMegaOptions } from '@delon/util/format';
 import { CurrencyPipeModule } from './module';
 
-describe('Pipe: currencyMega', () => {
+describe('Pipe: mega', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   describe('default', () => {
@@ -46,7 +46,7 @@ describe('Pipe: currencyMega', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | currencyMega: options }}</p> `,
+  template: ` <p id="result">{{ value | mega: options }}</p> `,
 })
 class TestComponent {
   value: number;

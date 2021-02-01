@@ -9,13 +9,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ value }} | mega </span>}} = {{ value | mega }}
-    </p>
-    <p class="mb-md">
-      {{<span>
-        {{ value }} | mega: 大括号 precision: <span>{{ precision }}</span> 大括号 </span
-      >}} =
-      {{ value | mega: { precision: precision } }}
+      {{<span> {{ value }} | _currency2 </span>}} = {{ value | _currency2: { precision: precision } }}
     </p>
     <nz-input-group nzAddOnBefore="Value" class="mb-md">
       <input type="text" nz-input [(ngModel)]="value" />
@@ -26,7 +20,7 @@ import { Component } from '@angular/core';
   `,
 })
 export class DemoComponent {
-  value = 123456;
-  precision = 1;
+  value = 10000.345;
+  precision = 2;
 }
 ```

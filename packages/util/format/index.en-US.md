@@ -8,12 +8,13 @@ type: Tools
 
 > You can override [ArrayService] to set the `startingUnit`, `megaUnit` through [Global Configuration](/docs/global-config).
 
-### commas
+### format
 
 Format a number with commas as thousands separators.
 
 ```ts
 10000 => `10,000`
+10000.567 => `10,000.57`
 ```
 
 ### mega

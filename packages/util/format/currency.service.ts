@@ -1,25 +1,27 @@
-import { Injectable } from '@angular/core';
+import { formatNumber } from '@angular/common';
+import { Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
-import { CurrencyCNYOptions, CurrencyCommasOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
+import { CurrencyCNYOptions, CurrencyFormatOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
   private c: AlainUtilCurrencyConfig;
 
-  constructor(cog: AlainConfigService) {
+  constructor(cog: AlainConfigService, @Inject(LOCALE_ID) private locale: string) {
     this.c = cog.merge('utilCurrency', { startingUnit: 'yuan', megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' } })!;
   }
 
   /**
    * Format a number with commas as thousands separators
    *
-   * 用逗号将数字格式化为千位分隔符
+   * 格式化货币，用逗号将数字格式化为千位分隔符
    * ```ts
    * 10000 => `10,000`
+   * 10000.567 => `10,000.57`
    * ```
    */
-  commas(value: number | string, options?: CurrencyCommasOptions): string {
-    options = { startingUnit: this.c.startingUnit, ...options };
+  format(value: number | string, options?: CurrencyFormatOptions): string {
+    options = { startingUnit: this.c.startingUnit, precision: 2, ...options };
     let truthValue = Number(value);
     if (value == null || isNaN(truthValue)) {
       return '';
@@ -27,7 +29,7 @@ export class CurrencyService {
     if (options.startingUnit === 'cent') {
       truthValue = truthValue / 100;
     }
-    return truthValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, options?.separator ?? ',');
+    return formatNumber(truthValue, this.locale, `.1-${options.precision}`).replace(/(?:\.[0]+)$/g, '');
   }
 
   /**
