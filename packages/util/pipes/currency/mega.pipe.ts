@@ -1,5 +1,5 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
-import { CurrencyService } from '@delon/util/format';
+import { CurrencyMegaOptions, CurrencyService } from '@delon/util/format';
 
 @Pipe({ name: 'currencyMega' })
 export class CurrencyMegaPipe implements PipeTransform {
@@ -13,8 +13,8 @@ export class CurrencyMegaPipe implements PipeTransform {
    *
    * 大数据格式化
    */
-  transform(value: number | string, precision: number = 2): string {
-    const res = this.srv.mega(value, { precision });
+  transform(value: number | string, options?: CurrencyMegaOptions): string {
+    const res = this.srv.mega(value, options);
     return res.value + (this.isCN ? res.unitI18n : res.unit);
   }
 }

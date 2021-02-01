@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CurrencyService } from '@delon/util/format';
+import { CurrencyCommasOptions, CurrencyService } from '@delon/util/format';
 
 @Pipe({ name: 'currencyCommas' })
 export class CurrencyCommasPipe implements PipeTransform {
@@ -9,7 +9,7 @@ export class CurrencyCommasPipe implements PipeTransform {
    *
    * 用逗号将数字格式化为千位分隔符
    */
-  transform(value: number | string, separator: string = ','): string {
-    return this.srv.commas(value, { separator });
+  transform(value: number | string, options?: CurrencyCommasOptions): string {
+    return this.srv.commas(value, options);
   }
 }

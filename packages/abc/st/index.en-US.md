@@ -267,6 +267,7 @@ class TestComponent {
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
 | `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` | - |
+| `[currency]` | Currency format option, `type=currency` is valid, see [CurrencyService.commas](https://ng-alain.com/util/format/en#commas). | `CurrencyCommasOptions` | - |
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |

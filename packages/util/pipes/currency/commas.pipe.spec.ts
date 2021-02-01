@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CurrencyCommasOptions } from '@delon/util/format';
 import { CurrencyPipeModule } from './module';
 
 describe('Pipe: currencyCommas', () => {
@@ -20,16 +21,16 @@ describe('Pipe: currencyCommas', () => {
   });
   it('should be thousands separators', () => {
     fixture.componentInstance.value = 10000;
-    fixture.componentInstance.separator = '-';
+    fixture.componentInstance.options.separator = '-';
     fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10-000');
   });
 });
 
 @Component({
-  template: ` <p id="result">{{ value | currencyCommas: separator }}</p> `,
+  template: ` <p id="result">{{ value | currencyCommas: options }}</p> `,
 })
 class TestComponent {
   value: number;
-  separator: string = ',';
+  options: CurrencyCommasOptions = {};
 }

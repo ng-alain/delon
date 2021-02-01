@@ -1,12 +1,38 @@
+export type CurrencyStartingUnit = 'yuan' | 'cent';
+
+export interface CurrencyCommasOptions {
+  /**
+   * Thousands separator, default: `,`
+   *
+   * 千位分隔符，默认：`,`
+   */
+  separator?: string;
+
+  /**
+   * Starting unit, default: `yuan`
+   *
+   * 起始单位，默认：`yuan`
+   */
+  startingUnit?: CurrencyStartingUnit;
+}
+
 export interface CurrencyMegaOptions {
   /**
    * 精度，默认：`2`
    */
   precision?: number;
+
   /**
    * 单位国际化，默认：`{Q: '京', T: '兆', B: '亿', M: '万', K: '千',}`
    */
   unitI18n?: CurrencyMegaUnitI18n;
+
+  /**
+   * Starting unit, default: `yuan`
+   *
+   * 起始单位，默认：`yuan`
+   */
+  startingUnit?: CurrencyStartingUnit;
 }
 
 export interface CurrencyMegaResult {
@@ -46,9 +72,9 @@ export interface CurrencyCNYOptions {
    */
   minusSymbol?: string;
   /**
-   * Throws an exception when the passed value is invalid. Default: `false`
+   * Starting unit, default: `yuan`
    *
-   * 当传递值无效数值时抛出异常，默认：`false`
+   * 起始单位，默认：`yuan`
    */
-  validThrow?: boolean;
+  startingUnit?: CurrencyStartingUnit;
 }

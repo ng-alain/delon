@@ -15,6 +15,12 @@ describe('util: FormatCurrencyService', () => {
     it('should be thousands separators', () => {
       expect(srv.commas(10000, { separator: '-' })).toBe('10-000');
     });
+    it('should be / 100 when staring unit is cent', () => {
+      expect(srv.commas(100, { startingUnit: 'cent' })).toBe('1');
+    });
+    it('should be return empty when is NaN', () => {
+      expect(srv.commas(undefined!)).toBe('');
+    });
   });
 
   describe('#mega', () => {
@@ -40,6 +46,10 @@ describe('util: FormatCurrencyService', () => {
     it('should be powerI18n', () => {
       expect(srv.mega(10100, { precision: 1, unitI18n: { K: 'Qiang' } as any }).unitI18n).toBe('Qiang');
     });
+
+    it('should be / 100 when staring unit is cent', () => {
+      expect(srv.mega(100, { startingUnit: 'cent' }).value).toBe('1');
+    });
   });
 
   describe('#cny', () => {
@@ -50,7 +60,7 @@ describe('util: FormatCurrencyService', () => {
       { inWords: true, num: 20000000000000000, value: '贰兆元整' },
       { inWords: false, num: 0, value: '零' },
       { inWords: true, num: 0, value: '零元整' },
-      { inWords: false, num: '1.0', value: '一点零' },
+      { inWords: false, num: '1.0', value: '一' },
       { inWords: true, num: '1.0', value: '壹元整' },
       { inWords: false, num: '1.0001', value: '一点零零零一' },
       { inWords: true, num: '1.0001', value: '壹元零角零分零厘壹毫' },
@@ -73,18 +83,16 @@ describe('util: FormatCurrencyService', () => {
         value: '欠壹佰贰拾万零贰仟零叁拾元整',
         options: { minusSymbol: '欠' },
       },
+      {
+        inWords: false,
+        num: 100,
+        value: '一',
+        options: { startingUnit: 'cent' },
+      },
     ].forEach((item: any) => {
       it(`${typeof item.num === 'string' ? '[string]' : ''}${item.inWords ? 'RMB:' : ''}${item.num} muse be ${item.value}`, () => {
         expect(srv.cny(item.num, { inWords: item.inWords, ...item.options })).toBe(item.value);
       });
-    });
-
-    it('should be throw when validThrow: true', () => {
-      expect(() => {
-        srv.cny('asdf', {
-          validThrow: true,
-        });
-      }).toThrow();
     });
 
     it('should be simple', () => {

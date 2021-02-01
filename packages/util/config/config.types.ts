@@ -25,7 +25,7 @@ import { AlainMockConfig } from './mock/mock.type';
 import { AlainSFConfig } from './sf/sf.type';
 import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig } from './theme/index';
 import { AlainUtilArrayConfig } from './util/array.type';
-import { AlainUtilFormatConfig } from './util/format.type';
+import { AlainUtilCurrencyConfig } from './util/currency.type';
 
 export interface AlainConfig {
   dataRange?: AlainDateRangePickerConfig;
@@ -51,7 +51,7 @@ export interface AlainConfig {
   chart?: AlainChartConfig;
   mock?: AlainMockConfig;
   utilArray?: AlainUtilArrayConfig;
-  utilFormat?: AlainUtilFormatConfig;
+  utilCurrency?: AlainUtilCurrencyConfig;
   themeHttp?: AlainThemeHttpClientConfig;
   themeResponsive?: AlainThemeResponsiveConfig;
 }

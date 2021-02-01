@@ -1,6 +1,7 @@
 import { Component, LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CurrencyMegaOptions } from '@delon/util/format';
 import { CurrencyPipeModule } from './module';
 
 describe('Pipe: currencyMega', () => {
@@ -21,7 +22,7 @@ describe('Pipe: currencyMega', () => {
     });
     it('should be precision', () => {
       fixture.componentInstance.value = 10100;
-      fixture.componentInstance.precision = 1;
+      fixture.componentInstance.options.precision = 1;
       fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10.1K');
     });
@@ -45,9 +46,9 @@ describe('Pipe: currencyMega', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | currencyMega: precision }}</p> `,
+  template: ` <p id="result">{{ value | currencyMega: options }}</p> `,
 })
 class TestComponent {
   value: number;
-  precision = 2;
+  options: CurrencyMegaOptions = {};
 }

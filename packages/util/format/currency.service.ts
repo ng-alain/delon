@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainUtilFormatConfig } from '@delon/util/config';
-import { CurrencyCNYOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
+import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
+import { CurrencyCNYOptions, CurrencyCommasOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
-  private c: AlainUtilFormatConfig;
+  private c: AlainUtilCurrencyConfig;
 
   constructor(cog: AlainConfigService) {
-    this.c = cog.merge('utilFormat', {})!;
+    this.c = cog.merge('utilCurrency', { startingUnit: 'yuan', megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' } })!;
   }
 
   /**
@@ -18,8 +18,16 @@ export class CurrencyService {
    * 10000 => `10,000`
    * ```
    */
-  commas(value: number | string, options?: { separator?: string }): string {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, options?.separator ?? ',');
+  commas(value: number | string, options?: CurrencyCommasOptions): string {
+    options = { startingUnit: this.c.startingUnit, ...options };
+    let truthValue = Number(value);
+    if (value == null || isNaN(truthValue)) {
+      return '';
+    }
+    if (options.startingUnit === 'cent') {
+      truthValue = truthValue / 100;
+    }
+    return truthValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, options?.separator ?? ',');
   }
 
   /**
@@ -32,14 +40,17 @@ export class CurrencyService {
    * ```
    */
   mega(value: number | string, options?: CurrencyMegaOptions): CurrencyMegaResult {
-    options = { precision: 2, unitI18n: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' }, ...this.c.currencyMegaUnit, ...options };
-    const num = parseFloat(value.toString());
+    options = { precision: 2, unitI18n: this.c.megaUnit, startingUnit: this.c.startingUnit, ...options };
+    let num = Number(value);
     const res: CurrencyMegaResult = { raw: value, value: '', unit: '', unitI18n: '' };
     if (isNaN(num) || num === 0) {
       res.value = value.toString();
       return res;
     }
-    let abs = Math.abs(+value);
+    if (options.startingUnit === 'cent') {
+      num = num / 100;
+    }
+    let abs = Math.abs(+num);
     const rounder = Math.pow(10, options.precision!);
     const isNegative = num < 0;
     for (const p of CurrencyMega_Powers) {
@@ -68,15 +79,18 @@ export class CurrencyService {
     options = {
       inWords: true,
       minusSymbol: '负',
-      validThrow: false,
+      startingUnit: this.c.startingUnit,
       ...options,
     };
-    if (typeof value === 'number') {
-      value = value.toString();
+
+    value = Number(value);
+    if (isNaN(value)) {
+      return '';
     }
-    if (!/^-?\d+(\.\d+)?$/.test(value) && options.validThrow) {
-      throw new Error(`${value} is invalid number type`);
+    if (options.startingUnit === 'cent') {
+      value = value / 100;
     }
+    value = value.toString();
     let integer: number | string;
     let decimal: number | string | null;
     [integer, decimal] = value.split('.');

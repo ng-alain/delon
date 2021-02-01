@@ -4,18 +4,9 @@ subtitle: Format, Currency
 type: Tools
 ---
 
-## format
-
-String formatting.
-
-```ts
-format('this is ${name}', { name: 'asdf' })
-// output: this is asdf
-format('this is ${user.name}', { user: { name: 'asdf' } }, true)
-// output: this is asdf
-```
-
 ## CurrencyService
+
+> You can override [ArrayService] to set the `startingUnit`, `megaUnit` through [Global Configuration](/docs/global-config).
 
 ### commas
 
@@ -41,6 +32,17 @@ Converted into RMB notation.
 ```ts
 1 => 壹元整
 1.34 => 壹元叁角肆分
+```
+
+## format
+
+String formatting.
+
+```ts
+format('this is ${name}', { name: 'asdf' })
+// output: this is asdf
+format('this is ${user.name}', { user: { name: 'asdf' } }, true)
+// output: this is asdf
 ```
 
 ## REGEX

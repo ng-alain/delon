@@ -4,18 +4,9 @@ subtitle: 格式化，含货币
 type: Tools
 ---
 
-## format
-
-字符串格式化。
-
-```ts
-format('this is ${name}', { name: 'asdf' })
-// output: this is asdf
-format('this is ${user.name}', { user: { name: 'asdf' } }, true)
-// output: this is asdf
-```
-
 ## CurrencyService
+
+> 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit` 等参数。
 
 ### commas
 
@@ -41,6 +32,17 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 ```ts
 1 => 壹元整
 1.34 => 壹元叁角肆分
+```
+
+## format
+
+字符串格式化。
+
+```ts
+format('this is ${name}', { name: 'asdf' })
+// output: this is asdf
+format('this is ${user.name}', { user: { name: 'asdf' } }, true)
+// output: this is asdf
 ```
 
 ## REGEX
