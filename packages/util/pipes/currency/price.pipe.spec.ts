@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { CurrencyFormatOptions } from '@delon/util/format';
 import { CurrencyPipeModule } from './module';
 
-describe('Pipe: _currency2', () => {
+describe('Pipe: price', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('Pipe: _currency2', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | _currency2: options }}</p> `,
+  template: ` <p id="result">{{ value | price: options }}</p> `,
 })
 class TestComponent {
   value: number;
