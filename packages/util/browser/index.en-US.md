@@ -1,6 +1,6 @@
 ---
 title: browser
-subtitle: Browser, Dom etc
+subtitle: Cookie, Copy, DOM etc
 type: Tools
 ---
 

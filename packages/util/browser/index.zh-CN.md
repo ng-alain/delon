@@ -1,6 +1,6 @@
 ---
 title: browser
-subtitle: 浏览器、DOM 等
+subtitle: Cookie、Copy、DOM 等
 type: Tools
 ---
 
