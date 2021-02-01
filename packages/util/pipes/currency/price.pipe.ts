@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CurrencyFormatOptions, CurrencyService } from '@delon/util/format';
 
-@Pipe({ name: '_currency2' })
-export class CurrencyFormatPipe implements PipeTransform {
+@Pipe({ name: 'price' })
+export class CurrencyPricePipe implements PipeTransform {
   constructor(private srv: CurrencyService) {}
   /**
    * Format a number with commas as thousands separators

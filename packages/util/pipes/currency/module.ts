@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CurrencyCNYPipe } from './cny.pipe';
-import { CurrencyFormatPipe } from './format.pipe';
 import { CurrencyMegaPipe } from './mega.pipe';
+import { CurrencyPricePipe } from './price.pipe';
 
-const PIPES = [CurrencyMegaPipe, CurrencyFormatPipe, CurrencyCNYPipe];
+const PIPES = [CurrencyMegaPipe, CurrencyPricePipe, CurrencyCNYPipe];
 
 @NgModule({
   declarations: PIPES,

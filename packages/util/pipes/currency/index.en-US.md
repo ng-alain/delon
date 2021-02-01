@@ -5,11 +5,11 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
-## _currency2
+## price
 
 Format a number with commas as thousands separators.
 
-[comment]: <demo(currency-format)>
+[comment]: <demo(currency-price)>
 
 ## mega
 

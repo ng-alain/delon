@@ -5,11 +5,11 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
-## _currency2
+## price
 
 用逗号将数字格式化为千位分隔符。
 
-[comment]: <demo(currency-format)>
+[comment]: <demo(currency-price)>
 
 ## mega
 
