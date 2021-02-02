@@ -251,6 +251,22 @@ describe('utils: array', () => {
     it('should be depth 1', () => {
       expect(srv.flat([1, [2, 3, [4, 5, [6]]]], 1).length).toBe(4);
     });
+    it('should be return original when is not array', () => {
+      expect(srv.flat(null as any)).toBeNull();
+    });
+  });
+
+  describe('[groupBy]', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      srv = TestBed.inject<ArrayService>(ArrayService);
+    });
+    it('should be working', () => {
+      expect(JSON.stringify(srv.groupBy([6.1, 4.2, 6.3], Math.floor))).toBe(`{"4":[4.2],"6":[6.1,6.3]}`);
+    });
+    it('should be return empty when is not array', () => {
+      expect(JSON.stringify(srv.groupBy(null as any, null as any))).toBe(`{}`);
+    });
   });
 
   class PageTreeNode {

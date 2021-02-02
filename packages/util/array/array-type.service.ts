@@ -65,3 +65,8 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
   /** 回调，返回一个值 `key` 值，优先级高于其他 */
   cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => any;
 }
+
+export interface ArrayServiceGroupByResult {
+  [key: string]: any;
+  [key: number]: any;
+}

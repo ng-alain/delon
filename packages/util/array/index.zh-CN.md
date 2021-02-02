@@ -1,6 +1,6 @@
 ---
 title: array
-subtitle: 数组,树,扁平
+subtitle: 数组,树,扁平,分组
 type: Tools
 ---
 
@@ -73,3 +73,17 @@ type: Tools
 ### flat
 
 递归扁平数组。
+
+```ts
+srv.flat([1, [2, 3, [4, 5, [6]]]]) => [1,2,3,4,5,6]
+srv.flat([1, [2, 3, [4, 5, [6]]]], 1) => [1,2,3,[4, 5, [6]]]
+```
+
+### groupBy
+
+对数组进行分组。
+
+```ts
+srv.groupBy([6.1, 4.2, 6.3], Math.floor) => {"4":[4.2],"6":[6.1,6.3]}
+srv.groupBy(['one', 'two', 'three'], v => v.length) => {"3":["one","two"],"5":["three"]}
+```

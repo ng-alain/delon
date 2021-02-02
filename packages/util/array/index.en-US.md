@@ -1,6 +1,6 @@
 ---
 title: array
-subtitle: Array&Tree, flat
+subtitle: Array&Tree,flat,groupBy
 type: Tools
 ---
 
@@ -73,3 +73,17 @@ Get all the selected `key` values.
 ### flat
 
 Recursively flattens array.
+
+```ts
+srv.flat([1, [2, 3, [4, 5, [6]]]]) => [1,2,3,4,5,6]
+srv.flat([1, [2, 3, [4, 5, [6]]]], 1) => [1,2,3,[4, 5, [6]]]
+```
+
+### groupBy
+
+Group the array.
+
+```ts
+srv.groupBy([6.1, 4.2, 6.3], Math.floor) => {"4":[4.2],"6":[6.1,6.3]}
+srv.groupBy(['one', 'two', 'three'], v => v.length) => {"3":["one","two"],"5":["three"]}
+```
