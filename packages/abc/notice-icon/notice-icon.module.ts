@@ -26,6 +26,6 @@ const COMPONENTS = [NoticeIconComponent];
     NzTagModule,
   ],
   declarations: [...COMPONENTS, NoticeIconTabComponent],
-  exports: [...COMPONENTS],
+  exports: COMPONENTS,
 })
 export class NoticeIconModule {}

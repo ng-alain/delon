@@ -6,11 +6,13 @@
   </div>
 </section>
 <section class="code-box-meta markdown">
-  <div class="code-box-title">
-    {{ item.title }}
-    <edit-button [item]="item"></edit-button>
-  </div>
-  <div class="code-box-description" [innerHTML]="item.summary"></div>
+  <ng-container *ngIf="type === 'default'">
+    <div class="code-box-title">
+      {{ item.title }}
+      <edit-button [item]="item"></edit-button>
+    </div>
+    <div class="code-box-description" [innerHTML]="item.summary"></div>
+  </ng-container>
   <div class="code-box-actions">
     <i
       nz-tooltip

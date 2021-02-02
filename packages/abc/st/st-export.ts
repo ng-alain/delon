@@ -1,6 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
-import { deepGet } from '@delon/util';
+import { deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumn, STExportOptions } from './st.interfaces';
 

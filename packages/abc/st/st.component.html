@@ -83,12 +83,13 @@
   [nzShowQuickJumper]="page.showQuickJumper"
   [nzShowSizeChanger]="page.showSize"
   [nzPaginationPosition]="page.position"
+  [nzPaginationType]="page.type"
   [nzItemRender]="page.itemRender"
   [nzSimple]="page.simple"
   [nzShowTotal]="totalTpl"
   [nzWidthConfig]="_widthConfig"
 >
-  <thead class="st__head">
+  <thead *ngIf="showHeader" class="st__head">
     <tr *ngFor="let row of _headers; let rowFirst = first">
       <th *ngIf="rowFirst && expand" nzWidth="50px" [rowSpan]="_headers.length"></th>
       <th
@@ -254,11 +255,6 @@
                 </span>
                 <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
               </ng-container>
-              <ng-template
-                [ngIf]="!c.__renderExpanded"
-                [ngTemplateOutlet]="c.__renderExpanded"
-                [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }"
-              ></ng-template>
             </ng-container>
           </span>
         </td>

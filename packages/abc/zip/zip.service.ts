@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { AlainConfigService, AlainZipConfig, LazyResult, LazyService } from '@delon/util';
+import { AlainConfigService, AlainZipConfig } from '@delon/util/config';
+import { LazyResult, LazyService } from '@delon/util/other';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ZipSaveOptions } from './zip.types';

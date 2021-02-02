@@ -14,7 +14,7 @@ import {
   SimpleChange,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber, NumberInput } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subscription } from 'rxjs';
 import { MediaService } from './media.service';

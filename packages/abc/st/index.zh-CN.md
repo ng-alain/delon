@@ -75,6 +75,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false` | ✅ |
 | `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200` | ✅ |
 | `[header]` | 表格标题 | `string,TemplateRef<void>` | - | - |
+| `[showHeader]` | 是否显示列头行 | `boolean` | `true` | - |
 | `[footer]` | 表格底部 | `string,TemplateRef<void>` | - | - |
 | `[bodyHeader]` | 表格顶部额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
 | `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | - | - |
@@ -266,6 +267,7 @@ class TestComponent {
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |
 | `[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `yyyy-MM-dd HH:mm` |
+| `[currency]` | 货币格式选项，`type=currency` 有效 | `STcolumnCurrency` | - |
 | `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | - |
 | `[exported]` | 是否允许导出 | `boolean` | `true` |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
@@ -392,6 +394,13 @@ class TestComponent {
 | `[yes]` | 徽章 `true` 时文本 | `string` | `是` |
 | `[no]` | 徽章 `false` 时文本 | `string` | `否` |
 | `[mode]` | 显示模式 | `full,icon,text` | `icon` |
+
+### STcolumnCurrency
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----------|-------------|------|---------|
+| `[type]` | 货币渲染类型 | `commas, mega` | `commas` |
+| `[format]` | 见 [CurrencyService.format](https://ng-alain.com/util/format/zh#format) | `CurrencyFormatOptions` | - |
 
 ### STColumnBadge
 

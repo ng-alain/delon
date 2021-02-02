@@ -1,4 +1,4 @@
-import { AlainSTConfig } from '@delon/util';
+import { AlainSTConfig } from '@delon/util/config';
 
 export const ST_DEFULAT_CONFIG: AlainSTConfig = {
   pi: 1,

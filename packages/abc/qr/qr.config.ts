@@ -1,4 +1,4 @@
-import { AlainQRConfig } from '@delon/util';
+import { AlainQRConfig } from '@delon/util/config';
 
 export const QR_DEFULAT_CONFIG: AlainQRConfig = {
   lib: `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`,

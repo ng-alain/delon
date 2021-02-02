@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util';
+import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';

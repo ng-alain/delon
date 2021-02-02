@@ -32,17 +32,9 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import {
-  AlainConfigService,
-  AlainSTConfig,
-  BooleanInput,
-  deepCopy,
-  deepMergeKey,
-  InputBoolean,
-  InputNumber,
-  NumberInput,
-  toBoolean,
-} from '@delon/util';
+import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
+import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
@@ -129,7 +121,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: STColumn[][] = [];
+  _headers: _STColumn[][] = [];
   _columns: _STColumn[] = [];
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
@@ -205,6 +197,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;
+  @Input() @InputBoolean() showHeader = true;
   @Input() footer: string | TemplateRef<void>;
   @Input() bodyHeader: TemplateRef<STStatisticalResults>;
   @Input() body: TemplateRef<STStatisticalResults>;
@@ -472,7 +465,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           left: 0,
         });
       } else {
-        el.querySelector('.ant-table-body')!.scrollTo(0, 0);
+        el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
       }
       return;
     }

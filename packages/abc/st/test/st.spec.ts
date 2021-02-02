@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
 import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG, deepCopy, deepGet } from '@delon/util';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -315,7 +316,7 @@ describe('abc: table', () => {
           it(`should be render currency`, fakeAsync(() => {
             page
               .updateColumn([{ title: '', index: 'id', type: 'currency' }])
-              .expectCell('￥1.00')
+              .expectCell('1')
               .asyncEnd();
           }));
           it(`should be text right`, fakeAsync(() => {
@@ -1045,7 +1046,7 @@ describe('abc: table', () => {
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
-      it('should scroll to .ant-table-body when used scroll', fakeAsync(() => {
+      it('should scroll to .ant-table-content when used scroll', fakeAsync(() => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
         page.cd();
@@ -1773,6 +1774,12 @@ describe('abc: table', () => {
           .asyncEnd();
       }));
     });
+    it('#showHeader', () => {
+      context.showHeader = false;
+      fixture.detectChanges();
+      page.expectElCount('.st__head', 0);
+      page.expectElCount('.st__body', 1);
+    });
   });
 
   describe('#multiSort', () => {
@@ -2077,6 +2084,7 @@ describe('abc: table', () => {
       [noResult]="noResult"
       [widthConfig]="widthConfig"
       [rowClickTime]="rowClickTime"
+      [showHeader]="showHeader"
       (change)="change($event)"
       (error)="error()"
     >
@@ -2109,6 +2117,7 @@ class TestComponent {
   expandAccordion = false;
   widthMode: STWidthMode = {};
   virtualScroll = false;
+  showHeader = true;
 
   error(): void {}
   change(): void {}

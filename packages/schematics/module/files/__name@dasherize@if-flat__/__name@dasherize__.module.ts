@@ -3,16 +3,12 @@ import { SharedModule } from '@shared';
 <% if (routing) { %>import { <%= classify(name) %>RoutingModule } from './<%= dasherize(name) %>-routing.module';<% } %>
 
 const COMPONENTS: Type<void>[] = [];
-const COMPONENTS_NOROUNT: Type<void>[] = [];
 
 @NgModule({
   imports: [
     SharedModule,<% if (routing) { %>
     <%= classify(name) %>RoutingModule<% } %>
   ],
-  declarations: [
-    ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
-  ],
+  declarations: COMPONENTS,
 })
 export class <%= classify(name) %>Module { }

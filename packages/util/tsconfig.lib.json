@@ -2,8 +2,13 @@
   "extends": "../tsconfig.lib.prod.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "@delon/util/*": ["../../dist/@delon/util/*"],
+      "@delon/*": ["../../dist/@delon/*"]
+    }
   },
+  "files": ["public_api.ts", "../typings.d.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": false,

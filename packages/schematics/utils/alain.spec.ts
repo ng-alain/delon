@@ -16,13 +16,10 @@ describe('Schematic: alain', () => {
       fileName,
       `
 const COMPONENTS = [Components...];
-const COMPONENTS_NOROUNT = [Noroute Components...];
     `,
     );
     addValueToVariable(tree, fileName, 'COMPONENTS', newComponentName, false);
-    addValueToVariable(tree, fileName, 'COMPONENTS_NOROUNT', newComponentName, false);
     const content = tree.readContent(fileName);
     expect(content.includes(`Components...,AComponent`)).toBe(true);
-    expect(content.includes(`Noroute Components...,AComponent`)).toBe(true);
   });
 });

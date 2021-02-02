@@ -1,4 +1,4 @@
-import { AlainSFConfig } from '@delon/util';
+import { AlainSFConfig } from '@delon/util/config';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { SF_SEQ } from '../const';

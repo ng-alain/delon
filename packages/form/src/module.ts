@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DelonLocaleModule } from '@delon/theme';
-import { AlainConfigService, DelonUtilModule } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -119,10 +119,9 @@ const WIDGETS = [
 // #endregion
 
 @NgModule({
-  imports: [CommonModule, FormsModule, DelonUtilModule, DelonLocaleModule, ...ZORROS],
+  imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
-  entryComponents: [...WIDGETS],
-  exports: [...COMPONENTS],
+  exports: COMPONENTS,
 })
 export class DelonFormModule {
   static forRoot(): ModuleWithProviders<DelonFormModule> {

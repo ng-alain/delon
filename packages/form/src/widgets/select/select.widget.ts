@@ -41,6 +41,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       compareWith,
       optionHeightPx,
       optionOverflowSize,
+      showArrow,
     } = this.ui;
     this.i = {
       autoClearSearchValue: toBool(autoClearSearchValue, true),
@@ -55,6 +56,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       maxTagCount: maxTagCount || undefined,
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
+      showArrow: typeof showArrow !== 'boolean' ? undefined : showArrow,
       compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
     };
 

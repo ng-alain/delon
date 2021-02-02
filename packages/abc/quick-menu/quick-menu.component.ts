@@ -3,15 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   Renderer2,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-
-import { InputNumber, NumberInput } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'quick-menu',
@@ -28,6 +29,7 @@ import { InputNumber, NumberInput } from '@delon/util';
 export class QuickMenuComponent implements OnInit, OnChanges {
   static ngAcceptInputType_top: NumberInput;
   static ngAcceptInputType_width: NumberInput;
+  static ngAcceptInputType_expand: BooleanInput;
 
   constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
   ctrlStyle: { [key: string]: string } = {};
@@ -37,13 +39,15 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   @Input() @InputNumber() width = 200;
   @Input() bgColor: string;
   @Input() borderColor: string;
+  @Input() @InputBoolean() expand: boolean = false;
+  @Output() readonly expandChange = new EventEmitter<boolean>();
 
   private show = false;
-
   private initFlag = false;
 
   _click(): void {
     this.show = !this.show;
+    this.expandChange.emit(this.show);
     this.setStyle();
   }
 
@@ -63,11 +67,16 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
     this.cdr.detectChanges();
   }
+
   ngOnInit(): void {
     this.initFlag = true;
     this.setStyle();
   }
+
   ngOnChanges(): void {
-    if (this.initFlag) this.setStyle();
+    this.show = this.expand;
+    if (this.initFlag) {
+      this.setStyle();
+    }
   }
 }

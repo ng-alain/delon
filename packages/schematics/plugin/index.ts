@@ -1,6 +1,6 @@
 import { chain, Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getProject } from '../utils/project';
+import { getProject } from '../utils';
 import { PluginOptions } from './interface';
 import { pluginAsdf } from './plugin.asdf';
 import { pluginCodeStyle } from './plugin.code-style';
@@ -20,11 +20,12 @@ function installPackages(): (_host: Tree, context: SchematicContext) => void {
 }
 
 export default function (options: PluginSchema): Rule {
-  return (host: Tree, context: SchematicContext) => {
-    const project = getProject(host, options.project);
+  return async (tree: Tree) => {
+    const res = await getProject(tree, options.project);
+    const project = res.project;
     const pluginOptions: PluginOptions = {
       type: options.type,
-      name: project.name,
+      name: res.name,
       projectPrefix: project.prefix,
       root: project.root,
       sourceRoot: project.sourceRoot,
@@ -69,6 +70,6 @@ export default function (options: PluginSchema): Rule {
         throw new SchematicsException(`Could not find plugin name: ${options.name}`);
     }
 
-    return chain(rules)(host, context);
+    return chain(rules);
   };
 }

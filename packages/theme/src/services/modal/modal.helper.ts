@@ -1,5 +1,5 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util';
+import { deepMerge } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';
@@ -112,10 +112,9 @@ export class ModalHelper {
   }
 
   /**
+   * @deprecated Will be removed in 12.0.0, Pls used `create` instead
+   *
    * 打开对话框
-   * @param comp 组件
-   * @param params 组件参数
-   * @param size 大小；例如：lg、600，默认：lg
    *
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
@@ -140,10 +139,9 @@ export class ModalHelper {
   }
 
   /**
+   * @deprecated Will be removed in 12.0.0, Pls used `createStatic` instead
+   *
    * 静态框，点击蒙层不允许关闭
-   * @param comp 组件
-   * @param params 组件参数
-   * @param size 大小；例如：lg、600，默认：lg
    *
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());

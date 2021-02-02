@@ -22,7 +22,7 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [CommonModule, RouterModule, NzToolTipModule, NzIconModule, NzAvatarModule, NzDropDownModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class LayoutDefaultModule {}

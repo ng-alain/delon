@@ -22,7 +22,6 @@ import { DelonFormModule } from '@delon/form';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
-import { DelonUtilModule } from '@delon/util';
 import { StartupService, StartupServiceFactory } from './startup.service';
 import { GlobalConfigModule } from './global-config.module';
 
@@ -49,7 +48,6 @@ imports: [
     DemoDelonChartModule,
     DelonACLModule.forRoot(),
     DelonCacheModule,
-    DelonUtilModule,
     DelonAuthModule,
     DelonFormModule.forRoot(),
     GlobalConfigModule.forRoot(),

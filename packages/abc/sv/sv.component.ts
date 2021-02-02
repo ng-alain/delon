@@ -13,7 +13,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, isEmpty, NumberInput } from '@delon/util';
+import { isEmpty } from '@delon/util/browser';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;
@@ -96,7 +97,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
   checkContent(): void {
     const { conEl } = this;
     const def = this.default;
-    if (!(def != null ? def : this.parent.default)) return;
+    if (!(def != null ? def : this.parent.default)) {
+      return;
+    }
     const el = conEl.nativeElement as HTMLElement;
     const cls = `sv__default`;
     if (el.classList.contains(cls)) {
