@@ -17,3 +17,32 @@ export function format(str: string | null | undefined, obj: NzSafeAny | null | u
     needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || '',
   );
 }
+
+/**
+ * Format mask
+ *
+ * 格式化掩码
+ * ```ts
+ * formatMask('123', '(###)') => (123)
+ * ```
+ */
+export function formatMask(value: string, mask: string): string {
+  if (!value) {
+    return '';
+  }
+
+  const splitValue = value.split('');
+  return mask
+    .split('')
+    .reduce((res, cur) => {
+      if (cur === '#') {
+        if (splitValue.length > 0) {
+          res.push(splitValue.shift()!);
+        }
+      } else {
+        res.push(cur);
+      }
+      return res;
+    }, [] as string[])
+    .join('');
+}

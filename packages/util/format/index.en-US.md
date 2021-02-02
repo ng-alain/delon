@@ -1,6 +1,6 @@
 ---
 title: format
-subtitle: String, Check, Currency
+subtitle: String,Check,Currency,Mask
 type: Tools
 ---
 
@@ -44,6 +44,14 @@ format('this is ${name}', { name: 'asdf' })
 // output: this is asdf
 format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 // output: this is asdf
+```
+
+### formatMask
+
+Format mask.
+
+```ts
+formatMask('123', '(###)') => (123)
 ```
 
 ## REGEX

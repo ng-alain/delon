@@ -1,6 +1,6 @@
 ---
 title: format
-subtitle: 字符、校验、货币
+subtitle: 字符,校验,货币,掩码
 type: Tools
 ---
 
@@ -15,6 +15,14 @@ type: Tools
 ```ts
 10000 => `10,000`
 10000.567 => `10,000.57`
+```
+
+### formatMask
+
+格式化掩码。
+
+```ts
+formatMask('123', '(###)') => (123)
 ```
 
 ### mega
