@@ -1,6 +1,6 @@
 ---
 title: other
-subtitle: Deep get, copy, merge, lazy
+subtitle: Deep get,copy,merge,lazy,assert
 type: Tools
 ---
 
@@ -57,3 +57,14 @@ export class AppComponent {
   }
 }
 ```
+
+## assert
+
+Assert whether the expression and throw an error into console in dev mode.
+
+- `assert` Assert whether the expression
+- `assertEmpty` Assert whether empty (`null` or `undefined`)
+- `assertNumber` Assert whether `number` type
+- `assertString` Assert whether `string` type
+- `assertArray` Assert whether `array` type
+- `assertObservable` Assert whether `Observable` type

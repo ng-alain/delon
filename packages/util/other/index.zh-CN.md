@@ -1,6 +1,6 @@
 ---
 title: other
-subtitle: 深获取、拷贝、合并、延迟加载
+subtitle: 深获取、拷贝、合并、延迟、断言
 type: Tools
 ---
 
@@ -57,3 +57,14 @@ export class AppComponent {
   }
 }
 ```
+
+## assert
+
+断言表达式是否符合预期，并在开发模式下会在控制台抛出一个错误。
+
+- `assert` 断言表达式是否符合预期
+- `assertEmpty` 断言是否空值（`null` 或 `undefined`）
+- `assertNumber` 断言是否 `number` 类型
+- `assertString` 断言是否 `string` 类型
+- `assertArray` 断言是否 `array` 类型
+- `assertObservable` 断言是否 `Observable` 类型
