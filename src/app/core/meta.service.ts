@@ -177,6 +177,7 @@ export class MetaService {
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,
         lib: typeof item.lib === 'boolean' ? item.lib : false,
+        deprecated: meta.deprecated,
       };
       groupItem.list.push(entry);
     });

@@ -89,7 +89,7 @@
   [nzShowTotal]="totalTpl"
   [nzWidthConfig]="_widthConfig"
 >
-  <thead class="st__head">
+  <thead *ngIf="showHeader" class="st__head">
     <tr *ngFor="let row of _headers; let rowFirst = first">
       <th *ngIf="rowFirst && expand" nzWidth="50px" [rowSpan]="_headers.length"></th>
       <th

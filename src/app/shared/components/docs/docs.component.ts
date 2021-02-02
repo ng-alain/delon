@@ -5,7 +5,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { I18NService, MetaService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { deepCopy } from '@delon/util';
+import { copy } from '@delon/util/browser';
+import { deepCopy } from '@delon/util/other';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -32,6 +34,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
+    private msg: NzMessageService,
     platform: Platform,
   ) {
     this.isBrowser = platform.isBrowser;
@@ -107,6 +110,12 @@ export class DocsComponent implements OnInit, OnDestroy {
         hljs.highlightBlock(element);
       }
     }, 250);
+  }
+
+  copyModule(): void {
+    copy(this.data.con.module).then(() => {
+      this.msg.success(this.i18n.fanyi('app.demo.copied'));
+    });
   }
 
   ngOnInit(): void {

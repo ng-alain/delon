@@ -42,7 +42,7 @@ export class CodeBoxComponent implements OnDestroy {
   get item(): any {
     return this._item;
   }
-
+  @Input() type: 'default' | 'simple' = 'default';
   @Input() expand: boolean = false;
 
   constructor(

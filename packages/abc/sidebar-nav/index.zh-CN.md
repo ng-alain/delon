@@ -4,6 +4,7 @@ title: sidebar-nav
 subtitle: 主菜单
 cols: 1
 module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
+deprecated: 12.0.0
 ---
 
 **将会在 12.0.0 时被移除，它已经集成在 `@delon/theme/layout-default` 里面。**

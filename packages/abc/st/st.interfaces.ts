@@ -2,6 +2,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ElementRef, TemplateRef } from '@angular/core';
 import { ACLCanType } from '@delon/acl';
 import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
+import { CurrencyFormatOptions } from '@delon/util/format';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
@@ -319,6 +320,12 @@ export interface STColumn {
    */
   dateFormat?: string;
   /**
+   * Currency format option, `type=currency` is valid, pls refer of [CurrencyService.commas](https://ng-alain.com/util/format/#commas).
+   *
+   * 货币格式选项，`type=currency` 有效。
+   */
+  currency?: STcolumnCurrency;
+  /**
    * 当 `type=yn` 有效
    */
   yn?: STColumnYn;
@@ -562,6 +569,13 @@ export interface STColumnSelection {
   select: (data: STData[]) => void;
   /** 权限，等同 `can()` 参数值 */
   acl?: ACLCanType;
+}
+
+export interface STcolumnCurrency {
+  /**
+   * See [CurrencyService.commas](https://ng-alain.com/util/format/en#format)
+   */
+  format?: CurrencyFormatOptions;
 }
 
 /** 当 `type=yn` 有效 */

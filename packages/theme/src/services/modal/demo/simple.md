@@ -36,7 +36,7 @@ export class DemoComponent {
   }
 
   static(): void {
-    this.modalHelper.static(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
+    this.modalHelper.createStatic(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
       this.msg.info(res);
     });
   }

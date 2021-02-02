@@ -8,6 +8,9 @@
         [routerLink]="item.url"
         [routerLinkActive]="['ant-menu-item-selected']"
         style="padding-left: 54px"
+        [class.menu-deprecated]="item.deprecated"
+        nz-tooltip
+        [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
       >
         <nz-badge [nzDot]="item.hot">
           <span>{{ item.title }}</span>

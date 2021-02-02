@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DelonUtilModule } from '@delon/util';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -22,7 +21,6 @@ const COMPONENTS = [SettingDrawerItemComponent, SettingDrawerComponent];
   imports: [
     CommonModule,
     FormsModule,
-    DelonUtilModule,
     NzDrawerModule,
     NzToolTipModule,
     NzDividerModule,
@@ -34,7 +32,7 @@ const COMPONENTS = [SettingDrawerItemComponent, SettingDrawerComponent];
     NzInputNumberModule,
     NzButtonModule,
   ],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class SettingDrawerModule {}

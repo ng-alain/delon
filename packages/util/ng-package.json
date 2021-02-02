@@ -3,15 +3,12 @@
   "dest": "../../dist/@delon/util",
   "deleteDestPath": true,
   "lib": {
-    "flatModuleFile": "util",
-    "entryFile": "public_api.ts",
+    "entryFile": "index.ts",
     "umdModuleIds": {
       "date-fns": "DateFns",
       "ng-zorro-antd/core": "ng-zorro-antd/core",
       "extend": "Extend"
     }
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib", "angular", "date-fns", "extend", "@ant-design/icons-angular"
-  ]
+  "whitelistedNonPeerDependencies": ["tslib", "angular", "date-fns", "extend", "@ant-design/icons-angular"]
 }

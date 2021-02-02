@@ -1,4 +1,4 @@
-import { AlainConfigService, AlainSFConfig } from '@delon/util';
+import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { mergeConfig } from '../config';
 import { SF_SEQ } from '../const';
 import { SFSchema } from '../schema/index';

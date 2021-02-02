@@ -9,7 +9,7 @@ const COMPONENTS = [RangePickerComponent];
 
 @NgModule({
   imports: [CommonModule, FormsModule, NzDatePickerModule],
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
 export class DatePickerModule {}

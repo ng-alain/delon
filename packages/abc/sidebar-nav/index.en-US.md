@@ -4,6 +4,7 @@ title: sidebar-nav
 subtitle: Sidebar
 cols: 1
 module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
+deprecated: 12.0.0
 ---
 
 **Will be removed in 12.0.0, it has been integrated in `@delon/theme/layout-default`.**
