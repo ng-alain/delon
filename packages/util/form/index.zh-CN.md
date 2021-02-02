@@ -1,6 +1,6 @@
 ---
 title: form
-subtitle: 表单
+subtitle: 响应式表单校验
 type: Tools
 ---
 

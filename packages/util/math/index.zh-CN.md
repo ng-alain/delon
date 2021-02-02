@@ -1,6 +1,6 @@
 ---
 title: math
-subtitle: 数学计算
+subtitle: 范围、四舍五入
 type: Tools
 ---
 

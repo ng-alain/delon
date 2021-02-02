@@ -1,6 +1,6 @@
 ---
 title: format
-subtitle: 格式化，含货币
+subtitle: 字符、校验、货币
 type: Tools
 ---
 

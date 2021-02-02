@@ -1,6 +1,6 @@
 ---
 title: other
-subtitle: 其他
+subtitle: 深获取、拷贝、合并、延迟加载
 type: Tools
 ---
 

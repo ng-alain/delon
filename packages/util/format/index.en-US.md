@@ -1,6 +1,6 @@
 ---
 title: format
-subtitle: Format, Currency
+subtitle: String, Check, Currency
 type: Tools
 ---
 
