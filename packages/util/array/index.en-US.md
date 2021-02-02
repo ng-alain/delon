@@ -1,6 +1,6 @@
 ---
 title: array
-subtitle: Array
+subtitle: Array&Tree, flat
 type: Tools
 ---
 
@@ -69,3 +69,7 @@ Get all the selected `key` values.
 | `includeHalfChecked` | Whether include half-checked | `boolean` | `true` |
 | `keyMapName` | Whether re-specify `key` name | `string` | - |
 | `cb` | Callback event, return `key` value | `(item: NzTreeNode, parent: NzTreeNode, deep: number) => any` | - |
+
+### flat
+
+Recursively flattens array.

@@ -1,6 +1,6 @@
 ---
 title: other
-subtitle: Deep get, copy, merge, lazyß
+subtitle: Deep get, copy, merge, lazy
 type: Tools
 ---
 

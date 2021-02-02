@@ -184,4 +184,33 @@ export class ArrayService {
     });
     return keys;
   }
+  private baseFlat(array: any[], depth: number, result: any[] = []): any[] {
+    let index = -1;
+    while (++index < array.length) {
+      const value = array[index];
+      if (depth > 0 && Array.isArray(value)) {
+        if (depth > 1) {
+          this.baseFlat(value, depth - 1, result);
+        } else {
+          let pushIndex = -1;
+          const offset = result.length;
+
+          while (++pushIndex < value.length) {
+            result[offset + pushIndex] = value[pushIndex];
+          }
+        }
+      } else {
+        result[result.length] = value;
+      }
+    }
+    return result;
+  }
+  /**
+   * Recursively flattens array
+   *
+   * 递归扁平数组
+   */
+  flat(array: any[], depth: number = 1 / 0): any[] {
+    return this.baseFlat(array, depth);
+  }
 }

@@ -237,6 +237,22 @@ describe('utils: array', () => {
     });
   });
 
+  describe('[flat]', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      srv = TestBed.inject<ArrayService>(ArrayService);
+    });
+    it('should be working', () => {
+      expect(srv.flat([1, [2, 3, [4, 5, [6]]]]).length).toBe(6);
+    });
+    it('should be depth 0', () => {
+      expect(srv.flat([1, [2, 3, [4, 5, [6]]]], 0).length).toBe(2);
+    });
+    it('should be depth 1', () => {
+      expect(srv.flat([1, [2, 3, [4, 5, [6]]]], 1).length).toBe(4);
+    });
+  });
+
   class PageTreeNode {
     data: NzTreeNode[];
     constructor(data?: any[]) {

@@ -1,6 +1,6 @@
 ---
 title: array
-subtitle: 数组
+subtitle: 数组,树,扁平
 type: Tools
 ---
 
@@ -69,3 +69,7 @@ type: Tools
 | `includeHalfChecked` | 是否包含半选状态的值 | `boolean` | `true` |
 | `keyMapName` | 是否重新指定 `key` 键名，若不指定表示使用 `NzTreeNode.key` 值 | `string` | - |
 | `cb` | 回调，返回一个值 `key` 值，优先级高于其他 | `(item: NzTreeNode, parent: NzTreeNode, deep: number) => any` | - |
+
+### flat
+
+递归扁平数组。
