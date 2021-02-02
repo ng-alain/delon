@@ -1,8 +1,7 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "other",
-      "entryFile": "public_api.ts"
+      "entryFile": "index.ts"
     }
   }
 }

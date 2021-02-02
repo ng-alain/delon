@@ -1,7 +1,6 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "pipe-format",
       "entryFile": "index.ts"
     }
   }

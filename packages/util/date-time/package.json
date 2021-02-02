@@ -1,8 +1,7 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "date-time",
-      "entryFile": "public_api.ts"
+      "entryFile": "index.ts"
     }
   }
 }

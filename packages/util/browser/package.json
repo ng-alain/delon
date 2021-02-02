@@ -2,7 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "browser",
-      "entryFile": "public_api.ts"
+      "entryFile": "index.ts"
     }
   }
 }

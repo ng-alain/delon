@@ -1,7 +1,6 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "pipe-currency",
       "entryFile": "index.ts"
     }
   }
