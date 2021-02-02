@@ -1,4 +1,4 @@
-import { AlainSFConfig } from '@delon/util';
+import { AlainSFConfig } from '@delon/util/config';
 import { SF_SEQ } from '../const';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';

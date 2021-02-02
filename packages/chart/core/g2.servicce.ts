@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AlainChartConfig, AlainConfigService, LazyService } from '@delon/util';
+import { AlainChartConfig, AlainConfigService } from '@delon/util/config';
+import { LazyService } from '@delon/util/other';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

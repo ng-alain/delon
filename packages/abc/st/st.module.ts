@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DelonACLModule } from '@delon/acl';
-import { DelonUtilModule } from '@delon/util';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -27,7 +26,6 @@ const DIRECTIVES = [STRowDirective, STWidgetHostDirective];
   imports: [
     CommonModule,
     FormsModule,
-    DelonUtilModule,
     DelonACLModule,
     NzPopconfirmModule,
     NzTableModule,

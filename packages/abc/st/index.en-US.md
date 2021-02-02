@@ -75,6 +75,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false` | ✅ |
 | `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200` | ✅ |
 | `[header]` | Table header renderer | `string,TemplateRef<void>` | - | - |
+| `[showHeader]` | Whether show the head of the columns of the table | `boolean` | `true` | - |
 | `[footer]` | Table footer renderer | `string,TemplateRef<void>` | - | - |
 | `[bodyHeader]` | Table extra body renderer in header, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
 | `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<STStatisticalResults>` | - | - |
@@ -266,6 +267,7 @@ class TestComponent {
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
 | `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` | - |
+| `[currency]` | Currency format option, `type=currency` is valid | `STcolumnCurrency` | - |
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
@@ -392,6 +394,13 @@ class TestComponent {
 | `[yes]` | Badge `true` text | `string` | `是` |
 | `[no]` | Badge `false` text | `string` | `否` |
 | `[mode]` | Display mode for yn | `full,icon,text` | `icon` |
+
+### STcolumnCurrency
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[type]` | Currency rendering type | `commas, mega` | `commas` |
+| `[format]` | See [CurrencyService.format](https://ng-alain.com/util/format/en#format) | `CurrencyFormatOptions` | - |
 
 ### STColumnBadge
 

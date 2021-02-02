@@ -85,6 +85,8 @@ export class LayoutBasicComponent {
 }
 ```
 
+除此之外，在布局的操作都可以通过 `SettingsService.notify` 来订阅布局的变化（例如：侧边栏的展开与收缩等），注意所有布局相关的变化都会通过这个接口，所以需要做好 `filter` 操作。
+
 ## API
 
 ### layout-default

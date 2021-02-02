@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
-import { deepCopy } from '@delon/util';
+import { DatePipe, YNPipe } from '@delon/theme';
+import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { of, throwError } from 'rxjs';
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
@@ -33,16 +33,22 @@ describe('abc: table: data-souce', () => {
   let srv: STDataSource;
   let options: STDataSourceOptions;
   let http: MockHttpClient;
-  let currentyPipe: CNCurrencyPipe;
   let datePipe: DatePipe;
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
+  let currencySrv: MockCurrencyService;
   // tslint:disable-next-line:prefer-const
   let httpResponse: any;
 
   class MockHttpClient {
     request(_method: string, _url: string, _opt: any): any {
       return of(httpResponse);
+    }
+  }
+
+  class MockCurrencyService {
+    format(): string {
+      return '';
     }
   }
 
@@ -69,12 +75,12 @@ describe('abc: table: data-souce', () => {
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
     };
-    currentyPipe = new CNCurrencyPipe('zh-CN');
     datePipe = new DatePipe(new MockNzI18nService() as any);
     ynPipe = new YNPipe(new MockDomSanitizer() as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
-    srv = new STDataSource(http as any, currentyPipe, datePipe, ynPipe, decimalPipe, new MockDomSanitizer() as any);
+    currencySrv = new MockCurrencyService();
+    srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, new MockDomSanitizer() as any);
   }
 
   describe('[local data]', () => {
@@ -732,9 +738,9 @@ describe('abc: table: data-souce', () => {
       });
       it('via currency', done => {
         options.columns[0].type = 'currency';
-        spyOn(currentyPipe, 'transform');
+        spyOn(currencySrv, 'format');
         srv.process(options).subscribe(() => {
-          expect(currentyPipe.transform).toHaveBeenCalled();
+          expect(currencySrv.format).toHaveBeenCalled();
           done();
         });
       });
@@ -832,7 +838,7 @@ describe('abc: table: data-souce', () => {
       genModule();
       options.pi = 1;
       options.ps = 100;
-      spyOn(currentyPipe, 'transform');
+      spyOn(currencySrv, 'format');
     });
 
     it('should be use key instead of index as result key', done => {
@@ -901,10 +907,10 @@ describe('abc: table: data-souce', () => {
       it('should working', done => {
         options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: true } }];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
-        expect(currentyPipe.transform).not.toHaveBeenCalled();
+        expect(currencySrv.format).not.toHaveBeenCalled();
 
         srv.process(options).subscribe(() => {
-          expect(currentyPipe.transform).toHaveBeenCalled();
+          expect(currencySrv.format).toHaveBeenCalled();
           done();
         });
       });

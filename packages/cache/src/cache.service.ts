@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { AlainCacheConfig, AlainConfigService } from '@delon/util';
+import { AlainCacheConfig, AlainConfigService } from '@delon/util/config';
 import addSeconds from 'date-fns/addSeconds';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, of } from 'rxjs';

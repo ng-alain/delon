@@ -17,7 +17,11 @@ export function groupFiles(srcPaths: string[], config: ModuleDirConfig, isSyncSp
       .forEach(item => {
         const key = config.reName
           ? config.reName
-          : path.relative(srcPath, config.hasSubDir ? path.dirname(item.path) : item.path.split('.')[0]).trim();
+          : path
+              .relative(srcPath, config.hasSubDir ? path.dirname(item.path) : item.path.split('.')[0])
+              .split('/')
+              .join('-')
+              .trim();
         if (key.length === 0) return;
         if (isSyncSpecific && key !== target) return;
         if (config.ignores && ~config.ignores.indexOf(key)) return;

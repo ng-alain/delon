@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { toDate } from '@delon/util';
+import { toDate } from '@delon/util/date-time';
 import format from 'date-fns/format';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';

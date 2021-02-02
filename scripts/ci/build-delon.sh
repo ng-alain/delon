@@ -8,6 +8,7 @@ cd $(dirname $0)/../..
 source ./scripts/ci/utils.sh
 
 DEBUG=false
+NOCSS=false
 PACKAGES=(util
   testing
   acl
@@ -27,6 +28,9 @@ for ARG in "$@"; do
       ;;
     -debug)
       DEBUG=true
+      ;;
+    -nocss)
+      NOCSS=true
       ;;
   esac
 done
@@ -88,7 +92,9 @@ build() {
 
   done
 
-  buildLess
+  if [[ ${NOCSS} == false ]]; then
+    buildLess
+  fi
   copySchemas
 }
 
@@ -98,7 +104,7 @@ echo 'FINISHED!'
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build-delon.sh -debug
-# clear | bash ./scripts/ci/build-delon.sh -n chart -debug
+# clear | bash ./scripts/ci/build-delon.sh -n chart -nocss
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/@delon/theme/*

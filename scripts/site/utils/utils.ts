@@ -75,7 +75,7 @@ export function generateDoc(data: any, tpl: string, savePath: string) {
 
 export function genUpperName(name: string) {
   return name
-    .split('-')
+    .split(/-|\//g)
     .map(v => v.charAt(0).toUpperCase() + v.slice(1))
     .join('');
 }

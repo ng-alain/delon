@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ACLService } from '@delon/acl';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import { filter } from 'rxjs/operators';
 import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuInner } from './interface';

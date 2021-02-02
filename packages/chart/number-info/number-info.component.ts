@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { InputNumber, NumberInput } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'number-info',
