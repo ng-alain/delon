@@ -4,6 +4,9 @@ import { NaNumberToChinesePipe } from './number-to-chinese.pipe';
 
 const PIPES = [NaNumberToChinesePipe];
 
+/**
+ * @deprecated Will be removed in 12.0.0, Pls used `CurrencyService.cny` instead
+ */
 @NgModule({
   imports: [CommonModule],
   declarations: PIPES,

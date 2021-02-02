@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Inject, LOCALE_ID, Pipe } from '@angular/core';
 
 /**
- * [Document](https://ng-alain.com/theme/currency)
+ * @deprecated Will be removed in 12.0.0, Pls used [price](https://ng-alain.com/util/pipes-currency/en?#price) pipe instead
  */
 // tslint:disable-next-line:use-pipe-transform-interface
 @Pipe({ name: '_currency' })

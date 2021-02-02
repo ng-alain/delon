@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import { ObjectProperty } from '../src/model/object.property';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';

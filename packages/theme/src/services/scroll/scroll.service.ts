@@ -2,6 +2,9 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 
+/**
+ * @deprecated Will be removed in 12.0.0, Pls used `import { ScrollService } from '{AT}delon/util/browser';` instead
+ */
 @Injectable({ providedIn: 'root' })
 export class ScrollService {
   private _getDoc(): Document {

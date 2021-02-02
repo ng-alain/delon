@@ -1,5 +1,5 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util';
+import { deepMerge } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { Observable, Observer } from 'rxjs';

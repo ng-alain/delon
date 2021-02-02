@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
 import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG, deepCopy, deepGet } from '@delon/util';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -315,7 +316,7 @@ describe('abc: table', () => {
           it(`should be render currency`, fakeAsync(() => {
             page
               .updateColumn([{ title: '', index: 'id', type: 'currency' }])
-              .expectCell('￥1.00')
+              .expectCell('1')
               .asyncEnd();
           }));
           it(`should be text right`, fakeAsync(() => {

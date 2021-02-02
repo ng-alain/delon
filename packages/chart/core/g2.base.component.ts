@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { InputNumber, NumberInput } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { G2Service } from './g2.servicce';

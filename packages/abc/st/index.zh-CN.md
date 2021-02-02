@@ -267,6 +267,7 @@ class TestComponent {
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |
 | `[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `yyyy-MM-dd HH:mm` |
+| `[currency]` | 货币格式选项，`type=currency` 有效 | `STcolumnCurrency` | - |
 | `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | - |
 | `[exported]` | 是否允许导出 | `boolean` | `true` |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
@@ -393,6 +394,13 @@ class TestComponent {
 | `[yes]` | 徽章 `true` 时文本 | `string` | `是` |
 | `[no]` | 徽章 `false` 时文本 | `string` | `否` |
 | `[mode]` | 显示模式 | `full,icon,text` | `icon` |
+
+### STcolumnCurrency
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----------|-------------|------|---------|
+| `[type]` | 货币渲染类型 | `commas, mega` | `commas` |
+| `[format]` | 见 [CurrencyService.format](https://ng-alain.com/util/format/zh#format) | `CurrencyFormatOptions` | - |
 
 ### STColumnBadge
 

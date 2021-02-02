@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainAuthConfig } from '@delon/util';
+import { AlainAuthConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';

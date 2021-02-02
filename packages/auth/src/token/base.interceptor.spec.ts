@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DelonAuthModule } from '../auth.module';

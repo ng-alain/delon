@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 import * as fs from 'file-saver';
 import { Observable, of, throwError } from 'rxjs';
 import { XlsxModule } from './xlsx.module';

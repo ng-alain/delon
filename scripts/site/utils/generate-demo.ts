@@ -14,7 +14,7 @@ function fixExample(item: any, filePath: string, config: ModuleConfig) {
   const obj = {
     selector: item.id + '-index',
     demos: `
-    <code-box [item]="item">
+    <code-box [item]="item" type="simple">
       <${item.id}></${item.id}>
     </code-box>`,
     componentName: item.componentIndexName,
@@ -23,14 +23,7 @@ function fixExample(item: any, filePath: string, config: ModuleConfig) {
   generateDoc(obj, exampleIndexTpl, filePath);
 }
 
-export function generateDemo(
-  rootDir: string,
-  key: string,
-  dir: string,
-  cols: number,
-  config: ModuleConfig,
-  siteConfig: SiteConfig,
-) {
+export function generateDemo(rootDir: string, key: string, dir: string, cols: number, config: ModuleConfig, siteConfig: SiteConfig) {
   if (!exampleIndexTpl) {
     exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
   }

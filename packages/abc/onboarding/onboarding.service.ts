@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DelonLocaleService } from '@delon/theme';
-import { AlainConfigService } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
 import { of, pipe, Subscription } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { OnboardingComponent } from './onboarding.component';

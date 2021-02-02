@@ -56,6 +56,7 @@ export const ENUS = {
   'app.footer.qqgroup': 'QQ Group',
   'app.footer.qqgroup.full': '(Full)',
   'app.footer.primary-color-changed': 'Change primary color successfully!',
+  'app.content.copy-import-module': 'Copy import module code:',
   'app.content.edit-page': 'Edit this page on GitHub!',
   'app.content.edit-demo': 'Edit this demo on GitHub!',
   'app.content.link.copied': 'Copy paragraph link successfully!',

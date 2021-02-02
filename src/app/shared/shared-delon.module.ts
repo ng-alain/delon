@@ -42,6 +42,8 @@ import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
+import { CurrencyPipeModule } from '@delon/util/pipes/currency';
+import { FormatPipeModule } from '@delon/util/pipes/format';
 
 export const SHARED_DELON_MODULES = [
   AvatarListModule,
@@ -89,4 +91,6 @@ export const SHARED_DELON_MODULES = [
   ThemeBtnModule,
   SettingDrawerModule,
   PdfModule,
+  CurrencyPipeModule,
+  FormatPipeModule,
 ];

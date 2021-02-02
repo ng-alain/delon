@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { BooleanInput, InputBoolean } from '@delon/util';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
