@@ -269,6 +269,18 @@ describe('utils: array', () => {
     });
   });
 
+  describe('[uniq]', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      srv = TestBed.inject<ArrayService>(ArrayService);
+    });
+    it('should be working', () => {
+      expect(JSON.stringify(srv.uniq([1, 2, 2, 3, 1]))).toBe(`[1,2,3]`);
+      expect(JSON.stringify(srv.uniq([{ a: 1 }, { a: 1 }, { a: 2 }], 'a'))).toBe(`[{"a":1},{"a":2}]`);
+      expect(JSON.stringify(srv.uniq([{ a: 1 }, { a: 1 }, { a: 2 }], _v => (_v.a === 1 ? 'a' : 'b')))).toBe(`[{"a":1},{"a":2}]`);
+    });
+  });
+
   class PageTreeNode {
     data: NzTreeNode[];
     constructor(data?: any[]) {

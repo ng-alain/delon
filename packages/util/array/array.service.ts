@@ -215,8 +215,8 @@ export class ArrayService {
    * srv.flat([1, [2, 3, [4, 5, [6]]]], 1) => [1,2,3,[4, 5, [6]]]
    * ```
    */
-  flat(array: any[], depth: number = 1 / 0): any[] {
-    return Array.isArray(array) ? this.baseFlat(array, depth) : array;
+  flat<T>(array: ReadonlyArray<T>, depth: number = 1 / 0): ReadonlyArray<T> {
+    return Array.isArray(array) ? this.baseFlat(array as any[], depth) : array;
   }
   /**
    * Group the array
@@ -227,7 +227,7 @@ export class ArrayService {
    * srv.groupBy(['one', 'two', 'three'], v => v.length) => {"3":["one","two"],"5":["three"]}
    * ```
    */
-  groupBy(array: any[], iteratee: (value: any) => any): ArrayServiceGroupByResult {
+  groupBy<T>(array: ReadonlyArray<T>, iteratee: (value: T) => string | number): ArrayServiceGroupByResult {
     if (!Array.isArray(array)) {
       return {};
     }
@@ -239,6 +239,29 @@ export class ArrayService {
         result[key] = [value];
       }
       return result;
-    }, {});
+    }, {} as ArrayServiceGroupByResult);
+  }
+  /**
+   * Creates a duplicate-free version of an array
+   *
+   * 创建去重后的数组
+   * ```ts
+   * uniq([1, 2, 2, 3, 1]) => [1,2,3]
+   * uniq([{ a: 1 }, { a: 1 }, { a: 2 }], 'a') => [{"a":1},{"a":2}]
+   * uniq([{ a: 1 }, { a: 1 }, { a: 2 }], i => (i.a === 1 ? 'a' : 'b')) => [{"a":1},{"a":2}]
+   * ```
+   */
+  uniq<T>(array: ReadonlyArray<T>, predicate?: string | ((value: T) => string | number | boolean)): ReadonlyArray<T> {
+    return Array.from(
+      array
+        .reduce((map, value) => {
+          const key = predicate ? (typeof predicate === 'string' ? (value as any)[predicate] : predicate!(value)) : value;
+          if (!map.has(key)) {
+            map.set(key, value);
+          }
+          return map;
+        }, new Map<string | number | boolean, T>())
+        .values(),
+    );
   }
 }

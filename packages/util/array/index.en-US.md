@@ -1,6 +1,6 @@
 ---
 title: array
-subtitle: Array&Tree,flat,groupBy
+subtitle: Array&Tree,flat,groupBy,uniq
 type: Tools
 ---
 
@@ -87,3 +87,14 @@ Group the array.
 srv.groupBy([6.1, 4.2, 6.3], Math.floor) => {"4":[4.2],"6":[6.1,6.3]}
 srv.groupBy(['one', 'two', 'three'], v => v.length) => {"3":["one","two"],"5":["three"]}
 ```
+
+### uniq
+
+Creates a duplicate-free version of an array.
+
+```ts
+uniq([1, 2, 2, 3, 1]) => [1,2,3]
+uniq([{ a: 1 }, { a: 1 }, { a: 2 }], 'a') => [{"a":1},{"a":2}]
+uniq([{ a: 1 }, { a: 1 }, { a: 2 }], i => (i.a === 1 ? 'a' : 'b')) => [{"a":1},{"a":2}]
+```
+
