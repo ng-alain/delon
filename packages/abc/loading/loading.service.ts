@@ -2,7 +2,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy, Optional } from '@angular/core';
-import { AlainConfigService, AlainLoadingConfig } from '@delon/util';
+import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { LoadingDefaultComponent } from './loading.component';

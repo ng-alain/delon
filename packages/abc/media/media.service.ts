@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainMediaConfig, LazyService } from '@delon/util';
+import { AlainConfigService, AlainMediaConfig } from '@delon/util/config';
+import { LazyService } from '@delon/util/other';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

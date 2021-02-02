@@ -14,7 +14,10 @@
       "ng-zorro-antd/i18n": "ng-zorro-antd/i18n",
       "date-fns": "DateFns",
       "@delon/acl": "delon.acl",
-      "@delon/util": "delon.util"
+      "@delon/util/browser": "delon.util.browser",
+      "@delon/util/config": "delon.util.config",
+      "@delon/util/date-time": "delon.util.date-time",
+      "@delon/util/other": "delon.util.other"
     }
   },
   "whitelistedNonPeerDependencies": [

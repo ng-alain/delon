@@ -1,6 +1,6 @@
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlSegment } from '@angular/router';
-import { AlainAuthConfig } from '@delon/util';
+import { AlainAuthConfig } from '@delon/util/config';
 import { CheckJwt, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { JWTTokenModel } from './jwt.model';

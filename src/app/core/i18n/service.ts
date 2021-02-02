@@ -97,6 +97,7 @@ export class I18NService implements AlainI18NService {
   }
 
   get(i: any): string {
+    if (i == null) return '';
     return typeof i === 'string' ? i : i[this.lang] || i[this.defaultLang] || '';
   }
 

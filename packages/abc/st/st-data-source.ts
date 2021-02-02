@@ -2,8 +2,9 @@ import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CNCurrencyPipe, DatePipe, YNPipe, _HttpClient } from '@delon/theme';
-import { deepCopy, deepGet } from '@delon/util';
+import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
+import { CurrencyService } from '@delon/util/format';
+import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -64,10 +65,10 @@ export class STDataSource {
 
   constructor(
     private http: _HttpClient,
-    @Host() private currentyPipe: CNCurrencyPipe,
     @Host() private datePipe: DatePipe,
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
+    private currencySrv: CurrencyService,
     private dom: DomSanitizer,
   ) {}
 
@@ -207,7 +208,7 @@ export class STDataSource {
           text = this.numberPipe.transform(value, col.numberDigits);
           break;
         case 'currency':
-          text = this.currentyPipe.transform(value);
+          text = this.currencySrv.format(value, col.currency?.format);
           break;
         case 'date':
           text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
@@ -445,7 +446,7 @@ export class STDataSource {
       }
     }
     if (item.currency === true || (item.currency == null && currency === true)) {
-      res.text = this.currentyPipe.transform(res.value) as string;
+      res.text = this.currencySrv.format(res.value, col.currency?.format) as string;
     } else {
       res.text = String(res.value);
     }

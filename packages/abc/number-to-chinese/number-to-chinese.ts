@@ -1,6 +1,9 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NumberToChineseOptions } from './number-to-chinese.interfaces';
 
+/**
+ * @deprecated Will be removed in 12.0.0, Pls used `CurrencyService.cny` instead
+ */
 export function numberToChinese(value: number | string, rmb: boolean = true, options?: NumberToChineseOptions): string {
   options = {
     minusSymbol: '负',

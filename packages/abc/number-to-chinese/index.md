@@ -5,7 +5,10 @@ title: number-to-chinese
 subtitle: 人民币大写
 cols: 1
 module: import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
+deprecated: 12.0.0
 ---
+
+**将会在 12.0.0 时被移除，请使用 [CurrencyService](/util/format/zh#CurrencyService) 替代。**
 
 常用在数值转化为人民币大写。
 
@@ -29,6 +32,8 @@ module: import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 | `validThrow` | 当传递值无法数值时抛出异常 | `boolean` | `false` |
 
 ## Pipe管道
+
+请使用 [cny](/util/pipes-currency/zh#cny) 管道替代。
 
 使用 `n2c` 便于直接在模板中渲染，例如：
 

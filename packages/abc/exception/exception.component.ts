@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { isEmpty } from '@delon/util';
+import { isEmpty } from '@delon/util/browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

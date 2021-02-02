@@ -3,7 +3,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import format from 'date-fns/format';
 import formatISO from 'date-fns/formatISO';
 registerLocaleData(zh);

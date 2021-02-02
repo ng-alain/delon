@@ -29,11 +29,10 @@ import { SharedModule } from '@shared';
 import { SysRoutingModule } from './sys-routing.module';
 
 const COMPONENTS: Type<void>[] = [];
-const COMPONENTS_NOROUNT: Type<void>[] = [];
 
 @NgModule({
   imports: [SharedModule, SysRoutingModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
+  declarations: COMPONENTS,
 })
 export class SysModule {}
 ```

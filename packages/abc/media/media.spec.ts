@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { MediaComponent } from './media.component';
 import { MediaModule } from './media.module';

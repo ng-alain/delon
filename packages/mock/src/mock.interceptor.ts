@@ -10,7 +10,7 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { MockRequest } from './interface';

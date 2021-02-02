@@ -2,7 +2,7 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { AlainConfigService } from '@delon/util';
+import { AlainConfigService } from '@delon/util/config';
 import { NzConfigService } from 'ng-zorro-antd/core/config';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';

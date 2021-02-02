@@ -1,4 +1,4 @@
-import { AlainConfigService, AlainSFConfig } from '@delon/util';
+import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { SFButton } from './interface';
 import { SFUISchemaItem } from './schema/ui';
 

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
-import { AlainDateRangePickerShortcut } from '@delon/util';
+import { AlainDateRangePickerShortcut } from '@delon/util/config';
 import differenceInDays from 'date-fns/differenceInDays';
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';

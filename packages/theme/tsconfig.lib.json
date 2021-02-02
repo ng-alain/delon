@@ -5,10 +5,10 @@
     "rootDir": ".",
     "paths": {
       "@delon/theme/*": ["../../dist/@delon/theme/*"],
-      "@delon/acl": ["../../dist/@delon/acl"],
-      "@delon/util": ["../../dist/@delon/util"]
+      "@delon/*": ["../../dist/@delon/*"]
     }
   },
+  "files": ["public_api.ts", "../typings.d.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": false,

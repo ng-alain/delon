@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DelonUtilModule } from '@delon/util';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
@@ -9,7 +8,7 @@ import { G2TimelineComponent } from './timeline.component';
 const COMPONENTS = [G2TimelineComponent];
 
 @NgModule({
-  imports: [CommonModule, DelonUtilModule, NzOutletModule, NzSkeletonModule],
+  imports: [CommonModule, NzOutletModule, NzSkeletonModule],
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })
