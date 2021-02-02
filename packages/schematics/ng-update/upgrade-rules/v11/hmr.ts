@@ -20,9 +20,11 @@ import mainContent from './files-tpl/main';
 function removeHmrOfAngularJson(context: SchematicContext): Rule {
   return updateWorkspace(async workspace => {
     workspace.projects.forEach(project => {
-      [BUILD_TARGET_BUILD, BUILD_TARGET_SERVE].forEach(targetName => {
-        delete project.targets.get(targetName).configurations.hmr;
-      });
+      [BUILD_TARGET_BUILD, BUILD_TARGET_SERVE]
+        .filter(targetName => !!project.targets.get(targetName).configurations)
+        .forEach(targetName => {
+          delete project.targets.get(targetName).configurations.hmr;
+        });
     });
     logInfo(context, `Remove '@angularclass/hmr'`);
   });
