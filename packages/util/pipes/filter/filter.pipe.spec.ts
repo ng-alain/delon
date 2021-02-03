@@ -29,6 +29,6 @@ describe('Pipe: filter', () => {
 })
 class TestComponent {
   list = [1, 2, 3];
-  matcher = (item: number) => item > 1;
   other = 4;
+  matcher = (item: number) => item > 1;
 }
