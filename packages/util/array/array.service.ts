@@ -161,7 +161,7 @@ export class ArrayService {
       for (const item of data) {
         cb(item, parent, deep);
         const childrenVal = item[options!.childrenMapName!];
-        if (childrenVal && childrenVal.length > 0) {
+        if (Array.isArray(childrenVal) && childrenVal.length > 0) {
           inFn(childrenVal, item, deep + 1);
         }
       }
