@@ -14,7 +14,6 @@ title:
 Using `multiSort` supported multi-field sorting.
 
 ```ts
-
 import { Component } from '@angular/core';
 import { STColumn, STData } from '@delon/abc/st';
 
@@ -70,4 +69,5 @@ export class DemoComponent {
     },
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
+}
 ```
