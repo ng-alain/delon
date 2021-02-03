@@ -32,7 +32,7 @@ describe('utils: array', () => {
       expect(res.length).toBe(4);
     });
     it('should be specified map names', () => {
-      const res = srv.treeToArr(
+      const res = srv.treeToArr<{ id: number; d?: string; p?: string }>(
         [
           {
             id: 1,
