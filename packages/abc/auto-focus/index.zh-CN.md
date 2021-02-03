@@ -1,5 +1,5 @@
 ---
-type: Layout
+type: Other
 title: auto-focus
 subtitle: 自动获得焦点
 cols: 1

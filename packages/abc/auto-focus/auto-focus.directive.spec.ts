@@ -21,7 +21,7 @@ describe('abc: auto-focus', () => {
     spyOn(context, 'focus');
   });
 
-  function toggle(status = true): void {
+  function toggle(status: boolean = true): void {
     context.showInput = status;
     fixture.detectChanges();
     tick(TICK);

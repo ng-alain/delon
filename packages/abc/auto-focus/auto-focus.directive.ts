@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, Input } from '@angular/core';
-import { InputBoolean, BooleanInput } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',

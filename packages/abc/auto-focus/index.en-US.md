@@ -1,5 +1,5 @@
 ---
-type: Layout
+type: Other
 title: auto-focus
 subtitle: Auto focus
 cols: 1
