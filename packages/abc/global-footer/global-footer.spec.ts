@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WINDOW } from '@delon/theme';
+import { WINDOW } from '@delon/util/token';
 import { GlobalFooterModule } from './global-footer.module';
 import { GlobalFooterLink } from './global-footer.types';
 
@@ -75,7 +75,7 @@ describe('abc: global-footer', () => {
 
   it('should be open new window when blankTarget is true', () => {
     createComp();
-    const win = TestBed.inject(WINDOW) as MockWindow;
+    const win = TestBed.inject(WINDOW);
     spyOn(win, 'open');
     context.links = [
       {
@@ -91,7 +91,7 @@ describe('abc: global-footer', () => {
 
   it('should be open extral link', () => {
     createComp();
-    const win = TestBed.inject(WINDOW) as MockWindow;
+    const win = TestBed.inject(WINDOW);
     context.links = [
       {
         title: '',

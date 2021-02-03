@@ -8,10 +8,10 @@ import { inject, InjectionToken } from '@angular/core';
  */
 export const WINDOW = new InjectionToken<Window>('WINDOW', {
   factory: () => {
-    const win = inject(DOCUMENT).defaultView;
-    if (!win) {
+    const { defaultView } = inject(DOCUMENT);
+    if (!defaultView) {
       throw new Error('Window is not available');
     }
-    return win;
+    return defaultView;
   },
 });
