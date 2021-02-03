@@ -35,6 +35,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzHighlightModule } from 'ng-zorro-antd/core/highlight';
 
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
@@ -74,4 +75,5 @@ export const SHARED_ZORRO_MODULES = [
   NzUploadModule,
   NzPaginationModule,
   NzEmptyModule,
+  NzHighlightModule,
 ];
