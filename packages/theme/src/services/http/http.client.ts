@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
-import { finalize, switchMap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -981,9 +981,9 @@ export class _HttpClient {
       withCredentials?: boolean;
     } = {},
   ): Observable<any> {
-    this.push();
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
+      tap(() => this.push()),
       switchMap(() => this.http.request(method, url, options)),
       finalize(() => this.pop()),
     );
