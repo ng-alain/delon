@@ -15,7 +15,14 @@ Using `multiSort` supported multi-field sorting.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
+
+interface UserData extends STData {
+  name: {
+    last: string;
+    first: string;
+  }
+}
 
 @Component({
   selector: 'app-demo',
@@ -27,7 +34,7 @@ import { STColumn } from '@delon/abc/st';
 export class DemoComponent {
   url = `/users?total=200`;
   params = { a: 1, b: 2 };
-  columns: STColumn[] = [
+  columns: STColumn<UserData>[] = [
     { title: '编号', index: 'id' },
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     {

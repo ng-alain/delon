@@ -245,7 +245,7 @@ class TestComponent {
 | `[expand]` | Whether to expand the status value | `boolean` | - |
 | `[showExpand]` | Whether show expand icon | `boolean` | - |
 
-### STColumn
+### STColumn<T extends STData = any>
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

@@ -1,6 +1,6 @@
 import { NzTreeNode } from 'ng-zorro-antd/core/tree';
 
-export interface ArrayServiceTreeToArrOptions {
+export interface ArrayServiceTreeToArrOptions<T extends object = any> {
   /** 深度项名，默认：`'deep'` */
   deepMapName?: string;
   /** 扁平后数组的父数据项名，默认：`'parent'` */
@@ -10,10 +10,10 @@ export interface ArrayServiceTreeToArrOptions {
   /** 是否移除 `children` 节点，默认：`true` */
   clearChildren?: boolean;
   /** 转换成数组结构时回调 */
-  cb?: (item: any, parent: any, deep: number) => void;
+  cb?: (item: T, parent: T | null, deep: number) => void;
 }
 
-export interface ArrayServiceArrToTreeOptions {
+export interface ArrayServiceArrToTreeOptions<T extends object = any> {
   /** 编号项名，默认：`'id'` */
   idMapName?: string;
   /** 父编号项名，默认：`'parent_id'` */
@@ -33,10 +33,10 @@ export interface ArrayServiceArrToTreeOptions {
   /** 子项名，默认：`'children'` */
   childrenMapName?: string;
   /** 转换成树数据时回调 */
-  cb?: (item: any) => void;
+  cb?: (item: T) => void;
 }
 
-export interface ArrayServiceArrToTreeNodeOptions {
+export interface ArrayServiceArrToTreeNodeOptions<T extends object = any> {
   /** 编号项名，默认：`'id'` */
   idMapName?: string;
   /** 父编号项名，默认：`'parent_id'` */
@@ -54,7 +54,7 @@ export interface ArrayServiceArrToTreeNodeOptions {
   /** 设置是否禁用节点(不可进行任何操作)项名，默认：`'disabled'` */
   disabledMapname?: string;
   /** 转换成树数据后，执行的递归回调 */
-  cb?: (item: any, parent: any, deep: number) => void;
+  cb?: (item: T, parent: T | null, deep: number) => void;
 }
 
 export interface ArrayServiceGetKeysByTreeNodeOptions {
@@ -63,7 +63,7 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
   /** 是否重新指定 `key` 键名，若不指定表示使用 `NzTreeNode.key` 值 */
   keyMapName?: string;
   /** 回调，返回一个值 `key` 值，优先级高于其他 */
-  cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => any;
+  cb?: (item: NzTreeNode, parent: NzTreeNode | null, deep: number) => any;
 }
 
 export interface ArrayServiceGroupByResult {

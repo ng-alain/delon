@@ -245,7 +245,7 @@ class TestComponent {
 | `[expand]` | 是否展开状态 | `boolean` | - |
 | `[showExpand]` | 是否显示展开按钮 | `boolean` | - |
 
-### STColumn
+### STColumn<T extends STData = any>
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
