@@ -8,7 +8,8 @@ import {
   Router,
   ROUTER_CONFIGURATION,
 } from '@angular/router';
-import { Menu, MenuService, ScrollService } from '@delon/theme';
+import { Menu, MenuService } from '@delon/theme';
+import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 import {
