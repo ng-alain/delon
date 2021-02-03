@@ -42,6 +42,7 @@ import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
+import { AutoFocusModule } from '@delon/abc/auto-focus';
 import { CurrencyPipeModule, FilterPipeModule, FormatPipeModule } from '@delon/util/pipes';
 
 export const SHARED_DELON_MODULES = [
@@ -93,4 +94,5 @@ export const SHARED_DELON_MODULES = [
   CurrencyPipeModule,
   FormatPipeModule,
   FilterPipeModule,
+  AutoFocusModule,
 ];
