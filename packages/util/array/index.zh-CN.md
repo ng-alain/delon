@@ -60,6 +60,14 @@ type: Tools
 |----|----|----|-----|
 | `childrenMapName` | 子项名 | `string` | `children` |
 
+### findTree
+
+根据条件返回树的第一个值，否则返回 `undefined`。
+
+| 参数 | 说明 | 类型 | 默认值 |
+|----------|-------------|------|---------|
+| `childrenMapName` | 子项名 | `string` | `children` |
+
 ### getKeysByTreeNode
 
 获取所有已经选中的 `key` 值。
