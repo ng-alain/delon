@@ -3,7 +3,8 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, ScrollService, WINDOW, zh_CN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
+import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
@@ -60,7 +61,6 @@ describe('abc: reuse-tab', () => {
       ],
       providers: [
         MenuService,
-        { provide: WINDOW, useValue: window },
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,

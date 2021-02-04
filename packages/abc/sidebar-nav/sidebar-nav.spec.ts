@@ -6,8 +6,9 @@ import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ACLService } from '@delon/acl';
-import { AlainThemeModule, MenuIcon, MenuService, SettingsService, WINDOW } from '@delon/theme';
+import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
+import { WINDOW } from '@delon/util/token';
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { SidebarNavModule } from './sidebar-nav.module';
 import { Nav } from './sidebar-nav.types';
@@ -140,7 +141,7 @@ describe('abc: sidebar-nav', () => {
       describe('should be navigate external link', () => {
         it('with target is _blank', () => {
           createComp();
-          const win = TestBed.inject(WINDOW) as MockWindow;
+          const win = TestBed.inject(WINDOW);
           spyOn(win, 'open');
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="6"]');
           itemEl!.click();
@@ -148,7 +149,7 @@ describe('abc: sidebar-nav', () => {
         });
         it('with target is _top', () => {
           createComp();
-          const win = TestBed.inject(WINDOW) as MockWindow;
+          const win = TestBed.inject(WINDOW);
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="7"]');
           itemEl!.click();
           expect(win.location.href).toBe(`//ng-alain.com/top`);
