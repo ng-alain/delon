@@ -142,7 +142,7 @@ class TestComponent {
 | `[headers]` | Request header | `any` | - | ✅ |
 | `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
 | `[allInBody]` | Whether to request all parameter data into `body` (except `url` itself parameter) | `boolean` | `false` | ✅ |
-| `[lazyLoad]` | Whether to dealy loading data in first render `st` component | `boolean` | `false` | ✅ |
+| `[lazyLoad]` | Whether to delay loading data in first render `st` component | `boolean` | `false` | ✅ |
 | `[process]` | Pre-request data processing | `(requestOptions: STRequestOptions) => STRequestOptions` | - | ✅ |
 
 ### STRes

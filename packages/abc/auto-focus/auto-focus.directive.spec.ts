@@ -43,13 +43,14 @@ describe('abc: auto-focus', () => {
 @Component({
   template: `
     <div *ngIf="showInput" class="mt-md">
-      <input auto-focus (focus)="focus()" [enabled]="enabled" />
+      <input auto-focus (focus)="focus()" [delay]="delay" [enabled]="enabled" />
     </div>
   `,
 })
 class TestComponent {
   @ViewChild(AutoFocusDirective) comp: AutoFocusDirective;
   showInput = false;
+  delay = 50;
   enabled = true;
   focus(): void {}
 }
