@@ -17,3 +17,12 @@ type: Tools
 - `_Validators.ip4` 是否IP地址（支持v4、v6）
 - `_Validators.color` 是否颜色代码值
 - `_Validators.chinese` 是否中文
+
+每一个验证型都包括着用于表单验证器：
+
+```ts
+this.valForm = fb.group({
+  // 手机号
+  mobile: [null, Validators.compose([Validators.required, _Validators.mobile])]
+});
+```
