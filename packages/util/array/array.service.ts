@@ -176,6 +176,32 @@ export class ArrayService {
   }
 
   /**
+   * Return the value of the first tree value in the tree where predicate is true, and `undefined` otherwise
+   *
+   * 根据条件返回树的第一个值，否则返回 `undefined`
+   */
+  findTree<T extends object = any>(
+    tree: ReadonlyArray<T>,
+    predicate: (item: T) => boolean,
+    options?: {
+      /** 子项名，默认：`'children'` */
+      childrenMapName?: string;
+    },
+  ): T | undefined {
+    let res: T | undefined;
+    this.visitTree<T>(
+      tree,
+      item => {
+        if (res === undefined && predicate(item)) {
+          res = item;
+        }
+      },
+      options,
+    );
+    return res;
+  }
+
+  /**
    * 获取所有已经选中的 `key` 值
    */
   getKeysByTreeNode(tree: NzTreeNode[], options?: ArrayServiceGetKeysByTreeNodeOptions): any[] {

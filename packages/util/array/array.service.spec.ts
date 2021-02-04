@@ -12,6 +12,17 @@ const MOCK_ARR: any[] = [
   { id: 5, pid: 2, name: 'name5', other: 'value5' },
   { id: 6, pid: 0, name: 'name6', other: 'value6', checked: true },
 ];
+const MOCK_TREE: any[] = [
+  {
+    id: 1,
+    name: 'asdf1',
+    children: [
+      { id: 2, name: 'asdf2' },
+      { id: 3, name: 'asdf2' },
+    ],
+  },
+  { id: 4, name: 'asdf4' },
+];
 describe('utils: array', () => {
   let srv: ArrayService;
   let page: PageTreeNode;
@@ -234,6 +245,19 @@ describe('utils: array', () => {
         },
       ]);
       expect(res[0].ID).toBe(id);
+    });
+  });
+
+  describe('[findTree]', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      srv = TestBed.inject<ArrayService>(ArrayService);
+    });
+    it('should be working', () => {
+      expect(srv.findTree(MOCK_TREE, item => item.id === 2).name).toBe('asdf2');
+    });
+    it('should be return undefined when predicate is false', () => {
+      expect(srv.findTree(MOCK_TREE, item => item.id === 'INVALID')).toBeUndefined();
     });
   });
 
