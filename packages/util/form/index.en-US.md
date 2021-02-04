@@ -17,3 +17,12 @@ A set of validators for reactive forms, including:
 - `_Validators.ip4` Wheter is IP address (Support v4, v6)
 - `_Validators.color` Wheter is color
 - `_Validators.chinese` Wheter is chinese
+
+Every method has a corresponding form validation:
+
+```ts
+this.valForm = fb.group({
+  // is mobile
+  mobile: [null, Validators.compose([Validators.required, _Validators.mobile])]
+});
+```
