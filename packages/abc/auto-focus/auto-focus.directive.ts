@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, Input } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
@@ -7,8 +7,10 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 })
 export class AutoFocusDirective implements AfterViewInit {
   static ngAcceptInputType_enabled: BooleanInput;
+  static ngAcceptInputType_delay: NumberInput;
 
   @Input() @InputBoolean() enabled = true;
+  @Input() @InputNumber() delay = 300;
 
   constructor(private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef) {}
 
@@ -20,6 +22,6 @@ export class AutoFocusDirective implements AfterViewInit {
     setTimeout(() => {
       el.focus({ preventScroll: false });
       this.cdr.markForCheck();
-    }, 50);
+    }, this.delay);
   }
 }

@@ -45,7 +45,7 @@ describe('abc: loading', () => {
     tick(1000);
   }));
 
-  describe('#dealy', () => {
+  describe('#delay', () => {
     it(`should be can appear when close without delay`, fakeAsync(() => {
       srv.open({ delay: 1000 });
       tick(500);

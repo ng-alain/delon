@@ -15,3 +15,4 @@ module: import { AutoFocusModule } from '@delon/abc/auto-focus';
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[enabled]` | 是否启用 | `boolean` | `true` |
+| `[delay]` | 延迟时长（单位：毫秒） | `number` | `300` |

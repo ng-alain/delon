@@ -15,3 +15,4 @@ Allows to focus HTML-element right after its appearance, By default, it will tak
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[enabled]` | Whether enabled of auto focus | `boolean` | `true` |
+| `[delay]` | Delay of the focus (unit: ms) | `number` | `300` |
