@@ -23,9 +23,9 @@ export function deepGet(obj: any, path: string | string[] | null | undefined, de
  *
  * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
  */
-export function deepCopy(obj: any): any {
+export function deepCopy<T extends object = any>(obj: T): T {
   const result = extend(true, {}, { _: obj });
-  return result._;
+  return result._ as T;
 }
 
 /**
@@ -39,7 +39,7 @@ export function deepCopy(obj: any): any {
  *  - `false` 表示会合并整个数组（将旧数据与新数据合并成新数组）
  * @param objects 要合并的对象
  */
-export function deepMergeKey(original: any, arrayProcessMethod: boolean, ...objects: any[]): any {
+export function deepMergeKey<T extends object = any>(original: T, arrayProcessMethod: boolean, ...objects: any[]): T {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
   const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
@@ -71,6 +71,6 @@ export function deepMergeKey(original: any, arrayProcessMethod: boolean, ...obje
  *
  * 深度合并对象
  */
-export function deepMerge(original: any, ...objects: any[]): any {
+export function deepMerge<T extends object = any>(original: T, ...objects: any[]): T {
   return deepMergeKey(original, false, ...objects);
 }
