@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     result: {{ i | json }}<br />
-    <range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
+    <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
   `,
 })
 export class DemoComponent {
