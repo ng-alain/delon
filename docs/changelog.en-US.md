@@ -14,6 +14,62 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [11.6.0](https://github.com/ng-alain/delon/compare/11.3.1...11.6.0) (2021-02-07)
+
+**Happy Chinese New Year 🇨🇳🐂🧧 to all NG-ALAIN users, so we skipped the two minor version numbers and went directly to the `6` version. the `6` is likabled number in china. 🧧🧨🧧🧨🧧🧨**
+
+Mainly for refactor of `@delon/util`, NG-ALAIN divides them into:
+- `@delon/util/array` Array&Tree, findTree, flat, groupBy, uniq
+- `@delon/util/browser` Browser: `CookieServicew`, `copy`, `ScrollService`
+- `@delon/util/date-time` Date Time Conversion
+- `@delon/util/decorator` Decorator
+- `@delon/util/form` Reactive Forms
+- `@delon/util/format` String, Check, Currency, Mask
+- `@delon/util/math` Math, Rounding
+- `@delon/util/token` Visit `Window`, `visibilitychange` Web apis etc
+- `@delon/util/other` Deep get, copy, merge, lazy, assert
+- `@delon/util/pipes` Includes `price`, `mega`, `cny`, `filter`, `mask` pipes
+
+> Pls refer to @delon/util [document](https://ng-alain.com/util/getting-started/en).
+
+In addition, **Recommendation** Use `nz-range-picker` and `extend` directive to replace `range-picker`, will remove `range-picker` at `12.0.0`.
+
+```html
+<range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
+```
+
+Changed to:
+
+```html
+<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
+```
+
+### Scaffold
+
+* fix failure of toggle the search box multiple times in small screen ([#1929](https://github.com/ng-alain/ng-alain/pull/1929))
+* used @delon/util second entry ([#1927](https://github.com/ng-alain/ng-alain/pull/1927))
+
+### Bug Fixes
+
+* **abc:st:** fix to top can't working ([#1153](https://github.com/ng-alain/delon/issues/1153)) ([93e314d](https://github.com/ng-alain/delon/commit/93e314de1c4d42117d25fc8f620e4176016cda64))
+* **cli:ng-update:** Cannot read property 'configurations' of undefined ([#1156](https://github.com/ng-alain/delon/issues/1156)) ([26d41e1](https://github.com/ng-alain/delon/commit/26d41e1efed154e0cdf477db88d2440a2c40b9ae))
+* **theme:_HttpClient:** fix count when subscribed ([#1157](https://github.com/ng-alain/delon/issues/1157)) ([a6b375a](https://github.com/ng-alain/delon/commit/a6b375ab89c80f012bca3f5abf26686f0bbee118))
+* **theme** fix less4 ([#1155](https://github.com/ng-alain/delon/issues/1155)) ([331b009](https://github.com/ng-alain/delon/commit/331b0095bbe725e1a192225cc25178da307e8c6e))
+
+### Features
+
+* **abc:auto-focus:** add `auto-focus` component ([#1161](https://github.com/ng-alain/delon/issues/1161)) ([c02b755](https://github.com/ng-alain/delon/commit/c02b7552220d0bdbb4a56d435eac3640e785d966))
+* **abc:range-picker** add `extend` directive to replace `range-picker` component ([#1167](https://github.com/ng-alain/delon/issues/1167))
+* **abc:highlight:** add `highlight` component ([#1160](https://github.com/ng-alain/delon/issues/1160)) ([0d940c3](https://github.com/ng-alain/delon/commit/0d940c354421ddb110ac2ccbe229bf0332703dda))
+* **abc:st:** add `contextmenu` property ([#1169](https://github.com/ng-alain/delon/issues/1169)) ([6461428](https://github.com/ng-alain/delon/commit/6461428e94a6ee7b6954ad54ce27964b6fb3245b))
+* **abc:st:** add `showHeader` property ([#1151](https://github.com/ng-alain/delon/issues/1151)) ([47f0447](https://github.com/ng-alain/delon/commit/47f044769932c58ccca5502913f20f39a55b1746))
+* **abc:st** support strongly data type of `STColumn` ([#1159](https://github.com/ng-alain/delon/issues/1159)) ([dadba41](https://github.com/ng-alain/delon/commit/dadba4187ee984ee4db63a18312ebe72a8f4c021))
+* **util:ArrayService:** add `findTree` method ([#1164](https://github.com/ng-alain/delon/issues/1164)) ([12bf232](https://github.com/ng-alain/delon/commit/12bf2320f66c8f8c3e36cfbcbc95dd640c780b60))
+* **util:token:** add tokens ([#1162](https://github.com/ng-alain/delon/issues/1162)) ([1a4b9d7](https://github.com/ng-alain/delon/commit/1a4b9d78767f3e631dca530548e8989dba8a7c2a))
+* **util:pipes:** add `filter` pipe ([#1158](https://github.com/ng-alain/delon/issues/1158)) ([ac8f768](https://github.com/ng-alain/delon/commit/ac8f7688a45824945c841805fff2fc19d19429e8))
+* **util** refactor util  ([#1154](https://github.com/ng-alain/delon/issues/1154))
+
+
 ## [11.3.1](https://github.com/ng-alain/delon/compare/11.3.0...11.3.1) (2021-01-28)
 
 ### Bug Fixes

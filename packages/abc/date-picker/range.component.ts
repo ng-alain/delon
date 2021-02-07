@@ -9,7 +9,7 @@ import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
 /**
- * @deprecated Will be removed in 12.0.0, Pls used `[extend]` instead, for examples:
+ * @deprecated Will be removed in 12.0.0, Pls used `nz-range-picker` and `[extend]` directive instead, for examples:
  * ```html
  * <range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
  * ```

@@ -14,6 +14,62 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [11.6.0](https://github.com/ng-alain/delon/compare/11.3.1...11.6.0) (2021-02-07)
+
+**祝大家牛年新年快乐 🇨🇳🐂🧧，为了讨喜NG-ALAIN将跳过两个次版本号，直接进入 `6` 版本，希望来年大家都能六六大顺。🧧🧨🧧🧨🧧🧨**
+
+本次主要针对 `@delon/util` 的重构，在原来的基础进一步分类并新增一些常见的工具类，NG-ALAIN把其分为：
+- `@delon/util/array` 数组与树相关，数组、树、查找树、扁平、分组、去重
+- `@delon/util/browser` 浏览器相关，`CookieServicew`、`copy`、`ScrollService`
+- `@delon/util/date-time` 日期时间转换
+- `@delon/util/decorator` 装饰器
+- `@delon/util/form` 响应式表单校验
+- `@delon/util/format` 字符,校验,货币,掩码
+- `@delon/util/math` 范围、四舍五入
+- `@delon/util/token` 访问 `Window`、`visibilitychange` 等
+- `@delon/util/other` 深获取、拷贝、合并、延迟、断言
+- `@delon/util/pipes` 包含 `price`, `mega`, `cny`, `filter`, `mask` 管道
+
+> 有关更多细节请参考 @delon/util [文档](https://ng-alain.com/util/getting-started/zh)。
+
+除此之外，**建议**使用 `nz-range-picker` 与 `extend` 指令配合来替代 `range-picker`，NG-ALAIN 将在 `12.0.0` 时移除 `range-picker`。
+
+```html
+<range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
+```
+
+变更为：
+
+```html
+<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
+```
+
+### Scaffold
+
+* 修复小屏幕下无法多次打开搜索框 ([#1929](https://github.com/ng-alain/ng-alain/pull/1929))
+* 优化使用次级导入 `@delon/util` ([#1927](https://github.com/ng-alain/ng-alain/pull/1927))
+
+### Bug Fixes
+
+* **abc:st:** 修复 `toTop` 无法工作问题 ([#1153](https://github.com/ng-alain/delon/issues/1153)) ([93e314d](https://github.com/ng-alain/delon/commit/93e314de1c4d42117d25fc8f620e4176016cda64))
+* **cli:ng-update:** 修复 `Cannot read property 'configurations' of undefined` 错误 ([#1156](https://github.com/ng-alain/delon/issues/1156)) ([26d41e1](https://github.com/ng-alain/delon/commit/26d41e1efed154e0cdf477db88d2440a2c40b9ae))
+* **theme:_HttpClient:** 修复未订阅时不进行计数 ([#1157](https://github.com/ng-alain/delon/issues/1157)) ([a6b375a](https://github.com/ng-alain/delon/commit/a6b375ab89c80f012bca3f5abf26686f0bbee118))
+* **theme** 修复部分样式不支持 less4 问题 ([#1155](https://github.com/ng-alain/delon/issues/1155)) ([331b009](https://github.com/ng-alain/delon/commit/331b0095bbe725e1a192225cc25178da307e8c6e))
+
+### Features
+
+* **abc:auto-focus:** 新增 `auto-focus` 组件 ([#1161](https://github.com/ng-alain/delon/issues/1161)) ([c02b755](https://github.com/ng-alain/delon/commit/c02b7552220d0bdbb4a56d435eac3640e785d966))
+* **abc:range-picker** 新增 `extend` 指令来替代 `range-picker` 组件，尽可能保持 `nz-range-picker` 的原始性 ([#1167](https://github.com/ng-alain/delon/issues/1167))
+* **abc:highlight:** 新增 `highlight` 高亮组件 ([#1160](https://github.com/ng-alain/delon/issues/1160)) ([0d940c3](https://github.com/ng-alain/delon/commit/0d940c354421ddb110ac2ccbe229bf0332703dda))
+* **abc:st:** 新增 `contextmenu` 右键菜单 ([#1169](https://github.com/ng-alain/delon/issues/1169)) ([6461428](https://github.com/ng-alain/delon/commit/6461428e94a6ee7b6954ad54ce27964b6fb3245b))
+* **abc:st:** 新增 `showHeader` 是否显示表头属性 ([#1151](https://github.com/ng-alain/delon/issues/1151)) ([47f0447](https://github.com/ng-alain/delon/commit/47f044769932c58ccca5502913f20f39a55b1746))
+* **abc:st** 新增 `STColumn` 支持强类型数据源 ([#1159](https://github.com/ng-alain/delon/issues/1159)) ([dadba41](https://github.com/ng-alain/delon/commit/dadba4187ee984ee4db63a18312ebe72a8f4c021))
+* **util:ArrayService:** 新增 `findTree` 方法 ([#1164](https://github.com/ng-alain/delon/issues/1164)) ([12bf232](https://github.com/ng-alain/delon/commit/12bf2320f66c8f8c3e36cfbcbc95dd640c780b60))
+* **util:token:** 新增一组常见 Web Apis 的 tokens ([#1162](https://github.com/ng-alain/delon/issues/1162)) ([1a4b9d7](https://github.com/ng-alain/delon/commit/1a4b9d78767f3e631dca530548e8989dba8a7c2a))
+* **util:pipes:** 新增 `filter` 管道 ([#1158](https://github.com/ng-alain/delon/issues/1158)) ([ac8f768](https://github.com/ng-alain/delon/commit/ac8f7688a45824945c841805fff2fc19d19429e8))
+* **util** 重构 `@delon/util`，新增数学、格式化、管道、浏览器、数组与树、断言等方法 ([#1154](https://github.com/ng-alain/delon/issues/1154))
+
+
 ## [11.3.1](https://github.com/ng-alain/delon/compare/11.3.0...11.3.1) (2021-01-28)
 
 ### Bug Fixes
