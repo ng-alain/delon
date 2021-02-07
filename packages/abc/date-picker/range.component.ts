@@ -8,6 +8,16 @@ import { deepMergeKey } from '@delon/util/other';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
+/**
+ * @deprecated Will be removed in 12.0.0, Pls used `[extend]` instead, for examples:
+ * ```html
+ * <range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
+ * ```
+ * Changed to =>
+ * ```html
+ * <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
+ * ```
+ */
 @Component({
   selector: 'range-picker',
   exportAs: 'rangePicker',
@@ -25,7 +35,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   private _shortcut: AlainDateRangePickerShortcut;
   private defaultShortcuts: AlainDateRangePickerShortcut;
   @ViewChild('comp', { static: false }) private comp: NzRangePickerComponent;
-  value: Date[] = [];
+  value: Array<Date | null> = [];
 
   @Input() ngModelEnd: Date;
   @Input()
