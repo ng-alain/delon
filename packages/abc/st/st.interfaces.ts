@@ -7,6 +7,7 @@ import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import { NzTablePaginationType } from 'ng-zorro-antd/table';
+import { Observable } from 'rxjs';
 import { STComponent } from './st.component';
 
 export interface STWidthMode {
@@ -1051,4 +1052,47 @@ export interface STResizable {
    * Enable preview when resizing, Default: `true`
    */
   preview?: boolean;
+}
+
+export type STContextmenuFn<T extends STData = any> = (
+  options: STContextmenuOptions<T>,
+) => Observable<STContextmenuItem[]> | STContextmenuItem[];
+
+export interface STContextmenuOptions<T extends STData = any> {
+  event: MouseEvent;
+  /**
+   * Contextmenu position
+   */
+  type: 'head' | 'body';
+  column: STColumn;
+  data: T | null;
+  /**
+   * Row index, when `type === 'body'` valid
+   *
+   * 所在行下标，当 `type === 'body'` 时有效
+   */
+  rowIndex: number | null;
+  /**
+   * Column index
+   *
+   * 所在列下标
+   */
+  colIndex: number;
+}
+
+export interface STContextmenuItem {
+  key?: string;
+  /**
+   * Text of the context menu item
+   */
+  text: string;
+  fn?: (item: STContextmenuItem) => void;
+  /**
+   * Only supports one level
+   *
+   * 只支持一级
+   */
+  children?: STContextmenuItem[];
+
+  [key: string]: any;
 }

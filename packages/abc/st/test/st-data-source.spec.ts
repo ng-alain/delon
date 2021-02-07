@@ -5,7 +5,7 @@ import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { of, throwError } from 'rxjs';
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
-import { ST_DEFULAT_CONFIG } from '../st.config';
+import { ST_DEFAULT_CONFIG } from '../st.config';
 import { STColumnFilterMenu, STData } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 
@@ -69,9 +69,9 @@ describe('abc: table: data-souce', () => {
       ps: DEFAULT.ps,
       data: [],
       total: DEFAULT.total,
-      req: deepCopy(ST_DEFULAT_CONFIG.req),
-      res: deepCopy(ST_DEFULAT_CONFIG.res),
-      page: deepCopy(ST_DEFULAT_CONFIG.page),
+      req: deepCopy(ST_DEFAULT_CONFIG.req),
+      res: deepCopy(ST_DEFAULT_CONFIG.res),
+      page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
     };
