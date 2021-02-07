@@ -24,7 +24,6 @@ import { Router } from '@angular/router';
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
-  CNCurrencyPipe,
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
@@ -76,7 +75,7 @@ import { _STColumn } from './st.types';
   selector: 'st',
   exportAs: 'st',
   templateUrl: './st.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, DatePipe, YNPipe, DecimalPipe],
   host: {
     '[class.st]': `true`,
     '[class.st__p-left]': `page.placement === 'left'`,
@@ -159,6 +158,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
+  @Input() contextmenu?: STContextmenuFn;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -220,7 +220,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
   @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
-  @Input() contextmenu?: STContextmenuFn;
 
   /**
    * Get the number of the current page
