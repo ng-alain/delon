@@ -23,9 +23,9 @@ export function deepGet(obj: any, path: string | string[] | null | undefined, de
  *
  * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
  */
-export function deepCopy(obj: any): any {
+export function deepCopy<T extends object = any>(obj: T | null | undefined): T {
   const result = extend(true, {}, { _: obj });
-  return result._;
+  return result._ as T;
 }
 
 /**

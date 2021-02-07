@@ -170,11 +170,11 @@ describe('abc: sidebar-nav', () => {
         createComp();
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
-        expect(data[0].children[0]._open).toBeUndefined();
+        expect(data[0].children![0]._open).toBeUndefined();
         const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__item-link');
         subTitleEl!.click();
         fixture.detectChanges();
-        expect(data[0].children[0]._open).toBe(true);
+        expect(data[0].children![0]._open).toBe(true);
       });
 
       it('should be reset menu when service is changed', () => {
