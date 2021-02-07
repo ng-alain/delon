@@ -36,15 +36,16 @@ import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
-import { from, Observable, of, Subject, Subscription } from 'rxjs';
+import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
-import { ST_DEFULAT_CONFIG } from './st.config';
+import { ST_DEFAULT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
@@ -52,6 +53,8 @@ import {
   STColumnButton,
   STColumnFilterMenu,
   STColumnSelection,
+  STContextmenuFn,
+  STContextmenuItem,
   STData,
   STError,
   STExportOptions,
@@ -123,7 +126,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _indeterminate = false;
   _headers: _STColumn[][] = [];
   _columns: _STColumn[] = [];
-  @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
+  contextmenuList: STContextmenuItem[] = [];
+  @ViewChild('table') readonly orgTable: NzTableComponent;
+  @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
   get req(): STReq {
@@ -215,6 +220,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
   @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
+  @Input() contextmenu?: STContextmenuFn;
 
   /**
    * Get the number of the current page
@@ -248,8 +254,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
+    private cms: NzContextMenuService,
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
@@ -803,6 +810,46 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('resize', column);
   }
 
+  // #endregion
+
+  // #region contextmenu
+  onContextmenu(event: MouseEvent): void {
+    if (!this.contextmenu) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    const colEl = (event.target as HTMLElement).closest('[data-col-index]') as HTMLElement;
+    if (!colEl) {
+      return;
+    }
+    const colIndex = Number(colEl.dataset.colIndex);
+    const rowIndex = Number((colEl.closest('tr') as HTMLElement).dataset.index);
+    const isTitle = isNaN(rowIndex);
+    const obs$ = this.contextmenu({
+      event,
+      type: isTitle ? 'head' : 'body',
+      rowIndex: isTitle ? null : rowIndex,
+      colIndex,
+      data: isTitle ? null : this.list[rowIndex],
+      column: this._columns[colIndex],
+    });
+    (isObservable(obs$) ? obs$ : of(obs$))
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(res => res.length > 0),
+      )
+      .subscribe(res => {
+        this.contextmenuList = res.map(i => {
+          if (!Array.isArray(i.children)) {
+            i.children = [];
+          }
+          return i;
+        });
+        this.cdr.detectChanges();
+        this.cms.create(event, this.contextmenuTpl);
+      });
+  }
   // #endregion
 
   get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {

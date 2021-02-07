@@ -88,8 +88,9 @@
   [nzSimple]="page.simple"
   [nzShowTotal]="totalTpl"
   [nzWidthConfig]="_widthConfig"
+  (contextmenu)="onContextmenu($event)"
 >
-  <thead *ngIf="showHeader" class="st__head">
+  <thead *ngIf="showHeader">
     <tr *ngFor="let row of _headers; let rowFirst = first">
       <th *ngIf="rowFirst && expand" nzWidth="50px" [rowSpan]="_headers.length"></th>
       <th
@@ -101,6 +102,7 @@
         [nzRight]="!!h.column._right"
         [ngClass]="h.column.className"
         [attr.data-col]="h.column.indexKey"
+        [attr.data-col-index]="index"
         [nzShowSort]="h.column._sort.enabled"
         [nzSortOrder]="h.column._sort.default"
         (nzSortOrderChange)="sort(h.column, index, $event)"
@@ -209,7 +211,14 @@
           (nzExpandChange)="_expandChange(i, $event)"
           nzWidth="50px"
         ></td>
-        <td *ngFor="let c of _columns; let cIdx = index" [nzLeft]="!!c._left" [nzRight]="!!c._right" [ngClass]="c._className" [attr.colspan]="c.colSpan">
+        <td
+          *ngFor="let c of _columns; let cIdx = index"
+          [nzLeft]="!!c._left"
+          [nzRight]="!!c._right"
+          [attr.data-col-index]="cIdx"
+          [ngClass]="c._className"
+          [attr.colspan]="c.colSpan"
+        >
           <span *ngIf="responsive" class="ant-table-rep__title">
             <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: c.title }"></ng-template>
           </span>
@@ -279,3 +288,15 @@
   </tbody>
   <ng-template #totalTpl let-range="range" let-total>{{ renderTotal(total, range) }}</ng-template>
 </nz-table>
+<nz-dropdown-menu #contextmenuTpl="nzDropdownMenu">
+  <ul nz-menu class="st__contextmenu">
+    <ng-container *ngFor="let i of contextmenuList">
+      <li nz-menu-item *ngIf="i.children.length === 0" (click)="i.fn(i)" [innerHTML]="i.text"></li>
+      <li nz-submenu *ngIf="i.children.length > 0" [nzTitle]="i.text">
+        <ul>
+          <li nz-menu-item *ngFor="let ci of i.children" (click)="ci.fn(ci)" [innerHTML]="ci.text"></li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>

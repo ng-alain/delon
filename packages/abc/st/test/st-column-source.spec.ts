@@ -5,7 +5,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumnSource, STColumnSourceProcessOptions } from '../st-column-source';
 import { STRowSource } from '../st-row.directive';
 import { STWidgetRegistry } from '../st-widget';
-import { ST_DEFULAT_CONFIG } from '../st.config';
+import { ST_DEFAULT_CONFIG } from '../st.config';
 import { STColumn, STColumnButtonPop, STIcon, STResizable, STWidthMode } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 
@@ -42,7 +42,7 @@ describe('st: column-source', () => {
     rowSrv = new STRowSource();
     stWidgetRegistry = new STWidgetRegistry();
     srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, stWidgetRegistry);
-    srv.setCog(other.cog || ST_DEFULAT_CONFIG);
+    srv.setCog(other.cog || ST_DEFAULT_CONFIG);
     page = new PageObject();
   }
 
