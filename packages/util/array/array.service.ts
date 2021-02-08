@@ -248,7 +248,7 @@ export class ArrayService {
    * ```
    */
   flat<T>(array: ReadonlyArray<T>, depth: number = 1 / 0): T[] {
-    return Array.isArray(array) ? this.baseFlat(array as any[], depth) : array;
+    return Array.isArray(array) ? this.baseFlat(array as any[], depth) : (array as T[]);
   }
   /**
    * Group the array
