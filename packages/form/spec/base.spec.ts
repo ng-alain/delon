@@ -3,7 +3,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { dispatchFakeEvent, typeInElement } from '@delon/testing';
+import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -96,10 +96,7 @@ export class SFPage {
   }
 
   cleanOverlay(): this {
-    const els = document.querySelectorAll('.cdk-overlay-container');
-    if (els && els.length > 0) {
-      els.forEach(el => (el.innerHTML = ''));
-    }
+    cleanCdkOverlayHtml();
     return this;
   }
 
