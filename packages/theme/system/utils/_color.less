@@ -83,6 +83,7 @@
   .text-@{adKey}-dark {
     @color-text-dark-color: extract(@adItem, @color-dark-position);
     e(~`genCommentTypeColor('text', '@{color-text-dark-color}')`);
+    color: @color-text-dark-color !important;
   }
 });
 
