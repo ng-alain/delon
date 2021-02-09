@@ -9,6 +9,7 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
     '[class.trend]': 'true',
     '[class.trend__grey]': '!colorful',
     '[class.trend__reverse]': 'colorful && reverseColor',
+    '[attr.data-flag]': `flag`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +20,7 @@ export class TrendComponent {
   static ngAcceptInputType_reverseColor: BooleanInput;
 
   /** 上升下降标识 */
-  @Input() flag: 'up' | 'down';
+  @Input() flag: 'up' | 'c';
   /** 是否彩色标记 */
   @Input() @InputBoolean() colorful = true;
   /** 颜色反转 */
