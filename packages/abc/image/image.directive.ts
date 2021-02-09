@@ -4,8 +4,8 @@ import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, Observer, of, Subject } from 'rxjs';
-import { filter, finalize, takeUntil } from 'rxjs/operators';
+import { Observable, Observer, of, Subject, throwError } from 'rxjs';
+import { filter, finalize, take, takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[_src]',
@@ -62,20 +62,14 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
 
   private update(): void {
     this.getSrc(this.src, true)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), take(1))
       .subscribe(
-        src => {
-          if (src === null) {
-            this.setError();
-            return;
-          }
-          this.imgEl.src = src;
-        },
+        src => (this.imgEl.src = src),
         () => this.setError(),
       );
   }
 
-  private getSrc(data: string, isSize: boolean): Observable<string | null> {
+  private getSrc(data: string, isSize: boolean): Observable<string> {
     const { size, useHttp } = this;
     if (useHttp) {
       return this.getByHttp(data);
@@ -90,16 +84,17 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
     return of(data.replace(/^(?:https?:)/i, ''));
   }
 
-  private getByHttp(url: string): Observable<string | null> {
+  private getByHttp(url: string): Observable<string> {
     if (!this.platform.isBrowser) {
-      return of(null);
+      return throwError(`Not supported`);
     }
 
-    return new Observable((observer: Observer<string | null>) => {
+    return new Observable((observer: Observer<string>) => {
       this.http
         .get(url, null, { responseType: 'blob' })
         .pipe(
           takeUntil(this.destroy$),
+          take(1),
           finalize(() => observer.complete()),
         )
         .subscribe(
@@ -140,6 +135,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         filter(w => !!w),
+        take(1),
       )
       .subscribe(src => {
         this.modal.create({

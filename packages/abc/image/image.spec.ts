@@ -32,26 +32,26 @@ describe('abc: _src', () => {
     fixture.detectChanges();
   });
 
-  xit('should be support qlogo auto size', () => {
+  it('should be support qlogo auto size', () => {
     context.src = `${SRC}0`;
     fixture.detectChanges();
     expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
   });
 
-  xit('should be support qlogo auto size when not full original address', () => {
+  it('should be support qlogo auto size when not full original address', () => {
     context.src = `${SRC}${context.size}`;
     fixture.detectChanges();
     expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
   });
 
-  xit('should be auto resize when is qlogo thum', () => {
+  it('should be auto resize when is qlogo thum', () => {
     context.src = `${SRC}32`;
     context.size = 96;
     fixture.detectChanges();
     expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
   });
 
-  xit('should be custom error src', () => {
+  it('should be custom error src', () => {
     context.error = 'error.png';
     fixture.detectChanges();
     const imgEl = getEl();
@@ -59,13 +59,13 @@ describe('abc: _src', () => {
     expect(imgEl.src).toContain(context.error);
   });
 
-  xit('should be ingore http', () => {
+  it('should be ingore http', () => {
     context.src = `http://ng-alain.com/1.png`;
     fixture.detectChanges();
     expect(getEl().src).toContain(`//ng-alain.com/1.png`);
   });
 
-  xit('should be ingore https', () => {
+  it('should be ingore https', () => {
     context.src = `https://ng-alain.com/1.png`;
     fixture.detectChanges();
     expect(getEl().src).toContain(`//ng-alain.com/1.png`);
@@ -87,7 +87,7 @@ describe('abc: _src', () => {
       fixture.detectChanges();
     });
 
-    xit('should working', () => {
+    it('should working', () => {
       spyOn(mockFileReader, 'readAsDataURL').and.callFake((_blob: Blob) => {
         mockFileReader.result = BASE64;
         mockFileReader.onloadend();
@@ -97,7 +97,7 @@ describe('abc: _src', () => {
       expect(getEl().src).toContain(BASE64);
     });
 
-    xit('should http request is error', () => {
+    it('should http request is error', () => {
       spyOn(mockFileReader, 'readAsDataURL').and.callFake((_blob: Blob) => {
         mockFileReader.result = BASE64;
         mockFileReader.onloadend();
@@ -107,7 +107,7 @@ describe('abc: _src', () => {
       expect(getEl().src).toContain('error.svg');
     });
 
-    xit('should invalid convert base64', () => {
+    it('should invalid convert base64', () => {
       spyOn(mockFileReader, 'readAsDataURL').and.callFake((_blob: Blob) => {
         mockFileReader.result = BASE64;
         mockFileReader.onerror();
