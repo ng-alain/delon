@@ -4,7 +4,10 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 @Component({
   selector: 'trend',
   exportAs: 'trend',
-  templateUrl: './trend.component.html',
+  template: `
+    <ng-content></ng-content>
+    <span *ngIf="flag" class="trend__{{ flag }}"><i nz-icon nzType="caret-{{ flag }}"></i></span>
+  `,
   host: {
     '[class.trend]': 'true',
     '[class.trend__grey]': '!colorful',
@@ -20,7 +23,7 @@ export class TrendComponent {
   static ngAcceptInputType_reverseColor: BooleanInput;
 
   /** 上升下降标识 */
-  @Input() flag: 'up' | 'c';
+  @Input() flag: 'up' | 'down';
   /** 是否彩色标记 */
   @Input() @InputBoolean() colorful = true;
   /** 颜色反转 */
