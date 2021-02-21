@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { cleanCdkOverlayHtml } from '@delon/testing';
 import { LoadingModule } from './loading.module';
 import { LoadingService } from './loading.service';
 
@@ -18,10 +19,7 @@ describe('abc: loading', () => {
 
   afterEach(() => {
     srv.ngOnDestroy();
-    const el = document.querySelector('.cdk-overlay-container') as HTMLElement;
-    if (el != null) {
-      el.innerHTML = '';
-    }
+    cleanCdkOverlayHtml();
   });
 
   function check(cls: string, count: number): void {
