@@ -5,7 +5,10 @@ title: _src
 subtitle: 显示图像
 cols: 2
 module: import { ImageModule } from '@delon/abc/image';
+deprecated: 13.0.0
 ---
+
+**将会在 13.0.0 时被移除，请使用 [nz-image](https://ng.ant.design/components/image/zh) 替代。**
 
 等同于 `src`，但相比较更多功能：
 

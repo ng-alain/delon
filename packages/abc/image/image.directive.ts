@@ -7,6 +7,9 @@ import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer, of, Subject, throwError } from 'rxjs';
 import { filter, finalize, take, takeUntil } from 'rxjs/operators';
 
+/**
+ * @deprecated Will be removed in 13.0.0, Pls used [nz-image](https://ng.ant.design/components/image/en) instead, for examples:
+ */
 @Directive({
   selector: '[_src]',
   exportAs: '_src',
