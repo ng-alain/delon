@@ -4,6 +4,19 @@ subtitle: Reactive Forms
 type: Tools
 ---
 
+## MatchControl
+
+Match two control values, for examples:
+
+```ts
+this.form = new FormGroup({
+  pwd: new FormControl(''),
+  repwd: new FormControl(''),
+}, {
+  validators: MatchControl('pwd', 'repwd'),
+});
+```
+
 ## _Validators
 
 A set of validators for reactive forms, including:

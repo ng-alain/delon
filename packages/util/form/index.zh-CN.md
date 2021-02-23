@@ -4,6 +4,19 @@ subtitle: 响应式表单校验
 type: Tools
 ---
 
+## MatchControl
+
+匹配两个控件值，例如：
+
+```ts
+this.form = new FormGroup({
+  pwd: new FormControl(''),
+  repwd: new FormControl(''),
+}, {
+  validators: MatchControl('pwd', 'repwd'),
+});
+```
+
 ## _Validators
 
 一套用于响应式表单的验证器，包含：
