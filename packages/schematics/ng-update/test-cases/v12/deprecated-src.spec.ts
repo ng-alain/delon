@@ -22,7 +22,7 @@ describe('migration:v12 deprecated _src', () => {
     const file = `${FILE_PREFIX}/src/app/app.component.html`;
     writeFile(tree, file, `<img _src="http://1.com/1.png" /><img [_src]="'http://1.com/1.png'" />`);
     await runMigration();
-    expect(log).toContain(`'${file}@1:6 - Found deprecated "_src" component. Use "nz-image" to instead please.'`);
-    expect(log).toContain(`'${file}@1:40 - Found deprecated "[_src]" component. Use "nz-image" to instead please.'`);
+    expect(log).toContain(`${file}@1:6 - Found deprecated "_src" component. Use "nz-image" to instead please.`);
+    expect(log).toContain(`${file}@1:40 - Found deprecated "[_src]" component. Use "nz-image" to instead please.`);
   });
 });
