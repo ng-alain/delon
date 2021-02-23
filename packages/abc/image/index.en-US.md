@@ -5,7 +5,10 @@ title: _src
 subtitle: Image
 cols: 2
 module: import { ImageModule } from '@delon/abc/image';
+deprecated: 13.0.0
 ---
+
+**Will be removed in 13.0.0, please use [nz-image](https://ng.ant.design/components/image/en) instead.**
 
 like `src`, but more features:
 
