@@ -8,13 +8,13 @@ import { STColumn, STExportOptions } from './st.interfaces';
 export class STExport {
   constructor(@Optional() private xlsxSrv: XlsxService) {}
 
-  private _stGet(item: any, col: STColumn, index: number): any {
+  private _stGet(item: any, col: STColumn, index: number, colIndex: number): any {
     const ret: { [key: string]: any } = { t: 's', v: '' };
 
     if (col.format) {
       ret.v = col.format(item, col, index);
     } else {
-      const val = deepGet(item, col.index as string[], '');
+      const val = item._values ? item._values[colIndex].text : deepGet(item, col.index as string[], '');
       ret.v = val;
       if (val != null) {
         switch (col.type) {
@@ -56,7 +56,7 @@ export class STExport {
     // content
     for (let i = 0; i < dataLen; i++) {
       for (let j = 0; j < colLen; j++) {
-        sheet[`${this.xlsxSrv.numberToSchema(j + 1)}${i + 2}`] = this._stGet(opt.data![i], colData[j], i);
+        sheet[`${this.xlsxSrv.numberToSchema(j + 1)}${i + 2}`] = this._stGet(opt.data![i], colData[j], i, j);
       }
     }
 
