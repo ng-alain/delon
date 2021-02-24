@@ -208,6 +208,7 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[tabType]` | Basic style of tabs | `line, card` | `line` |
 | `[tabMaxWidth]` | The maximum width of each tab, unit: `px` | `number` | - |
 | `[routeParamMatchMode]` | Match the pattern when routing parameters are included, for example:`/view/:id`<br> - `strict` Strict mode `/view/1`, `/view/2` Different pages<br> - `loose` Loose mode `/view/1`, `/view/2` Same page and only one tab of component | `strict,loose` | `strict` |
+| `[disabled]` | Whether to disabled | `boolean` | `false` |
 | `(close)` | Close callback event | `EventEmitter` | - |
 | `(change)` | Callback when switching | `EventEmitter` | - |
 
