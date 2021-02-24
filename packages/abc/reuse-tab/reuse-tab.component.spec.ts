@@ -251,6 +251,11 @@ describe('abc: reuse-tab', () => {
           }));
         });
       });
+      it('#disabled', () => {
+        layoutComp.disabled = true;
+        page.cd(0);
+        expect(page.getEl('.reuse-tab__disabled') != null).toBe(true);
+      });
     });
 
     describe('[context-menu]', () => {
@@ -682,8 +687,10 @@ describe('abc: reuse-tab', () => {
     }
     cd(time: number = 101): this {
       fixture.detectChanges();
-      tick(time);
-      fixture.detectChanges();
+      if (time > 0) {
+        tick(time);
+        fixture.detectChanges();
+      }
       return this;
     }
     to(id: string): this {
@@ -797,6 +804,7 @@ class AppComponent {}
       [tabType]="tabType"
       [tabMaxWidth]="tabMaxWidth"
       [routeParamMatchMode]="routeParamMatchMode"
+      [disabled]="disabled"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -818,6 +826,7 @@ class LayoutComponent {
   tabType: 'line' | 'card' = 'line';
   tabMaxWidth: number;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
+  disabled = false;
   change(): void {}
   close(): void {}
 }

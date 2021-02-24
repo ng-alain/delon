@@ -45,6 +45,7 @@ import { ReuseTabService } from './reuse-tab.service';
     '[class.reuse-tab]': 'true',
     '[class.reuse-tab__line]': `tabType === 'line'`,
     '[class.reuse-tab__card]': `tabType === 'card'`,
+    '[class.reuse-tab__disabled]': `disabled`,
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
@@ -57,6 +58,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_tabMaxWidth: NumberInput;
   static ngAcceptInputType_allowClose: BooleanInput;
   static ngAcceptInputType_keepingScroll: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
 
   @ViewChild('tabset') private tabset: NzTabSetComponent;
   private unsubscribe$ = new Subject<void>();
@@ -86,6 +88,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarStyle: { [key: string]: string };
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
+  @Input() @InputBoolean() disabled = false;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
