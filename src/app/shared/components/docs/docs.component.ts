@@ -48,7 +48,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     const ret: any = {
       demo: item.demo,
       urls: item.urls,
-      con: item.content[this.i18n.lang] || item.content[this.i18n.defaultLang],
+      con: item.content[this.i18n.currentLang] || item.content[this.i18n.defaultLang],
     };
 
     if (ret.demo && this.codes && this.codes.length) {

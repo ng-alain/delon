@@ -1,34 +1,34 @@
 <ng-template #menu>
   <ul nz-menu [nzMode]="isMobile ? 'inline' : 'horizontal'" class="menu-site" id="nav">
     <li nz-menu-item routerLink="/docs/getting-started/{{ i18n.zone }}" [matchRouter]="regexs.docs">
-      {{ 'app.header.menu.docs' | translate }}
+      {{ 'app.header.menu.docs' | i18n }}
     </li>
     <li nz-menu-item routerLink="/components/sv/{{ i18n.zone }}" [matchRouter]="regexs.components">
-      {{ 'app.header.menu.components' | translate }}
+      {{ 'app.header.menu.components' | i18n }}
     </li>
-    <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | translate">
+    <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | i18n">
       <ul>
         <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
-          {{ 'app.header.menu.' + i.name | translate }}
+          {{ 'app.header.menu.' + i.name | i18n }}
         </li>
       </ul>
     </li>
     <li *ngIf="!isMobile" nz-menu-item [matchRouter]="regexs.delon">
       <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">
-        {{ 'app.header.menu.delon' | translate }}
+        {{ 'app.header.menu.delon' | i18n }}
         <i nz-icon nzType="down"></i>
       </div>
       <nz-dropdown-menu #delonMenu="nzDropdownMenu">
         <ul nz-menu>
           <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
-            {{ 'app.header.menu.' + i.name | translate }}
+            {{ 'app.header.menu.' + i.name | i18n }}
           </li>
         </ul>
       </nz-dropdown-menu>
     </li>
     <li nz-menu-item>
       <a href="https://e.ng-alain.com/" target="_blank">
-        {{ 'app.header.menu.themes' | translate }}
+        {{ 'app.header.menu.themes' | i18n }}
       </a>
     </li>
     <li *ngIf="showGitee" nz-menu-item>
@@ -37,7 +37,7 @@
     <ng-container *ngIf="isMobile">
       <a nz-menu-item href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a>
       <li nz-menu-item (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')">
-        {{ 'app.header.lang' | translate }}
+        {{ 'app.header.lang' | i18n }}
       </li>
     </ng-container>
   </ul>
@@ -58,14 +58,14 @@
 <div nz-row style="flex-flow: nowrap; height: 64px">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="5" nzXXl="4">
     <h1>
-      <a routerLink="/{{ i18n.zone }}" nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | translate }}: 316911865" (click)="onCopy('316911865')" id="logo">
+      <a routerLink="/{{ i18n.zone }}" nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | i18n }}: 316911865" (click)="onCopy('316911865')" id="logo">
         <img src="./assets/img/logo-color.svg" style="max-height: 32px" />
         NG-ALAIN
       </a>
     </h1>
   </div>
   <div nz-col nz-col nzXs="0" nzSm="0" nzMd="0" nzLg="0" nzXl="19" nzXXl="20" class="menu-row">
-    <header-search *ngIf="showSearch"></header-search>
+    <header-search></header-search>
     <ng-container *ngIf="!isMobile">
       <ng-template [ngTemplateOutlet]="menu"></ng-template>
       <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
@@ -73,7 +73,7 @@
         <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
       </nz-select>
       <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')" class="header-button header-lang-button">
-        {{ 'app.header.lang' | translate }}
+        {{ 'app.header.lang' | i18n }}
       </button>
       <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">
         {{ rtl.nextDir | uppercase }}

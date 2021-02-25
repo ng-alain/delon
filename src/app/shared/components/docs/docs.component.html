@@ -29,7 +29,7 @@
     <h1 class="flex-center">
       {{ meta.item.subtitle || meta.item.title }}
       <div *ngIf="data.con.module" class="ml-sm">
-        <span class="copy-import-module" (click)="copyModule()" nz-tooltip [nzTooltipTitle]="('app.content.copy-import-module' | translate) + data.con.module">
+        <span class="copy-import-module" (click)="copyModule()" nz-tooltip [nzTooltipTitle]="('app.content.copy-import-module' | i18n) + data.con.module">
           IMPORT MODULE
         </span>
       </div>
