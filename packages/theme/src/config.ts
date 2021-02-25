@@ -21,7 +21,9 @@ export interface Environment {
 
 export interface ApiConfig {
   /**
-   * 指定API前缀，默认：`./`
+   * Specify API prefix
+   *
+   * 指定API前缀
    */
   baseUrl: string;
   /**
