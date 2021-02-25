@@ -28,6 +28,10 @@ export interface AlainI18NService {
    * - `isSafe` 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`
    */
   fanyi(key: string, params?: {}, isSafe?: boolean): string;
+
+  readonly defaultLang: string;
+
+  readonly currentLang: string;
 }
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTranslatorToken', {
@@ -57,5 +61,13 @@ export class AlainI18NServiceFake implements AlainI18NService {
 
   fanyi(key: string): string {
     return key;
+  }
+
+  get defaultLang(): string {
+    return '';
+  }
+
+  get currentLang(): string {
+    return '';
   }
 }
