@@ -88,7 +88,7 @@ export class I18NService implements AlainI18NService {
   fanyi(key: string, data?: any, isSafe?: boolean): any {
     let res = this.data[key] as string;
     if (data) {
-      Object.keys(data).forEach(key => (res = res.replace(new RegExp(`%${key}%`, 'g'), data[key])));
+      Object.keys(data).forEach(k => (res = res.replace(new RegExp(`%${k}%`, 'g'), data[k])));
     }
 
     if (isSafe === true) {
