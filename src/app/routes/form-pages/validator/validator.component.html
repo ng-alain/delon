@@ -14,10 +14,10 @@
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
         <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}"></i>
       </button>
-      <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" nz-button (click)="openOnStackBlitz()" class="ml-sm">
+      <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | i18n" nz-button (click)="openOnStackBlitz()" class="ml-sm">
         <i nz-icon nzType="form"></i>
       </button>
-      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" nz-button (click)="onCopy()" class="ml-sm">
+      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()" class="ml-sm">
         <i nz-icon nzType="copy"></i>
       </button>
     </nz-button-group>

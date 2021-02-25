@@ -39,6 +39,7 @@ export class AppComponent {
 
       const url = evt.url.split('#')[0].split('?')[0];
       if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
+
       this.prevUrl = url;
 
       let urlLang = url.split('/').pop() || i18n.zone;
@@ -62,7 +63,7 @@ export class AppComponent {
         const lang = i18n.getFullLang(urlLang);
 
         // update i18n
-        if (i18n.lang !== lang) {
+        if (i18n.currentLang !== lang) {
           i18n.use(lang as any);
           meta.clearMenu();
         }

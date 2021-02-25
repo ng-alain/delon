@@ -6,7 +6,6 @@ import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { DelonFormModule } from '@delon/form';
 import { AlainThemeModule } from '@delon/theme';
-import { TranslateModule } from '@ngx-translate/core';
 import { GithubButtonModule } from 'ng-github-button';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { HighlightJsModule } from 'ngx-highlight-js';
@@ -43,15 +42,7 @@ const COMPONENTS = [
   ...DIALOG_COMPONENTS,
 ];
 
-const THIRDS = [
-  HighlightJsModule,
-  TranslateModule,
-  GithubButtonModule,
-  NgxTinymceModule,
-  UEditorModule,
-  SimplemdeModule,
-  ColorSketchModule,
-];
+const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, UEditorModule, SimplemdeModule, ColorSketchModule];
 
 @NgModule({
   imports: [

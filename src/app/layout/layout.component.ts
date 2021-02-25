@@ -9,11 +9,13 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-layout',
   template: `
-    <app-header></app-header>
-    <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
-    <router-outlet></router-outlet>
-    <nz-back-top></nz-back-top>
-    <theme-btn></theme-btn>
+    <ng-container *ngIf="render">
+      <app-header></app-header>
+      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
+      <router-outlet></router-outlet>
+      <nz-back-top></nz-back-top>
+      <theme-btn></theme-btn>
+    </ng-container>
   `,
   host: {
     '[attr.id]': `'ng-content'`,
@@ -22,6 +24,7 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
+  render = true;
 
   constructor(
     private router: Router,

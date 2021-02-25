@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 
 // angular i18n
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
@@ -72,8 +71,6 @@ function registerElements(injector: Injector, platformId: {}): void {
     STWidgetModule,
     RoutesModule,
     ExampleModule,
-    // i18n
-    TranslateModule.forRoot(),
     NgxTinymceModule.forRoot({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/',
     }),

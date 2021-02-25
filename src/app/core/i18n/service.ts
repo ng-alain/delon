@@ -2,7 +2,6 @@ import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
-import { TranslateService } from '@ngx-translate/core';
 import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 import { Observable, Subject } from 'rxjs';
 import { ENUS } from './en-US';
@@ -13,6 +12,8 @@ export type LangType = 'en-US' | 'zh-CN';
 @Injectable({ providedIn: 'root' })
 export class I18NService implements AlainI18NService {
   private change$: Subject<LangType> = new Subject<LangType>();
+  private data: any;
+  private _lang: string;
 
   private _langs = [
     { code: 'en-US', text: 'English' },
@@ -22,13 +23,9 @@ export class I18NService implements AlainI18NService {
   constructor(
     private zorroI18n: NzI18nService,
     private delonI18n: DelonLocaleService,
-    private translate: TranslateService,
     private dom: DomSanitizer,
     private platform: Platform,
   ) {
-    this.translate.setTranslation('en-US', ENUS);
-    this.translate.setTranslation('zh-CN', ZHCN);
-    this.translate.setDefaultLang('en-US');
     // from browser
     const lang = (this.getBrowserLang() || this.defaultLang) as LangType;
     this.use(lang, false);
@@ -62,7 +59,8 @@ export class I18NService implements AlainI18NService {
   }
 
   use(lang: LangType, emit: boolean = true): void {
-    this.translate.use(lang);
+    this._lang = lang as string;
+    this.data = lang === 'en-US' ? ENUS : ZHCN;
     this.zorroI18n.setLocale(lang === 'en-US' ? en_US : zh_CN);
     this.delonI18n.setLocale(lang === 'en-US' ? delonEnUS : delonZhCn);
     if (emit) this.change$.next(lang);
@@ -75,21 +73,24 @@ export class I18NService implements AlainI18NService {
   get defaultLang(): LangType {
     return 'zh-CN';
   }
-
-  get lang(): string {
-    return this.translate.currentLang;
+  get currentLang(): string {
+    return this._lang;
   }
 
   get zone(): string {
-    return this.translate.currentLang.split('-')[0];
+    return this._lang.split('-')[0];
   }
 
   get langs(): string[] {
     return ['zh-CN', 'en-US'];
   }
 
-  fanyi(key: string, interpolateParams?: {}, isSafe?: boolean): any {
-    const res = this.translate.instant(key, interpolateParams);
+  fanyi(key: string, data?: any, isSafe?: boolean): any {
+    let res = this.data[key] as string;
+    if (data) {
+      Object.keys(data).forEach(k => (res = res.replace(new RegExp(`%${k}%`, 'g'), data[k])));
+    }
+
     if (isSafe === true) {
       return this.dom.bypassSecurityTrustHtml(res);
     }
@@ -98,7 +99,7 @@ export class I18NService implements AlainI18NService {
 
   get(i: any): string {
     if (i == null) return '';
-    return typeof i === 'string' ? i : i[this.lang] || i[this.defaultLang] || '';
+    return typeof i === 'string' ? i : i[this.currentLang] || i[this.defaultLang] || '';
   }
 
   getFullLang(lang: string): string {

@@ -83,7 +83,7 @@ export class MetaService {
     if (!data) return true;
     this._data = {
       ...data.meta![this.i18n.defaultLang],
-      ...data.meta![this.i18n.lang],
+      ...data.meta![this.i18n.currentLang],
       i18n: data.i18n,
       name: data.name,
       module_name: category.module || '',
@@ -92,7 +92,7 @@ export class MetaService {
     };
     // fix title
     if (typeof this._data.title === 'object') {
-      this._data.title = this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
+      this._data.title = this._data.title[this.i18n.currentLang] || this._data.title[this.i18n.defaultLang];
     }
 
     this.refPage(url);
@@ -153,19 +153,19 @@ export class MetaService {
     const group: any[] = category.types!.map((item: any, index: number) => {
       return {
         index,
-        title: item[this.i18n.lang] || item[this.i18n.defaultLang],
+        title: item[this.i18n.currentLang] || item[this.i18n.defaultLang],
         list: [],
       };
     });
     category.list!.forEach((item: any) => {
-      const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
+      const meta = item.meta[this.i18n.currentLang] || item.meta[this.i18n.defaultLang];
       let typeIdx = category.types!.findIndex((w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
         groupItem = {
           index: typeIdx,
-          title: category.types![typeIdx][this.i18n.lang] || category.types![typeIdx][this.i18n.defaultLang],
+          title: category.types![typeIdx][this.i18n.currentLang] || category.types![typeIdx][this.i18n.defaultLang],
           list: [],
         };
         group.push(groupItem);
