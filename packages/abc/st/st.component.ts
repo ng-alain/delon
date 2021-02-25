@@ -793,9 +793,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   export(newData?: STData[] | true, opt?: STExportOptions): void {
     (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
+        columens: this._columns,
         ...opt,
         data: res,
-        columens: this._columns,
       }),
     );
   }
