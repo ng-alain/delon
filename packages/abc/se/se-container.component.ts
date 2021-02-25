@@ -42,10 +42,10 @@ export class SEContainerComponent {
   @Input() title: string | TemplateRef<void>;
 
   @Input()
-  get gutter(): number {
+  get gutter(): number | string {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: number) {
+  set gutter(value: number | string) {
     this._gutter = toNumber(value);
   }
   private _gutter: number;

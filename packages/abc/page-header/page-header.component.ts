@@ -61,7 +61,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
   }
 
-  _titleVal: string = '';
+  _titleVal: string | null = '';
   paths: PageHeaderPath[] = [];
 
   // #region fields
@@ -69,7 +69,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   _title: string | null;
   _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<void>) {
+  set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;

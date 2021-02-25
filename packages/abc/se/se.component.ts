@@ -95,7 +95,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   // #endregion
 
   get paddingValue(): number {
-    return this.parent.gutter / 2;
+    return (this.parent.gutter as number) / 2;
   }
 
   get showErr(): boolean {
