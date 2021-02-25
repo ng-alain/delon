@@ -75,6 +75,9 @@ export class I18NService implements AlainI18NService {
   get defaultLang(): LangType {
     return 'zh-CN';
   }
+  get currentLang(): string {
+    return this.translate.currentLang;
+  }
 
   get lang(): string {
     return this.translate.currentLang;
