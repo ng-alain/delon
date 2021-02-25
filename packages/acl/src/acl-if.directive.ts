@@ -1,5 +1,5 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
-import { InputBoolean } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ACLService } from './acl.service';
@@ -10,6 +10,8 @@ import { ACLCanType } from './acl.type';
   exportAs: 'aclIf',
 })
 export class ACLIfDirective implements OnDestroy {
+  static ngAcceptInputType_except: BooleanInput;
+
   private _value: ACLCanType;
   private _change$: Subscription;
   private _thenTemplateRef: TemplateRef<void> | null = null;
