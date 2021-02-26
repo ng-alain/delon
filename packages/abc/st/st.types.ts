@@ -1,7 +1,7 @@
+// tslint:disable: class-name
 import { TemplateRef } from '@angular/core';
 import { STColumn, STSortMap } from './st.interfaces';
 
-// tslint:disable-next-line: class-name
 export interface _STColumn extends STColumn {
   children?: _STColumn[];
 
