@@ -20,7 +20,7 @@ export class LetDirective<T> {
 
   @Input() let!: T;
 
-  constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef, @Inject(TemplateRef) templateRef: TemplateRef<LetContext<T>>) {
-    viewContainer.createEmbeddedView(templateRef, new LetContext<T>(this));
+  constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef, @Inject(TemplateRef) ref: TemplateRef<LetContext<T>>) {
+    viewContainer.createEmbeddedView(ref, new LetContext<T>(this));
   }
 }
