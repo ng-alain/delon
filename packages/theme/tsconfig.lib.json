@@ -7,11 +7,5 @@
       "@delon/theme/*": ["../../dist/@delon/theme/*"],
       "@delon/*": ["../../dist/@delon/*"]
     }
-  },
-  "files": ["public_api.ts", "../typings.d.ts"],
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true
   }
 }
