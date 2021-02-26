@@ -23,8 +23,8 @@ import { SEErrorRefresh, SELayout } from './se.types';
     '[class.se__vertical]': `nzLayout === 'vertical'`,
     '[class.se__inline]': `nzLayout === 'inline'`,
     '[class.se__compact]': `size === 'compact'`,
-    '[style.margin-left.px]': `-(gutter / 2)`,
-    '[style.margin-right.px]': `-(gutter / 2)`,
+    '[style.margin-left.px]': `margin`,
+    '[style.margin-right.px]': `margin`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,6 +69,10 @@ export class SEContainerComponent {
   @Input()
   set errors(val: SEErrorRefresh[]) {
     this.setErrors(val);
+  }
+
+  get margin(): number {
+    return -((this.gutter as number) / 2);
   }
 
   get errorNotify(): Observable<SEErrorRefresh> {
