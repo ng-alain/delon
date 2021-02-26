@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { REGEX } from '@delon/util/format';
-import Ajv from 'ajv';
+import Ajv, { Options as AjvOptions } from 'ajv';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
@@ -23,15 +23,24 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       return;
     }
     this.options = mergeConfig(cogSrv);
+    const customOptions: AjvOptions = this.options.ajv || {};
     this.ajv = new Ajv({
-      ...this.options.ajv,
-      // errorDataPath: 'property',
       allErrors: true,
+      ...customOptions,
+      formats: {
+        ip: REGEX.ip,
+        'data-url': /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/,
+        color: REGEX.color,
+        mobile: REGEX.mobile,
+        'id-card': REGEX.idCard,
+      },
     });
-    this.ajv.addFormat('data-url', /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/);
-    this.ajv.addFormat('color', REGEX.color);
-    this.ajv.addFormat('mobile', REGEX.mobile);
-    this.ajv.addFormat('id-card', REGEX.idCard);
+    // add custom format
+    if (customOptions.formats) {
+      Object.keys(customOptions.formats).forEach(key => {
+        this.ajv.addFormat(key, customOptions.formats![key]!);
+      });
+    }
   }
 
   createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[] {
