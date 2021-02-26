@@ -31,6 +31,8 @@ import { MediaModule } from '@delon/abc/media';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
 import { OnboardingModule } from '@delon/abc/onboarding';
+import { LetModule } from '@delon/abc/let';
+import { AutoFocusModule } from '@delon/abc/auto-focus';
 
 const MODULES = [
   ErrorCollectModule,
@@ -63,6 +65,8 @@ const MODULES = [
   LoadingModule,
   MediaModule,
   OnboardingModule,
+  LetModule,
+  AutoFocusModule,
 ];
 
 @NgModule({ exports: MODULES })
