@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { REGEX } from '@delon/util/format';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import Ajv from 'ajv';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { SFSchema } from './schema';
-
-declare var Ajv: NzSafeAny;
 
 @Injectable()
 export abstract class SchemaValidatorFactory {
@@ -16,7 +14,7 @@ export abstract class SchemaValidatorFactory {
 
 @Injectable()
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
-  protected ajv: NzSafeAny;
+  protected ajv: Ajv;
   protected options: AlainSFConfig;
 
   constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService) {
@@ -27,9 +25,8 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     this.options = mergeConfig(cogSrv);
     this.ajv = new Ajv({
       ...this.options.ajv,
-      errorDataPath: 'property',
+      // errorDataPath: 'property',
       allErrors: true,
-      jsonPointers: true,
     });
     this.ajv.addFormat('data-url', /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/);
     this.ajv.addFormat('color', REGEX.color);
@@ -50,11 +47,11 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
           console.warn(e);
         }
       }
-      let errors: any[] = this.ajv.errors;
+      let errors = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {
         errors = errors.filter(w => ingoreKeywords.indexOf(w.keyword) === -1);
       }
-      return errors;
+      return errors as ErrorData[];
     };
   }
 }

@@ -1,3 +1,5 @@
+import { Options as AjvOptions } from 'ajv';
+
 export interface AlainSFConfigFormatMap {
   'date-time': { widget?: string; showTime?: boolean; format?: string };
   date: { widget?: string; format?: string };
@@ -24,7 +26,7 @@ export interface AlainSFConfig {
   /**
    * [ajv](http://epoberezkin.github.io/ajv/#options) 参数
    */
-  ajv?: any;
+  ajv?: AjvOptions;
   /**
    * 是否实时校验，默认：`true`
    * - `true` 每一次都校验
