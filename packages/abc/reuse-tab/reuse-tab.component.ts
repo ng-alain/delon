@@ -89,6 +89,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   @Input() @InputBoolean() disabled = false;
+  @Input() titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
