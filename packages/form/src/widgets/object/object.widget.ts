@@ -13,9 +13,9 @@ import { SFObjectWidgetRenderType } from './schema';
   encapsulation: ViewEncapsulation.None,
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
-  grid: SFGridSchema;
+  grid: any;
   type: SFObjectWidgetRenderType = 'default';
-  list: Array<{}> = [];
+  list: Array<any> = [];
   title: string;
   showExpand = true;
   expand = true;

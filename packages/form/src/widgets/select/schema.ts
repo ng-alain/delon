@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzOptionComponent, NzSelectModeType } from 'ng-zorro-antd/select';
 import { Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
@@ -57,7 +57,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉菜单的 style 属性
    */
-  dropdownStyle?: {};
+  dropdownStyle?: { [key: string]: string } | null;
 
   /**
    * 是否使用服务端搜索，当为 `true` 时，将不再在前端对 `nz-option` 进行过滤，默认：`false`
@@ -72,7 +72,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 设置 `nz-select` 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签
    */
-  mode?: 'default' | 'multiple' | 'tags';
+  mode?: NzSelectModeType;
 
   /**
    * 当下拉列表为空时显示的内容

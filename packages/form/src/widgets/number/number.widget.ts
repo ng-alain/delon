@@ -13,7 +13,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
   max: number;
   step: number;
   formatter: (value: number) => string | number = value => value;
-  parser: (value: string) => string | number = value => value;
+  parser: (value: string) => string = value => value;
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;

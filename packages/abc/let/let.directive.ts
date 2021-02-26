@@ -1,14 +1,14 @@
 import { Directive, Inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 export class LetContext<T> {
-  constructor(private readonly internalDirectiveInstance: LetDirective<T>) {}
+  constructor(private readonly dir: LetDirective<T>) {}
 
   get $implicit(): T {
-    return this.internalDirectiveInstance.let;
+    return this.dir.let;
   }
 
   get let(): T {
-    return this.internalDirectiveInstance.let;
+    return this.dir.let;
   }
 }
 

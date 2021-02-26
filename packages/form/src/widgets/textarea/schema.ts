@@ -1,8 +1,9 @@
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { AutoSizeType } from 'ng-zorro-antd/input';
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFTextareaWidgetSchema extends SFUISchemaItem {
-  size?: SFDLSSize;
+  size?: NzSizeLDSType;
 
   /**
    * 在文字框中显示提示讯息

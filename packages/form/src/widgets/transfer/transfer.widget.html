@@ -1,9 +1,9 @@
 <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
   <nz-transfer
-    [nzDataSource]="list"
+    [nzDataSource]="$any(list)"
     [nzTitles]="i.titles"
     [nzOperations]="i.operations"
-    [nzListStyle]="ui.listStyle"
+    [nzListStyle]="ui.listStyle!"
     [nzItemUnit]="i.itemUnit"
     [nzItemsUnit]="i.itemsUnit"
     [nzShowSearch]="ui.showSearch"

@@ -3,7 +3,7 @@
     [(ngModel)]="displayValue"
     (ngModelChange)="_change($event)"
     [nzDisabled]="disabled"
-    [nzSize]="ui.size"
+    [nzSize]="$any(ui.size)"
     [nzFormat]="i.displayFormat"
     [nzAllowEmpty]="i.allowEmpty"
     [nzClearText]="i.clearText"
@@ -16,8 +16,8 @@
     [nzHourStep]="i.hourStep"
     [nzMinuteStep]="i.minuteStep"
     [nzSecondStep]="i.secondStep"
-    [nzPopupClassName]="ui.popupClassName"
-    [nzPlaceHolder]="ui.placeholder"
+    [nzPopupClassName]="ui.popupClassName!"
+    [nzPlaceHolder]="ui.placeholder!"
     (nzOpenChange)="_openChange($event)"
   >
   </nz-time-picker>

@@ -5,7 +5,7 @@
     [attr.id]="id"
     [disabled]="disabled"
     [attr.disabled]="disabled"
-    [nzSize]="ui.size"
+    [nzSize]="ui.size!"
     [(ngModel)]="typing"
     (ngModelChange)="_setValue($event)"
     [attr.maxLength]="schema.maxLength || null"
@@ -19,8 +19,6 @@
     [nzWidth]="i.width"
     (selectionChange)="updateValue($event)"
   >
-    <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label">
-      {{i.label}}
-    </nz-auto-option>
+    <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label"> {{i.label}} </nz-auto-option>
   </nz-autocomplete>
 </sf-item-wrap>

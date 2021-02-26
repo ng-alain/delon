@@ -1,3 +1,4 @@
+import { NzButtonType } from 'ng-zorro-antd/button';
 import { FormProperty } from '../../model/form.property';
 import { SFUISchemaItem } from '../../schema/ui';
 
@@ -6,7 +7,7 @@ export interface SFArrayWidgetSchema extends SFUISchemaItem {
   addTitle?: string;
 
   /** 指定添加按钮风格，等同按钮 `nzType`，默认：dashed */
-  addType?: string;
+  addType?: NzButtonType;
 
   /** 指定是否显示移除按钮 */
   removable?: boolean;

@@ -1,5 +1,5 @@
 <nz-form-item [class.ant-form-item-with-help]="showError">
-  <nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
+  <div nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
     <label>
       {{ schema.title }}
       <span class="sf__optional">
@@ -15,18 +15,18 @@
           [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
           [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
           nz-icon
-          [nzType]="oh.icon"
+          [nzType]="oh.icon!"
         ></i>
       </span>
     </label>
     <div class="sf__array-add">
       <button type="button" nz-button [nzType]="addType" [disabled]="addDisabled" (click)="addItem()" [innerHTML]="addTitle"></button>
     </div>
-  </nz-col>
-  <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
+  </div>
+  <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
     <div class="ant-form-item-control" [class.has-error]="showError">
       <div nz-row class="sf__array-container">
-        <ng-container *ngFor="let i of formProperty.properties; let idx=index">
+        <ng-container *ngFor="let i of $any(formProperty).properties; let idx=index">
           <div nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf__array-item">
             <nz-card>
               <sf-item [formProperty]="i"></sf-item>
@@ -40,5 +40,5 @@
       <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{error}}</div>
       <div *ngIf="schema.description" [innerHTML]="schema._description" class="ant-form-extra"></div>
     </div>
-  </nz-col>
+  </div>
 </nz-form-item>
