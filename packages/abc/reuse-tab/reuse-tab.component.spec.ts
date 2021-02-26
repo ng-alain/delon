@@ -1,4 +1,4 @@
-import { Component, DebugElement, Injectable, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
@@ -255,6 +255,11 @@ describe('abc: reuse-tab', () => {
         layoutComp.disabled = true;
         page.cd(0);
         expect(page.getEl('.reuse-tab__disabled') != null).toBe(true);
+      });
+      it('#titleRender', () => {
+        layoutComp.titleRender = layoutComp.titleRenderTpl;
+        page.cd(0);
+        expect(page.getEl('.reuse-tab__name').textContent?.trim()).toBe('/a');
       });
     });
 
@@ -805,16 +810,19 @@ class AppComponent {}
       [tabMaxWidth]="tabMaxWidth"
       [routeParamMatchMode]="routeParamMatchMode"
       [disabled]="disabled"
+      [titleRender]="titleRender"
       (change)="change($event)"
       (close)="close($event)"
     >
     </reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
+    <ng-template #titleRender let-i>{{ i.url }}</ng-template>
   `,
 })
 class LayoutComponent {
   @ViewChild('comp', { static: true })
   comp: ReuseTabComponent;
+  @ViewChild('titleRender', { static: true }) titleRenderTpl: TemplateRef<{ $implicit: ReuseItem }>;
   mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
   debug = false;
   max: number = 3;
@@ -827,6 +835,7 @@ class LayoutComponent {
   tabMaxWidth: number;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   disabled = false;
+  titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   change(): void {}
   close(): void {}
 }
