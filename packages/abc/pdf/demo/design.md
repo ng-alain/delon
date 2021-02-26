@@ -22,7 +22,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'components-pdf-design',
   template: `
-    <div nz-row nzGutter="16">
+    <div nz-row [nzGutter]="16">
       <div nz-col nzSpan="8">
         <div se-container col="1">
           <se label="Url of the pdf file (Press enter to run)">

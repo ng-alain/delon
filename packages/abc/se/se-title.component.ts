@@ -28,8 +28,8 @@ export class SETitleComponent implements OnInit {
   }
 
   private setClass(): void {
-    const { gutter } = this.parent;
     const { el } = this;
+    const gutter = this.parent.gutter as number;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }

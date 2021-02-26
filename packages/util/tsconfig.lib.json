@@ -7,11 +7,5 @@
       "@delon/util/*": ["../../dist/@delon/util/*"],
       "@delon/*": ["../../dist/@delon/*"]
     }
-  },
-  "files": ["index.ts", "../typings.d.ts"],
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true
   }
 }

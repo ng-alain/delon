@@ -75,7 +75,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     @Optional() private directionality: Directionality,
   ) {}
 

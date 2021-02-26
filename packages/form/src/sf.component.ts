@@ -94,6 +94,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
+  get btnGrid(): any {
+    return this._btn.render!.grid;
+  }
 
   // #region fields
 

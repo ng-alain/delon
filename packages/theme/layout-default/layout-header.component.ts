@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, TemplateRef } from '@angular/core';
 import { App, SettingsService } from '@delon/theme';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,7 +6,7 @@ import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
 interface LayoutDefaultHeaderItem {
-  host: ElementRef;
+  host: TemplateRef<any>;
   hidden?: LayoutDefaultHeaderItemHidden;
   direction?: LayoutDefaultHeaderItemDirection;
 }

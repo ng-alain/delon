@@ -30,7 +30,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
   _formatter = (value: number) => {
     const { formatter } = this.ui;
     if (formatter) return formatter(value);
-    return value;
+    return `${value}`;
   };
 
   _afterChange(value: NzSliderValue): void {

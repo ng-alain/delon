@@ -50,12 +50,12 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     private dom: DomSanitizer,
     @Optional() private directionality: Directionality,
   ) {}
 
-  to(item: GlobalFooterLink): void {
+  to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     if (!item.href) {
       return;
     }

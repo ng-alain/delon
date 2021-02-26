@@ -1,5 +1,5 @@
 <nz-form-item [style.width.px]="ui.width" [class.ant-form-item-has-error]="showError" [class.ant-form-item-with-help]="showError">
-  <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
+  <div nz-col *ngIf="_showTitle" [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
     <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
       <span class="sf__label-text">{{ t }}</span>
       <span *ngIf="ui.optional || oh" class="sf__optional">
@@ -16,12 +16,12 @@
           [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
           [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
           nz-icon
-          [nzType]="oh.icon"
+          [nzType]="oh.icon!"
         ></i>
       </span>
     </label>
-  </nz-col>
-  <nz-col class="ant-form-item-control" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
+  </div>
+  <div nz-col class="ant-form-item-control" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
     <div class="ant-form-item-control-input">
       <div class="ant-form-item-control-input-content">
         <ng-content></ng-content>
@@ -31,5 +31,5 @@
       <div @helpMotion>{{ error }}</div>
     </div>
     <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="schema._description"></div>
-  </nz-col>
+  </div>
 </nz-form-item>

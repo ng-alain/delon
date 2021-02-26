@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <tag-select>
-      <nz-tag *ngFor="let i of categories; let idx = index" nzMode="checkable" [(nzChecked)]="i.value" (nzCheckedChange)="change(i)">
+      <nz-tag *ngFor="let i of categories; let idx = index" nzMode="checkable" [(nzChecked)]="i.value" (nzCheckedChange)="change($event)">
         {{ i.text }}
       </nz-tag>
     </tag-select>

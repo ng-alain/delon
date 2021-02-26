@@ -38,6 +38,7 @@ import {
   STWidthMode,
 } from '../st.interfaces';
 import { STModule } from '../st.module';
+import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 
 const MOCKDATE = new Date();
@@ -1165,7 +1166,7 @@ describe('abc: st', () => {
     describe('[filter]', () => {
       describe('in local-data', () => {
         let filter: STColumnFilter;
-        let firstCol: STColumn;
+        let firstCol: _STColumn;
         beforeEach(() => {
           context.columns = [
             {
@@ -1762,7 +1763,7 @@ describe('abc: st', () => {
           { index: 'id', resizable: true },
           { index: 'id', resizable: true },
         ]);
-        comp.colResize({ width: 100 }, { width: 10 });
+        comp.colResize({ width: 100 }, { width: 10 } as _STColumn);
         expect(page._changeData.type).toBe('resize');
         page.asyncEnd();
       }));

@@ -29,12 +29,12 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     return this.ui.class || '';
   }
 
-  get disabled(): boolean | null {
+  get disabled(): boolean {
     if (this.schema.readOnly === true || this.sfComp!.disabled) {
       return true;
     }
 
-    return null;
+    return false;
   }
 
   get l(): LocaleData {

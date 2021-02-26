@@ -52,7 +52,7 @@
   [nzPopoverContent]="menu"
   nzPopoverTrigger="click"
   [(nzPopoverVisible)]="menuVisible"
-  [nzPopoverTitle]="null"
+  [nzPopoverTitle]="undefined"
   class="nav-phone-icon"
 ></i>
 <div nz-row style="flex-flow: nowrap; height: 64px">
@@ -78,7 +78,7 @@
       <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">
         {{ rtl.nextDir | uppercase }}
       </button>
-      <github-button type="stargazers" size="small" namespace="ng-alain" repo="ng-alain"></github-button>
+      <github-button type="stargazers" size="default" namespace="ng-alain" repo="ng-alain"></github-button>
     </ng-container>
   </div>
 </div>

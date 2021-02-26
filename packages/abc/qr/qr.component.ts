@@ -49,7 +49,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() backgroundAlpha: number;
   @Input() foreground: string;
   @Input() foregroundAlpha: number;
-  @Input() level: 'L' | 'M' | 'Q' | 'H';
+  @Input() level: string;
   @Input() mime: string;
   @Input() @InputNumber() padding: number;
   @Input() @InputNumber() size: number;
@@ -102,7 +102,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
       backgroundAlpha: this.backgroundAlpha,
       foreground: this.foreground,
       foregroundAlpha: this.foregroundAlpha,
-      level: this.level,
+      level: this.level as any,
       mime: this.mime,
       padding: this.padding,
       size: this.size,

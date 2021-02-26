@@ -69,7 +69,7 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
@@ -123,7 +123,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: _STColumn[][] = [];
+  _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
   contextmenuList: STContextmenuItem[] = [];
   @ViewChild('table') readonly orgTable: NzTableComponent;
@@ -198,7 +198,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _resizable: STResizable;
   @Input()
-  set resizable(val: STResizable | boolean) {
+  set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;
@@ -594,10 +594,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   sort(col: _STColumn, idx: number, value: any): void {
     if (this.multiSort) {
-      col._sort!.default = value;
-      col._sort!.tick = this.dataSource.nextSortTick;
+      col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
+      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this.cdr.detectChanges();
     this.loadPageData();
@@ -610,7 +610,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   clearSort(): this {
-    this._columns.forEach(item => (item._sort!.default = null));
+    this._columns.forEach(item => (item._sort.default = null));
     return this;
   }
 

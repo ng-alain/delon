@@ -234,10 +234,10 @@ describe('st: column-source', () => {
     });
     describe('[sort]', () => {
       it('should be disabled', () => {
-        expect(srv.process([{ title: '' }], options).columns[0]._sort!.enabled).toBe(false);
+        expect(srv.process([{ title: '' }], options).columns[0]._sort.enabled).toBe(false);
       });
       it('should be enabled when is true', () => {
-        expect(srv.process([{ title: '', sort: true }], options).columns[0]._sort!.enabled).toBe(true);
+        expect(srv.process([{ title: '', sort: true }], options).columns[0]._sort.enabled).toBe(true);
       });
       it('should be enabled when is string', () => {
         const res = srv.process([{ title: '', sort: 'true' }], options).columns[0]._sort!;
@@ -532,7 +532,7 @@ describe('st: column-source', () => {
         const mockTemplateRef: NzSafeAny = {};
         expect(rowSrv.getRow).not.toHaveBeenCalled();
         expect(rowSrv.getTitle).not.toHaveBeenCalled();
-        const columns: _STColumn[] = [{ title: '', render: mockTemplateRef, renderTitle: mockTemplateRef }];
+        const columns = [{ title: '', render: mockTemplateRef, renderTitle: mockTemplateRef }] as _STColumn[];
         srv.restoreAllRender(columns);
         expect(rowSrv.getRow).not.toHaveBeenCalled();
         expect(rowSrv.getTitle).not.toHaveBeenCalled();

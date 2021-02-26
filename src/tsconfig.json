@@ -10,6 +10,7 @@
   "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"],
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }
