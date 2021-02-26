@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { LetModule } from '@delon/abc/let';
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
@@ -119,7 +120,7 @@ const WIDGETS = [
 // #endregion
 
 @NgModule({
-  imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
+  imports: [CommonModule, FormsModule, DelonLocaleModule, LetModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS,
 })
