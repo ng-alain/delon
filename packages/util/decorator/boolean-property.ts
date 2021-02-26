@@ -10,8 +10,8 @@ export function toBoolean(value: any, allowUndefined: boolean | null = false): b
  * Input decorator that handle a prop to do get/set automatically with toBoolean
  *
  * ```ts
- * @Input() InputBoolean() visible: boolean = false;
- * @Input() @InputBoolean(null) visible: boolean = false;
+ * {AT}Input() {AT}InputBoolean() visible: boolean = false;
+ * {AT}Input() {AT}InputBoolean(null) visible: boolean = false;
  * ```
  */
 export function InputBoolean(defaultValue: boolean | null = false): any {

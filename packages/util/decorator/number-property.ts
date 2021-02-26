@@ -12,8 +12,8 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
  * Input decorator that handle a prop to do get/set automatically with toNumber
  *
  * ```ts
- * @Input() @InputNumber() visible: number = 1;
- * @Input() @InputNumber(null) visible: number = 2;
+ * {AT}Input() {AT}InputNumber() visible: number = 1;
+ * {AT}Input() {AT}InputNumber(null) visible: number = 2;
  * ```
  */
 export function InputNumber(defaultValue: number | null = 0): any {
