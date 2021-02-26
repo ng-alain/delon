@@ -97,36 +97,36 @@
         *ngFor="let h of row; let index = index; let last = last"
         [colSpan]="h.colSpan"
         [rowSpan]="h.rowSpan"
-        [nzWidth]="h.column.width!"
+        [nzWidth]="$any(h.column.width)"
         [nzLeft]="!!h.column._left!"
         [nzRight]="!!h.column._right!"
         [ngClass]="h.column.className!"
         [attr.data-col]="h.column.indexKey!"
         [attr.data-col-index]="index"
         [nzShowSort]="h.column._sort.enabled"
-        [nzSortOrder]="h.column._sort.default"
+        [nzSortOrder]="$any(h.column._sort.default)"
         (nzSortOrderChange)="sort(h.column, index, $event)"
-        [nzCustomFilter]="h.column.filter!"
+        [nzCustomFilter]="$any(h.column.filter)"
         nz-resizable
-        [nzDisabled]="last || h.column.resizable.disabled"
-        [nzMaxWidth]="h.column.resizable.maxWidth"
-        [nzMinWidth]="h.column.resizable.minWidth"
-        [nzBounds]="h.column.resizable.bounds"
-        [nzPreview]="h.column.resizable.preview"
+        [nzDisabled]="$any(last || h.column.resizable.disabled)"
+        [nzMaxWidth]="$any(h.column.resizable.maxWidth)"
+        [nzMinWidth]="$any(h.column.resizable.minWidth)"
+        [nzBounds]="$any(h.column.resizable.bounds)"
+        [nzPreview]="$any(h.column.resizable.preview)"
         (nzResizeEnd)="colResize($event, h.column)"
       >
-        <nz-resize-handle *ngIf="!last && !h.column.resizable.disabled" nzDirection="right"><i></i></nz-resize-handle>
+        <nz-resize-handle *ngIf="$any(!last && !h.column.resizable.disabled)" nzDirection="right"><i></i></nz-resize-handle>
         <ng-template #renderTitle [ngTemplateOutlet]="h.column.__renderTitle" [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"></ng-template>
         <ng-container *ngIf="!h.column.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="h.column.type">
             <ng-container *ngSwitchCase="'checkbox'">
-              <ng-container *ngIf="h.column.selections.length === 0">
+              <ng-container *ngIf="h.column.selections!.length === 0">
                 <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: false }"> </ng-template>
               </ng-container>
-              <div *ngIf="h.column.selections.length > 0" class="ant-table-selection">
+              <div *ngIf="h.column.selections!.length > 0" class="ant-table-selection">
                 <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: true }"> </ng-template>
                 <div
-                  *ngIf="h.column.selections.length"
+                  *ngIf="h.column.selections!.length"
                   nz-dropdown
                   nzPlacement="bottomLeft"
                   [nzDropdownMenu]="selectionMenu"

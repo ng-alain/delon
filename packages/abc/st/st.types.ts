@@ -19,8 +19,8 @@ export interface _STColumn extends STColumn {
   _left?: string;
   _right?: string;
   __point?: number;
-  __renderTitle?: TemplateRef<void>;
-  __render?: TemplateRef<void>;
+  __renderTitle?: TemplateRef<any>;
+  __render?: TemplateRef<any>;
 }
 
 export interface _STHeader {
