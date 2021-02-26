@@ -67,7 +67,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   // #region fields
 
   _title: string | null;
-  _titleTpl: TemplateRef<void>;
+  _titleTpl: TemplateRef<any>;
   @Input()
   set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
@@ -90,7 +90,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() @InputBoolean() syncTitle: boolean;
   @Input() @InputBoolean() fixed: boolean;
   @Input() @InputNumber() fixedOffsetTop: number;
-  @Input() breadcrumb: TemplateRef<void>;
+  @Input() breadcrumb: TemplateRef<any>;
   @Input() @InputBoolean() recursiveBreadcrumb: boolean;
   @Input() logo: TemplateRef<void>;
   @Input() action: TemplateRef<void>;

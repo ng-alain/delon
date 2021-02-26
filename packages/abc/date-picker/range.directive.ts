@@ -27,6 +27,8 @@ import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 })
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
   static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
+  static ngAcceptInputType_ngModelEnd: Date | null | undefined;
+  static ngAcceptInputType_ngModelEndChange: Date | null | undefined;
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
   private _shortcut: AlainDateRangePickerShortcut;
@@ -35,7 +37,6 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   start: Date | null = null;
   end: Date | null = null;
 
-  @Input() ngModelEnd: Date | null | undefined;
   @Input()
   set shortcut(val: AlainDateRangePickerShortcut | null) {
     const item = deepMergeKey({ list: [] }, true, this.defaultShortcuts, val == null ? {} : val) as AlainDateRangePickerShortcut;
@@ -51,7 +52,8 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   get shortcut(): AlainDateRangePickerShortcut | null {
     return this._shortcut;
   }
-  @Output() readonly ngModelEndChange = new EventEmitter<Date | null>();
+  @Input() ngModelEnd: Date | null | undefined;
+  @Output() readonly ngModelEndChange = new EventEmitter<Date | null | undefined>();
 
   private get dp(): NzDatePickerComponent {
     return this.nativeComp.datePicker;

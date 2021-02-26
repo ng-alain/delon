@@ -175,7 +175,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be decremented`, done => {
         (options.data as STData[])[1].id = 100000;
-        options.columns[0]._sort!.default = 'descend';
+        options.columns[0]._sort.default = 'descend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(100000);
           done();
@@ -183,7 +183,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be incremented`, done => {
         (options.data as STData[])[1].id = -100000;
-        options.columns[0]._sort!.default = 'ascend';
+        options.columns[0]._sort.default = 'ascend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(-100000);
           done();
@@ -457,30 +457,30 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be decremented`, done => {
-        options.columns[0]._sort!.default = 'descend';
+        options.columns[0]._sort.default = 'descend';
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('descend');
           done();
         });
       });
       it(`should be incremented`, done => {
-        options.columns[0]._sort!.default = 'ascend';
+        options.columns[0]._sort.default = 'ascend';
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('ascend');
           done();
         });
       });
       it(`should be re-name`, done => {
-        options.columns[0]._sort!.default = 'ascend';
-        options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
+        options.columns[0]._sort.default = 'ascend';
+        options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('A');
           done();
         });
       });
       it(`should be used default key when invalid re-name paraments`, done => {
-        options.columns[0]._sort!.default = 'ascend';
-        options.columns[0]._sort!.reName = {};
+        options.columns[0]._sort.default = 'ascend';
+        options.columns[0]._sort.reName = {};
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('ascend');
           done();
@@ -513,7 +513,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it(`should be re-name`, done => {
-          options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
+          options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
           srv.process(options).subscribe(() => {
             expect(resParams.get('SORT')).toBe('id1.D-id2.ascend');
             done();
@@ -535,22 +535,22 @@ describe('abc: table: data-souce', () => {
               index: 'id2',
               sort: true,
             },
-          ];
+          ] as _STColumn[];
           srv.process(options).subscribe(() => {
             expect(resParams.has('SORT')).toBe(false);
             done();
           });
         });
         it(`should be used default key when invalid re-name paraments`, done => {
-          options.columns[0]._sort!.reName = {};
+          options.columns[0]._sort.reName = {};
           srv.process(options).subscribe(() => {
             expect(resParams.get('SORT')).toBe('id1.descend-id2.ascend');
             done();
           });
         });
         it(`should be in user order`, done => {
-          options.columns[1]._sort!.tick = srv.nextSortTick;
-          options.columns[0]._sort!.tick = srv.nextSortTick;
+          options.columns[1]._sort.tick = srv.nextSortTick;
+          options.columns[0]._sort.tick = srv.nextSortTick;
           srv.process(options).subscribe(() => {
             expect(resParams.get('SORT')).toBe('id2.ascend-id1.descend');
             done();
@@ -569,7 +569,7 @@ describe('abc: table: data-souce', () => {
       });
       describe('[singleSort]', () => {
         it(`should working`, done => {
-          options.columns[0]._sort!.default = 'ascend';
+          options.columns[0]._sort.default = 'ascend';
           options.singleSort = {};
           srv.process(options).subscribe(() => {
             expect(resParams.get('sort')).toBe('id.ascend');
@@ -577,7 +577,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it(`should specify options`, done => {
-          options.columns[0]._sort!.default = 'ascend';
+          options.columns[0]._sort.default = 'ascend';
           options.singleSort = { key: 'SORT', nameSeparator: '-' };
           srv.process(options).subscribe(() => {
             expect(resParams.get('SORT')).toBe('id-ascend');
@@ -754,7 +754,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return default value', done => {
-          options.columns[0] = { index: 'date', type: 'date', default: '-' };
+          options.columns[0] = { index: 'date', type: 'date', default: '-' } as _STColumn;
           options.data = [{}, { date: new Date() }];
           srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe('-');
@@ -815,7 +815,7 @@ describe('abc: table: data-souce', () => {
     });
     it('should be return empty string when is null or undefined', done => {
       options.data = genData(1);
-      options.columns = [{ title: '', index: 'aa' }];
+      options.columns = [{ title: '', index: 'aa' }] as _STColumn[];
       srv.process(options).subscribe(res => {
         expect(res.list[0]._values[0].text).toBe('');
         done();
@@ -823,7 +823,7 @@ describe('abc: table: data-souce', () => {
     });
     it('should be throw error when is invalid data', done => {
       options.data = [{ age: 'invalid-number' }];
-      options.columns = [{ title: '', index: 'age', type: 'number' }];
+      options.columns = [{ title: '', index: 'age', type: 'number' }] as _STColumn[];
       spyOn(console, 'error');
       srv.process(options).subscribe(res => {
         expect(console.error).toHaveBeenCalled();
@@ -842,7 +842,7 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be use key instead of index as result key', done => {
-      options.columns = [{ title: '', index: 'a', key: 'a', statistical: { type: 'sum' } }];
+      options.columns = [{ title: '', index: 'a', key: 'a', statistical: { type: 'sum' } }] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).subscribe(res => {
@@ -852,7 +852,7 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be use indexKey instead of key when not spcify key', done => {
-      options.columns = [{ title: '', index: 'a', indexKey: 'a', statistical: { type: 'sum' } }];
+      options.columns = [{ title: '', index: 'a', indexKey: 'a', statistical: { type: 'sum' } }] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).subscribe(res => {
@@ -873,7 +873,7 @@ describe('abc: table: data-souce', () => {
             },
           },
         },
-      ];
+      ] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).subscribe(res => {
@@ -884,7 +884,7 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be 3 digits', done => {
-      options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', digits: 3 } }];
+      options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', digits: 3 } }] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2.5666 }];
 
       srv.process(options).subscribe(res => {
@@ -894,7 +894,7 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be return 0 when invalid type', done => {
-      options.columns = [{ title: '', index: 'a', statistical: { type: 'invalid-type' as any } }];
+      options.columns = [{ title: '', index: 'a', statistical: { type: 'invalid-type' as any } }] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).subscribe(res => {
@@ -905,7 +905,7 @@ describe('abc: table: data-souce', () => {
 
     describe('#currency', () => {
       it('should working', done => {
-        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: true } }];
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: true } }] as _STColumn[];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
         expect(currencySrv.format).not.toHaveBeenCalled();
 
@@ -915,7 +915,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it('should be ingore currency', done => {
-        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: false } }];
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: false } }] as _STColumn[];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
 
         srv.process(options).subscribe(res => {
@@ -927,7 +927,7 @@ describe('abc: table: data-souce', () => {
 
     describe('#type', () => {
       it('with count', done => {
-        options.columns = [{ title: '', index: 'a', statistical: 'count' }];
+        options.columns = [{ title: '', index: 'a', statistical: 'count' }] as _STColumn[];
         options.data = [{ a: 1 }, { a: 1 }, { a: 1 }];
 
         srv.process(options).subscribe(res => {
@@ -938,7 +938,7 @@ describe('abc: table: data-souce', () => {
 
       describe('with distinctCount', () => {
         it('should working', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: 1 }];
 
           srv.process(options).subscribe(res => {
@@ -947,7 +947,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('when include null or undefined', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: null }, { a: 1 }];
 
           srv.process(options).subscribe(res => {
@@ -959,7 +959,7 @@ describe('abc: table: data-souce', () => {
 
       describe('with sum', () => {
         it('should working', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
           srv.process(options).subscribe(res => {
@@ -968,7 +968,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return 0 when the value > MAX_VALUE', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }] as _STColumn[];
           options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
 
           srv.process(options).subscribe(res => {
@@ -977,7 +977,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return 0 when data is empty', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }] as _STColumn[];
           options.data = [];
 
           srv.process(options).subscribe(res => {
@@ -989,7 +989,7 @@ describe('abc: table: data-souce', () => {
 
       describe('with average', () => {
         it('should working', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
           srv.process(options).subscribe(res => {
@@ -998,7 +998,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return 0 when the value > MAX_VALUE', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }] as _STColumn[];
           options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
 
           srv.process(options).subscribe(res => {
@@ -1007,7 +1007,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return 0 when data is empty', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }] as _STColumn[];
           options.data = [];
 
           srv.process(options).subscribe(res => {
@@ -1019,7 +1019,7 @@ describe('abc: table: data-souce', () => {
 
       describe('with max', () => {
         it('should working', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'max' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'max' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
           srv.process(options).subscribe(res => {
@@ -1031,7 +1031,7 @@ describe('abc: table: data-souce', () => {
 
       describe('with min', () => {
         it('should working', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'min' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'min' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
 
           srv.process(options).subscribe(res => {
@@ -1040,7 +1040,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it('should be return 0 when include null or undefined value', done => {
-          options.columns = [{ title: '', index: 'a', statistical: 'min' }];
+          options.columns = [{ title: '', index: 'a', statistical: 'min' }] as _STColumn[];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
           srv.process(options).subscribe(res => {

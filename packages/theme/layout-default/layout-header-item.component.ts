@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from './types';
 
 @Component({
@@ -10,7 +10,7 @@ import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from 
   `,
 })
 export class LayoutDefaultHeaderItemComponent {
-  @ViewChild('host', { static: true }) host: ElementRef;
+  @ViewChild('host', { static: true }) host: TemplateRef<any>;
 
   @Input() hidden: LayoutDefaultHeaderItemHidden = 'none';
   @Input() direction: LayoutDefaultHeaderItemDirection = 'right';

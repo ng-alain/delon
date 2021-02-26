@@ -2,7 +2,7 @@
   <div class="quick-menu__ctrl" [ngStyle]="ctrlStyle">
     <div class="quick-menu__ctrl-icon">
       <ng-container *nzStringTemplateOutlet="icon">
-        <i nz-icon [nzType]="icon"></i>
+        <i nz-icon [nzType]="$any(icon)"></i>
       </ng-container>
     </div>
   </div>
