@@ -1,4 +1,4 @@
-import { InputBoolean, toBoolean, InputNumber, toNumber } from './convert';
+import { InputBoolean, InputNumber, toBoolean, toNumber } from './convert';
 
 describe('util.#toBoolean', () => {
   [

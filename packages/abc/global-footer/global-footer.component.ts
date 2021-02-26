@@ -50,7 +50,7 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     private dom: DomSanitizer,
     @Optional() private directionality: Directionality,
   ) {}

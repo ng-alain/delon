@@ -57,7 +57,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     private el: ElementRef,
     private ngZone: NgZone,
     private dom: DomSanitizer,
-    @Inject(DOCUMENT) private doc: Document,
+    @Inject(DOCUMENT) private doc: any,
     private cdr: ChangeDetectorRef,
   ) {}
 
