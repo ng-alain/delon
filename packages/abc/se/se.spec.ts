@@ -114,16 +114,29 @@ describe('abc: edit', () => {
             fixture.detectChanges();
             expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
           });
-          it('#gutter', () => {
-            const gutter = 24;
-            const halfGutter = gutter / 2;
-            context.parent_gutter = gutter;
-            fixture.detectChanges();
-            expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
-            expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-            const itemCls = prefixCls + 'item';
-            expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
-            expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+          describe('#gutter', () => {
+            it('shoule gutter number working', () => {
+              const gutter = 24;
+              const halfGutter = gutter / 2;
+              context.parent_gutter = gutter;
+              fixture.detectChanges();
+              expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+              expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
+              const itemCls = prefixCls + 'item';
+              expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
+              expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+            });
+            it('shoule gutter string working', () => {
+              const gutter = '24';
+              const halfGutter = Number(gutter) / 2;
+              context.parent_gutter = gutter;
+              fixture.detectChanges();
+              expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+              expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
+              const itemCls = prefixCls + 'item';
+              expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
+              expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+            });
           });
           describe('#labelWidth', () => {
             it('should working', () => {
@@ -528,7 +541,7 @@ class TestComponent {
   @ViewChild('viewComp', { static: true })
   viewComp: SEComponent;
 
-  parent_gutter: number | null = 32;
+  parent_gutter: string | number | null = 32;
   parent_colInCon: number | null;
   parent_col: number | null = 3;
   parent_labelWidth: number | null = null;

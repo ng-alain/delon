@@ -20,5 +20,6 @@ export * from './src/pipes/keys/keys.pipe';
 export * from './src/pipes/yn/yn.pipe';
 export * from './src/pipes/safe/html.pipe';
 export * from './src/pipes/safe/url.pipe';
+export * from './src/config';
 export * from './src/theme.module';
 export { VERSION } from './src/version';

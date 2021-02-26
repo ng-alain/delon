@@ -32,11 +32,15 @@ describe('abc: trend', () => {
       context.flag = 'up';
       fixture.detectChanges();
       isExists('.anticon-caret-up');
+      const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
+      expect(el.dataset.flag).toBe('up');
     });
     it('width down', () => {
       context.flag = 'down';
       fixture.detectChanges();
       isExists('.anticon-caret-down');
+      const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
+      expect(el.dataset.flag).toBe('down');
     });
   });
 

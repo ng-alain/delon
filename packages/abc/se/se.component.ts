@@ -75,8 +75,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   set error(val: SEErrorType) {
     this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;
   }
-  @Input() extra: string | TemplateRef<void>;
-  @Input() label: string | TemplateRef<void>;
+  @Input() extra: string | TemplateRef<void> | null;
+  @Input() label: string | TemplateRef<void> | null;
   @Input() @InputNumber(null) col: number;
   @Input() @InputBoolean() required = false;
   @Input() controlClass: string = '';
@@ -95,7 +95,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   // #endregion
 
   get paddingValue(): number {
-    return this.parent.gutter / 2;
+    return (this.parent.gutter as number) / 2;
   }
 
   get showErr(): boolean {

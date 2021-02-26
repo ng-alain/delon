@@ -24,7 +24,6 @@ import { Router } from '@angular/router';
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
-  CNCurrencyPipe,
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
@@ -36,15 +35,16 @@ import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
-import { from, Observable, of, Subject, Subscription } from 'rxjs';
+import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
-import { ST_DEFULAT_CONFIG } from './st.config';
+import { ST_DEFAULT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
@@ -52,6 +52,8 @@ import {
   STColumnButton,
   STColumnFilterMenu,
   STColumnSelection,
+  STContextmenuFn,
+  STContextmenuItem,
   STData,
   STError,
   STExportOptions,
@@ -67,13 +69,13 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
   exportAs: 'st',
   templateUrl: './st.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, DatePipe, YNPipe, DecimalPipe],
   host: {
     '[class.st]': `true`,
     '[class.st__p-left]': `page.placement === 'left'`,
@@ -121,9 +123,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: _STColumn[][] = [];
+  _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
-  @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
+  contextmenuList: STContextmenuItem[] = [];
+  @ViewChild('table') readonly orgTable: NzTableComponent;
+  @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
   get req(): STReq {
@@ -154,6 +158,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
+  @Input() contextmenu?: STContextmenuFn;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -193,7 +198,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _resizable: STResizable;
   @Input()
-  set resizable(val: STResizable | boolean) {
+  set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;
@@ -248,8 +253,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
+    private cms: NzContextMenuService,
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
@@ -588,10 +594,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   sort(col: _STColumn, idx: number, value: any): void {
     if (this.multiSort) {
-      col._sort!.default = value;
-      col._sort!.tick = this.dataSource.nextSortTick;
+      col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
+      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this.cdr.detectChanges();
     this.loadPageData();
@@ -604,7 +610,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   clearSort(): this {
-    this._columns.forEach(item => (item._sort!.default = null));
+    this._columns.forEach(item => (item._sort.default = null));
     return this;
   }
 
@@ -787,9 +793,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   export(newData?: STData[] | true, opt?: STExportOptions): void {
     (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
+        columens: this._columns,
         ...opt,
         data: res,
-        columens: this._columns,
       }),
     );
   }
@@ -803,6 +809,46 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('resize', column);
   }
 
+  // #endregion
+
+  // #region contextmenu
+  onContextmenu(event: MouseEvent): void {
+    if (!this.contextmenu) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    const colEl = (event.target as HTMLElement).closest('[data-col-index]') as HTMLElement;
+    if (!colEl) {
+      return;
+    }
+    const colIndex = Number(colEl.dataset.colIndex);
+    const rowIndex = Number((colEl.closest('tr') as HTMLElement).dataset.index);
+    const isTitle = isNaN(rowIndex);
+    const obs$ = this.contextmenu({
+      event,
+      type: isTitle ? 'head' : 'body',
+      rowIndex: isTitle ? null : rowIndex,
+      colIndex,
+      data: isTitle ? null : this.list[rowIndex],
+      column: this._columns[colIndex],
+    });
+    (isObservable(obs$) ? obs$ : of(obs$))
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(res => res.length > 0),
+      )
+      .subscribe(res => {
+        this.contextmenuList = res.map(i => {
+          if (!Array.isArray(i.children)) {
+            i.children = [];
+          }
+          return i;
+        });
+        this.cdr.detectChanges();
+        this.cms.create(event, this.contextmenuTpl);
+      });
+  }
   // #endregion
 
   get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {

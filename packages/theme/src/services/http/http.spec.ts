@@ -90,7 +90,7 @@ describe('theme: http.client', () => {
         const ret = backend.expectOne(() => true) as TestRequest;
         // tslint:disable-next-line: forin
         for (const key in p) {
-          let v = p[key];
+          let v = p[key] as any;
           if (v instanceof Date) v = v.valueOf();
           expect(ret.request.params.get(key)).toBe(v, `param "${key}" muse be "${v}"`);
         }

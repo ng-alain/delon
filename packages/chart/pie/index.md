@@ -26,7 +26,7 @@ module: import { G2PieModule } from '@delon/chart/pie';
 | `[blockMaxWidth]` | 多少宽度为块显示 | `number` | `380` |
 | `[tooltip]` | 是否显示 tooltip | `boolean` | `true` |
 | `[subTitle]` | 图表子标题 | `string,TemplateRef<void><void>` | - |
-| `[total]` | 总量 | `string,TemplateRef<void><void>` | - |
+| `[total]` | 总量 | `string,number,TemplateRef<void><void>` | - |
 | `[valueFormat]` | y轴格式化 | `(y: number) => string` | - |
 | `[data]` | 数据 | `G2PieData[]` | - |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |

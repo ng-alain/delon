@@ -121,5 +121,14 @@ describe('abc: table: export', () => {
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);
     });
+
+    it('should be _values data first', async () => {
+      const ret: any = await srv.export({
+        data: [{ i: 1, _values: [{ text: '2' }] }],
+        columens: [{ title: 'i', index: 'i' }],
+      });
+      expect(ret).not.toBeNull();
+      expect(ret.sheets.Sheet1.A2.v).toBe('2');
+    });
   });
 });

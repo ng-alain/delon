@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -23,8 +23,8 @@ import { SEErrorRefresh, SELayout } from './se.types';
     '[class.se__vertical]': `nzLayout === 'vertical'`,
     '[class.se__inline]': `nzLayout === 'inline'`,
     '[class.se__compact]': `size === 'compact'`,
-    '[style.margin-left.px]': `-(gutter / 2)`,
-    '[style.margin-right.px]': `-(gutter / 2)`,
+    '[style.margin-left.px]': `margin`,
+    '[style.margin-right.px]': `margin`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +34,9 @@ export class SEContainerComponent {
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
+  static ngAcceptInputType_firstVisual: BooleanInput;
+  static ngAcceptInputType_ingoreDirty: BooleanInput;
+  static ngAcceptInputType_line: BooleanInput;
 
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
@@ -42,10 +45,10 @@ export class SEContainerComponent {
   @Input() title: string | TemplateRef<void>;
 
   @Input()
-  get gutter(): number {
+  get gutter(): number | string {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: number) {
+  set gutter(value: number | string) {
     this._gutter = toNumber(value);
   }
   private _gutter: number;
@@ -69,6 +72,10 @@ export class SEContainerComponent {
   @Input()
   set errors(val: SEErrorRefresh[]) {
     this.setErrors(val);
+  }
+
+  get margin(): number {
+    return -((this.gutter as number) / 2);
   }
 
   get errorNotify(): Observable<SEErrorRefresh> {

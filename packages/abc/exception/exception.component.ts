@@ -47,7 +47,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
   @Input()
   set type(value: ExceptionType) {
-    const item = {
+    const item: { img: string; title: string } = {
       403: {
         img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
         title: '403',

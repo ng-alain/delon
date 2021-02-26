@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
 import { I18NService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { copy, InputBoolean, LazyService } from '@delon/util';
+import { BooleanInput, copy, InputBoolean, LazyService } from '@delon/util';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -17,6 +17,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent implements OnInit {
+  static ngAcceptInputType_small: BooleanInput;
+
   color = `#1890ff`;
   lessLoaded = false;
 

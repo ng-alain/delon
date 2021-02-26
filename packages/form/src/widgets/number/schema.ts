@@ -1,7 +1,8 @@
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFNumberWidgetSchema extends SFUISchemaItem {
-  size?: SFDLSSize;
+  size?: NzSizeLDSType;
 
   /**
    * 前缀，简化 `nzFormatter`、`nzParser` 的使用
@@ -21,7 +22,7 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
   /**
    * 指定从 nzFormatter 里转换回数字的方式，和 nzFormatter 搭配使用
    */
-  parser?: (value: string) => string | number;
+  parser?: (value: string) => string;
 
   /**
    * 数值精度

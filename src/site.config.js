@@ -70,6 +70,10 @@ module.exports = {
           'zh-CN': '业务',
           'en-US': 'Business',
         },
+        {
+          'zh-CN': '其它',
+          'en-US': 'Other',
+        },
       ],
       extraRouteMeta: [
         {

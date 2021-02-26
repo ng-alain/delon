@@ -6,10 +6,5 @@
     "paths": {
       "@delon/*": ["../../dist/@delon/*"]
     }
-  },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true
   }
 }

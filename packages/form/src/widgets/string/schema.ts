@@ -84,5 +84,5 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
   /**
    * 回车事件
    */
-  enter?: (e: KeyboardEvent) => void;
+  enter?: (e: Event) => void;
 }

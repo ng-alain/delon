@@ -29,9 +29,11 @@ export class ArrayService {
   }
 
   /**
+   * Convert tree structure to array structure
+   *
    * 将树结构转换成数组结构
    */
-  treeToArr(tree: any[], options?: ArrayServiceTreeToArrOptions): any[] {
+  treeToArr<T extends object = any>(tree: ReadonlyArray<T>, options?: ArrayServiceTreeToArrOptions<T>): T[] {
     const opt = {
       deepMapName: this.c.deepMapName,
       parentMapName: this.c.parentMapName,
@@ -40,8 +42,8 @@ export class ArrayService {
       cb: null,
       ...options,
     } as ArrayServiceTreeToArrOptions;
-    const result: any[] = [];
-    const inFn = (list: any[], parent: any, deep: number = 0) => {
+    const result: Array<{ [key: string]: any }> = [];
+    const inFn = (list: ReadonlyArray<{ [key: string]: any }>, parent: T | null, deep: number = 0) => {
       for (const i of list) {
         i[opt.deepMapName!] = deep;
         i[opt.parentMapName!] = parent;
@@ -51,52 +53,56 @@ export class ArrayService {
         result.push(i);
         const children = i[opt.childrenMapName!];
         if (children != null && Array.isArray(children) && children.length > 0) {
-          inFn(children, i, deep + 1);
+          inFn(children, i as T, deep + 1);
         }
         if (opt.clearChildren) {
           delete i[opt.childrenMapName!];
         }
       }
     };
-    inFn(tree, 1);
-    return result;
+    inFn(tree, null);
+    return result as T[];
   }
 
   /**
+   * Convert array structure to tree structure
+   *
    * 数组转换成树数据
    */
-  arrToTree(arr: any[], options?: ArrayServiceArrToTreeOptions): any[] {
+  arrToTree<T extends object = any>(arr: ReadonlyArray<T>, options?: ArrayServiceArrToTreeOptions<T>): T[] {
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return [];
+    }
+
     const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
       childrenMapName: this.c.childrenMapName,
       cb: null,
       ...options,
-    } as ArrayServiceArrToTreeOptions;
-    if (arr.length === 0) {
-      return [];
-    }
-    const tree: any[] = [];
-    const childrenOf: any = {};
+    } as ArrayServiceArrToTreeOptions<T>;
+    const tree: T[] = [];
+    const childrenOf: { [key: string]: T[] } = {};
     let rootPid = opt.rootParentIdValue;
+    const arrType = arr as ReadonlyArray<{ [key: string]: any }>;
     if (!rootPid) {
-      const pids = arr.map(i => i[opt.parentIdMapName!]);
+      const pids = arrType.map(i => i[opt.parentIdMapName!]);
       const emptyPid = pids.findIndex(w => w == null);
       rootPid = emptyPid !== -1 ? pids[emptyPid] : pids.sort()[0];
     }
-    for (const item of arr) {
+    for (const item of arrType) {
       const id = item[opt.idMapName!];
       const pid = item[opt.parentIdMapName!];
       childrenOf[id] = childrenOf[id] || [];
       item[opt.childrenMapName!] = childrenOf[id];
       if (opt.cb) {
-        opt.cb(item);
+        opt.cb(item as T);
       }
       if (pid !== rootPid) {
         childrenOf[pid] = childrenOf[pid] || [];
-        childrenOf[pid].push(item);
+        childrenOf[pid].push(item as T);
       } else {
-        tree.push(item);
+        tree.push(item as T);
       }
     }
     return tree;
@@ -105,7 +111,7 @@ export class ArrayService {
   /**
    * 数组转换成 `nz-tree` 数据源，通过 `options` 转化项名，也可以使用 `options.cb` 更高级决定数据项
    */
-  arrToTreeNode(arr: any[], options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
+  arrToTreeNode<T extends object = any>(arr: ReadonlyArray<T>, options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
     const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
@@ -117,13 +123,13 @@ export class ArrayService {
       disabledMapname: this.c.disabledMapname,
       cb: null,
       ...options,
-    } as ArrayServiceArrToTreeNodeOptions;
-    const tree = this.arrToTree(arr, {
+    } as ArrayServiceArrToTreeNodeOptions<T>;
+    const tree = this.arrToTree<T>(arr, {
       idMapName: opt.idMapName,
       parentIdMapName: opt.parentIdMapName,
       childrenMapName: 'children',
     });
-    this.visitTree(tree, (item: any, parent: any, deep: number) => {
+    this.visitTree<T>(tree, (item: { [key: string]: any }, parent, deep) => {
       item.key = item[opt.idMapName!];
       item.title = item[opt.titleMapName!];
       item.checked = item[opt.checkedMapname!];
@@ -136,18 +142,18 @@ export class ArrayService {
         item.isLeaf = item[opt.isLeafMapName!];
       }
       if (opt.cb) {
-        opt.cb(item, parent, deep);
+        opt.cb(item as any, parent, deep);
       }
     });
-    return tree.map(node => new NzTreeNode(node));
+    return tree.map(node => new NzTreeNode(node as any));
   }
 
   /**
    * 递归访问整个树
    */
-  visitTree(
-    tree: any[],
-    cb: (item: any, parent: any, deep: number) => void,
+  visitTree<T extends object = any>(
+    tree: ReadonlyArray<T>,
+    cb: (item: T, parent: T | null, deep: number) => void,
     options?: {
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
@@ -157,16 +163,42 @@ export class ArrayService {
       childrenMapName: this.c.childrenMapName,
       ...options,
     };
-    const inFn = (data: any[], parent: any, deep: number) => {
+    const inFn = (data: ReadonlyArray<T>, parent: T | null, deep: number) => {
       for (const item of data) {
         cb(item, parent, deep);
-        const childrenVal = item[options!.childrenMapName!];
-        if (childrenVal && childrenVal.length > 0) {
+        const childrenVal = (item as { [key: string]: any })[options!.childrenMapName!];
+        if (Array.isArray(childrenVal) && childrenVal.length > 0) {
           inFn(childrenVal, item, deep + 1);
         }
       }
     };
     inFn(tree, null, 1);
+  }
+
+  /**
+   * Return the value of the first tree value in the tree where predicate is true, and `undefined` otherwise
+   *
+   * 根据条件返回树的第一个值，否则返回 `undefined`
+   */
+  findTree<T extends object = any>(
+    tree: ReadonlyArray<T>,
+    predicate: (item: T) => boolean,
+    options?: {
+      /** 子项名，默认：`'children'` */
+      childrenMapName?: string;
+    },
+  ): T | undefined {
+    let res: T | undefined;
+    this.visitTree<T>(
+      tree,
+      item => {
+        if (res === undefined && predicate(item)) {
+          res = item;
+        }
+      },
+      options,
+    );
+    return res;
   }
 
   /**
@@ -178,7 +210,7 @@ export class ArrayService {
       ...options,
     } as ArrayServiceGetKeysByTreeNodeOptions;
     const keys: any[] = [];
-    this.visitTree(tree, (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
+    this.visitTree<NzTreeNode>(tree, (item, parent, deep) => {
       if (item.isChecked || (opt.includeHalfChecked && item.isHalfChecked)) {
         keys.push(opt.cb ? opt.cb(item, parent, deep) : opt.keyMapName ? item.origin[opt.keyMapName] : item.key);
       }
@@ -215,8 +247,8 @@ export class ArrayService {
    * srv.flat([1, [2, 3, [4, 5, [6]]]], 1) => [1,2,3,[4, 5, [6]]]
    * ```
    */
-  flat<T>(array: ReadonlyArray<T>, depth: number = 1 / 0): ReadonlyArray<T> {
-    return Array.isArray(array) ? this.baseFlat(array as any[], depth) : array;
+  flat<T>(array: ReadonlyArray<T>, depth: number = 1 / 0): T[] {
+    return Array.isArray(array) ? this.baseFlat(array as any[], depth) : (array as T[]);
   }
   /**
    * Group the array
@@ -251,7 +283,7 @@ export class ArrayService {
    * uniq([{ a: 1 }, { a: 1 }, { a: 2 }], i => (i.a === 1 ? 'a' : 'b')) => [{"a":1},{"a":2}]
    * ```
    */
-  uniq<T>(array: ReadonlyArray<T>, predicate?: string | ((value: T) => string | number | boolean)): ReadonlyArray<T> {
+  uniq<T>(array: ReadonlyArray<T>, predicate?: string | ((value: T) => string | number | boolean)): T[] {
     return Array.from(
       array
         .reduce((map, value) => {

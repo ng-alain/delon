@@ -11,12 +11,16 @@ import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   encapsulation: ViewEncapsulation.None,
 })
 export class SFItemWrapComponent {
+  _showTitle: boolean = false;
   @Input() id: string;
   @Input() schema: SFSchema;
   @Input() ui: SFUISchemaItem;
   @Input() showError: boolean;
   @Input() error: string;
-  @Input() showTitle: boolean;
+  @Input()
+  set showTitle(val: boolean | string | null | undefined) {
+    this._showTitle = !!val;
+  }
   @Input() title: string | null = null;
 
   get t(): string {

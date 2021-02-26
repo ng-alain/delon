@@ -28,6 +28,8 @@ import {
   STColumnFilter,
   STColumnTag,
   STColumnTitle,
+  STContextmenuFn,
+  STContextmenuItem,
   STMultiSort,
   STPage,
   STReq,
@@ -36,6 +38,7 @@ import {
   STWidthMode,
 } from '../st.interfaces';
 import { STModule } from '../st.module';
+import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 
 const MOCKDATE = new Date();
@@ -82,7 +85,7 @@ class MockNzI18nService {
   }
 }
 
-describe('abc: table', () => {
+describe('abc: st', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
   let dl: DebugElement;
@@ -1163,7 +1166,7 @@ describe('abc: table', () => {
     describe('[filter]', () => {
       describe('in local-data', () => {
         let filter: STColumnFilter;
-        let firstCol: STColumn;
+        let firstCol: _STColumn;
         beforeEach(() => {
           context.columns = [
             {
@@ -1760,7 +1763,7 @@ describe('abc: table', () => {
           { index: 'id', resizable: true },
           { index: 'id', resizable: true },
         ]);
-        comp.colResize({ width: 100 }, { width: 10 });
+        comp.colResize({ width: 100 }, { width: 10 } as _STColumn);
         expect(page._changeData.type).toBe('resize');
         page.asyncEnd();
       }));
@@ -1777,8 +1780,40 @@ describe('abc: table', () => {
     it('#showHeader', () => {
       context.showHeader = false;
       fixture.detectChanges();
-      page.expectElCount('.st__head', 0);
+      page.expectElCount('.ant-table-thead', 0);
       page.expectElCount('.st__body', 1);
+    });
+    describe('#contextmenu', () => {
+      it('should be working', fakeAsync(() => {
+        page
+          .updateColumn([{ title: 'a', index: 'id' }])
+          .openContextMenu(1, 1)
+          .clickContentMenu(1)
+          .openContextMenu(1) // head
+          .clickContentMenu(1)
+          .asyncEnd();
+      }));
+      it('should be support return a observable value', fakeAsync(() => {
+        context.contextmenu = () => of([{ text: 'a', fn: jasmine.createSpy() }] as STContextmenuItem[]);
+        page
+          .updateColumn([{ title: 'a', index: 'id' }])
+          .openContextMenu(1, 1)
+          .clickContentMenu(1)
+          .asyncEnd();
+      }));
+      it('should be ingore invalid target', fakeAsync(() => {
+        context.contextmenu = jasmine.createSpy();
+        page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, { target: { closest: () => null } });
+        expect(context.contextmenu).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('should be ingore unspecified contextmenu property', fakeAsync(() => {
+        context.contextmenu = null;
+        const event = { preventDefault: jasmine.createSpy() };
+        page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, event);
+        expect(event.preventDefault).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
   });
 
@@ -2051,6 +2086,36 @@ describe('abc: table', () => {
       fixture.detectChanges();
       return this;
     }
+    openContextMenu(col: number, row?: number, event?: any): this {
+      let el: HTMLElement;
+      if (typeof row === 'number') {
+        el = this.getCell(row, col);
+      } else {
+        el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
+      }
+      if (!el) {
+        expect(false).toBe(true, `not found col: ${col}, row: ${row} element`);
+        return this;
+      }
+
+      context.comp.onContextmenu({
+        target: el,
+        preventDefault: jasmine.createSpy(),
+        stopPropagation: jasmine.createSpy(),
+        ...event,
+      } as any);
+      return this.cd();
+    }
+    clickContentMenu(idx: number): this {
+      const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
+      expect(el).not.toBeNull(`the index: ${idx} is invalid element of content menu container`);
+      const fn = context.comp.contextmenuList[idx - 1].fn;
+      expect(fn).not.toHaveBeenCalled();
+      (el as HTMLElement).click();
+      this.cd();
+      expect(fn).toHaveBeenCalled();
+      return this;
+    }
     asyncEnd(): this {
       flush();
       discardPeriodicTasks();
@@ -2085,6 +2150,7 @@ describe('abc: table', () => {
       [widthConfig]="widthConfig"
       [rowClickTime]="rowClickTime"
       [showHeader]="showHeader"
+      [contextmenu]="contextmenu"
       (change)="change($event)"
       (error)="error()"
     >
@@ -2118,6 +2184,10 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
   showHeader = true;
+  contextmenu: STContextmenuFn | null = _ => [
+    { text: 'a', fn: jasmine.createSpy() },
+    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] },
+  ];
 
   error(): void {}
   change(): void {}

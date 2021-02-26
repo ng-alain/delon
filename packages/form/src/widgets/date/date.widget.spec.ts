@@ -62,6 +62,16 @@ describe('form: widget: date', () => {
         const comp = getComp();
         expect(formatISO(comp.value)).toBe(formatISO(time));
       });
+      it('with rang values', () => {
+        const time = +new Date();
+        const s: SFSchema = {
+          properties: { a: { type: 'string', ui: { widget, mode: 'range' }, default: [time, time] } },
+        };
+        page.newSchema(s);
+        const comp = getComp();
+        expect(Array.isArray(comp.value)).toBe(true);
+        expect(formatISO(comp.value[0])).toBe(formatISO(time));
+      });
     });
     it('should be set value', fakeAsync(() => {
       const s: SFSchema = {

@@ -51,5 +51,6 @@ To select or input a date.
 | `[showTime]` | to provide an additional time selection, the `object` type is [TimePickerOptions](https://ng.ant.design/components/time-picker/en#api) | `object,boolean` | `true` |
 | `[showToday]` | whether to show "Today" button | `boolean` | `true` |
 | `[inputReadOnly]` | Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices) | `boolean` | `false` |
+| `[inline]` | Inline mode of the date picker | `boolean` | `false` |
 | `[onOk]` | callback when click ok button | `(data: Date | Date[]) => void` | - |
 | `[change]` | Date change callback | `(data: Date | Date[]) => void` | - |

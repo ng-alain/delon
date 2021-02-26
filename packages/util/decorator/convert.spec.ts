@@ -1,5 +1,4 @@
-import { InputBoolean, toBoolean } from './boolean-property';
-import { InputNumber, toNumber } from './number-property';
+import { InputBoolean, InputNumber, toBoolean, toNumber } from './convert';
 
 describe('util.#toBoolean', () => {
   [

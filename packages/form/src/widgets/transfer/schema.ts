@@ -1,3 +1,4 @@
+import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { Observable } from 'rxjs';
 import { SFSchemaEnumType } from '../../schema';
@@ -22,7 +23,7 @@ export interface SFTransferWidgetSchema extends SFUISchemaItem {
   /**
    * 两个穿梭框的自定义样式，以`ngStyle`写法标题
    */
-  listStyle?: object;
+  listStyle?: NgStyleInterface;
 
   /**
    * 单数单位

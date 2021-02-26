@@ -7,7 +7,7 @@
     [nzAllowHalf]="allowHalf"
     [nzTooltips]="ui.tooltips || []"
     [nzAutoFocus]="autoFocus"
-    [nzCount]="count"
+    [nzCount]="$any(count)"
   ></nz-rate>
   <span *ngIf="hasText && formProperty.value" class="ant-rate-text">{{ text }}</span>
 </sf-item-wrap>

@@ -1,9 +1,11 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createTestContext } from '@delon/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
+import { ModalOptions } from 'ng-zorro-antd/modal';
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
 
@@ -16,7 +18,7 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ImageModule, AlainThemeModule, HttpClientTestingModule],
+      imports: [ImageModule, AlainThemeModule, HttpClientTestingModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
   });
@@ -115,10 +117,41 @@ describe('abc: _src', () => {
       expect(getEl().src).toContain('error.svg');
     });
   });
+
+  describe('#preview', () => {
+    afterEach(cleanCdkOverlayHtml);
+    it('should be working', fakeAsync(() => {
+      context.previewSrc = `${SRC}`;
+      fixture.detectChanges();
+      getEl().click();
+      tick(1000);
+      fixture.detectChanges();
+      const el = document.querySelector('.img-fluid') as HTMLImageElement;
+      expect(el != null).toBe(true);
+      expect(el.src.endsWith(SRC)).toBe(true);
+    }));
+    it('should be ingore click when previewSrc is null', fakeAsync(() => {
+      context.previewSrc = null;
+      fixture.detectChanges();
+      getEl().click();
+      tick(1000);
+      fixture.detectChanges();
+      const el = document.querySelector('.img-fluid') as HTMLImageElement;
+      expect(el != null).toBe(false);
+    }));
+  });
 });
 
 @Component({
-  template: ` <img [_src]="src" #comp="_src" [size]="size" [error]="error" [useHttp]="useHttp" />`,
+  template: ` <img
+    [_src]="src"
+    #comp="_src"
+    [size]="size"
+    [error]="error"
+    [useHttp]="useHttp"
+    [previewSrc]="previewSrc"
+    [previewModalOptions]="previewModalOptions"
+  />`,
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: ImageDirective;
@@ -126,4 +159,6 @@ class TestComponent {
   size = 64;
   error = 'error.svg';
   useHttp = false;
+  previewSrc: string | null;
+  previewModalOptions: ModalOptions;
 }

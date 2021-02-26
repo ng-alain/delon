@@ -16,7 +16,7 @@
   <div class="code-box-actions">
     <i
       nz-tooltip
-      [nzTooltipTitle]="'app.demo.code-sandbox' | translate"
+      [nzTooltipTitle]="'app.demo.code-sandbox' | i18n"
       (click)="openOnlineIDE('CodeSandbox')"
       nz-icon
       nzType="code-sandbox"
@@ -24,7 +24,7 @@
     ></i>
     <i
       nz-tooltip
-      [nzTooltipTitle]="'app.demo.stackblitz' | translate"
+      [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
       (click)="openOnlineIDE()"
       nz-icon
       nzType="thunderbolt"
@@ -33,7 +33,7 @@
     ></i>
     <i
       nz-tooltip
-      [nzTooltipTitle]="'app.demo.copy' | translate"
+      [nzTooltipTitle]="'app.demo.copy' | i18n"
       (click)="onCopy(item.code)"
       nz-icon
       [nzType]="copied ? 'check' : 'snippets'"

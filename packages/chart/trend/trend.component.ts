@@ -4,11 +4,15 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 @Component({
   selector: 'trend',
   exportAs: 'trend',
-  templateUrl: './trend.component.html',
+  template: `
+    <ng-content></ng-content>
+    <span *ngIf="flag" class="trend__{{ flag }}"><i nz-icon nzType="caret-{{ flag }}"></i></span>
+  `,
   host: {
     '[class.trend]': 'true',
     '[class.trend__grey]': '!colorful',
     '[class.trend__reverse]': 'colorful && reverseColor',
+    '[attr.data-flag]': `flag`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,

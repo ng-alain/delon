@@ -48,7 +48,7 @@ export class G2PieComponent extends G2BaseComponent {
   @Input() @InputBoolean() animate = true;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() subTitle: string | TemplateRef<void>;
-  @Input() total: string | TemplateRef<void>;
+  @Input() total: string | number | TemplateRef<void>;
   @Input() @InputNumber() height = 0;
   @Input() @InputBoolean() hasLegend = false;
   @Input() inner = 0.75;

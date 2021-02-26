@@ -17,8 +17,9 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
+import { Menu, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { WINDOW } from '@delon/util/token';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Nav } from './sidebar-nav.types';
@@ -74,7 +75,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     @Optional() private directionality: Directionality,
   ) {}
 

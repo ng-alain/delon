@@ -30,7 +30,7 @@ import { STColumn } from '@delon/abc/st';
 })
 export class DemoComponent {
   url = `/users?total=100`;
-  params = { name: 'asdf' };
+  params: { name?: string } = { name: 'asdf' };
   columns: STColumn[] = [
     { title: '编号', index: 'id', default: '-' },
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
