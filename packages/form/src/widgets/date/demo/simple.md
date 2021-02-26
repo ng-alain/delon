@@ -61,6 +61,10 @@ export class FormDateSimpleComponent {
         type: 'string',
         ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
       },
+      inline: {
+        type: 'string',
+        ui: { widget: 'date', inline: true } as SFDateWidgetSchema,
+      },
     },
   };
 
