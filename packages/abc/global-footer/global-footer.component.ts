@@ -55,7 +55,7 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
     @Optional() private directionality: Directionality,
   ) {}
 
-  to(item: GlobalFooterLink): void {
+  to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     if (!item.href) {
       return;
     }

@@ -198,7 +198,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _resizable: STResizable;
   @Input()
-  set resizable(val: STResizable | boolean) {
+  set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header: string | TemplateRef<void>;

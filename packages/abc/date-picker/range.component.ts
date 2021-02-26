@@ -6,7 +6,8 @@ import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { InputBoolean } from '@delon/util/decorator';
 import { deepMergeKey } from '@delon/util/other';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerSizeType, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
 
 /**
  * @deprecated Will be removed in 12.0.0, Pls used `nz-range-picker` and `[extend]` directive instead, for examples:
@@ -31,6 +32,8 @@ import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
   ],
 })
 export class RangePickerComponent implements ControlValueAccessor {
+  static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
+
   private onChangeFn: (val: Date) => void;
   private _shortcut: AlainDateRangePickerShortcut;
   private defaultShortcuts: AlainDateRangePickerShortcut;
@@ -60,10 +63,10 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Input() nzAutoFocus = false;
   @Input() nzClassName: string;
   @Input() nzDisabled: boolean;
-  @Input() nzSize: string;
-  @Input() nzStyle: string;
+  @Input() nzSize: NzDatePickerSizeType = 'default';
+  @Input() nzStyle: { [klass: string]: any };
   @Input() nzDisabledDate: (d: Date) => boolean;
-  @Input() nzLocale: object;
+  @Input() nzLocale: NzDatePickerI18nInterface;
   @Input() nzPopupStyle: object;
   @Input() nzDropdownClassName: string;
   @Input() nzPlaceHolder: string | string[];
