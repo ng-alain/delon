@@ -33,14 +33,9 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
         color: REGEX.color,
         mobile: REGEX.mobile,
         'id-card': REGEX.idCard,
+        ...customOptions.formats,
       },
     });
-    // add custom format
-    if (customOptions.formats) {
-      Object.keys(customOptions.formats).forEach(key => {
-        this.ajv.addFormat(key, customOptions.formats![key]!);
-      });
-    }
   }
 
   createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[] {
