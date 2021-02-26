@@ -7,16 +7,15 @@
     <nz-form-item *ngIf="_btn.render" [ngClass]="_btn.render!.class!" class="sf-btns" [fixed-label]="_btn.render!.spanLabelFixed!">
       <div
         nz-col
-        *let="_btn.render!.grid! as g"
         class="ant-form-item-control"
-        [nzSpan]="g.span!"
-        [nzOffset]="g.offset!"
-        [nzXs]="g.xs!"
-        [nzSm]="g.sm!"
-        [nzMd]="g.md!"
-        [nzLg]="g.lg!"
-        [nzXl]="g.xl!"
-        [nzXXl]="g.xxl!"
+        [nzSpan]="btnGrid.span"
+        [nzOffset]="btnGrid.offset"
+        [nzXs]="btnGrid.xs"
+        [nzSm]="btnGrid.sm"
+        [nzMd]="btnGrid.md"
+        [nzLg]="btnGrid.lg"
+        [nzXl]="btnGrid.xl"
+        [nzXXl]="btnGrid.xxl"
       >
         <div class="ant-form-item-control-input">
           <div class="ant-form-item-control-input-content">
