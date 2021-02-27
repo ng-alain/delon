@@ -1,3 +1,5 @@
+import { ModuleWithProviders, Type } from '@angular/core';
+
 export interface Environment {
   /**
    * Whether production environment
@@ -18,11 +20,11 @@ export interface Environment {
    */
   api: ApiConfig;
   /**
-   * Data configuration of `@delon/mock`
+   * Defined imported modules in `global-config.module.ts`
    *
-   * Mock数据配置
+   * 定义在 `global-config.module.ts` 导入的模块列表
    */
-  mock?: MockConfig;
+  imports?: Array<Type<any> | ModuleWithProviders<{}> | any[]>;
 }
 
 export interface ApiConfig {
@@ -44,8 +46,4 @@ export interface ApiConfig {
    * 刷新Token方式，`re-request` 当检测过期时间到期时先发起刷新Token请求，再重新发起原请求，`auth-refresh` 利用 `@delon/auth` 来定期检测是否过期
    */
   refreshTokenType: 're-request' | 'auth-refresh';
-}
-
-export interface MockConfig {
-  data: any;
 }
