@@ -4,7 +4,7 @@ export interface AlainMockConfig {
    *
    * 规则定义数据
    */
-  data: any;
+  data?: any;
   /**
    * 请求延迟，单位：毫秒，默认：`300`
    */
