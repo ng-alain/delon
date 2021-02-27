@@ -6,6 +6,11 @@
       "description": "Updates NG-ALAIN to v11 [https://github.com/ng-alain/ng-alain/issues/1863]",
       "factory": "./ng-update/index#updateToV11"
     },
+    "migration-v117": {
+      "version": "11.7.0",
+      "description": "Updates NG-ALAIN to v11.7.0",
+      "factory": "./ng-update/index#updateToV117"
+    },
     "migration-v12": {
       "version": "12",
       "description": "Updates NG-ALAIN to v12 [https://github.com/ng-alain/ng-alain/issues/1863]",

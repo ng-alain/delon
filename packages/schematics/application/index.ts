@@ -39,6 +39,7 @@ import {
   writePackage,
   ZORROVERSION,
 } from '../utils';
+import { UpgradeDelonVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
@@ -93,20 +94,7 @@ function fixAngularJson(options: ApplicationOptions): Rule {
 function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
   return (tree: Tree) => {
     // 3rd
-    addPackage(tree, [
-      // allow ignore ng-zorro-antd becauce of @delon/theme dependency
-      // `ng-zorro-antd@${ZORROVERSION}`,
-      // ng-zorro-antd need
-      'screenfull@DEP-0.0.0-PLACEHOLDER',
-      // 'ajv@DEP-0.0.0-PLACEHOLDER',
-    ]);
-    // add ajv
-    addAssetsToTarget([{ type: 'script', value: 'node_modules/ajv/dist/ajv.bundle.js' }], 'add', [BUILD_TARGET_BUILD, BUILD_TARGET_TEST]);
-    // @delon/*
-    addPackage(
-      tree,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(pkg => `@delon/${pkg}@${VERSION}`),
-    );
+    addPackage(tree, ['screenfull@DEP-0.0.0-PLACEHOLDER']);
     // ng-alain
     addPackage(
       tree,
@@ -397,6 +385,7 @@ export default function (options: ApplicationOptions): Rule {
     project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
+      UpgradeDelonVersions(),
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
       // Configuring CommonJS dependencies

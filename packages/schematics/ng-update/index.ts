@@ -3,11 +3,16 @@ import { createMigrationSchematicRule, NullableDevkitMigration, TargetVersion } 
 import { ruleUpgradeData } from './upgrade-data';
 import { SrcToNzImageRule } from './upgrade-rules/checks/_src-to-nz-image-rule';
 import { v11Rule } from './upgrade-rules/v11';
+import { v117Rule } from './upgrade-rules/v117';
 
 const migrations: NullableDevkitMigration[] = [SrcToNzImageRule];
 
 export function updateToV11(): Rule {
   return chain([v11Rule]);
+}
+
+export function updateToV117(): Rule {
+  return chain([v117Rule]);
 }
 
 export function updateToV12(): Rule {
