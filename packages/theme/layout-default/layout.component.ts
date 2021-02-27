@@ -18,7 +18,7 @@ import { LayoutDefaultOptions } from './types';
       <div class="alain-default__aside-inner">
         <ng-container *ngTemplateOutlet="asideUser"></ng-container>
         <ng-container *ngTemplateOutlet="nav"></ng-container>
-        <layout-default-nav class="d-block py-lg"></layout-default-nav>
+        <layout-default-nav *ngIf="!nav" class="d-block py-lg"></layout-default-nav>
       </div>
     </div>
     <section class="alain-default__content">

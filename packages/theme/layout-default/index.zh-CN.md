@@ -29,7 +29,7 @@ import { environment } from '@env/environment';
 @Component({
   selector: 'layout-basic',
   template: `
-    <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl">
+    <layout-default [options]="options" [asideUser]="asideUserTpl" [nav]="navTpl" [content]="contentTpl">
       <layout-default-header-item direction="left">
         <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
@@ -60,6 +60,9 @@ import { environment } from '@env/environment';
             <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | translate }}</li>
           </ul>
         </nz-dropdown-menu>
+      </ng-template>
+      <ng-template #navTpl>
+        <layout-default-nav class="d-block py-lg"></layout-default-nav>
       </ng-template>
       <ng-template #contentTpl>
         <router-outlet></router-outlet>
@@ -97,6 +100,17 @@ export class LayoutBasicComponent {
 | `[asideUser]` | 侧边用户信息 | `TemplateRef<void>` | `-` |
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
+
+### layout-default-nav
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[disabledAcl]` | `acl` 校验失败时以 `disabled` 状态显示 | `boolean` | `false` |
+| `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true` |
+| `[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true` |
+| `[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false` |
+| `[maxLevelIcon]` | Icon最多显示到第几层 | `number` | `3` |
+| `(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | - |
 
 ### layout-default-header-item
 

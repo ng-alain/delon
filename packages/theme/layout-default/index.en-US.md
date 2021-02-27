@@ -29,7 +29,7 @@ import { environment } from '@env/environment';
 @Component({
   selector: 'layout-basic',
   template: `
-    <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl">
+    <layout-default [options]="options" [asideUser]="asideUserTpl" [nav]="navTpl" [content]="contentTpl">
       <layout-default-header-item direction="left">
         <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
@@ -60,6 +60,9 @@ import { environment } from '@env/environment';
             <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | translate }}</li>
           </ul>
         </nz-dropdown-menu>
+      </ng-template>
+      <ng-template #navTpl>
+        <layout-default-nav class="d-block py-lg"></layout-default-nav>
       </ng-template>
       <ng-template #contentTpl>
         <router-outlet></router-outlet>
@@ -97,6 +100,17 @@ In addition, in layout operations, you can subscribe to layout changes through `
 | `[asideUser]` | Side user of the layout | `TemplateRef<void>` | `-` |
 | `[nav]` | Nav | `TemplateRef<void>` | `-` |
 | `[content]` | Content | `TemplateRef<void>` | `-` |
+
+### layout-default-nav
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[disabledAcl]` | Displayed `disabled` state when `acl` check fails. | `boolean` | `false` |
+| `[autoCloseUnderPad]` | When the route width is less than the Pad width, the sidebar is automatically closed. | `boolean` | `true` |
+| `[recursivePath]` | Automatic up recursive lookup, menu data source contains `/ware`, then `/ware/1` is also treated as `/ware` | `boolean` | `true` |
+| `[openStrictly]` | Precise check open status, does not auto closed other open item | `boolean` | `false` |
+| `[maxLevelIcon]` | Icon displays up to which level | `number` | `3` |
+| `(select)` | Callback when clicking menu (including `disabled`) | `EventEmitter<Menu>` | - |
 
 ### layout-default-header-item
 
