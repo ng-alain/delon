@@ -1,6 +1,6 @@
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
-import { BUILD_TARGET_BUILD, BUILD_TARGET_TEST, logInfo, removePackage } from '../../../utils';
+import { BUILD_TARGET_BUILD, BUILD_TARGET_TEST, logInfo, logStart, removePackage } from '../../../utils';
 import { UpgradeDelonVersions } from '../../../utils/versions';
 
 function removeAjvLib(context: SchematicContext): Rule {
@@ -61,7 +61,9 @@ function removeQriousLib(context: SchematicContext): Rule {
 
 export function v117Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
+    UpgradeDelonVersions(tree);
+    logStart(context, `Upgrade @delon/* version number`);
     removePackage(tree, ['qrious', 'ajv'], 'dependencies');
-    return chain([UpgradeDelonVersions(), removeAjvLib(context), removeQriousLib(context)]);
+    return chain([removeAjvLib(context), removeQriousLib(context)]);
   };
 }
