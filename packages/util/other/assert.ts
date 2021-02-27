@@ -1,10 +1,11 @@
-import { isDevMode } from '@angular/core';
 import { isObservable } from 'rxjs';
+
+declare const ngDevMode: boolean;
 
 function throwError(msg: string | null | undefined): void;
 function throwError(msg: string | null | undefined, actual: any, expected: any, comparison: string): void;
 function throwError(msg: string | null | undefined, actual?: any, expected?: any, comparison?: string): void {
-  if (isDevMode()) {
+  if (ngDevMode) {
     throw new Error(`ASSERTION ERROR: ${msg}` + (comparison == null ? '' : ` [Expected=> ${expected} ${comparison} ${actual} <=Actual]`));
   }
 }
