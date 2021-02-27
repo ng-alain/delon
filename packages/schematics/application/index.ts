@@ -27,7 +27,6 @@ import {
   addPackage,
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
-  BUILD_TARGET_TEST,
   getProject,
   getProjectFromWorkspace,
   getProjectTarget,
@@ -93,6 +92,7 @@ function fixAngularJson(options: ApplicationOptions): Rule {
 
 function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
   return (tree: Tree) => {
+    UpgradeDelonVersions(tree);
     // 3rd
     addPackage(tree, ['screenfull@DEP-0.0.0-PLACEHOLDER']);
     // ng-alain
@@ -385,7 +385,6 @@ export default function (options: ApplicationOptions): Rule {
     project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
-      UpgradeDelonVersions(),
       // @delon/* dependencies
       addDependenciesToPackageJson(options),
       // Configuring CommonJS dependencies

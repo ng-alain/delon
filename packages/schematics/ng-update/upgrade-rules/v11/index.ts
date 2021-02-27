@@ -2,6 +2,7 @@ import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { colors } from '@angular/cli/utilities/color';
 import { addPackage, getProject, logStart, readPackage, VERSION } from '../../../utils';
+import { UpgradeDelonVersions } from '../../../utils/versions';
 import { fixHmr } from './hmr';
 import { fixLayout } from './layout';
 
@@ -9,10 +10,7 @@ let project: ProjectDefinition;
 
 function fixVersion(): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    addPackage(
-      tree,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(name => `@delon/${name}@${VERSION}`),
-    );
+    UpgradeDelonVersions(tree);
     logStart(context, `Upgrade @delon/* version number`);
   };
 }
