@@ -24,7 +24,7 @@ export interface Environment {
    *
    * 定义在 `global-config.module.ts` 导入的模块列表
    */
-  imports?: Array<Type<any> | ModuleWithProviders<{}> | any[]>;
+  modules?: Array<Type<any> | ModuleWithProviders<{}> | any[]>;
 }
 
 export interface ApiConfig {
