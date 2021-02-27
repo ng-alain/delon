@@ -7,7 +7,7 @@ cols: 1
 module: import { PdfModule } from '@delon/abc/pdf';
 ---
 
-Pdf view based on [pdf.js](https://neocotic.com/qrious).
+Pdf view based on [pdf.js](https://mozilla.github.io/pdf.js/).
 
 pdf.js libary is lazy loading by default，you can change the default root CDN path (or use the local path) via [Global Configuration](/docs/global-config).
 

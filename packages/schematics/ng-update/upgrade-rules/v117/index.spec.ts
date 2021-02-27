@@ -52,5 +52,6 @@ describe('Schematic: ng-update: v117Rule', () => {
     const content = tree.readContent(filePath);
     expect(content).toContain(`allowedCommonJsDependencies`);
     expect(content).not.toContain(`ajv.bundle.js`);
+    expect(content).not.toContain(`qrious.min.js`);
   });
 });

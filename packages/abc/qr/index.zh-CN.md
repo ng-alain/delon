@@ -7,7 +7,7 @@ cols: 1
 module: import { QRModule } from '@delon/abc/qr';
 ---
 
-基于 [qrious](https://neocotic.com/qrious) 生成二维码。
+基于 [qrious](https://github.com/neocotic/qrious) 生成二维码。
 
 默认二维码的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用本地路径），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`。或安装 `npm i --save qrious` 依赖包并在 `angular.json` 的 `scripts` 引用 `"node_modules/qrious/dist/qrious.min.js"`。
 
