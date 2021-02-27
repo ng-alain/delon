@@ -1,3 +1,41 @@
+# [11.7.0](https://github.com/ng-alain/delon/compare/11.6.0...11.7.0) (2021-02-27)
+
+
+### Bug Fixes
+
+* **abc:st:** fix `columns` can't be re-specified when call export Excel ([#1181](https://github.com/ng-alain/delon/issues/1181)) ([50baea3](https://github.com/ng-alain/delon/commit/50baea3df93e94cbc674d007de7e824992aabaec))
+* **abc:st:** fix data should be converted ([#1180](https://github.com/ng-alain/delon/issues/1180)) ([f800e66](https://github.com/ng-alain/delon/commit/f800e66af62712a7a06443479befda78639dfab1))
+* **abc:theme:i18n:** fix losing `defaultLang`, `currentLang` in `AlainI18NService` ([#1183](https://github.com/ng-alain/delon/issues/1183)) ([f65cb6b](https://github.com/ng-alain/delon/commit/f65cb6bd54b4ffaba8f2a90bb73b1449da861be0))
+* **chart:trend:** fix data flag of html attribute ([#1174](https://github.com/ng-alain/delon/issues/1174)) ([3a10bf3](https://github.com/ng-alain/delon/commit/3a10bf354375701ea70a90b2a760531c46135f01))
+* **form:** fix losing for ([#1144](https://github.com/ng-alain/delon/issues/1144)) ([e0ffa64](https://github.com/ng-alain/delon/commit/e0ffa64d3621b37458b460fbf9953e1bf9a1d1fd))
+* **form:widget:date:** fix invalid default value when mode is `range` ([#1185](https://github.com/ng-alain/delon/issues/1185)) ([d14a823](https://github.com/ng-alain/delon/commit/d14a8234f747c26e01b680e6d109b91071b5f3f4))
+* **theme:** fix less4 ([#1172](https://github.com/ng-alain/delon/issues/1172)) ([5e272c1](https://github.com/ng-alain/delon/commit/5e272c13739d71e3cc4c479440eafd5ac61ef7a7))
+* **theme:layout-default:** fix disabled default nav when `nav` is spe… ([#1193](https://github.com/ng-alain/delon/issues/1193)) ([38e60f5](https://github.com/ng-alain/delon/commit/38e60f5d2f010c9fb6000795f703107cb6a0035c))
+* **util:ArrayService:** fix cancel return readonly of `flat`, `uniq` ([#1171](https://github.com/ng-alain/delon/issues/1171)) ([7375cdf](https://github.com/ng-alain/delon/commit/7375cdfb35a1d0b4489216a46d29fbb626f69265))
+
+
+### Features
+
+* **abc:_src:** add `previewSrc` property ([#1173](https://github.com/ng-alain/delon/issues/1173)) ([ffa3b63](https://github.com/ng-alain/delon/commit/ffa3b63f522c1b41f35ffb624cee9faa80e24ae5))
+* **abc:_src:** BREAKING CHANGES: deprecated component ([#1177](https://github.com/ng-alain/delon/issues/1177)) ([492884f](https://github.com/ng-alain/delon/commit/492884f9f253fea3b1f1b53928cb0fdedeb4bd6c))
+* **abc:let:** add `let` directive ([#1187](https://github.com/ng-alain/delon/issues/1187)) ([9c4397b](https://github.com/ng-alain/delon/commit/9c4397b579aaf606f3abc6d09b9c4e5e64b4e133))
+* **abc:reuse-tab:** add `disabled` property ([#1179](https://github.com/ng-alain/delon/issues/1179)) ([2d2014f](https://github.com/ng-alain/delon/commit/2d2014f97cb5b85e758c985bcae53be88ee0a310))
+* **abc:reuse-tab:** add `titleRender` property ([#1186](https://github.com/ng-alain/delon/issues/1186)) ([5df3c61](https://github.com/ng-alain/delon/commit/5df3c6113a12d4fc96b9d312440c169d5999b815))
+* **abc:theme:** add environment type ([#1182](https://github.com/ng-alain/delon/issues/1182)) ([4e1c432](https://github.com/ng-alain/delon/commit/4e1c432b5844494bb4996fe69595816b1dbe50cb))
+* **form:** Upgrade `ajv` to `7.x` ([#1188](https://github.com/ng-alain/delon/issues/1188)) ([431d540](https://github.com/ng-alain/delon/commit/431d540d3f5169b36222697c83edbcff6de55220))
+* **mock:** add `setData` in `MockService` ([#1190](https://github.com/ng-alain/delon/issues/1190)) ([a118a07](https://github.com/ng-alain/delon/commit/a118a07f5d5275e859d4ea425f8c39bbff90e6b5))
+* add `strictTemplates` ([#1184](https://github.com/ng-alain/delon/issues/1184)) ([c4cfd44](https://github.com/ng-alain/delon/commit/c4cfd449661e0085322d9c61a504b3b0a71eabb4))
+* **module:theme:** adding Spanish locale [#308](https://github.com/ng-alain/delon/issues/308) ([#1175](https://github.com/ng-alain/delon/issues/1175)) ([3428310](https://github.com/ng-alain/delon/commit/342831048bd37e5dd02cee4eebbf39904bfa0a8f))
+* **util:form:** add `MatchControl` ([#1178](https://github.com/ng-alain/delon/issues/1178)) ([84ab014](https://github.com/ng-alain/delon/commit/84ab014da009803476dfc4d8b3c7cb7b447ca18a))
+
+
+### Performance Improvements
+
+* optimize cli ([#1192](https://github.com/ng-alain/delon/issues/1192)) ([34c1e57](https://github.com/ng-alain/delon/commit/34c1e57ea01d465fed37dc2bb1fd5b6234ab4375))
+* use `ngDevMode` to tree-shake errors ([#1191](https://github.com/ng-alain/delon/issues/1191)) ([56b45c8](https://github.com/ng-alain/delon/commit/56b45c8ecaf93248e70701acd25ce096f37fc0b5))
+
+
+
 # [11.6.0](https://github.com/ng-alain/delon/compare/11.3.1...11.6.0) (2021-02-07)
 
 
