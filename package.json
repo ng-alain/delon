@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "11.6.0",
+  "version": "11.7.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -36,7 +36,7 @@
     "site:build": "npm run site:gen && npm run ng-high-memory build -- --prod && npm run site:helper && node scripts/build/minify.js",
     "site:helper": "bash scripts/ci/helper.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
-    "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
+    "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js",
