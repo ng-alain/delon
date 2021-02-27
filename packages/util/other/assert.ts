@@ -1,10 +1,9 @@
-import { isDevMode } from '@angular/core';
 import { isObservable } from 'rxjs';
 
 function throwError(msg: string | null | undefined): void;
 function throwError(msg: string | null | undefined, actual: any, expected: any, comparison: string): void;
 function throwError(msg: string | null | undefined, actual?: any, expected?: any, comparison?: string): void {
-  if (isDevMode()) {
+  if (ngDevMode) {
     throw new Error(`ASSERTION ERROR: ${msg}` + (comparison == null ? '' : ` [Expected=> ${expected} ${comparison} ${actual} <=Actual]`));
   }
 }
@@ -26,7 +25,7 @@ export function assert(expression: boolean, msg?: string): void {
  * 断言是否空值（`null` 或 `undefined`）
  */
 export function assertEmpty(actual: any, msg?: string): void {
-  if (actual == null) {
+  if (ngDevMode || actual == null) {
     throwError(msg, typeof actual, 'NULL', '==');
   }
 }

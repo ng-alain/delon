@@ -1,5 +1,3 @@
-import { isDevMode } from '@angular/core';
-import { environment } from 'ng-zorro-antd/core/environments';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 const record: Record<string, boolean> = {};
@@ -18,7 +16,7 @@ function notRecorded(...args: NzSafeAny[]): boolean {
 }
 
 function consoleCommonBehavior(consoleFunc: (...args: NzSafeAny) => void, ...args: NzSafeAny[]): void {
-  if (environment.isTestMode || (isDevMode() && notRecorded(...args))) {
+  if (ngDevMode && notRecorded(...args)) {
     consoleFunc(...args);
   }
 }
@@ -31,7 +29,7 @@ export const deprecation11 = (comp: string, from: string, to?: string) => {
 };
 
 export const warnDeprecation = (...args: NzSafeAny[]) => {
-  if (!environment.isTestMode) {
+  if (!ngDevMode) {
     const stack = new Error().stack;
     return consoleCommonBehavior((...arg: NzSafeAny[]) => console.warn(PREFIX, 'deprecated:', ...arg, stack), ...args);
   } else {
@@ -41,7 +39,7 @@ export const warnDeprecation = (...args: NzSafeAny[]) => {
 
 // Log should only be printed in dev mode.
 export const log = (...args: NzSafeAny[]) => {
-  if (isDevMode()) {
+  if (ngDevMode) {
     console.log(PREFIX, ...args);
   }
 };
