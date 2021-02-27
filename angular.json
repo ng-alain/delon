@@ -35,12 +35,12 @@
             "scripts": [
               "node_modules/aos/dist/aos.js",
               "node_modules/simplemde-antd/dist/simplemde.min.js",
-              "node_modules/ajv/dist/ajv.bundle.js",
               "node_modules/docsearch.js/dist/cdn/docsearch.js"
             ],
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
               "hammerjs",
+              "ajv",
               "file-saver",
               "@ant-design/colors",
               "@antv/path-util",
@@ -171,11 +171,7 @@
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": "packages/polyfills.ts",
             "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/@antv/g2/dist/g2.min.js",
-              "node_modules/@antv/data-set/dist/data-set.js"
-            ],
+            "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
             "codeCoverageExclude": ["packages/schematics/**", "packages/testing/**"]
           }
         }

@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { REGEX } from '@delon/util/format';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import Ajv, { Options as AjvOptions } from 'ajv';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { SFSchema } from './schema';
-
-declare var Ajv: NzSafeAny;
 
 @Injectable()
 export abstract class SchemaValidatorFactory {
@@ -16,7 +14,7 @@ export abstract class SchemaValidatorFactory {
 
 @Injectable()
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
-  protected ajv: NzSafeAny;
+  protected ajv: Ajv;
   protected options: AlainSFConfig;
 
   constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService) {
@@ -25,16 +23,19 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       return;
     }
     this.options = mergeConfig(cogSrv);
+    const customOptions: AjvOptions = this.options.ajv || {};
     this.ajv = new Ajv({
-      ...this.options.ajv,
-      errorDataPath: 'property',
       allErrors: true,
-      jsonPointers: true,
+      ...customOptions,
+      formats: {
+        ip: REGEX.ip,
+        'data-url': /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/,
+        color: REGEX.color,
+        mobile: REGEX.mobile,
+        'id-card': REGEX.idCard,
+        ...customOptions.formats,
+      },
     });
-    this.ajv.addFormat('data-url', /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/);
-    this.ajv.addFormat('color', REGEX.color);
-    this.ajv.addFormat('mobile', REGEX.mobile);
-    this.ajv.addFormat('id-card', REGEX.idCard);
   }
 
   createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[] {
@@ -50,11 +51,11 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
           console.warn(e);
         }
       }
-      let errors: any[] = this.ajv.errors;
+      let errors = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {
         errors = errors.filter(w => ingoreKeywords.indexOf(w.keyword) === -1);
       }
-      return errors;
+      return errors as ErrorData[];
     };
   }
 }
