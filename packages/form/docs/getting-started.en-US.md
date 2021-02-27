@@ -46,19 +46,7 @@ import { DelonFormModule } from '@delon/form';
 export class AppModule { }
 ```
 
-Although the default `@delon/form` validator is [ajv](http://epoberezkin.github.io/ajv/), you can override `SchemaValidatorFactory` to use other validator libraries,  so you still have to install `ajv` and in `angular.json` import it.
-
-```bash
-yarn add ajv @types/ajv
-```
-
-angular.json
-
-```json
-"scripts": [
-  "node_modules/ajv/dist/ajv.bundle.js"
-]
-```
+Although the default `@delon/form` validator is [ajv](https://ajv.js.org/), you can override `SchemaValidatorFactory` to use other validator libraries.
 
 **Global Configuration**
 
@@ -66,7 +54,7 @@ Please refer to [Global Configuration](/docs/global-config), the members are as 
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) options | `Ajv.Options` | - |
+| `[ajv]` | [ajv](https://github.com/ajv-validator/ajv/blob/master/docs/api.md#options) options | `Ajv.Options` | - |
 | `[ingoreKeywords]` | Whether to ignore data type validator ([all types](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)) | `string[]` | `[ 'type', 'enum' ]` |
 | `[liveValidate]` | Whether to live validate | `boolean` | `true` |
 | `[autocomplete]` | autocomplete value of this form | `on,off` | `null` |
