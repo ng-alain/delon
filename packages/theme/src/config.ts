@@ -1,3 +1,5 @@
+import { ModuleWithProviders, Type } from '@angular/core';
+
 export interface Environment {
   /**
    * Whether production environment
@@ -17,6 +19,12 @@ export interface Environment {
    * API配置
    */
   api: ApiConfig;
+  /**
+   * Defined imported modules in `global-config.module.ts`
+   *
+   * 定义在 `global-config.module.ts` 导入的模块列表
+   */
+  modules?: Array<Type<any> | ModuleWithProviders<{}> | any[]>;
 }
 
 export interface ApiConfig {
