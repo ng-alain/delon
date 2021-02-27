@@ -12,6 +12,7 @@ export class MockService implements OnDestroy {
   constructor(cogSrv: AlainConfigService, options: MockOptions) {
     this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
     this.setData(options?.data || this.config.data);
+    delete this.config.data;
   }
 
   /**
@@ -20,24 +21,21 @@ export class MockService implements OnDestroy {
    * 重新设置请求数据
    */
   setData(data: any): void {
-    this.config.data = data;
-    this.applyMock();
-    delete this.config.data;
+    this.applyMock(data);
   }
 
   // #region parse rule
 
-  private applyMock(): void {
+  private applyMock(data: any): void {
     this.cached = [];
     try {
-      this.realApplyMock();
+      this.realApplyMock(data);
     } catch (e) {
       this.outputError(e);
     }
   }
 
-  private realApplyMock(): void {
-    const data = this.config.data;
+  private realApplyMock(data: any): void {
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
       const rules = data[key];

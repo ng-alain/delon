@@ -1,5 +1,7 @@
 export interface AlainMockConfig {
   /**
+   * @deprecated Will be removed in 12.0.0, Pls used `DelonMockModule.forRoot({ data: {} })` instead
+   *
    * 规则定义数据
    */
   data: any;
