@@ -31,12 +31,11 @@ export const deprecation11 = (comp: string, from: string, to?: string) => {
 };
 
 export const warnDeprecation = (...args: NzSafeAny[]) => {
-  if (!ngDevMode) {
-    const stack = new Error().stack;
-    return consoleCommonBehavior((...arg: NzSafeAny[]) => console.warn(PREFIX, 'deprecated:', ...arg, stack), ...args);
-  } else {
+  if (ngDevMode) {
     return () => {};
   }
+  const stack = new Error().stack;
+  return consoleCommonBehavior((...arg: NzSafeAny[]) => console.warn(PREFIX, 'deprecated:', ...arg, stack), ...args);
 };
 
 // Log should only be printed in dev mode.

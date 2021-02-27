@@ -1,7 +1,14 @@
 import { of } from 'rxjs';
 import { assert, assertArray, assertEmpty, assertNumber, assertObservable, assertString } from './assert';
+declare let ngDevMode: boolean;
 
 describe('util.#assert', () => {
+  it('should be disabled throw error when in production', () => {
+    const orgNgDevMode = ngDevMode;
+    ngDevMode = false;
+    expect(() => assert(false)).not.toThrow();
+    ngDevMode = orgNgDevMode;
+  });
   describe('#assert', () => {
     it('should be throw error when is fail', () => {
       expect(() => assert(false)).toThrow();

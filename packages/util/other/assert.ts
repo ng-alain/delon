@@ -27,7 +27,7 @@ export function assert(expression: boolean, msg?: string): void {
  * 断言是否空值（`null` 或 `undefined`）
  */
 export function assertEmpty(actual: any, msg?: string): void {
-  if (ngDevMode || actual == null) {
+  if (actual == null) {
     throwError(msg, typeof actual, 'NULL', '==');
   }
 }
