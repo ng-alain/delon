@@ -7,7 +7,7 @@ cols: 1
 module: import { PdfModule } from '@delon/abc/pdf';
 ---
 
-基于 [pdf.js](https://neocotic.com/qrious) 的PDF预览组件。
+基于 [pdf.js](https://mozilla.github.io/pdf.js/) 的PDF预览组件。
 
 默认PDF预览并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 pdf.js 类库的根路径（或使用本地路径）。
 

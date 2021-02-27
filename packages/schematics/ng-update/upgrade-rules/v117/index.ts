@@ -1,6 +1,6 @@
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
-import { BUILD_TARGET_BUILD, BUILD_TARGET_TEST, logInfo } from '../../../utils';
+import { BUILD_TARGET_BUILD, BUILD_TARGET_TEST, logInfo, removePackage } from '../../../utils';
 import { UpgradeDelonVersions } from '../../../utils/versions';
 
 function removeAjvLib(context: SchematicContext): Rule {
@@ -36,8 +36,32 @@ function removeAjvLib(context: SchematicContext): Rule {
   });
 }
 
+function removeQriousLib(context: SchematicContext): Rule {
+  return updateWorkspace(async workspace => {
+    workspace.projects.forEach(project => {
+      [BUILD_TARGET_BUILD, BUILD_TARGET_TEST].forEach(targetName => {
+        const targetOptions = project.targets?.get(targetName)?.options;
+        if (!targetOptions) {
+          return;
+        }
+        // options
+        const scripts = targetOptions.scripts as Array<string | { input: string }>;
+        const removePath = `node_modules/qrious/dist/qrious.min.js`;
+        if (Array.isArray(scripts)) {
+          const idx = scripts.findIndex(w => w === removePath);
+          if (idx !== -1) {
+            scripts.splice(idx, 1);
+          }
+        }
+      });
+    });
+    logInfo(context, `Remove qrious lib`);
+  });
+}
+
 export function v117Rule(): Rule {
-  return async (_tree: Tree, context: SchematicContext) => {
-    return chain([UpgradeDelonVersions(), removeAjvLib(context)]);
+  return async (tree: Tree, context: SchematicContext) => {
+    removePackage(tree, ['qrious', 'ajv'], 'dependencies');
+    return chain([UpgradeDelonVersions(), removeAjvLib(context), removeQriousLib(context)]);
   };
 }

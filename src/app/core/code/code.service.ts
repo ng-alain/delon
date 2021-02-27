@@ -39,7 +39,6 @@ export class CodeService {
       'tslib',
       'zone.js',
       'date-fns',
-      'qrious',
       '@angular/cdk',
       'ng-zorro-antd',
       '@delon/theme',
