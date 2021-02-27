@@ -1,5 +1,7 @@
 import { isObservable } from 'rxjs';
 
+declare const ngDevMode: boolean;
+
 function throwError(msg: string | null | undefined): void;
 function throwError(msg: string | null | undefined, actual: any, expected: any, comparison: string): void;
 function throwError(msg: string | null | undefined, actual?: any, expected?: any, comparison?: string): void {

@@ -1,5 +1,7 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+declare const ngDevMode: boolean;
+
 const record: Record<string, boolean> = {};
 
 export const PREFIX = '[@DELON]:';
