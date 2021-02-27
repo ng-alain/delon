@@ -112,6 +112,8 @@ In addition, in layout operations, you can subscribe to layout changes through `
 | `[maxLevelIcon]` | Icon displays up to which level | `number` | `3` |
 | `(select)` | Callback when clicking menu (including `disabled`) | `EventEmitter<Menu>` | - |
 
+> The component data comes from `MenuService` (which is structured as [Menu](/theme/menu#Menu)), and the operation of `MenuService` is auto synchronized to the component.
+
 ### layout-default-header-item
 
 | Property | Description | Type | Default |
@@ -191,4 +193,34 @@ The content area is the business page area, the specification details：
 | `@alain-default-content-bg` | `#f5f7fa` | Background color of content area |
 | `@alain-default-widget-app-icons-enabled` | `true` | Whether the app-icon widget styles |
 | `@alain-default-aside-user-enabled` | `true` | Whether the user styles of aside |
+
+## FAQ
+
+### Why are there two shortcut menus?
+
+The shortcut menu generation rules are uniformly searched under the `0` index，and get in the following order:
+
+1. [Recommended] children have `shortcutRoot: true` which is the highest priority
+2. Otherwise, find the link with the word [dashboard], if it exists, create a shortcut entry below the menu.
+3. Otherwise placed at the 0 node position
+
+Therefore, it's recommended to keep a valid `shortcutRoot: true` data under the `0` index of the menu data.
+
+### FAQ
+
+**Hide main menu item**
+
+You can set `hide: true` in the menu.
+
+**Hide auto-generated navigation hide breadcrumbs**
+
+You can set `hideInBreadcrumb: true` in the menu.
+
+**About level**
+
+Although unlimited levels are supported, please keep no more than four levels (including groups) for user experience.
+
+**How to update a menu item**
+
+The menu will be re-rendered via calling `MenuService.setItem(key, newValue)`, please refer to the definition of [Menu](/theme/menu#Menu).
 
