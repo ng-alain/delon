@@ -50,6 +50,7 @@ export class CodeService {
       '@delon/mock',
       '@delon/form',
       '@delon/util',
+      'ajv',
     ].forEach(key => {
       const includeVersion = key.indexOf(`@^`);
       if (includeVersion !== -1) {
