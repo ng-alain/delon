@@ -5,7 +5,7 @@
   <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
     <div [ngClass]="{ 'page-header__wide': wide }">
       <nz-skeleton [nzLoading]="loading" [nzTitle]="false" [nzActive]="true" [nzParagraph]="{ rows: 3 }" [nzAvatar]="{ size: 'large', shape: 'circle' }">
-        <ng-container *ngIf="!breadcrumb; else breadcrumb">
+        <ng-container *ngIf="!breadcrumb; else breadcrumb!">
           <nz-breadcrumb *ngIf="paths && paths.length > 0">
             <nz-breadcrumb-item *ngFor="let i of paths">
               <ng-container *ngIf="i.link">
@@ -31,7 +31,7 @@
             <div class="page-header__row">
               <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
                 <ng-content></ng-content>
-                <ng-template [ngTemplateOutlet]="content"></ng-template>
+                <ng-template [ngTemplateOutlet]="content!"></ng-template>
               </div>
               <div *ngIf="extra" class="page-header__extra">
                 <ng-template [ngTemplateOutlet]="extra"></ng-template>
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-        <ng-template [ngTemplateOutlet]="tab"></ng-template>
+        <ng-template [ngTemplateOutlet]="tab!"></ng-template>
       </nz-skeleton>
     </div>
   </div>

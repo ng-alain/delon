@@ -1,6 +1,6 @@
 <ng-template #badgeTpl>
-  <nz-badge [nzCount]="count" [ngClass]="btnClass" [nzStyle]="{ 'box-shadow': 'none' }">
-    <i nz-icon nzType="bell" [ngClass]="btnIconClass"></i>
+  <nz-badge [nzCount]="count" [ngClass]="btnClass!" [nzStyle]="{ 'box-shadow': 'none' }">
+    <i nz-icon nzType="bell" [ngClass]="btnIconClass!"></i>
   </nz-badge>
 </ng-template>
 <div *ngIf="data!.length === 0">

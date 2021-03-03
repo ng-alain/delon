@@ -71,14 +71,14 @@
   [nzLoading]="_loading"
   [nzLoadingDelay]="loadingDelay"
   [nzLoadingIndicator]="loadingIndicator"
-  [nzTitle]="header"
-  [nzFooter]="footer"
+  [nzTitle]="header!"
+  [nzFooter]="footer!"
   [nzScroll]="scroll"
   [nzVirtualItemSize]="virtualItemSize"
   [nzVirtualMaxBufferPx]="virtualMaxBufferPx"
   [nzVirtualMinBufferPx]="virtualMinBufferPx"
   [nzVirtualForTrackBy]="virtualForTrackBy"
-  [nzNoResult]="noResult"
+  [nzNoResult]="noResult!"
   [nzPageSizeOptions]="page.pageSizes!"
   [nzShowQuickJumper]="page.showQuickJumper"
   [nzShowSizeChanger]="page.showSize"
@@ -204,7 +204,7 @@
   </thead>
   <tbody class="st__body">
     <ng-container *ngIf="!_loading">
-      <ng-template [ngTemplateOutlet]="bodyHeader" [ngTemplateOutletContext]="{ $implicit: _statistical }"></ng-template>
+      <ng-template [ngTemplateOutlet]="bodyHeader!" [ngTemplateOutletContext]="{ $implicit: _statistical }"></ng-template>
     </ng-container>
     <ng-template #bodyTpl let-i let-index="index">
       <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [ngClass]="i._rowClassName">
@@ -287,7 +287,7 @@
       </ng-template>
     </ng-container>
     <ng-container *ngIf="!_loading">
-      <ng-template [ngTemplateOutlet]="body" [ngTemplateOutletContext]="{ $implicit: _statistical }"></ng-template>
+      <ng-template [ngTemplateOutlet]="body!" [ngTemplateOutletContext]="{ $implicit: _statistical }"></ng-template>
     </ng-container>
   </tbody>
   <ng-template #totalTpl let-range="range" let-total>{{ renderTotal(total, range) }}</ng-template>
