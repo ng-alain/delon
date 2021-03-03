@@ -21,6 +21,8 @@ Used on the navigation toolbar as a unified notification center for the entire p
 | `(clear)` | Callback for clicking the clear button | `EventEmitter<string>` | - |
 | `[popoverVisible]` | Manual control of Popover display | `boolean` | `false` |
 | `(popoverVisibleChange)` | Popover callback | `EventEmitter<boolean>` | - |
+| `[btnClass]` | Class of the button | `ngClass` | - |
+| `[btnIconClass]` | Class of the icon in button | `ngClass` | - |
 
 ### NoticeItem
 

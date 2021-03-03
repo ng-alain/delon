@@ -16,8 +16,8 @@ export class LetContext<T> {
 export class LetDirective<T> {
   @Input() let!: T;
 
-  constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef, @Inject(TemplateRef) ref: TemplateRef<LetContext<T>>) {
-    viewContainer.createEmbeddedView(ref, new LetContext<T>(this));
+  constructor(@Inject(ViewContainerRef) vc: ViewContainerRef, @Inject(TemplateRef) ref: TemplateRef<LetContext<T>>) {
+    vc.createEmbeddedView(ref, new LetContext<T>(this));
   }
 
   static ngTemplateContextGuard<T>(_dir: LetDirective<T>, _ctx: any): _ctx is LetDirective<T> {

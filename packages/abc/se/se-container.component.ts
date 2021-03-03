@@ -42,7 +42,7 @@ export class SEContainerComponent {
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
   @Input() @InputNumber(null) labelWidth: number;
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void> | null;
 
   @Input()
   get gutter(): number | string {
