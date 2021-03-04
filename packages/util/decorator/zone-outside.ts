@@ -1,16 +1,15 @@
-import { warn } from '../other';
+import { warn } from '@delon/util/other';
 
 export interface ZoneOptions {
   ngZoneName?: string;
 }
 
-function makeFn(
-  type: 'runOutsideAngular' | 'run',
-  options?: ZoneOptions,
-): (target: any, fn: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
+type DecoratorType = (target: any, fn: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
+
+function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): DecoratorType {
   return (_, __, descriptor) => {
     const source = descriptor.value;
-    descriptor.value = function (...data: any): Function {
+    descriptor.value = function (...data: any): () => void {
       const that = this as any;
       const ngZone = that[options?.ngZoneName || 'ngZone'];
       if (!ngZone) {
@@ -43,7 +42,7 @@ function makeFn(
  * }
  * ```
  */
-export function ZoneOutside(options?: ZoneOptions) {
+export function ZoneOutside(options?: ZoneOptions): DecoratorType {
   return makeFn('runOutsideAngular', options);
 }
 
@@ -61,6 +60,6 @@ export function ZoneOutside(options?: ZoneOptions) {
  * }
  * ```
  */
-export function ZoneRun(options?: ZoneOptions) {
+export function ZoneRun(options?: ZoneOptions): DecoratorType {
   return makeFn('run', options);
 }

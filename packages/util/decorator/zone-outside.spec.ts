@@ -10,10 +10,10 @@ describe('util.#ZoneOutside', () => {
         return 'OK';
       }
     }
-    const zone = jasmine.createSpyObj('mockNgZone', ['run', 'runOutsideAngular']);
-    zone.run.and.callFake((fn: any) => fn());
-    zone.runOutsideAngular.and.callFake((fn: any) => fn());
-    const cls = new MockClass(zone as any);
+    const mockZone = jasmine.createSpyObj('mockNgZone', ['run', 'runOutsideAngular']);
+    mockZone.run.and.callFake((fn: any) => fn());
+    mockZone.runOutsideAngular.and.callFake((fn: any) => fn());
+    const cls = new MockClass(mockZone as any);
     const res = cls.scroll();
     expect(res).toBe('OK');
   });
@@ -24,12 +24,12 @@ describe('util.#ZoneOutside', () => {
       @ZoneRun()
       scroll(): void {}
     }
-    const zone = {
+    const mockZone = {
       run: jasmine.createSpy(),
     };
-    const cls = new MockClass(zone as any);
+    const cls = new MockClass(mockZone as any);
     cls.scroll();
-    expect(zone.run).toHaveBeenCalled();
+    expect(mockZone.run).toHaveBeenCalled();
   });
 
   it('should be ngZone property is private', () => {
@@ -40,12 +40,12 @@ describe('util.#ZoneOutside', () => {
       @ZoneOutside({ ngZoneName: 'zone' })
       scroll(): void {}
     }
-    const zone = {
+    const mockZone = {
       runOutsideAngular: jasmine.createSpy(),
     };
-    const cls = new MockClass(zone as any);
+    const cls = new MockClass(mockZone as any);
     cls.scroll();
-    expect(zone.runOutsideAngular).toHaveBeenCalledTimes(2);
+    expect(mockZone.runOutsideAngular).toHaveBeenCalledTimes(2);
   });
 
   it('should be custom ngZone name', () => {
@@ -54,12 +54,12 @@ describe('util.#ZoneOutside', () => {
       @ZoneOutside({ ngZoneName: 'zone' })
       scroll(): void {}
     }
-    const zone = {
+    const mockZone = {
       runOutsideAngular: jasmine.createSpy(),
     };
-    const cls = new MockClass(zone as any);
+    const cls = new MockClass(mockZone as any);
     cls.scroll();
-    expect(zone.runOutsideAngular).toHaveBeenCalled();
+    expect(mockZone.runOutsideAngular).toHaveBeenCalled();
   });
 
   it('should be console warn when not NgZone property', () => {
