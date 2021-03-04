@@ -20,6 +20,7 @@ import { CodeBoxComponent } from './components/code-box/code-box.component';
 import { ContentComponent } from './components/content/content.component';
 import { DemoDrawerComponent } from './components/dialog/drawer.component';
 import { DemoModalComponent } from './components/dialog/modal.component';
+import { DemoSfComponent } from './components/dialog/sf.component';
 import { DocsComponent } from './components/docs/docs.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -28,7 +29,7 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { MatchRouterDirective } from './components/match-router/match-router.directive';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
 
-const DIALOG_COMPONENTS = [DemoModalComponent, DemoDrawerComponent, IconComponent];
+const DIALOG_COMPONENTS = [DemoModalComponent, DemoDrawerComponent, DemoSfComponent, IconComponent];
 
 const COMPONENTS = [
   FooterComponent,

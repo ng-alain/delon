@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -131,7 +131,7 @@ export class DelonFormModule {
         {
           provide: SchemaValidatorFactory,
           useClass: AjvSchemaValidatorFactory,
-          deps: [AlainConfigService],
+          deps: [AlainConfigService, NgZone],
         },
         { provide: WidgetRegistry, useClass: NzWidgetRegistry },
       ],

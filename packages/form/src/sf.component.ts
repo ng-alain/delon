@@ -430,6 +430,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     resolveIfSchema(_schema, this._ui);
 
     this._schema = _schema;
+    delete _schema.ui;
 
     di(this._ui, 'cover schema & ui', this._ui, _schema);
   }
