@@ -5,7 +5,6 @@ import {
   ContentChildren,
   Inject,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   QueryList,
@@ -14,11 +13,11 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { WINDOW } from '@delon/util/token';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
 
+@UntilDestroy()
 @Component({
   selector: 'global-footer',
   exportAs: 'globalFooter',
@@ -31,8 +30,7 @@ import { GlobalFooterLink } from './global-footer.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class GlobalFooterComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class GlobalFooterComponent implements OnInit {
   private _links: GlobalFooterLink[] = [];
 
   dir: Direction = 'ltr';
@@ -72,13 +70,8 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

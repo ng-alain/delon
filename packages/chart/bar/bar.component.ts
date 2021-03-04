@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
 
@@ -132,7 +133,7 @@ export class G2BarComponent extends G2BaseComponent {
 
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
-        takeUntil(this.destroy$),
+        untilDestroyed(this),
         filter(() => !!this._chart),
         debounceTime(200),
       )

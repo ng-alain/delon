@@ -1,23 +1,13 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  Optional,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 export type ExceptionType = 403 | 404 | 500;
 
+@UntilDestroy()
 @Component({
   selector: 'exception',
   exportAs: 'exception',
@@ -30,10 +20,9 @@ export type ExceptionType = 403 | 404 | 500;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ExceptionComponent implements OnInit, OnDestroy {
+export class ExceptionComponent implements OnInit {
   static ngAcceptInputType_type: ExceptionType | string;
 
-  private destroy$ = new Subject<void>();
   @ViewChild('conTpl', { static: true }) private conTpl: ElementRef;
 
   _type: ExceptionType;
@@ -97,15 +86,10 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-    this.i18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => (this.locale = this.i18n.getData('exception')));
+    this.i18n.change.pipe(untilDestroyed(this)).subscribe(() => (this.locale = this.i18n.getData('exception')));
     this.checkContent();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

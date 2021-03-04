@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MetaService, MobileService } from '@core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { untilDestroyed, UntilDestroy } from '@delon/util/decorator';
 
+@UntilDestroy()
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -11,15 +11,14 @@ import { takeUntil } from 'rxjs/operators';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContentComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+export class ContentComponent implements OnInit {
   isMobile: boolean;
   opened = false;
 
   constructor(public meta: MetaService, private mobileSrv: MobileService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.mobileSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
+    this.mobileSrv.change.pipe(untilDestroyed(this)).subscribe(res => {
       this.isMobile = res;
       this.cdr.detectChanges();
     });
@@ -27,11 +26,5 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   to(): void {
     this.opened = false;
-  }
-
-  ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
   }
 }

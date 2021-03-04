@@ -34,12 +34,13 @@ import {
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
-import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { from, isObservable, Observable, of, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
@@ -71,6 +72,7 @@ import {
 } from './st.interfaces';
 import { _STColumn, _STHeader } from './st.types';
 
+@UntilDestroy()
 @Component({
   selector: 'st',
   exportAs: 'st',
@@ -104,7 +106,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
-  private unsubscribe$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;
   private cog: AlainSTConfig;
@@ -114,6 +115,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _page: STPage;
   private _widthMode: STWidthMode;
   private customWidthConfig: boolean = false;
+  private destroy = false;
   _widthConfig: string[] = [];
   locale: LocaleData = {};
   _loading = false;
@@ -257,7 +259,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   ) {
     this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
-    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.delonI18n.change.pipe(untilDestroyed(this)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.updateTotalTpl();
@@ -267,7 +269,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     i18nSrv.change
       .pipe(
-        takeUntil(this.unsubscribe$),
+        untilDestroyed(this),
         filter(() => this._columns.length > 0),
       )
       .subscribe(() => this.refreshColumns());
@@ -362,7 +364,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           paginator: true,
           ...options,
         })
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(untilDestroyed(this))
         .subscribe(
           result => resolvePromise(result),
           error => {
@@ -400,8 +402,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
       return this._refCheck();
     } catch (error) {
-      this.setLoading(false);
-      if (!this.unsubscribe$.isStopped) {
+      if (!this.destroy) {
+        this.setLoading(false);
         this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
       }
@@ -835,7 +837,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     });
     (isObservable(obs$) ? obs$ : of(obs$))
       .pipe(
-        takeUntil(this.unsubscribe$),
+        untilDestroyed(this),
         filter(res => res.length > 0),
       )
       .subscribe(res => {
@@ -931,8 +933,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy = true;
   }
 }

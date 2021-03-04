@@ -22,9 +22,10 @@ import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } fr
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { merge, Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { merge, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton, SFLayout, SFValueChange } from './interface';
@@ -43,6 +44,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSr
 
 export type SFMode = 'default' | 'search' | 'edit';
 
+@UntilDestroy()
 @Component({
   selector: 'sf, [sf]',
   exportAs: 'sf',
@@ -80,7 +82,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_noColon: BooleanInput;
   static ngAcceptInputType_cleanValue: BooleanInput;
 
-  private unsubscribe$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item: {};
   private _valid = true;
@@ -242,7 +243,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
-    this.localeSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.localeSrv.change.pipe(untilDestroyed(this)).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
         this.validator({ emitError: false, onlyRoot: false });
@@ -258,7 +259,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       merge(...(refSchemas as Array<Observable<any>>))
         .pipe(
           filter(() => this._inited),
-          takeUntil(this.unsubscribe$),
+          untilDestroyed(this),
         )
         .subscribe(() => this.refreshSchema());
     }
@@ -631,8 +632,5 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.cleanRootSub();
     this.terminator.destroy();
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
   }
 }

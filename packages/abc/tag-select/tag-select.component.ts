@@ -5,7 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   Output,
@@ -13,9 +12,9 @@ import {
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'tag-select',
   exportAs: 'tagSelect',
@@ -31,10 +30,9 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class TagSelectComponent implements OnInit, OnDestroy {
+export class TagSelectComponent implements OnInit {
   static ngAcceptInputType_expandable: BooleanInput;
 
-  private destroy$ = new Subject<void>();
   locale: LocaleData = {};
   expand = false;
   dir: Direction = 'ltr';
@@ -47,10 +45,10 @@ export class TagSelectComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-    this.i18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.i18n.change.pipe(untilDestroyed(this)).subscribe(() => {
       this.locale = this.i18n.getData('tagSelect');
       this.cdr.detectChanges();
     });
@@ -59,10 +57,5 @@ export class TagSelectComponent implements OnInit, OnDestroy {
   trigger(): void {
     this.expand = !this.expand;
     this.change.emit(this.expand);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
 import { RTL, RTLService, SettingsService } from '@delon/theme';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { delay, filter, takeUntil } from 'rxjs/operators';
+import { delay, filter } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
   selector: 'app-layout',
   template: `
@@ -21,8 +22,7 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
     '[attr.id]': `'ng-content'`,
   },
 })
-export class LayoutComponent implements OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+export class LayoutComponent {
   isFetching = false;
   render = true;
 
@@ -34,7 +34,7 @@ export class LayoutComponent implements OnDestroy {
     rtl: RTLService,
   ) {
     rtl.change.subscribe(() => this.fixDirection());
-    router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
+    router.events.pipe(untilDestroyed(this)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -50,7 +50,7 @@ export class LayoutComponent implements OnDestroy {
     });
     router.events
       .pipe(
-        takeUntil(this.unsubscribe$),
+        untilDestroyed(this),
         filter(ev => ev instanceof NavigationEnd),
         delay(100),
       )
@@ -71,11 +71,5 @@ export class LayoutComponent implements OnDestroy {
       fragment = '';
     }
     this.location.replaceState(path, (direction === RTL ? `?direction=` + RTL : '') + fragment);
-  }
-
-  ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
   }
 }

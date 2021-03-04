@@ -7,16 +7,16 @@ import {
   ElementRef,
   Inject,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   ViewEncapsulation,
 } from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
 import { InputNumber } from '@delon/util/decorator';
-import { interval, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { interval } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'error-collect, [error-collect]',
   exportAs: 'errorCollect',
@@ -34,9 +34,8 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ErrorCollectComponent implements OnInit, OnDestroy {
+export class ErrorCollectComponent implements OnInit {
   private formEl: HTMLFormElement | null;
-  private destroy$ = new Subject<void>();
 
   _hiden = true;
   count = 0;
@@ -80,11 +79,11 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
 
   private install(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
     interval(this.freq)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(untilDestroyed(this))
       .subscribe(() => this.update());
     this.update();
   }
@@ -105,10 +104,5 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     this.formEl = this.findParent(this.el.nativeElement, 'form');
     if (this.formEl === null) throw new Error('No found form element');
     this.install();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -5,8 +5,7 @@
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib",
+  "allowedNonPeerDependencies": [
     "file-saver",
     "date-fns",
     "qrious",
@@ -16,6 +15,7 @@
     "ngx-countdown",
     "@delon/theme",
     "@delon/util",
-    "@delon/acl"
+    "@delon/acl",
+    "@ngneat/until-destroy"
   ]
 }

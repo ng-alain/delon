@@ -37,7 +37,8 @@ DEPENDENCIES=$(node -p "
     'ng-alain-sts',
     'ng-alain-plugin-theme',
     'nz-tslint-rules',
-    'source-map-explorer'
+    'source-map-explorer',
+    '@ngneat/until-destroy'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")

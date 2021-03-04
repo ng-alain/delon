@@ -20,13 +20,12 @@
       "@delon/util/other": "delon.util.other"
     }
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib",
-    "angular",
+  "allowedNonPeerDependencies": [
     "date-fns",
     "ng-zorro-antd",
     "@delon/acl",
     "@delon/util",
-    "@ant-design/icons-angular"
+    "@ant-design/icons-angular",
+    "@ngneat/until-destroy"
   ]
 }

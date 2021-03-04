@@ -6,5 +6,5 @@
     "flatModuleFile": "acl",
     "entryFile": "index.ts"
   },
-  "whitelistedNonPeerDependencies": ["tslib", "angular", "@delon/util"]
+  "allowedNonPeerDependencies": ["@delon/util"]
 }

@@ -9,7 +9,6 @@ import {
   Inject,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Renderer2,
@@ -23,15 +22,17 @@ import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService,
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { merge, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 interface PageHeaderPath {
   title?: string;
   link?: string[];
 }
 
+@UntilDestroy()
 @Component({
   selector: 'page-header',
   exportAs: 'pageHeader',
@@ -40,7 +41,7 @@ interface PageHeaderPath {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   static ngAcceptInputType_loading: BooleanInput;
   static ngAcceptInputType_wide: BooleanInput;
   static ngAcceptInputType_autoBreadcrumb: BooleanInput;
@@ -50,7 +51,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   static ngAcceptInputType_fixedOffsetTop: NumberInput;
   static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
 
-  private destroy$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
   inited = false;
@@ -126,13 +126,13 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     });
     settings.notify
       .pipe(
-        takeUntil(this.destroy$),
+        untilDestroyed(this),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
     merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(untilDestroyed(this))
       .subscribe(() => this.refresh());
   }
 
@@ -195,7 +195,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
@@ -211,10 +211,5 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.inited) {
       this.refresh();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

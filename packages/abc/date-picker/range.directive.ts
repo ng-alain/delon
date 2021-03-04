@@ -18,7 +18,6 @@ import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
-import { Subject } from 'rxjs';
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 
 @Directive({
@@ -30,7 +29,6 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
   private _shortcut: AlainDateRangePickerShortcut;
-  private destroy$ = new Subject<void>();
   private shortcutFactory: ComponentRef<RangePickerShortcutTplComponent> | null = null;
   start: Date | null = null;
   end: Date | null = null;
@@ -186,7 +184,5 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.destoryShortcut();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

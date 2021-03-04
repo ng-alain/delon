@@ -28,6 +28,7 @@
     "@antv/data-set": "@LIB-PLACEHOLDER",
     "@antv/g2": "@LIB-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
-    "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
+    "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
+    "@ngneat/until-destroy": "@LIB-PLACEHOLDER"
   }
 }

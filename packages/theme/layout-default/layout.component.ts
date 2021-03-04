@@ -1,14 +1,14 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ContentChildren, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
+import { Component, ContentChildren, ElementRef, Inject, Input, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultOptions } from './types';
 
+@UntilDestroy()
 @Component({
   selector: 'layout-default',
   template: `
@@ -27,7 +27,7 @@ import { LayoutDefaultOptions } from './types';
     </section>
   `,
 })
-export class LayoutDefaultComponent implements OnInit, OnDestroy {
+export class LayoutDefaultComponent implements OnInit {
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -36,7 +36,6 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   @Input() nav: TemplateRef<void>;
   @Input() content: TemplateRef<void>;
 
-  private destroy$ = new Subject<void>();
   isFetching = false;
 
   constructor(
@@ -48,7 +47,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {
     // scroll to top in change page
-    router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
+    router.events.pipe(untilDestroyed(this)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -86,13 +85,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     if (this.options == null) {
       throw new Error(`Please specify the [options] parameter, otherwise the layout display cannot be completed`);
     }
-    const { settings, destroy$ } = this;
-    settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
+    this.settings.notify.pipe(untilDestroyed(this)).subscribe(() => this.setClass());
     this.setClass();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

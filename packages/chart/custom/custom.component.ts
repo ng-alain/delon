@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { fromEvent } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'g2,g2-custom',
@@ -44,7 +45,7 @@ export class G2CustomComponent extends G2BaseComponent {
     if (this.resizeTime <= 0) return;
 
     fromEvent(window, 'resize')
-      .pipe(takeUntil(this.destroy$), debounceTime(Math.min(200, this.resizeTime)))
+      .pipe(untilDestroyed(this), debounceTime(Math.min(200, this.resizeTime)))
       .subscribe(() => this.resize.emit(this.el));
   }
 }

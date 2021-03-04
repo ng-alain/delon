@@ -2,17 +2,18 @@ import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { G2Service } from './g2.servicce';
 
+@UntilDestroy()
 @Directive()
 export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
 
   @ViewChild('container', { static: true }) protected node: ElementRef;
   protected resize$: Subscription;
-  protected destroy$ = new Subject<void>();
   protected _chart: Chart;
   loaded = false;
 
@@ -41,7 +42,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     this.theme = srv.cog.theme!;
     this.srv.notify
       .pipe(
-        takeUntil(this.destroy$),
+        untilDestroyed(this),
         filter(() => !this.loaded),
       )
       .subscribe(() => this.load());
@@ -76,8 +77,6 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     if (this.resize$) {
       this.resize$.unsubscribe();
     }
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this._chart) {
       this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }

@@ -3,8 +3,7 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, isDevMode, OnDestroy, OnInit, Optional, Renderer2 } from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 export const ThemeBtnStorageKey = `site-theme`;
 
@@ -13,6 +12,7 @@ export interface ThemeBtnType {
   text: string;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'theme-btn',
   templateUrl: './theme-btn.component.html',
@@ -32,7 +32,6 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   private el!: HTMLLinkElement;
-  private destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
 
   constructor(
@@ -45,7 +44,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
     this.initTheme();
@@ -92,7 +91,5 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (this.el) {
       this.doc.body.removeChild(this.el);
     }
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

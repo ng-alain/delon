@@ -1,15 +1,17 @@
 import { Platform } from '@angular/cdk/platform';
-import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, Observer, of, Subject, throwError } from 'rxjs';
-import { filter, finalize, take, takeUntil } from 'rxjs/operators';
+import { Observable, Observer, of, throwError } from 'rxjs';
+import { filter, finalize, take } from 'rxjs/operators';
 
 /**
  * @deprecated Will be removed in 13.0.0, Pls used [nz-image](https://ng.ant.design/components/image/en) instead, for examples:
  */
+@UntilDestroy()
 @Directive({
   selector: '[_src]',
   exportAs: '_src',
@@ -18,7 +20,7 @@ import { filter, finalize, take, takeUntil } from 'rxjs/operators';
     '[class.point]': `previewSrc`,
   },
 })
-export class ImageDirective implements OnChanges, OnInit, OnDestroy {
+export class ImageDirective implements OnChanges, OnInit {
   static ngAcceptInputType_size: NumberInput;
   static ngAcceptInputType_useHttp: BooleanInput;
 
@@ -31,7 +33,6 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
 
   private inited = false;
   private imgEl: HTMLImageElement;
-  private destroy$ = new Subject<void>();
 
   constructor(
     el: ElementRef<HTMLImageElement>,
@@ -65,7 +66,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
 
   private update(): void {
     this.getSrc(this.src, true)
-      .pipe(takeUntil(this.destroy$), take(1))
+      .pipe(untilDestroyed(this), take(1))
       .subscribe(
         src => (this.imgEl.src = src),
         () => this.setError(),
@@ -96,7 +97,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
       this.http
         .get(url, null, { responseType: 'blob' })
         .pipe(
-          takeUntil(this.destroy$),
+          untilDestroyed(this),
           take(1),
           finalize(() => observer.complete()),
         )
@@ -136,7 +137,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
 
     this.getSrc(this.previewSrc, false)
       .pipe(
-        takeUntil(this.destroy$),
+        untilDestroyed(this),
         filter(w => !!w),
         take(1),
       )
@@ -148,10 +149,5 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
           ...this.previewModalOptions,
         });
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

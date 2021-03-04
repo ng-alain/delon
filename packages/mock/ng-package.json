@@ -9,5 +9,5 @@
       "@delon/util": "delon.util"
     }
   },
-  "whitelistedNonPeerDependencies": ["tslib", "angular", "mockjs", "@types/mockjs", "@delon/util"]
+  "allowedNonPeerDependencies": ["mockjs", "@types/mockjs", "@delon/util"]
 }

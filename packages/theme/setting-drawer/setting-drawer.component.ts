@@ -1,27 +1,16 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Input,
-  isDevMode,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  Optional,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, isDevMode, NgZone, OnInit, Optional } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { InputBoolean } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.types';
 
+@UntilDestroy()
 @Component({
   selector: 'setting-drawer',
   templateUrl: './setting-drawer.component.html',
@@ -31,12 +20,11 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingDrawerComponent implements OnInit, OnDestroy {
+export class SettingDrawerComponent implements OnInit {
   @Input() @InputBoolean() autoApplyColor = true;
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
 
   private loadedLess = false;
-  private destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
   isDev = isDevMode();
   collapse = false;
@@ -70,7 +58,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(untilDestroyed(this)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
     if (this.autoApplyColor && this.color !== this.DEFAULT_PRIMARY) {
@@ -179,10 +167,5 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
       .join('\n');
     copy(copyContent);
     this.msg.success('Copy success');
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

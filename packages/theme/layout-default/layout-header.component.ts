@@ -1,7 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, TemplateRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef } from '@angular/core';
 import { App, SettingsService } from '@delon/theme';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
@@ -11,6 +10,7 @@ interface LayoutDefaultHeaderItem {
   direction?: LayoutDefaultHeaderItemDirection;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'layout-default-header',
   template: `
@@ -52,9 +52,7 @@ interface LayoutDefaultHeaderItem {
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-
+export class LayoutDefaultHeaderComponent implements AfterViewInit {
   left: LayoutDefaultHeaderItem[] = [];
   middle: LayoutDefaultHeaderItem[] = [];
   right: LayoutDefaultHeaderItem[] = [];
@@ -90,16 +88,11 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.parent.headerItems.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
+    this.parent.headerItems.changes.pipe(untilDestroyed(this)).subscribe(() => this.refresh());
     this.refresh();
   }
 
   toggleCollapsed(): void {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

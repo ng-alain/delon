@@ -9,7 +9,6 @@ import {
   Host,
   Input,
   OnChanges,
-  OnDestroy,
   Optional,
   Renderer2,
   TemplateRef,
@@ -20,16 +19,17 @@ import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { SEContainerComponent } from './se-container.component';
 import { SEError, SEErrorType } from './se.types';
 
 const prefixCls = `se`;
 let nextUniqueId = 0;
 
+@UntilDestroy()
 @Component({
   selector: 'se',
   exportAs: 'se',
@@ -45,14 +45,13 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
+export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_required: BooleanInput;
   static ngAcceptInputType_line: BooleanInput;
   static ngAcceptInputType_labelWidth: NumberInput;
 
   private el: HTMLElement;
-  private unsubscribe$ = new Subject<void>();
   @ContentChild(NgModel, { static: true }) private readonly ngModel: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName: FormControlName;
@@ -123,7 +122,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.el = el.nativeElement;
     parent.errorNotify
       .pipe(
-        takeUntil(this.unsubscribe$),
+        untilDestroyed(this),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name),
       )
       .subscribe(item => {
@@ -151,7 +150,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (!this.ngControl || this.isBindModel) return;
 
     this.isBindModel = true;
-    this.ngControl.statusChanges!.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.updateStatus(res === 'INVALID'));
+    this.ngControl.statusChanges!.pipe(untilDestroyed(this)).subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
@@ -216,11 +215,5 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
         this.onceFlag = false;
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
   }
 }

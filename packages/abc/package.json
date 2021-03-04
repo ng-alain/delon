@@ -28,6 +28,7 @@
     "ngx-countdown": "@LIB-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
-    "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
+    "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
+    "@ngneat/until-destroy": "@LIB-PLACEHOLDER"
   }
 }
