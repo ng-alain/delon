@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { REGEX } from '@delon/util/format';
 import Ajv, { Options as AjvOptions } from 'ajv';
@@ -17,24 +17,26 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   protected ajv: Ajv;
   protected options: AlainSFConfig;
 
-  constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService) {
+  constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService, private ngZone: NgZone) {
     super();
     if (!(typeof document === 'object' && !!document)) {
       return;
     }
     this.options = mergeConfig(cogSrv);
     const customOptions: AjvOptions = this.options.ajv || {};
-    this.ajv = new Ajv({
-      allErrors: true,
-      ...customOptions,
-      formats: {
-        ip: REGEX.ip,
-        'data-url': /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/,
-        color: REGEX.color,
-        mobile: REGEX.mobile,
-        'id-card': REGEX.idCard,
-        ...customOptions.formats,
-      },
+    this.ngZone.runOutsideAngular(() => {
+      this.ajv = new Ajv({
+        allErrors: true,
+        ...customOptions,
+        formats: {
+          ip: REGEX.ip,
+          'data-url': /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/,
+          color: REGEX.color,
+          mobile: REGEX.mobile,
+          'id-card': REGEX.idCard,
+          ...customOptions.formats,
+        },
+      });
     });
   }
 
@@ -43,7 +45,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
 
     return (value: SFValue): ErrorData[] => {
       try {
-        this.ajv.validate(schema, value);
+        this.ngZone.runOutsideAngular(() => this.ajv.validate(schema, value));
       } catch (e) {
         // swallow errors thrown in ajv due to invalid schemas, these
         // still get displayed
