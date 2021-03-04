@@ -20,8 +20,6 @@ describe('abc: tag-select', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => context.comp.ngOnDestroy());
-
   describe('#expandable', () => {
     it('with true', () => {
       context.expandable = true;

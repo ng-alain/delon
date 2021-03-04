@@ -107,8 +107,6 @@ describe('abc: reuse-tab', () => {
     discardPeriodicTasks();
   }
 
-  afterEach(() => rtComp.ngOnDestroy());
-
   describe('', () => {
     beforeEach(fakeAsync(() => {
       genModule();

@@ -20,8 +20,6 @@ describe('abc: exception', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => context.comp.ngOnDestroy());
-
   [403, 404, 500].forEach(type => {
     it(`#type=${type}`, () => {
       context.type = type as ExceptionType;
