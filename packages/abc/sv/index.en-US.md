@@ -48,5 +48,5 @@ Display title.
 |----------|-------------|------|---------|
 | `[prefix]` | Prefix of value | `string` | - |
 | `[unit]` | Unit of value | `string` | - |
-| `[tooltip]` | Tooltip text of value | `string` | - |
+| `[tooltip]` | Tooltip text of value | `string, TemplateRef<void>` | - |
 | `[size]` | Size of value | `'large','small','default'` | `default` |

@@ -36,8 +36,8 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() count: number;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() popoverVisible = false;
-  @Input() btnClass = '';
-  @Input() btnIconClass = '';
+  @Input() btnClass?: string | string[] | Set<string> | { [klass: string]: any };
+  @Input() btnIconClass?: string | string[] | Set<string> | { [klass: string]: any };
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();

@@ -59,7 +59,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
     }
   }
   @Input() @InputNumber() maxLength = 0;
-  @Input() excessItemsStyle: {};
+  @Input() excessItemsStyle: { [klass: string]: any };
 
   constructor(private cdr: ChangeDetectorRef, @Optional() private directionality: Directionality) {}
 

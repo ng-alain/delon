@@ -201,15 +201,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
-  @Input() header: string | TemplateRef<void>;
+  @Input() header?: string | TemplateRef<void> | null;
   @Input() @InputBoolean() showHeader = true;
-  @Input() footer: string | TemplateRef<void>;
-  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
-  @Input() body: TemplateRef<STStatisticalResults>;
+  @Input() footer?: string | TemplateRef<void> | null;
+  @Input() bodyHeader?: TemplateRef<STStatisticalResults> | null;
+  @Input() body?: TemplateRef<STStatisticalResults> | null;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
-  @Input() noResult: string | TemplateRef<void>;
+  @Input() noResult?: string | TemplateRef<void> | null;
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;

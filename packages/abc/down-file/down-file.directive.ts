@@ -13,8 +13,8 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 })
 export class DownFileDirective {
   private isFileSaverSupported = true;
-  @Input('http-data') httpData: {};
-  @Input('http-body') httpBody: {};
+  @Input('http-data') httpData: any;
+  @Input('http-body') httpBody: any;
   @Input('http-method') httpMethod: string = 'get';
   @Input('http-url') httpUrl: string;
   @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);

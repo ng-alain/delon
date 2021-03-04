@@ -21,6 +21,8 @@ module: import { NoticeIconModule } from '@delon/abc/notice-icon';
 | `(clear)` | 点击清空按钮的回调 | `EventEmitter<string>` | - |
 | `[popoverVisible]` | 手动控制Popover显示 | `boolean` | `false` |
 | `(popoverVisibleChange)` | Popover显隐回调 | `EventEmitter<boolean>` | - |
+| `[btnClass]` | 按钮类 | `ngClass` | - |
+| `[btnIconClass]` | Icon图标类 | `ngClass` | - |
 
 ### NoticeItem
 
