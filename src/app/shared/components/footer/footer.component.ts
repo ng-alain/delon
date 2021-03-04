@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
 import { I18NService } from '@core';
+import { LoadingService } from '@delon/abc/loading';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, copy, InputBoolean, LazyService } from '@delon/util';
 import { NzIconService } from 'ng-zorro-antd/icon';
@@ -27,6 +28,7 @@ export class FooterComponent implements OnInit {
   constructor(
     @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
     private msg: NzMessageService,
+    private loading: LoadingService,
     private lazy: LazyService,
     private iconSrv: NzIconService,
     private ngZone: NgZone,
@@ -69,13 +71,14 @@ export class FooterComponent implements OnInit {
               this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
               this.cdr.detectChanges();
             });
+            this.loading.close();
           });
       });
     };
 
     const lessUrl = 'https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js';
 
-    this.msg.loading('');
+    this.loading.open({ text: 'Compiling....' });
     if (this.lessLoaded) {
       changeColor();
     } else {

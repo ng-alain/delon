@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainZipConfig } from '@delon/util/config';
+import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -28,32 +29,31 @@ export class ZipService {
   }
 
   /** 解压 */
+  @ZoneOutside()
   read(fileOrUrl: File | string, options?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const resolveCallback = (data: NzSafeAny) => {
         this.ngZone.run(() => resolve(data));
       };
       this.init().then(() => {
-        this.ngZone.runOutsideAngular(() => {
-          // from url
-          if (typeof fileOrUrl === 'string') {
-            this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
-              (res: ArrayBuffer) => {
-                JSZip.loadAsync(res, options).then((ret: NzSafeAny) => resolveCallback(ret));
-              },
-              (err: any) => {
-                reject(err);
-              },
-            );
-            return;
-          }
-          // from file
-          const reader: FileReader = new FileReader();
-          reader.onload = (e: any) => {
-            JSZip.loadAsync(e.target.result, options).then((ret: NzSafeAny) => resolveCallback(ret));
-          };
-          reader.readAsBinaryString(fileOrUrl as File);
-        });
+        // from url
+        if (typeof fileOrUrl === 'string') {
+          this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
+            (res: ArrayBuffer) => {
+              JSZip.loadAsync(res, options).then((ret: NzSafeAny) => resolveCallback(ret));
+            },
+            (err: any) => {
+              reject(err);
+            },
+          );
+          return;
+        }
+        // from file
+        const reader: FileReader = new FileReader();
+        reader.onload = (e: any) => {
+          JSZip.loadAsync(e.target.result, options).then((ret: NzSafeAny) => resolveCallback(ret));
+        };
+        reader.readAsBinaryString(fileOrUrl as File);
       });
     });
   }

@@ -17,7 +17,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subject } from 'rxjs';
@@ -182,6 +182,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     setTimeout(() => this.load(), this.delay);
   }
 
+  @ZoneOutside()
   private load(): void {
     const { _src } = this;
     if (!this.inited || !_src) {
@@ -193,42 +194,39 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.ngZone.runOutsideAngular(() => {
-      this.destroy();
-      const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
-      loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
-      loadingTask.promise.then(
-        (pdf: NzSafeAny) => {
-          this._pdf = pdf;
-          this.lastSrc = _src;
-          this._total = pdf.numPages;
+    this.destroy();
+    const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
+    loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
+    loadingTask.promise.then(
+      (pdf: NzSafeAny) => {
+        this._pdf = pdf;
+        this.lastSrc = _src;
+        this._total = pdf.numPages;
 
-          this.emit('loaded');
+        this.emit('loaded');
 
-          if (!this.pageViewer) {
-            this.setupPageViewer();
-          }
+        if (!this.pageViewer) {
+          this.setupPageViewer();
+        }
 
-          this.resetDoc();
-          this.render();
-        },
-        (error: NzSafeAny) => this.emit('error', { error }),
-      );
-    });
+        this.resetDoc();
+        this.render();
+      },
+      (error: NzSafeAny) => this.emit('error', { error }),
+    );
   }
 
+  @ZoneOutside()
   private resetDoc(): void {
     const pdf = this._pdf;
     if (!pdf) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => {
-      this.cleanDoc();
+    this.cleanDoc();
 
-      this.findController.setDocument(pdf);
-      this.pageViewer.setDocument(pdf);
-      this.linkService.setDocument(pdf, null);
-    });
+    this.findController.setDocument(pdf);
+    this.pageViewer.setDocument(pdf);
+    this.linkService.setDocument(pdf, null);
   }
 
   private cleanDoc(): void {
@@ -263,29 +261,28 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.updateSize();
   }
 
+  @ZoneOutside()
   private updateSize(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const currentViewer = this.pageViewer;
-      this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
-        const { _rotation, _zoom } = this;
-        const rotation = _rotation || page.rotate;
-        const viewportWidth =
-          page.getViewport({
-            scale: _zoom,
-            rotation,
-          }).width * CSS_UNITS;
-        let scale = _zoom;
-        let stickToPage = true;
+    const currentViewer = this.pageViewer;
+    this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
+      const { _rotation, _zoom } = this;
+      const rotation = _rotation || page.rotate;
+      const viewportWidth =
+        page.getViewport({
+          scale: _zoom,
+          rotation,
+        }).width * CSS_UNITS;
+      let scale = _zoom;
+      let stickToPage = true;
 
-        // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
-        if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.nativeElement.clientWidth)) {
-          const viewPort = page.getViewport({ scale: 1, rotation });
-          scale = this.getScale(viewPort.width, viewPort.height);
-          stickToPage = !this.stickToPage;
-        }
+      // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
+      if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.nativeElement.clientWidth)) {
+        const viewPort = page.getViewport({ scale: 1, rotation });
+        scale = this.getScale(viewPort.width, viewPort.height);
+        stickToPage = !this.stickToPage;
+      }
 
-        currentViewer._setScale(scale, stickToPage);
-      });
+      currentViewer._setScale(scale, stickToPage);
     });
   }
 
@@ -316,18 +313,17 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return (this._zoom * ratio) / CSS_UNITS;
   }
 
+  @ZoneOutside()
   private destroy(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const { loadingTask } = this;
-      if (loadingTask && !loadingTask.destroyed) {
-        loadingTask.destroy();
-      }
-      if (this._pdf) {
-        this._pdf.destroy();
-        this._pdf = null;
-        this.cleanDoc();
-      }
-    });
+    const { loadingTask } = this;
+    if (loadingTask && !loadingTask.destroyed) {
+      loadingTask.destroy();
+    }
+    if (this._pdf) {
+      this._pdf.destroy();
+      this._pdf = null;
+      this.cleanDoc();
+    }
   }
 
   private setupPageViewer(): void {

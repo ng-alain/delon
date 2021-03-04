@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
-import { InputBoolean } from '@delon/util/decorator';
+import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -33,6 +33,7 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
 })
 export class SettingDrawerComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() autoApplyColor = true;
+  @Input() compilingText = 'Compiling...';
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
 
   private loadedLess = false;
@@ -52,7 +53,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     private msg: NzMessageService,
     private settingSrv: SettingsService,
     private lazy: LazyService,
-    private zone: NgZone,
+    private ngZone: NgZone,
     @Inject(DOCUMENT) private doc: any,
     @Optional() private directionality: Directionality,
   ) {
@@ -79,6 +80,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     }
   }
 
+  @ZoneOutside()
   private async loadLess(): Promise<void> {
     if (this.loadedLess) {
       return Promise.resolve();
@@ -112,17 +114,16 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     return vars;
   }
 
+  @ZoneOutside()
   private runLess(): void {
-    const { zone, msg, cdr } = this;
-    const msgId = msg.loading(`正在编译主题！`, { nzDuration: 0 }).messageId;
+    const { ngZone, msg, cdr } = this;
+    const msgId = msg.loading(this.compilingText, { nzDuration: 0 }).messageId;
     setTimeout(() => {
-      zone.runOutsideAngular(() => {
-        this.loadLess().then(() => {
-          (window as any).less.modifyVars(this.genVars()).then(() => {
-            msg.success('成功');
-            msg.remove(msgId);
-            zone.run(() => cdr.detectChanges());
-          });
+      this.loadLess().then(() => {
+        (window as any).less.modifyVars(this.genVars()).then(() => {
+          msg.success('成功');
+          msg.remove(msgId);
+          ngZone.run(() => cdr.detectChanges());
         });
       });
     }, 200);
