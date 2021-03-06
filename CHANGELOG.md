@@ -1,3 +1,18 @@
+## [11.7.1](https://github.com/ng-alain/delon/compare/11.7.0...11.7.1) (2021-03-06)
+
+
+### Bug Fixes
+
+* **chart:mini-area,mini-bar:** fix offset when tooltipType is 'mini' ([#1200](https://github.com/ng-alain/delon/issues/1200)) ([5524c35](https://github.com/ng-alain/delon/commit/5524c359392a5e2fdf446512271ff03b09890477))
+* **sf:** fix can't compile in `strict` of ajv ([#1197](https://github.com/ng-alain/delon/issues/1197)) ([acb59a3](https://github.com/ng-alain/delon/commit/acb59a3cf77d94df230bf4c58fa3c538802ee8ef))
+
+
+### Performance Improvements
+
+* **module:*:** coerces `number` or `boolean` type in `strictTemplates` ([#1196](https://github.com/ng-alain/delon/issues/1196)) ([ead34da](https://github.com/ng-alain/delon/commit/ead34da6054ad042cc7c1b5068ed005bd6379b14))
+
+
+
 # [11.7.0](https://github.com/ng-alain/delon/compare/11.6.0...11.7.0) (2021-02-27)
 
 
