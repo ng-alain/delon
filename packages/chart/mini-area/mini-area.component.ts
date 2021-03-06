@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { G2BaseComponent } from '@delon/chart/core';
+import { Chart, Event } from '@antv/g2';
+import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2MiniAreaData {
@@ -78,23 +78,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
     }
 
     chart.legend(false);
-    const tooltipOption: Types.TooltipOption = {
-      showTitle: false,
-      showMarkers: true,
-      enterable: true,
-      domStyles: {
-        'g2-tooltip': { padding: '0px' },
-        'g2-tooltip-title': { display: 'none' },
-        'g2-tooltip-list-item': { margin: '4px' },
-      },
-    };
-    if (tooltipType === 'mini') {
-      tooltipOption.position = 'top';
-      tooltipOption.domStyles!['g2-tooltip'] = { padding: '0px', backgroundColor: 'transparent', boxShadow: 'none' };
-      tooltipOption.itemTpl = `<li>{value}</li>`;
-      tooltipOption.offset = 8;
-    }
-    chart.tooltip(tooltipOption);
+    chart.tooltip(genMiniTooltipOptions(tooltipType));
 
     chart
       .area()
