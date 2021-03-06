@@ -94,7 +94,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
   return (tree: Tree) => {
     UpgradeDelonVersions(tree);
     // 3rd
-    addPackage(tree, ['screenfull@DEP-0.0.0-PLACEHOLDER']);
+    addPackage(tree, ['screenfull@DEP-0.0.0-PLACEHOLDER', 'ajv@DEP-0.0.0-PLACEHOLDER']);
     // ng-alain
     addPackage(
       tree,
