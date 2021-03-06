@@ -92,7 +92,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       tooltipOption.position = 'top';
       tooltipOption.domStyles!['g2-tooltip'] = { padding: '0px', backgroundColor: 'transparent', boxShadow: 'none' };
       tooltipOption.itemTpl = `<li>{value}</li>`;
-      tooltipOption.offset = 0;
+      tooltipOption.offset = 8;
     }
     chart.tooltip(tooltipOption);
 
