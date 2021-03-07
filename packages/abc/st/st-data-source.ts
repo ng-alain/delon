@@ -28,13 +28,13 @@ import {
   STStatisticalResults,
   STStatisticalType,
 } from './st.interfaces';
-import { _STColumn, _STColumnButton, _STData, _STDataValue } from './st.types';
+import { _STColumn, _STColumnButton, _STDataValue } from './st.types';
 
 export interface STDataSourceOptions {
   pi: number;
   ps: number;
   paginator: boolean;
-  data: string | _STData[] | Observable<_STData[]>;
+  data: string | STData[] | Observable<STData[]>;
   total: number;
   req: STReq;
   res: STRes;
@@ -55,7 +55,7 @@ export interface STDataSourceResult {
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total: number;
   /** 数据 */
-  list: _STData[];
+  list: STData[];
   /** 统计数据 */
   statistical: STStatisticalResults;
 }
@@ -74,7 +74,7 @@ export class STDataSource {
   ) {}
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
-    let data$: Observable<_STData[]>;
+    let data$: Observable<STData[]>;
     let isRemote = false;
     const { data, res, total, page, pi, ps, paginator, columns } = options;
     let retTotal: number;
@@ -286,12 +286,12 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: _STData[]; rowClassName?: STRowClassName }): _STData[] {
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c) } as _STDataValue;
+          return { buttons: this.genButtons(c.buttons, result[i], c) };
         }
 
         return this.get(result[i], c, i);

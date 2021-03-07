@@ -69,7 +69,7 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn, _STData, _STDataValue, _STHeader } from './st.types';
+import { _STColumn, _STDataValue, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
@@ -117,7 +117,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _widthConfig: string[] = [];
   locale: LocaleData = {};
   _loading = false;
-  _data: _STData[] = [];
+  _data: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
   _allChecked = false;
