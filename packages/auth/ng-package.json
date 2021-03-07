@@ -9,5 +9,5 @@
       "@delon/util": "delon.util"
     }
   },
-  "whitelistedNonPeerDependencies": ["tslib", "angular", "@delon/util"]
+  "allowedNonPeerDependencies": ["@delon/util"]
 }
