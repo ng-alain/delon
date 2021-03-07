@@ -831,6 +831,26 @@ describe('abc: table: data-souce', () => {
         done();
       });
     });
+    it('should be buttons', done => {
+      options.data = [{ id: 1 }];
+      options.columns = [
+        { title: '', index: 'id' },
+        {
+          title: 'btn',
+          iif: () => true,
+          buttons: [
+            { text: 'btn1', iif: () => true, children: [] },
+            { text: 'btn2', iif: () => true, children: [{ text: 'btn2-1', iif: () => true, children: [] }] },
+          ],
+        },
+      ] as _STColumn[];
+      srv.process(options).subscribe(res => {
+        const btns = res.list[0]._values[1].buttons;
+        expect(Array.isArray(btns)).toBe(true);
+        expect(btns.length).toBe(2);
+        done();
+      });
+    });
   });
 
   describe('[statistical]', () => {
