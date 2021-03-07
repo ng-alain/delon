@@ -69,7 +69,7 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn, _STHeader } from './st.types';
+import { _STColumn, _STData, _STDataValue, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
@@ -104,7 +104,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;
   private cog: AlainSTConfig;
@@ -117,7 +117,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _widthConfig: string[] = [];
   locale: LocaleData = {};
   _loading = false;
-  _data: STData[] = [];
+  _data: _STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
   _allChecked = false;
@@ -257,7 +257,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   ) {
     this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
-    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.updateTotalTpl();
@@ -267,7 +267,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     i18nSrv.change
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(() => this._columns.length > 0),
       )
       .subscribe(() => this.refreshColumns());
@@ -362,7 +362,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           paginator: true,
           ...options,
         })
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(
           result => resolvePromise(result),
           error => {
@@ -390,7 +390,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       if (typeof result.pageShow !== 'undefined') {
         this._isPagination = result.pageShow;
       }
-      this._data = result.list as STData[];
+      this._data = result.list;
       this._statistical = result.statistical as STStatisticalResults;
       this.changeEmit('loaded', result.list);
       // Should be re-render in next tike when using virtual scroll
@@ -401,7 +401,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      if (!this.unsubscribe$.isStopped) {
+      if (!this.destroy$.isStopped) {
         this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
       }
@@ -556,7 +556,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point!] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c =>
+        this._data.forEach((i, idx) => {
+          const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
+          i._values![c.__point!] = { text, _text: text, org: idx } as _STDataValue;
+        }),
+      );
 
     return this.cd();
   }
@@ -767,20 +772,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  _btnText(record: STData, btn: STColumnButton): string {
-    return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
-  }
-
-  _validBtns(btns: STColumnButton[], item: STData, col: STColumn): STColumnButton[] {
-    return btns.filter(btn => {
-      const result = btn.iif!(item, btn, col);
-      const isRenderDisabled = btn.iifBehavior === 'disabled';
-      btn._result = result;
-      btn._disabled = !result && isRenderDisabled;
-      return result || isRenderDisabled;
-    });
-  }
-
   // #endregion
 
   // #region export
@@ -835,7 +826,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     });
     (isObservable(obs$) ? obs$ : of(obs$))
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(res => res.length > 0),
       )
       .subscribe(res => {
@@ -931,8 +922,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

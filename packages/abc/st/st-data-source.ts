@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
@@ -9,6 +9,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+  STColumn,
   STColumnFilter,
   STColumnFilterMenu,
   STData,
@@ -27,13 +28,13 @@ import {
   STStatisticalResults,
   STStatisticalType,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STColumnButton, _STData, _STDataValue } from './st.types';
 
 export interface STDataSourceOptions {
   pi: number;
   ps: number;
   paginator: boolean;
-  data: string | STData[] | Observable<STData[]>;
+  data: string | _STData[] | Observable<_STData[]>;
   total: number;
   req: STReq;
   res: STRes;
@@ -54,7 +55,7 @@ export interface STDataSourceResult {
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total: number;
   /** 数据 */
-  list: STData[];
+  list: _STData[];
   /** 统计数据 */
   statistical: STStatisticalResults;
 }
@@ -73,7 +74,7 @@ export class STDataSource {
   ) {}
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
-    let data$: Observable<STData[]>;
+    let data$: Observable<_STData[]>;
     let isRemote = false;
     const { data, res, total, page, pi, ps, paginator, columns } = options;
     let retTotal: number;
@@ -183,7 +184,7 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: _STColumn, idx: number): { text: string; _text: SafeHtml; org?: any; color?: string } {
+  private get(item: STData, col: _STColumn, idx: number): _STDataValue {
     try {
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
@@ -232,11 +233,11 @@ export class STDataSource {
           break;
       }
       if (text == null) text = '';
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
+      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color, buttons: [] };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: text };
+      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: text, buttons: [] };
     }
   }
 
@@ -285,10 +286,16 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
+  optimizeData(options: { columns: _STColumn[]; result: _STData[]; rowClassName?: STRowClassName }): _STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
-      result[i]._values = columns.map(c => this.get(result[i], c, i));
+      result[i]._values = columns.map(c => {
+        if (Array.isArray(c.buttons) && c.buttons.length > 0) {
+          return { buttons: this.genButtons(c.buttons, result[i], c) } as _STDataValue;
+        }
+
+        return this.get(result[i], c, i);
+      });
       if (rowClassName) {
         result[i]._rowClassName = rowClassName(result[i], i);
       }
@@ -298,6 +305,35 @@ export class STDataSource {
 
   getNoIndex(item: STData, col: _STColumn, idx: number): number {
     return typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex! + idx;
+  }
+
+  private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
+    const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
+      return btns.filter(btn => {
+        const result = btn.iif!(item, btn, col);
+        const isRenderDisabled = btn.iifBehavior === 'disabled';
+        btn._result = result;
+        btn._disabled = !result && isRenderDisabled;
+        if (btn.children!.length > 0) {
+          btn.children = fn(btn.children!);
+        }
+        return result || isRenderDisabled;
+      });
+    };
+
+    const res = fn(_btns);
+
+    const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
+      for (const btn of btns) {
+        btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        if (btn.children!.length > 0) {
+          btn.children = fnText(btn.children!);
+        }
+      }
+      return btns;
+    };
+
+    return fnText(res);
   }
 
   // #region sort
