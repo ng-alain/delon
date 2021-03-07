@@ -38,7 +38,7 @@
     ></i>
     <i *ngIf="btn.icon.iconfont" nz-icon [nzIconfont]="btn.icon.iconfont"></i>
   </ng-container>
-  <span [innerHTML]="_btnText(i, btn)" [ngClass]="{ 'pl-xs': btn.icon }"></span>
+  <span [innerHTML]="btn._text" [ngClass]="{ 'pl-xs': btn.icon }"></span>
 </ng-template>
 <ng-template #titleTpl let-i>
   <span [innerHTML]="i._text"></span>
@@ -248,14 +248,14 @@
                 <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
                 <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
               </ng-container>
-              <ng-container *ngFor="let btn of _validBtns(c.buttons!, i, c); let last = last">
+              <ng-container *ngFor="let btn of i._values[cIdx].buttons; let last = last">
                 <a *ngIf="btn.children!.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
-                  <span [innerHTML]="_btnText(i, btn)"></span>
+                  <span [innerHTML]="btn._text"></span>
                   <i nz-icon nzType="down"></i>
                 </a>
                 <nz-dropdown-menu #btnMenu="nzDropdownMenu">
                   <ul nz-menu>
-                    <ng-container *ngFor="let subBtn of _validBtns(btn.children!, i, c)">
+                    <ng-container *ngFor="let subBtn of btn.children!">
                       <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
                         <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: subBtn }"> </ng-template>
                       </li>
