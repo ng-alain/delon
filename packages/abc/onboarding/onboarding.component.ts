@@ -2,6 +2,7 @@ import { Direction } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -10,8 +11,10 @@ import {
   Inject,
   OnDestroy,
   Optional,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 interface OnboardingLightData {
@@ -36,7 +39,7 @@ interface OnboardingLightData {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class OnboardingComponent implements OnDestroy {
+export class OnboardingComponent implements OnDestroy, AfterViewInit {
   private time: any;
   private prevSelectorEl: HTMLElement;
   config: OnboardingConfig;
@@ -46,6 +49,7 @@ export class OnboardingComponent implements OnDestroy {
   readonly op = new EventEmitter<OnboardingOpType>();
   running = false;
   dir: Direction = 'ltr';
+  @ViewChild('popover', { static: false }) private popover!: NzPopoverDirective;
 
   get first(): boolean {
     return this.active === 0;
@@ -98,6 +102,11 @@ export class OnboardingComponent implements OnDestroy {
     };
   }
 
+  ngAfterViewInit(): void {
+    // Waiting https://github.com/NG-ZORRO/ng-zorro-antd/issues/6491
+    this.popover.component!.onClickOutside = () => {};
+  }
+
   private scroll(pos: OnboardingLightData): void {
     this.prevSelectorEl = pos.el;
     const scrollY = pos.top - (pos.clientHeight - pos.height) / 2;
@@ -146,6 +155,7 @@ export class OnboardingComponent implements OnDestroy {
 
   handleMask(): void {
     if (this.config.maskClosable === true) {
+      this.popover.component!.hide();
       this.to('done');
     }
   }
