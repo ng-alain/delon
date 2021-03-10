@@ -171,6 +171,7 @@
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": "packages/polyfills.ts",
             "tsConfig": "packages/tsconfig.spec.json",
+            "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
             "codeCoverageExclude": ["packages/schematics/**", "packages/testing/**"]
           }
         }
