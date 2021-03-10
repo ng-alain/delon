@@ -101,6 +101,16 @@ In addition, in layout operations, you can subscribe to layout changes through `
 | `[nav]` | Nav | `TemplateRef<void>` | `-` |
 | `[content]` | Content | `TemplateRef<void>` | `-` |
 
+### LayoutDefaultOptions
+
+| Property | Description | Type | Default |
+|----|----|----|-----|
+| `[logoExpanded]` | Logo url of expanded status | `string` | `./assets/logo-full.svg` |
+| `[logoCollapsed]` | Logo url of collapsed status | `string` | `./assets/logo.svg` |
+| `[logoFixWidth]` | Specify a fixed logo width | `number` | - |
+| `[logoLink]` | Specify the logo routing address | `string` | `/` |
+| `[hideAside]` | Hide the sidebar without showing the collapsed icon button | `boolean` | `false` |
+
 ### layout-default-nav
 
 | Property | Description | Type | Default |
@@ -168,6 +178,7 @@ The content area is the business page area, the specification details：
 | `@alain-default-header-padding` | `@layout-gutter * 2` | Horizontal padding of header |
 | `@alain-default-header-search-enabled` | `true` | Whether top search |
 | `@alain-default-header-icon-fs` | `18px` | Font size of icon |
+| `@alain-default-header-logo-max-height` | `36px` | Max height of logo |
 | `@alain-default-aside-wd` | `200px` | Width of aside |
 | `@alain-default-aside-bg` | `#fff` | Background-color of aside |
 | `@alain-default-aside-scrollbar-width` | `0` | Scrollbar width of aside |

@@ -101,6 +101,16 @@ export class LayoutBasicComponent {
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
 
+### LayoutDefaultOptions
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[logoExpanded]` | 展开时 Logo 地址 | `string` | `./assets/logo-full.svg` |
+| `[logoCollapsed]` | 收缩时 Logo 地址 | `string` | `./assets/logo.svg` |
+| `[logoFixWidth]` | 指定固定 Logo 宽度 | `number` | - |
+| `[logoLink]` | 指定 Logo 路由地址 | `string` | `/` |
+| `[hideAside]` | 隐藏侧边栏，同时不显收缩图标按钮 | `boolean` | `false` |
+
 ### layout-default-nav
 
 | 成员 | 说明 | 类型 | 默认值 |
@@ -168,6 +178,7 @@ export class LayoutBasicComponent {
 | `@alain-default-header-padding` | `@layout-gutter * 2` | 顶部左右内边距 |
 | `@alain-default-header-search-enabled` | `true` | 是否开启顶部搜索框 |
 | `@alain-default-header-icon-fs` | `18px` | 顶部 Icon 大小 |
+| `@alain-default-header-logo-max-height` | `36px` | Logo 图最高高度 |
 | `@alain-default-aside-wd` | `200px` | 侧边栏宽度 |
 | `@alain-default-aside-bg` | `#fff` | 侧边栏背景色 |
 | `@alain-default-aside-scrollbar-width` | `0` | 侧边栏滚动条宽度 |
