@@ -36,3 +36,29 @@ The following calling methods will all be considered effective:
 <test count="1"></test> // 1
 <test [count]="1"></test> // 1
 ```
+
+## @ZoneOutside
+
+The decoration method runs in `runOutsideAngular`.
+
+```ts
+class MockClass {
+  constructor(public ngZone: NgZone) {}
+
+  @ZoneOutside()
+  run(): void {}
+}
+```
+
+## @ZoneRun
+
+The decoration method runs in `run`.
+
+```ts
+class MockClass {
+  constructor(public ngZone: NgZone) {}
+
+  @ZoneRun()
+  run(): void {}
+}
+```
