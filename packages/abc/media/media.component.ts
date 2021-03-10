@@ -14,7 +14,7 @@ import {
   SimpleChange,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subscription } from 'rxjs';
 import { MediaService } from './media.service';
@@ -55,16 +55,15 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     private el: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private srv: MediaService,
-    private ngZone: NgZone,
+    public ngZone: NgZone,
     private platform: Platform,
   ) {
     this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
   }
 
+  @ZoneOutside()
   private initDelay(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.time = setTimeout(() => this.init(), this.delay);
-    });
+    this.time = setTimeout(() => this.init(), this.delay);
   }
 
   private init(): void {

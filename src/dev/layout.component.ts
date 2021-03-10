@@ -82,6 +82,7 @@ const ICONS = [
       <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
       <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
     </layout-default>
+    <setting-drawer></setting-drawer>
   `,
   host: {
     '[class.alain-default]': 'true',

@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { G2Service } from './g2.servicce';
@@ -47,12 +47,13 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(() => this.load());
   }
 
+  @ZoneOutside()
   private load(): void {
     this.ngZone.run(() => {
       this.loaded = true;
       this.cdr.detectChanges();
     });
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnInit(): void {
@@ -72,14 +73,19 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
+  @ZoneOutside()
+  private destroyChart(): void {
+    if (this._chart) {
+      this._chart.destroy();
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.resize$) {
       this.resize$.unsubscribe();
     }
     this.destroy$.next();
     this.destroy$.complete();
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
+    this.destroyChart();
   }
 }
