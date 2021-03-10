@@ -3,18 +3,21 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { App, Layout, SettingsNotify, User } from './types';
 
+/** Layout data specifies the stored key */
 export const LAYOUT = 'layout';
 
+/** User data specifies the stored key */
 export const USER = 'user';
 
+/** App data specifies the stored key */
 export const APP = 'app';
 
 @Injectable({ providedIn: 'root' })
-export class SettingsService {
+export class SettingsService<L extends Layout = Layout, U extends User = User, A extends App = App> {
   private notify$ = new Subject<SettingsNotify>();
-  private _app: App | null = null;
-  private _user: User | null = null;
-  private _layout: Layout | null = null;
+  private _app: A | null = null;
+  private _user: U | null = null;
+  private _layout: L | null = null;
 
   constructor(private platform: Platform) {}
 
@@ -32,7 +35,7 @@ export class SettingsService {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  get layout(): Layout {
+  get layout(): L {
     if (!this._layout) {
       this._layout = {
         fixed: true,
@@ -43,10 +46,10 @@ export class SettingsService {
       };
       this.setData(LAYOUT, this._layout);
     }
-    return this._layout as Layout;
+    return this._layout as L;
   }
 
-  get app(): App {
+  get app(): A {
     if (!this._app) {
       this._app = {
         year: new Date().getFullYear(),
@@ -54,24 +57,24 @@ export class SettingsService {
       };
       this.setData(APP, this._app);
     }
-    return this._app as App;
+    return this._app as A;
   }
 
-  get user(): User {
+  get user(): U {
     if (!this._user) {
       this._user = { ...this.getData(USER) };
       this.setData(USER, this._user);
     }
-    return this._user as User;
+    return this._user as U;
   }
 
   get notify(): Observable<SettingsNotify> {
     return this.notify$.asObservable();
   }
 
-  setLayout(name: string | Layout, value?: any): boolean {
+  setLayout(name: string | L, value?: any): boolean {
     if (typeof name === 'string') {
-      this.layout[name] = value;
+      (this.layout as Layout)[name] = value;
     } else {
       this._layout = name;
     }
@@ -80,13 +83,13 @@ export class SettingsService {
     return true;
   }
 
-  setApp(value: App): void {
+  setApp(value: A): void {
     this._app = value;
     this.setData(APP, value);
     this.notify$.next({ type: 'app', value });
   }
 
-  setUser(value: User): void {
+  setUser(value: U): void {
     this._user = value;
     this.setData(USER, value);
     this.notify$.next({ type: 'user', value });
