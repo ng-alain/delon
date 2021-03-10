@@ -14,7 +14,7 @@ import { LayoutDefaultOptions } from './types';
   template: `
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
     <layout-default-header></layout-default-header>
-    <div class="alain-default__aside">
+    <div *ngIf="!options.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-inner">
         <ng-container *ngTemplateOutlet="asideUser"></ng-container>
         <ng-container *ngTemplateOutlet="nav"></ng-container>
@@ -77,6 +77,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       ['alain-default']: true,
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
+      [`alain-default__hide-aside`]: this.options.hideAside,
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');

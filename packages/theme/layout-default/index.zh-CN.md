@@ -101,6 +101,14 @@ export class LayoutBasicComponent {
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
 
+### LayoutDefaultOptions
+
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[logoExpanded]` | 展开时 Logo 地址 | `string` | - |
+| `[logoCollapsed]` | 收缩时 Logo 地址 | `string` | - |
+| `[hideAside]` | 隐藏侧边栏，同时不显收缩图标按钮 | `boolean` | `false` |
+
 ### layout-default-nav
 
 | 成员 | 说明 | 类型 | 默认值 |

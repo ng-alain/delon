@@ -32,8 +32,8 @@ interface LayoutDefaultHeaderItem {
     </div>
     <div class="alain-default__nav-wrap">
       <ul class="alain-default__nav">
-        <li>
-          <div class="alain-default__nav-item" (click)="toggleCollapsed()">
+        <li *ngIf="!options.hideAside">
+          <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
             <i nz-icon [nzType]="collapsedIcon"></i>
           </div>
         </li>

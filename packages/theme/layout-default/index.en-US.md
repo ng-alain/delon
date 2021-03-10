@@ -101,6 +101,14 @@ In addition, in layout operations, you can subscribe to layout changes through `
 | `[nav]` | Nav | `TemplateRef<void>` | `-` |
 | `[content]` | Content | `TemplateRef<void>` | `-` |
 
+### LayoutDefaultOptions
+
+| Property | Description | Type | Default |
+|----|----|----|-----|
+| `[logoExpanded]` | Logo url of expanded status | `string` | - |
+| `[logoCollapsed]` | Logo url of collapsed status | `string` | - |
+| `[hideAside]` | Hide the sidebar without showing the collapsed icon button | `boolean` | `false` |
+
 ### layout-default-nav
 
 | Property | Description | Type | Default |
