@@ -87,6 +87,13 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     if (this.options == null) {
       throw new Error(`Please specify the [options] parameter, otherwise the layout display cannot be completed`);
     }
+    this.options = {
+      logoExpanded: `./assets/logo-full.svg`,
+      logoCollapsed: `./assets/logo.svg`,
+      logoLink: `/`,
+      hideAside: false,
+      ...this.options,
+    };
     const { settings, destroy$ } = this;
     settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
     this.setClass();

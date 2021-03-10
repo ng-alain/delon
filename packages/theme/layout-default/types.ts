@@ -3,21 +3,27 @@ export type LayoutDefaultHeaderItemDirection = 'left' | 'middle' | 'right';
 
 export interface LayoutDefaultOptions {
   /**
-   * Logo url of expanded status
+   * Logo url of expanded status, default: `./assets/logo-full.svg`
    *
-   * 展开时 Logo 地址
+   * 展开时 Logo 地址，默认：`./assets/logo-full.svg`
    */
-  logoExpanded: string;
+  logoExpanded?: string;
   /**
-   * Logo url of collapsed status
+   * Logo url of collapsed status, default: `./assets/logo.svg`
    *
-   * 收缩时 Logo 地址
+   * 收缩时 Logo 地址，默认：`./assets/logo.svg`
    */
-  logoCollapsed: string;
+  logoCollapsed?: string;
   /**
-   * Hide the sidebar without showing the collapsed icon button
+   * Specify the logo routing address, default: `/`
    *
-   * 隐藏侧边栏，同时不显收缩图标按钮
+   * 指定 Logo 路由地址，默认：`/`
+   */
+  logoLink?: string;
+  /**
+   * Hide the sidebar without showing the collapsed icon button, default: `false`
+   *
+   * 隐藏侧边栏，同时不显收缩图标按钮，默认：`false`
    */
   hideAside?: boolean;
 }

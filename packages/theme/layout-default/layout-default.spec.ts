@@ -6,8 +6,6 @@ import { createTestContext } from '@delon/testing';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultOptions } from './types';
 
-const DEFAULT_OPTIONS: LayoutDefaultOptions = { logoExpanded: '', logoCollapsed: '' };
-
 describe('theme: layout-default', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
@@ -26,7 +24,7 @@ describe('theme: layout-default', () => {
 
   describe('#options', () => {
     it('#hideAside', () => {
-      context.options = { ...DEFAULT_OPTIONS, hideAside: true };
+      context.options = { hideAside: true };
       fixture.detectChanges();
       page.expectEl(`.alain-default__hide-aside`);
       page.expectEl(`.alain-default__nav-item--collapse`, false);
@@ -49,7 +47,7 @@ describe('theme: layout-default', () => {
   template: ` <layout-default [options]="options">test</layout-default> `,
 })
 class TestComponent {
-  options: LayoutDefaultOptions = { ...DEFAULT_OPTIONS };
+  options: LayoutDefaultOptions = {};
   asideUser: TemplateRef<void>;
   nav: TemplateRef<void>;
   content: TemplateRef<void>;

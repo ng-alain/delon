@@ -20,14 +20,9 @@ interface LayoutDefaultHeaderItem {
       </li>
     </ng-template>
     <div class="alain-default__header-logo">
-      <a [routerLink]="['/']" class="alain-default__header-logo-link">
-        <img class="alain-default__header-logo-expanded" [attr.src]="options.logoExpanded" [attr.alt]="app.name" style="max-height: 40px" />
-        <img
-          class="alain-default__header-logo-collapsed"
-          [attr.src]="options.logoCollapsed"
-          [attr.alt]="app.name"
-          style="max-height: 30px"
-        />
+      <a [routerLink]="options.logoLink" class="alain-default__header-logo-link">
+        <img class="alain-default__header-logo-expanded" [attr.src]="options.logoExpanded" [attr.alt]="app.name" />
+        <img class="alain-default__header-logo-collapsed" [attr.src]="options.logoCollapsed" [attr.alt]="app.name" />
       </a>
     </div>
     <div class="alain-default__nav-wrap">

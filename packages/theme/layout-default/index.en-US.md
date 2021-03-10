@@ -105,8 +105,9 @@ In addition, in layout operations, you can subscribe to layout changes through `
 
 | Property | Description | Type | Default |
 |----|----|----|-----|
-| `[logoExpanded]` | Logo url of expanded status | `string` | - |
-| `[logoCollapsed]` | Logo url of collapsed status | `string` | - |
+| `[logoExpanded]` | Logo url of expanded status | `string` | `./assets/logo-full.svg` |
+| `[logoCollapsed]` | Logo url of collapsed status | `string` | `./assets/logo.svg` |
+| `[logoLink]` | Specify the logo routing address | `string` | `/` |
 | `[hideAside]` | Hide the sidebar without showing the collapsed icon button | `boolean` | `false` |
 
 ### layout-default-nav
