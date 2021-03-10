@@ -19,7 +19,7 @@ interface LayoutDefaultHeaderItem {
         <ng-container *ngTemplateOutlet="i.host"></ng-container>
       </li>
     </ng-template>
-    <div class="alain-default__header-logo">
+    <div class="alain-default__header-logo" [style.width.px]="options.logoFixWidth">
       <a [routerLink]="options.logoLink" class="alain-default__header-logo-link">
         <img class="alain-default__header-logo-expanded" [attr.src]="options.logoExpanded" [attr.alt]="app.name" />
         <img class="alain-default__header-logo-collapsed" [attr.src]="options.logoCollapsed" [attr.alt]="app.name" />

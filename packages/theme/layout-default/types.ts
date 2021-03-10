@@ -21,6 +21,12 @@ export interface LayoutDefaultOptions {
    */
   logoLink?: string;
   /**
+   * Specify a fixed logo width
+   *
+   * 指定固定 Logo 宽度
+   */
+  logoFixWidth?: number;
+  /**
    * Hide the sidebar without showing the collapsed icon button, default: `false`
    *
    * 隐藏侧边栏，同时不显收缩图标按钮，默认：`false`
