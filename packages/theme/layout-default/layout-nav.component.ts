@@ -19,6 +19,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { WINDOW } from '@delon/util/token';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -74,6 +75,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
+    @Inject(WINDOW) private win: any,
     @Optional() private directionality: Directionality,
   ) {}
 
@@ -189,11 +191,10 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     if (item.disabled) return;
 
     if (item.externalLink) {
-      const { defaultView } = this.doc;
       if (item.target === '_blank') {
-        defaultView.open(item.externalLink);
+        this.win.open(item.externalLink);
       } else {
-        defaultView.location.href = item.externalLink;
+        this.win.location.href = item.externalLink;
       }
       return;
     }

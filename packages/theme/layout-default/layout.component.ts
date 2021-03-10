@@ -84,9 +84,6 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.options == null) {
-      throw new Error(`Please specify the [options] parameter, otherwise the layout display cannot be completed`);
-    }
     this.options = {
       logoExpanded: `./assets/logo-full.svg`,
       logoCollapsed: `./assets/logo.svg`,

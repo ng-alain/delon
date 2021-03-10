@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { createTestContext } from '@delon/testing';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
+import { SettingsService } from '../src/services/settings/settings.service';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultOptions } from './types';
 
@@ -42,6 +43,19 @@ describe('theme: layout-default', () => {
     page.expectEl('.custom-content', true);
   });
 
+  it('should be toggle collapsed', () => {
+    const srv = TestBed.inject(SettingsService);
+    let collapsed = false;
+    spyOnProperty(srv, 'layout').and.returnValue({ collapsed });
+    fixture.detectChanges();
+    const el = page.getEl('.alain-default__nav-item--collapse');
+    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+    collapsed = true;
+    el.click();
+    fixture.detectChanges();
+    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+  });
+
   describe('#options', () => {
     it('#logoLink', () => {
       context.options = { logoLink: '/home' };
@@ -61,6 +75,21 @@ describe('theme: layout-default', () => {
       context.options = { hideAside: true };
       fixture.detectChanges();
       page.expectEl(`.alain-default__hide-aside`).expectEl(`.alain-default__nav-item--collapse`, false);
+    });
+  });
+
+  describe('RTL', () => {
+    it('should be toggle collapsed', () => {
+      const srv = TestBed.inject(SettingsService);
+      let collapsed = false;
+      spyOnProperty(srv, 'layout').and.returnValue({ collapsed, direction: 'rtl' });
+      fixture.detectChanges();
+      const el = page.getEl('.alain-default__nav-item--collapse');
+      expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+      collapsed = true;
+      el.click();
+      fixture.detectChanges();
+      expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
     });
   });
 
