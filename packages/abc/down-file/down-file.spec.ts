@@ -41,95 +41,103 @@ describe('abc: down-file', () => {
       fixture.detectChanges();
     });
     ['xlsx', 'docx', 'pptx', 'pdf'].forEach(ext => {
-      it(`should be down ${ext}`, () => {
+      it(`should be down ${ext}`, fakeAsync(() => {
         spyOn(fs, 'saveAs');
         if (ext === 'docx') context.data = null;
         fixture.detectChanges();
         (dl.query(By.css('#down-' + ext)).nativeElement as HTMLButtonElement).click();
+        tick();
         const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
         ret.flush(genFile());
         expect(fs.saveAs).toHaveBeenCalled();
-      });
+      }));
     });
 
-    it('should be used custom filename', () => {
+    it('should be used custom filename', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = rep => rep.headers.get('a')!;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
         headers: new HttpHeaders({ a: filename }),
       });
       expect(fn!).toBe(filename);
-    });
+    }));
 
-    it('should be using header filename when repseon has [filename]', () => {
+    it('should be using header filename when repseon has [filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
         headers: new HttpHeaders({ filename }),
       });
       expect(fn!).toBe(filename);
-    });
+    }));
 
-    it('should be using header filename when repseon has [x-filename]', () => {
+    it('should be using header filename when repseon has [x-filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'x-newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
         headers: new HttpHeaders({ 'x-filename': filename }),
       });
       expect(fn!).toBe(filename);
-    });
+    }));
 
-    it('should be throw error when a bad request', () => {
+    it('should be throw error when a bad request', fakeAsync(() => {
       spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.error(new ErrorEvent(''), { status: 404 });
       expect(context.error).toHaveBeenCalled();
-    });
+    }));
 
-    it('should be throw error when a empty file', () => {
+    it('should be throw error when a empty file', fakeAsync(() => {
       spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(false));
       expect(context.error).toHaveBeenCalled();
-    });
+    }));
 
-    it('should be throw error when http status is not 200', () => {
+    it('should be throw error when http status is not 200', fakeAsync(() => {
       spyOn(fs, 'saveAs');
       spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       expect(fs.saveAs).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(null, { status: 201, statusText: '201' });
       expect(fs.saveAs).not.toHaveBeenCalled();
       expect(context.error).toHaveBeenCalled();
-    });
+    }));
 
-    it('should be request via post', () => {
+    it('should be request via post', fakeAsync(() => {
       spyOn(fs, 'saveAs');
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       expect(ret.request.body.a).toBe(1);
-    });
+    }));
 
     describe('#pre', () => {
       it('should be download when return true', fakeAsync(() => {
@@ -151,7 +159,7 @@ describe('abc: down-file', () => {
     });
   });
 
-  it('should be using content-disposition filename', () => {
+  it('should be using content-disposition filename', fakeAsync(() => {
     createComp();
     fixture.detectChanges();
     let fn: string;
@@ -160,6 +168,7 @@ describe('abc: down-file', () => {
     context.fileName = null;
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+    tick();
     const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
     ret.flush(genFile(), {
       headers: new HttpHeaders({
@@ -167,7 +176,7 @@ describe('abc: down-file', () => {
       }),
     });
     expect(fn!).toBe(filename);
-  });
+  }));
 
   it('should be down-file__not-support when not supoort fileSaver', () => {
     class MockBlob {

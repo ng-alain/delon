@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -8,14 +8,23 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
-import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
+import {
+  ALAIN_I18N_TOKEN,
+  DatePipe,
+  DelonLocaleModule,
+  DelonLocaleService,
+  DrawerHelper,
+  en_US,
+  ModalHelper,
+  _HttpClient,
+} from '@delon/theme';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
@@ -805,9 +814,9 @@ describe('abc: st', () => {
       });
     });
     describe('[data source]', () => {
-      let httpBed: HttpTestingController;
+      let _http: _HttpClient;
       beforeEach(() => {
-        httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+        _http = TestBed.inject(_HttpClient);
       });
       it('support null data', fakeAsync(() => {
         page.updateData(null);
@@ -824,11 +833,11 @@ describe('abc: st', () => {
         expect(comp.ps).toBe(PS);
       });
       it('should be automatically cancel paging when the returned body value is an array type', done => {
+        spyOn(_http, 'request').and.returnValue(of([{}, {}, {}]));
         context.pi = 1;
         context.ps = 2;
         context.data = '/mock';
         fixture.detectChanges();
-        httpBed.expectOne(() => true).flush([{}, {}, {}]);
         fixture.whenStable().then(() => {
           expect(comp.pi).toBe(1);
           expect(comp.ps).toBe(3);
@@ -838,36 +847,9 @@ describe('abc: st', () => {
       });
       describe('Http Request', () => {
         it('when error request', done => {
+          spyOn(_http, 'request').and.returnValue(throwError('cancel'));
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(() => true).error(new ErrorEvent('cancel'));
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 0', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 0, statusText: '' });
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 404', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 404, statusText: 'Not found' });
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 403', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 403, statusText: 'Forbidden' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
@@ -883,23 +865,20 @@ describe('abc: st', () => {
             done();
           });
         });
-        it('should be ingored incomplete request when has new request', done => {
+        it('should be ingored incomplete request when has new request', fakeAsync(() => {
+          let mockData = [{}];
+          spyOn(_http, 'request').and.callFake(() => of(mockData) as any);
           context.data = '/mock1';
           fixture.detectChanges();
+          tick(1000);
+          fixture.detectChanges();
+          mockData = [{}, {}];
           context.data = '/mock2';
           fixture.detectChanges();
-          // Can't call have beed unsubscribe request in flush method, so muse be using `try {} catch {}`
-          try {
-            httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
-            httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
-            expect(true).toBe(false);
-          } catch {}
-
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(1);
-            done();
-          });
-        });
+          tick(1000);
+          fixture.detectChanges();
+          expect(comp._data.length).toBe(mockData.length);
+        }));
       });
     });
     describe('#req', () => {
