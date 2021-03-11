@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { delay, finalize, switchMap, tap } from 'rxjs/operators';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -983,6 +983,8 @@ export class _HttpClient {
   ): Observable<any> {
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
       tap(() => this.push()),
       switchMap(() => this.http.request(method, url, options)),
       finalize(() => this.pop()),
