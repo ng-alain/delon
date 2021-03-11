@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { AlainThemeModule } from '../../theme.module';
 import { SettingsService } from './settings.service';
 
 describe('Service: Settings', () => {
@@ -21,7 +22,7 @@ describe('Service: Settings', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [AlainThemeModule],
       providers: [SettingsService],
     });
     srv = TestBed.inject(SettingsService);
