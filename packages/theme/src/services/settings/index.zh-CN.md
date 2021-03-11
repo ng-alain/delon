@@ -45,3 +45,23 @@ type: Service
 | `[collapsed]` | 是否折叠菜单 | `boolean` | - |
 | `[lang]` | 当前语言 | `string` | - |
 | `[colorWeak]` | 色弱模式 | `boolean` | `false` |
+
+## 常见问题
+
+**如何更改本地存储键名？**
+
+允许通过 `global-config.module.ts` 全局配置文件，增加 `ALAIN_SETTING_KEYS` 的配置，例如：
+
+```diff
+ const alainProvides = [
+  { provide: ALAIN_CONFIG, useValue: alainConfig },
++ {
++   provide: ALAIN_SETTING_KEYS,
++   useValue: {
++     layout: 'new-layout',
++     user: 'new-user',
++     app: 'new-app',
++   },
++ },
+];
+```
