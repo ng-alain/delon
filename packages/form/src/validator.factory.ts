@@ -27,6 +27,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     this.ngZone.runOutsideAngular(() => {
       this.ajv = new Ajv({
         allErrors: true,
+        loopEnum: 50,
         ...customOptions,
         formats: {
           ip: REGEX.ip,
