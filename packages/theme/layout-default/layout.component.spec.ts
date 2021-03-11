@@ -10,6 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SettingsService } from '../src/services/settings/settings.service';
+import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultOptions } from './types';
@@ -23,7 +24,7 @@ describe('theme: layout-default', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule],
+        imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule, AlainThemeModule],
         declarations: [TestComponent],
       });
 
@@ -156,6 +157,7 @@ describe('theme: layout-default', () => {
           NzIconTestModule,
           NoopAnimationsModule,
           RouterTestingModule.withRoutes([{ path: 'lazy', loadChildren: lazyLoadChildrenSpy }]),
+          AlainThemeModule,
         ],
         providers: [{ provide: PreloadingStrategy, useFactory: mockPreloaderFactory }],
       });

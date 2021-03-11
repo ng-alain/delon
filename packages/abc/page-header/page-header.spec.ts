@@ -5,7 +5,15 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { createTestContext } from '@delon/testing';
-import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
+import {
+  AlainI18NService,
+  AlainI18NServiceFake,
+  AlainThemeModule,
+  ALAIN_I18N_TOKEN,
+  MenuService,
+  SettingsService,
+  TitleService,
+} from '@delon/theme';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
@@ -25,7 +33,7 @@ describe('abc: page-header', () => {
   let router: Router;
 
   function genModule(other: { template?: string; providers?: any[]; created?: boolean }): void {
-    const imports = [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule];
+    const imports = [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule, AlainThemeModule];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
@@ -62,7 +70,7 @@ describe('abc: page-header', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule],
+        imports: [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule, AlainThemeModule],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
       });

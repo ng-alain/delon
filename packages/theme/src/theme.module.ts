@@ -2,8 +2,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { DelonLocaleModule } from './locale/locale.module';
+import { ALAIN_SETTING_KEYS } from './services/settings/settings.service';
 
 // #region import
 
@@ -37,6 +37,16 @@ const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 @NgModule({
   imports: [CommonModule, RouterModule, OverlayModule, NzI18nModule],
   declarations: [...PIPES],
+  providers: [
+    {
+      provide: ALAIN_SETTING_KEYS,
+      useValue: {
+        layout: 'layout',
+        user: 'user',
+        app: 'app',
+      },
+    },
+  ],
   exports: [...PIPES, DelonLocaleModule],
 })
 export class AlainThemeModule {
