@@ -406,8 +406,13 @@ export class _HttpClient {
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
   jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
-    this.push();
-    return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(finalize(() => this.pop()));
+    return of(null).pipe(
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
+      tap(() => this.push()),
+      switchMap(() => this.http.jsonp(this.appliedUrl(url, params), callbackParam)),
+      finalize(() => this.pop()),
+    );
   }
 
   // #endregion

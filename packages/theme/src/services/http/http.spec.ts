@@ -343,63 +343,55 @@ describe('theme: http.client', () => {
     });
 
     describe('[jsonp]', () => {
-      it(`basic`, done => {
-        http.jsonp(URL).subscribe(res => {
-          expect(res).toBe(OK);
-          done();
-        });
+      it(`basic`, fakeAsync(() => {
+        http.jsonp(URL).subscribe(_ => (res = _));
+        tick();
         backend.expectOne(() => true).flush(OK);
-      });
+        expect(res).toBe(OK);
+      }));
 
-      it(`specified params`, done => {
-        http.jsonp(URL, PARAMS).subscribe(res => {
-          expect(res).toBe(OK);
-          done();
-        });
+      it(`specified params`, fakeAsync(() => {
+        http.jsonp(URL, PARAMS).subscribe(_ => (res = _));
+        tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         const newURL = http.appliedUrl(URL, PARAMS);
         expect(ret.request.url).toBe(newURL);
         ret.flush(OK);
-      });
+        expect(res).toBe(OK);
+      }));
 
-      it(`specified params and url include ?`, done => {
+      it(`specified params and url include ?`, fakeAsync(() => {
         const u = URL + '?b=1';
-        http.jsonp(u, PARAMS).subscribe(res => {
-          expect(res).toBe(OK);
-          done();
-        });
+        http.jsonp(u, PARAMS).subscribe(_ => (res = _));
+        tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         const newURL = http.appliedUrl(u, PARAMS);
         expect(ret.request.url).toBe(newURL);
         ret.flush(OK);
-      });
+        expect(res).toBe(OK);
+      }));
 
-      it(`specified params & callback`, done => {
+      it(`specified params & callback`, fakeAsync(() => {
         const callbackParam = 'CB';
-        http.jsonp(URL, PARAMS, callbackParam).subscribe(res => {
-          expect(res).toBe(OK);
-          done();
-        });
+        http.jsonp(URL, PARAMS, callbackParam).subscribe(_ => (res = _));
+        tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         const newURL = `${URL}?a=1`;
         expect(ret.request.url).toBe(newURL);
         expect(ret.request.urlWithParams).toBe(`${newURL}&${callbackParam}=JSONP_CALLBACK`);
         ret.flush(OK);
-      });
+        expect(res).toBe(OK);
+      }));
 
-      it('should be catch error', done => {
+      it('should be catch error', fakeAsync(() => {
         http.jsonp(URL).subscribe(
-          () => {
-            expect(false).toBe(true);
-            done();
-          },
-          () => {
-            expect(true).toBe(true);
-            done();
-          },
+          () => (res = false),
+          () => (res = true),
         );
+        tick();
         backend.expectOne(() => true).flush(null, { status: 500, statusText: 'Server Error' });
-      });
+        expect(true).toBe(true);
+      }));
     });
 
     describe('[patch]', () => {
