@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +15,7 @@ import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { WidgetRegistry } from '../src/widget.factory';
 import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
+registerLocaleData(zh);
 
 describe('form: component', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -696,6 +699,20 @@ describe('form: component', () => {
           },
         };
         page.newSchema(s).checkCount('.ant-form-item-required', 1);
+      });
+
+      it('should be replace valid parameters in error', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'number',
+              title: '单价',
+              multipleOf: 0.01,
+              default: 0.011,
+            },
+          },
+        };
+        page.newSchema(s).checkError(`应当是 0.01 的整数倍`);
       });
     });
   });
