@@ -33,6 +33,7 @@ import { ZipModule } from '@delon/abc/zip';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { LetModule } from '@delon/abc/let';
 import { AutoFocusModule } from '@delon/abc/auto-focus';
+import { PdfModule } from '@delon/abc/pdf';
 
 const MODULES = [
   ErrorCollectModule,
@@ -67,6 +68,7 @@ const MODULES = [
   OnboardingModule,
   LetModule,
   AutoFocusModule,
+  PdfModule,
 ];
 
 @NgModule({ exports: MODULES })

@@ -122,6 +122,7 @@ const WIDGETS = [
   imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS,
+  entryComponents: WIDGETS,
 })
 export class DelonFormModule {
   static forRoot(): ModuleWithProviders<DelonFormModule> {
