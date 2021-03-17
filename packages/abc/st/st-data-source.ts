@@ -309,7 +309,7 @@ export class STDataSource {
 
   private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
     const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
-      return btns.filter(btn => {
+      return deepCopy(btns).filter(btn => {
         const result = btn.iif!(item, btn, col);
         const isRenderDisabled = btn.iifBehavior === 'disabled';
         btn._result = result;
@@ -317,6 +317,7 @@ export class STDataSource {
         if (btn.children!.length > 0) {
           btn.children = fn(btn.children!);
         }
+        delete btn.iif;
         return result || isRenderDisabled;
       });
     };
