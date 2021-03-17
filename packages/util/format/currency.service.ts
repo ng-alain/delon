@@ -40,8 +40,6 @@ export class CurrencyService {
       truthValue = truthValue / 100;
     }
     const res = formatNumber(truthValue, this.locale, `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`);
-    if (options.ingoreZeroPrecision) {
-    }
     return options.ingoreZeroPrecision ? res.replace(/(?:\.[0]+)$/g, '') : res;
   }
 
