@@ -14,6 +14,10 @@ export interface CurrencyFormatOptions extends CurrencyStartingUnitOptions {
    * 精度，默认：`2`
    */
   precision?: number;
+  /**
+   * 是否忽略精度 `.0` 或 `.00` 结尾的字符，默认：`true`
+   */
+  ingoreZeroPrecision?: boolean;
 }
 
 export interface CurrencyMegaOptions extends CurrencyStartingUnitOptions {

@@ -5,6 +5,8 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
+> You can override to set the `startingUnit`, `megaUnit`, `precision`, `ingoreZeroPrecision` through [Global Configuration](/docs/global-config).
+
 ## price
 
 Format a number with commas as thousands separators.
