@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { toDate } from '@delon/util/date-time';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';

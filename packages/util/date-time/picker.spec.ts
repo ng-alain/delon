@@ -1,5 +1,4 @@
-import addDays from 'date-fns/addDays';
-import addSeconds from 'date-fns/addSeconds';
+import { addDays, addSeconds } from 'date-fns';
 import { DisabledTimeConfig } from 'ng-zorro-antd/date-picker';
 import { dateTimePickerUtil } from './picker';
 

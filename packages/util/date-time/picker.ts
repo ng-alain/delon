@@ -1,7 +1,4 @@
-import addDays from 'date-fns/addDays';
-import addSeconds from 'date-fns/addSeconds';
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
-import format from 'date-fns/format';
+import { addDays, addSeconds, differenceInCalendarDays, format } from 'date-fns';
 import { DisabledDateFn, DisabledTimeConfig, DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 
 // TODO: timezone process

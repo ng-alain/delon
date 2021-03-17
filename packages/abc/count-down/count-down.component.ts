@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import addSeconds from 'date-fns/addSeconds';
-import format from 'date-fns/format';
+import { addSeconds, format } from 'date-fns';
 import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 
 @Component({

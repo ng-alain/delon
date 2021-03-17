@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NzI18nService, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 registerLocaleData(localeZhHans);
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { formatDistanceToNow } from 'date-fns';
 import { zhCN as dateFnsLang } from 'date-fns/locale';
 import { AlainThemeModule } from '../../theme.module';
 
