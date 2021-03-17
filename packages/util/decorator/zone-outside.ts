@@ -18,7 +18,6 @@ function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): Decor
       }
       let res: any;
       ngZone[type](() => {
-        console.log('in runOutsideAngular call');
         res = source.call(this, ...data);
       });
       return res;

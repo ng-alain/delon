@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -33,10 +34,12 @@ const BORDER_WIDTH: number = 9;
   exportAs: 'pdf',
   template: `
     <nz-skeleton *ngIf="!inited"></nz-skeleton>
-    <div class="pdfViewer"></div>
+    <div class="pdf-container">
+      <div class="pdfViewer"></div>
+    </div>
   `,
   host: {
-    '[class.pdf-container]': `true`,
+    '[class.d-block]': `true`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -142,13 +145,18 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.doc.defaultView || window;
   }
 
+  private get el(): HTMLElement {
+    return this._el.nativeElement.querySelector('.pdf-container') as HTMLElement;
+  }
+
   constructor(
     private ngZone: NgZone,
     configSrv: AlainConfigService,
     private lazySrv: LazyService,
     private platform: Platform,
-    private el: ElementRef<HTMLElement>,
+    private _el: ElementRef<HTMLElement>,
     @Optional() @Inject(DOCUMENT) private doc: any,
+    private cdr: ChangeDetectorRef,
   ) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
@@ -177,6 +185,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private initDelay(): void {
     this.inited = true;
+    this.cdr.detectChanges();
     this.win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
 
     setTimeout(() => this.load(), this.delay);
@@ -276,7 +285,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       let stickToPage = true;
 
       // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
-      if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.nativeElement.clientWidth)) {
+      if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.clientWidth)) {
         const viewPort = page.getViewport({ scale: 1, rotation });
         scale = this.getScale(viewPort.width, viewPort.height);
         stickToPage = !this.stickToPage;
@@ -288,7 +297,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private getScale(viewportWidth: number, viewportHeight: number): number {
     const borderSize = this.showBorders ? 2 * BORDER_WIDTH : 0;
-    const el = this.el.nativeElement;
+    const el = this.el;
     const containerWidth = el.clientWidth - borderSize;
     const containerHeight = el.clientHeight - borderSize;
 
@@ -369,7 +378,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const viewer = (this.multiPageViewer = new VIEWER.PDFViewer({
       eventBus,
-      container: this.el.nativeElement,
+      container: this.el,
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
@@ -392,7 +401,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const pageViewer = (this.singlePageViewer = new VIEWER.PDFSinglePageViewer({
       eventBus,
-      container: this.el.nativeElement,
+      container: this.el,
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
