@@ -52,26 +52,7 @@
               "@antv/adjust",
               "@antv/component",
               "@antv/util",
-              "date-fns/format",
-              "date-fns/parse",
-              "date-fns/getISOWeek",
-              "date-fns/addDays",
-              "date-fns/differenceInCalendarDays",
-              "date-fns/addSeconds",
-              "date-fns/subYears",
-              "date-fns/subWeeks",
-              "date-fns/subMonths",
-              "date-fns/startOfYear",
-              "date-fns/startOfWeek",
-              "date-fns/startOfMonth",
-              "date-fns/startOfDay",
-              "date-fns/parseISO",
-              "date-fns/endOfYear",
-              "date-fns/endOfWeek",
-              "date-fns/endOfMonth",
-              "date-fns/endOfDay",
-              "date-fns/formatDistanceToNow",
-              "date-fns/add"
+              "date-fns"
             ]
           },
           "configurations": {

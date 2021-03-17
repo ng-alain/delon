@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'dev-list-item',

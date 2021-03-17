@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { toDate } from '@delon/util/date-time';
-import format from 'date-fns/format';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { format, formatDistanceToNow } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 

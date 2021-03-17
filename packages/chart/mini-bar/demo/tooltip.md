@@ -8,7 +8,7 @@ title: Tooltip
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { G2MiniBarData } from '@delon/chart/mini-bar';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-demo',

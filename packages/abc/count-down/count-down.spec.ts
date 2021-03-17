@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import addSeconds from 'date-fns/addSeconds';
+import { addSeconds } from 'date-fns';
 import { CountdownConfig } from 'ngx-countdown';
 import { CountDownModule } from './count-down.module';
 
