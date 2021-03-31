@@ -20,7 +20,16 @@ At the same time, please follow the following publishing rules and update versio
 
 ## How to upgrade?
 
-### Method 1: Modify the version number
+
+### Method 1: Command (Recommend)
+
+Unless it's a major version update (Similar to upgrading from `10.0.0` to `11.0.0`), you only need to run the following command:
+
+```bash
+ng update ng-alain
+```
+
+### Method 2: Modify the version number
 
 Modify `package.json` All class libraries starting with `@delon/` are the latest version number:
 
@@ -38,7 +47,7 @@ yarn
 
 > Please read [Frequently Asked Questions](/docs/faq)
 
-### Method 2: Update all class libraries
+### Method 3: Update all class libraries
 
 Scaffolding in `package.json` most libraries use loose version numbers, for example:
 
