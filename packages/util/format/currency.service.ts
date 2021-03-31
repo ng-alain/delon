@@ -8,7 +8,12 @@ export class CurrencyService {
   private c: AlainUtilCurrencyConfig;
 
   constructor(cog: AlainConfigService, @Inject(LOCALE_ID) private locale: string) {
-    this.c = cog.merge('utilCurrency', { startingUnit: 'yuan', megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' } })!;
+    this.c = cog.merge('utilCurrency', {
+      startingUnit: 'yuan',
+      megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },
+      precision: 2,
+      ingoreZeroPrecision: true,
+    })!;
   }
 
   /**
@@ -21,7 +26,12 @@ export class CurrencyService {
    * ```
    */
   format(value: number | string, options?: CurrencyFormatOptions): string {
-    options = { startingUnit: this.c.startingUnit, precision: 2, ...options };
+    options = {
+      startingUnit: this.c.startingUnit,
+      precision: this.c.precision,
+      ingoreZeroPrecision: this.c.ingoreZeroPrecision,
+      ...options,
+    };
     let truthValue = Number(value);
     if (value == null || isNaN(truthValue)) {
       return '';
@@ -29,7 +39,8 @@ export class CurrencyService {
     if (options.startingUnit === 'cent') {
       truthValue = truthValue / 100;
     }
-    return formatNumber(truthValue, this.locale, `.1-${options.precision}`).replace(/(?:\.[0]+)$/g, '');
+    const res = formatNumber(truthValue, this.locale, `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`);
+    return options.ingoreZeroPrecision ? res.replace(/(?:\.[0]+)$/g, '') : res;
   }
 
   /**
@@ -42,7 +53,7 @@ export class CurrencyService {
    * ```
    */
   mega(value: number | string, options?: CurrencyMegaOptions): CurrencyMegaResult {
-    options = { precision: 2, unitI18n: this.c.megaUnit, startingUnit: this.c.startingUnit, ...options };
+    options = { precision: this.c.precision, unitI18n: this.c.megaUnit, startingUnit: this.c.startingUnit, ...options };
     let num = Number(value);
     const res: CurrencyMegaResult = { raw: value, value: '', unit: '', unitI18n: '' };
     if (isNaN(num) || num === 0) {
