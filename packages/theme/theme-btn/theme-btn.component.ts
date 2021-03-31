@@ -1,17 +1,28 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, isDevMode, OnDestroy, OnInit, Optional, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  InjectionToken,
+  Input,
+  isDevMode,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Renderer2,
+} from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-export const ThemeBtnStorageKey = `site-theme`;
 
 export interface ThemeBtnType {
   key: string;
   text: string;
 }
+
+export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_KEYS');
 
 @Component({
   selector: 'theme-btn',
@@ -41,6 +52,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private platform: Platform,
     @Inject(DOCUMENT) private doc: any,
     @Optional() private directionality: Directionality,
+    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string,
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +67,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.theme = localStorage.getItem(ThemeBtnStorageKey) || 'default';
+    this.theme = localStorage.getItem(this.KEYS) || 'default';
     this.updateChartTheme();
     this.onThemeChange(this.theme);
   }
@@ -70,19 +82,19 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     }
     this.theme = theme;
     this.renderer.setAttribute(this.doc.body, 'data-theme', theme);
-    const dom = this.doc.getElementById(ThemeBtnStorageKey);
+    const dom = this.doc.getElementById(this.KEYS);
     if (dom) {
       dom.remove();
     }
-    localStorage.removeItem(ThemeBtnStorageKey);
+    localStorage.removeItem(this.KEYS);
     if (theme !== 'default') {
       const el = (this.el = this.doc.createElement('link'));
       el.type = 'text/css';
       el.rel = 'stylesheet';
-      el.id = ThemeBtnStorageKey;
+      el.id = this.KEYS;
       el.href = `assets/style.${theme}.css`;
 
-      localStorage.setItem(ThemeBtnStorageKey, theme);
+      localStorage.setItem(this.KEYS, theme);
       this.doc.body.append(el);
     }
     this.updateChartTheme();
