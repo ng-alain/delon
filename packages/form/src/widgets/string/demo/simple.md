@@ -47,6 +47,14 @@ export class DemoComponent {
         format: 'id-card',
         title: '身份证号',
       },
+      regex: {
+        type: 'string',
+        pattern: `^[abc]+$`,
+        title: '正则表达式',
+        ui: {
+          placeholder: `^[abc]+$`,
+        } as SFStringWidgetSchema,
+      },
       color: {
         type: 'string',
         format: 'color',
