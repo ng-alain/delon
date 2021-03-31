@@ -102,7 +102,7 @@ The implementation mechanism of `sf` causes that it couldn't handle error captur
 |-----------|-------------|------|---------------|
 | `[maxLength]` | Maximum length of string | `number` | - |
 | `[minLength]` | Minimum length of string | `number` | - |
-| `[pattern]` | Regular expression, must set if `format: 'regex'` has been set | `string` | - |
+| `[pattern]` | Regular expression | `string` | - |
 
 ### Array Type
 
