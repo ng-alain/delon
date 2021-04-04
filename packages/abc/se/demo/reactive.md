@@ -2,7 +2,7 @@
 order: 2
 title:
   zh-CN: 响应式表单
-  en-US: Reactive From
+  en-US: Reactive Form
 ---
 
 ## zh-CN
