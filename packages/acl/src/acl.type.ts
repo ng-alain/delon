@@ -4,8 +4,6 @@
  * TODO: 尝试增加 `@delon/core` 类库用于处理这种通用型
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 export interface ACLType {
   /**
    * 角色
@@ -28,7 +26,7 @@ export interface ACLType {
    */
   except?: boolean;
 
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 }
 
 export type ACLCanType = number | number[] | string | string[] | ACLType;
