@@ -33,7 +33,7 @@ const BORDER_WIDTH: number = 9;
   selector: 'pdf',
   exportAs: 'pdf',
   template: `
-    <nz-skeleton *ngIf="!inited"></nz-skeleton>
+    <nz-skeleton *ngIf="!inited || loading"></nz-skeleton>
     <div class="pdf-container">
       <div class="pdfViewer"></div>
     </div>
@@ -68,6 +68,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _rotation = 0;
   private _zoom = 1;
   private _renderText = true;
+  private _loading = false;
 
   private multiPageViewer: NzSafeAny;
   private multiPageLinkService: NzSafeAny;
@@ -120,6 +121,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
   @Input() @InputNumber() delay: number;
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
+
+  get loading(): boolean {
+    return this._loading;
+  }
 
   get pdf(): NzSafeAny {
     return this._pdf;
@@ -191,6 +196,13 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     setTimeout(() => this.load(), this.delay);
   }
 
+  setLoading(status: boolean): void {
+    this.ngZone.run(() => {
+      this._loading = status;
+      this.cdr.detectChanges();
+    });
+  }
+
   @ZoneOutside()
   private load(): void {
     const { _src } = this;
@@ -204,25 +216,32 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
 
     this.destroy();
+    this.ngZone.run(() => {
+      this._loading = true;
+      this.cdr.detectChanges();
+    });
+    this.setLoading(true);
     const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
     loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
-    loadingTask.promise.then(
-      (pdf: NzSafeAny) => {
-        this._pdf = pdf;
-        this.lastSrc = _src;
-        this._total = pdf.numPages;
+    (loadingTask.promise as PromiseLike<void>)
+      .then(
+        (pdf: NzSafeAny) => {
+          this._pdf = pdf;
+          this.lastSrc = _src;
+          this._total = pdf.numPages;
 
-        this.emit('loaded');
+          this.emit('loaded');
 
-        if (!this.pageViewer) {
-          this.setupPageViewer();
-        }
+          if (!this.pageViewer) {
+            this.setupPageViewer();
+          }
 
-        this.resetDoc();
-        this.render();
-      },
-      (error: NzSafeAny) => this.emit('error', { error }),
-    );
+          this.resetDoc();
+          this.render();
+        },
+        (error: NzSafeAny) => this.emit('error', { error }),
+      )
+      .then(() => this.setLoading(false));
   }
 
   @ZoneOutside()
