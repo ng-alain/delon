@@ -1,13 +1,19 @@
-import { formatNumber } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { CurrencyPipe, formatNumber } from '@angular/common';
+import { DEFAULT_CURRENCY_CODE, Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
 import { CurrencyCNYOptions, CurrencyFormatOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
   private c: AlainUtilCurrencyConfig;
+  private readonly currencyPipe: CurrencyPipe;
 
-  constructor(cog: AlainConfigService, @Inject(LOCALE_ID) private locale: string) {
+  constructor(
+    cog: AlainConfigService,
+    @Inject(LOCALE_ID) private locale: string,
+    @Inject(DEFAULT_CURRENCY_CODE) _defaultCurrencyCode: string = 'USD',
+  ) {
+    this.currencyPipe = new CurrencyPipe(locale, _defaultCurrencyCode);
     this.c = cog.merge('utilCurrency', {
       startingUnit: 'yuan',
       megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },
@@ -30,6 +36,7 @@ export class CurrencyService {
       startingUnit: this.c.startingUnit,
       precision: this.c.precision,
       ingoreZeroPrecision: this.c.ingoreZeroPrecision,
+      ngCurrency: this.c.ngCurrency,
       ...options,
     };
     let truthValue = Number(value);
@@ -38,6 +45,10 @@ export class CurrencyService {
     }
     if (options.startingUnit === 'cent') {
       truthValue = truthValue / 100;
+    }
+    if (options.ngCurrency != null) {
+      const cur = options.ngCurrency!;
+      return this.currencyPipe.transform(truthValue, cur.currencyCode, cur.display, cur.digitsInfo, cur.locale || this.locale)!;
     }
     const res = formatNumber(truthValue, this.locale, `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`);
     return options.ingoreZeroPrecision ? res.replace(/(?:\.[0]+)$/g, '') : res;

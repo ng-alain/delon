@@ -17,6 +17,8 @@ Format a number with commas as thousands separators.
 10000.567 => `10,000.57`
 ```
 
+> Use anguar `currency` pipe parse when is set, pls refer to [document](https://angular.io/api/common/CurrencyPipe).
+
 ### mega
 
 Large number format filter.
