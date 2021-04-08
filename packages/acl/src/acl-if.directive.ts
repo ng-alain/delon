@@ -45,10 +45,10 @@ export class ACLIfDirective implements OnDestroy {
   }
 
   @Input()
-  set except(value: any) {
+  set except(value: boolean) {
     this._except = value != null && `${value}` !== 'false';
   }
-  get except() {
+  get except(): boolean {
     return this._except;
   }
 
