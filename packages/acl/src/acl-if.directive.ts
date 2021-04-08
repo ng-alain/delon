@@ -1,5 +1,4 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ACLService } from './acl.service';
@@ -10,7 +9,7 @@ import { ACLCanType } from './acl.type';
   exportAs: 'aclIf',
 })
 export class ACLIfDirective implements OnDestroy {
-  static ngAcceptInputType_except: BooleanInput;
+  static ngAcceptInputType_except: boolean | string | undefined | null;
 
   private _value: ACLCanType;
   private _change$: Subscription;
@@ -18,6 +17,7 @@ export class ACLIfDirective implements OnDestroy {
   private _elseTemplateRef: TemplateRef<void> | null = null;
   private _thenViewRef: EmbeddedViewRef<void> | null = null;
   private _elseViewRef: EmbeddedViewRef<void> | null = null;
+  private _except = false;
 
   constructor(templateRef: TemplateRef<void>, private srv: ACLService, private _viewContainer: ViewContainerRef) {
     this._change$ = this.srv.change.pipe(filter(r => r != null)).subscribe(() => this._updateView());
@@ -44,7 +44,13 @@ export class ACLIfDirective implements OnDestroy {
     this._updateView();
   }
 
-  @Input() @InputBoolean() except = false;
+  @Input()
+  set except(value: boolean) {
+    this._except = value != null && `${value}` !== 'false';
+  }
+  get except(): boolean {
+    return this._except;
+  }
 
   protected _updateView(): void {
     const res = this.srv.can(this._value);
