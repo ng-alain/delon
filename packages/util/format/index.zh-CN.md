@@ -17,6 +17,8 @@ type: Tools
 10000.567 => `10,000.57`
 ```
 
+> 若指定则表示使用 Angular 自带的 `currency` 管道来解析，见[文档](https://angular.cn/api/common/CurrencyPipe)。
+
 ### formatMask
 
 格式化掩码。

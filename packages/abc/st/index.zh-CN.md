@@ -267,7 +267,7 @@ class TestComponent {
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |
 | `[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `yyyy-MM-dd HH:mm` |
-| `[currency]` | 货币格式选项，`type=currency` 有效 | `STcolumnCurrency` | - |
+| `[currency]` | 货币格式选项，`type=currency` 有效 | `STColumnCurrency` | - |
 | `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | - |
 | `[exported]` | 是否允许导出 | `boolean` | `true` |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
