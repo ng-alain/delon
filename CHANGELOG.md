@@ -1,3 +1,20 @@
+# [11.9.0](https://github.com/ng-alain/delon/compare/11.8.1...11.9.0) (2021-04-09)
+
+
+### Bug Fixes
+
+* **acl:** keeping pure lib ([#1229](https://github.com/ng-alain/delon/issues/1229)) ([3e79ad2](https://github.com/ng-alain/delon/commit/3e79ad238aa35eb2733a61923594805b7f30ee96))
+* **theme:theme-btn:** optimize Keys of storage ([#1224](https://github.com/ng-alain/delon/issues/1224)) ([8a40157](https://github.com/ng-alain/delon/commit/8a401578b12a281b90ceb00b481bcef239825e6a))
+
+
+### Features
+
+* **abc:pdf:** add `loading` of pdf file loading ([#1228](https://github.com/ng-alain/delon/issues/1228)) ([b4effc5](https://github.com/ng-alain/delon/commit/b4effc5552864d79d7320dab151053b97cc9dbef))
+* **util:currency:** add ingoreZeroPrecision property ([#1222](https://github.com/ng-alain/delon/issues/1222)) ([dd10674](https://github.com/ng-alain/delon/commit/dd10674311283a9a4643457ad1e2003be98139bd))
+* **util:CurrencyService:** add support angular `currency` pipe render type ([#1230](https://github.com/ng-alain/delon/issues/1230)) ([7a6c329](https://github.com/ng-alain/delon/commit/7a6c32998dcbb62a3b100214eb234032411ab223))
+
+
+
 ## [11.8.1](https://github.com/ng-alain/delon/compare/11.8.0...11.8.1) (2021-03-17)
 
 
