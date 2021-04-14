@@ -39,6 +39,7 @@ describe('abc: table: data-souce', () => {
   let currencySrv: MockCurrencyService;
   // tslint:disable-next-line:prefer-const
   let httpResponse: any;
+  let mockDomSanitizer: MockDomSanitizer;
 
   class MockHttpClient {
     request(_method: string, _url: string, _opt: any): any {
@@ -74,13 +75,15 @@ describe('abc: table: data-souce', () => {
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
+      saftHtml: true,
     };
+    mockDomSanitizer = new MockDomSanitizer() as any;
     datePipe = new DatePipe(new MockNzI18nService() as any);
-    ynPipe = new YNPipe(new MockDomSanitizer() as any);
+    ynPipe = new YNPipe(mockDomSanitizer as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
     currencySrv = new MockCurrencyService();
-    srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, new MockDomSanitizer() as any);
+    srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, mockDomSanitizer as any);
   }
 
   describe('[local data]', () => {
@@ -802,6 +805,25 @@ describe('abc: table: data-souce', () => {
           expect(res.list[0]._values[0].text).toBe('一');
           expect(res.list[1]._values[0].text).toBe('');
           done();
+        });
+      });
+      describe('NOT SAFE HTML', () => {
+        beforeEach(() => {
+          spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
+          options.columns[0].saftHtml = false;
+        });
+        it('should be working in index', done => {
+          srv.process(options).subscribe(() => {
+            expect(mockDomSanitizer.bypassSecurityTrustHtml).not.toHaveBeenCalled();
+            done();
+          });
+        });
+        it('should be working in format', done => {
+          options.columns[0].format = () => 'a';
+          srv.process(options).subscribe(() => {
+            expect(mockDomSanitizer.bypassSecurityTrustHtml).not.toHaveBeenCalled();
+            done();
+          });
         });
       });
     });

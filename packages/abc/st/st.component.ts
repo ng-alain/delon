@@ -360,6 +360,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           multiSort,
           rowClassName,
           paginator: true,
+          saftHtml: this.cog.saftHtml!,
           ...options,
         })
         .pipe(takeUntil(this.destroy$))
@@ -884,7 +885,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private optimizeData(): void {
-    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this._data = this.dataSource.optimizeData({
+      columns: this._columns,
+      result: this._data,
+      rowClassName: this.rowClassName,
+      safeHtml: this.cog.saftHtml!,
+    });
   }
 
   /**

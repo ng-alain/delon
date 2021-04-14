@@ -43,6 +43,7 @@ export interface STDataSourceOptions {
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
+  saftHtml: boolean;
 }
 
 export interface STDataSourceResult {
@@ -164,7 +165,9 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    data$ = data$.pipe(map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })));
+    data$ = data$.pipe(
+      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, safeHtml: options.saftHtml })),
+    );
 
     return data$.pipe(
       map(result => {
@@ -184,11 +187,11 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: _STColumn, idx: number): _STDataValue {
+  private get(item: STData, col: _STColumn, idx: number, safeHtml: boolean): _STDataValue {
     try {
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
-        if (formatRes && ~formatRes.indexOf('</')) {
+        if (safeHtml && formatRes && ~formatRes.indexOf('</')) {
           return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
         }
         return { text: formatRes, _text: formatRes, org: formatRes };
@@ -233,11 +236,11 @@ export class STDataSource {
           break;
       }
       if (text == null) text = '';
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color, buttons: [] };
+      return { text, _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text, org: value, color, buttons: [] };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: text, buttons: [] };
+      return { text, _text: text, org: text, buttons: [] };
     }
   }
 
@@ -286,15 +289,15 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
-    const { result, columns, rowClassName } = options;
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName; safeHtml: boolean }): STData[] {
+    const { result, columns, rowClassName, safeHtml } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
           return { buttons: this.genButtons(c.buttons, result[i], c) };
         }
 
-        return this.get(result[i], c, i);
+        return this.get(result[i], c, i, c.saftHtml == null ? safeHtml : c.saftHtml);
       });
       if (rowClassName) {
         result[i]._rowClassName = rowClassName(result[i], i);

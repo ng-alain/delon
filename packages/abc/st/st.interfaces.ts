@@ -284,6 +284,12 @@ export interface STColumn<T extends STData = any> {
    */
   format?: (item: T, col: STColumn, index: number) => string;
   /**
+   * Whether trust html, default: `true`, Support [global config](https://ng-alain.com/docs/global-config)
+   *
+   * 是否信任HTML，默认：`true`，支持[全局配置](https://ng-alain.com/docs/global-config/zh)
+   */
+  saftHtml?: boolean;
+  /**
    * 自定义全/反选选择项
    */
   selections?: STColumnSelection<T>[];
