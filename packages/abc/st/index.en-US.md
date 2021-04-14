@@ -281,6 +281,7 @@ class TestComponent {
 | `[statistical]` | Statistics | `STStatisticalType,STStatistical` | - |
 | `[resizable]` | Resize header, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `[children]` | Group columns | `STColumn[]` | - |
+| `[saftHtml]` | Whether trust html, Support [global config](https://ng-alain.com/docs/global-config) | `boolean` | `true` |
 
 ### STColumnTitle
 
