@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -102,6 +103,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: any,
+    private platform: Platform,
   ) {}
 
   private genTit(title: ReuseTitle): string {
@@ -244,6 +246,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(50)).subscribe(() => {
       const url = this.srv.getUrl(this.route.snapshot);
       const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
@@ -291,6 +297,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;
