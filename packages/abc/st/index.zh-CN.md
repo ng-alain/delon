@@ -282,6 +282,7 @@ class TestComponent {
 | `[resizable]` | 调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
 | `[children]` | 多表头 | `STColumn[]` | - |
 | `[saftHtml]` | 是否信任HTML，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `boolean` | `true` |
+| `[customRequest]` | 覆盖默认的请求行为，可以自定义自己的请求实现，例如：Graphql，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle
 

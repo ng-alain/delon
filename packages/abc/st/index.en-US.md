@@ -282,6 +282,7 @@ class TestComponent {
 | `[resizable]` | Resize header, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `[children]` | Group columns | `STColumn[]` | - |
 | `[saftHtml]` | Whether trust html, Support [global config](https://ng-alain.com/docs/global-config) | `boolean` | `true` |
+| `[customRequest]` | Override the default request behavior, you can customize your own request implementation, for example: Graphql, Support [global config](https://ng-alain.com/docs/global-config) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle
 

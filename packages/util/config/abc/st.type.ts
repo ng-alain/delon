@@ -1,9 +1,11 @@
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { TemplateRef, TrackByFunction } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import { NzTableData } from 'ng-zorro-antd/table';
+import { Observable } from 'rxjs';
 
 export interface AlainSTConfig {
   /**
@@ -389,4 +391,26 @@ export interface AlainSTConfig {
    * 是否信任HTML，默认：`true`
    */
   saftHtml?: boolean;
+  /**
+   * Override the default request behavior, you can customize your own request implementation, for example: Graphql
+   *
+   * 覆盖默认的请求行为，可以自定义自己的请求实现，例如：Graphql
+   */
+  customRequest?: (options: {
+    method: string;
+    url: string;
+    options: {
+      body?: any;
+      headers?:
+        | HttpHeaders
+        | {
+            [header: string]: string | string[];
+          };
+      params?:
+        | HttpParams
+        | {
+            [param: string]: string | string[];
+          };
+    };
+  }) => Observable<any>;
 }

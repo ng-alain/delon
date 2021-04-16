@@ -12,6 +12,7 @@ import {
   STColumn,
   STColumnFilter,
   STColumnFilterMenu,
+  STCustomRequestOptions,
   STData,
   STMultiSort,
   STMultiSortResultType,
@@ -44,6 +45,7 @@ export interface STDataSourceOptions {
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
   saftHtml: boolean;
+  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
 }
 
 export interface STDataSourceResult {
@@ -87,7 +89,7 @@ export class STDataSource {
 
     if (typeof data === 'string') {
       isRemote = true;
-      data$ = this.getByHttp(data, options).pipe(
+      data$ = this.getByRemote(data, options).pipe(
         map(result => {
           rawData = result;
           let ret: STData[];
@@ -244,7 +246,7 @@ export class STDataSource {
     }
   }
 
-  private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
+  private getByRemote(url: string, options: STDataSourceOptions): Observable<{}> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
     let params = {};
@@ -285,6 +287,9 @@ export class STDataSource {
     }
     if (!(reqOptions.params instanceof HttpParams)) {
       reqOptions.params = new HttpParams({ fromObject: reqOptions.params });
+    }
+    if (typeof options.customRequest === 'function') {
+      return options.customRequest({ method, url, options: reqOptions });
     }
     return this.http.request(method, url, reqOptions);
   }

@@ -39,6 +39,7 @@ import {
   STColumnTitle,
   STContextmenuFn,
   STContextmenuItem,
+  STCustomRequestOptions,
   STMultiSort,
   STPage,
   STReq,
@@ -878,6 +879,14 @@ describe('abc: st', () => {
           tick(1000);
           fixture.detectChanges();
           expect(comp._data.length).toBe(mockData.length);
+        }));
+        it('#customRequest', fakeAsync(() => {
+          context.customRequest = jasmine.createSpy('customRequest');
+          context.data = '/invalid-url';
+          fixture.detectChanges();
+          tick(1000);
+          fixture.detectChanges();
+          expect(context.customRequest).toHaveBeenCalled();
         }));
       });
     });
@@ -2130,6 +2139,7 @@ describe('abc: st', () => {
       [rowClickTime]="rowClickTime"
       [showHeader]="showHeader"
       [contextmenu]="contextmenu"
+      [customRequest]="customRequest"
       (change)="change($event)"
       (error)="error()"
     >
@@ -2163,6 +2173,7 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
   showHeader = true;
+  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
   contextmenu: STContextmenuFn | null = _ => [
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] },
