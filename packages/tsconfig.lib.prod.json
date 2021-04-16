@@ -5,7 +5,6 @@
   },
   "angularCompilerOptions": {
     "enableIvy": true,
-    "compilationMode": "partial",
-    "fullTemplateTypeCheck": false
+    "compilationMode": "partial"
   }
 }
