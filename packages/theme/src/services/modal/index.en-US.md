@@ -16,13 +16,13 @@ this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
 
 // Ok callback
 // 1. considered successful
-this.subject.close(true);
-this.subject.close({ other: 1 });
+this.nzModalRef.close(true);
+this.nzModalRef.close({ other: 1 });
 // 2. considered error
-this.subject.close();
+this.nzModalRef.close();
 
 // Close
-this.subject.destroy();
+this.nzModalRef.destroy();
 ```
 
 There are includes `create` & `createStatic` methods to open the normal & static modal. Add a few parameters based on `NzModalService`.

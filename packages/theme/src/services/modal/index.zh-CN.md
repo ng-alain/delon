@@ -16,13 +16,13 @@ this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
 
 // 成功范例
 // 1. 视为成功
-this.subject.close(true);
-this.subject.close({ other: 1 });
+this.nzModalRef.close(true);
+this.nzModalRef.close({ other: 1 });
 // 2. 视为失败
-this.subject.close();
+this.nzModalRef.close();
 
 // 关闭：
-this.subject.destroy();
+this.nzModalRef.destroy();
 ```
 
 包括两个方法体 `create` & `createStatic` 分别打开普通&静态对话框。在 `NzModalService` 基础上新增若干参数。
