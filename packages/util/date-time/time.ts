@@ -1,17 +1,19 @@
-import addDays from 'date-fns/addDays';
-import endOfDay from 'date-fns/endOfDay';
-import endOfMonth from 'date-fns/endOfMonth';
-import endOfWeek from 'date-fns/endOfWeek';
-import endOfYear from 'date-fns/endOfYear';
-import parse from 'date-fns/parse';
-import parseISO from 'date-fns/parseISO';
-import startOfDay from 'date-fns/startOfDay';
-import startOfMonth from 'date-fns/startOfMonth';
-import startOfWeek from 'date-fns/startOfWeek';
-import startOfYear from 'date-fns/startOfYear';
-import subMonths from 'date-fns/subMonths';
-import subWeeks from 'date-fns/subWeeks';
-import subYears from 'date-fns/subYears';
+import {
+  addDays,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  parse,
+  parseISO,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+  subMonths,
+  subWeeks,
+  subYears,
+} from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 /**

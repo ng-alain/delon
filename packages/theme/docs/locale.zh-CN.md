@@ -53,6 +53,7 @@ switchLanguage() {
 | 日语 | ja_JP |
 | 斯洛文尼亚文 | sl_SI |
 | 法文 | fr_FR |
+| 西班牙语 | es_ES |
 
 ## 增加语言包
 

@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
@@ -9,8 +9,10 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+  STColumn,
   STColumnFilter,
   STColumnFilterMenu,
+  STCustomRequestOptions,
   STData,
   STMultiSort,
   STMultiSortResultType,
@@ -27,7 +29,7 @@ import {
   STStatisticalResults,
   STStatisticalType,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STColumnButton, _STDataValue } from './st.types';
 
 export interface STDataSourceOptions {
   pi: number;
@@ -42,6 +44,8 @@ export interface STDataSourceOptions {
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
+  saftHtml: boolean;
+  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
 }
 
 export interface STDataSourceResult {
@@ -85,7 +89,7 @@ export class STDataSource {
 
     if (typeof data === 'string') {
       isRemote = true;
-      data$ = this.getByHttp(data, options).pipe(
+      data$ = this.getByRemote(data, options).pipe(
         map(result => {
           rawData = result;
           let ret: STData[];
@@ -163,7 +167,9 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    data$ = data$.pipe(map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })));
+    data$ = data$.pipe(
+      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, safeHtml: options.saftHtml })),
+    );
 
     return data$.pipe(
       map(result => {
@@ -183,11 +189,11 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: _STColumn, idx: number): { text: string; _text: SafeHtml; org?: any; color?: string } {
+  private get(item: STData, col: _STColumn, idx: number, safeHtml: boolean): _STDataValue {
     try {
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
-        if (formatRes && ~formatRes.indexOf('</')) {
+        if (safeHtml && formatRes && ~formatRes.indexOf('</')) {
           return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
         }
         return { text: formatRes, _text: formatRes, org: formatRes };
@@ -232,15 +238,15 @@ export class STDataSource {
           break;
       }
       if (text == null) text = '';
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
+      return { text, _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text, org: value, color, buttons: [] };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: text };
+      return { text, _text: text, org: text, buttons: [] };
     }
   }
 
-  private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
+  private getByRemote(url: string, options: STDataSourceOptions): Observable<{}> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
     let params = {};
@@ -282,13 +288,22 @@ export class STDataSource {
     if (!(reqOptions.params instanceof HttpParams)) {
       reqOptions.params = new HttpParams({ fromObject: reqOptions.params });
     }
+    if (typeof options.customRequest === 'function') {
+      return options.customRequest({ method, url, options: reqOptions });
+    }
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
-    const { result, columns, rowClassName } = options;
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName; safeHtml: boolean }): STData[] {
+    const { result, columns, rowClassName, safeHtml } = options;
     for (let i = 0, len = result.length; i < len; i++) {
-      result[i]._values = columns.map(c => this.get(result[i], c, i));
+      result[i]._values = columns.map(c => {
+        if (Array.isArray(c.buttons) && c.buttons.length > 0) {
+          return { buttons: this.genButtons(c.buttons, result[i], c) };
+        }
+
+        return this.get(result[i], c, i, c.saftHtml == null ? safeHtml : c.saftHtml);
+      });
       if (rowClassName) {
         result[i]._rowClassName = rowClassName(result[i], i);
       }
@@ -298,6 +313,36 @@ export class STDataSource {
 
   getNoIndex(item: STData, col: _STColumn, idx: number): number {
     return typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex! + idx;
+  }
+
+  private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
+    const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
+      return deepCopy(btns).filter(btn => {
+        const result = btn.iif!(item, btn, col);
+        const isRenderDisabled = btn.iifBehavior === 'disabled';
+        btn._result = result;
+        btn._disabled = !result && isRenderDisabled;
+        if (btn.children!.length > 0) {
+          btn.children = fn(btn.children!);
+        }
+        delete btn.iif;
+        return result || isRenderDisabled;
+      });
+    };
+
+    const res = fn(_btns);
+
+    const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
+      for (const btn of btns) {
+        btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        if (btn.children!.length > 0) {
+          btn.children = fnText(btn.children!);
+        }
+      }
+      return btns;
+    };
+
+    return fnText(res);
   }
 
   // #region sort

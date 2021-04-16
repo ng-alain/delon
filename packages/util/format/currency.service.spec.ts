@@ -1,10 +1,13 @@
+import { DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CurrencyService } from './currency.service';
 
 describe('util: FormatCurrencyService', () => {
   let srv: CurrencyService;
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'CNY' }],
+    });
     srv = TestBed.inject<CurrencyService>(CurrencyService);
   });
 
@@ -18,6 +21,20 @@ describe('util: FormatCurrencyService', () => {
     });
     it('should be return empty when is NaN', () => {
       expect(srv.format(undefined!)).toBe('');
+    });
+    it('#ingoreZeroPrecision', () => {
+      expect(srv.format(100, { startingUnit: 'cent', ingoreZeroPrecision: false })).toBe('1.00');
+    });
+    describe('[USE ANGULAR]', () => {
+      it('should be working', () => {
+        expect(srv.format(10000, { ngCurrency: { display: 'symbol' } })).toBe('CN¥10,000.00');
+        expect(
+          srv.format(5.1234, { startingUnit: 'yuan', ngCurrency: { currencyCode: 'USD', display: 'code', digitsInfo: '.0-3' } }),
+        ).toEqual('USD5.123');
+        expect(srv.format(5.1234, { startingUnit: 'yuan', ngCurrency: { currencyCode: 'CAD', display: 'symbol-narrow' } })).toEqual(
+          '$5.12',
+        );
+      });
     });
   });
 

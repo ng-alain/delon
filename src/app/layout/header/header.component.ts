@@ -2,11 +2,12 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18NService, MobileService } from '@core';
-import { RTLService } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
 import { copy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
 import { MetaSearchGroupItem } from '../../interfaces';
+import { LayoutComponent } from '../layout.component';
 const pkg = require('../../../../package.json');
 
 @Component({
@@ -42,20 +43,20 @@ export class HeaderComponent implements AfterViewInit {
     cli: { regex: /^\/cli/ },
     delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ },
   };
-  showSearch = true;
 
   private getWin(): Window {
     return (this.doc as Document).defaultView || window;
   }
 
   constructor(
-    public i18n: I18NService,
+    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
     private router: Router,
     private msg: NzMessageService,
     private mobileSrv: MobileService,
     @Inject(DOCUMENT) private doc: any,
     private cdr: ChangeDetectorRef,
     public rtl: RTLService,
+    private layout: LayoutComponent,
   ) {
     router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
       this.menuVisible = false;
@@ -69,7 +70,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   private updateGitee(): void {
-    this.showGitee = this.i18n.lang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') === -1;
+    this.showGitee = this.i18n.currentLang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') === -1;
     this.cdr.detectChanges();
   }
 
@@ -86,14 +87,10 @@ export class HeaderComponent implements AfterViewInit {
 
   langChange(language: 'en' | 'zh'): void {
     this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => {
-      this.updateGitee();
-      // fix header-search
-      this.showSearch = false;
-      this.cdr.detectChanges();
+      this.layout.render = false;
       setTimeout(() => {
-        this.showSearch = true;
-        this.cdr.detectChanges();
-      }, 100);
+        this.layout.render = true;
+      }, 25);
     });
   }
 

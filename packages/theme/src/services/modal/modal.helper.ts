@@ -32,11 +32,11 @@ export class ModalHelper {
    * @example
    * this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
   create(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<NzSafeAny> {
     options = deepMerge(
@@ -97,11 +97,11 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
   createStatic(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<any> {
     const modalOptions = {
@@ -119,11 +119,11 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
   open(
     comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
@@ -146,11 +146,11 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
   static(
     comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,

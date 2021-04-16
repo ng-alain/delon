@@ -22,7 +22,7 @@ export interface AlainSFConfig {
    */
   ingoreKeywords?: string[];
   /**
-   * [ajv](http://epoberezkin.github.io/ajv/#options) 参数
+   * [ajv](https://github.com/ajv-validator/ajv/blob/master/docs/api.md#options) 参数
    */
   ajv?: any;
   /**

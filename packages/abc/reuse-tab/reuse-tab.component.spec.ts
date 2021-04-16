@@ -1,9 +1,10 @@
-import { Component, DebugElement, Injectable, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, ScrollService, WINDOW, zh_CN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
+import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
@@ -60,7 +61,6 @@ describe('abc: reuse-tab', () => {
       ],
       providers: [
         MenuService,
-        { provide: WINDOW, useValue: window },
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
@@ -250,6 +250,16 @@ describe('abc: reuse-tab', () => {
             page.to('#b').to('#b2').to('#b3').expectCount(2);
           }));
         });
+      });
+      it('#disabled', () => {
+        layoutComp.disabled = true;
+        page.cd(0);
+        expect(page.getEl('.reuse-tab__disabled') != null).toBe(true);
+      });
+      it('#titleRender', () => {
+        layoutComp.titleRender = layoutComp.titleRenderTpl;
+        page.cd(0);
+        expect(page.getEl('.reuse-tab__name').textContent?.trim()).toBe('/a');
       });
     });
 
@@ -682,8 +692,10 @@ describe('abc: reuse-tab', () => {
     }
     cd(time: number = 101): this {
       fixture.detectChanges();
-      tick(time);
-      fixture.detectChanges();
+      if (time > 0) {
+        tick(time);
+        fixture.detectChanges();
+      }
       return this;
     }
     to(id: string): this {
@@ -797,16 +809,20 @@ class AppComponent {}
       [tabType]="tabType"
       [tabMaxWidth]="tabMaxWidth"
       [routeParamMatchMode]="routeParamMatchMode"
+      [disabled]="disabled"
+      [titleRender]="titleRender"
       (change)="change($event)"
       (close)="close($event)"
     >
     </reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
+    <ng-template #titleRender let-i>{{ i.url }}</ng-template>
   `,
 })
 class LayoutComponent {
   @ViewChild('comp', { static: true })
   comp: ReuseTabComponent;
+  @ViewChild('titleRender', { static: true }) titleRenderTpl: TemplateRef<{ $implicit: ReuseItem }>;
   mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
   debug = false;
   max: number = 3;
@@ -818,6 +834,8 @@ class LayoutComponent {
   tabType: 'line' | 'card' = 'line';
   tabMaxWidth: number;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
+  disabled = false;
+  titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   change(): void {}
   close(): void {}
 }

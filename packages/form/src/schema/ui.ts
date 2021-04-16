@@ -1,5 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { ACLCanType } from '@delon/acl';
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { ErrorSchema } from '../errors';
 
 export type SFPlacement =
@@ -20,7 +21,7 @@ export type SFTrigger = 'click' | 'focus' | 'hover';
 
 export type SFLSSize = 'large' | 'small';
 
-export type SFDLSSize = 'default' | 'large' | 'small';
+export type SFDLSSize = NzSizeLDSType;
 
 export interface SFGridSizeSchema {
   span?: number | null;

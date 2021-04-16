@@ -43,7 +43,7 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
     if (this.ui.blur) this.ui.blur(e);
   }
 
-  enter(e: KeyboardEvent): void {
+  enter(e: Event): void {
     if (this.ui.enter) this.ui.enter(e);
   }
 }

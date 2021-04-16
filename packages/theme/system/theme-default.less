@@ -58,12 +58,12 @@
 // Layout Gutter
 @layout-gutter: 8px;
 
-@xs:    @layout-gutter / 2; // 4px
+@xs:    (@layout-gutter / 2); // 4px
 @sm:    @layout-gutter;     // 8px
-@md:    @layout-gutter * 2; // 16px
-@lg:    @layout-gutter * 3; // 24px
-@xl:    @layout-gutter * 4; // 32px
-@xxl:   @layout-gutter * 6; // 48px
+@md:    (@layout-gutter * 2); // 16px
+@lg:    (@layout-gutter * 3); // 24px
+@xl:    (@layout-gutter * 4); // 32px
+@xxl:   (@layout-gutter * 6); // 48px
 
 @grid-breakpoints:
     xs @screen-xs,
@@ -203,8 +203,8 @@
 @nz-table-rep-min-width: @nz-table-rep-max-width + 1;
 @nz-table-rep-header-background: @border-color-split;
 @nz-table-rep-even-background: #f9f9f9;
-@nz-table-rep-padding-vertical: @table-padding-vertical / 2;
-@nz-table-rep-padding-horizontal: @table-padding-horizontal / 2;
+@nz-table-rep-padding-vertical: (@table-padding-vertical / 2);
+@nz-table-rep-padding-horizontal: (@table-padding-horizontal / 2);
 @nz-table-rep-column-name-width: 100px;
 @nz-table-rep-column-name-text-align: right;
 @nz-table-rep-column-name-padding-right: 8px;

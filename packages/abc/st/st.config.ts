@@ -1,6 +1,6 @@
 import { AlainSTConfig } from '@delon/util/config';
 
-export const ST_DEFULAT_CONFIG: AlainSTConfig = {
+export const ST_DEFAULT_CONFIG: AlainSTConfig = {
   pi: 1,
   ps: 10,
   size: 'default',
@@ -64,4 +64,5 @@ export const ST_DEFULAT_CONFIG: AlainSTConfig = {
   virtualMinBufferPx: 100,
   iifBehavior: 'hide',
   loadingDelay: 0,
+  saftHtml: true,
 };

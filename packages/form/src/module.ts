@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -122,6 +122,7 @@ const WIDGETS = [
   imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS,
+  entryComponents: WIDGETS,
 })
 export class DelonFormModule {
   static forRoot(): ModuleWithProviders<DelonFormModule> {
@@ -131,7 +132,7 @@ export class DelonFormModule {
         {
           provide: SchemaValidatorFactory,
           useClass: AjvSchemaValidatorFactory,
-          deps: [AlainConfigService],
+          deps: [AlainConfigService, NgZone],
         },
         { provide: WidgetRegistry, useClass: NzWidgetRegistry },
       ],

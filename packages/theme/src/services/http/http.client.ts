@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
-import { finalize, switchMap } from 'rxjs/operators';
+import { delay, finalize, switchMap, tap } from 'rxjs/operators';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -406,8 +406,13 @@ export class _HttpClient {
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
   jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
-    this.push();
-    return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(finalize(() => this.pop()));
+    return of(null).pipe(
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
+      tap(() => this.push()),
+      switchMap(() => this.http.jsonp(this.appliedUrl(url, params), callbackParam)),
+      finalize(() => this.pop()),
+    );
   }
 
   // #endregion
@@ -981,9 +986,11 @@ export class _HttpClient {
       withCredentials?: boolean;
     } = {},
   ): Observable<any> {
-    this.push();
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
+      tap(() => this.push()),
       switchMap(() => this.http.request(method, url, options)),
       finalize(() => this.pop()),
     );

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { MockCachedRule, MockRule } from './interface';
+import { MockCachedRule, MockOptions, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';
 
 @Injectable({ providedIn: 'root' })
@@ -9,25 +9,33 @@ export class MockService implements OnDestroy {
   private cached: MockCachedRule[] = [];
   readonly config: AlainMockConfig;
 
-  constructor(cogSrv: AlainConfigService) {
+  constructor(cogSrv: AlainConfigService, options: MockOptions) {
     this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
-    this.applyMock();
+    this.setData(options?.data || this.config.data);
     delete this.config.data;
+  }
+
+  /**
+   * Reset request data
+   *
+   * 重新设置请求数据
+   */
+  setData(data: any): void {
+    this.applyMock(data);
   }
 
   // #region parse rule
 
-  private applyMock(): void {
+  private applyMock(data: any): void {
     this.cached = [];
     try {
-      this.realApplyMock();
+      this.realApplyMock(data);
     } catch (e) {
       this.outputError(e);
     }
   }
 
-  private realApplyMock(): void {
-    const data = this.config.data;
+  private realApplyMock(data: any): void {
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
       const rules = data[key];

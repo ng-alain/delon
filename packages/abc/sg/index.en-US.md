@@ -10,7 +10,7 @@ module: import { SGModule } from '@delon/abc/sg';
 A higher-order components of grid systems, that consists of `sg-container` (directive) and `sg` components:
 
 ```html
-<div nz-row nzGutter="32">
+<div nz-row [nzGutter]="32">
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">1</nz-col>
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">2</nz-col>
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">3</nz-col>

@@ -46,3 +46,22 @@ Project config data, includes [App](https://github.com/ng-alain/delon/blob/maste
 | `[lang]` | Current language | `string` | - |
 | `[colorWeak]` | Color weak | `boolean` | `false` |
 
+## FAQ
+
+**How to change the local storage key name?**
+
+Support add the configuration of `ALAIN_SETTING_KEYS` via the `global-config.module.ts` global configuration file, for example:
+
+```diff
+ const alainProvides = [
+  { provide: ALAIN_CONFIG, useValue: alainConfig },
++ {
++   provide: ALAIN_SETTING_KEYS,
++   useValue: {
++     layout: 'new-layout',
++     user: 'new-user',
++     app: 'new-app',
++   },
++ },
+];
+```

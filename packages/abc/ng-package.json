@@ -5,8 +5,7 @@
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib",
+  "allowedNonPeerDependencies": [
     "file-saver",
     "date-fns",
     "qrious",

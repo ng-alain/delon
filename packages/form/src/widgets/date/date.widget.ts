@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { toDate } from '@delon/util/date-time';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
@@ -57,7 +57,12 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   reset(value: SFValue): void {
-    value = toDate(value, { formatString: this.startFormat, defaultValue: null });
+    const toDateOptions = { formatString: this.startFormat, defaultValue: null };
+    if (Array.isArray(value)) {
+      value = value.map(v => toDate(v, toDateOptions));
+    } else {
+      value = toDate(value, toDateOptions);
+    }
     if (this.flatRange) {
       const endValue = toDate(this.endProperty.formData as NzSafeAny, {
         formatString: this.endFormat || this.startFormat,

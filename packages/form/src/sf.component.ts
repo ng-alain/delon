@@ -94,6 +94,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
+  get btnGrid(): any {
+    return this._btn.render!.grid;
+  }
 
   // #region fields
 
@@ -407,7 +410,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       liveValidate: this.liveValidate,
       firstVisual: this.firstVisual,
       ...this.options.ui,
-      ..._schema.ui,
+      ...(_schema as any).ui,
       ...this.ui['*'],
     };
     if (this.onlyVisual === true) {
@@ -427,6 +430,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     resolveIfSchema(_schema, this._ui);
 
     this._schema = _schema;
+    delete _schema.ui;
 
     di(this._ui, 'cover schema & ui', this._ui, _schema);
   }

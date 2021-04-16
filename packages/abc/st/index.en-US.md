@@ -142,7 +142,7 @@ class TestComponent {
 | `[headers]` | Request header | `any` | - | ✅ |
 | `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
 | `[allInBody]` | Whether to request all parameter data into `body` (except `url` itself parameter) | `boolean` | `false` | ✅ |
-| `[lazyLoad]` | Whether to dealy loading data in first render `st` component | `boolean` | `false` | ✅ |
+| `[lazyLoad]` | Whether to delay loading data in first render `st` component | `boolean` | `false` | ✅ |
 | `[process]` | Pre-request data processing | `(requestOptions: STRequestOptions) => STRequestOptions` | - | ✅ |
 
 ### STRes
@@ -245,7 +245,7 @@ class TestComponent {
 | `[expand]` | Whether to expand the status value | `boolean` | - |
 | `[showExpand]` | Whether show expand icon | `boolean` | - |
 
-### STColumn
+### STColumn<T extends STData = any>
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -267,7 +267,7 @@ class TestComponent {
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
 | `[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm` | - |
-| `[currency]` | Currency format option, `type=currency` is valid | `STcolumnCurrency` | - |
+| `[currency]` | Currency format option, `type=currency` is valid | `STColumnCurrency` | - |
 | `[yn]` | Config of type is yn | `STColumnYn` | - |
 | `[exported]` | Whether to allow export | `boolean` | `true` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
@@ -281,6 +281,8 @@ class TestComponent {
 | `[statistical]` | Statistics | `STStatisticalType,STStatistical` | - |
 | `[resizable]` | Resize header, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `[children]` | Group columns | `STColumn[]` | - |
+| `[saftHtml]` | Whether trust html, Support [global config](https://ng-alain.com/docs/global-config) | `boolean` | `true` |
+| `[customRequest]` | Override the default request behavior, you can customize your own request implementation, for example: Graphql, Support [global config](https://ng-alain.com/docs/global-config) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle
 

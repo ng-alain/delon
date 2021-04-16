@@ -3,7 +3,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { createTestContext } from '@delon/testing';
+import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeIconModule } from './notice-icon.module';
@@ -26,10 +26,7 @@ describe('abc: notice-icon', () => {
 
   afterEach(() => {
     context.comp.ngOnDestroy();
-    const el = document.querySelector('.cdk-overlay-container');
-    if (el) {
-      el.innerHTML = ``;
-    }
+    cleanCdkOverlayHtml();
   });
 
   describe('when not data', () => {

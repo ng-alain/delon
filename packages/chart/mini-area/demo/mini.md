@@ -8,7 +8,7 @@ title: Mini tooltip
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { G2MiniAreaData } from '@delon/chart/mini-area';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-demo',

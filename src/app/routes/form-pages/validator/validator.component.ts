@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AppService, CodeService, I18NService } from '@core';
-import { SFSchema } from '@delon/form';
+import { SFLayout, SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
@@ -64,7 +64,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     { name: 'validation', title: '自定义校验' },
     { name: 'fixed', title: '不规则布局' },
   ];
-  layout = 'horizontal';
+  layout: SFLayout = 'horizontal';
   name: string;
   title: string;
   schema: string;

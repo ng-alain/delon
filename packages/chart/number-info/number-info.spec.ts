@@ -118,8 +118,8 @@ class TestComponent {
   @ViewChild('subTotalTpl', { static: true }) subTotalTpl: TemplateRef<void>;
   title: string | TemplateRef<void> = 'title';
   subTitle: string | TemplateRef<void> = 'subTitle';
-  total: string | TemplateRef<void> = 'total';
-  subTotal: string | TemplateRef<void> = 'subTotal';
+  total: string | number | TemplateRef<void> = 'total';
+  subTotal: string | number | TemplateRef<void> = 'subTotal';
   status = 'up';
   theme = 'light';
   gap = 8;

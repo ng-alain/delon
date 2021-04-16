@@ -24,7 +24,6 @@ import { Router } from '@angular/router';
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
-  CNCurrencyPipe,
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
@@ -36,15 +35,16 @@ import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
-import { from, Observable, of, Subject, Subscription } from 'rxjs';
+import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
-import { ST_DEFULAT_CONFIG } from './st.config';
+import { ST_DEFAULT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
@@ -52,6 +52,9 @@ import {
   STColumnButton,
   STColumnFilterMenu,
   STColumnSelection,
+  STContextmenuFn,
+  STContextmenuItem,
+  STCustomRequestOptions,
   STData,
   STError,
   STExportOptions,
@@ -67,13 +70,13 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STDataValue, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
   exportAs: 'st',
   templateUrl: './st.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, DatePipe, YNPipe, DecimalPipe],
   host: {
     '[class.st]': `true`,
     '[class.st__p-left]': `page.placement === 'left'`,
@@ -102,7 +105,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;
   private cog: AlainSTConfig;
@@ -121,9 +124,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: _STColumn[][] = [];
+  _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
-  @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
+  contextmenuList: STContextmenuItem[] = [];
+  @ViewChild('table') readonly orgTable: NzTableComponent;
+  @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
   get req(): STReq {
@@ -154,6 +159,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
+  @Input() contextmenu?: STContextmenuFn;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -193,18 +199,18 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _resizable: STResizable;
   @Input()
-  set resizable(val: STResizable | boolean) {
+  set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
-  @Input() header: string | TemplateRef<void>;
+  @Input() header?: string | TemplateRef<void> | null;
   @Input() @InputBoolean() showHeader = true;
-  @Input() footer: string | TemplateRef<void>;
-  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
-  @Input() body: TemplateRef<STStatisticalResults>;
+  @Input() footer?: string | TemplateRef<void> | null;
+  @Input() bodyHeader?: TemplateRef<STStatisticalResults> | null;
+  @Input() body?: TemplateRef<STStatisticalResults> | null;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
-  @Input() noResult: string | TemplateRef<void>;
+  @Input() noResult?: string | TemplateRef<void> | null;
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
@@ -214,6 +220,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualItemSize = 54;
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
+  @Input() customRequest?: (options: STCustomRequestOptions) => Observable<any>;
   @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
 
   /**
@@ -248,10 +255,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
+    private cms: NzContextMenuService,
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
-    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.updateTotalTpl();
@@ -261,7 +269,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     i18nSrv.change
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(() => this._columns.length > 0),
       )
       .subscribe(() => this.refreshColumns());
@@ -354,9 +362,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           multiSort,
           rowClassName,
           paginator: true,
+          saftHtml: this.cog.saftHtml!,
+          customRequest: this.customRequest || this.cog.customRequest,
           ...options,
         })
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(
           result => resolvePromise(result),
           error => {
@@ -384,7 +394,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       if (typeof result.pageShow !== 'undefined') {
         this._isPagination = result.pageShow;
       }
-      this._data = result.list as STData[];
+      this._data = result.list;
       this._statistical = result.statistical as STStatisticalResults;
       this.changeEmit('loaded', result.list);
       // Should be re-render in next tike when using virtual scroll
@@ -395,7 +405,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      if (!this.unsubscribe$.isStopped) {
+      if (!this.destroy$.isStopped) {
         this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
       }
@@ -550,7 +560,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point!] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c =>
+        this._data.forEach((i, idx) => {
+          const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
+          i._values![c.__point!] = { text, _text: text, org: idx } as _STDataValue;
+        }),
+      );
 
     return this.cd();
   }
@@ -588,10 +603,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   sort(col: _STColumn, idx: number, value: any): void {
     if (this.multiSort) {
-      col._sort!.default = value;
-      col._sort!.tick = this.dataSource.nextSortTick;
+      col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
+      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this.cdr.detectChanges();
     this.loadPageData();
@@ -604,7 +619,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   clearSort(): this {
-    this._columns.forEach(item => (item._sort!.default = null));
+    this._columns.forEach(item => (item._sort.default = null));
     return this;
   }
 
@@ -761,20 +776,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  _btnText(record: STData, btn: STColumnButton): string {
-    return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
-  }
-
-  _validBtns(btns: STColumnButton[], item: STData, col: STColumn): STColumnButton[] {
-    return btns.filter(btn => {
-      const result = btn.iif!(item, btn, col);
-      const isRenderDisabled = btn.iifBehavior === 'disabled';
-      btn._result = result;
-      btn._disabled = !result && isRenderDisabled;
-      return result || isRenderDisabled;
-    });
-  }
-
   // #endregion
 
   // #region export
@@ -787,9 +788,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   export(newData?: STData[] | true, opt?: STExportOptions): void {
     (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
+        columens: this._columns,
         ...opt,
         data: res,
-        columens: this._columns,
       }),
     );
   }
@@ -803,6 +804,46 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('resize', column);
   }
 
+  // #endregion
+
+  // #region contextmenu
+  onContextmenu(event: MouseEvent): void {
+    if (!this.contextmenu) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    const colEl = (event.target as HTMLElement).closest('[data-col-index]') as HTMLElement;
+    if (!colEl) {
+      return;
+    }
+    const colIndex = Number(colEl.dataset.colIndex);
+    const rowIndex = Number((colEl.closest('tr') as HTMLElement).dataset.index);
+    const isTitle = isNaN(rowIndex);
+    const obs$ = this.contextmenu({
+      event,
+      type: isTitle ? 'head' : 'body',
+      rowIndex: isTitle ? null : rowIndex,
+      colIndex,
+      data: isTitle ? null : this.list[rowIndex],
+      column: this._columns[colIndex],
+    });
+    (isObservable(obs$) ? obs$ : of(obs$))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(res => res.length > 0),
+      )
+      .subscribe(res => {
+        this.contextmenuList = res.map(i => {
+          if (!Array.isArray(i.children)) {
+            i.children = [];
+          }
+          return i;
+        });
+        this.cdr.detectChanges();
+        this.cms.create(event, this.contextmenuTpl);
+      });
+  }
   // #endregion
 
   get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {
@@ -847,7 +888,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private optimizeData(): void {
-    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this._data = this.dataSource.optimizeData({
+      columns: this._columns,
+      result: this._data,
+      rowClassName: this.rowClassName,
+      safeHtml: this.cog.saftHtml!,
+    });
   }
 
   /**
@@ -885,8 +931,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

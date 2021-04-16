@@ -1,19 +1,19 @@
 <ng-template #badgeTpl>
-  <nz-badge [nzCount]="count" [ngClass]="btnClass" [nzStyle]="{ 'box-shadow': 'none' }">
-    <i nz-icon nzType="bell" [ngClass]="btnIconClass"></i>
+  <nz-badge [nzCount]="count" [ngClass]="btnClass!" [nzStyle]="{ 'box-shadow': 'none' }">
+    <i nz-icon nzType="bell" [ngClass]="btnIconClass!"></i>
   </nz-badge>
 </ng-template>
-<div *ngIf="data?.length === 0">
+<div *ngIf="data!.length === 0">
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
 <div
-  *ngIf="data?.length > 0"
+  *ngIf="data!.length > 0"
   nz-dropdown
   [nzVisible]="popoverVisible"
   (nzVisibleChange)="onVisibleChange($event)"
   nzTrigger="click"
   nzPlacement="bottomRight"
-  [nzOverlayClassName]="['header-dropdown', 'notice-icon']"
+  nzOverlayClassName="header-dropdown notice-icon"
   [nzDropdownMenu]="noticeMenu"
 >
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>

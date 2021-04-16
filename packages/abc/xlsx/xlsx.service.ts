@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
+import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
 import { saveAs } from 'file-saver';
 import isUtf8 from 'isutf8';
@@ -24,25 +25,24 @@ export class XlsxService {
     return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
+  @ZoneOutside()
   private read(data: NzSafeAny, options: { type: 'array' | 'binary' | 'string' }): { [key: string]: NzSafeAny[][] } {
     const ret: NzSafeAny = {};
-    this.ngZone.runOutsideAngular(() => {
-      if (options.type === 'binary') {
-        const buf = new Uint8Array(data);
-        if (!isUtf8(buf)) {
-          try {
-            data = cptable.utils.decode(936, buf);
-            options.type = 'string';
-          } catch {
-            options.type = 'array';
-          }
+    if (options.type === 'binary') {
+      const buf = new Uint8Array(data);
+      if (!isUtf8(buf)) {
+        try {
+          data = cptable.utils.decode(936, buf);
+          options.type = 'string';
+        } catch {
+          options.type = 'array';
         }
       }
-      const wb = XLSX.read(data, options);
-      wb.SheetNames.forEach((name: string) => {
-        const sheet: NzSafeAny = wb.Sheets[name];
-        ret[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      });
+    }
+    const wb = XLSX.read(data, options);
+    wb.SheetNames.forEach((name: string) => {
+      const sheet: NzSafeAny = wb.Sheets[name];
+      ret[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
     });
     return ret;
   }
@@ -91,35 +91,34 @@ export class XlsxService {
     });
   }
 
+  @ZoneOutside()
   async export(options: XlsxExportOptions): Promise<XlsxExportResult> {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()
         .then(() => {
-          this.ngZone.runOutsideAngular(() => {
-            const wb: any = XLSX.utils.book_new();
-            if (Array.isArray(options.sheets)) {
-              (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-                const ws: any = XLSX.utils.aoa_to_sheet(value.data);
-                XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
-              });
-            } else {
-              wb.SheetNames = Object.keys(options.sheets);
-              wb.Sheets = options.sheets;
-            }
-
-            if (options.callback) options.callback(wb);
-
-            const wbout: ArrayBuffer = XLSX.write(wb, {
-              bookType: 'xlsx',
-              bookSST: false,
-              type: 'array',
-              ...options.opts,
+          const wb: any = XLSX.utils.book_new();
+          if (Array.isArray(options.sheets)) {
+            (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
+              const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+              XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
             });
-            const filename = options.filename || 'export.xlsx';
-            saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);
+          } else {
+            wb.SheetNames = Object.keys(options.sheets);
+            wb.Sheets = options.sheets;
+          }
 
-            resolve({ filename, wb });
+          if (options.callback) options.callback(wb);
+
+          const wbout: ArrayBuffer = XLSX.write(wb, {
+            bookType: 'xlsx',
+            bookSST: false,
+            type: 'array',
+            ...options.opts,
           });
+          const filename = options.filename || 'export.xlsx';
+          saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);
+
+          resolve({ filename, wb });
         })
         .catch(err => reject(err));
     });

@@ -60,6 +60,14 @@ Recursive access tree.
 |----------|-------------|------|---------|
 | `childrenMapName` | Children map name | `string` | `children` |
 
+### findTree
+
+Return the value of the first tree value in the tree where predicate is true, and `undefined` otherwise.
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `childrenMapName` | Children map name | `string` | `children` |
+
 ### getKeysByTreeNode
 
 Get all the selected `key` values.

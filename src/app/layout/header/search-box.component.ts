@@ -1,7 +1,8 @@
 import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18NService } from '@core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 declare const docsearch: any;
@@ -18,7 +19,7 @@ export class HeaderSearchComponent implements AfterViewInit {
   @ViewChild('searchInput', { static: false })
   searchInput: ElementRef<HTMLInputElement>;
 
-  constructor(private i18n: I18NService, private platform: Platform, private router: Router) {}
+  constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService, private platform: Platform, private router: Router) {}
 
   ngAfterViewInit(): void {
     this.initDocSearch();

@@ -11,14 +11,15 @@ import { LayoutDefaultOptions } from './types';
 
 @Component({
   selector: 'layout-default',
+  exportAs: 'layoutDefault',
   template: `
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
     <layout-default-header></layout-default-header>
-    <div class="alain-default__aside">
+    <div *ngIf="!options.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-inner">
         <ng-container *ngTemplateOutlet="asideUser"></ng-container>
         <ng-container *ngTemplateOutlet="nav"></ng-container>
-        <layout-default-nav class="d-block py-lg"></layout-default-nav>
+        <layout-default-nav *ngIf="!nav" class="d-block py-lg"></layout-default-nav>
       </div>
     </div>
     <section class="alain-default__content">
@@ -47,7 +48,6 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     @Inject(DOCUMENT) private doc: any,
   ) {
-    // scroll to top in change page
     router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
@@ -77,15 +77,20 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       ['alain-default']: true,
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
+      [`alain-default__hide-aside`]: this.options.hideAside,
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');
   }
 
   ngOnInit(): void {
-    if (this.options == null) {
-      throw new Error(`Please specify the [options] parameter, otherwise the layout display cannot be completed`);
-    }
+    this.options = {
+      logoExpanded: `./assets/logo-full.svg`,
+      logoCollapsed: `./assets/logo.svg`,
+      logoLink: `/`,
+      hideAside: false,
+      ...this.options,
+    };
     const { settings, destroy$ } = this;
     settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
     this.setClass();

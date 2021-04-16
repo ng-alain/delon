@@ -19,8 +19,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-    <pdf src="https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf" style="height: 300px"></pdf>
+    <button nz-button nzType="primary" (click)="src = src === one ? two : one">Change File</button>
+    <pdf [src]="src" style="height: 300px" (change)="handle($event)"></pdf>
   `,
 })
-export class DemoComponent {}
+export class DemoComponent {
+  one = `https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf`;
+  two = `https://raw.githubusercontent.com/mozilla/pdf.js/master/examples/learning/helloworld.pdf`;
+  src = this.one;
+  handle(ev: any): void {
+    console.log(ev);
+  }
+}
 ```

@@ -10,7 +10,7 @@ module: import { SGModule } from '@delon/abc/sg';
 简化栅格系统运用的高阶组件，它由 `sg-container` 容器（指令）和 `sg` 组件组合代替一个响应式布局：
 
 ```html
-<div nz-row nzGutter="32">
+<div nz-row [nzGutter]="32">
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">1</nz-col>
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">2</nz-col>
   <nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6">3</nz-col>

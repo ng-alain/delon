@@ -1,14 +1,25 @@
-import { formatNumber } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { CurrencyPipe, formatNumber } from '@angular/common';
+import { DEFAULT_CURRENCY_CODE, Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
 import { CurrencyCNYOptions, CurrencyFormatOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
   private c: AlainUtilCurrencyConfig;
+  private readonly currencyPipe: CurrencyPipe;
 
-  constructor(cog: AlainConfigService, @Inject(LOCALE_ID) private locale: string) {
-    this.c = cog.merge('utilCurrency', { startingUnit: 'yuan', megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' } })!;
+  constructor(
+    cog: AlainConfigService,
+    @Inject(LOCALE_ID) private locale: string,
+    @Inject(DEFAULT_CURRENCY_CODE) _defaultCurrencyCode: string = 'USD',
+  ) {
+    this.currencyPipe = new CurrencyPipe(locale, _defaultCurrencyCode);
+    this.c = cog.merge('utilCurrency', {
+      startingUnit: 'yuan',
+      megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },
+      precision: 2,
+      ingoreZeroPrecision: true,
+    })!;
   }
 
   /**
@@ -21,7 +32,13 @@ export class CurrencyService {
    * ```
    */
   format(value: number | string, options?: CurrencyFormatOptions): string {
-    options = { startingUnit: this.c.startingUnit, precision: 2, ...options };
+    options = {
+      startingUnit: this.c.startingUnit,
+      precision: this.c.precision,
+      ingoreZeroPrecision: this.c.ingoreZeroPrecision,
+      ngCurrency: this.c.ngCurrency,
+      ...options,
+    };
     let truthValue = Number(value);
     if (value == null || isNaN(truthValue)) {
       return '';
@@ -29,7 +46,12 @@ export class CurrencyService {
     if (options.startingUnit === 'cent') {
       truthValue = truthValue / 100;
     }
-    return formatNumber(truthValue, this.locale, `.1-${options.precision}`).replace(/(?:\.[0]+)$/g, '');
+    if (options.ngCurrency != null) {
+      const cur = options.ngCurrency!;
+      return this.currencyPipe.transform(truthValue, cur.currencyCode, cur.display, cur.digitsInfo, cur.locale || this.locale)!;
+    }
+    const res = formatNumber(truthValue, this.locale, `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`);
+    return options.ingoreZeroPrecision ? res.replace(/(?:\.[0]+)$/g, '') : res;
   }
 
   /**
@@ -42,7 +64,7 @@ export class CurrencyService {
    * ```
    */
   mega(value: number | string, options?: CurrencyMegaOptions): CurrencyMegaResult {
-    options = { precision: 2, unitI18n: this.c.megaUnit, startingUnit: this.c.startingUnit, ...options };
+    options = { precision: this.c.precision, unitI18n: this.c.megaUnit, startingUnit: this.c.startingUnit, ...options };
     let num = Number(value);
     const res: CurrencyMegaResult = { raw: value, value: '', unit: '', unitI18n: '' };
     if (isNaN(num) || num === 0) {

@@ -245,7 +245,7 @@ class TestComponent {
 | `[expand]` | 是否展开状态 | `boolean` | - |
 | `[showExpand]` | 是否显示展开按钮 | `boolean` | - |
 
-### STColumn
+### STColumn<T extends STData = any>
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -267,7 +267,7 @@ class TestComponent {
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |
 | `[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `yyyy-MM-dd HH:mm` |
-| `[currency]` | 货币格式选项，`type=currency` 有效 | `STcolumnCurrency` | - |
+| `[currency]` | 货币格式选项，`type=currency` 有效 | `STColumnCurrency` | - |
 | `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | - |
 | `[exported]` | 是否允许导出 | `boolean` | `true` |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
@@ -281,6 +281,8 @@ class TestComponent {
 | `[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | - |
 | `[resizable]` | 调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
 | `[children]` | 多表头 | `STColumn[]` | - |
+| `[saftHtml]` | 是否信任HTML，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `boolean` | `true` |
+| `[customRequest]` | 覆盖默认的请求行为，可以自定义自己的请求实现，例如：Graphql，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle
 

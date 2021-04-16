@@ -6,7 +6,7 @@ type: Tools
 
 ## CurrencyService
 
-> You can override [ArrayService] to set the `startingUnit`, `megaUnit` through [Global Configuration](/docs/global-config).
+> You can override to set the `startingUnit`, `megaUnit`, `precision`, `ingoreZeroPrecision` through [Global Configuration](/docs/global-config).
 
 ### format
 
@@ -16,6 +16,8 @@ Format a number with commas as thousands separators.
 10000 => `10,000`
 10000.567 => `10,000.57`
 ```
+
+> Use anguar `currency` pipe parse when is set, pls refer to [document](https://angular.io/api/common/CurrencyPipe).
 
 ### mega
 

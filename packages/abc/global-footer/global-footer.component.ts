@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { WINDOW } from '@delon/theme';
+import { WINDOW } from '@delon/util/token';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GlobalFooterItemComponent } from './global-footer-item.component';
@@ -50,12 +50,12 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     private dom: DomSanitizer,
     @Optional() private directionality: Directionality,
   ) {}
 
-  to(item: GlobalFooterLink): void {
+  to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     if (!item.href) {
       return;
     }

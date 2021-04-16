@@ -2,7 +2,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { TimeWidget } from './time.widget';

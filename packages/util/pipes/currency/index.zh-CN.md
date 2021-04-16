@@ -5,6 +5,8 @@ type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
 ---
 
+> 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit`、`precision`、`ingoreZeroPrecision` 等参数。
+
 ## price
 
 用逗号将数字格式化为千位分隔符。

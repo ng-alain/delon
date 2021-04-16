@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'sv-container, [sv-container]',
@@ -22,6 +22,7 @@ export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_default: BooleanInput;
 
   @Input() title: string | TemplateRef<void>;
   @Input() size: 'small' | 'large';
@@ -31,7 +32,7 @@ export class SVContainerComponent {
   @Input() @InputNumber() labelWidth: number;
   /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
   @Input() @InputNumber() col: number;
-  @Input() default: boolean;
+  @Input() @InputBoolean() default: boolean;
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sv', {

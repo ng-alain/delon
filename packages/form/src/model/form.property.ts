@@ -252,7 +252,7 @@ export abstract class FormProperty {
 
         if (message) {
           if (~(message as string).indexOf('{')) {
-            message = (message as string).replace(/{([\.a-z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
+            message = (message as string).replace(/{([\.a-zA-Z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
           }
           err.message = message as string;
         }

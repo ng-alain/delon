@@ -50,7 +50,7 @@ Next you can use `ngx-tinymce` in any submodule:
 
 ## Non-Angular Component
 
-Referencing a non-Angular component is actually loading a JavaScript class library file, such as the QR code library [qrious](https://neocotic.com/qrious/):
+Referencing a non-Angular component is actually loading a JavaScript class library file, such as the QR code library [qrious](https://github.com/neocotic/qrious/):
 
 ### Installing dependencies
 

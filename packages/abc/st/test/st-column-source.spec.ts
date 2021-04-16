@@ -5,7 +5,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STColumnSource, STColumnSourceProcessOptions } from '../st-column-source';
 import { STRowSource } from '../st-row.directive';
 import { STWidgetRegistry } from '../st-widget';
-import { ST_DEFULAT_CONFIG } from '../st.config';
+import { ST_DEFAULT_CONFIG } from '../st.config';
 import { STColumn, STColumnButtonPop, STIcon, STResizable, STWidthMode } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 
@@ -42,7 +42,7 @@ describe('st: column-source', () => {
     rowSrv = new STRowSource();
     stWidgetRegistry = new STWidgetRegistry();
     srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, stWidgetRegistry);
-    srv.setCog(other.cog || ST_DEFULAT_CONFIG);
+    srv.setCog(other.cog || ST_DEFAULT_CONFIG);
     page = new PageObject();
   }
 
@@ -234,10 +234,10 @@ describe('st: column-source', () => {
     });
     describe('[sort]', () => {
       it('should be disabled', () => {
-        expect(srv.process([{ title: '' }], options).columns[0]._sort!.enabled).toBe(false);
+        expect(srv.process([{ title: '' }], options).columns[0]._sort.enabled).toBe(false);
       });
       it('should be enabled when is true', () => {
-        expect(srv.process([{ title: '', sort: true }], options).columns[0]._sort!.enabled).toBe(true);
+        expect(srv.process([{ title: '', sort: true }], options).columns[0]._sort.enabled).toBe(true);
       });
       it('should be enabled when is string', () => {
         const res = srv.process([{ title: '', sort: 'true' }], options).columns[0]._sort!;
@@ -532,7 +532,7 @@ describe('st: column-source', () => {
         const mockTemplateRef: NzSafeAny = {};
         expect(rowSrv.getRow).not.toHaveBeenCalled();
         expect(rowSrv.getTitle).not.toHaveBeenCalled();
-        const columns: _STColumn[] = [{ title: '', render: mockTemplateRef, renderTitle: mockTemplateRef }];
+        const columns = [{ title: '', render: mockTemplateRef, renderTitle: mockTemplateRef }] as _STColumn[];
         srv.restoreAllRender(columns);
         expect(rowSrv.getRow).not.toHaveBeenCalled();
         expect(rowSrv.getTitle).not.toHaveBeenCalled();

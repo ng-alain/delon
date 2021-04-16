@@ -8,9 +8,7 @@ title: 带浮层卡片
 ```ts
 import { Component } from '@angular/core';
 import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
-import add from 'date-fns/add';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import parse from 'date-fns/parse';
+import { add, formatDistanceToNow, parse } from 'date-fns';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 

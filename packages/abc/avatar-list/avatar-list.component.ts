@@ -13,6 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AvatarListItemComponent } from './avatar-list-item.component';
@@ -42,7 +43,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
   dir: Direction = 'ltr';
 
   cls = '';
-  avatarSize = '';
+  avatarSize: NzSizeLDSType = 'default';
   @Input()
   set size(value: 'large' | 'small' | 'mini' | 'default') {
     this.cls = 'avatar-list__item' + (value === 'default' ? '' : ` avatar-list__${value}`);
@@ -58,7 +59,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
     }
   }
   @Input() @InputNumber() maxLength = 0;
-  @Input() excessItemsStyle: {};
+  @Input() excessItemsStyle: { [klass: string]: any };
 
   constructor(private cdr: ChangeDetectorRef, @Optional() private directionality: Directionality) {}
 

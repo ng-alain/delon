@@ -84,8 +84,6 @@ build() {
       addBanners ${DIST}/${NAME}/bundles
       # license file
       cp ${PWD}/LICENSE ${DIST}/${NAME}/LICENSE
-      # package version
-      updateVersionReferences ${DIST}/${NAME}
     else
       echo "not yet!!!"
     fi
@@ -95,6 +93,8 @@ build() {
   if [[ ${NOCSS} == false ]]; then
     buildLess
   fi
+  # package version
+  updateVersionReferences ${DIST}
   copySchemas
 }
 

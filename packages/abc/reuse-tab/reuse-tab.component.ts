@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -45,6 +46,7 @@ import { ReuseTabService } from './reuse-tab.service';
     '[class.reuse-tab]': 'true',
     '[class.reuse-tab__line]': `tabType === 'line'`,
     '[class.reuse-tab__card]': `tabType === 'card'`,
+    '[class.reuse-tab__disabled]': `disabled`,
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
@@ -57,6 +59,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_tabMaxWidth: NumberInput;
   static ngAcceptInputType_allowClose: BooleanInput;
   static ngAcceptInputType_keepingScroll: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
 
   @ViewChild('tabset') private tabset: NzTabSetComponent;
   private unsubscribe$ = new Subject<void>();
@@ -86,6 +89,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarStyle: { [key: string]: string };
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
+  @Input() @InputBoolean() disabled = false;
+  @Input() titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
@@ -98,6 +103,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: any,
+    private platform: Platform,
   ) {}
 
   private genTit(title: ReuseTitle): string {
@@ -240,6 +246,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(50)).subscribe(() => {
       const url = this.srv.getUrl(this.route.snapshot);
       const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
@@ -287,6 +297,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;

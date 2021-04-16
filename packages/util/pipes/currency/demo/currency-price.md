@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
       <input type="text" nz-input [(ngModel)]="value" />
     </nz-input-group>
     <nz-input-group nzAddOnBefore="Precision">
-      <nz-input-number [(ngModel)]="precision" nzMin="0" nzMax="292"></nz-input-number>
+      <nz-input-number [(ngModel)]="precision" [nzMin]="0" [nzMax]="292"></nz-input-number>
     </nz-input-group>
   `,
 })

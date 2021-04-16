@@ -6,7 +6,7 @@ type: Tools
 
 ## CurrencyService
 
-> 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit` 等参数。
+> 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit`、`precision`、`ingoreZeroPrecision` 等参数。
 
 ### format
 
@@ -16,6 +16,8 @@ type: Tools
 10000 => `10,000`
 10000.567 => `10,000.57`
 ```
+
+> 若指定则表示使用 Angular 自带的 `currency` 管道来解析，见[文档](https://angular.cn/api/common/CurrencyPipe)。
 
 ### formatMask
 

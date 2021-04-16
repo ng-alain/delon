@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -17,7 +18,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subject } from 'rxjs';
@@ -32,11 +33,13 @@ const BORDER_WIDTH: number = 9;
   selector: 'pdf',
   exportAs: 'pdf',
   template: `
-    <nz-skeleton *ngIf="!inited"></nz-skeleton>
-    <div class="pdfViewer"></div>
+    <nz-skeleton *ngIf="!inited || loading"></nz-skeleton>
+    <div class="pdf-container">
+      <div class="pdfViewer"></div>
+    </div>
   `,
   host: {
-    '[class.pdf-container]': `true`,
+    '[class.d-block]': `true`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,6 +68,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _rotation = 0;
   private _zoom = 1;
   private _renderText = true;
+  private _loading = false;
 
   private multiPageViewer: NzSafeAny;
   private multiPageLinkService: NzSafeAny;
@@ -118,6 +122,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputNumber() delay: number;
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
 
+  get loading(): boolean {
+    return this._loading;
+  }
+
   get pdf(): NzSafeAny {
     return this._pdf;
   }
@@ -142,13 +150,18 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.doc.defaultView || window;
   }
 
+  private get el(): HTMLElement {
+    return this._el.nativeElement.querySelector('.pdf-container') as HTMLElement;
+  }
+
   constructor(
     private ngZone: NgZone,
     configSrv: AlainConfigService,
     private lazySrv: LazyService,
     private platform: Platform,
-    private el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: Document,
+    private _el: ElementRef<HTMLElement>,
+    @Optional() @Inject(DOCUMENT) private doc: any,
+    private cdr: ChangeDetectorRef,
   ) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
@@ -177,11 +190,20 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private initDelay(): void {
     this.inited = true;
+    this.cdr.detectChanges();
     this.win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
 
     setTimeout(() => this.load(), this.delay);
   }
 
+  setLoading(status: boolean): void {
+    this.ngZone.run(() => {
+      this._loading = status;
+      this.cdr.detectChanges();
+    });
+  }
+
+  @ZoneOutside()
   private load(): void {
     const { _src } = this;
     if (!this.inited || !_src) {
@@ -193,11 +215,16 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.ngZone.runOutsideAngular(() => {
-      this.destroy();
-      const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
-      loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
-      loadingTask.promise.then(
+    this.destroy();
+    this.ngZone.run(() => {
+      this._loading = true;
+      this.cdr.detectChanges();
+    });
+    this.setLoading(true);
+    const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
+    loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
+    (loadingTask.promise as PromiseLike<void>)
+      .then(
         (pdf: NzSafeAny) => {
           this._pdf = pdf;
           this.lastSrc = _src;
@@ -213,22 +240,21 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
           this.render();
         },
         (error: NzSafeAny) => this.emit('error', { error }),
-      );
-    });
+      )
+      .then(() => this.setLoading(false));
   }
 
+  @ZoneOutside()
   private resetDoc(): void {
     const pdf = this._pdf;
     if (!pdf) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => {
-      this.cleanDoc();
+    this.cleanDoc();
 
-      this.findController.setDocument(pdf);
-      this.pageViewer.setDocument(pdf);
-      this.linkService.setDocument(pdf, null);
-    });
+    this.findController.setDocument(pdf);
+    this.pageViewer.setDocument(pdf);
+    this.linkService.setDocument(pdf, null);
   }
 
   private cleanDoc(): void {
@@ -263,35 +289,34 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.updateSize();
   }
 
+  @ZoneOutside()
   private updateSize(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const currentViewer = this.pageViewer;
-      this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
-        const { _rotation, _zoom } = this;
-        const rotation = _rotation || page.rotate;
-        const viewportWidth =
-          page.getViewport({
-            scale: _zoom,
-            rotation,
-          }).width * CSS_UNITS;
-        let scale = _zoom;
-        let stickToPage = true;
+    const currentViewer = this.pageViewer;
+    this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
+      const { _rotation, _zoom } = this;
+      const rotation = _rotation || page.rotate;
+      const viewportWidth =
+        page.getViewport({
+          scale: _zoom,
+          rotation,
+        }).width * CSS_UNITS;
+      let scale = _zoom;
+      let stickToPage = true;
 
-        // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
-        if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.nativeElement.clientWidth)) {
-          const viewPort = page.getViewport({ scale: 1, rotation });
-          scale = this.getScale(viewPort.width, viewPort.height);
-          stickToPage = !this.stickToPage;
-        }
+      // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
+      if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.clientWidth)) {
+        const viewPort = page.getViewport({ scale: 1, rotation });
+        scale = this.getScale(viewPort.width, viewPort.height);
+        stickToPage = !this.stickToPage;
+      }
 
-        currentViewer._setScale(scale, stickToPage);
-      });
+      currentViewer._setScale(scale, stickToPage);
     });
   }
 
   private getScale(viewportWidth: number, viewportHeight: number): number {
     const borderSize = this.showBorders ? 2 * BORDER_WIDTH : 0;
-    const el = this.el.nativeElement;
+    const el = this.el;
     const containerWidth = el.clientWidth - borderSize;
     const containerHeight = el.clientHeight - borderSize;
 
@@ -316,18 +341,17 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return (this._zoom * ratio) / CSS_UNITS;
   }
 
+  @ZoneOutside()
   private destroy(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const { loadingTask } = this;
-      if (loadingTask && !loadingTask.destroyed) {
-        loadingTask.destroy();
-      }
-      if (this._pdf) {
-        this._pdf.destroy();
-        this._pdf = null;
-        this.cleanDoc();
-      }
-    });
+    const { loadingTask } = this;
+    if (loadingTask && !loadingTask.destroyed) {
+      loadingTask.destroy();
+    }
+    if (this._pdf) {
+      this._pdf.destroy();
+      this._pdf = null;
+      this.cleanDoc();
+    }
   }
 
   private setupPageViewer(): void {
@@ -373,7 +397,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const viewer = (this.multiPageViewer = new VIEWER.PDFViewer({
       eventBus,
-      container: this.el.nativeElement,
+      container: this.el,
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
@@ -396,7 +420,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const pageViewer = (this.singlePageViewer = new VIEWER.PDFSinglePageViewer({
       eventBus,
-      container: this.el.nativeElement,
+      container: this.el,
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,

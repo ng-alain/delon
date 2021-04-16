@@ -17,8 +17,9 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { Menu, MenuInner, MenuService, SettingsService, WINDOW } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { Menu, MenuInner, MenuService, SettingsService } from '@delon/theme';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { WINDOW } from '@delon/util/token';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -74,7 +75,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
-    @Inject(WINDOW) private win: Window,
+    @Inject(WINDOW) private win: any,
     @Optional() private directionality: Directionality,
   ) {}
 
@@ -170,19 +171,18 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     }
   }
 
+  @ZoneOutside()
   showSubMenu(e: MouseEvent, item: Nav): void {
     if (this.collapsed !== true) {
       return;
     }
-    this.ngZone.runOutsideAngular(() => {
-      e.preventDefault();
-      const linkNode = e.target as Element;
-      this.genFloating();
-      const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
-      this.hideAll();
-      subNode.classList.add(SHOWCLS);
-      this.calPos(linkNode as HTMLLinkElement, subNode);
-    });
+    e.preventDefault();
+    const linkNode = e.target as Element;
+    this.genFloating();
+    const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
+    this.hideAll();
+    subNode.classList.add(SHOWCLS);
+    this.calPos(linkNode as HTMLLinkElement, subNode);
   }
 
   to(item: Menu): void {

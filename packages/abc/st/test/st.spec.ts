@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -8,14 +8,23 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
-import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
+import {
+  ALAIN_I18N_TOKEN,
+  DatePipe,
+  DelonLocaleModule,
+  DelonLocaleService,
+  DrawerHelper,
+  en_US,
+  ModalHelper,
+  _HttpClient,
+} from '@delon/theme';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
@@ -28,6 +37,9 @@ import {
   STColumnFilter,
   STColumnTag,
   STColumnTitle,
+  STContextmenuFn,
+  STContextmenuItem,
+  STCustomRequestOptions,
   STMultiSort,
   STPage,
   STReq,
@@ -36,6 +48,7 @@ import {
   STWidthMode,
 } from '../st.interfaces';
 import { STModule } from '../st.module';
+import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 
 const MOCKDATE = new Date();
@@ -82,7 +95,7 @@ class MockNzI18nService {
   }
 }
 
-describe('abc: table', () => {
+describe('abc: st', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
   let dl: DebugElement;
@@ -802,9 +815,9 @@ describe('abc: table', () => {
       });
     });
     describe('[data source]', () => {
-      let httpBed: HttpTestingController;
+      let _http: _HttpClient;
       beforeEach(() => {
-        httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+        _http = TestBed.inject(_HttpClient);
       });
       it('support null data', fakeAsync(() => {
         page.updateData(null);
@@ -821,11 +834,11 @@ describe('abc: table', () => {
         expect(comp.ps).toBe(PS);
       });
       it('should be automatically cancel paging when the returned body value is an array type', done => {
+        spyOn(_http, 'request').and.returnValue(of([{}, {}, {}]));
         context.pi = 1;
         context.ps = 2;
         context.data = '/mock';
         fixture.detectChanges();
-        httpBed.expectOne(() => true).flush([{}, {}, {}]);
         fixture.whenStable().then(() => {
           expect(comp.pi).toBe(1);
           expect(comp.ps).toBe(3);
@@ -835,36 +848,9 @@ describe('abc: table', () => {
       });
       describe('Http Request', () => {
         it('when error request', done => {
+          spyOn(_http, 'request').and.returnValue(throwError('cancel'));
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(() => true).error(new ErrorEvent('cancel'));
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 0', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 0, statusText: '' });
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 404', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 404, statusText: 'Not found' });
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('when http status: 403', done => {
-          context.data = '/mock';
-          fixture.detectChanges();
-          httpBed.expectOne(() => true).flush(null, { status: 403, statusText: 'Forbidden' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
@@ -880,23 +866,28 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('should be ingored incomplete request when has new request', done => {
+        it('should be ingored incomplete request when has new request', fakeAsync(() => {
+          let mockData = [{}];
+          spyOn(_http, 'request').and.callFake(() => of(mockData) as any);
           context.data = '/mock1';
           fixture.detectChanges();
+          tick(1000);
+          fixture.detectChanges();
+          mockData = [{}, {}];
           context.data = '/mock2';
           fixture.detectChanges();
-          // Can't call have beed unsubscribe request in flush method, so muse be using `try {} catch {}`
-          try {
-            httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
-            httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
-            expect(true).toBe(false);
-          } catch {}
-
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(1);
-            done();
-          });
-        });
+          tick(1000);
+          fixture.detectChanges();
+          expect(comp._data.length).toBe(mockData.length);
+        }));
+        it('#customRequest', fakeAsync(() => {
+          context.customRequest = jasmine.createSpy('customRequest');
+          context.data = '/invalid-url';
+          fixture.detectChanges();
+          tick(1000);
+          fixture.detectChanges();
+          expect(context.customRequest).toHaveBeenCalled();
+        }));
       });
     });
     describe('#req', () => {
@@ -1163,7 +1154,7 @@ describe('abc: table', () => {
     describe('[filter]', () => {
       describe('in local-data', () => {
         let filter: STColumnFilter;
-        let firstCol: STColumn;
+        let firstCol: _STColumn;
         beforeEach(() => {
           context.columns = [
             {
@@ -1760,7 +1751,7 @@ describe('abc: table', () => {
           { index: 'id', resizable: true },
           { index: 'id', resizable: true },
         ]);
-        comp.colResize({ width: 100 }, { width: 10 });
+        comp.colResize({ width: 100 }, { width: 10 } as _STColumn);
         expect(page._changeData.type).toBe('resize');
         page.asyncEnd();
       }));
@@ -1777,8 +1768,40 @@ describe('abc: table', () => {
     it('#showHeader', () => {
       context.showHeader = false;
       fixture.detectChanges();
-      page.expectElCount('.st__head', 0);
+      page.expectElCount('.ant-table-thead', 0);
       page.expectElCount('.st__body', 1);
+    });
+    describe('#contextmenu', () => {
+      it('should be working', fakeAsync(() => {
+        page
+          .updateColumn([{ title: 'a', index: 'id' }])
+          .openContextMenu(1, 1)
+          .clickContentMenu(1)
+          .openContextMenu(1) // head
+          .clickContentMenu(1)
+          .asyncEnd();
+      }));
+      it('should be support return a observable value', fakeAsync(() => {
+        context.contextmenu = () => of([{ text: 'a', fn: jasmine.createSpy() }] as STContextmenuItem[]);
+        page
+          .updateColumn([{ title: 'a', index: 'id' }])
+          .openContextMenu(1, 1)
+          .clickContentMenu(1)
+          .asyncEnd();
+      }));
+      it('should be ingore invalid target', fakeAsync(() => {
+        context.contextmenu = jasmine.createSpy();
+        page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, { target: { closest: () => null } });
+        expect(context.contextmenu).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('should be ingore unspecified contextmenu property', fakeAsync(() => {
+        context.contextmenu = null;
+        const event = { preventDefault: jasmine.createSpy() };
+        page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, event);
+        expect(event.preventDefault).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
   });
 
@@ -2051,6 +2074,36 @@ describe('abc: table', () => {
       fixture.detectChanges();
       return this;
     }
+    openContextMenu(col: number, row?: number, event?: any): this {
+      let el: HTMLElement;
+      if (typeof row === 'number') {
+        el = this.getCell(row, col);
+      } else {
+        el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
+      }
+      if (!el) {
+        expect(false).toBe(true, `not found col: ${col}, row: ${row} element`);
+        return this;
+      }
+
+      context.comp.onContextmenu({
+        target: el,
+        preventDefault: jasmine.createSpy(),
+        stopPropagation: jasmine.createSpy(),
+        ...event,
+      } as any);
+      return this.cd();
+    }
+    clickContentMenu(idx: number): this {
+      const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
+      expect(el).not.toBeNull(`the index: ${idx} is invalid element of content menu container`);
+      const fn = context.comp.contextmenuList[idx - 1].fn;
+      expect(fn).not.toHaveBeenCalled();
+      (el as HTMLElement).click();
+      this.cd();
+      expect(fn).toHaveBeenCalled();
+      return this;
+    }
     asyncEnd(): this {
       flush();
       discardPeriodicTasks();
@@ -2085,6 +2138,8 @@ describe('abc: table', () => {
       [widthConfig]="widthConfig"
       [rowClickTime]="rowClickTime"
       [showHeader]="showHeader"
+      [contextmenu]="contextmenu"
+      [customRequest]="customRequest"
       (change)="change($event)"
       (error)="error()"
     >
@@ -2118,6 +2173,11 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
   showHeader = true;
+  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
+  contextmenu: STContextmenuFn | null = _ => [
+    { text: 'a', fn: jasmine.createSpy() },
+    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] },
+  ];
 
   error(): void {}
   change(): void {}

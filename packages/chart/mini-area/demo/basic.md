@@ -10,7 +10,7 @@ title:
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { G2MiniAreaClickItem, G2MiniAreaData } from '@delon/chart/mini-area';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({

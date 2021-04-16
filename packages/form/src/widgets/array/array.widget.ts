@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
+import { NzButtonType } from 'ng-zorro-antd/button';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
@@ -12,7 +13,7 @@ import { ArrayLayoutWidget } from '../../widget';
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: SafeHtml;
-  addType: string;
+  addType: NzButtonType;
   removeTitle: string | null;
   arraySpan = 8;
 

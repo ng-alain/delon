@@ -102,7 +102,7 @@ JSON Schema 有完整的对每个属性的规范描述，`@delon/form` 当前是
 |----|----|----|-----|
 | `[maxLength]` | 定义字符串的最大长度 | `number` | - |
 | `[minLength]` | 定义字符串的最小长度 | `number` | - |
-| `[pattern]` | 验证输入字段正则表达式字符串，若指定 `format: 'regex'` 时务必指定 | `string` | - |
+| `[pattern]` | 验证输入字段正则表达式字符串 | `string` | - |
 
 ### 数组类型
 

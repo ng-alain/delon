@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';

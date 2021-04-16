@@ -4,8 +4,7 @@ import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
 import { deepCopy } from '@delon/util/other';
-import format from 'date-fns/format';
-import formatISO from 'date-fns/formatISO';
+import { format, formatISO } from 'date-fns';
 registerLocaleData(zh);
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -61,6 +60,16 @@ describe('form: widget: date', () => {
         page.newSchema(s);
         const comp = getComp();
         expect(formatISO(comp.value)).toBe(formatISO(time));
+      });
+      it('with rang values', () => {
+        const time = +new Date();
+        const s: SFSchema = {
+          properties: { a: { type: 'string', ui: { widget, mode: 'range' }, default: [time, time] } },
+        };
+        page.newSchema(s);
+        const comp = getComp();
+        expect(Array.isArray(comp.value)).toBe(true);
+        expect(formatISO(comp.value[0])).toBe(formatISO(time));
       });
     });
     it('should be set value', fakeAsync(() => {

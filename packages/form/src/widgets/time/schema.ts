@@ -88,6 +88,20 @@ export interface SFTimeWidgetSchema extends SFUISchemaItem {
   popupClassName?: string;
 
   /**
+   * text of the Now button
+   *
+   * 此刻按钮文本
+   */
+  nowText?: string;
+
+  /**
+   * text of the Ok button
+   *
+   * 确认按钮文本
+   */
+  okText?: string;
+
+  /**
    * a callback function, can be executed when the selected time is changing
    */
   change?: (value: Date | null) => void;

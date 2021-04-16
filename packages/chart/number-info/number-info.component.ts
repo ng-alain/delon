@@ -22,9 +22,9 @@ export class NumberInfoComponent {
   /** 子标题 */
   @Input() subTitle: string | TemplateRef<void>;
   /** 总量 */
-  @Input() total: string | TemplateRef<void>;
+  @Input() total: string | number | TemplateRef<void>;
   /** 总量后缀 */
-  @Input() subTotal: string | TemplateRef<void>;
+  @Input() subTotal: string | number | TemplateRef<void>;
   /** 子总量 */
   @Input() suffix: string;
   /** 增加状态 */

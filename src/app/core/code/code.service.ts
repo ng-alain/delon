@@ -39,7 +39,6 @@ export class CodeService {
       'tslib',
       'zone.js',
       'date-fns',
-      'qrious',
       '@angular/cdk',
       'ng-zorro-antd',
       '@delon/theme',
@@ -51,6 +50,7 @@ export class CodeService {
       '@delon/mock',
       '@delon/form',
       '@delon/util',
+      'ajv',
     ].forEach(key => {
       const includeVersion = key.indexOf(`@^`);
       if (includeVersion !== -1) {

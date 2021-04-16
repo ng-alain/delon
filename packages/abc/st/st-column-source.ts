@@ -18,7 +18,7 @@ import {
   STSortMap,
   STWidthMode,
 } from './st.interfaces';
-import { _STColumn } from './st.types';
+import { _STColumn, _STHeader } from './st.types';
 
 export interface STColumnSourceProcessOptions {
   widthMode: STWidthMode;
@@ -248,8 +248,8 @@ export class STColumnSource {
     }
   }
 
-  private genHeaders(rootColumns: _STColumn[]): { headers: _STColumn[][]; headerWidths: string[] | null } {
-    const rows: _STColumn[][] = [];
+  private genHeaders(rootColumns: _STColumn[]): { headers: _STHeader[][]; headerWidths: string[] | null } {
+    const rows: _STHeader[][] = [];
     const widths: string[] = [];
     const fillRowCells = (columns: _STColumn[], colIndex: number, rowIndex = 0): number[] => {
       // Init rows
@@ -299,8 +299,8 @@ export class STColumnSource {
     const rowCount = rows.length;
     for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
       rows[rowIndex].forEach(cell => {
-        if (!('rowSpan' in cell) && !cell.hasSubColumns) {
-          cell.rowSpan = rowCount - rowIndex;
+        if (!('rowSpan' in cell) && !(cell as _STHeader).hasSubColumns) {
+          (cell as _STHeader).rowSpan = rowCount - rowIndex;
         }
       });
     }
@@ -326,7 +326,7 @@ export class STColumnSource {
   process(
     list: STColumn[],
     options: STColumnSourceProcessOptions,
-  ): { columns: _STColumn[]; headers: _STColumn[][]; headerWidths: string[] | null } {
+  ): { columns: _STColumn[]; headers: _STHeader[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
@@ -408,6 +408,8 @@ export class STColumnSource {
       if (typeof item.width === 'number') {
         item.width = `${item.width}px`;
       }
+      item._left = false;
+      item._right = false;
 
       // sorter
       item._sort = this.sortCoerce(item);

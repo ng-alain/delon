@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';
-import { MockRequest, MockRule } from './interface';
+import { MockOptions, MockRequest, MockRule } from './interface';
 import { MockService } from './mock.service';
 
 const DATA = {
@@ -25,9 +25,9 @@ const DATA = {
 describe('mock: service', () => {
   let srv: MockService;
 
-  function genModule(options: AlainMockConfig): void {
+  function genModule(options: AlainMockConfig, mockOptions?: MockOptions): void {
     TestBed.configureTestingModule({
-      imports: [DelonMockModule.forRoot()],
+      imports: [DelonMockModule.forRoot(mockOptions)],
       providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }],
     });
     srv = TestBed.inject<MockService>(MockService);
@@ -37,6 +37,12 @@ describe('mock: service', () => {
     spyOn(console, 'warn');
     spyOn(console, 'error');
   }
+
+  it('shoulbe be data from forRoot', () => {
+    genModule({}, { data: DATA });
+    const rule = srv.getRule('', '/users') as MockRule;
+    expect(rule).not.toBeNull();
+  });
 
   describe('#getRule', () => {
     beforeEach(() =>

@@ -48,5 +48,5 @@ module: import { SVModule } from '@delon/abc/sv';
 |----|----|----|-----|
 | `[prefix]` | 前缀 | `string` | - |
 | `[unit]` | 单位 | `string` | - |
-| `[tooltip]` | 文字提示内容 | `string` | - |
+| `[tooltip]` | 文字提示内容 | `string, TemplateRef<void>` | - |
 | `[size]` | 大小 | `'large','small','default'` | `default` |

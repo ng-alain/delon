@@ -1,8 +1,8 @@
-<div class="loading-default__icon" *ngIf="options.type !== 'text'">
-  <ng-container [ngSwitch]="options.type">
+<div class="loading-default__icon" *ngIf="options.type! !== 'text'">
+  <ng-container [ngSwitch]="options.type!">
     <nz-spin *ngSwitchCase="'spin'" nzSimple></nz-spin>
-    <i *ngSwitchCase="'icon'" nz-icon [nzType]="icon.type" [nzTheme]="icon.theme" [nzSpin]="icon.spin"></i>
-    <div *ngSwitchDefault class="loading-default__custom" [ngStyle]="custom.style" [innerHTML]="custom.html"></div>
+    <i *ngSwitchCase="'icon'" nz-icon [nzType]="icon.type!" [nzTheme]="icon.theme!" [nzSpin]="icon.spin"></i>
+    <div *ngSwitchDefault class="loading-default__custom" [ngStyle]="custom.style!" [innerHTML]="custom.html"></div>
   </ng-container>
 </div>
 <div *ngIf="options.text" class="loading-default__text">{{ options.text }}</div>

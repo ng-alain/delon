@@ -18,4 +18,24 @@ export interface AlainUtilCurrencyConfig {
     M: string;
     K: string;
   };
+  /**
+   * 精度，默认：`2`
+   */
+  precision?: number;
+  /**
+   * 是否忽略精度 `.0` 或 `.00` 结尾的字符，默认：`true`
+   */
+  ingoreZeroPrecision: boolean;
+
+  /**
+   * Use anguar `currency` pipe parse when is set, pls refer to [document](https://angular.io/api/common/CurrencyPipe)
+   *
+   * 若指定则表示使用 Angular 自带的 `currency` 管道来解析，见[文档](https://angular.cn/api/common/CurrencyPipe)
+   */
+  ngCurrency?: {
+    display: 'code' | 'symbol' | 'symbol-narrow';
+    currencyCode?: string;
+    digitsInfo?: string;
+    locale?: string;
+  };
 }

@@ -61,15 +61,15 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
   }
 
-  _titleVal: string = '';
+  _titleVal: string | null = '';
   paths: PageHeaderPath[] = [];
 
   // #region fields
 
   _title: string | null;
-  _titleTpl: TemplateRef<void>;
+  _titleTpl: TemplateRef<any>;
   @Input()
-  set title(value: string | TemplateRef<void>) {
+  set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -82,21 +82,21 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() wide = false;
-  @Input() home: string;
-  @Input() homeLink: string;
-  @Input() homeI18n: string;
+  @Input() home?: string;
+  @Input() homeLink?: string;
+  @Input() homeI18n?: string;
   @Input() @InputBoolean() autoBreadcrumb: boolean;
   @Input() @InputBoolean() autoTitle: boolean;
   @Input() @InputBoolean() syncTitle: boolean;
   @Input() @InputBoolean() fixed: boolean;
   @Input() @InputNumber() fixedOffsetTop: number;
-  @Input() breadcrumb: TemplateRef<void>;
+  @Input() breadcrumb?: TemplateRef<any> | null = null;
   @Input() @InputBoolean() recursiveBreadcrumb: boolean;
-  @Input() logo: TemplateRef<void>;
-  @Input() action: TemplateRef<void>;
-  @Input() content: TemplateRef<void>;
-  @Input() extra: TemplateRef<void>;
-  @Input() tab: TemplateRef<void>;
+  @Input() logo?: TemplateRef<void> | null = null;
+  @Input() action?: TemplateRef<void> | null = null;
+  @Input() content?: TemplateRef<void> | null = null;
+  @Input() extra?: TemplateRef<void> | null = null;
+  @Input() tab?: TemplateRef<void> | null = null;
 
   // #endregion
 
@@ -157,7 +157,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.home) {
       paths.splice(0, 0, {
         title: (this.homeI18n && this.i18nSrv && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
-        link: [this.homeLink],
+        link: [this.homeLink!],
       });
     }
     this.paths = paths;

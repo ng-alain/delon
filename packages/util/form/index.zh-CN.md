@@ -4,6 +4,19 @@ subtitle: 响应式表单校验
 type: Tools
 ---
 
+## MatchControl
+
+匹配两个控件值，例如：
+
+```ts
+this.form = new FormGroup({
+  pwd: new FormControl(''),
+  repwd: new FormControl(''),
+}, {
+  validators: MatchControl('pwd', 'repwd'),
+});
+```
+
 ## _Validators
 
 一套用于响应式表单的验证器，包含：
@@ -17,3 +30,12 @@ type: Tools
 - `_Validators.ip4` 是否IP地址（支持v4、v6）
 - `_Validators.color` 是否颜色代码值
 - `_Validators.chinese` 是否中文
+
+每一个验证型都包括着用于表单验证器：
+
+```ts
+this.valForm = fb.group({
+  // 手机号
+  mobile: [null, Validators.compose([Validators.required, _Validators.mobile])]
+});
+```
