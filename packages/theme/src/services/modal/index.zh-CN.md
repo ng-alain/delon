@@ -14,7 +14,7 @@ type: Service
 ```ts
 this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
 
-// 成功范例
+// 成功范例，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
 // 1. 视为成功
 this.nzModalRef.close(true);
 this.nzModalRef.close({ other: 1 });

@@ -32,7 +32,7 @@ export class ModalHelper {
    * @example
    * this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
    * this.nzModalRef.close(data);
    * this.nzModalRef.close();
    * // 关闭
@@ -97,7 +97,7 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
    * this.nzModalRef.close(data);
    * this.nzModalRef.close();
    * // 关闭
@@ -119,7 +119,7 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
    * this.nzModalRef.close(data);
    * this.nzModalRef.close();
    * // 关闭
@@ -146,7 +146,7 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
    * this.nzModalRef.close(data);
    * this.nzModalRef.close();
    * // 关闭

@@ -14,7 +14,7 @@ Based on the `NzModalService` package, it solves some known issues:
 ```ts
 this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
 
-// Ok callback
+// Ok callback, Where `nzModalRef` refers to the variable name of the target component in the constructor `NzModalRef`
 // 1. considered successful
 this.nzModalRef.close(true);
 this.nzModalRef.close({ other: 1 });
