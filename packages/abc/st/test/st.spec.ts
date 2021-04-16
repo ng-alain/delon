@@ -2173,11 +2173,11 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
   showHeader = true;
+  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
   contextmenu: STContextmenuFn | null = _ => [
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] },
   ];
-  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
 
   error(): void {}
   change(): void {}
