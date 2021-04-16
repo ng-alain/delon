@@ -54,6 +54,7 @@ import {
   STColumnSelection,
   STContextmenuFn,
   STContextmenuItem,
+  STCustomRequestOptions,
   STData,
   STError,
   STExportOptions,
@@ -219,6 +220,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualItemSize = 54;
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
+  @Input() customRequest?: (options: STCustomRequestOptions) => Observable<any>;
   @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
 
   /**
@@ -361,6 +363,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           rowClassName,
           paginator: true,
           saftHtml: this.cog.saftHtml!,
+          customRequest: this.customRequest || this.cog.customRequest,
           ...options,
         })
         .pipe(takeUntil(this.destroy$))
