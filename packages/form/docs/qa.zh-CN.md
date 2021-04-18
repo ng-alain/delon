@@ -93,5 +93,5 @@ const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
 // 或手动触发 `detectChanges`
-statusProperty.widget.detectChanges();
+// statusProperty.widget.detectChanges();
 ```
