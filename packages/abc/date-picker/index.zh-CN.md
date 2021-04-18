@@ -3,7 +3,7 @@ type: Form
 title: range-picker
 subtitle: 日期范围
 cols: 1
-module: import { DateRangeModule } from '@delon/abc/date-picker';
+module: import { DatePickerModule } from '@delon/abc/date-picker';
 ---
 
 基于 `nz-range-picker` 进一步优化，更好的服务于开始与结束日期。
