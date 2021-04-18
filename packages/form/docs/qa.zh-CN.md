@@ -92,12 +92,6 @@ Schema 的 `default` 用于设置初始化，一般情况下当修改表单时�
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
-```
-
-有时候需要对 Schema 进行修改，例如 `title`、`readOnly`，受限于 Angular 变更检测机制，需要手动触发 `detectChanges`，例如：
-
-```ts
-const statusProperty = this.sf.getProperty('/status')!;
-statusProperty.schema.readOnly = true;
+// 或手动触发 `detectChanges`
 statusProperty.widget.detectChanges();
 ```
