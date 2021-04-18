@@ -93,3 +93,11 @@ const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
 ```
+
+Sometimes need modify the Schema, such as `title` and `readOnly`, which are limited by the Angular change detection mechanism and need to manually trigger `detectChanges`, for example:
+
+```ts
+const statusProperty = this.sf.getProperty('/status')!;
+statusProperty.schema.readOnly = true;
+statusProperty.widget.detectChanges();
+```
