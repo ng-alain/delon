@@ -153,7 +153,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       },
     } as NzSafeAny);
     _chart.data(dv.rows);
-    _chart.render();
+    _chart.render(true);
   }
 
   private _attachChart(): void {

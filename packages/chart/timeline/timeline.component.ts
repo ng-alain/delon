@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Chart, Event, Types } from '@antv/g2';
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
@@ -82,7 +91,15 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   // #endregion
 
-  install(): void {
+  onChanges(changes: SimpleChanges): void {
+    const tm = changes.titleMap;
+    if (tm && !tm.firstChange && tm.currentValue !== tm.previousValue) {
+      this.destroyChart();
+      this._install();
+    }
+  }
+
+  private _install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: node.nativeElement,
@@ -135,7 +152,10 @@ export class G2TimelineComponent extends G2BaseComponent {
         line.changeVisible(!item.unchecked);
       }
     });
+  }
 
+  install(): void {
+    this._install();
     this.attachChart();
   }
 
@@ -196,6 +216,6 @@ export class G2TimelineComponent extends G2BaseComponent {
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
     _chart.changeData(filterData);
-    _chart.render();
+    _chart.render(true);
   }
 }

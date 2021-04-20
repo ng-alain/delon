@@ -117,7 +117,7 @@ export class G2BarComponent extends G2BaseComponent {
     _chart.padding = padding;
 
     _chart.data(data);
-    _chart.render();
+    _chart.render(true);
   }
 
   private updatelabel(): void {

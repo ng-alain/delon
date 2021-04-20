@@ -150,7 +150,7 @@ export class G2PieComponent extends G2BaseComponent {
       item.percent = totalSum === 0 ? 0 : item.y / totalSum;
     }
     _chart.changeData(data);
-    _chart.render();
+    _chart.render(true);
 
     this.ngZone.run(() => this.genLegend());
   }

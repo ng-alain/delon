@@ -118,6 +118,6 @@ export class G2MiniAreaComponent extends G2BaseComponent {
     _chart.padding = padding;
 
     _chart.changeData(data);
-    _chart.render();
+    _chart.render(true);
   }
 }

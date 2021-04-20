@@ -153,6 +153,6 @@ export class G2GaugeComponent extends G2BaseComponent {
     });
 
     _chart.changeData(data);
-    _chart.render();
+    _chart.render(true);
   }
 }

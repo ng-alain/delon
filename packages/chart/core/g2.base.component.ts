@@ -1,5 +1,16 @@
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Chart, Types } from '@antv/g2';
 import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
@@ -29,7 +40,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   onInit(): void {}
 
-  onChanges(): void {}
+  onChanges(_changes: SimpleChanges): void {}
 
   constructor(
     protected srv: G2Service,
@@ -68,13 +79,13 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges(): void {
-    this.onChanges();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.onChanges(changes);
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   @ZoneOutside()
-  private destroyChart(): void {
+  protected destroyChart(): void {
     if (this._chart) {
       this._chart.destroy();
     }

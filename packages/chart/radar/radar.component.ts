@@ -124,7 +124,7 @@ export class G2RadarComponent extends G2BaseComponent {
 
     _chart.geometries.forEach(g => g.color('name', colors));
     _chart.changeData(data);
-    _chart.render();
+    _chart.render(true);
 
     this.ngZone.run(() => this.genLegend());
   }
