@@ -2,17 +2,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
 
 export interface G2BarData {
-  x: NzSafeAny;
-  y: NzSafeAny;
+  x: any;
+  y: any;
   color?: string;
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 }
 
 export interface G2BarClickItem {

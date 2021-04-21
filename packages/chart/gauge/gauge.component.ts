@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { Chart } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'g2-gauge',
@@ -38,7 +37,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       draw(cfg: any, container: any) {
         const group = container.addGroup({});
         // 获取极坐标系下画布中心点
-        const center = (this as NzSafeAny).parsePoint({ x: 0, y: 0 });
+        const center = (this as any).parsePoint({ x: 0, y: 0 });
         // 绘制指针
         group.addShape('line', {
           attrs: {

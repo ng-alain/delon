@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
   x: any;
@@ -68,7 +67,7 @@ export class G2MiniBarComponent extends G2BaseComponent {
       .position('x*y')
       .color(color)
       .size(borderWidth)
-      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
+      .tooltip('x*y', (x: any, y: any) => ({ name: x, value: y + yTooltipSuffix }));
 
     chart.on(`interval:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));

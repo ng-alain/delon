@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
 import { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
   x: any;
@@ -51,7 +50,7 @@ export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_select: BooleanInput;
 
   private percentColor: (value: string) => string;
-  legendData: NzSafeAny[] = [];
+  legendData: any[] = [];
   isPercent: boolean;
 
   // #region fields
