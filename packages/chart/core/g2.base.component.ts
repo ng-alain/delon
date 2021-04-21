@@ -51,14 +51,18 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() theme: string | Types.LooseObject;
 
+  /** 检查是否只变更数据 */
   onlyChangeData?: (changes: SimpleChanges) => boolean;
 
   abstract install(): void;
 
+  /** G2数据变更 */
   changeData(): void {}
 
+  /** 等同 `ngOnInit` */
   onInit(): void {}
 
+  /** 等同 `ngOnChanges` */
   onChanges(_: SimpleChanges): void {}
 
   @ZoneOutside()
