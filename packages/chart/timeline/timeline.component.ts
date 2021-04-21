@@ -8,7 +8,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
+import type { Chart, Event, Types } from '@antv/g2';
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';

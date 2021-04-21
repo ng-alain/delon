@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { Chart } from '@antv/g2';
+import type { Chart } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 

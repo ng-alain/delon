@@ -11,7 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import type { Chart, Types } from '@antv/g2';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
