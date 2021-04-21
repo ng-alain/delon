@@ -115,16 +115,13 @@ export class G2TagCloudComponent extends G2BaseComponent {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
-    this.attachChart();
+    this.changeData();
+    chart.render();
   }
 
-  attachChart(): void {
-    const { _chart, padding, data } = this;
-    if (!_chart || !data || data.length <= 0) return;
-
-    _chart.height = this.height;
-    _chart.width = this.width;
-    _chart.padding = padding;
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
 
     const dv = new (window as any).DataSet.View().source(data);
     const range = dv.range('value');
@@ -152,12 +149,8 @@ export class G2TagCloudComponent extends G2BaseComponent {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
       },
     } as NzSafeAny);
-    _chart.data(dv.rows);
-    _chart.render(true);
-  }
 
-  private _attachChart(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
+    _chart.changeData(dv.rows);
   }
 
   private installResizeEvent(): void {
@@ -166,7 +159,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
         filter(() => !!this._chart),
         debounceTime(200),
       )
-      .subscribe(() => this._attachChart());
+      .subscribe(() => this.changeData());
   }
 
   onInit(): void {

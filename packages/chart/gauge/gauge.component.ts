@@ -100,10 +100,12 @@ export class G2GaugeComponent extends G2BaseComponent {
     });
     chart.point().position('value*1').shape('pointer');
 
-    this.attachChart();
+    this.changeData();
+
+    chart.render();
   }
 
-  attachChart(): void {
+  changeData(): void {
     const { _chart, percent, color, bgColor, title } = this;
     if (!_chart) return;
 
@@ -153,6 +155,5 @@ export class G2GaugeComponent extends G2BaseComponent {
     });
 
     _chart.changeData(data);
-    _chart.render(true);
   }
 }

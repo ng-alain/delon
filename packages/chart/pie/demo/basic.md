@@ -5,11 +5,11 @@ title:
   en-US: Basic
 ---
 
-基础用法。
+基础用法。默认情况下丝滑更新数据的判断标准是以只更新 `data` 为准，这里利用 `repaint` 进行手动调用 `changeData` 改变数据达到丝滑更新的效果。
 
 ```ts
-import { Component } from '@angular/core';
-import { G2PieClickItem, G2PieData } from '@delon/chart/pie';
+import { Component, ViewChild } from '@angular/core';
+import { G2PieClickItem, G2PieComponent, G2PieData } from '@delon/chart/pie';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -17,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <g2-pie
+      #pie
       [hasLegend]="true"
       title="销售额"
       subTitle="销售额"
@@ -24,11 +25,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       [valueFormat]="format"
       [data]="salesPieData"
       height="294"
+      repaint="false"
       (clickItem)="handleClick($event)"
     ></g2-pie>
   `,
 })
 export class DemoComponent {
+  @ViewChild('pie', { static: false }) readonly pie: G2PieComponent;
   salesPieData: G2PieData[] = [];
   total = '';
 
@@ -67,6 +70,10 @@ export class DemoComponent {
       });
     }
     this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
+    if (this.pie) {
+      // 等待组件渲染
+      setTimeout(() => this.pie.changeData());
+    }
   }
 
   format(val: number): string {

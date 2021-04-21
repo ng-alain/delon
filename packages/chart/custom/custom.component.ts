@@ -38,8 +38,6 @@ export class G2CustomComponent extends G2BaseComponent {
     this.installResizeEvent();
   }
 
-  attachChart(): void {}
-
   private installResizeEvent(): void {
     if (this.resizeTime <= 0) return;
 

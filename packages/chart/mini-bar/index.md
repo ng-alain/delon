@@ -14,6 +14,7 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `#1890FF` |
 | `[height]` | 图表高度 | `number` | - |
