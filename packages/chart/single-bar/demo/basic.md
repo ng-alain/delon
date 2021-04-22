@@ -13,6 +13,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
+    <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <nz-table [nzData]="list" [nzShowPagination]="false">
       <thead>
         <tr>
@@ -44,10 +45,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class DemoComponent {
-  list = new Array(5).fill({}).map(() => ({
+  list: Array<{ id: number; value: number; other: number }> = new Array(5).fill({}).map(() => ({
     id: Math.floor(Math.random() * 10000),
     value: Math.floor(Math.random() * 100),
     other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100),
   }));
+
+  refresh(): void {
+    this.list.forEach(v => {
+      v.value = Math.floor(Math.random() * 100);
+      v.other = Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
+    });
+  }
 }
 ```

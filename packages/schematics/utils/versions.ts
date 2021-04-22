@@ -22,5 +22,5 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
     'devDependencies',
   );
   // TODO: fix angular depends on 6.x
-  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER']);
+  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER', 'ajv-formats@DEP-0.0.0-PLACEHOLDER']);
 }

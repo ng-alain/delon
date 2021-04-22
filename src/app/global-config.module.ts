@@ -17,6 +17,9 @@ const alainConfig: AlainConfig = {
   },
   mock: { data: MOCKDATA },
   pdf: {},
+  chart: {
+    echartsExtensions: ['https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/theme/dark.min.js'],
+  },
 };
 
 const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];

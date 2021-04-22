@@ -469,8 +469,12 @@ module.exports = {
           'en-US': 'Documents',
         },
         {
-          'zh-CN': '组件',
-          'en-US': 'Components',
+          'zh-CN': 'G2',
+          'en-US': 'G2',
+        },
+        {
+          'zh-CN': 'ECharts',
+          'en-US': 'ECharts',
         },
       ],
       module: '@delon/chart',

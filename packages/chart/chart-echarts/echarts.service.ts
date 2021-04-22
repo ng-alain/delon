@@ -4,7 +4,7 @@ import { LazyService } from '@delon/util/other';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class G2Service implements OnDestroy {
+export class ChartEChartsService implements OnDestroy {
   private _cog: AlainChartConfig;
   private loading = false;
   private loaded = false;
@@ -18,10 +18,7 @@ export class G2Service implements OnDestroy {
       'chart',
       {
         theme: '',
-        libs: [
-          'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.14/dist/g2.min.js',
-          'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.8/dist/data-set.js',
-        ],
+        echartsLib: 'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js',
       } as AlainChartConfig,
       val,
     )!;
@@ -39,10 +36,19 @@ export class G2Service implements OnDestroy {
       return this;
     }
     this.loading = true;
-    this.lazySrv.load(this.cog.libs!).then(() => {
-      this.loaded = true;
-      this.notify$.next();
-    });
+    this.lazySrv
+      .load(this.cog.echartsLib!)
+      .then(() => {
+        const extensions = this.cog.echartsExtensions;
+        if (Array.isArray(extensions) && extensions.length > 0) {
+          return this.lazySrv.load(extensions).then(() => true);
+        }
+        return Promise.resolve(true);
+      })
+      .then(() => {
+        this.loaded = true;
+        this.notify$.next();
+      });
     return this;
   }
 

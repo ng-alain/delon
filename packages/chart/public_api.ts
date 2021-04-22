@@ -13,5 +13,6 @@ export * from '@delon/chart/water-wave';
 export * from '@delon/chart/number-info';
 export * from '@delon/chart/trend';
 export * from '@delon/chart/single-bar';
+export * from '@delon/chart/chart-echarts';
 
 export * from './chart.module';

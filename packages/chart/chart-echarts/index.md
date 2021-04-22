@@ -1,8 +1,8 @@
 ---
-title: g2-bar
-subtitle: 柱状图
+title: chart-echarts
+subtitle: ECharts
 cols: 1
-type: G2
+type: ECharts
 module: import { G2BarModule } from '@delon/chart/bar';
 ---
 
@@ -14,7 +14,6 @@ module: import { G2BarModule } from '@delon/chart/bar';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |

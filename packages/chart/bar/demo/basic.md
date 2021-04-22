@@ -14,16 +14,27 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)"></g2-bar>`,
+  template: `
+    <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
+    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)"></g2-bar>
+  `,
 })
 export class DemoComponent {
   constructor(private msg: NzMessageService) {}
 
-  salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
-    x: `${idx + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200,
-    color: idx > 5 ? '#f50' : undefined,
-  }));
+  salesData = this.genData();
+
+  private genData(): G2BarData[] {
+    return new Array(12).fill({}).map((_i, idx) => ({
+      x: `${idx + 1}月`,
+      y: Math.floor(Math.random() * 1000) + 200,
+      color: idx > 5 ? '#f50' : undefined,
+    }));
+  }
+
+  refresh(): void {
+    this.salesData = this.genData();
+  }
 
   handleClick(data: G2BarClickItem): void {
     this.msg.info(`${data.item.x} - ${data.item.y}`);

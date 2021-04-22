@@ -15,7 +15,7 @@ Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic
 
 ```ts
 import { Component, ElementRef, NgZone } from '@angular/core';
-import { Chart } from '@antv/g2';
+import type { Chart } from '@antv/g2';
 
 @Component({
   selector: 'chart-custom-basic',
