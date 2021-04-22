@@ -11,4 +11,26 @@ export interface AlainChartConfig {
   libs?: string[];
 
   theme?: string | { [key: string]: NzSafeAny };
+
+  /**
+   * [ECharts](https://echarts.apache.org/) library path
+   * default: `[
+   *  "https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js",
+   *  "https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/i18n/langZH.min.js",
+   *  "https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/theme/dark.min.js"
+   * ]`
+   */
+  echartsLib?: string;
+
+  /**
+   * [ECharts](https://echarts.apache.org/zh/download-extension.html) library path, like i18n, theme etc
+   */
+  echartsExtensions?: string[];
+
+  /**
+   * Theme configuration item, you can load the default theme file with `echartsExtensions`
+   *
+   * 主题配置项，可以配合 `echartsExtensions` 加载默认的主题文件
+   */
+  echartsTheme?: string | object | null;
 }

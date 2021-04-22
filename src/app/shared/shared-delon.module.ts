@@ -1,3 +1,4 @@
+import { AutoFocusModule } from '@delon/abc/auto-focus';
 import { AvatarListModule } from '@delon/abc/avatar-list';
 import { CountDownModule } from '@delon/abc/count-down';
 import { DatePickerModule } from '@delon/abc/date-picker';
@@ -8,6 +9,7 @@ import { ExceptionModule } from '@delon/abc/exception';
 import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { ImageModule } from '@delon/abc/image';
+import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
@@ -28,6 +30,7 @@ import { TagSelectModule } from '@delon/abc/tag-select';
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
 import { G2CustomModule } from '@delon/chart/custom';
+import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
@@ -42,8 +45,6 @@ import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
-import { AutoFocusModule } from '@delon/abc/auto-focus';
-import { LetModule } from '@delon/abc/let';
 import { CurrencyPipeModule, FilterPipeModule, FormatPipeModule } from '@delon/util/pipes';
 
 export const SHARED_DELON_MODULES = [
@@ -85,6 +86,7 @@ export const SHARED_DELON_MODULES = [
   G2TagCloudModule,
   G2TimelineModule,
   G2WaterWaveModule,
+  ChartEChartsModule,
   NumberInfoModule,
   TrendModule,
   ReuseTabModule,

@@ -2,7 +2,7 @@
 title: g2-pie
 subtitle: 饼状图
 cols: 1
-type: Components
+type: G2
 module: import { G2PieModule } from '@delon/chart/pie';
 ---
 

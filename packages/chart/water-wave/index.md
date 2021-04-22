@@ -2,7 +2,7 @@
 title: g2-water-wave
 subtitle: 水波图
 cols: 1
-type: Components
+type: G2
 module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 ---
 

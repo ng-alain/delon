@@ -2,7 +2,7 @@
 title: g2-timeline
 subtitle: 折线图
 cols: 1
-type: Components
+type: G2
 module: import { G2TimelineModule } from '@delon/chart/timeline';
 ---
 
