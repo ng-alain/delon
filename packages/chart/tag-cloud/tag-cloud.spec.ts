@@ -17,10 +17,10 @@ describe('chart: tag-cloud', () => {
 
     it('should be repaint when window resize', fakeAsync(() => {
       page.dcFirst();
-      spyOn(page.chart, 'render');
+      spyOn(page.chart, 'changeData');
       window.dispatchEvent(new Event('resize'));
       tick(201);
-      expect(page.chart.render).toHaveBeenCalled();
+      expect(page.chart.changeData).toHaveBeenCalled();
     }));
 
     it('shuld be not rotate when random is 2', fakeAsync(() => {

@@ -14,6 +14,7 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |

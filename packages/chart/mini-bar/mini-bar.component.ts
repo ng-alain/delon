@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Chart, Event } from '@antv/g2';
+import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
   x: any;
@@ -44,7 +43,7 @@ export class G2MiniBarComponent extends G2BaseComponent {
   // #endregion
 
   install(): void {
-    const { el, height, padding, yTooltipSuffix, tooltipType, theme } = this;
+    const { el, height, padding, yTooltipSuffix, tooltipType, theme, color, borderWidth } = this;
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
@@ -66,24 +65,21 @@ export class G2MiniBarComponent extends G2BaseComponent {
     chart
       .interval()
       .position('x*y')
-      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
+      .color(color)
+      .size(borderWidth)
+      .tooltip('x*y', (x: any, y: any) => ({ name: x, value: y + yTooltipSuffix }));
 
     chart.on(`interval:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
+    this.changeData();
     chart.render();
-
-    this.attachChart();
   }
 
-  attachChart(): void {
-    const { _chart, height, padding, data, color, borderWidth } = this;
-    if (!_chart || !data || data.length <= 0) return;
-    _chart.geometries[0].size(borderWidth).color(color);
-    _chart.height = height;
-    _chart.padding = padding;
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
     _chart.changeData(data);
-    _chart.render();
   }
 }

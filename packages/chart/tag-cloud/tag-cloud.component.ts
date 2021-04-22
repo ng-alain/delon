@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Chart, Event } from '@antv/g2';
+import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
@@ -43,7 +42,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
     (window as any).G2.registerShape('point', 'cloud', {
       // tslint:disable-next-line: typedef
       draw(cfg: any, container: any) {
-        const data = cfg.data as NzSafeAny;
+        const data = cfg.data as any;
         const textShape = container.addShape({
           type: 'text',
           name: 'tag-cloud-text',
@@ -57,7 +56,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
             textBaseline: 'Alphabetic',
             x: cfg.x,
             y: cfg.y,
-          } as NzSafeAny,
+          } as any,
         });
         if (data.rotate) {
           (window as any).G2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
@@ -96,7 +95,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       showTitle: false,
       showMarkers: false,
     });
-    (chart.coordinate() as NzSafeAny).reflect();
+    (chart.coordinate() as any).reflect();
     chart
       .point()
       .position('x*y')
@@ -115,16 +114,13 @@ export class G2TagCloudComponent extends G2BaseComponent {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
-    this.attachChart();
+    this.changeData();
+    chart.render();
   }
 
-  attachChart(): void {
-    const { _chart, padding, data } = this;
-    if (!_chart || !data || data.length <= 0) return;
-
-    _chart.height = this.height;
-    _chart.width = this.width;
-    _chart.padding = padding;
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
 
     const dv = new (window as any).DataSet.View().source(data);
     const range = dv.range('value');
@@ -148,16 +144,12 @@ export class G2TagCloudComponent extends G2BaseComponent {
         return random * 90; // 0, 90, 270
       },
       // tslint:disable-next-line: typedef
-      fontSize(d: NzSafeAny) {
+      fontSize(d: any) {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
       },
-    } as NzSafeAny);
-    _chart.data(dv.rows);
-    _chart.render();
-  }
+    } as any);
 
-  private _attachChart(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
+    _chart.changeData(dv.rows);
   }
 
   private installResizeEvent(): void {
@@ -166,7 +158,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
         filter(() => !!this._chart),
         debounceTime(200),
       )
-      .subscribe(() => this._attachChart());
+      .subscribe(() => this.changeData());
   }
 
   onInit(): void {

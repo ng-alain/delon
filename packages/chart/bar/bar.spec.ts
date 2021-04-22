@@ -23,7 +23,7 @@ describe('chart: bar', () => {
         page.context.title = null;
         page.context.height = 100;
         page.dc();
-        page.checkOptions('height', 100);
+        page.checkOptions('height', 59);
       });
       it('with string', () => {
         page.context.height = 100;
