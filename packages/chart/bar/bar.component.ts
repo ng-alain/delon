@@ -1,18 +1,17 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Chart, Event } from '@antv/g2';
+import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
 
 export interface G2BarData {
-  x: NzSafeAny;
-  y: NzSafeAny;
+  x: any;
+  y: any;
   color?: string;
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 }
 
 export interface G2BarClickItem {
@@ -103,21 +102,16 @@ export class G2BarComponent extends G2BaseComponent {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
-    this.attachChart();
+    this.changeData();
+    chart.render();
+    this.installResizeEvent();
   }
 
-  attachChart(): void {
-    const { _chart, padding, data } = this;
-    if (!_chart || !data || data.length <= 0) return;
-    this.installResizeEvent();
-    const height = this.getHeight();
-    if (_chart.height !== height) {
-      _chart.height = height;
-    }
-    _chart.padding = padding;
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
 
-    _chart.data(data);
-    _chart.render();
+    _chart.changeData(data);
   }
 
   private updatelabel(): void {

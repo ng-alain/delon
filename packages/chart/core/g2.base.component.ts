@@ -1,35 +1,27 @@
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
-import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import {
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import type { Chart, Types } from '@antv/g2';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { G2Service } from './g2.servicce';
 
 @Directive()
 export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_delay: NumberInput;
-
-  @ViewChild('container', { static: true }) protected node: ElementRef;
-  protected resize$: Subscription;
-  protected destroy$ = new Subject<void>();
-  protected _chart: Chart;
-  loaded = false;
-
-  @Input() @InputNumber() delay = 0;
-  @Input() theme: string | Types.LooseObject;
-
   get chart(): Chart {
     return this._chart;
   }
-
-  abstract install(): void;
-
-  abstract attachChart(): void;
-
-  onInit(): void {}
-
-  onChanges(): void {}
 
   constructor(
     protected srv: G2Service,
@@ -46,6 +38,32 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       )
       .subscribe(() => this.load());
   }
+  static ngAcceptInputType_repaint: BooleanInput;
+  static ngAcceptInputType_delay: NumberInput;
+  @Input() @InputBoolean() repaint = true;
+
+  @ViewChild('container', { static: true }) protected node: ElementRef;
+  protected resize$: Subscription;
+  protected destroy$ = new Subject<void>();
+  protected _chart: Chart;
+  loaded = false;
+
+  @Input() @InputNumber() delay = 0;
+  @Input() theme: string | Types.LooseObject;
+
+  /** 检查是否只变更数据 */
+  onlyChangeData?: (changes: SimpleChanges) => boolean;
+
+  abstract install(): void;
+
+  /** G2数据变更 */
+  changeData(): void {}
+
+  /** 等同 `ngOnInit` */
+  onInit(): void {}
+
+  /** 等同 `ngOnChanges` */
+  onChanges(_: SimpleChanges): void {}
 
   @ZoneOutside()
   private load(): void {
@@ -68,16 +86,26 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges(): void {
-    this.onChanges();
-    this.ngZone.runOutsideAngular(() => this.attachChart());
+  ngOnChanges(changes: SimpleChanges): void {
+    this.onChanges(changes);
+
+    const isOnlyChangeData = this.onlyChangeData ? this.onlyChangeData(changes) : Object.keys(changes).length === 1 && !!changes.data;
+    if (isOnlyChangeData) {
+      this.changeData();
+      return;
+    }
+    if (!this.chart || !this.repaint) return;
+    this.ngZone.runOutsideAngular(() => {
+      this.destroyChart().install();
+    });
   }
 
   @ZoneOutside()
-  private destroyChart(): void {
+  protected destroyChart(): this {
     if (this._chart) {
       this._chart.destroy();
     }
+    return this;
   }
 
   ngOnDestroy(): void {

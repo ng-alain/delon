@@ -1,10 +1,18 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
+import type { Chart, Event, Types } from '@antv/g2';
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { format } from 'date-fns';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
   /**
@@ -82,6 +90,11 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   // #endregion
 
+  onlyChangeData = (changes: SimpleChanges): boolean => {
+    const tm = changes.titleMap;
+    return !(tm && !tm.firstChange && tm.currentValue !== tm.previousValue);
+  };
+
   install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
@@ -136,13 +149,15 @@ export class G2TimelineComponent extends G2BaseComponent {
       }
     });
 
-    this.attachChart();
+    this.changeData();
+
+    chart.render();
   }
 
-  attachChart(): void {
+  changeData(): void {
     const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
     let data = [...this.data];
-    if (!_chart || !data || data.length <= 0) return;
+    if (!_chart || data.length <= 0) return;
 
     const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
 
@@ -157,7 +172,7 @@ export class G2TimelineComponent extends G2BaseComponent {
 
     // border
     _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
+      v.color((colorMap as any)[`y${idx + 1}`]).size(borderWidth);
     });
     _chart.height = height;
     _chart.padding = padding;
@@ -196,6 +211,5 @@ export class G2TimelineComponent extends G2BaseComponent {
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
     _chart.changeData(filterData);
-    _chart.render();
   }
 }

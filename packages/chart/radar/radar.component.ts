@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Chart, Event } from '@antv/g2';
+import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -52,7 +52,7 @@ export class G2RadarComponent extends G2BaseComponent {
   }
 
   install(): void {
-    const { node, padding, theme } = this;
+    const { node, padding, theme, tickCount } = this;
 
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: node.nativeElement,
@@ -91,40 +91,33 @@ export class G2RadarComponent extends G2BaseComponent {
         },
       },
     });
-    chart.filter('name', (name: string) => {
-      const legendItem = this.legendData.find(w => w.name === name);
-      return legendItem ? legendItem.checked !== false : true;
-    });
-
-    chart.line().position('label*value');
-
-    chart.point().position('label*value').shape('circle').size(3);
-
-    chart.render();
-
-    chart.on(`point:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
-    });
-
-    this.attachChart();
-  }
-
-  attachChart(): void {
-    const { _chart, padding, data, colors, tickCount } = this;
-    if (!_chart || !data || data.length <= 0) return;
-
-    _chart.height = this.getHeight();
-    _chart.padding = padding;
-    _chart.scale({
+    chart.scale({
       value: {
         min: 0,
         tickCount,
       },
     });
+    chart.filter('name', (name: string) => {
+      const legendItem = this.legendData.find(w => w.name === name);
+      return legendItem ? legendItem.checked !== false : true;
+    });
 
-    _chart.geometries.forEach(g => g.color('name', colors));
+    chart.line().position('label*value').color('name', this.colors);
+    chart.point().position('label*value').shape('circle').size(3);
+
+    chart.on(`point:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
+
+    this.changeData();
+
+    chart.render();
+  }
+
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
     _chart.changeData(data);
-    _chart.render();
 
     this.ngZone.run(() => this.genLegend());
   }
@@ -151,7 +144,7 @@ export class G2RadarComponent extends G2BaseComponent {
   _click(i: number): void {
     const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    _chart.render();
+    _chart.render(true);
   }
 
   onChanges(): void {

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Chart, Event } from '@antv/g2';
+import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
   x: any;
@@ -13,6 +12,17 @@ export interface G2PieData {
 export interface G2PieClickItem {
   item: G2PieData;
   ev: Event;
+}
+
+export interface G2PieRatio {
+  /** 占比文本，默认：`占比` */
+  text: string;
+  /** 反比文本，默认：`反比` */
+  inverse: string;
+  /** 正比颜色，默认使用 `color` 值 */
+  color: string;
+  /** 反比颜色，默认：`#F0F2F5` */
+  inverseColor: string;
 }
 
 @Component({
@@ -40,7 +50,7 @@ export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_select: BooleanInput;
 
   private percentColor: (value: string) => string;
-  legendData: NzSafeAny[] = [];
+  legendData: any[] = [];
   isPercent: boolean;
 
   // #region fields
@@ -62,6 +72,12 @@ export class G2PieComponent extends G2BaseComponent {
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
   @Input() interaction: G2InteractionType = 'none';
+  @Input() ratio: G2PieRatio = {
+    text: '占比',
+    inverse: '反比',
+    color: '',
+    inverseColor: '#F0F2F5',
+  };
   @Output() clickItem = new EventEmitter<G2PieClickItem>();
 
   // #endregion
@@ -73,25 +89,42 @@ export class G2PieComponent extends G2BaseComponent {
   private fixData(): void {
     const { percent, color } = this;
     this.isPercent = percent != null;
-    if (this.isPercent) {
-      this.select = false;
-      this.tooltip = false;
-      this.percentColor = (value: string) => (value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5');
-      this.data = [
-        {
-          x: '占比',
-          y: percent,
-        },
-        {
-          x: '反比',
-          y: 100 - percent,
-        },
-      ];
+    if (!this.isPercent) {
+      return;
     }
+
+    this.select = false;
+    this.tooltip = false;
+    const { text, inverse, color: textColor, inverseColor } = this.ratio;
+    this.percentColor = (value: string) => (value === text ? textColor || color : inverseColor);
+    this.data = [
+      {
+        x: text,
+        y: percent,
+      },
+      {
+        x: inverse,
+        y: 100 - percent,
+      },
+    ];
   }
 
   install(): void {
-    const { node, height, padding, tooltip, inner, hasLegend, interaction, theme } = this;
+    const {
+      node,
+      height,
+      padding,
+      tooltip,
+      inner,
+      hasLegend,
+      interaction,
+      theme,
+      animate,
+      lineWidth,
+      isPercent,
+      percentColor,
+      colors,
+    } = this;
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
@@ -99,6 +132,7 @@ export class G2PieComponent extends G2BaseComponent {
       padding,
       theme,
     }));
+    chart.animate(animate);
 
     if (!tooltip) {
       chart.tooltip(false);
@@ -117,41 +151,38 @@ export class G2PieComponent extends G2BaseComponent {
       .interval()
       .adjust('stack')
       .position('y')
+      .style({ lineWidth, stroke: '#fff' })
+      .color('x', isPercent ? percentColor : colors)
       .tooltip('x*percent', (name: string, p: number) => ({
         name,
         value: `${hasLegend ? p : (p * 100).toFixed(2)} %`,
       }))
       .state({});
-
-    chart.on(`interval:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
-    });
-
-    this.attachChart();
-  }
-
-  attachChart(): void {
-    const { _chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
-    if (!_chart) return;
-
-    _chart.height = height;
-    _chart.padding = padding;
-    _chart.animate(animate);
-    _chart.geometries[0].style({ lineWidth, stroke: '#fff' }).color('x', isPercent ? percentColor : colors);
-    _chart.scale({
+    chart.scale({
       x: {
         type: 'cat',
         range: [0, 1],
       },
     });
+
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
+
+    this.changeData();
+    chart.render();
+  }
+
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+
     // 转化 percent
     const totalSum = data.reduce((cur, item) => cur + item.y, 0);
     for (const item of data) {
       item.percent = totalSum === 0 ? 0 : item.y / totalSum;
     }
     _chart.changeData(data);
-    _chart.render();
-
     this.ngZone.run(() => this.genLegend());
   }
 
@@ -173,7 +204,7 @@ export class G2PieComponent extends G2BaseComponent {
   _click(i: number): void {
     const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    _chart.render();
+    _chart.render(true);
   }
 
   onChanges(): void {
