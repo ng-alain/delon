@@ -63,7 +63,7 @@ export function v117Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logStart(context, `Upgrade @delon/* version number`);
-    removePackage(tree, ['qrious', 'ajv'], 'dependencies');
+    removePackage(tree, ['qrious'], 'dependencies');
     return chain([removeAjvLib(context), removeQriousLib(context)]);
   };
 }
