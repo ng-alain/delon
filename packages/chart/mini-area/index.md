@@ -2,7 +2,7 @@
 title: g2-mini-area
 subtitle: 迷你区域图
 cols: 2
-type: Components
+type: G2
 module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 ---
 

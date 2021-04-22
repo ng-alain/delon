@@ -1,5 +1,5 @@
 ---
-type: Components
+type: G2
 title: number-info
 subtitle: 数据文本
 cols: 2

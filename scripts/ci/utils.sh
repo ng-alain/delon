@@ -29,6 +29,7 @@ DEPENDENCIES=$(node -p "
     'prettier',
     '@antv/data-set',
     '@antv/g2',
+    'echarts',
     'ng-zorro-antd',
     'ngx-ueditor',
     'ngx-tinymce',

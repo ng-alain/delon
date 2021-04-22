@@ -1,8 +1,8 @@
 ---
-title: g2-bar
-subtitle: 柱状图
+title: chart-echarts
+subtitle: ECharts
 cols: 1
-type: G2
+type: ECharts
 module: import { G2BarModule } from '@delon/chart/bar';
 ---
 

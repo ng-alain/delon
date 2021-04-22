@@ -2,7 +2,7 @@
 title: g2-mini-bar
 subtitle: 迷你柱状图
 cols: 2
-type: Components
+type: G2
 module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 ---
 

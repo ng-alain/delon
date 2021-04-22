@@ -2,7 +2,7 @@
 title: g2-single-bar
 subtitle: 单一柱状图
 cols: 1
-type: Components
+type: G2
 module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 ---
 
