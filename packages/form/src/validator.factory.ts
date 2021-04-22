@@ -2,6 +2,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { REGEX } from '@delon/util/format';
 import Ajv, { Options as AjvOptions } from 'ajv';
+import addFormats from 'ajv-formats';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
@@ -30,7 +31,6 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
         loopEnum: 50,
         ...customOptions,
         formats: {
-          ip: REGEX.ip,
           'data-url': /^data:([a-z]+\/[a-z0-9-+.]+)?;name=(.*);base64,(.*)$/,
           color: REGEX.color,
           mobile: REGEX.mobile,
@@ -38,6 +38,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
           ...customOptions.formats,
         },
       });
+      addFormats(this.ajv as any);
     });
   }
 

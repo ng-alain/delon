@@ -14,6 +14,7 @@ DEPENDENCIES=$(node -p "
     'mockjs',
     '@types/mockjs',
     'ajv',
+    'ajv-formats',
     'screenfull',
     '@ngx-translate/core',
     '@ngx-translate/http-loader',
