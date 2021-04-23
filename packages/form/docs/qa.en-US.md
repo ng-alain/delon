@@ -92,4 +92,6 @@ You can get a specific attribute of Schema by calling `getProperty` function, th
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
+// Or manually trigger `detectChanges`
+// statusProperty.widget.detectChanges();
 ```
