@@ -67,7 +67,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@stackblitz/sdk": "^1.5.2",
     "codesandbox": "^2.2.1",
-    "ajv": "^7.1.1",
+    "ajv": "^8.1.0",
     "ajv-formats": "^2.0.2",
     "extend": "^3.0.2",
     "file-saver": "^2.0.5",
