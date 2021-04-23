@@ -14,6 +14,26 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [11.10.0](https://github.com/ng-alain/delon/compare/11.9.0...11.10.0) (2021-04-23)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复SSR初始化失败 ([#1232](https://github.com/ng-alain/delon/issues/1232)) ([4933deb](https://github.com/ng-alain/delon/commit/4933deb64cc6211cd25e6276044cf46647a0bdef))
+* **abc:st:** 修复 `expand` 与 `click` 事件相互触发污染 ([#1241](https://github.com/ng-alain/delon/issues/1241)) ([0321613](https://github.com/ng-alain/delon/commit/0321613db04b16c255be2fdf22869456d9556fc7))
+* **form:** 修复 7.x 版本格式化数据丢失问题 ([#1239](https://github.com/ng-alain/delon/issues/1239)) ([393f0a3](https://github.com/ng-alain/delon/commit/393f0a3a741925ac4f113a2f7cc230e7570783ec))
+
+### Features
+
+* **abc:st:** 新增 `customRequest` 属性，自定义实现远程数据，例如：Graphql ([#1234](https://github.com/ng-alain/delon/issues/1234)) ([65aba5c](https://github.com/ng-alain/delon/commit/65aba5c04eed8378fac95e1617ad2bca29e5ffdc))
+* **abc:st:** 新增 `STColumn` 里 `safeHtml` 属性 ([#1233](https://github.com/ng-alain/delon/issues/1233)) ([f49d45c](https://github.com/ng-alain/delon/commit/f49d45c99fffcf4bd7f08cbc1f89870432702fd0))
+* **chart:echarts:** 新增 `chart-echarts` ECharts组件 ([#1238](https://github.com/ng-alain/delon/issues/1238)) ([ce04327](https://github.com/ng-alain/delon/commit/ce0432742649a2e375793720146ddfbf9df158f4))
+* **form:** 升级 `ajv` 至 `8.x` ([#1240](https://github.com/ng-alain/delon/issues/1240)) ([9b9f3c8](https://github.com/ng-alain/delon/commit/9b9f3c817ed61ee7ce15d9aff8d04d09867ebe0a))
+
+### Performance Improvements
+
+* **chart:*:** 优化当只有数据变更时丝滑更新 ([#1237](https://github.com/ng-alain/delon/issues/1237)) ([24069bf](https://github.com/ng-alain/delon/commit/24069bf65cafaf5348e4a7f236e921451eaef788))
+
+
 # [11.9.0](https://github.com/ng-alain/delon/compare/11.8.1...11.9.0) (2021-04-09)
 
 ### Bug Fixes

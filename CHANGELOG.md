@@ -1,3 +1,27 @@
+# [11.10.0](https://github.com/ng-alain/delon/compare/11.9.0...11.10.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **abc:reuse-tab:** support ssr ([#1232](https://github.com/ng-alain/delon/issues/1232)) ([4933deb](https://github.com/ng-alain/delon/commit/4933deb64cc6211cd25e6276044cf46647a0bdef))
+* **abc:st:** fix mutual pollution of `expand` and `click` event ([#1241](https://github.com/ng-alain/delon/issues/1241)) ([0321613](https://github.com/ng-alain/delon/commit/0321613db04b16c255be2fdf22869456d9556fc7))
+* **form:** fix losing format rules of ajv in 7.x version ([#1239](https://github.com/ng-alain/delon/issues/1239)) ([393f0a3](https://github.com/ng-alain/delon/commit/393f0a3a741925ac4f113a2f7cc230e7570783ec))
+
+
+### Features
+
+* **abc:st:** add `customRequest` property ([#1234](https://github.com/ng-alain/delon/issues/1234)) ([65aba5c](https://github.com/ng-alain/delon/commit/65aba5c04eed8378fac95e1617ad2bca29e5ffdc))
+* **abc:st:** add `safeHtml` property in `STColumn` ([#1233](https://github.com/ng-alain/delon/issues/1233)) ([f49d45c](https://github.com/ng-alain/delon/commit/f49d45c99fffcf4bd7f08cbc1f89870432702fd0))
+* **chart:echarts:** add `chart-echarts` component ([#1238](https://github.com/ng-alain/delon/issues/1238)) ([ce04327](https://github.com/ng-alain/delon/commit/ce0432742649a2e375793720146ddfbf9df158f4))
+* **form:** Upgrade `ajv` to `8.x` ([#1240](https://github.com/ng-alain/delon/issues/1240)) ([9b9f3c8](https://github.com/ng-alain/delon/commit/9b9f3c817ed61ee7ce15d9aff8d04d09867ebe0a))
+
+
+### Performance Improvements
+
+* **chart:*:** silky change data ([#1237](https://github.com/ng-alain/delon/issues/1237)) ([24069bf](https://github.com/ng-alain/delon/commit/24069bf65cafaf5348e4a7f236e921451eaef788))
+
+
+
 # [11.9.0](https://github.com/ng-alain/delon/compare/11.8.1...11.9.0) (2021-04-09)
 
 
