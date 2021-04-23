@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1617949281338,
+  "timestamp": 1619189445482,
   "index": "/delon/index.html",
   "assetGroups": [
     {
@@ -11,11 +11,11 @@
         "ignoreVary": true
       },
       "urls": [
-        "/delon/10.6262712e768a40391a93.js",
-        "/delon/11.9315370db692952fe3da.js",
-        "/delon/12.988daabd127f9d003c69.js",
+        "/delon/10.8a4a0a3476a62381fd8c.js",
+        "/delon/11.8e45d4cfcf752fbfdb76.js",
+        "/delon/12.bd3497fe058d3e5e4117.js",
         "/delon/13.7c40aa8f720a6c4336d8.js",
-        "/delon/14.1c41d3f6666b9c6e231a.js",
+        "/delon/14.23c6bcec36bb3d079b0f.js",
         "/delon/15.56c69874edeee2c6b2ce.js",
         "/delon/16.58844ed8e053613b53d9.js",
         "/delon/17.787700c12dd54974afb7.js",
@@ -24,15 +24,15 @@
         "/delon/5.c2c3bc91fad7ed7082aa.js",
         "/delon/6.d6220703a20107e79e2d.js",
         "/delon/7.d39eb6f95e28acf486f9.js",
-        "/delon/8.59c9c8395cf9c0647f98.js",
+        "/delon/8.f13d79f42f6a1e74592b.js",
         "/delon/9.58a3c273008ce1ab5fbd.js",
         "/delon/index.html",
-        "/delon/main.c345cac60d9ede931088.js",
+        "/delon/main.d1ad9e70e5dae16b2a36.js",
         "/delon/manifest.webmanifest",
         "/delon/polyfills.3567656f53e98ce20d60.js",
-        "/delon/runtime.0577f4711a2c61551d66.js",
+        "/delon/runtime.ea161a0665fd821c9b05.js",
         "/delon/scripts.e6395d35367126018e76.js",
-        "/delon/styles.fe50ed945278b76d4be2.css"
+        "/delon/styles.759d5b9d8116daa89659.css"
       ],
       "patterns": [
         "https:\\/\\/gw\\.alipayobjects\\.com\\/.*",
@@ -106,11 +106,11 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/delon/10.6262712e768a40391a93.js": "01c60a874c6ee0c58947953c5758386104303ce2",
-    "/delon/11.9315370db692952fe3da.js": "f1d11b4cb914df01f7aed02f7940668e54cfb075",
-    "/delon/12.988daabd127f9d003c69.js": "6d9a3b0ba55604286b390fe8ab550d02cf1c603d",
+    "/delon/10.8a4a0a3476a62381fd8c.js": "faa0db389aa7c94d932bf5ab87fc15b65a26d6fd",
+    "/delon/11.8e45d4cfcf752fbfdb76.js": "76fae7f9307627a8f360362829e62255711c4719",
+    "/delon/12.bd3497fe058d3e5e4117.js": "947d00a7016175889b455b22aefe180d2aaedd9d",
     "/delon/13.7c40aa8f720a6c4336d8.js": "bfb6a7409bcc010c47522a50980dd04e6ea9a81f",
-    "/delon/14.1c41d3f6666b9c6e231a.js": "76bdfd04dbc7ad922a6e2c8b6072ac8aa2f0632b",
+    "/delon/14.23c6bcec36bb3d079b0f.js": "dc5a66d60b715491e25babe16faeca69c449456b",
     "/delon/15.56c69874edeee2c6b2ce.js": "050ac703a6f83a966f7e1499874744e0452d4c22",
     "/delon/16.58844ed8e053613b53d9.js": "c8b2cd0fc8578da1aa0297ed665ca53ec1a73d41",
     "/delon/17.787700c12dd54974afb7.js": "fb6cd5a5768fe4f639277541e1e2e205bd3ccad5",
@@ -119,10 +119,10 @@
     "/delon/5.c2c3bc91fad7ed7082aa.js": "8db2c14c21ee55c29832ade3246fac87ab4965c4",
     "/delon/6.d6220703a20107e79e2d.js": "8600a98610b0b034a735d798b326089721bed926",
     "/delon/7.d39eb6f95e28acf486f9.js": "61e42232db2fcbe83069f84e34d5b9f84d6f3719",
-    "/delon/8.59c9c8395cf9c0647f98.js": "fd7aa882f6b67f09e17b866f00b5a43647d01a22",
+    "/delon/8.f13d79f42f6a1e74592b.js": "f1b2c005e2b63fd4583badafcd757914d39ae669",
     "/delon/9.58a3c273008ce1ab5fbd.js": "7e025ff41c75b60166611d072c4d13874120f2e1",
     "/delon/assets/LOGO.ai": "f0eb50ff534d6596d2e66439066909d965fd74f2",
-    "/delon/assets/color.less": "ccbed38a70824d78df290b0dee20ef47b253da66",
+    "/delon/assets/color.less": "f0b1dd779248f24f8f8d4922277a67b09648ae61",
     "/delon/assets/demo.docx": "e6cf4a7b4a490811ed5bec39e8cf203824e8703f",
     "/delon/assets/demo.pdf": "05248c1d4a636ee577f515809534ca1c85cd45c2",
     "/delon/assets/demo.pptx": "09fcb13206d59676838c2682a2a9b62f0a11863b",
@@ -171,15 +171,15 @@
     "/delon/assets/screenshot/pro.png": "37bd67671530613e955593eb3fc818e27d18dcb6",
     "/delon/assets/screenshot/start.png": "8af50c7dbc9bab333f7e88b67debb6657bc61ed9",
     "/delon/assets/screenshot/yun.png": "b0e3dec2af4dfae8f25e5d90f19cd3c60107e89f",
-    "/delon/assets/style.compact.css": "61a63182861cd328be14310be055cdfb0a64def5",
-    "/delon/assets/style.dark.css": "c4891033f855ebc95742a6e92df3dff0121a296a",
-    "/delon/index.html": "a19303157ea7218159fd37269589284ade0aa3d5",
-    "/delon/main.c345cac60d9ede931088.js": "a4fd9ad4ebcdd7b73053d66a05782b48f3828bf4",
+    "/delon/assets/style.compact.css": "ce50e07f00be93fa295e2bff16304697baa8f870",
+    "/delon/assets/style.dark.css": "82ee9273313cfe682f6a6b009cf85b08bc2a2f53",
+    "/delon/index.html": "3b80c092b3bc81dcf7af88dd23c7cc41c377c43e",
+    "/delon/main.d1ad9e70e5dae16b2a36.js": "c64182a934d73c3ea0b7667c85f7d40757c2eb5b",
     "/delon/manifest.webmanifest": "f2cc31edb8bfeb4b17cbb40c2d97b6c73c1906c2",
     "/delon/polyfills.3567656f53e98ce20d60.js": "8c1df28bb733cce14be891ab7c11eae2465abddb",
-    "/delon/runtime.0577f4711a2c61551d66.js": "a4d93228de5e8cb164e21772599b2d4533347192",
+    "/delon/runtime.ea161a0665fd821c9b05.js": "22c9a7e6f267faa4f613d284ebd9138269bdbd92",
     "/delon/scripts.e6395d35367126018e76.js": "1aa86dbc3072dd9265cc62e1b05eed6f9b037266",
-    "/delon/styles.fe50ed945278b76d4be2.css": "60d2e062e4b099567363d7b662ab7fe80a242d44"
+    "/delon/styles.759d5b9d8116daa89659.css": "f8c94c2f3ace14ddfb99a408b1c1d88932cdbbb4"
   },
   "navigationUrls": [
     {
