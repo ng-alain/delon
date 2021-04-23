@@ -528,12 +528,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _expandChange(item: STData, expand: boolean): void {
-    if (this.expandRowByClick) {
-      return;
-    }
     item.expand = expand;
     this.closeOtherExpand(item);
     this.changeEmit('expand', item);
+  }
+
+  _stopPropagation(ev: Event): void {
+    ev.stopPropagation();
   }
 
   /**
@@ -721,10 +722,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region buttons
 
-  _btnClick(record: STData, btn: STColumnButton, e?: Event): void {
-    // should be stop propagation when expandRowByClick is true
-    if (e && this.expandRowByClick === true) {
-      e.stopPropagation();
+  _btnClick(record: STData, btn: STColumnButton, ev?: Event): void {
+    if (ev) {
+      ev.stopPropagation();
     }
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;

@@ -16,9 +16,10 @@
     [nzCancelText]="btn.pop.cancelText"
     [nzOkText]="btn.pop.okText"
     [nzOkType]="btn.pop.okType"
-    (nzOnConfirm)="$any(_btnClick)(i, btn, $event)"
+    (nzOnConfirm)="_btnClick(i, btn)"
     class="st__btn-text"
     [ngClass]="btn.className"
+    (click)="_stopPropagation($event)"
   >
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
   </a>
@@ -213,6 +214,7 @@
           [nzShowExpand]="expand && i.showExpand !== false"
           [nzExpand]="i.expand"
           (nzExpandChange)="_expandChange(i, $event)"
+          (click)="_stopPropagation($event)"
           nzWidth="50px"
         ></td>
         <td
