@@ -28,6 +28,7 @@ function removeAjvLib(context: SchematicContext): Rule {
             allowedCommonJsDependencies = [];
           }
           allowedCommonJsDependencies.push(`ajv`);
+          allowedCommonJsDependencies.push(`ajv-formats`);
           targetOptions.allowedCommonJsDependencies = allowedCommonJsDependencies;
         }
       });
