@@ -79,21 +79,7 @@ export function addAllowedCommonJsDependencies(items: string[], projectName?: st
     }
 
     const result = new Set<string>(...list);
-    [
-      // 'codesandbox/lib/api/define',
-      'hammerjs',
-      'file-saver',
-      '@ant-design/colors',
-      '@antv/path-util',
-      '@antv/g-canvas',
-      '@antv/g-base',
-      '@antv/g-svg',
-      '@antv/g-math',
-      '@antv/attr',
-      '@antv/adjust',
-      '@antv/component',
-      '@antv/util',
-    ].forEach(key => result.add(key));
+    ['@antv/g2', 'file-saver', 'ajv', 'ajv-formats', 'date-fns'].forEach(key => result.add(key));
 
     targetOptions.allowedCommonJsDependencies = Array.from(result).sort();
   });
