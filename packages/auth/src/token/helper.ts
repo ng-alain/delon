@@ -11,7 +11,12 @@ export function CheckSimple(model: SimpleTokenModel | null): boolean {
 }
 
 export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
-  return model != null && !!model.token && !model.isExpired(offset);
+  try {
+    return model != null && !!model.token && !model.isExpired(offset);
+  } catch(err) {
+    console.warn(`${err.message}, jump to login_url`);
+    return false;
+  }
 }
 
 export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: string): void {
