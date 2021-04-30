@@ -32,7 +32,7 @@ alainProvides.push({
 
 **Add Component**
 
-> In `src/app/layout/base/base.component.ts`
+> In `src/app/layout/basic/basic.component.ts`
 
 ```html
 <reuse-tab #reuseTab></reuse-tab>
@@ -40,6 +40,20 @@ alainProvides.push({
 ```
 
 > **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**
+
+> In `src/app/layout/layout.module.ts`
+
+```ts
+import { ReuseTabModule } from '@delon/abc/reuse-tab'; // add
+@NgModule({
+  imports: [
+  // ...
+  ReuseTabModule, // add
+  ],
+  // ...
+})
+export class LayoutModule {}
+```
 
 ## Matching Mode
 
