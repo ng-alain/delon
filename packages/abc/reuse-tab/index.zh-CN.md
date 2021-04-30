@@ -32,7 +32,7 @@ alainProvides.push({
 
 **添加组件**
 
-> 位置 `src/app/layout/base/base.component.ts`
+> 位置 `src/app/layout/basic/basic.component.ts`
 
 ```html
 <reuse-tab #reuseTab></reuse-tab>
@@ -40,6 +40,20 @@ alainProvides.push({
 ```
 
 > **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
+
+> 位置 `src/app/layout/layout.module.ts`
+```ts
+import { ReuseTabModule } from '@delon/abc/reuse-tab'; // 新增 import
+
+@NgModule({
+  imports: [
+  // ...
+  ReuseTabModule, // 导入模块
+  ],
+  // ...
+})
+export class LayoutModule {}
+```
 
 ## 匹配模式
 
