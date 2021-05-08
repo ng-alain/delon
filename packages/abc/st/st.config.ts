@@ -65,10 +65,12 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
   iifBehavior: 'hide',
   loadingDelay: 0,
   saftHtml: true,
+  date: {
+    format: `yyyy-MM-dd HH:mm`,
+  },
   yn: {
     truth: true,
     yes: '是',
-    no: '否',
     mode: 'icon',
   },
 };

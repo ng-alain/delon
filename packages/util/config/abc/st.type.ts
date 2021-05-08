@@ -413,6 +413,19 @@ export interface AlainSTConfig {
           };
     };
   }) => Observable<any>;
+  /**
+   * Date format
+   *
+   * 日期格式化
+   */
+  date?: {
+    /**
+     * Format string, default: `yyyy-MM-dd HH:mm`
+     *
+     * 格式化字符串，默认：`yyyy-MM-dd HH:mm`
+     */
+    format: string;
+  };
   yn?: {
     /**
      * 真值条件，（默认：`true`）
