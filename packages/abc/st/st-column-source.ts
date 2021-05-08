@@ -386,6 +386,10 @@ export class STColumnSource {
       if (item.type === 'yn') {
         item.yn = { truth: true, ...item.yn };
       }
+      // date
+      if (item.type === 'date') {
+        item.dateFormat = item.dateFormat || this.cog.date?.format;
+      }
       if (
         (item.type === 'link' && typeof item.click !== 'function') ||
         (item.type === 'badge' && item.badge == null) ||
