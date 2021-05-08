@@ -68,4 +68,9 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
   date: {
     format: `yyyy-MM-dd HH:mm`,
   },
+  yn: {
+    truth: true,
+    yes: '是',
+    mode: 'icon',
+  },
 };

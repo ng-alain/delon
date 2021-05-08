@@ -426,4 +426,25 @@ export interface AlainSTConfig {
      */
     format: string;
   };
+  yn?: {
+    /**
+     * 真值条件，（默认：`true`）
+     */
+    truth?: any;
+    /**
+     * 徽章 `true` 时文本，（默认：`是`）
+     */
+    yes?: string;
+    /**
+     * 徽章 `false` 时文本，（默认：`否`）
+     */
+    no?: string;
+    /**
+     * 徽章显示风格，默认：`icon`
+     * - `full` 图标和文本
+     * - `icon` 图标
+     * - `text` 文本
+     */
+    mode?: 'full' | 'icon' | 'text';
+  };
 }
