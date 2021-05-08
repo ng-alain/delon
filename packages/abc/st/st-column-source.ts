@@ -384,7 +384,7 @@ export class STColumnSource {
       }
       // types
       if (item.type === 'yn') {
-        item.yn = { truth: true, ...item.yn };
+        item.yn = { truth: true, ...this.cog.yn, ...item.yn };
       }
       if (
         (item.type === 'link' && typeof item.click !== 'function') ||
