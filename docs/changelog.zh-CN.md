@@ -14,6 +14,17 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [11.10.1](https://github.com/ng-alain/delon/compare/11.10.0...11.10.1) (2021-05-09)
+
+### Bug Fixes
+
+* **abc:st:** 修复设置 `exported` 为 `false` 时引起字段错位 ([#1247](https://github.com/ng-alain/delon/issues/1247)) ([e7fa69b](https://github.com/ng-alain/delon/commit/e7fa69bc0ed6399682433fdbad44f4e55c60e61c))
+* **auth:** 修复捕获无效 JWT 密钥产生的异常 ([#1244](https://github.com/ng-alain/delon/issues/1244)) ([faf2e90](https://github.com/ng-alain/delon/commit/faf2e9031d80c54ae7db5f0b8eab9068f3e72e0d))
+* **cli:** 修复多余的 `allowedCommonJsDependencies` ([#1243](https://github.com/ng-alain/delon/issues/1243)) ([b1bc537](https://github.com/ng-alain/delon/commit/b1bc5372a5a52e6e1285c897abe4aa48b146cc86))
+* **abc:st:** 修复 `dateFormat` 支持全局配置 ([#1246](https://github.com/ng-alain/delon/issues/1246)) ([76f97e4](https://github.com/ng-alain/delon/commit/76f97e4baf33aca1011ef517afa468caf85aa9fc))
+* **abc:st:** 修复 `yn` 支持全局配置 ([#1247](https://github.com/ng-alain/delon/issues/1247)) ([e7fa69b](https://github.com/ng-alain/delon/commit/e7fa69bc0ed6399682433fdbad44f4e55c60e61c))
+
+
 # [11.10.0](https://github.com/ng-alain/delon/compare/11.9.0...11.10.0) (2021-04-23)
 
 ### Bug Fixes
