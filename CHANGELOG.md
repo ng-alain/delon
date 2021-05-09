@@ -1,3 +1,19 @@
+## [11.10.1](https://github.com/ng-alain/delon/compare/11.10.0...11.10.1) (2021-05-09)
+
+
+### Bug Fixes
+
+* **abc:st:** fix invalid `exported` in excel export ([#1247](https://github.com/ng-alain/delon/issues/1247)) ([e7fa69b](https://github.com/ng-alain/delon/commit/e7fa69bc0ed6399682433fdbad44f4e55c60e61c))
+* **auth:** catch the error when check jwt token ([#1244](https://github.com/ng-alain/delon/issues/1244)) ([faf2e90](https://github.com/ng-alain/delon/commit/faf2e9031d80c54ae7db5f0b8eab9068f3e72e0d))
+* **cli:** fix excess `allowedCommonJsDependencies` ([#1243](https://github.com/ng-alain/delon/issues/1243)) ([b1bc537](https://github.com/ng-alain/delon/commit/b1bc5372a5a52e6e1285c897abe4aa48b146cc86))
+
+
+### Features
+
+* **abc:st:** support `dateFormat` of global config ([#1246](https://github.com/ng-alain/delon/issues/1246)) ([76f97e4](https://github.com/ng-alain/delon/commit/76f97e4baf33aca1011ef517afa468caf85aa9fc))
+
+
+
 # [11.10.0](https://github.com/ng-alain/delon/compare/11.9.0...11.10.0) (2021-04-23)
 
 
