@@ -27,7 +27,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       hideDisabledOptions: toBool(ui.hideDisabledOptions, false),
       use12Hours: toBool(ui.use12Hours, false),
       hourStep: ui.hourStep || 1,
-      minuteStep: ui.nzMinuteStep || 1,
+      minuteStep: ui.minuteStep || 1,
       secondStep: ui.secondStep || 1,
     };
     if (opt.use12Hours && !ui.displayFormat) {
