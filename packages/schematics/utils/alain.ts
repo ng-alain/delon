@@ -2,6 +2,7 @@ import { strings } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import {
   apply,
+  applyTemplates,
   branchAndMerge,
   chain,
   filter,
@@ -10,7 +11,6 @@ import {
   noop,
   Rule,
   SchematicsException,
-  template,
   Tree,
   url,
 } from '@angular-devkit/schematics';
@@ -24,6 +24,8 @@ import * as path from 'path';
 import * as ts from 'typescript';
 import { getSourceFile } from './ast';
 import { getProject } from './workspace';
+
+const TEMPLATE_FILENAME_RE = /\.template$/;
 
 export interface CommonSchema {
   [key: string]: any;
@@ -40,6 +42,7 @@ export interface CommonSchema {
   prefix?: string;
   withoutPrefix?: boolean;
   project?: string;
+  skipTests?: boolean;
 }
 
 function buildSelector(schema: CommonSchema, projectPrefix: string): string {
@@ -90,7 +93,7 @@ function resolveSchema(tree: Tree, project: ProjectDefinition, schema: CommonSch
   schema.name = parsedPath.name;
   schema.path = parsedPath.path;
   const fullPath = path.join(process.cwd(), schema.path, schema.name);
-  if (fs.existsSync(fullPath)) {
+  if (fs.existsSync(fullPath) && fs.readdirSync(fullPath).length > 0) {
     throw new SchematicsException(`The directory (${fullPath}) already exists`);
   }
   schema.importModulePath = findModuleFromOptions(tree, schema as any);
@@ -99,8 +102,8 @@ function resolveSchema(tree: Tree, project: ProjectDefinition, schema: CommonSch
     // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
     if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
       const overrideDir = '/' + [project.root, `_cli-tpl/_${schema.schematicName}`].filter(i => !!i).join('/');
-      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template`;
-      if (tree.exists(overridePath)) {
+      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
+      if (tree.exists(overridePath) || tree.exists(overridePath + '.template')) {
         // 所在目录与命令目录同属一个目录结构，因此无须特殊处理
         schema._filesPath = path.relative(__dirname, process.cwd()) + overrideDir;
       }
@@ -192,10 +195,13 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),
-      schema.spec ? noop() : filter(filePath => !filePath.endsWith('.spec.ts')),
-      schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__styleext__')) : noop(),
-      schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html')) : noop(),
-      template({
+      schema.skipTests ? filter(filePath => !filePath.endsWith('.spec.ts.template')) : noop(),
+      schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__style__.template')) : noop(),
+      schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html.template')) : noop(),
+      // schema.spec ? noop() : filter(filePath => !filePath.endsWith('.spec.ts')),
+      // schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__styleext__')) : noop(),
+      // schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html')) : noop(),
+      applyTemplates({
         ...strings,
         'if-flat': (s: string) => (schema.flat ? '' : s),
         ...schema,
