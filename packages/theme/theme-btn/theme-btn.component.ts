@@ -42,7 +42,6 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     { key: 'compact', text: 'Compact Theme' },
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
-  private el!: HTMLLinkElement;
   private destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
 
@@ -88,7 +87,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     }
     localStorage.removeItem(this.KEYS);
     if (theme !== 'default') {
-      const el = (this.el = this.doc.createElement('link'));
+      const el = this.doc.createElement('link');
       el.type = 'text/css';
       el.rel = 'stylesheet';
       el.id = this.KEYS;
@@ -101,8 +100,9 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.el) {
-      this.doc.body.removeChild(this.el);
+    const el = this.doc.getElementById(this.KEYS);
+    if (el != null) {
+      this.doc.body.removeChild(el);
     }
     this.destroy$.next();
     this.destroy$.complete();
