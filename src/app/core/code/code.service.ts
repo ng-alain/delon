@@ -34,12 +34,12 @@ export class CodeService {
       '@angular/platform-browser-dynamic',
       '@angular/router',
       '@ant-design/icons-angular',
-      'core-js',
+      'core-js@3.8.3',
       'rxjs',
       'tslib',
       'zone.js',
       'date-fns',
-      '@angular/cdk',
+      '@angular/cdk@^11.x',
       'ng-zorro-antd',
       '@delon/theme',
       '@delon/abc',
@@ -51,9 +51,10 @@ export class CodeService {
       '@delon/form',
       '@delon/util',
       'ajv',
+      'ajv-formats',
     ].forEach(key => {
-      const includeVersion = key.indexOf(`@^`);
-      if (includeVersion !== -1) {
+      const includeVersion = key.lastIndexOf(`@`);
+      if (includeVersion > 1) {
         res[key.substr(0, includeVersion)] = key.substr(includeVersion + 1);
         return;
       }
