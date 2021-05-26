@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 export interface AlainCacheConfig {
   /**
    * Cache mode, default: `promise`
@@ -30,4 +32,10 @@ export interface AlainCacheConfig {
    * Key name of persistent data metadata storage, default: `__cache_meta`
    */
   meta_key?: string;
+  /**
+   * 自定义请求体
+   *
+   * Custom request
+   */
+  request?: (key: string) => Observable<unknown>;
 }
