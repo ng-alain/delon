@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1622023755131,
+  "timestamp": 1622026576839,
   "index": "/delon/index.html",
   "assetGroups": [
     {
@@ -122,7 +122,7 @@
     "/delon/8.0974479d5b4511f1c528.js": "8591b8699745941fd7ff015ccafef5ecd162801c",
     "/delon/9.fb4d860a414516b3a3b7.js": "197e9819038218d5d9c26806bce7a2bee009fff2",
     "/delon/assets/LOGO.ai": "f0eb50ff534d6596d2e66439066909d965fd74f2",
-    "/delon/assets/color.less": "657ea9b7a93b76cc3709b1e8ef21c0fd81b17f8f",
+    "/delon/assets/color.less": "f92e30e940337fe6a97465f604f14f5e037d060d",
     "/delon/assets/demo.docx": "e6cf4a7b4a490811ed5bec39e8cf203824e8703f",
     "/delon/assets/demo.pdf": "05248c1d4a636ee577f515809534ca1c85cd45c2",
     "/delon/assets/demo.pptx": "09fcb13206d59676838c2682a2a9b62f0a11863b",
