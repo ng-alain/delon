@@ -54,7 +54,8 @@
       "type": "string",
       "description": "The prefix to apply to generated selectors.",
       "alias": "p",
-      "oneOf": [{
+      "oneOf": [
+        {
           "maxLength": 0
         },
         {
@@ -67,18 +68,19 @@
       "description": "The file extension or preprocessor to use for style files.",
       "type": "string",
       "default": "css",
-      "enum": [
-        "css",
-        "scss",
-        "sass",
-        "less",
-        "styl"
-      ]
+      "enum": ["css", "scss", "sass", "less", "styl"],
+      "x-user-analytics": 5
     },
-    "spec": {
+    "type": {
+      "type": "string",
+      "description": "Adds a developer-defined type to the filename, in the format \"name.type.ts\".",
+      "default": "Component"
+    },
+    "skipTests": {
       "type": "boolean",
-      "description": "Specifies if a spec file is generated.",
-      "default": true
+      "description": "Do not create \"spec.ts\" test files for the new component.",
+      "default": false,
+      "x-user-analytics": 12
     },
     "flat": {
       "type": "boolean",
@@ -133,8 +135,5 @@
       "x-prompt": "Would you like to modal mode?"
     }
   },
-  "required": [
-    "name",
-    "module"
-  ]
+  "required": ["name", "module"]
 }

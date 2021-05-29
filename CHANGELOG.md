@@ -1,3 +1,14 @@
+## [11.10.2](https://github.com/ng-alain/delon/compare/11.10.1...11.10.2) (2021-05-26)
+
+
+### Bug Fixes
+
+* **cli:** fix .template suffix should be remove ([#1252](https://github.com/ng-alain/delon/issues/1252)) ([296b4f4](https://github.com/ng-alain/delon/commit/296b4f46e1b412a47ba5e998eabacb3953ccbccb))
+* **form:widget:time:** fix `minuteStep` param name ([#1249](https://github.com/ng-alain/delon/issues/1249)) ([2c36c11](https://github.com/ng-alain/delon/commit/2c36c1107f3e49f7a2dab834728ba4e3976cc0af))
+* **theme:theme-btn:** fix Failed to execute 'removeChild' on 'Node' ([#1250](https://github.com/ng-alain/delon/issues/1250)) ([73017f5](https://github.com/ng-alain/delon/commit/73017f5778364179361245fdc1d53c87e9901522))
+
+
+
 ## [11.10.1](https://github.com/ng-alain/delon/compare/11.10.0...11.10.1) (2021-05-09)
 
 

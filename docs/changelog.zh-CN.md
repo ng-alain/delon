@@ -14,6 +14,15 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [11.10.2](https://github.com/ng-alain/delon/compare/11.10.1...11.10.2) (2021-05-26)
+
+### Bug Fixes
+
+* **cli:** 修复应移除带有 `.template` 后缀的文件名 ([#1252](https://github.com/ng-alain/delon/issues/1252)) ([296b4f4](https://github.com/ng-alain/delon/commit/296b4f46e1b412a47ba5e998eabacb3953ccbccb))
+* **form:widget:time:** 修复 `minuteStep` 无效参数名 ([#1249](https://github.com/ng-alain/delon/issues/1249)) ([2c36c11](https://github.com/ng-alain/delon/commit/2c36c1107f3e49f7a2dab834728ba4e3976cc0af))
+* **theme:theme-btn:** 修复 `Failed to execute 'removeChild' on 'Node'` ([#1250](https://github.com/ng-alain/delon/issues/1250)) ([73017f5](https://github.com/ng-alain/delon/commit/73017f5778364179361245fdc1d53c87e9901522))
+
+
 ## [11.10.1](https://github.com/ng-alain/delon/compare/11.10.0...11.10.1) (2021-05-09)
 
 ### Bug Fixes
