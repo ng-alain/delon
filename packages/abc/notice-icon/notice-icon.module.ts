@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -24,6 +25,7 @@ const COMPONENTS = [NoticeIconComponent];
     NzSpinModule,
     NzTabsModule,
     NzTagModule,
+    NzOutletModule,
   ],
   declarations: [...COMPONENTS, NoticeIconTabComponent],
   exports: COMPONENTS,
