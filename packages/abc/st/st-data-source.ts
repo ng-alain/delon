@@ -44,7 +44,7 @@ export interface STDataSourceOptions {
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
-  saftHtml: boolean;
+  safeHtml: boolean;
   customRequest?: (options: STCustomRequestOptions) => Observable<any>;
 }
 
@@ -168,7 +168,7 @@ export class STDataSource {
     }
 
     data$ = data$.pipe(
-      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, safeHtml: options.saftHtml })),
+      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, safeHtml: options.safeHtml })),
     );
 
     return data$.pipe(
@@ -302,7 +302,7 @@ export class STDataSource {
           return { buttons: this.genButtons(c.buttons, result[i], c) };
         }
 
-        return this.get(result[i], c, i, c.saftHtml == null ? safeHtml : c.saftHtml);
+        return this.get(result[i], c, i, c.safeHtml == null ? safeHtml : c.safeHtml);
       });
       if (rowClassName) {
         result[i]._rowClassName = rowClassName(result[i], i);

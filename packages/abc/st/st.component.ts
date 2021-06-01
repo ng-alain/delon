@@ -362,7 +362,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           multiSort,
           rowClassName,
           paginator: true,
-          saftHtml: this.cog.saftHtml!,
+          safeHtml: this.cog.safeHtml!,
           customRequest: this.customRequest || this.cog.customRequest,
           ...options,
         })
@@ -892,7 +892,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       columns: this._columns,
       result: this._data,
       rowClassName: this.rowClassName,
-      safeHtml: this.cog.saftHtml!,
+      safeHtml: this.cog.safeHtml!,
     });
   }
 

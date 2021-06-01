@@ -64,7 +64,7 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
   virtualMinBufferPx: 100,
   iifBehavior: 'hide',
   loadingDelay: 0,
-  saftHtml: true,
+  safeHtml: true,
   date: {
     format: `yyyy-MM-dd HH:mm`,
   },

@@ -75,7 +75,7 @@ describe('abc: table: data-souce', () => {
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
-      saftHtml: true,
+      safeHtml: true,
     };
     mockDomSanitizer = new MockDomSanitizer() as any;
     datePipe = new DatePipe(new MockNzI18nService() as any);
@@ -810,7 +810,7 @@ describe('abc: table: data-souce', () => {
       describe('NOT SAFE HTML', () => {
         beforeEach(() => {
           spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
-          options.columns[0].saftHtml = false;
+          options.columns[0].safeHtml = false;
         });
         it('should be working in index', done => {
           srv.process(options).subscribe(() => {

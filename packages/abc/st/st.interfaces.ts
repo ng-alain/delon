@@ -288,7 +288,7 @@ export interface STColumn<T extends STData = any> {
    *
    * 是否信任HTML，默认：`true`，支持[全局配置](https://ng-alain.com/docs/global-config/zh)
    */
-  saftHtml?: boolean;
+  safeHtml?: boolean;
   /**
    * 自定义全/反选选择项
    */

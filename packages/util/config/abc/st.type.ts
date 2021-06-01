@@ -390,7 +390,7 @@ export interface AlainSTConfig {
   /**
    * 是否信任HTML，默认：`true`
    */
-  saftHtml?: boolean;
+  safeHtml?: boolean;
   /**
    * Override the default request behavior, you can customize your own request implementation, for example: Graphql
    *
