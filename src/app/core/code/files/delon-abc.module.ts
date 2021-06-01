@@ -34,6 +34,7 @@ import { OnboardingModule } from '@delon/abc/onboarding';
 import { LetModule } from '@delon/abc/let';
 import { AutoFocusModule } from '@delon/abc/auto-focus';
 import { PdfModule } from '@delon/abc/pdf';
+import { PriceModule } from '@delon/abc/price';
 
 const MODULES = [
   ErrorCollectModule,
@@ -69,6 +70,7 @@ const MODULES = [
   LetModule,
   AutoFocusModule,
   PdfModule,
+  PriceModule,
 ];
 
 @NgModule({ exports: MODULES })
