@@ -51,6 +51,7 @@ import {
   STColumn,
   STColumnButton,
   STColumnFilterMenu,
+  STColumnSafeType,
   STColumnSelection,
   STContextmenuFn,
   STContextmenuItem,
@@ -362,7 +363,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           multiSort,
           rowClassName,
           paginator: true,
-          safeHtml: this.cog.safeHtml!,
           customRequest: this.customRequest || this.cog.customRequest,
           ...options,
         })
@@ -564,7 +564,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       .forEach(c =>
         this._data.forEach((i, idx) => {
           const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
-          i._values![c.__point!] = { text, _text: text, org: idx } as _STDataValue;
+          i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
         }),
       );
 
@@ -878,7 +878,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns as _STColumn[], { widthMode: this.widthMode, resizable: this._resizable });
+    const res = this.columnSource.process(this.columns as _STColumn[], {
+      widthMode: this.widthMode,
+      resizable: this._resizable,
+      safeType: this.cog.safeType as STColumnSafeType,
+    });
     this._columns = res.columns;
     this._headers = res.headers;
     if (this.customWidthConfig === false && res.headerWidths != null) {
@@ -892,7 +896,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       columns: this._columns,
       result: this._data,
       rowClassName: this.rowClassName,
-      safeHtml: this.cog.safeHtml!,
     });
   }
 

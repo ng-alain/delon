@@ -281,7 +281,7 @@ class TestComponent {
 | `[statistical]` | Statistics | `STStatisticalType,STStatistical` | - |
 | `[resizable]` | Resize header, **Multiple headers not supported** | `STResizable, boolean` | - | - |
 | `[children]` | Group columns | `STColumn[]` | - |
-| `[safeHtml]` | Whether trust html, Support [global config](https://ng-alain.com/docs/global-config) | `boolean` | `true` |
+| `[safeType]` | Safe rendering type, Support [global config](https://ng-alain.com/docs/global-config) | `text,html,safeHtml` | `safeHtml` |
 | `[customRequest]` | Override the default request behavior, you can customize your own request implementation, for example: Graphql, Support [global config](https://ng-alain.com/docs/global-config) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle

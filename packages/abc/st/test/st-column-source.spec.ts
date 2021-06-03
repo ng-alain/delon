@@ -34,7 +34,7 @@ describe('st: column-source', () => {
   let rowSrv: STRowSource;
   let stWidgetRegistry: STWidgetRegistry;
   let page: PageObject;
-  const options: STColumnSourceProcessOptions = { widthMode, resizable: { disabled: true } };
+  const options: STColumnSourceProcessOptions = { widthMode, resizable: { disabled: true }, safeType: 'safeHtml' };
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }): void {
     aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
@@ -49,7 +49,7 @@ describe('st: column-source', () => {
   it('should be throw error when is empty columns', () => {
     expect(() => {
       genModule({});
-      srv.process(null!, { widthMode: null!, resizable: {} });
+      srv.process(null!, { widthMode: null!, resizable: {}, safeType: 'safeHtml' });
     }).toThrow();
     expect(() => {
       genModule({});

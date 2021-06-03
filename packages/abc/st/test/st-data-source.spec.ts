@@ -75,7 +75,6 @@ describe('abc: table: data-souce', () => {
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true,
-      safeHtml: true,
     };
     mockDomSanitizer = new MockDomSanitizer() as any;
     datePipe = new DatePipe(new MockNzI18nService() as any);
@@ -807,19 +806,26 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
-      describe('NOT SAFE HTML', () => {
+      describe('#safeType', () => {
         beforeEach(() => {
           spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
-          options.columns[0].safeHtml = false;
         });
-        it('should be working in index', done => {
+        it('with safeHtml', done => {
+          options.columns[0].safeType = 'safeHtml';
+          srv.process(options).subscribe(() => {
+            expect(mockDomSanitizer.bypassSecurityTrustHtml).toHaveBeenCalled();
+            done();
+          });
+        });
+        it('with html', done => {
+          options.columns[0].safeType = 'html';
           srv.process(options).subscribe(() => {
             expect(mockDomSanitizer.bypassSecurityTrustHtml).not.toHaveBeenCalled();
             done();
           });
         });
-        it('should be working in format', done => {
-          options.columns[0].format = () => 'a';
+        it('with text', done => {
+          options.columns[0].safeType = 'text';
           srv.process(options).subscribe(() => {
             expect(mockDomSanitizer.bypassSecurityTrustHtml).not.toHaveBeenCalled();
             done();

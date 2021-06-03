@@ -1,7 +1,7 @@
 // tslint:disable: class-name
 import { TemplateRef } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
-import { STColumn, STColumnButton, STData, STSortMap } from './st.interfaces';
+import { STColumn, STColumnButton, STColumnSafeType, STData, STSortMap } from './st.interfaces';
 
 export interface _STColumn extends STColumn {
   children?: _STColumn[];
@@ -44,5 +44,6 @@ export interface _STDataValue {
   _text: SafeHtml;
   org?: any;
   color?: string;
+  safeType: STColumnSafeType;
   buttons?: _STColumnButton[];
 }
