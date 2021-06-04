@@ -817,6 +817,14 @@ describe('abc: table: data-souce', () => {
             done();
           });
         });
+        it('with safeHtml in format', done => {
+          options.columns[0].safeType = 'safeHtml';
+          options.columns[0].format = () => 'a';
+          srv.process(options).subscribe(() => {
+            expect(mockDomSanitizer.bypassSecurityTrustHtml).toHaveBeenCalled();
+            done();
+          });
+        });
         it('with html', done => {
           options.columns[0].safeType = 'html';
           srv.process(options).subscribe(() => {
