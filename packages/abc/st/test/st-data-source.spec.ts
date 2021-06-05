@@ -810,8 +810,7 @@ describe('abc: table: data-souce', () => {
         beforeEach(() => {
           spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
         });
-        it('with safeHtml', done => {
-          options.columns[0].safeType = 'safeHtml';
+        it('with safeHtml in global config', done => {
           srv.process(options).subscribe(() => {
             expect(mockDomSanitizer.bypassSecurityTrustHtml).toHaveBeenCalled();
             done();
