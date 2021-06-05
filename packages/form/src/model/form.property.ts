@@ -289,13 +289,12 @@ export abstract class FormProperty {
   setVisible(visible: boolean): void {
     this._visible = visible;
     this._visibilityChanges.next(visible);
-    // 部分数据源来自 reset
-    if (this.root.widget?.sfComp?._inited === true) {
+    // 渲染时需要重新触发 reset
+    if (visible) {
       this.resetValue(this.value, true);
     }
   }
 
-  // A field is visible if AT LEAST ONE of the properties it depends on is visible AND has a value in the list
   _bindVisibility(): void {
     const visibleIf = (this.ui as SFUISchemaItem).visibleIf;
     if (typeof visibleIf === 'object' && Object.keys(visibleIf).length === 0) {
