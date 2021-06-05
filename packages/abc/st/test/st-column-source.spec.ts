@@ -583,6 +583,10 @@ describe('st: column-source', () => {
         expect(res.minWidth).toBe(100);
       });
     });
+    it('[safeType]', () => {
+      const res = srv.process([{ title: '1', index: 'id', safeType: 'text' }], options).columns[0].safeType;
+      expect(res).toBe('text');
+    });
   });
 
   describe('[acl]', () => {
