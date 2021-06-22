@@ -14,6 +14,15 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [11.10.3](https://github.com/ng-alain/delon/compare/11.10.2...11.10.3) (2021-06-22)
+
+### Bug Fixes
+
+* **chart:** remove empty theme variable ([#1257](https://github.com/ng-alain/delon/issues/1257)) ([c0a7c01](https://github.com/ng-alain/delon/commit/c0a7c01792bfe5ff47d95febf6893e2008ac2498))
+* **chart:echarts:** fix can't percentage of width ([#1261](https://github.com/ng-alain/delon/issues/1261)) ([aeb5d6f](https://github.com/ng-alain/delon/commit/aeb5d6f97996ee3f74ff6ed3a6964a7d5399ff69))
+* **form:** fix should be triggered `reset` every time when can be displayed ([#1260](https://github.com/ng-alain/delon/issues/1260)) ([10431c0](https://github.com/ng-alain/delon/commit/10431c005faea81e8943b9681d6f67fb936f9008))
+
+
 ## [11.10.2](https://github.com/ng-alain/delon/compare/11.10.1...11.10.2) (2021-05-26)
 
 ### Bug Fixes
