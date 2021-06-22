@@ -2,6 +2,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { createTestContext } from '@delon/testing';
+import { NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { ChartEChartsComponent } from './echarts.component';
 import { ChartEChartsModule } from './echarts.module';
@@ -47,6 +48,16 @@ describe('chart: chart-echarts', () => {
     expect(context.handleEvents).toHaveBeenCalled();
   });
 
+  it('should be support percentage of width or height input', () => {
+    context.height = '50%';
+    context.width = '50%';
+    fixture.detectChanges();
+    const container = dl.query(By.css('div')).nativeElement as HTMLDivElement;
+    expect(container.style.height).toBe(`${context.height}`);
+    expect(container.style.width).toBe(`${context.width}`);
+    expect(context.handleEvents).toHaveBeenCalled();
+  });
+
   it('should be update option', () => {
     spyOn(context.cmp, 'setOption');
     context.option = {};
@@ -84,8 +95,8 @@ describe('chart: chart-echarts', () => {
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp: ChartEChartsComponent;
-  width = 600;
-  height = 400;
+  width: NumberInput = 600;
+  height: NumberInput = 400;
   theme?: string | object | null = null;
   option: ChartEChartsOption = {};
   initOpt: any;
