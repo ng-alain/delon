@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ChartEChartsService } from './echarts.service';
@@ -24,10 +24,12 @@ import { ChartECharts, ChartEChartsEvent, ChartEChartsEventType, ChartEChartsOpt
   exportAs: 'chartECharts',
   template: `
     <nz-skeleton *ngIf="!loaded"></nz-skeleton>
-    <div #container [style.width.px]="width" [style.height.px]="height"></div>
+    <div #container [style.width]="_width" [style.height]="_height"></div>
   `,
   host: {
     '[style.display]': `'inline-block'`,
+    '[style.width]': `_width`,
+    '[style.height]': `_height`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,9 +51,16 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     locale?: any;
   };
   private _option: ChartEChartsOption;
+  _width = '100%';
+  _height = '400px';
 
-  @Input() @InputNumber() width = 600;
-  @Input() @InputNumber() height = 400;
+  @Input()
+  set width(val: NumberInput) {
+    this._width = typeof val === 'number' ? val + 'px' : `${val}`;
+  }
+  @Input() set height(val: NumberInput) {
+    this._height = typeof val === 'number' ? val + 'px' : `${val}`;
+  }
   @Input()
   set theme(value: string | object | null | undefined) {
     this._theme = value;

@@ -3,31 +3,19 @@ title: chart-echarts
 subtitle: ECharts
 cols: 1
 type: ECharts
-module: import { G2BarModule } from '@delon/chart/bar';
+module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 ---
 
-使用垂直的柱子显示类别之间的数值比较。其中一个轴表示需要对比的分类维度，另一个轴代表相应的数值。
+[ECharts](https://echarts.apache.org/zh/index.html) 一个基于 JavaScript 的开源可视化图表库。使用懒加载 ECharts 脚本，开箱启用。
 
 ## API
 
-### g2-bar
+### chart-echarts
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
-| `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
-| `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
-| `[padding]` | 图表内部间距 | `Array<number | string> | string` | `[32, 0, 32, 40]` |
-| `[height]` | 图表高度 | `number` | - |
-| `[data]` | 数据 | `G2BarData[]` | `[]` |
-| `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
-| `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2BarClickItem>` | - |
-
-### G2BarData
-
-| 参数 | 说明 | 类型 | 默认值 |
-|----|----|----|-----|
-| `[x]` | x轴 | `any` | - |
-| `[y]` | y轴 | `any` | - |
+| `[width]` | 图表宽度 | `number, string` | `100%`|
+| `[height]` | 图表高度 | `number, string` | `400px`|
+| `[option]` | [配置项](https://echarts.apache.org/zh/option.html#title) | `ChartEChartsOption` | - |
+| `[theme]` | [主题](https://echarts.apache.org/zh/theme-builder.html)配置 | `string, object` | - |
+| `(events)` | 事件回调 | `EventEmitter<ChartEChartsEvent>` | - |
