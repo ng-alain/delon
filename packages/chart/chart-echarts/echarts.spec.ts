@@ -2,11 +2,11 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { createTestContext } from '@delon/testing';
+import { NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { ChartEChartsComponent } from './echarts.component';
 import { ChartEChartsModule } from './echarts.module';
 import { ChartEChartsEvent, ChartEChartsOption } from './echarts.types';
-import { NumberInput } from '@delon/util/decorator';
 
 // let isClassECharts = false;
 class MockLazyService {
