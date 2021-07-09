@@ -221,7 +221,7 @@ export interface STColumn<T extends STData = any> {
    * - `price.market`
    * - `[ 'price', 'market' ]`
    */
-  index?: string | string[] | null;
+  index?: string & {} | string[] | keyof T | null;
   /**
    * 类型
    * - `no` 行号，计算规则：`index + noIndex`
