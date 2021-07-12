@@ -60,6 +60,7 @@ export class ACLService {
    * 设置当前用户角色或权限能力（会先清除所有）
    */
   set(value: ACLType): void {
+    this.full = false;
     this.abilities = [];
     this.roles = [];
     this.add(value);
