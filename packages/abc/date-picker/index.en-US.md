@@ -30,17 +30,3 @@ It needs to be used with [nz-range-picker](https://ng.ant.design/components/date
 | `[enabled]` | Whether to enable | `boolean` | `false` |
 | `[closed]` | Whether to close the panel after clicking | `boolean` | `true` |
 | `[enabled]` | Shortcut list | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |
-
-### range-picker
-
-**Deprecated** Use `nz-range-picker` and `extend` directive to replace `range-picker`, will remove `range-picker` at `12.0.0`.
-
-```html
-<range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
-```
-
-Changed to:
-
-```html
-<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
-```

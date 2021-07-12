@@ -13,7 +13,6 @@ import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
-import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
@@ -60,7 +59,6 @@ export const SHARED_DELON_MODULES = [
   ImageModule,
   LoadingModule,
   QRModule,
-  NumberToChineseModule,
   OnboardingModule,
   ErrorCollectModule,
   ExceptionModule,

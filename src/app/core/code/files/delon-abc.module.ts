@@ -15,7 +15,6 @@ import { ImageModule } from '@delon/abc/image';
 import { LoadingModule } from '@delon/abc/loading';
 import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
-import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
@@ -55,7 +54,6 @@ const MODULES = [
   FullContentModule,
   XlsxModule,
   ZipModule,
-  NumberToChineseModule,
   LodopModule,
   QuickMenuModule,
   QRModule,
