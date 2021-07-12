@@ -185,7 +185,7 @@ export class CacheService implements OnDestroy {
     const value = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
-        return this.http.get(key).pipe(
+        return (this.cog.request ? this.cog.request(key) : this.http.get(key)).pipe(
           map((ret: NzSafeAny) => this.deepGet(ret, this.cog.reName as string[], null)),
           tap(v => this.set(key, v, { type: options.type as NzSafeAny, expire: options.expire })),
         );

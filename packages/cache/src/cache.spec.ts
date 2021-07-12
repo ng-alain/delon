@@ -357,4 +357,14 @@ describe('cache: service', () => {
       expect(srv.getMeta().has(KEY)).toBe(true);
     });
   });
+
+  it('should be custom request', async () => {
+    const returnValue = 11;
+    const request = jasmine.createSpy('request').and.callFake(() => of(returnValue));
+    genModule({ request });
+    expect(request).not.toHaveBeenCalled();
+    const res = await srv.get('/data/1', { mode: 'promise', type: 'm' }).toPromise();
+    expect(request).toHaveBeenCalled();
+    expect(res).toBe(returnValue);
+  });
 });

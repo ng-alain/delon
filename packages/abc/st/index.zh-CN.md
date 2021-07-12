@@ -281,7 +281,7 @@ class TestComponent {
 | `[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | - |
 | `[resizable]` | 调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
 | `[children]` | 多表头 | `STColumn[]` | - |
-| `[saftHtml]` | 是否信任HTML，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `boolean` | `true` |
+| `[safeType]` | 安全渲染方式，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `text,html,safeHtml` | `safeHtml` |
 | `[customRequest]` | 覆盖默认的请求行为，可以自定义自己的请求实现，例如：Graphql，支持[全局配置](https://ng-alain.com/docs/global-config/zh) | `(options: STCustomRequestOptions) => Observable<any>` | - |
 
 ### STColumnTitle

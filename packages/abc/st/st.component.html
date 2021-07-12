@@ -248,7 +248,10 @@
                   <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text"></nz-badge>
                 </ng-container>
                 <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
-                <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+                <ng-container *ngSwitchDefault>
+                  <span *ngIf="c.safeType !== 'text'" [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+                  <span *ngIf="c.safeType === 'text'" [innerText]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+                </ng-container>
               </ng-container>
               <ng-container *ngFor="let btn of i._values[cIdx].buttons; let last = last">
                 <a *ngIf="btn.children!.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">

@@ -586,6 +586,14 @@ module.exports = {
           hasSubDir: false,
         },
         {
+          src: ['./packages/theme/theme-btn'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          reName: 'theme-btn',
+          hasSubDir: false,
+        },
+        {
           src: ['./packages/theme/src/pipes'],
           template: {
             content: './src/templates/content.ts',

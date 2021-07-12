@@ -387,9 +387,11 @@ export interface AlainSTConfig {
    */
   noResult?: string | TemplateRef<void>;
   /**
-   * 是否信任HTML，默认：`true`
+   * Safe rendering type, default: `safeHtml`
+   *
+   * 安全渲染方式，默认：`safeHtml`
    */
-  saftHtml?: boolean;
+  safeType?: 'text' | 'html' | 'safeHtml';
   /**
    * Override the default request behavior, you can customize your own request implementation, for example: Graphql
    *

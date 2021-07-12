@@ -14,8 +14,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NumberInput, ZoneOutside } from '@delon/util/decorator';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { ChartEChartsService } from './echarts.service';
 import { ChartECharts, ChartEChartsEvent, ChartEChartsEventType, ChartEChartsOption } from './echarts.types';
 
@@ -41,7 +41,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
 
   @ViewChild('container', { static: true }) private node: ElementRef;
   private destroy$ = new Subject<void>();
-  private _chart: ChartECharts;
+  private _chart: ChartECharts | null = null;
   private _theme?: string | object | null;
   private _initOpt?: {
     renderer?: any;
@@ -84,7 +84,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   }
   @Output() events = new EventEmitter<ChartEChartsEvent>();
 
-  get chart(): ChartECharts {
+  get chart(): ChartECharts | null {
     return this._chart;
   }
   loaded = false;
@@ -101,7 +101,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   }
 
   private emit(type: ChartEChartsEventType, other?: ChartEChartsEvent): void {
-    this.events.emit({ type, chart: this.chart, ...other });
+    this.events.emit({ type, chart: this.chart!!, ...other });
   }
 
   @ZoneOutside()
@@ -147,6 +147,14 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     } else {
       this.srv.libLoad();
     }
+
+    fromEvent(window, 'resize')
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(() => !!this._chart),
+        debounceTime(200),
+      )
+      .subscribe(() => this._chart!!.resize());
   }
 
   ngOnDestroy(): void {
