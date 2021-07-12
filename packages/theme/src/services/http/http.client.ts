@@ -88,13 +88,6 @@ export class _HttpClient {
   }
 
   /**
-   * @deprecated Will be removed in 12.0.0, Pls used `cleanLoading` instead
-   */
-  end(): void {
-    this.cleanLoading();
-  }
-
-  /**
    * Clean loading count
    *
    * 清空加载中
