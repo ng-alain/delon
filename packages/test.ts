@@ -2,7 +2,7 @@
 
 // tslint:disable:ordered-imports
 // tslint:disable:no-import-side-effect
-import 'zone.js/dist/zone-testing';
+import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,

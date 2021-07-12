@@ -4,7 +4,6 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
-import { NzTableData } from 'ng-zorro-antd/table';
 import { Observable } from 'rxjs';
 
 export interface AlainSTConfig {
@@ -370,7 +369,7 @@ export interface AlainSTConfig {
   /**
    * The TrackByFunction to use for tracking changes
    */
-  virtualForTrackBy?: TrackByFunction<NzTableData>;
+  virtualForTrackBy?: TrackByFunction<unknown>;
   /**
    * Conditional expression rendering behavior, can be set to `hide` (default) or `disabled`, Default: `hide`
    */

@@ -28,7 +28,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "types": ["jasmine"],
-    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "tmp"]

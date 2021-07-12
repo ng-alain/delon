@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainViewComponent",
+  "$id": "SchematicsNgAlainViewComponent",
   "title": "Ng Alain View Component Options Schema",
   "type": "object",
   "properties": {
@@ -54,7 +54,8 @@
       "type": "string",
       "description": "The prefix to apply to generated selectors.",
       "alias": "p",
-      "oneOf": [{
+      "oneOf": [
+        {
           "maxLength": 0
         },
         {
@@ -67,13 +68,7 @@
       "description": "The file extension or preprocessor to use for style files.",
       "type": "string",
       "default": "css",
-      "enum": [
-        "css",
-        "scss",
-        "sass",
-        "less",
-        "styl"
-      ]
+      "enum": ["css", "scss", "sass", "less", "styl"]
     },
     "spec": {
       "type": "boolean",
@@ -133,8 +128,5 @@
       "x-prompt": "Would you like to modal mode?"
     }
   },
-  "required": [
-    "name",
-    "module"
-  ]
+  "required": ["name", "module"]
 }

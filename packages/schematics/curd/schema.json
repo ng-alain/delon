@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainCURDComponent",
+  "$id": "SchematicsNgAlainCURDComponent",
   "title": "Ng Alain CURD Component Options Schema",
   "type": "object",
   "properties": {

@@ -75,9 +75,9 @@ function setPolyfills(options: PluginOptions): Rule {
       content = `import 'core-js/modules/es.array.includes';
 import 'classlist.js';
 import 'web-animations-js';
-import 'zone.js/dist/zone';`;
+import 'zone.js';`;
     } else {
-      content = `import 'zone.js/dist/zone';`;
+      content = `import 'zone.js';`;
     }
     overwriteFile({ tree, filePath, content, overwrite: true, contentIsString: true });
   };

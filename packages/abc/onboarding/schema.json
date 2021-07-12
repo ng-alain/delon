@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "https://github.com/ng-alain/delon/blob/master/packages/abc/onboarding/schema.json",
+  "$id": "https://github.com/ng-alain/delon/blob/master/packages/abc/onboarding/schema.json",
   "title": "Onboarding Configuration",
   "type": "object",
   "properties": {

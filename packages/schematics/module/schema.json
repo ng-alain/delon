@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainModule",
+  "$id": "SchematicsNgAlainModule",
   "title": "Ng Alain Module Options Schema",
   "type": "object",
   "properties": {
@@ -54,7 +54,5 @@
       "alias": "m"
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }
