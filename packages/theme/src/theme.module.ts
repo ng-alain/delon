@@ -15,14 +15,13 @@ import { NzI18nModule } from 'ng-zorro-antd/i18n';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { DelonLocaleModule } from './locale/locale.module';
-import { CNCurrencyPipe } from './pipes/currency/cn-currency.pipe';
 import { DatePipe } from './pipes/date/date.pipe';
 import { KeysPipe } from './pipes/keys/keys.pipe';
 import { HTMLPipe } from './pipes/safe/html.pipe';
 import { URLPipe } from './pipes/safe/url.pipe';
 import { YNPipe } from './pipes/yn/yn.pipe';
 import { I18nPipe } from './services/i18n/i18n.pipe';
-const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, URLPipe];
+const PIPES = [DatePipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, URLPipe];
 
 // #endregion
 

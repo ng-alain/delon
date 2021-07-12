@@ -57,6 +57,7 @@ describe('mock: interceptor', () => {
   let httpMock: HttpTestingController;
 
   function genModule(
+    data: any,
     options: AlainMockConfig,
     imports: any[] = [],
     spyConsole: boolean = true,
@@ -72,7 +73,7 @@ describe('mock: interceptor', () => {
             loadChildren: 'expected'
           }
         ]),
-        DelonMockModule.forRoot()
+        DelonMockModule.forRoot({ data })
       ].concat(imports),
       providers: ([{ provide: ALAIN_CONFIG, useValue: { mock: options } }] as any[]).concat(providers || [])
     });
@@ -85,7 +86,7 @@ describe('mock: interceptor', () => {
   }
 
   describe('[default]', () => {
-    beforeEach(() => genModule({ executeOtherInterceptors: false, data: DATA, delay: 1 }));
+    beforeEach(() => genModule(DATA, { executeOtherInterceptors: false, delay: 1 }));
     it('should be init', (done: () => void) => {
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();
@@ -201,14 +202,14 @@ describe('mock: interceptor', () => {
 
   describe('[disabled log]', () => {
     it('with request', (done: () => void) => {
-      genModule({ data: DATA, delay: 1, log: false });
+      genModule(DATA, { delay: 1, log: false });
       http.get('/users').subscribe(() => {
         expect(console.log).not.toHaveBeenCalled();
         done();
       });
     });
     it('with error request', (done: () => void) => {
-      genModule({ data: DATA, delay: 1, log: false });
+      genModule(DATA, { delay: 1, log: false });
       http.get('/404').subscribe(
         () => {
           expect(false).toBe(true);
@@ -224,7 +225,7 @@ describe('mock: interceptor', () => {
   });
 
   describe('[lazy module]', () => {
-    beforeEach(() => genModule({ data: DATA, delay: 1 }));
+    beforeEach(() => genModule(DATA, { delay: 1 }));
 
     it('should work', fakeAsync(() => {
       const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
@@ -264,7 +265,7 @@ describe('mock: interceptor', () => {
   });
   describe('[executeOtherInterceptors]', () => {
     beforeEach(() => {
-      genModule({ data: DATA, delay: 1, executeOtherInterceptors: true }, [], true, [
+      genModule(DATA, { delay: 1, executeOtherInterceptors: true }, [], true, [
         { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true }
       ]);
     });
