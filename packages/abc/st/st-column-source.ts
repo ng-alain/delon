@@ -13,6 +13,7 @@ import {
   STColumnButtonPop,
   STColumnFilter,
   STColumnGroupType,
+  STColumnSafeType,
   STIcon,
   STResizable,
   STSortMap,
@@ -23,6 +24,7 @@ import { _STColumn, _STHeader } from './st.types';
 export interface STColumnSourceProcessOptions {
   widthMode: STWidthMode;
   resizable: STResizable;
+  safeType: STColumnSafeType;
 }
 
 @Injectable()
@@ -414,6 +416,7 @@ export class STColumnSource {
       }
       item._left = false;
       item._right = false;
+      item.safeType = item.safeType ?? options.safeType;
 
       // sorter
       item._sort = this.sortCoerce(item);
