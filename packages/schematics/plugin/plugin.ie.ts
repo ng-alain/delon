@@ -5,7 +5,6 @@ import * as colors from 'ansi-colors';
 import {
   addPackage,
   BUILD_TARGET_BUILD,
-  BUILD_TARGET_E2E,
   BUILD_TARGET_SERVE,
   BUILD_TARGET_TEST,
   getProject,
@@ -29,9 +28,8 @@ function setAngularJson(options: PluginOptions): Rule {
       p.targets.get(BUILD_TARGET_TEST).configurations = {
         es5: { tsConfig: './tsconfig-es5.app.json' },
       };
-      p.targets.get(BUILD_TARGET_E2E).configurations.es5 = { browserTarget: `${options.project}:${BUILD_TARGET_BUILD}:es5` };
     } else {
-      [BUILD_TARGET_BUILD, BUILD_TARGET_SERVE, BUILD_TARGET_TEST, BUILD_TARGET_E2E]
+      [BUILD_TARGET_BUILD, BUILD_TARGET_SERVE, BUILD_TARGET_TEST]
         .map(key => p.targets.get(key))
         .filter(item => !!item)
         .forEach(item => {

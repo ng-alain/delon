@@ -6,7 +6,6 @@ import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/works
 export const BUILD_TARGET_BUILD = 'build';
 export const BUILD_TARGET_TEST = 'test';
 export const BUILD_TARGET_SERVE = 'serve';
-export const BUILD_TARGET_E2E = 'e2e';
 
 function getProjectName(workspace: WorkspaceDefinition, name?: string): string | null {
   if (name && workspace.projects.has(name)) {
