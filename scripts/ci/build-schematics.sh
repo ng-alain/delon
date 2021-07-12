@@ -48,7 +48,7 @@ echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 TSC=${PWD}/node_modules/.bin/tsc
 JASMINE=${PWD}/node_modules/.bin/jasmine
 
-SOURCE=${PWD}/packages/schematics
+SOURCE=${PWD}/schematics
 DIST=${PWD}/dist/ng-alain/
 tsconfigFile=${SOURCE}/tsconfig.json
 

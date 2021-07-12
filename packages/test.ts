@@ -16,9 +16,8 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
 
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
-// const context = require.context('./', true, /\/chart\/(.*)\.spec\.ts$/);
+// const context = require.context('./', true, /\/form\/(.*)\.spec\.ts$/);
 // And load the modules.
 context
   .keys()
-  .filter((path: string) => path.indexOf('/schematics/') === -1)
   .map(context);

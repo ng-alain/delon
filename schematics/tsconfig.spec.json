@@ -3,7 +3,7 @@
     "lib": ["es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../../dist/schematics-test",
+    "outDir": "../dist/schematics-test",
     "noEmitOnError": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
