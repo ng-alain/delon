@@ -46,6 +46,7 @@ import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
 import { CurrencyPipeModule, FilterPipeModule, FormatPipeModule } from '@delon/util/pipes';
+import { PriceModule } from '@delon/abc/price';
 
 export const SHARED_DELON_MODULES = [
   AvatarListModule,
@@ -99,4 +100,5 @@ export const SHARED_DELON_MODULES = [
   FilterPipeModule,
   AutoFocusModule,
   LetModule,
+  PriceModule,
 ];
