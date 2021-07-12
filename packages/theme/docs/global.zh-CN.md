@@ -106,7 +106,6 @@ title: 全局参数
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
-| `@badge-enabled` | `true` | bootstrap徽章 |
 | `@hafl-enabled` | `true` | 半图 |
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |

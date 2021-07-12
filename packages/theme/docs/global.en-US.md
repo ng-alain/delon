@@ -106,7 +106,6 @@ By `nz-table`。
 
 | Name | Default | Description |
 | --- | --- | --- |
-| `@badge-enabled` | `true` | Whether bootstrap badge |
 | `@hafl-enabled` | `true` | Whether hafl image |
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |
