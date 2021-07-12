@@ -22,7 +22,6 @@ import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
 import { SEModule } from '@delon/abc/se';
 import { SGModule } from '@delon/abc/sg';
-import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
@@ -70,7 +69,6 @@ export const SHARED_DELON_MODULES = [
   TagSelectModule,
   NoticeIconModule,
   QuickMenuModule,
-  SidebarNavModule,
   G2BarModule,
   G2CardModule,
   G2CustomModule,

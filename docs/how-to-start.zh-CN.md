@@ -79,7 +79,7 @@ export class StartupService {
 | 应用信息 | 应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。<br>例如：`this.settingService.setApp(res.app);` |
 | 用户信息 | 当前用户的姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。<br>例如：`this.settingService.setUser(res.user);` |
 | 布局信息 | 调整主题配置，例如：固定顶部菜单、折叠菜单等。<br>例如：`this.settingService.setLayout("fixed", false);` 或 `this.settingService.setLayout("collapsed", false);` |
-| 菜单数据 | NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。<br>菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。<br>例如：`this.menuService.add(res.menu);` |
+| 菜单数据 | NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。<br>菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。<br>例如：`this.menuService.add(res.menu);` |
 | 页面标题 | 若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。<br>例如设置页面标题的后缀：`this.titleService.suffix = res.app.name;` |
 | ACL | 访问控制列表数据，建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。 <br>例如设置全量权限：`this.aclService.setFull(true);` |
 | 国际化 | 建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。 |
