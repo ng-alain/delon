@@ -11,11 +11,13 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
+import { NumberInput, ZoneOutside } from '@delon/util/decorator';
+
 import { ChartEChartsService } from './echarts.service';
 import { ChartECharts, ChartEChartsEvent, ChartEChartsEventType, ChartEChartsOption } from './echarts.types';
 
@@ -29,11 +31,11 @@ import { ChartECharts, ChartEChartsEvent, ChartEChartsEventType, ChartEChartsOpt
   host: {
     '[style.display]': `'inline-block'`,
     '[style.width]': `_width`,
-    '[style.height]': `_height`,
+    '[style.height]': `_height`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ChartEChartsComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_width: NumberInput;
@@ -42,7 +44,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   @ViewChild('container', { static: true }) private node: ElementRef;
   private destroy$ = new Subject<void>();
   private _chart: ChartECharts | null = null;
-  private _theme?: string | object | null;
+  private _theme?: string | Record<string, unknown> | null;
   private _initOpt?: {
     renderer?: any;
     devicePixelRatio?: number;
@@ -56,13 +58,13 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
 
   @Input()
   set width(val: NumberInput) {
-    this._width = typeof val === 'number' ? val + 'px' : `${val}`;
+    this._width = typeof val === 'number' ? `${val}px` : `${val}`;
   }
   @Input() set height(val: NumberInput) {
-    this._height = typeof val === 'number' ? val + 'px' : `${val}`;
+    this._height = typeof val === 'number' ? `${val}px` : `${val}`;
   }
   @Input()
-  set theme(value: string | object | null | undefined) {
+  set theme(value: string | Record<string, unknown> | null | undefined) {
     this._theme = value;
     if (this._chart) {
       this.install();
@@ -82,18 +84,23 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
       this.setOption(value, true);
     }
   }
-  @Output() events = new EventEmitter<ChartEChartsEvent>();
+  @Output() readonly events = new EventEmitter<ChartEChartsEvent>();
 
   get chart(): ChartECharts | null {
     return this._chart;
   }
   loaded = false;
 
-  constructor(private srv: ChartEChartsService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private platform: Platform) {
+  constructor(
+    private srv: ChartEChartsService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
+    private platform: Platform
+  ) {
     this.srv.notify
       .pipe(
         takeUntil(this.destroy$),
-        filter(() => !this.loaded),
+        filter(() => !this.loaded)
       )
       .subscribe(() => this.load());
 
@@ -152,7 +159,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         filter(() => !!this._chart),
-        debounceTime(200),
+        debounceTime(200)
       )
       .subscribe(() => this._chart!!.resize());
   }

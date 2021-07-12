@@ -9,13 +9,15 @@ import {
   Injectable,
   Injector,
   OnDestroy,
-  Optional,
+  Optional
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DelonLocaleService } from '@delon/theme';
-import { AlainConfigService } from '@delon/util/config';
 import { of, pipe, Subscription } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
+
+import { DelonLocaleService } from '@delon/theme';
+import { AlainConfigService } from '@delon/util/config';
+
 import { OnboardingComponent } from './onboarding.component';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
@@ -50,7 +52,7 @@ export class OnboardingService implements OnDestroy {
     private injector: Injector,
     @Inject(DOCUMENT) private doc: any,
     private configSrv: AlainConfigService,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {}
 
   private attach(): void {
@@ -109,7 +111,7 @@ export class OnboardingService implements OnDestroy {
       before: of(true),
       after: of(true),
       ...this.i18n.getData('onboarding'),
-      ...items[this.active],
+      ...items[this.active]
     } as OnboardingItem;
     const dir = this.configSrv.get('onboarding')!.direction || this.directionality.value;
     Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length, dir });
@@ -118,7 +120,7 @@ export class OnboardingService implements OnDestroy {
       switchMap(() => {
         const obs = this.type === 'prev' ? item.after! : item.before!;
         return typeof obs === 'number' ? of(true).pipe(delay(obs)) : obs;
-      }),
+      })
     ];
     if (!isStart) {
       pipes.push(delay(1));
@@ -130,7 +132,7 @@ export class OnboardingService implements OnDestroy {
       .pipe(pipe.apply(this, pipes))
       .subscribe(
         () => this.cancelRunning().updateRunning(false),
-        () => this.done(),
+        () => this.done()
       );
   }
 
@@ -149,7 +151,7 @@ export class OnboardingService implements OnDestroy {
       mask: true,
       maskClosable: true,
       showTotal: false,
-      ...config,
+      ...config
     };
     this.active = 0;
     this.type = null;

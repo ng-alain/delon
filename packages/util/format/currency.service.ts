@@ -1,7 +1,17 @@
 import { CurrencyPipe, formatNumber } from '@angular/common';
 import { DEFAULT_CURRENCY_CODE, Inject, Injectable, LOCALE_ID } from '@angular/core';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
-import { CurrencyCNYOptions, CurrencyFormatOptions, CurrencyMegaOptions, CurrencyMegaResult, CurrencyMega_Powers } from './currency.types';
+
+import {
+  CurrencyCNYOptions,
+  CurrencyFormatOptions,
+  CurrencyMegaOptions,
+  CurrencyMegaResult,
+  CurrencyMega_Powers
+} from './currency.types';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
@@ -11,14 +21,14 @@ export class CurrencyService {
   constructor(
     cog: AlainConfigService,
     @Inject(LOCALE_ID) private locale: string,
-    @Inject(DEFAULT_CURRENCY_CODE) _defaultCurrencyCode: string = 'USD',
+    @Inject(DEFAULT_CURRENCY_CODE) _defaultCurrencyCode: string = 'USD'
   ) {
     this.currencyPipe = new CurrencyPipe(locale, _defaultCurrencyCode);
     this.c = cog.merge('utilCurrency', {
       startingUnit: 'yuan',
       megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },
       precision: 2,
-      ingoreZeroPrecision: true,
+      ingoreZeroPrecision: true
     })!;
   }
 
@@ -37,7 +47,7 @@ export class CurrencyService {
       precision: this.c.precision,
       ingoreZeroPrecision: this.c.ingoreZeroPrecision,
       ngCurrency: this.c.ngCurrency,
-      ...options,
+      ...options
     };
     let truthValue = Number(value);
     if (value == null || isNaN(truthValue)) {
@@ -48,9 +58,19 @@ export class CurrencyService {
     }
     if (options.ngCurrency != null) {
       const cur = options.ngCurrency!;
-      return this.currencyPipe.transform(truthValue, cur.currencyCode, cur.display, cur.digitsInfo, cur.locale || this.locale)!;
+      return this.currencyPipe.transform(
+        truthValue,
+        cur.currencyCode,
+        cur.display,
+        cur.digitsInfo,
+        cur.locale || this.locale
+      )!;
     }
-    const res = formatNumber(truthValue, this.locale, `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`);
+    const res = formatNumber(
+      truthValue,
+      this.locale,
+      `.${options.ingoreZeroPrecision ? 1 : options.precision}-${options.precision}`
+    );
     return options.ingoreZeroPrecision ? res.replace(/(?:\.[0]+)$/g, '') : res;
   }
 
@@ -90,7 +110,7 @@ export class CurrencyService {
     }
 
     res.value = (isNegative ? '-' : '') + abs;
-    res.unitI18n = (options.unitI18n as { [key: string]: any })[res.unit];
+    res.unitI18n = (options.unitI18n as { [key: string]: NzSafeAny })[res.unit];
     return res;
   }
 
@@ -104,7 +124,7 @@ export class CurrencyService {
       inWords: true,
       minusSymbol: '负',
       startingUnit: this.c.startingUnit,
-      ...options,
+      ...options
     };
 
     value = Number(value);
@@ -133,9 +153,51 @@ export class CurrencyService {
         ? ['', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '点']
         : ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '点'],
       radice: inWords
-        ? ['', '拾', '佰', '仟', '万', '拾', '佰', '仟', '亿', '拾', '佰', '仟', '万亿', '拾', '佰', '仟', '兆', '拾', '佰', '仟']
-        : ['', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万亿', '十', '百', '千', '兆', '十', '百', '千'],
-      dec: ['角', '分', '厘', '毫'],
+        ? [
+            '',
+            '拾',
+            '佰',
+            '仟',
+            '万',
+            '拾',
+            '佰',
+            '仟',
+            '亿',
+            '拾',
+            '佰',
+            '仟',
+            '万亿',
+            '拾',
+            '佰',
+            '仟',
+            '兆',
+            '拾',
+            '佰',
+            '仟'
+          ]
+        : [
+            '',
+            '十',
+            '百',
+            '千',
+            '万',
+            '十',
+            '百',
+            '千',
+            '亿',
+            '十',
+            '百',
+            '千',
+            '万亿',
+            '十',
+            '百',
+            '千',
+            '兆',
+            '十',
+            '百',
+            '千'
+          ],
+      dec: ['角', '分', '厘', '毫']
     };
     if (inWords) {
       value = (+value).toFixed(5).toString();

@@ -2,6 +2,7 @@ import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import * as colors from 'ansi-colors';
+
 import {
   addPackage,
   BUILD_TARGET_BUILD,
@@ -11,7 +12,7 @@ import {
   getProjectFromWorkspace,
   overwriteFile,
   readContent,
-  removePackage,
+  removePackage
 } from '../utils';
 import tsConfigEs5App from './files/ie/tsconfig-es5.app';
 import tsConfigEs5Spec from './files/ie/tsconfig-es5.spec';
@@ -24,9 +25,11 @@ function setAngularJson(options: PluginOptions): Rule {
     const p = getProjectFromWorkspace(workspace, options.project);
     if (options.type === 'add') {
       p.targets.get(BUILD_TARGET_BUILD).configurations.es5 = { tsConfig: './tsconfig-es5.app.json' };
-      p.targets.get(BUILD_TARGET_SERVE).configurations.es5 = { browserTarget: `${options.project}:${BUILD_TARGET_BUILD}:es5` };
+      p.targets.get(BUILD_TARGET_SERVE).configurations.es5 = {
+        browserTarget: `${options.project}:${BUILD_TARGET_BUILD}:es5`
+      };
       p.targets.get(BUILD_TARGET_TEST).configurations = {
-        es5: { tsConfig: './tsconfig-es5.app.json' },
+        es5: { tsConfig: './tsconfig-es5.app.json' }
       };
     } else {
       [BUILD_TARGET_BUILD, BUILD_TARGET_SERVE, BUILD_TARGET_TEST]
@@ -55,12 +58,16 @@ function setBrowserslist(options: PluginOptions): Rule {
 function setPackage(options: PluginOptions): Rule {
   return (tree: Tree) => {
     // libs
-    (options.type === 'add' ? addPackage : removePackage)(tree, ['classlist.js@^1.1.0', 'web-animations-js@^2.3.2'], 'dependencies');
+    (options.type === 'add' ? addPackage : removePackage)(
+      tree,
+      ['classlist.js@^1.1.0', 'web-animations-js@^2.3.2'],
+      'dependencies'
+    );
     // scripts
     (options.type === 'add' ? addPackage : removePackage)(
       tree,
       ['ie:start@ng serve -o --configuration es5', 'ie:hmr@ng serve --hmr --configuration es5'],
-      'scripts',
+      'scripts'
     );
   };
 }
@@ -93,7 +100,7 @@ function setTsConfig(options: PluginOptions): Rule {
         filePath: buildFilePath,
         content: JSON.stringify(tsConfigEs5App, null, 2),
         overwrite: true,
-        contentIsString: true,
+        contentIsString: true
       });
     }
     // spec
@@ -105,7 +112,7 @@ function setTsConfig(options: PluginOptions): Rule {
         filePath: specFilePath,
         content: JSON.stringify(tsConfigEs5Spec, null, 2),
         overwrite: true,
-        contentIsString: true,
+        contentIsString: true
       });
     }
   };
@@ -115,8 +122,8 @@ function finished(): Rule {
   return (_: Tree, context: SchematicContext) => {
     context.logger.info(
       colors.yellow(
-        `  ⚠  If you encounter [No provider for AlainConfigService], please refer to https://github.com/ng-alain/ng-alain/issues/1624#issuecomment-623071468`,
-      ),
+        `  ⚠  If you encounter [No provider for AlainConfigService], please refer to https://github.com/ng-alain/ng-alain/issues/1624#issuecomment-623071468`
+      )
     );
   };
 }
@@ -131,7 +138,7 @@ export function pluginIE(options: PluginOptions): Rule {
       setPackage(options),
       setPolyfills(options),
       setTsConfig(options),
-      finished(),
+      finished()
     ]);
   };
 }

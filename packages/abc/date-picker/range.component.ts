@@ -1,13 +1,15 @@
 import { Component, EventEmitter, forwardRef, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDatePickerSizeType, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
+
 import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { InputBoolean } from '@delon/util/decorator';
 import { deepMergeKey } from '@delon/util/other';
-import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDatePickerSizeType, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
 
 /**
  * @deprecated Will be removed in 12.0.0, Pls used `nz-range-picker` and `[extend]` directive instead, for examples:
@@ -27,9 +29,9 @@ import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => RangePickerComponent),
-    },
-  ],
+      useExisting: forwardRef(() => RangePickerComponent)
+    }
+  ]
 })
 export class RangePickerComponent implements ControlValueAccessor {
   static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
@@ -57,8 +59,6 @@ export class RangePickerComponent implements ControlValueAccessor {
   }
   @Output() readonly ngModelEndChange = new EventEmitter<Date>();
 
-  // #region Native properties
-
   @Input() nzAllowClear = true;
   @Input() nzAutoFocus = false;
   @Input() nzClassName: string;
@@ -67,7 +67,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Input() nzStyle: { [klass: string]: any };
   @Input() nzDisabledDate: (d: Date) => boolean;
   @Input() nzLocale: NzDatePickerI18nInterface;
-  @Input() nzPopupStyle: object;
+  @Input() nzPopupStyle: NzSafeAny;
   @Input() nzDropdownClassName: string;
   @Input() nzPlaceHolder: string | string[];
   @Output() readonly nzOnOpenChange = new EventEmitter<boolean>();
@@ -84,8 +84,6 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Output() readonly nzOnPanelChange = new EventEmitter<any>();
   @Output() readonly nzOnOk = new EventEmitter<any>();
 
-  // #endregion
-
   constructor(private dom: DomSanitizer, configSrv: AlainConfigService) {
     const cog = configSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
@@ -99,34 +97,34 @@ export class RangePickerComponent implements ControlValueAccessor {
         list: [
           {
             text: '今天',
-            fn: () => getTimeDistance('today'),
+            fn: () => getTimeDistance('today')
           },
           {
             text: '昨天',
-            fn: () => getTimeDistance('yesterday'),
+            fn: () => getTimeDistance('yesterday')
           },
           {
             text: '近3天',
-            fn: () => getTimeDistance(-2),
+            fn: () => getTimeDistance(-2)
           },
           {
             text: '近7天',
-            fn: () => getTimeDistance(-6),
+            fn: () => getTimeDistance(-6)
           },
           {
             text: '本周',
-            fn: () => getTimeDistance('week'),
+            fn: () => getTimeDistance('week')
           },
           {
             text: '本月',
-            fn: () => getTimeDistance('month'),
+            fn: () => getTimeDistance('month')
           },
           {
             text: '全年',
-            fn: () => getTimeDistance('year'),
-          },
-        ],
-      },
+            fn: () => getTimeDistance('year')
+          }
+        ]
+      }
     })!;
     this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
     Object.assign(this, cog);
@@ -171,7 +169,6 @@ export class RangePickerComponent implements ControlValueAccessor {
     this.value = item.fn(this.value as any);
     this.valueChange(this.value as [Date, Date]);
     if (this._shortcut.closed) {
-      // tslint:disable-next-line:no-string-literal
       (this.comp as NzSafeAny)['picker'].hideOverlay();
     }
   }

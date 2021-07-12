@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
+
 import { addSeconds } from 'date-fns';
 import { CountdownConfig } from 'ngx-countdown';
+
+import { createTestContext } from '@delon/testing';
+
 import { CountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {
@@ -12,7 +15,7 @@ describe('abc: count-down', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CountDownModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, context } = createTestContext(TestComponent));
   });
@@ -21,7 +24,7 @@ describe('abc: count-down', () => {
     spyOn(context, 'handleEvent');
     context.config = {
       leftTime: 2,
-      notify: [1.5],
+      notify: [1.5]
     };
     fixture.detectChanges();
     tick(2001);
@@ -53,7 +56,7 @@ describe('abc: count-down', () => {
     <div *ngIf="target">
       <count-down [target]="target" (event)="handleEvent()" style="font-size: 20px"></count-down>
     </div>
-  `,
+  `
 })
 class TestComponent {
   config: CountdownConfig;

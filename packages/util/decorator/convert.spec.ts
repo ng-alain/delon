@@ -13,10 +13,12 @@ describe('util.#toBoolean', () => {
     { value: 'true', ret: true },
     { value: 'pink', ret: true },
     { value: {}, ret: true },
-    { value: [], ret: true },
+    { value: [], ret: true }
   ].forEach(item => {
     const au = typeof item.au !== 'undefined';
-    it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(item.ret)}]${au ? ', because allow undefined' : ''}`, () => {
+    it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(item.ret)}]${
+      au ? ', because allow undefined' : ''
+    }`, () => {
       if (au) {
         expect(toBoolean(item.value, item.au)).toBe(item.ret);
       } else {
@@ -29,11 +31,11 @@ describe('util.#toBoolean', () => {
 describe('util.#InputBoolean', () => {
   it('should be working', () => {
     class MockClass {
-      private _val = true;
-      @InputBoolean() set val(val: any) {
+      private _val: unknown = true;
+      @InputBoolean() set val(val: unknown) {
         this._val = val;
       }
-      get val(): any {
+      get val(): unknown {
         return this._val;
       }
     }
@@ -132,17 +134,16 @@ describe('util.#InputNumber', () => {
   it('should be warn when already exist', () => {
     spyOn(console, 'warn');
     class MockClass {
-      private _val = true;
+      private _val: unknown = true;
       @InputNumber()
       @InputNumber()
-      set val(val: any) {
+      set val(val: unknown) {
         this._val = val;
       }
-      get val(): any {
+      get val(): unknown {
         return this._val;
       }
     }
-    // tslint:disable-next-line: no-unused-expression
     new MockClass();
     expect(console.warn).toHaveBeenCalled();
   });

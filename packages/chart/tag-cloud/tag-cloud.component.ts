@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import type { Chart, Event } from '@antv/g2';
-import { G2BaseComponent } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
+
+import type { Chart, Event } from '@antv/g2';
+
+import { G2BaseComponent } from '@delon/chart/core';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2TagCloudData {
   value?: number;
@@ -22,7 +24,7 @@ export interface G2TagCloudClickItem {
   template: `<nz-skeleton *ngIf="!loaded"></nz-skeleton>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2TagCloudComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -34,13 +36,12 @@ export class G2TagCloudComponent extends G2BaseComponent {
   @Input() @InputNumber() height = 200;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
-  @Output() clickItem = new EventEmitter<G2TagCloudClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2TagCloudClickItem>();
 
   // #endregion
 
   private initTagCloud(): void {
     (window as any).G2.registerShape('point', 'cloud', {
-      // tslint:disable-next-line: typedef
       draw(cfg: any, container: any) {
         const data = cfg.data as any;
         const textShape = container.addShape({
@@ -55,14 +56,14 @@ export class G2TagCloudComponent extends G2BaseComponent {
             fill: cfg.color,
             textBaseline: 'Alphabetic',
             x: cfg.x,
-            y: cfg.y,
-          } as any,
+            y: cfg.y
+          } as any
         });
         if (data.rotate) {
           (window as any).G2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
         }
         return textShape;
-      },
+      }
     });
   }
 
@@ -83,17 +84,17 @@ export class G2TagCloudComponent extends G2BaseComponent {
       padding,
       height: this.height,
       width: this.width,
-      theme,
+      theme
     }));
     chart.scale({
       x: { nice: false },
-      y: { nice: false },
+      y: { nice: false }
     });
     chart.legend(false);
     chart.axis(false);
     chart.tooltip({
       showTitle: false,
-      showMarkers: false,
+      showMarkers: false
     });
     (chart.coordinate() as any).reflect();
     chart
@@ -104,9 +105,9 @@ export class G2TagCloudComponent extends G2BaseComponent {
       .state({
         active: {
           style: {
-            fillOpacity: 0.4,
-          },
-        },
+            fillOpacity: 0.4
+          }
+        }
       });
     chart.interaction('element-active');
 
@@ -135,7 +136,6 @@ export class G2TagCloudComponent extends G2BaseComponent {
       size: [this.width, this.height], // 宽高设置最好根据 imageMask 做调整
       padding: 0,
       timeInterval: 5000, // max execute time
-      // tslint:disable-next-line: typedef
       rotate() {
         let random = ~~(Math.random() * 4) % 4;
         if (random === 2) {
@@ -143,10 +143,9 @@ export class G2TagCloudComponent extends G2BaseComponent {
         }
         return random * 90; // 0, 90, 270
       },
-      // tslint:disable-next-line: typedef
       fontSize(d: any) {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
-      },
+      }
     } as any);
 
     _chart.changeData(dv.rows);
@@ -156,7 +155,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
         filter(() => !!this._chart),
-        debounceTime(200),
+        debounceTime(200)
       )
       .subscribe(() => this.changeData());
   }

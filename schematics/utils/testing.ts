@@ -1,5 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { join } from 'path';
+
 import { Schema as NgAddSchema } from '../ng-add/schema';
 
 /** Path to the collection file for the Material schematics */
@@ -30,7 +32,7 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
     .runSchematicAsync('workspace', {
       name: 'workspace',
       newProjectRoot: 'projects',
-      version: '8.0.0',
+      version: '8.0.0'
     })
     .toPromise();
   const appTree = await baseRunner
@@ -43,9 +45,9 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
         routing: false,
         style: 'css',
         skipTests: false,
-        skipPackageJson: false,
+        skipPackageJson: false
       },
-      workspaceTree,
+      workspaceTree
     )
     .toPromise();
   const alainRunner = createAlainRunner();
@@ -54,9 +56,9 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
       'ng-add',
       {
         skipPackageJson: false,
-        ...ngAddOptions,
+        ...ngAddOptions
       },
-      appTree,
+      appTree
     )
     .toPromise();
   return { runner: alainRunner, tree };
@@ -64,7 +66,9 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
 
 export async function createAlainAndModuleApp(name: string = 'trade', ngAddOptions?: object): Promise<AppResult> {
   const res = await createAlainApp(ngAddOptions);
-  res.tree = await res.runner.runSchematicAsync('module', { name, project: APPNAME, routing: true }, res.tree).toPromise();
+  res.tree = await res.runner
+    .runSchematicAsync('module', { name, project: APPNAME, routing: true }, res.tree)
+    .toPromise();
   return res;
 }
 
@@ -74,7 +78,7 @@ export async function createTestApp(): Promise<{ runner: SchematicTestRunner; tr
     .runSchematicAsync('workspace', {
       name: 'workspace',
       newProjectRoot: 'projects',
-      version: '8.0.0',
+      version: '8.0.0'
     })
     .toPromise();
   const appTree = await runner
@@ -87,9 +91,9 @@ export async function createTestApp(): Promise<{ runner: SchematicTestRunner; tr
         routing: false,
         style: 'css',
         skipTests: false,
-        skipPackageJson: false,
+        skipPackageJson: false
       },
-      workspaceTree,
+      workspaceTree
     )
     .toPromise();
   return { runner, tree: appTree };

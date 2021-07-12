@@ -1,5 +1,6 @@
 import { Direction } from '@angular/cdk/bidi';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+
 import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types';
 
 @Component({
@@ -7,11 +8,11 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
   templateUrl: './loading.component.html',
   host: {
     '[class.loading-default]': 'true',
-    '[class.loading-default-rtl]': `dir === 'rtl'`,
+    '[class.loading-default-rtl]': `dir === 'rtl'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class LoadingDefaultComponent {
   options: LoadingShowOptions;

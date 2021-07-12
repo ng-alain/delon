@@ -32,7 +32,7 @@ The `[plugin name]` is plugin name, `-t` supports two values `add` (default) and
 
 Code style rules:
 
-- Verify typescript with [tslint](https://github.com/palantir/tslint)
+- Verify typescript with [angular-eslint](https://github.com/angular-eslint/angular-eslint)
 - Verify less with [stylelint](https://github.com/stylelint/stylelint)
 - Use [prettier](https://github.com/prettier/prettier) code formatting
 - Use [husky](https://github.com/typicode/husky) and [pretty-quick](https://github.com/azz/pretty-quick) to code verify and code format when git add

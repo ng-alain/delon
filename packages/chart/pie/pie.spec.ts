@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
 import { checkDelay, PageG2 } from '@delon/testing';
+
 import { G2PieComponent } from './pie.component';
 import { G2PieModule } from './pie.module';
 
@@ -10,7 +12,7 @@ describe('chart: pie', () => {
   describe('[mini]', () => {
     beforeEach(() => {
       page = new PageG2<TestMiniComponent>().makeModule(G2PieModule, TestMiniComponent, {
-        dc: false,
+        dc: false
       });
       page.context.percent = 10;
     });
@@ -36,12 +38,12 @@ describe('chart: pie', () => {
   describe('[full]', () => {
     beforeEach(fakeAsync(() => {
       page = new PageG2<TestFullComponent>().makeModule(G2PieModule, TestFullComponent, {
-        dc: false,
+        dc: false
       });
       page.context.data = [
         { x: '1', y: 50 },
         { x: '2', y: 20 },
-        { x: '3', y: 30 },
+        { x: '3', y: 30 }
       ];
       page.dcFirst();
     }));
@@ -63,7 +65,7 @@ describe('chart: pie', () => {
   describe('#tooltip', () => {
     beforeEach(() => {
       page = new PageG2<TestMiniComponent>().makeModule(G2PieModule, TestFullComponent, {
-        dc: false,
+        dc: false
       });
       page.context.inner = 0.1;
       page.context.data = [{ x: '1', y: 100 }];
@@ -100,7 +102,7 @@ describe('chart: pie', () => {
       [select]="select"
       [colors]="colors"
     ></g2-pie>
-  `,
+  `
 })
 class TestMiniComponent {
   @ViewChild('comp', { static: true }) comp: G2PieComponent;
@@ -138,7 +140,7 @@ class TestMiniComponent {
       [colors]="colors"
       [delay]="delay"
     ></g2-pie>
-  `,
+  `
 })
 class TestFullComponent {
   @ViewChild('comp', { static: true }) comp: G2PieComponent;

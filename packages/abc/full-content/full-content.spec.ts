@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
+
 import { FullContentComponent } from './full-content.component';
 import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
@@ -22,7 +23,7 @@ describe('abc: full-content', () => {
       imports: [FullContentModule, RouterTestingModule.withRoutes([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }]
     });
   });
 
@@ -108,7 +109,7 @@ describe('abc: full-content', () => {
       createComp();
       const bodyHeight = 10;
       spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
-        height: bodyHeight,
+        height: bodyHeight
       } as any);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
@@ -126,7 +127,7 @@ describe('abc: full-content', () => {
         useFactory: () => {
           return new MockRouter();
         },
-        deps: [],
+        deps: []
       });
       createComp();
       // mock component destroy
@@ -145,7 +146,7 @@ describe('abc: full-content', () => {
         useFactory: () => {
           return new MockRouter();
         },
-        deps: [],
+        deps: []
       });
       createComp();
 
@@ -161,10 +162,16 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content #comp [(fullscreen)]="fullscreen" [hideTitle]="hideTitle" [padding]="padding" (fullscreenChange)="change()">
+    <full-content
+      #comp
+      [(fullscreen)]="fullscreen"
+      [hideTitle]="hideTitle"
+      [padding]="padding"
+      (fullscreenChange)="change()"
+    >
       <button full-toggle>Full</button>
     </full-content>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: FullContentComponent;

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { warnDeprecation } from '@delon/util/other';
 
 // #region all modules
 
@@ -18,6 +17,7 @@ import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { G2TimelineModule } from '@delon/chart/timeline';
 import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
+import { warnDeprecation } from '@delon/util/other';
 
 const MODULES = [
   G2BarModule,
@@ -34,7 +34,7 @@ const MODULES = [
   G2WaterWaveModule,
   G2SingleBarModule,
   NumberInfoModule,
-  TrendModule,
+  TrendModule
 ];
 
 // #endregion
@@ -46,7 +46,7 @@ const MODULES = [
 export class DelonChartModule {
   constructor() {
     warnDeprecation(
-      "The `DelonChartModule` has been deprecated and will be removed in 12.0.0. Please use secondary entry instead.\ne.g. `import { G2BarModule } from '@delon/chart/bar';`",
+      "The `DelonChartModule` has been deprecated and will be removed in 12.0.0. Please use secondary entry instead.\ne.g. `import { G2BarModule } from '@delon/chart/bar';`"
     );
   }
 }

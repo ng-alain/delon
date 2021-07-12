@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
+
 import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
 
@@ -13,7 +15,7 @@ describe('theme: ModalHelper', () => {
   beforeEach(() => {
     @NgModule({
       imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzModalModule],
-      declarations: [TestModalComponent, TestComponent],
+      declarations: [TestModalComponent, TestComponent]
     })
     class TestModule {}
 
@@ -93,7 +95,7 @@ describe('theme: ModalHelper', () => {
           () => {
             expect(true).toBeTruthy();
             flush();
-          },
+          }
         );
         fixture.detectChanges();
         tick(1000);
@@ -104,11 +106,11 @@ describe('theme: ModalHelper', () => {
 
   describe('#static', () => {
     it('should be open', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       modal
         .static(TestModalComponent, {
           id,
-          ret: true,
+          ret: true
         })
         .subscribe(res => {
           fixture.detectChanges();
@@ -120,15 +122,15 @@ describe('theme: ModalHelper', () => {
       fixture.detectChanges();
     }));
     it('should be open sm size', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       modal
         .static(
           TestModalComponent,
           {
             id,
-            ret: 'true',
+            ret: 'true'
           },
-          'sm',
+          'sm'
         )
         .subscribe(res => {
           fixture.detectChanges();
@@ -140,15 +142,15 @@ describe('theme: ModalHelper', () => {
       fixture.detectChanges();
     }));
     it('should be open default size', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       modal
         .static(
           TestModalComponent,
           {
             id,
-            ret: 'true',
+            ret: 'true'
           },
-          '',
+          ''
         )
         .subscribe(res => {
           fixture.detectChanges();
@@ -160,19 +162,19 @@ describe('theme: ModalHelper', () => {
       fixture.detectChanges();
     }));
     it('should be custom modal options', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       const nzZIndex = 980;
       modal
         .static(
           TestModalComponent,
           {
             id,
-            ret: 1,
+            ret: 1
           },
           'sm',
           {
-            nzZIndex,
-          },
+            nzZIndex
+          }
         )
         .subscribe(res => {
           fixture.detectChanges();
@@ -187,11 +189,11 @@ describe('theme: ModalHelper', () => {
 
   describe('#createStatic', () => {
     it('should be open', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       modal
         .createStatic(TestModalComponent, {
           id,
-          ret: true,
+          ret: true
         })
         .subscribe(res => {
           fixture.detectChanges();
@@ -203,15 +205,15 @@ describe('theme: ModalHelper', () => {
       fixture.detectChanges();
     }));
     it('should be open sm size', fakeAsync(() => {
-      const id = '' + +new Date();
+      const id = `${+new Date()}`;
       modal
         .createStatic(
           TestModalComponent,
           {
             id,
-            ret: 'true',
+            ret: 'true'
           },
-          { size: 'sm' },
+          { size: 'sm' }
         )
         .subscribe(res => {
           fixture.detectChanges();
@@ -226,7 +228,7 @@ describe('theme: ModalHelper', () => {
 });
 
 @Component({
-  template: ` <div id="modal{{ id }}">modal{{ id }}</div> `,
+  template: ` <div id="modal{{ id }}">modal{{ id }}</div> `
 })
 class TestModalComponent {
   id = '';

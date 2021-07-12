@@ -1,8 +1,17 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { G2BaseComponent } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+
+import { G2BaseComponent } from '@delon/chart/core';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'g2,g2-custom',
@@ -12,11 +21,11 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     <ng-content></ng-content>
   `,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2CustomComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;

@@ -1,4 +1,5 @@
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
+
 import { SFButton } from './interface';
 import { SFUISchemaItem } from './schema/ui';
 
@@ -7,7 +8,7 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
     'date-time': {
       widget: 'date',
       showTime: true,
-      format: `yyyy-MM-dd'T'HH:mm:ss.SSSxxx`,
+      format: `yyyy-MM-dd'T'HH:mm:ss.SSSxxx`
     },
     date: { widget: 'date', format: 'yyyy-MM-dd' },
     'full-date': { widget: 'date', format: 'yyyy-MM-dd' },
@@ -18,7 +19,7 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
     uri: { widget: 'upload' },
     email: { widget: 'autocomplete', type: 'email' },
     color: { widget: 'string', type: 'color' },
-    '': { widget: 'string' },
+    '': { widget: 'string' }
   },
   ingoreKeywords: ['type', 'enum'],
   liveValidate: true,
@@ -32,7 +33,7 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
   uiDateNumberFormat: 'T',
   uiTimeStringFormat: 'HH:mm:ss',
   uiTimeNumberFormat: 'T',
-  uiEmailSuffixes: ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com'],
+  uiEmailSuffixes: ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainSFConfig {

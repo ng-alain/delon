@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { LazyService } from '@delon/util/other';
-import * as fs from 'file-saver';
 import { Observable, of, throwError } from 'rxjs';
+
+import * as fs from 'file-saver';
+
+import { LazyService } from '@delon/util/other';
+
 import { ZipModule } from './zip.module';
 import { ZipService } from './zip.service';
 
@@ -27,7 +30,7 @@ const DEFAULTMOCKJSZIP = {
   loadAsync: () => {
     return Promise.resolve();
   },
-  write: () => {},
+  write: () => {}
 };
 
 class MockHttpClient {
@@ -43,8 +46,8 @@ describe('abc: zip', () => {
       imports: [ZipModule],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+        { provide: LazyService, useClass: MockLazyService }
+      ]
     });
     srv = TestBed.inject<ZipService>(ZipService);
   }
@@ -66,7 +69,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -81,7 +84,7 @@ describe('abc: zip', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -95,7 +98,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
   });
@@ -111,7 +114,7 @@ describe('abc: zip', () => {
       () => {
         expect(false).toBe(true);
         done();
-      },
+      }
     );
   });
 
@@ -134,7 +137,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be reject when bad request', (done: () => void) => {
@@ -147,7 +150,7 @@ describe('abc: zip', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
   });
@@ -166,7 +169,6 @@ describe('abc: zip', () => {
       spyOn(fs, 'saveAs');
       srv.save(zip, { filename: '123.zip' }).then(
         () => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           expect(true).toBe(true);
           done();
@@ -174,7 +176,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be call callback', (done: () => void) => {
@@ -182,19 +184,18 @@ describe('abc: zip', () => {
       let count = 0;
       srv
         .save(zip, {
-          callback: () => ++count,
+          callback: () => ++count
         })
         .then(
           () => {
             expect(count).toBe(1);
-            // tslint:disable-next-line: deprecation
             expect(fs.saveAs).toHaveBeenCalled();
             done();
           },
           () => {
             expect(false).toBe(true);
             done();
-          },
+          }
         );
     });
     it('should be reject when generateAsync return error', (done: () => void) => {
@@ -206,11 +207,10 @@ describe('abc: zip', () => {
           done();
         },
         () => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).not.toHaveBeenCalled();
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be throw error when invalid zip', () => {

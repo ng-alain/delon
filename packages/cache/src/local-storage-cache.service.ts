@@ -1,10 +1,11 @@
 import { Platform } from '@angular/cdk/platform';
 import { inject, InjectionToken } from '@angular/core';
+
 import { ICache, ICacheStore } from './interface';
 
 export const DC_STORE_STORAGE_TOKEN = new InjectionToken<ICacheStore>('DC_STORE_STORAGE_TOKEN', {
   providedIn: 'root',
-  factory: () => new LocalStorageCacheService(inject(Platform)),
+  factory: () => new LocalStorageCacheService(inject(Platform))
 });
 
 export class LocalStorageCacheService implements ICacheStore {

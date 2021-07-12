@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+
 import {
   ContentTemplateData,
   ExampleModules,
@@ -8,7 +9,7 @@ import {
   MetaTemplateData,
   ModuleConfig,
   ModuleTemplateData,
-  SiteConfig,
+  SiteConfig
 } from './interfaces';
 import { generateDemo } from './utils/generate-demo';
 import { generateExampleModule } from './utils/generate-example';
@@ -26,18 +27,17 @@ const siteConfig = require(path.join(rootDir, 'src/site.config.js')) as SiteConf
 const defaultLang = siteConfig.defaultLang;
 
 const exampleModules: ExampleModules = {
-  list: [],
+  list: []
 };
 
 function generateModule(config: ModuleConfig) {
   const distPath = path.join(rootDir, config.dist);
 
-  // tslint:disable-next-line: prefer-object-spread
   const metas: Meta[] = Object.assign([], config.extraRouteMeta);
   const modules: any = {
     imports: [],
     components: [],
-    routes: [],
+    routes: []
   };
 
   function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true) {
@@ -92,7 +92,9 @@ function generateModule(config: ModuleConfig) {
       }
     });
 
-    const newList = demos.data.filter(w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0);
+    const newList = demos.data.filter(
+      w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0
+    );
 
     exampleModules.list.push(...newList);
   }
@@ -105,7 +107,7 @@ function generateModule(config: ModuleConfig) {
       dirConfig,
       isSyncSpecific,
       target,
-      siteConfig,
+      siteConfig
     );
 
     files.forEach(item => {
@@ -129,14 +131,21 @@ function generateModule(config: ModuleConfig) {
         i18n,
         order: content[defaultLang].meta.order || -1,
         cols: content[defaultLang].meta.cols || 1,
-        meta: contentMetas,
+        meta: contentMetas
       };
       metas.push(meta);
 
       // #endregion
 
       // #region generate demo files
-      const demos = generateDemo(rootDir, item.key, path.join(path.dirname(item.data[defaultLang]), 'demo'), meta.cols, config, siteConfig);
+      const demos = generateDemo(
+        rootDir,
+        item.key,
+        path.join(path.dirname(item.data[defaultLang]), 'demo'),
+        meta.cols,
+        config,
+        siteConfig
+      );
       // #endregion
 
       // #region generate document file
@@ -150,11 +159,11 @@ function generateModule(config: ModuleConfig) {
           cols: meta.cols,
           urls,
           content,
-          demo: isDemo,
+          demo: isDemo
           // i18n: meta.i18n,
         } as any,
         demos: '',
-        demo: isDemo,
+        demo: isDemo
       };
       if (fileObject.demo) {
         fixDemo(fileObject, demos);
@@ -186,7 +195,7 @@ function generateModule(config: ModuleConfig) {
   generateDoc(
     { data: JSON.stringify(metaObj) } as MetaTemplateData,
     fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
-    path.join(distPath, `meta.ts`),
+    path.join(distPath, `meta.ts`)
   );
   // #endregion
 
@@ -196,12 +205,12 @@ function generateModule(config: ModuleConfig) {
     moduleName: genUpperName(config.name),
     imports: modules.imports.join('\r\n'),
     components: modules.components.join(',\r\n'),
-    routes: modules.routes.join(',\r\n'),
+    routes: modules.routes.join(',\r\n')
   };
   generateDoc(
     moduleObj,
     fs.readFileSync(path.join(rootDir, config.template.module)).toString('utf8'),
-    path.join(distPath, `${config.name}.module.ts`),
+    path.join(distPath, `${config.name}.module.ts`)
   );
   // #endregion
 }

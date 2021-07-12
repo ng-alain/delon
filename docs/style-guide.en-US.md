@@ -69,7 +69,7 @@ VSCode is the best choice for writing Angular. Naturally NG-ALAIN also created t
 
 ## Consistent code style
 
-NG-ALAIN uses [Prettier](https://prettier.io/) to optimize the code style and match the results to `tslint.json`.
+NG-ALAIN uses [Prettier](https://prettier.io/) to optimize the code style and match the results to `.eslintrc.js`.
 
 It is recommended to install several plugins for more friendly development in vscode:
 

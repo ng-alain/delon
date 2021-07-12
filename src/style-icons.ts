@@ -31,7 +31,7 @@ import {
   TwitterOutline,
   UserOutline,
   VerticalLeftOutline,
-  VerticalRightOutline,
+  VerticalRightOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
@@ -65,5 +65,5 @@ export const ICONS = [
   TwitterOutline,
   UserOutline,
   VerticalLeftOutline,
-  VerticalRightOutline,
+  VerticalRightOutline
 ];

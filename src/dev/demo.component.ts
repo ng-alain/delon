@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { dateTimePickerUtil } from '@delon/util/date-time';
 
 @Component({
@@ -26,7 +27,7 @@ import { dateTimePickerUtil } from '@delon/util/date-time';
       nzShowNow
       nzFormat="yyyy-MM-dd HH:mm:ss"
     ></nz-range-picker>
-  `,
+  `
 })
 export class DemoComponent {
   value: Date;

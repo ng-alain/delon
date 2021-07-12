@@ -22,7 +22,12 @@
   <nz-spin [nzSpinning]="loading" [nzDelay]="0">
     <nz-tabset nzSelectedIndex="0">
       <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
-        <notice-icon-tab [locale]="locale" [data]="i" (select)="onSelect($event)" (clear)="onClear($event)"></notice-icon-tab>
+        <notice-icon-tab
+          [locale]="locale"
+          [data]="i"
+          (select)="onSelect($event)"
+          (clear)="onClear($event)"
+        ></notice-icon-tab>
       </nz-tab>
     </nz-tabset>
   </nz-spin>

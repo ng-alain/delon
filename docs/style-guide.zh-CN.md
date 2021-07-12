@@ -67,7 +67,7 @@ vscode 是编写 Angular 最佳的选择，自然 NG-ALAIN 也制作了相应 sn
 
 ## 一致的代码风格
 
-NG-ALAIN 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且使其结果符合 `tslint.json`。
+NG-ALAIN 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且使其结果符合 `.eslintrc.js`。
 
 推荐安装几个插件在 vscode 中更友好的开发：
 

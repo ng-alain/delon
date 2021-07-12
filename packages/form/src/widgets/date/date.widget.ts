@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { toDate } from '@delon/util/date-time';
+
 import { format } from 'date-fns';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { toDate } from '@delon/util/date-time';
+
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
@@ -12,7 +16,7 @@ import { SFDateWidgetSchema } from './schema';
   selector: 'sf-date',
   templateUrl: './date.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
   private startFormat: string;
@@ -52,7 +56,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     this.i = {
       allowClear: toBool(allowClear, true),
       // nz-date-picker
-      showToday: toBool(showToday, true),
+      showToday: toBool(showToday, true)
     };
   }
 
@@ -66,7 +70,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     if (this.flatRange) {
       const endValue = toDate(this.endProperty.formData as NzSafeAny, {
         formatString: this.endFormat || this.startFormat,
-        defaultValue: null,
+        defaultValue: null
       });
       this.displayValue = value == null || endValue == null ? [] : [value, endValue];
     } else {

@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
+
 import { G2BarComponent } from './bar.component';
 import { G2BarModule } from './bar.module';
 
@@ -83,7 +85,7 @@ describe('chart: bar', () => {
       (clickItem)="clickItem($event)"
     ></g2-bar>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
-  `,
+  `
 })
 class TestComponent implements OnInit {
   @ViewChild('comp', { static: true }) comp: G2BarComponent;
@@ -100,7 +102,7 @@ class TestComponent implements OnInit {
     for (let i = 0; i < PageG2DataCount; i += 1) {
       this.data.push({
         x: `${i + 1}月`,
-        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200,
+        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
       });
     }
   }

@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { CurrencyFormatOptions, CurrencyService } from '@delon/util/format';
 
 @Pipe({ name: 'price' })

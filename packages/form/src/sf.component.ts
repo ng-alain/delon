@@ -14,17 +14,20 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { merge, Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton, SFLayout, SFValueChange } from './interface';
@@ -37,7 +40,10 @@ import { di, resolveIfSchema, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService): FormPropertyFactory {
+export function useFactory(
+  schemaValidatorFactory: SchemaValidatorFactory,
+  cogSrv: AlainConfigService
+): FormPropertyFactory {
   return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
 }
 
@@ -52,9 +58,9 @@ export type SFMode = 'default' | 'search' | 'edit';
     {
       provide: FormPropertyFactory,
       useFactory,
-      deps: [SchemaValidatorFactory, AlainConfigService],
+      deps: [SchemaValidatorFactory, AlainConfigService]
     },
-    TerminatorService,
+    TerminatorService
   ],
   host: {
     '[class.sf]': 'true',
@@ -64,11 +70,11 @@ export type SFMode = 'default' | 'search' | 'edit';
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
     '[class.sf__no-colon]': `noColon`,
-    '[class.sf__compact]': `compact`,
+    '[class.sf__compact]': `compact`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_liveValidate: BooleanInput;
@@ -82,7 +88,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
-  private _item: {};
+  private _item: Record<string, unknown>;
   private _valid = true;
   private _defUi: SFUISchemaItem;
   readonly options: AlainSFConfig;
@@ -90,7 +96,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _inited = false;
   locale: LocaleData = {};
   rootProperty: FormProperty | null = null;
-  _formData: {};
+  _formData: Record<string, unknown>;
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
@@ -107,7 +113,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   /** UI Schema */
   @Input() ui: SFUISchema;
   /** 表单默认值 */
-  @Input() formData: {};
+  @Input() formData: Record<string, unknown>;
   /**
    * 按钮
    * - 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
@@ -163,9 +169,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() noColon = false;
   @Input() @InputBoolean() cleanValue = false;
   @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
-  @Output() readonly formChange = new EventEmitter<{}>();
-  @Output() readonly formSubmit = new EventEmitter<{}>();
-  @Output() readonly formReset = new EventEmitter<{}>();
+  @Output() readonly formChange = new EventEmitter<Record<string, unknown>>();
+  @Output() readonly formSubmit = new EventEmitter<Record<string, unknown>>();
+  @Output() readonly formReset = new EventEmitter<Record<string, unknown>>();
   @Output() readonly formError = new EventEmitter<ErrorData[]>();
   // #endregion
 
@@ -236,7 +242,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     @Optional() private aclSrv: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     cogSrv: AlainConfigService,
-    private platform: Platform,
+    private platform: Platform
   ) {
     this.options = mergeConfig(cogSrv);
     this.liveValidate = this.options.liveValidate as boolean;
@@ -252,13 +258,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     });
     const refSchemas: Array<Observable<any> | null> = [
       this.aclSrv ? this.aclSrv.change : null,
-      this.i18nSrv ? this.i18nSrv.change : null,
+      this.i18nSrv ? this.i18nSrv.change : null
     ].filter(o => o != null);
     if (refSchemas.length > 0) {
       merge(...(refSchemas as Array<Observable<any>>))
         .pipe(
           filter(() => this._inited),
-          takeUntil(this.unsubscribe$),
+          takeUntil(this.unsubscribe$)
         )
         .subscribe(() => this.refreshSchema());
     }
@@ -282,7 +288,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       _parentSchema: SFSchema,
       uiSchema: SFUISchemaItemRun,
       parentUiSchema: SFUISchemaItemRun,
-      uiRes: SFUISchemaItemRun,
+      uiRes: SFUISchemaItemRun
     ) => {
       if (!Array.isArray(schema.required)) schema.required = [];
 
@@ -293,10 +299,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
+          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
+            ? { widget: 'select' }
+            : null),
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
-          ...uiSchema[uiKey],
+          ...uiSchema[uiKey]
         } as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
@@ -305,10 +313,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
             }
           } else {
-            if (!ui.spanLabel) ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
-            if (!ui.spanControl) ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
+            if (!ui.spanLabel)
+              ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
+            if (!ui.spanControl)
+              ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
             if (!ui.offsetControl)
-              ui.offsetControl = typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
+              ui.offsetControl =
+                typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
           }
         } else {
           ui.spanLabel = null;
@@ -334,7 +345,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             dateEndProperty.ui = {
               ...(dateEndProperty.ui as SFUISchemaItem),
               widget: ui.widget,
-              hidden: true,
+              hidden: true
             };
           } else {
             ui.end = null;
@@ -344,7 +355,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         if (ui.optionalHelp) {
           if (typeof ui.optionalHelp === 'string') {
             ui.optionalHelp = {
-              text: ui.optionalHelp,
+              text: ui.optionalHelp
             } as SFOptionalHelp;
           }
           const oh = (ui.optionalHelp = {
@@ -354,7 +365,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             trigger: 'hover',
             mouseEnterDelay: 0.15,
             mouseLeaveDelay: 0.1,
-            ...ui.optionalHelp,
+            ...ui.optionalHelp
           });
           if (oh.i18n) {
             oh.text = this.fanyi(oh.i18n);
@@ -392,7 +403,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ui.$items = {
             ...(property.items.ui as SFUISchemaItem),
             ...uiSchemaInArr[uiKey],
-            ...ui.$items,
+            ...ui.$items
           };
           inFn(property.items, property.items, uiSchemaInArr, ui.$items, ui.$items);
         }
@@ -411,7 +422,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       firstVisual: this.firstVisual,
       ...this.options.ui,
       ...(_schema as any).ui,
-      ...this.ui['*'],
+      ...this.ui['*']
     };
     if (this.onlyVisual === true) {
       this._defUi.onlyVisual = true;
@@ -440,7 +451,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       render: { size: 'default' },
       ...this.locale,
       ...this.options.button,
-      ...(this.button as SFButton),
+      ...(this.button as SFButton)
     };
     const firstKey = Object.keys(this._ui).find(w => w.startsWith('$'));
     const btnRender = this._btn.render!;
@@ -449,7 +460,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       if (!btnRender.grid) {
         btnRender.grid = {
           offset: btnUi.spanLabel,
-          span: btnUi.spanControl,
+          span: btnUi.spanControl
         };
       }
       // fixed label
@@ -529,7 +540,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       if (Array.isArray(property.properties)) {
         property.properties.forEach(p => fn(p));
       } else {
-        Object.keys(property.properties).forEach(key => fn((property.properties as { [key: string]: FormProperty })[key]));
+        Object.keys(property.properties).forEach(key =>
+          fn((property.properties as { [key: string]: FormProperty })[key])
+        );
       }
     };
     if (options.onlyRoot) {
@@ -568,7 +581,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (newUI) this.ui = newUI;
 
     if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
-    if (this.schema.ui && typeof this.schema.ui === 'string') throw new Error(`Don't support string with root ui property`);
+    if (this.schema.ui && typeof this.schema.ui === 'string')
+      throw new Error(`Don't support string with root ui property`);
 
     this.schema.type = 'object';
 
@@ -609,6 +623,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * Reset form
    *
    * 重置表单
+   *
    * @param [emit] 是否触发 `formReset` 事件，默认：`false`
    */
   reset(emit: boolean = false): this {

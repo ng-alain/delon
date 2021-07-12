@@ -11,13 +11,14 @@ import {
   Rule,
   SchematicsException,
   Tree,
-  url,
+  url
 } from '@angular-devkit/schematics';
 import { addImportToModule, findNode } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
+
 import { getProject } from '../utils';
 import { Schema as ModuleSchema } from './schema';
 
@@ -27,7 +28,7 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
       return tree;
     }
 
-    const modulePath = normalize('/' + options.module);
+    const modulePath = normalize(`/${options.module}`);
 
     const text = tree.read(modulePath);
     if (text === null) {
@@ -37,11 +38,15 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
 
     const importModulePath = normalize(
-      `/${options.path}/${options.flat ? '' : strings.dasherize(options.name) + '/'}${strings.dasherize(options.name)}.module`,
+      `/${options.path}/${options.flat ? '' : `${strings.dasherize(options.name)}/`}${strings.dasherize(
+        options.name
+      )}.module`
     );
     const relativeDir = relative(dirname(modulePath), dirname(importModulePath));
 
-    const relativePath = `${relativeDir.startsWith('.') ? relativeDir : './' + relativeDir}/${basename(importModulePath)}`;
+    const relativePath = `${relativeDir.startsWith('.') ? relativeDir : `./${relativeDir}`}/${basename(
+      importModulePath
+    )}`;
     const changes = addImportToModule(source, modulePath, strings.classify(`${options.name}Module`), relativePath);
 
     const recorder = tree.beginUpdate(modulePath);
@@ -69,7 +74,10 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
       return tree;
     }
     const parentNode = routesNode.parent as ts.PropertyAssignment;
-    if (parentNode.initializer.kind !== ts.SyntaxKind.ArrayLiteralExpression || parentNode.initializer.getChildCount() === 0) {
+    if (
+      parentNode.initializer.kind !== ts.SyntaxKind.ArrayLiteralExpression ||
+      parentNode.initializer.getChildCount() === 0
+    ) {
       return tree;
     }
     const childrenNode = findNode(parentNode.initializer, ts.SyntaxKind.Identifier, 'children');
@@ -110,11 +118,15 @@ export default function (schema: ModuleSchema): Rule {
       applyTemplates({
         ...strings,
         'if-flat': (s: string) => (schema.flat ? '' : s),
-        ...schema,
+        ...schema
       }),
-      move(parsedPath.path),
+      move(parsedPath.path)
     ]);
 
-    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)]))]);
+    return chain([
+      branchAndMerge(
+        chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)])
+      )
+    ]);
   };
 }

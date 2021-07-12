@@ -2,8 +2,14 @@ import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overla
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ElementRef, Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
+
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
-import { ReuseContextCloseEvent, ReuseContextEvent, ReuseContextI18n, ReuseCustomContextMenu } from './reuse-tab.interfaces';
+import {
+  ReuseContextCloseEvent,
+  ReuseContextEvent,
+  ReuseContextI18n,
+  ReuseCustomContextMenu
+} from './reuse-tab.interfaces';
 
 @Injectable()
 export class ReuseTabContextService {
@@ -32,18 +38,18 @@ export class ReuseTabContextService {
         left: event.clientX,
         right: event.clientX,
         top: event.clientY,
-        width: 0,
-      }),
+        width: 0
+      })
     });
     const positions = [
       new ConnectionPositionPair({ originX: 'start', originY: 'bottom' }, { overlayX: 'start', overlayY: 'top' }),
-      new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' }),
+      new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
     ];
     const positionStrategy = this.overlay.position().flexibleConnectedTo(fakeElement).withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
       panelClass: 'reuse-tab__cm',
-      scrollStrategy: this.overlay.scrollStrategies.close(),
+      scrollStrategy: this.overlay.scrollStrategies.close()
     });
     const comp = this.ref.attach(new ComponentPortal(ReuseTabContextMenuComponent));
     const instance = comp.instance;
@@ -57,7 +63,7 @@ export class ReuseTabContextService {
       instance.close.subscribe((res: ReuseContextCloseEvent) => {
         this.close.next(res);
         this.remove();
-      }),
+      })
     );
     comp.onDestroy(() => sub$.unsubscribe());
   }

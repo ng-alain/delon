@@ -3,9 +3,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { LazyService } from '@delon/util/other';
-import * as fs from 'file-saver';
 import { Observable, of, throwError } from 'rxjs';
+
+import * as fs from 'file-saver';
+
+import { LazyService } from '@delon/util/other';
+
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
@@ -31,8 +34,8 @@ describe('abc: xlsx', () => {
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+        { provide: LazyService, useClass: MockLazyService }
+      ]
     });
     srv = TestBed.inject<XlsxService>(XlsxService);
   }
@@ -48,26 +51,26 @@ describe('abc: xlsx', () => {
         sheet_to_json: () => {
           return {
             A1: 1,
-            B1: 2,
+            B1: 2
           };
-        },
+        }
       },
       read: () => {
         return {
           SheetNames: ['sheet1'],
           Sheets: {
-            sheet1: {},
-          },
+            sheet1: {}
+          }
         };
       },
-      write: () => {},
+      write: () => {}
     };
     (window as any).cptable = {
       utils: {
         decode: (data: any) => {
           return data;
-        },
-      },
+        }
+      }
     };
     isErrorRequest = false;
   });
@@ -98,7 +101,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -113,7 +116,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -127,7 +130,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
   });
@@ -140,10 +143,9 @@ describe('abc: xlsx', () => {
     it('should be export xlsx via array', (done: () => void) => {
       srv
         .export({
-          sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
+          sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }]
         } as XlsxExportOptions)
         .then(() => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
@@ -152,11 +154,10 @@ describe('abc: xlsx', () => {
       srv
         .export({
           sheets: {
-            name: 'asdf',
-          },
+            name: 'asdf'
+          }
         } as XlsxExportOptions)
         .then(() => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
@@ -166,11 +167,11 @@ describe('abc: xlsx', () => {
       srv
         .export({
           sheets: {
-            name: 'asdf',
+            name: 'asdf'
           },
           callback: () => {
             ++count;
-          },
+          }
         } as XlsxExportOptions)
         .then(() => {
           expect(count).toBe(1);
@@ -182,8 +183,8 @@ describe('abc: xlsx', () => {
       srv
         .export({
           sheets: {
-            name: 'asdf',
-          },
+            name: 'asdf'
+          }
         } as XlsxExportOptions)
         .then(() => {
           expect(true).toBe(false);
@@ -226,7 +227,7 @@ describe('abc: xlsx', () => {
 });
 
 @Component({
-  template: ` <button [xlsx]="data"></button> `,
+  template: ` <button [xlsx]="data"></button> `
 })
 class TestComponent {
   data: any = {};

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
@@ -11,6 +12,6 @@ const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
 @NgModule({
   imports: [CommonModule, NzAvatarModule, NzToolTipModule],
   declarations: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class AvatarListModule {}

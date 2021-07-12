@@ -2,8 +2,10 @@ import { Injectable, InjectionToken } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface AlainI18NService {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   /**
    * Call `use` to trigger change notification
@@ -30,6 +32,7 @@ export interface AlainI18NService {
    * Change language
    *
    * 变更语言
+   *
    * @param lang 语言代码
    * @param emit 是否触发 `change`，默认：true
    */
@@ -40,19 +43,19 @@ export interface AlainI18NService {
    *
    * 返回当前语言列表
    */
-  getLangs(): any[];
+  getLangs(): NzSafeAny[];
 
   /**
    * 翻译
    * - `params` 模板所需要的参数对象
    * - `isSafe` 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`
    */
-  fanyi(key: string, params?: { [key: string]: any }, isSafe?: boolean): string;
+  fanyi(key: string, params?: unknown, isSafe?: boolean): string;
 }
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTranslatorToken', {
   providedIn: 'root',
-  factory: ALAIN_I18N_TOKEN_FACTORY,
+  factory: ALAIN_I18N_TOKEN_FACTORY
 });
 
 export function ALAIN_I18N_TOKEN_FACTORY(): AlainI18NServiceFake {
@@ -79,7 +82,7 @@ export class AlainI18NServiceFake implements AlainI18NService {
     this.change$.next(lang);
   }
 
-  getLangs(): any[] {
+  getLangs(): NzSafeAny[] {
     return [];
   }
 

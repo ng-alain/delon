@@ -3,10 +3,13 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SF_SEQ } from '../src/const';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
@@ -19,14 +22,14 @@ export const SCHEMA = {
   user: {
     properties: {
       name: {
-        type: 'string',
+        type: 'string'
       },
       pwd: {
-        type: 'string',
-      },
+        type: 'string'
+      }
     },
-    required: ['name', 'pwd'],
-  } as SFSchema,
+    required: ['name', 'pwd']
+  } as SFSchema
 };
 
 let fixture: ComponentFixture<TestFormComponent>;
@@ -45,8 +48,10 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(options.imports || []),
-    declarations: [TestFormComponent],
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
+      options.imports || []
+    ),
+    declarations: [TestFormComponent]
   });
   if (options.template) {
     TestBed.overrideTemplate(TestFormComponent, options.template);
@@ -67,7 +72,7 @@ export function builder(options?: {
     fixture,
     dl,
     context,
-    page,
+    page
   };
 }
 
@@ -75,7 +80,7 @@ export function configureSFTestSuite(): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
-      declarations: [TestFormComponent],
+      declarations: [TestFormComponent]
     });
   });
 }
@@ -184,7 +189,7 @@ export class SFPage {
   chainSchema(schema: SFSchema, overObject: SFSchema): this {
     context.schema = {
       ...deepCopy(schema),
-      properties: { a: overObject },
+      properties: { a: overObject }
     };
     return this.dc();
   }
@@ -357,7 +362,7 @@ export class SFPage {
       (formReset)="formReset($event)"
       (formError)="formError($event)"
     ></sf>
-  `,
+  `
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp: SFComponent;

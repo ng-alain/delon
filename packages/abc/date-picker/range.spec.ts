@@ -5,9 +5,12 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { differenceInDays } from 'date-fns';
+
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
-import { differenceInDays } from 'date-fns';
+
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';
 
@@ -21,7 +24,7 @@ describe('abc: date-picker: range', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [DatePickerModule, FormsModule, NoopAnimationsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -41,7 +44,7 @@ describe('abc: date-picker: range', () => {
     it('should be set values via outside values', done => {
       context.i = {
         start: new Date(),
-        end: new Date(),
+        end: new Date()
       };
       fixture.detectChanges();
       fixture.whenStable().then(() => {
@@ -53,7 +56,7 @@ describe('abc: date-picker: range', () => {
     it('should be invalid value when start & end include null value', done => {
       context.i = {
         start: new Date(),
-        end: null,
+        end: null
       };
       fixture.detectChanges();
       fixture.whenStable().then(() => {
@@ -155,7 +158,7 @@ describe('abc: date-picker: range', () => {
       (nzOnOk)="_nzOnOk()"
       [shortcut]="shortcut"
     ></range-picker>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: RangePickerComponent;

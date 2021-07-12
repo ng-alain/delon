@@ -1,4 +1,5 @@
 import { UpgradeData } from '@angular/cdk/schematics';
+
 import {
   attributeSelectors,
   classNames,
@@ -8,7 +9,7 @@ import {
   inputNames,
   methodCallChecks,
   outputNames,
-  propertyNames,
+  propertyNames
 } from './data';
 
 export const ruleUpgradeData: UpgradeData = {
@@ -20,5 +21,5 @@ export const ruleUpgradeData: UpgradeData = {
   inputNames,
   methodCallChecks,
   outputNames,
-  propertyNames,
+  propertyNames
 };

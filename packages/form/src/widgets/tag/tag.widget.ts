@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -9,7 +10,7 @@ import { SFTagWidgetSchema } from './schema';
   selector: 'sf-tag',
   templateUrl: './tag.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   data: SFSchemaEnum[];
@@ -36,7 +37,7 @@ export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   private updateValue(): void {
     this.formProperty.setValue(
       this.data.filter(w => w.checked).map(i => i.value),
-      false,
+      false
     );
   }
 }

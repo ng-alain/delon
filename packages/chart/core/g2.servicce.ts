@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
 import { AlainChartConfig, AlainConfigService } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class G2Service implements OnDestroy {
@@ -20,10 +21,10 @@ export class G2Service implements OnDestroy {
         theme: '',
         libs: [
           'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.14/dist/g2.min.js',
-          'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.8/dist/data-set.js',
-        ],
+          'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.8/dist/data-set.js'
+        ]
       } as AlainChartConfig,
-      val,
+      val
     )!;
   }
 

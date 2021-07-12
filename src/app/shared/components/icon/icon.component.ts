@@ -1,9 +1,19 @@
 import { Component, Input } from '@angular/core';
+
 import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'nz-icon',
-  template: ` <i nz-icon [nzType]="type" [nzTheme]="theme" [nzSpin]="spin" [nzTwotoneColor]="twoToneColor" [nzIconfont]="iconfont"></i> `,
+  template: `
+    <i
+      nz-icon
+      [nzType]="type"
+      [nzTheme]="theme"
+      [nzSpin]="spin"
+      [nzTwotoneColor]="twoToneColor"
+      [nzIconfont]="iconfont"
+    ></i>
+  `
 })
 export class IconComponent {
   @Input()

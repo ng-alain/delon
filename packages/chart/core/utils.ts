@@ -8,9 +8,9 @@ export function genMiniTooltipOptions(type: 'mini' | 'default', options?: Types.
     domStyles: {
       'g2-tooltip': { padding: '0px' },
       'g2-tooltip-title': { display: 'none' },
-      'g2-tooltip-list-item': { margin: '4px' },
+      'g2-tooltip-list-item': { margin: '4px' }
     },
-    ...options,
+    ...options
   };
   if (type === 'mini') {
     res.position = 'top';

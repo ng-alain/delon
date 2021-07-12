@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
+
 import { ContentComponent } from '../../shared/components/content/content.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormValidatorComponent } from './validator/validator.component';
@@ -15,20 +17,20 @@ const routes: Routes = [
       {
         path: 'validator/:lang',
         component: FormValidatorComponent,
-        data: { titleI18n: 'app.header.menu.form.validator' },
-      },
-    ],
-  },
+        data: { titleI18n: 'app.header.menu.form.validator' }
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [
     SharedModule,
     NuMonacoEditorModule.forRoot({
-      defaultOptions: { scrollBeyondLastLine: false },
+      defaultOptions: { scrollBeyondLastLine: false }
     }),
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  declarations: COMPONENTS,
+  declarations: COMPONENTS
 })
 export class FormPagesModule {}

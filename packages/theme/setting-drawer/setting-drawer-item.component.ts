@@ -4,8 +4,8 @@ import { Component, Input } from '@angular/core';
   selector: 'setting-drawer-item',
   templateUrl: './setting-drawer-item.component.html',
   host: {
-    '[class.setting-drawer__body-item]': 'true',
-  },
+    '[class.setting-drawer__body-item]': 'true'
+  }
 })
 export class SettingDrawerItemComponent {
   i: any = {};

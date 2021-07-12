@@ -11,11 +11,12 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Renderer2,
+  Renderer2
 } from '@angular/core';
-import { AlainConfigService } from '@delon/util/config';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { AlainConfigService } from '@delon/util/config';
 
 export interface ThemeBtnType {
   key: string;
@@ -29,9 +30,9 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
   templateUrl: './theme-btn.component.html',
   host: {
     '[class.theme-btn]': `true`,
-    '[class.theme-btn-rtl]': `dir === 'rtl'`,
+    '[class.theme-btn-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
   private theme = 'default';
@@ -39,7 +40,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() types: ThemeBtnType[] = [
     { key: 'default', text: 'Default Theme' },
     { key: 'dark', text: 'Dark Theme' },
-    { key: 'compact', text: 'Compact Theme' },
+    { key: 'compact', text: 'Compact Theme' }
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
@@ -52,7 +53,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private platform: Platform,
     @Inject(DOCUMENT) private doc: any,
     @Optional() private directionality: Directionality,
-    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string,
+    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string
   ) {}
 
   ngOnInit(): void {

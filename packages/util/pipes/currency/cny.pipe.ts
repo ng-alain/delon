@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { CurrencyCNYOptions, CurrencyService } from '@delon/util/format';
 
 @Pipe({ name: 'cny' })

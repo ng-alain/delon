@@ -1,5 +1,8 @@
 import { addDays, addSeconds } from 'date-fns';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledTimeConfig } from 'ng-zorro-antd/date-picker';
+
 import { dateTimePickerUtil } from './picker';
 
 const NOW = new Date(2000, 1, 1, 0, 0, 0, 0);
@@ -20,20 +23,31 @@ describe('util: date-time', () => {
     });
     it('#disabledBeforeDate', () => {
       expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).toBe(false, `Shoule be not include today`);
-      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW)).toBe(true, `Shoule be not today, because of offset`);
+      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW)).toBe(
+        true,
+        `Shoule be not today, because of offset`
+      );
     });
     it('#disabledAfterDate', () => {
       expect(dateTimePickerUtil.disabledAfterDate()(NOW)).toBe(false, `Shoule be not include today`);
-      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW)).toBe(true, `Shoule be not today, because of offset`);
+      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW)).toBe(
+        true,
+        `Shoule be not today, because of offset`
+      );
     });
     describe('disabled time', () => {
-      function checkRes(res: DisabledTimeConfig, hourseLength: number, minutesLength: number, secondsLength: number): void {
+      function checkRes(
+        res: DisabledTimeConfig,
+        hourseLength: number,
+        minutesLength: number,
+        secondsLength: number
+      ): void {
         expect(res?.nzDisabledHours().length).toBe(hourseLength);
         expect(res?.nzDisabledMinutes(NOW.getHours()).length).toBe(minutesLength);
         expect(res?.nzDisabledSeconds(NOW.getHours(), NOW.getMinutes()).length).toBe(secondsLength);
       }
       it('when is invalid date', () => {
-        const res = dateTimePickerUtil.disabledBeforeTime()(null as any);
+        const res = dateTimePickerUtil.disabledBeforeTime()(null as NzSafeAny);
         expect(res?.nzDisabledHours).toBeUndefined();
         expect(res?.nzDisabledMinutes).toBeUndefined();
         expect(res?.nzDisabledSeconds).toBeUndefined();

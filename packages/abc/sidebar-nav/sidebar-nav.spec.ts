@@ -5,10 +5,12 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { WINDOW } from '@delon/util/token';
+
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { SidebarNavModule } from './sidebar-nav.module';
 import { Nav } from './sidebar-nav.types';
@@ -28,17 +30,17 @@ const MOCKMENUS = [
           {
             text: 'externalLink-blank',
             externalLink: '//ng-alain.com/blank',
-            target: '_blank',
+            target: '_blank'
           },
           {
             text: 'externalLink-top',
             externalLink: '//ng-alain.com/top',
-            target: '_top',
-          },
-        ],
-      },
-    ],
-  },
+            target: '_top'
+          }
+        ]
+      }
+    ]
+  }
 ] as Nav[];
 
 const MOCKOPENSTRICTLY = [
@@ -50,16 +52,16 @@ const MOCKOPENSTRICTLY = [
         text: '',
         link: '/v1',
         open: true,
-        children: [{ text: '' }],
+        children: [{ text: '' }]
       },
       {
         text: '',
         link: '/v1',
         open: true,
-        children: [{ text: '' }],
-      },
-    ],
-  },
+        children: [{ text: '' }]
+      }
+    ]
+  }
 ] as Nav[];
 
 class MockACLService {
@@ -98,8 +100,8 @@ describe('abc: sidebar-nav', () => {
       declarations: [TestComponent],
       providers: [
         { provide: ACLService, useClass: MockACLService },
-        { provide: WINDOW, useFactory: () => new MockWindow() },
-      ],
+        { provide: WINDOW, useFactory: () => new MockWindow() }
+      ]
     });
   }
 
@@ -193,8 +195,8 @@ describe('abc: sidebar-nav', () => {
         const newMenus = [
           {
             text: '',
-            children: [{ text: 'new menu', disabled: true }],
-          },
+            children: [{ text: 'new menu', disabled: true }]
+          }
         ];
         menuSrv.add(newMenus);
         expect(context.select).not.toHaveBeenCalled();
@@ -224,10 +226,10 @@ describe('abc: sidebar-nav', () => {
             children: [
               {
                 text: '',
-                icon,
-              },
-            ],
-          },
+                icon
+              }
+            ]
+          }
         ] as Nav[]);
 
         fixture.detectChanges();
@@ -354,7 +356,6 @@ describe('abc: sidebar-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        // tslint:disable-next-line: no-string-literal
         spyOn(context.comp['floatingEl'], 'remove');
         page.hideSubMenu();
         expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
@@ -367,9 +368,9 @@ describe('abc: sidebar-nav', () => {
           text: '',
           children: [
             { text: 'new menu', acl: 'admin' },
-            { text: 'new menu', acl: 'user' },
-          ],
-        },
+            { text: 'new menu', acl: 'user' }
+          ]
+        }
       ];
       beforeEach(() => createComp());
       it('should be disabled item when with true', () => {
@@ -468,10 +469,10 @@ describe('abc: sidebar-nav', () => {
           RouterTestingModule.withRoutes([
             { path: 'user', component: TestRouteComponent },
             { path: 'user2', component: TestRouteComponent },
-            { path: 'user/type', component: TestRouteComponent },
-          ]),
+            { path: 'user/type', component: TestRouteComponent }
+          ])
         ],
-        declarations: [TestComponent, TestRouteComponent],
+        declarations: [TestComponent, TestRouteComponent]
       });
     });
     beforeEach(fakeAsync(() => {
@@ -487,9 +488,9 @@ describe('abc: sidebar-nav', () => {
           group: true,
           children: [
             { text: 'user1', link: '/user' },
-            { text: 'user2', link: '/user' },
-          ],
-        },
+            { text: 'user2', link: '/user' }
+          ]
+        }
       ]);
     }));
     it('with true', fakeAsync(() => {
@@ -529,7 +530,11 @@ describe('abc: sidebar-nav', () => {
 
   class PageObject {
     getEl<T>(cls: string, body: boolean = false): T | null {
-      const el = body ? document.querySelector(cls) : dl.query(By.css(cls)) ? dl.query(By.css(cls)).nativeElement : null;
+      const el = body
+        ? document.querySelector(cls)
+        : dl.query(By.css(cls))
+        ? dl.query(By.css(cls)).nativeElement
+        : null;
       return el ? (el as T) : null;
     }
     checkText(cls: string, value: any): void {
@@ -577,7 +582,7 @@ describe('abc: sidebar-nav', () => {
       [openStrictly]="openStrictly"
       (select)="select()"
     ></sidebar-nav>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

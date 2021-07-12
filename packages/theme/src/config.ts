@@ -1,5 +1,7 @@
 import { ModuleWithProviders, Type } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface Environment {
   /**
    * Whether production environment
@@ -24,7 +26,7 @@ export interface Environment {
    *
    * 定义在 `global-config.module.ts` 导入的模块列表
    */
-  modules?: Array<Type<any> | ModuleWithProviders<{}> | any[]>;
+  modules?: Array<Type<NzSafeAny> | ModuleWithProviders<NzSafeAny> | NzSafeAny[]>;
 }
 
 export interface ApiConfig {

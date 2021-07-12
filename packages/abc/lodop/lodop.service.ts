@@ -1,8 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService, AlainLodopConfig } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, of, Subject } from 'rxjs';
+
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 @Injectable({ providedIn: 'root' })
@@ -20,7 +23,7 @@ export class LodopService implements OnDestroy {
       url: '//localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',
       companyName: '',
-      checkMaxCount: 100,
+      checkMaxCount: 100
     })!;
     this.cog = this.defaultConfig;
   }
@@ -36,7 +39,7 @@ export class LodopService implements OnDestroy {
   set cog(value: AlainLodopConfig) {
     this._cog = {
       ...this.defaultConfig,
-      ...value,
+      ...value
     };
   }
 
@@ -87,12 +90,12 @@ export class LodopService implements OnDestroy {
 
     const url = `${this.cog.url}?name=${this.cog.name}`;
     let checkMaxCount = this.cog.checkMaxCount as number;
-    const onResolve = (status: NzSafeAny, error?: {}) => {
+    const onResolve = (status: NzSafeAny, error?: NzSafeAny) => {
       this._init.next({
         ok: status === 'ok',
         status,
         error,
-        lodop: this._lodop!,
+        lodop: this._lodop!
       });
     };
     const checkStatus = () => {
@@ -154,7 +157,6 @@ export class LodopService implements OnDestroy {
       if (fn) {
         let arr: any[] | null = null;
         try {
-          // tslint:disable-next-line: function-constructor
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
         } catch {}
@@ -184,7 +186,7 @@ export class LodopService implements OnDestroy {
       this._lodop!.On_Return = (taskID: string, value: boolean | string) => {
         if (tid !== taskID) return;
         this._lodop!.On_Return = null;
-        resolve('' + value);
+        resolve(`${value}`);
       };
     });
   }
@@ -199,7 +201,7 @@ export class LodopService implements OnDestroy {
       this._events.next({
         ok: value === true,
         error: value === true ? null : value,
-        ...data,
+        ...data
       });
       this.printDo();
     };
@@ -210,13 +212,13 @@ export class LodopService implements OnDestroy {
    *
    * 立即打印，一般用于批量套打
    */
-  print(code: string, contextObj: {} | Array<{}>, parser?: RegExp): void {
+  print(code: string, contextObj: NzSafeAny, parser?: RegExp): void {
     this.check();
     if (contextObj) {
       this.printBuffer.push(
         ...(Array.isArray(contextObj) ? contextObj : [contextObj]).map(item => {
           return { code, parser, item };
-        }),
+        })
       );
     }
     this.printDo();

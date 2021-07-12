@@ -8,13 +8,14 @@ import {
   OnInit,
   Optional,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
-import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { isEmpty } from '@delon/util/browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { DelonLocaleService, LocaleData } from '@delon/theme';
+import { isEmpty } from '@delon/util/browser';
 
 export type ExceptionType = 403 | 404 | 500;
 
@@ -24,11 +25,11 @@ export type ExceptionType = 403 | 404 | 500;
   templateUrl: './exception.component.html',
   host: {
     '[class.exception]': 'true',
-    '[class.exception-rtl]': `dir === 'rtl'`,
+    '[class.exception-rtl]': `dir === 'rtl'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ExceptionComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_type: ExceptionType | string;
@@ -50,16 +51,16 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     const item: { img: string; title: string } = {
       403: {
         img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
-        title: '403',
+        title: '403'
       },
       404: {
         img: 'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
-        title: '404',
+        title: '404'
       },
       500: {
         img: 'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
-        title: '500',
-      },
+        title: '500'
+      }
     }[value];
 
     if (!item) return;
@@ -93,7 +94,11 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
-  constructor(private i18n: DelonLocaleService, private dom: DomSanitizer, @Optional() private directionality: Directionality) {}
+  constructor(
+    private i18n: DelonLocaleService,
+    private dom: DomSanitizer,
+    @Optional() private directionality: Directionality
+  ) {}
 
   ngOnInit(): void {
     this.dir = this.directionality.value;

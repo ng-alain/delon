@@ -1,7 +1,6 @@
+/* eslint-disable import/no-unassigned-import */
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-// tslint:disable:ordered-imports
-// tslint:disable:no-import-side-effect
 import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import {

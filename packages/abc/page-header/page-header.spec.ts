@@ -4,6 +4,9 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
+
 import { createTestContext } from '@delon/testing';
 import {
   AlainI18NService,
@@ -12,9 +15,9 @@ import {
   ALAIN_I18N_TOKEN,
   MenuService,
   SettingsService,
-  TitleService,
+  TitleService
 } from '@delon/theme';
-import { NzAffixComponent } from 'ng-zorro-antd/affix';
+
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderModule } from './page-header.module';
@@ -33,7 +36,11 @@ describe('abc: page-header', () => {
   let router: Router;
 
   function genModule(other: { template?: string; providers?: any[]; created?: boolean }): void {
-    const imports = [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule, AlainThemeModule];
+    const imports = [
+      RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
+      PageHeaderModule,
+      AlainThemeModule
+    ];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
@@ -41,7 +48,7 @@ describe('abc: page-header', () => {
     TestBed.configureTestingModule({
       imports,
       declarations: [TestComponent],
-      providers,
+      providers
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
     fixture = TestBed.createComponent(TestComponent);
@@ -70,9 +77,13 @@ describe('abc: page-header', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule, AlainThemeModule],
+        imports: [
+          RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
+          PageHeaderModule,
+          AlainThemeModule
+        ],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
-        declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
+        declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent]
       });
     });
 
@@ -95,7 +106,7 @@ describe('abc: page-header', () => {
       });
 
       ['breadcrumb', 'logo', 'action', 'content', 'extra', 'tab'].forEach(type => {
-        it('#' + type, () => isExists('.' + type));
+        it(`#${type}`, () => isExists(`.${type}`));
       });
 
       describe('#fixed', () => {
@@ -108,7 +119,9 @@ describe('abc: page-header', () => {
         });
         it('should be update position when switch collapsed', () => {
           const srv = TestBed.inject(SettingsService);
-          const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get<NzAffixComponent>(NzAffixComponent, undefined);
+          const affixComp = dl
+            .query(By.directive(NzAffixComponent))
+            .injector.get<NzAffixComponent>(NzAffixComponent, undefined);
           spyOn(affixComp, 'updatePosition');
           srv.setLayout('collapsed', true);
           expect(affixComp.updatePosition).toHaveBeenCalled();
@@ -144,11 +157,11 @@ describe('abc: page-header', () => {
                 link: '/1-1',
                 children: [
                   { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
-              },
-            ],
-          },
+                  { text: '1-1-2', link: '/1-1/1-1-2' }
+                ]
+              }
+            ]
+          }
         ]);
       });
 
@@ -178,11 +191,11 @@ describe('abc: page-header', () => {
                 link: '/1-1',
                 children: [
                   { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
-              },
-            ],
-          },
+                  { text: '1-1-2', link: '/1-1/1-1-2' }
+                ]
+              }
+            ]
+          }
         ]);
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
         context.autoBreadcrumb = true;
@@ -224,7 +237,7 @@ describe('abc: page-header', () => {
       let i18n: AlainI18NService;
       beforeEach(() => {
         TestBed.overrideProvider(ALAIN_I18N_TOKEN, {
-          useFactory: () => new MockI18NServiceFake(),
+          useFactory: () => new MockI18NServiceFake()
         });
         ({ fixture, dl, context } = createTestContext(TestI18nComponent));
         i18n = TestBed.inject(ALAIN_I18N_TOKEN);
@@ -249,11 +262,11 @@ describe('abc: page-header', () => {
                 link: '/1-1',
                 children: [
                   { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
-              },
-            ],
-          },
+                  { text: '1-1-2', link: '/1-1/1-1-2' }
+                ]
+              }
+            ]
+          }
         ]);
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
         spyOn(i18n, 'fanyi');
@@ -264,7 +277,6 @@ describe('abc: page-header', () => {
       });
       it('in title', () => {
         const text = 'asdf';
-        // tslint:disable-next-line:no-shadowed-variable
         const i18n = 'i18n';
         context.title = null;
         context.autoTitle = true;
@@ -283,11 +295,11 @@ describe('abc: page-header', () => {
                 link: '/1-1',
                 children: [
                   { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
-              },
-            ],
-          },
+                  { text: '1-1-2', link: '/1-1/1-1-2' }
+                ]
+              }
+            ]
+          }
         ]);
         context.autoBreadcrumb = true;
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
@@ -308,7 +320,7 @@ describe('abc: page-header', () => {
           <ng-template #titleTpl>
             <div class="custom-title">title</div>
           </ng-template>
-        </page-header>`,
+        </page-header>`
       });
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
@@ -319,7 +331,7 @@ describe('abc: page-header', () => {
       context.autoTitle = true;
       menuSrv.add([
         { text: '1', link: '/1-1/p1' },
-        { text: '2', link: '/1-1/p2' },
+        { text: '2', link: '/1-1/p2' }
       ]);
       const urlSpy = spyOnProperty(router, 'url');
       urlSpy.and.returnValue('/1-1/p1');
@@ -340,13 +352,13 @@ describe('abc: page-header', () => {
           providers: [
             {
               provide: TitleService,
-              useFactory: () => null,
+              useFactory: () => null
             },
             {
               provide: ReuseTabService,
-              useFactory: () => null,
-            },
-          ],
+              useFactory: () => null
+            }
+          ]
         });
 
         context.title = null;
@@ -379,13 +391,13 @@ describe('abc: page-header', () => {
           providers: [
             {
               provide: TitleService,
-              useClass: MockTitle,
+              useClass: MockTitle
             },
             {
               provide: ReuseTabService,
-              useClass: MockReuse,
-            },
-          ],
+              useClass: MockReuse
+            }
+          ]
         });
         titleSrv = TestBed.inject<TitleService>(TitleService);
         reuseSrv = TestBed.inject<ReuseTabService>(ReuseTabService);
@@ -447,12 +459,20 @@ class TestBaseComponent {
       <ng-template #extra><div class="extra">extra</div></ng-template>
       <ng-template #tab><div class="tab">tab</div></ng-template>
     </page-header>
-  `,
+  `
 })
 class TestComponent extends TestBaseComponent {}
 
 @Component({
-  template: ` <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header> `,
+  template: `
+    <page-header
+      #comp
+      [title]="title"
+      [home]="home"
+      [homeI18n]="homeI18n"
+      [autoBreadcrumb]="autoBreadcrumb"
+    ></page-header>
+  `
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}
 
@@ -466,6 +486,6 @@ class TestAutoBreadcrumbComponent extends TestBaseComponent {}
       [homeLink]="homeLink"
       [autoBreadcrumb]="autoBreadcrumb"
     ></page-header>
-  `,
+  `
 })
 class TestI18nComponent extends TestBaseComponent {}

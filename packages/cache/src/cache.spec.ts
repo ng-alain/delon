@@ -1,12 +1,14 @@
-// tslint:disable:no-string-literal
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
 import { ICache } from './interface';
@@ -43,7 +45,7 @@ describe('cache: service', () => {
     }
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, DelonCacheModule],
-      providers,
+      providers
     });
 
     srv = TestBed.inject<CacheService>(CacheService);
@@ -131,8 +133,8 @@ describe('cache: service', () => {
           KEY,
           JSON.stringify({
             e: 1000,
-            v: 1,
-          } as ICache),
+            v: 1
+          } as ICache)
         );
         expect(srv.getNone(KEY)).toBeNull();
       });
@@ -236,12 +238,12 @@ describe('cache: service', () => {
     describe('#clear', () => {
       it('shoule be return null', () => {
         srv.set(KEY, 10, { type: 'm' });
-        srv.set(KEY + '1', 100);
+        srv.set(`${KEY}1`, 100);
         expect(srv.getNone(KEY)).toBe(10);
-        expect(srv.getNone(KEY + '1')).toBe(100);
+        expect(srv.getNone(`${KEY}1`)).toBe(100);
         srv.clear();
         expect(srv.getNone(KEY)).toBeNull();
-        expect(srv.getNone(KEY + '1')).toBeNull();
+        expect(srv.getNone(`${KEY}1`)).toBeNull();
       });
       it('should be notify a remove event', (done: () => void) => {
         srv
@@ -261,9 +263,9 @@ describe('cache: service', () => {
       const tree = {
         responsne: {
           list: [],
-          total: 10,
+          total: 10
         },
-        status: 'ok',
+        status: 'ok'
       };
       it('should be get [status]', () => {
         expect(srv['deepGet'](tree, ['status'])).toBe(tree.status);
@@ -348,8 +350,8 @@ describe('cache: service', () => {
       localStorage.setItem(
         meta_key,
         JSON.stringify({
-          v: [KEY],
-        }),
+          v: [KEY]
+        })
       );
     });
     beforeEach(() => genModule());

@@ -1,22 +1,24 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { warn } from '@delon/util/other';
 
 export interface ZoneOptions {
   ngZoneName?: string;
 }
 
-type DecoratorType = (target: any, fn: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
+type DecoratorType = (target: unknown, fn: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
 
 function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): DecoratorType {
   return (_, __, descriptor) => {
     const source = descriptor.value;
-    descriptor.value = function (...data: any): () => void {
-      const that = this as any;
+    descriptor.value = function (...data: any[]): () => void {
+      const that = this as NzSafeAny;
       const ngZone = that[options?.ngZoneName || 'ngZone'];
       if (!ngZone) {
         warn(`ZoneOutside: Decorator should have 'ngZone' property with 'NgZone' class.`);
         return source.call(this, ...data);
       }
-      let res: any;
+      let res: NzSafeAny;
       ngZone[type](() => {
         res = source.call(this, ...data);
       });

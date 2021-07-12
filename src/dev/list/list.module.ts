@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { SharedModule } from '../../app/shared/shared.module';
 import { DevLayoutListComponent } from './layout.component';
 import { DevListItemComponent } from './list-item.component';
@@ -13,13 +14,13 @@ const routes: Routes = [
     component: DevLayoutListComponent,
     children: [
       { path: '', component: DevListComponent },
-      { path: 'item', component: DevListItemComponent },
-    ],
-  },
+      { path: 'item', component: DevListItemComponent }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],
-  declarations: COMPONENTS,
+  declarations: COMPONENTS
 })
 export class DevListModule {}

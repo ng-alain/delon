@@ -1,7 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
+
+import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
@@ -29,14 +31,14 @@ describe('form: widget: tree-select', () => {
           enum: [
             { title: '待支付', key: 'WAIT_BUYER_PAY' },
             { title: '已支付', key: 'TRADE_SUCCESS' },
-            { title: '交易完成', key: 'TRADE_FINISHED' },
+            { title: '交易完成', key: 'TRADE_FINISHED' }
           ],
           default: 'WAIT_BUYER_PAY',
           ui: {
-            widget,
-          },
-        },
-      },
+            widget
+          }
+        }
+      }
     };
 
     page
@@ -57,14 +59,14 @@ describe('form: widget: tree-select', () => {
           enum: [
             { title: '待支付', key: 'WAIT_BUYER_PAY' },
             { title: '已支付', key: 'TRADE_SUCCESS' },
-            { title: '交易完成', key: 'TRADE_FINISHED' },
+            { title: '交易完成', key: 'TRADE_FINISHED' }
           ],
           default: 'TRADE_SUCCESS',
           ui: {
-            widget,
-          },
-        },
-      },
+            widget
+          }
+        }
+      }
     };
     page.newSchema(s).dc(1);
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('已支付');
@@ -81,15 +83,15 @@ describe('form: widget: tree-select', () => {
           enum: [
             { title: '待支付', key: 'WAIT_BUYER_PAY' },
             { title: '已支付', key: 'TRADE_SUCCESS' },
-            { title: '交易完成', key: 'TRADE_FINISHED' },
+            { title: '交易完成', key: 'TRADE_FINISHED' }
           ],
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            change: jasmine.createSpy(),
-          },
-        },
-      },
+            change: jasmine.createSpy()
+          }
+        }
+      }
     };
     page
       .newSchema(s)
@@ -109,15 +111,15 @@ describe('form: widget: tree-select', () => {
           enum: [
             { title: '待支付', key: 'WAIT_BUYER_PAY' },
             { title: '已支付', key: 'TRADE_SUCCESS' },
-            { title: '交易完成', key: 'TRADE_FINISHED' },
+            { title: '交易完成', key: 'TRADE_FINISHED' }
           ],
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            expandChange: jasmine.createSpy().and.returnValue(of([])),
-          },
-        },
-      },
+            expandChange: jasmine.createSpy().and.returnValue(of([]))
+          }
+        }
+      }
     };
     page
       .newSchema(s)

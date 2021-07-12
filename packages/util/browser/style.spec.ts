@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { updateHostClass } from './style';
 
 describe('util: style', () => {
@@ -10,7 +12,7 @@ describe('util: style', () => {
       .run({
         a: true,
         ['aa']: true,
-        [varCls]: true,
+        [varCls]: true
       })
       .has('a')
       .has('aa')
@@ -18,7 +20,13 @@ describe('util: style', () => {
   });
 
   it('should be removed when add new classes', () => {
-    page.run({ a: true, b: false }).has('a', true).has('b', false).run({ a: false, b: true }).has('a', false).has('b', true);
+    page
+      .run({ a: true, b: false })
+      .has('a', true)
+      .has('b', false)
+      .run({ a: false, b: true })
+      .has('a', false)
+      .has('b', true);
   });
 
   it('should be clearn all when add new classes', () => {
@@ -26,14 +34,14 @@ describe('util: style', () => {
   });
 
   class PageObject {
-    fakeEl: any = {};
-    fakeRender: any = {
-      removeClass: (_el: any, value: any) => delete this.fakeEl[value],
-      addClass: (_el: any, value: any) => (this.fakeEl[value] = ''),
-      removeAttribute: () => (this.fakeEl = {}),
+    fakeEl: NzSafeAny = {};
+    fakeRender: NzSafeAny = {
+      removeClass: (_el: NzSafeAny, value: NzSafeAny) => delete this.fakeEl[value],
+      addClass: (_el: NzSafeAny, value: NzSafeAny) => (this.fakeEl[value] = ''),
+      removeAttribute: () => (this.fakeEl = {})
     };
 
-    run(obj: {}, cleanAll?: boolean): this {
+    run(obj: { [klass: string]: unknown }, cleanAll?: boolean): this {
       if (typeof cleanAll === 'undefined') {
         updateHostClass(this.fakeEl, this.fakeRender, obj);
       } else {

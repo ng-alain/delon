@@ -1,15 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { concat } from 'rxjs';
 import { filter, mergeMap, tap } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { LazyService } from '@delon/util/other';
+
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';
 import { Lodop } from './lodop.types';
 
 const cog: AlainConfig = {
-  lodop: { name: 'LODOP' },
+  lodop: { name: 'LODOP' }
 };
 let mockLodop: any;
 let isErrRequest = false;
@@ -38,10 +41,10 @@ describe('abc: lodop', () => {
       providers: [
         {
           provide: ALAIN_CONFIG,
-          useFactory: fnLodopConfig,
+          useFactory: fnLodopConfig
         },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+        { provide: LazyService, useClass: MockLazyService }
+      ]
     });
     srv = TestBed.inject<LodopService>(LodopService);
     isErrRequest = false;
@@ -52,8 +55,8 @@ describe('abc: lodop', () => {
       GET_PRINTER_COUNT: jasmine.createSpy('GET_PRINTER_COUNT').and.returnValue(1),
       GET_PRINTER_NAME: jasmine.createSpy('GET_PRINTER_NAME').and.returnValue('1'),
       webskt: {
-        readyState: 1,
-      },
+        readyState: 1
+      }
     };
   }
 
@@ -79,8 +82,8 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         webskt: {
-          readyState: 0,
-        },
+          readyState: 0
+        }
       };
       setTimeout(() => {
         const obj = (window as NzSafeAny)[cog.lodop!.name!] as Lodop;
@@ -103,7 +106,7 @@ describe('abc: lodop', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
     it('#checkMaxCount', (done: () => void) => {
@@ -112,8 +115,8 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         webskt: {
-          readyState: 0,
-        },
+          readyState: 0
+        }
       };
       srv.lodop.subscribe(res => {
         expect(res.status).toBe('check-limit');
@@ -176,8 +179,8 @@ describe('abc: lodop', () => {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
         webskt: {
-          readyState: 1,
-        },
+          readyState: 1
+        }
       };
 
       srv.lodop.subscribe(() => {
@@ -200,13 +203,12 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
-        // tslint:disable-next-line: only-arrow-functions
         PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function (): void {
           mockRes = arguments[4];
         }),
         webskt: {
-          readyState: 1,
-        },
+          readyState: 1
+        }
       };
 
       srv.lodop.subscribe(() => {
@@ -228,14 +230,13 @@ describe('abc: lodop', () => {
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
       PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function (): number {
-        const that = this;
-        setTimeout(() => that.On_Return(0, code), 30);
-        setTimeout(() => that.On_Return(1, code), 31);
+        setTimeout(() => mockLodop.On_Return(0, code), 30);
+        setTimeout(() => mockLodop.On_Return(1, code), 31);
         return 1;
       }),
       webskt: {
-        readyState: 1,
-      },
+        readyState: 1
+      }
     };
 
     srv.lodop.subscribe(() => {
@@ -258,18 +259,17 @@ describe('abc: lodop', () => {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
         PRINT: jasmine.createSpy('PRINT').and.callFake(function (): number {
-          const that = this;
           if (isPrintError) {
-            setTimeout(() => that.On_Return(0, '缺纸'), 10);
+            setTimeout(() => mockLodop.On_Return(0, '缺纸'), 10);
           } else {
-            setTimeout(() => that.On_Return(1, true), 10);
-            setTimeout(() => that.On_Return(0, true), 30);
+            setTimeout(() => mockLodop.On_Return(1, true), 10);
+            setTimeout(() => mockLodop.On_Return(0, true), 30);
           }
           return 0;
         }),
         webskt: {
-          readyState: 1,
-        },
+          readyState: 1
+        }
       };
     });
     it('should be print', (done: () => void) => {
@@ -278,7 +278,7 @@ describe('abc: lodop', () => {
           filter(w => w.ok),
           tap(() => srv.print(code, {})),
           mergeMap(() => srv.events),
-          filter(w => w.ok),
+          filter(w => w.ok)
         )
         .subscribe(() => {
           expect(mockLodop.PRINT).toHaveBeenCalled();
@@ -291,7 +291,7 @@ describe('abc: lodop', () => {
           filter(w => w.ok),
           tap(() => srv.print(code, [{ index: 0 }, { index: 1 }])),
           mergeMap(() => srv.events),
-          filter(w => w.ok && w.item.index === 1),
+          filter(w => w.ok && w.item.index === 1)
         )
         .subscribe(() => {
           expect(mockLodop.PRINT).toHaveBeenCalled();
@@ -302,7 +302,7 @@ describe('abc: lodop', () => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
-          tap(() => srv.print(code, null!)),
+          tap(() => srv.print(code, null!))
         )
         .subscribe(() => {
           expect(mockLodop.PRINT).not.toHaveBeenCalled();
@@ -317,7 +317,7 @@ describe('abc: lodop', () => {
             isPrintError = true;
             srv.print(code, {});
           }),
-          mergeMap(() => srv.events),
+          mergeMap(() => srv.events)
         )
         .subscribe(res => {
           expect(mockLodop.PRINT).toHaveBeenCalled();

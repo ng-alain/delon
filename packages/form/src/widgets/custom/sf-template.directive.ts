@@ -1,9 +1,10 @@
 import { Directive, Input, OnInit, TemplateRef } from '@angular/core';
+
 import { SF_SEQ } from '../../const';
 import { SFComponent } from '../../sf.component';
 
 @Directive({
-  selector: '[sf-template]',
+  selector: '[sf-template]'
 })
 export class SFTemplateDirective implements OnInit {
   @Input('sf-template') path: string;

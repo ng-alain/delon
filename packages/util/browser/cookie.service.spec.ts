@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Injector, StaticProvider } from '@angular/core';
+
 import { CookieService } from './cookie.service';
 
 describe('Util: CookieService', () => {
@@ -13,7 +14,7 @@ describe('Util: CookieService', () => {
     const providers = [
       { provide: CookieService, useClass: CookieService, deps: [DOCUMENT, Platform] },
       { provide: Platform, useValue: { isBrowser } },
-      { provide: DOCUMENT, useValue: Document },
+      { provide: DOCUMENT, useValue: Document }
     ] as StaticProvider[];
     injector = Injector.create({ providers });
     srv = injector.get(CookieService);

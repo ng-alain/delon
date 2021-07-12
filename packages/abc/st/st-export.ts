@@ -1,7 +1,10 @@
 import { Injectable, Optional } from '@angular/core';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { STColumn, STExportOptions } from './st.interfaces';
 
 @Injectable()
@@ -37,7 +40,7 @@ export class STExport {
     return ret;
   }
 
-  private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
+  private genSheet(opt: STExportOptions): { [sheet: string]: unknown } {
     const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
     const dataLen = opt.data!.length;
@@ -53,7 +56,7 @@ export class STExport {
       const columnName = this.xlsxSrv.numberToSchema(colIdx + 1 - loseCount);
       sheet[`${columnName}1`] = {
         t: 's',
-        v: typeof col.title === 'object' ? col.title.text : col.title,
+        v: typeof col.title === 'object' ? col.title.text : col.title
       };
       for (let dataIdx = 0; dataIdx < dataLen; dataIdx++) {
         sheet[`${columnName}${dataIdx + 2}`] = this._stGet(opt.data![dataIdx], col, dataIdx, colIdx);
@@ -72,7 +75,7 @@ export class STExport {
     return this.xlsxSrv.export({
       sheets,
       filename: opt.filename,
-      callback: opt.callback,
+      callback: opt.callback
     });
   }
 }

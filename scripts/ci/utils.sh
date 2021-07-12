@@ -18,7 +18,6 @@ DEPENDENCIES=$(node -p "
     'screenfull',
     '@ngx-translate/core',
     '@ngx-translate/http-loader',
-    'tslint-config-prettier',
     'pretty-quick',
     'husky',
     'stylelint-config-prettier',

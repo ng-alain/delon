@@ -1,8 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+
 import { MediaComponent } from './media.component';
 import { MediaModule } from './media.module';
 import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
@@ -26,7 +29,7 @@ describe('abc: media', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MediaModule],
-      declarations: [TestComponent, TestCustomVideoComponent],
+      declarations: [TestComponent, TestCustomVideoComponent]
     });
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
@@ -76,7 +79,6 @@ describe('abc: media', () => {
       fixture2.detectChanges();
       tick();
       fixture2.detectChanges();
-      // tslint:disable-next-line: no-string-literal
       expect(fixture2.componentInstance.comp['videoEl'].dataset.type).toBe(`custom`);
     }));
   });
@@ -101,7 +103,9 @@ describe('abc: media', () => {
 });
 
 @Component({
-  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()"></media> `,
+  template: `
+    <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()"></media>
+  `
 })
 class TestComponent {
   @ViewChild('comp') comp: MediaComponent;
@@ -112,6 +116,7 @@ class TestComponent {
   ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media> <media [source]="source"></media>`,
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media>
+    <media [source]="source"></media>`
 })
 class TestCustomVideoComponent extends TestComponent {}

@@ -13,15 +13,17 @@ import {
   Optional,
   Output,
   Renderer2,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
 import { Menu, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+
 import { Nav } from './sidebar-nav.types';
 
 const SHOWCLS = 'sidebar-nav__floating-show';
@@ -36,11 +38,11 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   templateUrl: './sidebar-nav.component.html',
   host: {
     '(click)': '_click()',
-    '(document:click)': '_docClick()',
+    '(document:click)': '_docClick()'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_disabledAcl: BooleanInput;
@@ -76,7 +78,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: any,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {}
 
   private getLinkNode(node: HTMLElement): HTMLElement | null {
@@ -122,7 +124,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   private genFloating(): void {
     this.clearFloating();
     this.floatingEl = this.render.createElement('div');
-    this.floatingEl.classList.add(FLOATINGCLS + '-container');
+    this.floatingEl.classList.add(`${FLOATINGCLS}-container`);
     this.floatingEl.addEventListener('click', this.floatingClickHandle.bind(this), false);
     this.bodyEl.appendChild(this.floatingEl);
   }
@@ -138,15 +140,14 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       () => {
         node.classList.remove(SHOWCLS);
       },
-      false,
+      false
     );
     this.floatingEl.appendChild(node);
     return node;
   }
 
   private hideAll(): void {
-    const allNode = this.floatingEl.querySelectorAll('.' + FLOATINGCLS);
-    // tslint:disable-next-line:prefer-for-of
+    const allNode = this.floatingEl.querySelectorAll(`.${FLOATINGCLS}`);
     for (let i = 0; i < allNode.length; i++) {
       allNode[i].classList.remove(SHOWCLS);
     }
@@ -281,7 +282,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     settings.notify
       .pipe(
         takeUntil(destroy$),
-        filter(t => t.type === 'layout' && t.name === 'collapsed'),
+        filter(t => t.type === 'layout' && t.name === 'collapsed')
       )
       .subscribe(() => this.clearFloating());
     this.underPad();

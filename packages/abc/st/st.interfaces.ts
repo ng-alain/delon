@@ -1,13 +1,16 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ElementRef, TemplateRef } from '@angular/core';
-import { ACLCanType } from '@delon/acl';
-import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
-import { CurrencyFormatOptions } from '@delon/util/format';
+import { Observable } from 'rxjs';
+
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import { NzTablePaginationType } from 'ng-zorro-antd/table';
-import { Observable } from 'rxjs';
+
+import { ACLCanType } from '@delon/acl';
+import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
+import { CurrencyFormatOptions } from '@delon/util/format';
+
 import { STComponent } from './st.component';
 
 export type STColumnSafeType = 'text' | 'html' | 'safeHtml';
@@ -240,7 +243,21 @@ export interface STColumn<T extends STData = any> {
    * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
    * - `widget` 使用自定义小部件动态创建
    */
-  type?: '' | 'checkbox' | 'link' | 'badge' | 'tag' | 'enum' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
+  type?:
+    | ''
+    | 'checkbox'
+    | 'link'
+    | 'badge'
+    | 'tag'
+    | 'enum'
+    | 'radio'
+    | 'img'
+    | 'currency'
+    | 'number'
+    | 'date'
+    | 'yn'
+    | 'no'
+    | 'widget';
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
@@ -248,9 +265,10 @@ export interface STColumn<T extends STData = any> {
   /**
    * 按钮组
    */
-  buttons?: STColumnButton<T>[];
+  buttons?: Array<STColumnButton<T>>;
   /**
    * 自定义渲染ID
+   *
    * @example
    * <ng-template st-row="custom" let-item let-index="index" let-column="column">
    *  {{ c.title }}
@@ -259,6 +277,7 @@ export interface STColumn<T extends STData = any> {
   render?: string | TemplateRef<void> | TemplateRef<{ $implicit: T; index: number }>;
   /**
    * 标题自定义渲染ID
+   *
    * @example
    * <ng-template st-row="custom" type="title" let-c>
    *  {{ item | json }}
@@ -294,7 +313,7 @@ export interface STColumn<T extends STData = any> {
   /**
    * 自定义全/反选选择项
    */
-  selections?: STColumnSelection<T>[];
+  selections?: Array<STColumnSelection<T>>;
   /**
    * 列 `class` 属性值（注：无须 `.` 点）多个用空格隔开，例如：
    * - `text-center` 居中
@@ -378,7 +397,7 @@ export interface STColumn<T extends STData = any> {
   /**
    * 分组表头
    */
-  children?: STColumn<T>[];
+  children?: Array<STColumn<T>>;
 
   rowSpan?: number;
 
@@ -395,7 +414,7 @@ export interface STColumn<T extends STData = any> {
 export interface STWidgetColumn<T extends STData = any> {
   type: string;
 
-  params?: (options: { record: T; column: STColumn }) => {};
+  params?: (options: { record: T; column: STColumn }) => Record<string, unknown>;
 }
 
 export interface STColumnTitle {
@@ -424,7 +443,12 @@ export interface STColumnTitle {
 
 export type STStatisticalType = 'count' | 'distinctCount' | 'sum' | 'average' | 'max' | 'min';
 
-export type STStatisticalFn<T extends STData = any> = (values: number[], col: STColumn, list: T[], rawData?: any) => STStatisticalResult;
+export type STStatisticalFn<T extends STData = any> = (
+  values: number[],
+  col: STColumn,
+  list: T[],
+  rawData?: any
+) => STStatisticalResult;
 
 export interface STStatistical<T extends STData = any> {
   type: STStatisticalType | STStatisticalFn<T>;
@@ -527,9 +551,10 @@ export interface STColumnFilter<T extends STData = any> {
   /**
    * 远程数据的过滤时后端相对应的VALUE
    * - 默认当 `multiple: true` 时以英文逗号拼接的字符串
+   *
    * @return 返回为 Object 对象
    */
-  reName?: (list: STColumnFilterMenu[], col: STColumn) => {};
+  reName?: (list: STColumnFilterMenu[], col: STColumn) => Record<string, unknown>;
 }
 
 export interface STColumnFilterMenu {
@@ -663,7 +688,7 @@ export interface STColumnButton<T extends STData = any> {
    * 下拉菜单，当存在时以 `dropdown` 形式渲染
    * - 只支持一级
    */
-  children?: STColumnButton<T>[];
+  children?: Array<STColumnButton<T>>;
   /**
    * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
    */
@@ -701,7 +726,7 @@ export interface STColumnButtonModal<T extends STData = any> extends ModalHelper
   /**
    * 对话框参数
    */
-  params?: (record: T) => {};
+  params?: (record: T) => Record<string, unknown>;
   /**
    * 对话框目标组件的接收参数名，默认：`record`
    */
@@ -733,7 +758,7 @@ export interface STColumnButtonDrawer<T extends STData = any> extends DrawerHelp
   /**
    * 抽屉参数
    */
-  params?: (record: T) => {};
+  params?: (record: T) => Record<string, unknown>;
   /**
    * 抽屉目标组件的接收参数名，默认：`record`
    */
@@ -806,7 +831,7 @@ export interface STColumnButtonPop<T extends STData = any> {
   /**
    * Style of the popover card
    */
-  overlayStyle?: {};
+  overlayStyle?: { [key: string]: string };
 
   /**
    * Text of the Cancel button
@@ -907,7 +932,9 @@ export interface STMultiSort {
   global?: boolean;
 }
 
-export type STMultiSortResultType = { [key: string]: string | string[] };
+export interface STMultiSortResultType {
+  [key: string]: string | string[];
+}
 
 /**
  * 徽标信息
@@ -946,10 +973,33 @@ export interface STColumnTagValue {
    * - 预设：geekblue,blue,purple,success,red,volcano,orange,gold,lime,green,cyan
    * - 色值：#f50,#ff0
    */
-  color?: 'geekblue' | 'blue' | 'purple' | 'success' | 'red' | 'volcano' | 'orange' | 'gold' | 'lime' | 'green' | 'cyan' | string;
+  color?:
+    | 'geekblue'
+    | 'blue'
+    | 'purple'
+    | 'success'
+    | 'red'
+    | 'volcano'
+    | 'orange'
+    | 'gold'
+    | 'lime'
+    | 'green'
+    | 'cyan'
+    | string;
 }
 
-export type STChangeType = 'loaded' | 'pi' | 'ps' | 'checkbox' | 'radio' | 'sort' | 'filter' | 'click' | 'dblClick' | 'expand' | 'resize';
+export type STChangeType =
+  | 'loaded'
+  | 'pi'
+  | 'ps'
+  | 'checkbox'
+  | 'radio'
+  | 'sort'
+  | 'filter'
+  | 'click'
+  | 'dblClick'
+  | 'expand'
+  | 'resize';
 
 /**
  * 回调数据
@@ -1063,7 +1113,7 @@ export interface STResizable {
 }
 
 export type STContextmenuFn<T extends STData = any> = (
-  options: STContextmenuOptions<T>,
+  options: STContextmenuOptions<T>
 ) => Observable<STContextmenuItem[]> | STContextmenuItem[];
 
 export interface STContextmenuOptions<T extends STData = any> {

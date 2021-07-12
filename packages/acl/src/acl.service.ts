@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
+
 import { ACL_DEFAULT_CONFIG } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
@@ -27,7 +29,7 @@ export class ACLService {
     return {
       full: this.full,
       roles: this.roles,
-      abilities: this.abilities,
+      abilities: this.abilities
     };
   }
 

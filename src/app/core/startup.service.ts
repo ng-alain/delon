@@ -1,9 +1,12 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
+
+import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util';
-import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { ICONS } from '../../style-icons';
 
 @Injectable()
@@ -13,7 +16,7 @@ export class StartupService {
     iconSrv: NzIconService,
     @Inject(DOCUMENT) private doc: any,
     private lazy: LazyService,
-    private platform: Platform,
+    private platform: Platform
   ) {
     iconSrv.addIcon(...ICONS);
   }
@@ -36,17 +39,16 @@ export class StartupService {
     const win = this.doc.defaultView as any;
     win.hj =
       win.hj ||
-      // tslint:disable-next-line: only-arrow-functions typedef
       function () {
         (win.hj.q = win.hj.q || []).push(arguments);
       };
     win._hjSettings = {
       hjid: 920546,
-      hjsv: 6,
+      hjsv: 6
     };
     Promise.all([
       this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`),
-      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`),
+      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
     ]).then(() => {
       const dataLayer: any[] = win.dataLayer || [];
       dataLayer.push(['js', new Date()]);

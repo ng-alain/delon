@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
 describe('Schematic: ng-update: v117Rule', () => {
@@ -46,7 +47,7 @@ describe('Schematic: ng-update: v117Rule', () => {
           }
         }
       }
-    }`,
+    }`
     );
     await runMigration();
     const content = tree.readContent(filePath);

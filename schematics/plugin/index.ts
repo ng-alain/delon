@@ -1,5 +1,6 @@
 import { chain, Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+
 import { getProject } from '../utils';
 import { PluginOptions } from './interface';
 import { pluginAsdf } from './plugin.asdf';
@@ -29,7 +30,7 @@ export default function (options: PluginSchema): Rule {
       projectPrefix: project.prefix,
       root: project.root,
       sourceRoot: project.sourceRoot,
-      project: options.project,
+      project: options.project
     };
 
     const rules: Rule[] = [];
@@ -47,8 +48,8 @@ export default function (options: PluginSchema): Rule {
         rules.push(
           pluginDefaultLanguage({
             ...pluginOptions,
-            defaultLanguage: options.defaultLanguage,
-          }),
+            defaultLanguage: options.defaultLanguage
+          })
         );
         break;
       case 'icon':

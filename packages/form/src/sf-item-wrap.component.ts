@@ -1,5 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+
 import { helpMotion } from 'ng-zorro-antd/core/animation';
+
 import { SFSchema } from './schema/index';
 import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 
@@ -8,7 +10,7 @@ import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   templateUrl: './sf-item-wrap.component.html',
   animations: [helpMotion],
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SFItemWrapComponent {
   _showTitle: boolean = false;

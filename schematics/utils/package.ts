@@ -1,4 +1,5 @@
 import { Tree } from '@angular-devkit/schematics';
+
 import { readJSON, writeJSON } from './json';
 
 export const PACCKAGE_PATH = 'package.json';
@@ -22,7 +23,7 @@ export function writePackage(tree: Tree, json: any): any {
 export function addPackage(
   tree: Tree,
   pkg: string | string[],
-  type: 'dependencies' | 'devDependencies' | 'scripts' = 'dependencies',
+  type: 'dependencies' | 'devDependencies' | 'scripts' = 'dependencies'
 ): Tree {
   const json = readPackage(tree, type);
   if (json == null) return tree;
@@ -50,7 +51,7 @@ export function addPackage(
 export function removePackage(
   tree: Tree,
   pkg: string | string[],
-  type: 'dependencies' | 'devDependencies' | 'scripts' = 'dependencies',
+  type: 'dependencies' | 'devDependencies' | 'scripts' = 'dependencies'
 ): Tree {
   const json = readPackage(tree, type);
   if (json == null) return tree;

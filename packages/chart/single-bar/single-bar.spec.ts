@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
 import { checkDelay, PageG2 } from '@delon/testing';
+
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
 
@@ -48,7 +50,7 @@ describe('chart: single-bar', () => {
       [textStyle]="textStyle"
       [delay]="delay"
     ></g2-single-bar>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2SingleBarComponent;

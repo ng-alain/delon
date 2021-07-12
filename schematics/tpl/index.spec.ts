@@ -1,6 +1,9 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import * as fs from 'fs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createAlainAndModuleApp } from '../utils/testing';
 
 describe('Schematic: tpl', () => {

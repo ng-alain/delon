@@ -20,14 +20,27 @@
       </span>
     </label>
     <div class="sf__array-add">
-      <button type="button" nz-button [nzType]="addType" [disabled]="addDisabled" (click)="addItem()" [innerHTML]="addTitle"></button>
+      <button
+        type="button"
+        nz-button
+        [nzType]="addType"
+        [disabled]="addDisabled"
+        (click)="addItem()"
+        [innerHTML]="addTitle"
+      ></button>
     </div>
   </div>
   <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
     <div class="ant-form-item-control" [class.has-error]="showError">
       <div nz-row class="sf__array-container">
-        <ng-container *ngFor="let i of $any(formProperty).properties; let idx=index">
-          <div nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf__array-item">
+        <ng-container *ngFor="let i of $any(formProperty).properties; let idx = index">
+          <div
+            nz-col
+            *ngIf="i.visible && !i.ui.hidden"
+            [nzSpan]="arraySpan"
+            [attr.data-index]="idx"
+            class="sf__array-item"
+          >
             <nz-card>
               <sf-item [formProperty]="i"></sf-item>
               <span *ngIf="showRemove" class="sf__array-remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
@@ -37,7 +50,7 @@
           </div>
         </ng-container>
       </div>
-      <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{error}}</div>
+      <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{ error }}</div>
       <div *ngIf="schema.description" [innerHTML]="schema._description" class="ant-form-extra"></div>
     </div>
   </div>

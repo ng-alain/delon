@@ -1,6 +1,7 @@
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
+
 import { addImportToModule, addValueToVariable, getProject, overwriteIfExists, readContent } from '../utils';
 import { PluginOptions } from './interface';
 
@@ -12,7 +13,7 @@ function fixImport(): Rule {
     if (tree.exists(basicComponentPath)) {
       const content = readContent(tree, basicComponentPath).replace(
         `<div nz-menu style="width: 200px;">`,
-        `<div nz-menu style="width: 200px;"><div nz-menu-item><header-rtl></header-rtl></div>`,
+        `<div nz-menu style="width: 200px;"><div nz-menu-item><header-rtl></header-rtl></div>`
       );
       tree.overwrite(basicComponentPath, content);
     }
@@ -40,11 +41,16 @@ function fixImport(): Rule {
 export function pluginRTL(options: PluginOptions): Rule {
   return async (tree: Tree) => {
     if (options.type !== 'add') {
-      throw new SchematicsException(`Sorry, the plug-in does not support hot swap, if you need to remove it, please handle it manually`);
+      throw new SchematicsException(
+        `Sorry, the plug-in does not support hot swap, if you need to remove it, please handle it manually`
+      );
     }
 
     project = (await getProject(tree, options.project)).project;
 
-    return chain([mergeWith(apply(url('./files/rtl'), [move(`${project.sourceRoot}/app`), overwriteIfExists(tree)])), fixImport()]);
+    return chain([
+      mergeWith(apply(url('./files/rtl'), [move(`${project.sourceRoot}/app`), overwriteIfExists(tree)])),
+      fixImport()
+    ]);
   };
 }

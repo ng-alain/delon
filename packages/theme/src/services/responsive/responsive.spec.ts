@@ -6,7 +6,7 @@ describe('theme: responsive', () => {
   it('should be throw error when invalid range', () => {
     expect(() => {
       srv = new ResponsiveService({
-        merge: (_key: string, def: any) => ({ ...def, ...{ rules: { 10: {} } } }),
+        merge: (_key: string, def: any) => ({ ...def, ...{ rules: { 10: {} } } })
       } as any);
     }).toThrow();
   });
@@ -14,7 +14,7 @@ describe('theme: responsive', () => {
   describe('#genCls', () => {
     beforeEach(() => {
       srv = new ResponsiveService({
-        merge: (_key: string, def: any) => ({ ...def }),
+        merge: (_key: string, def: any) => ({ ...def })
       } as any);
     });
     it('rule 1', () => {

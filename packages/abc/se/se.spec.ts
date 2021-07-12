@@ -1,11 +1,22 @@
 import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, FormControlName, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControlName,
+  FormGroup,
+  FormsModule,
+  NgModel,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
 import { SEModule } from './se.module';
@@ -23,7 +34,7 @@ describe('abc: edit', () => {
   const moduleAction = () => {
     TestBed.configureTestingModule({
       imports: [SEModule, FormsModule, NzRadioModule, NoopAnimationsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   };
 
@@ -112,7 +123,7 @@ describe('abc: edit', () => {
           it('#title', () => {
             context.parent_title = `parent_title`;
             fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+            expect(page.getEl(`${prefixCls}title`).textContent).toContain(`parent_title`);
           });
           describe('#gutter', () => {
             it('shoule gutter number working', () => {
@@ -122,7 +133,7 @@ describe('abc: edit', () => {
               fixture.detectChanges();
               expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
               expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-              const itemCls = prefixCls + 'item';
+              const itemCls = `${prefixCls}item`;
               expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
               expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
             });
@@ -133,7 +144,7 @@ describe('abc: edit', () => {
               fixture.detectChanges();
               expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
               expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-              const itemCls = prefixCls + 'item';
+              const itemCls = `${prefixCls}item`;
               expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
               expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
             });
@@ -164,19 +175,19 @@ describe('abc: edit', () => {
           it('#layout', () => {
             context.parent_layout = 'horizontal';
             fixture.detectChanges();
-            page.expect(prefixCls + 'horizontal');
+            page.expect(`${prefixCls}horizontal`);
             context.parent_layout = 'vertical';
             fixture.detectChanges();
-            page.expect(prefixCls + 'vertical');
+            page.expect(`${prefixCls}vertical`);
             context.parent_layout = 'inline';
             fixture.detectChanges();
-            page.expect(prefixCls + 'inline');
-            page.expect(prefixCls + 'compact');
+            page.expect(`${prefixCls}inline`);
+            page.expect(`${prefixCls}compact`);
           });
           it('#size', () => {
             context.parent_size = 'compact';
             fixture.detectChanges();
-            page.expect(prefixCls + 'compact');
+            page.expect(`${prefixCls}compact`);
           });
           it('should be ingroed less than 0', () => {
             context.parent_col = 0;
@@ -242,20 +253,20 @@ describe('abc: edit', () => {
           it('#label', () => {
             context.label = 'test-label';
             fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
+            expect(page.getEl(`${prefixCls}label`).textContent).toContain('test-label');
           });
           it('should be only horizontal will increase the responsive', () => {
             context.parent_layout = 'inline';
             context.label = 'aa';
             fixture.detectChanges();
-            page.expect(prefixCls + 'inline');
+            page.expect(`${prefixCls}inline`);
             page.expect('.ant-col-xs-24', 0);
           });
           it('#line', () => {
             context.parent_line = true;
             context.line = null;
             fixture.detectChanges();
-            page.expect(prefixCls + 'line');
+            page.expect(`${prefixCls}line`);
           });
         });
       });
@@ -334,7 +345,7 @@ describe('abc: edit', () => {
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
         imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-        declarations: [TestReactiveComponent],
+        declarations: [TestReactiveComponent]
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
@@ -366,7 +377,7 @@ describe('abc: edit', () => {
       it('in reactive form', () => {
         TestBed.configureTestingModule({
           imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-          declarations: [TestReactiveComponent],
+          declarations: [TestReactiveComponent]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);
         dl = fixture2.debugElement;
@@ -394,7 +405,7 @@ describe('abc: edit', () => {
           <ng-template #title>
             <a id="tip">tip</a>
           </ng-template>
-        </se-container>`,
+        </se-container>`
       );
       page.expect('#tip');
     });
@@ -407,7 +418,7 @@ describe('abc: edit', () => {
             </ng-template>
             Custom label
           </se>
-        </se-container>`,
+        </se-container>`
       );
       page.expect('#tip');
     });
@@ -533,7 +544,7 @@ describe('abc: edit', () => {
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
     </form>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('seComp', { static: true })
@@ -579,14 +590,14 @@ class TestComponent {
         <input formControlName="dis" nz-input />
       </se>
     </form>
-  `,
+  `
 })
 class TestReactiveComponent {
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({
       userName: [null, [Validators.required]],
-      dis: { value: '', disabled: true },
+      dis: { value: '', disabled: true }
     });
   }
 }

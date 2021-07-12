@@ -1,13 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface LazyResult {
   path: string;
   status: 'ok' | 'error' | 'loading';
-  error?: {};
+  error?: NzSafeAny;
 }
 
 /**
@@ -19,12 +20,12 @@ export class LazyService {
   private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
-  constructor(@Inject(DOCUMENT) private doc: any) {}
+  constructor(@Inject(DOCUMENT) private doc: NzSafeAny) {}
 
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(
       share(),
-      filter(ls => ls.length !== 0),
+      filter(ls => ls.length !== 0)
     );
   }
 
@@ -81,7 +82,7 @@ export class LazyService {
             node.onreadystatechange = null;
             onSuccess({
               path,
-              status: 'ok',
+              status: 'ok'
             });
           }
         };
@@ -89,14 +90,14 @@ export class LazyService {
         node.onload = () =>
           onSuccess({
             path,
-            status: 'ok',
+            status: 'ok'
           });
       }
-      node.onerror = (error: {}) =>
+      node.onerror = (error: NzSafeAny) =>
         onSuccess({
           path,
           status: 'error',
-          error,
+          error
         });
       this.doc.getElementsByTagName('head')[0].appendChild(node);
     });
@@ -121,7 +122,7 @@ export class LazyService {
       this.doc.getElementsByTagName('head')[0].appendChild(node);
       const item: LazyResult = {
         path,
-        status: 'ok',
+        status: 'ok'
       };
       this.cached[path] = item;
       resolve(item);

@@ -1,12 +1,14 @@
+import { Observable, Subscription } from 'rxjs';
+
 import {
   NzShowUploadList,
   NzUploadChangeParam,
   NzUploadFile,
   NzUploadTransformFileType,
   NzUploadXHRArgs,
-  UploadFilter,
+  UploadFilter
 } from 'ng-zorro-antd/upload';
-import { Observable, Subscription } from 'rxjs';
+
 import { SFSchemaEnumType } from '../../schema';
 import { SFUISchemaItem } from '../../schema/ui';
 

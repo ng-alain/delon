@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
 import { map, tap } from 'rxjs/operators';
+
+import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, getEnum } from '../../utils';
@@ -11,7 +13,7 @@ import { SFMentionWidgetSchema } from './schema';
   selector: 'sf-mention',
   templateUrl: './mention.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   @ViewChild('mentions', { static: true }) private mentionChild: NzMentionComponent;
@@ -26,7 +28,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
       notFoundContent: notFoundContent || '无匹配结果，轻敲空格完成输入',
       placement: placement || 'bottom',
       prefix: prefix || '@',
-      autosize: typeof autosize === 'undefined' ? true : this.ui.autosize,
+      autosize: typeof autosize === 'undefined' ? true : this.ui.autosize
     };
 
     const { minimum, maximum } = this.schema;
@@ -66,7 +68,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
       .loadData(option)
       .pipe(
         tap(() => (this.loading = false)),
-        map(res => getEnum(res, null, this.schema.readOnly!)),
+        map(res => getEnum(res, null, this.schema.readOnly!))
       )
       .subscribe(res => {
         this.data = res;

@@ -18,9 +18,17 @@ import {
   TemplateRef,
   TrackByFunction,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { NzTableComponent } from 'ng-zorro-antd/table';
+
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
@@ -29,17 +37,12 @@ import {
   DrawerHelper,
   LocaleData,
   ModalHelper,
-  YNPipe,
+  YNPipe
 } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { NzTableComponent } from 'ng-zorro-antd/table';
-import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
@@ -69,7 +72,7 @@ import {
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
-  STWidthMode,
+  STWidthMode
 } from './st.interfaces';
 import { _STColumn, _STDataValue, _STHeader } from './st.types';
 
@@ -84,11 +87,11 @@ import { _STColumn, _STDataValue, _STHeader } from './st.types';
     '[class.st__p-center]': `page.placement === 'center'`,
     '[class.st__width-strict]': `widthMode.type === 'strict'`,
     '[class.ant-table-rep]': `responsive`,
-    '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`,
+    '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_ps: NumberInput;
@@ -177,12 +180,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._multiSort;
   }
   set multiSort(value: NzSafeAny) {
-    if ((typeof value === 'boolean' && !toBoolean(value)) || (typeof value === 'object' && Object.keys(value).length === 0)) {
+    if (
+      (typeof value === 'boolean' && !toBoolean(value)) ||
+      (typeof value === 'object' && Object.keys(value).length === 0)
+    ) {
       this._multiSort = undefined;
       return;
     }
     this._multiSort = {
-      ...(typeof value === 'object' ? value : {}),
+      ...(typeof value === 'object' ? value : {})
     };
   }
   @Input() rowClassName: STRowClassName;
@@ -210,7 +216,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() body?: TemplateRef<STStatisticalResults> | null;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
-  @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
+  @Input() expand: TemplateRef<{ $implicit: NzSafeAny; column: STColumn }>;
   @Input() noResult?: string | TemplateRef<void> | null;
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
@@ -256,7 +262,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
-    private cms: NzContextMenuService,
+    private cms: NzContextMenuService
   ) {
     this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
@@ -271,7 +277,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     i18nSrv.change
       .pipe(
         takeUntil(this.destroy$),
-        filter(() => this._columns.length > 0),
+        filter(() => this._columns.length > 0)
       )
       .subscribe(() => this.refreshColumns());
   }
@@ -305,7 +311,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       type,
       pi: this.pi,
       ps: this.ps,
-      total: this.total,
+      total: this.total
     };
     if (data != null) {
       res[type] = data;
@@ -364,7 +370,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           rowClassName,
           paginator: true,
           customRequest: this.customRequest || this.cog.customRequest,
-          ...options,
+          ...options
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe(
@@ -372,7 +378,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           error => {
             console.warn('st.loadDate', error);
             rejectPromise(error);
-          },
+          }
         );
     });
   }
@@ -434,7 +440,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param extraParams 重新指定 `extraParams` 值
    * @param options 选项
    */
-  load(pi: number = 1, extraParams?: {}, options?: STLoadOptions): this {
+  load(pi: number = 1, extraParams?: NzSafeAny, options?: STLoadOptions): this {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
       this.req.params = options && options.merge ? { ...this.req.params, ...extraParams } : extraParams;
@@ -445,9 +451,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * 重新刷新当前页
+   *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: {}, options?: STLoadOptions): this {
+  reload(extraParams?: NzSafeAny, options?: STLoadOptions): this {
     return this.load(-1, extraParams, options);
   }
 
@@ -460,7 +467,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: {}, options?: STLoadOptions): this {
+  reset(extraParams?: NzSafeAny, options?: STLoadOptions): this {
     this.clearStatus().load(1, extraParams, options);
     return this;
   }
@@ -472,7 +479,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       if (this.cdkVirtualScrollViewport) {
         this.cdkVirtualScrollViewport.scrollTo({
           top: 0,
-          left: 0,
+          left: 0
         });
       } else {
         el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
@@ -565,7 +572,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         this._data.forEach((i, idx) => {
           const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
           i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
-        }),
+        })
       );
 
     return this.cd();
@@ -614,7 +621,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const res = {
       value,
       map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
-      column: col,
+      column: col
     };
     this.changeEmit('sort', res);
   }
@@ -732,7 +739,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal!.component,
         { ...obj, ...(modal!.params && modal!.params!(record)) },
-        deepMergeKey({}, true, this.cog.modal, modal),
+        deepMergeKey({}, true, this.cog.modal, modal)
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
@@ -745,7 +752,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           drawer!.title!,
           drawer!.component,
           { ...obj, ...(drawer!.params && drawer!.params!(record)) },
-          deepMergeKey({}, true, this.cog.drawer, drawer),
+          deepMergeKey({}, true, this.cog.drawer, drawer)
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -782,6 +789,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
+   *
    * @param newData 重新指定数据；若为 `true` 表示使用 `filteredData` 数据
    * @param opt 额外参数
    */
@@ -790,8 +798,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.exportSrv.export({
         columens: this._columns,
         ...opt,
-        data: res,
-      }),
+        data: res
+      })
     );
   }
 
@@ -826,12 +834,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       rowIndex: isTitle ? null : rowIndex,
       colIndex,
       data: isTitle ? null : this.list[rowIndex],
-      column: this._columns[colIndex],
+      column: this._columns[colIndex]
     });
     (isObservable(obs$) ? obs$ : of(obs$))
       .pipe(
         takeUntil(this.destroy$),
-        filter(res => res.length > 0),
+        filter(res => res.length > 0)
       )
       .subscribe(res => {
         this.contextmenuList = res.map(i => {
@@ -881,7 +889,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const res = this.columnSource.process(this.columns as _STColumn[], {
       widthMode: this.widthMode,
       resizable: this._resizable,
-      safeType: this.cog.safeType as STColumnSafeType,
+      safeType: this.cog.safeType as STColumnSafeType
     });
     this._columns = res.columns;
     this._headers = res.headers;
@@ -895,7 +903,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data = this.dataSource.optimizeData({
       columns: this._columns,
       result: this._data,
-      rowClassName: this.rowClassName,
+      rowClassName: this.rowClassName
     });
   }
 

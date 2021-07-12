@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { FormatPipeModule } from './module';
 
 describe('Pipe: mask', () => {
@@ -9,7 +10,7 @@ describe('Pipe: mask', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [FormatPipeModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
   });
@@ -20,7 +21,7 @@ describe('Pipe: mask', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | mask: maskStr }}</p> `,
+  template: ` <p id="result">{{ value | mask: maskStr }}</p> `
 })
 class TestComponent {
   value = '123';

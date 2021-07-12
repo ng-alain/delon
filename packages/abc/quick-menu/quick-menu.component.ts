@@ -10,8 +10,9 @@ import {
   Output,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
@@ -20,11 +21,11 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   templateUrl: './quick-menu.component.html',
   host: {
     '[class.quick-menu]': 'true',
-    '(click)': '_click()',
+    '(click)': '_click()'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
   static ngAcceptInputType_top: NumberInput;
@@ -54,10 +55,14 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   private setStyle(): void {
     this.ctrlStyle = {
       'background-color': this.bgColor,
-      'border-color': this.borderColor,
+      'border-color': this.borderColor
     };
 
-    const res: string[] = [`top:${this.top}px`, `width:${this.width}px`, `margin-right:-${this.show ? 0 : this.width}px`];
+    const res: string[] = [
+      `top:${this.top}px`,
+      `width:${this.width}px`,
+      `margin-right:-${this.show ? 0 : this.width}px`
+    ];
     if (this.bgColor) {
       res.push(`background-color:${this.bgColor}`);
     }

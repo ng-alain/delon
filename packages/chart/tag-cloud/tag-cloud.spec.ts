@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
+
 import { checkDelay, PageG2 } from '@delon/testing';
+
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
 import { G2TagCloudModule } from './tag-cloud.module';
 
@@ -40,7 +42,7 @@ describe('chart: tag-cloud', () => {
 });
 
 @Component({
-  template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data" [delay]="delay"></g2-tag-cloud> `,
+  template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data" [delay]="delay"></g2-tag-cloud> `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2TagCloudComponent;
@@ -50,7 +52,7 @@ class TestComponent {
     { name: 'China3', value: 3 },
     { name: 'China4', value: 4 },
     { name: 'China5', value: 5 },
-    { name: 'China6', value: 6 },
+    { name: 'China6', value: 6 }
   ];
   delay = 0;
 }

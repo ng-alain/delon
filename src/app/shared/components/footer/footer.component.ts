@@ -1,11 +1,14 @@
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
+
 import { I18NService } from '@core';
+
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { LoadingService } from '@delon/abc/loading';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, copy, InputBoolean, LazyService } from '@delon/util';
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-footer',
@@ -13,9 +16,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   host: {
     '[class.footer]': 'true',
     '[class.footer__dark]': 'true',
-    '[class.footer__small]': 'small',
+    '[class.footer__small]': 'small'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent implements OnInit {
   static ngAcceptInputType_small: BooleanInput;
@@ -33,7 +36,7 @@ export class FooterComponent implements OnInit {
     private iconSrv: NzIconService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    private platform: Platform,
+    private platform: Platform
   ) {}
 
   onCopy(value: string): void {
@@ -61,7 +64,7 @@ export class FooterComponent implements OnInit {
       this.ngZone.runOutsideAngular(() => {
         (window as any).less
           .modifyVars({
-            '@primary-color': res.color.hex,
+            '@primary-color': res.color.hex
           })
           .then(() => {
             window.scrollTo(0, 0);
@@ -84,7 +87,7 @@ export class FooterComponent implements OnInit {
     } else {
       (window as any).less = {
         async: true,
-        javascriptEnabled: true,
+        javascriptEnabled: true
       };
       this.lazy.loadScript(lessUrl).then(() => {
         this.lessLoaded = true;

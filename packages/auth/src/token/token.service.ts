@@ -1,7 +1,9 @@
 import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
-import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
+
+import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
+
 import { mergeConfig } from '../auth.config';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';
 import { AuthReferrer, ITokenModel, ITokenService } from './interface';
@@ -84,7 +86,7 @@ export class TokenService implements ITokenService, OnDestroy {
           const curTime = new Date().valueOf() + refreshOffset!;
           return expired <= curTime ? item : null;
         }),
-        filter(v => v != null),
+        filter(v => v != null)
       )
       .subscribe(res => this.refresh$.next(res!));
   }

@@ -1,4 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
+
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
 import { Widget } from './widget';
@@ -42,7 +43,8 @@ export class WidgetFactory {
     }
 
     const componentClass = this.registry.getType(type) as any;
-    const componentFactory = this.resolver.resolveComponentFactory<Widget<FormProperty, SFUISchemaItem>>(componentClass);
+    const componentFactory =
+      this.resolver.resolveComponentFactory<Widget<FormProperty, SFUISchemaItem>>(componentClass);
     return container.createComponent(componentFactory);
   }
 }

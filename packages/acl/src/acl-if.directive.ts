@@ -1,12 +1,13 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[aclIf]',
-  exportAs: 'aclIf',
+  exportAs: 'aclIf'
 })
 export class ACLIfDirective implements OnDestroy {
   static ngAcceptInputType_except: boolean | string | undefined | null;

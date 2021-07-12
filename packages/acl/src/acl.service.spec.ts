@@ -42,7 +42,7 @@ describe('acl: service', () => {
   it(`#setAbility() set [${ABILITY}]`, () => {
     srv.setAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true);
-    expect(srv.canAbility(ABILITY + `1`)).toBe(false);
+    expect(srv.canAbility(`${ABILITY}1`)).toBe(false);
   });
 
   it(`#setRole()`, () => {
@@ -53,7 +53,7 @@ describe('acl: service', () => {
   it(`#add()`, () => {
     srv.add({
       role: ['NEWROLE'],
-      ability: ['NEWABILITY'],
+      ability: ['NEWABILITY']
     });
     expect(srv.can(ADMIN)).toBe(true);
     expect(srv.can('NEWROLE')).toBe(true);
@@ -91,12 +91,12 @@ describe('acl: service', () => {
   describe('#can()', () => {
     it('should working', () => {
       srv.attachAbility([ABILITY_NUMBER]);
-      expect(srv.can(ADMIN)).toBe(true, 'can ' + ADMIN);
+      expect(srv.can(ADMIN)).toBe(true, `can ${ADMIN}`);
       expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
       expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
       expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
       expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true, 'ACLType item muse be true');
-      expect(srv.can(ADMIN + '1')).toBe(false);
+      expect(srv.can(`${ADMIN}1`)).toBe(false);
       expect(srv.can(null)).toBe(true);
       expect(srv.can({})).toBe(false);
     });
@@ -123,7 +123,7 @@ describe('acl: service', () => {
     srv.attachAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true, 'should be support number or string type');
     expect(srv.canAbility([ABILITY])).toBe(true, 'should be support array type');
-    expect(srv.canAbility(ADMIN + '1')).toBe(false, 'should be invalid ability');
+    expect(srv.canAbility(`${ADMIN}1`)).toBe(false, 'should be invalid ability');
   });
 
   it('should be valid when all of for is array roles', () => {

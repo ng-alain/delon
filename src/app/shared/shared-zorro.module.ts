@@ -9,6 +9,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzHighlightModule } from 'ng-zorro-antd/core/highlight';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
@@ -35,7 +36,6 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-import { NzHighlightModule } from 'ng-zorro-antd/core/highlight';
 
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
@@ -75,5 +75,5 @@ export const SHARED_ZORRO_MODULES = [
   NzUploadModule,
   NzPaginationModule,
   NzEmptyModule,
-  NzHighlightModule,
+  NzHighlightModule
 ];

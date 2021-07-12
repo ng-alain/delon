@@ -1,9 +1,7 @@
 // Karma configuration file, see link for more information
-// https://karma-runner.github.io/0.13/config/configuration-file.html
-const tags = process.env && process.env['NG_TEST_TAGS'];
 
 module.exports = function (config) {
-  const configuration = {
+  config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular', 'viewport'],
     plugins: [
@@ -20,8 +18,7 @@ module.exports = function (config) {
       jasmine: {
         random: false,
       },
-      clearContext: true, // leave Jasmine Spec Runner output visible in browser
-      ...(tags && { args: [tags] }),
+      clearContext: true // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
       subdir: '.',
@@ -57,7 +54,5 @@ module.exports = function (config) {
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 3000000,
     captureTimeout: 1800000,
-  };
-
-  config.set(configuration);
+  });
 };

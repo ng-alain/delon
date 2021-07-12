@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+
 import { ControlUIWidget } from '../../widget';
 import { SFBooleanWidgetSchema } from './schema';
 
@@ -6,6 +7,6 @@ import { SFBooleanWidgetSchema } from './schema';
   selector: 'sf-boolean',
   templateUrl: './boolean.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class BooleanWidget extends ControlUIWidget<SFBooleanWidgetSchema> {}

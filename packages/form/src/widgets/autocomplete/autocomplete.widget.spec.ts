@@ -1,8 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+
 import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
-import { of } from 'rxjs';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
 import { mergeConfig } from '../../config';
@@ -28,12 +30,11 @@ describe('form: widget: autocomplete', () => {
     page
       .newSchema({
         properties: {
-          a: { type: 'string', ui: { widget }, enum: ['aaa', 'bbb', 'ccc'] },
-        },
+          a: { type: 'string', ui: { widget }, enum: ['aaa', 'bbb', 'ccc'] }
+        }
       })
       .setValue('/a', 'bbb');
     const widgetInstance = page.getProperty('/a').widget as AutoCompleteWidget;
-    // tslint:disable-next-line: no-string-literal
     const list = widgetInstance['fixData'] as SFSchemaEnum[];
     const item = list.find(w => w.checked === true) as SFSchemaEnum;
     expect(item != null).toBe(true);
@@ -51,13 +52,13 @@ describe('form: widget: autocomplete', () => {
           default: 'aaa',
           ui: {
             widget,
-            change: jasmine.createSpy(),
-          } as SFAutoCompleteWidgetSchema,
-        },
-      },
+            change: jasmine.createSpy()
+          } as SFAutoCompleteWidgetSchema
+        }
+      }
     };
     page.newSchema(s);
-    const selectWidget = page.getWidget<AutoCompleteWidget>('sf-' + widget);
+    const selectWidget = page.getWidget<AutoCompleteWidget>(`sf-${widget}`);
     selectWidget.updateValue({ nzLabel: 'aaa', nzValue: { value: 'aaa', label: 'aaa' } } as any);
     const item = s.properties!.a.ui as SFAutoCompleteWidgetSchema;
     expect(item.change).toHaveBeenCalled();
@@ -69,8 +70,8 @@ describe('form: widget: autocomplete', () => {
       page
         .newSchema({
           properties: {
-            a: { type: 'string', ui: { widget }, enum: data },
-          },
+            a: { type: 'string', ui: { widget }, enum: data }
+          }
         })
         .typeEvent('focusin')
         .checkCount('nz-auto-option', data.length)
@@ -86,10 +87,10 @@ describe('form: widget: autocomplete', () => {
             ui: {
               widget,
               asyncData: () => of([{ label: 'label1', value: '1' }]),
-              debounceTime: 1,
-            },
-          },
-        },
+              debounceTime: 1
+            }
+          }
+        }
       });
       const comp = page.getWidget<AutoCompleteWidget>('sf-autocomplete');
       comp.list.subscribe(res => {
@@ -104,9 +105,9 @@ describe('form: widget: autocomplete', () => {
           properties: {
             a: {
               type: 'string',
-              format: 'email',
-            },
-          },
+              format: 'email'
+            }
+          }
         })
         .time(100)
         .typeChar(typeValue)
@@ -124,9 +125,9 @@ describe('form: widget: autocomplete', () => {
             a: {
               type: 'string',
               format: 'email',
-              enum: suffixes,
-            },
-          },
+              enum: suffixes
+            }
+          }
         })
         .time(100)
         .typeChar(typeValue)
@@ -145,10 +146,10 @@ describe('form: widget: autocomplete', () => {
               ui: {
                 widget,
                 asyncData: () => of([{ label: 'label1', value: '1' }]),
-                debounceTime: 1,
-              },
-            },
-          },
+                debounceTime: 1
+              }
+            }
+          }
         })
         .typeChar(typeValue)
         .click('nz-auto-option')
@@ -160,8 +161,8 @@ describe('form: widget: autocomplete', () => {
       page
         .newSchema({
           properties: {
-            a: { type: 'string', ui: { widget }, default: email },
-          },
+            a: { type: 'string', ui: { widget }, default: email }
+          }
         })
         .time();
       expect((page.getEl('input') as HTMLInputElement).value).toBe(email);
@@ -179,11 +180,11 @@ describe('form: widget: autocomplete', () => {
               ui: {
                 widget,
                 change: () => {},
-                filterOption: (_input: string, option: SFSchemaEnum) => option.label === 'a11',
+                filterOption: (_input: string, option: SFSchemaEnum) => option.label === 'a11'
               },
-              enum: data,
-            },
-          },
+              enum: data
+            }
+          }
         })
         .typeChar('a1')
         .checkCount('nz-auto-option', 1)

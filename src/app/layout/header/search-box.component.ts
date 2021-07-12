@@ -1,9 +1,12 @@
 import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { I18NService } from '@core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
 declare const docsearch: any;
 
@@ -11,15 +14,19 @@ declare const docsearch: any;
   selector: 'header-search',
   templateUrl: './search-box.component.html',
   host: {
-    '[attr.id]': '"search-box"',
+    '[attr.id]': '"search-box"'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderSearchComponent implements AfterViewInit {
   @ViewChild('searchInput', { static: false })
   searchInput: ElementRef<HTMLInputElement>;
 
-  constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService, private platform: Platform, private router: Router) {}
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private platform: Platform,
+    private router: Router
+  ) {}
 
   ngAfterViewInit(): void {
     this.initDocSearch();
@@ -39,7 +46,7 @@ export class HeaderSearchComponent implements AfterViewInit {
       inputSelector: '#search-box input',
       algoliaOptions: {
         hitsPerPage: 5,
-        facetFilters: [`tags:${this.i18n.zone}`],
+        facetFilters: [`tags:${this.i18n.zone}`]
       },
       handleSelected: (_input: NzSafeAny, _event: NzSafeAny, suggestion: { url: string }) => {
         const url = suggestion?.url || '';
@@ -50,7 +57,7 @@ export class HeaderSearchComponent implements AfterViewInit {
         }
         window.open(url);
       },
-      debug: false,
+      debug: false
     });
   }
 

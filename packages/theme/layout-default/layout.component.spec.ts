@@ -4,11 +4,14 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadingStrategy, Route, Router, RouterModule, RouterPreloader } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { createTestContext } from '@delon/testing';
-import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { createTestContext } from '@delon/testing';
+
 import { SettingsService } from '../src/services/settings/settings.service';
 import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
@@ -25,7 +28,7 @@ describe('theme: layout-default', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule, AlainThemeModule],
-        declarations: [TestComponent],
+        declarations: [TestComponent]
       });
 
       ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -128,40 +131,40 @@ describe('theme: layout-default', () => {
       }
       return new DelayedPreLoad();
     };
-    let layoutComp: LayoutCmp;
+    let layoutComp: LayoutComponent;
 
     @Component({ template: '<layout-default #comp><router-outlet></router-outlet></layout-default>' })
-    class LayoutCmp {
+    class LayoutComponent {
       @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;
     }
 
     @Component({ template: '' })
-    class LazyLoadedCmp {}
+    class LazyLoadedComponent {}
 
     @NgModule({
-      declarations: [LayoutCmp, LazyLoadedCmp],
+      declarations: [LayoutComponent, LazyLoadedComponent]
     })
     class SharedModule {}
 
     @NgModule({
-      imports: [SharedModule, RouterModule.forChild([{ path: 'LoadedModule1', component: LazyLoadedCmp }])],
+      imports: [SharedModule, RouterModule.forChild([{ path: 'LoadedModule1', component: LazyLoadedComponent }])]
     })
     class LoadedModule1 {}
 
     beforeEach(() => {
       lazyLoadChildrenSpy.calls.reset();
       TestBed.configureTestingModule({
-        declarations: [LayoutCmp],
+        declarations: [LayoutComponent],
         imports: [
           LayoutDefaultModule,
           NzIconTestModule,
           NoopAnimationsModule,
           RouterTestingModule.withRoutes([{ path: 'lazy', loadChildren: lazyLoadChildrenSpy }]),
-          AlainThemeModule,
+          AlainThemeModule
         ],
-        providers: [{ provide: PreloadingStrategy, useFactory: mockPreloaderFactory }],
+        providers: [{ provide: PreloadingStrategy, useFactory: mockPreloaderFactory }]
       });
-      layoutComp = TestBed.createComponent(LayoutCmp).componentInstance;
+      layoutComp = TestBed.createComponent(LayoutComponent).componentInstance;
     });
 
     it('should working', fakeAsync(() => {
@@ -219,7 +222,7 @@ describe('theme: layout-default', () => {
     <ng-template #contentTpl>
       <span class="custom-content">custom-content</span>
     </ng-template>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('asideUserTpl', { static: true }) asideUserTpl!: TemplateRef<void>;

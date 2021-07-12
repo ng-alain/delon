@@ -1,4 +1,5 @@
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainAndModuleApp } from '../utils/testing';
 import { addValueToVariable } from './alain';
 
@@ -16,7 +17,7 @@ describe('Schematic: alain', () => {
       fileName,
       `
 const COMPONENTS = [Components...];
-    `,
+    `
     );
     addValueToVariable(tree, fileName, 'COMPONENTS', newComponentName, false);
     const content = tree.readContent(fileName);

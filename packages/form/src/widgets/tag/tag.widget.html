@@ -1,12 +1,26 @@
 <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
   <ng-template #icon let-i>
-    <i nz-icon [nzType]="i.type" [nzTheme]="i.theme" [nzTwotoneColor]="i.twotoneColor" [nzRotate]="i.rotate" [nzIconfont]="i.iconfont" [nzSpin]="i.spin"></i>
+    <i
+      nz-icon
+      [nzType]="i.type"
+      [nzTheme]="i.theme"
+      [nzTwotoneColor]="i.twotoneColor"
+      [nzRotate]="i.rotate"
+      [nzIconfont]="i.iconfont"
+      [nzSpin]="i.spin"
+    ></i>
   </ng-template>
-  <nz-tag *ngFor="let i of data" [nzMode]="ui.mode || 'checkable'" [nzChecked]="i.checked" (nzOnClose)="_close($event)" (nzCheckedChange)="onChange(i)">
+  <nz-tag
+    *ngFor="let i of data"
+    [nzMode]="ui.mode || 'checkable'"
+    [nzChecked]="i.checked"
+    (nzOnClose)="_close($event)"
+    (nzCheckedChange)="onChange(i)"
+  >
     <ng-container *ngIf="i.prefixIcon">
       <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.prefixIcon }"></ng-template>
     </ng-container>
-    <span>{{i.label}}</span>
+    <span>{{ i.label }}</span>
     <ng-container *ngIf="i.suffixIcon">
       <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.suffixIcon }"></ng-template>
     </ng-container>

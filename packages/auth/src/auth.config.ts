@@ -5,7 +5,6 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   token_invalid_redirect: true,
   token_exp_offset: 10,
   token_send_key: `token`,
-  // tslint:disable-next-line: no-invalid-template-strings
   token_send_template: '${token}',
   token_send_place: 'header',
   login_url: '/login',
@@ -13,7 +12,7 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   allow_anonymous_key: `_allow_anonymous`,
   executeOtherInterceptors: true,
   refreshTime: 3000,
-  refreshOffset: 6000,
+  refreshOffset: 6000
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainAuthConfig {

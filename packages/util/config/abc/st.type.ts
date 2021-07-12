@@ -1,10 +1,11 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { TemplateRef, TrackByFunction } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
-import { Observable } from 'rxjs';
 
 export interface AlainSTConfig {
   /**
@@ -273,7 +274,7 @@ export interface AlainSTConfig {
     /**
      * Style of the popover card
      */
-    overlayStyle?: {};
+    overlayStyle?: { [key: string]: string };
 
     /**
      * Text of the Cancel button
@@ -401,7 +402,7 @@ export interface AlainSTConfig {
     method: string;
     url: string;
     options: {
-      body?: any;
+      body?: unknown;
       headers?:
         | HttpHeaders
         | {
@@ -413,7 +414,7 @@ export interface AlainSTConfig {
             [param: string]: string | string[];
           };
     };
-  }) => Observable<any>;
+  }) => Observable<NzSafeAny>;
   /**
    * Date format
    *
@@ -431,7 +432,7 @@ export interface AlainSTConfig {
     /**
      * 真值条件，（默认：`true`）
      */
-    truth?: any;
+    truth?: unknown;
     /**
      * 徽章 `true` 时文本，（默认：`是`）
      */

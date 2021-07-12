@@ -1,6 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from './i18n';
 
@@ -31,7 +32,7 @@ describe('theme: i18n', () => {
         this.data = {
           simple: 'a',
           param: 'a-{{value}}',
-          html: '<i>asdf</i>',
+          html: '<i>asdf</i>'
         };
       }
       fanyi(key: string, data?: { [key: string]: string }, _isSafe?: boolean): string {
@@ -51,9 +52,9 @@ describe('theme: i18n', () => {
           {
             provide: ALAIN_I18N_TOKEN,
             useClass: MockI18NService,
-            multi: false,
-          },
-        ],
+            multi: false
+          }
+        ]
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
@@ -62,7 +63,7 @@ describe('theme: i18n', () => {
     }
 
     function check(result: string, id: string = 'simple'): void {
-      const el = fixture.debugElement.query(By.css('#' + id)).nativeElement as HTMLElement;
+      const el = fixture.debugElement.query(By.css(`#${id}`)).nativeElement as HTMLElement;
 
       expect(el.textContent!.trim()).toBe(result);
     }
@@ -96,7 +97,7 @@ describe('theme: i18n', () => {
     <div id="simple">{{ key | i18n }}</div>
     <div id="param">{{ key | i18n: params }}</div>
     <div id="html" [innerHTML]="key | i18n: params:isSafe"></div>
-  `,
+  `
 })
 class TestComponent {
   key = 'simple';

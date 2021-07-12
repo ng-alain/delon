@@ -1,7 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injector } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LocaleData } from '@delon/theme';
 import { takeUntil } from 'rxjs/operators';
+
+import { LocaleData } from '@delon/theme';
+
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { ArrayProperty } from './model/array.property';
@@ -57,23 +59,25 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     @Inject(ChangeDetectorRef) public readonly cd: ChangeDetectorRef,
     @Inject(Injector) public readonly injector: Injector,
     @Inject(SFItemComponent) public readonly sfItemComp?: SFItemComponent,
-    @Inject(SFComponent) public readonly sfComp?: SFComponent,
+    @Inject(SFComponent) public readonly sfComp?: SFComponent
   ) {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe((errors: ErrorData[] | null) => {
-      if (errors == null) return;
-      di(this.ui, 'errorsChanges', this.formProperty.path, errors);
+    this.formProperty.errorsChanges
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
+      .subscribe((errors: ErrorData[] | null) => {
+        if (errors == null) return;
+        di(this.ui, 'errorsChanges', this.formProperty.path, errors);
 
-      // 不显示首次校验视觉
-      if (this.firstVisual) {
-        this.showError = errors.length > 0;
-        this.error = this.showError ? (errors[0].message as string) : '';
+        // 不显示首次校验视觉
+        if (this.firstVisual) {
+          this.showError = errors.length > 0;
+          this.error = this.showError ? (errors[0].message as string) : '';
 
-        this.cd.detectChanges();
-      }
-      this.firstVisual = true;
-    });
+          this.cd.detectChanges();
+        }
+        this.firstVisual = true;
+      });
     this.afterViewInit();
   }
 
@@ -117,7 +121,9 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
   afterViewInit(): void {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
+      .subscribe(() => this.cd.detectChanges());
   }
 }
 
@@ -127,6 +133,8 @@ export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSch
   afterViewInit(): void {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
+      .subscribe(() => this.cd.detectChanges());
   }
 }

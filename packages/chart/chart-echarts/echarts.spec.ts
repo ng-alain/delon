@@ -1,9 +1,11 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
 import { NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
+
 import { ChartEChartsComponent } from './echarts.component';
 import { ChartEChartsModule } from './echarts.module';
 import { ChartEChartsEvent, ChartEChartsOption } from './echarts.types';
@@ -15,9 +17,9 @@ class MockLazyService {
       init: () => {
         return {
           setOption: jasmine.createSpy('setOption'),
-          dispose: jasmine.createSpy('dispose'),
+          dispose: jasmine.createSpy('dispose')
         };
-      },
+      }
     };
     return Promise.resolve();
   }
@@ -32,7 +34,7 @@ describe('chart: chart-echarts', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: LazyService, useClass: MockLazyService }],
       imports: [ChartEChartsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     spyOn(context, 'handleEvents');
@@ -91,13 +93,13 @@ describe('chart: chart-echarts', () => {
       [initOpt]="initOpt"
       (events)="handleEvents($event)"
     ></chart-echarts>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp: ChartEChartsComponent;
   width: NumberInput = 600;
   height: NumberInput = 400;
-  theme?: string | object | null = null;
+  theme?: string | Record<string, unknown> | null = null;
   option: ChartEChartsOption = {};
   initOpt: any;
   handleEvents(_: ChartEChartsEvent): void {}

@@ -6,29 +6,29 @@ export default {
     403: `Sorry, you don't have access to this page`,
     404: `Sorry, the page you visited does not exist`,
     500: `Sorry, the server is reporting an error`,
-    backToHome: 'Back To Home',
+    backToHome: 'Back To Home'
   },
   noticeIcon: {
     emptyText: 'No data',
-    clearText: 'Clear',
+    clearText: 'Clear'
   },
   reuseTab: {
     close: 'Close tab',
     closeOther: 'Close other tabs',
     closeRight: 'Close tabs to right',
-    refresh: 'Refresh',
+    refresh: 'Refresh'
   },
   tagSelect: {
     expand: 'Expand',
-    collapse: 'Collapse',
+    collapse: 'Collapse'
   },
   miniProgress: {
-    target: 'Target: ',
+    target: 'Target: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} of {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Reset',
+    filterReset: 'Reset'
   },
   sf: {
     submit: 'Submit',
@@ -72,13 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
   onboarding: {
     skip: `Skip`,
     prev: `Prev`,
     next: `Next`,
-    done: `Done`,
-  },
+    done: `Done`
+  }
 } as FullLocaleData;

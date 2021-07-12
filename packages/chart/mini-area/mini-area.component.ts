@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -19,11 +21,11 @@ export interface G2MiniAreaClickItem {
   exportAs: 'g2MiniArea',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2MiniAreaComponent extends G2BaseComponent {
   static ngAcceptInputType_borderWidth: NumberInput;
@@ -47,7 +49,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() clickItem = new EventEmitter<G2MiniAreaClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2MiniAreaClickItem>();
 
   // #endregion
 
@@ -66,14 +68,14 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       animate,
       color,
       borderColor,
-      borderWidth,
+      borderWidth
     } = this;
     const chart: Chart = (this._chart = new (window as any).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.animate(animate);
 

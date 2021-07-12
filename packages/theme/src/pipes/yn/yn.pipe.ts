@@ -18,7 +18,9 @@ export class YNPipe implements PipeTransform {
     no = no || '否';
     switch (mode) {
       case 'full':
-        html = value ? `<i ${CLS_YES}>${ICON_YES}<span>${yes}</span></i>` : `<i ${CLS_NO}>${ICON_NO}<span>${no}</span></i>`;
+        html = value
+          ? `<i ${CLS_YES}>${ICON_YES}<span>${yes}</span></i>`
+          : `<i ${CLS_NO}>${ICON_NO}<span>${no}</span></i>`;
         break;
       case 'text':
         html = value ? `<i ${CLS_YES}>${yes}</i>` : `<i ${CLS_NO}>${no}</i>`;

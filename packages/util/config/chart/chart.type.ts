@@ -32,5 +32,5 @@ export interface AlainChartConfig {
    *
    * 主题配置项，可以配合 `echartsExtensions` 加载默认的主题文件
    */
-  echartsTheme?: string | object | null;
+  echartsTheme?: string | Record<string, unknown> | null;
 }

@@ -3,6 +3,7 @@ import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics'
 import { findNode } from '@schematics/angular/utility/ast-utils';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import * as ts from 'typescript';
+
 import {
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
@@ -13,7 +14,7 @@ import {
   readContent,
   readPackage,
   removeAllowedCommonJsDependencies,
-  writePackage,
+  writePackage
 } from '../../../utils';
 import mainContent from './files-tpl/main';
 
@@ -102,7 +103,7 @@ export function fixHmr(sourceRoot: string): Rule {
       // 3、修改 package.json 命令行 `-c=hmr` 为 `--hmr`
       fixPackage(),
       // 4、修改 `main.ts` 并移除 `hmr.ts` 文件
-      fixMainTs(hmrTsPath, sourceRoot),
+      fixMainTs(hmrTsPath, sourceRoot)
     ]);
   };
 }

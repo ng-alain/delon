@@ -1,9 +1,12 @@
 import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
-import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 import { Observable, Subject } from 'rxjs';
+
+import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
+
+import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
+
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
@@ -17,14 +20,14 @@ export class I18NService implements AlainI18NService {
 
   private _langs = [
     { code: 'en-US', text: 'English' },
-    { code: 'zh-CN', text: '中文' },
+    { code: 'zh-CN', text: '中文' }
   ];
 
   constructor(
     private zorroI18n: NzI18nService,
     private delonI18n: DelonLocaleService,
     private dom: DomSanitizer,
-    private platform: Platform,
+    private platform: Platform
   ) {
     // from browser
     const lang = (this.getBrowserLang() || this.defaultLang) as LangType;

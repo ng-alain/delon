@@ -1,20 +1,23 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AppService, CodeService, I18NService } from '@core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { copy, deepCopy } from '@delon/util';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
+import { AppService, CodeService, I18NService } from '@core';
+
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy, deepCopy } from '@delon/util';
 
 @Component({
   selector: 'code-box',
   templateUrl: './code-box.component.html',
   host: {
     '[class.code-box]': 'true',
-    '[class.expand]': 'expand',
+    '[class.expand]': 'expand'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeBoxComponent implements OnDestroy {
   private _item: any;
@@ -35,7 +38,7 @@ export class CodeBoxComponent implements OnDestroy {
       summary: this.sanitizer.bypassSecurityTrustHtml(this.i18n.get(value.summary)),
       browser: +value.meta.browser > 0 ? +value.meta.browser : null,
       bg: value.meta.bg,
-      urls: value.urls,
+      urls: value.urls
     };
     this._item = ret;
   }
@@ -51,7 +54,7 @@ export class CodeBoxComponent implements OnDestroy {
     private msg: NzMessageService,
     private codeSrv: CodeService,
     private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.theme = data;
@@ -60,7 +63,7 @@ export class CodeBoxComponent implements OnDestroy {
     this.i18n.change
       .pipe(
         filter(() => !!this._orgItem),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         this.item.title = this.i18n.get(this._orgItem.meta.title);

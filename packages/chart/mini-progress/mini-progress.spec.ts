@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { createTestContext, PageG2 } from '@delon/testing';
+
 import { G2MiniProgressComponent } from './mini-progress.component';
 import { G2MiniProgressModule } from './mini-progress.module';
 
@@ -12,7 +14,7 @@ describe('chart: mini-progress', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2MiniProgressModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -42,8 +44,9 @@ describe('chart: mini-progress', () => {
 
 @Component({
   template: `
-    <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent" [strokeWidth]="strokeWidth"> </g2-mini-progress>
-  `,
+    <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent" [strokeWidth]="strokeWidth">
+    </g2-mini-progress>
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2MiniProgressComponent;

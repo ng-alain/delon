@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
+
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
 
 const OPENTYPE = '_delonAuthSocialType';
@@ -15,10 +16,15 @@ export class SocialService implements OnDestroy {
   private _winTime: any;
   private observer: Observer<ITokenModel | null>;
 
-  constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, @Inject(DOCUMENT) private doc: any, private router: Router) {}
+  constructor(
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    @Inject(DOCUMENT) private doc: any,
+    private router: Router
+  ) {}
 
   /**
    * 使用窗体打开授权页，返回值是 `Observable<ITokenModel>` 用于订阅授权后返回的结果
+   *
    * @param url 获取授权地址
    * @param callback 回调路由地址
    * @param options.windowFeatures 等同 `window.open` 的 `features` 参数值
@@ -29,11 +35,12 @@ export class SocialService implements OnDestroy {
     options?: {
       type?: 'window';
       windowFeatures?: string;
-    },
+    }
   ): Observable<ITokenModel>;
 
   /**
    * 跳转至授权页
+   *
    * @param url 获取授权地址
    * @param callback 回调路由地址
    */
@@ -42,11 +49,12 @@ export class SocialService implements OnDestroy {
     callback?: string,
     options?: {
       type?: 'href';
-    },
+    }
   ): void;
 
   /**
    * 跳转至登录页，若为 `type=window` 时，返回值是 `Observable<ITokenModel>`
+   *
    * @param url 获取授权地址
    * @param callback 当 `type=href` 成功时的回调路由地址
    * @param options.type 打开方式，默认 `window`
@@ -58,12 +66,12 @@ export class SocialService implements OnDestroy {
     options: {
       type?: SocialOpenType;
       windowFeatures?: string;
-    } = {},
+    } = {}
   ): Observable<ITokenModel | null> | void {
     options = {
       type: 'window',
       windowFeatures: 'location=yes,height=570,width=520,scrollbars=yes,status=yes',
-      ...options,
+      ...options
     };
     localStorage.setItem(OPENTYPE, options.type!);
     localStorage.setItem(HREFCALLBACK, callback);
@@ -108,7 +116,7 @@ export class SocialService implements OnDestroy {
     let data: ITokenModel = { token: `` };
     if (typeof rawData === 'string') {
       const rightUrl = rawData.split('?')[1].split('#')[0];
-      data = this.router.parseUrl('./?' + rightUrl).queryParams as ITokenModel;
+      data = this.router.parseUrl(`./?${rightUrl}`).queryParams as ITokenModel;
     } else {
       data = rawData as ITokenModel;
     }

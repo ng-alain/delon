@@ -6,29 +6,29 @@ export default {
     403: 'ページへのアクセス権限がありません',
     404: 'ページが存在しません',
     500: 'サーバーエラーが発生しました',
-    backToHome: 'ホームに戻る',
+    backToHome: 'ホームに戻る'
   },
   noticeIcon: {
     emptyText: 'データが有りません',
-    clearText: 'クリア',
+    clearText: 'クリア'
   },
   reuseTab: {
     close: 'タブを閉じる',
     closeOther: '他のタブを閉じる',
     closeRight: '右のタブを閉じる',
-    refresh: 'リフレッシュ',
+    refresh: 'リフレッシュ'
   },
   tagSelect: {
     expand: '展開する',
-    collapse: '折りたたむ',
+    collapse: '折りたたむ'
   },
   miniProgress: {
-    target: '設定値: ',
+    target: '設定値: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} / {{total}}',
     filterConfirm: '確定',
-    filterReset: 'リセット',
+    filterReset: 'リセット'
   },
   sf: {
     submit: '送信',
@@ -55,8 +55,8 @@ export default {
       formatMinimum: `値が不正です: {comparison} {limit}`,
       maximum: `値が不正です: {comparison} {limit}`,
       formatMaximum: `値が不正です: {comparison} {limit}`,
-      maxItems: `最大選択数は {limit}　より小さい必要があります`,
-      minItems: `最小選択数は {limit}　より大きい必要があります`,
+      maxItems: `最大選択数は {limit} より小さい必要があります`,
+      minItems: `最小選択数は {limit} より大きい必要があります`,
       maxProperties: `値を{limit}より大きくすることはできません`,
       minProperties: `値を{limit}より小さくすることはできません`,
       multipleOf: `値は次の数の倍数である必要があります: {multipleOf}`,
@@ -72,13 +72,13 @@ export default {
       contains: `有効なアイテムを含める必要があります`,
       formatExclusiveMaximum: `formatExclusiveMaximum は真偽値である必要があります`,
       formatExclusiveMinimum: `formatExclusiveMaximum は真偽値である必要があります`,
-      if: `パターンと一致する必要があります: "{failingKeyword}" `,
-    },
+      if: `パターンと一致する必要があります: "{failingKeyword}" `
+    }
   },
   onboarding: {
     skip: `スキップ`,
     prev: `前へ`,
     next: `次`,
-    done: `できた`,
-  },
+    done: `できた`
+  }
 } as FullLocaleData;

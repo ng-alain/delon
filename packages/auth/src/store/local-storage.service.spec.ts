@@ -1,4 +1,5 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ITokenModel } from '../token/interface';
 import { LocalStorageStore } from './local-storage.service';
 
@@ -6,7 +7,7 @@ describe('auth: local-storage', () => {
   const store = new LocalStorageStore();
   const KEY = 'token';
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
 
   beforeEach(() => {

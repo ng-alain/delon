@@ -5,9 +5,9 @@ describe('abc: utils', () => {
     const tree = {
       responsne: {
         list: [],
-        total: 10,
+        total: 10
       },
-      status: 'ok',
+      status: 'ok'
     };
     it('should be get [status]', () => {
       expect(deepGet(tree, ['status'])).toBe(tree.status);

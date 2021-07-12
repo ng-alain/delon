@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -12,11 +13,11 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
     '[class.sv__vertical]': `layout === 'vertical'`,
     '[class.sv__small]': `size === 'small'`,
     '[class.sv__large]': `size === 'large'`,
-    '[class.clearfix]': `true`,
+    '[class.clearfix]': `true`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
@@ -40,7 +41,7 @@ export class SVContainerComponent {
       gutter: 32,
       layout: 'horizontal',
       col: 3,
-      default: true,
+      default: true
     });
   }
 }

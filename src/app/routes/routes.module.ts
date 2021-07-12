@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
@@ -19,7 +20,7 @@ const routes: Route[] = [
       { path: 'docs', loadChildren: () => import('./gen/docs/docs.module').then(m => m.DocsModule) },
       {
         path: 'components',
-        loadChildren: () => import('./gen/components/components.module').then(m => m.ComponentsModule),
+        loadChildren: () => import('./gen/components/components.module').then(m => m.ComponentsModule)
       },
       { path: 'theme', loadChildren: () => import('./gen/theme/theme.module').then(m => m.ThemeModule) },
       { path: 'auth', loadChildren: () => import('./gen/auth/auth.module').then(m => m.AuthModule) },
@@ -31,22 +32,25 @@ const routes: Route[] = [
       { path: 'form', loadChildren: () => import('./gen/form/form.module').then(m => m.FormModule) },
       {
         path: 'form-pages',
-        loadChildren: () => import('./form-pages/form-pages.module').then(m => m.FormPagesModule),
+        loadChildren: () => import('./form-pages/form-pages.module').then(m => m.FormPagesModule)
       },
-      { path: 'cli', loadChildren: () => import('./gen/cli/cli.module').then(m => m.CliModule) },
+      { path: 'cli', loadChildren: () => import('./gen/cli/cli.module').then(m => m.CliModule) }
       // #endregion
-    ],
+    ]
   },
   {
     path: 'dev',
-    loadChildren: () => import('../../dev/dev.module').then(m => m.DevTestModule),
+    loadChildren: () => import('../../dev/dev.module').then(m => m.DevTestModule)
   },
   { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: '404' },
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forRoot(routes, { initialNavigation: 'enabled', scrollPositionRestoration: 'enabled' })],
-  declarations: COMPONENTS,
+  imports: [
+    SharedModule,
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled', scrollPositionRestoration: 'enabled' })
+  ],
+  declarations: COMPONENTS
 })
 export class RoutesModule {}

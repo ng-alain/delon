@@ -13,5 +13,5 @@ export const WINDOW = new InjectionToken<Window>('WINDOW', {
       throw new Error('Window is not available');
     }
     return defaultView;
-  },
+  }
 });

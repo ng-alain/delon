@@ -1,8 +1,11 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createTestContext } from '@delon/testing';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { createTestContext } from '@delon/testing';
+
 import { QuickMenuComponent } from './quick-menu.component';
 import { QuickMenuModule } from './quick-menu.module';
 
@@ -14,7 +17,7 @@ describe('abc: quick-menu', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [QuickMenuModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
 
     ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -80,7 +83,7 @@ describe('abc: quick-menu', () => {
       [expand]="expand"
       (expandChange)="expandChange()"
     ></quick-menu>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

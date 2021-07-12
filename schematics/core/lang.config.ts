@@ -6,13 +6,13 @@ export const LANGS_CONFIG = [
     langs: ['zh-Hans', 'zh-cn', 'zh-Hans-CN', 'zh'],
     zorro: 'zh_CN',
     delon: 'zh_CN',
-    fileName: 'zh-CN.json',
+    fileName: 'zh-CN.json'
   },
   {
     langs: ['zh-Hant', 'zh-tw', 'zh-Hant-TW'],
     zorro: 'zh_TW',
     delon: 'zh_TW',
-    fileName: 'zh-TW.json',
+    fileName: 'zh-TW.json'
   },
   { langs: ['en'], zorro: 'en_US', delon: 'en_US', fileName: 'en-US.json' },
   { langs: ['tr'], zorro: 'tr_TR', delon: 'tr_TR', fileName: 'tr-TR.json' },
@@ -23,7 +23,7 @@ export const LANGS_CONFIG = [
   { langs: ['ja'], zorro: 'ja_JP', delon: 'ja_JP' },
   { langs: ['sl'], zorro: 'sl_SI', delon: 'sl_SI', fileName: 'sl-SI.json' },
   { langs: ['fr'], zorro: 'fr_FR', delon: 'fr_FR', fileName: 'fr-FR.json' },
-  { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' },
+  { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' }
 ];
 
 export function getLangConfig(lang: string): any {

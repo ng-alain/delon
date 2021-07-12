@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { SFSelectWidgetSchema } from './schema';
@@ -22,14 +24,14 @@ describe('form: widget: select', () => {
   });
 
   function getWidget(): SelectWidget {
-    return page.getWidget<SelectWidget>('sf-' + widget);
+    return page.getWidget<SelectWidget>(`sf-${widget}`);
   }
 
   it('#setValue', fakeAsync(() => {
     page.newSchema({
       properties: {
-        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] },
-      },
+        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
+      }
     });
     page.setValue('/a', 'item1').dc(1);
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('item1');
@@ -46,15 +48,15 @@ describe('form: widget: select', () => {
           enum: [
             { label: '待支付', value: 'WAIT_BUYER_PAY' },
             { label: '已支付', value: 'TRADE_SUCCESS' },
-            { label: '交易完成', value: 'TRADE_FINISHED' },
+            { label: '交易完成', value: 'TRADE_FINISHED' }
           ],
           default: 'WAIT_BUYER_PAY',
           ui: {
-            widget,
+            widget
           },
-          readOnly: true,
-        },
-      },
+          readOnly: true
+        }
+      }
     };
     page.newSchema(s).typeEvent('click', 'nz-select').checkCount('.ant-select-disabled', 1).asyncEnd();
   }));
@@ -69,7 +71,7 @@ describe('form: widget: select', () => {
             enum: [
               { label: '待支付', value: 'WAIT_BUYER_PAY' },
               { label: '已支付', value: 'TRADE_SUCCESS' },
-              { label: '交易完成', value: 'TRADE_FINISHED' },
+              { label: '交易完成', value: 'TRADE_FINISHED' }
             ],
             default: 'WAIT_BUYER_PAY',
             ui: {
@@ -77,10 +79,10 @@ describe('form: widget: select', () => {
               change: jasmine.createSpy(),
               openChange: jasmine.createSpy(),
               onSearch: jasmine.createSpy().and.returnValue(Promise.resolve()),
-              scrollToBottom: jasmine.createSpy(),
-            },
-          },
-        },
+              scrollToBottom: jasmine.createSpy()
+            }
+          }
+        }
       };
       page.newSchema(s);
       const selectWidget = getWidget();
@@ -107,16 +109,16 @@ describe('form: widget: select', () => {
                 group: true,
                 children: [
                   { label: '已支付', value: 'TRADE_SUCCESS' },
-                  { label: '交易完成', value: 'TRADE_FINISHED' },
-                ],
-              },
+                  { label: '交易完成', value: 'TRADE_FINISHED' }
+                ]
+              }
             ],
             ui: {
               widget,
-              change: jasmine.createSpy(),
-            },
-          },
-        },
+              change: jasmine.createSpy()
+            }
+          }
+        }
       };
       page.newSchema(s);
       const selectWidget = getWidget();
@@ -136,11 +138,18 @@ describe('form: widget: select', () => {
           default: 1,
           ui: {
             widget,
-            allowClear: true,
-          },
-        },
-      },
+            allowClear: true
+          }
+        }
+      }
     };
-    page.newSchema(s).checkValue('/a', 1).time().typeEvent('click', '.ant-select-close-icon').time().checkValue('/a', undefined).asyncEnd();
+    page
+      .newSchema(s)
+      .checkValue('/a', 1)
+      .time()
+      .typeEvent('click', '.ant-select-close-icon')
+      .time()
+      .checkValue('/a', undefined)
+      .asyncEnd();
   }));
 });

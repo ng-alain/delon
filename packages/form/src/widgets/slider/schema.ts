@@ -1,4 +1,5 @@
 import { NzMarks, NzSliderValue } from 'ng-zorro-antd/slider';
+
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFSliderWidgetSchema extends SFUISchemaItem {

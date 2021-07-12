@@ -1,4 +1,5 @@
 import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFNumberWidgetSchema extends SFUISchemaItem {

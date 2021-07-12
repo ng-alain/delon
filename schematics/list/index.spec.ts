@@ -1,5 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import * as fs from 'fs';
+
 import { createAlainAndModuleApp } from '../utils/testing';
 
 describe('Schematic: list', () => {
@@ -33,7 +35,9 @@ describe('Schematic: list', () => {
   });
 
   xit('should be support targets (like: list/edit)', async () => {
-    tree = await runner.runSchematicAsync('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree).toPromise();
+    tree = await runner
+      .runSchematicAsync('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree)
+      .toPromise();
     expect(tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(true);
   });
 

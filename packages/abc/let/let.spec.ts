@@ -1,7 +1,9 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
+
 import { LetModule } from './let.module';
 
 describe('abc: let', () => {
@@ -11,7 +13,7 @@ describe('abc: let', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LetModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -27,7 +29,7 @@ describe('abc: let', () => {
 });
 
 @Component({
-  template: ` <div *let="getter as value" class="value">{{ value }}{{ value }}{{ value }}</div> `,
+  template: ` <div *let="getter as value" class="value">{{ value }}{{ value }}{{ value }}</div> `
 })
 class TestComponent {
   counter = 0;

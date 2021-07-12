@@ -6,29 +6,29 @@ export default {
     403: `Désolé, vous n'avez pas accès à cette page`,
     404: `Désolé, la page que vous avez visitée n'existe pas`,
     500: `Désolé, le serveur signale une erreur`,
-    backToHome: "Retour à l'accueil",
+    backToHome: "Retour à l'accueil"
   },
   noticeIcon: {
     emptyText: 'Pas de données',
-    clearText: 'Effacer',
+    clearText: 'Effacer'
   },
   reuseTab: {
     close: "Fermer l'onglet",
     closeOther: 'Fermer les autres onglets',
     closeRight: 'Fermer les onglets à droite',
-    refresh: 'Rafraîchir',
+    refresh: 'Rafraîchir'
   },
   tagSelect: {
     expand: 'Etendre',
-    collapse: 'Effondrer',
+    collapse: 'Effondrer'
   },
   miniProgress: {
-    target: 'Cible: ',
+    target: 'Cible: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} de {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Réinitialiser',
+    filterReset: 'Réinitialiser'
   },
   sf: {
     submit: 'Soumettre',
@@ -72,13 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
   onboarding: {
     skip: `Passer`,
     prev: `Précédent`,
     next: `Suivant`,
-    done: `Terminé`,
-  },
+    done: `Terminé`
+  }
 } as FullLocaleData;

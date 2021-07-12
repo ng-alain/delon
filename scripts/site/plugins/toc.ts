@@ -1,6 +1,7 @@
-const JsonML = require('jsonml.js/lib/utils');
 import { SiteConfig } from '../interfaces';
 import { generateSluggedId, genValidId, isHeading } from '../utils/utils';
+
+const JsonML = require('jsonml.js/lib/utils');
 
 interface TocItem {
   id: string;
@@ -41,7 +42,7 @@ export function toc(markdownData: any, siteConfig: SiteConfig): TocItem[] {
       return {
         id: genValidId(`${slugged.id}`),
         title: slugged.text,
-        h: +JsonML.getTagName(node).charAt(1),
+        h: +JsonML.getTagName(node).charAt(1)
       } as TocItem;
     });
   return fixChildren(listItems);

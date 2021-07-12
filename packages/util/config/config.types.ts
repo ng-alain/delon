@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import {
   AlainDateRangePickerConfig,
   AlainErrorCollectConfig,
@@ -15,7 +16,7 @@ import {
   AlainSTConfig,
   AlainSVConfig,
   AlainXlsxConfig,
-  AlainZipConfig,
+  AlainZipConfig
 } from './abc/index';
 import { AlainACLConfig } from './acl/acl.type';
 import { AlainAuthConfig } from './auth/auth.type';
@@ -60,7 +61,7 @@ export type AlainConfigKey = keyof AlainConfig;
 
 export const ALAIN_CONFIG = new InjectionToken<AlainConfig>('alain-config', {
   providedIn: 'root',
-  factory: ALAIN_CONFIG_FACTORY,
+  factory: ALAIN_CONFIG_FACTORY
 });
 
 export function ALAIN_CONFIG_FACTORY(): AlainConfig {

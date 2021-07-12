@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: networkEnv', () => {
@@ -19,7 +20,9 @@ describe('NgAlainSchematic: plugin: networkEnv', () => {
 
     describe('when remove', () => {
       beforeEach(async () =>
-        runner.runSchematicAsync('plugin', { name: 'networkEnv', type: 'remove', packageManager: 'npm' }, tree).toPromise(),
+        runner
+          .runSchematicAsync('plugin', { name: 'networkEnv', type: 'remove', packageManager: 'npm' }, tree)
+          .toPromise()
       );
 
       it(`should remove .npmrc`, () => {
@@ -42,7 +45,9 @@ describe('NgAlainSchematic: plugin: networkEnv', () => {
 
     describe('when remove', () => {
       beforeEach(async () =>
-        runner.runSchematicAsync('plugin', { name: 'networkEnv', type: 'remove', packageManager: 'yarn' }, tree).toPromise(),
+        runner
+          .runSchematicAsync('plugin', { name: 'networkEnv', type: 'remove', packageManager: 'yarn' }, tree)
+          .toPromise()
       );
 
       it(`should remove .yarnrc`, () => {

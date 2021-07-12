@@ -73,5 +73,5 @@ export const ENUS = {
   'app.theme-btn.dark': 'Dark Theme',
   'app.theme-btn.compact': 'Compact Theme',
   'sf.name': 'Name',
-  'sf.description': 'This is description',
+  'sf.description': 'This is description'
 };

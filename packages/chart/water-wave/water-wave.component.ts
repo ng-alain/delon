@@ -12,11 +12,12 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'g2-water-wave',
@@ -25,7 +26,7 @@ import { debounceTime } from 'rxjs/operators';
   host: { '[class.g2-water-wave]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   static ngAcceptInputType_animate: BooleanInput;
@@ -53,7 +54,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private renderer: Renderer2,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    private platform: Platform,
+    private platform: Platform
   ) {}
 
   private renderChart(isUpdate: boolean): void {
@@ -64,6 +65,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     const { percent, color, node, animate } = this;
 
     const data = Math.min(Math.max(percent / 100, 0), 100);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     cancelAnimationFrame(this.timer);
 
@@ -92,7 +94,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     const circleOffset = -(Math.PI / 2);
     let circleLock = true;
 
-    // tslint:disable-next-line:binary-expression-operand-order
     for (let i = circleOffset; i < circleOffset + 2 * Math.PI; i += 1 / (8 * Math.PI)) {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
@@ -110,7 +111,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         const x = sp + (xOffset + i) / unit;
         const y = Math.sin(x) * currRange;
         const dx = i;
-        // tslint:disable-next-line:binary-expression-operand-order
         const dy = 2 * cR * (1 - currData) + (radius - cR) - unit * y;
 
         ctx.lineTo(dx, dy);
@@ -155,12 +155,10 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
           ctx.globalCompositeOperation = 'destination-over';
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
-          // tslint:disable-next-line:binary-expression-operand-order
           ctx.arc(radius, radius, bR, 0, 2 * Math.PI, true);
 
           ctx.beginPath();
           ctx.save();
-          // tslint:disable-next-line:binary-expression-operand-order
           ctx.arc(radius, radius, radius - 3 * lineWidth, 0, 2 * Math.PI, true);
 
           ctx.restore();

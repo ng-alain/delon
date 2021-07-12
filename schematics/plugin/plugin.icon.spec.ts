@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainApp } from '../utils/testing';
 
 const testCases = {
@@ -38,7 +39,7 @@ const testCases = {
     \`
   })
   export class TestComponent {}
-  `,
+  `
 };
 
 describe('NgAlainSchematic: plugin: icon', () => {

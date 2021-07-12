@@ -1,4 +1,5 @@
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
+
 import { PluginOptions } from './interface';
 
 const CONFIG = {
@@ -7,15 +8,15 @@ const CONFIG = {
     content: `sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
 phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs/
 electron_mirror=https://npm.taobao.org/mirrors/electron/
-registry=https://registry.npm.taobao.org`,
+registry=https://registry.npm.taobao.org`
   },
   yarn: {
     path: `./.yarnrc`,
     content: `sass_binary_site "https://npm.taobao.org/mirrors/node-sass/"
 phantomjs_cdnurl "https://npm.taobao.org/mirrors/phantomjs/"
 electron_mirror "https://npm.taobao.org/mirrors/electron/"
-registry "https://registry.npm.taobao.org"`,
-  },
+registry "https://registry.npm.taobao.org"`
+  }
 };
 
 export function pluginNetworkEnv(options: PluginOptions): Rule {

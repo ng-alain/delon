@@ -1,4 +1,7 @@
 import { NgZone } from '@angular/core';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ZoneOutside, ZoneRun } from './zone-outside';
 
 describe('util.#ZoneOutside', () => {
@@ -11,9 +14,9 @@ describe('util.#ZoneOutside', () => {
       }
     }
     const mockZone = jasmine.createSpyObj('mockNgZone', ['run', 'runOutsideAngular']);
-    mockZone.run.and.callFake((fn: any) => fn());
-    mockZone.runOutsideAngular.and.callFake((fn: any) => fn());
-    const cls = new MockClass(mockZone as any);
+    mockZone.run.and.callFake((fn: NzSafeAny) => fn());
+    mockZone.runOutsideAngular.and.callFake((fn: NzSafeAny) => fn());
+    const cls = new MockClass(mockZone as NzSafeAny);
     const res = cls.scroll();
     expect(res).toBe('OK');
   });
@@ -25,9 +28,9 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      run: jasmine.createSpy(),
+      run: jasmine.createSpy()
     };
-    const cls = new MockClass(mockZone as any);
+    const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
     expect(mockZone.run).toHaveBeenCalled();
   });
@@ -41,9 +44,9 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      runOutsideAngular: jasmine.createSpy(),
+      runOutsideAngular: jasmine.createSpy()
     };
-    const cls = new MockClass(mockZone as any);
+    const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
     expect(mockZone.runOutsideAngular).toHaveBeenCalledTimes(2);
   });
@@ -55,9 +58,9 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      runOutsideAngular: jasmine.createSpy(),
+      runOutsideAngular: jasmine.createSpy()
     };
-    const cls = new MockClass(mockZone as any);
+    const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
     expect(mockZone.runOutsideAngular).toHaveBeenCalled();
   });

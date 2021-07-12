@@ -2,6 +2,7 @@ import { Component, NgModule, NgModuleFactoryLoader } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
+
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleGuard } from './simple.guard';
@@ -18,25 +19,25 @@ describe('auth: SimpleGuard', () => {
           {
             path: 'home',
             component: MockComponent,
-            canActivate: [SimpleGuard],
+            canActivate: [SimpleGuard]
           },
           {
             path: 'my',
             canActivateChild: [SimpleGuard],
-            children: [{ path: 'profile', component: MockComponent }],
+            children: [{ path: 'profile', component: MockComponent }]
           },
           {
             path: 'lazy',
             canLoad: [SimpleGuard],
-            loadChildren: 'expected',
+            loadChildren: 'expected'
           },
           {
             path: 'login',
-            component: MockComponent,
-          },
+            component: MockComponent
+          }
         ]),
-        DelonAuthModule,
-      ],
+        DelonAuthModule
+      ]
     });
     srv = TestBed.inject(DA_SERVICE_TOKEN);
     router = TestBed.inject<Router>(Router);
@@ -79,7 +80,6 @@ describe('auth: SimpleGuard', () => {
   });
 
   it(`should be support lazy module route`, fakeAsync(() => {
-    // tslint:disable-next-line: deprecation
     const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
     loader.stubbedModules = { expected: AModule };
     router.navigateByUrl('/lazy').then(res => {
