@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
 import { AlainChartConfig, AlainConfigService } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ChartEChartsService implements OnDestroy {
@@ -18,9 +19,9 @@ export class ChartEChartsService implements OnDestroy {
       'chart',
       {
         theme: '',
-        echartsLib: 'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js',
+        echartsLib: 'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js'
       } as AlainChartConfig,
-      val,
+      val
     )!;
   }
 

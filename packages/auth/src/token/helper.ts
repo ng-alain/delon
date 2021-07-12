@@ -1,7 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AlainAuthConfig } from '@delon/util/config';
+
 import { DA_SERVICE_TOKEN, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 import { SimpleTokenModel } from './simple/simple.model';
@@ -13,7 +15,7 @@ export function CheckSimple(model: SimpleTokenModel | null): boolean {
 export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   try {
     return model != null && !!model.token && !model.isExpired(offset);
-  } catch(err) {
+  } catch (err) {
     console.warn(`${err.message}, jump to login_url`);
     return false;
   }

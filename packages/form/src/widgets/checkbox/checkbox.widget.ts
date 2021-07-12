@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -9,7 +10,7 @@ import { SFCheckboxWidgetSchema } from './schema';
   selector: 'sf-checkbox',
   templateUrl: './checkbox.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   data: SFSchemaEnum[] = [];

@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainApp, FILE_PREFIX, migrationCollection } from '../../../utils/testing';
 
 describe('Schematic: ng-update: v11Rule', () => {
@@ -38,7 +39,7 @@ export const environment = {
 
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-      `,
+      `
       );
     });
     it('should working', async () => {

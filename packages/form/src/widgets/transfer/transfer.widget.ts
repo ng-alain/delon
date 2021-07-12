@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { Observable, of } from 'rxjs';
+
+import {
+  TransferCanMove,
+  TransferChange,
+  TransferItem,
+  TransferSearchChange,
+  TransferSelectChange
+} from 'ng-zorro-antd/transfer';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -11,7 +19,7 @@ import { SFTransferWidgetSchema } from './schema';
   selector: 'sf-transfer',
   templateUrl: './transfer.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   list: SFSchemaEnum[] = [];
@@ -24,7 +32,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
       titles: titles || ['', ''],
       operations: operations || ['', ''],
       itemUnit: itemUnit || '项',
-      itemsUnit: itemsUnit || '项',
+      itemsUnit: itemsUnit || '项'
     };
   }
 
@@ -49,7 +57,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
   private notify(): void {
     this.formProperty.setValue(
       this._data.map(i => i.value),
-      false,
+      false
     );
   }
 

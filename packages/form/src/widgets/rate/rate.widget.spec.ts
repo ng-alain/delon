@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: rate', () => {
@@ -27,10 +29,10 @@ describe('form: widget: rate', () => {
             title: '评级',
             default: 2,
             ui: {
-              widget,
-            },
-          },
-        },
+              widget
+            }
+          }
+        }
       })
       .time()
       .checkCount('.ant-rate-star-full', 2);
@@ -46,10 +48,10 @@ describe('form: widget: rate', () => {
             default: 2,
             ui: {
               widget,
-              text: '{{value}} A',
-            },
-          },
-        },
+              text: '{{value}} A'
+            }
+          }
+        }
       })
       .checkElText('.ant-rate-text', '2 A');
   }));

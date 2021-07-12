@@ -15,19 +15,22 @@ import {
   Optional,
   Output,
   SimpleChange,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
 import { PDF_DEFULAT_CONFIG } from './pdf.config';
 import { PdfChangeEvent, PdfChangeEventType, PdfExternalLinkTarget, PdfTextLayerMode, PdfZoomScale } from './pdf.types';
 
 const CSS_UNITS: number = 96.0 / 72.0;
-const BORDER_WIDTH: number = 9;
+const BORDER_WIDTH = 9;
 
 @Component({
   selector: 'pdf',
@@ -39,11 +42,11 @@ const BORDER_WIDTH: number = 9;
     </div>
   `,
   host: {
-    '[class.d-block]': `true`,
+    '[class.d-block]': `true`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_pi: NumberInput;
@@ -161,7 +164,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     private platform: Platform,
     private _el: ElementRef<HTMLElement>,
     @Optional() @Inject(DOCUMENT) private doc: any,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
@@ -183,8 +186,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
         pdf: this._pdf,
         pi: this._pi,
         total: this._total,
-        ...opt,
-      }),
+        ...opt
+      })
     );
   }
 
@@ -239,7 +242,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
           this.resetDoc();
           this.render();
         },
-        (error: NzSafeAny) => this.emit('error', { error }),
+        (error: NzSafeAny) => this.emit('error', { error })
       )
       .then(() => this.setLoading(false));
   }
@@ -298,7 +301,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       const viewportWidth =
         page.getViewport({
           scale: _zoom,
-          rotation,
+          rotation
         }).width * CSS_UNITS;
       let scale = _zoom;
       let stickToPage = true;
@@ -388,11 +391,11 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const eventBus = this.createEventBus();
     const linkService = (this.multiPageLinkService = new VIEWER.PDFLinkService({
-      eventBus,
+      eventBus
     }));
     const findController = (this.multiPageFindController = new VIEWER.PDFFindController({
       eventBus,
-      linkService,
+      linkService
     }));
 
     const viewer = (this.multiPageViewer = new VIEWER.PDFViewer({
@@ -401,7 +404,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
-      findController,
+      findController
     }));
     linkService.setViewer(viewer);
   }
@@ -411,11 +414,11 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const eventBus = this.createEventBus();
     const linkService = (this.singlePageLinkService = new VIEWER.PDFLinkService({
-      eventBus,
+      eventBus
     }));
     const findController = (this.singlePageFindController = new VIEWER.PDFFindController({
       eventBus,
-      linkService,
+      linkService
     }));
 
     const pageViewer = (this.singlePageViewer = new VIEWER.PDFSinglePageViewer({
@@ -424,7 +427,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       removePageBorders: !this.showBorders,
       textLayerMode: this._textLayerMode,
       linkService,
-      findController,
+      findController
     }));
     linkService.setViewer(pageViewer);
     pageViewer._currentPageNumber = this._pi;
@@ -452,7 +455,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       .pipe(
         debounceTime(100),
         filter(() => this.autoReSize && this._pdf),
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe(() => this.updateSize());
   }

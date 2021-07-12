@@ -2,6 +2,7 @@ import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { InsertChange } from '@schematics/angular/utility/change';
 import * as parse5 from 'parse5';
+
 import { BUILD_TARGET_BUILD, getProjectTarget } from './workspace';
 
 /** Gets the app index.html file */
@@ -23,7 +24,7 @@ export function getTag(tree: Tree, src: string, tagName: string): { startOffset:
     return getTagInV4(tree, src, tagName);
   }
   const document = parse5.parse(src, {
-    sourceCodeLocationInfo: true,
+    sourceCodeLocationInfo: true
   } as any) as any;
 
   let resNode: any;
@@ -48,13 +49,13 @@ export function getTag(tree: Tree, src: string, tagName: string): { startOffset:
 
   return {
     startOffset: resNode.sourceCodeLocation.startTag.endOffset,
-    endOffset: resNode.sourceCodeLocation.endTag.startOffset,
+    endOffset: resNode.sourceCodeLocation.endTag.startOffset
   };
 }
 
 export function getTagInV4(_host: Tree, src: string, tagName: string): { startOffset: any; endOffset: any } {
   const document: any = parse5.parse(src, {
-    locationInfo: true,
+    locationInfo: true
   } as any);
 
   let resNode;
@@ -79,7 +80,7 @@ export function getTagInV4(_host: Tree, src: string, tagName: string): { startOf
 
   return {
     startOffset: resNode.__location.startTag.endOffset,
-    endOffset: resNode.__location.endTag.startOffset,
+    endOffset: resNode.__location.endTag.startOffset
   };
 }
 
@@ -95,7 +96,7 @@ export function getIndexHtmlContent(tree: Tree, project: ProjectDefinition): { i
 
   return {
     indexPath,
-    src: buffer.toString(),
+    src: buffer.toString()
   };
 }
 

@@ -7,10 +7,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class KeysPipe implements PipeTransform {
   transform(value: any, keyIsNumber: boolean = false): any[] {
     const ret: any[] = [];
-    // tslint:disable-next-line: forin
-    for (const key in value) {
+    Object.keys(value).forEach(key => {
       ret.push({ key: keyIsNumber ? +key : key, value: value[key] });
-    }
+    });
     return ret;
   }
 }

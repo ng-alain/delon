@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import * as LANG from '../core/lang.config';
 import { APPNAME, createAlainApp, createAlainRunner, createNgRunner } from '../utils/testing';
 
@@ -47,15 +48,15 @@ describe('NgAlainSchematic: application', () => {
         spyOn(LANG, 'getLangData').and.returnValue(
           JSON.stringify({
             key1: 'Key1',
-            key2: 'KEY2',
-          }),
+            key2: 'KEY2'
+          })
         );
         const baseRunner = createNgRunner();
         const workspaceTree = await baseRunner
           .runSchematicAsync('workspace', {
             name: 'workspace',
             newProjectRoot: 'projects',
-            version: '6.0.0',
+            version: '6.0.0'
           })
           .toPromise();
         const appTree = await baseRunner
@@ -68,9 +69,9 @@ describe('NgAlainSchematic: application', () => {
               routing: false,
               style: 'css',
               skipTests: false,
-              skipPackageJson: false,
+              skipPackageJson: false
             },
-            workspaceTree,
+            workspaceTree
           )
           .toPromise();
         appTree.create(
@@ -82,19 +83,18 @@ describe('NgAlainSchematic: application', () => {
         <nz-tab [nzTitle]="'key1' | translate">
         {{ 'Please enter mobile number!' | translate }}
         <button>{{ count ? count + 's' : 'key1' | translate }}</button>
-        `,
+        `
         );
 
         const alainRunner = createAlainRunner();
-        // tslint:disable-next-line:no-shadowed-variable
         const tree = await alainRunner
           .runSchematicAsync(
             'ng-add',
             {
               skipPackageJson: false,
-              defaultLanguage: 'zh',
+              defaultLanguage: 'zh'
             },
-            appTree,
+            appTree
           )
           .toPromise();
 

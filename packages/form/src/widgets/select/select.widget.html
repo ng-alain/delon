@@ -40,7 +40,12 @@
     </ng-container>
     <ng-container *ngIf="!loading && hasGroup">
       <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
-        <nz-option *ngFor="let o of i.children" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
+        <nz-option
+          *ngFor="let o of i.children"
+          [nzLabel]="o.label"
+          [nzValue]="o.value"
+          [nzDisabled]="o.disabled"
+        ></nz-option>
       </nz-option-group>
     </ng-container>
     <nz-option *ngIf="loading" nzDisabled nzCustomContent>

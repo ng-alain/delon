@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -12,7 +14,7 @@ import { SFSelectWidgetSchema } from './schema';
   selector: 'sf-select',
   templateUrl: './select.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
   private search$ = new Subject<string>();
@@ -41,7 +43,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       compareWith,
       optionHeightPx,
       optionOverflowSize,
-      showArrow,
+      showArrow
     } = this.ui;
     this.i = {
       autoClearSearchValue: toBool(autoClearSearchValue, true),
@@ -57,7 +59,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
       showArrow: typeof showArrow !== 'boolean' ? undefined : showArrow,
-      compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
+      compareWith: compareWith || ((o1: any, o2: any) => o1 === o2)
     };
 
     const onSearch = this.ui.onSearch!;
@@ -68,7 +70,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
           distinctUntilChanged(),
           debounceTime(this.ui.searchDebounceTime || 300),
           switchMap(text => onSearch(text)),
-          catchError(() => []),
+          catchError(() => [])
         )
         .subscribe(list => {
           this.data = list;

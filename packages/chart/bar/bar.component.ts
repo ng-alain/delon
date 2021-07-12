@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import type { Chart, Event } from '@antv/g2';
-import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
+import type { Chart, Event } from '@antv/g2';
+
+import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 const TITLE_HEIGHT = 41;
 
@@ -30,11 +40,11 @@ export interface G2BarClickItem {
     <div #container></div>
   `,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2BarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -49,7 +59,7 @@ export class G2BarComponent extends G2BaseComponent {
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
   @Input() interaction: G2InteractionType = 'none';
-  @Output() clickItem = new EventEmitter<G2BarClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2BarClickItem>();
 
   // #endregion
 
@@ -66,24 +76,24 @@ export class G2BarComponent extends G2BaseComponent {
       autoFit: true,
       height: this.getHeight(),
       padding,
-      theme,
+      theme
     }));
     this.updatelabel();
     chart.axis('y', {
       title: null,
       line: null,
-      tickLine: null,
+      tickLine: null
     });
     chart.scale({
       x: {
-        type: 'cat',
+        type: 'cat'
       },
       y: {
-        min: 0,
-      },
+        min: 0
+      }
     });
     chart.tooltip({
-      showTitle: false,
+      showTitle: false
     });
     if (interaction !== 'none') {
       chart.interaction(interaction);
@@ -128,7 +138,7 @@ export class G2BarComponent extends G2BaseComponent {
       .pipe(
         takeUntil(this.destroy$),
         filter(() => !!this._chart),
-        debounceTime(200),
+        debounceTime(200)
       )
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
   }

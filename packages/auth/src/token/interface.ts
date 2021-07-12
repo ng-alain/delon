@@ -1,14 +1,15 @@
 import { InjectionToken } from '@angular/core';
-import { AlainAuthConfig } from '@delon/util/config';
 import { Observable } from 'rxjs';
+
+import { AlainAuthConfig } from '@delon/util/config';
+
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
 export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TOKEN', {
   providedIn: 'root',
-  factory: DA_SERVICE_TOKEN_FACTORY,
+  factory: DA_SERVICE_TOKEN_FACTORY
 });
 
-// tslint:disable-next-line: interface-name
 export interface ITokenModel {
   [key: string]: any;
 
@@ -25,7 +26,6 @@ export interface AuthReferrer {
   url?: string | null | undefined;
 }
 
-// tslint:disable-next-line: interface-name
 export interface ITokenService {
   /**
    * 授权失败后跳转路由路径（支持外部链接地址），通过设置[全局配置](https://ng-alain.com/docs/global-config)来改变

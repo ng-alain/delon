@@ -29,8 +29,8 @@ import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
-import { G2CustomModule } from '@delon/chart/custom';
 import { ChartEChartsModule } from '@delon/chart/chart-echarts';
+import { G2CustomModule } from '@delon/chart/custom';
 import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
@@ -98,5 +98,5 @@ export const SHARED_DELON_MODULES = [
   FormatPipeModule,
   FilterPipeModule,
   AutoFocusModule,
-  LetModule,
+  LetModule
 ];

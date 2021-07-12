@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { TrendComponent } from './trend.component';
@@ -9,6 +10,6 @@ const COMPONENTS = [TrendComponent];
 @NgModule({
   imports: [CommonModule, NzIconModule],
   declarations: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class TrendModule {}

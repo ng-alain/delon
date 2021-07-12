@@ -6,29 +6,29 @@ export default {
     403: '抱歉，你無權訪問該頁麵',
     404: '抱歉，你訪問的頁麵不存在',
     500: '抱歉，服務器出錯了',
-    backToHome: '返回首頁',
+    backToHome: '返回首頁'
   },
   noticeIcon: {
     emptyText: '暫無數據',
-    clearText: '清空',
+    clearText: '清空'
   },
   reuseTab: {
     close: '關閉標簽',
     closeOther: '關閉其它標簽',
     closeRight: '關閉右側標簽',
-    refresh: '刷新',
+    refresh: '刷新'
   },
   tagSelect: {
     expand: '展開',
-    collapse: '收起',
+    collapse: '收起'
   },
   miniProgress: {
-    target: '目標值：',
+    target: '目標值：'
   },
   st: {
     total: '共 {{total}} 條',
     filterConfirm: '確定',
-    filterReset: '重置',
+    filterReset: '重置'
   },
   sf: {
     submit: '提交',
@@ -72,13 +72,13 @@ export default {
       contains: `應當包含一個有效項`,
       formatExclusiveMaximum: `formatExclusiveMaximum 應當是佈爾值`,
       formatExclusiveMinimum: `formatExclusiveMinimum 應當是佈爾值`,
-      if: `應當匹配模式 "{failingKeyword}"`,
-    },
+      if: `應當匹配模式 "{failingKeyword}"`
+    }
   },
   onboarding: {
     skip: `跳過`,
     prev: `上一項`,
     next: `下一項`,
-    done: `完成`,
-  },
+    done: `完成`
+  }
 } as FullLocaleData;

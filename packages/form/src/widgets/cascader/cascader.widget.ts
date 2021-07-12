@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -10,7 +12,7 @@ import { SFCascaderWidgetSchema } from './schema';
   selector: 'sf-cascader',
   templateUrl: './cascader.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   clearText: string;
@@ -27,7 +29,8 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.showInput = toBool(showInput, true);
     this.triggerAction = triggerAction || ['click'];
     if (!!asyncData) {
-      this.loadData = (node: NzCascaderOption, index: number) => asyncData(node, index, this).then(() => this.detectChanges());
+      this.loadData = (node: NzCascaderOption, index: number) =>
+        asyncData(node, index, this).then(() => this.detectChanges());
     }
   }
 

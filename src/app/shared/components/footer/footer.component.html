@@ -50,7 +50,9 @@
           <a href="https://github.com/ng-alain/ng-alain/issues" target="_blank">{{ 'app.footer.issues' | i18n }}</a>
         </div>
         <div>
-          <a href="https://ng-alain.com/issue-helper/index.html#{{ i18n.zone }}" target="_blank">{{ 'app.footer.issue-help' | i18n }}</a>
+          <a href="https://ng-alain.com/issue-helper/index.html#{{ i18n.zone }}" target="_blank">{{
+            'app.footer.issue-help' | i18n
+          }}</a>
         </div>
         <div>
           <a (click)="onCopy('316911865')">{{ 'app.footer.qqgroup' | i18n }} 1: 316911865</a>
@@ -67,7 +69,13 @@
           <a href="https://beian.miit.gov.cn/" target="_blank" class="text-grey">闽ICP备18008195号</a>
         </p>
         <div class="mt-lg">
-          <div class="theme-color" nz-popover [nzPopoverContent]="colorTpl" nzPopoverTrigger="click" nzPopoverOverlayClassName="theme-color-content">
+          <div
+            class="theme-color"
+            nz-popover
+            [nzPopoverContent]="colorTpl"
+            nzPopoverTrigger="click"
+            nzPopoverOverlayClassName="theme-color-content"
+          >
             <div class="theme-color-value" [ngStyle]="{ background: color }"></div>
           </div>
           <ng-template #colorTpl>

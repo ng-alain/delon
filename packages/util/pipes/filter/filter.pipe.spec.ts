@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { FilterPipeModule } from './module';
 
 describe('Pipe: filter', () => {
@@ -9,7 +10,7 @@ describe('Pipe: filter', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [FilterPipeModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
   });
@@ -20,12 +21,12 @@ describe('Pipe: filter', () => {
   it('should be other args', () => {
     const matcherSpy = spyOn(fixture.componentInstance, 'matcher');
     fixture.detectChanges();
-    expect((matcherSpy.calls.first().args as any[]).length).toBe(2);
+    expect((matcherSpy.calls.first().args as unknown[]).length).toBe(2);
   });
 });
 
 @Component({
-  template: ` <p id="result">{{ list | filter: matcher:other }}</p> `,
+  template: ` <p id="result">{{ list | filter: matcher:other }}</p> `
 })
 class TestComponent {
   list = [1, 2, 3];

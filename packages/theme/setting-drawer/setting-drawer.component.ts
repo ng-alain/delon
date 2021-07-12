@@ -10,16 +10,19 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  Optional,
+  Optional
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+
 import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.types';
 
 @Component({
@@ -27,9 +30,9 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   templateUrl: './setting-drawer.component.html',
   host: {
     '[class.setting-drawer]': 'true',
-    '[class.setting-drawer-rtl]': `dir === 'rtl'`,
+    '[class.setting-drawer-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingDrawerComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() autoApplyColor = true;
@@ -55,7 +58,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     private lazy: LazyService,
     private ngZone: NgZone,
     @Inject(DOCUMENT) private doc: any,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {
     this.color = this.cachedData['@primary-color'] || this.DEFAULT_PRIMARY;
     this.resetData(this.cachedData, false);
@@ -107,7 +110,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
   private genVars(): any {
     const { data, color, validKeys } = this;
     const vars: any = {
-      [`@primary-color`]: color,
+      [`@primary-color`]: color
     };
     validKeys.filter(key => key !== 'primary-color').forEach(key => (vars[`@${key}`] = data[key].value));
     this.setLayout(ALAINDEFAULTVAR, vars);

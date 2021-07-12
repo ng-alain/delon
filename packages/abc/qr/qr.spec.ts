@@ -1,8 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
+
+import { createTestContext } from '@delon/testing';
+
 import { AlainConfigService, LazyService } from '../../util';
 import { QRComponent } from './qr.component';
 import { QRModule } from './qr.module';
@@ -25,7 +27,7 @@ describe('abc: qr', () => {
   function createModule(): void {
     TestBed.configureTestingModule({
       imports: [QRModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   }
 
@@ -97,7 +99,7 @@ describe('abc: qr', () => {
       [size]="size"
       (change)="change($event)"
     ></qr>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -105,10 +107,8 @@ class TestComponent {
 
   value = 'https://ng-alain.com/';
   background = 'white';
-  // tslint:disable-next-line:number-literal-format
   backgroundAlpha = 1.0;
   foreground = 'black';
-  // tslint:disable-next-line:number-literal-format
   foregroundAlpha = 1.0;
   level = 'L';
   mime = 'image/png';

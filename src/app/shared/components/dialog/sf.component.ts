@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+
 import { NzModalRef } from 'ng-zorro-antd/modal';
+
+import { SFSchema } from '@delon/form';
 
 @Component({
   selector: `app-demo-dialog-modal`,
@@ -11,22 +13,24 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     <sf #sf mode="edit" [schema]="schema" [formData]="i" button="none">
       <div class="modal-footer">
         <button nz-button type="button" (click)="close()">关闭</button>
-        <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid">保存</button>
+        <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid"
+          >保存</button
+        >
       </div>
     </sf>
-  `,
+  `
 })
 export class DemoSfComponent {
   i: any;
   schema: SFSchema = {
     properties: {
-      name: { title: 'Name', type: 'string' },
+      name: { title: 'Name', type: 'string' }
     },
     required: ['name'],
     ui: {
       spanLabelFixed: 150,
-      grid: { span: 24 },
-    },
+      grid: { span: 24 }
+    }
   };
 
   // schema: SFSchema = {

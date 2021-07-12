@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { deepGet } from '@delon/util/other';
+import { of } from 'rxjs';
+
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { of } from 'rxjs';
+
+import { deepGet } from '@delon/util/other';
+
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
@@ -12,7 +15,7 @@ import { SFUploadWidgetSchema } from './schema';
   selector: 'sf-upload',
   templateUrl: './upload.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
   i: any;
@@ -41,7 +44,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       customRequest,
       directory,
       openFileDialogOnClick,
-      limitFileCount,
+      limitFileCount
     } = this.ui;
     const res: any = {
       type: type || 'select',
@@ -63,7 +66,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       urlReName: (urlReName || '').split('.'),
       beforeUpload: typeof beforeUpload === 'function' ? beforeUpload : null,
       customRequest: typeof customRequest === 'function' ? customRequest : null,
-      limitFileCount: limitFileCount || 999,
+      limitFileCount: limitFileCount || 999
     };
     if (res.listType === 'picture-card') {
       this.btnType = 'plus';
@@ -85,12 +88,14 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
 
   reset(value: SFValue): void {
     const { fileList } = this.ui;
-    (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(list => {
-      this.fileList = list as NzUploadFile[];
-      this.formProperty._value = this.pureValue(list);
-      this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: false });
-      this.detectChanges();
-    });
+    (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(
+      list => {
+        this.fileList = list as NzUploadFile[];
+        this.formProperty._value = this.pureValue(list);
+        this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: false });
+        this.detectChanges();
+      }
+    );
   }
 
   private _getValue(file: NzUploadFile): any {
@@ -127,7 +132,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     }
     this.injector.get<NzModalService>(NzModalService).create({
       nzContent: `<img src="${_url}" class="img-fluid" />`,
-      nzFooter: null,
+      nzFooter: null
     });
   };
 }

@@ -5,11 +5,13 @@ import {
   HttpInterceptor,
   HttpParams,
   HttpRequest,
-  HTTP_INTERCEPTORS,
+  HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Injectable, Injector, Optional } from '@angular/core';
-import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 import { Observable, Observer } from 'rxjs';
+
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
+
 import { mergeConfig } from '../auth.config';
 import { ToLogin } from './helper';
 import { ITokenModel } from './interface';
@@ -71,7 +73,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
           url: req.url,
           headers: req.headers,
           status: 401,
-          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#AlainAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#AlainAuthConfig`,
+          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#AlainAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#AlainAuthConfig`
         });
         observer.error(res);
       });
@@ -79,9 +81,12 @@ export abstract class BaseInterceptor implements HttpInterceptor {
         const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
         const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
         if (lastInterceptors.length > 0) {
-          const chain = lastInterceptors.reduceRight((_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor), {
-            handle: (_: HttpRequest<any>) => err$,
-          });
+          const chain = lastInterceptors.reduceRight(
+            (_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor),
+            {
+              handle: (_: HttpRequest<any>) => err$
+            }
+          );
           return chain.handle(req);
         }
       }

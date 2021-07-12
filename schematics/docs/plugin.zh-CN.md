@@ -32,7 +32,7 @@ ng g ng-alain:plugin [plugin name] -t=[add | remove]
 
 代码风格，有几个规则：
 
-- 使用 [tslint](https://github.com/palantir/tslint) 校验 typescript 部分
+- 使用 [angular-eslint](https://github.com/angular-eslint/angular-eslint) 校验 typescript 部分
 - 使用 [stylelint](https://github.com/stylelint/stylelint) 校验 less 部分
 - 使用 [prettier](https://github.com/prettier/prettier) 代码格式化
 - 使用 [husky](https://github.com/typicode/husky) 和 [pretty-quick](https://github.com/azz/pretty-quick) 在你提交代码时进行代码校验和格式化

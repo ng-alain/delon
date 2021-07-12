@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
 import { SFStringWidgetSchema } from './schema';
@@ -26,10 +28,10 @@ describe('form: widget: string', () => {
           a: {
             type: 'string',
             ui: {
-              prefix: 'P',
-            },
-          },
-        },
+              prefix: 'P'
+            }
+          }
+        }
       })
       .checkCount('nz-input-group', 1);
   });
@@ -39,9 +41,9 @@ describe('form: widget: string', () => {
       properties: {
         a: {
           type: 'string',
-          format: 'color',
-        },
-      },
+          format: 'color'
+        }
+      }
     });
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('#000000');
@@ -56,10 +58,10 @@ describe('form: widget: string', () => {
             change: jasmine.createSpy('change'),
             focus: jasmine.createSpy('focus'),
             blur: jasmine.createSpy('blur'),
-            enter: jasmine.createSpy('enter'),
-          } as SFStringWidgetSchema,
-        },
-      },
+            enter: jasmine.createSpy('enter')
+          } as SFStringWidgetSchema
+        }
+      }
     };
     page.newSchema(schema);
     const ui = schema.properties!.a.ui as SFStringWidgetSchema;
@@ -85,10 +87,10 @@ describe('form: widget: string', () => {
           type: 'string',
           ui: {
             autofocus: true,
-            focus: jasmine.createSpy('focus'),
-          } as SFStringWidgetSchema,
-        },
-      },
+            focus: jasmine.createSpy('focus')
+          } as SFStringWidgetSchema
+        }
+      }
     };
     page.newSchema(schema);
     const el = page.getEl('.ant-input') as HTMLInputElement;

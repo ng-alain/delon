@@ -1,10 +1,22 @@
-<div class="sv__label" [class.sv__label-empty]="!label" [class.sv__label-width]="labelWidth != null" [style.width.px]="labelWidth">
+<div
+  class="sv__label"
+  [class.sv__label-empty]="!label"
+  [class.sv__label-width]="labelWidth !== null"
+  [style.width.px]="labelWidth"
+>
   <span class="sv__label-text">
     <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
   </span>
   <span *ngIf="optional || optionalHelp" class="sv__label-optional" [class.sv__label-optional-no-text]="!optional">
     <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
-    <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" [nzTooltipColor]="optionalHelpColor" nz-icon nzType="question-circle"></i>
+    <i
+      *ngIf="optionalHelp"
+      nz-tooltip
+      [nzTooltipTitle]="optionalHelp"
+      [nzTooltipColor]="optionalHelpColor"
+      nz-icon
+      nzType="question-circle"
+    ></i>
   </span>
 </div>
 <div class="sv__detail">

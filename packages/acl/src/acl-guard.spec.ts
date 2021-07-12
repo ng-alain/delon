@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+
 import { ACLGuard } from './acl-guard';
 import { DelonACLModule } from './acl.module';
 import { ACLService } from './acl.service';
@@ -14,13 +15,13 @@ describe('acl: guard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([]), DelonACLModule.forRoot()],
+      imports: [RouterTestingModule.withRoutes([]), DelonACLModule.forRoot()]
     });
     srv = TestBed.inject<ACLGuard>(ACLGuard);
     acl = TestBed.inject<ACLService>(ACLService);
     acl.set({
       role: ['user'],
-      ability: [1, 2, 3],
+      ability: [1, 2, 3]
     } as ACLType);
     routerSpy = spyOn(TestBed.inject<Router>(Router), 'navigateByUrl');
   });
@@ -37,10 +38,10 @@ describe('acl: guard', () => {
       .canActivate(
         {
           data: {
-            guard: 'user',
-          },
+            guard: 'user'
+          }
         } as any,
-        null,
+        null
       )
       .subscribe(res => {
         expect(res).toBeTruthy();
@@ -53,10 +54,10 @@ describe('acl: guard', () => {
       .canActivate(
         {
           data: {
-            guard: 'admin',
-          },
+            guard: 'admin'
+          }
         } as any,
-        null,
+        null
       )
       .subscribe(res => {
         expect(res).toBeFalsy();
@@ -69,10 +70,10 @@ describe('acl: guard', () => {
       .canActivate(
         {
           data: {
-            guard: of('user'),
-          },
+            guard: of('user')
+          }
         } as any,
-        null,
+        null
       )
       .subscribe(res => {
         expect(res).toBeTruthy();
@@ -85,10 +86,10 @@ describe('acl: guard', () => {
       .canActivate(
         {
           data: {
-            guard: of(1),
-          },
+            guard: of(1)
+          }
         } as any,
-        null,
+        null
       )
       .subscribe(res => {
         expect(res).toBeTruthy();
@@ -101,10 +102,10 @@ describe('acl: guard', () => {
       .canActivate(
         {
           data: {
-            guard: of(10),
-          },
+            guard: of(10)
+          }
         } as any,
-        null,
+        null
       )
       .subscribe(res => {
         expect(res).toBeFalsy();
@@ -117,8 +118,8 @@ describe('acl: guard', () => {
       srv
         .canLoad({
           data: {
-            guard: of('user'),
-          },
+            guard: of('user')
+          }
         } as any)
         .subscribe(res => {
           expect(res).toBeTruthy();
@@ -129,8 +130,8 @@ describe('acl: guard', () => {
       srv
         .canLoad({
           data: {
-            guard: null,
-          },
+            guard: null
+          }
         } as any)
         .subscribe(res => {
           expect(res).toBeTruthy();
@@ -144,10 +145,10 @@ describe('acl: guard', () => {
       .canActivateChild(
         {
           data: {
-            guard: of('user'),
-          },
+            guard: of('user')
+          }
         } as any,
-        null!,
+        null!
       )
       .subscribe(res => {
         expect(res).toBeTruthy();
@@ -161,10 +162,10 @@ describe('acl: guard', () => {
         .canActivate(
           {
             data: {
-              guard: 'admin',
-            },
+              guard: 'admin'
+            }
           } as any,
-          null,
+          null
         )
         .subscribe(() => {
           expect(routerSpy.calls.first().args[0]).toBe(`/403`);
@@ -177,10 +178,10 @@ describe('acl: guard', () => {
           {
             data: {
               guard: 'admin',
-              guard_url: '/no',
-            },
+              guard_url: '/no'
+            }
           } as any,
-          null,
+          null
         )
         .subscribe(() => {
           expect(routerSpy.calls.first().args[0]).toBe(`/no`);

@@ -8,11 +8,13 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { Subscription } from 'rxjs';
+
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -22,7 +24,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_count: NumberInput;

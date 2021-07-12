@@ -1,5 +1,7 @@
 import { TemplateRef } from '@angular/core';
+
 import { NzSizeDSType } from 'ng-zorro-antd/core/types';
+
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFBooleanWidgetSchema extends SFUISchemaItem {

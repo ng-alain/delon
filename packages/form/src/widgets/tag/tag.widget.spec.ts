@@ -1,7 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
+
 import { NzTagComponent } from 'ng-zorro-antd/tag';
+
+import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
@@ -32,15 +35,15 @@ describe('form: widget: tag', () => {
           enum: [
             { value: 1, label: '电影' },
             { value: 2, label: '书' },
-            { value: 3, label: '旅行' },
+            { value: 3, label: '旅行' }
           ],
           ui: {
             widget: 'tag',
-            checkedChange: jasmine.createSpy(),
+            checkedChange: jasmine.createSpy()
           },
-          default: [1, 2],
-        },
-      },
+          default: [1, 2]
+        }
+      }
     };
     page.newSchema(s).typeEvent('click', '.ant-tag');
     const res = page.getValue('a') as number[];
@@ -52,8 +55,8 @@ describe('form: widget: tag', () => {
   it('#setValue', fakeAsync(() => {
     page.newSchema({
       properties: {
-        a: { type: 'string', ui: { widget: 'tag' }, enum: ['item1', 'item2'] },
-      },
+        a: { type: 'string', ui: { widget: 'tag' }, enum: ['item1', 'item2'] }
+      }
     });
     page.setValue('/a', 'item1').dc(1);
     expect(page.getEl('.ant-tag-checkable-checked').textContent!.trim()).toBe('item1');
@@ -72,15 +75,15 @@ describe('form: widget: tag', () => {
               enum: [
                 { value: 1, label: '电影' },
                 { value: 2, label: '书' },
-                { value: 3, label: '旅行' },
+                { value: 3, label: '旅行' }
               ],
               ui: {
                 widget: 'tag',
-                mode: 'default',
+                mode: 'default'
               },
-              default: [1, 2],
-            },
-          },
+              default: [1, 2]
+            }
+          }
         })
         .typeEvent('click', '.ant-tag');
       expect(getComp().nzMode).toBe('default');
@@ -96,15 +99,15 @@ describe('form: widget: tag', () => {
               enum: [
                 { value: 1, label: '电影' },
                 { value: 2, label: '书' },
-                { value: 3, label: '旅行' },
+                { value: 3, label: '旅行' }
               ],
               ui: {
                 widget: 'tag',
-                mode: 'checkable',
+                mode: 'checkable'
               },
-              default: [1, 2],
-            },
-          },
+              default: [1, 2]
+            }
+          }
         })
         .typeEvent('click', '.ant-tag');
       expect(getComp().nzMode).toBe('checkable');
@@ -121,15 +124,15 @@ describe('form: widget: tag', () => {
                 enum: [
                   { value: 1, label: '电影' },
                   { value: 2, label: '书' },
-                  { value: 3, label: '旅行' },
+                  { value: 3, label: '旅行' }
                 ],
                 ui: {
                   widget: 'tag',
-                  mode: 'closeable',
+                  mode: 'closeable'
                 },
-                default: [1, 2],
-              },
-            },
+                default: [1, 2]
+              }
+            }
           })
           .typeEvent('click', '.anticon')
           .checkCount('.ant-tag', 2, true);
@@ -143,16 +146,16 @@ describe('form: widget: tag', () => {
               enum: [
                 { value: 1, label: '电影' },
                 { value: 2, label: '书' },
-                { value: 3, label: '旅行' },
+                { value: 3, label: '旅行' }
               ],
               ui: {
                 widget: 'tag',
                 mode: 'closeable',
-                onClose: jasmine.createSpy(),
+                onClose: jasmine.createSpy()
               },
-              default: [1, 2],
-            },
-          },
+              default: [1, 2]
+            }
+          }
         };
         page.newSchema(s).typeEvent('click', '.anticon');
 

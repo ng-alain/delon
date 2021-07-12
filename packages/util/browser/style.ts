@@ -1,13 +1,10 @@
 import { Renderer2 } from '@angular/core';
 
-function removeClass(el: HTMLElement, classMap: object, renderer: Renderer2): void {
-  // tslint:disable-next-line: forin
-  for (const i in classMap) {
-    renderer.removeClass(el, i);
-  }
+function removeClass(el: HTMLElement, classMap: { [klass: string]: unknown }, renderer: Renderer2): void {
+  Object.keys(classMap).forEach(key => renderer.removeClass(el, key));
 }
 
-function addClass(el: HTMLElement, classMap: any, renderer: Renderer2): void {
+function addClass(el: HTMLElement, classMap: { [klass: string]: unknown }, renderer: Renderer2): void {
   for (const i in classMap) {
     if (classMap[i]) {
       renderer.addClass(el, i);
@@ -32,7 +29,12 @@ function addClass(el: HTMLElement, classMap: any, renderer: Renderer2): void {
  *  })
  * ```
  */
-export function updateHostClass(el: HTMLElement, renderer: Renderer2, classMap: object, preClean: boolean = false): void {
+export function updateHostClass(
+  el: HTMLElement,
+  renderer: Renderer2,
+  classMap: { [klass: string]: unknown },
+  preClean: boolean = false
+): void {
   if (preClean === true) {
     renderer.removeAttribute(el, 'class');
   } else {

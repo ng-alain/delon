@@ -1,6 +1,8 @@
 import { DebugElement, Type } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+
 import { Chart } from '@antv/g2';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geometries' | 'views';
@@ -20,7 +22,6 @@ export class PageG2<T> {
   }
 
   get comp(): any {
-    // tslint:disable-next-line:no-string-literal
     return (this.context as NzSafeAny)['comp'];
   }
 
@@ -31,7 +32,7 @@ export class PageG2<T> {
   genModule<M>(module: M, comp: Type<T>): this {
     TestBed.configureTestingModule({
       imports: [module],
-      declarations: [comp],
+      declarations: [comp]
     });
     return this;
   }
@@ -79,7 +80,6 @@ export class PageG2<T> {
   }
 
   newData(data: any): this {
-    // tslint:disable-next-line:no-string-literal
     (this.context as NzSafeAny)['data'] = data;
     this.dc();
     return this;
@@ -145,7 +145,6 @@ export class PageG2<T> {
   }
 
   get firstDataPoint(): { x: number; y: number } {
-    // tslint:disable-next-line: no-string-literal
     return this.chart.getXY((this.context as NzSafeAny)['data'][0]);
   }
 
@@ -163,7 +162,7 @@ export class PageG2<T> {
     const clientPoint = this.chart.canvas.getClientByPoint(point.x, point.y);
     const event = new MouseEvent('click', {
       clientX: clientPoint.x,
-      clientY: clientPoint.y,
+      clientY: clientPoint.y
     });
     (this.chart.canvas.get('el') as HTMLElement).dispatchEvent(event);
     return this;

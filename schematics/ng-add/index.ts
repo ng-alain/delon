@@ -1,6 +1,8 @@
 import { chain, Rule, schematic, Tree } from '@angular-devkit/schematics';
+
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
+
 import { Schema as ApplicationOptions } from '../application/schema';
 import { readPackage } from '../utils';
 import { Schema as NgAddOptions } from './schema';
@@ -22,8 +24,8 @@ function genRules(options: NgAddOptions): Rule {
       schematic('plugin', {
         name: 'defaultLanguage',
         type: 'add',
-        defaultLanguage: options.defaultLanguage,
-      }),
+        defaultLanguage: options.defaultLanguage
+      })
     );
   }
 
@@ -32,8 +34,8 @@ function genRules(options: NgAddOptions): Rule {
       schematic('plugin', {
         name: 'networkEnv',
         type: 'add',
-        packageManager: 'npm',
-      }),
+        packageManager: 'npm'
+      })
     );
   }
 
@@ -42,8 +44,8 @@ function genRules(options: NgAddOptions): Rule {
       schematic('plugin', {
         name: 'networkEnv',
         type: 'add',
-        packageManager: 'yarn',
-      }),
+        packageManager: 'yarn'
+      })
     );
   }
 
@@ -65,7 +67,9 @@ function isUseCNPM(): boolean {
 export default function (options: NgAddOptions): Rule {
   return (tree: Tree) => {
     if (isUseCNPM()) {
-      throw new Error(`Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);
+      throw new Error(
+        `Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`
+      );
     }
 
     const pkg = readPackage(tree);
@@ -78,9 +82,9 @@ export default function (options: NgAddOptions): Rule {
     if (/^[\^|\~]/g.test(ngCoreVersion)) {
       ngCoreVersion = ngCoreVersion.substr(1);
     }
-    if (!ngCoreVersion.startsWith(V + '.')) {
+    if (!ngCoreVersion.startsWith(`${V}.`)) {
       throw new Error(
-        `Sorry, the current version only supports angular ${V}.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@${V}] (or via npm: [npm install -g @angular/cli@${V}])`,
+        `Sorry, the current version only supports angular ${V}.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@${V}] (or via npm: [npm install -g @angular/cli@${V}])`
       );
     }
 

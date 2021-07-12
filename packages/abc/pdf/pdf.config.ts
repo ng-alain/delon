@@ -7,5 +7,5 @@ export const PDF_DEFULAT_CONFIG: AlainPdfConfig = {
   showBorders: false,
   originalSize: true,
   fitToPage: false,
-  autoReSize: true,
+  autoReSize: true
 };

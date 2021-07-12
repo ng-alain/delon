@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
+
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
@@ -13,7 +15,7 @@ describe('theme: DrawerHelper', () => {
   beforeEach(() => {
     @NgModule({
       imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzDrawerModule],
-      declarations: [TestDrawerComponent, TestComponent],
+      declarations: [TestDrawerComponent, TestComponent]
     })
     class TestModule {}
 
@@ -30,7 +32,7 @@ describe('theme: DrawerHelper', () => {
   it('should be subscribing return value', (done: () => void) => {
     drawer
       .create('', TestDrawerComponent, {
-        ret: 'true',
+        ret: 'true'
       })
       .subscribe(() => {
         expect(true).toBeTruthy();
@@ -42,7 +44,7 @@ describe('theme: DrawerHelper', () => {
   it('should be only close', (done: () => void) => {
     drawer
       .create('', TestDrawerComponent, {
-        ret: 'destroy',
+        ret: 'destroy'
       })
       .subscribe(
         () => {
@@ -53,7 +55,7 @@ describe('theme: DrawerHelper', () => {
         () => {
           expect(true).toBeTruthy();
           done();
-        },
+        }
       );
     fixture.detectChanges();
   });
@@ -61,7 +63,7 @@ describe('theme: DrawerHelper', () => {
   it('#static', (done: () => void) => {
     drawer
       .static('', TestDrawerComponent, {
-        ret: 'true',
+        ret: 'true'
       })
       .subscribe(() => {
         expect(true).toBeTruthy();
@@ -77,14 +79,14 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: 'true',
+            ret: 'true'
           },
           {
             size: 'sm',
             drawerOptions: {
-              nzWrapClassName: 'aaa',
-            },
-          },
+              nzWrapClassName: 'aaa'
+            }
+          }
         )
         .subscribe();
       fixture.detectChanges();
@@ -99,15 +101,15 @@ describe('theme: DrawerHelper', () => {
             '',
             TestDrawerComponent,
             {
-              ret: 'true',
+              ret: 'true'
             },
             {
               size: 100,
               drawerOptions: {
                 nzWrapClassName: 'bbb',
-                nzPlacement: 'left',
-              },
-            },
+                nzPlacement: 'left'
+              }
+            }
           )
           .subscribe();
         fixture.detectChanges();
@@ -121,15 +123,15 @@ describe('theme: DrawerHelper', () => {
             '',
             TestDrawerComponent,
             {
-              ret: 'true',
+              ret: 'true'
             },
             {
               size: 100,
               drawerOptions: {
                 nzWrapClassName: 'cccc',
-                nzPlacement: 'top',
-              },
-            },
+                nzPlacement: 'top'
+              }
+            }
           )
           .subscribe();
         fixture.detectChanges();
@@ -144,15 +146,15 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: 'true',
+            ret: 'true'
           },
           {
             size: 'sm',
             drawerOptions: {
               nzWidth: 100,
-              nzWrapClassName: 'aaa',
-            },
-          },
+              nzWrapClassName: 'aaa'
+            }
+          }
         )
         .subscribe();
       fixture.detectChanges();
@@ -171,7 +173,7 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: 'true',
+            ret: 'true'
           },
           {
             size: 100,
@@ -180,9 +182,9 @@ describe('theme: DrawerHelper', () => {
             drawerOptions: {
               nzHeight: height,
               nzWrapClassName: 'eee',
-              nzPlacement: 'top',
-            },
-          },
+              nzPlacement: 'top'
+            }
+          }
         )
         .subscribe();
       fixture.detectChanges();
@@ -197,15 +199,15 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: 'true',
+            ret: 'true'
           },
           {
             size: 100,
             footer: false,
             drawerOptions: {
-              nzWrapClassName: 'ddd',
-            },
-          },
+              nzWrapClassName: 'ddd'
+            }
+          }
         )
         .subscribe();
       fixture.detectChanges();
@@ -223,11 +225,11 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: undefined,
+            ret: undefined
           },
           {
-            exact: true,
-          },
+            exact: true
+          }
         )
         .subscribe(
           () => {
@@ -239,7 +241,7 @@ describe('theme: DrawerHelper', () => {
           () => {
             expect(true).toBe(true);
             done();
-          },
+          }
         );
       fixture.detectChanges();
     });
@@ -249,11 +251,11 @@ describe('theme: DrawerHelper', () => {
           '',
           TestDrawerComponent,
           {
-            ret: undefined,
+            ret: undefined
           },
           {
-            exact: false,
-          },
+            exact: false
+          }
         )
         .subscribe(
           res => {
@@ -263,7 +265,7 @@ describe('theme: DrawerHelper', () => {
           () => {
             expect(false).toBe(true);
             done();
-          },
+          }
         );
       fixture.detectChanges();
     });
@@ -271,7 +273,7 @@ describe('theme: DrawerHelper', () => {
 });
 
 @Component({
-  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `,
+  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `
 })
 class TestDrawerComponent {
   id: string = '';

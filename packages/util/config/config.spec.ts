@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { AlainChartConfig } from './chart/chart.type';
 import { AlainConfigService } from './config.service';
 
@@ -7,7 +8,7 @@ describe('util: config', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AlainConfigService],
+      providers: [AlainConfigService]
     });
     srv = TestBed.inject(AlainConfigService);
   });

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
 import { AlainConfigService, AlainMediaConfig } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MediaService {
@@ -17,9 +18,12 @@ export class MediaService {
     this._cog = this.cogSrv.merge(
       'media',
       {
-        urls: ['https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js', 'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css'],
+        urls: [
+          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js',
+          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css'
+        ]
       },
-      val,
+      val
     )!;
   }
 

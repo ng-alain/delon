@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+
 import { App, Layout, SettingsNotify, User } from './types';
 
 export interface SettingsKeys {
@@ -44,7 +45,7 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
         collapsed: false,
         boxed: false,
         lang: null,
-        ...this.getData(this.KEYS.layout),
+        ...this.getData(this.KEYS.layout)
       };
       this.setData(this.KEYS.layout, this._layout);
     }
@@ -55,7 +56,7 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     if (!this._app) {
       this._app = {
         year: new Date().getFullYear(),
-        ...this.getData(this.KEYS.app),
+        ...this.getData(this.KEYS.app)
       };
       this.setData(this.KEYS.app, this._app);
     }

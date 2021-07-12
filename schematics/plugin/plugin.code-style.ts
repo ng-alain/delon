@@ -1,4 +1,5 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
+
 import { readPackage, writePackage } from '../utils';
 import { PluginOptions } from './interface';
 
@@ -10,8 +11,8 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
     if (options.type === 'add') {
       json.husky = {
         hooks: {
-          'pre-commit': 'pretty-quick --staged',
-        },
+          'pre-commit': 'pretty-quick --staged'
+        }
       };
     } else {
       delete json.husky;

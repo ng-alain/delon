@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+
 import { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+
 import { SEErrorRefresh, SELayout } from './se.types';
 
 @Component({
@@ -24,11 +27,11 @@ import { SEErrorRefresh, SELayout } from './se.types';
     '[class.se__inline]': `nzLayout === 'inline'`,
     '[class.se__compact]': `size === 'compact'`,
     '[style.margin-left.px]': `margin`,
-    '[style.margin-right.px]': `margin`,
+    '[style.margin-right.px]': `margin`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SEContainerComponent {
   static ngAcceptInputType_col: NumberInput;
@@ -90,7 +93,7 @@ export class SEContainerComponent {
       col: 2,
       labelWidth: 150,
       firstVisual: false,
-      ingoreDirty: false,
+      ingoreDirty: false
     });
   }
 

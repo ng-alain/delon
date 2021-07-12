@@ -1,16 +1,19 @@
 import { HttpResponse } from '@angular/common/http';
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
-import { saveAs } from 'file-saver';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { finalize } from 'rxjs/operators';
+
+import { saveAs } from 'file-saver';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { _HttpClient } from '@delon/theme';
 
 @Directive({
   selector: '[down-file]',
   exportAs: 'downFile',
   host: {
-    '(click)': '_click($event)',
-  },
+    '(click)': '_click($event)'
+  }
 })
 export class DownFileDirective {
   private isFileSaverSupported = true;
@@ -24,7 +27,7 @@ export class DownFileDirective {
   @Output() readonly error = new EventEmitter<any>();
 
   private getDisposition(data: string | null): NzSafeAny {
-    const arr: Array<{}> = (data || '')
+    const arr: Array<Record<string, string>> = (data || '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {
@@ -66,7 +69,7 @@ export class DownFileDirective {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',
-        body: this.httpBody,
+        body: this.httpBody
       })
       .pipe(finalize(() => this.setDisabled(false)))
       .subscribe(
@@ -79,11 +82,15 @@ export class DownFileDirective {
           let fileName = this.fileName;
           if (typeof fileName === 'function') fileName = fileName(res);
           fileName =
-            fileName || disposition[`filename*`] || disposition[`filename`] || res.headers.get('filename') || res.headers.get('x-filename');
+            fileName ||
+            disposition[`filename*`] ||
+            disposition[`filename`] ||
+            res.headers.get('filename') ||
+            res.headers.get('x-filename');
           saveAs(res.body!, decodeURI(fileName as string));
           this.success.emit(res);
         },
-        err => this.error.emit(err),
+        err => this.error.emit(err)
       );
   }
 }

@@ -9,13 +9,15 @@ import {
   OnChanges,
   OnDestroy,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+
 import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QROptions } from './qr.types';
 
@@ -26,11 +28,11 @@ import { QROptions } from './qr.types';
   host: {
     '[style.display]': `'inline-block'`,
     '[style.height.px]': 'size',
-    '[style.width.px]': 'size',
+    '[style.width.px]': 'size'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_padding: NumberInput;
@@ -57,7 +59,12 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputNumber() delay: number;
   @Output() readonly change = new EventEmitter<string>();
 
-  constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService, private platform: Platform) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    configSrv: AlainConfigService,
+    private lazySrv: LazyService,
+    private platform: Platform
+  ) {
     this.cog = configSrv.merge('qr', QR_DEFULAT_CONFIG)!;
     Object.assign(this, this.cog);
   }
@@ -106,7 +113,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
       mime: this.mime,
       padding: this.padding,
       size: this.size,
-      value: this.toUtf8ByteArray(this.value),
+      value: this.toUtf8ByteArray(this.value)
     };
     this.option = option;
     this.init();

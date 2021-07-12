@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import * as Mock from 'mockjs';
+
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { DelonMockModule } from '../index';
 import { MockOptions, MockRequest, MockRule } from './interface';
 import { MockService } from './mock.service';
@@ -18,8 +21,8 @@ const DATA = {
       return { id: req.params.id, s: 'edit' };
     },
     'POST /users/1': { uid: 0, action: 'add' },
-    '/data/([0-9])': (req: MockRequest) => req,
-  },
+    '/data/([0-9])': (req: MockRequest) => req
+  }
 };
 
 describe('mock: service', () => {
@@ -28,7 +31,7 @@ describe('mock: service', () => {
   function genModule(options: AlainMockConfig, mockOptions?: MockOptions): void {
     TestBed.configureTestingModule({
       imports: [DelonMockModule.forRoot(mockOptions)],
-      providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }],
+      providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }]
     });
     srv = TestBed.inject<MockService>(MockService);
     spyOn(console, 'log');
@@ -47,8 +50,8 @@ describe('mock: service', () => {
   describe('#getRule', () => {
     beforeEach(() =>
       genModule({
-        data: DATA,
-      }),
+        data: DATA
+      })
     );
 
     afterEach(() => srv.ngOnDestroy());
@@ -103,7 +106,7 @@ describe('mock: service', () => {
   describe('#apply', () => {
     it('should allow empty data', () => {
       genModule({
-        data: null,
+        data: null
       });
       expect(srv.rules.length).toBe(0);
     });
@@ -111,8 +114,8 @@ describe('mock: service', () => {
     it('should allow empty rule', () => {
       genModule({
         data: {
-          '/a': null,
-        },
+          '/a': null
+        }
       });
       expect(srv.rules.length).toBe(0);
     });
@@ -121,12 +124,12 @@ describe('mock: service', () => {
       genModule({
         data: {
           USERS: {
-            '/users': { a: 1 },
+            '/users': { a: 1 }
           },
           USER: {
-            '/users': { a: 2 },
-          },
-        },
+            '/users': { a: 2 }
+          }
+        }
       });
       expect(srv.rules.length).toBe(1);
       const rule = srv.getRule('GET', '/users') as MockRule;
@@ -141,9 +144,9 @@ describe('mock: service', () => {
         genModule({
           data: {
             USERS: {
-              'AAA /users': {},
-            },
-          },
+              'AAA /users': {}
+            }
+          }
         });
       }).toThrow();
     });
@@ -155,9 +158,9 @@ describe('mock: service', () => {
         genModule({
           data: {
             USERS: {
-              'AAA /users': 1,
-            },
-          },
+              'AAA /users': 1
+            }
+          }
         });
       }).toThrowError();
     });

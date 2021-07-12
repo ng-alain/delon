@@ -6,29 +6,29 @@ export default {
     403: `Lo sentimos, no tiene acceso a esta página`,
     404: `Lo sentimos, la página que ha visitado no existe`,
     500: `Lo siento, error interno del servidor `,
-    backToHome: 'Volver a la página de inicio',
+    backToHome: 'Volver a la página de inicio'
   },
   noticeIcon: {
     emptyText: 'No hay datos',
-    clearText: 'Limpiar',
+    clearText: 'Limpiar'
   },
   reuseTab: {
     close: 'Cerrar pestaña',
     closeOther: 'Cerrar otras pestañas',
     closeRight: 'Cerrar pestañas a la derecha',
-    refresh: 'Actualizar',
+    refresh: 'Actualizar'
   },
   tagSelect: {
     expand: 'Expandir',
-    collapse: 'Ocultar',
+    collapse: 'Ocultar'
   },
   miniProgress: {
-    target: 'Target: ',
+    target: 'Target: '
   },
   st: {
     total: '{{rango[0]}} - {{rango[1]}} de {{total}}',
     filterConfirm: 'Aceptar',
-    filterReset: 'Reiniciar',
+    filterReset: 'Reiniciar'
   },
   sf: {
     submit: 'Submit',
@@ -72,13 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
   onboarding: {
     skip: `Omitir`,
     prev: `Previo`,
     next: `Siguiente`,
-    done: `Terminado`,
-  },
+    done: `Terminado`
+  }
 } as FullLocaleData;

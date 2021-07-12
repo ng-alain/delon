@@ -1,17 +1,27 @@
 import * as path from 'path';
+
 import { ModuleDirConfig, SiteConfig } from '../interfaces';
+
 const klawSync = require('klaw-sync');
 
-export function groupFiles(srcPaths: string[], config: ModuleDirConfig, isSyncSpecific: boolean, target: string, siteConfig: SiteConfig) {
-  const files: { key: string; data: { [key: string]: string } }[] = [];
+export function groupFiles(
+  srcPaths: string[],
+  config: ModuleDirConfig,
+  isSyncSpecific: boolean,
+  target: string,
+  siteConfig: SiteConfig
+) {
+  const files: Array<{ key: string; data: { [key: string]: string } }> = [];
   const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
   srcPaths.forEach(srcPath => {
     klawSync(srcPath, {
       nodir: false,
       filter: item => {
         if (config.hasSubDir && item.stats.isDirectory()) return true;
-        return path.extname(item.path) === '.md' && item.stats.size > 1 && !item.path.includes(`${path.sep}demo${path.sep}`);
-      },
+        return (
+          path.extname(item.path) === '.md' && item.stats.size > 1 && !item.path.includes(`${path.sep}demo${path.sep}`)
+        );
+      }
     })
       .filter(item => path.extname(item.path) === '.md')
       .forEach(item => {
@@ -30,7 +40,7 @@ export function groupFiles(srcPaths: string[], config: ModuleDirConfig, isSyncSp
         if (!sourceItem) {
           sourceItem = {
             key,
-            data: {},
+            data: {}
           };
           files.push(sourceItem);
         }

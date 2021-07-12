@@ -1,6 +1,8 @@
+import { colors } from '@angular/cli/utilities/color';
+
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import { colors } from '@angular/cli/utilities/color';
+
 import { addPackage, getProject, logStart, readPackage, VERSION } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 import { fixHmr } from './hmr';
@@ -25,12 +27,16 @@ function fixThirdVersion(): Rule {
         `ngx-ueditor@DEP-0.0.0-PLACEHOLDER`,
         `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`,
         `ngx-countdown@DEP-0.0.0-PLACEHOLDER`,
-        'ajv@DEP-0.0.0-PLACEHOLDER',
+        'ajv@DEP-0.0.0-PLACEHOLDER'
       ],
-      'dependencies',
+      'dependencies'
     );
     // dependencies
-    addPackage(tree, [`ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`, `ng-alain-sts@DEP-0.0.0-PLACEHOLDER`], 'devDependencies');
+    addPackage(
+      tree,
+      [`ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`, `ng-alain-sts@DEP-0.0.0-PLACEHOLDER`],
+      'devDependencies'
+    );
     logStart(context, `Upgrade third libs version number`);
   };
 }
@@ -52,8 +58,8 @@ function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {
     context.logger.info(
       colors.green(
-        `  ✓  Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/1863`,
-      ),
+        `  ✓  Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/1863`
+      )
     );
   };
 }
@@ -62,6 +68,13 @@ export function v11Rule(): Rule {
   return async (tree: Tree) => {
     project = (await getProject(tree)).project;
 
-    return chain([fixVersion(), fixThirdVersion(), fixAnalyze(), fixHmr(project.sourceRoot), fixLayout(project), finished()]);
+    return chain([
+      fixVersion(),
+      fixThirdVersion(),
+      fixAnalyze(),
+      fixHmr(project.sourceRoot),
+      fixLayout(project),
+      finished()
+    ]);
   };
 }

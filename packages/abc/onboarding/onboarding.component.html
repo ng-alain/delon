@@ -24,16 +24,37 @@
       <ng-container *ngIf="config.showTotal">{{ active + 1 }}/{{ max }}</ng-container>
     </span>
     <div class="onboarding__btns">
-      <a *ngIf="!last && item.skip !== null" nz-button nzType="link" (click)="to('skip')" nzSize="small" data-btnType="skip">
+      <a
+        *ngIf="!last && item.skip !== null"
+        nz-button
+        nzType="link"
+        (click)="to('skip')"
+        nzSize="small"
+        data-btnType="skip"
+      >
         <ng-container *nzStringTemplateOutlet="item.skip">{{ item.skip }}</ng-container>
       </a>
       <a *ngIf="!first && item.prev !== null" nz-button (click)="to('prev')" nzSize="small" data-btnType="prev">
         <ng-container *nzStringTemplateOutlet="item.prev">{{ item.prev }}</ng-container>
       </a>
-      <a *ngIf="!last && item.next !== null" nz-button (click)="to('next')" nzType="primary" nzSize="small" data-btnType="next">
+      <a
+        *ngIf="!last && item.next !== null"
+        nz-button
+        (click)="to('next')"
+        nzType="primary"
+        nzSize="small"
+        data-btnType="next"
+      >
         <ng-container *nzStringTemplateOutlet="item.next">{{ item.next }}</ng-container>
       </a>
-      <a *ngIf="last && item.done !== null" nz-button (click)="to('done')" nzType="primary" nzSize="small" data-btnType="done">
+      <a
+        *ngIf="last && item.done !== null"
+        nz-button
+        (click)="to('done')"
+        nzType="primary"
+        nzSize="small"
+        data-btnType="done"
+      >
         <ng-container *nzStringTemplateOutlet="item.done">{{ item.done }}</ng-container>
       </a>
     </div>

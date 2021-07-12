@@ -13,11 +13,13 @@ import {
   SchematicContext,
   template,
   Tree,
-  url,
+  url
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
+
 import * as path from 'path';
+
 import { getLangData } from '../core/lang.config';
 import {
   addAllowedCommonJsDependencies,
@@ -36,7 +38,7 @@ import {
   VERSION,
   writeJSON,
   writePackage,
-  ZORROVERSION,
+  ZORROVERSION
 } from '../utils';
 import { UpgradeMainVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
@@ -62,7 +64,7 @@ function removeOrginalFiles(): Rule {
       `${project.sourceRoot}/app/app.component.ts`,
       `${project.sourceRoot}/app/app.component.html`,
       `${project.sourceRoot}/app/app.component.less`,
-      `${project.sourceRoot}/app/app-routing.module.ts`,
+      `${project.sourceRoot}/app/app-routing.module.ts`
     ]
       .filter(p => tree.exists(p))
       .forEach(p => tree.delete(p));
@@ -75,7 +77,8 @@ function fixAngularJson(options: ApplicationOptions): Rule {
     // Add proxy.conf.json
     getProjectTarget(p, BUILD_TARGET_BUILD).proxyConfig = 'proxy.conf.json';
     // 调整budgets
-    const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject).budgets as Array<{
+    const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject)
+      .budgets as Array<{
       type: string;
       maximumWarning: string;
       maximumError: string;
@@ -97,7 +100,10 @@ function addDependenciesToPackageJson(options: ApplicationOptions): Rule {
     addPackage(tree, ['screenfull@DEP-0.0.0-PLACEHOLDER']);
     // i18n
     if (options.i18n) {
-      addPackage(tree, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
+      addPackage(tree, [
+        `@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`,
+        `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`
+      ]);
     }
     return tree;
   };
@@ -145,13 +151,11 @@ function addCodeStylesToPackageJson(): Rule {
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['pretty-quick'] = `pretty-quick`;
-    json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     writePackage(tree, json);
     // dependencies
     addPackage(
       tree,
       [
-        `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
         `pretty-quick@DEP-0.0.0-PLACEHOLDER`,
         `husky@DEP-0.0.0-PLACEHOLDER`,
         `prettier@DEP-0.0.0-PLACEHOLDER`,
@@ -160,9 +164,9 @@ function addCodeStylesToPackageJson(): Rule {
         `stylelint-config-rational-order@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
-        `stylelint-order@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-order@DEP-0.0.0-PLACEHOLDER`
       ],
-      'devDependencies',
+      'devDependencies'
     );
     return tree;
   };
@@ -174,38 +178,38 @@ function addSchematics(options: ApplicationOptions): Rule {
     const schematics = p.extensions.schematics;
     schematics['ng-alain:module'] = {
       routing: true,
-      spec: false,
+      spec: false
     };
     schematics['ng-alain:list'] = {
-      spec: false,
+      spec: false
     };
     schematics['ng-alain:edit'] = {
       spec: false,
-      modal: true,
+      modal: true
     };
     schematics['ng-alain:view'] = {
       spec: false,
-      modal: true,
+      modal: true
     };
     schematics['ng-alain:curd'] = {
-      spec: false,
+      spec: false
     };
     schematics['@schematics/angular:module'] = {
       routing: true,
-      spec: false,
+      spec: false
     };
     schematics['@schematics/angular:component'] = {
       spec: false,
       flat: false,
       inlineStyle: true,
       inlineTemplate: false,
-      ...schematics['@schematics/angular:component'],
+      ...schematics['@schematics/angular:component']
     };
     schematics['@schematics/angular:directive'] = {
-      spec: false,
+      spec: false
     };
     schematics['@schematics/angular:service'] = {
-      spec: false,
+      spec: false
     };
   });
 }
@@ -237,12 +241,12 @@ function addStyle(): Rule {
     addHeadStyle(
       tree,
       project,
-      `  <style type="text/css">.preloader{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;background:#49a9ee;z-index:9999;transition:opacity .65s}.preloader-hidden-add{opacity:1;display:block}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}.cs-loader{position:absolute;top:0;left:0;height:100%;width:100%}.cs-loader-inner{transform:translateY(-50%);top:50%;position:absolute;width:100%;color:#fff;text-align:center}.cs-loader-inner label{font-size:20px;opacity:0;display:inline-block}@keyframes lol{0%{opacity:0;transform:translateX(-300px)}33%{opacity:1;transform:translateX(0)}66%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(300px)}}.cs-loader-inner label:nth-child(6){animation:lol 3s infinite ease-in-out}.cs-loader-inner label:nth-child(5){animation:lol 3s .1s infinite ease-in-out}.cs-loader-inner label:nth-child(4){animation:lol 3s .2s infinite ease-in-out}.cs-loader-inner label:nth-child(3){animation:lol 3s .3s infinite ease-in-out}.cs-loader-inner label:nth-child(2){animation:lol 3s .4s infinite ease-in-out}.cs-loader-inner label:nth-child(1){animation:lol 3s .5s infinite ease-in-out}</style>`,
+      `  <style type="text/css">.preloader{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;background:#49a9ee;z-index:9999;transition:opacity .65s}.preloader-hidden-add{opacity:1;display:block}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}.cs-loader{position:absolute;top:0;left:0;height:100%;width:100%}.cs-loader-inner{transform:translateY(-50%);top:50%;position:absolute;width:100%;color:#fff;text-align:center}.cs-loader-inner label{font-size:20px;opacity:0;display:inline-block}@keyframes lol{0%{opacity:0;transform:translateX(-300px)}33%{opacity:1;transform:translateX(0)}66%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(300px)}}.cs-loader-inner label:nth-child(6){animation:lol 3s infinite ease-in-out}.cs-loader-inner label:nth-child(5){animation:lol 3s .1s infinite ease-in-out}.cs-loader-inner label:nth-child(4){animation:lol 3s .2s infinite ease-in-out}.cs-loader-inner label:nth-child(3){animation:lol 3s .3s infinite ease-in-out}.cs-loader-inner label:nth-child(2){animation:lol 3s .4s infinite ease-in-out}.cs-loader-inner label:nth-child(1){animation:lol 3s .5s infinite ease-in-out}</style>`
     );
     addHtmlToBody(
       tree,
       project,
-      `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div></div>\n`,
+      `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div></div>\n`
     );
     // add styles
     [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`].forEach(p => {
@@ -264,10 +268,10 @@ function addFilesToRoot(options: ApplicationOptions): Rule {
           ...options,
           dot: '.',
           VERSION,
-          ZORROVERSION,
+          ZORROVERSION
         }),
-        move(project.sourceRoot),
-      ]),
+        move(project.sourceRoot)
+      ])
     ),
     mergeWith(
       apply(url('./files/root'), [
@@ -278,12 +282,12 @@ function addFilesToRoot(options: ApplicationOptions): Rule {
           ...options,
           dot: '.',
           VERSION,
-          ZORROVERSION,
-        }),
+          ZORROVERSION
+        })
         // move('/')
       ]),
-      MergeStrategy.Overwrite,
-    ),
+      MergeStrategy.Overwrite
+    )
   ]);
 }
 
@@ -394,7 +398,7 @@ export default function (options: ApplicationOptions): Rule {
       fixVsCode(),
       fixAngularJson(options),
       install(),
-      finished(),
+      finished()
     ]);
   };
 }

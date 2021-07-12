@@ -39,28 +39,63 @@ export interface Lodop extends CLodop {
   PRINT_INIT(strTaskName: string): boolean;
 
   /** 设定纸张大小 */
-  SET_PRINT_PAGESIZE(intOrient: number, PageWidth: number | string, PageHeight: number | string, strPageName: string): void;
+  SET_PRINT_PAGESIZE(
+    intOrient: number,
+    PageWidth: number | string,
+    PageHeight: number | string,
+    strPageName: string
+  ): void;
 
   /** 增加超文本打印项(普通模式) */
-  ADD_PRINT_HTM(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strHtmlContent: string): void;
+  ADD_PRINT_HTM(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strHtmlContent: string
+  ): void;
 
   /**
    * 增加表格打印项（超文本模式）
    */
-  ADD_PRINT_TABLE(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strHtml: string): void;
+  ADD_PRINT_TABLE(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strHtml: string
+  ): void;
 
   /**
    * 增加表格打印项（超文本模式）
    */
-  ADD_PRINT_TABLE(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strHtml: string): void;
+  ADD_PRINT_TABLE(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strHtml: string
+  ): void;
 
   /**
    * 增加超文本打印项（URL模式）
    */
-  ADD_PRINT_URL(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strURL: string): void;
+  ADD_PRINT_URL(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strURL: string
+  ): void;
 
   /** 增加纯文本打印项 */
-  ADD_PRINT_TEXT(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strContent: string): void;
+  ADD_PRINT_TEXT(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strContent: string
+  ): void;
 
   /** 增加图片打印项 */
   ADD_PRINT_IMAGE(
@@ -68,7 +103,7 @@ export interface Lodop extends CLodop {
     Left: number | string,
     Width: number | string,
     Height: number | string,
-    strHtmlContent: string,
+    strHtmlContent: string
   ): void;
 
   /** 增加矩形线 */
@@ -78,7 +113,7 @@ export interface Lodop extends CLodop {
     Width: number | string,
     Height: number | string,
     intLineStyle: number,
-    intLineWidth: number,
+    intLineWidth: number
   ): void;
 
   /** 增加椭圆线 */
@@ -88,7 +123,7 @@ export interface Lodop extends CLodop {
     Width: number | string,
     Height: number | string,
     intLineStyle: number,
-    intLineWidth: number,
+    intLineWidth: number
   ): void;
 
   /** 增加直线 */
@@ -98,7 +133,7 @@ export interface Lodop extends CLodop {
     Top2: number | string,
     Left2: number | string,
     intLineStyle: number,
-    intLineWidth: number,
+    intLineWidth: number
   ): void;
 
   /** 增加条形码 */
@@ -108,7 +143,7 @@ export interface Lodop extends CLodop {
     Width: number | string,
     Height: number | string,
     CodeType: string,
-    CodeValue: string,
+    CodeValue: string
   ): void;
 
   /** 增加图表 */
@@ -118,7 +153,7 @@ export interface Lodop extends CLodop {
     Width: number | string,
     Height: number | string,
     ChartType: number,
-    strHtml: string,
+    strHtml: string
   ): void;
 
   /** 装载文档式模板 */
@@ -151,7 +186,11 @@ export interface Lodop extends CLodop {
   /** 指定打印设备 */
   SET_PRINTER_INDEX(oIndexOrName: number | string): boolean;
   /** 【CLodop】指定打印机 */
-  SET_PRINTER_INDEX(DriverIndex: number | string, PrinterIDandName: number | string, SubDevIndex: number | string): boolean;
+  SET_PRINTER_INDEX(
+    DriverIndex: number | string,
+    PrinterIDandName: number | string,
+    SubDevIndex: number | string
+  ): boolean;
 
   /** 选择打印设备 */
   SELECT_PRINTER(): number;
@@ -172,7 +211,7 @@ export interface Lodop extends CLodop {
     blDirectPrint: number,
     inWidth: number,
     intHeight: number,
-    strTitleButtonCaptoin: string,
+    strTitleButtonCaptoin: string
   ): void;
 
   /** 指定背景图 */
@@ -218,7 +257,13 @@ export interface Lodop extends CLodop {
   GET_DIALOG_VALUE(oType: string, oPreValue: string): string;
 
   /** (增强型)打印初始化 */
-  PRINT_INITA(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strPrintName: string): boolean;
+  PRINT_INITA(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strPrintName: string
+  ): boolean;
 
   /** (增强型)增加超文本打印项(图形模式) */
   ADD_PRINT_HTML(
@@ -226,14 +271,26 @@ export interface Lodop extends CLodop {
     Left: number | string,
     Width: number | string,
     Height: number | string,
-    strHtmlContent: string,
+    strHtmlContent: string
   ): void;
 
   /** (增强型)增加表格打印项（URL模式） */
-  ADD_PRINT_TBURL(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strURL: string): void;
+  ADD_PRINT_TBURL(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strURL: string
+  ): void;
 
   /** (增强型)增加纯文本打印项 */
-  ADD_PRINT_TEXTA(Top: number | string, Left: number | string, Width: number | string, Height: number | string, strContent: string): void;
+  ADD_PRINT_TEXTA(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strContent: string
+  ): void;
 
   /** (增强型)设置打印项风格A, 继承 `SET_PRINT_STYLE` 的所有属性 */
   SET_PRINT_STYLEA(varItemNameID: number | string, strStyleName: string, varStyleValue: number | string): void;
@@ -253,7 +310,7 @@ export interface Lodop extends CLodop {
     Height: number | string,
     intLineStyle: number,
     intLineWidth: number,
-    varColor: number | string,
+    varColor: number | string
   ): void;
 
   /** (增强型)指定打印设备 */
@@ -290,7 +347,6 @@ export interface Lodop extends CLodop {
    */
   SET_LICENSES(strCompanyName: string, strLicense: string, strLicenseA?: string, strLicenseB?: string): void;
 
-  // tslint:disable-next-line: member-ordering
   webskt: WebSocket;
 }
 

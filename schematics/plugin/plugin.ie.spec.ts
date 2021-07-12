@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { APPNAME, createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: ie', () => {
@@ -20,7 +21,10 @@ describe('NgAlainSchematic: plugin: ie', () => {
 
   describe('when remove', () => {
     beforeEach(
-      async () => (tree = await runner.runSchematicAsync('plugin', { name: 'ie', type: 'remove', project: APPNAME }, tree).toPromise()),
+      async () =>
+        (tree = await runner
+          .runSchematicAsync('plugin', { name: 'ie', type: 'remove', project: APPNAME }, tree)
+          .toPromise())
     );
     it(`should be working`, () => {
       expect(tree.exists(`/projects/${APPNAME}/tsconfig-es5.app.json`)).toBe(false);

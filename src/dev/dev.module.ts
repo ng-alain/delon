@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { LayoutDefaultModule } from '@delon/theme/layout-default';
+
 import { SharedModule } from '../app/shared/shared.module';
 import { DemoComponent } from './demo.component';
 import { DevHomeComponent } from './home/home.component';
@@ -12,7 +14,7 @@ const COMPONENTS = [DevLayoutComponent, DevHomeComponent, DevPageComponent, Demo
 const routes: Routes = [
   {
     path: 'demo',
-    component: DemoComponent,
+    component: DemoComponent
   },
   {
     path: '',
@@ -30,13 +32,13 @@ const routes: Routes = [
       { path: 'login', component: DevPageComponent },
       { path: 'view/:id', component: DevPageComponent },
       { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.DevLazyModule) },
-      { path: 'list', loadChildren: () => import('./list/list.module').then(m => m.DevListModule) },
-    ],
-  },
+      { path: 'list', loadChildren: () => import('./list/list.module').then(m => m.DevListModule) }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes), LayoutDefaultModule],
-  declarations: COMPONENTS,
+  declarations: COMPONENTS
 })
 export class DevTestModule {}

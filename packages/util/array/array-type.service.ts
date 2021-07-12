@@ -20,6 +20,7 @@ export interface ArrayServiceArrToTreeOptions<T extends object = any> {
   parentIdMapName?: string;
   /**
    * 根父编号值，默认会自动计算得到最合适的根父编号值，例如：
+   *
    * @example
    * ```ts
    * const res = srv.arrToTree([

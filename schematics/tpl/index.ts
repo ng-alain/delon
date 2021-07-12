@@ -1,6 +1,8 @@
 import { Rule, SchematicsException } from '@angular-devkit/schematics';
+
 import * as fs from 'fs';
 import * as path from 'path';
+
 import { buildAlain } from '../utils';
 import { Schema } from './schema';
 

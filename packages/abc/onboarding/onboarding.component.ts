@@ -12,9 +12,11 @@ import {
   OnDestroy,
   Optional,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
+
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 interface OnboardingLightData {
@@ -33,11 +35,11 @@ interface OnboardingLightData {
   host: {
     '[class.onboarding]': `true`,
     '[class.onboarding-rtl]': `dir === 'rtl'`,
-    '[attr.data-onboarding-active]': `active`,
+    '[attr.data-onboarding-active]': `active`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {
   private time: any;
@@ -71,7 +73,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
     private el: ElementRef<HTMLElement>,
     @Optional() @Inject(DOCUMENT) private doc: any,
     private platform: Platform,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   private getLightData(): OnboardingLightData | null {
@@ -98,7 +100,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
       height: rect.height + offsetWH,
       el,
       clientWidth: doc.body.clientWidth,
-      clientHeight: doc.body.clientHeight,
+      clientHeight: doc.body.clientHeight
     };
   }
 

@@ -3,6 +3,7 @@ import { Rule, Tree } from '@angular-devkit/schematics';
 import { findNodes, getDecoratorMetadata } from '@schematics/angular/utility/ast-utils';
 import { Attribute, Element, parseFragment } from 'parse5';
 import * as ts from 'typescript';
+
 import { getSourceFile } from '../utils';
 import { PluginOptions } from './interface';
 
@@ -56,13 +57,13 @@ const WHITE_ICONS = [
   'BellOutline',
   'DeleteOutline',
   'PlusOutline',
-  'InboxOutline',
+  'InboxOutline'
 ];
 
 const ATTRIBUTES = {
   'nz-input-group': ['nzAddOnBeforeIcon', 'nzAddOnAfterIcon', 'nzPrefixIcon', 'nzSuffixIcon'],
   'nz-avatar': ['nzIcon'],
-  'quick-menu': ['icon'],
+  'quick-menu': ['icon']
 };
 
 const ATTRIBUTE_NAMES = Object.keys(ATTRIBUTES);
@@ -186,7 +187,7 @@ function fixTs(tree: Tree, path: string): string[] {
     return [];
   }
   const templateNode = (nodes[0] as ts.ObjectLiteralExpression).properties.find(
-    p => p.name!.getText() === `template`,
+    p => p.name!.getText() === `template`
   ) as ts.PropertyAssignment;
   if (!templateNode || !ts.isStringLiteralLike(templateNode.initializer)) {
     return [];
@@ -256,7 +257,7 @@ function getIcons(options: PluginOptions, tree: Tree): string[] {
 }
 
 function genCustomIcons(options: PluginOptions, tree: Tree): void {
-  const path = options.sourceRoot + `/style-icons.ts`;
+  const path = `${options.sourceRoot}/style-icons.ts`;
   if (!tree.exists(path)) {
     tree.create(
       path,
@@ -265,17 +266,19 @@ function genCustomIcons(options: PluginOptions, tree: Tree): void {
 import { } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [ ];
-`,
+`
     );
     return;
   }
   const source = getSourceFile(tree, path);
   const allImports = findNodes(source as any, ts.SyntaxKind.ImportDeclaration);
   const iconImport = allImports.find((w: ts.ImportDeclaration) =>
-    w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons'),
+    w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons')
   ) as ts.ImportDeclaration;
   if (!iconImport) return;
-  (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v => WHITE_ICONS.push(v.getText().trim()));
+  (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v =>
+    WHITE_ICONS.push(v.getText().trim())
+  );
 }
 
 function genIconFile(options: PluginOptions, tree: Tree, icons: string[]): void {
@@ -291,7 +294,7 @@ export const ICONS_AUTO = [
   ${icons.join(',\n  ')}
 ];
 `;
-  const savePath = options.sourceRoot + `/style-icons-auto.ts`;
+  const savePath = `${options.sourceRoot}/style-icons-auto.ts`;
   if (tree.exists(savePath)) {
     tree.overwrite(savePath, content);
   } else {
@@ -307,7 +310,9 @@ export function pluginIcon(options: PluginOptions): Rule {
     genIconFile(options, tree, icons);
     console.log(`\n\n`);
     console.log(`生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
-    console.log(`Finished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
+    console.log(
+      `Finished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`
+    );
     console.log(`\n\n`);
   };
 }

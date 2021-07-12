@@ -14,7 +14,7 @@ describe('Pipe: _currency', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
   });
@@ -31,7 +31,7 @@ describe('Pipe: _currency', () => {
     { value: 100, result: `￥100.00`, display: 'symbol-narrow' },
     { value: 100, result: `￥100.00`, display: false },
     { value: 100, result: `￥100.00`, display: true },
-    { value: 3.14, result: `￥003.14000`, digits: '3.5-5' },
+    { value: 3.14, result: `￥003.14000`, digits: '3.5-5' }
   ].forEach((item: any) => {
     it(`${JSON.stringify(item)} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
@@ -45,9 +45,7 @@ describe('Pipe: _currency', () => {
 });
 
 @Component({
-  template: `
-    <p id="result">{{ value | _currency: currencyCode:display:digits }}</p>
-  `,
+  template: ` <p id="result">{{ value | _currency: currencyCode:display:digits }}</p> `
 })
 class TestComponent {
   value: number;

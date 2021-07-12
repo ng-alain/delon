@@ -10,7 +10,7 @@ describe('Pipe: html', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
@@ -18,18 +18,20 @@ describe('Pipe: html', () => {
 
   [
     { value: '', result: `` },
-    { value: '<i>asdf</i>', result: `asdf` },
+    { value: '<i>asdf</i>', result: `asdf` }
   ].forEach((item: any) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
       fixture.detectChanges();
-      expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).textContent).toBe(item.result);
+      expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).textContent).toBe(
+        item.result
+      );
     });
   });
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | html"></div> `,
+  template: ` <div id="result" [innerHTML]="value | html"></div> `
 })
 class TestComponent {
   value = '';

@@ -10,11 +10,13 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;
@@ -25,11 +27,11 @@ const prefixCls = `sv`;
   templateUrl: './sv.component.html',
   host: {
     '[style.padding-left.px]': 'paddingValue',
-    '[style.padding-right.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_col: NumberInput;
@@ -66,7 +68,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
     el: ElementRef,
     @Host() @Optional() public parent: SVContainerComponent,
     private rep: ResponsiveService,
-    private ren: Renderer2,
+    private ren: Renderer2
   ) {
     if (parent == null) {
       throw new Error(`[sv] must include 'sv-container' component`);

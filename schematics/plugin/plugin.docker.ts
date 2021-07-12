@@ -1,4 +1,5 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
+
 import { tryAddFile, tryDelFile } from '../utils';
 import { PluginOptions } from './interface';
 
@@ -17,7 +18,7 @@ docker-compose*
 .gitignore
 README.md
 LICENSE
-.vscode`,
+.vscode`
     );
   } else {
     tryDelFile(tree, filePath);
@@ -40,7 +41,7 @@ services:
       NODE_ENV: production
     ports:
       - 80:80
-`,
+`
     );
   } else {
     tryDelFile(tree, filePath);
@@ -80,7 +81,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /${options.name}/dist /usr/share/nginx/html
 
 CMD [ "nginx", "-g", "daemon off;"]
-`,
+`
     );
   } else {
     tryDelFile(tree, filePath);
@@ -119,7 +120,7 @@ function setNginx(tree: Tree, options: PluginOptions): void {
     root   /usr/share/nginx/html;
   }
 }
-`,
+`
     );
   }
 }

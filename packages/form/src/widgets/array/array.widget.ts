@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
+
 import { NzButtonType } from 'ng-zorro-antd/button';
+
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
@@ -9,7 +11,7 @@ import { ArrayLayoutWidget } from '../../widget';
   templateUrl: './array.widget.html',
   host: { '[class.sf__array]': 'true' },
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: SafeHtml;
@@ -19,7 +21,8 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
 
   get addDisabled(): boolean {
     return (
-      this.disabled || (this.schema.maxItems != null && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems!)
+      this.disabled ||
+      (this.schema.maxItems != null && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems!)
     );
   }
 

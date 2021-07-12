@@ -1,11 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
+
+import { saveAs } from 'file-saver';
+import isUtf8 from 'isutf8';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
 import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
-import { saveAs } from 'file-saver';
-import isUtf8 from 'isutf8';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
 declare var XLSX: any;
@@ -13,16 +17,23 @@ declare var cptable: any;
 
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
-  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService, private ngZone: NgZone) {
+  constructor(
+    private http: HttpClient,
+    private lazy: LazyService,
+    configSrv: AlainConfigService,
+    private ngZone: NgZone
+  ) {
     this.cog = configSrv.merge('xlsx', {
       url: 'https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js',
-      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`],
+      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`]
     })!;
   }
   private cog: AlainXlsxConfig;
 
   private init(): Promise<LazyResult[]> {
-    return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
+    return typeof XLSX !== 'undefined'
+      ? Promise.resolve([])
+      : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
   @ZoneOutside()
@@ -58,12 +69,14 @@ export class XlsxService {
    * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
    * @param rABS 加载数据方式 `readAsBinaryString` 或 `readAsArrayBuffer` （默认），[更多细节](http://t.cn/R3n63A0)
    */
-  // tslint:disable-next-line: unified-signatures
-  import(fileOrUrl: File | string, rABS: 'readAsBinaryString' | 'readAsArrayBuffer'): Promise<{ [key: string]: any[][] }>;
+  import(
+    fileOrUrl: File | string,
+    rABS: 'readAsBinaryString' | 'readAsArrayBuffer'
+  ): Promise<{ [key: string]: any[][] }>;
 
   import(
     fileOrUrl: File | string,
-    _rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
+    _rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString'
   ): Promise<{ [key: string]: any[][] }> {
     return new Promise<{ [key: string]: any[][] }>((resolve, reject) => {
       this.init()
@@ -76,7 +89,7 @@ export class XlsxService {
               },
               (err: any) => {
                 reject(err);
-              },
+              }
             );
             return;
           }
@@ -113,7 +126,7 @@ export class XlsxService {
             bookType: 'xlsx',
             bookSST: false,
             type: 'array',
-            ...options.opts,
+            ...options.opts
           });
           const filename = options.filename || 'export.xlsx';
           saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);

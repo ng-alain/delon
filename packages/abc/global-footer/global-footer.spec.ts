@@ -4,7 +4,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { WINDOW } from '@delon/util/token';
+
 import { GlobalFooterModule } from './global-footer.module';
 import { GlobalFooterLink } from './global-footer.types';
 
@@ -35,8 +37,8 @@ describe('abc: global-footer', () => {
       declarations: [TestComponent],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: WINDOW, useFactory: () => new MockWindow() },
-      ],
+        { provide: WINDOW, useFactory: () => new MockWindow() }
+      ]
     });
   });
 
@@ -53,16 +55,16 @@ describe('abc: global-footer', () => {
     context.links = [
       {
         title: '帮助',
-        href: '',
+        href: ''
       },
       {
         title: '隐私',
-        href: '',
+        href: ''
       },
       {
         title: '条款',
-        href: '',
-      },
+        href: ''
+      }
     ];
     fixture.detectChanges();
     expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links.length);
@@ -81,8 +83,8 @@ describe('abc: global-footer', () => {
       {
         title: '',
         href: 'https://www.youtube.com',
-        blankTarget: true,
-      },
+        blankTarget: true
+      }
     ];
     fixture.detectChanges();
     page.getFirst().click();
@@ -95,8 +97,8 @@ describe('abc: global-footer', () => {
     context.links = [
       {
         title: '',
-        href: 'https://www.youtube.com',
-      },
+        href: 'https://www.youtube.com'
+      }
     ];
     fixture.detectChanges();
     page.getFirst().click();
@@ -110,8 +112,8 @@ describe('abc: global-footer', () => {
     context.links = [
       {
         title: '',
-        href: '/',
-      },
+        href: '/'
+      }
     ];
     fixture.detectChanges();
     page.getFirst().click();
@@ -125,8 +127,8 @@ describe('abc: global-footer', () => {
     context.links = [
       {
         title: '',
-        href: '',
-      },
+        href: ''
+      }
     ];
     fixture.detectChanges();
     page.getFirst().click();
@@ -143,7 +145,7 @@ describe('abc: global-footer', () => {
         <i class="icon-github"></i>
       </global-footer-item>
     </global-footer>
-    `,
+    `
     );
     createComp();
     expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(1);
@@ -162,7 +164,7 @@ describe('abc: global-footer', () => {
     <global-footer [links]="links">
       <div id="copyright">copyright</div>
     </global-footer>
-  `,
+  `
 })
 class TestComponent {
   links: GlobalFooterLink[] = [];

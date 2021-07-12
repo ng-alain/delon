@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Component({
@@ -12,11 +13,11 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
     '[class.trend]': 'true',
     '[class.trend__grey]': '!colorful',
     '[class.trend__reverse]': 'colorful && reverseColor',
-    '[attr.data-flag]': `flag`,
+    '[attr.data-flag]': `flag`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TrendComponent {
   static ngAcceptInputType_colorful: BooleanInput;

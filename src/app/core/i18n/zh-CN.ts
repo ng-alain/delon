@@ -73,5 +73,5 @@ export const ZHCN = {
   'app.theme-btn.dark': '暗黑主题',
   'app.theme-btn.compact': '紧凑主题',
   'sf.name': '名称',
-  'sf.description': '这是一段描述',
+  'sf.description': '这是一段描述'
 };

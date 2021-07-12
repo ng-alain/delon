@@ -1,4 +1,5 @@
 import { forEach, Rule, Tree } from '@angular-devkit/schematics';
+
 import * as fs from 'fs';
 
 export function tryDelFile(tree: Tree, filePath: string): void {

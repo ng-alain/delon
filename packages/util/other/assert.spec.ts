@@ -1,4 +1,5 @@
 import { of } from 'rxjs';
+
 import { assert, assertArray, assertEmpty, assertNumber, assertObservable, assertString } from './assert';
 declare let ngDevMode: boolean;
 

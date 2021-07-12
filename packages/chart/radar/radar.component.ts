@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -21,11 +31,11 @@ export interface G2RadarClickItem {
   templateUrl: './radar.component.html',
   host: {
     '[style.height.px]': 'height',
-    '[class.g2-radar]': 'true',
+    '[class.g2-radar]': 'true'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2RadarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -43,7 +53,7 @@ export class G2RadarComponent extends G2BaseComponent {
   @Input() @InputNumber() tickCount = 4;
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
-  @Output() clickItem = new EventEmitter<G2RadarClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2RadarClickItem>();
 
   // #endregion
 
@@ -59,7 +69,7 @@ export class G2RadarComponent extends G2BaseComponent {
       autoFit: true,
       height: this.getHeight(),
       padding,
-      theme,
+      theme
     }));
 
     chart.coordinate('polar');
@@ -67,17 +77,17 @@ export class G2RadarComponent extends G2BaseComponent {
     chart.axis('label', {
       line: null,
       label: {
-        offset: 8,
+        offset: 8
       },
       grid: {
         line: {
           style: {
             stroke: '#e9e9e9',
             lineWidth: 1,
-            lineDash: [0, 0],
-          },
-        },
-      },
+            lineDash: [0, 0]
+          }
+        }
+      }
     });
     chart.axis('value', {
       grid: {
@@ -86,16 +96,16 @@ export class G2RadarComponent extends G2BaseComponent {
           style: {
             stroke: '#e9e9e9',
             lineWidth: 1,
-            lineDash: [0, 0],
-          },
-        },
-      },
+            lineDash: [0, 0]
+          }
+        }
+      }
     });
     chart.scale({
       value: {
         min: 0,
-        tickCount,
-      },
+        tickCount
+      }
     });
     chart.filter('name', (name: string) => {
       const legendItem = this.legendData.find(w => w.name === name);
@@ -132,7 +142,7 @@ export class G2RadarComponent extends G2BaseComponent {
         name: origin.name,
         color: item[0].color,
         checked: true,
-        value: item.reduce((p, n) => p + n._origin.value, 0),
+        value: item.reduce((p, n) => p + n._origin.value, 0)
       };
 
       return result;

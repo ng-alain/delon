@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { numberToChinese } from './number-to-chinese';
 import { NumberToChineseModule } from './number-to-chinese.module';
 
@@ -28,16 +29,18 @@ describe('abc: number-to-chinese', () => {
         rmb: false,
         num: -1202030,
         value: '欠一百二十万零两千零三十',
-        options: { minusSymbol: '欠' },
+        options: { minusSymbol: '欠' }
       },
       {
         rmb: true,
         num: -1202030,
         value: '欠壹佰贰拾万零贰仟零叁拾元整',
-        options: { minusSymbol: '欠' },
-      },
+        options: { minusSymbol: '欠' }
+      }
     ].forEach((item: any) => {
-      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${item.num} muse be ${item.value}`, () => {
+      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${item.num} muse be ${
+        item.value
+      }`, () => {
         expect(numberToChinese(item.num, item.rmb, item.options || null)).toBe(item.value);
       });
     });
@@ -45,7 +48,7 @@ describe('abc: number-to-chinese', () => {
     it('should be throw when validThrow: true', () => {
       expect(() => {
         numberToChinese('asdf', true, {
-          validThrow: true,
+          validThrow: true
         });
       }).toThrow();
     });
@@ -61,7 +64,7 @@ describe('abc: number-to-chinese', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [NumberToChineseModule],
-        declarations: [TestComponent],
+        declarations: [TestComponent]
       });
       fixture = TestBed.createComponent(TestComponent);
       fixture.detectChanges();
@@ -70,21 +73,23 @@ describe('abc: number-to-chinese', () => {
     [
       { value: 1, result: `壹元整` },
       { value: 1, result: `一`, rmb: false },
-      { value: -1, result: `负壹元整`, rmb: true, minusSymbol: '负' },
+      { value: -1, result: `负壹元整`, rmb: true, minusSymbol: '负' }
     ].forEach((item: any) => {
       it(`${item.value.toString()} muse be ${item.result}`, () => {
         fixture.componentInstance.value = item.value;
         fixture.componentInstance.rmb = item.rmb;
         fixture.componentInstance.minusSymbol = item.minusSymbol;
         fixture.detectChanges();
-        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toBe(item.result);
+        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toBe(
+          item.result
+        );
       });
     });
   });
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | n2c: rmb:minusSymbol"></div> `,
+  template: ` <div id="result" [innerHTML]="value | n2c: rmb:minusSymbol"></div> `
 })
 class TestComponent {
   value: number | string = 1;

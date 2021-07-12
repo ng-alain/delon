@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs';
+
 import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { AutoSizeType } from 'ng-zorro-antd/input';
 import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
-import { Observable } from 'rxjs';
+
 import { SFSchemaEnumType } from '../../schema';
 import { SFUISchemaItem } from '../../schema/ui';
 

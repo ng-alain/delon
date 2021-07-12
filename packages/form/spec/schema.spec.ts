@@ -1,7 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
+
 import { ObjectProperty } from '../src/model/object.property';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';
@@ -28,8 +30,8 @@ describe('form: schema', () => {
       page
         .newSchema({
           properties: {
-            name: { type: 'string', enum: ['a'] },
-          },
+            name: { type: 'string', enum: ['a'] }
+          }
         })
         .checkUI('/name', 'widget', 'select');
     });
@@ -37,8 +39,8 @@ describe('form: schema', () => {
       page
         .newSchema({
           properties: {
-            name: { type: 'string', format: 'email' },
-          },
+            name: { type: 'string', format: 'email' }
+          }
         })
         .checkUI('/name', 'widget', 'autocomplete');
     });
@@ -46,8 +48,8 @@ describe('form: schema', () => {
       page
         .newSchema({
           properties: {
-            name: { type: 'string', ui: 'textarea' },
-          },
+            name: { type: 'string', ui: 'textarea' }
+          }
         })
         .checkUI('/name', 'widget', 'textarea');
     });
@@ -63,24 +65,24 @@ describe('form: schema', () => {
                 a: {
                   type: 'string',
                   ui: {
-                    grid: { span: 12 },
-                  },
+                    grid: { span: 12 }
+                  }
                 },
-                b: { type: 'string' },
+                b: { type: 'string' }
               },
-              ui: { spanLabelFixed: 10 },
-            },
-          },
-        },
+              ui: { spanLabelFixed: 10 }
+            }
+          }
+        }
       };
       const label = 10;
       const ui: SFUISchema = {
         '*': { spanLabel: label },
         $name2: {
           $items: {
-            $a: { spanLabel: 9 },
-          },
-        },
+            $a: { spanLabel: 9 }
+          }
+        }
       };
       page
         .newSchema(schema, ui)
@@ -98,12 +100,12 @@ describe('form: schema', () => {
             title: '同意本协议',
             description: '《用户协议》',
             ui: {
-              widget: 'checkbox',
+              widget: 'checkbox'
             },
-            default: true,
-          },
+            default: true
+          }
         },
-        ui: { spanLabelFixed: 10, debug: true },
+        ui: { spanLabelFixed: 10, debug: true }
       };
       page.newSchema(schema).checkUI('/name', 'spanLabelFixed', 10).checkUI('/protocol', 'spanLabelFixed', 10);
     });
@@ -111,8 +113,8 @@ describe('form: schema', () => {
       page
         .newSchema({
           properties: {
-            name: { type: 'string', format: 'email1' },
-          },
+            name: { type: 'string', format: 'email1' }
+          }
         })
         .checkUI('/name', 'widget', 'string');
     });
@@ -129,12 +131,12 @@ describe('form: schema', () => {
               type: 'object',
               properties: {
                 name: { type: 'string' },
-                age: { type: 'number' },
-              },
-            },
-          },
+                age: { type: 'number' }
+              }
+            }
+          }
         },
-        { '*': { spanLabelFixed: 100, spanControl: 10, offsetControl: 11 } },
+        { '*': { spanLabelFixed: 100, spanControl: 10, offsetControl: 11 } }
       );
       page.checkUI('/user/name', 'spanLabelFixed', 100);
       page.checkUI('/user/name', 'spanControl', null); // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
@@ -156,11 +158,11 @@ describe('form: schema', () => {
             items: {
               type: 'object',
               properties: {
-                a: { type: 'string' },
-              },
-            },
-          },
-        },
+                a: { type: 'string' }
+              }
+            }
+          }
+        }
       };
       describe('[#via in json schema]', () => {
         it('should be has $items when is array', () => {
@@ -175,8 +177,8 @@ describe('form: schema', () => {
           const uiSchema: SFUISchema = {
             $name: {
               $items: {},
-              ...deepCopy(arrUI),
-            },
+              ...deepCopy(arrUI)
+            }
           };
           page.newSchema(schema, uiSchema).checkUI('/name', 'grid.arraySpan', arrUI.grid!.arraySpan);
         });
@@ -186,8 +188,8 @@ describe('form: schema', () => {
       it('should working when value is string', fakeAsync(() => {
         context.comp.refreshSchema({
           properties: {
-            name: { type: 'string', ui: { optionalHelp: 'a' } },
-          },
+            name: { type: 'string', ui: { optionalHelp: 'a' } }
+          }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 1);
         discardPeriodicTasks();
@@ -195,8 +197,8 @@ describe('form: schema', () => {
       it('should working when value is object', fakeAsync(() => {
         context.comp.refreshSchema({
           properties: {
-            name: { type: 'string', ui: { optionalHelp: { text: 'b', placement: 'bottomRight' } } },
-          },
+            name: { type: 'string', ui: { optionalHelp: { text: 'b', placement: 'bottomRight' } } }
+          }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 1);
         discardPeriodicTasks();
@@ -204,8 +206,8 @@ describe('form: schema', () => {
       it('should be hide when not text value in object', fakeAsync(() => {
         context.comp.refreshSchema({
           properties: {
-            name: { type: 'string', ui: { optionalHelp: { text: '', placement: 'bottomRight' } } },
-          },
+            name: { type: 'string', ui: { optionalHelp: { text: '', placement: 'bottomRight' } } }
+          }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 0);
         discardPeriodicTasks();
@@ -214,10 +216,10 @@ describe('form: schema', () => {
         context.comp.refreshSchema(
           {
             properties: {
-              name: { type: 'string', ui: { optionalHelp: { text: 'a' } } },
-            },
+              name: { type: 'string', ui: { optionalHelp: { text: 'a' } } }
+            }
           },
-          { '*': { optionalHelp: { text: '', placement: 'bottomRight' } } },
+          { '*': { optionalHelp: { text: '', placement: 'bottomRight' } } }
         );
         const prop = page.getProperty('/name');
         expect((prop!.ui!.optionalHelp as any).placement!).toBe(`bottomRight`);
@@ -233,12 +235,12 @@ describe('form: schema', () => {
           definitions: {
             large: {
               type: 'string',
-              maxLength: 10,
-            },
+              maxLength: 10
+            }
           },
           properties: {
-            name: { $ref: '#/definitions/large' },
-          },
+            name: { $ref: '#/definitions/large' }
+          }
         })
         .checkSchema('/name', 'maxLength', 10);
     });
@@ -247,8 +249,8 @@ describe('form: schema', () => {
         page.newSchema({
           definitions: {},
           properties: {
-            name: { $ref: '#/definitions/large' },
-          },
+            name: { $ref: '#/definitions/large' }
+          }
         });
       }).toThrow();
     });
@@ -257,8 +259,8 @@ describe('form: schema', () => {
         page.newSchema({
           definitions: {},
           properties: {
-            name: { $ref: 'definitions/large' },
-          },
+            name: { $ref: 'definitions/large' }
+          }
         });
       }).toThrow();
     });
@@ -274,13 +276,13 @@ describe('form: schema', () => {
               title: '登录方式',
               enum: [
                 { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
+                { label: '账密', value: 'account' }
               ],
               default: 'mobile',
               ui: {
                 widget: 'radio',
-                class: 'j-login_type',
-              },
+                class: 'j-login_type'
+              }
             },
             mobile: { type: 'string', ui: { class: 'j-mobile' } },
             code: { type: 'number', ui: { class: 'j-code' } },
@@ -289,20 +291,20 @@ describe('form: schema', () => {
               type: 'string',
               ui: {
                 type: 'password',
-                class: 'j-pwd',
-              },
-            },
+                class: 'j-pwd'
+              }
+            }
           },
           required: ['login_type'],
           if: {
-            properties: { login_type: { enum: ['mobile'] } },
+            properties: { login_type: { enum: ['mobile'] } }
           },
           then: {
-            required: ['mobile', 'code'],
+            required: ['mobile', 'code']
           },
           else: {
-            required: ['name', 'pwd'],
-          },
+            required: ['name', 'pwd']
+          }
         })
         .checkCount('.j-mobile', 1)
         .checkCount('.j-name', 0);
@@ -320,13 +322,13 @@ describe('form: schema', () => {
               title: '登录方式',
               enum: [
                 { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
+                { label: '账密', value: 'account' }
               ],
               default: 'mobile',
               ui: {
                 widget: 'radio',
-                class: 'j-login_type',
-              },
+                class: 'j-login_type'
+              }
             },
             mobile: { type: 'string', ui: { class: 'j-mobile' } },
             code: { type: 'number', ui: { class: 'j-code' } },
@@ -335,17 +337,17 @@ describe('form: schema', () => {
               type: 'string',
               ui: {
                 type: 'password',
-                class: 'j-pwd',
-              },
-            },
+                class: 'j-pwd'
+              }
+            }
           },
           required: ['login_type'],
           if: {
-            properties: { login_type: { enum: ['mobile'] } },
+            properties: { login_type: { enum: ['mobile'] } }
           },
           then: {
-            required: ['mobile', 'code'],
-          },
+            required: ['mobile', 'code']
+          }
         })
         .checkCount('.j-mobile', 1)
         .checkCount('.j-name', 1);
@@ -359,7 +361,7 @@ describe('form: schema', () => {
         page.newSchema({
           properties: { name: { type: 'string' } },
           if: {},
-          then: {},
+          then: {}
         });
       }).toThrowError(`if: does not contain 'properties'`);
     });
@@ -372,13 +374,13 @@ describe('form: schema', () => {
               title: '登录方式',
               enum: [
                 { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
+                { label: '账密', value: 'account' }
               ],
               default: 'mobile',
               ui: {
                 widget: 'radio',
-                class: 'j-login_type',
-              },
+                class: 'j-login_type'
+              }
             },
             mobile: { type: 'string', ui: { class: 'j-mobile' } },
             code: { type: 'number', ui: { class: 'j-code' } },
@@ -387,17 +389,17 @@ describe('form: schema', () => {
               type: 'string',
               ui: {
                 type: 'password',
-                class: 'j-pwd',
-              },
-            },
+                class: 'j-pwd'
+              }
+            }
           },
           required: ['login_type'],
           if: {
-            properties: { login_type1: { enum: ['mobile'] } },
+            properties: { login_type1: { enum: ['mobile'] } }
           },
           then: {
-            required: ['mobile', 'code'],
-          },
+            required: ['mobile', 'code']
+          }
         });
       }).toThrow();
     });
@@ -417,11 +419,11 @@ describe('form: schema', () => {
       page.newSchema({
         properties: {
           name: { type: 'string' },
-          pwd: { type: 'string' },
+          pwd: { type: 'string' }
         },
         ui: {
-          order,
-        },
+          order
+        }
       });
       checkOrderKeys(order);
     });
@@ -431,11 +433,11 @@ describe('form: schema', () => {
         properties: {
           a: { type: 'string' },
           b: { type: 'string' },
-          c: { type: 'string' },
+          c: { type: 'string' }
         },
         ui: {
-          order: ['b', '*'],
-        },
+          order: ['b', '*']
+        }
       });
       checkOrderKeys(['b', 'a', 'c']);
     });
@@ -447,11 +449,11 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' },
+              b: { type: 'string' }
             },
             ui: {
-              order: ['c', 'a'],
-            },
+              order: ['c', 'a']
+            }
           });
         }).toThrow();
       });
@@ -460,11 +462,11 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' },
+              b: { type: 'string' }
             },
             ui: {
-              order: ['a'],
-            },
+              order: ['a']
+            }
           });
         }).toThrow();
       });
@@ -473,11 +475,11 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' },
+              b: { type: 'string' }
             },
             ui: {
-              order: ['a', '*', '*', '*', '*'],
-            },
+              order: ['a', '*', '*', '*', '*']
+            }
           });
         }).toThrow();
       });
@@ -491,19 +493,19 @@ describe('form: schema', () => {
           definitions: {
             nameRef: {
               type: 'string',
-              title: 'nameRef',
-            },
+              title: 'nameRef'
+            }
           },
           properties: {
             name: {
               type: 'string',
-              title: 'Name',
+              title: 'Name'
             },
             nameTwo: {
-              $ref: '#/definitions/nameRef',
-            },
+              $ref: '#/definitions/nameRef'
+            }
           },
-          required: ['name', 'nameTwo'],
+          required: ['name', 'nameTwo']
         })
         .checkUI('/nameTwo', '_required', true);
     });

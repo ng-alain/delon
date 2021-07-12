@@ -6,28 +6,28 @@ export default {
     403: `Žal nimate dostopa do te strani`,
     404: `Žal stran, ki ste jo obiskali, ne obstaja`,
     500: `Žal strežnik poroča o napaki`,
-    backToHome: 'Nazaj domov',
+    backToHome: 'Nazaj domov'
   },
   noticeIcon: {
     emptyText: 'Ni podatkov',
-    clearText: 'Počisti',
+    clearText: 'Počisti'
   },
   reuseTab: {
     close: 'Zapri zavihek',
     closeOther: 'Zaprite druge zavihke',
-    closeRight: 'Zaprite zavihke na desni',
+    closeRight: 'Zaprite zavihke na desni'
   },
   tagSelect: {
     expand: 'Razširi',
-    collapse: 'Strni',
+    collapse: 'Strni'
   },
   miniProgress: {
-    target: 'Cilj: ',
+    target: 'Cilj: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} of {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Reset',
+    filterReset: 'Reset'
   },
   sf: {
     submit: 'Pošlji',
@@ -71,13 +71,13 @@ export default {
       contains: `Naj vsebuje veljaven artikel`,
       formatExclusiveMaximum: `formatExclusiveMaximum naj bo boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum naj bo boolean`,
-      if: `Naj se ujema s shemo "{failingKeyword}"`,
-    },
+      if: `Naj se ujema s shemo "{failingKeyword}"`
+    }
   },
   onboarding: {
     skip: `Preskoči`,
     prev: `Prejšnje`,
     next: `Naslednji`,
-    done: `Končano`,
-  },
+    done: `Končano`
+  }
 } as FullLocaleData;

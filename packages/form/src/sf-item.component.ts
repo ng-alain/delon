@@ -7,9 +7,10 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { Subject } from 'rxjs';
+
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
 import { TerminatorService } from './terminator.service';
@@ -24,7 +25,7 @@ let nextUniqueId = 0;
   host: { '[class.sf__item]': 'true' },
   template: ` <ng-template #target></ng-template> `,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;

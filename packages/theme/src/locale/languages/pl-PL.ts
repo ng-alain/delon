@@ -6,29 +6,29 @@ export default {
     403: `Niestety, nie masz uprawnień do tej strony`,
     404: `Niestety, ta strona nie istnieje`,
     500: `Niestety, błąd serwera`,
-    backToHome: 'Powróć do strony głównej',
+    backToHome: 'Powróć do strony głównej'
   },
   noticeIcon: {
     emptyText: 'Brak danych',
-    clearText: 'Wyczyść',
+    clearText: 'Wyczyść'
   },
   reuseTab: {
     close: 'Zamknij kartę',
     closeOther: 'Zamknij inne karty',
     closeRight: 'Zamknij karty po prawej',
-    refresh: 'Refresh',
+    refresh: 'Refresh'
   },
   tagSelect: {
     expand: 'Rozszerz',
-    collapse: 'Zmniejsz',
+    collapse: 'Zmniejsz'
   },
   miniProgress: {
-    target: 'Cel: ',
+    target: 'Cel: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} z {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Wyczyść',
+    filterReset: 'Wyczyść'
   },
   sf: {
     submit: 'Wyślij',
@@ -72,13 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
   onboarding: {
     skip: `Pominąć`,
     prev: `Poprzedni`,
     next: `Kolejny`,
-    done: `Gotowe`,
-  },
+    done: `Gotowe`
+  }
 } as FullLocaleData;

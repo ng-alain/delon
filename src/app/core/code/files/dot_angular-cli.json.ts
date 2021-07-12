@@ -13,8 +13,8 @@ export default {
       environmentSource: 'environments/environment.ts',
       environments: {
         dev: 'environments/environment.ts',
-        prod: 'environments/environment.prod.ts',
-      },
-    },
-  ],
+        prod: 'environments/environment.prod.ts'
+      }
+    }
+  ]
 };

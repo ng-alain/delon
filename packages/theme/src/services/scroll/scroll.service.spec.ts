@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Injector, StaticProvider } from '@angular/core';
+
 import { ScrollService } from './scroll.service';
 
 describe('Service: Scroll', () => {
@@ -32,7 +33,7 @@ describe('Service: Scroll', () => {
       const providers = [
         { provide: ScrollService, useClass: ScrollService, deps: [DOCUMENT, Platform] },
         { provide: Platform, useValue: { isBrowser: true } },
-        { provide: DOCUMENT, useClass: MockDocument, deps: [] },
+        { provide: DOCUMENT, useClass: MockDocument, deps: [] }
       ] as StaticProvider[];
       injector = Injector.create({ providers });
       doc = injector.get(DOCUMENT) as any;

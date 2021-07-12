@@ -1,10 +1,13 @@
-// tslint:disable: no-import-side-effect ordered-imports no-string-literal
+// eslint-disable-next-line import/no-unassigned-import
 import 'zone.js/dist/zone-node';
 import { APP_BASE_HREF } from '@angular/common';
+
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import express from 'express';
-import { join } from 'path';
+
 import { existsSync } from 'fs';
+import { join } from 'path';
+
 import { AppServerModule } from './main.server';
 
 const distFolder = join(__dirname, '../browser');
@@ -28,8 +31,8 @@ export function app() {
   server.engine(
     'html',
     ngExpressEngine({
-      bootstrap: AppServerModule,
-    }) as any, // abourt as any issues: https://github.com/angular/universal/issues/1210
+      bootstrap: AppServerModule
+    }) as any // abourt as any issues: https://github.com/angular/universal/issues/1210
   );
 
   server.set('view engine', 'html');
@@ -41,8 +44,8 @@ export function app() {
   server.get(
     '*.*',
     express.static(distFolder, {
-      maxAge: '1y',
-    }),
+      maxAge: '1y'
+    })
   );
 
   // All regular routes use the Universal engine

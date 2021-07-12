@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
+
 import { G2MiniBarComponent } from './mini-bar.component';
 import { G2MiniBarModule } from './mini-bar.module';
 
@@ -19,7 +21,7 @@ describe('chart: mini-bar', () => {
           .newData([
             { x: 1, y: 10 },
             { x: 2, y: 20 },
-            { x: 3, y: 30 },
+            { x: 3, y: 30 }
           ])
           .isDataCount('geometries', 3);
       });
@@ -28,7 +30,7 @@ describe('chart: mini-bar', () => {
     describe('#tooltipType', () => {
       beforeEach(() => {
         page = new PageG2<TestComponent>().makeModule(G2MiniBarModule, TestComponent, {
-          dc: false,
+          dc: false
         });
       });
       it('with default', fakeAsync(() => {
@@ -56,13 +58,13 @@ describe('chart: mini-bar', () => {
       [data]="data"
       [delay]="delay"
     ></g2-mini-bar>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2MiniBarComponent;
   data: any[] = [
     { x: 1, y: 10 },
-    { x: 2, y: 20 },
+    { x: 2, y: 20 }
   ];
   height = PageG2Height;
   tooltipType = 'default';

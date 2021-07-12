@@ -3,13 +3,21 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable } from 'rxjs';
+
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseCustomContextMenu, ReuseItem, ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
+import {
+  ReuseCustomContextMenu,
+  ReuseItem,
+  ReuseTabMatchMode,
+  ReuseTabRouteParamMatchMode
+} from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -51,37 +59,37 @@ describe('abc: reuse-tab', () => {
                 {
                   path: 'leave',
                   component: DComponent,
-                  canDeactivate: ['CanDeactivate'],
-                },
-              ],
-            },
+                  canDeactivate: ['CanDeactivate']
+                }
+              ]
+            }
           ],
-          { scrollPositionRestoration: 'disabled' },
-        ),
+          { scrollPositionRestoration: 'disabled' }
+        )
       ],
       providers: [
         MenuService,
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
+          deps: [ReuseTabService]
         },
         {
           provide: 'CanDeactivate',
           useValue: () => {
             return new Observable((observer: any) => observer.next(false));
-          },
-        },
+          }
+        }
       ].concat(
         !needI18n
           ? []
           : [
               {
                 provide: ALAIN_I18N_TOKEN,
-                useClass: MockI18NServiceFake,
-              } as any,
-            ],
-      ),
+                useClass: MockI18NServiceFake
+              } as any
+            ]
+      )
     });
   }
 
@@ -317,10 +325,25 @@ describe('abc: reuse-tab', () => {
           .end();
       }));
       it('should keeping tab when closed prev tab', fakeAsync(() => {
-        page.to('#b').expectCount(2).openContextMenu(0).clickContentMenu('close').expectCount(1).expectActive(0, true).end();
+        page
+          .to('#b')
+          .expectCount(2)
+          .openContextMenu(0)
+          .clickContentMenu('close')
+          .expectCount(1)
+          .expectActive(0, true)
+          .end();
       }));
       it('should keeping tab when closed next tab', fakeAsync(() => {
-        page.to('#b').go(0).expectCount(2).openContextMenu(1).clickContentMenu('close').expectCount(1).expectActive(0, true).end();
+        page
+          .to('#b')
+          .go(0)
+          .expectCount(2)
+          .openContextMenu(1)
+          .clickContentMenu('close')
+          .expectCount(1)
+          .expectActive(0, true)
+          .end();
       }));
       it('should keeping tab of closed right tab', fakeAsync(() => {
         let bTime = '';
@@ -405,10 +428,16 @@ describe('abc: reuse-tab', () => {
         page
           .to('#e')
           .openContextMenu(1)
-          .tap(() => expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).toContain('ant-menu-item-disabled'))
+          .tap(() =>
+            expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).toContain(
+              'ant-menu-item-disabled'
+            )
+          )
           .openContextMenu(1, { ctrlKey: true })
           .tap(() =>
-            expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).not.toContain('ant-menu-item-disabled'),
+            expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).not.toContain(
+              'ant-menu-item-disabled'
+            )
           )
           .expectCount(2)
           .end();
@@ -419,14 +448,14 @@ describe('abc: reuse-tab', () => {
             {
               id: 'custom1',
               title: '自定义1',
-              fn: jasmine.createSpy('custom.menu.1'),
+              fn: jasmine.createSpy('custom.menu.1')
             },
             {
               id: 'custom2',
               title: '自定义2',
               disabled: () => true,
-              fn: jasmine.createSpy('custom.menu.2'),
-            },
+              fn: jasmine.createSpy('custom.menu.2')
+            }
           ];
           fixture.detectChanges();
         });
@@ -633,14 +662,18 @@ describe('abc: reuse-tab', () => {
       expect(time).toBe(+page.time);
     }));
     it('should be call _onReuseInit when refresh active tab', fakeAsync(() => {
-      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      createComp(
+        `<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`
+      );
       page.to('#a').openContextMenu(0);
       spyOn(srv.componentRef.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
       expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
     it('should be call _onReuseInit when refresh non-active tab', fakeAsync(() => {
-      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      createComp(
+        `<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`
+      );
       page.to('#a').to('#b').openContextMenu(0);
       spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
@@ -789,7 +822,7 @@ describe('abc: reuse-tab', () => {
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
     <router-outlet></router-outlet>
-  `,
+  `
 })
 class AppComponent {}
 
@@ -817,7 +850,7 @@ class AppComponent {}
     </reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
     <ng-template #titleRender let-i>{{ i.url }}</ng-template>
-  `,
+  `
 })
 class LayoutComponent {
   @ViewChild('comp', { static: true })
@@ -845,7 +878,7 @@ class LayoutComponent {
   template: `
     a:
     <div id="time">{{ time }}</div>
-  `,
+  `
 })
 class AComponent {
   time = +new Date();
@@ -860,7 +893,7 @@ class AComponent {
     <div id="time">{{ time }}</div>
     <a id="b2" [routerLink]="['/b/2']">b2</a>
     <a id="b3" [routerLink]="['/b/3']">b3</a>
-  `,
+  `
 })
 class BComponent {
   time = +new Date();
@@ -874,7 +907,7 @@ class BComponent {
     c:
     <div id="time">{{ time }}</div>
     <a id="to-d" routerLink="/d">to-d</a>
-  `,
+  `
 })
 class CComponent {
   time = +new Date();
@@ -891,7 +924,7 @@ class CComponent {
     d:
     <div id="time">{{ time }}</div>
     <a id="to-c" routerLink="/c">to-c</a>
-  `,
+  `
 })
 class DComponent {
   time = +new Date();
@@ -904,7 +937,7 @@ class DComponent {
   template: `
     e:
     <div id="time">{{ time }}</div>
-  `,
+  `
 })
 class EComponent {
   time = +new Date();

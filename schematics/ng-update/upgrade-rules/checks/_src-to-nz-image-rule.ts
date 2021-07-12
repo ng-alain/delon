@@ -1,4 +1,10 @@
-import { findInputsOnElementWithAttr, Migration, ResolvedResource, TargetVersion, UpgradeData } from '@angular/cdk/schematics';
+import {
+  findInputsOnElementWithAttr,
+  Migration,
+  ResolvedResource,
+  TargetVersion,
+  UpgradeData
+} from '@angular/cdk/schematics';
 
 export class SrcToNzImageRule extends Migration<UpgradeData> {
   enabled = this.targetVersion === TargetVersion.V12;
@@ -9,7 +15,7 @@ export class SrcToNzImageRule extends Migration<UpgradeData> {
         this.failures.push({
           filePath: template.filePath,
           position: template.getCharacterAndLineOfPosition(offset),
-          message: `Found deprecated "${deprecated}" component. Use "nz-image" to instead please.`,
+          message: `Found deprecated "${deprecated}" component. Use "nz-image" to instead please.`
         });
       });
     };

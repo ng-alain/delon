@@ -13,11 +13,11 @@ describe('theme: preloader', () => {
       cached[type] = {
         className: [],
         style: {
-          overflow: '',
+          overflow: ''
         },
         addEventListener: (_key: string, fn: any) => {
           fn();
-        },
+        }
       };
       return cached[type];
     });
@@ -41,11 +41,11 @@ describe('theme: preloader', () => {
       cached[type] = {
         className: [],
         style: {
-          overflow: '',
+          overflow: ''
         },
         addEventListener: (_key: string, fn: any) => {
           fn();
-        },
+        }
       };
       return cached[type];
     });

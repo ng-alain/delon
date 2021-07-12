@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { SFTextareaWidgetSchema } from './schema';
@@ -22,7 +24,7 @@ describe('form: widget: textarea', () => {
 
   it('should working', () => {
     const s: SFSchema = {
-      properties: { a: { type: 'string', ui: { widget, autosize: true } } },
+      properties: { a: { type: 'string', ui: { widget, autosize: true } } }
     };
     page.newSchema(s).checkCount('textarea', 1);
   });
@@ -37,10 +39,10 @@ describe('form: widget: textarea', () => {
             autosize: true,
             change: jasmine.createSpy('change'),
             focus: jasmine.createSpy('focus'),
-            blur: jasmine.createSpy('blur'),
-          } as SFTextareaWidgetSchema,
-        },
-      },
+            blur: jasmine.createSpy('blur')
+          } as SFTextareaWidgetSchema
+        }
+      }
     };
     page.newSchema(schema);
     const ui = schema.properties!.a.ui as SFTextareaWidgetSchema;

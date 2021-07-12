@@ -1,9 +1,12 @@
-import { toBoolean } from '@delon/util/decorator';
-import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
+
+import { toBoolean } from '@delon/util/decorator';
+import { deepCopy } from '@delon/util/other';
+
 import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
@@ -19,7 +22,6 @@ export function toBool(value: any, defaultValue: boolean): boolean {
 
 export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {
   if (ui.debug) {
-    // tslint:disable-next-line:no-console
     console.warn(...args);
   }
 }
@@ -170,7 +172,12 @@ export function getCopyEnum(list: any[], formData: any, readOnly: boolean): SFSc
   return getEnum(deepCopy(list || []), formData, readOnly);
 }
 
-export function getData(schema: SFSchema, ui: SFUISchemaItem, formData: any, asyncArgs?: any): Observable<SFSchemaEnum[]> {
+export function getData(
+  schema: SFSchema,
+  ui: SFUISchemaItem,
+  formData: any,
+  asyncArgs?: any
+): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
     return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getEnum(list, formData, schema.readOnly!)));
   }

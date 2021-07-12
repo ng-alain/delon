@@ -1,8 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+
 import { SVContainerComponent } from './sv-container.component';
 import { SVComponent } from './sv.component';
 import { SVModule } from './sv.module';
@@ -18,7 +20,7 @@ describe('abc: view', () => {
   const moduleAction = () => {
     TestBed.configureTestingModule({
       imports: [SVModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   };
 
@@ -45,23 +47,23 @@ describe('abc: view', () => {
         it('#title', () => {
           context.parent_title = `parent_title`;
           fixture.detectChanges();
-          expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+          expect(page.getEl(`${prefixCls}title`).textContent).toContain(`parent_title`);
         });
         it('#size', () => {
           context.parent_size = 'large';
           fixture.detectChanges();
-          page.expect(prefixCls + 'large');
+          page.expect(`${prefixCls}large`);
           context.parent_size = 'small';
           fixture.detectChanges();
-          page.expect(prefixCls + 'small');
+          page.expect(`${prefixCls}small`);
         });
         it('#layout', () => {
           context.parent_layout = 'horizontal';
           fixture.detectChanges();
-          page.expect(prefixCls + 'horizontal');
+          page.expect(`${prefixCls}horizontal`);
           context.parent_layout = 'vertical';
           fixture.detectChanges();
-          page.expect(prefixCls + 'vertical');
+          page.expect(`${prefixCls}vertical`);
         });
         it('#gutter', () => {
           const gutter = 24;
@@ -70,7 +72,7 @@ describe('abc: view', () => {
           fixture.detectChanges();
           expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
           expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-          const itemCls = prefixCls + 'item';
+          const itemCls = `${prefixCls}item`;
           expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
         });
@@ -79,15 +81,15 @@ describe('abc: view', () => {
             context.parent_labelWidth = 20;
             context.label = 'aa';
             fixture.detectChanges();
-            page.expect(prefixCls + 'item-fixed');
-            expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.parent_labelWidth}px`);
+            page.expect(`${prefixCls}item-fixed`);
+            expect(page.getEl(`${prefixCls}label`).style.width).toBe(`${context.parent_labelWidth}px`);
           });
           it('should be ingore width when layout not horizontal', () => {
             context.parent_layout = 'vertical';
             context.parent_labelWidth = 20;
             context.label = 'aa';
             fixture.detectChanges();
-            page.expect(prefixCls + 'item-fixed');
+            page.expect(`${prefixCls}item-fixed`);
             page.expect('sv__label-width', 0);
           });
         });
@@ -116,12 +118,12 @@ describe('abc: view', () => {
         it('#label', () => {
           context.label = 'test-label';
           fixture.detectChanges();
-          expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
+          expect(page.getEl(`${prefixCls}label`).textContent).toContain('test-label');
         });
         it('#optional', () => {
           context.optional = 'test-optional';
           fixture.detectChanges();
-          expect(page.getEl(prefixCls + 'label-optional').textContent).toContain('test-optional');
+          expect(page.getEl(`${prefixCls}label-optional`).textContent).toContain('test-optional');
         });
         it('#optionalHelp', () => {
           context.optionalHelp = 'test-optional';
@@ -133,44 +135,44 @@ describe('abc: view', () => {
             context.content = '';
             context.parent_default = false;
             // make surce clean because of genModule has generated
-            page.getEl(prefixCls + 'detail').classList.remove(prefixCls + 'default');
+            page.getEl(`${prefixCls}detail`).classList.remove(`${prefixCls}default`);
           });
           it('with true', () => {
             context.default = true;
             fixture.detectChanges();
             // mock
             context.viewComp.checkContent();
-            page.expect(prefixCls + 'default', 1);
+            page.expect(`${prefixCls}default`, 1);
           });
           it('with false', () => {
             context.default = false;
             fixture.detectChanges();
             // mock
             context.viewComp.checkContent();
-            page.expect(prefixCls + 'default', 0);
+            page.expect(`${prefixCls}default`, 0);
           });
           it('shoule be from defualt to text', () => {
             context.default = true;
             fixture.detectChanges();
             context.viewComp.checkContent();
-            page.expect(prefixCls + 'default', 1);
+            page.expect(`${prefixCls}default`, 1);
             context.content = 'asdf';
             fixture.detectChanges();
             context.viewComp.checkContent();
-            page.expect(prefixCls + 'default', 0);
+            page.expect(`${prefixCls}default`, 0);
           });
         });
         describe('#unit', () => {
           it('should be working', () => {
             context.unit = '个';
             fixture.detectChanges();
-            page.expect(prefixCls + 'unit', 1);
+            page.expect(`${prefixCls}unit`, 1);
           });
         });
         it('#type', () => {
           context.type = 'danger';
           fixture.detectChanges();
-          page.expect(prefixCls + 'type-danger');
+          page.expect(`${prefixCls}type-danger`);
         });
       });
     });
@@ -183,7 +185,7 @@ describe('abc: view', () => {
           <ng-template #title>
             <a id="tip">tip</a>
           </ng-template>
-        </sv-container>`,
+        </sv-container>`
       );
       page.expect('#tip');
     });
@@ -196,7 +198,7 @@ describe('abc: view', () => {
             </ng-template>
             Custom label
           </sv>
-        </sv-container>`,
+        </sv-container>`
       );
       page.expect('#tip');
     });
@@ -260,7 +262,7 @@ describe('abc: view', () => {
       <sv-value size="small">small</sv-value>
       <sv-value size="default">default</sv-value>
     </sv-container>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('svComp', { static: true })

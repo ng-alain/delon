@@ -3,7 +3,9 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu } from '../menu/interface';
@@ -27,8 +29,8 @@ describe('Service: Title', () => {
       return {
         childNodes: [],
         firstChild: {
-          textContent: 'a',
-        },
+          textContent: 'a'
+        }
       };
     }
   }
@@ -43,7 +45,9 @@ describe('Service: Title', () => {
     const i18nProvider: any[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
     TestBed.configureTestingModule({
       imports: [AlainThemeModule, RouterTestingModule],
-      providers: [TitleService, MenuService, { provide: Title, useClass: TestTitleService }, ...i18nProvider].concat(providers),
+      providers: [TitleService, MenuService, { provide: Title, useClass: TestTitleService }, ...i18nProvider].concat(
+        providers
+      )
     });
     title = TestBed.inject<Title>(Title) as NzSafeAny;
     srv = TestBed.inject<TitleService>(TitleService);
@@ -66,14 +70,14 @@ describe('Service: Title', () => {
       srv.suffix = alain;
       srv.setTitle('newTitle');
       tick(srv.DELAY_TIME + 1);
-      expect(title.setTitle).toHaveBeenCalledWith('newTitle - ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`newTitle - ${alain}`);
     }));
 
     it('should set new title via array', fakeAsync(() => {
       srv.suffix = alain;
       srv.setTitle(['newTitle']);
       tick(srv.DELAY_TIME + 1);
-      expect(title.setTitle).toHaveBeenCalledWith('newTitle - ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`newTitle - ${alain}`);
     }));
 
     it('#separator', fakeAsync(() => {
@@ -81,14 +85,14 @@ describe('Service: Title', () => {
       srv.separator = ' / ';
       srv.setTitle('newTitle');
       tick(srv.DELAY_TIME + 1);
-      expect(title.setTitle).toHaveBeenCalledWith('newTitle / ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`newTitle / ${alain}`);
     }));
 
     it('#prefix', fakeAsync(() => {
       srv.prefix = alain;
       srv.setTitle('newTitle');
       tick(srv.DELAY_TIME + 1);
-      expect(title.setTitle).toHaveBeenCalledWith(alain + ' - newTitle');
+      expect(title.setTitle).toHaveBeenCalledWith(`${alain} - newTitle`);
     }));
 
     it('#reverse', fakeAsync(() => {
@@ -96,7 +100,7 @@ describe('Service: Title', () => {
       srv.suffix = alain;
       srv.setTitle('newTitle');
       tick(srv.DELAY_TIME + 1);
-      expect(title.setTitle).toHaveBeenCalledWith(alain + ' - newTitle');
+      expect(title.setTitle).toHaveBeenCalledWith(`${alain} - newTitle`);
     }));
 
     it('#default', fakeAsync(() => {
@@ -118,12 +122,12 @@ describe('Service: Title', () => {
               firstChild: {
                 snapshot: {
                   data: {
-                    title: alain,
-                  },
-                },
-              },
-            },
-          },
+                    title: alain
+                  }
+                }
+              }
+            }
+          }
         ]);
         srv.setTitle();
         tick(srv.DELAY_TIME + 1);
@@ -133,8 +137,8 @@ describe('Service: Title', () => {
         genModule([
           {
             provide: ActivatedRoute,
-            useValue: {},
-          },
+            useValue: {}
+          }
         ]);
         srv.setTitle();
         tick(srv.DELAY_TIME + 1);
@@ -148,11 +152,11 @@ describe('Service: Title', () => {
             useValue: {
               snapshot: {
                 data: {
-                  titleI18n,
-                },
-              },
-            },
-          },
+                  titleI18n
+                }
+              }
+            }
+          }
         ]);
         spyOn(i18n, 'fanyi');
         srv.setTitle();

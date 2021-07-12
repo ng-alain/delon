@@ -1,13 +1,18 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 import { I18NService, MobileService } from '@core';
+
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
 import { copy } from '@delon/util';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { filter } from 'rxjs/operators';
+
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
+
 const pkg = require('../../../../package.json');
 
 @Component({
@@ -15,9 +20,9 @@ const pkg = require('../../../../package.json');
   templateUrl: './header.component.html',
   host: {
     '[attr.id]': '"header"',
-    '[class.clearfix]': `true`,
+    '[class.clearfix]': `true`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
@@ -33,7 +38,7 @@ export class HeaderComponent implements AfterViewInit {
     { name: 'chart' },
     { name: 'mock' },
     { name: 'util' },
-    { name: 'cli' },
+    { name: 'cli' }
   ];
   menuVisible = false;
   showGitee = false;
@@ -41,7 +46,7 @@ export class HeaderComponent implements AfterViewInit {
     docs: { regex: /^\/docs/ },
     components: { regex: /^\/components/ },
     cli: { regex: /^\/cli/ },
-    delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ },
+    delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ }
   };
 
   private getWin(): Window {
@@ -56,7 +61,7 @@ export class HeaderComponent implements AfterViewInit {
     @Inject(DOCUMENT) private doc: any,
     private cdr: ChangeDetectorRef,
     public rtl: RTLService,
-    private layout: LayoutComponent,
+    private layout: LayoutComponent
   ) {
     router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
       this.menuVisible = false;

@@ -1,4 +1,5 @@
 import { Directive, Input } from '@angular/core';
+
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
 
@@ -6,8 +7,8 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
   selector: '[reuse-tab-context-menu]',
   exportAs: 'reuseTabContextMenu',
   host: {
-    '(contextmenu)': '_onContextMenu($event)',
-  },
+    '(contextmenu)': '_onContextMenu($event)'
+  }
 })
 export class ReuseTabContextDirective {
   @Input('reuse-tab-context-menu') item: ReuseItem;
@@ -19,7 +20,7 @@ export class ReuseTabContextDirective {
     this.srv.show.next({
       event,
       item: this.item,
-      customContextMenu: this.customContextMenu,
+      customContextMenu: this.customContextMenu
     });
     event.preventDefault();
     event.stopPropagation();

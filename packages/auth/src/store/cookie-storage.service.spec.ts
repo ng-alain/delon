@@ -1,4 +1,5 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ITokenModel } from '../token/interface';
 import { CookieStorageStore } from './cookie-storage.service';
 
@@ -9,11 +10,11 @@ describe('auth: cookie-storage', () => {
     get: jasmine.createSpy('get').and.callFake((key: string) => data[key] || null),
     remove: jasmine.createSpy('remove').and.callFake((key: string) => {
       delete data[key];
-    }),
+    })
   } as any);
   const KEY = 'token';
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
 
   beforeEach(() => {

@@ -1,5 +1,7 @@
-import { chain, Rule, SchematicContext } from '@angular-devkit/schematics';
 import { createMigrationSchematicRule, NullableDevkitMigration, TargetVersion } from '@angular/cdk/schematics';
+
+import { chain, Rule, SchematicContext } from '@angular-devkit/schematics';
+
 import { ruleUpgradeData } from './upgrade-data';
 import { SrcToNzImageRule } from './upgrade-rules/checks/_src-to-nz-image-rule';
 import { v11Rule } from './upgrade-rules/v11';
@@ -28,7 +30,7 @@ export function postUpdate(context: SchematicContext, targetVersion: any, hasFai
   if (hasFailures) {
     context.logger.warn(
       '  ⚠  Some issues were detected but could not be fixed automatically. Please check the ' +
-        'output above and fix these issues manually.',
+        'output above and fix these issues manually.'
     );
   }
 }

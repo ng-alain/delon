@@ -24,7 +24,10 @@ function getProjectName(workspace: WorkspaceDefinition, name?: string): string |
   return null;
 }
 
-export async function getProject(tree: Tree, projectName?: string): Promise<{ project: ProjectDefinition; name: string }> {
+export async function getProject(
+  tree: Tree,
+  projectName?: string
+): Promise<{ project: ProjectDefinition; name: string }> {
   const workspace = await getWorkspace(tree);
   projectName = getProjectName(workspace, projectName);
   if (!projectName || !workspace.projects.has(projectName)) {
@@ -39,7 +42,7 @@ export function addAssetsToTarget(
   behavior: 'add' | 'delete',
   types: string[] = [BUILD_TARGET_BUILD, BUILD_TARGET_TEST],
   projectName?: string,
-  clean: boolean = false,
+  clean: boolean = false
 ): Rule {
   return updateWorkspace(async workspace => {
     const project = getProjectFromWorkspace(workspace, projectName);
@@ -104,7 +107,7 @@ export function removeAllowedCommonJsDependencies(key: string, projectName?: str
 
 export function getProjectFromWorkspace(
   workspace: WorkspaceDefinition,
-  projectName: string = workspace.extensions.defaultProject as string,
+  projectName: string = workspace.extensions.defaultProject as string
 ): ProjectDefinition {
   const project = workspace.projects.get(projectName);
 
@@ -118,7 +121,7 @@ export function getProjectFromWorkspace(
 export function getProjectTarget(
   project: ProjectDefinition,
   buildTarget: string,
-  type: 'options' | 'configurations' = 'options',
+  type: 'options' | 'configurations' = 'options'
 ): Record<string, JsonValue | undefined> {
   const options = project.targets?.get(buildTarget)?.[type];
 

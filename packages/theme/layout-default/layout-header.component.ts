@@ -1,7 +1,16 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, TemplateRef } from '@angular/core';
-import { App, SettingsService } from '@delon/theme';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  TemplateRef
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { App, SettingsService } from '@delon/theme';
+
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
@@ -43,9 +52,9 @@ interface LayoutDefaultHeaderItem {
     </div>
   `,
   host: {
-    '[class.alain-default__header]': `true`,
+    '[class.alain-default__header]': `true`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -74,7 +83,11 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     return `menu-${type}`;
   }
 
-  constructor(private settings: SettingsService, private parent: LayoutDefaultComponent, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private settings: SettingsService,
+    private parent: LayoutDefaultComponent,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   private refresh(): void {
     const arr = this.parent.headerItems.toArray();

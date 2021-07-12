@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+
 import { createAlainApp } from '../utils/testing';
 import { Schema as ModuleOptions } from './schema';
 
@@ -9,7 +10,7 @@ describe('NgAlainSchematic: module', () => {
     project: 'foo',
     name: 'trade',
     routing: true,
-    flat: false,
+    flat: false
   };
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
@@ -21,7 +22,7 @@ describe('NgAlainSchematic: module', () => {
     expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade-routing.module.ts')).toBe(true);
     const routesRoutingModuleContent = tree.readContent(`/projects/foo/src/app/routes/routes-routing.module.ts`);
     expect(routesRoutingModuleContent).toContain(
-      `{ path: 'trade', loadChildren: () => import('./trade/trade.module').then((m) => m.TradeModule) }`,
+      `{ path: 'trade', loadChildren: () => import('./trade/trade.module').then((m) => m.TradeModule) }`
     );
   });
 

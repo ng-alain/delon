@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
@@ -9,14 +10,10 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     </div>
     <p>参数：{{ record | json }}</p>
     <div class="modal-footer">
-      <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="cancel()">
-        Cancel
-      </button>
-      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()">
-        OK
-      </button>
+      <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="cancel()"> Cancel </button>
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()"> OK </button>
     </div>
-  `,
+  `
 })
 export class DemoModalComponent {
   @Input()

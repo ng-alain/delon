@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainUtilArrayConfig } from '@delon/util/config';
+
 import { NzTreeNode } from 'ng-zorro-antd/core/tree';
+
+import { AlainConfigService, AlainUtilArrayConfig } from '@delon/util/config';
+
 import {
   ArrayServiceArrToTreeNodeOptions,
   ArrayServiceArrToTreeOptions,
   ArrayServiceGetKeysByTreeNodeOptions,
   ArrayServiceGroupByResult,
-  ArrayServiceTreeToArrOptions,
+  ArrayServiceTreeToArrOptions
 } from './array-type.service';
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +28,7 @@ export class ArrayService {
       checkedMapname: 'checked',
       selectedMapname: 'selected',
       expandedMapname: 'expanded',
-      disabledMapname: 'disabled',
+      disabledMapname: 'disabled'
     })!;
   }
 
@@ -33,14 +37,14 @@ export class ArrayService {
    *
    * 将树结构转换成数组结构
    */
-  treeToArr<T extends object = any>(tree: ReadonlyArray<T>, options?: ArrayServiceTreeToArrOptions<T>): T[] {
+  treeToArr<T extends object = any>(tree: readonly T[], options?: ArrayServiceTreeToArrOptions<T>): T[] {
     const opt = {
       deepMapName: this.c.deepMapName,
       parentMapName: this.c.parentMapName,
       childrenMapName: this.c.childrenMapName,
       clearChildren: true,
       cb: null,
-      ...options,
+      ...options
     } as ArrayServiceTreeToArrOptions;
     const result: Array<{ [key: string]: any }> = [];
     const inFn = (list: ReadonlyArray<{ [key: string]: any }>, parent: T | null, deep: number = 0) => {
@@ -69,7 +73,7 @@ export class ArrayService {
    *
    * 数组转换成树数据
    */
-  arrToTree<T extends object = any>(arr: ReadonlyArray<T>, options?: ArrayServiceArrToTreeOptions<T>): T[] {
+  arrToTree<T extends object = any>(arr: readonly T[], options?: ArrayServiceArrToTreeOptions<T>): T[] {
     if (!Array.isArray(arr) || arr.length === 0) {
       return [];
     }
@@ -79,7 +83,7 @@ export class ArrayService {
       parentIdMapName: this.c.parentIdMapName,
       childrenMapName: this.c.childrenMapName,
       cb: null,
-      ...options,
+      ...options
     } as ArrayServiceArrToTreeOptions<T>;
     const tree: T[] = [];
     const childrenOf: { [key: string]: T[] } = {};
@@ -111,7 +115,7 @@ export class ArrayService {
   /**
    * 数组转换成 `nz-tree` 数据源，通过 `options` 转化项名，也可以使用 `options.cb` 更高级决定数据项
    */
-  arrToTreeNode<T extends object = any>(arr: ReadonlyArray<T>, options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
+  arrToTreeNode<T extends object = any>(arr: readonly T[], options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
     const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
@@ -122,12 +126,12 @@ export class ArrayService {
       expandedMapname: this.c.expandedMapname,
       disabledMapname: this.c.disabledMapname,
       cb: null,
-      ...options,
+      ...options
     } as ArrayServiceArrToTreeNodeOptions<T>;
     const tree = this.arrToTree<T>(arr, {
       idMapName: opt.idMapName,
       parentIdMapName: opt.parentIdMapName,
-      childrenMapName: 'children',
+      childrenMapName: 'children'
     });
     this.visitTree<T>(tree, (item: { [key: string]: any }, parent, deep) => {
       item.key = item[opt.idMapName!];
@@ -152,18 +156,18 @@ export class ArrayService {
    * 递归访问整个树
    */
   visitTree<T extends object = any>(
-    tree: ReadonlyArray<T>,
+    tree: readonly T[],
     cb: (item: T, parent: T | null, deep: number) => void,
     options?: {
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
-    },
+    }
   ): void {
     options = {
       childrenMapName: this.c.childrenMapName,
-      ...options,
+      ...options
     };
-    const inFn = (data: ReadonlyArray<T>, parent: T | null, deep: number) => {
+    const inFn = (data: readonly T[], parent: T | null, deep: number) => {
       for (const item of data) {
         cb(item, parent, deep);
         const childrenVal = (item as { [key: string]: any })[options!.childrenMapName!];
@@ -181,12 +185,12 @@ export class ArrayService {
    * 根据条件返回树的第一个值，否则返回 `undefined`
    */
   findTree<T extends object = any>(
-    tree: ReadonlyArray<T>,
+    tree: readonly T[],
     predicate: (item: T) => boolean,
     options?: {
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
-    },
+    }
   ): T | undefined {
     let res: T | undefined;
     this.visitTree<T>(
@@ -196,7 +200,7 @@ export class ArrayService {
           res = item;
         }
       },
-      options,
+      options
     );
     return res;
   }
@@ -207,7 +211,7 @@ export class ArrayService {
   getKeysByTreeNode(tree: NzTreeNode[], options?: ArrayServiceGetKeysByTreeNodeOptions): any[] {
     const opt = {
       includeHalfChecked: true,
-      ...options,
+      ...options
     } as ArrayServiceGetKeysByTreeNodeOptions;
     const keys: any[] = [];
     this.visitTree<NzTreeNode>(tree, (item, parent, deep) => {
@@ -247,7 +251,7 @@ export class ArrayService {
    * srv.flat([1, [2, 3, [4, 5, [6]]]], 1) => [1,2,3,[4, 5, [6]]]
    * ```
    */
-  flat<T>(array: ReadonlyArray<T>, depth: number = 1 / 0): T[] {
+  flat<T>(array: readonly T[], depth: number = 1 / 0): T[] {
     return Array.isArray(array) ? this.baseFlat(array as any[], depth) : (array as T[]);
   }
   /**
@@ -259,7 +263,7 @@ export class ArrayService {
    * srv.groupBy(['one', 'two', 'three'], v => v.length) => {"3":["one","two"],"5":["three"]}
    * ```
    */
-  groupBy<T>(array: ReadonlyArray<T>, iteratee: (value: T) => string | number): ArrayServiceGroupByResult {
+  groupBy<T>(array: readonly T[], iteratee: (value: T) => string | number): ArrayServiceGroupByResult {
     if (!Array.isArray(array)) {
       return {};
     }
@@ -283,17 +287,21 @@ export class ArrayService {
    * uniq([{ a: 1 }, { a: 1 }, { a: 2 }], i => (i.a === 1 ? 'a' : 'b')) => [{"a":1},{"a":2}]
    * ```
    */
-  uniq<T>(array: ReadonlyArray<T>, predicate?: string | ((value: T) => string | number | boolean)): T[] {
+  uniq<T>(array: readonly T[], predicate?: string | ((value: T) => string | number | boolean)): T[] {
     return Array.from(
       array
         .reduce((map, value) => {
-          const key = predicate ? (typeof predicate === 'string' ? (value as any)[predicate] : predicate!(value)) : value;
+          const key = predicate
+            ? typeof predicate === 'string'
+              ? (value as any)[predicate]
+              : predicate!(value)
+            : value;
           if (!map.has(key)) {
             map.set(key, value);
           }
           return map;
         }, new Map<string | number | boolean, T>())
-        .values(),
+        .values()
     );
   }
 }

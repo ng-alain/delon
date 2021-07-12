@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { format } from 'date-fns';
 
 @Component({
@@ -9,7 +10,7 @@ import { format } from 'date-fns';
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
     <p>id: {{ id | json }}</p>
     page: {{ route.url | json }}
-  `,
+  `
 })
 export class DevPageComponent implements OnInit {
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');

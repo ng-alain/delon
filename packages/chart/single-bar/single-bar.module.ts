@@ -8,6 +8,6 @@ const COMPONENTS = [G2SingleBarComponent];
 @NgModule({
   imports: [CommonModule],
   declarations: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class G2SingleBarModule {}

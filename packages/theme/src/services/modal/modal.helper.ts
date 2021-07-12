@@ -1,8 +1,10 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util/other';
+import { Observable, Observer } from 'rxjs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, Observer } from 'rxjs';
+
+import { deepMerge } from '@delon/util/other';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
@@ -38,14 +40,18 @@ export class ModalHelper {
    * // 关闭
    * this.nzModalRef.destroy();
    */
-  create(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<NzSafeAny> {
+  create(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'lg',
         exact: true,
-        includeTabs: false,
+        includeTabs: false
       },
-      options,
+      options
     );
     return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, includeTabs, modalOptions } = options as ModalHelperOptions;
@@ -70,7 +76,7 @@ export class ModalHelper {
         nzContent: comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
-        nzComponentParams: params,
+        nzComponentParams: params
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
@@ -103,10 +109,14 @@ export class ModalHelper {
    * // 关闭
    * this.nzModalRef.destroy();
    */
-  createStatic(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<any> {
+  createStatic(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<any> {
     const modalOptions = {
       nzMaskClosable: false,
-      ...(options && options.modalOptions),
+      ...(options && options.modalOptions)
     };
     return this.create(comp, params, { ...options, modalOptions });
   }
@@ -129,12 +139,12 @@ export class ModalHelper {
     comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
     params?: NzSafeAny,
     size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptions,
+    options?: ModalOptions
   ): Observable<any> {
     return this.create(comp, params, {
       size,
       modalOptions: options,
-      exact: false,
+      exact: false
     });
   }
 
@@ -156,11 +166,11 @@ export class ModalHelper {
     comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
     params?: NzSafeAny,
     size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptions,
+    options?: ModalOptions
   ): Observable<any> {
     return this.open(comp, params, size, {
       nzMaskClosable: false,
-      ...options,
+      ...options
     });
   }
 }

@@ -12,14 +12,18 @@
       <nz-list-item (click)="onClick(item)" [ngClass]="{ 'notice-icon__item-read': item.read }">
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" [nzAvatar]="item.avatar">
           <ng-template #nzTitle>
-            <ng-container *nzStringTemplateOutlet="item.title; context: { $implicit: item }">{{ item.title }}</ng-container>
+            <ng-container *nzStringTemplateOutlet="item.title; context: { $implicit: item }">{{
+              item.title
+            }}</ng-container>
             <div class="notice-icon__item-extra" *ngIf="item.extra">
               <nz-tag [nzColor]="item.color">{{ item.extra }}</nz-tag>
             </div>
           </ng-template>
           <ng-template #nzDescription>
             <div *ngIf="item.description" class="notice-icon__item-desc">
-              <ng-container *nzStringTemplateOutlet="item.description; context: { $implicit: item }">{{ item.description }}</ng-container>
+              <ng-container *nzStringTemplateOutlet="item.description; context: { $implicit: item }">{{
+                item.description
+              }}</ng-container>
             </div>
             <div *ngIf="item.datetime" class="notice-icon__item-time">{{ item.datetime }}</div>
           </ng-template>

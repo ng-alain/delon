@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+
 import type { Chart } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -8,11 +12,11 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   exportAs: 'g2Gauge',
   template: `<nz-skeleton *ngIf="!loaded"></nz-skeleton>`,
   host: {
-    '[class.g2-gauge]': 'true',
+    '[class.g2-gauge]': 'true'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2GaugeComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -24,7 +28,7 @@ export class G2GaugeComponent extends G2BaseComponent {
   @Input() @InputNumber() height: number;
   @Input() color = '#2f9cff';
   @Input() bgColor: string; // = '#f0f2f5';
-  @Input() format: (text: string, item: {}, index: number) => string;
+  @Input() format: (text: string, item: NzSafeAny, index: number) => string;
   @Input() @InputNumber() percent: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
 
@@ -33,7 +37,6 @@ export class G2GaugeComponent extends G2BaseComponent {
   install(): void {
     // 自定义Shape 部分
     (window as any).G2.registerShape('point', 'pointer', {
-      // tslint:disable-next-line: typedef
       draw(cfg: any, container: any) {
         const group = container.addGroup({});
         // 获取极坐标系下画布中心点
@@ -47,8 +50,8 @@ export class G2GaugeComponent extends G2BaseComponent {
             y2: cfg.y,
             stroke: cfg.color,
             lineWidth: 2.5,
-            lineCap: 'round',
-          },
+            lineCap: 'round'
+          }
         });
         group.addShape('circle', {
           attrs: {
@@ -57,11 +60,11 @@ export class G2GaugeComponent extends G2BaseComponent {
             r: 5.75,
             stroke: cfg.color,
             lineWidth: 2,
-            fill: '#fff',
-          },
+            fill: '#fff'
+          }
         });
         return group;
-      },
+      }
     });
 
     const { el, height, padding, format, theme } = this;
@@ -71,7 +74,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.legend(false);
     chart.animate(false);
@@ -79,23 +82,23 @@ export class G2GaugeComponent extends G2BaseComponent {
     chart.coordinate('polar', {
       startAngle: (-9 / 8) * Math.PI,
       endAngle: (1 / 8) * Math.PI,
-      radius: 0.75,
+      radius: 0.75
     });
     chart.scale('value', {
       min: 0,
       max: 100,
       nice: true,
-      tickCount: 6,
+      tickCount: 6
     });
     chart.axis('1', false);
     chart.axis('value', {
       line: null,
       label: {
         offset: -14,
-        formatter: format,
+        formatter: format
       },
       tickLine: null,
-      grid: null,
+      grid: null
     });
     chart.point().position('value*1').shape('pointer');
 
@@ -120,8 +123,8 @@ export class G2GaugeComponent extends G2BaseComponent {
       style: {
         stroke: bgColor,
         lineWidth: 12,
-        lineDash: null,
-      },
+        lineDash: null
+      }
     });
     _chart.annotation().arc({
       start: [0, 0.95],
@@ -129,8 +132,8 @@ export class G2GaugeComponent extends G2BaseComponent {
       style: {
         stroke: color,
         lineWidth: 12,
-        lineDash: null,
-      },
+        lineDash: null
+      }
     });
 
     _chart.annotation().text({
@@ -139,8 +142,8 @@ export class G2GaugeComponent extends G2BaseComponent {
       style: {
         fontSize: 12,
         fill: 'rgba(0, 0, 0, 0.43)',
-        textAlign: 'center',
-      },
+        textAlign: 'center'
+      }
     });
     _chart.annotation().text({
       position: ['50%', '90%'],
@@ -148,9 +151,9 @@ export class G2GaugeComponent extends G2BaseComponent {
       style: {
         fontSize: 20,
         fill: 'rgba(0, 0, 0, 0.85)',
-        textAlign: 'center',
+        textAlign: 'center'
       },
-      offsetY: 15,
+      offsetY: 15
     });
 
     _chart.changeData(data);

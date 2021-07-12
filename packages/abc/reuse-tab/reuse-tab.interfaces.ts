@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
+
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 
 /**
@@ -30,7 +31,7 @@ export enum ReuseTabMatchMode {
   /**
    * 对所有路由有效，可以配合 `excludes` 过滤无须复用路由
    */
-  URL,
+  URL
 }
 
 export type ReuseTabRouteParamMatchMode = 'strict' | 'loose';

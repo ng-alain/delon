@@ -1,6 +1,7 @@
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+
 import { logInfo, logStart, readContent } from '../../../utils';
 
 let project: ProjectDefinition;
@@ -25,7 +26,10 @@ function upgradeStylePath(): void {
   if (!tree.exists(fullscreenComponentPath)) {
     return;
   }
-  const fullscreenComponentContent = readContent(tree, fullscreenComponentPath).replace(`alain-fullscreen`, `alain-blank`);
+  const fullscreenComponentContent = readContent(tree, fullscreenComponentPath).replace(
+    `alain-fullscreen`,
+    `alain-blank`
+  );
   tree.overwrite(fullscreenComponentPath, fullscreenComponentContent);
   logInfo(context, `Update alain-fullscreen to alain-blank`);
 }

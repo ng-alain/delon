@@ -1,5 +1,7 @@
-import { AlainSFConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainSFConfig } from '@delon/util/config';
+
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
@@ -23,7 +25,7 @@ export class ObjectProperty extends PropertyGroup {
     formData: NzSafeAny,
     parent: PropertyGroup | null,
     path: string,
-    options: AlainSFConfig,
+    options: AlainSFConfig
   ) {
     super(schemaValidatorFactory, schema, ui, formData, parent, path, options);
     this.createProperties();
@@ -41,10 +43,10 @@ export class ObjectProperty extends PropertyGroup {
     orderedProperties!.forEach(propertyId => {
       (this.properties as { [key: string]: FormProperty })[propertyId] = this.formPropertyFactory.createProperty(
         this.schema.properties![propertyId],
-        this.ui['$' + propertyId],
+        this.ui[`$${propertyId}`],
         ((this.formData || {}) as NzSafeAny)[propertyId],
         this,
-        propertyId,
+        propertyId
       );
       this._propertiesId.push(propertyId);
     });
@@ -63,9 +65,10 @@ export class ObjectProperty extends PropertyGroup {
   resetValue(value: SFValue, onlySelf: boolean): void {
     value = value || this.schema.default || {};
     const properties = this.properties as { [key: string]: FormProperty };
-    // tslint:disable-next-line: forin
     for (const propertyId in this.schema.properties) {
-      properties[propertyId].resetValue(value[propertyId], true);
+      if (this.schema.properties.hasOwnProperty(propertyId)) {
+        properties[propertyId].resetValue(value[propertyId], true);
+      }
     }
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }

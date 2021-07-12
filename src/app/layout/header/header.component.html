@@ -8,7 +8,11 @@
     </li>
     <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | i18n">
       <ul>
-        <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+        <li
+          *ngFor="let i of delonLibs"
+          nz-menu-item
+          routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
+        >
           {{ 'app.header.menu.' + i.name | i18n }}
         </li>
       </ul>
@@ -20,7 +24,11 @@
       </div>
       <nz-dropdown-menu #delonMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li *ngFor="let i of delonLibs" nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+          <li
+            *ngFor="let i of delonLibs"
+            nz-menu-item
+            routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
+          >
             {{ 'app.header.menu.' + i.name | i18n }}
           </li>
         </ul>
@@ -58,7 +66,13 @@
 <div nz-row style="flex-flow: nowrap; height: 64px">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="5" nzXXl="4">
     <h1>
-      <a routerLink="/{{ i18n.zone }}" nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | i18n }}: 316911865" (click)="onCopy('316911865')" id="logo">
+      <a
+        routerLink="/{{ i18n.zone }}"
+        nz-tooltip
+        nzTooltipTitle="{{ 'app.footer.qqgroup' | i18n }}: 316911865"
+        (click)="onCopy('316911865')"
+        id="logo"
+      >
         <img src="./assets/img/logo-color.svg" style="max-height: 32px" />
         NG-ALAIN
       </a>
@@ -72,7 +86,13 @@
         <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
         <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
       </nz-select>
-      <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')" class="header-button header-lang-button">
+      <button
+        nz-button
+        nzGhost
+        nzSize="small"
+        (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')"
+        class="header-button header-lang-button"
+      >
         {{ 'app.header.lang' | i18n }}
       </button>
       <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">

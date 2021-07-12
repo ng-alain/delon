@@ -1,11 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
+
 // import { Router } from '@angular/router';
-import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-
-// #region icons
-
 import {
   AppstoreOutline,
   BellOutline,
@@ -22,10 +17,17 @@ import {
   SearchOutline,
   // Optional
   SettingOutline,
-  UserOutline,
+  UserOutline
 } from '@ant-design/icons-angular/icons';
 import { I18NService, LangType } from '@core';
+
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+// #region icons
+
 import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
+import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
 
 const ICONS = [
@@ -44,7 +46,7 @@ const ICONS = [
   GlobalOutline,
   // Optional
   GithubOutline,
-  AppstoreOutline,
+  AppstoreOutline
 ];
 
 // #endregion
@@ -85,14 +87,14 @@ const ICONS = [
     <setting-drawer></setting-drawer>
   `,
   host: {
-    '[class.alain-default]': 'true',
+    '[class.alain-default]': 'true'
   },
-  preserveWhitespaces: false,
+  preserveWhitespaces: false
 })
 export class DevLayoutComponent implements OnInit {
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`,
+    logoCollapsed: `./assets/logo.svg`
   };
 
   lang: LangType = 'zh-CN';
@@ -112,7 +114,7 @@ export class DevLayoutComponent implements OnInit {
           icon: 'anticon anticon-dashboard',
           i18n: 'app.header.menu.home',
           badge: 5,
-          disabled: true,
+          disabled: true
         },
         { text: '测试view1-id', link: '/dev/view/1' },
         { text: '测试view2-id', link: '/dev/view/2' },
@@ -130,11 +132,11 @@ export class DevLayoutComponent implements OnInit {
               link: '#',
               children: [
                 { text: 'Level3A', link: '/dev/l1' },
-                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true },
-              ],
+                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true }
+              ]
             },
-            { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true },
-          ],
+            { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true }
+          ]
         },
         {
           text: 'ABC',
@@ -147,19 +149,19 @@ export class DevLayoutComponent implements OnInit {
             { text: 'Reuse Tab5', link: '/dev/l5' },
             { text: 'Reuse Tab6', link: '/dev/l6' },
             { text: 'Reuse Tab7', link: '/dev/l7' },
-            { text: 'Ellipsis', link: '/dev/l8' },
-          ],
+            { text: 'Ellipsis', link: '/dev/l8' }
+          ]
         },
         {
           text: 'LIST',
           icon: 'anticon anticon-appstore',
           children: [
             { text: 'list', link: '/dev/list' },
-            { text: 'list/item', link: '/dev/list/item' },
-          ],
-        },
-      ],
-    },
+            { text: 'list/item', link: '/dev/list/item' }
+          ]
+        }
+      ]
+    }
   ];
 
   customContextMenu: ReuseCustomContextMenu[] = [
@@ -168,7 +170,7 @@ export class DevLayoutComponent implements OnInit {
       title: '自定义1',
       fn: (item, m) => {
         console.log('自定义1', item, m);
-      },
+      }
     },
     {
       id: 'custom2',
@@ -176,8 +178,8 @@ export class DevLayoutComponent implements OnInit {
       disabled: () => true,
       fn: (item, m) => {
         console.log('自定义2', item, m);
-      },
-    },
+      }
+    }
   ];
 
   constructor(
@@ -187,7 +189,7 @@ export class DevLayoutComponent implements OnInit {
     public msgSrv: NzMessageService,
     // private router: Router,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    public rtl: RTLService,
+    public rtl: RTLService
   ) {
     iconSrv.addIcon(...ICONS);
     // this.testReuse();

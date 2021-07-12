@@ -1,17 +1,20 @@
-// tslint:disable: deprecation
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { _HttpClient } from '@delon/theme';
+
 import * as fs from 'file-saver';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { _HttpClient } from '@delon/theme';
+
 import { DownFileModule } from './down-file.module';
 
 function genFile(isRealFile: boolean = true): Blob {
   const blob = new Blob([
-    isRealFile ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==` : '',
+    isRealFile ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==` : ''
   ]);
   return blob;
 }
@@ -25,7 +28,7 @@ describe('abc: down-file', () => {
   function createComp(): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, DownFileModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
 
     fixture = TestBed.createComponent(TestComponent);
@@ -45,7 +48,7 @@ describe('abc: down-file', () => {
         spyOn(fs, 'saveAs');
         if (ext === 'docx') context.data = null;
         fixture.detectChanges();
-        (dl.query(By.css('#down-' + ext)).nativeElement as HTMLButtonElement).click();
+        (dl.query(By.css(`#down-${ext}`)).nativeElement as HTMLButtonElement).click();
         tick();
         const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
         ret.flush(genFile());
@@ -56,14 +59,14 @@ describe('abc: down-file', () => {
     it('should be used custom filename', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
+      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = rep => rep.headers.get('a')!;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
-        headers: new HttpHeaders({ a: filename }),
+        headers: new HttpHeaders({ a: filename })
       });
       expect(fn!).toBe(filename);
     }));
@@ -71,14 +74,14 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
+      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
-        headers: new HttpHeaders({ filename }),
+        headers: new HttpHeaders({ filename })
       });
       expect(fn!).toBe(filename);
     }));
@@ -86,14 +89,14 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [x-filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'x-newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
+      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(genFile(), {
-        headers: new HttpHeaders({ 'x-filename': filename }),
+        headers: new HttpHeaders({ 'x-filename': filename })
       });
       expect(fn!).toBe(filename);
     }));
@@ -167,7 +170,7 @@ describe('abc: down-file', () => {
     fixture.detectChanges();
     let fn: string;
     const filename = 'newfile.docx';
-    spyOn(fs, 'saveAs').and.callFake(((_body: {}, fileName: string) => (fn = fileName)) as NzSafeAny);
+    spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
     context.fileName = null;
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -175,8 +178,8 @@ describe('abc: down-file', () => {
     const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
     ret.flush(genFile(), {
       headers: new HttpHeaders({
-        'Content-Disposition': `attachment; filename=${filename}; filename*=UTF-8''${filename}`,
-      }),
+        'Content-Disposition': `attachment; filename=${filename}; filename*=UTF-8''${filename}`
+      })
     });
     expect(fn!).toBe(filename);
   }));
@@ -213,18 +216,18 @@ describe('abc: down-file', () => {
     >
       {{ i }}
     </button>
-  `,
+  `
 })
 class TestComponent {
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
   data: any = {
     otherdata: 1,
-    time: new Date(),
+    time: new Date()
   };
 
   body = {
-    a: 1,
+    a: 1
   };
 
   method = 'get';

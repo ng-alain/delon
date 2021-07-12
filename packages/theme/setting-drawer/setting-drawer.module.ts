@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -30,9 +31,9 @@ const COMPONENTS = [SettingDrawerItemComponent, SettingDrawerComponent];
     NzIconModule,
     NzInputModule,
     NzInputNumberModule,
-    NzButtonModule,
+    NzButtonModule
   ],
   declarations: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class SettingDrawerModule {}

@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -19,11 +21,11 @@ export interface G2MiniBarClickItem {
   exportAs: 'g2MiniBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2MiniBarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -38,7 +40,7 @@ export class G2MiniBarComponent extends G2BaseComponent {
   @Input() data: G2MiniBarData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() clickItem = new EventEmitter<G2MiniBarClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2MiniBarClickItem>();
 
   // #endregion
 
@@ -49,15 +51,15 @@ export class G2MiniBarComponent extends G2BaseComponent {
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.scale({
       x: {
-        type: 'cat',
+        type: 'cat'
       },
       y: {
-        min: 0,
-      },
+        min: 0
+      }
     });
     chart.legend(false);
     chart.axis(false);

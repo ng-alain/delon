@@ -2,12 +2,15 @@ import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 import {
   STColumn,
   STColumnFilter,
@@ -27,7 +30,7 @@ import {
   STStatistical,
   STStatisticalResult,
   STStatisticalResults,
-  STStatisticalType,
+  STStatisticalType
 } from './st.interfaces';
 import { _STColumn, _STColumnButton, _STDataValue } from './st.types';
 
@@ -72,7 +75,7 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private currencySrv: CurrencyService,
-    private dom: DomSanitizer,
+    private dom: DomSanitizer
   ) {}
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
@@ -108,7 +111,7 @@ export class STDataSource {
             retTotal = resultTotal == null ? total || 0 : +resultTotal;
           }
           return deepCopy(ret);
-        }),
+        })
       );
     } else if (Array.isArray(data)) {
       data$ = of(data);
@@ -157,7 +160,7 @@ export class STDataSource {
             }
           }
           return result;
-        }),
+        })
       );
     }
 
@@ -180,9 +183,9 @@ export class STDataSource {
           total: retTotal,
           list: retList,
           statistical: this.genStatistical(columns as _STColumn[], retList, rawData),
-          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
+          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage
         } as STDataSourceResult;
-      }),
+      })
     );
   }
 
@@ -195,7 +198,7 @@ export class STDataSource {
           text: formatRes,
           _text: safeHtml ? this.dom.bypassSecurityTrustHtml(formatRes) : formatRes,
           org: formatRes,
-          safeType: col.safeType!,
+          safeType: col.safeType!
         };
       }
 
@@ -244,7 +247,7 @@ export class STDataSource {
         org: value,
         color,
         safeType: col.safeType!,
-        buttons: [],
+        buttons: []
       };
     } catch (ex) {
       const text = `INVALID DATA`;
@@ -253,7 +256,7 @@ export class STDataSource {
     }
   }
 
-  private getByRemote(url: string, options: STDataSourceOptions): Observable<{}> {
+  private getByRemote(url: string, options: STDataSourceOptions): Observable<unknown> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
     let params = {};
@@ -262,12 +265,12 @@ export class STDataSource {
       if (req.type === 'page') {
         params = {
           [reName.pi as string]: page.zeroIndexed ? pi - 1 : pi,
-          [reName.ps as string]: ps,
+          [reName.ps as string]: ps
         };
       } else {
         params = {
           [reName.skip as string]: (pi - 1) * ps,
-          [reName.limit as string]: ps,
+          [reName.limit as string]: ps
         };
       }
     }
@@ -275,18 +278,18 @@ export class STDataSource {
       ...params,
       ...req.params,
       ...this.getReqSortMap(singleSort, multiSort, columns),
-      ...this.getReqFilterMap(columns),
+      ...this.getReqFilterMap(columns)
     };
 
     let reqOptions: STRequestOptions = {
       params,
       body: req.body,
-      headers: req.headers,
+      headers: req.headers
     };
     if (method === 'POST' && req.allInBody === true) {
       reqOptions = {
         body: { ...req.body, ...params },
-        headers: req.headers,
+        headers: req.headers
       };
     }
     if (typeof req.process === 'function') {
@@ -385,7 +388,11 @@ export class STDataSource {
     return ++this.sortTick;
   }
 
-  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: _STColumn[]): STMultiSortResultType {
+  getReqSortMap(
+    singleSort: STSingleSort | undefined,
+    multiSort: STMultiSort | undefined,
+    columns: _STColumn[]
+  ): STMultiSortResultType {
     let ret: STMultiSortResultType = {};
     const sortList = this.getValidSort(columns);
 
@@ -396,7 +403,7 @@ export class STDataSource {
         nameSeparator: '.',
         keepEmptyKey: true,
         arrayParam: false,
-        ...multiSort,
+        ...multiSort
       };
 
       const sortMap = sortList
@@ -454,7 +461,8 @@ export class STDataSource {
   private genStatistical(columns: _STColumn[], list: STData[], rawData: any): STStatisticalResults {
     const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
-      res[col.key || col.indexKey || index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
+      res[col.key || col.indexKey || index] =
+        col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;
   }
@@ -464,7 +472,7 @@ export class STDataSource {
     const item: STStatistical = {
       digits: 2,
       currency: undefined,
-      ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical)),
+      ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical))
     };
     let res: STStatisticalResult = { value: 0 };
     let currency = false;

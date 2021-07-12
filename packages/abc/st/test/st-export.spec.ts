@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { XlsxService } from '../../xlsx/xlsx.service';
 import { XlsxExportOptions } from '../../xlsx/xlsx.types';
 import { STExport } from '../st-export';
@@ -26,8 +27,8 @@ const columns: STColumn[] = [
   {
     title: '',
     index: 'id',
-    buttons: [{ text: '' }],
-  },
+    buttons: [{ text: '' }]
+  }
 ];
 const data = [
   {
@@ -38,7 +39,7 @@ const data = [
     date: '2018-1-1',
     status: true,
     null: null,
-    customYn: 'Y',
+    customYn: 'Y'
   },
   {
     id: 2,
@@ -48,7 +49,7 @@ const data = [
     date: '2018-1-2',
     status: false,
     null: null,
-    customYn: 'N',
+    customYn: 'N'
   },
   {
     id: 3,
@@ -58,7 +59,7 @@ const data = [
     date: '2018-1-3',
     status: false,
     null: null,
-    customYn: 'Y',
+    customYn: 'Y'
   },
   {
     id: 4,
@@ -68,8 +69,8 @@ const data = [
     date: '2018-1-4',
     status: true,
     null: null,
-    customYn: 'Y',
-  },
+    customYn: 'Y'
+  }
 ];
 
 describe('abc: table: export', () => {
@@ -78,7 +79,7 @@ describe('abc: table: export', () => {
   describe('[default]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [{ provide: XlsxService, useClass: MockXlsxService }, STExport],
+        providers: [{ provide: XlsxService, useClass: MockXlsxService }, STExport]
       });
       srv = TestBed.inject<STExport>(STExport);
     });
@@ -89,17 +90,14 @@ describe('abc: table: export', () => {
         columens: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
-        callback: () => {},
+        callback: () => {}
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets).not.toBeNull();
       const sheet = ret.sheets.sn;
       expect(sheet).not.toBeNull();
       const cc = columns.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
-      expect(sheet['!ref']).toBe(
-        // tslint:disable-next-line:binary-expression-operand-order
-        `A1:${String.fromCharCode(65 + cc.length - 1)}${data.length + 1}`,
-      );
+      expect(sheet['!ref']).toBe(`A1:${String.fromCharCode(65 + cc.length - 1)}${data.length + 1}`);
     });
 
     it('should auto specify sheet name [Sheet1]', async () => {
@@ -107,7 +105,7 @@ describe('abc: table: export', () => {
         data,
         columens: columns,
         filename: 'filename.xlsx',
-        callback: () => {},
+        callback: () => {}
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets)).toContain('Sheet1');
@@ -116,7 +114,7 @@ describe('abc: table: export', () => {
     it('should be generate empty sheet', async () => {
       const ret: any = await srv.export({
         data: [],
-        columens: [],
+        columens: []
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);
@@ -125,7 +123,7 @@ describe('abc: table: export', () => {
     it('should be _values data first', async () => {
       const ret: any = await srv.export({
         data: [{ i: 1, _values: [{ text: '2' }] }],
-        columens: [{ title: 'i', index: 'i' }],
+        columens: [{ title: 'i', index: 'i' }]
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets.Sheet1.A2.v).toBe('2');

@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
 import { checkDelay, PageG2 } from '@delon/testing';
+
 import { G2WaterWaveComponent } from './water-wave.component';
 import { G2WaterWaveModule } from './water-wave.module';
 
@@ -53,7 +55,7 @@ describe('chart: water-wave', () => {
       [delay]="delay"
       [animate]="animate"
     ></g2-water-wave>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2WaterWaveComponent;

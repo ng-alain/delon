@@ -1,8 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { deepCopy } from '@delon/util';
+
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
+
+import { deepCopy } from '@delon/util';
+
 import pkg from '../../../../package.json';
 import { AppService } from '../app.service';
 import angularJSON from './files/angular.json';
@@ -51,7 +54,7 @@ export class CodeService {
       '@delon/form',
       '@delon/util',
       'ajv',
-      'ajv-formats',
+      'ajv-formats'
     ].forEach(key => {
       const includeVersion = key.lastIndexOf(`@`);
       if (includeVersion > 1) {
@@ -85,7 +88,7 @@ export class CodeService {
   private get genMock(): { [key: string]: string } {
     return {
       '_mock/user.ts': require('!!raw-loader!../../../../_mock/user.ts').default,
-      '_mock/index.ts': `export * from './user';`,
+      '_mock/index.ts': `export * from './user';`
     };
   }
 
@@ -106,8 +109,8 @@ export class CodeService {
       html: [
         `<base href="/">`,
         `<${selector}>loading</${selector}>`,
-        `<div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>`,
-      ].join('\n'),
+        `<div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>`
+      ].join('\n')
     };
   }
 
@@ -136,13 +139,13 @@ export class CodeService {
           'src/app/delon-chart.module.ts': delonChartModuleTS,
           'src/app/startup.service.ts': this.genStartupService,
           'src/styles.css': ``,
-          ...this.genMock,
+          ...this.genMock
         },
-        template: 'angular-cli',
+        template: 'angular-cli'
       },
       {
-        openFile: `src/app/app.component.ts`,
-      },
+        openFile: `src/app/app.component.ts`
+      }
     );
   }
 
@@ -156,16 +159,16 @@ export class CodeService {
         'package.json': {
           content: JSON.stringify(
             {
-              dependencies: this.dependencies,
+              dependencies: this.dependencies
             },
             null,
-            2,
+            2
           ),
-          isBinary: false,
+          isBinary: false
         },
         '.angular-cli.json': {
           content: `${JSON.stringify(json, null, 2)}`,
-          isBinary: false,
+          isBinary: false
         },
         // 'tsconfig.json': {
         //   content: `${JSON.stringify(tsconfigJSON, null, 2)}`,
@@ -173,61 +176,61 @@ export class CodeService {
         // },
         'src/environments/environment.ts': {
           content: environmentTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/index.html': {
           content: res.html,
-          isBinary: false,
+          isBinary: false
         },
         'src/main.ts': {
           content: mainTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/polyfills.ts': {
           content: polyfillTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/app.module.ts': {
           content: appModuleTS(res.componentName),
-          isBinary: false,
+          isBinary: false
         },
         'src/app/global-config.module.ts': {
           content: globalConfigTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/app.component.ts': {
           content: appComponentCode,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/ng-zorro-antd.module.ts': {
           content: nzZorroAntdModuleTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/delon-abc.module.ts': {
           content: delonABCModuleTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/delon-chart.module.ts': {
           content: delonChartModuleTS,
-          isBinary: false,
+          isBinary: false
         },
         'src/app/startup.service.ts': {
           content: this.genStartupService,
-          isBinary: false,
+          isBinary: false
         },
         'src/styles.css': {
           content: ``,
-          isBinary: false,
+          isBinary: false
         },
         '_mock/user.ts': {
           content: mockObj['_mock/user.ts'],
-          isBinary: false,
+          isBinary: false
         },
         '_mock/index.ts': {
           content: mockObj['_mock/index.ts'],
-          isBinary: false,
-        },
-      },
+          isBinary: false
+        }
+      }
     });
 
     const form = this.document.createElement('form');

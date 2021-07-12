@@ -21,7 +21,7 @@ for ARG in "$@"; do
 done
 
 if [[ ${TS} == true ]]; then
-  $(npm bin)/ng lint
+  npm run lint:ts
 fi
 
 if [[ ${LESS} == true ]]; then

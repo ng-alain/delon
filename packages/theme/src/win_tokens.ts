@@ -9,5 +9,5 @@ function WINDOW_FACTORY(): any {
  */
 export const WINDOW = new InjectionToken('Window', {
   providedIn: 'root',
-  factory: WINDOW_FACTORY,
+  factory: WINDOW_FACTORY
 });

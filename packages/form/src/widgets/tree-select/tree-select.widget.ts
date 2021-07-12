@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { NzFormatEmitEvent } from 'ng-zorro-antd/core/tree';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -10,7 +12,7 @@ import { SFTreeSelectWidgetSchema } from './schema';
   selector: 'sf-tree-select',
   templateUrl: './tree-select.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> implements OnInit {
   i: SFTreeSelectWidgetSchema;
@@ -31,7 +33,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
       checkStrictly: toBool(ui.checkStrictly, false),
       hideUnMatched: toBool(ui.hideUnMatched, false),
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
-      displayWith: ui.displayWith || ((node: any) => node.title),
+      displayWith: ui.displayWith || ((node: any) => node.title)
     };
     this.asyncData = typeof ui.expandChange === 'function';
   }

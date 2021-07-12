@@ -1,9 +1,12 @@
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { of, throwError } from 'rxjs';
+
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
 import { ST_DEFAULT_CONFIG } from '../st.config';
 import { STColumnFilterMenu, STData } from '../st.interfaces';
@@ -13,7 +16,7 @@ const DEFAULT = {
   pi: 1,
   ps: 3,
   total: 10,
-  maxPi: 0,
+  maxPi: 0
 };
 DEFAULT.maxPi = Math.ceil(DEFAULT.total / DEFAULT.ps);
 
@@ -24,7 +27,7 @@ function genData(count: number = DEFAULT.total, whetherRandom: boolean = false):
       return {
         id: whetherRandom ? Math.ceil(Math.random() * 1) + count : idx + 1,
         name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
+        age: Math.ceil(Math.random() * 10) + 20
       };
     });
 }
@@ -37,7 +40,6 @@ describe('abc: table: data-souce', () => {
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
   let currencySrv: MockCurrencyService;
-  // tslint:disable-next-line:prefer-const
   let httpResponse: any;
   let mockDomSanitizer: MockDomSanitizer;
 
@@ -74,7 +76,7 @@ describe('abc: table: data-souce', () => {
       res: deepCopy(ST_DEFAULT_CONFIG.res),
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
-      paginator: true,
+      paginator: true
     };
     mockDomSanitizer = new MockDomSanitizer() as any;
     datePipe = new DatePipe(new MockNzI18nService() as any);
@@ -172,7 +174,7 @@ describe('abc: table: data-souce', () => {
         options.data = genData(DEFAULT.total, true);
         options.columns[0]._sort = {
           enabled: true,
-          compare: (a: any, b: any) => a.id - b.id,
+          compare: (a: any, b: any) => a.id - b.id
         };
       });
       it(`should be decremented`, done => {
@@ -195,7 +197,7 @@ describe('abc: table: data-souce', () => {
         options.columns[0]._sort = {
           enabled: true,
           compare: null,
-          default: 'descend',
+          default: 'descend'
         };
         (options.data as STData[])[1].id = 100000;
         srv.process(options).subscribe(res => {
@@ -210,7 +212,7 @@ describe('abc: table: data-souce', () => {
         options.columns[0].filter = {
           type: 'default',
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter, record) => record.name.includes(filter.value),
+          fn: (filter, record) => record.name.includes(filter.value)
         };
       });
       it(`should be filter [1] in name`, done => {
@@ -255,7 +257,7 @@ describe('abc: table: data-souce', () => {
       it('should be always return full data when include filter', done => {
         options.columns[0].filter = {
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter, record) => record.name.includes(filter.value),
+          fn: (filter, record) => record.name.includes(filter.value)
         };
         const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).subscribe(res => {
@@ -431,7 +433,7 @@ describe('abc: table: data-souce', () => {
           err => {
             expect(err).toBe('aa');
             done();
-          },
+          }
         );
       });
       it('should be support array data', done => {
@@ -451,7 +453,7 @@ describe('abc: table: data-souce', () => {
         options.data = '/mockurl';
         options.columns[0]._sort = {
           enabled: true,
-          key: 'id',
+          key: 'id'
         };
         spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
@@ -493,19 +495,19 @@ describe('abc: table: data-souce', () => {
           options.multiSort = {
             key: 'SORT',
             separator: '-',
-            nameSeparator: '.',
+            nameSeparator: '.'
           };
           options.columns = [
             {
               title: '',
               index: 'id1',
-              _sort: { enabled: true, default: 'descend', key: 'id1' },
+              _sort: { enabled: true, default: 'descend', key: 'id1' }
             },
             {
               title: '',
               index: 'id2',
-              _sort: { enabled: true, default: 'ascend', key: 'id2' },
-            },
+              _sort: { enabled: true, default: 'ascend', key: 'id2' }
+            }
           ];
         });
         it(`should be`, done => {
@@ -524,19 +526,19 @@ describe('abc: table: data-souce', () => {
         it(`should be removed key when no any sort of keepEmptyKey is false`, done => {
           options.multiSort = {
             ...options.multiSort,
-            keepEmptyKey: false,
+            keepEmptyKey: false
           };
           options.columns = [
             {
               title: '',
               index: 'id1',
-              sort: true,
+              sort: true
             },
             {
               title: '',
               index: 'id2',
-              sort: true,
-            },
+              sort: true
+            }
           ] as _STColumn[];
           srv.process(options).subscribe(() => {
             expect(resParams.has('SORT')).toBe(false);
@@ -561,7 +563,7 @@ describe('abc: table: data-souce', () => {
         it(`#arrayParam`, done => {
           options.multiSort = {
             ...options.multiSort,
-            arrayParam: true,
+            arrayParam: true
           };
           srv.process(options).subscribe(() => {
             expect(resParams.toString()).toContain(`SORT=id1.descend&SORT=id2.ascend`);
@@ -599,8 +601,8 @@ describe('abc: table: data-souce', () => {
           key: 'id',
           menus: [
             { text: '', value: 'a', checked: true },
-            { text: '', value: 'b', checked: true },
-          ],
+            { text: '', value: 'b', checked: true }
+          ]
         };
         spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
@@ -615,7 +617,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be re-name`, done => {
         options.columns[0].filter!.reName = (list: STColumnFilterMenu[]) => {
-          return { id: list.map(i => i.value + '1').join(',') };
+          return { id: list.map(i => `${i.value}1`).join(',') };
         };
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')).toBe('a1,b1');
@@ -776,7 +778,7 @@ describe('abc: table: data-souce', () => {
       it('via tag', done => {
         options.columns[0].type = 'tag';
         options.columns[0].tag = {
-          1: { text: '一' },
+          1: { text: '一' }
         };
         srv.process(options).subscribe(res => {
           expect(res.list[0]._values[0].text).toBe('一');
@@ -787,7 +789,7 @@ describe('abc: table: data-souce', () => {
       it('via badge', done => {
         options.columns[0].type = 'badge';
         options.columns[0].badge = {
-          1: { text: '一' },
+          1: { text: '一' }
         };
         srv.process(options).subscribe(res => {
           expect(res.list[0]._values[0].text).toBe('一');
@@ -798,7 +800,7 @@ describe('abc: table: data-souce', () => {
       it('via enum', done => {
         options.columns[0].type = 'enum';
         options.columns[0].enum = {
-          1: '一',
+          1: '一'
         };
         srv.process(options).subscribe(res => {
           expect(res.list[0]._values[0].text).toBe('一');
@@ -876,9 +878,9 @@ describe('abc: table: data-souce', () => {
           iif: () => true,
           buttons: [
             { text: 'btn1', iif: () => true, children: [] },
-            { text: 'btn2', iif: () => true, children: [{ text: 'btn2-1', iif: () => true, children: [] }] },
-          ],
-        },
+            { text: 'btn2', iif: () => true, children: [{ text: 'btn2-1', iif: () => true, children: [] }] }
+          ]
+        }
       ] as _STColumn[];
       srv.process(options).subscribe(res => {
         const btns = res.list[0]._values[1].buttons;
@@ -926,9 +928,9 @@ describe('abc: table: data-souce', () => {
             type: (_values, _col, _list, rawData) => {
               callbackRawData = rawData;
               return { value: 10 };
-            },
-          },
-        },
+            }
+          }
+        }
       ] as _STColumn[];
       options.data = [{ a: 1 }, { a: 2 }];
 

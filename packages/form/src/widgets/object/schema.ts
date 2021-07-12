@@ -1,4 +1,5 @@
 import { TemplateRef } from '@angular/core';
+
 import { SFUISchemaItem } from '../../schema/ui';
 
 export type SFObjectWidgetRenderType = 'card' | 'default';
@@ -34,6 +35,7 @@ export interface SFObjectWidgetSchema extends SFUISchemaItem {
   cardBodyStyle?: { [key: string]: string };
   /**
    * 等同 `nzBordered` 属性，默认：`true`
+   *
    * @deprecated 使用 `cardBorderless` 替代
    */
   cardBordered?: boolean;

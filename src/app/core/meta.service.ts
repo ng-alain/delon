@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
+
 import { ALAIN_I18N_TOKEN, Menu } from '@delon/theme';
+
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -25,7 +27,7 @@ const FULLMETAS: Meta[] = [
   UtilMeta,
   FormMeta,
   CliMeta,
-  ThemeMeta,
+  ThemeMeta
 ] as any;
 
 @Injectable({ providedIn: 'root' })
@@ -88,7 +90,7 @@ export class MetaService {
       name: data.name,
       module_name: category.module || '',
       github: category.github,
-      list: category.list,
+      list: category.list
     };
     // fix title
     if (typeof this._data.title === 'object') {
@@ -154,30 +156,32 @@ export class MetaService {
       return {
         index,
         title: item[this.i18n.currentLang] || item[this.i18n.defaultLang],
-        list: [],
+        list: []
       };
     });
     category.list!.forEach((item: any) => {
       const meta = item.meta[this.i18n.currentLang] || item.meta[this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex((w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
+      let typeIdx = category.types!.findIndex(
+        (w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
+      );
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
         groupItem = {
           index: typeIdx,
           title: category.types![typeIdx][this.i18n.currentLang] || category.types![typeIdx][this.i18n.defaultLang],
-          list: [],
+          list: []
         };
         group.push(groupItem);
       }
       const entry: any = {
-        url: (meta.url || item.route || `/${category.name}/${item.name}`) + `/${this.i18n.zone}`,
+        url: `${meta.url || item.route || `/${category.name}/${item.name}`}/${this.i18n.zone}`,
         title: this.i18n.get(meta.title),
         subtitle: meta.subtitle,
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,
         lib: typeof item.lib === 'boolean' ? item.lib : false,
-        deprecated: meta.deprecated,
+        deprecated: meta.deprecated
       };
       groupItem.list.push(entry);
     });
@@ -228,14 +232,14 @@ export class MetaService {
           return {
             title: item._t,
             name: item.name,
-            url: (item.route || `/${type}/${item.name}`) + `/${zone}`,
+            url: `${item.route || `/${type}/${item.name}`}/${zone}`
           };
         });
       if (children != null && children.length) {
         res.push({
           title: g.name,
           type,
-          children: children.slice(0, childrenMax),
+          children: children.slice(0, childrenMax)
         });
       }
     }

@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
+
+import { saveAs } from 'file-saver';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService, AlainZipConfig } from '@delon/util/config';
 import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
-import { saveAs } from 'file-saver';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ZipSaveOptions } from './zip.types';
 
 declare var JSZip: any;
@@ -13,10 +17,15 @@ declare var JSZip: any;
 export class ZipService {
   private cog: AlainZipConfig;
 
-  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService, private ngZone: NgZone) {
+  constructor(
+    private http: HttpClient,
+    private lazy: LazyService,
+    configSrv: AlainConfigService,
+    private ngZone: NgZone
+  ) {
     this.cog = configSrv.merge('zip', {
       url: '//cdn.bootcss.com/jszip/3.3.0/jszip.min.js',
-      utils: [],
+      utils: []
     })!;
   }
 
@@ -44,7 +53,7 @@ export class ZipService {
             },
             (err: any) => {
               reject(err);
-            },
+            }
           );
           return;
         }
@@ -70,6 +79,7 @@ export class ZipService {
 
   /**
    * 下载URL资源并写入 zip
+   *
    * @param zip Zip 实例
    * @param path Zip 路径，例如： `text.txt`、`txt/hi.txt`
    * @param url URL 地址
@@ -84,7 +94,7 @@ export class ZipService {
         },
         (error: any) => {
           reject({ url, error });
-        },
+        }
       );
     });
   }
@@ -107,7 +117,7 @@ export class ZipService {
         },
         (err: NzSafeAny) => {
           reject(err);
-        },
+        }
       );
     });
   }
