@@ -1,12 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 export interface AlainMockConfig {
-  /**
-   * @deprecated Will be removed in 12.0.0, Pls used `DelonMockModule.forRoot({ data: {} })` instead
-   *
-   * 规则定义数据
-   */
-  data?: NzSafeAny;
   /**
    * 请求延迟，单位：毫秒，默认：`300`
    */
