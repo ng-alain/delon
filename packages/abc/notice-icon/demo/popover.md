@@ -6,7 +6,7 @@ title: 带浮层卡片
 点击展开通知卡片，展现多种类型的通知，通常放在导航工具栏。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import { add, formatDistanceToNow, parse } from 'date-fns';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
@@ -26,10 +26,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         (clear)="clear($event)"
         (popoverVisibleChange)="loadData()"
       ></notice-icon>
+      <ng-template #titleTpl let-i> {{ i.id }} Title By NgTemplate </ng-template>
+      <ng-template #descTpl let-i>
+        <a (click)="showOK()">{{ i.id }}</a>
+        Descriptioin By NgTemplate
+      </ng-template>
     </div>
   `,
 })
 export class DemoComponent {
+  @ViewChild('titleTpl') private titleTpl!: TemplateRef<{ $implicit: NoticeIconList }>;
+  @ViewChild('descTpl') private descTpl!: TemplateRef<{ $implicit: NoticeIconList }>;
   data: NoticeItem[] = [
     {
       title: '通知',
@@ -88,6 +95,7 @@ export class DemoComponent {
     this.loading = true;
     setTimeout(() => {
       const now = new Date();
+      console.log(this.descTpl);
       this.data = this.updateNoticeData([
         {
           id: '000000001',
@@ -144,8 +152,8 @@ export class DemoComponent {
         {
           id: '000000008',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-          title: '标题',
-          description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
+          title: this.titleTpl,
+          description: this.descTpl,
           datetime: '2017-08-07',
           type: '消息',
         },
@@ -193,6 +201,10 @@ export class DemoComponent {
 
   select(res: NoticeIconSelect): void {
     this.msg.success(`点击了 ${res.title} 的 ${res.item.title}`);
+  }
+
+  showOK(): void {
+    this.msg.info(`ok`);
   }
 }
 ```

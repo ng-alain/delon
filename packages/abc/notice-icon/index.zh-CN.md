@@ -30,7 +30,7 @@ module: import { NoticeIconModule } from '@delon/abc/notice-icon';
 |----|----|----|-----|
 | `[title]` | 标题 | `string` | - |
 | `[list]` | 列表数据，格式参照下表 | `NoticeIconList[]` | - |
-| `[emptyText]` | 针对每个 Tab 定制空数据文案 | `string` | `无通知` |
+| `[emptyText]` | 针对每个 Tab 定制空数据文案 | `string | TemplateRef<void>` | `无通知` |
 | `[emptyImage]` | 针对每个 Tab 定制空数据图片 | `string` | - |
 | `[clearText]` | 针对每个 Tab 清空按钮文本 | `string` | `清空` |
 
@@ -39,8 +39,8 @@ module: import { NoticeIconModule } from '@delon/abc/notice-icon';
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[avatar]` | 头像图片链接 | `string` | - |
-| `[title]` | 标题 | `string` | - |
-| `[description]` | 描述信息 | `string` | - |
+| `[title]` | 标题 | `string | TemplateRef<{ $implicit: NoticeIconList }>` | - |
+| `[description]` | 描述信息 | `string | TemplateRef<{ $implicit: NoticeIconList }>` | - |
 | `[datetime]` | 时间戳 | `string` | - |
 | `[extra]` | 额外信息，在列表项右上角 | `string` | - |
 | `[read]` | 是否已读状态 | `boolean` | - |
