@@ -20,6 +20,13 @@ describe('acl: service', () => {
     expect(srv.can(USER)).toBe(false);
   });
 
+  it('should be cancel full when call set', () => {
+    srv.setFull(true);
+    expect(srv.can(ADMIN)).toBe(true);
+    srv.set([USER]);
+    expect(srv.can(ADMIN)).toBe(false);
+  });
+
   it(`#setFull() set [true]`, () => {
     srv.setFull(true);
     expect(srv.can(ADMIN)).toBe(true);
