@@ -14,6 +14,15 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [11.10.4](https://github.com/ng-alain/delon/compare/11.10.3...11.10.4) (2021-07-12)
+
+### Bug Fixes
+
+* **abc:down-file:** 修复无效请求时禁用状态应设置为可用 ([#1266](https://github.com/ng-alain/delon/issues/1266)) ([0d24c04](https://github.com/ng-alain/delon/commit/0d24c04c8123c4bd03529f00abdff478199ec614))
+* **abc:notice-icon:** 修复 `NoticeItem` 不支持对象 ([#1268](https://github.com/ng-alain/delon/issues/1268)) ([18e6ed5](https://github.com/ng-alain/delon/commit/18e6ed567d2a386ce5b10a43e88eba5fbe577c50))
+* **acl:** 修复调用 `set` 时应该取消 `full` 为 `false` ([#1267](https://github.com/ng-alain/delon/issues/1267)) ([ceef83c](https://github.com/ng-alain/delon/commit/ceef83cdb18265344f6d24170bf4966399cf9a7f))
+
+
 ## [11.10.3](https://github.com/ng-alain/delon/compare/11.10.2...11.10.3) (2021-06-22)
 
 ### Bug Fixes

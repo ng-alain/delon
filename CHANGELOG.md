@@ -1,3 +1,14 @@
+## [11.10.4](https://github.com/ng-alain/delon/compare/11.10.3...11.10.4) (2021-07-12)
+
+
+### Bug Fixes
+
+* **abc:down-file:** fix should be enabled when http is invalid request ([#1266](https://github.com/ng-alain/delon/issues/1266)) ([0d24c04](https://github.com/ng-alain/delon/commit/0d24c04c8123c4bd03529f00abdff478199ec614))
+* **abc:notice-icon:** fix support objects of `NoticeItem` ([#1268](https://github.com/ng-alain/delon/issues/1268)) ([18e6ed5](https://github.com/ng-alain/delon/commit/18e6ed567d2a386ce5b10a43e88eba5fbe577c50))
+* **acl:** fix should be cancel full when call  set ([#1267](https://github.com/ng-alain/delon/issues/1267)) ([ceef83c](https://github.com/ng-alain/delon/commit/ceef83cdb18265344f6d24170bf4966399cf9a7f))
+
+
+
 ## [11.10.3](https://github.com/ng-alain/delon/compare/11.10.2...11.10.3) (2021-06-22)
 
 
