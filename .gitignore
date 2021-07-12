@@ -27,4 +27,4 @@ src/assets/style.dark.css
 /ng-alain
 /integration
 scripts/build/var.less
-/packages/schematics/plugin/files/rtl
+/schematics/plugin/files/rtl

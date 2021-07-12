@@ -37,7 +37,7 @@ import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
@@ -128,7 +128,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
   contextmenuList: STContextmenuItem[] = [];
-  @ViewChild('table') readonly orgTable: NzTableComponent;
+  @ViewChild('table') readonly orgTable: NzTableComponent<STData>;
   @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
@@ -222,7 +222,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
   @Input() customRequest?: (options: STCustomRequestOptions) => Observable<any>;
-  @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
+  @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
 
   /**
    * Get the number of the current page

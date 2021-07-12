@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainTplComponent",
-  "title": "Ng Alain Tpl Options Schema",
+  "$id": "SchematicsNgAlainListComponent",
+  "title": "Ng Alain List Component Options Schema",
   "type": "object",
   "properties": {
     "path": {
@@ -17,21 +17,12 @@
         "$source": "projectName"
       }
     },
-    "tplName": {
-      "type": "string",
-      "description": "指定模板名称 (Specifies template name)",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "What template name would you like to use for the component:"
-    },
     "name": {
       "type": "string",
       "description": "The name of the component.",
       "$default": {
         "$source": "argv",
-        "index": 1
+        "index": 0
       },
       "x-prompt": "What name would you like to use for the component:"
     },
@@ -136,14 +127,7 @@
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
       "alias": "t"
-    },
-    "modal": {
-      "type": "boolean",
-      "default": true,
-      "description": "指定是否使用模态框 (Specifies using modal mode)",
-      "x-prompt": "Would you like to modal mode?"
     }
   },
-  "required": ["tplName", "name", "module", "modal"],
-  "additionalProperties": true
+  "required": ["name", "module"]
 }

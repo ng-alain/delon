@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainAdd",
+  "$id": "SchematicsNgAlainAdd",
   "title": "NgAlain Add Options Schema",
   "type": "object",
   "properties": {

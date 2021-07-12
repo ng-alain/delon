@@ -9,7 +9,6 @@ describe('util: PAGE_VISIBILITY', () => {
       .pipe(first())
       .subscribe(state => {
         expect(typeof state).toBe('boolean');
-        expect(state).toBe(true);
         done();
       });
   });

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainEmptyComponent",
-  "title": "Ng Alain Empty Component Options Schema",
+  "$id": "SchematicsNgAlainEditComponent",
+  "title": "Ng Alain Edit Component Options Schema",
   "type": "object",
   "properties": {
     "path": {
@@ -127,6 +127,12 @@
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
       "alias": "t"
+    },
+    "modal": {
+      "type": "boolean",
+      "default": true,
+      "description": "指定是否使用模态框 (Specifies using modal mode)",
+      "x-prompt": "Would you like to modal mode?"
     }
   },
   "required": ["name", "module"]

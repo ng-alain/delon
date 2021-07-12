@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { deepCopy } from '@delon/util';
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
-import * as pkg from '../../../../package.json';
+import pkg from '../../../../package.json';
 import { AppService } from '../app.service';
 import angularJSON from './files/angular.json';
 import appModuleTS from './files/app.module';
@@ -60,9 +60,11 @@ export class CodeService {
       }
       const version = key.startsWith('@delon')
         ? `~${pkg.version}`
-        : ((pkg.dependencies || pkg.devDependencies) as {
-            [key: string]: string;
-          })[key];
+        : (
+            (pkg.dependencies || pkg.devDependencies) as {
+              [key: string]: string;
+            }
+          )[key];
       res[key] = version || '*';
     });
     return res;

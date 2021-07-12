@@ -5,7 +5,7 @@ import { Schema as ApplicationOptions } from '../application/schema';
 import { readPackage } from '../utils';
 import { Schema as NgAddOptions } from './schema';
 
-const V = 11;
+const V = 12;
 
 function genRules(options: NgAddOptions): Rule {
   const rules: Rule[] = [];

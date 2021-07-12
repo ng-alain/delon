@@ -35,9 +35,9 @@
       "sourceMaps": true,
       "internalConsoleOptions": "openOnSessionStart",
       "env": {
-        "TS_NODE_PROJECT": "${workspaceFolder}/packages/schematics/tsconfig.json"
+        "TS_NODE_PROJECT": "${workspaceFolder}/schematics/tsconfig.json"
       },
-      "args": ["${workspaceFolder}/packages/schematics/test.ts"]
+      "args": ["${workspaceFolder}/schematics/test.ts"]
     }
   ]
 }

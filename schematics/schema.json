@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "https://ng-alain.com/schema",
+  "$id": "https://ng-alain.com/schema",
   "title": "NG-ALAIN Configuration",
   "type": "object",
   "properties": {

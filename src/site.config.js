@@ -523,7 +523,7 @@ module.exports = {
       },
       dir: [
         {
-          src: ['./packages/schematics/docs'],
+          src: ['./schematics/docs'],
           template: {
             content: './src/templates/content.ts',
           },

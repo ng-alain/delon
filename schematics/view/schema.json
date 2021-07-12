@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgAlainListComponent",
-  "title": "Ng Alain List Component Options Schema",
+  "$id": "SchematicsNgAlainViewComponent",
+  "title": "Ng Alain View Component Options Schema",
   "type": "object",
   "properties": {
     "path": {
@@ -68,19 +68,12 @@
       "description": "The file extension or preprocessor to use for style files.",
       "type": "string",
       "default": "css",
-      "enum": ["css", "scss", "sass", "less", "styl"],
-      "x-user-analytics": 5
+      "enum": ["css", "scss", "sass", "less", "styl"]
     },
-    "type": {
-      "type": "string",
-      "description": "Adds a developer-defined type to the filename, in the format \"name.type.ts\".",
-      "default": "Component"
-    },
-    "skipTests": {
+    "spec": {
       "type": "boolean",
-      "description": "Do not create \"spec.ts\" test files for the new component.",
-      "default": false,
-      "x-user-analytics": 12
+      "description": "Specifies if a spec file is generated.",
+      "default": true
     },
     "flat": {
       "type": "boolean",
@@ -127,6 +120,12 @@
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
       "alias": "t"
+    },
+    "modal": {
+      "type": "boolean",
+      "default": true,
+      "description": "指定是否使用模态框 (Specifies using modal mode)",
+      "x-prompt": "Would you like to modal mode?"
     }
   },
   "required": ["name", "module"]
