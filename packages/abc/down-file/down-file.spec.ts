@@ -123,12 +123,15 @@ describe('abc: down-file', () => {
       spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       expect(fs.saveAs).not.toHaveBeenCalled();
-      (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      const el = dl.query(By.css('#down-docx')).nativeElement as HTMLElement;
+      el.click();
+      expect(el.classList.contains(`down-file__disabled`)).toBe(true);
       tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
       ret.flush(null, { status: 201, statusText: '201' });
       expect(fs.saveAs).not.toHaveBeenCalled();
       expect(context.error).toHaveBeenCalled();
+      expect(el.classList.contains(`down-file__disabled`)).toBe(false);
     }));
 
     it('should be request via post', fakeAsync(() => {

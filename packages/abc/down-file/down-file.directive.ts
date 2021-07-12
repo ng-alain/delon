@@ -3,6 +3,7 @@ import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 import { _HttpClient } from '@delon/theme';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { finalize } from 'rxjs/operators';
 
 @Directive({
   selector: '[down-file]',
@@ -67,6 +68,7 @@ export class DownFileDirective {
         observe: 'response',
         body: this.httpBody,
       })
+      .pipe(finalize(() => this.setDisabled(false)))
       .subscribe(
         (res: HttpResponse<Blob>) => {
           if (res.status !== 200 || res.body!.size <= 0) {
@@ -82,7 +84,6 @@ export class DownFileDirective {
           this.success.emit(res);
         },
         err => this.error.emit(err),
-        () => this.setDisabled(false),
       );
   }
 }
