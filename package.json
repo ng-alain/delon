@@ -20,6 +20,9 @@
     "url": "git+https://github.com/ng-alain/delon.git"
   },
   "homepage": "https://ng-alain.com",
+  "engines": {
+    "node": "^12.14.1 || ^14.0.0"
+  },
   "scripts": {
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "prepare": "husky install",
