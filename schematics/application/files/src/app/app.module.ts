@@ -1,3 +1,5 @@
+/* eslint-disable import/order */
+/* eslint-disable import/no-duplicates */
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

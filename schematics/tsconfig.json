@@ -3,14 +3,20 @@
     "lib": ["es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../../dist/ng-alain",
+    "outDir": "../dist/ng-alain",
     "noEmitOnError": false,
+    "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "declaration": true,
     "target": "es6",
-    "types": ["jasmine", "node"]
+    "types": [
+      "jasmine",
+      "node"
+    ]
   },
+  "include": [
+    "**/*"
+  ],
   "exclude": ["test.ts", "*/files/**/*", "**/*.spec.ts"]
 }

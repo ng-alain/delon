@@ -58,16 +58,18 @@ copyFiles() {
     # i18n data
     "${1}src/assets/tmp/i18n|${2}application/files/i18n"
     # code styles
-    "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
-    "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
-    "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
+    "${1}.eslintignore|${2}application/files/root/.eslintignore"
+    "${1}.eslintrc.js|${2}application/files/root/.eslintrc.js"
+    "${1}.prettierignore|${2}application/files/root/.prettierignore"
+    "${1}.prettierrc.js|${2}application/files/root/.prettierrc.js"
+    "${1}.stylelintrc|${2}application/files/root/.stylelintrc"
     "${1}.nvmrc|${2}application/files/root"
-    "${1}tslint.json|${2}application/files/root"
     "${1}proxy.conf.json|${2}application/files/root"
+    "${1}.husky|${2}application/files/root/.husky"
     # ng-alain.json
     "${1}ng-alain.json|${2}application/files/root/"
     # ci
-    "${1}.vscode|${2}application/files/root/__dot__vscode"
+    "${1}.vscode|${2}application/files/root/.vscode"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"
@@ -247,7 +249,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng12-strict/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

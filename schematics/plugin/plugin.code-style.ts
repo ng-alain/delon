@@ -9,13 +9,11 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
     if (json == null) return;
 
     if (options.type === 'add') {
-      json.husky = {
-        hooks: {
-          'pre-commit': 'pretty-quick --staged'
-        }
+      json['lint-staged'] = {
+        '(src)/**/*.{html,ts}': ['eslint --fix']
       };
     } else {
-      delete json.husky;
+      delete json['lint-staged'];
     }
 
     writePackage(tree, json);

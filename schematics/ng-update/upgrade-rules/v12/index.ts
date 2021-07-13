@@ -4,13 +4,13 @@ import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import {
   addPackage,
   BUILD_TARGET_BUILD,
-  BUILD_TARGET_LINT,
   BUILD_TARGET_SERVE,
   logInfo,
   logStart,
+  readPackage,
   removePackage
 } from '../../../utils';
-import { UpgradeMainVersions } from '../../../utils/versions';
+import { addESLintRule, UpgradeMainVersions } from '../../../utils/versions';
 
 // 修正 angular.json 的格式
 function fixAngularJson(context: SchematicContext): Rule {
@@ -78,19 +78,6 @@ function migrateESLint(context: SchematicContext): Rule {
     logInfo(context, `Add .eslintignore, .eslintrc.js`);
     // 重命名 .prettierr -> .prettierr.js 并修正内容
     logInfo(context, `Rename .prettierr -> .prettierr.js`);
-    // 修正 angular.json 的 lint 节点
-    workspace.projects.forEach(project => {
-      if (project.targets.has(BUILD_TARGET_LINT)) {
-        project.targets.delete(BUILD_TARGET_LINT);
-      }
-      project.targets.set(BUILD_TARGET_LINT, {
-        builder: '@angular-eslint/builder:lint',
-        options: {
-          lintFilePatterns: ['src/**/*.ts', 'src/**/*.html']
-        }
-      });
-    });
-    logInfo(context, `Update 'lint' node in angular.json`);
     // 更新 .vscode/settings 的 source.fixAll.tslint 为 source.fixAll.eslint
     logInfo(context, `Update .vscode/settings`);
     // 移除 tslint.json
@@ -98,10 +85,28 @@ function migrateESLint(context: SchematicContext): Rule {
   });
 }
 
+function fixPackageJson(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    const packageJson = readPackage(tree);
+    delete packageJson.scripts['pretty-quick'];
+    delete packageJson.scripts['tslint-check'];
+    packageJson.scripts['prepare'] = 'husky install';
+    delete packageJson.devDependencies['pretty-quick'];
+    logStart(context, `Update package.json`);
+  };
+}
+
 export function v12Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);
-    return chain([fixAngularJson(context), migrateESLint(context), upgradeThirdVersion(), removeThird()]);
+    return chain([
+      fixAngularJson(context),
+      migrateESLint(context),
+      addESLintRule(context),
+      upgradeThirdVersion(),
+      removeThird(),
+      fixPackageJson()
+    ]);
   };
 }

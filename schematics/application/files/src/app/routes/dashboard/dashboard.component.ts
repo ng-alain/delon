@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit {
-
-  constructor(private http: _HttpClient) { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class DashboardComponent {}

@@ -15,7 +15,7 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { NodePackageInstallTask, RunSchematicTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
 import * as path from 'path';
@@ -28,19 +28,20 @@ import {
   addHtmlToBody,
   addPackage,
   BUILD_TARGET_BUILD,
-  BUILD_TARGET_SERVE,
   getProject,
   getProjectFromWorkspace,
   getProjectTarget,
   overwriteFile,
+  readContent,
   readJSON,
   readPackage,
   VERSION,
+  writeFile,
   writeJSON,
   writePackage,
   ZORROVERSION
 } from '../utils';
-import { UpgradeMainVersions } from '../utils/versions';
+import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
@@ -52,7 +53,6 @@ function removeOrginalFiles(): Rule {
   return (tree: Tree) => {
     [
       `${project.root}/README.md`,
-      `${project.root}/tslint.json`,
       `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/test.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
@@ -116,8 +116,8 @@ function addRunScriptToPackageJson(): Rule {
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
     json.scripts.start = `ng s -o`;
     json.scripts.hmr = `ng s -o --hmr`;
-    json.scripts.build = `npm run ng-high-memory build -- --prod`;
-    json.scripts.analyze = `npm run ng-high-memory build -- --prod --source-map`;
+    json.scripts.build = `npm run ng-high-memory build`;
+    json.scripts.analyze = `npm run ng-high-memory build -- --source-map`;
     json.scripts['analyze:view'] = `source-map-explorer dist/**/*.js`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
@@ -151,14 +151,20 @@ function addCodeStylesToPackageJson(): Rule {
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
-    json.scripts['pretty-quick'] = `pretty-quick`;
+    json.scripts['prepare'] = 'husky install';
     writePackage(tree, json);
+    // fix polyfills.ts
+    const polyfillsPath = `${project.sourceRoot}/polyfills.ts`;
+    if (tree.exists(polyfillsPath)) {
+      const polyfillsContent = `/* eslint-disable import/no-unassigned-import */\n${readContent(tree, polyfillsPath)}`;
+      writeFile(tree, polyfillsPath, polyfillsContent);
+    }
     // dependencies
     addPackage(
       tree,
       [
-        `pretty-quick@DEP-0.0.0-PLACEHOLDER`,
         `husky@DEP-0.0.0-PLACEHOLDER`,
+        `lint-staged@DEP-0.0.0-PLACEHOLDER`,
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
@@ -213,22 +219,6 @@ function addSchematics(options: ApplicationOptions): Rule {
       spec: false
     };
   });
-}
-
-function addNzLintRules(): Rule {
-  return (tree: Tree) => {
-    addPackage(tree, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
-
-    const json = readJSON(tree, 'tslint.json');
-    if (json == null) return tree;
-
-    json.rulesDirectory.push(`nz-tslint-rules`);
-    json.rules['nz-secondary-entry-imports'] = true;
-
-    writeJSON(tree, 'tslint.json', json);
-
-    return tree;
-  };
 }
 
 function forceLess(): Rule {
@@ -374,7 +364,7 @@ function finished(): Rule {
 }
 
 export default function (options: ApplicationOptions): Rule {
-  return async (tree: Tree) => {
+  return async (tree: Tree, context: SchematicContext) => {
     project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
@@ -389,7 +379,7 @@ export default function (options: ApplicationOptions): Rule {
       // code style
       addCodeStylesToPackageJson(),
       addSchematics(options),
-      addNzLintRules(),
+      addESLintRule(context, false),
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),

@@ -35,7 +35,7 @@ ng g ng-alain:plugin [plugin name] -t=[add | remove]
 - 使用 [angular-eslint](https://github.com/angular-eslint/angular-eslint) 校验 typescript 部分
 - 使用 [stylelint](https://github.com/stylelint/stylelint) 校验 less 部分
 - 使用 [prettier](https://github.com/prettier/prettier) 代码格式化
-- 使用 [husky](https://github.com/typicode/husky) 和 [pretty-quick](https://github.com/azz/pretty-quick) 在你提交代码时进行代码校验和格式化
+- 使用 [husky](https://github.com/typicode/husky) 在你提交代码时进行代码校验和格式化
 
 ng-alain 默认提供了一部分的代码风格配置方案，你可以在项目的根目录下找到这些配置信息，依照你自己的风格进行修饰。
 
