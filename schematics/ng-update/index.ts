@@ -18,7 +18,7 @@ export function updateToV117(): Rule {
 }
 
 export function updateToV12(): Rule {
-  return createMigrationSchematicRule(TargetVersion.V12, migrations, ruleUpgradeData, postUpdate);
+  return chain([createMigrationSchematicRule(TargetVersion.V12, migrations, ruleUpgradeData, postUpdate)]);
 }
 
 /** Post-update schematic to be called when update is finished. */
