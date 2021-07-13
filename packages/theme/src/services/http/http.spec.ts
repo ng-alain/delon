@@ -76,7 +76,6 @@ describe('theme: http.client', () => {
         http.cleanLoading();
         tick();
         expect(http.loading).toBeFalsy();
-        http.end();
       }));
     });
 

@@ -24,7 +24,6 @@ ng-alain 除了提供主题方案以外，还包含一套类似 Bootstrap 的工
 | `@scrollbar-enabled` | `true` | 启用美化滚动条 |
 | `@preserve-white-spaces-enabled` | `true` | 解决开启 [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) 时按钮间可能会出现无缝 |
 | `@form-state-visual-feedback-enabled` | `false` | 开启表单元素的视觉反馈 |
-| `@badge-enabled` | `true` | bootstrap徽章 |
 | `@hafl-enabled` | `true` | 半图 |
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |

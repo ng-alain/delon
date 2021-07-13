@@ -143,7 +143,7 @@ export class LayoutBasicComponent {
 + 侧边区域宽度 `200px`（参数：`@aside-wd`）
   + 当屏幕低于 `1140px` 宽时隐藏侧边导航
   + 当屏幕低于 `1140px` 宽时打开侧边导航为 `fixed` 状态
-  + 主要包括一个 [sidebar-nav（点击查看API）](/components/sidebar-nav) 组件
+  + 主要包括一个 [layout-default-nav](/theme/layout-default/zh?#layout-default-nav) 组件
 
 > 参数是指可以通过 `src/styles/theme.less` 文件按需要调整。
 
@@ -159,7 +159,7 @@ export class LayoutBasicComponent {
 
 位置：*src/app/layout/default/sidebar*。
 
-只包括一个用户信息和主菜单。主菜单是一个 [sidebar-nav](/components/sidebar-nav) 组件，具体使用细节请至[业务组件](/components/sidebar-nav)中查询。
+只包括一个用户信息和主菜单。主菜单是一个 [layout-default-nav](/theme/layout-default/zh?#layout-default-nav)。
 
 **内部区域**
 

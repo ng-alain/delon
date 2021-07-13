@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "numberToChinese",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

@@ -49,9 +49,12 @@ describe('mock: service', () => {
 
   describe('#getRule', () => {
     beforeEach(() =>
-      genModule({
-        data: DATA
-      })
+      genModule(
+        {},
+        {
+          data: DATA
+        }
+      )
     );
 
     afterEach(() => srv.ngOnDestroy());
@@ -105,32 +108,29 @@ describe('mock: service', () => {
 
   describe('#apply', () => {
     it('should allow empty data', () => {
-      genModule({
-        data: null
-      });
+      genModule({}, { data: null });
       expect(srv.rules.length).toBe(0);
     });
 
     it('should allow empty rule', () => {
-      genModule({
-        data: {
-          '/a': null
-        }
-      });
+      genModule({}, { data: { '/a': null } });
       expect(srv.rules.length).toBe(0);
     });
 
     it('should be overwrite rule when same url & method', () => {
-      genModule({
-        data: {
-          USERS: {
-            '/users': { a: 1 }
-          },
-          USER: {
-            '/users': { a: 2 }
+      genModule(
+        {},
+        {
+          data: {
+            USERS: {
+              '/users': { a: 1 }
+            },
+            USER: {
+              '/users': { a: 2 }
+            }
           }
         }
-      });
+      );
       expect(srv.rules.length).toBe(1);
       const rule = srv.getRule('GET', '/users') as MockRule;
       expect(rule).not.toBeNull();
@@ -141,13 +141,16 @@ describe('mock: service', () => {
       expect(() => {
         spyOn(console, 'log');
         spyOn(console, 'warn');
-        genModule({
-          data: {
-            USERS: {
-              'AAA /users': {}
+        genModule(
+          {},
+          {
+            data: {
+              USERS: {
+                'AAA /users': {}
+              }
             }
           }
-        });
+        );
       }).toThrow();
     });
 
@@ -155,19 +158,22 @@ describe('mock: service', () => {
       expect(() => {
         spyOn(console, 'log');
         spyOn(console, 'warn');
-        genModule({
-          data: {
-            USERS: {
-              'AAA /users': 1
+        genModule(
+          {},
+          {
+            data: {
+              USERS: {
+                'AAA /users': 1
+              }
             }
           }
-        });
+        );
       }).toThrowError();
     });
   });
 
   it('#clearCache', () => {
-    genModule({ data: DATA });
+    genModule({}, { data: DATA });
     srv.clearCache();
     const rule = srv.getRule('POST', '/users/1');
     expect(rule).toBeNull();

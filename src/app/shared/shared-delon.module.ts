@@ -13,7 +13,6 @@ import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
-import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
@@ -23,7 +22,6 @@ import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
 import { SEModule } from '@delon/abc/se';
 import { SGModule } from '@delon/abc/sg';
-import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
@@ -60,7 +58,6 @@ export const SHARED_DELON_MODULES = [
   ImageModule,
   LoadingModule,
   QRModule,
-  NumberToChineseModule,
   OnboardingModule,
   ErrorCollectModule,
   ExceptionModule,
@@ -72,7 +69,6 @@ export const SHARED_DELON_MODULES = [
   TagSelectModule,
   NoticeIconModule,
   QuickMenuModule,
-  SidebarNavModule,
   G2BarModule,
   G2CardModule,
   G2CustomModule,

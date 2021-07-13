@@ -29,38 +29,6 @@ describe('theme: ModalHelper', () => {
     if (a) a.remove();
   });
 
-  describe('[default]', () => {
-    it('#open', fakeAsync(() => {
-      modal.open(TestModalComponent, { ret: 'true' }).subscribe(() => {
-        expect(true).toBeTruthy();
-        flush();
-      });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-
-    it('shoudl be size & nzWrapClassName toggle', fakeAsync(() => {
-      modal.open(TestModalComponent, { ret: 'true' }, 'sm', { nzWrapClassName: 'aaa' }).subscribe(() => {
-        expect(true).toBeTruthy();
-        flush();
-      });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-
-    it('#open of 100px modal', fakeAsync(() => {
-      modal.open(TestModalComponent, { ret: 'true' }, 100).subscribe(() => {
-        expect(true).toBeTruthy();
-        flush();
-      });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-  });
-
   describe('#create', () => {
     it('should be open', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }).subscribe(() => {
@@ -102,89 +70,6 @@ describe('theme: ModalHelper', () => {
         fixture.detectChanges();
       }));
     });
-  });
-
-  describe('#static', () => {
-    it('should be open', fakeAsync(() => {
-      const id = `${+new Date()}`;
-      modal
-        .static(TestModalComponent, {
-          id,
-          ret: true
-        })
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe(true);
-          flush();
-        });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-    it('should be open sm size', fakeAsync(() => {
-      const id = `${+new Date()}`;
-      modal
-        .static(
-          TestModalComponent,
-          {
-            id,
-            ret: 'true'
-          },
-          'sm'
-        )
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe('true');
-          flush();
-        });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-    it('should be open default size', fakeAsync(() => {
-      const id = `${+new Date()}`;
-      modal
-        .static(
-          TestModalComponent,
-          {
-            id,
-            ret: 'true'
-          },
-          ''
-        )
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe('true');
-          flush();
-        });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
-    it('should be custom modal options', fakeAsync(() => {
-      const id = `${+new Date()}`;
-      const nzZIndex = 980;
-      modal
-        .static(
-          TestModalComponent,
-          {
-            id,
-            ret: 1
-          },
-          'sm',
-          {
-            nzZIndex
-          }
-        )
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe(1);
-          flush();
-        });
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-    }));
   });
 
   describe('#createStatic', () => {
