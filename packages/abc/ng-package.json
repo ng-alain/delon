@@ -10,7 +10,7 @@
     "date-fns",
     "qrious",
     "isutf8",
-    "@types/jszip",
+    "jszip",
     "xlsx",
     "ngx-countdown",
     "@delon/theme",

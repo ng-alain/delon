@@ -123,6 +123,7 @@ function addRunScriptToPackageJson(): Rule {
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
     json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
+    json.scripts.prepare = `husky install`;
     writePackage(tree, json);
     return tree;
   };
