@@ -7,7 +7,7 @@
       "aliases": ["alain-shell"]
     },
     "ng-update": {
-      "factory": "./ng-update/index#updateToV11",
+      "factory": "./ng-update/index#updateToV12",
       "description": "Create an Alain workspace."
     },
     "application": {

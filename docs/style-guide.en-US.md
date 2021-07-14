@@ -8,22 +8,36 @@ type: Advance
 
 The project built by Angular CLI is already very good in terms of its directory structure. Official website also has an [Angular Style Guide](https://angular.io/guide/styleguide) ([Chinese version](https://angular.cn/guide/styleguide)) Style guide. It is recommended to read it several times. In addition, NG-ALAIN also has a part of the coding style, the following instructions may be useful for reading the code.
 
-## Style guide
+## Consistent code style
 
-### Region
+NG-ALAIN uses [ESLint](https://eslint.org/) to **guarantee code quality** and [Prettier](https://prettier.io/) to **optimize the code style**.
 
-Use a `// #region` & `// #endregion` free folding code preprocessor directive (limited to VSCODE) for a set of identical properties, using the `shared.module.ts` file as an example:
+It is recommended to install several plugins for more friendly development in vscode:
 
-```ts
-// #region third libs
-import { NzSchemaFormModule } from 'nz-schema-form';
-const THIRDMODULES = [ NzSchemaFormModule ];
-// #endregion
+- [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
+- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+
+Of course, NG-ALAIN has prepared a complete set of extension packs for everyone, just install [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack).
+
+## Git - pre commit Hook
+
+The `ng lint` command provided by Angular, can be very effective in helping us find bugs and readability earlier. Isn't it cool if we can guarantee that the lint of the file in staged is automatically done before each commit in the team development process?
+
+NG-ALAIN is configured to do lint each time you commit to staged and you can't commit if you find an error.
+
+By default, the `*.ts`, `*.less` commit process forces the formatting of the code. You can change the rules by modifying the `husky` node of `package.json`.
+
+> If **hint: The'.husky/pre-commit' hook was ignored because it's not set as executable.** is generated when executing `git commit -m "commit"`, it may be due to permission issues. Try to execute in the project root directory:
+
+```bash
+chmod ug+x .husky/*
+chmod ug+x .git/hooks/*
 ```
 
-Place all third-party modules in the `third libs` area and unify the registration module into the `THIRDMODULES` variable. You don't have to worry about importing and exporting anymore, because the `THIRDMODULES` array is added by default to the import and export rows and columns.
-
-When we are reading a long file, we can fold some of the code in VSCODE, which is more helpful for reading.
+## Style guide
 
 ### API documentation
 
@@ -66,27 +80,3 @@ Of course, you can easily adjust the default configuration in `angular.json`.
 ### VSCode snippets
 
 VSCode is the best choice for writing Angular. Naturally NG-ALAIN also created the corresponding snippets extension: [ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) and [ng-alain-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode).
-
-## Consistent code style
-
-NG-ALAIN uses [Prettier](https://prettier.io/) to optimize the code style and match the results to `.eslintrc.js`.
-
-It is recommended to install several plugins for more friendly development in vscode:
-
-- [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
-- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
-
-> You can automatically fix the code style when the file is saved by configuring `.vscode/settings.json` with `formatOnSave`.
-
-## Git
-
-### pre commit
-
-`lint` can be very effective in helping us find bugs and readability earlier. Isn't it cool if we can guarantee that the lint of the file in staged is automatically done before each commit in the team development process?
-
-NG-ALAIN is configured to do lint each time you commit to staged and you can't commit if you find an error.
-
-By default, the `*.ts`, `*.less` commit process forces the formatting of the code. You can change the rules by modifying the `husky` node of `package.json` (for example: `prettier --write`)

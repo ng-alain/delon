@@ -67,9 +67,9 @@ updateVersionReferences() {
     for dependencie in ${DEPENDENCIES[@]}
     do
       IFS=$'|' read -r lib version <<< "$dependencie"
-      echo ">>>> update ${lib}: ${version}"
-      perl -p -i -e "s/\"${lib}\": \"\@LIB\-PLACEHOLDER\"/\"${lib}\": \"${version}\"/g" $(grep -ril \"${lib}\": \"\@LIB\-PLACEHOLDER\" .) < /dev/null 2> /dev/null
-      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
+      # echo ">>>> update ${lib}: ${version}"
+      perl -p -i -e "s/\"${lib}\": \"\@LIB\-PLACEHOLDER\"/\"${lib}\": \"${version}\"/g" $(grep -ril -s \"${lib}\": \"\@LIB\-PLACEHOLDER\" .) < /dev/null 2> /dev/null
+      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril -s ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     done
 
     FIX_VERSION="${VERSION}"

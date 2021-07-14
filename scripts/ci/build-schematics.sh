@@ -58,7 +58,7 @@ copyFiles() {
     # i18n data
     "${1}src/assets/tmp/i18n|${2}application/files/i18n"
     # code styles
-    "${1}.eslintignore|${2}application/files/root/.eslintignore"
+    "${1}.eslintignore|${2}application/files/root/"
     "${1}.eslintrc.js|${2}application/files/root/.eslintrc.js"
     "${1}.prettierignore|${2}application/files/root/.prettierignore"
     "${1}.prettierrc.js|${2}application/files/root/.prettierrc.js"
@@ -137,6 +137,7 @@ copyFiles() {
       fi
     fi
     if [[ ${from} != '' ]]; then
+      # echo "copy ${from} to ${to}"
       cp -fr $from $to
     fi
   done
@@ -167,10 +168,10 @@ buildCLI() {
     if [[ ${CLONE} == true ]]; then
       cloneScaffold
       echo ">>> copy delon/ng-alain files via travis mode"
-      copyFiles 'ng-alain/' ${DIST}/
+      copyFiles 'ng-alain/' ${DIST}
     else
       echo ">>> copy work/ng-alain files via dev mode"
-      copyFiles '../ng-alain/' ${DIST}/
+      copyFiles "${PWD}/ng-alain/" ${DIST}
     fi
   else
     echo ">>> can't copy files!"
@@ -249,7 +250,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng12-strict/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng-alain/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}
