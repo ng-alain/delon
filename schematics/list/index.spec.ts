@@ -18,23 +18,23 @@ describe('Schematic: list', () => {
     tree = await runner.runSchematicAsync('list', { name: 'list', module: 'trade' }, tree).toPromise();
   });
 
-  xit('should be generate list page', () => {
+  it('should be generate list page', () => {
     [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
   });
 
-  xit('should be has import code', () => {
+  it('should be has import code', () => {
     expect(tree.readContent(modulePath)).toContain(`import { TradeListComponent } from './list/list.component';`);
   });
 
-  xit('should be include module name in component name', () => {
+  it('should be include module name in component name', () => {
     expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
   });
 
-  xit('shuold be exclude style', () => {
+  it('shuold be exclude style', () => {
     expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
   });
 
-  xit('should be support targets (like: list/edit)', async () => {
+  it('should be support targets (like: list/edit)', async () => {
     tree = await runner
       .runSchematicAsync('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree)
       .toPromise();

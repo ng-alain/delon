@@ -3,11 +3,12 @@
   "$id": "SchematicsNgAlainViewComponent",
   "title": "Ng Alain View Component Options Schema",
   "type": "object",
+  "additionalProperties": true,
   "properties": {
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the component.",
+      "description": "The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root.",
       "visible": false
     },
     "project": {
@@ -24,27 +25,37 @@
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use for the component:"
+      "x-prompt": "What name would you like to use for the component?"
     },
-    "inlineStyle": {
-      "description": "Specifies if the style will be in the ts file.",
+    "displayBlock": {
+      "description": "Specifies if the style will contain `:host { display: block; }`.",
       "type": "boolean",
       "default": false,
-      "alias": "s"
+      "alias": "b"
+    },
+    "inlineStyle": {
+      "description": "Include styles inline in the component.ts file. Only CSS styles can be included inline. By default, an external styles file is created and referenced in the component.ts file.",
+      "type": "boolean",
+      "default": false,
+      "alias": "s",
+      "x-user-analytics": 9
     },
     "inlineTemplate": {
-      "description": "Specifies if the template will be in the ts file.",
+      "description": "Include template inline in the component.ts file. By default, an external template file is created and referenced in the component.ts file.",
       "type": "boolean",
-      "default": false
+      "default": false,
+      "alias": "t",
+      "x-user-analytics": 10
     },
     "viewEncapsulation": {
-      "description": "Specifies the view encapsulation strategy.",
-      "enum": ["Emulated", "Native", "None", "ShadowDom"],
+      "description": "The view encapsulation strategy to use in the new component.",
+      "enum": ["Emulated", "None", "ShadowDom"],
       "type": "string",
-      "alias": "v"
+      "alias": "v",
+      "x-user-analytics": 11
     },
     "changeDetection": {
-      "description": "Specifies the change detection strategy.",
+      "description": "The change detection strategy to use in the new component.",
       "enum": ["Default", "OnPush"],
       "type": "string",
       "default": "Default",
@@ -52,7 +63,7 @@
     },
     "prefix": {
       "type": "string",
-      "description": "The prefix to apply to generated selectors.",
+      "description": "The prefix to apply to the generated component selector.",
       "alias": "p",
       "oneOf": [
         {
@@ -65,45 +76,55 @@
       ]
     },
     "style": {
-      "description": "The file extension or preprocessor to use for style files.",
+      "description": "The file extension or preprocessor to use for style files, or 'none' to skip generating the style file.",
       "type": "string",
       "default": "css",
-      "enum": ["css", "scss", "sass", "less", "styl"]
+      "enum": ["css", "scss", "sass", "less", "none"],
+      "x-user-analytics": 5
     },
-    "spec": {
+    "type": {
+      "type": "string",
+      "description": "Adds a developer-defined type to the filename, in the format \"name.type.ts\".",
+      "default": "Component"
+    },
+    "skipTests": {
       "type": "boolean",
-      "description": "Specifies if a spec file is generated.",
-      "default": true
+      "description": "Do not create \"spec.ts\" test files for the new component.",
+      "default": false,
+      "x-user-analytics": 12
     },
     "flat": {
       "type": "boolean",
-      "description": "Flag to indicate if a directory is created.",
+      "description": "Create the new files at the top level of the current project.",
       "default": false
     },
     "skipImport": {
       "type": "boolean",
-      "description": "Flag to skip the module import.",
-      "default": false
+      "description": "Do not import this component into the owning NgModule.",
+      "default": false,
+      "x-user-analytics": 18
     },
     "selector": {
       "type": "string",
       "format": "html-selector",
-      "description": "The selector to use for the component."
+      "description": "The HTML selector to use for this component."
+    },
+    "skipSelector": {
+      "type": "boolean",
+      "default": false,
+      "description": "Specifies if the component should have a selector or not."
     },
     "export": {
       "type": "boolean",
       "default": false,
-      "description": "Specifies if declaring module exports the component."
-    },
-    "entryComponent": {
-      "type": "boolean",
-      "default": false,
-      "description": "Specifies if the component is an entry component of declaring module."
+      "description": "The declaring NgModule exports this component.",
+      "x-user-analytics": 19
     },
     "lintFix": {
       "type": "boolean",
-      "default": false,
-      "description": "Specifies whether to apply lint fixes after generating the component."
+      "description": "Apply lint fixes after generating the component.",
+      "x-user-analytics": 15,
+      "x-deprecated": "Use \"ng lint --fix\" directly instead."
     },
     "withoutPrefix": {
       "type": "boolean",

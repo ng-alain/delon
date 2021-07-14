@@ -6,6 +6,7 @@ import { ruleUpgradeData } from './upgrade-data';
 import { SrcToNzImageRule } from './upgrade-rules/checks/_src-to-nz-image-rule';
 import { v11Rule } from './upgrade-rules/v11';
 import { v117Rule } from './upgrade-rules/v117';
+import { v12Rule } from './upgrade-rules/v12';
 
 const migrations: NullableDevkitMigration[] = [SrcToNzImageRule];
 
@@ -18,7 +19,7 @@ export function updateToV117(): Rule {
 }
 
 export function updateToV12(): Rule {
-  return createMigrationSchematicRule(TargetVersion.V12, migrations, ruleUpgradeData, postUpdate);
+  return chain([v12Rule, createMigrationSchematicRule(TargetVersion.V12, migrations, ruleUpgradeData, postUpdate)]);
 }
 
 /** Post-update schematic to be called when update is finished. */

@@ -15,7 +15,7 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { NodePackageInstallTask, RunSchematicTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
 import * as path from 'path';
@@ -33,17 +33,18 @@ import {
   getProjectFromWorkspace,
   getProjectTarget,
   overwriteFile,
+  readContent,
   readJSON,
   readPackage,
   VERSION,
+  writeFile,
   writeJSON,
   writePackage,
   ZORROVERSION
 } from '../utils';
-import { UpgradeMainVersions } from '../utils/versions';
+import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
 
-const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: ProjectDefinition;
 const spinner = new Spinner();
 
@@ -52,7 +53,6 @@ function removeOrginalFiles(): Rule {
   return (tree: Tree) => {
     [
       `${project.root}/README.md`,
-      `${project.root}/tslint.json`,
       `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/test.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
@@ -75,7 +75,9 @@ function fixAngularJson(options: ApplicationOptions): Rule {
   return updateWorkspace(async workspace => {
     const p = getProjectFromWorkspace(workspace, options.project);
     // Add proxy.conf.json
-    getProjectTarget(p, BUILD_TARGET_BUILD).proxyConfig = 'proxy.conf.json';
+    const serveTarget = p.targets?.get(BUILD_TARGET_SERVE);
+    if (serveTarget.options == null) serveTarget.options = {};
+    serveTarget.options.proxyConfig = 'proxy.conf.json';
     // 调整budgets
     const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject)
       .budgets as Array<{
@@ -116,13 +118,14 @@ function addRunScriptToPackageJson(): Rule {
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
     json.scripts.start = `ng s -o`;
     json.scripts.hmr = `ng s -o --hmr`;
-    json.scripts.build = `npm run ng-high-memory build -- --prod`;
-    json.scripts.analyze = `npm run ng-high-memory build -- --prod --source-map`;
+    json.scripts.build = `npm run ng-high-memory build`;
+    json.scripts.analyze = `npm run ng-high-memory build -- --source-map`;
     json.scripts['analyze:view'] = `source-map-explorer dist/**/*.js`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `ng-alain-plugin-theme -t=colorLess`;
     json.scripts.theme = `ng-alain-plugin-theme -t=themeCss`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
+    json.scripts.prepare = `husky install`;
     writePackage(tree, json);
     return tree;
   };
@@ -150,14 +153,20 @@ function addCodeStylesToPackageJson(): Rule {
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
-    json.scripts['pretty-quick'] = `pretty-quick`;
+    json.scripts['prepare'] = 'husky install';
     writePackage(tree, json);
+    // fix polyfills.ts
+    const polyfillsPath = `${project.sourceRoot}/polyfills.ts`;
+    if (tree.exists(polyfillsPath)) {
+      const polyfillsContent = `/* eslint-disable import/no-unassigned-import */\n${readContent(tree, polyfillsPath)}`;
+      writeFile(tree, polyfillsPath, polyfillsContent);
+    }
     // dependencies
     addPackage(
       tree,
       [
-        `pretty-quick@DEP-0.0.0-PLACEHOLDER`,
         `husky@DEP-0.0.0-PLACEHOLDER`,
+        `lint-staged@DEP-0.0.0-PLACEHOLDER`,
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
@@ -178,56 +187,40 @@ function addSchematics(options: ApplicationOptions): Rule {
     const schematics = p.extensions.schematics;
     schematics['ng-alain:module'] = {
       routing: true,
-      spec: false
+      skipTests: false
     };
     schematics['ng-alain:list'] = {
-      spec: false
+      skipTests: false
     };
     schematics['ng-alain:edit'] = {
-      spec: false,
+      skipTests: false,
       modal: true
     };
     schematics['ng-alain:view'] = {
-      spec: false,
+      skipTests: false,
       modal: true
     };
     schematics['ng-alain:curd'] = {
-      spec: false
+      skipTests: false
     };
     schematics['@schematics/angular:module'] = {
       routing: true,
-      spec: false
+      skipTests: false
     };
     schematics['@schematics/angular:component'] = {
-      spec: false,
+      skipTests: false,
       flat: false,
       inlineStyle: true,
       inlineTemplate: false,
       ...schematics['@schematics/angular:component']
     };
     schematics['@schematics/angular:directive'] = {
-      spec: false
+      skipTests: false
     };
     schematics['@schematics/angular:service'] = {
-      spec: false
+      skipTests: false
     };
   });
-}
-
-function addNzLintRules(): Rule {
-  return (tree: Tree) => {
-    addPackage(tree, ['nz-tslint-rules@DEP-0.0.0-PLACEHOLDER'], 'devDependencies');
-
-    const json = readJSON(tree, 'tslint.json');
-    if (json == null) return tree;
-
-    json.rulesDirectory.push(`nz-tslint-rules`);
-    json.rules['nz-secondary-entry-imports'] = true;
-
-    writeJSON(tree, 'tslint.json', json);
-
-    return tree;
-  };
 }
 
 function forceLess(): Rule {
@@ -248,10 +241,10 @@ function addStyle(): Rule {
       project,
       `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div></div>\n`
     );
-    // add styles
-    [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`].forEach(p => {
-      overwriteFile({ tree, filePath: p, content: path.join(overwriteDataFileRoot, p), overwrite: true });
-    });
+    // // add styles
+    // [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`].forEach(p => {
+    //   overwriteFile({ tree, filePath: p, content: path.join(overwriteDataFileRoot, p), overwrite: true });
+    // });
 
     return tree;
   };
@@ -362,18 +355,13 @@ function fixVsCode(): Rule {
 
 function install(): Rule {
   return (_host: Tree, context: SchematicContext) => {
-    context.addTask(new NodePackageInstallTask());
-  };
-}
-
-function finished(): Rule {
-  return () => {
-    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
+    const installId = context.addTask(new NodePackageInstallTask());
+    context.addTask(new RunSchematicTask('ng-add-finished', {}), [installId]);
   };
 }
 
 export default function (options: ApplicationOptions): Rule {
-  return async (tree: Tree) => {
+  return async (tree: Tree, context: SchematicContext) => {
     project = (await getProject(tree, options.project)).project;
     spinner.start(`Generating NG-ALAIN scaffold...`);
     return chain([
@@ -388,7 +376,7 @@ export default function (options: ApplicationOptions): Rule {
       // code style
       addCodeStylesToPackageJson(),
       addSchematics(options),
-      addNzLintRules(),
+      addESLintRule(context, false),
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),
@@ -397,8 +385,7 @@ export default function (options: ApplicationOptions): Rule {
       fixLang(options),
       fixVsCode(),
       fixAngularJson(options),
-      install(),
-      finished()
+      install()
     ]);
   };
 }

@@ -1,6 +1,7 @@
 import { forEach, Rule, Tree } from '@angular-devkit/schematics';
 
 import * as fs from 'fs';
+import { join } from 'path';
 
 export function tryDelFile(tree: Tree, filePath: string): void {
   if (tree.exists(filePath)) {
@@ -28,6 +29,16 @@ export interface OverWriteFileOptions {
   contentIsString?: boolean;
 }
 
+export function getFileContentInApplicationFiles(fileName: string): string {
+  const filePath = join(__dirname, `../application/files/${fileName}`);
+  if (fs.existsSync(filePath)) {
+    return fs.readFileSync(filePath).toString('utf-8');
+  } else {
+    console.warn(`Not found file: ${filePath}`);
+    return '';
+  }
+}
+
 /**
  * Overwrite files to the project
  */
@@ -51,7 +62,9 @@ export function overwriteFile(options: OverWriteFileOptions): Tree {
       } else {
         options.tree.overwrite(options.filePath, content);
       }
-    } catch {}
+    } catch (ex) {
+      console.warn(`Overwrite file error: ${ex}`);
+    }
   }
   return options.tree;
 }

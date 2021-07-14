@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "11.10.4",
+  "version": "12.0.0-beta.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -120,7 +120,6 @@
     "@types/deep-extend": "^0.4.31",
     "@types/extend": "^3.0.1",
     "@types/fs-extra": "^9.0.1",
-    "@types/jszip": "^3.4.1",
     "@types/mockjs": "^1.0.2",
     "@types/parse5": "^6.0.0",
     "karma-summary-reporter": "^1.7.2",
@@ -151,6 +150,7 @@
     "stylelint-order": "^4.1.0",
     "source-map-explorer": "^2.5.1",
     "xlsx": "^0.16.9",
+    "jszip": "^3.6.0",
     "screenfull": "^5.1.0",
     "less-bundle-promise": "^1.0.7",
     "ng-alain-codelyzer": "^0.0.1",
@@ -181,6 +181,9 @@
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [
       "eslint --fix"
+    ],
+    "packages/**/*.less": [
+      "stylelint --syntax less --fix"
     ]
   }
 }

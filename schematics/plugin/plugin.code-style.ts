@@ -1,6 +1,7 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
 
 import { readPackage, writePackage } from '../utils';
+import { LINT_STAGED, LINT_STAGED_CONFIG } from '../utils/code-style';
 import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
@@ -9,13 +10,9 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
     if (json == null) return;
 
     if (options.type === 'add') {
-      json.husky = {
-        hooks: {
-          'pre-commit': 'pretty-quick --staged'
-        }
-      };
+      json[LINT_STAGED] = LINT_STAGED_CONFIG;
     } else {
-      delete json.husky;
+      delete json[LINT_STAGED];
     }
 
     writePackage(tree, json);

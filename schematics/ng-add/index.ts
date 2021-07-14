@@ -1,4 +1,4 @@
-import { chain, Rule, schematic, Tree } from '@angular-devkit/schematics';
+import { chain, Rule, schematic, Tree, SchematicContext } from '@angular-devkit/schematics';
 
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
@@ -90,4 +90,12 @@ export default function (options: NgAddOptions): Rule {
 
     return genRules(options);
   };
+}
+
+export function finished(context: SchematicContext): void {
+  context.logger.info('');
+  context.logger.info(
+    `  ✓  Congratulations, NG-ALAIN scaffold generation complete. NG-ALAIN documentation site: https://ng-alain.com`
+  );
+  context.logger.info('');
 }
