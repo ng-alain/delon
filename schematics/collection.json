@@ -6,6 +6,10 @@
       "schema": "./ng-add/schema.json",
       "aliases": ["alain-shell"]
     },
+    "ng-add-finished": {
+      "factory": "./ng-add/index#finished",
+      "private": true
+    },
     "ng-update": {
       "factory": "./ng-update/index#updateToV12",
       "description": "Create an Alain workspace."
