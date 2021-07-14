@@ -1,5 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
+import { LINT_STAGED } from '../utils/code-style';
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: codeStyle', () => {
@@ -11,7 +12,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
   describe('when add', () => {
     it(`should add precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
-      expect(json.husky).not.toBeUndefined();
+      expect(json[LINT_STAGED]).not.toBeUndefined();
     });
   });
 
@@ -20,7 +21,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
 
     it(`should remove precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
-      expect(json.husky).toBeUndefined();
+      expect(json[LINT_STAGED]).toBeUndefined();
     });
   });
 });
