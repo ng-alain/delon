@@ -1,6 +1,7 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
 
 import { readPackage, writePackage } from '../utils';
+import { LINT_STAGED } from '../utils/code-style';
 import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
@@ -9,9 +10,7 @@ export function pluginCodeStyle(options: PluginOptions): Rule {
     if (json == null) return;
 
     if (options.type === 'add') {
-      json['lint-staged'] = {
-        '(src)/**/*.{html,ts}': ['eslint --fix']
-      };
+      json['lint-staged'] = LINT_STAGED;
     } else {
       delete json['lint-staged'];
     }

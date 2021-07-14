@@ -28,6 +28,7 @@ import {
   addHtmlToBody,
   addPackage,
   BUILD_TARGET_BUILD,
+  BUILD_TARGET_SERVE,
   getProject,
   getProjectFromWorkspace,
   getProjectTarget,
@@ -74,7 +75,9 @@ function fixAngularJson(options: ApplicationOptions): Rule {
   return updateWorkspace(async workspace => {
     const p = getProjectFromWorkspace(workspace, options.project);
     // Add proxy.conf.json
-    getProjectTarget(p, BUILD_TARGET_BUILD).proxyConfig = 'proxy.conf.json';
+    const serveTarget = p.targets?.get(BUILD_TARGET_SERVE);
+    if (serveTarget.options == null) serveTarget.options = {};
+    serveTarget.options.proxyConfig = 'proxy.conf.json';
     // 调整budgets
     const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject)
       .budgets as Array<{

@@ -181,6 +181,9 @@
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [
       "eslint --fix"
+    ],
+    "packages/**/*.less": [
+      "stylelint --syntax less --fix"
     ]
   }
 }
