@@ -21,7 +21,7 @@ import {
   writeJSON,
   writePackage
 } from '../../../utils';
-import { LINT_STAGED } from '../../../utils/code-style';
+import { LINT_STAGED, LINT_STAGED_CONFIG } from '../../../utils/code-style';
 import { addESLintRule, UpgradeMainVersions } from '../../../utils/versions';
 
 // 修正 angular.json 的格式
@@ -133,7 +133,7 @@ function upgradeHusky(): Rule {
     packageJson.scripts['prepare'] = 'husky install';
     delete packageJson.devDependencies['pretty-quick'];
     delete packageJson['husky'];
-    packageJson['lint-staged'] = LINT_STAGED;
+    packageJson[LINT_STAGED] = LINT_STAGED_CONFIG;
     ['.husky/.gitignore', '.husky/pre-commit'].forEach(f => {
       overwriteFile({
         tree,
