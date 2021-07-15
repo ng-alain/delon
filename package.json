@@ -84,7 +84,6 @@
     "qrious": "^4.0.2",
     "@webcomponents/custom-elements": "^1.4.2",
     "aos": "^3.0.0-beta.6",
-    "docsearch.js": "^2.6.3",
     "@ng-util/monaco-editor": "^12.0.0",
     "@nguniversal/express-engine": "~12.1.0",
     "express": "^4.17.1",
