@@ -694,7 +694,7 @@ describe('abc: reuse-tab', () => {
       createComp();
       page.to('#e').expectAttr(1, 'title', 'zh');
       i18nResult = 'en';
-      TestBed.inject(ALAIN_I18N_TOKEN).use('en');
+      TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       page.cd().expectAttr(1, 'title', 'en').end();
     }));
     it('#context-menu-text', fakeAsync(() => {

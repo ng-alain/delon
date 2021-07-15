@@ -16,8 +16,6 @@ DEPENDENCIES=$(node -p "
     'ajv',
     'ajv-formats',
     'screenfull',
-    '@ngx-translate/core',
-    '@ngx-translate/http-loader',
     'stylelint-config-prettier',
     'stylelint-config-rational-order',
     'stylelint-config-standard',

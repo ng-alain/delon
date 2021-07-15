@@ -7,8 +7,7 @@ import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { LayoutDefaultModule } from '@delon/theme/layout-default';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
-import { ThemeBtnModule } from '@delon/theme/theme-btn';<% if (i18n) { %>
-import { TranslateModule } from '@ngx-translate/core';<% } %>
+import { ThemeBtnModule } from '@delon/theme/theme-btn';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -50,8 +49,7 @@ const PASSPORT = [
     RouterModule,
     ThemeBtnModule,
     SettingDrawerModule,
-    LayoutDefaultModule,<% if (i18n) { %>
-    TranslateModule,<% } %>
+    LayoutDefaultModule,
     NoticeIconModule,
     GlobalFooterModule,
     NzDropDownModule,

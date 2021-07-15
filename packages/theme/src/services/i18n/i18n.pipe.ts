@@ -6,7 +6,7 @@ import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 export class I18nPipe implements PipeTransform {
   constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: AlainI18NService) {}
 
-  transform(key: string, interpolateParams?: unknown, isSafe?: boolean): string {
-    return this.i18n.fanyi(key, interpolateParams, isSafe);
+  transform(key: string, params?: Record<string, unknown>): string {
+    return this.i18n.fanyi(key, params);
   }
 }

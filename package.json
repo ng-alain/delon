@@ -68,8 +68,6 @@
     "@antv/data-set": "^0.11.8",
     "@antv/g2": "^4.1.14",
     "echarts": "^5.1.0",
-    "@ngx-translate/core": "^13.0.0",
-    "@ngx-translate/http-loader": "^6.0.0",
     "@stackblitz/sdk": "^1.5.2",
     "codesandbox": "^2.2.1",
     "ajv": "^8.6.1",

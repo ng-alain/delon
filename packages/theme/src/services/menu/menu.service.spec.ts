@@ -360,7 +360,7 @@ describe('Service: Menu', () => {
       srv = TestBed.inject<MenuService>(MenuService);
       spyOn(srv, 'resume');
       expect(srv.resume).not.toHaveBeenCalled();
-      TestBed.inject(ALAIN_I18N_TOKEN).use('en');
+      TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       expect(srv.resume).toHaveBeenCalled();
     });
 

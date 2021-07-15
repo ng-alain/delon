@@ -77,12 +77,12 @@ describe('NgAlainSchematic: application', () => {
         appTree.create(
           '/demo.html',
           `
-        {{(status ? 'key1' : 'key2') | translate }}
-        {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
-        [placeholder]="'key1' | translate">
-        <nz-tab [nzTitle]="'key1' | translate">
-        {{ 'Please enter mobile number!' | translate }}
-        <button>{{ count ? count + 's' : 'key1' | translate }}</button>
+        {{(status ? 'key1' : 'key2') | i18n }}
+        {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | i18n }}
+        [placeholder]="'key1' | i18n">
+        <nz-tab [nzTitle]="'key1' | i18n">
+        {{ 'Please enter mobile number!' | i18n }}
+        <button>{{ count ? count + 's' : 'key1' | i18n }}</button>
         `
         );
 
