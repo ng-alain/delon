@@ -347,7 +347,7 @@ export class STColumnSource {
       // index
       if (item.index) {
         if (!Array.isArray(item.index)) {
-          item.index = item.index.split('.');
+          item.index = item.index.toString().split('.');
         }
         item.indexKey = item.index.join('.');
       }
