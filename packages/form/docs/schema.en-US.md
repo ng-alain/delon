@@ -265,7 +265,7 @@ Equals to `<sf [ui]="ui">`, a group of UI structure corresponds to JSON Schema s
 | `[order]` | Order of property | `string[]` | - |
 | `[asyncData]` | Asynchronized static data source | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
 | `[hidden]` | If hide | `boolean` | `false` |
-| `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
+| `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any, property: FormProperty) => boolean) }` | - |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
 
 **visibleIf**
@@ -274,7 +274,7 @@ Is visible with conditions, for example:
 
 - `visibleIf: { shown: [ true ] }`: show current property when `shown: true`
 - `visibleIf: { shown: [ '$ANY$' ] }`: show current property when `shown` is any value
-- `visibleIf: { shown: (value: any) => value > 0 }`: complex expression
+- `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`: complex expression
 
 ### Validation Type
 

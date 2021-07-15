@@ -323,7 +323,7 @@ export abstract class FormProperty {
               map(res => {
                 const vi = visibleIf[dependencyPath];
                 if (typeof vi === 'function') {
-                  return vi(res.value);
+                  return vi(res.value, property);
                 }
                 if (vi.indexOf('$ANY$') !== -1) {
                   return res.value.length > 0;
