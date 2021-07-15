@@ -52,6 +52,22 @@ title: Global Parameters
 | `@scrollbar-thumb-color` | `#6e6e6e` | Scrollbar thumb color |
 | `@scrollbar-table-enabled` | `false` | Enable landscaping scrollbars of nz-table |
 | `@rtl-enabled` | `false` | Wheter support RTL |
+| `@enabled-util-align` | `true` | Whether to enable tools align |
+| `@enabled-util-border` | `true` | Whether to enable tools border |
+| `@enabled-util-code` | `true` | Whether to enable tools code |
+| `@enabled-util-color` | `true` | Whether to enable tools color |
+| `@enabled-util-display` | `true` | Whether to enable tools display |
+| `@enabled-util-float` | `true` | Whether to enable tools float |
+| `@enabled-util-icon` | `true` | Whether to enable tools icon |
+| `@enabled-util-img` | `true` | Whether to enable tools img |
+| `@enabled-util-position` | `true` | Whether to enable tools position |
+| `@enabled-util-overflow` | `true` | Whether to enable tools overflow |
+| `@enabled-util-responsive` | `true` | Whether to enable tools responsive |
+| `@enabled-util-spacing` | `true` | Whether to enable tools spacing |
+| `@enabled-util-text` | `true` | Whether to enable tools text |
+| `@enabled-util-width` | `true` | Whether to enable tools width |
+| `@enabled-util-scrollbar` | `true` | Whether to enable tools scrollbar |
+| `@enabled-util-other` | `true` | Whether to enable tools other |
 
 ## Ng patch
 
