@@ -32,4 +32,4 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 |----|----|----|-----|
 | `[x]` | x轴 | `any` | - |
 | `[y]` | y轴 | `any` | - |
-
+| `[color]` | 轴颜色 | `string` | - |
