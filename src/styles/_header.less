@@ -243,7 +243,11 @@
 
       &:hover {
         border-top: @menu-item-border solid @primary-color;
-        border-bottom: @menu-item-border solid transparent;
+        border-bottom: none;
+      }
+
+      &::after {
+        content: none;
       }
     }
 

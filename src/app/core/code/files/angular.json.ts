@@ -16,7 +16,7 @@ export default {
             index: 'src/index.html',
             main: 'src/main.ts',
             polyfills: 'src/polyfills.ts',
-            tsConfig: 'src/tsconfig.app.json',
+            tsConfig: 'tsconfig.json',
             assets: ['src/assets'],
             styles: ['src/styles.css']
           },
