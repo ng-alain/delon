@@ -1,12 +1,10 @@
-import { Platform } from '@angular/cdk/platform';
-import { inject, Inject, Injectable, InjectionToken, Injector } from '@angular/core';
+import { Injectable, InjectionToken } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from '../http/http.client';
-import { SettingsService } from '../settings/settings.service';
 
 export interface AlainI18NService {
   [key: string]: NzSafeAny;
@@ -39,7 +37,7 @@ export interface AlainI18NService {
    *
    * @param emit 是否触发 `change`，默认：true ; Should be removed, please use `change` event instead.
    */
-  use(lang: string, data: Record<string, string>): void;
+  use(lang: string, data?: Record<string, string>): void;
 
   /**
    * Return to the current language list
@@ -59,7 +57,7 @@ export interface AlainI18NService {
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainI18nToken', {
   providedIn: 'root',
-  factory: () => new AlainI18NServiceFake(inject(Injector))
+  factory: () => new AlainI18NServiceFake()
 });
 
 @Injectable()
@@ -81,11 +79,7 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     return this._data;
   }
 
-  constructor(@Inject(Injector) protected readonly injector: Injector) {
-    this._defaultLang = this.getDefaultLang();
-  }
-
-  abstract use(lang: string, data: Record<string, string>): void;
+  abstract use(lang: string, data?: Record<string, string>): void;
 
   abstract getLangs(): NzSafeAny[];
 
@@ -97,17 +91,6 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
       Object.keys(params).forEach(key => (content = content.replace(new RegExp(`{{${key}}}`, 'g'), `${params[key]}`)));
     }
     return content;
-  }
-
-  protected getDefaultLang(): string {
-    if (!this.injector.get(Platform).isBrowser) {
-      return '';
-    }
-    const settingsSrv = this.injector.get(SettingsService);
-    if (settingsSrv.layout.lang) {
-      return settingsSrv.layout.lang;
-    }
-    return (navigator.languages ? navigator.languages[0] : null) || navigator.language;
   }
 }
 

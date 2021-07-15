@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { createTestContext } from '@delon/testing';
 import {
@@ -238,7 +237,7 @@ describe('abc: page-header', () => {
       let i18n: AlainI18NService;
       beforeEach(() => {
         TestBed.overrideProvider(ALAIN_I18N_TOKEN, {
-          useFactory: () => new MockI18NServiceFake({} as NzSafeAny)
+          useFactory: () => new MockI18NServiceFake()
         });
         ({ fixture, dl, context } = createTestContext(TestI18nComponent));
         i18n = TestBed.inject(ALAIN_I18N_TOKEN);
