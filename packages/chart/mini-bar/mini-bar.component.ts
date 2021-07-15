@@ -8,6 +8,7 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
 export interface G2MiniBarData {
   x: any;
   y: any;
+  color?: string | null;
   [key: string]: any;
 }
 
@@ -67,7 +68,10 @@ export class G2MiniBarComponent extends G2BaseComponent {
     chart
       .interval()
       .position('x*y')
-      .color(color)
+      .color('x*y', (x, y) => {
+        const colorItem = this.data.find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color;
+      })
       .size(borderWidth)
       .tooltip('x*y', (x: any, y: any) => ({ name: x, value: y + yTooltipSuffix }));
 

@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const types = ['build', 'chore', 'ci', 'docs', 'feat', 'fix', 'perf', 'refactor', 'release', 'revert', 'style', 'test'];
 
-const scopes = ['showcase', 'release', 'packaging', 'changelog', 'schematics', 'module:*'];
+const scopes = ["abc", "acl", "auth", "cache", "chart", "form", "sf", "mock", "cli", "testing", "theme", "util"];
 
 function parseMessage(message) {
   const PATTERN = /^(\w+)(?:\(([^)]+)\))?\: (.+)$/;
@@ -25,8 +25,8 @@ function getScopesRule() {
     return [2, 'always', scopes];
   }
   const { scope, type } = parsed;
-  if (scope && !scopes.includes(scope) && type !== 'release' && !/module:.+/.test(scope)) {
-    return [2, 'always', scopes];
+  if (scope && !scopes.find(w => scope.startsWith(w)) && type !== 'release') {
+    return [2, 'always', scopes.concat(scope)];
   } else {
     return [2, 'always', []];
   }

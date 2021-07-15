@@ -32,3 +32,4 @@ module: import { G2BarModule } from '@delon/chart/bar';
 |----|----|----|-----|
 | `[x]` | x轴 | `any` | - |
 | `[y]` | y轴 | `any` | - |
+| `[color]` | 轴颜色 | `string` | - |

@@ -8,6 +8,7 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
 export interface G2MiniAreaData {
   x: any;
   y: any;
+  color?: string | null;
   [key: string]: any;
 }
 
@@ -101,7 +102,10 @@ export class G2MiniAreaComponent extends G2BaseComponent {
     chart
       .area()
       .position('x*y')
-      .color(color)
+      .color('x*y', (x, y) => {
+        const colorItem = this.data.find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color;
+      })
       .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
       .shape('smooth');
 

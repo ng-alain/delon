@@ -20,7 +20,7 @@ const TITLE_HEIGHT = 41;
 export interface G2BarData {
   x: any;
   y: any;
-  color?: string;
+  color?: string | null;
   [key: string]: any;
 }
 

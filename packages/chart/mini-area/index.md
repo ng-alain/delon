@@ -36,3 +36,4 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 |----|----|----|-----|
 | `[x]` | x轴 | `any` | - |
 | `[y]` | y轴 | `any` | - |
+| `[color]` | 轴颜色 | `string` | - |
