@@ -146,7 +146,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone -b dev-ng12 --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -250,7 +250,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng12-strict/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

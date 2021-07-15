@@ -825,7 +825,7 @@ describe('form: component', () => {
         .checkSchema('/a', 'description', 'descriptionI18n')
         .checkUI('/a', 'optionalHelp.text', 'ohi18n');
       lang = 'zh';
-      i18n.use(lang);
+      i18n.use(lang, {});
       page
         .checkSchema('/a', 'title', 'zh-i18n')
         .checkSchema('/a', 'description', 'zh-descriptionI18n')

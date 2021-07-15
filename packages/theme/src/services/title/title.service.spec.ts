@@ -216,7 +216,7 @@ describe('Service: Title', () => {
     it('should be reset title when i18n has changed', () => {
       genModule();
       spyOn(srv, 'setTitle');
-      i18n.use('en');
+      i18n.use('en', {});
       expect(srv.setTitle).toHaveBeenCalled();
     });
     it('#setTitleByI18n', fakeAsync(() => {

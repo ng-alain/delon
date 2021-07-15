@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { Observable } from 'rxjs';
 
 // #region default language
 // Reference: https://ng-alain.com/docs/i18n
@@ -31,24 +32,8 @@ const LANG_PROVIDES = [
 ];
 // #endregion
 <% if (i18n) { %>// #region i18n services
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core';
-
-export function I18nHttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
-}
-
-const I18NSERVICE_MODULES = [
-  TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-      useFactory: I18nHttpLoaderFactory,
-      deps: [HttpClient]
-    }
-  })
-];
 
 const I18NSERVICE_PROVIDES = [
   { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false }
@@ -72,13 +57,12 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MODULES: Type<any>[] = [
-];
+const GLOBAL_THIRD_MODULES: Array<Type<void>> = [];
 // #endregion
 
 // #region Startup Service
 import { StartupService } from '@core';
-export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
+export function StartupServiceFactory(startupService: StartupService): () => Observable<void> {
   return () => startupService.load();
 }
 const APPINIT_PROVIDES = [
@@ -115,8 +99,7 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     RoutesModule,
     STWidgetModule,
     NzMessageModule,
-    NzNotificationModule,<% if (i18n) { %>
-    ...I18NSERVICE_MODULES,<% } %><% if (form) { %>
+    NzNotificationModule,<% if (form) { %>
     ...FORM_MODULES,<% } %>
     ...GLOBAL_THIRD_MODULES
   ],

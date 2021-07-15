@@ -1921,7 +1921,7 @@ describe('abc: st', () => {
       page.updateColumn([{ title: { i18n: curLang }, index: 'id' }]);
       page.expectHead(curLang, 'id');
       curLang = 'zh';
-      i18nSrv.use(curLang);
+      i18nSrv.use(curLang, {});
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     }));
   });

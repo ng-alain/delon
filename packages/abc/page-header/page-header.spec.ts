@@ -248,7 +248,7 @@ describe('abc: page-header', () => {
       it('should be refresh when i18n changed', () => {
         spyOn(context.comp, 'refresh');
         expect(context.comp.refresh).not.toHaveBeenCalled();
-        i18n.use('en');
+        i18n.use('en', {});
         expect(context.comp.refresh).toHaveBeenCalled();
       });
       it('in text', () => {
