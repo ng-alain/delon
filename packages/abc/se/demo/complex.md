@@ -46,6 +46,7 @@ import { Component } from '@angular/core';
       <se label="App Secret" required>
         <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32" />
       </se>
+      <nz-divider></nz-divider>
       <se label="Phone Number" required>
         <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
           <ng-template #addOnBeforeTemplate>
