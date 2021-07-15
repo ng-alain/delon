@@ -29,29 +29,18 @@
             "styles": [
               "node_modules/ngx-simplemde/index.less",
               "node_modules/aos/dist/aos.css",
-              "node_modules/docsearch.js/dist/cdn/docsearch.css",
               "src/styles.less"
             ],
             "scripts": [
               "node_modules/aos/dist/aos.js",
-              "node_modules/simplemde-antd/dist/simplemde.min.js",
-              "node_modules/docsearch.js/dist/cdn/docsearch.js"
+              "node_modules/simplemde-antd/dist/simplemde.min.js"
             ],
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
               "hammerjs",
               "ajv",
               "file-saver",
-              "@ant-design/colors",
-              "@antv/path-util",
-              "@antv/g-canvas",
-              "@antv/g-base",
-              "@antv/g-svg",
-              "@antv/g-math",
-              "@antv/attr",
-              "@antv/adjust",
-              "@antv/component",
-              "@antv/util",
+              "ajv-formats",
               "date-fns"
             ]
           },
