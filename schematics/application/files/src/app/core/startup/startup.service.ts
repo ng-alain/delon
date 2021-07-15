@@ -7,8 +7,9 @@ import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { I18NService } from '../i18n/i18n.service';<% } %>
 import { Observable, zip, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 
@@ -36,7 +37,7 @@ export class StartupService {
     private viaHttp(): Observable<void> {
       const defaultLang = this.i18n.defaultLang;
       return zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json')).pipe(
-        catchError((res) => {
+        catchError((res: NzSafeAny) => {
           console.warn(`StartupService.load: Network request failed`, res);
           return [];
         }),
@@ -61,11 +62,11 @@ export class StartupService {
   <% } else { %>
     private viaHttp(): Observable<void> {
       return this.httpClient.get('assets/tmp/app-data.json').pipe(
-        catchError((res) => {
+        catchError((res: NzSafeAny) => {
           console.warn(`StartupService.load: Network request failed`, res);
-          return [];
+          return of({});
         }),
-        map(res: NzSafeAny) => {
+        map((res: NzSafeAny) => {
           // Application information: including site name, description, year
           this.settingService.setApp(res.app);
           // User information: including name, avatar, email address
@@ -84,10 +85,8 @@ export class StartupService {
   <% if (i18n) { %>
   private viaMockI18n(): Observable<void> {
     const defaultLang = this.i18n.defaultLang;
-    return this.httpClient
-      .get(`assets/tmp/i18n/${defaultLang}.json`)
-      .pipe(
-        map(langData => {
+    return this.i18n.loadLangData(defaultLang).pipe(
+        map((langData: NzSafeAny) => {
           this.i18n.use(defaultLang, langData);
 
           this.viaMock();
@@ -140,7 +139,7 @@ export class StartupService {
 
   load(): Observable<void> {
     // http
-    // return this.viaHttp(resolve, reject);
+    // return this.viaHttp();
     // mock: Don’t use it in a production environment. ViaMock is just to simulate some data to make the scaffolding work normally
     // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
     return <% if (i18n) { %>this.viaMockI18n();<% } else { %>this.viaMock();<% } %>

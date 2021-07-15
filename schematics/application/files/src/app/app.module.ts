@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { Observable } from 'rxjs';
 
 // #region default language
 // Reference: https://ng-alain.com/docs/i18n
@@ -56,13 +57,12 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MODULES: Type<any>[] = [
-];
+const GLOBAL_THIRD_MODULES: Array<Type<void>> = [];
 // #endregion
 
 // #region Startup Service
 import { StartupService } from '@core';
-export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
+export function StartupServiceFactory(startupService: StartupService): () => Observable<void> {
   return () => startupService.load();
 }
 const APPINIT_PROVIDES = [

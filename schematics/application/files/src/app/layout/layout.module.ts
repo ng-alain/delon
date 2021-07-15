@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
-import { NoticeIconModule } from '@delon/abc/notice-icon';
+import { NoticeIconModule } from '@delon/abc/notice-icon';<% if (i18n) { %>
+import { AlainThemeModule } from '@delon/theme';<% } %>
 import { LayoutDefaultModule } from '@delon/theme/layout-default';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
@@ -46,7 +47,8 @@ const PASSPORT = [
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule,
+    RouterModule,<% if (i18n) { %>
+    AlainThemeModule.forChild(),<% } %>
     ThemeBtnModule,
     SettingDrawerModule,
     LayoutDefaultModule,

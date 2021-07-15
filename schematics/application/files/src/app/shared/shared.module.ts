@@ -11,14 +11,14 @@ import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 // #region third libs
 
-const THIRDMODULES: Type<any>[] = [ ];
+const THIRDMODULES: Array<Type<void>> = [];
 
 // #endregion
 
 // #region your componets & directives
 
-const COMPONENTS: Type<any>[] = [];
-const DIRECTIVES: Type<any>[] = [];
+const COMPONENTS: Array<Type<void>> = [];
+const DIRECTIVES: Array<Type<void>> = [];
 
 // #endregion
 
