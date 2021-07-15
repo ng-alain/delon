@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { GithubButtonModule } from 'ng-github-button';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 
@@ -44,14 +43,7 @@ const COMPONENTS = [
   ...DIALOG_COMPONENTS
 ];
 
-const THIRDS = [
-  HighlightJsModule,
-  GithubButtonModule,
-  NgxTinymceModule,
-  UEditorModule,
-  SimplemdeModule,
-  ColorSketchModule
-];
+const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, UEditorModule, ColorSketchModule];
 
 @NgModule({
   imports: [

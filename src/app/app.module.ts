@@ -14,7 +14,6 @@ registerLocaleData(localeZh);
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { I18NService, StartupService } from '@core';
-import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 
@@ -82,9 +81,6 @@ function registerElements(injector: Injector, platformId: {}): void {
       options: {
         UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`
       }
-    }),
-    SimplemdeModule.forRoot({
-      delay: 300
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
