@@ -27,13 +27,11 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/manifest.webmanifest"],
             "styles": [
-              "node_modules/ngx-simplemde/index.less",
               "node_modules/aos/dist/aos.css",
               "src/styles.less"
             ],
             "scripts": [
-              "node_modules/aos/dist/aos.js",
-              "node_modules/simplemde-antd/dist/simplemde.min.js"
+              "node_modules/aos/dist/aos.js"
             ],
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
