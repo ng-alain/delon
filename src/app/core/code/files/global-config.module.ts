@@ -9,11 +9,9 @@ import { AlainConfig, ALAIN_CONFIG, AlainConfigService } from '@delon/util';
 import { DelonACLModule } from '@delon/acl';
 import * as MOCKDATA from '../../_mock';
 
-const alainConfig: AlainConfig = {
-  mock: { data: MOCKDATA },
-};
+const alainConfig: AlainConfig = { };
 
-const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];
+const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })];
 const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
 
 // #region reuse-tab
