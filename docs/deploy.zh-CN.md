@@ -23,7 +23,7 @@ NG-ALAIN 本身是一个 Angular CLI 项目，因此也可以参照 [Build](http
 ```json
 {
   "scripts": {
-    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod"
+    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build"
   }
 }
 ```
@@ -57,7 +57,7 @@ npm run analyze:view
 如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `-d` 参数指定一个 cdn 地址。
 
 ```bash
-ng build --prod -d=//cdn.ng-alain.com/
+ng build -d=//cdn.ng-alain.com/
 ```
 
 这样生成的 `index.html` 内 `*.js`、`*.css` 会自动加上 `//cdn.ng-alain.com/*.js`。

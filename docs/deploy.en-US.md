@@ -23,7 +23,7 @@ Avoid executing `ng build` when throw error **JavaScript heap out of memory**:
 ```json
 {
   "scripts": {
-    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod"
+    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build"
   }
 }
 ```
@@ -57,7 +57,7 @@ The default static resource reference path directly points to the directory wher
 If your static resource is deployed to another domain name (such as a separate CDN address), you can specify a CDN address with the `--deployUrl` parameter.
 
 ```bash
-ng build --prod -deployUrl=//cdn.ng-alain.com/
+ng build -deployUrl=//cdn.ng-alain.com/
 ```
 
 The generated `index.html` with its `*.js`, `*.css` files will automatically refer to `//cdn.ng-alain.com/*.js`, `//cdn.ng-alain.com/*css`, respectively.
