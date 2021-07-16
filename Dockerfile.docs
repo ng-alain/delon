@@ -3,7 +3,7 @@
 # MAINTAINER authors="cipchk <cipchk@qq.com>"
 
 # WORKDIR /usr/src/app
-# RUN git clone --depth 1 --branch site-ssr https://github.com/ng-alain/delon-builds.git .
+# RUN git clone --depth 1 --branch site https://github.com/ng-alain/delon-builds.git .
 
 # EXPOSE 80
 # CMD [ "node", "server/main.js" ]
@@ -12,9 +12,7 @@
 FROM node:lts as dist
 MAINTAINER authors="cipchk <cipchk@qq.com>"
 WORKDIR /dist
-RUN git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git . \
-    && sed -i 's/\/delon\//\//g' /dist/index.html \
-    && sed -i 's/\/delon\//\//g' /dist/404.html
+RUN git clone --depth 1 --branch site https://github.com/ng-alain/delon-builds.git .
 COPY _nginx _nginx
 
 FROM nginx:stable-alpine
