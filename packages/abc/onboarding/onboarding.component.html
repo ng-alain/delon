@@ -25,7 +25,7 @@
     </span>
     <div class="onboarding__btns">
       <a
-        *ngIf="!last && item.skip !== null"
+        *ngIf="!last && item.skip !== null && item.skip !== undefined"
         nz-button
         nzType="link"
         (click)="to('skip')"
@@ -38,7 +38,7 @@
         <ng-container *nzStringTemplateOutlet="item.prev">{{ item.prev }}</ng-container>
       </a>
       <a
-        *ngIf="!last && item.next !== null"
+        *ngIf="!last && item.next !== null && item.next !== undefined"
         nz-button
         (click)="to('next')"
         nzType="primary"
@@ -48,7 +48,7 @@
         <ng-container *nzStringTemplateOutlet="item.next">{{ item.next }}</ng-container>
       </a>
       <a
-        *ngIf="last && item.done !== null"
+        *ngIf="last && item.done !== null && item.done !== undefined"
         nz-button
         (click)="to('done')"
         nzType="primary"
