@@ -1,0 +1,24 @@
+name: SSR
+
+on: push
+
+jobs:
+  website:
+    if: "startsWith(github.event.commits[0].message, 'release')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: install
+        run: npm install
+
+      - name: pre-build
+        run: |
+          npm run ssr:build
+
+      # - name: to-delon-builds
+      #   run: |
+      #     bash ./scripts/ci/build-artifacts-site.sh -ssr
+      #   env:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
