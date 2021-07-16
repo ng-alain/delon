@@ -6,6 +6,15 @@ readonly thisDir=$(cd $(dirname $0); pwd)
 
 cd $(dirname $0)/../..
 
+SSR=false
+for ARG in "$@"; do
+  case "$ARG" in
+    -ssr)
+      SSR=true
+      ;;
+  esac
+done
+
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
 commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
@@ -32,13 +41,18 @@ cp ${DIST}/browser/index.html ${DIST}/browser/404.html
 buildDir=${DIST}/publish
 rm -rf ${buildDir}
 mkdir -p ${buildDir}
-cp -r ${DIST}/browser ${buildDir}/browser
-cp -r ${DIST}/server ${buildDir}/server
+
+if [[ ${SSR} == true ]]; then
+  cp -r ${DIST}/browser ${buildDir}/browser
+  cp -r ${DIST}/server ${buildDir}/server
+else
+  cp -r ${DIST}/browser ${buildDir}
+fi
 cp ./Dockerfile.docs ${buildDir}/Dockerfile.docs
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")
-branchName=${TRAVIS_BRANCH:-'site-ssr'}
+branchName=${TRAVIS_BRANCH:-'site'}
 
 buildVersionName="${buildVersion}-${commitSha}"
 buildTagName="${branchName}-${commitSha}"
