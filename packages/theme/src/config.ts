@@ -28,9 +28,9 @@ export interface Environment {
    */
   modules?: Array<Type<NzSafeAny> | ModuleWithProviders<NzSafeAny> | NzSafeAny[]>;
   /**
-   * Other custom configuration for project about environment
+   * Other custom configuration info for project about environment
    *
-   * 为项目定义的其他与环境相关的自定义配置
+   * 为项目定义的其他与环境相关的自定义配置信息
    */
   config: any;
 }
