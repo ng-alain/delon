@@ -794,7 +794,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param opt 额外参数
    */
   export(newData?: STData[] | true, opt?: STExportOptions): void {
-    (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
+    const data = Array.isArray(newData)
+      ? this.dataSource.optimizeData({ columns: this._columns, result: newData })
+      : this._data;
+    (newData === true ? from(this.filteredData) : of(data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
         columens: this._columns,
         ...opt,
