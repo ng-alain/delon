@@ -141,6 +141,10 @@ copyFiles() {
       cp -fr $from $to
     fi
   done
+
+  # remove passport-routing & passport.module.ts
+  rm ${2}application/files/src/app/routes/passport/passport-routing.module.ts
+  rm ${2}application/files/src/app/routes/passport/passport.module.ts
 }
 
 cloneScaffold() {
