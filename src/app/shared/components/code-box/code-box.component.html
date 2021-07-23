@@ -16,12 +16,17 @@
   <div class="code-box-actions">
     <i
       nz-tooltip
-      [nzTooltipTitle]="'app.demo.code-sandbox' | i18n"
+      [nzTooltipTitle]="codeSandboxTpl"
       (click)="openOnlineIDE('CodeSandbox')"
       nz-icon
       nzType="code-sandbox"
       class="code-box-code-icon"
     ></i>
+    <ng-template #codeSandboxTpl>
+      {{ 'app.demo.code-sandbox' | i18n }} (
+      <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
+      )
+    </ng-template>
     <i
       nz-tooltip
       [nzTooltipTitle]="'app.demo.stackblitz' | i18n"

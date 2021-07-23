@@ -146,7 +146,7 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.1.0",
     "source-map-explorer": "^2.5.1",
-    "xlsx": "^0.16.9",
+    "xlsx": "^0.17.0",
     "jszip": "^3.6.0",
     "screenfull": "^5.1.0",
     "less-bundle-promise": "^1.0.7",

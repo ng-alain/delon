@@ -18,7 +18,6 @@ export default {
     lib: ['es2018', 'dom']
   },
   angularCompilerOptions: {
-    enableIvy: false,
     enableI18nLegacyMessageIdFormat: false,
     strictInjectionParameters: true,
     strictInputAccessModifiers: true,

@@ -1,5 +1,5 @@
 export default (options: { ajvVersion: string }) => `import { Injectable } from '@angular/core';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 
 @Injectable()
 export class StartupService {
