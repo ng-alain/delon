@@ -81,11 +81,11 @@ export class CodeBoxComponent implements OnDestroy {
     this.check();
   }
 
-  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
+  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz', includeCli: boolean = false): void {
     if (ide === 'StackBlitz') {
       this.codeSrv.openOnStackBlitz(this.item.code);
     } else {
-      this.codeSrv.openOnCodeSandbox(this.item.code);
+      this.codeSrv.openOnCodeSandbox(this.item.code, includeCli);
     }
   }
 

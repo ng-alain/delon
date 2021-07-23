@@ -17,6 +17,7 @@ import delonChartModuleTS from './files/delon-chart.module';
 import environmentTS from './files/environment';
 import globalConfigTS from './files/global-config.module';
 import mainTS from './files/main';
+import mainCliTS from './files/main-cli';
 import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import packageJSON from './files/package.json';
 import polyfillTS from './files/polyfill';
@@ -109,6 +110,16 @@ export class CodeService {
       '@ant-design/icons-angular',
       ...dependencies
     ].forEach(k => (res.dependencies[k] = '*'));
+    if (includeCli) {
+      devDependencies = [
+        ...devDependencies,
+        'ng-alain',
+        'ng-alain-plugin-theme',
+        '@angular/cli',
+        '@angular/compiler-cli',
+        '@angular-devkit/build-angular'
+      ];
+    }
     devDependencies.forEach(k => (res.devDependencies[k] = '*'));
 
     const fullLibs: Record<string, string> = { ...pkg.dependencies, ...pkg.devDependencies };
@@ -122,12 +133,6 @@ export class CodeService {
     res.dependencies['core-js'] = `~3.8.3`;
     if (!includeCli) res;
 
-    // if (includeCli) {
-    //   const coreVersion = dependencies['@angular/core'];
-    //   dependencies['@angular/cli'] = coreVersion;
-    //   dependencies['@angular/compiler-cli'] = coreVersion;
-    //   dependencies['@angular-devkit/build-angular'] = coreVersion;
-    // }
     return res;
   }
 
@@ -241,7 +246,7 @@ export class CodeService {
         isBinary: false
       },
       'src/main.ts': {
-        content: mainTS,
+        content: includeCli ? mainCliTS : mainTS,
         isBinary: false
       },
       'src/polyfills.ts': {

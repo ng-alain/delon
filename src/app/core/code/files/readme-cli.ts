@@ -8,5 +8,13 @@ On the terminal on your bottom right there is a + you can click to open a new ta
 
 \`\`\`
 yarn ng <your command>
+yarn ng g ng-alain:module news
+yarn ng g ng-alain:list list -m=news
 \`\`\`
+
+## QA
+
+**502: Bad Gateway**
+
+The solution is to click refresh on the Browser panel when the terminal displays \`✔ Compiled successfully.\`
 `;
