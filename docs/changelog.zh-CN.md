@@ -14,6 +14,13 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [12.0.2](https://github.com/ng-alain/delon/compare/12.0.1...12.0.2) (2021-07-26)
+
+### Bug Fixes
+
+* **cli:** `ng update ng-alain --fixAngularJson=false` 增加 `fixAngularJson` 选项，可忽略对 `angular.json` 的调整 ([#1294](https://github.com/ng-alain/delon/issues/1294)) ([dbe0642](https://github.com/ng-alain/delon/commit/dbe06424c59fa005f86c0f196bb5ad053ac4665f))
+
+
 ## [12.0.1](https://github.com/ng-alain/delon/compare/12.0.0...12.0.1) (2021-07-24)
 
 ### Bug Fixes
