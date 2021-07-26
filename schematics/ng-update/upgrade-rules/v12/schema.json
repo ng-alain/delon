@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsNgUpdateV12",
+  "title": "Ng Alain Update V12",
+  "type": "object",
+  "properties": {
+    "fixAngularJson": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically correct the Angular.json format, Default: true"
+    }
+  }
+}

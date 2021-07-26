@@ -23,6 +23,7 @@ import {
 } from '../../../utils';
 import { LINT_STAGED, LINT_STAGED_CONFIG } from '../../../utils/code-style';
 import { addESLintRule, UpgradeMainVersions } from '../../../utils/versions';
+import { Schema } from './schema';
 
 // 修正 angular.json 的格式
 function fixAngularJson(context: SchematicContext): Rule {
@@ -170,12 +171,11 @@ function finished(): Rule {
   };
 }
 
-export function v12Rule(): Rule {
+export function v12Rule(options: Schema): Rule {
   return async (tree: Tree, context: SchematicContext) => {
-    logStart(context, `Upgrade @delon/* version number`);
+    logStart(context, `Upgrade @delon/* version number ${JSON.stringify(options)}`);
     UpgradeMainVersions(tree);
-    return chain([
-      fixAngularJson(context),
+    const rules = [
       migrateESLint(tree, context),
       addESLintRule(context),
       upgradeThirdVersion(),
@@ -183,6 +183,10 @@ export function v12Rule(): Rule {
       upgradeHusky(),
       formatJson(),
       finished()
-    ]);
+    ];
+    if (options.fixAngularJson !== false) {
+      rules.splice(0, 0, fixAngularJson(context));
+    }
+    return chain(rules);
   };
 }

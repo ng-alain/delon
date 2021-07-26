@@ -12,6 +12,7 @@
     },
     "ng-update": {
       "factory": "./ng-update/index#updateToV12",
+      "schema": "./ng-update/upgrade-rules/v12/schema.json",
       "description": "Create an Alain workspace."
     },
     "application": {
