@@ -6,10 +6,6 @@
       "schema": "./ng-add/schema.json",
       "aliases": ["alain-shell"]
     },
-    "ng-add-finished": {
-      "factory": "./ng-add/index#finished",
-      "private": true
-    },
     "ng-update": {
       "factory": "./ng-update/index#updateToV12",
       "schema": "./ng-update/upgrade-rules/v12/schema.json",
