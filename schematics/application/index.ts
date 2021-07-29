@@ -15,10 +15,8 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask, RunSchematicTask } from '@angular-devkit/schematics/tasks';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
-
-import * as path from 'path';
 
 import { getLangData } from '../core/lang.config';
 import {
@@ -32,7 +30,6 @@ import {
   getProject,
   getProjectFromWorkspace,
   getProjectTarget,
-  overwriteFile,
   readContent,
   readJSON,
   readPackage,
@@ -348,8 +345,13 @@ function fixVsCode(): Rule {
 
 function install(): Rule {
   return (_host: Tree, context: SchematicContext) => {
-    const installId = context.addTask(new NodePackageInstallTask());
-    context.addTask(new RunSchematicTask('ng-add-finished', {}), [installId]);
+    context.addTask(new NodePackageInstallTask());
+  };
+}
+
+function finished(): Rule {
+  return () => {
+    spinner.succeed(`Congratulations, NG-ALAIN scaffold generation complete.`);
   };
 }
 
@@ -378,7 +380,8 @@ export default function (options: ApplicationOptions): Rule {
       fixLang(options),
       fixVsCode(),
       fixAngularJson(options),
-      install()
+      install(),
+      finished()
     ]);
   };
 }
