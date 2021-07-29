@@ -133,12 +133,11 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
-    merge(
-      menuSrv.change.pipe(filter(() => this.inited)),
-      router.events.pipe(filter(ev => ev instanceof NavigationEnd)),
-      i18nSrv.change
-    )
-      .pipe(takeUntil(this.destroy$))
+    merge(menuSrv.change, router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
+      .pipe(
+        filter(() => this.inited),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.refresh());
   }
 
