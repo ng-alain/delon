@@ -4,6 +4,7 @@ import { XlsxService } from '../../xlsx/xlsx.service';
 import { XlsxExportOptions } from '../../xlsx/xlsx.types';
 import { STExport } from '../st-export';
 import { STColumn } from '../st.interfaces';
+import { _STColumn } from '../st.types';
 
 class MockXlsxService {
   export(options: XlsxExportOptions): XlsxExportOptions {
@@ -127,6 +128,18 @@ describe('abc: table: export', () => {
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets.Sheet1.A2.v).toBe('2');
+    });
+
+    it('should be width', async () => {
+      const width = 10;
+      const ret: any = await srv.export({
+        data: [{ i: 1, _values: [{ text: '2' }] }],
+        columens: [{ title: 'i', index: 'i', _width: width } as _STColumn]
+      });
+      expect(ret).not.toBeNull();
+      const colInfo = ret.sheets.Sheet1['!cols'];
+      expect(Array.isArray(colInfo)).toBe(true);
+      expect(colInfo[0].wpx).toBe(width);
     });
   });
 });

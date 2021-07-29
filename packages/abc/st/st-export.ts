@@ -6,6 +6,7 @@ import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util/other';
 
 import { STColumn, STExportOptions } from './st.interfaces';
+import { _STColumn } from './st.types';
 
 @Injectable()
 export class STExport {
@@ -46,8 +47,13 @@ export class STExport {
     const dataLen = opt.data!.length;
     let validColCount = 0;
     let loseCount = 0;
-    for (let colIdx = 0; colIdx < opt.columens!.length; colIdx++) {
-      const col = opt.columens![colIdx];
+    const columns = opt.columens! as _STColumn[];
+    if (columns.findIndex(w => w._width != null) !== -1) {
+      // wpx: width in screen pixels https://github.com/SheetJS/sheetjs#column-properties
+      sheet['!cols'] = columns.map(col => ({ wpx: col._width }));
+    }
+    for (let colIdx = 0; colIdx < columns.length; colIdx++) {
+      const col = columns[colIdx];
       if (col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0)) {
         ++loseCount;
         continue;

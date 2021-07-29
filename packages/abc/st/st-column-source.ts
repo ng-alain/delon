@@ -420,6 +420,7 @@ export class STColumnSource {
       item._className = item.className || (item._isTruncate ? 'text-truncate' : null);
       // width
       if (typeof item.width === 'number') {
+        item._width = item.width;
         item.width = `${item.width}px`;
       }
       item._left = false;
