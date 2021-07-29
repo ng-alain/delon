@@ -17,6 +17,7 @@ export interface _STColumn extends STColumn {
    */
   _className?: string | string[] | Set<string> | { [klass: string]: any } | null;
   _sort: STSortMap;
+  _width?: number;
   _left?: string | boolean;
   _right?: string | boolean;
   __point?: number;
