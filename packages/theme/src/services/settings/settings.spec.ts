@@ -34,7 +34,7 @@ describe('Service: Settings', () => {
     it('should be reset all', () => {
       srv.setLayout({
         a: 1
-      } as any);
+      } as NzSafeAny);
       expect(srv.layout.a).toBe(1);
     });
 

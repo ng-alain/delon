@@ -277,7 +277,7 @@ describe('theme: DrawerHelper', () => {
 })
 class TestDrawerComponent {
   id: string = '';
-  ret: any = 'true';
+  ret = 'true';
 
   constructor(private modal: NzDrawerRef) {
     setTimeout(() => {

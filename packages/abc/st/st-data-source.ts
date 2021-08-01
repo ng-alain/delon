@@ -47,7 +47,7 @@ export interface STDataSourceOptions {
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
-  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
+  customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
 }
 
 export interface STDataSourceResult {
@@ -86,7 +86,7 @@ export class STDataSource {
     let retPs: number;
     let retList: STData[];
     let retPi: number;
-    let rawData: any;
+    let rawData: NzSafeAny;
     let showPage = page.show;
 
     if (typeof data === 'string') {
@@ -458,7 +458,7 @@ export class STDataSource {
 
   // #region statistical
 
-  private genStatistical(columns: _STColumn[], list: STData[], rawData: any): STStatisticalResults {
+  private genStatistical(columns: _STColumn[], list: STData[], rawData: NzSafeAny): STStatisticalResults {
     const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
       res[col.key || col.indexKey || index] =
@@ -467,7 +467,7 @@ export class STDataSource {
     return res;
   }
 
-  private getStatistical(col: _STColumn, index: number, list: STData[], rawData: any): STStatisticalResult {
+  private getStatistical(col: _STColumn, index: number, list: STData[], rawData: NzSafeAny): STStatisticalResult {
     const val = col.statistical;
     const item: STStatistical = {
       digits: 2,

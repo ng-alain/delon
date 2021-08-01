@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, N
 
 import { I18NService } from '@core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -59,10 +60,10 @@ export class FooterComponent implements OnInit {
     document.getElementsByTagName('head')[0].appendChild(node);
   }
 
-  changeColor(res: any): void {
+  changeColor(res: NzSafeAny): void {
     const changeColor = () => {
       this.ngZone.runOutsideAngular(() => {
-        (window as any).less
+        (window as NzSafeAny).less
           .modifyVars({
             '@primary-color': res.color.hex
           })
@@ -85,7 +86,7 @@ export class FooterComponent implements OnInit {
     if (this.lessLoaded) {
       changeColor();
     } else {
-      (window as any).less = {
+      (window as NzSafeAny).less = {
         async: true,
         javascriptEnabled: true
       };

@@ -55,8 +55,6 @@ export class DemoComponent {
   }
 }`;
 
-declare var ace: any;
-
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
@@ -68,7 +66,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
 
   private destroy$ = new Subject();
-  files: any[] = [
+  files: Array<{ name: string; title: string; cache?: string }> = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },
     { name: 'sort', title: '顺序' },
@@ -145,7 +143,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
       formData: this.formCode || '{}',
       ui: this.uiCode || '{}'
     };
-    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: any) =>
+    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: string) =>
       (obj[offset] || '').trim()
     );
     this.codeSrv.openOnStackBlitz(componentCode);
@@ -155,19 +153,19 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
-  submit(value: any): void {
+  submit(value: NzSafeAny): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: any): void {
+  change(value: NzSafeAny): void {
     console.log('formChange', value);
   }
 
-  valueChange(value: any): void {
+  valueChange(value: NzSafeAny): void {
     console.log('formChange', value);
   }
 
-  error(value: any): void {
+  error(value: NzSafeAny): void {
     console.log('formError', value);
   }
 

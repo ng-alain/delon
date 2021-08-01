@@ -3,6 +3,8 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 
 import { AlainConfigService, LazyService } from '../../util';
@@ -13,7 +15,7 @@ describe('abc: qr', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
-  const win: any = window;
+  const win: NzSafeAny = window;
 
   class MockQRious {
     set(): jasmine.Spy<jasmine.Func> {

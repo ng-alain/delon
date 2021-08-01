@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
@@ -39,7 +40,7 @@ describe('form: widget: upload', () => {
     });
     const comp = getComp();
     spyOn(comp.formProperty, 'setValue');
-    comp.change({ type: 'error', fileList: [] } as any);
+    comp.change({ type: 'error', fileList: [] } as NzSafeAny);
     expect(comp.formProperty.setValue).not.toHaveBeenCalled();
   });
 
@@ -107,7 +108,7 @@ describe('form: widget: upload', () => {
         }
       });
       const comp = page.getWidget<UploadWidget>('sf-upload');
-      comp.change({ type: 'success', fileList: [] } as any);
+      comp.change({ type: 'success', fileList: [] } as NzSafeAny);
       page.checkCalled('a', 'change');
     });
 
@@ -174,7 +175,7 @@ describe('form: widget: upload', () => {
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
         spyOn(msg, 'create');
-        comp.handlePreview({ url: 'a' } as any);
+        comp.handlePreview({ url: 'a' } as NzSafeAny);
         expect(msg.create).toHaveBeenCalled();
       }));
       it(`should be won't preview image when not found url property`, inject(
@@ -190,7 +191,7 @@ describe('form: widget: upload', () => {
           });
           const comp = page.getWidget<UploadWidget>('sf-upload');
           spyOn(msg, 'create');
-          comp.handlePreview({} as any);
+          comp.handlePreview({} as NzSafeAny);
           expect(msg.create).not.toHaveBeenCalled();
         }
       ));

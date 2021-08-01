@@ -18,6 +18,8 @@ import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 import { FullContentService } from './full-content.service';
@@ -62,7 +64,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
-    @Inject(DOCUMENT) private doc: any
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {}
 
   private updateCls(): void {

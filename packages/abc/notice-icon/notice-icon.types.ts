@@ -1,7 +1,9 @@
 import { TemplateRef } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface NoticeItem {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   title: string;
 
@@ -15,7 +17,7 @@ export interface NoticeItem {
 }
 
 export interface NoticeIconList {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   /** 头像图片链接 */
   avatar?: string;

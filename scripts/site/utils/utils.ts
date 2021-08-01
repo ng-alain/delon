@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fse from 'fs-extra';
 
 import * as fs from 'fs';

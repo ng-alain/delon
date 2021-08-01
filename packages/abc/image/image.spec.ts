@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of, throwError } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
@@ -85,7 +86,7 @@ describe('abc: _src', () => {
       onerror: () => {}
     };
     beforeEach(() => {
-      spyOn(window, 'FileReader').and.returnValue(mockFileReader as any);
+      spyOn(window, 'FileReader').and.returnValue(mockFileReader as NzSafeAny);
       _http = TestBed.inject(_HttpClient);
       context.useHttp = true;
     });

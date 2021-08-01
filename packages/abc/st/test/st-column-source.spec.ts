@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ACLService } from '@delon/acl';

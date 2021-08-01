@@ -221,7 +221,7 @@ describe('abc: down-file', () => {
 class TestComponent {
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
-  data: any = {
+  data: NzSafeAny = {
     otherdata: 1,
     time: new Date()
   };

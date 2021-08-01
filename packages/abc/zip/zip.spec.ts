@@ -4,6 +4,8 @@ import { Observable, of, throwError } from 'rxjs';
 
 import * as fs from 'file-saver';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { LazyService } from '@delon/util/other';
 
 import { ZipModule } from './zip.module';
@@ -14,7 +16,7 @@ let isClassZIP = false;
 let isErrorGenZip = false;
 class MockLazyService {
   load(): Promise<void> {
-    (window as any).JSZip = isClassZIP
+    (window as NzSafeAny).JSZip = isClassZIP
       ? class JSZip {
           file(): void {}
           generateAsync(): Promise<void> {
@@ -119,7 +121,7 @@ describe('abc: zip', () => {
   });
 
   describe('#pushUrl', () => {
-    let zip: any;
+    let zip: NzSafeAny;
     beforeEach((done: () => void) => {
       isClassZIP = true;
       genModule();
@@ -156,7 +158,7 @@ describe('abc: zip', () => {
   });
 
   describe('#save', () => {
-    let zip: any;
+    let zip: NzSafeAny;
     beforeEach((done: () => void) => {
       isClassZIP = true;
       genModule();

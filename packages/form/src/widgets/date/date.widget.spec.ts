@@ -5,6 +5,8 @@ import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
 
 import { format, formatISO } from 'date-fns';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
 
@@ -236,7 +238,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties!.a.ui as any;
+      const ui = s.properties!.a.ui as NzSafeAny;
       expect(ui.onOpenChange).not.toHaveBeenCalled();
       comp._openChange(true);
       expect(ui.onOpenChange).toHaveBeenCalled();
@@ -247,7 +249,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties!.a.ui as any;
+      const ui = s.properties!.a.ui as NzSafeAny;
       expect(ui.onOk).not.toHaveBeenCalled();
       comp._ok(true);
       expect(ui.onOk).toHaveBeenCalled();

@@ -12,8 +12,8 @@ import { LazyResult, LazyService } from '@delon/util/other';
 
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
-declare var XLSX: any;
-declare var cptable: any;
+declare var XLSX: NzSafeAny;
+declare var cptable: NzSafeAny;
 
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
@@ -61,8 +61,8 @@ export class XlsxService {
   /**
    * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
    */
-  import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }> {
-    return new Promise<{ [key: string]: any[][] }>((resolve, reject) => {
+  import(fileOrUrl: File | string): Promise<{ [key: string]: NzSafeAny[][] }> {
+    return new Promise<{ [key: string]: NzSafeAny[][] }>((resolve, reject) => {
       this.init()
         .then(() => {
           // from url
@@ -71,7 +71,7 @@ export class XlsxService {
               (res: ArrayBuffer) => {
                 this.ngZone.run(() => resolve(this.read(new Uint8Array(res), { type: 'array' })));
               },
-              (err: any) => {
+              (err: NzSafeAny) => {
                 reject(err);
               }
             );
@@ -79,7 +79,7 @@ export class XlsxService {
           }
           // from file
           const reader: FileReader = new FileReader();
-          reader.onload = (e: any) => {
+          reader.onload = (e: NzSafeAny) => {
             this.ngZone.run(() => resolve(this.read(e.target.result, { type: 'binary' })));
           };
           reader.readAsArrayBuffer(fileOrUrl);
@@ -93,10 +93,10 @@ export class XlsxService {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()
         .then(() => {
-          const wb: any = XLSX.utils.book_new();
+          const wb: NzSafeAny = XLSX.utils.book_new();
           if (Array.isArray(options.sheets)) {
             (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-              const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+              const ws: NzSafeAny = XLSX.utils.aoa_to_sheet(value.data);
               XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
             });
           } else {

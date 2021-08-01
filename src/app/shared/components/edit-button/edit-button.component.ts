@@ -22,7 +22,7 @@ export class EditButtonComponent {
   _full: string;
 
   @Input()
-  set item(data: any) {
+  set item(data: { urls: string }) {
     this._full = `${this.meta.github}/edit/master/${this.i18n.get(data.urls)}`;
   }
 

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 import { NzConfigService } from 'ng-zorro-antd/core/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AlainConfigService } from '@delon/util/config';
 
@@ -35,7 +36,7 @@ export class RTLService {
     this.updateHtml();
     // Should be wait inited
     Promise.resolve().then(() => {
-      (this.d as any).value = value;
+      (this.d as NzSafeAny).value = value;
       this.d.change.emit(value);
       this.srv.setLayout(RTL_DIRECTION, value);
     });
@@ -68,7 +69,7 @@ export class RTLService {
     private nz: NzConfigService,
     private delon: AlainConfigService,
     private platform: Platform,
-    @Inject(DOCUMENT) private doc: any
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
     this.dir = srv.layout.direction === RTL ? RTL : LTR;
   }
@@ -98,10 +99,10 @@ export class RTLService {
 
   private updateLibConfig(): void {
     RTL_NZ_COMPONENTS.forEach(name => {
-      this.nz.set(name as any, { nzDirection: this.dir });
+      this.nz.set(name as NzSafeAny, { nzDirection: this.dir });
     });
     RTL_DELON_COMPONENTS.forEach(name => {
-      this.delon.set(name as any, { direction: this.dir });
+      this.delon.set(name as NzSafeAny, { direction: this.dir });
     });
   }
 }

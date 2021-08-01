@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tree } from '@angular-devkit/schematics';
 
 import { readJSON, writeJSON } from './json';

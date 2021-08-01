@@ -11,7 +11,7 @@ import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from 
   `
 })
 export class LayoutDefaultHeaderItemComponent {
-  @ViewChild('host', { static: true }) host: TemplateRef<any>;
+  @ViewChild('host', { static: true }) host: TemplateRef<void>;
 
   @Input() hidden: LayoutDefaultHeaderItemHidden = 'none';
   @Input() direction: LayoutDefaultHeaderItemDirection = 'right';

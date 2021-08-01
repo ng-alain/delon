@@ -2,14 +2,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
 
 import type { Chart, Event } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2MiniAreaData {
-  x: any;
-  y: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
   color?: string | null;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2MiniAreaClickItem {
@@ -44,8 +46,8 @@ export class G2MiniAreaComponent extends G2BaseComponent {
   @Input() @InputBoolean() fit = true;
   @Input() @InputBoolean() line = false;
   @Input() @InputBoolean() animate = true;
-  @Input() xAxis: any;
-  @Input() yAxis: any;
+  @Input() xAxis: NzSafeAny;
+  @Input() yAxis: NzSafeAny;
   @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
@@ -71,7 +73,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       borderColor,
       borderWidth
     } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,

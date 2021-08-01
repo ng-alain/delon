@@ -10,13 +10,15 @@ import {
 
 import type { Chart, Event } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2PieData {
-  x: any;
+  x: NzSafeAny;
   y: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2PieClickItem {
@@ -60,7 +62,7 @@ export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_select: BooleanInput;
 
   private percentColor: (value: string) => string;
-  legendData: any[] = [];
+  legendData: NzSafeAny[] = [];
   isPercent: boolean;
 
   // #region fields
@@ -80,7 +82,7 @@ export class G2PieComponent extends G2BaseComponent {
   @Input() @InputBoolean() select = true;
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
-  @Input() colors: any[];
+  @Input() colors: string[];
   @Input() interaction: G2InteractionType = 'none';
   @Input() ratio: G2PieRatio = {
     text: '占比',
@@ -135,7 +137,7 @@ export class G2PieComponent extends G2BaseComponent {
       percentColor,
       colors
     } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -156,7 +158,7 @@ export class G2PieComponent extends G2BaseComponent {
       chart.interaction(interaction);
     }
     chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner });
-    chart.filter('x', (_val: any, item: any) => item.checked !== false);
+    chart.filter('x', (_val: NzSafeAny, item: NzSafeAny) => item.checked !== false);
     chart
       .interval()
       .adjust('stack')
@@ -200,7 +202,7 @@ export class G2PieComponent extends G2BaseComponent {
     const { hasLegend, isPercent, cdr, _chart } = this;
     if (!hasLegend || isPercent) return;
 
-    this.legendData = _chart.geometries[0].dataArray.map((item: any) => {
+    this.legendData = _chart.geometries[0].dataArray.map((item: NzSafeAny) => {
       const origin = item[0]._origin;
       origin.color = item[0].color;
       origin.checked = true;

@@ -12,6 +12,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { zhCN as dateFnsLang } from 'date-fns/locale';
 
 import { AlainThemeModule } from '../../theme.module';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 describe('Pipe: _date', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -37,7 +38,7 @@ describe('Pipe: _date', () => {
     { date: null, result: `` },
     { date: undefined, result: `` },
     { date, result: ``, format: 'fn' }
-  ].forEach((item: any) => {
+  ].forEach((item: NzSafeAny) => {
     it(`${typeof item.date}:${`${item.date}`} muse be ${item.result}${
       item.format ? `(format: ${item.format})` : ''
     }`, () => {

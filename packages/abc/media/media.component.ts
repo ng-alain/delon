@@ -70,7 +70,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private init(): void {
-    if (!(window as any).Plyr) {
+    if (!(window as NzSafeAny).Plyr) {
       throw new Error(
         `No window.Plyr found, please make sure that cdn or local path exists, the current referenced path is: ${JSON.stringify(
           this.srv.cog.urls

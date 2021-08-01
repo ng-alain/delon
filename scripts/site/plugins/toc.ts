@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SiteConfig } from '../interfaces';
 import { generateSluggedId, genValidId, isHeading } from '../utils/utils';
 

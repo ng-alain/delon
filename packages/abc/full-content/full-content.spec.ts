@@ -6,6 +6,8 @@ import { ActivationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { FullContentComponent } from './full-content.component';
 import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
@@ -110,7 +112,7 @@ describe('abc: full-content', () => {
       const bodyHeight = 10;
       spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
         height: bodyHeight
-      } as any);
+      } as NzSafeAny);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
       fixture.detectChanges();
@@ -119,7 +121,7 @@ describe('abc: full-content', () => {
       expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
     }));
     it('should be clear class when go to other route', () => {
-      const eventsSub = new BehaviorSubject<any>(null);
+      const eventsSub = new BehaviorSubject<NzSafeAny>(null);
       class MockRouter {
         events = eventsSub;
       }
@@ -138,7 +140,7 @@ describe('abc: full-content', () => {
       expect(bodyEl.classList.contains('full-content')).toBe(false);
     });
     it('should be attach class when back route', () => {
-      const eventsSub = new BehaviorSubject<any>(null);
+      const eventsSub = new BehaviorSubject<NzSafeAny>(null);
       class MockRouter {
         events = eventsSub;
       }

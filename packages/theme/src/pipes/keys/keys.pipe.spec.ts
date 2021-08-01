@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainThemeModule } from '../../theme.module';
 
 describe('Pipe: keys', () => {
@@ -46,7 +48,7 @@ describe('Pipe: keys', () => {
   `
 })
 class TestComponent {
-  data: any = {
+  data: NzSafeAny = {
     name: 'cipchk',
     address: { city: 'shanghai', district: 'changning' }
   };

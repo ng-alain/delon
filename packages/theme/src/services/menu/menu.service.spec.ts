@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { filter } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';
 
@@ -282,7 +284,7 @@ describe('Service: Menu', () => {
             icon: null
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(icon).toBeNull();
       });
       it('should be undefined', () => {
@@ -293,7 +295,7 @@ describe('Service: Menu', () => {
             icon: undefined
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(icon).toBeUndefined();
       });
       it('should be type is string', () => {
@@ -304,7 +306,7 @@ describe('Service: Menu', () => {
             icon: 'aa'
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('class');
       });
@@ -316,7 +318,7 @@ describe('Service: Menu', () => {
             icon: { type: 'icon', value: 'user' }
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
       });
@@ -328,7 +330,7 @@ describe('Service: Menu', () => {
             icon: `anticon anticon-user`
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
         expect(icon.value).toBe('user');
@@ -341,7 +343,7 @@ describe('Service: Menu', () => {
             icon: `http://ng-alain.com/1.jpg`
           }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('img');
       });

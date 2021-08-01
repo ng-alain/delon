@@ -18,13 +18,14 @@ export function updateToV117(): Rule {
   return chain([v117Rule]);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function updateToV12(schema: any): Rule {
   const rule = v12Rule(schema);
   return chain([rule, createMigrationSchematicRule(TargetVersion.V12, migrations, ruleUpgradeData, postUpdate)]);
 }
 
 /** Post-update schematic to be called when update is finished. */
-export function postUpdate(context: SchematicContext, targetVersion: any, hasFailures: boolean): void {
+export function postUpdate(context: SchematicContext, targetVersion: TargetVersion, hasFailures: boolean): void {
   context.logger.info('');
   context.logger.info(`  ✓  Updated NG-ALAIN to ${targetVersion}`);
   context.logger.info('');

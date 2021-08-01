@@ -16,7 +16,7 @@ import {
 } from '@angular-devkit/schematics';
 import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
-import { buildRelativePath, findModuleFromOptions } from '@schematics/angular/utility/find-module';
+import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
 import * as ts from 'typescript';
@@ -30,7 +30,7 @@ import { getProject } from './workspace';
 const TEMPLATE_FILENAME_RE = /\.template$/;
 
 export interface CommonSchema {
-  [key: string]: any;
+  // [key: string]: any;
   _filesPath?: string;
   schematicName?: string;
   name?: string;
@@ -45,6 +45,11 @@ export interface CommonSchema {
   withoutPrefix?: boolean;
   project?: string;
   skipTests?: boolean;
+  flat: string;
+  inlineStyle: boolean;
+  inlineTemplate: boolean;
+  modal: boolean;
+  skipImport: boolean;
 }
 
 function buildSelector(schema: CommonSchema, projectPrefix: string): string {
@@ -98,7 +103,7 @@ function resolveSchema(tree: Tree, project: ProjectDefinition, schema: CommonSch
   if (fs.existsSync(fullPath) && fs.readdirSync(fullPath).length > 0) {
     throw new SchematicsException(`The directory (${fullPath}) already exists`);
   }
-  schema.importModulePath = findModuleFromOptions(tree, schema as any);
+  schema.importModulePath = findModuleFromOptions(tree, schema as unknown as ModuleOptions);
 
   if (!schema._filesPath) {
     // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
@@ -146,6 +151,7 @@ export function addValueToVariable(
   if (!node) {
     throw new SchematicsException(`Could not find any [${variableName}] variable in path '${filePath}'.`);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(

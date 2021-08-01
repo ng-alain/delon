@@ -271,6 +271,7 @@ export const ICONS = [ ];
     return;
   }
   const source = getSourceFile(tree, path);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const allImports = findNodes(source as any, ts.SyntaxKind.ImportDeclaration);
   const iconImport = allImports.find((w: ts.ImportDeclaration) =>
     w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons')

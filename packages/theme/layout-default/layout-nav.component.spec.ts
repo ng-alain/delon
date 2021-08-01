@@ -6,6 +6,8 @@ import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
@@ -545,7 +547,7 @@ describe('theme: layout-default-nav', () => {
         : null;
       return el ? (el as T) : null;
     }
-    checkText(cls: string, value: any): void {
+    checkText(cls: string, value: NzSafeAny): void {
       const el = this.getEl<HTMLElement>(cls);
       expect(el ? el.innerText.trim() : '').toBe(value);
     }

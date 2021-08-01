@@ -36,7 +36,7 @@ describe('Pipe: yn', () => {
         yes: '好',
         no: '坏'
       }
-    ].forEach((item: any) => {
+    ].forEach((item: { value: boolean; result: string; yes?: string; no?: string }) => {
       it(`${item.value.toString()} muse be ${item.result}`, () => {
         fixture.componentInstance.value = item.value;
         fixture.componentInstance.yes = item.yes;
@@ -89,7 +89,7 @@ describe('Pipe: yn', () => {
 })
 class TestComponent {
   value = true;
-  yes: string;
-  no: string;
+  yes?: string;
+  no?: string;
   mode: YNMode;
 }
