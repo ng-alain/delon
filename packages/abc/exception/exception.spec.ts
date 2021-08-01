@@ -61,7 +61,7 @@ describe('abc: exception', () => {
 
 @Component({
   template: `
-    <exception #comp [type]="type" [img]="img" [title]="title" [desc]="desc">
+    <exception #comp [type]="type" [img]="img" [title]="title" [desc]="desc" backRouterLink="/">
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
     </exception>

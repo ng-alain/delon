@@ -8,6 +8,8 @@
     <div (cdkObserveContent)="checkContent()" #conTpl>
       <ng-content></ng-content>
     </div>
-    <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">{{ locale.backToHome }}</button>
+    <button *ngIf="!hasCon" nz-button [routerLink]="backRouterLink" [nzType]="'primary'">
+      {{ locale.backToHome }}
+    </button>
   </div>
 </div>

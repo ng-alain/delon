@@ -90,6 +90,8 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this._desc = this.dom.bypassSecurityTrustHtml(value);
   }
 
+  @Input() backRouterLink: string | any[] = '/';
+
   checkContent(): void {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }

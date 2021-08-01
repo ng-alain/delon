@@ -18,4 +18,5 @@ module: import { ExceptionModule } from '@delon/abc/exception';
 | `[title]` | 标题 | `string` | - |
 | `[desc]` | 补充描述 | `string` | - |
 | `[img]` | 背景图片地址 | `string` | - |
+| `[backRouterLink]` | 后退路由链接 | `string, any[]` | `/` |
 | `ng-content` | 建议操作，配置此属性时默认的『返回首页』按钮不生效 | `TemplateRef<void>` | - |
