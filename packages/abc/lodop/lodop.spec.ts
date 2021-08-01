@@ -14,7 +14,7 @@ import { Lodop } from './lodop.types';
 const cog: AlainConfig = {
   lodop: { name: 'LODOP' }
 };
-let mockLodop: any;
+let mockLodop: NzSafeAny;
 let isErrRequest = false;
 let loadCount = 0;
 let isNullLodop = false;
@@ -87,7 +87,7 @@ describe('abc: lodop', () => {
       };
       setTimeout(() => {
         const obj = (window as NzSafeAny)[cog.lodop!.name!] as Lodop;
-        (obj.webskt as any).readyState = 1;
+        (obj.webskt as NzSafeAny).readyState = 1;
       }, 30);
       srv.lodop.subscribe(res => {
         expect(res).not.toBeNull();

@@ -16,6 +16,8 @@ import {
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { NumberInput, ZoneOutside } from '@delon/util/decorator';
 
 import { ChartEChartsService } from './echarts.service';
@@ -46,11 +48,11 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   private _chart: ChartECharts | null = null;
   private _theme?: string | Record<string, unknown> | null;
   private _initOpt?: {
-    renderer?: any;
+    renderer?: NzSafeAny;
     devicePixelRatio?: number;
     width?: number;
     height?: number;
-    locale?: any;
+    locale?: NzSafeAny;
   };
   private _option: ChartEChartsOption;
   _width = '100%';
@@ -71,7 +73,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     }
   }
   @Input()
-  set initOpt(value: any) {
+  set initOpt(value: NzSafeAny) {
     this._initOpt = value;
     if (this._chart) {
       this.install();
@@ -123,7 +125,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
 
   install(): this {
     this.destroy();
-    this._chart = (window as any).echarts.init(this.node.nativeElement, this._theme, this._initOpt);
+    this._chart = (window as NzSafeAny).echarts.init(this.node.nativeElement, this._theme, this._initOpt);
     this.emit('init');
     this.setOption(this._option!);
     return this;
@@ -140,7 +142,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   setOption(option: ChartEChartsOption, notMerge: boolean = false, lazyUpdate: boolean = false): this {
     if (this._chart) {
       this._chart.setOption(option, notMerge, lazyUpdate);
-      this.emit('set-option', { option } as any);
+      this.emit('set-option', { option } as NzSafeAny);
     }
     return this;
   }
@@ -149,7 +151,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    if ((window as any).echarts) {
+    if ((window as NzSafeAny).echarts) {
       this.load();
     } else {
       this.srv.libLoad();

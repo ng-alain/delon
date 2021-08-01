@@ -12,8 +12,8 @@ import { _STColumn } from './st.types';
 export class STExport {
   constructor(@Optional() private xlsxSrv: XlsxService) {}
 
-  private _stGet(item: any, col: STColumn, index: number, colIndex: number): any {
-    const ret: { [key: string]: any } = { t: 's', v: '' };
+  private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
+    const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
 
     if (col.format) {
       ret.v = col.format(item, col, index);

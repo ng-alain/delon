@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
@@ -28,7 +29,6 @@ export class DocsComponent implements OnInit, OnDestroy {
   isBrowser = true;
 
   @Input() codes: any[];
-
   @Input() item: any;
 
   constructor(

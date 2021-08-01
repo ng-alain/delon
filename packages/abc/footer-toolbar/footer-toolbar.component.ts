@@ -12,6 +12,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 const CLSBODY = 'footer-toolbar__body';
@@ -30,7 +32,7 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() errorCollect = false;
   @Input() extra: string | TemplateRef<void>;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: any) {}
+  constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: NzSafeAny) {}
 
   private get bodyCls(): DOMTokenList {
     return (this.doc.querySelector('body') as HTMLElement).classList;

@@ -6,7 +6,7 @@ cols: 1
 module: import { FullContentModule } from '@delon/abc/full-content';
 ---
 
-全屏工作区，常用于带有滚动条表格，一个在线[示例](https://ng-alain.surge.sh/#/delon/simple-table)。
+全屏工作区，常用于带有滚动条表格，一个在线[示例](https://ng-alain.surge.sh/#/delon/st)。
 
 ## API
 

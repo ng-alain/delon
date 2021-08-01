@@ -19,7 +19,7 @@ describe('Pipe: html', () => {
   [
     { value: '', result: `` },
     { value: '<i>asdf</i>', result: `asdf` }
-  ].forEach((item: any) => {
+  ].forEach((item: { value: string; result: string }) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
       fixture.detectChanges();

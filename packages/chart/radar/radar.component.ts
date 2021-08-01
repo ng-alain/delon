@@ -10,6 +10,8 @@ import {
 
 import type { Chart, Event } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -17,7 +19,7 @@ export interface G2RadarData {
   name: string;
   label: string;
   value: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2RadarClickItem {
@@ -42,7 +44,7 @@ export class G2RadarComponent extends G2BaseComponent {
   static ngAcceptInputType_hasLegend: BooleanInput;
   static ngAcceptInputType_tickCount: NumberInput;
 
-  legendData: any[] = [];
+  legendData: NzSafeAny[] = [];
 
   // #region fields
 
@@ -64,7 +66,7 @@ export class G2RadarComponent extends G2BaseComponent {
   install(): void {
     const { node, padding, theme, tickCount } = this;
 
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height: this.getHeight(),

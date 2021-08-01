@@ -2,6 +2,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -41,7 +43,7 @@ describe('form: widget: mention', () => {
       .checkCount('.ant-mention-dropdown-item', DATA.length, true)
       .typeEvent('click', '.ant-mention-dropdown-item');
 
-    expect((s.properties!.a.ui as any).select).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).select).toHaveBeenCalled();
   }));
 
   it('should be validator mention count via minimum or maximum', fakeAsync(() => {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 import { SFSchema } from '@delon/form';
@@ -21,7 +22,7 @@ import { SFSchema } from '@delon/form';
   `
 })
 export class DemoSfComponent {
-  i: any;
+  i: NzSafeAny;
   schema: SFSchema = {
     properties: {
       name: { title: 'Name', type: 'string' }
@@ -46,7 +47,7 @@ export class DemoSfComponent {
 
   constructor(private modal: NzModalRef) {}
 
-  save(value: any): void {
+  save(value: NzSafeAny): void {
     this.modal.destroy(value);
   }
 

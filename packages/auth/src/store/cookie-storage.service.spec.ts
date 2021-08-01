@@ -11,7 +11,7 @@ describe('auth: cookie-storage', () => {
     remove: jasmine.createSpy('remove').and.callFake((key: string) => {
       delete data[key];
     })
-  } as any);
+  } as NzSafeAny);
   const KEY = 'token';
   const VALUE: ITokenModel = {
     token: 'token data'

@@ -22,6 +22,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -105,7 +106,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private platform: Platform
   ) {}
 
@@ -242,7 +243,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
-  activate(instance: any): void {
+  activate(instance: NzSafeAny): void {
     this.srv.componentRef = { instance };
   }
 

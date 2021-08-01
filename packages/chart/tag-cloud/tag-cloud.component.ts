@@ -4,13 +4,15 @@ import { debounceTime, filter } from 'rxjs/operators';
 
 import type { Chart, Event } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2TagCloudData {
   value?: number;
   name?: string;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2TagCloudClickItem {
@@ -41,9 +43,9 @@ export class G2TagCloudComponent extends G2BaseComponent {
   // #endregion
 
   private initTagCloud(): void {
-    (window as any).G2.registerShape('point', 'cloud', {
-      draw(cfg: any, container: any) {
-        const data = cfg.data as any;
+    (window as NzSafeAny).G2.registerShape('point', 'cloud', {
+      draw(cfg: NzSafeAny, container: NzSafeAny) {
+        const data = cfg.data as NzSafeAny;
         const textShape = container.addShape({
           type: 'text',
           name: 'tag-cloud-text',
@@ -57,10 +59,10 @@ export class G2TagCloudComponent extends G2BaseComponent {
             textBaseline: 'Alphabetic',
             x: cfg.x,
             y: cfg.y
-          } as any
+          } as NzSafeAny
         });
         if (data.rotate) {
-          (window as any).G2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
+          (window as NzSafeAny).G2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
         }
         return textShape;
       }
@@ -78,7 +80,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       this.width = this.el.nativeElement.clientWidth;
     }
 
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: false,
       padding,
@@ -96,7 +98,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       showTitle: false,
       showMarkers: false
     });
-    (chart.coordinate() as any).reflect();
+    (chart.coordinate() as NzSafeAny).reflect();
     chart
       .point()
       .position('x*y')
@@ -123,7 +125,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
     const { _chart, data } = this;
     if (!_chart || !Array.isArray(data) || data.length <= 0) return;
 
-    const dv = new (window as any).DataSet.View().source(data);
+    const dv = new (window as NzSafeAny).DataSet.View().source(data);
     const range = dv.range('value');
     const min = range[0];
     const max = range[1];
@@ -143,10 +145,10 @@ export class G2TagCloudComponent extends G2BaseComponent {
         }
         return random * 90; // 0, 90, 270
       },
-      fontSize(d: any) {
+      fontSize(d: NzSafeAny) {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
       }
-    } as any);
+    } as NzSafeAny);
 
     _chart.changeData(dv.rows);
   }

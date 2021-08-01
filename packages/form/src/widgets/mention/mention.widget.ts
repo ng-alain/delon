@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
 
 import { SFValue } from '../../interface';
@@ -18,7 +19,7 @@ import { SFMentionWidgetSchema } from './schema';
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   @ViewChild('mentions', { static: true }) private mentionChild: NzMentionComponent;
   data: SFSchemaEnum[] = [];
-  i: any;
+  i: NzSafeAny;
   loading = false;
 
   ngOnInit(): void {
@@ -45,7 +46,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
           return [{ keyword: 'mention', message: `最多提及 ${max} 次` }];
         }
         return null;
-      }) as any;
+      }) as NzSafeAny;
     }
   }
 
@@ -56,7 +57,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
     });
   }
 
-  _select(options: any): void {
+  _select(options: NzSafeAny): void {
     if (this.ui.select) this.ui.select(options);
   }
 

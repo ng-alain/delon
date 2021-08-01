@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -28,6 +29,7 @@ export class CodeBoxComponent implements OnDestroy {
 
   @Input()
   set item(value: any) {
+    debugger;
     if (!this._orgItem) {
       this._orgItem = deepCopy(value);
     }

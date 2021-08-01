@@ -79,7 +79,7 @@ export class ModalHelper {
         nzComponentParams: params
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: any) => {
+      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -113,7 +113,7 @@ export class ModalHelper {
     comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
     params?: NzSafeAny,
     options?: ModalHelperOptions
-  ): Observable<any> {
+  ): Observable<NzSafeAny> {
     const modalOptions = {
       nzMaskClosable: false,
       ...(options && options.modalOptions)

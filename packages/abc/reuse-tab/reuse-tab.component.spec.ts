@@ -77,7 +77,7 @@ describe('abc: reuse-tab', () => {
         {
           provide: 'CanDeactivate',
           useValue: () => {
-            return new Observable((observer: any) => observer.next(false));
+            return new Observable((observer: NzSafeAny) => observer.next(false));
           }
         }
       ].concat(
@@ -87,7 +87,7 @@ describe('abc: reuse-tab', () => {
               {
                 provide: ALAIN_I18N_TOKEN,
                 useClass: MockI18NServiceFake
-              } as any
+              } as NzSafeAny
             ]
       )
     });
@@ -750,7 +750,7 @@ describe('abc: reuse-tab', () => {
       expect(this.list[pos].url).toBe(url);
       return this;
     }
-    expectAttr(pos: number, attrName: string, value: any): this {
+    expectAttr(pos: number, attrName: string, value: NzSafeAny): this {
       expect((this.list[pos] as NzSafeAny)[attrName]).toBe(value);
       return this;
     }
@@ -787,7 +787,7 @@ describe('abc: reuse-tab', () => {
       this.cd();
       return this;
     }
-    openContextMenu(pos: number, eventArgs?: any): this {
+    openContextMenu(pos: number, eventArgs?: NzSafeAny): this {
       const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
         expect(false).toBe(true, `the pos muse be 0-${ls.length}`);

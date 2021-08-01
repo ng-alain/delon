@@ -1,6 +1,8 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainAuthConfig } from '@delon/util/config';
 
 import { BaseInterceptor } from '../base.interceptor';
@@ -23,7 +25,7 @@ export class JWTInterceptor extends BaseInterceptor {
     return CheckJwt(this.model as JWTTokenModel, options.token_exp_offset!);
   }
 
-  setReq(req: HttpRequest<any>, _options: AlainAuthConfig): HttpRequest<any> {
+  setReq(req: HttpRequest<NzSafeAny>, _options: AlainAuthConfig): HttpRequest<NzSafeAny> {
     return req.clone({
       setHeaders: {
         Authorization: `Bearer ${this.model.token}`

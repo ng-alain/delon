@@ -7,6 +7,8 @@ import { Observable, of, throwError } from 'rxjs';
 
 import * as fs from 'file-saver';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { LazyService } from '@delon/util/other';
 
 import { XlsxModule } from './xlsx.module';
@@ -41,7 +43,7 @@ describe('abc: xlsx', () => {
   }
 
   beforeEach(() => {
-    (window as any).XLSX = {
+    (window as NzSafeAny).XLSX = {
       utils: {
         book_new: () => {
           return {};
@@ -65,9 +67,9 @@ describe('abc: xlsx', () => {
       },
       write: () => {}
     };
-    (window as any).cptable = {
+    (window as NzSafeAny).cptable = {
       utils: {
-        decode: (data: any) => {
+        decode: (data: NzSafeAny) => {
           return data;
         }
       }
@@ -76,13 +78,13 @@ describe('abc: xlsx', () => {
   });
 
   afterEach(() => {
-    delete (window as any).XLSX;
-    delete (window as any).cptable;
+    delete (window as NzSafeAny).XLSX;
+    delete (window as NzSafeAny).cptable;
   });
 
   describe('[#import]', () => {
     it('should be load xlsx lib when not found XLSX in window', () => {
-      delete (window as any).XLSX;
+      delete (window as NzSafeAny).XLSX;
       genModule();
       const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
       spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
@@ -179,7 +181,7 @@ describe('abc: xlsx', () => {
         });
     });
     it('should catch error when XLSX process error', done => {
-      (window as any).XLSX.utils.book_new = null;
+      (window as NzSafeAny).XLSX.utils.book_new = null;
       srv
         .export({
           sheets: {
@@ -230,5 +232,5 @@ describe('abc: xlsx', () => {
   template: ` <button [xlsx]="data"></button> `
 })
 class TestComponent {
-  data: any = {};
+  data: NzSafeAny = {};
 }

@@ -16,6 +16,8 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 import type { Chart, Types } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 
 import { G2Service } from './g2.servicce';
@@ -82,7 +84,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.onInit();
-    if ((window as any).G2) {
+    if ((window as NzSafeAny).G2) {
       this.load();
     } else {
       this.srv.libLoad();

@@ -36,11 +36,11 @@ export class G2GaugeComponent extends G2BaseComponent {
 
   install(): void {
     // 自定义Shape 部分
-    (window as any).G2.registerShape('point', 'pointer', {
-      draw(cfg: any, container: any) {
+    (window as NzSafeAny).G2.registerShape('point', 'pointer', {
+      draw(cfg: NzSafeAny, container: NzSafeAny) {
         const group = container.addGroup({});
         // 获取极坐标系下画布中心点
-        const center = (this as any).parsePoint({ x: 0, y: 0 });
+        const center = (this as NzSafeAny).parsePoint({ x: 0, y: 0 });
         // 绘制指针
         group.addShape('line', {
           attrs: {
@@ -69,7 +69,7 @@ export class G2GaugeComponent extends G2BaseComponent {
 
     const { el, height, padding, format, theme } = this;
 
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,

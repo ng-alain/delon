@@ -43,6 +43,7 @@ describe('Schematic: list', () => {
 
   it('should be throw error when directory already exists', async () => {
     spyOn(fs, 'existsSync').and.returnValue(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
     try {
       tree = await runner.runSchematicAsync('list', { name: 'list', module: 'trade' }, tree).toPromise();

@@ -17,7 +17,7 @@ class MockMenuService {
 }
 class MockRouter {
   navigateByUrl = jasmine.createSpy();
-  get events(): any {
+  get events(): NzSafeAny {
     return {
       subscribe: () => {
         return { unsubscribe: () => {} };
@@ -33,7 +33,7 @@ describe('abc: reuse-tab(service)', () => {
 
   afterEach(() => srv.ngOnDestroy());
 
-  function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]): void {
+  function genModule(providers: NzSafeAny[] = [{ provide: MenuService, useClass: MockMenuService }]): void {
     TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
@@ -55,7 +55,7 @@ describe('abc: reuse-tab(service)', () => {
     srv.clear();
     Array(count)
       .fill({})
-      .forEach((_item: any, index: number) => {
+      .forEach((_item: NzSafeAny, index: number) => {
         srv.store(getSnapshot(index + 1, urlTpl), { a: 1 });
       });
   }
@@ -64,11 +64,11 @@ describe('abc: reuse-tab(service)', () => {
    * 模拟 Snapshot
    * - 1 => a/1
    */
-  function getSnapshot(index: number, urlTpl: string = `a/{index}`): any {
+  function getSnapshot(index: number, urlTpl: string = `a/{index}`): NzSafeAny {
     return {
       routeConfig: {},
       url: [urlTpl.replace(`{index}`, `${index}`)]
-    } as any;
+    } as NzSafeAny;
   }
 
   describe('[property]', () => {
@@ -217,7 +217,7 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get title from route data', () => {
         const title = 'aa';
-        expect(srv.getTitle('/', { data: { title } } as any).text).toBe(title);
+        expect(srv.getTitle('/', { data: { title } } as NzSafeAny).text).toBe(title);
       });
       it('should used ReuseTitle set title via service', () => {
         genCached(1, '/');
@@ -243,7 +243,7 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get closable from route data', () => {
         const closable = false;
-        expect(srv.getClosable('/', { data: { reuseClosable: closable } } as any)).toBe(closable);
+        expect(srv.getClosable('/', { data: { reuseClosable: closable } } as NzSafeAny)).toBe(closable);
       });
       it('should get closable from menu data', () => {
         const spy = spyOn(menuSrv, 'getPathByUrl');
@@ -384,8 +384,8 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.getKeepingScroll('')).toBe(false);
       });
       it('should get keepingScroll from route data', () => {
-        expect(srv.getKeepingScroll('/', { data: { keepingScroll: false } } as any)).toBe(false);
-        expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as any)).toBe(true);
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: false } } as NzSafeAny)).toBe(false);
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as NzSafeAny)).toBe(true);
       });
       it('should get keepingScroll from menu data', () => {
         const spy = spyOn(menuSrv, 'getPathByUrl');
@@ -502,7 +502,7 @@ describe('abc: reuse-tab(service)', () => {
     });
     it('should be retrieve when is cached', () => {
       genCached(1);
-      const handle: any = srv.retrieve(getSnapshot(1));
+      const handle: NzSafeAny = srv.retrieve(getSnapshot(1));
       expect(handle).not.toBeNull();
       expect(handle.a).toBe(1);
     });

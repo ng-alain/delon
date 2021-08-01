@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainSFConfig } from '@delon/util/config';
 
 import { SF_SEQ } from '../const';
@@ -52,7 +54,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   _updateValue(): void {
-    const value: any[] = [];
+    const value: NzSafeAny[] = [];
     this.forEachChild((property: FormProperty) => {
       if (property.visible) {
         value.push({ ...(this.widget?.cleanValue ? null : property.formData), ...property.value });

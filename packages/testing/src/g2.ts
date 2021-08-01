@@ -21,7 +21,7 @@ export class PageG2<T> {
     return this.fixture!.componentInstance;
   }
 
-  get comp(): any {
+  get comp(): NzSafeAny {
     return (this.context as NzSafeAny)['comp'];
   }
 
@@ -79,7 +79,7 @@ export class PageG2<T> {
     this.comp.ngOnDestroy();
   }
 
-  newData(data: any): this {
+  newData(data: NzSafeAny): this {
     (this.context as NzSafeAny)['data'] = data;
     this.dc();
     return this;
@@ -113,12 +113,12 @@ export class PageG2<T> {
     return this;
   }
 
-  checkOptions(key: string, value: any): this {
+  checkOptions(key: string, value: NzSafeAny): this {
     expect((this.chart as NzSafeAny)[key]).toBe(value);
     return this;
   }
 
-  checkAttrOptions(type: PageG2Type, key: string, value: any): this {
+  checkAttrOptions(type: PageG2Type, key: string, value: NzSafeAny): this {
     const x = (this.chart[type][0] as NzSafeAny).attributeOption[key];
     expect(x.field).toBe(value);
     return this;
@@ -173,7 +173,7 @@ export function checkDelay<M, T>(module: M, comp: Type<T>, page: PageG2<T> | nul
   if (page == null) {
     page = new PageG2<T>().makeModule(module, comp, { dc: false });
   }
-  const context = page.context as any;
+  const context = page.context as NzSafeAny;
   if (typeof context.delay === 'undefined') {
     console.warn(`You muse be dinfed "delay" property in test component`);
     return;

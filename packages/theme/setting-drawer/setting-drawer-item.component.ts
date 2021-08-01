@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 @Component({
   selector: 'setting-drawer-item',
   templateUrl: './setting-drawer-item.component.html',
@@ -8,10 +10,10 @@ import { Component, Input } from '@angular/core';
   }
 })
 export class SettingDrawerItemComponent {
-  i: any = {};
+  i: NzSafeAny = {};
 
   @Input()
-  set data(val: any) {
+  set data(val: NzSafeAny) {
     this.i = val;
     if (val.type === 'px') {
       this.pxVal = +val.value.replace('px', '');

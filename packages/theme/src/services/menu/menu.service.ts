@@ -2,6 +2,8 @@ import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
@@ -81,7 +83,7 @@ export class MenuService implements OnDestroy {
       } else if (/^https?:\/\//.test(item.icon)) {
         type = 'img';
       }
-      item.icon = { type, value } as any;
+      item.icon = { type, value } as NzSafeAny;
     }
     if (item.icon != null) {
       item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };

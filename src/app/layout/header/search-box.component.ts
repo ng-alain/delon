@@ -9,7 +9,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
 
-declare const docsearch: any;
+declare const docsearch: NzSafeAny;
 
 @Component({
   selector: 'header-search',

@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
 import { createTestContext } from '@delon/testing';
@@ -49,7 +50,7 @@ describe('form: widget: tag', () => {
     const res = page.getValue('a') as number[];
     expect(res.length).toBe(1);
     expect(res[0]).toBe(2);
-    expect((s.properties!.a.ui as any).checkedChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).checkedChange).toHaveBeenCalled();
   }));
 
   it('#setValue', fakeAsync(() => {
@@ -159,7 +160,7 @@ describe('form: widget: tag', () => {
         };
         page.newSchema(s).typeEvent('click', '.anticon');
 
-        const ui = s.properties!.a.ui as any;
+        const ui = s.properties!.a.ui as NzSafeAny;
         expect(ui.onClose).toHaveBeenCalled();
       }));
     });

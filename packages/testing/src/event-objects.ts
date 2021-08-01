@@ -51,8 +51,8 @@ export function createTouchEvent(type: string, pageX: number = 0, pageY: number 
 }
 
 /** Dispatches a keydown event from an element. */
-export function createKeyboardEvent(type: string, keyCode: number, target?: Element, key?: string): any {
-  const event = document.createEvent('KeyboardEvent') as any;
+export function createKeyboardEvent(type: string, keyCode: number, target?: Element, key?: string): NzSafeAny {
+  const event = document.createEvent('KeyboardEvent') as NzSafeAny;
   // Firefox does not support `initKeyboardEvent`, but supports `initKeyEvent`.
   const initEventFn = (event.initKeyEvent || event.initKeyboardEvent).bind(event);
   const originalPreventDefault = event.preventDefault;
@@ -68,7 +68,7 @@ export function createKeyboardEvent(type: string, keyCode: number, target?: Elem
   });
 
   // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
-  event.preventDefault = function (): any {
+  event.preventDefault = function (): NzSafeAny {
     Object.defineProperty(event, 'defaultPrevented', { get: () => true });
     return originalPreventDefault.apply(this, arguments);
   };

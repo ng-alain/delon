@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export function preloaderFinished(): void {
   const body = document.querySelector('body')!;
   const preloader = document.querySelector('.preloader')!;
@@ -14,7 +16,7 @@ export function preloaderFinished(): void {
     preloader.className += ' preloader-hidden-add preloader-hidden-add-active';
   }
 
-  (window as any).appBootstrap = () => {
+  (window as NzSafeAny).appBootstrap = () => {
     setTimeout(() => {
       remove();
       body.style.overflow = '';

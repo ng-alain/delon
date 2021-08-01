@@ -22,8 +22,8 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 | `[line]` | 是否显示描边 | `boolean` | `false` |
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
-| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
-| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
+| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
+| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |

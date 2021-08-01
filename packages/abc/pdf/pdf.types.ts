@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export type PdfChangeEventType =
   | 'loaded'
   | 'load-progress'
@@ -12,10 +14,10 @@ export interface PdfChangeEvent {
   type?: PdfChangeEventType;
   pi?: number;
   total?: number;
-  pdf?: any;
-  ev?: any;
+  pdf?: NzSafeAny;
+  ev?: NzSafeAny;
   progress?: { loaded: number; total: number };
-  error?: any;
+  error?: NzSafeAny;
 }
 
 export enum PdfTextLayerMode {

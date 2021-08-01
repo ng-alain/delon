@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -116,7 +117,7 @@ describe('theme: layout-default', () => {
     const lazyLoadChildrenSpy = jasmine.createSpy('lazymodule');
     const mockPreloaderFactory = (): PreloadingStrategy => {
       class DelayedPreLoad implements PreloadingStrategy {
-        preload(_route: Route, fn: () => Observable<any>): Observable<any> {
+        preload(_route: Route, fn: () => Observable<NzSafeAny>): Observable<NzSafeAny> {
           return fn().pipe(catchError(() => of(null)));
           // const routeName =
           //     route.loadChildren ? (route.loadChildren as jasmine.Spy).and.identity : 'noChildren';

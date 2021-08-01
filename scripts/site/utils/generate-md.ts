@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { highlight } from '../converters/highlight';
 import { escapeHTML, genAttr, generateSluggedId, isHeading, isStandalone } from './utils';
 

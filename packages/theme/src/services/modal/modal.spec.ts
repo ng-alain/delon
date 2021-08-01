@@ -117,7 +117,7 @@ describe('theme: ModalHelper', () => {
 })
 class TestModalComponent {
   id = '';
-  ret: any = 'true';
+  ret = 'true';
 
   constructor(private modal: NzModalRef) {
     setTimeout(() => {

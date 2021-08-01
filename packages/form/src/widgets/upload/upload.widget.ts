@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
@@ -18,7 +19,7 @@ import { SFUploadWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
-  i: any;
+  i: NzSafeAny;
   fileList: NzUploadFile[] = [];
   btnType = '';
 
@@ -46,7 +47,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       openFileDialogOnClick,
       limitFileCount
     } = this.ui;
-    const res: any = {
+    const res: NzSafeAny = {
       type: type || 'select',
       text: text || '点击上传',
       action: action || '',
@@ -98,7 +99,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     );
   }
 
-  private _getValue(file: NzUploadFile): any {
+  private _getValue(file: NzUploadFile): NzSafeAny {
     return deepGet(file.response, this.i.resReName, file.response);
   }
 

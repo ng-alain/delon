@@ -47,7 +47,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
   get layout(): Layout {
     return this.settingSrv.layout;
   }
-  data: any = {};
+  data: NzSafeAny = {};
   color: string;
   colors = DEFAULT_COLORS;
 
@@ -57,14 +57,14 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     private settingSrv: SettingsService,
     private lazy: LazyService,
     private ngZone: NgZone,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     @Optional() private directionality: Directionality
   ) {
     this.color = this.cachedData['@primary-color'] || this.DEFAULT_PRIMARY;
     this.resetData(this.cachedData, false);
   }
 
-  private get cachedData(): { [key: string]: any } {
+  private get cachedData(): { [key: string]: NzSafeAny } {
     return this.settingSrv.layout[ALAINDEFAULTVAR] || {};
   }
 
@@ -107,9 +107,9 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
       });
   }
 
-  private genVars(): any {
+  private genVars(): NzSafeAny {
     const { data, color, validKeys } = this;
-    const vars: any = {
+    const vars: { [key: string]: string } = {
       [`@primary-color`]: color
     };
     validKeys.filter(key => key !== 'primary-color').forEach(key => (vars[`@${key}`] = data[key].value));
@@ -123,7 +123,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     const msgId = msg.loading(this.compilingText, { nzDuration: 0 }).messageId;
     setTimeout(() => {
       this.loadLess().then(() => {
-        (window as any).less.modifyVars(this.genVars()).then(() => {
+        (window as NzSafeAny).less.modifyVars(this.genVars()).then(() => {
           msg.success('成功');
           msg.remove(msgId);
           ngZone.run(() => cdr.detectChanges());
@@ -144,7 +144,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     this.resetData(this.cachedData, false);
   }
 
-  setLayout(name: string, value: any): void {
+  setLayout(name: string, value: NzSafeAny): void {
     this.settingSrv.setLayout(name, value);
   }
 

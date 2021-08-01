@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 
 @Component({
@@ -14,8 +15,7 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
   `
 })
 export class DemoDrawerComponent {
-  @Input()
-  record: any;
+  @Input() record: NzSafeAny;
 
   constructor(private ref: NzDrawerRef) {}
 

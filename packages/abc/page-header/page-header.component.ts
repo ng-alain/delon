@@ -22,6 +22,7 @@ import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
@@ -69,7 +70,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   // #region fields
 
   _title: string | null;
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<NzSafeAny>;
   @Input()
   set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
@@ -92,7 +93,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() @InputBoolean() syncTitle: boolean;
   @Input() @InputBoolean() fixed: boolean;
   @Input() @InputNumber() fixedOffsetTop: number;
-  @Input() breadcrumb?: TemplateRef<any> | null = null;
+  @Input() breadcrumb?: TemplateRef<NzSafeAny> | null = null;
   @Input() @InputBoolean() recursiveBreadcrumb: boolean;
   @Input() logo?: TemplateRef<void> | null = null;
   @Input() action?: TemplateRef<void> | null = null;
@@ -131,7 +132,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
         takeUntil(this.destroy$),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed')
       )
-      .subscribe(() => this.affix.updatePosition({} as any));
+      .subscribe(() => this.affix.updatePosition({} as NzSafeAny));
 
     merge(menuSrv.change, router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
       .pipe(

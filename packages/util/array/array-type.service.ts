@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NzTreeNode } from 'ng-zorro-antd/core/tree';
 
 export interface ArrayServiceTreeToArrOptions<T extends object = any> {

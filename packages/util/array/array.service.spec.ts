@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
 import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';

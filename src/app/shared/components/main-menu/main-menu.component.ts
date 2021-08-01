@@ -13,6 +13,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { I18NService, MetaService } from '@core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
 @Component({
@@ -26,7 +28,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   @Output() readonly to = new EventEmitter<string>();
 
-  get menus(): any[] {
+  get menus(): NzSafeAny[] {
     return this.meta.menus!;
   }
 
@@ -38,7 +40,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.cdr.markForCheck());
-    this.count = this.meta.menus?.reduce((p: number, c: any) => (p += c.list.length), 0);
+    this.count = this.meta.menus?.reduce((p: number, c: NzSafeAny) => (p += c.list.length), 0);
   }
 
   ngOnDestroy(): void {

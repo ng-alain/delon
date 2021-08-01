@@ -19,7 +19,7 @@ describe('Pipe: url', () => {
   [
     { value: '', result: `` },
     { value: 'https://ng-alain.com', result: `https://ng-alain.com` }
-  ].forEach((item: any) => {
+  ].forEach((item: { value: string; result: string }) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
       fixture.detectChanges();

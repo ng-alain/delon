@@ -6,6 +6,7 @@ export const USERS = {
   // 支持值为 Object 和 Array
   'GET /users': (req: MockRequest) => {
     const total = +(req.queryString.total || 100);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = {
       list: [],
       total

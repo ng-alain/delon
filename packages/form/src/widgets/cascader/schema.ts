@@ -1,5 +1,5 @@
 import { NzCascaderExpandTrigger, NzCascaderOption, NzShowSearchOptions } from 'ng-zorro-antd/cascader';
-import { NgStyleInterface } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFUISchemaItem } from '../../schema/ui';
 import { CascaderWidget } from './cascader.widget';
@@ -102,7 +102,7 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   /**
    * 选项值变更事件
    */
-  change?: (values: any[] | null) => void;
+  change?: (values: NzSafeAny[] | null) => void;
 
   /**
    * 选项变更事件

@@ -15,6 +15,8 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
@@ -60,7 +62,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     private el: ElementRef,
     private ngZone: NgZone,
     private dom: DomSanitizer,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private cdr: ChangeDetectorRef
   ) {}
 

@@ -2,6 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { TitleService } from '@delon/theme';
@@ -14,7 +15,7 @@ export class StartupService {
   constructor(
     private injector: Injector,
     iconSrv: NzIconService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private lazy: LazyService,
     private platform: Platform
   ) {
@@ -36,7 +37,7 @@ export class StartupService {
   }
 
   lazyLoad(): void {
-    const win = this.doc.defaultView as any;
+    const win = this.doc.defaultView as NzSafeAny;
     win.hj =
       win.hj ||
       function () {
@@ -50,7 +51,7 @@ export class StartupService {
       this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`),
       this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
     ]).then(() => {
-      const dataLayer: any[] = win.dataLayer || [];
+      const dataLayer: NzSafeAny[] = win.dataLayer || [];
       dataLayer.push(['js', new Date()]);
       dataLayer.push(['config', 'UA-120202005-1']);
     });

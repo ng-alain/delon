@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export function urlBase64Decode(str: string): string {
   let output = str.replace(/-/g, '+').replace(/_/g, '/');
   switch (output.length % 4) {
@@ -27,7 +29,7 @@ function b64decode(str: string): string {
 
   for (
     // initialize result and counters
-    let bc = 0, bs: any, buffer: any, idx = 0;
+    let bc = 0, bs: NzSafeAny, buffer: NzSafeAny, idx = 0;
     // get next character
     (buffer = str.charAt(idx++));
     // character found in table? initialize bit storage and add its ascii value;
