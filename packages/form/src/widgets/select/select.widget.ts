@@ -59,7 +59,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
       showArrow: typeof showArrow !== 'boolean' ? undefined : showArrow,
-      compareWith: compareWith || ((o1: any, o2: any) => o1 === o2)
+      compareWith: compareWith || ((o1: NzSafeAny, o2: NzSafeAny) => o1 === o2)
     };
 
     const onSearch = this.ui.onSearch!;

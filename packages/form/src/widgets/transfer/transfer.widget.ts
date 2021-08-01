@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import {
   TransferCanMove,
   TransferChange,
@@ -23,7 +24,7 @@ import { SFTransferWidgetSchema } from './schema';
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   list: SFSchemaEnum[] = [];
-  i: any;
+  i!: { titles: string[]; operations: string[]; itemUnit: string; itemsUnit: string };
   private _data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {
@@ -43,7 +44,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
         formData = [formData];
       }
       list.forEach((item: SFSchemaEnum) => {
-        if (~(formData as any[]).indexOf(item.value)) {
+        if (~(formData as NzSafeAny[]).indexOf(item.value)) {
           item.direction = 'right';
         }
       });
@@ -69,7 +70,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     if (options.to === 'right') {
       this._data = this._data.concat(...options.list);
     } else {
-      this._data = this._data.filter((w: any) => options.list.indexOf(w) === -1);
+      this._data = this._data.filter((w: SFSchemaEnum) => options.list.indexOf(w as TransferItem) === -1);
     }
     if (this.ui.change) this.ui.change(options);
     this.notify();

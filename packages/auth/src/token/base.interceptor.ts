@@ -10,6 +10,8 @@ import {
 import { Injectable, Injector, Optional } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 
 import { mergeConfig } from '../auth.config';
@@ -19,7 +21,7 @@ import { ITokenModel } from './interface';
 class HttpAuthInterceptorHandler implements HttpHandler {
   constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
 
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+  handle(req: HttpRequest<NzSafeAny>): Observable<HttpEvent<NzSafeAny>> {
     return this.interceptor.intercept(req, this.next);
   }
 }
@@ -32,9 +34,9 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
   abstract isAuth(options: AlainAuthConfig): boolean;
 
-  abstract setReq(req: HttpRequest<any>, options: AlainAuthConfig): HttpRequest<any>;
+  abstract setReq(req: HttpRequest<NzSafeAny>, options: AlainAuthConfig): HttpRequest<NzSafeAny>;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
     const options = mergeConfig(this.injector.get(AlainConfigService));
     if (Array.isArray(options.ignores)) {
       for (const item of options.ignores) {
@@ -68,7 +70,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     } else {
       ToLogin(options, this.injector);
       // Interrupt Http request, so need to generate a new Observable
-      const err$ = new Observable((observer: Observer<HttpEvent<any>>) => {
+      const err$ = new Observable((observer: Observer<HttpEvent<NzSafeAny>>) => {
         const res = new HttpErrorResponse({
           url: req.url,
           headers: req.headers,
@@ -84,7 +86,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
           const chain = lastInterceptors.reduceRight(
             (_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor),
             {
-              handle: (_: HttpRequest<any>) => err$
+              handle: (_: HttpRequest<NzSafeAny>) => err$
             }
           );
           return chain.handle(req);

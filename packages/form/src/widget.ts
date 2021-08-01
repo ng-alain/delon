@@ -2,6 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injec
 import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { LocaleData } from '@delon/theme';
 
 import { ErrorData } from './errors';
@@ -86,7 +88,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     di(this.ui, 'valueChanges', this.formProperty.path, this.formProperty);
   }
 
-  get value(): any {
+  get value(): NzSafeAny {
     return this.formProperty.value;
   }
 

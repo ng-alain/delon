@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { NzFormatEmitEvent } from 'ng-zorro-antd/core/tree';
+import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/core/tree';
 
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -33,7 +33,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
       checkStrictly: toBool(ui.checkStrictly, false),
       hideUnMatched: toBool(ui.hideUnMatched, false),
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
-      displayWith: ui.displayWith || ((node: any) => node.title)
+      displayWith: ui.displayWith || ((node: NzTreeNode) => node.title)
     };
     this.asyncData = typeof ui.expandChange === 'function';
   }

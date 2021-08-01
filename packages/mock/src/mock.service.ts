@@ -22,13 +22,13 @@ export class MockService implements OnDestroy {
    *
    * 重新设置请求数据
    */
-  setData(data: any): void {
+  setData(data: NzSafeAny): void {
     this.applyMock(data);
   }
 
   // #region parse rule
 
-  private applyMock(data: any): void {
+  private applyMock(data: NzSafeAny): void {
     this.cached = [];
     try {
       this.realApplyMock(data);
@@ -37,7 +37,7 @@ export class MockService implements OnDestroy {
     }
   }
 
-  private realApplyMock(data: any): void {
+  private realApplyMock(data: NzSafeAny): void {
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
       const rules = data[key];
@@ -65,7 +65,7 @@ export class MockService implements OnDestroy {
     this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
   }
 
-  private genRule(key: string, callback: any): MockCachedRule {
+  private genRule(key: string, callback: NzSafeAny): MockCachedRule {
     let method = 'GET';
     let url = key;
 

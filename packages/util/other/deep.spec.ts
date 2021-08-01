@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { deepCopy, deepGet, deepMerge, deepMergeKey } from './deep';
 
 describe('abc: utils', () => {
@@ -56,7 +58,7 @@ describe('abc: utils', () => {
   });
 
   describe('#deepMerge', () => {
-    let original: any;
+    let original: NzSafeAny;
     it('should working', () => {
       const fn = () => {};
       const time = new Date();

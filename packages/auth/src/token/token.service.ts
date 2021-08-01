@@ -2,6 +2,8 @@ import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 
 import { mergeConfig } from '../auth.config';
@@ -49,7 +51,7 @@ export class TokenService implements ITokenService, OnDestroy {
     return this.store.set(this._options.store_key!, data);
   }
 
-  get(type?: any): any;
+  get(type?: NzSafeAny): NzSafeAny;
   get<T extends ITokenModel>(type?: new () => T): T {
     const data = this.store.get(this._options.store_key!);
     return type ? (Object.assign(new type(), data) as T) : (data as T);

@@ -100,7 +100,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
-  get btnGrid(): any {
+  get btnGrid(): NzSafeAny {
     return this._btn.render!.grid;
   }
 
@@ -113,7 +113,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   /** UI Schema */
   @Input() ui: SFUISchema;
   /** 表单默认值 */
-  @Input() formData: Record<string, unknown>;
+  @Input() formData: Record<string, NzSafeAny>;
   /**
    * 按钮
    * - 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
@@ -189,7 +189,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 表单值
    */
-  get value(): { [key: string]: any } {
+  get value(): { [key: string]: NzSafeAny } {
     return this._item;
   }
 
@@ -207,7 +207,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 根据[路径](https://ng-alain.com/form/qa#path)获取表单元素值
    */
-  getValue(path: string): any {
+  getValue(path: string): NzSafeAny {
     return this.getProperty(path)!.value;
   }
 
@@ -216,7 +216,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 根据[路径](https://ng-alain.com/form/qa#path)设置某个表单元素属性值
    */
-  setValue(path: string, value: any): this {
+  setValue(path: string, value: NzSafeAny): this {
     const item = this.getProperty(path);
     if (!item) {
       throw new Error(`Invalid path: ${path}`);
@@ -256,12 +256,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.cdr.markForCheck();
       }
     });
-    const refSchemas: Array<Observable<any> | null> = [
+    const refSchemas: Array<Observable<NzSafeAny> | null> = [
       this.aclSrv ? this.aclSrv.change : null,
       this.i18nSrv ? this.i18nSrv.change : null
     ].filter(o => o != null);
     if (refSchemas.length > 0) {
-      merge(...(refSchemas as Array<Observable<any>>))
+      merge(...(refSchemas as Array<Observable<NzSafeAny>>))
         .pipe(
           filter(() => this._inited),
           takeUntil(this.unsubscribe$)
@@ -421,7 +421,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       liveValidate: this.liveValidate,
       firstVisual: this.firstVisual,
       ...this.options.ui,
-      ...(_schema as any).ui,
+      ...(_schema as NzSafeAny).ui,
       ...this.ui['*']
     };
     if (this.onlyVisual === true) {

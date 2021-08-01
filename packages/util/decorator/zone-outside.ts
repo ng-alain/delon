@@ -11,7 +11,7 @@ type DecoratorType = (target: unknown, fn: string, descriptor: PropertyDescripto
 function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): DecoratorType {
   return (_, __, descriptor) => {
     const source = descriptor.value;
-    descriptor.value = function (...data: any[]): () => void {
+    descriptor.value = function (...data: NzSafeAny[]): () => void {
       const that = this as NzSafeAny;
       const ngZone = that[options?.ngZoneName || 'ngZone'];
       if (!ngZone) {
