@@ -1,3 +1,13 @@
+## [12.0.3](https://github.com/ng-alain/delon/compare/12.0.2...12.0.3) (2021-08-01)
+
+
+### Bug Fixes
+
+* **abc:page-header:** fix `should be run in update mode` error ([#1297](https://github.com/ng-alain/delon/issues/1297)) ([1e4ea43](https://github.com/ng-alain/delon/commit/1e4ea439adf3eb0f9cb3419a9d6b8b5ea84714d9))
+* **abc:st:** fix excel column width ([#1296](https://github.com/ng-alain/delon/issues/1296)) ([b0a9a96](https://github.com/ng-alain/delon/commit/b0a9a964085f951efe2ff58c8c853e0c178a8bd9))
+
+
+
 ## [12.0.2](https://github.com/ng-alain/delon/compare/12.0.1...12.0.2) (2021-07-26)
 
 
