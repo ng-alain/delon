@@ -14,6 +14,7 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
+import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
 import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
@@ -29,27 +30,20 @@ import { getProject } from './workspace';
 
 const TEMPLATE_FILENAME_RE = /\.template$/;
 
-export interface CommonSchema {
-  // [key: string]: any;
+export interface CommonSchema extends ComponentSchema {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
   _filesPath?: string;
   schematicName?: string;
-  name?: string;
-  path?: string;
-  module?: string;
   target?: string;
   componentName?: string;
   importModulePath?: string;
   routerModulePath?: string;
   selector?: string;
-  prefix?: string;
   withoutPrefix?: boolean;
-  project?: string;
   skipTests?: boolean;
-  flat: string;
-  inlineStyle: boolean;
-  inlineTemplate: boolean;
-  modal: boolean;
-  skipImport: boolean;
+  flat?: boolean;
+  modal?: boolean;
 }
 
 function buildSelector(schema: CommonSchema, projectPrefix: string): string {

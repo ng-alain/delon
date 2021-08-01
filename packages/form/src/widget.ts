@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injec
 import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NgClassType, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LocaleData } from '@delon/theme';
 
@@ -29,7 +29,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   firstVisual = false;
 
   @HostBinding('class')
-  get cls(): string | string[] {
+  get cls(): NgClassType {
     return this.ui.class || '';
   }
 

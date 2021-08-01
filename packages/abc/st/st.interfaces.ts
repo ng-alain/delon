@@ -3,14 +3,15 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ElementRef, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
-import { ModalOptions } from 'ng-zorro-antd/modal';
-import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
-import { NzTablePaginationType } from 'ng-zorro-antd/table';
+import type { NgClassType, NgStyleInterface } from 'ng-zorro-antd/core/types';
+import type { NzDrawerOptions } from 'ng-zorro-antd/drawer';
+import type { ModalOptions } from 'ng-zorro-antd/modal';
+import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
+import type { NzTablePaginationType } from 'ng-zorro-antd/table';
 
-import { ACLCanType } from '@delon/acl';
-import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
-import { CurrencyFormatOptions } from '@delon/util/format';
+import type { ACLCanType } from '@delon/acl';
+import type { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
+import type { CurrencyFormatOptions } from '@delon/util/format';
 
 import { STComponent } from './st.component';
 
@@ -322,7 +323,7 @@ export interface STColumn<T extends STData = any> {
    * - `text-success` 成功色
    * - `text-error` 异常色
    */
-  className?: string | string[] | Set<string> | { [klass: string]: any };
+  className?: NgClassType;
   /**
    * 合并列
    */
@@ -712,7 +713,7 @@ export interface STColumnButton<T extends STData = any> {
    * - `text-success` 成功色
    * - `text-error` 错误色
    */
-  className?: string | string[] | Set<string> | { [klass: string]: any };
+  className?: NgClassType;
 
   [key: string]: any;
 }
@@ -832,7 +833,7 @@ export interface STColumnButtonPop<T extends STData = any> {
   /**
    * Style of the popover card
    */
-  overlayStyle?: { [key: string]: string };
+  overlayStyle?: NgStyleInterface;
 
   /**
    * Text of the Cancel button

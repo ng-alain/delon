@@ -1,8 +1,8 @@
 import { TemplateRef } from '@angular/core';
 
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NgClassType, NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 
-import { ACLCanType } from '@delon/acl';
+import type { ACLCanType } from '@delon/acl';
 
 import { ErrorSchema } from '../errors';
 import type { FormProperty } from '../model/form.property';
@@ -68,7 +68,7 @@ export interface SFRenderSchema {
   /**
    * 自定义类，等同 `[ngClass]` 值
    */
-  class?: string | string[];
+  class?: NgClassType;
   /**
    * 元素组件大小
    */
@@ -102,8 +102,8 @@ export interface SFOptionalHelp {
   trigger?: SFTrigger;
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
-  overlayClassName?: string;
-  overlayStyle?: { [key: string]: string };
+  overlayClassName?: NgClassType;
+  overlayStyle?: NgStyleInterface;
 }
 
 export interface SFHorizontalLayoutSchema {

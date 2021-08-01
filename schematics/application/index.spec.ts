@@ -45,12 +45,10 @@ describe('NgAlainSchematic: application', () => {
     });
     describe('default language', () => {
       it(`with use zh`, async () => {
-        spyOn(LANG, 'getLangData').and.returnValue(
-          JSON.stringify({
-            key1: 'Key1',
-            key2: 'KEY2'
-          })
-        );
+        spyOn(LANG, 'getLangData').and.returnValue({
+          key1: 'Key1',
+          key2: 'KEY2'
+        });
         const baseRunner = createNgRunner();
         const workspaceTree = await baseRunner
           .runSchematicAsync('workspace', {
@@ -100,12 +98,12 @@ describe('NgAlainSchematic: application', () => {
 
         const res = tree.readContent('/demo.html');
         expect(res).toBe(`
-        {{ status ? 'key1' : 'key2' }}
+        {{ status ? 'Key1' : 'KEY2' }}
         {{ status ? 'menu.fullscreen.exit' : 'menu.fullscreen' }}
-        [placeholder]="'key1'">
-        <nz-tab [nzTitle]="'key1'">
+        [placeholder]="'Key1'">
+        <nz-tab [nzTitle]="'Key1'">
         Please enter mobile number!
-        <button>{{ count ? count + 's' : 'key1'}}</button>
+        <button>{{ count ? count + 's' : 'Key1'}}</button>
         `);
       });
     });
