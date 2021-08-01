@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSliderComponent } from 'ng-zorro-antd/slider';
 
 import { createTestContext } from '@delon/testing';
@@ -93,7 +94,7 @@ describe('form: widget: slider', () => {
     spyOn(comp, '_formatter');
     page.time();
     expect(comp._formatter).toHaveBeenCalled();
-    expect((s.properties!.a.ui as any).formatter).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).formatter).toHaveBeenCalled();
   }));
 
   it('#afterChange', fakeAsync(() => {
@@ -112,6 +113,6 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s).time();
     getWidget()._afterChange(1);
-    expect((s.properties!.a.ui as any).afterChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).afterChange).toHaveBeenCalled();
   }));
 });

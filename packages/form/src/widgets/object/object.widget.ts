@@ -16,9 +16,9 @@ import { SFObjectWidgetRenderType } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
-  grid: any;
+  grid: NzSafeAny;
   type: SFObjectWidgetRenderType = 'default';
-  list: any[] = [];
+  list: NzSafeAny[] = [];
   title: string;
   showExpand = true;
   expand = true;

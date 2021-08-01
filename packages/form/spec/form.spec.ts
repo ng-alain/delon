@@ -58,7 +58,7 @@ describe('form: component', () => {
       it('should throw error when parent is not object or array', () => {
         expect(() => {
           const factory = context.comp['formPropertyFactory'] as FormPropertyFactory;
-          factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
+          factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as NzSafeAny, 'a');
         }).toThrowError(`Instanciation of a FormProperty with an unknown parent type: invalid`);
       });
 
@@ -67,7 +67,7 @@ describe('form: component', () => {
           context.schema = {
             properties: {
               a: {
-                type: 'aa' as any
+                type: 'aa' as NzSafeAny
               }
             }
           };
@@ -332,7 +332,7 @@ describe('form: component', () => {
       });
 
       describe('#autocomplete', () => {
-        [null, 'on', 'off'].forEach((type: any) => {
+        [null, 'on', 'off'].forEach((type: NzSafeAny) => {
           it(`with [${type}]`, () => {
             context.autocomplete = type;
             fixture.detectChanges();
@@ -656,7 +656,7 @@ describe('form: component', () => {
         };
         page.newSchema(s);
         expect(page.getProperty('/a').errors![0].message).toBe('A');
-        expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
+        expect((s.properties!.a.ui as NzSafeAny).errors.required).toHaveBeenCalled();
       });
 
       it('should be i18n', () => {
@@ -794,7 +794,7 @@ describe('form: component', () => {
       spyOn(i18n, 'fanyi').and.callFake(((key: string) => {
         if (key === 'null') return null;
         return lang === 'en' ? key : `zh-${key}`;
-      }) as any);
+      }) as NzSafeAny);
       const s: SFSchema = {
         properties: {
           a: {

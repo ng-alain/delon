@@ -41,7 +41,7 @@ export function deepCopy<T extends { [key: string]: NzSafeAny } = NzSafeAny>(obj
  *  - `false` 表示会合并整个数组（将旧数据与新数据合并成新数组）
  * @param objects 要合并的对象
  */
-export function deepMergeKey(original: unknown, arrayProcessMethod: boolean, ...objects: any[]): NzSafeAny {
+export function deepMergeKey(original: unknown, arrayProcessMethod: boolean, ...objects: NzSafeAny[]): NzSafeAny {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
   const isObject = (v: unknown) => typeof v === 'object' || typeof v === 'function';

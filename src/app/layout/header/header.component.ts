@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 
 import { I18NService, MobileService } from '@core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
@@ -58,7 +59,7 @@ export class HeaderComponent implements AfterViewInit {
     private router: Router,
     private msg: NzMessageService,
     private mobileSrv: MobileService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private cdr: ChangeDetectorRef,
     public rtl: RTLService,
     private layout: LayoutComponent

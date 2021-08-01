@@ -163,7 +163,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     private lazySrv: LazyService,
     private platform: Platform,
     private _el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: any,
+    @Optional() @Inject(DOCUMENT) private doc: NzSafeAny,
     private cdr: ChangeDetectorRef
   ) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;

@@ -2,6 +2,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { EllipsisComponent } from './ellipsis.component';
@@ -87,7 +88,7 @@ describe('abc: ellipsis', () => {
       });
       describe('when not support line clamp', () => {
         beforeEach(fakeAsync(() => {
-          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as any);
+          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as NzSafeAny);
           page.comp['isSupportLineClamp'] = false;
           context.lines = 1;
           page.tick();

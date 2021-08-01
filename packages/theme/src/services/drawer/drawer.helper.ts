@@ -66,7 +66,7 @@ export class DrawerHelper {
       | Type<NzSafeAny>,
     params?: NzSafeAny,
     options?: DrawerHelperOptions
-  ): Observable<any> {
+  ): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'md',
@@ -80,7 +80,7 @@ export class DrawerHelper {
       },
       options
     );
-    return new Observable((observer: Observer<any>) => {
+    return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, footer, footerHeight, drawerOptions } = options as DrawerHelperOptions;
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
@@ -105,7 +105,7 @@ export class DrawerHelper {
       }
 
       const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: any) => {
+      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -132,7 +132,7 @@ export class DrawerHelper {
       | Type<NzSafeAny>,
     params?: NzSafeAny,
     options?: DrawerHelperOptions
-  ): Observable<any> {
+  ): Observable<NzSafeAny> {
     const drawerOptions = {
       nzMaskClosable: false,
       ...(options && options.drawerOptions)

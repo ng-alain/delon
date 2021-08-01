@@ -1,7 +1,7 @@
 import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
 
 export interface Schema extends ComponentSchema {
-  [key: string]: any;
+  // [key: string]: any;
 
   /**
    * 指定模板名称 (Specifies template name)
@@ -19,4 +19,8 @@ export interface Schema extends ComponentSchema {
    * 指定是否使用模态框 (Specifies using modal mode)
    */
   modal?: boolean;
+
+  _tplDir: string;
+  _filesPath: string;
+  extraArgs: Record<string, unknown>;
 }

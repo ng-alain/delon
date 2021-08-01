@@ -12,6 +12,8 @@ import {
 import type { Chart, Event, Types } from '@antv/g2';
 import { format } from 'date-fns';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -31,7 +33,7 @@ export interface G2TimelineData {
   y4?: number;
   /** 指标5数据 */
   y5?: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2TimelineMap {
@@ -99,7 +101,7 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -179,7 +181,7 @@ export class G2TimelineComponent extends G2BaseComponent {
 
     // border
     _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap as any)[`y${idx + 1}`]).size(borderWidth);
+      v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
     });
     _chart.height = height;
     _chart.padding = padding;

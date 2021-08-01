@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable } from '@angular/core';
 
-import { ALAIN_I18N_TOKEN, Menu } from '@delon/theme';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
@@ -16,7 +17,7 @@ import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { META as UtilMeta } from '../routes/gen/util/meta';
 import { I18NService } from './i18n/service';
 
-const FULLMETAS: Meta[] = [
+const FULLMETAS = [
   DocsMeta,
   ComponentsMeta,
   AuthMeta,
@@ -28,13 +29,15 @@ const FULLMETAS: Meta[] = [
   FormMeta,
   CliMeta,
   ThemeMeta
-] as any;
+] as Meta[];
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
   private _platMenus: any[];
   private _menus: any[] | null;
   private _type: string;
+  private _data: any;
+  private _isPages = false;
   next: any;
   prev: any;
 
@@ -53,35 +56,12 @@ export class MetaService {
     }
   }
 
-  private _data: any;
-  private _isPages = false;
-
-  private getCatgory(url: string): Menu | undefined {
-    const arr = url.split('?')[0].split('/');
-    if (arr.length <= 2) return;
-
-    let categoryName = arr[1].toLowerCase().trim();
-    let category = FULLMETAS.find(w => w.name === categoryName);
-    if (~categoryName.indexOf('-')) {
-      categoryName = categoryName.split('-')[0];
-      category = FULLMETAS.find(w => w.name === categoryName);
-      this._isPages = !!category;
-    } else {
-      this._isPages = false;
-    }
-    return category;
-  }
-
-  private getPageName(url: string): string {
-    return url.split('?')[0].split('/')[2].toLowerCase().trim();
-  }
-
   /** `true` 表示需要跳转404 */
   set(url: string): boolean {
     const category = this.getCatgory(url);
     if (!category) return false;
     const name = this.getPageName(url);
-    const data = category.list!.find((w: { name: string }) => w.name === name) || null;
+    const data = category.list!.find(w => w.name === name) || null;
     if (!data) return true;
     this._data = {
       ...data.meta![this.i18n.defaultLang],
@@ -130,6 +110,26 @@ export class MetaService {
     this._menus = null;
   }
 
+  private getCatgory(url: string): Meta | undefined {
+    const arr = url.split('?')[0].split('/');
+    if (arr.length <= 2) return;
+
+    let categoryName = arr[1].toLowerCase().trim();
+    let category = FULLMETAS.find(w => w.name === categoryName);
+    if (~categoryName.indexOf('-')) {
+      categoryName = categoryName.split('-')[0];
+      category = FULLMETAS.find(w => w.name === categoryName);
+      this._isPages = !!category;
+    } else {
+      this._isPages = false;
+    }
+    return category;
+  }
+
+  private getPageName(url: string): string {
+    return url.split('?')[0].split('/')[2].toLowerCase().trim();
+  }
+
   private getType(url: string): string {
     const category = this.getCatgory(url);
     return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
@@ -152,15 +152,15 @@ export class MetaService {
     if (!category) return;
 
     // todo: support level 2
-    const group: any[] = category.types!.map((item: any, index: number) => {
+    const group: any[] = category.types!.map((item, index: number) => {
       return {
         index,
         title: item[this.i18n.currentLang] || item[this.i18n.defaultLang],
         list: []
       };
     });
-    category.list!.forEach((item: any) => {
-      const meta = item.meta[this.i18n.currentLang] || item.meta[this.i18n.defaultLang];
+    category.list!.forEach(item => {
+      const meta = item.meta![this.i18n.currentLang] || item.meta![this.i18n.defaultLang];
       let typeIdx = category.types!.findIndex(
         (w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
       );
@@ -176,7 +176,7 @@ export class MetaService {
       }
       const entry: any = {
         url: `${meta.url || item.route || `/${category.name}/${item.name}`}/${this.i18n.zone}`,
-        title: this.i18n.get(meta.title),
+        title: this.i18n.get(meta.title!),
         subtitle: meta.subtitle,
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,

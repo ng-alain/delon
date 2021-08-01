@@ -1,7 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export const LANGS_CONFIG = [
+export interface LangConfig {
+  langs: string[];
+  zorro: string;
+  delon: string;
+  fileName?: string;
+}
+
+export const LANGS_CONFIG: LangConfig[] = [
   {
     langs: ['zh-Hans', 'zh-cn', 'zh-Hans-CN', 'zh'],
     zorro: 'zh_CN',
@@ -26,11 +33,11 @@ export const LANGS_CONFIG = [
   { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' }
 ];
 
-export function getLangConfig(lang: string): any {
+export function getLangConfig(lang: string): LangConfig {
   return LANGS_CONFIG.find(w => w.langs.includes(lang));
 }
 
-export function getLangData(lang: string): any {
+export function getLangData(lang: string): Record<string, unknown> | null {
   let langCog = getLangConfig(lang);
   if (!langCog || !langCog.fileName) {
     langCog = getLangConfig('zh');

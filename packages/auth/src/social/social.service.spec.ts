@@ -15,7 +15,7 @@ const mockRouter = {
   url: '',
   navigate: jasmine.createSpy('navigate'),
   navigateByUrl: jasmine.createSpy('navigateByUrl'),
-  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
+  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: NzSafeAny) => {
     return new DefaultUrlSerializer().parse(value);
   })
 };
@@ -69,7 +69,7 @@ describe('auth: social.service', () => {
   afterEach(() => srv.ngOnDestroy());
 
   describe('#login', () => {
-    [MockAuth0].forEach((item: any) => {
+    [MockAuth0].forEach((item: NzSafeAny) => {
       it(`${item.type} via href`, () => {
         srv.login(item.url, '/', { type: 'href' });
         const ret = TestBed.inject(DOCUMENT).location.href;
@@ -154,10 +154,10 @@ describe('auth: social.service', () => {
         be: 'throw'
       },
       { summary: 'via ITokenModel', url: swtData, be: swtData }
-    ].forEach((item: any) => {
+    ].forEach((item: NzSafeAny) => {
       it(`${item.summary}`, () => {
         if (item.be === 'throw') {
-          const router = TestBed.inject<Router>(Router) as any;
+          const router = TestBed.inject<Router>(Router) as NzSafeAny;
           router.url = item.url;
           expect(() => {
             srv.callback(null);

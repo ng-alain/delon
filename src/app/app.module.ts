@@ -33,7 +33,7 @@ import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
 
-export function StartupServiceFactory(startupService: StartupService): () => Promise<any> {
+export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
 }
 

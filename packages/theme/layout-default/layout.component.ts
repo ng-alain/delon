@@ -22,6 +22,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { SettingsService } from '@delon/theme';
@@ -67,7 +68,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     private settings: SettingsService,
     private el: ElementRef,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private doc: any
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {

@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
 
@@ -222,7 +224,7 @@ describe('form: schema', () => {
           { '*': { optionalHelp: { text: '', placement: 'bottomRight' } } }
         );
         const prop = page.getProperty('/name');
-        expect((prop!.ui!.optionalHelp as any).placement!).toBe(`bottomRight`);
+        expect((prop!.ui!.optionalHelp as NzSafeAny).placement!).toBe(`bottomRight`);
         discardPeriodicTasks();
       }));
     });

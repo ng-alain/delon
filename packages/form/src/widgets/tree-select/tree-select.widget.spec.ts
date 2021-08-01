@@ -2,6 +2,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -99,7 +101,7 @@ describe('form: widget: tree-select', () => {
       .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
-    expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
   }));
 
   it('#expandChange', fakeAsync(() => {
@@ -128,6 +130,6 @@ describe('form: widget: tree-select', () => {
       .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
-    expect((s.properties!.a.ui as any).expandChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).expandChange).toHaveBeenCalled();
   }));
 });

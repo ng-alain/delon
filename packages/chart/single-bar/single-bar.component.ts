@@ -38,13 +38,13 @@ export class G2SingleBarComponent extends G2BaseComponent {
   @Input() @InputBoolean() line = false;
   @Input() format: (value: number, item: NzSafeAny, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
-  @Input() textStyle: any = { fontSize: 12, color: '#595959' };
+  @Input() textStyle: { [key: string]: NzSafeAny } = { fontSize: 12, color: '#595959' };
 
   // #endregion
 
   install(): void {
     const { el, height, padding, textStyle, line, format, theme, min, max, plusColor, minusColor, barSize } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,

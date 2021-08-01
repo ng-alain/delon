@@ -22,7 +22,7 @@ describe('cache: service', () => {
   }
 
   beforeEach(() => {
-    let data: any = {};
+    let data: NzSafeAny = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;
@@ -39,7 +39,7 @@ describe('cache: service', () => {
   });
 
   function genModule(options?: AlainCacheConfig): void {
-    const providers: any[] = [];
+    const providers: NzSafeAny[] = [];
     if (options) {
       providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
     }
@@ -53,7 +53,7 @@ describe('cache: service', () => {
 
   it('should be specify a global config', () => {
     genModule({ expire: 100, type: 'm' });
-    const saveSpy = spyOn(srv as any, 'save');
+    const saveSpy = spyOn(srv as NzSafeAny, 'save');
     srv.set(KEY, 'a');
     const args = saveSpy.calls.first().args;
     expect(args[0]).toBe('m');
@@ -194,7 +194,7 @@ describe('cache: service', () => {
       });
       it('should be return value via http request', done => {
         const http = TestBed.inject(HttpClient);
-        srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
+        srv.tryGet(KEY, http.get('/')).subscribe((ret: NzSafeAny) => {
           expect(ret.a).toBe(1);
           done();
         });

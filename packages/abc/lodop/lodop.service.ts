@@ -16,7 +16,7 @@ export class LodopService implements OnDestroy {
   private _lodop: Lodop | null = null;
   private _init = new Subject<LodopResult>();
   private _events = new Subject<LodopPrintResult>();
-  private printBuffer: any[] = [];
+  private printBuffer: NzSafeAny[] = [];
 
   constructor(private scriptSrv: LazyService, configSrv: AlainConfigService) {
     this.defaultConfig = configSrv.merge('lodop', {
@@ -155,7 +155,7 @@ export class LodopService implements OnDestroy {
       if (!res) return;
       const fn = this._lodop![res[1]];
       if (fn) {
-        let arr: any[] | null = null;
+        let arr: NzSafeAny[] | null = null;
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();

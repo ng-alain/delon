@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 
 import { AlainI18nBaseService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
@@ -28,12 +29,12 @@ export class I18NService extends AlainI18nBaseService {
     if (!this.platform.isBrowser) {
       return undefined;
     }
-    const winNav: any = window.navigator;
+    const winNav: NzSafeAny = window.navigator;
     if (typeof window === 'undefined' || typeof winNav === 'undefined') {
       return undefined;
     }
 
-    let browserLang: any = winNav.languages ? winNav.languages[0] : null;
+    let browserLang: NzSafeAny = winNav.languages ? winNav.languages[0] : null;
     browserLang = browserLang || winNav.language || winNav.browserLanguage || winNav.userLanguage;
 
     if (browserLang.indexOf('-') !== -1) {
@@ -55,7 +56,7 @@ export class I18NService extends AlainI18nBaseService {
     if (emit !== false) this._change$.next(lang);
   }
 
-  getLangs(): any[] {
+  getLangs(): Array<{ code: string; text: string }> {
     return this._langs;
   }
 
@@ -71,7 +72,7 @@ export class I18NService extends AlainI18nBaseService {
     return ['zh-CN', 'en-US'];
   }
 
-  get(i: any): string {
+  get(i: string | { [key: string]: string } | null): string {
     if (i == null) return '';
     return typeof i === 'string' ? i : i[this.currentLang] || i[this.defaultLang] || '';
   }

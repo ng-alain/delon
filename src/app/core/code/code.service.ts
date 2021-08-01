@@ -136,7 +136,7 @@ export class CodeService {
     return res;
   }
 
-  constructor(private appSrv: AppService, @Inject(DOCUMENT) document: any) {
+  constructor(private appSrv: AppService, @Inject(DOCUMENT) document: NzSafeAny) {
     this.document = document;
   }
 

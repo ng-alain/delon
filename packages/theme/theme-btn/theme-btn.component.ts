@@ -16,6 +16,8 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService } from '@delon/util/config';
 
 export interface ThemeBtnType {
@@ -51,7 +53,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private configSrv: AlainConfigService,
     private platform: Platform,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     @Optional() private directionality: Directionality,
     @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string
   ) {}

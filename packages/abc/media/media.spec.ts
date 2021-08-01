@@ -91,7 +91,7 @@ describe('abc: media', () => {
       return this;
     }
 
-    get player(): any {
+    get player(): NzSafeAny {
       return context.comp.player;
     }
 

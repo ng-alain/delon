@@ -17,14 +17,14 @@ import { _HttpClient } from '@delon/theme';
 })
 export class DownFileDirective {
   private isFileSaverSupported = true;
-  @Input('http-data') httpData: any;
-  @Input('http-body') httpBody: any;
+  @Input('http-data') httpData: NzSafeAny;
+  @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
   @Input('http-url') httpUrl: string;
   @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
   @Input() pre: (ev: MouseEvent) => Promise<boolean>;
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
-  @Output() readonly error = new EventEmitter<any>();
+  @Output() readonly error = new EventEmitter<NzSafeAny>();
 
   private getDisposition(data: string | null): NzSafeAny {
     const arr: Array<Record<string, string>> = (data || '')

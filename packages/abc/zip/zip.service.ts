@@ -11,7 +11,7 @@ import { LazyResult, LazyService } from '@delon/util/other';
 
 import { ZipSaveOptions } from './zip.types';
 
-declare var JSZip: any;
+declare var JSZip: NzSafeAny;
 
 @Injectable({ providedIn: 'root' })
 export class ZipService {
@@ -33,14 +33,14 @@ export class ZipService {
     return this.lazy.load([this.cog.url!].concat(this.cog.utils!));
   }
 
-  private check(zip: any): void {
+  private check(zip: NzSafeAny): void {
     if (!zip) throw new Error('get instance via `ZipService.create()`');
   }
 
   /** 解压 */
   @ZoneOutside()
-  read(fileOrUrl: File | string, options?: any): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  read(fileOrUrl: File | string, options?: NzSafeAny): Promise<NzSafeAny> {
+    return new Promise<NzSafeAny>((resolve, reject) => {
       const resolveCallback = (data: NzSafeAny) => {
         this.ngZone.run(() => resolve(data));
       };
@@ -51,7 +51,7 @@ export class ZipService {
             (res: ArrayBuffer) => {
               JSZip.loadAsync(res, options).then((ret: NzSafeAny) => resolveCallback(ret));
             },
-            (err: any) => {
+            (err: NzSafeAny) => {
               reject(err);
             }
           );
@@ -59,7 +59,7 @@ export class ZipService {
         }
         // from file
         const reader: FileReader = new FileReader();
-        reader.onload = (e: any) => {
+        reader.onload = (e: NzSafeAny) => {
           JSZip.loadAsync(e.target.result, options).then((ret: NzSafeAny) => resolveCallback(ret));
         };
         reader.readAsBinaryString(fileOrUrl as File);
@@ -68,10 +68,10 @@ export class ZipService {
   }
 
   /** 创建 Zip 实例，用于创建压缩文件 */
-  create(): Promise<any> {
-    return new Promise<any>(resolve => {
+  create(): Promise<NzSafeAny> {
+    return new Promise<NzSafeAny>(resolve => {
       this.init().then(() => {
-        const zipFile: any = new JSZip();
+        const zipFile: NzSafeAny = new JSZip();
         resolve(zipFile);
       });
     });
@@ -84,7 +84,7 @@ export class ZipService {
    * @param path Zip 路径，例如： `text.txt`、`txt/hi.txt`
    * @param url URL 地址
    */
-  pushUrl(zip: any, path: string, url: string): Promise<void> {
+  pushUrl(zip: NzSafeAny, path: string, url: string): Promise<void> {
     this.check(zip);
     return new Promise<void>((resolve, reject) => {
       this.http.request('GET', url, { responseType: 'arraybuffer' }).subscribe(
@@ -92,7 +92,7 @@ export class ZipService {
           zip.file(path, res);
           resolve();
         },
-        (error: any) => {
+        (error: NzSafeAny) => {
           reject({ url, error });
         }
       );
@@ -105,7 +105,7 @@ export class ZipService {
    * @param zip zip 对象，务必通过 `create()` 构建
    * @param options 额外参数，
    */
-  save(zip: any, options?: ZipSaveOptions): Promise<void> {
+  save(zip: NzSafeAny, options?: ZipSaveOptions): Promise<void> {
     this.check(zip);
     const opt = { ...options } as ZipSaveOptions;
     return new Promise<void>((resolve, reject) => {

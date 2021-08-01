@@ -346,14 +346,14 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 刷新，触发一个 refresh 类型事件
    */
-  refresh(data?: any): void {
+  refresh(data?: NzSafeAny): void {
     this._cachedChange.next({ active: 'refresh', data });
   }
   // #endregion
 
   // #region privates
 
-  private destroy(_handle: any): void {
+  private destroy(_handle: NzSafeAny): void {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
   }
 
@@ -413,7 +413,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 存储
    */
-  store(_snapshot: ActivatedRouteSnapshot, _handle: any): void {
+  store(_snapshot: ActivatedRouteSnapshot, _handle: NzSafeAny): void {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
     const isAdd = idx === -1;
@@ -521,7 +521,7 @@ export class ReuseTabService implements OnDestroy {
   }
 
   private get isDisabledInRouter(): boolean {
-    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as any);
+    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as NzSafeAny);
     return routerConfig.scrollPositionRestoration === 'disabled';
   }
 

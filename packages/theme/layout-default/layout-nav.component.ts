@@ -20,6 +20,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { Menu, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
@@ -75,8 +77,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private doc: any,
-    @Inject(WINDOW) private win: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
+    @Inject(WINDOW) private win: NzSafeAny,
     @Optional() private directionality: Directionality
   ) {}
 

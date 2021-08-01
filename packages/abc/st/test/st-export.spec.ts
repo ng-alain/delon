@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { XlsxService } from '../../xlsx/xlsx.service';
 import { XlsxExportOptions } from '../../xlsx/xlsx.types';
 import { STExport } from '../st-export';
@@ -86,7 +88,7 @@ describe('abc: table: export', () => {
     });
 
     it('should be export a excel', async () => {
-      const ret: any = await srv.export({
+      const ret: NzSafeAny = await srv.export({
         data,
         columens: columns,
         sheetname: 'sn',
@@ -102,7 +104,7 @@ describe('abc: table: export', () => {
     });
 
     it('should auto specify sheet name [Sheet1]', async () => {
-      const ret: any = await srv.export({
+      const ret: NzSafeAny = await srv.export({
         data,
         columens: columns,
         filename: 'filename.xlsx',
@@ -113,7 +115,7 @@ describe('abc: table: export', () => {
     });
 
     it('should be generate empty sheet', async () => {
-      const ret: any = await srv.export({
+      const ret: NzSafeAny = await srv.export({
         data: [],
         columens: []
       });
@@ -122,7 +124,7 @@ describe('abc: table: export', () => {
     });
 
     it('should be _values data first', async () => {
-      const ret: any = await srv.export({
+      const ret: NzSafeAny = await srv.export({
         data: [{ i: 1, _values: [{ text: '2' }] }],
         columens: [{ title: 'i', index: 'i' }]
       });
@@ -132,7 +134,7 @@ describe('abc: table: export', () => {
 
     it('should be width', async () => {
       const width = 10;
-      const ret: any = await srv.export({
+      const ret: NzSafeAny = await srv.export({
         data: [{ i: 1, _values: [{ text: '2' }] }],
         columens: [{ title: 'i', index: 'i', _width: width } as _STColumn]
       });

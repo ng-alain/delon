@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line import/no-unassigned-import
 import 'zone.js/dist/zone-node';
 import { APP_BASE_HREF } from '@angular/common';

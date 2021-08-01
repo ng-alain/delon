@@ -15,7 +15,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -62,7 +62,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
     }
   }
   @Input() @InputNumber() maxLength = 0;
-  @Input() excessItemsStyle: { [klass: string]: NzSafeAny };
+  @Input() excessItemsStyle: NgStyleInterface;
 
   constructor(private cdr: ChangeDetectorRef, @Optional() private directionality: Directionality) {}
 

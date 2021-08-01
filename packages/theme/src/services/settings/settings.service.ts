@@ -2,6 +2,8 @@ import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { App, Layout, SettingsNotify, User } from './types';
 
 export interface SettingsKeys {
@@ -24,14 +26,14 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
 
   constructor(private platform: Platform, @Inject(ALAIN_SETTING_KEYS) private KEYS: SettingsKeys) {}
 
-  getData(key: string): any {
+  getData(key: string): NzSafeAny {
     if (!this.platform.isBrowser) {
       return null;
     }
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
-  setData(key: string, value: any): void {
+  setData(key: string, value: NzSafeAny): void {
     if (!this.platform.isBrowser) {
       return;
     }
@@ -75,14 +77,14 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     return this.notify$.asObservable();
   }
 
-  setLayout(name: string | L, value?: any): boolean {
+  setLayout(name: string | L, value?: NzSafeAny): boolean {
     if (typeof name === 'string') {
       (this.layout as Layout)[name] = value;
     } else {
       this._layout = name;
     }
     this.setData(this.KEYS.layout, this._layout);
-    this.notify$.next({ type: 'layout', name, value } as any);
+    this.notify$.next({ type: 'layout', name, value } as NzSafeAny);
     return true;
   }
 

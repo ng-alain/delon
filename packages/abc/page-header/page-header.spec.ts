@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { createTestContext } from '@delon/testing';
 import {
@@ -35,7 +36,7 @@ describe('abc: page-header', () => {
   let context: TestComponent;
   let router: Router;
 
-  function genModule(other: { template?: string; providers?: any[]; created?: boolean }): void {
+  function genModule(other: { template?: string; providers?: NzSafeAny[]; created?: boolean }): void {
     const imports = [
       RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
       PageHeaderModule,
@@ -67,7 +68,7 @@ describe('abc: page-header', () => {
     }
   }
 
-  function checkValue(cls: string, value: any): void {
+  function checkValue(cls: string, value: NzSafeAny): void {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
     expect(el.textContent!.trim()).toBe(value);
   }

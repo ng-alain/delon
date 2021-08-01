@@ -1,9 +1,11 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface ZipWriteOptions {
   /** save file name, default: `download.zip` */
   filename?: string;
-  options?: any;
+  options?: NzSafeAny;
   /** The optional function called on each internal update with the metadata. */
-  update?: (metadata: any) => void;
+  update?: (metadata: NzSafeAny) => void;
   /** triggers when saveas */
   callback?: () => void;
 }
@@ -16,7 +18,7 @@ export interface ZipSaveOptions {
   /**
    * JSZip [generateAsync](https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html) 方法的 `options` 选项
    */
-  options?: any;
+  options?: NzSafeAny;
   /**
    * JSZip [generateAsync](https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html) 方法的 `onUpdate` 回调
    */

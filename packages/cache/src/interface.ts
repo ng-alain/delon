@@ -1,5 +1,7 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface ICache {
-  v: any;
+  v: NzSafeAny;
   /** 过期时间戳，`0` 表示不过期 */
   e: number;
 }
@@ -16,5 +18,5 @@ export type CacheNotifyType = 'set' | 'remove' | 'expire';
 
 export interface CacheNotifyResult {
   type: CacheNotifyType;
-  value?: any;
+  value?: NzSafeAny;
 }

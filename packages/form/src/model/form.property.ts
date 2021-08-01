@@ -1,6 +1,8 @@
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainSFConfig } from '@delon/util/config';
 
 import { SF_SEQ } from '../const';
@@ -49,7 +51,7 @@ export abstract class FormProperty {
     if (parent) {
       this._root = parent.root;
     } else {
-      this._root = this as any;
+      this._root = this as NzSafeAny;
     }
     this.path = path;
   }

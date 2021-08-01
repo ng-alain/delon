@@ -13,7 +13,7 @@ import { MenuService } from '../menu/menu.service';
 import { TitleService } from './title.service';
 
 describe('Service: Title', () => {
-  let getPathByUrlData: any;
+  let getPathByUrlData: NzSafeAny;
   class TestTitleService {
     setTitle = jasmine.createSpy('reset');
   }
@@ -25,7 +25,7 @@ describe('Service: Title', () => {
   }
 
   class TestDocument {
-    querySelector(): any {
+    querySelector(): NzSafeAny {
       return {
         childNodes: [],
         firstChild: {
@@ -41,8 +41,8 @@ describe('Service: Title', () => {
   const alain = 'Alain';
   const notPageName = 'Not Page Name';
 
-  function genModule(providers: any[] = [], loadI18n: boolean = true): void {
-    const i18nProvider: any[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
+  function genModule(providers: NzSafeAny[] = [], loadI18n: boolean = true): void {
+    const i18nProvider: NzSafeAny[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
     TestBed.configureTestingModule({
       imports: [AlainThemeModule, RouterTestingModule],
       providers: [TitleService, MenuService, { provide: Title, useClass: TestTitleService }, ...i18nProvider].concat(

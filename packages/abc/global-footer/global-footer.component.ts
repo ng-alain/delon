@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { WINDOW } from '@delon/util/token';
 
 import { GlobalFooterItemComponent } from './global-footer-item.component';
@@ -52,7 +54,7 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WINDOW) private win: any,
+    @Inject(WINDOW) private win: NzSafeAny,
     private dom: DomSanitizer,
     @Optional() private directionality: Directionality
   ) {}

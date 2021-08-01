@@ -15,6 +15,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
 
@@ -58,8 +59,8 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   get shortcut(): AlainDateRangePickerShortcut | null {
     return this._shortcut;
   }
-  @Input() ngModelEnd: any;
-  @Output() readonly ngModelEndChange = new EventEmitter<any>();
+  @Input() ngModelEnd: NzSafeAny;
+  @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
     return this.nativeComp.datePicker;
@@ -126,7 +127,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   }
 
   private cd(): void {
-    (this.dp as any).cdr.markForCheck();
+    (this.dp as NzSafeAny).cdr.markForCheck();
   }
 
   private overrideNative(): void {
@@ -159,7 +160,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       return;
     }
     const { enabled, list } = this._shortcut;
-    let extraFooter: TemplateRef<any> | undefined;
+    let extraFooter: TemplateRef<NzSafeAny> | undefined;
     if (!this.nativeComp || !enabled) {
       extraFooter = undefined;
     } else {

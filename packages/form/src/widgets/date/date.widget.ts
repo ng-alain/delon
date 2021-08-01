@@ -25,7 +25,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   mode: string;
   displayValue: Date | Date[] | null = null;
   displayFormat: string;
-  i: any;
+  i!: { allowClear: boolean; showToday: boolean };
 
   ngOnInit(): void {
     const { mode, end, displayFormat, allowClear, showToday } = this.ui;
@@ -109,7 +109,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     if (this.ui.onOpenChange) this.ui.onOpenChange(status);
   }
 
-  _ok(value: any): void {
+  _ok(value: NzSafeAny): void {
     if (this.ui.onOk) this.ui.onOk(value);
   }
 

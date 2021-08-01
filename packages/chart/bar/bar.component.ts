@@ -12,16 +12,18 @@ import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 import type { Chart, Event } from '@antv/g2';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 const TITLE_HEIGHT = 41;
 
 export interface G2BarData {
-  x: any;
-  y: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
   color?: string | null;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2BarClickItem {
@@ -71,7 +73,7 @@ export class G2BarComponent extends G2BaseComponent {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container,
       autoFit: true,
       height: this.getHeight(),

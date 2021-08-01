@@ -3,6 +3,8 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
 
 const OPENTYPE = '_delonAuthSocialType';
@@ -13,12 +15,12 @@ export type SocialOpenType = 'href' | 'window';
 @Injectable()
 export class SocialService implements OnDestroy {
   private _win: Window | null;
-  private _winTime: any;
+  private _winTime: NzSafeAny;
   private observer: Observer<ITokenModel | null>;
 
   constructor(
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private router: Router
   ) {}
 

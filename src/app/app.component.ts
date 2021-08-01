@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { I18NService, MetaService, MobileService } from '@core';
+import { I18NService, LangType, MetaService, MobileService } from '@core';
 
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 
@@ -67,7 +67,7 @@ export class AppComponent {
 
         // update i18n
         if (i18n.currentLang !== lang) {
-          i18n.use(lang as any);
+          i18n.use(lang as LangType);
           meta.clearMenu();
         }
         meta.refMenu(url);

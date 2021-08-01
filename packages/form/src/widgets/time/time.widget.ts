@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { format } from 'date-fns';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
@@ -16,7 +18,7 @@ import { SFTimeWidgetSchema } from './schema';
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {
   private valueFormat: string | undefined;
   displayValue: Date | null = null;
-  i: any;
+  i: NzSafeAny;
 
   ngOnInit(): void {
     const ui = this.ui;

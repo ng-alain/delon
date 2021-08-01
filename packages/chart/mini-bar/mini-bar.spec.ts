@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
 
 import { G2MiniBarComponent } from './mini-bar.component';
@@ -62,7 +64,7 @@ describe('chart: mini-bar', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2MiniBarComponent;
-  data: any[] = [
+  data: NzSafeAny[] = [
     { x: 1, y: 10 },
     { x: 2, y: 20 }
   ];

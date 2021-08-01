@@ -9,13 +9,15 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { App, SettingsService } from '@delon/theme';
 
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
 interface LayoutDefaultHeaderItem {
-  host: TemplateRef<any>;
+  host: TemplateRef<NzSafeAny>;
   hidden?: LayoutDefaultHeaderItemHidden;
   direction?: LayoutDefaultHeaderItemDirection;
 }

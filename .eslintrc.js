@@ -111,6 +111,7 @@ module.exports = {
         '@typescript-eslint/no-this-alias': 'error',
         '@typescript-eslint/naming-convention': 'off',
         '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/no-explicit-any': 'error',
         'prefer-arrow/prefer-arrow-functions': 'off',
         'import/no-duplicates': 'error',
         'import/no-unused-modules': 'error',

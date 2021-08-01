@@ -179,9 +179,9 @@ export class ACLService {
       }
       if (t.ability && t.ability.length > 0) {
         if (t.mode === 'allOf') {
-          result = (t.ability as any[]).every(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).every(v => this.abilities.includes(v));
         } else {
-          result = (t.ability as any[]).some(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).some(v => this.abilities.includes(v));
         }
       }
     }

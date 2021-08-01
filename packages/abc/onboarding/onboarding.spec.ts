@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { throwError } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 
 import { OnboardingModule } from './onboarding.module';
@@ -114,8 +116,8 @@ describe('abc: onboarding', () => {
   it('should ingore start when current is running', fakeAsync(() => {
     page.start();
     spyOnProperty(srv, 'running').and.returnValue(true);
-    const srvAny = srv as any;
-    spyOn(srvAny as any, 'attach');
+    const srvAny = srv as NzSafeAny;
+    spyOn(srvAny as NzSafeAny, 'attach');
     page.start();
     expect(srvAny.attach).not.toHaveBeenCalled();
   }));

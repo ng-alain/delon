@@ -2,6 +2,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
 
@@ -59,7 +61,7 @@ describe('form: widget: autocomplete', () => {
     };
     page.newSchema(s);
     const selectWidget = page.getWidget<AutoCompleteWidget>(`sf-${widget}`);
-    selectWidget.updateValue({ nzLabel: 'aaa', nzValue: { value: 'aaa', label: 'aaa' } } as any);
+    selectWidget.updateValue({ nzLabel: 'aaa', nzValue: { value: 'aaa', label: 'aaa' } } as NzSafeAny);
     const item = s.properties!.a.ui as SFAutoCompleteWidgetSchema;
     expect(item.change).toHaveBeenCalled();
   });

@@ -15,6 +15,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
@@ -42,7 +43,7 @@ interface OnboardingLightData {
   encapsulation: ViewEncapsulation.None
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {
-  private time: any;
+  private time: NzSafeAny;
   private prevSelectorEl: HTMLElement;
   config: OnboardingConfig;
   item: OnboardingItem;
@@ -71,7 +72,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
 
   constructor(
     private el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: any,
+    @Optional() @Inject(DOCUMENT) private doc: NzSafeAny,
     private platform: Platform,
     private cdr: ChangeDetectorRef
   ) {}

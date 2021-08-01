@@ -37,7 +37,7 @@ function parseExtraArgs(options: Schema): void {
   });
 }
 
-function runFixJS(options: Schema): Promise<any> {
+function runFixJS(options: Schema): Promise<void> {
   parseExtraArgs(options);
   const fixScriptPath = path.join(options._tplDir, '_fix.js');
   if (fs.existsSync(fixScriptPath)) {

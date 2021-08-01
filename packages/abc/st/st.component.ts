@@ -227,7 +227,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() virtualItemSize = 54;
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
-  @Input() customRequest?: (options: STCustomRequestOptions) => Observable<any>;
+  @Input() customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
   @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
 
   /**
@@ -257,7 +257,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private exportSrv: STExport,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
@@ -306,7 +306,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       : '';
   }
 
-  private changeEmit(type: STChangeType, data?: any): void {
+  private changeEmit(type: STChangeType, data?: NzSafeAny): void {
     const res: STChange = {
       type,
       pi: this.pi,
@@ -327,7 +327,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * - 远程数据：不传递 `pi`、`ps` 两个参数
    */
   get filteredData(): Promise<STData[]> {
-    return this.loadData({ paginator: false } as any).then(res => res.list);
+    return this.loadData({ paginator: false } as NzSafeAny).then(res => res.list);
   }
 
   private updateTotalTpl(): void {
@@ -609,7 +609,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region sort
 
-  sort(col: _STColumn, idx: number, value: any): void {
+  sort(col: _STColumn, idx: number, value: NzSafeAny): void {
     if (this.multiSort) {
       col._sort.default = value;
       col._sort.tick = this.dataSource.nextSortTick;
@@ -736,7 +736,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal!.paramsName!]: record };
-      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
         modal!.component,
         { ...obj, ...(modal!.params && modal!.params!(record)) },
         deepMergeKey({}, true, this.cog.modal, modal)
@@ -767,7 +767,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  private btnCallback(record: STData, btn: STColumnButton, modal?: any): any {
+  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
       switch (btn.click) {
