@@ -102,7 +102,7 @@ export interface SFOptionalHelp {
   trigger?: SFTrigger;
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
-  overlayClassName?: NgClassType;
+  overlayClassName?: string;
   overlayStyle?: NgStyleInterface;
 }
 
