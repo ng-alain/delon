@@ -14,6 +14,8 @@ import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 
@@ -90,7 +92,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this._desc = this.dom.bypassSecurityTrustHtml(value);
   }
 
-  @Input() backRouterLink: string | any[] = '/';
+  @Input() backRouterLink: string | NzSafeAny[] = '/';
 
   checkContent(): void {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
