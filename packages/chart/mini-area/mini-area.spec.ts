@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniAreaComponent } from './mini-area.component';
 import { G2MiniAreaModule } from './mini-area.module';

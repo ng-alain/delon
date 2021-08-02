@@ -4,7 +4,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DelonACLModule } from '@delon/acl';
 import { DelonMockModule } from '@delon/mock';
 import { AlainThemeModule } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config

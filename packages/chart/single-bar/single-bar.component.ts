@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, Input, SimpleChanges, ViewEncapsula
 
 import type { Chart } from '@antv/g2';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'g2-single-bar',

@@ -3,11 +3,10 @@ import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChang
 import { Observable, Observer, of, Subject, throwError } from 'rxjs';
 import { filter, finalize, take, takeUntil } from 'rxjs/operators';
 
-import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-
 import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 
 /**
  * @deprecated Will be removed in 13.0.0, Pls used [nz-image](https://ng.ant.design/components/image/en) instead, for examples:

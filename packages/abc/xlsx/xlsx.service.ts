@@ -4,11 +4,10 @@ import { Injectable, NgZone } from '@angular/core';
 import { saveAs } from 'file-saver';
 import isUtf8 from 'isutf8';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
 import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 

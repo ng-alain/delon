@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { DelonLocaleModule } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-
-import { DelonLocaleModule } from '@delon/theme';
 
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';

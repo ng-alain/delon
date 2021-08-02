@@ -1,8 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 
-import { I18NService, MetaService } from '@core';
-
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+
+import { I18NService, MetaService } from '@core';
 
 @Component({
   selector: 'edit-button',

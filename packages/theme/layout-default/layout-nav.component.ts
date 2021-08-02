@@ -20,11 +20,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { Menu, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface Nav extends MenuInner {
   _needIcon?: boolean;

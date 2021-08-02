@@ -20,12 +20,11 @@ import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { helpMotion } from 'ng-zorro-antd/core/animation';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { helpMotion } from 'ng-zorro-antd/core/animation';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SEContainerComponent } from './se-container.component';
 import { SEError, SEErrorType } from './se.types';

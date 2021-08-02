@@ -15,10 +15,9 @@ import { Router } from '@angular/router';
 import { of, pipe, Subscription } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { DelonLocaleService } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { OnboardingComponent } from './onboarding.component';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';

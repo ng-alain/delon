@@ -2,12 +2,11 @@ import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { I18NService } from '@core';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { I18NService } from '@core';
 
 declare const docsearch: NzSafeAny;
 

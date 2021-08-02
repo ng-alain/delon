@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as fse from 'fs-extra';
-
 import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 
 import { ModuleConfig, SiteConfig } from '../interfaces';
@@ -11,7 +10,7 @@ import { getCode, genUpperName, genUrl, generateDoc } from './utils';
 const JsonML = require('jsonml.js/lib/utils');
 const MT = require('mark-twain');
 
-let exampleIndexTpl = null;
+let exampleIndexTpl: string | null = null;
 
 function fixExample(item: any, filePath: string, config: ModuleConfig) {
   item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
@@ -24,7 +23,7 @@ function fixExample(item: any, filePath: string, config: ModuleConfig) {
     componentName: item.componentIndexName,
     item: JSON.stringify(item)
   };
-  generateDoc(obj, exampleIndexTpl, filePath);
+  generateDoc(obj, exampleIndexTpl!!, filePath);
 }
 
 export function generateDemo(

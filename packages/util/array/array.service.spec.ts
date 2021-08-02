@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
-import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
-
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
+import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
 
 import { ArrayService } from './array.service';
 

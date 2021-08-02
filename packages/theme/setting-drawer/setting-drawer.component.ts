@@ -15,13 +15,12 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
-
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.types';
 

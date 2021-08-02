@@ -5,10 +5,9 @@ import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';

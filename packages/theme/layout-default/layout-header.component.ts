@@ -9,9 +9,8 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { App, SettingsService } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';

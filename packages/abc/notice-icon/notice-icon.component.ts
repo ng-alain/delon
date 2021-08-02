@@ -12,10 +12,9 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { NgClassType } from 'ng-zorro-antd/core/types';
-
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NgClassType } from 'ng-zorro-antd/core/types';
 
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 

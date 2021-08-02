@@ -1,10 +1,9 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-
 import { deepMerge } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */

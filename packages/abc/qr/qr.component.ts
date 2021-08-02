@@ -14,11 +14,10 @@ import {
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QROptions } from './qr.types';

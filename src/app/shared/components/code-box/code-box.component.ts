@@ -4,12 +4,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { AppService, CodeService, I18NService } from '@core';
-
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy } from '@delon/util/browser';
+import { deepCopy } from '@delon/util/other';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { copy, deepCopy } from '@delon/util';
+import { AppService, CodeService, I18NService } from '@core';
 
 @Component({
   selector: 'code-box',

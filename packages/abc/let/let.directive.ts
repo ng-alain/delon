@@ -1,6 +1,6 @@
 import { Directive, Inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export class LetContext<T> {
   constructor(private readonly dir: LetDirective<T>) {}

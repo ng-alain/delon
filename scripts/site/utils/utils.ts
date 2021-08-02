@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as fse from 'fs-extra';
-
 import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 
 import { ModuleConfig } from '../interfaces';
@@ -88,7 +87,7 @@ export function includeAttributes(config: ModuleConfig, targetMeta: any) {
 
   targetMeta = targetMeta || {};
   for (const key of config.metaIncludeAttributes) {
-    targetMeta[key] = config[key];
+    targetMeta[key] = (config as any)[key];
   }
   return targetMeta;
 }
@@ -97,7 +96,7 @@ export function genUrl(rootDir: string, filePath: string) {
   return path.relative(rootDir, filePath).replace(/\\/g, `/`);
 }
 
-export function genComponentName(...names) {
+export function genComponentName(...names: string[]) {
   return `${names.map(key => genUpperName(key)).join('')}Component`;
 }
 

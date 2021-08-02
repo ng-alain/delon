@@ -15,7 +15,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';

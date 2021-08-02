@@ -15,10 +15,9 @@ import {
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService } from '@delon/util/config';
 import { InputNumber } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'error-collect, [error-collect]',

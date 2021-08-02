@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
-import { NzTSType } from 'ng-zorro-antd/core/types';
+import type { NzTSType } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'sv-value, [sv-value]',

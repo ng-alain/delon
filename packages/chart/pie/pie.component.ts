@@ -10,10 +10,9 @@ import {
 
 import type { Chart, Event } from '@antv/g2';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
   x: NzSafeAny;

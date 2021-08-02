@@ -5,10 +5,9 @@ import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
 
 import { format, formatISO } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';

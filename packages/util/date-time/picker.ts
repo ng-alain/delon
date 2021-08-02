@@ -1,6 +1,6 @@
 import { addDays, addSeconds, differenceInCalendarDays, format } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledDateFn, DisabledTimeConfig, DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 
 // TODO: timezone process

@@ -10,15 +10,15 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AppService, CodeService, I18NService } from '@core';
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { SFLayout, SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
-import { copy } from '@delon/util';
+import { copy } from '@delon/util/browser';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { AppService, CodeService, I18NService } from '@core';
 
 const stackBlitzTpl = `
 import { Component } from '@angular/core';

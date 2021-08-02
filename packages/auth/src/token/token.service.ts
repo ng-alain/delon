@@ -2,9 +2,8 @@ import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { mergeConfig } from '../auth.config';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';

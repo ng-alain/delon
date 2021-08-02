@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface AlainSFConfigFormatMap {
   'date-time': { widget?: string; showTime?: boolean; format?: string };

@@ -121,7 +121,7 @@ module.exports = {
           {
             alphabetize: { order: 'asc', caseInsensitive: false },
             'newlines-between': 'always',
-            groups: ['external', 'builtin', 'internal', ['parent', 'sibling', 'index']],
+            groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
             pathGroups: [
               {
                 pattern: '{@angular/**,rxjs,rxjs/operators}',
@@ -129,13 +129,13 @@ module.exports = {
                 position: 'before'
               },
               {
-                pattern: 'ng-zorro-antd/**',
+                pattern: '{ng-zorro-antd/**,@delon/**}',
                 group: 'internal',
                 position: 'before'
               },
               {
-                pattern: '@delon/**',
-                group: 'internal',
+                pattern: '{@core,@share,@env/*}',
+                group: 'parent',
                 position: 'before'
               }
             ],

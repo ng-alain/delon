@@ -3,13 +3,12 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-import { I18NService, MobileService } from '@core';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
+import { copy } from '@delon/util/browser';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
-import { copy } from '@delon/util';
+import { I18NService, MobileService } from '@core';
 
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';

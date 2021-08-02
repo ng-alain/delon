@@ -15,7 +15,7 @@ import {
   subYears
 } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * Get the time range, return `[ Date, Date]` for the start and end dates

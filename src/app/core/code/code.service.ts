@@ -4,9 +4,8 @@ import { Inject, Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
-import { deepCopy } from '@delon/util';
+import { deepCopy } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import pkg from '../../../../package.json';
 import { AppService } from '../app.service';

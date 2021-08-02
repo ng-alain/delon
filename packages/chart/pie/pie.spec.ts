@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { checkDelay, PageG2 } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2PieComponent } from './pie.component';
 import { G2PieModule } from './pie.module';

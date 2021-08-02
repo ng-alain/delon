@@ -2,9 +2,8 @@ import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ACLService } from '@delon/acl';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuIcon, MenuInner } from './interface';

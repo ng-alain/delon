@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export function urlBase64Decode(str: string): string {
   let output = str.replace(/-/g, '+').replace(/_/g, '/');
