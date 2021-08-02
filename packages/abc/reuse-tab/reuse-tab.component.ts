@@ -22,11 +22,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
-
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {

@@ -22,11 +22,10 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
-
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultOptions } from './types';

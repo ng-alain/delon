@@ -13,9 +13,8 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { deepCopy } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MockRequest } from './interface';
 import { MockService } from './mock.service';

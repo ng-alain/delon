@@ -3,7 +3,7 @@ export default `import './polyfills';
 import { enableProdMode, ViewEncapsulation } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { preloaderFinished } from '@delon/theme';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';

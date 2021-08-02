@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { App, Layout, SettingsNotify, User } from './types';
 

@@ -16,9 +16,8 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MediaService } from './media.service';
 import { PlyrMediaSource, PlyrMediaType } from './plyr.types';

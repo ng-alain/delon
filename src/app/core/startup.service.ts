@@ -2,11 +2,10 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconService } from 'ng-zorro-antd/icon';
-
 import { TitleService } from '@delon/theme';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { ICONS } from '../../style-icons';
 

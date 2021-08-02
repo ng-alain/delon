@@ -6,12 +6,11 @@ import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { WINDOW } from '@delon/util/token';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LayoutDefaultNavComponent, Nav } from './layout-nav.component';
 import { LayoutDefaultModule } from './layout.module';

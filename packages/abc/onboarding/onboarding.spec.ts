@@ -5,9 +5,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { throwError } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';

@@ -2,9 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import * as Mock from 'mockjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonMockModule } from '../index';
 import { MockOptions, MockRequest, MockRule } from './interface';

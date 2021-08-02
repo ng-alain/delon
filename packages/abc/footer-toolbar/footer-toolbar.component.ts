@@ -12,9 +12,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 const CLSBODY = 'footer-toolbar__body';
 

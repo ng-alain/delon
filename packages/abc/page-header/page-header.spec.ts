@@ -5,9 +5,6 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
 import {
   AlainI18NService,
@@ -18,6 +15,8 @@ import {
   SettingsService,
   TitleService
 } from '@delon/theme';
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';

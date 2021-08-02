@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Injectable({ providedIn: 'root' })
 export class ScrollService {

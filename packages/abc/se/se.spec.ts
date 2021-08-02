@@ -12,10 +12,9 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';

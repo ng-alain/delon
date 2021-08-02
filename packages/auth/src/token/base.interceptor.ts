@@ -10,9 +10,8 @@ import {
 import { Injectable, Injector, Optional } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
-import { AlainAuthConfig, AlainConfigService } from '@delon/util';
+import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { mergeConfig } from '../auth.config';
 import { ToLogin } from './helper';

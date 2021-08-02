@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
 
 import type { Chart, Event } from '@antv/g2';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
   x: NzSafeAny;

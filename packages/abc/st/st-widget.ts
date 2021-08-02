@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Injectable({ providedIn: 'root' })
 export class STWidgetRegistry {

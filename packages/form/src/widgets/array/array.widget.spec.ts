@@ -1,10 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { ArrayProperty, FormProperty } from '../../model';

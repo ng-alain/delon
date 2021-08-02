@@ -24,11 +24,6 @@ import { Router } from '@angular/router';
 import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { NzTableComponent } from 'ng-zorro-antd/table';
-
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
@@ -42,6 +37,10 @@ import {
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';

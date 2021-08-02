@@ -1,12 +1,11 @@
 import { Host, Inject, Injectable, Optional, TemplateRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { AlainSTConfig } from '@delon/util/config';
 import { deepCopy, warn } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';

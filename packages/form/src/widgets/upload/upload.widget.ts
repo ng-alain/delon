@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { of } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { deepGet } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-
-import { deepGet } from '@delon/util/other';
 
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';

@@ -11,11 +11,10 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { I18NService, MetaService } from '@core';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { I18NService, MetaService } from '@core';
 
 @Component({
   selector: 'main-menu, [main-menu]',

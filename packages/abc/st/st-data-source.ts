@@ -5,11 +5,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import {
   STColumn,

@@ -4,9 +4,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, switchMap, tap } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';

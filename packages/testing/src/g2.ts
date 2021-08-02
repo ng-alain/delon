@@ -3,7 +3,7 @@ import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@a
 
 import { Chart } from '@antv/g2';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geometries' | 'views';
 

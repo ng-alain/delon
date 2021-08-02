@@ -16,9 +16,8 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 import type { Chart, Types } from '@antv/g2';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2Service } from './g2.servicce';
 

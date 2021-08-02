@@ -2,9 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injec
 import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 
-import { NgClassType, NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { LocaleData } from '@delon/theme';
+import { NgClassType, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ErrorData } from './errors';
 import { SFValue } from './interface';

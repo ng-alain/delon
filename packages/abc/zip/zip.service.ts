@@ -3,11 +3,10 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { saveAs } from 'file-saver';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainZipConfig } from '@delon/util/config';
 import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ZipSaveOptions } from './zip.types';
 

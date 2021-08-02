@@ -3,9 +3,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ResultComponent } from './result.component';
 import { ResultModule } from './result.module';

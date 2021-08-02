@@ -3,7 +3,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
 

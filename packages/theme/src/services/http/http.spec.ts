@@ -6,10 +6,9 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainThemeHttpClientConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from './http.client';
 

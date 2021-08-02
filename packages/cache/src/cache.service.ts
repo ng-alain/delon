@@ -5,9 +5,8 @@ import { map, tap } from 'rxjs/operators';
 
 import { addSeconds } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainCacheConfig, AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { CacheNotifyResult, CacheNotifyType, ICache, ICacheStore } from './interface';
 import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';

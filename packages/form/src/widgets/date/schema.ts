@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledDateFn, DisabledTimeFn, NzDatePickerSizeType, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
 import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
 

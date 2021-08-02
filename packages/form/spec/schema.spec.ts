@@ -1,10 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ObjectProperty } from '../src/model/object.property';
 import { SFSchema } from '../src/schema/index';

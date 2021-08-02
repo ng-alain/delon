@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, map, mergeMap, startWith } from 'rxjs/operators';
 
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';

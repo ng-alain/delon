@@ -7,7 +7,7 @@ import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { I18NService } from '../i18n/i18n.service';<% } %>
 import { Observable, zip, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { ICONS } from '../../../style-icons';

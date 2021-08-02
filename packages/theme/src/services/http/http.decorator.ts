@@ -3,9 +3,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ACLService } from '@delon/acl';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from './http.client';
 

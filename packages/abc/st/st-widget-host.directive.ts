@@ -1,6 +1,6 @@
 import { ComponentFactoryResolver, Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STWidgetRegistry } from './st-widget';
 import { STColumn, STData } from './st.interfaces';

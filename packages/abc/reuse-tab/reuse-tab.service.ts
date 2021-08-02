@@ -10,10 +10,9 @@ import {
 } from '@angular/router';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import {
   ReuseComponentRef,

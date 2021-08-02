@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({

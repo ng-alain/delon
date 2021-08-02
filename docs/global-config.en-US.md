@@ -14,7 +14,7 @@ If you want to provide default configurations to some components, you should pro
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },

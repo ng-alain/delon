@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';

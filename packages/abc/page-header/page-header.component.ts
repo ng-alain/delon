@@ -21,14 +21,13 @@ import { NavigationEnd, Router } from '@angular/router';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 interface PageHeaderPath {
   title?: string;
