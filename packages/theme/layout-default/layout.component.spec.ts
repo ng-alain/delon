@@ -7,11 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
-
-import { createTestContext } from '@delon/testing';
 
 import { SettingsService } from '../src/services/settings/settings.service';
 import { AlainThemeModule } from '../src/theme.module';

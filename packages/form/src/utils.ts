@@ -1,11 +1,10 @@
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
-
 import { toBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';

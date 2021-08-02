@@ -2,9 +2,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';

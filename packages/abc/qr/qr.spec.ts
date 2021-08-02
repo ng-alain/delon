@@ -3,9 +3,8 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AlainConfigService, LazyService } from '../../util';
 import { QRComponent } from './qr.component';

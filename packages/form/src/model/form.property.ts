@@ -1,9 +1,8 @@
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainSFConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SF_SEQ } from '../const';
 import { ErrorData } from '../errors';

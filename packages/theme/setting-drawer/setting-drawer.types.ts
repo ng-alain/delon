@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export const ALAINDEFAULTVAR = 'alain-default-vars';
 export const DEFAULT_COLORS = [

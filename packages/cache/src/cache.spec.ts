@@ -5,9 +5,8 @@ import { TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';

@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export class MockOptions {
   data?: NzSafeAny;

@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { checkDelay, PageG2 } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';

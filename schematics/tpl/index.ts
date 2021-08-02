@@ -1,5 +1,4 @@
 import { Rule, SchematicsException } from '@angular-devkit/schematics';
-
 import * as fs from 'fs';
 import * as path from 'path';
 

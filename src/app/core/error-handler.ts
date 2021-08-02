@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ErrorHandler, Inject, Injectable } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Injectable()
 export class CustomErrorHandler extends ErrorHandler {

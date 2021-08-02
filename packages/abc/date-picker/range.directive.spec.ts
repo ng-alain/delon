@@ -8,10 +8,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { differenceInDays } from 'date-fns';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerDirective } from './range.directive';

@@ -5,10 +5,9 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService } from '@delon/util/config';
+import { NzConfigService } from 'ng-zorro-antd/core/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SettingsService } from '../settings/settings.service';
 

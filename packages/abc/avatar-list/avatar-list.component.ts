@@ -15,9 +15,8 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { AvatarListItemComponent } from './avatar-list-item.component';
 

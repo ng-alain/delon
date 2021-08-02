@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { InputBoolean } from '@delon/util';
+import { InputBoolean } from '@delon/util/decorator';
 
 @Component({
   selector: 'nz-icon',

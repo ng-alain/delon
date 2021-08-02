@@ -2,7 +2,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { TemplateRef, TrackByFunction } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import { ModalOptions } from 'ng-zorro-antd/modal';
 import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';

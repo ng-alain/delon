@@ -1,8 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MockCachedRule, MockOptions, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';

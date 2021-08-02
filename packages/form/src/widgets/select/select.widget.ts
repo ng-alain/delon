@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';

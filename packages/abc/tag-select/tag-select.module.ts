@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-
 import { DelonLocaleModule } from '@delon/theme';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { TagSelectComponent } from './tag-select.component';
 

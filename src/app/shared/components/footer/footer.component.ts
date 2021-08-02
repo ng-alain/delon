@@ -1,15 +1,16 @@
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
 
-import { I18NService } from '@core';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { LoadingService } from '@delon/abc/loading';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy } from '@delon/util/browser';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { LoadingService } from '@delon/abc/loading';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { BooleanInput, copy, InputBoolean, LazyService } from '@delon/util';
+import { I18NService } from '@core';
 
 @Component({
   selector: 'app-footer',

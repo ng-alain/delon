@@ -10,11 +10,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of, Subject, throwError } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-
 import { dispatchDropDown } from '@delon/testing';
 import {
   ALAIN_I18N_TOKEN,
@@ -28,6 +23,10 @@ import {
 } from '@delon/theme';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy, deepGet } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../st-data-source';

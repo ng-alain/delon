@@ -15,9 +15,8 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'ellipsis',

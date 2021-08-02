@@ -1,6 +1,5 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainSFConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SF_SEQ } from '../const';
 import { SFValue } from '../interface';

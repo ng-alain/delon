@@ -1,9 +1,8 @@
 import { CurrencyPipe, formatNumber } from '@angular/common';
 import { DEFAULT_CURRENCY_CODE, Inject, Injectable, LOCALE_ID } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import {
   CurrencyCNYOptions,

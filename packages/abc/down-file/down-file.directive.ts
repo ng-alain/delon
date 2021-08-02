@@ -4,9 +4,8 @@ import { finalize } from 'rxjs/operators';
 
 import { saveAs } from 'file-saver';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { _HttpClient } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
   selector: '[down-file]',

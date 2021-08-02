@@ -20,13 +20,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';

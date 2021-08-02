@@ -1,6 +1,5 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { warn } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type BooleanInput = boolean | string | undefined | null;
 export type NumberInput = number | string | undefined | null;

@@ -12,11 +12,10 @@ import {
 import type { Chart, Event, Types } from '@antv/g2';
 import { format } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
   /**

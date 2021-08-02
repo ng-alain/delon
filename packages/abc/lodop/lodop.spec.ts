@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { concat } from 'rxjs';
 import { filter, mergeMap, tap } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';

@@ -1,6 +1,5 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { warn } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface ZoneOptions {
   ngZoneName?: string;

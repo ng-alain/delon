@@ -19,16 +19,16 @@ import {
   SettingOutline,
   UserOutline
 } from '@ant-design/icons-angular/icons';
-import { I18NService, LangType } from '@core';
-
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
 
 // #region icons
 
 import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { I18NService, LangType } from '@core';
 
 const ICONS = [
   MenuFoldOutline,

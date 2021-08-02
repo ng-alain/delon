@@ -7,9 +7,8 @@ import { Observable, of, throwError } from 'rxjs';
 
 import * as fs from 'file-saver';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { LazyService } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';

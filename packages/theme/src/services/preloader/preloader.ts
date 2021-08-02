@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export function preloaderFinished(): void {
   const body = document.querySelector('body')!;

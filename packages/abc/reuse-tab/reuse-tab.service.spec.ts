@@ -2,9 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { MenuService } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';

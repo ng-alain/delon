@@ -1,10 +1,9 @@
 import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
-
 import { AlainI18nBaseService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';

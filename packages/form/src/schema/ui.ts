@@ -1,8 +1,7 @@
 import { TemplateRef } from '@angular/core';
 
-import type { NgClassType, NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-
 import type { ACLCanType } from '@delon/acl';
+import type { NgClassType, NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { ErrorSchema } from '../errors';
 import type { FormProperty } from '../model/form.property';

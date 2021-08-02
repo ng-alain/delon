@@ -2,11 +2,12 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { I18NService } from '@core';
 import AOS from 'aos';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { ZoneOutside } from '@delon/util';
+import { ZoneOutside } from '@delon/util/decorator';
+
+import { I18NService } from '@core';
 
 @Component({
   selector: 'app-home',

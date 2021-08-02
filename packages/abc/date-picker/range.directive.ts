@@ -15,13 +15,12 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
-
 import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
 
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 

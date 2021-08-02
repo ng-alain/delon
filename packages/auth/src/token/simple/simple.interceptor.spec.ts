@@ -6,9 +6,8 @@ import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-
 import { SFSchema } from '@delon/form';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: `app-demo-dialog-modal`,

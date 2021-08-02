@@ -1,10 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainConfigService, AlainLodopConfig } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 

@@ -16,9 +16,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
