@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { format } from 'date-fns';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
@@ -9,12 +13,12 @@ import { SFTimeWidgetSchema } from './schema';
   selector: 'sf-time',
   templateUrl: './time.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {
   private valueFormat: string | undefined;
   displayValue: Date | null = null;
-  i: any;
+  i: NzSafeAny;
 
   ngOnInit(): void {
     const ui = this.ui;
@@ -28,7 +32,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       use12Hours: toBool(ui.use12Hours, false),
       hourStep: ui.hourStep || 1,
       minuteStep: ui.minuteStep || 1,
-      secondStep: ui.secondStep || 1,
+      secondStep: ui.secondStep || 1
     };
     if (opt.use12Hours && !ui.displayFormat) {
       opt.displayFormat = `h:mm:ss a`;
@@ -49,7 +53,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       if (value.toString().split(':').length <= 1) {
         value += ':00';
       }
-      v = new Date(`1970-1-1 ` + value);
+      v = new Date(`1970-1-1 ${value}`);
     }
     this.displayValue = v;
     this.detectChanges();

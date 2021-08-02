@@ -15,17 +15,20 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { merge, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { merge, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
 
 interface PageHeaderPath {
   title?: string;
@@ -38,7 +41,7 @@ interface PageHeaderPath {
   templateUrl: './page-header.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_loading: BooleanInput;
@@ -67,7 +70,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   // #region fields
 
   _title: string | null;
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<NzSafeAny>;
   @Input()
   set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
@@ -90,7 +93,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() @InputBoolean() syncTitle: boolean;
   @Input() @InputBoolean() fixed: boolean;
   @Input() @InputNumber() fixedOffsetTop: number;
-  @Input() breadcrumb?: TemplateRef<any> | null = null;
+  @Input() breadcrumb?: TemplateRef<NzSafeAny> | null = null;
   @Input() @InputBoolean() recursiveBreadcrumb: boolean;
   @Input() logo?: TemplateRef<void> | null = null;
   @Input() action?: TemplateRef<void> | null = null;
@@ -111,7 +114,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     private cdr: ChangeDetectorRef,
     configSrv: AlainConfigService,
     platform: Platform,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {
     this.isBrowser = platform.isBrowser;
     configSrv.attach(this, 'pageHeader', {
@@ -122,17 +125,20 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       autoTitle: true,
       syncTitle: true,
       fixed: false,
-      fixedOffsetTop: 64,
+      fixedOffsetTop: 64
     });
     settings.notify
       .pipe(
         takeUntil(this.destroy$),
-        filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
+        filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed')
       )
-      .subscribe(() => this.affix.updatePosition({} as any));
+      .subscribe(() => this.affix.updatePosition({} as NzSafeAny));
 
-    merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
-      .pipe(takeUntil(this.destroy$))
+    merge(menuSrv.change, router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
+      .pipe(
+        filter(() => this.inited),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.refresh());
   }
 
@@ -157,7 +163,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.home) {
       paths.splice(0, 0, {
         title: (this.homeI18n && this.i18nSrv && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
-        link: [this.homeLink!],
+        link: [this.homeLink!]
       });
     }
     this.paths = paths;

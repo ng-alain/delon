@@ -1,7 +1,8 @@
-// tslint:disable: class-name
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TemplateRef } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
-import { STColumn, STColumnButton, STData, STSortMap } from './st.interfaces';
+
+import { STColumn, STColumnButton, STColumnSafeType, STData, STSortMap } from './st.interfaces';
 
 export interface _STColumn extends STColumn {
   children?: _STColumn[];
@@ -17,6 +18,7 @@ export interface _STColumn extends STColumn {
    */
   _className?: string | string[] | Set<string> | { [klass: string]: any } | null;
   _sort: STSortMap;
+  _width?: number;
   _left?: string | boolean;
   _right?: string | boolean;
   __point?: number;
@@ -36,7 +38,7 @@ export interface _STHeader {
 
 export interface _STColumnButton<T extends STData = any> extends STColumnButton<T> {
   _text?: string;
-  children?: _STColumnButton<T>[];
+  children?: Array<_STColumnButton<T>>;
 }
 
 export interface _STDataValue {
@@ -44,5 +46,6 @@ export interface _STDataValue {
   _text: SafeHtml;
   org?: any;
   color?: string;
+  safeType: STColumnSafeType;
   buttons?: _STColumnButton[];
 }

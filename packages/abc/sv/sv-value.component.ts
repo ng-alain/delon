@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+
 import { NzTSType } from 'ng-zorro-antd/core/types';
 
 @Component({
@@ -12,11 +13,11 @@ import { NzTSType } from 'ng-zorro-antd/core/types';
   host: {
     '[class.sv__value]': 'true',
     '[class.sv__value-small]': `size === 'small'`,
-    '[class.sv__value-large]': `size === 'large'`,
+    '[class.sv__value-large]': `size === 'large'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVValueComponent {
   @Input() prefix?: string;

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
@@ -12,10 +13,10 @@ const COMPONENTS = [ThemeBtnComponent];
   providers: [
     {
       provide: ALAIN_THEME_BTN_KEYS,
-      useValue: 'site-theme',
-    },
+      useValue: 'site-theme'
+    }
   ],
   declarations: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class ThemeBtnModule {}

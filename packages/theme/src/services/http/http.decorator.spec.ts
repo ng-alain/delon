@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpParams } from '@angular/common/http';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { _HttpClient } from './http.client';
 import {
   BaseApi,
@@ -19,7 +22,7 @@ import {
   Payload,
   POST,
   PUT,
-  Query,
+  Query
 } from './http.decorator';
 
 @BaseUrl('/user')
@@ -51,7 +54,7 @@ class MockService extends BaseApi {
   }
 
   @POST(':id')
-  save(@Path('id') _id: number, @Body _data: {}): Observable<any> {
+  save(@Path('id') _id: number, @Body _data: NzSafeAny): Observable<any> {
     return null as any;
   }
 
@@ -66,7 +69,7 @@ class MockService extends BaseApi {
   }
 
   @POST(':id')
-  payloadPost(@Payload _body: any, @Body _body2?: {}): Observable<any> {
+  payloadPost(@Payload _body: any, @Body _body2?: NzSafeAny): Observable<any> {
     return null as any;
   }
 
@@ -140,7 +143,7 @@ describe('theme: http.decorator', () => {
 
   class MockInjector {
     get(token: any, notFoundValue: null = null): any {
-      const tokenStr = token + '';
+      const tokenStr = `${token}`;
       if (tokenStr.includes('_HttpClient')) {
         return tokens._HttpClient;
       }
@@ -154,10 +157,10 @@ describe('theme: http.decorator', () => {
   beforeEach(() => {
     request = jasmine.createSpy('request').and.returnValue({});
     tokens = {
-      _HttpClient: { request },
+      _HttpClient: { request }
     };
     jasmine.createSpyObj('http', {
-      request,
+      request
     });
     injector = new MockInjector();
     srv = new MockService(injector as any);
@@ -184,7 +187,7 @@ describe('theme: http.decorator', () => {
 
       expect(request).toHaveBeenCalled();
       const res = new HttpParams({
-        fromObject: request.calls.mostRecent().args[2].params,
+        fromObject: request.calls.mostRecent().args[2].params
       });
       expect(res.toString()).toBe('ids=1&ids=2&ids=3');
     });
@@ -307,7 +310,7 @@ describe('theme: http.decorator', () => {
   describe('[acl]', () => {
     it('should be request when user authorized', () => {
       tokens.ACLService = {
-        can: () => true,
+        can: () => true
       };
       srv.ACL_Admin();
 
@@ -318,7 +321,7 @@ describe('theme: http.decorator', () => {
 
     it('should be throw 401 when user not authorize', done => {
       tokens.ACLService = {
-        can: () => false,
+        can: () => false
       };
       srv.ACL_User().subscribe(
         () => {
@@ -328,7 +331,7 @@ describe('theme: http.decorator', () => {
         err => {
           expect(err.status).toBe(401);
           done();
-        },
+        }
       );
     });
   });

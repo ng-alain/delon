@@ -1,11 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ControlWidget } from '@delon/form';
 
 @Component({
   selector: 'sf-ueditor',
   template: `
-    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-      <ueditor [ngModel]="value" [config]="config" [loadingTip]="loading" [delay]="delay" (ngModelChange)="change($event)"> </ueditor>
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <ueditor
+        [ngModel]="value"
+        [config]="config"
+        [loadingTip]="loading"
+        [delay]="delay"
+        (ngModelChange)="change($event)"
+      >
+      </ueditor>
     </sf-item-wrap>
   `,
   styles: [
@@ -13,14 +28,13 @@ import { ControlWidget } from '@delon/form';
       :host ueditor {
         line-height: normal;
       }
-    `,
-  ],
+    `
+  ]
 })
-// tslint:disable-next-line:component-class-suffix
 export class UeditorWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'ueditor';
 
-  config: {};
+  config: Record<string, unknown>;
   loading: string;
   delay: number;
 

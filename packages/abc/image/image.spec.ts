@@ -3,14 +3,19 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of, throwError } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ModalOptions } from 'ng-zorro-antd/modal';
+
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { AlainThemeModule, _HttpClient } from '@delon/theme';
-import { ModalOptions } from 'ng-zorro-antd/modal';
-import { of, throwError } from 'rxjs';
+
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
 
-const SRC = 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
+const SRC =
+  'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -20,7 +25,7 @@ describe('abc: _src', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ImageModule, AlainThemeModule, HttpClientTestingModule, NoopAnimationsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   });
 
@@ -78,10 +83,10 @@ describe('abc: _src', () => {
       result: '',
       readAsDataURL: (_blob: Blob) => {},
       onloadend: () => {},
-      onerror: () => {},
+      onerror: () => {}
     };
     beforeEach(() => {
-      spyOn(window, 'FileReader').and.returnValue(mockFileReader as any);
+      spyOn(window, 'FileReader').and.returnValue(mockFileReader as NzSafeAny);
       _http = TestBed.inject(_HttpClient);
       context.useHttp = true;
     });
@@ -150,7 +155,7 @@ describe('abc: _src', () => {
     [useHttp]="useHttp"
     [previewSrc]="previewSrc"
     [previewModalOptions]="previewModalOptions"
-  />`,
+  />`
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: ImageDirective;

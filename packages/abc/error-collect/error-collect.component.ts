@@ -10,12 +10,15 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { AlainConfigService } from '@delon/util/config';
-import { InputNumber } from '@delon/util/decorator';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfigService } from '@delon/util/config';
+import { InputNumber } from '@delon/util/decorator';
 
 @Component({
   selector: 'error-collect, [error-collect]',
@@ -28,11 +31,11 @@ import { takeUntil } from 'rxjs/operators';
     '[class.error-collect]': 'true',
     '[class.error-collect-rtl]': `dir === 'rtl'`,
     '[class.d-none]': '_hiden',
-    '(click)': '_click()',
+    '(click)': '_click()'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private formEl: HTMLFormElement | null;
@@ -48,9 +51,9 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     configSrv: AlainConfigService,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {
     configSrv.attach(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });
   }

@@ -1,6 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
+
 import { MockCachedRule, MockOptions, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';
 
@@ -11,8 +14,7 @@ export class MockService implements OnDestroy {
 
   constructor(cogSrv: AlainConfigService, options: MockOptions) {
     this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
-    this.setData(options?.data || this.config.data);
-    delete this.config.data;
+    this.setData(options?.data);
   }
 
   /**
@@ -20,13 +22,13 @@ export class MockService implements OnDestroy {
    *
    * 重新设置请求数据
    */
-  setData(data: any): void {
+  setData(data: NzSafeAny): void {
     this.applyMock(data);
   }
 
   // #region parse rule
 
-  private applyMock(data: any): void {
+  private applyMock(data: NzSafeAny): void {
     this.cached = [];
     try {
       this.realApplyMock(data);
@@ -35,7 +37,7 @@ export class MockService implements OnDestroy {
     }
   }
 
-  private realApplyMock(data: any): void {
+  private realApplyMock(data: NzSafeAny): void {
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
       const rules = data[key];
@@ -43,7 +45,9 @@ export class MockService implements OnDestroy {
       Object.keys(rules).forEach((ruleKey: string) => {
         const value = rules[ruleKey];
         if (!(typeof value === 'function' || typeof value === 'object' || typeof value === 'string')) {
-          throw Error(`mock value of [${key}-${ruleKey}] should be function or object or string, but got ${typeof value}`);
+          throw Error(
+            `mock value of [${key}-${ruleKey}] should be function or object or string, but got ${typeof value}`
+          );
         }
         const rule = this.genRule(ruleKey, value);
         if (['GET', 'POST', 'PUT', 'HEAD', 'DELETE', 'PATCH', 'OPTIONS'].indexOf(rule.method) === -1) {
@@ -61,7 +65,7 @@ export class MockService implements OnDestroy {
     this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
   }
 
-  private genRule(key: string, callback: any): MockCachedRule {
+  private genRule(key: string, callback: NzSafeAny): MockCachedRule {
     let method = 'GET';
     let url = key;
 
@@ -92,7 +96,7 @@ export class MockService implements OnDestroy {
       martcher,
       segments,
       callback,
-      method: method.toUpperCase(),
+      method: method.toUpperCase()
     };
   }
 
@@ -130,7 +134,7 @@ export class MockService implements OnDestroy {
       url,
       method: ret.method,
       params,
-      callback: ret.callback,
+      callback: ret.callback
     };
   }
 

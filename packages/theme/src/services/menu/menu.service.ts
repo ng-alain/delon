@@ -1,7 +1,11 @@
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
-import { ACLService } from '@delon/acl';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { ACLService } from '@delon/acl';
+
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuIcon, MenuInner } from './interface';
 
@@ -19,7 +23,7 @@ export class MenuService implements OnDestroy {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
-    @Optional() private aclService: ACLService,
+    @Optional() private aclService: ACLService
   ) {
     this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
   }
@@ -79,7 +83,7 @@ export class MenuService implements OnDestroy {
       } else if (/^https?:\/\//.test(item.icon)) {
         type = 'img';
       }
-      item.icon = { type, value } as any;
+      item.icon = { type, value } as NzSafeAny;
     }
     if (item.icon != null) {
       item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
@@ -145,18 +149,17 @@ export class MenuService implements OnDestroy {
         text: '快捷菜单',
         i18n: 'shortcut',
         icon: 'icon-rocket',
-        children: [],
+        children: []
       } as MenuInner;
       this.data[0].children!.splice(pos, 0, shortcutMenu);
     }
     let _data = this.data[0].children![pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
-    // tslint:disable-next-line:prefer-object-spread
     _data = Object.assign(_data, {
       shortcutRoot: true,
       _id: -1,
       _parent: null,
-      _depth: 1,
+      _depth: 1
     } as MenuInner);
     _data.children = shortcuts.map(i => {
       i._depth = 2;

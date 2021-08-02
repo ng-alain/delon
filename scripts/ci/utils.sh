@@ -9,18 +9,13 @@ DEPENDENCIES=$(node -p "
     'extend',
     'isutf8',
     'file-saver',
-    '@types/jszip',
+    'jszip',
     'xlsx',
     'mockjs',
     '@types/mockjs',
     'ajv',
     'ajv-formats',
     'screenfull',
-    '@ngx-translate/core',
-    '@ngx-translate/http-loader',
-    'tslint-config-prettier',
-    'pretty-quick',
-    'husky',
     'stylelint-config-prettier',
     'stylelint-config-rational-order',
     'stylelint-config-standard',
@@ -35,11 +30,26 @@ DEPENDENCIES=$(node -p "
     'ngx-ueditor',
     'ngx-tinymce',
     'ngx-countdown',
-    'ng-alain-codelyzer',
     'ng-alain-sts',
     'ng-alain-plugin-theme',
-    'nz-tslint-rules',
-    'source-map-explorer'
+    'source-map-explorer',
+    '@angular/language-service',
+    '@angular-eslint/builder',
+    '@angular-eslint/eslint-plugin',
+    '@angular-eslint/eslint-plugin-template',
+    '@angular-eslint/schematics',
+    '@angular-eslint/template-parser',
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint/parser',
+    'eslint',
+    'eslint-config-prettier',
+    'eslint-plugin-import',
+    'eslint-plugin-jsdoc',
+    'eslint-plugin-prefer-arrow',
+    'eslint-plugin-prettier',
+    'prettier',
+    'husky',
+    'lint-staged'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")
@@ -55,9 +65,9 @@ updateVersionReferences() {
     for dependencie in ${DEPENDENCIES[@]}
     do
       IFS=$'|' read -r lib version <<< "$dependencie"
-      echo ">>>> update ${lib}: ${version}"
-      perl -p -i -e "s/\"${lib}\": \"\@LIB\-PLACEHOLDER\"/\"${lib}\": \"${version}\"/g" $(grep -ril \"${lib}\": \"\@LIB\-PLACEHOLDER\" .) < /dev/null 2> /dev/null
-      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
+      # echo ">>>> update ${lib}: ${version}"
+      perl -p -i -e "s/\"${lib}\": \"\@LIB\-PLACEHOLDER\"/\"${lib}\": \"${version}\"/g" $(grep -ril -s \"${lib}\": \"\@LIB\-PLACEHOLDER\" .) < /dev/null 2> /dev/null
+      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril -s ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     done
 
     FIX_VERSION="${VERSION}"

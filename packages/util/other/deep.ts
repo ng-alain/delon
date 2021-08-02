@@ -1,11 +1,13 @@
 import extend from 'extend';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 /**
  * Gets the value at `path` of `object`, like `_.get` in lodash.
  *
  * 类似 `_.get`，根据 `path` 获取安全值
  */
-export function deepGet(obj: any, path: string | string[] | null | undefined, defaultValue?: any): any {
+export function deepGet(obj: NzSafeAny, path: string | string[] | null | undefined, defaultValue?: unknown): NzSafeAny {
   if (!obj || path == null || path.length === 0) return defaultValue;
   if (!Array.isArray(path)) {
     path = ~path.indexOf('.') ? path.split('.') : [path];
@@ -23,7 +25,7 @@ export function deepGet(obj: any, path: string | string[] | null | undefined, de
  *
  * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
  */
-export function deepCopy<T extends object = any>(obj: T | null | undefined): T {
+export function deepCopy<T extends { [key: string]: NzSafeAny } = NzSafeAny>(obj: T | null | undefined): T {
   const result = extend(true, {}, { _: obj });
   return result._ as T;
 }
@@ -39,12 +41,12 @@ export function deepCopy<T extends object = any>(obj: T | null | undefined): T {
  *  - `false` 表示会合并整个数组（将旧数据与新数据合并成新数组）
  * @param objects 要合并的对象
  */
-export function deepMergeKey(original: any, arrayProcessMethod: boolean, ...objects: any[]): any {
+export function deepMergeKey(original: unknown, arrayProcessMethod: boolean, ...objects: NzSafeAny[]): NzSafeAny {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
-  const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
+  const isObject = (v: unknown) => typeof v === 'object' || typeof v === 'function';
 
-  const merge = (target: any, obj: any) => {
+  const merge = (target: NzSafeAny, obj: NzSafeAny) => {
     Object.keys(obj)
       .filter(key => key !== '__proto__' && Object.prototype.hasOwnProperty.call(obj, key))
       .forEach(key => {
@@ -71,6 +73,6 @@ export function deepMergeKey(original: any, arrayProcessMethod: boolean, ...obje
  *
  * 深度合并对象
  */
-export function deepMerge(original: any, ...objects: any[]): any {
+export function deepMerge(original: unknown, ...objects: unknown[]): NzSafeAny {
   return deepMergeKey(original, false, ...objects);
 }

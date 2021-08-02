@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+
 import type { Chart } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
@@ -8,11 +12,11 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   exportAs: 'g2SingleBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2SingleBarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -32,20 +36,20 @@ export class G2SingleBarComponent extends G2BaseComponent {
   @Input() @InputNumber() max = 100;
   @Input() @InputNumber() value = 0;
   @Input() @InputBoolean() line = false;
-  @Input() format: (value: number, item: {}, index: number) => string;
+  @Input() format: (value: number, item: NzSafeAny, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
-  @Input() textStyle: any = { fontSize: 12, color: '#595959' };
+  @Input() textStyle: { [key: string]: NzSafeAny } = { fontSize: 12, color: '#595959' };
 
   // #endregion
 
   install(): void {
     const { el, height, padding, textStyle, line, format, theme, min, max, plusColor, minusColor, barSize } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.legend(false);
     chart.axis(false);
@@ -60,8 +64,8 @@ export class G2SingleBarComponent extends G2BaseComponent {
       .label('value', () => ({
         formatter: format,
         style: {
-          ...textStyle,
-        },
+          ...textStyle
+        }
       }));
 
     if (line) {
@@ -70,8 +74,8 @@ export class G2SingleBarComponent extends G2BaseComponent {
         end: ['50%', '100%'],
         style: {
           stroke: '#e8e8e8',
-          lineDash: [0, 0],
-        },
+          lineDash: [0, 0]
+        }
       });
     }
 

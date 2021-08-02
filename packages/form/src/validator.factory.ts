@@ -1,8 +1,13 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
-import { REGEX } from '@delon/util/format';
+
 import Ajv, { Options as AjvOptions } from 'ajv';
 import addFormats from 'ajv-formats';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
+import { REGEX } from '@delon/util/format';
+
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
@@ -10,7 +15,10 @@ import { SFSchema } from './schema';
 
 @Injectable()
 export abstract class SchemaValidatorFactory {
-  abstract createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[];
+  abstract createValidatorFn(
+    schema: SFSchema,
+    extraOptions: { ingoreKeywords: string[]; debug: boolean }
+  ): (value: SFValue) => ErrorData[];
 }
 
 @Injectable()
@@ -35,15 +43,21 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
           color: REGEX.color,
           mobile: REGEX.mobile,
           'id-card': REGEX.idCard,
-          ...customOptions.formats,
-        },
+          ...customOptions.formats
+        }
       });
-      addFormats(this.ajv as any);
+      addFormats(this.ajv as NzSafeAny);
     });
   }
 
-  createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[] {
-    const ingoreKeywords: string[] = [...(this.options.ingoreKeywords as string[]), ...((extraOptions.ingoreKeywords as string[]) || [])];
+  createValidatorFn(
+    schema: SFSchema,
+    extraOptions: { ingoreKeywords: string[]; debug: boolean }
+  ): (value: SFValue) => ErrorData[] {
+    const ingoreKeywords: string[] = [
+      ...(this.options.ingoreKeywords as string[]),
+      ...((extraOptions.ingoreKeywords as string[]) || [])
+    ];
 
     return (value: SFValue): ErrorData[] => {
       try {

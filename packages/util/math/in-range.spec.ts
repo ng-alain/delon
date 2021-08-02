@@ -1,14 +1,16 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { inRange } from './in-range';
 
 describe('util.inRange', () => {
   it('should be working', () => {
-    const data: Array<{ k: any[]; v: boolean | 'throw' }> = [
+    const data: Array<{ k: NzSafeAny[]; v: boolean | 'throw' }> = [
       { k: [3, 2, 4], v: true },
       { k: [4, 8], v: true },
       { k: [4, 2], v: false },
       { k: [2, 2], v: false },
       { k: [-3, -2, -6], v: true },
-      { k: [null, 2], v: 'throw' },
+      { k: [null, 2], v: 'throw' }
     ];
     for (const item of data) {
       const value = item.k[0];

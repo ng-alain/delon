@@ -1,9 +1,13 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util';
-import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { ICONS } from '../../style-icons';
 
 @Injectable()
@@ -11,9 +15,9 @@ export class StartupService {
   constructor(
     private injector: Injector,
     iconSrv: NzIconService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private lazy: LazyService,
-    private platform: Platform,
+    private platform: Platform
   ) {
     iconSrv.addIcon(...ICONS);
   }
@@ -33,22 +37,21 @@ export class StartupService {
   }
 
   lazyLoad(): void {
-    const win = this.doc.defaultView as any;
+    const win = this.doc.defaultView as NzSafeAny;
     win.hj =
       win.hj ||
-      // tslint:disable-next-line: only-arrow-functions typedef
       function () {
         (win.hj.q = win.hj.q || []).push(arguments);
       };
     win._hjSettings = {
       hjid: 920546,
-      hjsv: 6,
+      hjsv: 6
     };
     Promise.all([
       this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`),
-      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`),
+      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
     ]).then(() => {
-      const dataLayer: any[] = win.dataLayer || [];
+      const dataLayer: NzSafeAny[] = win.dataLayer || [];
       dataLayer.push(['js', new Date()]);
       dataLayer.push(['config', 'UA-120202005-1']);
     });

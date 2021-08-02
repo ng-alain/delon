@@ -1,12 +1,24 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2PieData {
-  x: any;
+  x: NzSafeAny;
   y: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2PieClickItem {
@@ -33,11 +45,11 @@ export interface G2PieRatio {
     '[class.g2-pie]': 'true',
     '[class.g2-pie__legend-has]': 'hasLegend',
     '[class.g2-pie__legend-block]': 'block',
-    '[class.g2-pie__mini]': 'isPercent',
+    '[class.g2-pie__mini]': 'isPercent'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -50,7 +62,7 @@ export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_select: BooleanInput;
 
   private percentColor: (value: string) => string;
-  legendData: any[] = [];
+  legendData: NzSafeAny[] = [];
   isPercent: boolean;
 
   // #region fields
@@ -70,15 +82,15 @@ export class G2PieComponent extends G2BaseComponent {
   @Input() @InputBoolean() select = true;
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
-  @Input() colors: any[];
+  @Input() colors: string[];
   @Input() interaction: G2InteractionType = 'none';
   @Input() ratio: G2PieRatio = {
     text: '占比',
     inverse: '反比',
     color: '',
-    inverseColor: '#F0F2F5',
+    inverseColor: '#F0F2F5'
   };
-  @Output() clickItem = new EventEmitter<G2PieClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2PieClickItem>();
 
   // #endregion
 
@@ -100,12 +112,12 @@ export class G2PieComponent extends G2BaseComponent {
     this.data = [
       {
         x: text,
-        y: percent,
+        y: percent
       },
       {
         x: inverse,
-        y: 100 - percent,
-      },
+        y: 100 - percent
+      }
     ];
   }
 
@@ -123,14 +135,14 @@ export class G2PieComponent extends G2BaseComponent {
       lineWidth,
       isPercent,
       percentColor,
-      colors,
+      colors
     } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.animate(animate);
 
@@ -139,14 +151,14 @@ export class G2PieComponent extends G2BaseComponent {
     } else {
       chart.tooltip({
         showTitle: false,
-        showMarkers: false,
+        showMarkers: false
       });
     }
     if (interaction !== 'none') {
       chart.interaction(interaction);
     }
     chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner });
-    chart.filter('x', (_val: any, item: any) => item.checked !== false);
+    chart.filter('x', (_val: NzSafeAny, item: NzSafeAny) => item.checked !== false);
     chart
       .interval()
       .adjust('stack')
@@ -155,14 +167,14 @@ export class G2PieComponent extends G2BaseComponent {
       .color('x', isPercent ? percentColor : colors)
       .tooltip('x*percent', (name: string, p: number) => ({
         name,
-        value: `${hasLegend ? p : (p * 100).toFixed(2)} %`,
+        value: `${hasLegend ? p : (p * 100).toFixed(2)} %`
       }))
       .state({});
     chart.scale({
       x: {
         type: 'cat',
-        range: [0, 1],
-      },
+        range: [0, 1]
+      }
     });
 
     chart.on(`interval:click`, (ev: Event) => {
@@ -190,7 +202,7 @@ export class G2PieComponent extends G2BaseComponent {
     const { hasLegend, isPercent, cdr, _chart } = this;
     if (!hasLegend || isPercent) return;
 
-    this.legendData = _chart.geometries[0].dataArray.map((item: any) => {
+    this.legendData = _chart.geometries[0].dataArray.map((item: NzSafeAny) => {
       const origin = item[0]._origin;
       origin.color = item[0].color;
       origin.checked = true;

@@ -6,13 +6,17 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import type { Chart, Event, Types } from '@antv/g2';
+import { format } from 'date-fns';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { format } from 'date-fns';
 
 export interface G2TimelineData {
   /**
@@ -29,7 +33,7 @@ export interface G2TimelineData {
   y4?: number;
   /** 指标5数据 */
   y5?: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2TimelineMap {
@@ -64,7 +68,7 @@ export interface G2TimelineClickItem {
   `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2TimelineComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -86,7 +90,7 @@ export class G2TimelineComponent extends G2BaseComponent {
   @Input() padding: number[] = [40, 8, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
-  @Output() clickItem = new EventEmitter<G2TimelineClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2TimelineClickItem>();
 
   // #endregion
 
@@ -97,12 +101,12 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
@@ -117,7 +121,7 @@ export class G2TimelineComponent extends G2BaseComponent {
 
     chart.tooltip({
       showCrosshairs: true,
-      shared: true,
+      shared: true
     });
 
     const sliderPadding = { ...[], ...padding };
@@ -128,10 +132,10 @@ export class G2TimelineComponent extends G2BaseComponent {
         start: 0,
         end: 1,
         trendCfg: {
-          isArea: false,
+          isArea: false
         },
         minLimit: 2,
-        formatter: (val: Date) => format(val, maskSlider),
+        formatter: (val: Date) => format(val, maskSlider)
       });
     }
 
@@ -166,13 +170,18 @@ export class G2TimelineComponent extends G2BaseComponent {
       custom: true,
       items: arrAxis.map(id => {
         const key = `y${id}`;
-        return { id: key, name: titleMap[key], value: key, marker: { style: { fill: colorMap[key] } } } as Types.LegendItem;
-      }),
+        return {
+          id: key,
+          name: titleMap[key],
+          value: key,
+          marker: { style: { fill: colorMap[key] } }
+        } as Types.LegendItem;
+      })
     });
 
     // border
     _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap as any)[`y${idx + 1}`]).size(borderWidth);
+      v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
     });
     _chart.height = height;
     _chart.padding = padding;
@@ -193,21 +202,21 @@ export class G2TimelineComponent extends G2BaseComponent {
       scaleOptions[key] = {
         alias: titleMap[key],
         max,
-        min: 0,
+        min: 0
       };
     });
     _chart.scale({
       time: {
         type: 'time',
         mask,
-        range: [0, 1],
+        range: [0, 1]
       },
-      ...scaleOptions,
+      ...scaleOptions
     });
 
     const initialRange = {
       start: data[0]._time,
-      end: data[data.length - 1]._time,
+      end: data[data.length - 1]._time
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
     _chart.changeData(filterData);

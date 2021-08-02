@@ -265,7 +265,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 | `[order]` | 属性顺序 | `string[]` | - |
 | `[asyncData]` | 异步静态数据源 | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
 | `[hidden]` | 是否隐藏渲染 | `boolean` | `false` |
-| `[visibleIf]` | 指定条件时才显示 | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
+| `[visibleIf]` | 指定条件时才显示 | `{ [key: string]: any[] | ((value: any, property: FormProperty) => boolean) }` | - |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
 
 **visibleIf**
@@ -274,7 +274,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 
 - `visibleIf: { shown: [ true ] }`：当 `shown: true` 时才显示当前属性
 - `visibleIf: { shown: [ '$ANY$' ] }`：当 `shown` 包括任意值时
-- `visibleIf: { shown: (value: any) => value > 0 }`：复杂表达式
+- `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`：复杂表达式
 
 ### 校验类
 

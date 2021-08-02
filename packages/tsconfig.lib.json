@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
     "alwaysStrict": true,
@@ -10,13 +10,12 @@
   "files": ["public_api.ts", "typings.d.ts"],
   "exclude": ["*.spec.ts"],
   "angularCompilerOptions": {
-    "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
+    "enableResourceInlining": true,
     "fullTemplateTypeCheck": true,
-    "enableResourceInlining": true
+    "strictTemplates": true,
+    "strictInjectionParameters": true
   }
 }

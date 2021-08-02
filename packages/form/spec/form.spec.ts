@@ -3,13 +3,16 @@ import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconService } from 'ng-zorro-antd/icon';
+
 import { ACLService, DelonACLModule } from '@delon/acl';
 import { createTestContext } from '@delon/testing';
 import { AlainI18NService, AlainThemeModule, ALAIN_I18N_TOKEN, DelonLocaleService, en_US } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { of } from 'rxjs';
+
 import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
@@ -34,7 +37,7 @@ describe('form: component', () => {
     }
     TestBed.configureTestingModule({
       imports,
-      declarations: [TestFormComponent, TestModeComponent],
+      declarations: [TestFormComponent, TestModeComponent]
     });
   }
 
@@ -54,9 +57,8 @@ describe('form: component', () => {
     describe('[default]', () => {
       it('should throw error when parent is not object or array', () => {
         expect(() => {
-          // tslint:disable-next-line: no-string-literal
           const factory = context.comp['formPropertyFactory'] as FormPropertyFactory;
-          factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
+          factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as NzSafeAny, 'a');
         }).toThrowError(`Instanciation of a FormProperty with an unknown parent type: invalid`);
       });
 
@@ -65,9 +67,9 @@ describe('form: component', () => {
           context.schema = {
             properties: {
               a: {
-                type: 'aa' as any,
-              },
-            },
+                type: 'aa' as NzSafeAny
+              }
+            }
           };
           fixture.detectChanges();
         }).toThrowError(`Undefined type aa`);
@@ -84,7 +86,7 @@ describe('form: component', () => {
         expect(() => {
           context.schema = {
             ui: 'string',
-            properties: {},
+            properties: {}
           };
           fixture.detectChanges();
         }).toThrowError(`Don't support string with root ui property`);
@@ -97,8 +99,8 @@ describe('form: component', () => {
           type: 'string',
           properties: {},
           ui: {
-            widget: 'asdf',
-          },
+            widget: 'asdf'
+          }
         };
         fixture.detectChanges();
         expect(console.warn).toHaveBeenCalled();
@@ -110,12 +112,12 @@ describe('form: component', () => {
         context.schema = {
           properties: {
             name: { type: 'string' },
-            age: { type: 'number' },
+            age: { type: 'number' }
           },
           required: ['name', 'age'],
           ui: {
-            debug: true,
-          },
+            debug: true
+          }
         };
         fixture.detectChanges();
         page.setValue('/name', 'a');
@@ -131,12 +133,12 @@ describe('form: component', () => {
               type: 'string',
               ui: { widget: 'date', mode: 'range' },
               title: 'Date',
-              format: 'yyyy-MM-dd HH:mm:ss',
-            },
+              format: 'yyyy-MM-dd HH:mm:ss'
+            }
           },
           ui: {
-            debug: true,
-          },
+            debug: true
+          }
         };
         fixture.detectChanges();
         expect(console.warn).toHaveBeenCalled();
@@ -147,10 +149,10 @@ describe('form: component', () => {
           properties: {
             name: {
               type: 'string',
-              ui: { hidden: true },
-            },
+              ui: { hidden: true }
+            }
           },
-          required: ['name'],
+          required: ['name']
         };
         page.newSchema(s);
         expect(context.comp._schema.required!.indexOf('name') === -1).toBe(true);
@@ -191,11 +193,11 @@ describe('form: component', () => {
       it('should be icon', () => {
         context.button = {
           submit_icon: {
-            type: 'search',
+            type: 'search'
           },
           reset_icon: {
-            type: 'file',
-          },
+            type: 'file'
+          }
         };
         fixture.detectChanges();
         page.checkCount('[type="submit"] .anticon', 1);
@@ -209,10 +211,10 @@ describe('form: component', () => {
                 name: {
                   type: 'string',
                   ui: {
-                    spanLabelFixed: 100,
-                  },
-                },
-              },
+                    spanLabelFixed: 100
+                  }
+                }
+              }
             })
             .checkStyle('.sf-btns .ant-form-item-control', 'margin-left', '100px');
         });
@@ -220,8 +222,8 @@ describe('form: component', () => {
           const span = 11;
           context.button = {
             render: {
-              grid: { span },
-            },
+              grid: { span }
+            }
           };
           fixture.detectChanges();
           page.checkCls('.sf-btns .ant-form-item-control', `ant-col-${span}`);
@@ -230,8 +232,8 @@ describe('form: component', () => {
           const spanLabelFixed = 56;
           context.button = {
             render: {
-              spanLabelFixed,
-            },
+              spanLabelFixed
+            }
           };
           fixture.detectChanges();
           page.checkStyle('.sf-btns .ant-form-item-control', 'margin-left', `${spanLabelFixed}px`);
@@ -302,10 +304,10 @@ describe('form: component', () => {
                   name: {
                     type: 'string',
                     ui: {
-                      spanLabelFixed: 100,
-                    },
-                  },
-                },
+                      spanLabelFixed: 100
+                    }
+                  }
+                }
               })
               .checkStyle('.ant-form-item-label', 'flex', '0 0 100px')
               .checkStyle('.ant-form-item-control', 'maxWidth', 'calc(100% - 100px)');
@@ -318,10 +320,10 @@ describe('form: component', () => {
                     type: 'object',
                     ui: { spanLabelFixed: 98 },
                     properties: {
-                      city: { type: 'string' },
-                    },
-                  },
-                },
+                      city: { type: 'string' }
+                    }
+                  }
+                }
               })
               .checkStyle('.ant-form-item-label', 'flex', '0 0 98px')
               .checkStyle('.ant-form-item-control', 'maxWidth', 'calc(100% - 98px)');
@@ -330,7 +332,7 @@ describe('form: component', () => {
       });
 
       describe('#autocomplete', () => {
-        [null, 'on', 'off'].forEach((type: any) => {
+        [null, 'on', 'off'].forEach((type: NzSafeAny) => {
           it(`with [${type}]`, () => {
             context.autocomplete = type;
             fixture.detectChanges();
@@ -368,18 +370,18 @@ describe('form: component', () => {
       });
 
       it('#disabled', () => {
-        const CLS: { [key: string]: string | Array<NzSafeAny> } = {
+        const CLS: { [key: string]: string | NzSafeAny[] } = {
           input: '.ant-input[disabled]',
           number: '.ant-input-number-disabled',
-          switch: '.ant-switch-disabled',
+          switch: '.ant-switch-disabled'
         };
         page.newSchema({
           properties: {
             ipt: { type: 'string' },
             number: { type: 'number' },
             switch: { type: 'boolean' },
-            select: { type: 'string', enum: ['A'] },
-          },
+            select: { type: 'string', enum: ['A'] }
+          }
         });
         context.disabled = false;
         fixture.detectChanges();
@@ -406,7 +408,7 @@ describe('form: component', () => {
         fixture.detectChanges();
         const CLS = {
           loading: '[data-type="submit"].ant-btn-loading',
-          disabled: '[data-type="reset"][disabled]',
+          disabled: '[data-type="reset"][disabled]'
         };
         page.checkCount(CLS.loading, 0);
         page.checkCount(CLS.disabled, 0);
@@ -434,11 +436,11 @@ describe('form: component', () => {
             {
               properties: {
                 name: { type: 'string' },
-                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } },
-              },
+                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } }
+              }
             },
             {},
-            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] },
+            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] }
           );
           expect(context.comp.value.age == null).toBe(true);
           expect(context.comp.value.arr[0].y == null).toBe(true);
@@ -450,11 +452,11 @@ describe('form: component', () => {
             {
               properties: {
                 name: { type: 'string' },
-                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } },
-              },
+                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } }
+              }
             },
             {},
-            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] },
+            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] }
           );
           expect(context.comp.value.age).toBe(10);
           expect(context.comp.value.arr[0].y).toBe(2);
@@ -491,12 +493,14 @@ describe('form: component', () => {
       it('#size', () => {
         page
           .newSchema({
-            properties: { name: { type: 'string', ui: { size: 'large' } } },
+            properties: { name: { type: 'string', ui: { size: 'large' } } }
           })
           .checkCls('input', 'ant-input-lg');
       });
       it('#disabled', fakeAsync(() => {
-        const el = page.newSchema({ properties: { name: { type: 'string', readOnly: true } } }).getEl('input') as HTMLInputElement;
+        const el = page
+          .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
+          .getEl('input') as HTMLInputElement;
         tick();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
@@ -504,7 +508,7 @@ describe('form: component', () => {
       it('should be custom class', () => {
         page
           .newSchema({
-            properties: { name: { type: 'string', ui: { class: 'test-cls' } } },
+            properties: { name: { type: 'string', ui: { class: 'test-cls' } } }
           })
           .checkCls('sf-string', 'test-cls');
       });
@@ -542,10 +546,10 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }]),
-              },
-            },
-          },
+                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }])
+              }
+            }
+          }
         };
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(false);
@@ -556,10 +560,10 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([]),
-              },
-            },
-          },
+                validator: jasmine.createSpy().and.returnValue([])
+              }
+            }
+          }
         };
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(true);
@@ -570,10 +574,10 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }])),
-              },
-            },
-          },
+                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }]))
+              }
+            }
+          }
         };
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(false);
@@ -585,10 +589,10 @@ describe('form: component', () => {
               a: {
                 type: 'string',
                 ui: {
-                  validator: jasmine.createSpy().and.returnValue([{ keyword: 'required' }]),
-                },
-              },
-            },
+                  validator: jasmine.createSpy().and.returnValue([{ keyword: 'required' }])
+                }
+              }
+            }
           };
           page.newSchema(s);
         }).toThrowError();
@@ -604,13 +608,13 @@ describe('form: component', () => {
                     keyword: 'a',
                     message: 'a-{id}-{invalid}',
                     params: {
-                      id: 10,
-                    },
-                  },
-                ],
-              },
-            },
-          },
+                      id: 10
+                    }
+                  }
+                ]
+              }
+            }
+          }
         };
         page.newSchema(s);
         expect(page.getProperty('/a').errors![0].message).toBe(`a-10-`);
@@ -625,12 +629,12 @@ describe('form: component', () => {
               type: 'string',
               ui: {
                 errors: {
-                  required: 'REQUEST',
-                },
-              },
-            },
+                  required: 'REQUEST'
+                }
+              }
+            }
           },
-          required: ['a'],
+          required: ['a']
         };
         page.newSchema(s);
         expect(page.getProperty('/a').errors![0].message).toBe('REQUEST');
@@ -643,16 +647,16 @@ describe('form: component', () => {
               type: 'string',
               ui: {
                 errors: {
-                  required: jasmine.createSpy().and.returnValue('A'),
-                },
-              },
-            },
+                  required: jasmine.createSpy().and.returnValue('A')
+                }
+              }
+            }
           },
-          required: ['a'],
+          required: ['a']
         };
         page.newSchema(s);
         expect(page.getProperty('/a').errors![0].message).toBe('A');
-        expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
+        expect((s.properties!.a.ui as NzSafeAny).errors.required).toHaveBeenCalled();
       });
 
       it('should be i18n', () => {
@@ -661,7 +665,7 @@ describe('form: component', () => {
         const s: SFSchema = {
           properties: {
             a: {
-              type: 'string',
+              type: 'string'
             },
             arr: {
               type: 'array',
@@ -669,14 +673,14 @@ describe('form: component', () => {
                 type: 'object',
                 properties: {
                   name: {
-                    type: 'string',
-                  },
+                    type: 'string'
+                  }
                 },
-                required: ['name'],
-              },
-            },
+                required: ['name']
+              }
+            }
           },
-          required: ['a'],
+          required: ['a']
         };
         page.newSchema(s, undefined, { a: '', arr: [{ name: '' }] });
         expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
@@ -693,10 +697,10 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                showRequired: true,
-              },
-            },
-          },
+                showRequired: true
+              }
+            }
+          }
         };
         page.newSchema(s).checkCount('.ant-form-item-required', 1);
       });
@@ -708,9 +712,9 @@ describe('form: component', () => {
               type: 'number',
               title: '单价',
               multipleOf: 0.01,
-              default: 0.011,
-            },
-          },
+              default: 0.011
+            }
+          }
         };
         page.newSchema(s).checkError(`应当是 0.01 的整数倍`);
       });
@@ -735,7 +739,7 @@ describe('form: component', () => {
     it('should be custom text of search', () => {
       context.mode = 'search';
       context.button = {
-        search: 'SEARCH',
+        search: 'SEARCH'
       };
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SEARCH');
@@ -743,7 +747,7 @@ describe('form: component', () => {
     it('should be custom text of edit', () => {
       context.mode = 'edit';
       context.button = {
-        edit: 'SAVE',
+        edit: 'SAVE'
       };
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SAVE');
@@ -764,11 +768,11 @@ describe('form: component', () => {
           a: {
             type: 'string',
             ui: {
-              acl: 'admin',
-            },
-          },
+              acl: 'admin'
+            }
+          }
         },
-        required: ['a'],
+        required: ['a']
       };
       page.newSchema(s);
       page.checkUI('/a', 'hidden', false);
@@ -790,7 +794,7 @@ describe('form: component', () => {
       spyOn(i18n, 'fanyi').and.callFake(((key: string) => {
         if (key === 'null') return null;
         return lang === 'en' ? key : `zh-${key}`;
-      }) as any);
+      }) as NzSafeAny);
       const s: SFSchema = {
         properties: {
           a: {
@@ -801,18 +805,18 @@ describe('form: component', () => {
               i18n: 'i18n',
               descriptionI18n: 'descriptionI18n',
               optionalHelp: {
-                i18n: 'ohi18n',
-              },
-            },
+                i18n: 'ohi18n'
+              }
+            }
           },
           b: {
             type: 'string',
             title: 'a',
             ui: {
-              i18n: 'null',
-            },
-          },
-        },
+              i18n: 'null'
+            }
+          }
+        }
       };
       page.newSchema(s);
       page
@@ -821,7 +825,7 @@ describe('form: component', () => {
         .checkSchema('/a', 'description', 'descriptionI18n')
         .checkUI('/a', 'optionalHelp.text', 'ohi18n');
       lang = 'zh';
-      i18n.use(lang);
+      i18n.use(lang, {});
       page
         .checkSchema('/a', 'title', 'zh-i18n')
         .checkSchema('/a', 'description', 'zh-descriptionI18n')
@@ -831,6 +835,8 @@ describe('form: component', () => {
 });
 
 @Component({
-  template: ` <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf> `,
+  template: `
+    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf>
+  `
 })
 class TestModeComponent extends TestFormComponent {}

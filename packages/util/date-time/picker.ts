@@ -1,4 +1,6 @@
 import { addDays, addSeconds, differenceInCalendarDays, format } from 'date-fns';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledDateFn, DisabledTimeConfig, DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 
 // TODO: timezone process
@@ -44,7 +46,10 @@ export class DateTimePickerUtil {
    * 计算两个日期相差天数，`0` 表示同一天
    */
   getDiffDays(dateLeft: Date | number, dateRight?: Date | number): number {
-    return differenceInCalendarDays(dateLeft, typeof dateRight === 'number' ? addDays(this.date, dateRight) : dateRight || this.date);
+    return differenceInCalendarDays(
+      dateLeft,
+      typeof dateRight === 'number' ? addDays(this.date, dateRight) : dateRight || this.date
+    );
   }
   /**
    * Disabled Before date (Default: today), Generally serves `nzDisabledDate`
@@ -68,7 +73,7 @@ export class DateTimePickerUtil {
     return (current): DisabledTimeConfig => {
       const cur = current as Date;
       if (cur == null) {
-        return {} as any;
+        return {} as NzSafeAny;
       }
       const now = addSeconds(this.now, offsetSeconds || 0);
       const nowHours = now.getHours();
@@ -92,7 +97,7 @@ export class DateTimePickerUtil {
             return type === 'before' ? tick60.slice(0, nowSeconds) : tick60.slice(nowSeconds + 1);
           }
           return [];
-        },
+        }
       };
     };
   }

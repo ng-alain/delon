@@ -2,9 +2,11 @@ import { Directionality } from '@angular/cdk/bidi';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy, Optional } from '@angular/core';
-import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
+
+import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
+
 import { LoadingDefaultComponent } from './loading.component';
 import { LoadingShowOptions } from './loading.types';
 
@@ -21,16 +23,20 @@ export class LoadingService implements OnDestroy {
     return this.compRef != null ? this.compRef.instance : null;
   }
 
-  constructor(private overlay: Overlay, private configSrv: AlainConfigService, @Optional() private directionality: Directionality) {
+  constructor(
+    private overlay: Overlay,
+    private configSrv: AlainConfigService,
+    @Optional() private directionality: Directionality
+  ) {
     this.cog = configSrv.merge('loading', {
       type: 'spin',
       text: '加载中...',
       icon: {
         type: 'loading',
         theme: 'outline',
-        spin: true,
+        spin: true
       },
-      delay: 0,
+      delay: 0
     })!;
     this.loading$ = this.n$
       .asObservable()
@@ -47,7 +53,7 @@ export class LoadingService implements OnDestroy {
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
       scrollStrategy: this.overlay.scrollStrategies.block(),
       hasBackdrop: true,
-      backdropClass: 'loading-backdrop',
+      backdropClass: 'loading-backdrop'
     });
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
     const dir = this.configSrv.get('loading')!.direction || this.directionality.value;

@@ -1,7 +1,11 @@
 import { TemplateRef } from '@angular/core';
-import { ACLCanType } from '@delon/acl';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
+import type { NgClassType, NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
+import type { ACLCanType } from '@delon/acl';
+
 import { ErrorSchema } from '../errors';
+import type { FormProperty } from '../model/form.property';
 
 export type SFPlacement =
   | 'top'
@@ -64,7 +68,7 @@ export interface SFRenderSchema {
   /**
    * 自定义类，等同 `[ngClass]` 值
    */
-  class?: string | string[];
+  class?: NgClassType;
   /**
    * 元素组件大小
    */
@@ -99,7 +103,7 @@ export interface SFOptionalHelp {
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   overlayClassName?: string;
-  overlayStyle?: { [key: string]: string };
+  overlayStyle?: NgStyleInterface;
 }
 
 export interface SFHorizontalLayoutSchema {
@@ -143,7 +147,7 @@ export interface SFSchemaI18n {
 
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema, SFSchemaI18n {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */
   debug?: boolean;
@@ -170,9 +174,9 @@ export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema
    * 有效格式包括：
    * - `visibleIf: { shown: [ true ] }`：当 `shown: true` 时才显示当前属性
    * - `visibleIf: { shown: [ '$ANY$' ] }`：当 `shown` 包括任意值时
-   * - `visibleIf: { shown: (value: any) => value > 0 }`：复杂表达式
+   * - `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`：复杂表达式
    */
-  visibleIf?: { [key: string]: any[] | ((value: any) => boolean) };
+  visibleIf?: { [key: string]: NzSafeAny[] | ((value: NzSafeAny, property: FormProperty) => boolean) };
 
   /**
    * ACL 配置

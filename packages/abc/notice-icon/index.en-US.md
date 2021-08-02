@@ -30,7 +30,7 @@ Used on the navigation toolbar as a unified notification center for the entire p
 |----------|-------------|------|---------|
 | `[title]` | Title of the item | `string` | - |
 | `[list]` | List data of the item | `NoticeIconList[]` | - |
-| `[emptyText]` | Customize empty data copy for each tab | `string` | `无通知` |
+| `[emptyText]` | Customize empty data copy for each tab | `string | TemplateRef<void>` | `无通知` |
 | `[emptyImage]` | Customize the empty data image for each Tab | `string` | - |
 | `[clearText]` | Clear button text for each Tab | `string` | `清空` |
 
@@ -39,8 +39,8 @@ Used on the navigation toolbar as a unified notification center for the entire p
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[avatar]` | Avatar image link of the icon | `string` | - |
-| `[title]` | Title of the icon | `string` | - |
-| `[description]` | Description of the icon | `string` | - |
+| `[title]` | Title of the icon | `string | TemplateRef<{ $implicit: NoticeIconList }>` | - |
+| `[description]` | Description of the icon | `string | TemplateRef<{ $implicit: NoticeIconList }>` | - |
 | `[datetime]` | Timestamp of the icon | `string` | - |
 | `[extra]` | Additional information, in the upper right corner of the icon | `string` | - |
 | `[read]` | Whether readed status of the item | `boolean` | - |

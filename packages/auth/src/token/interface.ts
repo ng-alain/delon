@@ -1,16 +1,19 @@
 import { InjectionToken } from '@angular/core';
-import { AlainAuthConfig } from '@delon/util/config';
 import { Observable } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainAuthConfig } from '@delon/util/config';
+
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
 export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TOKEN', {
   providedIn: 'root',
-  factory: DA_SERVICE_TOKEN_FACTORY,
+  factory: DA_SERVICE_TOKEN_FACTORY
 });
 
-// tslint:disable-next-line: interface-name
 export interface ITokenModel {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   token: string | null | undefined;
 
@@ -25,7 +28,6 @@ export interface AuthReferrer {
   url?: string | null | undefined;
 }
 
-// tslint:disable-next-line: interface-name
 export interface ITokenService {
   /**
    * 授权失败后跳转路由路径（支持外部链接地址），通过设置[全局配置](https://ng-alain.com/docs/global-config)来改变
@@ -56,14 +58,14 @@ export interface ITokenService {
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
-  get(type?: any): ITokenModel | null;
+  get(type?: NzSafeAny): ITokenModel | null;
 
   /**
    * 获取Token，形式包括：
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
-  get<T extends ITokenModel>(type?: any): T;
+  get<T extends ITokenModel>(type?: NzSafeAny): T;
 
   /**
    * 清除 Token 信息，当用户退出登录时调用。

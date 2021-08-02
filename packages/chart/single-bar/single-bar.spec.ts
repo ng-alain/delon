@@ -1,6 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { checkDelay, PageG2 } from '@delon/testing';
+
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
 
@@ -48,7 +52,7 @@ describe('chart: single-bar', () => {
       [textStyle]="textStyle"
       [delay]="delay"
     ></g2-single-bar>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2SingleBarComponent;
@@ -61,7 +65,7 @@ class TestComponent {
   max = 100;
   line = false;
   format: (value: number) => string;
-  padding: any = 0;
-  textStyle: any = { fontSize: 12, color: '#595959' };
+  padding: NzSafeAny = 0;
+  textStyle: NzSafeAny = { fontSize: 12, color: '#595959' };
   delay = 0;
 }

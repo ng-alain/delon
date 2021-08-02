@@ -2,6 +2,8 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface CookieOptions {
   path?: string;
   domain?: string;
@@ -36,7 +38,7 @@ export class CookieService {
     return this.platform.isBrowser ? this.doc.cookie : '';
   }
 
-  constructor(@Inject(DOCUMENT) private _doc: any, private platform: Platform) {}
+  constructor(@Inject(DOCUMENT) private _doc: NzSafeAny, private platform: Platform) {}
 
   /**
    * Get all cookie key-value pairs
@@ -46,7 +48,6 @@ export class CookieService {
   getAll(): { [key: string]: string } {
     const ret: { [key: string]: string } = {};
     const arr = this.cookie.split('; ');
-    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < arr.length; i++) {
       const cookie = arr[i];
       const index = cookie.indexOf('=');
@@ -85,12 +86,14 @@ export class CookieService {
     if (typeof opt.expires !== 'string') {
       opt.expires = opt.expires ? opt.expires.toUTCString() : '';
     }
-    const optStr: { [key: string]: string | boolean } = opt as any;
+    const optStr: { [key: string]: string | boolean } = opt as NzSafeAny;
     const attributes = Object.keys(optStr)
       .filter(k => optStr[k] && optStr[k] !== true)
       .map(k => `${k}=${(optStr[k] as string).split(';')[0]}`)
       .join(';');
-    this.doc.cookie = encodeURIComponent(String(key)) + '=' + encodeURIComponent(String(value)) + (attributes ? '; ' + attributes : '');
+    this.doc.cookie = `${encodeURIComponent(String(key))}=${encodeURIComponent(String(value))}${
+      attributes ? `; ${attributes}` : ''
+    }`;
   }
 
   /**

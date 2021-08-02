@@ -24,7 +24,6 @@ You can to [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/sty
 | `@scrollbar-enabled` | `true` | Enable landscaping scrollbars |
 | `@preserve-white-spaces-enabled` | `true` | Fixed between buttons spacing when enabled [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) is true |
 | `@form-state-visual-feedback-enabled` | `false` | Turn on visual feedback of form invalid elements |
-| `@badge-enabled` | `true` | Whether bootstrap badge |
 | `@hafl-enabled` | `true` | Whether hafl image |
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |

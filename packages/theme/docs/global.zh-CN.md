@@ -52,6 +52,22 @@ title: 全局参数
 | `@scrollbar-thumb-color` | `#6e6e6e` | 美化滚动条小方块颜色 |
 | `@scrollbar-table-enabled` | `false` | 启用美化表格滚动条 |
 | `@rtl-enabled` | `false` | 是否支持 RTL |
+| `@enabled-util-align` | `true` | 是否启用工具类 align |
+| `@enabled-util-border` | `true` | 是否启用工具类 border |
+| `@enabled-util-code` | `true` | 是否启用工具类 code |
+| `@enabled-util-color` | `true` | 是否启用工具类 color |
+| `@enabled-util-display` | `true` | 是否启用工具类 display |
+| `@enabled-util-float` | `true` | 是否启用工具类 float |
+| `@enabled-util-icon` | `true` | 是否启用工具类 icon |
+| `@enabled-util-img` | `true` | 是否启用工具类 img |
+| `@enabled-util-position` | `true` | 是否启用工具类 position |
+| `@enabled-util-overflow` | `true` | 是否启用工具类 overflow |
+| `@enabled-util-responsive` | `true` | 是否启用工具类 responsive |
+| `@enabled-util-spacing` | `true` | 是否启用工具类 spacing |
+| `@enabled-util-text` | `true` | 是否启用工具类 text |
+| `@enabled-util-width` | `true` | 是否启用工具类 width |
+| `@enabled-util-scrollbar` | `true` | 是否启用工具类 scrollbar |
+| `@enabled-util-other` | `true` | 是否启用工具类 other |
 
 ## Ng补丁
 
@@ -106,7 +122,6 @@ title: 全局参数
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
-| `@badge-enabled` | `true` | bootstrap徽章 |
 | `@hafl-enabled` | `true` | 半图 |
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |

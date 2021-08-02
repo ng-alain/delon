@@ -14,16 +14,19 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
+import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { helpMotion } from 'ng-zorro-antd/core/animation';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+
 import { SEContainerComponent } from './se-container.component';
 import { SEError, SEErrorType } from './se.types';
 
@@ -38,12 +41,12 @@ let nextUniqueId = 0;
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
     '[class.ant-form-item-has-error]': 'invalid',
-    '[class.ant-form-item-with-help]': 'showErr',
+    '[class.ant-form-item-with-help]': 'showErr'
   },
   preserveWhitespaces: false,
   animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   static ngAcceptInputType_col: NumberInput;
@@ -115,7 +118,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     @Optional() @Host() private parent: SEContainerComponent,
     private rep: ResponsiveService,
     private ren: Renderer2,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     if (parent == null) {
       throw new Error(`[se] must include 'se-container' component`);
@@ -124,7 +127,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     parent.errorNotify
       .pipe(
         takeUntil(this.unsubscribe$),
-        filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name),
+        filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
       )
       .subscribe(item => {
         this.error = item.error;
@@ -137,7 +140,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    const repCls = parent.nzLayout === 'horizontal' ? rep.genCls(col != null ? col : parent.colInCon || parent.col) : [];
+    const repCls =
+      parent.nzLayout === 'horizontal' ? rep.genCls(col != null ? col : parent.colInCon || parent.col) : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (line || parent.line) {
       clsMap.push(`${prefixCls}__line`);
@@ -151,7 +155,9 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (!this.ngControl || this.isBindModel) return;
 
     this.isBindModel = true;
-    this.ngControl.statusChanges!.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.updateStatus(res === 'INVALID'));
+    this.ngControl
+      .statusChanges!.pipe(takeUntil(this.unsubscribe$))
+      .subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
@@ -165,7 +171,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     }
     // auto required
     if (this.required !== true) {
-      const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Array<Validator>;
+      const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Validator[];
       this.required = rawValidators.find(w => w instanceof RequiredValidator) != null;
       this.cdr.detectChanges();
     }
@@ -175,7 +181,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (this.ngControl.disabled || this.ngControl.isDisabled) {
       return;
     }
-    this.invalid = !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl.dirty ? false : invalid;
+    this.invalid =
+      !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl.dirty ? false : invalid;
     const errors = this.ngControl.errors;
     if (errors != null && Object.keys(errors).length > 0) {
       const key = Object.keys(errors)[0] || '';

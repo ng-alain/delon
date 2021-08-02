@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -10,7 +13,7 @@ import { SFCascaderWidgetSchema } from './schema';
   selector: 'sf-cascader',
   templateUrl: './cascader.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   clearText: string;
@@ -18,7 +21,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
-  loadData: (node: NzCascaderOption, index: number) => PromiseLike<any>;
+  loadData: (node: NzCascaderOption, index: number) => PromiseLike<NzSafeAny>;
 
   ngOnInit(): void {
     const { clearText, showArrow, showInput, triggerAction, asyncData } = this.ui;
@@ -27,7 +30,8 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.showInput = toBool(showInput, true);
     this.triggerAction = triggerAction || ['click'];
     if (!!asyncData) {
-      this.loadData = (node: NzCascaderOption, index: number) => asyncData(node, index, this).then(() => this.detectChanges());
+      this.loadData = (node: NzCascaderOption, index: number) =>
+        asyncData(node, index, this).then(() => this.detectChanges());
     }
   }
 
@@ -42,7 +46,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     if (this.ui.visibleChange) this.ui.visibleChange(status);
   }
 
-  _change(value: any[] | null): void {
+  _change(value: NzSafeAny[] | null): void {
     this.setValue(value);
     if (this.ui.change) {
       this.ui.change(value);

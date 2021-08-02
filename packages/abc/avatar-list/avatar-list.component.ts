@@ -10,12 +10,15 @@ import {
   OnDestroy,
   Optional,
   QueryList,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
+import { InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
@@ -24,11 +27,11 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   templateUrl: './avatar-list.component.html',
   host: {
     '[class.avatar-list]': 'true',
-    '[class.avatar-list-rtl]': `dir === 'rtl'`,
+    '[class.avatar-list-rtl]': `dir === 'rtl'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_maxLength: NumberInput;
@@ -46,7 +49,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
   avatarSize: NzSizeLDSType = 'default';
   @Input()
   set size(value: 'large' | 'small' | 'mini' | 'default') {
-    this.cls = 'avatar-list__item' + (value === 'default' ? '' : ` avatar-list__${value}`);
+    this.cls = `avatar-list__item${value === 'default' ? '' : ` avatar-list__${value}`}`;
     switch (value) {
       case 'large':
       case 'small':
@@ -59,7 +62,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
     }
   }
   @Input() @InputNumber() maxLength = 0;
-  @Input() excessItemsStyle: { [klass: string]: any };
+  @Input() excessItemsStyle: NgStyleInterface;
 
   constructor(private cdr: ChangeDetectorRef, @Optional() private directionality: Directionality) {}
 

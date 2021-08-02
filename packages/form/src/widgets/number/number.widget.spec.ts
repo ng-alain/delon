@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
@@ -21,7 +23,7 @@ describe('form: widget: number', () => {
   it('#setValue', fakeAsync(() => {
     page
       .newSchema({
-        properties: { a: { type: 'number', default: 1 } },
+        properties: { a: { type: 'number', default: 1 } }
       })
       .dc(1)
       .checkInput('.ant-input-number-input', '1')
@@ -31,14 +33,14 @@ describe('form: widget: number', () => {
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = {
-      properties: { a: { type: 'number', default: 1 } },
+      properties: { a: { type: 'number', default: 1 } }
     };
     page.newSchema(s).checkValue('a', 1);
   });
 
   it('when value is string', () => {
     const s: SFSchema = {
-      properties: { a: { type: 'number', default: 1 } },
+      properties: { a: { type: 'number', default: 1 } }
     };
     const property = page.newSchema(s).getProperty('/a');
     expect(property.value).toBe(1);
@@ -55,7 +57,7 @@ describe('form: widget: number', () => {
       const minimum = 10;
       const maximum = 100;
       const s: SFSchema = {
-        properties: { a: { type: 'number', minimum, maximum, default: 1 } },
+        properties: { a: { type: 'number', minimum, maximum, default: 1 } }
       };
       page
         .newSchema(s)
@@ -77,9 +79,9 @@ describe('form: widget: number', () => {
             exclusiveMinimum: true,
             maximum,
             exclusiveMaximum: true,
-            default: 1,
-          },
-        },
+            default: 1
+          }
+        }
       };
       page
         .newSchema(s)
@@ -94,7 +96,7 @@ describe('form: widget: number', () => {
       const minimum = 10.8;
       const maximum = 100.8;
       const s: SFSchema = {
-        properties: { a: { type: 'integer', minimum, maximum, default: 1 } },
+        properties: { a: { type: 'integer', minimum, maximum, default: 1 } }
       };
       page
         .newSchema(s)
@@ -110,7 +112,7 @@ describe('form: widget: number', () => {
   describe('[ui]', () => {
     it('#prefix', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } },
+        properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } }
       };
       const property = page.newSchema(s).getProperty('/a');
       page.typeChar(1);
@@ -123,7 +125,7 @@ describe('form: widget: number', () => {
 
     it('#unit', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: 1, ui: { unit: 'b' } } },
+        properties: { a: { type: 'number', default: 1, ui: { unit: 'b' } } }
       };
       const property = page.newSchema(s).getProperty('/a');
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
@@ -136,11 +138,11 @@ describe('form: widget: number', () => {
 
     it('#formatter & #parser', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: 1 } },
+        properties: { a: { type: 'number', default: 1 } }
       };
       const ui = (s.properties!.a.ui = {
         formatter: jasmine.createSpy('formatter'),
-        parser: jasmine.createSpy('parser'),
+        parser: jasmine.createSpy('parser')
       });
       page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();

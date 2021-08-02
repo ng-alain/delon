@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { LazyService } from './lazy.service';
 
 let isIE = false;
@@ -20,14 +22,14 @@ class MockDocument {
             return;
           }
           node.onerror();
-        },
-      },
+        }
+      }
     ];
   };
   createElement = () => {
-    const ret: any = {
+    const ret: NzSafeAny = {
       testStatus,
-      onload: () => {},
+      onload: () => {}
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
@@ -41,7 +43,7 @@ describe('utils: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     TestBed.configureTestingModule({
-      providers: [{ provide: DOCUMENT, useClass: MockDocument }],
+      providers: [{ provide: DOCUMENT, useClass: MockDocument }]
     });
     srv = TestBed.inject(LazyService);
     srv.clear();
@@ -87,7 +89,7 @@ describe('utils: lazy', () => {
       srv.load('/1.js');
     });
     it('should be custom content', () => {
-      const res: any = {};
+      const res: NzSafeAny = {};
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);
       srv.loadScript('/1.js', content);
@@ -110,8 +112,8 @@ describe('utils: lazy', () => {
       });
     });
     it('should be custom content', () => {
-      const res: any = {
-        onerror(): void {},
+      const res: NzSafeAny = {
+        onerror(): void {}
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);

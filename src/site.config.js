@@ -523,7 +523,7 @@ module.exports = {
       },
       dir: [
         {
-          src: ['./packages/schematics/docs'],
+          src: ['./schematics/docs'],
           template: {
             content: './src/templates/content.ts',
           },
@@ -583,6 +583,14 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           reName: 'layout-blank',
+          hasSubDir: false,
+        },
+        {
+          src: ['./packages/theme/theme-btn'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          reName: 'theme-btn',
           hasSubDir: false,
         },
         {

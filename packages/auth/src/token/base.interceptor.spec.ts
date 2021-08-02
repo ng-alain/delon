@@ -1,29 +1,41 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
-function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
-  const model: any = new modelType();
+function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): NzSafeAny {
+  const model: NzSafeAny = new modelType();
   model.token = token;
   model.uid = 1;
   return model;
 }
 
 class MockTokenService implements ITokenService {
-  [key: string]: any;
-  _data: any;
-  options: any;
+  [key: string]: NzSafeAny;
+  _data: NzSafeAny;
+  options: NzSafeAny;
   referrer: AuthReferrer = {};
   refresh: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
@@ -33,7 +45,7 @@ class MockTokenService implements ITokenService {
   get(): ITokenModel {
     return this._data;
   }
-  change(): any {
+  change(): NzSafeAny {
     return null;
   }
   clear(): void {
@@ -46,11 +58,11 @@ class MockTokenService implements ITokenService {
 
 let otherRes = new HttpResponse();
 class OtherInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
     return next.handle(req.clone()).pipe(
       catchError(() => {
         return throwError(otherRes);
-      }),
+      })
     );
   }
 }
@@ -61,11 +73,11 @@ describe('auth: base.interceptor', () => {
   let router: Router;
   const MockDoc = {
     location: {
-      href: '',
-    },
+      href: ''
+    }
   };
 
-  function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
+  function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: NzSafeAny[] = []): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
@@ -74,10 +86,10 @@ describe('auth: base.interceptor', () => {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,
-          multi: true,
+          multi: true
         },
-        { provide: DA_SERVICE_TOKEN, useClass: MockTokenService },
-      ].concat(provider),
+        { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
+      ].concat(provider)
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
@@ -132,7 +144,7 @@ describe('auth: base.interceptor', () => {
           http
             .get('https://ng-alain.com/api/user', {
               responseType: 'text',
-              params: { _allow_anonymous: '' },
+              params: { _allow_anonymous: '' }
             })
             .subscribe(done);
           const ret = httpBed.expectOne(() => true);
@@ -151,7 +163,9 @@ describe('auth: base.interceptor', () => {
         });
         it(`(full url)`, done => {
           genModule({}, genModel(SimpleTokenModel, null));
-          http.get('https://ng-alain.com/api/user?a=1&_allow_anonymous=1&other=a&cn=中文', { responseType: 'text' }).subscribe(done);
+          http
+            .get('https://ng-alain.com/api/user?a=1&_allow_anonymous=1&other=a&cn=中文', { responseType: 'text' })
+            .subscribe(done);
           const ret = httpBed.expectOne(() => true);
           expect(ret.request.url).toBe(`https://ng-alain.com/api/user?a=1&other=a&cn=%E4%B8%AD%E6%96%87`);
           expect(ret.request.headers.get('Authorization')).toBeNull();
@@ -170,13 +184,13 @@ describe('auth: base.interceptor', () => {
             expect(false).toBe(true);
             done();
           },
-          (err: any) => {
+          (err: NzSafeAny) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
               done();
             }, 20);
-          },
+          }
         );
       });
       it('with location', done => {
@@ -187,13 +201,13 @@ describe('auth: base.interceptor', () => {
             expect(false).toBe(true);
             done();
           },
-          (err: any) => {
+          (err: NzSafeAny) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
               done();
             }, 20);
-          },
+          }
         );
       });
     });
@@ -205,10 +219,10 @@ describe('auth: base.interceptor', () => {
           expect(false).toBe(true);
           done();
         },
-        (err: any) => {
+        (err: NzSafeAny) => {
           expect(err.status).toBe(401);
           done();
-        },
+        }
       );
     });
   });
@@ -226,7 +240,7 @@ describe('auth: base.interceptor', () => {
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe('/');
           done();
-        },
+        }
       );
     });
   });
@@ -234,7 +248,7 @@ describe('auth: base.interceptor', () => {
   describe('[executeOtherInterceptors]', () => {
     beforeEach(() => {
       genModule({ executeOtherInterceptors: true }, genModel(SimpleTokenModel, null), [
-        { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true }
       ]);
     });
 
@@ -249,7 +263,7 @@ describe('auth: base.interceptor', () => {
         err => {
           expect(err.body.a).toBe(1);
           done();
-        },
+        }
       );
     });
   });

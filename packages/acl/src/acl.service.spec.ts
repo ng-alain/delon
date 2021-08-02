@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
@@ -11,13 +13,20 @@ describe('acl: service', () => {
   let srv: ACLService;
 
   beforeEach(() => {
-    srv = new ACLService({ merge: (_: any, def: any) => def } as any);
+    srv = new ACLService({ merge: (_: NzSafeAny, def: NzSafeAny) => def } as NzSafeAny);
     srv.set({ role: [ADMIN] } as ACLType);
   });
 
   it(`#set()`, () => {
     expect(srv.can(ADMIN)).toBe(true);
     expect(srv.can(USER)).toBe(false);
+  });
+
+  it('should be cancel full when call set', () => {
+    srv.setFull(true);
+    expect(srv.can(ADMIN)).toBe(true);
+    srv.set([USER]);
+    expect(srv.can(ADMIN)).toBe(false);
   });
 
   it(`#setFull() set [true]`, () => {
@@ -35,7 +44,7 @@ describe('acl: service', () => {
   it(`#setAbility() set [${ABILITY}]`, () => {
     srv.setAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true);
-    expect(srv.canAbility(ABILITY + `1`)).toBe(false);
+    expect(srv.canAbility(`${ABILITY}1`)).toBe(false);
   });
 
   it(`#setRole()`, () => {
@@ -46,7 +55,7 @@ describe('acl: service', () => {
   it(`#add()`, () => {
     srv.add({
       role: ['NEWROLE'],
-      ability: ['NEWABILITY'],
+      ability: ['NEWABILITY']
     });
     expect(srv.can(ADMIN)).toBe(true);
     expect(srv.can('NEWROLE')).toBe(true);
@@ -84,18 +93,18 @@ describe('acl: service', () => {
   describe('#can()', () => {
     it('should working', () => {
       srv.attachAbility([ABILITY_NUMBER]);
-      expect(srv.can(ADMIN)).toBe(true, 'can ' + ADMIN);
+      expect(srv.can(ADMIN)).toBe(true, `can ${ADMIN}`);
       expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
       expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
       expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
       expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true, 'ACLType item muse be true');
-      expect(srv.can(ADMIN + '1')).toBe(false);
+      expect(srv.can(`${ADMIN}1`)).toBe(false);
       expect(srv.can(null)).toBe(true);
       expect(srv.can({})).toBe(false);
     });
     it('should be allow ability is string in can method by preCan', () => {
       const preCanSpy = jasmine.createSpy();
-      srv = new ACLService({ merge: () => ({ preCan: preCanSpy }) } as any);
+      srv = new ACLService({ merge: () => ({ preCan: preCanSpy }) } as NzSafeAny);
       srv.attachAbility([ABILITY_CREATE]);
       srv.can(ABILITY_CREATE);
       expect(preCanSpy).toHaveBeenCalled();
@@ -116,7 +125,7 @@ describe('acl: service', () => {
     srv.attachAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true, 'should be support number or string type');
     expect(srv.canAbility([ABILITY])).toBe(true, 'should be support array type');
-    expect(srv.canAbility(ADMIN + '1')).toBe(false, 'should be invalid ability');
+    expect(srv.canAbility(`${ADMIN}1`)).toBe(false, 'should be invalid ability');
   });
 
   it('should be valid when all of for is array roles', () => {

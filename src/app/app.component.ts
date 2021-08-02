@@ -1,13 +1,16 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { I18NService, MetaService, MobileService } from '@core';
-import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+
+import { I18NService, LangType, MetaService, MobileService } from '@core';
+
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
+
+import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 
 @Component({
   selector: 'app-root',
-  template: ` <router-outlet></router-outlet>`,
+  template: ` <router-outlet></router-outlet>`
 })
 export class AppComponent {
   @HostBinding('class.mobile')
@@ -24,7 +27,7 @@ export class AppComponent {
     title: TitleService,
     router: Router,
     mobileSrv: MobileService,
-    breakpointObserver: BreakpointObserver,
+    breakpointObserver: BreakpointObserver
   ) {
     renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
     renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
@@ -64,7 +67,7 @@ export class AppComponent {
 
         // update i18n
         if (i18n.currentLang !== lang) {
-          i18n.use(lang as any);
+          i18n.use(lang as LangType);
           meta.clearMenu();
         }
         meta.refMenu(url);

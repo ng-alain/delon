@@ -1,7 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
-import { G2BarComponent } from './bar.component';
+
+import { G2BarComponent, G2BarData } from './bar.component';
 import { G2BarModule } from './bar.module';
 
 describe('chart: bar', () => {
@@ -43,7 +47,7 @@ describe('chart: bar', () => {
       const color = '#f50';
       page.context.color = color;
       page.dc();
-      expect((page.chart.geometries[0] as any).attributeOption.color.callback(1, 1)).toBe(color);
+      expect((page.chart.geometries[0] as NzSafeAny).attributeOption.color.callback(1, 1)).toBe(color);
     });
 
     it('#padding', () => {
@@ -83,11 +87,11 @@ describe('chart: bar', () => {
       (clickItem)="clickItem($event)"
     ></g2-bar>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
-  `,
+  `
 })
 class TestComponent implements OnInit {
   @ViewChild('comp', { static: true }) comp: G2BarComponent;
-  data: any[] = [];
+  data: G2BarData[] = [];
   delay = 0;
   @ViewChild('titleTpl', { static: true }) titleTpl: TemplateRef<void>;
   title: string | TemplateRef<void> | null = 'title';
@@ -100,7 +104,7 @@ class TestComponent implements OnInit {
     for (let i = 0; i < PageG2DataCount; i += 1) {
       this.data.push({
         x: `${i + 1}月`,
-        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200,
+        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
       });
     }
   }

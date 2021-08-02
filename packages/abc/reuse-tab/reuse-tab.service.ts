@@ -6,12 +6,15 @@ import {
   NavigationEnd,
   NavigationStart,
   Router,
-  ROUTER_CONFIGURATION,
+  ROUTER_CONFIGURATION
 } from '@angular/router';
+import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+
 import {
   ReuseComponentRef,
   ReuseHookOnReuseInitType,
@@ -20,7 +23,7 @@ import {
   ReuseTabMatchMode,
   ReuseTabNotify,
   ReuseTabRouteParamMatchMode,
-  ReuseTitle,
+  ReuseTitle
 } from './reuse-tab.interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -105,7 +108,7 @@ export class ReuseTabService implements OnDestroy {
       active: 'title',
       url,
       title: value,
-      list: this._cached,
+      list: this._cached
     });
   }
   /** 获取指定路径缓存所在位置，`-1` 表示无缓存 */
@@ -183,6 +186,7 @@ export class ReuseTabService implements OnDestroy {
   }
   /**
    * 移动缓存数据
+   *
    * @param url 要移动的URL地址
    * @param position 新位置，下标从 `0` 开始
    *
@@ -208,7 +212,7 @@ export class ReuseTabService implements OnDestroy {
       active: 'move',
       url,
       position,
-      list: this._cached,
+      list: this._cached
     });
   }
   /**
@@ -241,7 +245,7 @@ export class ReuseTabService implements OnDestroy {
     if (route && route.data && (route.data.titleI18n || route.data.title)) {
       return {
         text: route.data.title,
-        i18n: route.data.titleI18n,
+        i18n: route.data.titleI18n
       } as ReuseTitle;
     }
 
@@ -263,7 +267,7 @@ export class ReuseTabService implements OnDestroy {
     this._cachedChange.next({
       active: 'closable',
       closable: value,
-      list: this._cached,
+      list: this._cached
     });
   }
   /**
@@ -307,12 +311,10 @@ export class ReuseTabService implements OnDestroy {
       segments.push(next.url.join('/'));
       next = next.parent!;
     }
-    const url =
-      '/' +
-      segments
-        .filter(i => i)
-        .reverse()
-        .join('/');
+    const url = `/${segments
+      .filter(i => i)
+      .reverse()
+      .join('/')}`;
     return url;
   }
   /**
@@ -344,20 +346,19 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 刷新，触发一个 refresh 类型事件
    */
-  refresh(data?: any): void {
+  refresh(data?: NzSafeAny): void {
     this._cachedChange.next({ active: 'refresh', data });
   }
   // #endregion
 
   // #region privates
 
-  private destroy(_handle: any): void {
+  private destroy(_handle: NzSafeAny): void {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
   }
 
   private di(...args: NzSafeAny[]): void {
     if (!this.debug) return;
-    // tslint:disable-next-line:no-console
     console.warn(...args);
   }
 
@@ -412,7 +413,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 存储
    */
-  store(_snapshot: ActivatedRouteSnapshot, _handle: any): void {
+  store(_snapshot: ActivatedRouteSnapshot, _handle: NzSafeAny): void {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
     const isAdd = idx === -1;
@@ -423,7 +424,7 @@ export class ReuseTabService implements OnDestroy {
       position: this.getKeepingScroll(url, _snapshot) ? this.positionBuffer[url] : null,
       url,
       _snapshot,
-      _handle,
+      _handle
     };
     if (isAdd) {
       if (this.count >= this._max) {
@@ -472,7 +473,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 提取复用数据
    */
-  retrieve(route: ActivatedRouteSnapshot): {} | null {
+  retrieve(route: ActivatedRouteSnapshot): NzSafeAny | null {
     if (this.hasInValidRoute(route)) return null;
     const url = this.getUrl(route);
     const data = this.get(url);
@@ -520,7 +521,7 @@ export class ReuseTabService implements OnDestroy {
   }
 
   private get isDisabledInRouter(): boolean {
-    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as any);
+    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as NzSafeAny);
     return routerConfig.scrollPositionRestoration === 'disabled';
   }
 

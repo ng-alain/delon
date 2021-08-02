@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 import { SFRateWidgetSchema } from './schema';
@@ -7,7 +8,7 @@ import { SFRateWidgetSchema } from './schema';
   selector: 'sf-rate',
   templateUrl: './rate.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements OnInit {
   count: number;

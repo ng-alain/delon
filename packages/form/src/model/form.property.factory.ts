@@ -1,4 +1,5 @@
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
+
 import { mergeConfig } from '../config';
 import { SF_SEQ } from '../const';
 import { SFSchema } from '../schema/index';
@@ -21,9 +22,9 @@ export class FormPropertyFactory {
   createProperty(
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
-    formData: {},
+    formData: Record<string, unknown>,
     parent: PropertyGroup | null = null,
-    propertyId?: string,
+    propertyId?: string
   ): FormProperty {
     let newProperty: FormProperty | null = null;
     let path = '';
@@ -40,7 +41,7 @@ export class FormPropertyFactory {
           path += ((parent as ArrayProperty).properties as PropertyGroup[]).length;
           break;
         default:
-          throw new Error('Instanciation of a FormProperty with an unknown parent type: ' + parent.type);
+          throw new Error(`Instanciation of a FormProperty with an unknown parent type: ${parent.type}`);
       }
     } else {
       path = SF_SEQ;
@@ -51,7 +52,10 @@ export class FormPropertyFactory {
       newProperty = this.createProperty(refSchema, ui, formData, parent, path);
     } else {
       // fix required
-      if ((propertyId && parent!.schema.required!.indexOf(propertyId.split(SF_SEQ).pop()!) !== -1) || ui.showRequired === true) {
+      if (
+        (propertyId && parent!.schema.required!.indexOf(propertyId.split(SF_SEQ).pop()!) !== -1) ||
+        ui.showRequired === true
+      ) {
         ui._required = true;
       }
       // fix title
@@ -70,19 +74,61 @@ export class FormPropertyFactory {
       switch (schema.type) {
         case 'integer':
         case 'number':
-          newProperty = new NumberProperty(this.schemaValidatorFactory, schema, ui, formData, parent, path, this.options);
+          newProperty = new NumberProperty(
+            this.schemaValidatorFactory,
+            schema,
+            ui,
+            formData,
+            parent,
+            path,
+            this.options
+          );
           break;
         case 'string':
-          newProperty = new StringProperty(this.schemaValidatorFactory, schema, ui, formData, parent, path, this.options);
+          newProperty = new StringProperty(
+            this.schemaValidatorFactory,
+            schema,
+            ui,
+            formData,
+            parent,
+            path,
+            this.options
+          );
           break;
         case 'boolean':
-          newProperty = new BooleanProperty(this.schemaValidatorFactory, schema, ui, formData, parent, path, this.options);
+          newProperty = new BooleanProperty(
+            this.schemaValidatorFactory,
+            schema,
+            ui,
+            formData,
+            parent,
+            path,
+            this.options
+          );
           break;
         case 'object':
-          newProperty = new ObjectProperty(this, this.schemaValidatorFactory, schema, ui, formData, parent, path, this.options);
+          newProperty = new ObjectProperty(
+            this,
+            this.schemaValidatorFactory,
+            schema,
+            ui,
+            formData,
+            parent,
+            path,
+            this.options
+          );
           break;
         case 'array':
-          newProperty = new ArrayProperty(this, this.schemaValidatorFactory, schema, ui, formData, parent, path, this.options);
+          newProperty = new ArrayProperty(
+            this,
+            this.schemaValidatorFactory,
+            schema,
+            ui,
+            formData,
+            parent,
+            path,
+            this.options
+          );
           break;
         default:
           throw new TypeError(`Undefined type ${schema.type}`);

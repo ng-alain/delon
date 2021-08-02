@@ -1,4 +1,7 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainSFConfig } from '@delon/util/config';
+
 import { SF_SEQ } from '../const';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
@@ -14,10 +17,10 @@ export class ArrayProperty extends PropertyGroup {
     schemaValidatorFactory: SchemaValidatorFactory,
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
-    formData: {},
+    formData: Record<string, unknown>,
     parent: PropertyGroup | null,
     path: string,
-    options: AlainSFConfig,
+    options: AlainSFConfig
   ) {
     super(schemaValidatorFactory, schema, ui, formData, parent, path, options);
     this.properties = [];
@@ -51,7 +54,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   _updateValue(): void {
-    const value: any[] = [];
+    const value: NzSafeAny[] = [];
     this.forEachChild((property: FormProperty) => {
       if (property.visible) {
         value.push({ ...(this.widget?.cleanValue ? null : property.formData), ...property.value });
@@ -60,18 +63,18 @@ export class ArrayProperty extends PropertyGroup {
     this._value = value;
   }
 
-  private addProperty(formData: {}): FormProperty {
+  private addProperty(formData: Record<string, unknown>): FormProperty {
     const newProperty = this.formPropertyFactory.createProperty(
       this.schema.items!,
       this.ui.$items,
       formData,
-      this as PropertyGroup,
+      this as PropertyGroup
     ) as ObjectProperty;
     (this.properties as FormProperty[]).push(newProperty);
     return newProperty;
   }
 
-  private resetProperties(formDatas: Array<{}>): void {
+  private resetProperties(formDatas: Array<Record<string, unknown>>): void {
     for (const item of formDatas) {
       const property = this.addProperty(item);
       property.resetValue(item, true);
@@ -84,7 +87,7 @@ export class ArrayProperty extends PropertyGroup {
 
   // #region actions
 
-  add(formData: {}): FormProperty {
+  add(formData: Record<string, unknown>): FormProperty {
     const newProperty = this.addProperty(formData);
     newProperty.resetValue(formData, false);
     return newProperty;

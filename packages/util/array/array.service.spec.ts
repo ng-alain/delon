@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
+
+import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
+
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
-import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
+
 import { ArrayService } from './array.service';
 
 const MOCK_ARR: any[] = [
@@ -10,7 +14,7 @@ const MOCK_ARR: any[] = [
   { id: 3, pid: 1, name: 'name3', other: 'value3', expanded: true },
   { id: 4, pid: 1, name: 'name4', other: 'value4', selected: true },
   { id: 5, pid: 2, name: 'name5', other: 'value5' },
-  { id: 6, pid: 0, name: 'name6', other: 'value6', checked: true },
+  { id: 6, pid: 0, name: 'name6', other: 'value6', checked: true }
 ];
 const MOCK_TREE: any[] = [
   {
@@ -18,10 +22,10 @@ const MOCK_TREE: any[] = [
     name: 'asdf1',
     children: [
       { id: 2, name: 'asdf2' },
-      { id: 3, name: 'asdf2' },
-    ],
+      { id: 3, name: 'asdf2' }
+    ]
   },
-  { id: 4, name: 'asdf4' },
+  { id: 4, name: 'asdf4' }
 ];
 describe('utils: array', () => {
   let srv: ArrayService;
@@ -36,9 +40,9 @@ describe('utils: array', () => {
       const res = srv.treeToArr([
         {
           id: 1,
-          children: [{ id: 2 }, { id: 3 }],
+          children: [{ id: 2 }, { id: 3 }]
         },
-        { id: 3 },
+        { id: 3 }
       ]);
       expect(res.length).toBe(4);
     });
@@ -46,10 +50,10 @@ describe('utils: array', () => {
       const res = srv.treeToArr<{ id: number; d?: string; p?: string }>(
         [
           {
-            id: 1,
-          },
+            id: 1
+          }
         ],
-        { deepMapName: 'd', parentMapName: 'p' },
+        { deepMapName: 'd', parentMapName: 'p' }
       );
       expect(res[0].d).not.toBeUndefined();
       expect(res[0].p).not.toBeUndefined();
@@ -59,16 +63,16 @@ describe('utils: array', () => {
         [
           {
             id: 1,
-            children: [{ id: 2 }],
-          },
+            children: [{ id: 2 }]
+          }
         ],
-        { clearChildren: false },
+        { clearChildren: false }
       );
       expect(res[0].children).not.toBeUndefined();
     });
     it('should be callback', () => {
       const options = {
-        cb: jasmine.createSpy(),
+        cb: jasmine.createSpy()
       };
       srv.treeToArr([{ id: 1 }], options);
       expect(options.cb).toHaveBeenCalled();
@@ -86,14 +90,14 @@ describe('utils: array', () => {
     it('should be array to tree', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: 1, title: 'c1' },
-        { id: 1, parent_id: 0, title: 't1' },
+        { id: 1, parent_id: 0, title: 't1' }
       ]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 1).check('0/0', 'id', 2);
     });
     it('should be callback', () => {
       const options = {
-        cb: jasmine.createSpy(),
+        cb: jasmine.createSpy()
       };
       srv.arrToTree(deepCopy(MOCK_ARR), options);
       expect(options.cb).toHaveBeenCalled();
@@ -101,7 +105,7 @@ describe('utils: array', () => {
     it('should be support parent_id is string', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: '1', title: 'c1' },
-        { id: 1, parent_id: '', title: 't1' },
+        { id: 1, parent_id: '', title: 't1' }
       ]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 1).check('0/0', 'id', 2);
@@ -109,7 +113,7 @@ describe('utils: array', () => {
     it('should be support greater than 0 parent_id', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: 4, title: 'c1' },
-        { id: 4, parent_id: 3, title: 't1' },
+        { id: 4, parent_id: 3, title: 't1' }
       ]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 4).check('0/0', 'id', 2);
@@ -118,9 +122,9 @@ describe('utils: array', () => {
       const res = srv.arrToTree(
         [
           { id: 2, parent_id: 'a', title: 'c1' },
-          { id: 4, parent_id: 2, title: 't1' },
+          { id: 4, parent_id: 2, title: 't1' }
         ],
-        { rootParentIdValue: 'a' },
+        { rootParentIdValue: 'a' }
       );
       page = new PageTreeNode(res);
       page.check('0', 'id', 2).check('0/0', 'id', 4);
@@ -128,7 +132,7 @@ describe('utils: array', () => {
     it('should be null root parent_id value', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: 4, title: 'c1' },
-        { id: 4, parent_id: null, title: 't1' },
+        { id: 4, parent_id: null, title: 't1' }
       ]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 4).check('0/0', 'id', 2);
@@ -146,7 +150,7 @@ describe('utils: array', () => {
       it('should be array to NzTreeNode', () => {
         const res = srv.arrToTreeNode([
           { id: 1, parent_id: 0, title: 't1' },
-          { id: 2, parent_id: 1, title: 'c1' },
+          { id: 2, parent_id: 1, title: 'c1' }
         ]);
         page = new PageTreeNode(res);
         page.check('0', 'key', 1).check('0/0', 'key', 2);
@@ -158,7 +162,7 @@ describe('utils: array', () => {
         const options = {
           pidMapName: 'pid',
           titleMapName: 'name',
-          cb: jasmine.createSpy(),
+          cb: jasmine.createSpy()
         };
         srv.arrToTreeNode(deepCopy(MOCK_ARR), options);
         expect(options.cb).toHaveBeenCalled();
@@ -169,11 +173,14 @@ describe('utils: array', () => {
       for (const key of ['isLeaf', 'checked', 'selected', 'expanded', 'disabled']) {
         it(`should map to ${key}`, () => {
           const options = {
-            [`${key}MapName`]: key,
+            [`${key}MapName`]: key
           };
-          const res = srv.arrToTreeNode([{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }], options);
+          const res = srv.arrToTreeNode(
+            [{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }],
+            options
+          );
           page = new PageTreeNode(res);
-          page.check('0', key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)), true);
+          page.check('0', key.startsWith('is') ? key : `is${key.slice(0, 1).toUpperCase() + key.slice(1)}`, true);
         });
       }
     });
@@ -183,7 +190,7 @@ describe('utils: array', () => {
         expect(srv.getKeysByTreeNode(page.data).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked)
             .map(i => i.id)
-            .join(','),
+            .join(',')
         );
       });
       it('should be include half checked', () => {
@@ -195,25 +202,25 @@ describe('utils: array', () => {
         expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: true }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked || w.halfChecked)
             .map(i => i.id)
-            .join(','),
+            .join(',')
         );
         page.data[0].isHalfChecked = false;
         expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: false }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked)
             .map(i => i.id)
-            .join(','),
+            .join(',')
         );
       });
       it('should be specified name', () => {
         expect(srv.getKeysByTreeNode(page.data, { keyMapName: 'title' }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked)
             .map(i => i.name)
-            .join(','),
+            .join(',')
         );
       });
       it('should be callback', () => {
         const options = {
-          cb: jasmine.createSpy(),
+          cb: jasmine.createSpy()
         };
         srv.getKeysByTreeNode(page.data, options);
         expect(options.cb).toHaveBeenCalled();
@@ -229,11 +236,11 @@ describe('utils: array', () => {
             provide: ALAIN_CONFIG,
             useValue: {
               utilArray: {
-                idMapName: 'ID',
-              },
-            } as AlainConfig,
-          },
-        ],
+                idMapName: 'ID'
+              }
+            } as AlainConfig
+          }
+        ]
       });
       srv = TestBed.inject<ArrayService>(ArrayService);
     });
@@ -241,8 +248,8 @@ describe('utils: array', () => {
       const id = 100;
       const res = srv.arrToTree([
         {
-          ID: id,
-        },
+          ID: id
+        }
       ]);
       expect(res[0].ID).toBe(id);
     });
@@ -301,7 +308,9 @@ describe('utils: array', () => {
     it('should be working', () => {
       expect(JSON.stringify(srv.uniq([1, 2, 2, 3, 1]))).toBe(`[1,2,3]`);
       expect(JSON.stringify(srv.uniq([{ a: 1 }, { a: 1 }, { a: 2 }], 'a'))).toBe(`[{"a":1},{"a":2}]`);
-      expect(JSON.stringify(srv.uniq([{ a: 1 }, { a: 1 }, { a: 2 }], _v => (_v.a === 1 ? 'a' : 'b')))).toBe(`[{"a":1},{"a":2}]`);
+      expect(JSON.stringify(srv.uniq([{ a: 1 }, { a: 1 }, { a: 2 }], _v => (_v.a === 1 ? 'a' : 'b')))).toBe(
+        `[{"a":1},{"a":2}]`
+      );
     });
   });
 
@@ -312,7 +321,7 @@ describe('utils: array', () => {
         ? data
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
             parentIdMapName: 'pid',
-            titleMapName: 'name',
+            titleMapName: 'name'
           });
     }
     check(path: string, field: string, value: any): this {

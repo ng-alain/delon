@@ -1,4 +1,7 @@
 import { Observable } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 
@@ -36,16 +39,16 @@ export const ERRORSDEFAULT = {
   contains: `应当包含一个有效项`,
   formatExclusiveMaximum: `formatExclusiveMaximum 应当是布尔值`,
   formatExclusiveMinimum: `formatExclusiveMinimum 应当是布尔值`,
-  if: `应当匹配模式 "{failingKeyword}"`,
+  if: `应当匹配模式 "{failingKeyword}"`
 };
 
 export interface ErrorData {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   keyword: string;
   dataPath?: string;
   schemaPath?: string;
-  params?: { [key: string]: any };
+  params?: { [key: string]: NzSafeAny };
   message?: string;
 }
 
@@ -82,5 +85,9 @@ export interface ErrorSchema {
   /**
    * 自定义校验
    */
-  validator?: (value: SFValue, formProperty: FormProperty, form: PropertyGroup) => ErrorData[] | Observable<ErrorData[]>;
+  validator?: (
+    value: SFValue,
+    formProperty: FormProperty,
+    form: PropertyGroup
+  ) => ErrorData[] | Observable<ErrorData[]>;
 }

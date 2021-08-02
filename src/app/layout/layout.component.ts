@@ -1,10 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
-import { RTL, RTLService, SettingsService } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil } from 'rxjs/operators';
+
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { RTL, RTLService, SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'app-layout',
@@ -18,8 +20,8 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
     </ng-container>
   `,
   host: {
-    '[attr.id]': `'ng-content'`,
-  },
+    '[attr.id]': `'ng-content'`
+  }
 })
 export class LayoutComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
@@ -31,7 +33,7 @@ export class LayoutComponent implements OnDestroy {
     msg: NzMessageService,
     private settingsSrv: SettingsService,
     private location: Location,
-    rtl: RTLService,
+    rtl: RTLService
   ) {
     rtl.change.subscribe(() => this.fixDirection());
     router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
@@ -52,7 +54,7 @@ export class LayoutComponent implements OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$),
         filter(ev => ev instanceof NavigationEnd),
-        delay(100),
+        delay(100)
       )
       .subscribe(() => {
         this.fixDirection();
@@ -70,7 +72,7 @@ export class LayoutComponent implements OnDestroy {
     } else {
       fragment = '';
     }
-    this.location.replaceState(path, (direction === RTL ? `?direction=` + RTL : '') + fragment);
+    this.location.replaceState(path, (direction === RTL ? `?direction=${RTL}` : '') + fragment);
   }
 
   ngOnDestroy(): void {

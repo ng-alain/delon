@@ -6,29 +6,29 @@ export default {
     403: `Nažalost, nemate pristup ovoj lokaciji`,
     404: `Nažalost, lokacija ne postoji`,
     500: `Nažalost, server je javio pogrešku`,
-    backToHome: 'Nazad na početnu stranicu',
+    backToHome: 'Nazad na početnu stranicu'
   },
   noticeIcon: {
     emptyText: 'Nema podataka',
-    clearText: 'Obriši',
+    clearText: 'Obriši'
   },
   reuseTab: {
     close: 'Zatvori karticu',
     closeOther: 'Zatvori druge kartice',
     closeRight: 'Zatvori kartice desno',
-    refresh: 'Refresh',
+    refresh: 'Refresh'
   },
   tagSelect: {
     expand: 'Proširi',
-    collapse: 'Skupi',
+    collapse: 'Skupi'
   },
   miniProgress: {
-    target: 'Cilj: ',
+    target: 'Cilj: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} od {{total}}',
     filterConfirm: 'U redu',
-    filterReset: 'Poništi',
+    filterReset: 'Poništi'
   },
   sf: {
     submit: 'Pošalji',
@@ -37,12 +37,12 @@ export default {
     edit: 'Spremi',
     addText: 'Dodaj',
     removeText: 'Ukloni',
-    checkAllText: 'Označi sve',
+    checkAllText: 'Označi sve'
   },
   onboarding: {
     skip: `Preskočiti`,
     prev: `Prethodna`,
     next: `Sljedeći`,
-    done: `Sastavljeno`,
-  },
+    done: `Sastavljeno`
+  }
 } as FullLocaleData;

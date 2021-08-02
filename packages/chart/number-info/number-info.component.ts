@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
@@ -8,11 +9,11 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   host: {
     '[class.number-info]': `true`,
     '[class.number-info__light]': `theme === 'light'`,
-    '[class.number-info__default]': `theme === 'default'`,
+    '[class.number-info__default]': `theme === 'default'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NumberInfoComponent {
   static ngAcceptInputType_gap: NumberInput;

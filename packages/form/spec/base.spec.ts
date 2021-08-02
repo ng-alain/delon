@@ -3,10 +3,13 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SF_SEQ } from '../src/const';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
@@ -19,14 +22,14 @@ export const SCHEMA = {
   user: {
     properties: {
       name: {
-        type: 'string',
+        type: 'string'
       },
       pwd: {
-        type: 'string',
-      },
+        type: 'string'
+      }
     },
-    required: ['name', 'pwd'],
-  } as SFSchema,
+    required: ['name', 'pwd']
+  } as SFSchema
 };
 
 let fixture: ComponentFixture<TestFormComponent>;
@@ -36,7 +39,7 @@ export function builder(options?: {
   detectChanges?: boolean;
   template?: string;
   ingoreAntd?: boolean;
-  imports?: any[];
+  imports?: NzSafeAny[];
 }): {
   fixture: ComponentFixture<TestFormComponent>;
   dl: DebugElement;
@@ -45,8 +48,10 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(options.imports || []),
-    declarations: [TestFormComponent],
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
+      options.imports || []
+    ),
+    declarations: [TestFormComponent]
   });
   if (options.template) {
     TestBed.overrideTemplate(TestFormComponent, options.template);
@@ -67,7 +72,7 @@ export function builder(options?: {
     fixture,
     dl,
     context,
-    page,
+    page
   };
 }
 
@@ -75,7 +80,7 @@ export function configureSFTestSuite(): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
-      declarations: [TestFormComponent],
+      declarations: [TestFormComponent]
     });
   });
 }
@@ -118,12 +123,12 @@ export class SFPage {
     return path.startsWith(SF_SEQ) ? path : SF_SEQ + path;
   }
 
-  getValue(path: string): any {
+  getValue(path: string): NzSafeAny {
     path = this.fixPath(path);
     return this.comp.getValue(path);
   }
 
-  setValue(path: string, value: any, dc: number = 0): this {
+  setValue(path: string, value: NzSafeAny, dc: number = 0): this {
     path = this.fixPath(path);
     this.comp.setValue(path, value);
     if (dc > 0) {
@@ -173,7 +178,7 @@ export class SFPage {
     return this.dc();
   }
 
-  newSchema(schema: SFSchema, ui?: SFUISchema, formData?: any): this {
+  newSchema(schema: SFSchema, ui?: SFUISchema, formData?: NzSafeAny): this {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
     if (typeof formData !== 'undefined') context.formData = formData;
@@ -184,12 +189,12 @@ export class SFPage {
   chainSchema(schema: SFSchema, overObject: SFSchema): this {
     context.schema = {
       ...deepCopy(schema),
-      properties: { a: overObject },
+      properties: { a: overObject }
     };
     return this.dc();
   }
 
-  checkSchema(path: string, propertyName: string, value: any): this {
+  checkSchema(path: string, propertyName: string, value: NzSafeAny): this {
     path = this.fixPath(path);
     const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
@@ -199,7 +204,7 @@ export class SFPage {
     return this;
   }
 
-  checkUI(path: string, propertyName: string, value: any): this {
+  checkUI(path: string, propertyName: string, value: NzSafeAny): this {
     path = this.fixPath(path);
     const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
@@ -209,7 +214,7 @@ export class SFPage {
     return this;
   }
 
-  checkValue(path: string, value: any, propertyName?: string): this {
+  checkValue(path: string, value: NzSafeAny, propertyName?: string): this {
     path = this.fixPath(path);
     const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
@@ -236,7 +241,7 @@ export class SFPage {
     return this;
   }
 
-  checkElText(cls: string, value: any, viaDocument: boolean = false): this {
+  checkElText(cls: string, value: NzSafeAny, viaDocument: boolean = false): this {
     const node = viaDocument ? document.querySelector(cls) : this.getEl(cls);
     if (value == null) {
       expect(node).toBeNull();
@@ -258,7 +263,7 @@ export class SFPage {
     return this;
   }
 
-  checkAttr(cls: string, key: string, value: any, required: boolean = true): this {
+  checkAttr(cls: string, key: string, value: NzSafeAny, required: boolean = true): this {
     const el = this.getEl(cls);
     const attr = el.attributes.getNamedItem(key);
     if (required) expect(attr!.textContent).toBe(value);
@@ -272,7 +277,7 @@ export class SFPage {
     return this;
   }
 
-  checkInput(cls: string, value: any, viaDocument: boolean = false): this {
+  checkInput(cls: string, value: NzSafeAny, viaDocument: boolean = false): this {
     const ipt = (viaDocument ? document.querySelector(cls) : dl.query(By.css(cls)).nativeElement) as HTMLInputElement;
     expect(ipt.value).toBe(value);
     return this;
@@ -295,7 +300,7 @@ export class SFPage {
     return this.dc();
   }
 
-  typeChar(value: any, cls: string = 'input'): this {
+  typeChar(value: NzSafeAny, cls: string = 'input'): this {
     const node = this.getEl(cls) as HTMLInputElement;
     typeInElement(value, node);
     tick();
@@ -357,7 +362,7 @@ export class SFPage {
       (formReset)="formReset($event)"
       (formError)="formError($event)"
     ></sf>
-  `,
+  `
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp: SFComponent;
@@ -365,7 +370,7 @@ export class TestFormComponent {
   layout = 'horizontal';
   schema: SFSchema | null = SCHEMA.user;
   ui: SFUISchema | null = {};
-  formData: any;
+  formData: NzSafeAny;
   button: SFButton | 'none' | null | undefined = {};
   liveValidate = true;
   autocomplete: 'on' | 'off';

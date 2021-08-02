@@ -1,7 +1,9 @@
 import { TemplateRef } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzOptionComponent, NzSelectModeType } from 'ng-zorro-antd/select';
-import { Observable } from 'rxjs';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
 import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
@@ -22,7 +24,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 与 [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) 相同
    */
-  compareWith?: (o1: any, o2: any) => boolean;
+  compareWith?: (o1: NzSafeAny, o2: NzSafeAny) => boolean;
 
   /**
    * 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效，默认：`true`
@@ -118,27 +120,27 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 自定义的选择框后缀图标
    */
-  suffixIcon?: TemplateRef<any> | string;
+  suffixIcon?: TemplateRef<NzSafeAny> | string;
 
   /**
    * 自定义的多选框清除图标
    */
-  removeIcon?: TemplateRef<any>;
+  removeIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 自定义的多选框清空图标
    */
-  clearIcon?: TemplateRef<any>;
+  clearIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 自定义当前选中的条目图标
    */
-  menuItemSelectedIcon?: TemplateRef<any>;
+  menuItemSelectedIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 隐藏 tag 时显示的内容
    */
-  maxTagPlaceholder?: TemplateRef<{ $implicit: any[] }>;
+  maxTagPlaceholder?: TemplateRef<{ $implicit: NzSafeAny[] }>;
 
   /**
    * 下拉菜单中每个 Option 的高度，默认：`32`

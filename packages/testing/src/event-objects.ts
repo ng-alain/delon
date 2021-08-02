@@ -26,7 +26,7 @@ export function createMouseEvent(type: string, x: number = 0, y: number = 0): Mo
     false /* shiftKey */,
     false /* metaKey */,
     0 /* button */,
-    null /* relatedTarget */,
+    null /* relatedTarget */
   );
 
   return event;
@@ -44,15 +44,15 @@ export function createTouchEvent(type: string, pageX: number = 0, pageY: number 
   // Most of the browsers don't have a "initTouchEvent" method that can be used to define
   // the touch details.
   Object.defineProperties(event, {
-    touches: { value: [touchDetails] },
+    touches: { value: [touchDetails] }
   });
 
   return event;
 }
 
 /** Dispatches a keydown event from an element. */
-export function createKeyboardEvent(type: string, keyCode: number, target?: Element, key?: string): any {
-  const event = document.createEvent('KeyboardEvent') as any;
+export function createKeyboardEvent(type: string, keyCode: number, target?: Element, key?: string): NzSafeAny {
+  const event = document.createEvent('KeyboardEvent') as NzSafeAny;
   // Firefox does not support `initKeyboardEvent`, but supports `initKeyEvent`.
   const initEventFn = (event.initKeyEvent || event.initKeyboardEvent).bind(event);
   const originalPreventDefault = event.preventDefault;
@@ -64,13 +64,12 @@ export function createKeyboardEvent(type: string, keyCode: number, target?: Elem
   Object.defineProperties(event, {
     keyCode: { get: () => keyCode },
     key: { get: () => key },
-    target: { get: () => target },
+    target: { get: () => target }
   });
 
   // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
-  event.preventDefault = function (): any {
+  event.preventDefault = function (): NzSafeAny {
     Object.defineProperty(event, 'defaultPrevented', { get: () => true });
-    // tslint:disable-next-line:no-invalid-this
     return originalPreventDefault.apply(this, arguments);
   };
 

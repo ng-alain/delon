@@ -1,11 +1,13 @@
 import { Platform } from '@angular/cdk/platform';
 import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Observable, Observer, of, Subject, throwError } from 'rxjs';
+import { filter, finalize, take, takeUntil } from 'rxjs/operators';
+
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
+
 import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, Observer, of, Subject, throwError } from 'rxjs';
-import { filter, finalize, take, takeUntil } from 'rxjs/operators';
 
 /**
  * @deprecated Will be removed in 13.0.0, Pls used [nz-image](https://ng.ant.design/components/image/en) instead, for examples:
@@ -15,8 +17,8 @@ import { filter, finalize, take, takeUntil } from 'rxjs/operators';
   exportAs: '_src',
   host: {
     '(click)': 'open($event)',
-    '[class.point]': `previewSrc`,
-  },
+    '[class.point]': `previewSrc`
+  }
 })
 export class ImageDirective implements OnChanges, OnInit, OnDestroy {
   static ngAcceptInputType_size: NumberInput;
@@ -38,7 +40,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
     configSrv: AlainConfigService,
     private http: _HttpClient,
     private platform: Platform,
-    private modal: NzModalService,
+    private modal: NzModalService
   ) {
     configSrv.attach(this, 'image', { size: 64, error: `./assets/img/logo.svg` });
     this.imgEl = el.nativeElement;
@@ -68,7 +70,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$), take(1))
       .subscribe(
         src => (this.imgEl.src = src),
-        () => this.setError(),
+        () => this.setError()
       );
   }
 
@@ -98,7 +100,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
         .pipe(
           takeUntil(this.destroy$),
           take(1),
-          finalize(() => observer.complete()),
+          finalize(() => observer.complete())
         )
         .subscribe(
           (blob: Blob) => {
@@ -107,14 +109,13 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
             reader.onerror = () => observer.error(`Can't reader image data by ${url}`);
             reader.readAsDataURL(blob);
           },
-          () => observer.error(`Can't access remote url ${url}`),
+          () => observer.error(`Can't access remote url ${url}`)
         );
     });
   }
 
   private updateError(): void {
     const { imgEl, error } = this;
-    // tslint:disable-next-line: only-arrow-functions, typedef
     imgEl.onerror = function () {
       this.onerror = null;
       this.src = error;
@@ -138,14 +139,14 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         filter(w => !!w),
-        take(1),
+        take(1)
       )
       .subscribe(src => {
         this.modal.create({
           nzTitle: undefined,
           nzFooter: null,
           nzContent: `<img class="img-fluid" src="${src}" />`,
-          ...this.previewModalOptions,
+          ...this.previewModalOptions
         });
       });
   }

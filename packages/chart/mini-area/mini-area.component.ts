@@ -1,12 +1,17 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2MiniAreaData {
-  x: any;
-  y: any;
-  [key: string]: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
+  color?: string | null;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2MiniAreaClickItem {
@@ -19,11 +24,11 @@ export interface G2MiniAreaClickItem {
   exportAs: 'g2MiniArea',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2MiniAreaComponent extends G2BaseComponent {
   static ngAcceptInputType_borderWidth: NumberInput;
@@ -41,13 +46,13 @@ export class G2MiniAreaComponent extends G2BaseComponent {
   @Input() @InputBoolean() fit = true;
   @Input() @InputBoolean() line = false;
   @Input() @InputBoolean() animate = true;
-  @Input() xAxis: any;
-  @Input() yAxis: any;
+  @Input() xAxis: NzSafeAny;
+  @Input() yAxis: NzSafeAny;
   @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() clickItem = new EventEmitter<G2MiniAreaClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2MiniAreaClickItem>();
 
   // #endregion
 
@@ -66,14 +71,14 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       animate,
       color,
       borderColor,
-      borderWidth,
+      borderWidth
     } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.animate(animate);
 
@@ -99,7 +104,10 @@ export class G2MiniAreaComponent extends G2BaseComponent {
     chart
       .area()
       .position('x*y')
-      .color(color)
+      .color('x*y', (x, y) => {
+        const colorItem = this.data.find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color;
+      })
       .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
       .shape('smooth');
 

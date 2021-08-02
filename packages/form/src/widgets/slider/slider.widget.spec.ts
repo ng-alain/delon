@@ -1,7 +1,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSliderComponent } from 'ng-zorro-antd/slider';
+
+import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { SliderWidget } from './slider.widget';
@@ -22,7 +26,7 @@ describe('form: widget: slider', () => {
   });
 
   function getWidget(): SliderWidget {
-    return page.getWidget<SliderWidget>('sf-' + widget);
+    return page.getWidget<SliderWidget>(`sf-${widget}`);
   }
 
   function getComp(): NzSliderComponent {
@@ -37,11 +41,11 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            included: true,
+            included: true
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page.newSchema(s);
     const comp = getWidget();
@@ -61,11 +65,11 @@ describe('form: widget: slider', () => {
           maximum: 5,
           multipleOf: 2,
           ui: {
-            widget,
+            widget
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page.newSchema(s).time();
     expect(getComp().value).toBe(5);
@@ -79,18 +83,18 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            formatter: jasmine.createSpy(),
+            formatter: jasmine.createSpy()
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page.newSchema(s);
     const comp = getWidget();
     spyOn(comp, '_formatter');
     page.time();
     expect(comp._formatter).toHaveBeenCalled();
-    expect((s.properties!.a.ui as any).formatter).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).formatter).toHaveBeenCalled();
   }));
 
   it('#afterChange', fakeAsync(() => {
@@ -101,14 +105,14 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            afterChange: jasmine.createSpy(),
+            afterChange: jasmine.createSpy()
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page.newSchema(s).time();
     getWidget()._afterChange(1);
-    expect((s.properties!.a.ui as any).afterChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).afterChange).toHaveBeenCalled();
   }));
 });

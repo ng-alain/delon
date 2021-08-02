@@ -1,4 +1,5 @@
-// tslint:disable:no-invalid-template-strings
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { format, formatMask } from './string';
 
 describe('util: string', () => {
@@ -8,8 +9,8 @@ describe('util: string', () => {
       {
         s: 'this is ${name}, age: ${age}',
         o: { name: 'asdf', age: 10 },
-        r: 'this is asdf, age: 10',
-      },
+        r: 'this is asdf, age: 10'
+      }
     ].forEach(item => {
       it(item.s, () => {
         expect(format(item.s, item.o)).toBe(item.r);
@@ -34,7 +35,7 @@ describe('util: string', () => {
     const data: Array<{ value: string; mask: string; result: string }> = [
       { value: '123', mask: '(###)', result: '(123)' },
       { value: '15900000000', mask: '+86 ###########', result: '+86 15900000000' },
-      { value: '123', mask: '#-#-#', result: '1-2-3' },
+      { value: '123', mask: '#-#-#', result: '1-2-3' }
     ];
     for (const item of data) {
       it(`should be return ${item.result} when value is '${item.value}' and mask is '${item.mask}'`, () => {
@@ -43,7 +44,7 @@ describe('util: string', () => {
     }
 
     it('should be return empty when is invalid string', () => {
-      expect(formatMask(null as any, '#')).toBe('');
+      expect(formatMask(null as NzSafeAny, '#')).toBe('');
     });
   });
 });

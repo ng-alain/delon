@@ -10,20 +10,24 @@ import {
   OnDestroy,
   Optional,
   Output,
-  TemplateRef,
+  TemplateRef
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
+
 import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
-import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
-import { Subject } from 'rxjs';
+
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 
 @Directive({
   selector: 'nz-range-picker[extend]',
-  exportAs: 'extendRangePicker',
+  exportAs: 'extendRangePicker'
 })
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
   static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
@@ -37,7 +41,12 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
 
   @Input()
   set shortcut(val: AlainDateRangePickerShortcut | null) {
-    const item = deepMergeKey({ list: [] }, true, this.defaultShortcuts, val == null ? {} : val) as AlainDateRangePickerShortcut;
+    const item = deepMergeKey(
+      { list: [] },
+      true,
+      this.defaultShortcuts,
+      val == null ? {} : val
+    ) as AlainDateRangePickerShortcut;
     if (typeof val !== 'object') {
       item.enabled = val !== false;
     }
@@ -50,8 +59,8 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   get shortcut(): AlainDateRangePickerShortcut | null {
     return this._shortcut;
   }
-  @Input() ngModelEnd: any;
-  @Output() readonly ngModelEndChange = new EventEmitter<any>();
+  @Input() ngModelEnd: NzSafeAny;
+  @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
     return this.nativeComp.datePicker;
@@ -66,11 +75,11 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     configSrv: AlainConfigService,
     @Host() @Optional() private nativeComp: NzRangePickerComponent,
     private resolver: ComponentFactoryResolver,
-    private injector: Injector,
+    private injector: Injector
   ) {
     assert(
       !!nativeComp,
-      `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`,
+      `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`
     );
     const cog = configSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
@@ -84,41 +93,41 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
         list: [
           {
             text: '今天',
-            fn: () => getTimeDistance('today'),
+            fn: () => getTimeDistance('today')
           },
           {
             text: '昨天',
-            fn: () => getTimeDistance('yesterday'),
+            fn: () => getTimeDistance('yesterday')
           },
           {
             text: '近3天',
-            fn: () => getTimeDistance(-2),
+            fn: () => getTimeDistance(-2)
           },
           {
             text: '近7天',
-            fn: () => getTimeDistance(-6),
+            fn: () => getTimeDistance(-6)
           },
           {
             text: '本周',
-            fn: () => getTimeDistance('week'),
+            fn: () => getTimeDistance('week')
           },
           {
             text: '本月',
-            fn: () => getTimeDistance('month'),
+            fn: () => getTimeDistance('month')
           },
           {
             text: '全年',
-            fn: () => getTimeDistance('year'),
-          },
-        ],
-      },
+            fn: () => getTimeDistance('year')
+          }
+        ]
+      }
     })!;
     this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
     Object.assign(this, cog);
   }
 
   private cd(): void {
-    (this.dp as any).cdr.markForCheck();
+    (this.dp as NzSafeAny).cdr.markForCheck();
   }
 
   private overrideNative(): void {
@@ -151,7 +160,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       return;
     }
     const { enabled, list } = this._shortcut;
-    let extraFooter: TemplateRef<any> | undefined;
+    let extraFooter: TemplateRef<NzSafeAny> | undefined;
     if (!this.nativeComp || !enabled) {
       extraFooter = undefined;
     } else {

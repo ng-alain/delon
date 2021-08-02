@@ -1,7 +1,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { MentionWidget } from './mention.widget';
@@ -24,14 +28,14 @@ describe('form: widget: mention', () => {
   });
 
   function getWidget(): MentionWidget {
-    return page.getWidget<MentionWidget>('sf-' + widget);
+    return page.getWidget<MentionWidget>(`sf-${widget}`);
   }
 
   it('should be working', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', enum: DATA, ui: { widget, select: jasmine.createSpy() } },
-      },
+        a: { type: 'string', enum: DATA, ui: { widget, select: jasmine.createSpy() } }
+      }
     };
     page
       .newSchema(s)
@@ -39,18 +43,17 @@ describe('form: widget: mention', () => {
       .checkCount('.ant-mention-dropdown-item', DATA.length, true)
       .typeEvent('click', '.ant-mention-dropdown-item');
 
-    expect((s.properties!.a.ui as any).select).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).select).toHaveBeenCalled();
   }));
 
   it('should be validator mention count via minimum or maximum', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', minimum: 1, maximum: 2, ui: { widget, asyncData: () => of(DATA) } },
-      },
+        a: { type: 'string', minimum: 1, maximum: 2, ui: { widget, asyncData: () => of(DATA) } }
+      }
     };
     page.newSchema(s).typeChar('@').checkError(`最少提及 1 次`);
 
-    // tslint:disable-next-line: no-string-literal
     spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
     page.typeChar('@').checkError(`最多提及 2 次`);
   }));
@@ -63,9 +66,9 @@ describe('form: widget: mention', () => {
           enum: DATA,
           minimum: 1,
           maximum: 2,
-          ui: { widget, loadData: () => of(['1']) },
-        },
-      },
+          ui: { widget, loadData: () => of(['1']) }
+        }
+      }
     };
     page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mention-dropdown-item', '1', true);
   }));

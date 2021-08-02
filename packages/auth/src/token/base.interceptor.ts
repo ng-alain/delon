@@ -5,11 +5,15 @@ import {
   HttpInterceptor,
   HttpParams,
   HttpRequest,
-  HTTP_INTERCEPTORS,
+  HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Injectable, Injector, Optional } from '@angular/core';
-import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 import { Observable, Observer } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
+
 import { mergeConfig } from '../auth.config';
 import { ToLogin } from './helper';
 import { ITokenModel } from './interface';
@@ -17,7 +21,7 @@ import { ITokenModel } from './interface';
 class HttpAuthInterceptorHandler implements HttpHandler {
   constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
 
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+  handle(req: HttpRequest<NzSafeAny>): Observable<HttpEvent<NzSafeAny>> {
     return this.interceptor.intercept(req, this.next);
   }
 }
@@ -30,9 +34,9 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
   abstract isAuth(options: AlainAuthConfig): boolean;
 
-  abstract setReq(req: HttpRequest<any>, options: AlainAuthConfig): HttpRequest<any>;
+  abstract setReq(req: HttpRequest<NzSafeAny>, options: AlainAuthConfig): HttpRequest<NzSafeAny>;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
     const options = mergeConfig(this.injector.get(AlainConfigService));
     if (Array.isArray(options.ignores)) {
       for (const item of options.ignores) {
@@ -66,12 +70,12 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     } else {
       ToLogin(options, this.injector);
       // Interrupt Http request, so need to generate a new Observable
-      const err$ = new Observable((observer: Observer<HttpEvent<any>>) => {
+      const err$ = new Observable((observer: Observer<HttpEvent<NzSafeAny>>) => {
         const res = new HttpErrorResponse({
           url: req.url,
           headers: req.headers,
           status: 401,
-          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#AlainAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#AlainAuthConfig`,
+          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#AlainAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#AlainAuthConfig`
         });
         observer.error(res);
       });
@@ -79,9 +83,12 @@ export abstract class BaseInterceptor implements HttpInterceptor {
         const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
         const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
         if (lastInterceptors.length > 0) {
-          const chain = lastInterceptors.reduceRight((_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor), {
-            handle: (_: HttpRequest<any>) => err$,
-          });
+          const chain = lastInterceptors.reduceRight(
+            (_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor),
+            {
+              handle: (_: HttpRequest<NzSafeAny>) => err$
+            }
+          );
           return chain.handle(req);
         }
       }

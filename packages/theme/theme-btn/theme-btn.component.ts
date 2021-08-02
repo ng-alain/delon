@@ -11,11 +11,14 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Renderer2,
+  Renderer2
 } from '@angular/core';
-import { AlainConfigService } from '@delon/util/config';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfigService } from '@delon/util/config';
 
 export interface ThemeBtnType {
   key: string;
@@ -29,9 +32,9 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
   templateUrl: './theme-btn.component.html',
   host: {
     '[class.theme-btn]': `true`,
-    '[class.theme-btn-rtl]': `dir === 'rtl'`,
+    '[class.theme-btn-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
   private theme = 'default';
@@ -39,9 +42,10 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() types: ThemeBtnType[] = [
     { key: 'default', text: 'Default Theme' },
     { key: 'dark', text: 'Dark Theme' },
-    { key: 'compact', text: 'Compact Theme' },
+    { key: 'compact', text: 'Compact Theme' }
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
+  @Input() deployUrl = '';
   private destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
 
@@ -49,9 +53,9 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private configSrv: AlainConfigService,
     private platform: Platform,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     @Optional() private directionality: Directionality,
-    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string,
+    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +95,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
       el.type = 'text/css';
       el.rel = 'stylesheet';
       el.id = this.KEYS;
-      el.href = `assets/style.${theme}.css`;
+      el.href = `${this.deployUrl}assets/style.${theme}.css`;
 
       localStorage.setItem(this.KEYS, theme);
       this.doc.body.append(el);

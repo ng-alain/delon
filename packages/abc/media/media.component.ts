@@ -12,11 +12,14 @@ import {
   Output,
   Renderer2,
   SimpleChange,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subscription } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+
 import { MediaService } from './media.service';
 import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
@@ -27,11 +30,11 @@ declare const Plyr: NzSafeAny;
   exportAs: 'mediaComponent',
   template: `<ng-content></ng-content>`,
   host: {
-    '[style.display]': `'block'`,
+    '[style.display]': `'block'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
@@ -56,7 +59,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private srv: MediaService,
     public ngZone: NgZone,
-    private platform: Platform,
+    private platform: Platform
   ) {
     this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
   }
@@ -67,18 +70,18 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private init(): void {
-    if (!(window as any).Plyr) {
+    if (!(window as NzSafeAny).Plyr) {
       throw new Error(
         `No window.Plyr found, please make sure that cdn or local path exists, the current referenced path is: ${JSON.stringify(
-          this.srv.cog.urls,
-        )}`,
+          this.srv.cog.urls
+        )}`
       );
     }
 
     this.ensureElement();
 
     const player = (this._p = new Plyr(this.videoEl, {
-      ...this.srv.cog.options,
+      ...this.srv.cog.options
     }));
 
     player.on('ready', () => this.ready.next(player));

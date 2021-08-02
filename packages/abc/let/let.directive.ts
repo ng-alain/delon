@@ -1,5 +1,7 @@
 import { Directive, Inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export class LetContext<T> {
   constructor(private readonly dir: LetDirective<T>) {}
 
@@ -20,7 +22,7 @@ export class LetDirective<T> {
     vc.createEmbeddedView(ref, new LetContext<T>(this));
   }
 
-  static ngTemplateContextGuard<T>(_dir: LetDirective<T>, _ctx: any): _ctx is LetDirective<T> {
+  static ngTemplateContextGuard<T>(_dir: LetDirective<T>, _ctx: NzSafeAny): _ctx is LetDirective<T> {
     return true;
   }
 }

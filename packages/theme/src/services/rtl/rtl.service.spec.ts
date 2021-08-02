@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+
 import { AlainThemeModule } from '../../theme.module';
 import { LTR, RTL, RTLService } from './rtl.service';
 
@@ -13,7 +14,7 @@ describe('Service: RTL', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, AlainThemeModule.forChild()],
+      imports: [CommonModule, AlainThemeModule.forChild()]
     })
     class TestModule {}
     const injector = TestBed.configureTestingModule({ imports: [TestModule] });

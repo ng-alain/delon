@@ -5,6 +5,9 @@ import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { FullContentComponent } from './full-content.component';
 import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
@@ -22,7 +25,7 @@ describe('abc: full-content', () => {
       imports: [FullContentModule, RouterTestingModule.withRoutes([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }]
     });
   });
 
@@ -108,8 +111,8 @@ describe('abc: full-content', () => {
       createComp();
       const bodyHeight = 10;
       spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
-        height: bodyHeight,
-      } as any);
+        height: bodyHeight
+      } as NzSafeAny);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
       fixture.detectChanges();
@@ -118,7 +121,7 @@ describe('abc: full-content', () => {
       expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
     }));
     it('should be clear class when go to other route', () => {
-      const eventsSub = new BehaviorSubject<any>(null);
+      const eventsSub = new BehaviorSubject<NzSafeAny>(null);
       class MockRouter {
         events = eventsSub;
       }
@@ -126,7 +129,7 @@ describe('abc: full-content', () => {
         useFactory: () => {
           return new MockRouter();
         },
-        deps: [],
+        deps: []
       });
       createComp();
       // mock component destroy
@@ -137,7 +140,7 @@ describe('abc: full-content', () => {
       expect(bodyEl.classList.contains('full-content')).toBe(false);
     });
     it('should be attach class when back route', () => {
-      const eventsSub = new BehaviorSubject<any>(null);
+      const eventsSub = new BehaviorSubject<NzSafeAny>(null);
       class MockRouter {
         events = eventsSub;
       }
@@ -145,7 +148,7 @@ describe('abc: full-content', () => {
         useFactory: () => {
           return new MockRouter();
         },
-        deps: [],
+        deps: []
       });
       createComp();
 
@@ -161,10 +164,16 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content #comp [(fullscreen)]="fullscreen" [hideTitle]="hideTitle" [padding]="padding" (fullscreenChange)="change()">
+    <full-content
+      #comp
+      [(fullscreen)]="fullscreen"
+      [hideTitle]="hideTitle"
+      [padding]="padding"
+      (fullscreenChange)="change()"
+    >
       <button full-toggle>Full</button>
     </full-content>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: FullContentComponent;

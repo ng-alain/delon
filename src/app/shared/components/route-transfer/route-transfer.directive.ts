@@ -1,15 +1,22 @@
 import { Directive, HostListener, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { I18NService } from '@core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { copy } from '@delon/util';
+
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy } from '@delon/util';
+
 @Directive({
-  selector: '[routeTransfer]',
+  selector: '[routeTransfer]'
 })
 export class RouteTransferDirective {
-  constructor(private router: Router, private msg: NzMessageService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {}
+  constructor(
+    private router: Router,
+    private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
+  ) {}
 
   private clickToc(id: string): void {
     const link = `#${id}`;

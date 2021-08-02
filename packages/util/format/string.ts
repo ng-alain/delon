@@ -1,5 +1,6 @@
-import { deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { deepGet } from '@delon/util/other';
 
 /**
  * String formatting
@@ -12,9 +13,13 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
  * // output: this is asdf
  * ```
  */
-export function format(str: string | null | undefined, obj: NzSafeAny | null | undefined, needDeepGet: boolean = false): string {
+export function format(
+  str: string | null | undefined,
+  obj: NzSafeAny | null | undefined,
+  needDeepGet: boolean = false
+): string {
   return (str || '').replace(/\${([^}]+)}/g, (_work: string, key: string) =>
-    needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || '',
+    needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || ''
   );
 }
 

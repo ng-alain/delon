@@ -1,7 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import { filter } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';
-import { filter } from 'rxjs/operators';
+
 import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuInner } from './interface';
 import { MenuService } from './menu.service';
@@ -20,12 +24,12 @@ describe('Service: Menu', () => {
       link: '/dashboard',
       children: [
         { text: 'v1', link: '/dashboard/v1' },
-        { text: 'v2', link: '/dashboard/v2' },
-      ],
+        { text: 'v2', link: '/dashboard/v2' }
+      ]
     },
     {
       text: 'text',
-      children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
+      children: [{ text: 'sub text', link: '/text/sub', shortcut: true }]
     },
     { text: 'text', link: '/test', badge: 10 },
     {
@@ -33,11 +37,11 @@ describe('Service: Menu', () => {
       link: '/demo1',
       badge: 10,
       badgeDot: true,
-      badgeStatus: 'success',
+      badgeStatus: 'success'
     },
     { text: 'text', externalLink: '//ng-alain.com' },
     { text: 'text', link: '/demo2', i18n: 'text' },
-    { text: 'sub', children: [] },
+    { text: 'sub', children: [] }
   ];
 
   afterEach(() => srv.ngOnDestroy());
@@ -48,8 +52,8 @@ describe('Service: Menu', () => {
         providers: [
           MenuService,
           { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake },
-          { provide: ACLService, useClass: MockACLService },
-        ],
+          { provide: ACLService, useClass: MockACLService }
+        ]
       });
       srv = TestBed.inject<MenuService>(MenuService);
     });
@@ -169,13 +173,13 @@ describe('Service: Menu', () => {
             children: [
               { text: 'submenu1', link: '/' },
               { text: 'submenu2', link: '/' },
-              { text: 'sc', shortcutRoot: true },
-            ],
+              { text: 'sc', shortcutRoot: true }
+            ]
           },
           {
             text: 'text',
-            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
-          },
+            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }]
+          }
         ] as Menu[];
         srv.add(newMenus);
         expect(srv.menus[0].children![2].children!.length).toBe(1);
@@ -184,12 +188,12 @@ describe('Service: Menu', () => {
         const newMenus = [
           {
             text: 'new menu',
-            i18n: 'test',
+            i18n: 'test'
           },
           {
             text: 'text',
-            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
-          },
+            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }]
+          }
         ] as Menu[];
         srv.add(newMenus);
         expect(srv.menus[0].children![0].children!.length).toBe(1);
@@ -201,13 +205,13 @@ describe('Service: Menu', () => {
             children: [
               { text: 'submenu1', link: '/' },
               { text: 'submenu2', link: '/' },
-              { text: 'sc', shortcutRoot: true },
-            ],
+              { text: 'sc', shortcutRoot: true }
+            ]
           },
           {
             text: 'text',
-            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
-          },
+            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }]
+          }
         ] as Menu[];
         srv.add(newMenus);
         const shortcutList = srv.menus[0].children![2].children;
@@ -219,7 +223,7 @@ describe('Service: Menu', () => {
     it('ACL', () => {
       const newMenus = [
         { text: 'new menu', acl: 'admin' },
-        { text: 'new menu', acl: 'user' },
+        { text: 'new menu', acl: 'user' }
       ];
       srv.add(newMenus);
       expect((srv.menus[0] as MenuInner)._aclResult).toBe(true);
@@ -277,10 +281,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: null,
-          },
+            icon: null
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(icon).toBeNull();
       });
       it('should be undefined', () => {
@@ -288,10 +292,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: undefined,
-          },
+            icon: undefined
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(icon).toBeUndefined();
       });
       it('should be type is string', () => {
@@ -299,10 +303,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: 'aa',
-          },
+            icon: 'aa'
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('class');
       });
@@ -311,10 +315,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: { type: 'icon', value: 'user' },
-          },
+            icon: { type: 'icon', value: 'user' }
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
       });
@@ -323,10 +327,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: `anticon anticon-user`,
-          },
+            icon: `anticon anticon-user`
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
         expect(icon.value).toBe('user');
@@ -336,10 +340,10 @@ describe('Service: Menu', () => {
           {
             text: 'dashboard',
             link: '/dashboard',
-            icon: `http://ng-alain.com/1.jpg`,
-          },
+            icon: `http://ng-alain.com/1.jpg`
+          }
         ]);
-        const icon: any = srv.menus[0].icon;
+        const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('img');
       });
@@ -352,19 +356,19 @@ describe('Service: Menu', () => {
         providers: [
           MenuService,
           { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake },
-          { provide: ACLService, useClass: MockACLService },
-        ],
+          { provide: ACLService, useClass: MockACLService }
+        ]
       });
       srv = TestBed.inject<MenuService>(MenuService);
       spyOn(srv, 'resume');
       expect(srv.resume).not.toHaveBeenCalled();
-      TestBed.inject(ALAIN_I18N_TOKEN).use('en');
+      TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       expect(srv.resume).toHaveBeenCalled();
     });
 
     it('without ALAIN_I18N_TOKEN', () => {
       TestBed.configureTestingModule({
-        providers: [MenuService, { provide: ACLService, useClass: MockACLService }],
+        providers: [MenuService, { provide: ACLService, useClass: MockACLService }]
       });
       srv = TestBed.inject<MenuService>(MenuService);
       expect(true).toBe(true);

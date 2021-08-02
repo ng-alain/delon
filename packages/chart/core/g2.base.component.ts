@@ -9,12 +9,17 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import type { Chart, Types } from '@antv/g2';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
+import type { Chart, Types } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+
 import { G2Service } from './g2.servicce';
 
 @Directive()
@@ -28,13 +33,13 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     protected el: ElementRef<HTMLElement>,
     protected ngZone: NgZone,
     protected platform: Platform,
-    protected cdr: ChangeDetectorRef,
+    protected cdr: ChangeDetectorRef
   ) {
     this.theme = srv.cog.theme!;
     this.srv.notify
       .pipe(
         takeUntil(this.destroy$),
-        filter(() => !this.loaded),
+        filter(() => !this.loaded)
       )
       .subscribe(() => this.load());
   }
@@ -79,7 +84,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.onInit();
-    if ((window as any).G2) {
+    if ((window as NzSafeAny).G2) {
       this.load();
     } else {
       this.srv.libLoad();
@@ -89,7 +94,9 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     this.onChanges(changes);
 
-    const isOnlyChangeData = this.onlyChangeData ? this.onlyChangeData(changes) : Object.keys(changes).length === 1 && !!changes.data;
+    const isOnlyChangeData = this.onlyChangeData
+      ? this.onlyChangeData(changes)
+      : Object.keys(changes).length === 1 && !!changes.data;
     if (isOnlyChangeData) {
       this.changeData();
       return;

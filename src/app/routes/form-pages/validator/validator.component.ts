@@ -1,13 +1,24 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { AppService, CodeService, I18NService } from '@core';
+import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { SFLayout, SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
-import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 const stackBlitzTpl = `
 import { Component } from '@angular/core';
@@ -44,12 +55,10 @@ export class DemoComponent {
   }
 }`;
 
-declare var ace: any;
-
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
@@ -57,12 +66,12 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
 
   private destroy$ = new Subject();
-  files: any[] = [
+  files: Array<{ name: string; title: string; cache?: string }> = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },
     { name: 'sort', title: '顺序' },
     { name: 'validation', title: '自定义校验' },
-    { name: 'fixed', title: '不规则布局' },
+    { name: 'fixed', title: '不规则布局' }
   ];
   layout: SFLayout = 'horizontal';
   name: string;
@@ -82,7 +91,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     private http: _HttpClient,
     private msg: NzMessageService,
     private appService: AppService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
@@ -132,9 +141,11 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
       schema: this.schema,
       layout: this.layout,
       formData: this.formCode || '{}',
-      ui: this.uiCode || '{}',
+      ui: this.uiCode || '{}'
     };
-    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: any) => (obj[offset] || '').trim());
+    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: string) =>
+      (obj[offset] || '').trim()
+    );
     this.codeSrv.openOnStackBlitz(componentCode);
   }
 
@@ -142,19 +153,19 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
-  submit(value: any): void {
+  submit(value: NzSafeAny): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: any): void {
+  change(value: NzSafeAny): void {
     console.log('formChange', value);
   }
 
-  valueChange(value: any): void {
+  valueChange(value: NzSafeAny): void {
     console.log('formChange', value);
   }
 
-  error(value: any): void {
+  error(value: NzSafeAny): void {
     console.log('formError', value);
   }
 

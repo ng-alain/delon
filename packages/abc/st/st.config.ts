@@ -11,10 +11,10 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
     method: 'GET',
     allInBody: false,
     lazyLoad: false,
-    reName: { pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' },
+    reName: { pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }
   },
   res: {
-    reName: { list: ['list'], total: ['total'] },
+    reName: { list: ['list'], total: ['total'] }
   },
   page: {
     front: true,
@@ -29,48 +29,48 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
     toTop: true,
     toTopOffset: 100,
     itemRender: null,
-    simple: false,
+    simple: false
   },
   modal: {
     paramsName: 'record',
     size: 'lg',
-    exact: true,
+    exact: true
   },
   drawer: {
     paramsName: 'record',
     size: 'md',
     footer: true,
-    footerHeight: 55,
+    footerHeight: 55
   },
   pop: {
     title: '确认删除吗？',
     trigger: 'click',
-    placement: 'top',
+    placement: 'top'
   },
   rowClickTime: 200,
   btnIcon: {
     theme: 'outline',
-    spin: false,
+    spin: false
   },
   noIndex: 1,
   expandRowByClick: false,
   expandAccordion: false,
   widthMode: {
     type: 'default',
-    strictBehavior: 'truncate',
+    strictBehavior: 'truncate'
   },
   virtualItemSize: 54,
   virtualMaxBufferPx: 200,
   virtualMinBufferPx: 100,
   iifBehavior: 'hide',
   loadingDelay: 0,
-  saftHtml: true,
+  safeType: 'safeHtml',
   date: {
-    format: `yyyy-MM-dd HH:mm`,
+    format: `yyyy-MM-dd HH:mm`
   },
   yn: {
     truth: true,
     yes: '是',
-    mode: 'icon',
-  },
+    mode: 'icon'
+  }
 };

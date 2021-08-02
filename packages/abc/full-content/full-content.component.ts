@@ -12,12 +12,16 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { FullContentService } from './full-content.service';
 
 const wrapCls = `full-content__body`;
@@ -30,11 +34,11 @@ const hideTitleCls = `full-content__hidden-title`;
   template: ` <ng-content></ng-content> `,
   host: {
     '[class.full-content]': 'true',
-    '[style.height.px]': '_height',
+    '[style.height.px]': '_height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_fullscreen: BooleanInput;
@@ -60,7 +64,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {}
 
   private updateCls(): void {
@@ -85,7 +89,8 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   private updateHeight(): void {
-    this._height = this.bodyEl.getBoundingClientRect().height - this.el.nativeElement.getBoundingClientRect().top - this.padding;
+    this._height =
+      this.bodyEl.getBoundingClientRect().height - this.el.nativeElement.getBoundingClientRect().top - this.padding;
     this.cdr.detectChanges();
   }
 
@@ -113,10 +118,10 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     this.route$ = this.router.events
       .pipe(
         filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
-        debounceTime(200),
+        debounceTime(200)
       )
       .subscribe(() => {
-        if (!!this.doc.querySelector('#' + this.id)) {
+        if (!!this.doc.querySelector(`#${this.id}`)) {
           this.bodyEl.classList.add(wrapCls);
           this.updateCls();
         } else {

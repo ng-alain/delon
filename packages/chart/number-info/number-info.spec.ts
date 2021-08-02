@@ -1,7 +1,9 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
+
 import { NumberInfoComponent } from './number-info.component';
 import { NumberInfoModule } from './number-info.module';
 
@@ -13,7 +15,7 @@ describe('abc: number-info', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NumberInfoModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -108,7 +110,7 @@ describe('abc: number-info', () => {
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>
     <ng-template #subTotalTpl><p id="subTotalTpl">subTotalTpl</p></ng-template>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('ni', { static: true }) comp: NumberInfoComponent;

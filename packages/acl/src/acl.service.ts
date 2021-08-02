@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
+
 import { ACL_DEFAULT_CONFIG } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
@@ -27,7 +29,7 @@ export class ACLService {
     return {
       full: this.full,
       roles: this.roles,
-      abilities: this.abilities,
+      abilities: this.abilities
     };
   }
 
@@ -60,6 +62,7 @@ export class ACLService {
    * 设置当前用户角色或权限能力（会先清除所有）
    */
   set(value: ACLType): void {
+    this.full = false;
     this.abilities = [];
     this.roles = [];
     this.add(value);
@@ -176,9 +179,9 @@ export class ACLService {
       }
       if (t.ability && t.ability.length > 0) {
         if (t.mode === 'allOf') {
-          result = (t.ability as any[]).every(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).every(v => this.abilities.includes(v));
         } else {
-          result = (t.ability as any[]).some(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).some(v => this.abilities.includes(v));
         }
       }
     }

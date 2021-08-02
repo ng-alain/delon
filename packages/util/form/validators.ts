@@ -1,4 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+
 import { isChinese, isColor, isDecimal, isIdCard, isInt, isIp, isMobile, isNum, isUrl } from '@delon/util/format';
 
 /**
@@ -6,7 +7,6 @@ import { isChinese, isColor, isDecimal, isIdCard, isInt, isIp, isMobile, isNum, 
  *
  * 一套用于响应式表单的验证器
  */
-// tslint:disable-next-line:class-name
 export class _Validators {
   /**
    * Wheter is number

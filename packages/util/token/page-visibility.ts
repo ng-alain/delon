@@ -15,7 +15,7 @@ export const PAGE_VISIBILITY = new InjectionToken<Observable<boolean>>('PAGE_VIS
       startWith(0),
       map(() => !doc.hidden),
       distinctUntilChanged(),
-      share(),
+      share()
     );
-  },
+  }
 });

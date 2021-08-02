@@ -1,9 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, Input } from '@angular/core';
+
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
-  exportAs: 'autoFocus',
+  exportAs: 'autoFocus'
 })
 export class AutoFocusDirective implements AfterViewInit {
   static ngAcceptInputType_enabled: BooleanInput;

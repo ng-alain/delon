@@ -1,16 +1,21 @@
-// tslint:disable: no-string-literal
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
-import { deepCopy } from '@delon/util/other';
+
 import { format, formatISO } from 'date-fns';
-registerLocaleData(zh);
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
+import { deepCopy } from '@delon/util/other';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { DateWidget } from './date.widget';
 import { SFDateWidgetSchema } from './schema';
+
+registerLocaleData(zh);
 
 describe('form: widget: date', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -34,7 +39,7 @@ describe('form: widget: date', () => {
   describe('#default', () => {
     it('should working', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget } } },
+        properties: { a: { type: 'string', ui: { widget } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -46,7 +51,7 @@ describe('form: widget: date', () => {
       it('with number type', () => {
         const time = +new Date();
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget }, default: time } },
+          properties: { a: { type: 'string', ui: { widget }, default: time } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -55,7 +60,7 @@ describe('form: widget: date', () => {
       it('with number type but is string value', () => {
         const time = +new Date();
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget }, default: time } },
+          properties: { a: { type: 'string', ui: { widget }, default: time } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -64,7 +69,7 @@ describe('form: widget: date', () => {
       it('with rang values', () => {
         const time = +new Date();
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget, mode: 'range' }, default: [time, time] } },
+          properties: { a: { type: 'string', ui: { widget, mode: 'range' }, default: [time, time] } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -74,7 +79,7 @@ describe('form: widget: date', () => {
     });
     it('should be set value', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', format: 'date-time', ui: { widget } } },
+        properties: { a: { type: 'string', format: 'date-time', ui: { widget } } }
       };
       page.newSchema(s).checkValue('a', null).setValue('a', new Date(2019, 0, 1)).dc(1);
       flush();
@@ -86,7 +91,7 @@ describe('form: widget: date', () => {
   describe('#mode', () => {
     it('should be default format is [date]', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget } } },
+        properties: { a: { type: 'string', ui: { widget } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -95,7 +100,7 @@ describe('form: widget: date', () => {
 
     it('should be spcify mode', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, mode: 'range' } } },
+        properties: { a: { type: 'string', ui: { widget, mode: 'range' } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -105,7 +110,7 @@ describe('form: widget: date', () => {
     describe('when not specify displayFormat', () => {
       it('should display yyyy with year mode ', () => {
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget, mode: 'year' } } },
+          properties: { a: { type: 'string', ui: { widget, mode: 'year' } } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -113,7 +118,7 @@ describe('form: widget: date', () => {
       });
       it('should display yyyy-MM with month mode ', () => {
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget, mode: 'month' } } },
+          properties: { a: { type: 'string', ui: { widget, mode: 'month' } } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -121,7 +126,7 @@ describe('form: widget: date', () => {
       });
       it('should display yyyy-ww with week mode ', () => {
         const s: SFSchema = {
-          properties: { a: { type: 'string', ui: { widget, mode: 'week' } } },
+          properties: { a: { type: 'string', ui: { widget, mode: 'week' } } }
         };
         page.newSchema(s);
         const comp = getComp();
@@ -133,7 +138,7 @@ describe('form: widget: date', () => {
   describe('#format', () => {
     it('should be default yyyy-MM-dd HH:mm:ss', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget } } },
+        properties: { a: { type: 'string', ui: { widget } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -141,7 +146,7 @@ describe('form: widget: date', () => {
     });
     it('should be spcify format', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, format: 'yyyy' } } },
+        properties: { a: { type: 'string', ui: { widget, format: 'yyyy' } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -149,7 +154,7 @@ describe('form: widget: date', () => {
     });
     it('should be use timespan when type is number', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', ui: { widget } } },
+        properties: { a: { type: 'number', ui: { widget } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -162,13 +167,13 @@ describe('form: widget: date', () => {
       properties: {
         start: {
           type: 'string',
-          ui: { widget: 'date', end: 'end' },
+          ui: { widget: 'date', end: 'end' }
         },
         end: {
           type: 'string',
-          ui: { widget: 'date', end: 'end' },
-        },
-      },
+          ui: { widget: 'date', end: 'end' }
+        }
+      }
     };
     it('should working', () => {
       page.newSchema(deepCopy(s));
@@ -176,7 +181,9 @@ describe('form: widget: date', () => {
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page.checkValue('/start', format(time, comp['startFormat'])).checkValue('/end', format(time, comp['startFormat']));
+      page
+        .checkValue('/start', format(time, comp['startFormat']))
+        .checkValue('/end', format(time, comp['startFormat']));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });
@@ -217,7 +224,7 @@ describe('form: widget: date', () => {
   describe('ui', () => {
     it('#displayFormat', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, displayFormat: 'yyyy' } } },
+        properties: { a: { type: 'string', ui: { widget, displayFormat: 'yyyy' } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -227,22 +234,22 @@ describe('form: widget: date', () => {
     });
     it('should be trigger onOpenChange', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOpenChange: jasmine.createSpy() } } },
+        properties: { a: { type: 'string', ui: { widget, onOpenChange: jasmine.createSpy() } } }
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties!.a.ui as any;
+      const ui = s.properties!.a.ui as NzSafeAny;
       expect(ui.onOpenChange).not.toHaveBeenCalled();
       comp._openChange(true);
       expect(ui.onOpenChange).toHaveBeenCalled();
     });
     it('should be trigger onOk', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOk: jasmine.createSpy() } } },
+        properties: { a: { type: 'string', ui: { widget, onOk: jasmine.createSpy() } } }
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties!.a.ui as any;
+      const ui = s.properties!.a.ui as NzSafeAny;
       expect(ui.onOk).not.toHaveBeenCalled();
       comp._ok(true);
       expect(ui.onOk).toHaveBeenCalled();

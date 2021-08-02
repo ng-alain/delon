@@ -9,7 +9,7 @@ export interface MatchRouterOptions {
 }
 
 @Directive({
-  selector: '[matchRouter]',
+  selector: '[matchRouter]'
 })
 export class MatchRouterDirective implements AfterViewInit, OnDestroy {
   private _options: MatchRouterOptions;

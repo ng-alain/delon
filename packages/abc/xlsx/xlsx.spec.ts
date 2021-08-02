@@ -3,9 +3,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { LazyService } from '@delon/util/other';
-import * as fs from 'file-saver';
 import { Observable, of, throwError } from 'rxjs';
+
+import * as fs from 'file-saver';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { LazyService } from '@delon/util/other';
+
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
@@ -31,14 +36,14 @@ describe('abc: xlsx', () => {
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+        { provide: LazyService, useClass: MockLazyService }
+      ]
     });
     srv = TestBed.inject<XlsxService>(XlsxService);
   }
 
   beforeEach(() => {
-    (window as any).XLSX = {
+    (window as NzSafeAny).XLSX = {
       utils: {
         book_new: () => {
           return {};
@@ -48,38 +53,38 @@ describe('abc: xlsx', () => {
         sheet_to_json: () => {
           return {
             A1: 1,
-            B1: 2,
+            B1: 2
           };
-        },
+        }
       },
       read: () => {
         return {
           SheetNames: ['sheet1'],
           Sheets: {
-            sheet1: {},
-          },
+            sheet1: {}
+          }
         };
       },
-      write: () => {},
+      write: () => {}
     };
-    (window as any).cptable = {
+    (window as NzSafeAny).cptable = {
       utils: {
-        decode: (data: any) => {
+        decode: (data: NzSafeAny) => {
           return data;
-        },
-      },
+        }
+      }
     };
     isErrorRequest = false;
   });
 
   afterEach(() => {
-    delete (window as any).XLSX;
-    delete (window as any).cptable;
+    delete (window as NzSafeAny).XLSX;
+    delete (window as NzSafeAny).cptable;
   });
 
   describe('[#import]', () => {
     it('should be load xlsx lib when not found XLSX in window', () => {
-      delete (window as any).XLSX;
+      delete (window as NzSafeAny).XLSX;
       genModule();
       const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
       spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
@@ -98,7 +103,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -113,7 +118,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -127,7 +132,7 @@ describe('abc: xlsx', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
   });
@@ -140,10 +145,9 @@ describe('abc: xlsx', () => {
     it('should be export xlsx via array', (done: () => void) => {
       srv
         .export({
-          sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
+          sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }]
         } as XlsxExportOptions)
         .then(() => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
@@ -152,11 +156,10 @@ describe('abc: xlsx', () => {
       srv
         .export({
           sheets: {
-            name: 'asdf',
-          },
+            name: 'asdf'
+          }
         } as XlsxExportOptions)
         .then(() => {
-          // tslint:disable-next-line: deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
@@ -166,11 +169,11 @@ describe('abc: xlsx', () => {
       srv
         .export({
           sheets: {
-            name: 'asdf',
+            name: 'asdf'
           },
           callback: () => {
             ++count;
-          },
+          }
         } as XlsxExportOptions)
         .then(() => {
           expect(count).toBe(1);
@@ -178,12 +181,12 @@ describe('abc: xlsx', () => {
         });
     });
     it('should catch error when XLSX process error', done => {
-      (window as any).XLSX.utils.book_new = null;
+      (window as NzSafeAny).XLSX.utils.book_new = null;
       srv
         .export({
           sheets: {
-            name: 'asdf',
-          },
+            name: 'asdf'
+          }
         } as XlsxExportOptions)
         .then(() => {
           expect(true).toBe(false);
@@ -226,8 +229,8 @@ describe('abc: xlsx', () => {
 });
 
 @Component({
-  template: ` <button [xlsx]="data"></button> `,
+  template: ` <button [xlsx]="data"></button> `
 })
 class TestComponent {
-  data: any = {};
+  data: NzSafeAny = {};
 }

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
+
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Component({
@@ -8,7 +17,7 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   host: { '[class.g2-card]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2CardComponent implements OnChanges {
   static ngAcceptInputType_bordered: BooleanInput;

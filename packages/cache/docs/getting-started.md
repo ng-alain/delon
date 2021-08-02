@@ -59,5 +59,6 @@ import { DelonCacheModule } from '@delon/cache';
 | `[expire]` | `number` | - | 设置默认过期时间值（单位：秒） | ✅ |
 | `[prefix]` | `string` | - | 持久化数据键值前缀 | ✅ |
 | `[meta_key]` | `string` | `__cache_meta` | 持久化数据元数据存储键名 | ✅ |
+| `[request]` | `(key: string) => Observable<unknown>` | - | 自定义请求体 | ✅ |
 
 > 可以通过[全局配置](/docs/global-config)覆盖它们。

@@ -5,10 +5,14 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { differenceInDays } from 'date-fns';
+
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
-import { differenceInDays } from 'date-fns';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerDirective } from './range.directive';
 
@@ -23,7 +27,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
     expect(() => {
       TestBed.configureTestingModule({
         imports: [DatePickerModule, FormsModule, NoopAnimationsModule, NzDatePickerModule],
-        declarations: [TestThrowComponent],
+        declarations: [TestThrowComponent]
       });
       createTestContext(TestThrowComponent);
       fixture.detectChanges();
@@ -34,7 +38,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [DatePickerModule, FormsModule, NoopAnimationsModule, NzDatePickerModule],
-        declarations: [TestComponent],
+        declarations: [TestComponent]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();
@@ -45,7 +49,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
         const NOW = new Date();
         context.i = {
           start: NOW,
-          end: NOW,
+          end: NOW
         };
         cd();
         expect(context.comp.start).not.toBeNull();
@@ -56,7 +60,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       it('should be invalid value when start & end include null value', fakeAsync(() => {
         context.i = {
           start: new Date(),
-          end: undefined,
+          end: undefined
         };
         cd();
         expect(context.comp.start).toBeNull();
@@ -108,8 +112,14 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 
 @Component({
   template: `
-    <nz-range-picker #comp="extendRangePicker" [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" [shortcut]="shortcut"></nz-range-picker>
-  `,
+    <nz-range-picker
+      #comp="extendRangePicker"
+      [(ngModel)]="i.start"
+      extend
+      [(ngModelEnd)]="i.end"
+      [shortcut]="shortcut"
+    ></nz-range-picker>
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: RangePickerDirective;
@@ -118,7 +128,7 @@ class TestComponent {
 }
 
 @Component({
-  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `,
+  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `
 })
 class TestThrowComponent {
   i: { start?: Date; end?: Date } = {};

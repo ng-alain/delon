@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
     <nz-input-group nzAddOnBefore="number">
       <nz-input-number [(ngModel)]="number"></nz-input-number>
     </nz-input-group>
-  `,
+  `
 })
 export class DemoComponent {
   list = new Array(10).fill(0).map((_, idx) => ({ price: idx + 1 }));

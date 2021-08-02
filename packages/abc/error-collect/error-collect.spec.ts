@@ -2,8 +2,10 @@ import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
+
 import { ErrorCollectComponent } from './error-collect.component';
 import { ErrorCollectModule } from './error-collect.module';
 
@@ -15,7 +17,7 @@ describe('abc: error-collect', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ErrorCollectModule, ReactiveFormsModule, NzFormModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   });
 
@@ -62,7 +64,7 @@ describe('abc: error-collect', () => {
   it('should be not to error element when not errores', () => {
     TestBed.overrideTemplate(
       TestComponent,
-      `<form nz-form [formGroup]="validateForm"><error-collect #ec [freq]="freq"></error-collect></form>`,
+      `<form nz-form [formGroup]="validateForm"><error-collect #ec [freq]="freq"></error-collect></form>`
     );
     getPropertiesAndCreate();
     const safeComp = context.comp as NzSafeAny;
@@ -90,7 +92,7 @@ describe('abc: error-collect', () => {
       </nz-form-item>
       <error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></error-collect>
     </form>
-  `,
+  `
 })
 class TestComponent implements OnInit {
   freq = 20;
@@ -100,7 +102,7 @@ class TestComponent implements OnInit {
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email]]
     });
   }
 

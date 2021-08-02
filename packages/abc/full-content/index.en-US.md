@@ -6,7 +6,7 @@ cols: 1
 module: import { FullContentModule } from '@delon/abc/full-content';
 ---
 
-Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.sh/#/delon/simple-table)。
+Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.sh/#/delon/st)。
 
 ## API
 

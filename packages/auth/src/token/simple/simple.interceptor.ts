@@ -1,7 +1,10 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainAuthConfig } from '@delon/util/config';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainAuthConfig } from '@delon/util/config';
+
 import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
@@ -22,7 +25,7 @@ export class SimpleInterceptor extends BaseInterceptor {
     return CheckSimple(this.model as SimpleTokenModel);
   }
 
-  setReq(req: HttpRequest<any>, options: AlainAuthConfig): HttpRequest<any> {
+  setReq(req: HttpRequest<NzSafeAny>, options: AlainAuthConfig): HttpRequest<NzSafeAny> {
     const { token_send_template, token_send_key } = options;
     const token = token_send_template!.replace(/\$\{([\w]+)\}/g, (_: string, g) => this.model[g]);
     switch (options.token_send_place) {
@@ -30,19 +33,19 @@ export class SimpleInterceptor extends BaseInterceptor {
         const obj: NzSafeAny = {};
         obj[token_send_key!] = token;
         req = req.clone({
-          setHeaders: obj,
+          setHeaders: obj
         });
         break;
       case 'body':
         const body = req.body || {};
         body[token_send_key!] = token;
         req = req.clone({
-          body,
+          body
         });
         break;
       case 'url':
         req = req.clone({
-          params: req.params.append(token_send_key!, token),
+          params: req.params.append(token_send_key!, token)
         });
         break;
     }

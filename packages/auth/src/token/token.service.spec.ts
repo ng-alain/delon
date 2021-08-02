@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import { AlainAuthConfig } from '@delon/util/config';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainAuthConfig } from '@delon/util/config';
+
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
 describe('auth: token.service', () => {
   let service: ITokenService;
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
   const JWTVALUE: ITokenModel = {
-    token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`,
+    token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`
   } as ITokenModel;
 
   beforeEach(() => {

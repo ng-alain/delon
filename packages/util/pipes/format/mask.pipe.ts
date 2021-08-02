@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { formatMask } from '@delon/util/format';
 
 @Pipe({ name: 'mask' })

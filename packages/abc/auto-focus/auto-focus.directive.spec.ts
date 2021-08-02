@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+
 import { AutoFocusDirective } from './auto-focus.directive';
 import { AutoFocusModule } from './auto-focus.module';
 
@@ -13,7 +14,7 @@ describe('abc: auto-focus', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, AutoFocusModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
 
     fixture = TestBed.createComponent(TestComponent);
@@ -45,7 +46,7 @@ describe('abc: auto-focus', () => {
     <div *ngIf="showInput" class="mt-md">
       <input auto-focus (focus)="focus()" [delay]="delay" [enabled]="enabled" />
     </div>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild(AutoFocusDirective) comp: AutoFocusDirective;

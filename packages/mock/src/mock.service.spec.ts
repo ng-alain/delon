@@ -1,6 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import * as Mock from 'mockjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { DelonMockModule } from '../index';
 import { MockOptions, MockRequest, MockRule } from './interface';
 import { MockService } from './mock.service';
@@ -18,8 +23,8 @@ const DATA = {
       return { id: req.params.id, s: 'edit' };
     },
     'POST /users/1': { uid: 0, action: 'add' },
-    '/data/([0-9])': (req: MockRequest) => req,
-  },
+    '/data/([0-9])': (req: MockRequest) => req
+  }
 };
 
 describe('mock: service', () => {
@@ -28,7 +33,7 @@ describe('mock: service', () => {
   function genModule(options: AlainMockConfig, mockOptions?: MockOptions): void {
     TestBed.configureTestingModule({
       imports: [DelonMockModule.forRoot(mockOptions)],
-      providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }],
+      providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }]
     });
     srv = TestBed.inject<MockService>(MockService);
     spyOn(console, 'log');
@@ -46,9 +51,12 @@ describe('mock: service', () => {
 
   describe('#getRule', () => {
     beforeEach(() =>
-      genModule({
-        data: DATA,
-      }),
+      genModule(
+        {},
+        {
+          data: DATA
+        }
+      )
     );
 
     afterEach(() => srv.ngOnDestroy());
@@ -86,15 +94,15 @@ describe('mock: service', () => {
 
     it('should be full url priority', () => {
       const editRule = srv.getRule('GET', '/users/1/edit') as MockRule;
-      const editRes = editRule.callback(editRule as any);
+      const editRes = editRule.callback(editRule as NzSafeAny);
       expect(editRes.s).toBe('edit');
       const detailRule = srv.getRule('GET', '/users/1') as MockRule;
-      expect((detailRule.callback as any).rank).not.toBeUndefined();
+      expect((detailRule.callback as NzSafeAny).rank).not.toBeUndefined();
     });
 
     it('should be exact match priority', () => {
       const detail1Rule = srv.getRule('GET', '/users/1') as MockRule;
-      expect((detail1Rule.callback as any).rank).not.toBeUndefined();
+      expect((detail1Rule.callback as NzSafeAny).rank).not.toBeUndefined();
       const detail2Rule = srv.getRule('GET', '/users/2') as MockRule;
       expect(detail2Rule.callback.name).toBe('/users/:id');
     });
@@ -102,49 +110,49 @@ describe('mock: service', () => {
 
   describe('#apply', () => {
     it('should allow empty data', () => {
-      genModule({
-        data: null,
-      });
+      genModule({}, { data: null });
       expect(srv.rules.length).toBe(0);
     });
 
     it('should allow empty rule', () => {
-      genModule({
-        data: {
-          '/a': null,
-        },
-      });
+      genModule({}, { data: { '/a': null } });
       expect(srv.rules.length).toBe(0);
     });
 
     it('should be overwrite rule when same url & method', () => {
-      genModule({
-        data: {
-          USERS: {
-            '/users': { a: 1 },
-          },
-          USER: {
-            '/users': { a: 2 },
-          },
-        },
-      });
+      genModule(
+        {},
+        {
+          data: {
+            USERS: {
+              '/users': { a: 1 }
+            },
+            USER: {
+              '/users': { a: 2 }
+            }
+          }
+        }
+      );
       expect(srv.rules.length).toBe(1);
       const rule = srv.getRule('GET', '/users') as MockRule;
       expect(rule).not.toBeNull();
-      expect((rule.callback as any).a).toBe(2);
+      expect((rule.callback as NzSafeAny).a).toBe(2);
     });
 
     it('should be throw invalid method error', () => {
       expect(() => {
         spyOn(console, 'log');
         spyOn(console, 'warn');
-        genModule({
-          data: {
-            USERS: {
-              'AAA /users': {},
-            },
-          },
-        });
+        genModule(
+          {},
+          {
+            data: {
+              USERS: {
+                'AAA /users': {}
+              }
+            }
+          }
+        );
       }).toThrow();
     });
 
@@ -152,19 +160,22 @@ describe('mock: service', () => {
       expect(() => {
         spyOn(console, 'log');
         spyOn(console, 'warn');
-        genModule({
-          data: {
-            USERS: {
-              'AAA /users': 1,
-            },
-          },
-        });
+        genModule(
+          {},
+          {
+            data: {
+              USERS: {
+                'AAA /users': 1
+              }
+            }
+          }
+        );
       }).toThrowError();
     });
   });
 
   it('#clearCache', () => {
-    genModule({ data: DATA });
+    genModule({}, { data: DATA });
     srv.clearCache();
     const rule = srv.getRule('POST', '/users/1');
     expect(rule).toBeNull();

@@ -1,6 +1,10 @@
-import { AlainSFConfig } from '@delon/util/config';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainSFConfig } from '@delon/util/config';
+
 import { SF_SEQ } from '../const';
 import { ErrorData } from '../errors';
 import { SFFormValueChange, SFUpdateValueAndValidity, SFValue } from '../interface';
@@ -22,7 +26,7 @@ export abstract class FormProperty {
   schemaValidator: (value: SFValue) => ErrorData[];
   schema: SFSchema;
   ui: SFUISchema | SFUISchemaItemRun;
-  formData: {};
+  formData: Record<string, unknown>;
   _value: SFValue = null;
   widget: Widget<FormProperty, SFUISchemaItem>;
   path: string;
@@ -31,23 +35,23 @@ export abstract class FormProperty {
     schemaValidatorFactory: SchemaValidatorFactory,
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
-    formData: {},
+    formData: Record<string, unknown>,
     parent: PropertyGroup | null,
     path: string,
-    private _options: AlainSFConfig,
+    private _options: AlainSFConfig
   ) {
     this.schema = schema;
     this.ui = ui;
     this.schemaValidator = schemaValidatorFactory.createValidatorFn(schema, {
       ingoreKeywords: this.ui.ingoreKeywords as string[],
-      debug: (ui as SFUISchemaItem)!.debug!,
+      debug: (ui as SFUISchemaItem)!.debug!
     });
     this.formData = formData || schema.default;
     this._parent = parent;
     if (parent) {
       this._root = parent.root;
     } else {
-      this._root = this as any;
+      this._root = this as NzSafeAny;
     }
     this.path = path;
   }
@@ -120,7 +124,14 @@ export abstract class FormProperty {
    * 更新值且校验数据
    */
   updateValueAndValidity(options?: SFUpdateValueAndValidity): void {
-    options = { onlySelf: false, emitValidator: true, emitValueEvent: true, updatePath: '', updateValue: null, ...options };
+    options = {
+      onlySelf: false,
+      emitValidator: true,
+      emitValueEvent: true,
+      updatePath: '',
+      updateValue: null,
+      ...options
+    };
     this._updateValue();
 
     if (options.emitValueEvent) {
@@ -141,6 +152,7 @@ export abstract class FormProperty {
 
   /** 根据路径搜索表单属性 */
   searchProperty(path: string): FormProperty | null {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let prop: FormProperty = this;
     let base: PropertyGroup | null = null;
 
@@ -159,6 +171,7 @@ export abstract class FormProperty {
 
   /** 查找根表单属性 */
   findRoot(): PropertyGroup {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let property: FormProperty = this;
     while (property.parent !== null) {
       property = property.parent;
@@ -168,11 +181,11 @@ export abstract class FormProperty {
 
   // #region process errors
 
-  private isEmptyData(value: {}): boolean {
+  private isEmptyData(value: Record<string, unknown>): boolean {
     if (isBlank(value)) return true;
     switch (this.type) {
       case 'string':
-        return ('' + value).length === 0;
+        return `${value}`.length === 0;
     }
     return false;
   }
@@ -252,7 +265,10 @@ export abstract class FormProperty {
 
         if (message) {
           if (~(message as string).indexOf('{')) {
-            message = (message as string).replace(/{([\.a-zA-Z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
+            message = (message as string).replace(
+              /{([\.a-zA-Z0-9]+)}/g,
+              (_v: string, key: string) => err.params![key] || ''
+            );
           }
           err.message = message as string;
         }
@@ -289,13 +305,12 @@ export abstract class FormProperty {
   setVisible(visible: boolean): void {
     this._visible = visible;
     this._visibilityChanges.next(visible);
-    // 部分数据源来自 reset
-    if (this.root.widget?.sfComp?._inited === true) {
+    // 渲染时需要重新触发 reset
+    if (visible) {
       this.resetValue(this.value, true);
     }
   }
 
-  // A field is visible if AT LEAST ONE of the properties it depends on is visible AND has a value in the list
   _bindVisibility(): void {
     const visibleIf = (this.ui as SFUISchemaItem).visibleIf;
     if (typeof visibleIf === 'object' && Object.keys(visibleIf).length === 0) {
@@ -310,14 +325,14 @@ export abstract class FormProperty {
               map(res => {
                 const vi = visibleIf[dependencyPath];
                 if (typeof vi === 'function') {
-                  return vi(res.value);
+                  return vi(res.value, property);
                 }
                 if (vi.indexOf('$ANY$') !== -1) {
                   return res.value.length > 0;
                 } else {
                   return vi.indexOf(res.value) !== -1;
                 }
-              }),
+              })
             );
             const visibilityCheck = property._visibilityChanges;
             const and = combineLatest([valueCheck, visibilityCheck]).pipe(map(results => results[0] && results[1]));
@@ -331,7 +346,7 @@ export abstract class FormProperty {
       combineLatest(propertiesBinding)
         .pipe(
           map(values => values.indexOf(true) !== -1),
-          distinctUntilChanged(),
+          distinctUntilChanged()
         )
         .subscribe(visible => this.setVisible(visible));
     }

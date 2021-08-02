@@ -1,7 +1,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { ArrayProperty, FormProperty } from '../../model';
 import { SFSchema } from '../../schema';
@@ -21,15 +25,15 @@ describe('form: widget: array', () => {
         items: {
           type: 'object',
           properties: {
-            a: { type: 'string' },
-          },
+            a: { type: 'string' }
+          }
         },
         ui: {
-          add: jasmine.createSpy('add') as any,
-          remove: jasmine.createSpy('remove') as any,
-        },
-      },
-    },
+          add: jasmine.createSpy('add') as NzSafeAny,
+          remove: jasmine.createSpy('remove') as NzSafeAny
+        }
+      }
+    }
   };
 
   configureSFTestSuite();
@@ -42,10 +46,17 @@ describe('form: widget: array', () => {
 
   it('should be add item', () => {
     page.newSchema(schema).checkCount('.sf__array-item', 0).add().checkCount('.sf__array-item', 1);
-    expect((schema.properties!.arr.ui as any).add).toHaveBeenCalled();
+    expect((schema.properties!.arr.ui as NzSafeAny).add).toHaveBeenCalled();
   });
   it(`should be maximum ${maxItems}`, () => {
-    page.newSchema(schema).add().add().add().checkCount('.sf__array-item', maxItems).add().checkCount('.sf__array-item', maxItems);
+    page
+      .newSchema(schema)
+      .add()
+      .add()
+      .add()
+      .checkCount('.sf__array-item', maxItems)
+      .add()
+      .checkCount('.sf__array-item', maxItems);
   });
   it('should be set values', () => {
     page
@@ -59,8 +70,17 @@ describe('form: widget: array', () => {
   describe('#removable', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
-      s.properties!.arr.ui = { removable: true, remove: jasmine.createSpy('remove') as any } as SFArrayWidgetSchema;
-      page.newSchema(s).checkCount('.sf__array-item', 0).add().checkCount('.sf__array-item', 1).remove().checkCount('.sf__array-item', 0);
+      s.properties!.arr.ui = {
+        removable: true,
+        remove: jasmine.createSpy('remove') as NzSafeAny
+      } as SFArrayWidgetSchema;
+      page
+        .newSchema(s)
+        .checkCount('.sf__array-item', 0)
+        .add()
+        .checkCount('.sf__array-item', 1)
+        .remove()
+        .checkCount('.sf__array-item', 0);
       expect(s.properties!.arr.ui.remove).toHaveBeenCalled();
     });
     it('with false', () => {
@@ -90,7 +110,7 @@ describe('form: widget: array', () => {
   describe('#default data', () => {
     it('via formData in sf component', () => {
       const data = {
-        arr: [{ a: 'a1' }, { a: 'a2' }],
+        arr: [{ a: 'a1' }, { a: 'a2' }]
       };
       context.formData = data;
       page.newSchema(schema).checkCount('.sf__array-item', data.arr.length);

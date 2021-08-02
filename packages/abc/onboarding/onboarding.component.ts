@@ -12,9 +12,12 @@ import {
   OnDestroy,
   Optional,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
+
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 interface OnboardingLightData {
@@ -33,14 +36,14 @@ interface OnboardingLightData {
   host: {
     '[class.onboarding]': `true`,
     '[class.onboarding-rtl]': `dir === 'rtl'`,
-    '[attr.data-onboarding-active]': `active`,
+    '[attr.data-onboarding-active]': `active`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {
-  private time: any;
+  private time: NzSafeAny;
   private prevSelectorEl: HTMLElement;
   config: OnboardingConfig;
   item: OnboardingItem;
@@ -69,9 +72,9 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
 
   constructor(
     private el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: any,
+    @Optional() @Inject(DOCUMENT) private doc: NzSafeAny,
     private platform: Platform,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   private getLightData(): OnboardingLightData | null {
@@ -98,7 +101,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
       height: rect.height + offsetWH,
       el,
       clientWidth: doc.body.clientWidth,
-      clientHeight: doc.body.clientHeight,
+      clientHeight: doc.body.clientHeight
     };
   }
 

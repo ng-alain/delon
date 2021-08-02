@@ -1,6 +1,8 @@
 import { DebugElement, Type } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+
 import { Chart } from '@antv/g2';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geometries' | 'views';
@@ -19,8 +21,7 @@ export class PageG2<T> {
     return this.fixture!.componentInstance;
   }
 
-  get comp(): any {
-    // tslint:disable-next-line:no-string-literal
+  get comp(): NzSafeAny {
     return (this.context as NzSafeAny)['comp'];
   }
 
@@ -31,7 +32,7 @@ export class PageG2<T> {
   genModule<M>(module: M, comp: Type<T>): this {
     TestBed.configureTestingModule({
       imports: [module],
-      declarations: [comp],
+      declarations: [comp]
     });
     return this;
   }
@@ -78,8 +79,7 @@ export class PageG2<T> {
     this.comp.ngOnDestroy();
   }
 
-  newData(data: any): this {
-    // tslint:disable-next-line:no-string-literal
+  newData(data: NzSafeAny): this {
     (this.context as NzSafeAny)['data'] = data;
     this.dc();
     return this;
@@ -113,12 +113,12 @@ export class PageG2<T> {
     return this;
   }
 
-  checkOptions(key: string, value: any): this {
+  checkOptions(key: string, value: NzSafeAny): this {
     expect((this.chart as NzSafeAny)[key]).toBe(value);
     return this;
   }
 
-  checkAttrOptions(type: PageG2Type, key: string, value: any): this {
+  checkAttrOptions(type: PageG2Type, key: string, value: NzSafeAny): this {
     const x = (this.chart[type][0] as NzSafeAny).attributeOption[key];
     expect(x.field).toBe(value);
     return this;
@@ -145,7 +145,6 @@ export class PageG2<T> {
   }
 
   get firstDataPoint(): { x: number; y: number } {
-    // tslint:disable-next-line: no-string-literal
     return this.chart.getXY((this.context as NzSafeAny)['data'][0]);
   }
 
@@ -163,7 +162,7 @@ export class PageG2<T> {
     const clientPoint = this.chart.canvas.getClientByPoint(point.x, point.y);
     const event = new MouseEvent('click', {
       clientX: clientPoint.x,
-      clientY: clientPoint.y,
+      clientY: clientPoint.y
     });
     (this.chart.canvas.get('el') as HTMLElement).dispatchEvent(event);
     return this;
@@ -174,7 +173,7 @@ export function checkDelay<M, T>(module: M, comp: Type<T>, page: PageG2<T> | nul
   if (page == null) {
     page = new PageG2<T>().makeModule(module, comp, { dc: false });
   }
-  const context = page.context as any;
+  const context = page.context as NzSafeAny;
   if (typeof context.delay === 'undefined') {
     console.warn(`You muse be dinfed "delay" property in test component`);
     return;

@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { copy } from './copy';
 
 describe('abc: utils', () => {
@@ -14,7 +16,7 @@ describe('abc: utils', () => {
         });
     });
     it('[[boundary]]', (done: () => void) => {
-      spyOn(document, 'createElement').and.returnValue({ parentNode: null } as any);
+      spyOn(document, 'createElement').and.returnValue({ parentNode: null } as NzSafeAny);
       copy('test')
         .then(() => {
           expect(false).toBe(true);

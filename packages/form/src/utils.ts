@@ -1,36 +1,38 @@
-import { toBoolean } from '@delon/util/decorator';
-import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
+
+import { toBoolean } from '@delon/util/decorator';
+import { deepCopy } from '@delon/util/other';
+
 import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
-export function isBlank(o: any): boolean {
+export function isBlank(o: NzSafeAny): boolean {
   return o == null;
 }
 
-export function toBool(value: any, defaultValue: boolean): boolean {
+export function toBool(value: NzSafeAny, defaultValue: boolean): boolean {
   value = toBoolean(value, true);
   return value == null ? defaultValue : value;
 }
 
 export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {
   if (ui.debug) {
-    // tslint:disable-next-line:no-console
     console.warn(...args);
   }
 }
 
 /** 根据 `$ref` 查找 `definitions` */
-function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition): any {
+function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition): NzSafeAny {
   const match = /^#\/definitions\/(.*)$/.exec($ref);
   if (match && match[1]) {
     // parser JSON Pointer
     const parts = match[1].split(SF_SEQ);
-    let current: any = definitions;
+    let current: NzSafeAny = definitions;
     for (let part of parts) {
       part = part.replace(/~1/g, SF_SEQ).replace(/~0/g, '~');
       if (current.hasOwnProperty(part)) {
@@ -91,12 +93,12 @@ function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
     schema.required = schema.required.concat(schema.else!.required!);
   }
 
-  const visibleIf: any = {};
-  const visibleElse: any = {};
+  const visibleIf: NzSafeAny = {};
+  const visibleElse: NzSafeAny = {};
   ifKeys.forEach(key => {
     const cond = schema.if!.properties![key].enum;
     visibleIf[key] = cond;
-    if (hasElse) visibleElse[key] = (value: any) => !cond!.includes(value);
+    if (hasElse) visibleElse[key] = (value: NzSafeAny) => !cond!.includes(value);
   });
 
   schema.then!.required!.forEach(key => (ui[`$${key}`].visibleIf = visibleIf));
@@ -146,10 +148,10 @@ export function orderProperties(properties: string[], order: string[]): string[]
   return complete;
 }
 
-export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchemaEnum[] {
+export function getEnum(list: NzSafeAny[], formData: NzSafeAny, readOnly: boolean): SFSchemaEnum[] {
   if (isBlank(list) || !Array.isArray(list) || list.length === 0) return [];
   if (typeof list[0] !== 'object') {
-    list = list.map((item: any) => {
+    list = list.map((item: NzSafeAny) => {
       return { label: item, value: item } as SFSchemaEnum;
     });
   }
@@ -166,11 +168,16 @@ export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchema
   return list;
 }
 
-export function getCopyEnum(list: any[], formData: any, readOnly: boolean): SFSchemaEnum[] {
+export function getCopyEnum(list: NzSafeAny[], formData: NzSafeAny, readOnly: boolean): SFSchemaEnum[] {
   return getEnum(deepCopy(list || []), formData, readOnly);
 }
 
-export function getData(schema: SFSchema, ui: SFUISchemaItem, formData: any, asyncArgs?: any): Observable<SFSchemaEnum[]> {
+export function getData(
+  schema: SFSchema,
+  ui: SFUISchemaItem,
+  formData: NzSafeAny,
+  asyncArgs?: NzSafeAny
+): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
     return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getEnum(list, formData, schema.readOnly!)));
   }

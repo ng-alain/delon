@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { SFValue } from '../../interface';
 import { ControlUIWidget } from '../../widget';
 import { SFStringWidgetSchema } from './schema';
@@ -7,19 +8,40 @@ import { SFStringWidgetSchema } from './schema';
   selector: 'sf-string',
   templateUrl: './string.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implements OnInit {
   type: string;
 
   ngOnInit(): void {
-    const { addOnAfter, addOnAfterIcon, addOnBefore, addOnBeforeIcon, prefix, prefixIcon, suffix, suffixIcon, autofocus } = this.ui;
-    this.type = !!(addOnAfter || addOnBefore || addOnAfterIcon || addOnBeforeIcon || prefix || prefixIcon || suffix || suffixIcon)
+    const {
+      addOnAfter,
+      addOnAfterIcon,
+      addOnBefore,
+      addOnBeforeIcon,
+      prefix,
+      prefixIcon,
+      suffix,
+      suffixIcon,
+      autofocus
+    } = this.ui;
+    this.type = !!(
+      addOnAfter ||
+      addOnBefore ||
+      addOnAfterIcon ||
+      addOnBeforeIcon ||
+      prefix ||
+      prefixIcon ||
+      suffix ||
+      suffixIcon
+    )
       ? 'addon'
       : '';
     if (autofocus === true) {
       setTimeout(() => {
-        ((this.injector.get(ElementRef).nativeElement as HTMLElement).querySelector(`#${this.id}`) as HTMLElement).focus();
+        (
+          (this.injector.get(ElementRef).nativeElement as HTMLElement).querySelector(`#${this.id}`) as HTMLElement
+        ).focus();
       }, 20);
     }
   }

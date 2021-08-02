@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface SiteConfig {
   /** github 项目地址 */
   github: string;
@@ -30,7 +31,7 @@ export interface ModuleConfig {
   /** 生成目标位置 */
   dist: string;
   /** 分类数据 */
-  types: { [key: string]: string }[];
+  types: Array<{ [key: string]: string }>;
   /** 默认路由 */
   defaultRoute: string;
   /** 额外路由元数据 */

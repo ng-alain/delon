@@ -11,7 +11,7 @@ describe('Pipe: yn', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   });
 
@@ -28,21 +28,23 @@ describe('Pipe: yn', () => {
         value: true,
         result: `好`,
         yes: '好',
-        no: '坏',
+        no: '坏'
       },
       {
         value: false,
         result: `坏`,
         yes: '好',
-        no: '坏',
-      },
-    ].forEach((item: any) => {
+        no: '坏'
+      }
+    ].forEach((item: { value: boolean; result: string; yes?: string; no?: string }) => {
       it(`${item.value.toString()} muse be ${item.result}`, () => {
         fixture.componentInstance.value = item.value;
         fixture.componentInstance.yes = item.yes;
         fixture.componentInstance.no = item.no;
         fixture.detectChanges();
-        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toContain(item.result);
+        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toContain(
+          item.result
+        );
       });
     });
 
@@ -83,11 +85,11 @@ describe('Pipe: yn', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | yn: yes:no:mode"></div> `,
+  template: ` <div id="result" [innerHTML]="value | yn: yes:no:mode"></div> `
 })
 class TestComponent {
   value = true;
-  yes: string;
-  no: string;
+  yes?: string;
+  no?: string;
   mode: YNMode;
 }

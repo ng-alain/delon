@@ -1,12 +1,17 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
 import type { Chart, Event } from '@antv/g2';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 export interface G2MiniBarData {
-  x: any;
-  y: any;
-  [key: string]: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
+  color?: string | null;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2MiniBarClickItem {
@@ -19,11 +24,11 @@ export interface G2MiniBarClickItem {
   exportAs: 'g2MiniBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2MiniBarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;
@@ -38,26 +43,26 @@ export class G2MiniBarComponent extends G2BaseComponent {
   @Input() data: G2MiniBarData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() clickItem = new EventEmitter<G2MiniBarClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2MiniBarClickItem>();
 
   // #endregion
 
   install(): void {
     const { el, height, padding, yTooltipSuffix, tooltipType, theme, color, borderWidth } = this;
-    const chart: Chart = (this._chart = new (window as any).G2.Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.scale({
       x: {
-        type: 'cat',
+        type: 'cat'
       },
       y: {
-        min: 0,
-      },
+        min: 0
+      }
     });
     chart.legend(false);
     chart.axis(false);
@@ -65,9 +70,12 @@ export class G2MiniBarComponent extends G2BaseComponent {
     chart
       .interval()
       .position('x*y')
-      .color(color)
+      .color('x*y', (x, y) => {
+        const colorItem = this.data.find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color;
+      })
       .size(borderWidth)
-      .tooltip('x*y', (x: any, y: any) => ({ name: x, value: y + yTooltipSuffix }));
+      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
 
     chart.on(`interval:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));

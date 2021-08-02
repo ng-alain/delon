@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { format } from 'date-fns';
 
 @Component({
@@ -12,7 +13,7 @@ import { format } from 'date-fns';
     <div class="px-lg">
       <router-outlet></router-outlet>
     </div>
-  `,
+  `
 })
 export class DevLayoutListComponent implements OnInit, OnDestroy {
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');

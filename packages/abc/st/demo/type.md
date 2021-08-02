@@ -46,6 +46,8 @@ export class DemoComponent {
     { title: '行号', type: 'no' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age', type: 'number' },
+    { title: 'HTML', index: 'html', safeType: 'safeHtml' },
+    { title: 'Text', index: 'html', safeType: 'text' },
     { title: 'tag', index: 'tag', type: 'tag', tag: TAG },
     { title: 'badge', index: 'badge', type: 'badge', badge: BADGE },
     { title: 'Enum', index: 'enum', type: 'enum', enum: { 1: '壹', 2: '贰', 3: '叁' } },
@@ -63,6 +65,7 @@ export class DemoComponent {
         badge: r(1, 5),
         enum: r(1, 3),
         yn: [true, false][r(1, 5) % 2],
+        html: `<strong>${idx + 1}</strong> Other`,
       }));
   }
 

@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: radio', () => {
@@ -29,11 +31,11 @@ describe('form: widget: radio', () => {
             ui: {
               widget,
               styleType: 'button',
-              change: jasmine.createSpy(),
+              change: jasmine.createSpy()
             },
-            default: '未知',
-          },
-        },
+            default: '未知'
+          }
+        }
       })
       .typeEvent('click', '.ant-radio-button-wrapper')
       .checkCalled('a', 'change')
@@ -43,8 +45,8 @@ describe('form: widget: radio', () => {
   it('#setValue', fakeAsync(() => {
     page.newSchema({
       properties: {
-        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] },
-      },
+        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
+      }
     });
     page.setValue('/a', 'item1').dc(1);
     expect(page.getEl('.ant-radio-checked').nextSibling!.textContent).toBe('item1');

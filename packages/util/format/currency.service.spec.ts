@@ -1,12 +1,15 @@
 import { DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { CurrencyService } from './currency.service';
 
 describe('util: FormatCurrencyService', () => {
   let srv: CurrencyService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'CNY' }],
+      providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'CNY' }]
     });
     srv = TestBed.inject<CurrencyService>(CurrencyService);
   });
@@ -29,11 +32,14 @@ describe('util: FormatCurrencyService', () => {
       it('should be working', () => {
         expect(srv.format(10000, { ngCurrency: { display: 'symbol' } })).toBe('CN¥10,000.00');
         expect(
-          srv.format(5.1234, { startingUnit: 'yuan', ngCurrency: { currencyCode: 'USD', display: 'code', digitsInfo: '.0-3' } }),
+          srv.format(5.1234, {
+            startingUnit: 'yuan',
+            ngCurrency: { currencyCode: 'USD', display: 'code', digitsInfo: '.0-3' }
+          })
         ).toEqual('USD5.123');
-        expect(srv.format(5.1234, { startingUnit: 'yuan', ngCurrency: { currencyCode: 'CAD', display: 'symbol-narrow' } })).toEqual(
-          '$5.12',
-        );
+        expect(
+          srv.format(5.1234, { startingUnit: 'yuan', ngCurrency: { currencyCode: 'CAD', display: 'symbol-narrow' } })
+        ).toEqual('$5.12');
       });
     });
   });
@@ -45,7 +51,7 @@ describe('util: FormatCurrencyService', () => {
       { value: '999000', return: '1M' },
       { value: -999, return: '-1K' },
       { value: 0, return: '0' },
-      { value: 10000, return: '10千', returnType: 'i18n' },
+      { value: 10000, return: '10千', returnType: 'i18n' }
     ];
     data.forEach(i => {
       it(`should be ${i.value} return ${i.return}${i.returnType === 'i18n' ? ' via i18n' : ''}`, () => {
@@ -59,7 +65,7 @@ describe('util: FormatCurrencyService', () => {
     });
 
     it('should be powerI18n', () => {
-      expect(srv.mega(10100, { precision: 1, unitI18n: { K: 'Qiang' } as any }).unitI18n).toBe('Qiang');
+      expect(srv.mega(10100, { precision: 1, unitI18n: { K: 'Qiang' } as NzSafeAny }).unitI18n).toBe('Qiang');
     });
 
     it('should be / 100 when staring unit is cent', () => {
@@ -90,22 +96,24 @@ describe('util: FormatCurrencyService', () => {
         inWords: false,
         num: -1202030,
         value: '欠一百二十万零两千零三十',
-        options: { minusSymbol: '欠' },
+        options: { minusSymbol: '欠' }
       },
       {
         inWords: true,
         num: -1202030,
         value: '欠壹佰贰拾万零贰仟零叁拾元整',
-        options: { minusSymbol: '欠' },
+        options: { minusSymbol: '欠' }
       },
       {
         inWords: false,
         num: 100,
         value: '一',
-        options: { startingUnit: 'cent' },
-      },
-    ].forEach((item: any) => {
-      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.inWords ? 'RMB:' : ''}${item.num} muse be ${item.value}`, () => {
+        options: { startingUnit: 'cent' }
+      }
+    ].forEach((item: NzSafeAny) => {
+      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.inWords ? 'RMB:' : ''}${item.num} muse be ${
+        item.value
+      }`, () => {
         expect(srv.cny(item.num, { inWords: item.inWords, ...item.options })).toBe(item.value);
       });
     });

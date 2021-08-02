@@ -2,8 +2,12 @@ import { Injectable, InjectionToken } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { _HttpClient } from '../http/http.client';
+
 export interface AlainI18NService {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   /**
    * Call `use` to trigger change notification
@@ -30,60 +34,75 @@ export interface AlainI18NService {
    * Change language
    *
    * 变更语言
-   * @param lang 语言代码
-   * @param emit 是否触发 `change`，默认：true
+   *
+   * @param emit 是否触发 `change`，默认：true ; Should be removed, please use `change` event instead.
    */
-  use(lang: string, emit?: boolean): void;
+  use(lang: string, data?: Record<string, string>): void;
 
   /**
    * Return to the current language list
    *
    * 返回当前语言列表
    */
-  getLangs(): any[];
+  getLangs(): NzSafeAny[];
 
   /**
-   * 翻译
-   * - `params` 模板所需要的参数对象
-   * - `isSafe` 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`
+   * Translate 翻译
+   *
+   * @param params 模板所需要的参数对象
+   * @param isSafe 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`; Should be removed, If you need SafeHtml support, please use `| html` pipe instead.
    */
-  fanyi(key: string, params?: { [key: string]: any }, isSafe?: boolean): string;
+  fanyi(path: string, params?: unknown): string;
 }
 
-export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTranslatorToken', {
+export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainI18nToken', {
   providedIn: 'root',
-  factory: ALAIN_I18N_TOKEN_FACTORY,
+  factory: () => new AlainI18NServiceFake()
 });
 
-export function ALAIN_I18N_TOKEN_FACTORY(): AlainI18NServiceFake {
-  return new AlainI18NServiceFake();
+@Injectable()
+export abstract class AlainI18nBaseService implements AlainI18NService {
+  protected _change$ = new BehaviorSubject<string | null>(null);
+  protected _currentLang: string = '';
+  protected _defaultLang: string = '';
+  protected _data: Record<string, string> = {};
+  get change(): Observable<string> {
+    return this._change$.asObservable().pipe(filter(w => w != null)) as Observable<string>;
+  }
+  get defaultLang(): string {
+    return this._defaultLang;
+  }
+  get currentLang(): string {
+    return this._currentLang;
+  }
+  get data(): Record<string, string> {
+    return this._data;
+  }
+
+  abstract use(lang: string, data?: Record<string, string>): void;
+
+  abstract getLangs(): NzSafeAny[];
+
+  fanyi(path: string, params?: Record<string, unknown>): string {
+    let content = this._data[path] || '';
+    if (!content) return path;
+
+    if (params) {
+      Object.keys(params).forEach(key => (content = content.replace(new RegExp(`{{${key}}}`, 'g'), `${params[key]}`)));
+    }
+    return content;
+  }
 }
 
 @Injectable({ providedIn: 'root' })
-export class AlainI18NServiceFake implements AlainI18NService {
-  private change$ = new BehaviorSubject<string | null>(null);
-
-  get change(): Observable<string> {
-    return this.change$.asObservable().pipe(filter(w => w != null)) as Observable<string>;
+export class AlainI18NServiceFake extends AlainI18nBaseService {
+  use(lang: string, data: Record<string, string>): void {
+    this._data = data;
+    this._currentLang = lang;
+    this._change$.next(lang);
   }
 
-  get defaultLang(): string {
-    return '';
-  }
-
-  get currentLang(): string {
-    return '';
-  }
-
-  use(lang: string): void {
-    this.change$.next(lang);
-  }
-
-  getLangs(): any[] {
+  getLangs(): NzSafeAny[] {
     return [];
-  }
-
-  fanyi(key: string): string {
-    return key;
   }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { CurrencyFormatOptions } from '@delon/util/format';
+
 import { CurrencyPipeModule } from './module';
 
 describe('Pipe: price', () => {
@@ -10,7 +12,7 @@ describe('Pipe: price', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CurrencyPipeModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
   });
@@ -28,7 +30,7 @@ describe('Pipe: price', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | price: options }}</p> `,
+  template: ` <p id="result">{{ value | price: options }}</p> `
 })
 class TestComponent {
   value: number;

@@ -16,14 +16,18 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
+
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
   ReuseContextCloseEvent,
@@ -34,7 +38,7 @@ import {
   ReuseTabMatchMode,
   ReuseTabNotify,
   ReuseTabRouteParamMatchMode,
-  ReuseTitle,
+  ReuseTitle
 } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 
@@ -46,12 +50,12 @@ import { ReuseTabService } from './reuse-tab.service';
     '[class.reuse-tab]': 'true',
     '[class.reuse-tab__line]': `tabType === 'line'`,
     '[class.reuse-tab__card]': `tabType === 'card'`,
-    '[class.reuse-tab__disabled]': `disabled`,
+    '[class.reuse-tab__disabled]': `disabled`
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_debug: BooleanInput;
@@ -102,8 +106,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    @Inject(DOCUMENT) private doc: any,
-    private platform: Platform,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
+    private platform: Platform
   ) {}
 
   private genTit(title: ReuseTitle): string {
@@ -123,7 +127,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       closable: this.allowClose && this.srv.count > 0 && this.srv.getClosable(url, snapshotTrue),
       active: false,
       last: false,
-      index: 0,
+      index: 0
     };
   }
 
@@ -136,8 +140,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           closable: this.allowClose && item.closable && this.srv.count > 0,
           index,
           active: false,
-          last: false,
-        } as ReuseItem),
+          last: false
+        } as ReuseItem)
     );
 
     const url = this.curUrl;
@@ -239,7 +243,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
-  activate(instance: any): void {
+  activate(instance: NzSafeAny): void {
     this.srv.componentRef = { instance };
   }
 
@@ -289,7 +293,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(
         filter(() => this.srv.inited),
         takeUntil(this.unsubscribe$),
-        debounceTime(100),
+        debounceTime(100)
       )
       .subscribe(() => this.genList({ active: 'title' }));
 

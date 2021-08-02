@@ -1,8 +1,11 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
 import { debounceTime, map, mergeMap, startWith } from 'rxjs/operators';
+
+import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -13,10 +16,10 @@ import { SFAutoCompleteWidgetSchema } from './schema';
   selector: 'sf-autocomplete',
   templateUrl: './autocomplete.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
-  i: any = {};
+  i: NzSafeAny = {};
   list: Observable<SFSchemaEnum[]>;
   typing: string = '';
   @ViewChild(NgModel, { static: false }) private ngModel: NgModel;
@@ -46,12 +49,13 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     this.i = {
       backfill: toBool(backfill, false),
       defaultActiveFirstOption: toBool(defaultActiveFirstOption, true),
-      width: nzWidth || undefined,
+      width: nzWidth || undefined
     };
 
     let filterOptionValue = filterOption == null ? true : filterOption;
     if (typeof filterOptionValue === 'boolean') {
-      filterOptionValue = (input: string, option: SFSchemaEnum) => option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
+      filterOptionValue = (input: string, option: SFSchemaEnum) =>
+        option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
     }
     this.filterOption = filterOptionValue;
 
@@ -63,7 +67,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
       debounceTime(time),
       startWith(''),
       mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
-      map(res => getEnum(res, null, this.schema.readOnly!)),
+      map(res => getEnum(res, null, this.schema.readOnly!))
     );
   }
 
@@ -72,7 +76,11 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(this.schema.enum! || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly!);
+        this.fixData = getCopyEnum(
+          this.schema.enum! || this.formProperty.options.uiEmailSuffixes,
+          null,
+          this.schema.readOnly!
+        );
         break;
       default:
         this.fixData = getCopyEnum(this.schema.enum!, value, this.schema.readOnly!);

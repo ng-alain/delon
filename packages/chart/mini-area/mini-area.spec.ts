@@ -1,6 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
+
 import { G2MiniAreaComponent } from './mini-area.component';
 import { G2MiniAreaModule } from './mini-area.module';
 
@@ -22,7 +26,7 @@ describe('chart: mini-area', () => {
         .newData([
           { x: 1, y: 10 },
           { x: 2, y: 20 },
-          { x: 3, y: 30 },
+          { x: 3, y: 30 }
         ])
         .isDataCount('geometries', 3);
     }));
@@ -39,8 +43,8 @@ describe('chart: mini-area', () => {
       it('shoule be close x-axis', fakeAsync(() => {
         page.context.xAxis = {
           line: {
-            stroke: '#ff8800',
-          },
+            stroke: '#ff8800'
+          }
         };
         page.dcFirst();
         const opt = page.getController('axis').option;
@@ -50,8 +54,8 @@ describe('chart: mini-area', () => {
       it('shoule be close y-axis', fakeAsync(() => {
         page.context.yAxis = {
           line: {
-            stroke: '#ff8800',
-          },
+            stroke: '#ff8800'
+          }
         };
         page.dcFirst();
         const opt = page.getController('axis').option;
@@ -93,17 +97,17 @@ describe('chart: mini-area', () => {
       [xAxis]="xAxis"
       [yAxis]="yAxis"
     ></g2-mini-area>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2MiniAreaComponent;
   line = false;
   height = PageG2Height;
-  xAxis: any;
-  yAxis: any;
-  data: any[] = [
+  xAxis: NzSafeAny;
+  yAxis: NzSafeAny;
+  data: NzSafeAny[] = [
     { x: 1, y: 10 },
-    { x: 2, y: 20 },
+    { x: 2, y: 20 }
   ];
   tooltipType = 'default';
   delay = 0;

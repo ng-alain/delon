@@ -3,8 +3,12 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { createTestContext } from '@delon/testing';
 import { throwError } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { createTestContext } from '@delon/testing';
+
 import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';
 import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
@@ -17,7 +21,7 @@ describe('abc: onboarding', () => {
   function genModule(): void {
     TestBed.configureTestingModule({
       imports: [OnboardingModule, NoopAnimationsModule, RouterTestingModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture } = createTestContext(TestComponent));
     srv = TestBed.inject<OnboardingService>(OnboardingService);
@@ -112,8 +116,8 @@ describe('abc: onboarding', () => {
   it('should ingore start when current is running', fakeAsync(() => {
     page.start();
     spyOnProperty(srv, 'running').and.returnValue(true);
-    const srvAny = srv as any;
-    spyOn(srvAny as any, 'attach');
+    const srvAny = srv as NzSafeAny;
+    spyOn(srvAny as NzSafeAny, 'attach');
     page.start();
     expect(srvAny.attach).not.toHaveBeenCalled();
   }));
@@ -153,9 +157,9 @@ describe('abc: onboarding', () => {
       config = {
         items: [
           { selectors: '#a', title: 'atitle', content: 'acontent' },
-          { selectors: '#b', title: 'btitle' },
+          { selectors: '#b', title: 'btitle' }
         ],
-        ...config,
+        ...config
       };
       srv.start(config);
       return this.cd();
@@ -190,6 +194,6 @@ describe('abc: onboarding', () => {
     <div style="padding: 100px">
       <div id="b" style="width: 1000px; height: 50px">b</div>
     </div>
-    <div id="c" style="width: 100px; height: 50px">c</div>`,
+    <div id="c" style="width: 100px; height: 50px">c</div>`
 })
 class TestComponent {}

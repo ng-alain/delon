@@ -3,20 +3,24 @@ export default {
   compilerOptions: {
     baseUrl: './',
     outDir: './dist/out-tsc',
+    forceConsistentCasingInFileNames: true,
+    strict: true,
+    noImplicitReturns: true,
+    noFallthroughCasesInSwitch: true,
     sourceMap: true,
     declaration: false,
     downlevelIteration: true,
     experimentalDecorators: true,
-    module: 'esnext',
     moduleResolution: 'node',
     importHelpers: true,
-    target: 'es2015',
-    typeRoots: ['node_modules/@types'],
-    lib: ['es2018', 'dom'],
+    target: 'es2017',
+    module: 'es2020',
+    lib: ['es2018', 'dom']
   },
   angularCompilerOptions: {
-    enableIvy: false,
-    fullTemplateTypeCheck: true,
+    enableI18nLegacyMessageIdFormat: false,
     strictInjectionParameters: true,
-  },
+    strictInputAccessModifiers: true,
+    strictTemplates: true
+  }
 };

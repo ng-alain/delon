@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { deepCopy, deepGet, deepMerge, deepMergeKey } from './deep';
 
 describe('abc: utils', () => {
@@ -5,9 +7,9 @@ describe('abc: utils', () => {
     const tree = {
       responsne: {
         list: [],
-        total: 10,
+        total: 10
       },
-      status: 'ok',
+      status: 'ok'
     };
     it('should be get [status]', () => {
       expect(deepGet(tree, ['status'])).toBe(tree.status);
@@ -56,7 +58,7 @@ describe('abc: utils', () => {
   });
 
   describe('#deepMerge', () => {
-    let original: any;
+    let original: NzSafeAny;
     it('should working', () => {
       const fn = () => {};
       const time = new Date();

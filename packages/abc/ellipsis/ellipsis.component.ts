@@ -10,11 +10,14 @@ import {
   NgZone,
   OnChanges,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { take } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'ellipsis',
@@ -22,7 +25,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './ellipsis.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_tooltip: BooleanInput;
@@ -30,7 +33,6 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_lines: NumberInput;
   static ngAcceptInputType_fullWidthRecognition: BooleanInput;
 
-  // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
   @ViewChild('orgEl', { static: false }) private orgEl: ElementRef;
   @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl: ElementRef;
@@ -50,15 +52,18 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   get linsWord(): string {
     const { targetCount, text, tail } = this;
-    return (targetCount > 0 ? text.substring(0, targetCount) : '') + (targetCount > 0 && targetCount < text.length ? tail : '');
+    return (
+      (targetCount > 0 ? text.substring(0, targetCount) : '') +
+      (targetCount > 0 && targetCount < text.length ? tail : '')
+    );
   }
 
   constructor(
     private el: ElementRef,
     private ngZone: NgZone,
     private dom: DomSanitizer,
-    @Inject(DOCUMENT) private doc: any,
-    private cdr: ChangeDetectorRef,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
+    private cdr: ChangeDetectorRef
   ) {}
 
   private getStrFullLength(str: string): number {
@@ -87,7 +92,14 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private bisection(targetHeight: number, mid: number, begin: number, end: number, text: string, node: HTMLElement): number {
+  private bisection(
+    targetHeight: number,
+    mid: number,
+    begin: number,
+    end: number,
+    text: string,
+    node: HTMLElement
+  ): number {
     const suffix = this.tail;
     node.innerHTML = text.substring(0, mid) + suffix;
     let sh = node.offsetHeight;
@@ -120,7 +132,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     this.cls = {
       ellipsis: true,
       ellipsis__lines: lines && !isSupportLineClamp,
-      'ellipsis__line-clamp': lines && isSupportLineClamp,
+      'ellipsis__line-clamp': lines && isSupportLineClamp
     };
     if (!lines && !length) {
       this.type = 'default';
@@ -149,7 +161,9 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         if (length - tail.length <= 0) {
           displayText = '';
         } else {
-          displayText = fullWidthRecognition ? this.cutStrByFullLength(lengthText, length) : lengthText.slice(0, length);
+          displayText = fullWidthRecognition
+            ? this.cutStrByFullLength(lengthText, length)
+            : lengthText.slice(0, length);
         }
         this.text = displayText + tail;
       }

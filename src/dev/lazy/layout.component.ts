@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { format } from 'date-fns';
 
 @Component({
@@ -9,7 +10,7 @@ import { format } from 'date-fns';
     <div class="p-lg">
       <router-outlet></router-outlet>
     </div>
-  `,
+  `
 })
 export class DevLazyLayoutComponent {
   now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');

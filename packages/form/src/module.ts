@@ -1,8 +1,8 @@
+/* eslint-disable import/order */
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DelonLocaleModule } from '@delon/theme';
-import { AlainConfigService } from '@delon/util/config';
+
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -28,6 +28,9 @@ import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
+import { DelonLocaleModule } from '@delon/theme';
+import { AlainConfigService } from '@delon/util/config';
+
 const ZORROS = [
   NzAutocompleteModule,
   NzButtonModule,
@@ -52,7 +55,7 @@ const ZORROS = [
   NzToolTipModule,
   NzTransferModule,
   NzTreeSelectModule,
-  NzUploadModule,
+  NzUploadModule
 ];
 
 import { SFFixedDirective } from './sf-fixed.directive';
@@ -113,7 +116,7 @@ const WIDGETS = [
   CascaderWidget,
   MentionWidget,
   CustomWidget,
-  TextWidget,
+  TextWidget
 ];
 
 // #endregion
@@ -122,7 +125,7 @@ const WIDGETS = [
   imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS,
-  entryComponents: WIDGETS,
+  entryComponents: WIDGETS
 })
 export class DelonFormModule {
   static forRoot(): ModuleWithProviders<DelonFormModule> {
@@ -132,10 +135,10 @@ export class DelonFormModule {
         {
           provide: SchemaValidatorFactory,
           useClass: AjvSchemaValidatorFactory,
-          deps: [AlainConfigService, NgZone],
+          deps: [AlainConfigService, NgZone]
         },
-        { provide: WidgetRegistry, useClass: NzWidgetRegistry },
-      ],
+        { provide: WidgetRegistry, useClass: NzWidgetRegistry }
+      ]
     };
   }
 }

@@ -1,28 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
+
+import { saveAs } from 'file-saver';
+import isUtf8 from 'isutf8';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
 import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
-import { saveAs } from 'file-saver';
-import isUtf8 from 'isutf8';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
-declare var XLSX: any;
-declare var cptable: any;
+declare var XLSX: NzSafeAny;
+declare var cptable: NzSafeAny;
 
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
-  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService, private ngZone: NgZone) {
+  constructor(
+    private http: HttpClient,
+    private lazy: LazyService,
+    configSrv: AlainConfigService,
+    private ngZone: NgZone
+  ) {
     this.cog = configSrv.merge('xlsx', {
       url: 'https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js',
-      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`],
+      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`]
     })!;
   }
   private cog: AlainXlsxConfig;
 
   private init(): Promise<LazyResult[]> {
-    return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
+    return typeof XLSX !== 'undefined'
+      ? Promise.resolve([])
+      : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
   @ZoneOutside()
@@ -50,22 +61,8 @@ export class XlsxService {
   /**
    * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
    */
-  import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }>;
-
-  /**
-   * @deprecated 无须指定 `rABS` 参数，从12.x后将移除
-   *
-   * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
-   * @param rABS 加载数据方式 `readAsBinaryString` 或 `readAsArrayBuffer` （默认），[更多细节](http://t.cn/R3n63A0)
-   */
-  // tslint:disable-next-line: unified-signatures
-  import(fileOrUrl: File | string, rABS: 'readAsBinaryString' | 'readAsArrayBuffer'): Promise<{ [key: string]: any[][] }>;
-
-  import(
-    fileOrUrl: File | string,
-    _rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
-  ): Promise<{ [key: string]: any[][] }> {
-    return new Promise<{ [key: string]: any[][] }>((resolve, reject) => {
+  import(fileOrUrl: File | string): Promise<{ [key: string]: NzSafeAny[][] }> {
+    return new Promise<{ [key: string]: NzSafeAny[][] }>((resolve, reject) => {
       this.init()
         .then(() => {
           // from url
@@ -74,15 +71,15 @@ export class XlsxService {
               (res: ArrayBuffer) => {
                 this.ngZone.run(() => resolve(this.read(new Uint8Array(res), { type: 'array' })));
               },
-              (err: any) => {
+              (err: NzSafeAny) => {
                 reject(err);
-              },
+              }
             );
             return;
           }
           // from file
           const reader: FileReader = new FileReader();
-          reader.onload = (e: any) => {
+          reader.onload = (e: NzSafeAny) => {
             this.ngZone.run(() => resolve(this.read(e.target.result, { type: 'binary' })));
           };
           reader.readAsArrayBuffer(fileOrUrl);
@@ -96,10 +93,10 @@ export class XlsxService {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()
         .then(() => {
-          const wb: any = XLSX.utils.book_new();
+          const wb: NzSafeAny = XLSX.utils.book_new();
           if (Array.isArray(options.sheets)) {
             (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-              const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+              const ws: NzSafeAny = XLSX.utils.aoa_to_sheet(value.data);
               XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
             });
           } else {
@@ -113,7 +110,7 @@ export class XlsxService {
             bookType: 'xlsx',
             bookSST: false,
             type: 'array',
-            ...options.opts,
+            ...options.opts
           });
           const filename = options.filename || 'export.xlsx';
           saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);

@@ -62,7 +62,7 @@ export const CurrencyMega_Powers = [
   { unit: 'T', value: Math.pow(10, 12) },
   { unit: 'B', value: Math.pow(10, 9) },
   { unit: 'M', value: Math.pow(10, 6) },
-  { unit: 'K', value: 1000 },
+  { unit: 'K', value: 1000 }
 ];
 
 export interface CurrencyMegaUnitI18n {

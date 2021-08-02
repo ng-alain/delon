@@ -2,12 +2,15 @@ import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 import {
   STColumn,
   STColumnFilter,
@@ -27,7 +30,7 @@ import {
   STStatistical,
   STStatisticalResult,
   STStatisticalResults,
-  STStatisticalType,
+  STStatisticalType
 } from './st.interfaces';
 import { _STColumn, _STColumnButton, _STDataValue } from './st.types';
 
@@ -44,8 +47,7 @@ export interface STDataSourceOptions {
   singleSort?: STSingleSort;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
-  saftHtml: boolean;
-  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
+  customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
 }
 
 export interface STDataSourceResult {
@@ -73,7 +75,7 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private currencySrv: CurrencyService,
-    private dom: DomSanitizer,
+    private dom: DomSanitizer
   ) {}
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
@@ -84,7 +86,7 @@ export class STDataSource {
     let retPs: number;
     let retList: STData[];
     let retPi: number;
-    let rawData: any;
+    let rawData: NzSafeAny;
     let showPage = page.show;
 
     if (typeof data === 'string') {
@@ -109,7 +111,7 @@ export class STDataSource {
             retTotal = resultTotal == null ? total || 0 : +resultTotal;
           }
           return deepCopy(ret);
-        }),
+        })
       );
     } else if (Array.isArray(data)) {
       data$ = of(data);
@@ -158,7 +160,7 @@ export class STDataSource {
             }
           }
           return result;
-        }),
+        })
       );
     }
 
@@ -167,9 +169,7 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    data$ = data$.pipe(
-      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, safeHtml: options.saftHtml })),
-    );
+    data$ = data$.pipe(map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })));
 
     return data$.pipe(
       map(result => {
@@ -183,20 +183,23 @@ export class STDataSource {
           total: retTotal,
           list: retList,
           statistical: this.genStatistical(columns as _STColumn[], retList, rawData),
-          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
+          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage
         } as STDataSourceResult;
-      }),
+      })
     );
   }
 
-  private get(item: STData, col: _STColumn, idx: number, safeHtml: boolean): _STDataValue {
+  private get(item: STData, col: _STColumn, idx: number): _STDataValue {
     try {
+      const safeHtml = col.safeType === 'safeHtml';
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
-        if (safeHtml && formatRes && ~formatRes.indexOf('</')) {
-          return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
-        }
-        return { text: formatRes, _text: formatRes, org: formatRes };
+        return {
+          text: formatRes,
+          _text: safeHtml ? this.dom.bypassSecurityTrustHtml(formatRes) : formatRes,
+          org: formatRes,
+          safeType: col.safeType!
+        };
       }
 
       const value = deepGet(item, col.index as string[], col.default);
@@ -238,15 +241,22 @@ export class STDataSource {
           break;
       }
       if (text == null) text = '';
-      return { text, _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text, org: value, color, buttons: [] };
+      return {
+        text,
+        _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text,
+        org: value,
+        color,
+        safeType: col.safeType!,
+        buttons: []
+      };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: text, org: text, buttons: [] };
+      return { text, _text: text, org: text, buttons: [], safeType: 'text' };
     }
   }
 
-  private getByRemote(url: string, options: STDataSourceOptions): Observable<{}> {
+  private getByRemote(url: string, options: STDataSourceOptions): Observable<unknown> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
     let params = {};
@@ -255,12 +265,12 @@ export class STDataSource {
       if (req.type === 'page') {
         params = {
           [reName.pi as string]: page.zeroIndexed ? pi - 1 : pi,
-          [reName.ps as string]: ps,
+          [reName.ps as string]: ps
         };
       } else {
         params = {
           [reName.skip as string]: (pi - 1) * ps,
-          [reName.limit as string]: ps,
+          [reName.limit as string]: ps
         };
       }
     }
@@ -268,18 +278,18 @@ export class STDataSource {
       ...params,
       ...req.params,
       ...this.getReqSortMap(singleSort, multiSort, columns),
-      ...this.getReqFilterMap(columns),
+      ...this.getReqFilterMap(columns)
     };
 
     let reqOptions: STRequestOptions = {
       params,
       body: req.body,
-      headers: req.headers,
+      headers: req.headers
     };
     if (method === 'POST' && req.allInBody === true) {
       reqOptions = {
         body: { ...req.body, ...params },
-        headers: req.headers,
+        headers: req.headers
       };
     }
     if (typeof req.process === 'function') {
@@ -294,15 +304,15 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName; safeHtml: boolean }): STData[] {
-    const { result, columns, rowClassName, safeHtml } = options;
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
+    const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
           return { buttons: this.genButtons(c.buttons, result[i], c) };
         }
 
-        return this.get(result[i], c, i, c.saftHtml == null ? safeHtml : c.saftHtml);
+        return this.get(result[i], c, i);
       });
       if (rowClassName) {
         result[i]._rowClassName = rowClassName(result[i], i);
@@ -378,7 +388,11 @@ export class STDataSource {
     return ++this.sortTick;
   }
 
-  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: _STColumn[]): STMultiSortResultType {
+  getReqSortMap(
+    singleSort: STSingleSort | undefined,
+    multiSort: STMultiSort | undefined,
+    columns: _STColumn[]
+  ): STMultiSortResultType {
     let ret: STMultiSortResultType = {};
     const sortList = this.getValidSort(columns);
 
@@ -389,7 +403,7 @@ export class STDataSource {
         nameSeparator: '.',
         keepEmptyKey: true,
         arrayParam: false,
-        ...multiSort,
+        ...multiSort
       };
 
       const sortMap = sortList
@@ -444,20 +458,21 @@ export class STDataSource {
 
   // #region statistical
 
-  private genStatistical(columns: _STColumn[], list: STData[], rawData: any): STStatisticalResults {
+  private genStatistical(columns: _STColumn[], list: STData[], rawData: NzSafeAny): STStatisticalResults {
     const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
-      res[col.key || col.indexKey || index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
+      res[col.key || col.indexKey || index] =
+        col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;
   }
 
-  private getStatistical(col: _STColumn, index: number, list: STData[], rawData: any): STStatisticalResult {
+  private getStatistical(col: _STColumn, index: number, list: STData[], rawData: NzSafeAny): STStatisticalResult {
     const val = col.statistical;
     const item: STStatistical = {
       digits: 2,
       currency: undefined,
-      ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical)),
+      ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical))
     };
     let res: STStatisticalResult = { value: 0 };
     let currency = false;

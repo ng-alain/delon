@@ -13,24 +13,23 @@ import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
-import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
+import { PriceModule } from '@delon/abc/price';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
 import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
 import { SEModule } from '@delon/abc/se';
 import { SGModule } from '@delon/abc/sg';
-import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
-import { G2CustomModule } from '@delon/chart/custom';
 import { ChartEChartsModule } from '@delon/chart/chart-echarts';
+import { G2CustomModule } from '@delon/chart/custom';
 import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
@@ -46,7 +45,6 @@ import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
 import { CurrencyPipeModule, FilterPipeModule, FormatPipeModule } from '@delon/util/pipes';
-import { PriceModule } from '@delon/abc/price';
 
 export const SHARED_DELON_MODULES = [
   AvatarListModule,
@@ -61,7 +59,6 @@ export const SHARED_DELON_MODULES = [
   ImageModule,
   LoadingModule,
   QRModule,
-  NumberToChineseModule,
   OnboardingModule,
   ErrorCollectModule,
   ExceptionModule,
@@ -73,7 +70,6 @@ export const SHARED_DELON_MODULES = [
   TagSelectModule,
   NoticeIconModule,
   QuickMenuModule,
-  SidebarNavModule,
   G2BarModule,
   G2CardModule,
   G2CustomModule,
@@ -100,5 +96,5 @@ export const SHARED_DELON_MODULES = [
   FilterPipeModule,
   AutoFocusModule,
   LetModule,
-  PriceModule,
+  PriceModule
 ];

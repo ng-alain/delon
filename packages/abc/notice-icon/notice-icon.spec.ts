@@ -3,8 +3,10 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
+
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeItem } from './notice-icon.types';
@@ -19,7 +21,7 @@ describe('abc: notice-icon', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, NoticeIconModule, HttpClientTestingModule, DelonLocaleModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
   });
@@ -127,7 +129,7 @@ describe('abc: notice-icon', () => {
       [(popoverVisible)]="popoverVisible"
       (popoverVisibleChange)="popupVisibleChange($event)"
     ></notice-icon>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -141,14 +143,14 @@ class TestComponent {
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '你收到了 14 份新周报',
           datetime: '7 个月前',
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000002',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
           title: '你推荐的 曲妮妮 已通过第三轮面试',
           datetime: '7 个月前',
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000003',
@@ -156,24 +158,24 @@ class TestComponent {
           title: '这种模板可以区分多种通知类型',
           datetime: '7 个月前',
           read: true,
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000004',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
           title: '左侧图标用于区分不同的类型',
           datetime: '7 个月前',
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000005',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '内容不要超过两行字，超出时自动截断',
           datetime: '7 个月前',
-          type: '通知',
-        },
-      ],
-    },
+          type: '通知'
+        }
+      ]
+    }
   ];
   count = 10;
   loading = false;

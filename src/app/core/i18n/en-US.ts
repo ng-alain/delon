@@ -68,10 +68,11 @@ export const ENUS = {
   'app.demo.copy': 'Copy code',
   'app.demo.copied': 'Copied!',
   'app.demo.code-sandbox': 'Edit On CodeSandbox',
+  'app.demo.code-sandbox-cli': 'Using Angular Cli mode',
   'app.demo.stackblitz': 'Edit On StackBlitz',
   'app.theme-btn.default': 'Default Theme',
   'app.theme-btn.dark': 'Dark Theme',
   'app.theme-btn.compact': 'Compact Theme',
   'sf.name': 'Name',
-  'sf.description': 'This is description',
+  'sf.description': 'This is description'
 };

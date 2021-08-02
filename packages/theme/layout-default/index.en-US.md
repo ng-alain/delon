@@ -56,8 +56,8 @@ import { environment } from '@env/environment';
         </div>
         <nz-dropdown-menu #userMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' | translate }}</li>
-            <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | translate }}</li>
+            <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' | i18n }}</li>
+            <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | i18n }}</li>
           </ul>
         </nz-dropdown-menu>
       </ng-template>
@@ -143,7 +143,7 @@ In the upper-left-right layout mode, it is applied to the development of the **b
 + Side area width `200px`（parameter：`@aside-wd`）
 + Hide side navigation when the screen is below `1140px` wide
 + Turn the side navigation to the `fixed` state when the screen is below `1140px` wide
-+ Mainly includes a [sidebar-nav (click to view API)](/components/sidebar-nav) component
++ Mainly includes a [layout-default-nav](/theme/layout-default/en?#layout-default-nav) component
 
 > Parameters are adjustable as needed by the `src/styles/theme.less` file.
 
@@ -159,7 +159,7 @@ Scaffolding provides some regular top-level components by default, which are sto
 
 location：*src/app/layout/default/sidebar*
 
-Only one user information and main menu are included. The main menu is a [sidebar-nav](/components/sidebar-nav) component. For details, please refer to [Business Components](/components/sidebar-nav).
+Only one user information and main menu are included. The main menu is a [layout-default-nav](/theme/layout-default/en?#layout-default-nav) component.
 
 **Internal area**
 

@@ -70,7 +70,7 @@ this.settingService.setLayout(`collapsed`, false);
 
 NG-ALAIN takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
 
-Menu data **Make sure** ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav](/components/sidebar-nav), page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
+Menu data **Make sure** ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
 
 ```ts
 this.menuService.add(res.menu);

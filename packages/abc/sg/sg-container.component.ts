@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+
 import { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
@@ -11,11 +12,11 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
     '[style.margin-left.px]': 'marginValue',
     '[style.margin-right.px]': 'marginValue',
     '[class.ant-row]': 'true',
-    '[class.sg__wrap]': 'true',
+    '[class.sg__wrap]': 'true'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SGContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
@@ -33,7 +34,7 @@ export class SGContainerComponent {
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sg', {
       gutter: 32,
-      col: 2,
+      col: 2
     });
   }
 }

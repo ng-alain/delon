@@ -1,5 +1,14 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -9,11 +18,11 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './result.component.html',
   host: {
     '[class.result]': 'true',
-    '[class.result-rtl]': `dir === 'rtl'`,
+    '[class.result-rtl]': `dir === 'rtl'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ResultComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

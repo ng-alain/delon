@@ -1,8 +1,10 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util/other';
+import { Observable, Observer } from 'rxjs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerOptions, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
-import { Observable, Observer } from 'rxjs';
+
+import { deepMerge } from '@delon/util/other';
 
 export interface DrawerHelperOptions {
   /**
@@ -55,7 +57,7 @@ export class DrawerHelper {
    * 构建一个抽屉
    */
   create(
-    title: string | TemplateRef<{}> | undefined | null,
+    title: string | TemplateRef<NzSafeAny> | undefined | null,
     comp:
       | TemplateRef<{
           $implicit: NzSafeAny;
@@ -63,8 +65,8 @@ export class DrawerHelper {
         }>
       | Type<NzSafeAny>,
     params?: NzSafeAny,
-    options?: DrawerHelperOptions,
-  ): Observable<any> {
+    options?: DrawerHelperOptions
+  ): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'md',
@@ -73,17 +75,17 @@ export class DrawerHelper {
         exact: true,
         drawerOptions: {
           nzPlacement: 'right',
-          nzWrapClassName: '',
-        },
+          nzWrapClassName: ''
+        }
       },
-      options,
+      options
     );
-    return new Observable((observer: Observer<any>) => {
+    return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, footer, footerHeight, drawerOptions } = options as DrawerHelperOptions;
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
         nzContentParams: params,
-        nzTitle: title as NzSafeAny,
+        nzTitle: title as NzSafeAny
       };
 
       if (typeof size === 'number') {
@@ -91,19 +93,19 @@ export class DrawerHelper {
           drawerOptions!.nzPlacement === 'top' || drawerOptions!.nzPlacement === 'bottom' ? 'nzHeight' : 'nzWidth'
         ] = options!.size;
       } else if (!drawerOptions!.nzWidth) {
-        defaultOptions.nzWrapClassName = (drawerOptions!.nzWrapClassName + ` drawer-${options!.size}`).trim();
+        defaultOptions.nzWrapClassName = `${drawerOptions!.nzWrapClassName} drawer-${options!.size}`.trim();
         delete drawerOptions!.nzWrapClassName;
       }
 
       if (footer) {
         // The 24 value is @drawer-body-padding
         defaultOptions.nzBodyStyle = {
-          'padding-bottom.px': footerHeight! + 24,
+          'padding-bottom.px': footerHeight! + 24
         };
       }
 
       const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: any) => {
+      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -121,7 +123,7 @@ export class DrawerHelper {
    * 构建一个抽屉，点击蒙层不允许关闭
    */
   static(
-    title: string | TemplateRef<{}> | undefined | null,
+    title: string | TemplateRef<NzSafeAny> | undefined | null,
     comp:
       | TemplateRef<{
           $implicit: NzSafeAny;
@@ -129,11 +131,11 @@ export class DrawerHelper {
         }>
       | Type<NzSafeAny>,
     params?: NzSafeAny,
-    options?: DrawerHelperOptions,
-  ): Observable<any> {
+    options?: DrawerHelperOptions
+  ): Observable<NzSafeAny> {
     const drawerOptions = {
       nzMaskClosable: false,
-      ...(options && options.drawerOptions),
+      ...(options && options.drawerOptions)
     };
     return this.create(title, comp, params, { ...options, drawerOptions });
   }

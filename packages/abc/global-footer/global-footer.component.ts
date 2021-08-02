@@ -9,13 +9,17 @@ import {
   OnInit,
   Optional,
   QueryList,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { WINDOW } from '@delon/util/token';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { WINDOW } from '@delon/util/token';
+
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
 
@@ -25,11 +29,11 @@ import { GlobalFooterLink } from './global-footer.types';
   templateUrl: './global-footer.component.html',
   host: {
     '[class.global-footer]': 'true',
-    '[class.global-footer-rtl]': `dir === 'rtl'`,
+    '[class.global-footer-rtl]': `dir === 'rtl'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class GlobalFooterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -50,9 +54,9 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WINDOW) private win: any,
+    @Inject(WINDOW) private win: NzSafeAny,
     private dom: DomSanitizer,
-    @Optional() private directionality: Directionality,
+    @Optional() private directionality: Directionality
   ) {}
 
   to(item: GlobalFooterLink | GlobalFooterItemComponent): void {

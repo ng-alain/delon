@@ -10,16 +10,19 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  Optional,
+  Optional
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+
 import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.types';
 
 @Component({
@@ -27,9 +30,9 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   templateUrl: './setting-drawer.component.html',
   host: {
     '[class.setting-drawer]': 'true',
-    '[class.setting-drawer-rtl]': `dir === 'rtl'`,
+    '[class.setting-drawer-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingDrawerComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() autoApplyColor = true;
@@ -44,7 +47,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
   get layout(): Layout {
     return this.settingSrv.layout;
   }
-  data: any = {};
+  data: NzSafeAny = {};
   color: string;
   colors = DEFAULT_COLORS;
 
@@ -54,14 +57,14 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     private settingSrv: SettingsService,
     private lazy: LazyService,
     private ngZone: NgZone,
-    @Inject(DOCUMENT) private doc: any,
-    @Optional() private directionality: Directionality,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
+    @Optional() private directionality: Directionality
   ) {
     this.color = this.cachedData['@primary-color'] || this.DEFAULT_PRIMARY;
     this.resetData(this.cachedData, false);
   }
 
-  private get cachedData(): { [key: string]: any } {
+  private get cachedData(): { [key: string]: NzSafeAny } {
     return this.settingSrv.layout[ALAINDEFAULTVAR] || {};
   }
 
@@ -104,10 +107,10 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
       });
   }
 
-  private genVars(): any {
+  private genVars(): NzSafeAny {
     const { data, color, validKeys } = this;
-    const vars: any = {
-      [`@primary-color`]: color,
+    const vars: { [key: string]: string } = {
+      [`@primary-color`]: color
     };
     validKeys.filter(key => key !== 'primary-color').forEach(key => (vars[`@${key}`] = data[key].value));
     this.setLayout(ALAINDEFAULTVAR, vars);
@@ -120,7 +123,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     const msgId = msg.loading(this.compilingText, { nzDuration: 0 }).messageId;
     setTimeout(() => {
       this.loadLess().then(() => {
-        (window as any).less.modifyVars(this.genVars()).then(() => {
+        (window as NzSafeAny).less.modifyVars(this.genVars()).then(() => {
           msg.success('成功');
           msg.remove(msgId);
           ngZone.run(() => cdr.detectChanges());
@@ -141,7 +144,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
     this.resetData(this.cachedData, false);
   }
 
-  setLayout(name: string, value: any): void {
+  setLayout(name: string, value: NzSafeAny): void {
     this.settingSrv.setLayout(name, value);
   }
 

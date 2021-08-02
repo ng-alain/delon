@@ -1,11 +1,33 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ContentChildren, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
-import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
-import { SettingsService } from '@delon/theme';
-import { updateHostClass } from '@delon/util/browser';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import {
+  Component,
+  ContentChildren,
+  ElementRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  TemplateRef
+} from '@angular/core';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router
+} from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { SettingsService } from '@delon/theme';
+import { updateHostClass } from '@delon/util/browser';
+
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultOptions } from './types';
 
@@ -26,7 +48,7 @@ import { LayoutDefaultOptions } from './types';
       <ng-container *ngTemplateOutlet="content"></ng-container>
       <ng-content></ng-content>
     </section>
-  `,
+  `
 })
 export class LayoutDefaultComponent implements OnInit, OnDestroy {
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
@@ -46,7 +68,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     private settings: SettingsService,
     private el: ElementRef,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
@@ -77,7 +99,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       ['alain-default']: true,
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
-      [`alain-default__hide-aside`]: this.options.hideAside,
+      [`alain-default__hide-aside`]: this.options.hideAside
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');
@@ -89,7 +111,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       logoCollapsed: `./assets/logo.svg`,
       logoLink: `/`,
       hideAside: false,
-      ...this.options,
+      ...this.options
     };
     const { settings, destroy$ } = this;
     settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());

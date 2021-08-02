@@ -3,7 +3,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DelonAuthModule } from '../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
@@ -13,9 +15,9 @@ const mockRouter = {
   url: '',
   navigate: jasmine.createSpy('navigate'),
   navigateByUrl: jasmine.createSpy('navigateByUrl'),
-  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
+  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: NzSafeAny) => {
     return new DefaultUrlSerializer().parse(value);
-  }),
+  })
 };
 
 class MockDocument {
@@ -37,10 +39,10 @@ class MockLocation {
 const MockAuth0 = {
   type: 'auth0',
   url: `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent(
-    'http://localhost:4200/#/login/callback',
+    'http://localhost:4200/#/login/callback'
   )}`,
   be: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5' },
-  model: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5', token: '123' },
+  model: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5', token: '123' }
 };
 
 describe('auth: social.service', () => {
@@ -49,7 +51,11 @@ describe('auth: social.service', () => {
   function genModule(tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
-      providers: [SocialService, { provide: DOCUMENT, useClass: MockDocument }, { provide: Router, useValue: mockRouter }],
+      providers: [
+        SocialService,
+        { provide: DOCUMENT, useClass: MockDocument },
+        { provide: Router, useValue: mockRouter }
+      ]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
@@ -63,7 +69,7 @@ describe('auth: social.service', () => {
   afterEach(() => srv.ngOnDestroy());
 
   describe('#login', () => {
-    [MockAuth0].forEach((item: any) => {
+    [MockAuth0].forEach((item: NzSafeAny) => {
       it(`${item.type} via href`, () => {
         srv.login(item.url, '/', { type: 'href' });
         const ret = TestBed.inject(DOCUMENT).location.href;
@@ -124,34 +130,34 @@ describe('auth: social.service', () => {
       user: 'cipchk',
       uid: 1,
       role: 'admin',
-      permission: [1, 2, 3, 4],
+      permission: [1, 2, 3, 4]
     };
     [
       {
         summary: 'swt via url',
         url: 'http://localhost:4200/login/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1',
-        be: { token: '40SOJV-L8oOwwUIs', name: 'cipchk', uid: '1' },
+        be: { token: '40SOJV-L8oOwwUIs', name: 'cipchk', uid: '1' }
       },
       {
         summary: 'jwt via url',
         url: `http://localhost:4200/login/callback?token=${jwtToken}`,
-        be: { token: jwtToken },
+        be: { token: jwtToken }
       },
       {
         summary: 'url muse contain a ?',
         url: 'http://localhost:4200/callback',
-        be: 'throw',
+        be: 'throw'
       },
       {
         summary: 'invalide token data',
         url: 'http://localhost:4200/?code=40SOJV-L8oOwwUIs#/login/callback',
-        be: 'throw',
+        be: 'throw'
       },
-      { summary: 'via ITokenModel', url: swtData, be: swtData },
-    ].forEach((item: any) => {
+      { summary: 'via ITokenModel', url: swtData, be: swtData }
+    ].forEach((item: NzSafeAny) => {
       it(`${item.summary}`, () => {
         if (item.be === 'throw') {
-          const router = TestBed.inject<Router>(Router) as any;
+          const router = TestBed.inject<Router>(Router) as NzSafeAny;
           router.url = item.url;
           expect(() => {
             srv.callback(null);

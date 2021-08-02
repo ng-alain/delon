@@ -1,9 +1,10 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { filter } from 'rxjs/operators';
-import { DelonLocaleService } from './locale.service';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import enUS from './languages/en-US';
 import zhCN from './languages/zh-CN';
+import { DelonLocaleService } from './locale.service';
 
 describe('theme: locale', () => {
   let locale: DelonLocaleService;

@@ -1,17 +1,33 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
+
 import { DelonLocaleService } from '@delon/theme';
-import { CloseType, ReuseContextCloseEvent, ReuseContextI18n, ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
+
+import {
+  CloseType,
+  ReuseContextCloseEvent,
+  ReuseContextI18n,
+  ReuseCustomContextMenu,
+  ReuseItem
+} from './reuse-tab.interfaces';
 
 @Component({
   selector: 'reuse-tab-context-menu',
   templateUrl: './reuse-tab-context-menu.component.html',
   host: {
     '(document:click)': 'closeMenu($event)',
-    '(document:contextmenu)': 'closeMenu($event)',
+    '(document:contextmenu)': 'closeMenu($event)'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;
@@ -19,7 +35,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
   set i18n(value: ReuseContextI18n) {
     this._i18n = {
       ...this.i18nSrv.getData('reuseTab'),
-      ...value,
+      ...value
     };
   }
   get i18n(): ReuseContextI18n {
@@ -40,7 +56,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     this.close.next({
       type,
       item: this.item,
-      includeNonCloseable: this.includeNonCloseable,
+      includeNonCloseable: this.includeNonCloseable
     });
   }
 

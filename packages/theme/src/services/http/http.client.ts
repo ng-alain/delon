@@ -1,9 +1,12 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { HttpClient, HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, switchMap, tap } from 'rxjs/operators';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -15,13 +18,12 @@ export type HttpObserve = 'body' | 'events' | 'response';
  * + 统一处理时间格式问题
  */
 @Injectable({ providedIn: 'root' })
-// tslint:disable-next-line:class-name
 export class _HttpClient {
   private cog: AlainThemeHttpClientConfig;
   constructor(private http: HttpClient, cogSrv: AlainConfigService) {
     this.cog = cogSrv.merge('themeHttp', {
       nullValueHandling: 'include',
-      dateValueHandling: 'timestamp',
+      dateValueHandling: 'timestamp'
     })!;
   }
 
@@ -68,10 +70,9 @@ export class _HttpClient {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];
-    // tslint:disable-next-line: forin
-    for (const key in params) {
+    Object.keys(params).forEach(key => {
       arr.push(`${key}=${params[key]}`);
-    }
+    });
     return url + arr.join('&');
   }
 
@@ -85,13 +86,6 @@ export class _HttpClient {
 
   private pop(): void {
     this.setCount(--this.lc);
-  }
-
-  /**
-   * @deprecated Will be removed in 12.0.0, Pls used `cleanLoading` instead
-   */
-  end(): void {
-    this.cleanLoading();
   }
 
   /**
@@ -117,7 +111,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -132,7 +127,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
@@ -147,7 +143,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
@@ -162,7 +159,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<T>>;
 
   /**
@@ -177,7 +175,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -192,7 +191,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   get(
@@ -204,11 +204,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('GET', url, {
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -229,7 +230,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -245,7 +247,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
@@ -261,7 +264,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
@@ -277,7 +281,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -293,7 +298,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   post(
@@ -306,12 +312,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('POST', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -331,7 +338,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -346,8 +354,9 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
    * **DELETE Request** Return a `any` type / 返回一个 `any` 类型
@@ -361,7 +370,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -376,7 +386,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   delete(
@@ -388,11 +399,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('DELETE', url, {
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -411,7 +423,7 @@ export class _HttpClient {
       delay(0),
       tap(() => this.push()),
       switchMap(() => this.http.jsonp(this.appliedUrl(url, params), callbackParam)),
-      finalize(() => this.pop()),
+      finalize(() => this.pop())
     );
   }
 
@@ -432,7 +444,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -448,8 +461,9 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
    * **PATCH Request** Return a `any` type / 返回一个 `any` 类型
@@ -464,7 +478,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -480,7 +495,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   patch(
@@ -493,12 +509,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('PATCH', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -519,7 +536,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -535,8 +553,9 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
    * **PUT Request** Return a `any` type / 返回一个 `any` 类型
@@ -551,7 +570,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -567,7 +587,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   put(
@@ -580,12 +601,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('PUT', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -606,7 +628,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -622,7 +645,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
@@ -638,7 +662,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
@@ -654,7 +679,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
@@ -670,7 +696,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
   form(
@@ -683,15 +710,16 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('POST', url, {
       body,
       params,
       ...options,
       headers: {
-        'content-type': `application/x-www-form-urlencoded`,
-      },
+        'content-type': `application/x-www-form-urlencoded`
+      }
     });
   }
 
@@ -713,7 +741,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<ArrayBuffer>;
 
   /**
@@ -730,7 +759,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<Blob>;
 
   /**
@@ -747,7 +777,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
@@ -764,7 +795,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<ArrayBuffer>>;
 
   /**
@@ -781,7 +813,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<Blob>>;
 
   /**
@@ -798,7 +831,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<string>>;
 
   /**
@@ -815,7 +849,8 @@ export class _HttpClient {
       observe: 'events';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<any>>;
 
   /**
@@ -832,7 +867,8 @@ export class _HttpClient {
       observe: 'events';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<R>>;
 
   /**
@@ -849,7 +885,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<ArrayBuffer>>;
 
   /**
@@ -866,7 +903,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<Blob>>;
 
   /**
@@ -883,7 +921,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<string>>;
 
   /**
@@ -900,9 +939,9 @@ export class _HttpClient {
       observe: 'response';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): // tslint:disable-next-line: ban-types
-  Observable<HttpResponse<Object>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
    * **Request** Return a `HttpResponse<R>` type / 返回一个 `HttpResponse<R>` 类型
@@ -918,7 +957,8 @@ export class _HttpClient {
       observe: 'response';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<R>>;
 
   /**
@@ -935,9 +975,9 @@ export class _HttpClient {
       responseType?: 'json';
       reportProgress?: boolean;
       withCredentials?: boolean;
-    },
-  ): // tslint:disable-next-line: ban-types
-  Observable<Object>;
+      context?: HttpContext;
+    }
+  ): Observable<Record<string, unknown>>;
 
   /**
    * **Request** Return a `R` type / 返回一个 `R` 类型
@@ -953,7 +993,8 @@ export class _HttpClient {
       responseType?: 'json';
       reportProgress?: boolean;
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<R>;
 
   /**
@@ -970,7 +1011,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   request(
@@ -984,7 +1026,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
@@ -992,7 +1035,7 @@ export class _HttpClient {
       delay(0),
       tap(() => this.push()),
       switchMap(() => this.http.request(method, url, options)),
-      finalize(() => this.pop()),
+      finalize(() => this.pop())
     );
   }
 

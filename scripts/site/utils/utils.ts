@@ -1,10 +1,13 @@
-// tslint:disable
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import * as fse from 'fs-extra';
+
+import * as fs from 'fs';
+import * as path from 'path';
+
+import { ModuleConfig } from '../interfaces';
+
 const JsonML = require('jsonml.js/lib/utils');
 const mustache = require('mustache');
-import * as path from 'path';
-import * as fs from 'fs';
-import * as fse from 'fs-extra';
-import { ModuleConfig } from '../interfaces';
 
 export function isHeading(node: any) {
   return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
@@ -53,7 +56,7 @@ export function generateSluggedId(children: any): { id: string; text: string } {
     .join('');
   return {
     id: genValidId(headingText.trim()),
-    text: headingText,
+    text: headingText
   };
 }
 

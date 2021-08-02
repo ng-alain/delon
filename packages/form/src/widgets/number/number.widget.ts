@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { ControlUIWidget } from '../../widget';
 import { SFNumberWidgetSchema } from './schema';
 
@@ -6,7 +7,7 @@ import { SFNumberWidgetSchema } from './schema';
   selector: 'sf-number',
   templateUrl: './number.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
   min: number;

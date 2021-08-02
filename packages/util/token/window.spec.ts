@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+
 import { WINDOW } from './window';
 
 describe('util: WINDOW', () => {
@@ -13,9 +14,9 @@ describe('util: WINDOW', () => {
       providers: [
         {
           provide: DOCUMENT,
-          useValue: {},
-        },
-      ],
+          useValue: {}
+        }
+      ]
     });
     expect(() => TestBed.inject(WINDOW)).toThrow();
   });

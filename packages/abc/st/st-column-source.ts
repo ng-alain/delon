@@ -1,10 +1,13 @@
 import { Host, Inject, Injectable, Optional, TemplateRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { AlainSTConfig } from '@delon/util/config';
 import { deepCopy, warn } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';
 import {
@@ -13,16 +16,18 @@ import {
   STColumnButtonPop,
   STColumnFilter,
   STColumnGroupType,
+  STColumnSafeType,
   STIcon,
   STResizable,
   STSortMap,
-  STWidthMode,
+  STWidthMode
 } from './st.interfaces';
 import { _STColumn, _STHeader } from './st.types';
 
 export interface STColumnSourceProcessOptions {
   widthMode: STWidthMode;
   resizable: STResizable;
+  safeType: STColumnSafeType;
 }
 
 @Injectable()
@@ -34,7 +39,7 @@ export class STColumnSource {
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    private stWidgetRegistry: STWidgetRegistry,
+    private stWidgetRegistry: STWidgetRegistry
   ) {}
 
   setCog(val: AlainSTConfig): void {
@@ -48,14 +53,14 @@ export class STColumnSource {
     }
 
     let pop = {
-      ...def,
+      ...def
     };
     if (typeof i.pop === 'string') {
       pop.title = i.pop;
     } else if (typeof i.pop === 'object') {
       pop = {
         ...pop,
-        ...i.pop,
+        ...i.pop
       };
     }
 
@@ -104,7 +109,7 @@ export class STColumnSource {
       if (item.icon) {
         item.icon = {
           ...btnIcon,
-          ...(typeof item.icon === 'string' ? { type: item.icon } : item.icon),
+          ...(typeof item.icon === 'string' ? { type: item.icon } : item.icon)
         };
       }
 
@@ -138,19 +143,19 @@ export class STColumnSource {
     // left width
     list
       .filter(w => w.fixed && w.fixed === 'left' && w.width)
-      .forEach((item, idx) => (item._left = list.slice(0, idx).reduce(countReduce, 0) + 'px'));
+      .forEach((item, idx) => (item._left = `${list.slice(0, idx).reduce(countReduce, 0)}px`));
     // right width
     list
       .filter(w => w.fixed && w.fixed === 'right' && w.width)
       .reverse()
-      .forEach((item, idx) => (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'));
+      .forEach((item, idx) => (item._right = `${idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0}px`));
   }
 
   private sortCoerce(item: _STColumn): STSortMap {
     const res = this.fixSortCoerce(item);
     res.reName = {
       ...this.cog.sortReName,
-      ...res.reName,
+      ...res.reName
     };
     return res;
   }
@@ -233,10 +238,13 @@ export class STColumnSource {
   private restoreRender(item: _STColumn): void {
     if (item.renderTitle) {
       item.__renderTitle =
-        typeof item.renderTitle === 'string' ? this.rowSource.getTitle(item.renderTitle) : (item.renderTitle as TemplateRef<void>);
+        typeof item.renderTitle === 'string'
+          ? this.rowSource.getTitle(item.renderTitle)
+          : (item.renderTitle as TemplateRef<void>);
     }
     if (item.render) {
-      item.__render = typeof item.render === 'string' ? this.rowSource.getRow(item.render) : (item.render as TemplateRef<void>);
+      item.__render =
+        typeof item.render === 'string' ? this.rowSource.getRow(item.render) : (item.render as TemplateRef<void>);
     }
   }
 
@@ -260,10 +268,10 @@ export class STColumnSource {
         const cell: STColumnGroupType = {
           column,
           colStart: currentColIndex,
-          hasSubColumns: false,
+          hasSubColumns: false
         };
 
-        let colSpan: number = 1;
+        let colSpan = 1;
 
         const subColumns = column.children;
         if (Array.isArray(subColumns) && subColumns.length > 0) {
@@ -325,7 +333,7 @@ export class STColumnSource {
 
   process(
     list: STColumn[],
-    options: STColumnSourceProcessOptions,
+    options: STColumnSourceProcessOptions
   ): { columns: _STColumn[]; headers: _STHeader[][]; headerWidths: string[] | null } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
@@ -339,7 +347,7 @@ export class STColumnSource {
       // index
       if (item.index) {
         if (!Array.isArray(item.index)) {
-          item.index = item.index.split('.');
+          item.index = item.index.toString().split('.');
         }
         item.indexKey = item.index.join('.');
       }
@@ -401,19 +409,23 @@ export class STColumnSource {
       item._isTruncate = !!item.width && options.widthMode.strictBehavior === 'truncate' && item.type !== 'img';
       // className
       if (!item.className) {
-        item.className = ({
-          number: 'text-right',
-          currency: 'text-right',
-          date: 'text-center',
-        } as NzSafeAny)[item.type!];
+        item.className = (
+          {
+            number: 'text-right',
+            currency: 'text-right',
+            date: 'text-center'
+          } as NzSafeAny
+        )[item.type!];
       }
       item._className = item.className || (item._isTruncate ? 'text-truncate' : null);
       // width
       if (typeof item.width === 'number') {
+        item._width = item.width;
         item.width = `${item.width}px`;
       }
       item._left = false;
       item._right = false;
+      item.safeType = item.safeType ?? options.safeType;
 
       // sorter
       item._sort = this.sortCoerce(item);
@@ -433,7 +445,7 @@ export class STColumnSource {
         maxWidth: 360,
         preview: true,
         ...options.resizable,
-        ...(typeof item.resizable === 'boolean' ? ({ disabled: !item.resizable } as STResizable) : item.resizable),
+        ...(typeof item.resizable === 'boolean' ? ({ disabled: !item.resizable } as STResizable) : item.resizable)
       };
 
       item.__point = point++;
@@ -461,7 +473,10 @@ export class STColumnSource {
     }
 
     this.fixedCoerce(columns as _STColumn[]);
-    return { columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0), ...this.genHeaders(copyList) };
+    return {
+      columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0),
+      ...this.genHeaders(copyList)
+    };
   }
 
   restoreAllRender(columns: _STColumn[]): void {

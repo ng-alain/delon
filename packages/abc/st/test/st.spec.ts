@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
@@ -7,6 +8,13 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable, of, Subject, throwError } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+
 import { dispatchDropDown } from '@delon/testing';
 import {
   ALAIN_I18N_TOKEN,
@@ -16,15 +24,11 @@ import {
   DrawerHelper,
   en_US,
   ModalHelper,
-  _HttpClient,
+  _HttpClient
 } from '@delon/theme';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-import { Observable, of, Subject, throwError } from 'rxjs';
+
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
@@ -45,7 +49,7 @@ import {
   STReq,
   STRes,
   STResReNameType,
-  STWidthMode,
+  STWidthMode
 } from '../st.interfaces';
 import { STModule } from '../st.module';
 import { _STColumn } from '../st.types';
@@ -71,8 +75,8 @@ function genData(count: number): any[] {
         tag: r(1, 5),
         prices: {
           fix: `fix${idx + 1}`,
-          total: Math.ceil(Math.random() * 10) + 200,
-        },
+          total: Math.ceil(Math.random() * 10) + 200
+        }
       };
     });
 }
@@ -104,14 +108,20 @@ describe('abc: st', () => {
   let i18nSrv: AlainI18NService;
   let registerWidget: STWidgetRegistry;
 
-  function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }): void {
+  function genModule(other: {
+    template?: string;
+    i18n?: boolean;
+    minColumn?: boolean;
+    providers?: any[];
+    createComp?: boolean;
+  }): void {
     other = {
       template: '',
       i18n: false,
       minColumn: false,
       providers: [],
       createComp: true,
-      ...other,
+      ...other
     };
     const imports = [
       NoopAnimationsModule,
@@ -122,13 +132,13 @@ describe('abc: st', () => {
       NzModalModule,
       NzDrawerModule,
       STModule,
-      DelonLocaleModule,
+      DelonLocaleModule
     ];
     const providers = [
       {
         provide: ALAIN_I18N_TOKEN,
-        useClass: MockI18NServiceFake,
-      },
+        useClass: MockI18NServiceFake
+      }
     ];
     if (other.providers!.length > 0) {
       providers.push(...other.providers!);
@@ -136,7 +146,7 @@ describe('abc: st', () => {
     TestBed.configureTestingModule({
       imports,
       declarations: [TestComponent, TestExpandComponent, TestWidgetComponent],
-      providers,
+      providers
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
     registerWidget = TestBed.inject(STWidgetRegistry);
@@ -215,8 +225,8 @@ describe('abc: st', () => {
             const selections = [
               {
                 text: '<div class="j-s1"></div>',
-                select: (ls: any[]) => ls.forEach(i => (i.checked = i.id < 2)),
-              },
+                select: (ls: any[]) => ls.forEach(i => (i.checked = i.id < 2))
+              }
             ];
             page
               .updateColumn([{ title: '', index: 'id', type: 'checkbox', selections }])
@@ -275,8 +285,8 @@ describe('abc: st', () => {
                 title: '',
                 index: 'id',
                 type: 'link',
-                click: jasmine.createSpy(),
-              },
+                click: jasmine.createSpy()
+              }
             ];
             page
               .updateColumn(columns as any)
@@ -299,8 +309,8 @@ describe('abc: st', () => {
                   title: '',
                   index: 'link',
                   type: 'link',
-                  click: (item: any) => item.link,
-                },
+                  click: (item: any) => item.link
+                }
               ])
               .clickCell('a');
             expect(router.navigateByUrl).toHaveBeenCalled();
@@ -352,8 +362,8 @@ describe('abc: st', () => {
                   title: '',
                   index: 'id',
                   type: 'number',
-                  numberDigits: '3.1-5',
-                },
+                  numberDigits: '3.1-5'
+                }
               ])
               .expectCell('001.0')
               .asyncEnd();
@@ -378,8 +388,8 @@ describe('abc: st', () => {
                   title: '',
                   index: 'date',
                   type: 'date',
-                  dateFormat: 'yyyy-MM',
-                },
+                  dateFormat: 'yyyy-MM'
+                }
               ])
               .expectCell(new DatePipe(new MockNzI18nService() as any).transform(MOCKDATE, 'yyyy-MM'))
               .asyncEnd();
@@ -415,9 +425,9 @@ describe('abc: st', () => {
                   yn: {
                     truth: 1,
                     yes: 'Y',
-                    no: 'N',
-                  },
-                },
+                    no: 'N'
+                  }
+                }
               ])
               .expectCell('Y', 1, 1, '', true)
               .expectCell('N', 2, 1, '', true)
@@ -428,7 +438,9 @@ describe('abc: st', () => {
         describe('with widget', () => {
           it(`should be working`, fakeAsync(() => {
             expect(Object.keys(registerWidget.widgets)).toContain('test');
-            page.updateColumn([{ type: 'widget', widget: { type: 'test' } }], 1, 1).expectCell('1', 1, 1, '.widget-record-value');
+            page
+              .updateColumn([{ type: 'widget', widget: { type: 'test' } }], 1, 1)
+              .expectCell('1', 1, 1, '.widget-record-value');
           }));
           it(`should be specify parameters`, fakeAsync(() => {
             page
@@ -443,7 +455,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'error' },
           3: { text: '进行中', color: 'processing' },
           4: { text: '默认', color: 'default' },
-          5: { text: '警告', color: 'warning' },
+          5: { text: '警告', color: 'warning' }
         };
         it(`should be render badge`, fakeAsync(() => {
           page
@@ -464,7 +476,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'red' },
           3: { text: '进行中', color: 'blue' },
           4: { text: '默认', color: '' },
-          5: { text: '警告', color: 'orange' },
+          5: { text: '警告', color: 'orange' }
         };
         it(`should be render tag`, fakeAsync(() => {
           page
@@ -486,8 +498,8 @@ describe('abc: st', () => {
               {
                 title: '',
                 index: 'id',
-                format: a => `<div class="j-format">${a.id}</div>`,
-              },
+                format: a => `<div class="j-format">${a.id}</div>`
+              }
             ])
             .expectCell('1', 1, 1, '.j-format')
             .asyncEnd();
@@ -498,8 +510,8 @@ describe('abc: st', () => {
               {
                 title: '',
                 index: 'id1',
-                default: '-',
-              },
+                default: '-'
+              }
             ])
             .expectCell('-')
             .asyncEnd();
@@ -520,10 +532,10 @@ describe('abc: st', () => {
                 {
                   type: 'del',
                   click: jasmine.createSpy(),
-                  popTitle: 'confirm?',
-                },
-              ],
-            },
+                  popTitle: 'confirm?'
+                }
+              ]
+            }
           ];
           page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]');
           // mock trigger
@@ -539,10 +551,10 @@ describe('abc: st', () => {
               title: '',
               buttons: [
                 {
-                  text: a => `<div class="j-btn-format">${a.id}</div>`,
-                },
-              ],
-            },
+                  text: a => `<div class="j-btn-format">${a.id}</div>`
+                }
+              ]
+            }
           ];
           page.updateColumn(columns).expectElCount('.j-btn-format', PS).asyncEnd();
         }));
@@ -552,10 +564,10 @@ describe('abc: st', () => {
               title: '',
               buttons: [
                 {
-                  text: a => `<div class="j-btn-format">${a.id}</div>`,
-                },
-              ],
-            },
+                  text: a => `<div class="j-btn-format">${a.id}</div>`
+                }
+              ]
+            }
           ];
           page.updateColumn(columns).expectElCount('.j-btn-format', PS).asyncEnd();
         }));
@@ -569,10 +581,10 @@ describe('abc: st', () => {
                   text: 'del',
                   type: 'del',
                   click: jasmine.createSpy(),
-                  popTitle: 'confirm?',
-                },
-              ],
-            },
+                  popTitle: 'confirm?'
+                }
+              ]
+            }
           ];
           page.updateColumn(columns);
           // mock trigger
@@ -585,8 +597,8 @@ describe('abc: st', () => {
             const columns: STColumn[] = [
               {
                 title: '',
-                buttons: [{ text: 'a', iif: (item: any) => item.id !== 1 }],
-              },
+                buttons: [{ text: 'a', iif: (item: any) => item.id !== 1 }]
+              }
             ];
             page.updateColumn(columns).expectCell(null!, 1, 1, 'a').expectCell('a', 2, 1, 'a').asyncEnd();
           }));
@@ -596,8 +608,8 @@ describe('abc: st', () => {
             const columns: STColumn[] = [
               {
                 title: '',
-                buttons: [{ text: 'a', click: 'reload' }],
-              },
+                buttons: [{ text: 'a', click: 'reload' }]
+              }
             ];
             spyOn(comp, 'reload');
             page.updateColumn(columns);
@@ -610,8 +622,8 @@ describe('abc: st', () => {
             const columns: STColumn[] = [
               {
                 title: '',
-                buttons: [{ text: 'a', click: 'load' }],
-              },
+                buttons: [{ text: 'a', click: 'load' }]
+              }
             ];
             spyOn(comp, 'load');
             page.updateColumn(columns);
@@ -632,11 +644,11 @@ describe('abc: st', () => {
                       click: jasmine.createSpy(),
                       modal: {
                         component: {},
-                        params: () => ({ aa: 1 }),
-                      },
-                    },
-                  ],
-                },
+                        params: () => ({ aa: 1 })
+                      }
+                    }
+                  ]
+                }
               ];
               const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
@@ -662,11 +674,11 @@ describe('abc: st', () => {
                       click: jasmine.createSpy(),
                       modal: {
                         component: {},
-                        params: () => ({ aa: 1 }),
-                      },
-                    },
-                  ],
-                },
+                        params: () => ({ aa: 1 })
+                      }
+                    }
+                  ]
+                }
               ];
               const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
@@ -694,11 +706,11 @@ describe('abc: st', () => {
                       click: jasmine.createSpy(),
                       drawer: {
                         component: {},
-                        params: () => ({ aa: 1 }),
-                      },
-                    },
-                  ],
-                },
+                        params: () => ({ aa: 1 })
+                      }
+                    }
+                  ]
+                }
               ];
               const drawerHelp = TestBed.inject<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
@@ -719,8 +731,8 @@ describe('abc: st', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => null }],
-                },
+                  buttons: [{ text: 'a', type: 'link', click: () => null }]
+                }
               ];
               const router = TestBed.inject<Router>(Router);
               spyOn(router, 'navigateByUrl');
@@ -734,8 +746,8 @@ describe('abc: st', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
-                },
+                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }]
+                }
               ];
               const router = TestBed.inject<Router>(Router);
               spyOn(router, 'navigateByUrl');
@@ -749,8 +761,8 @@ describe('abc: st', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
-                },
+                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }]
+                }
               ];
               const router = TestBed.inject<Router>(Router);
               const spy = spyOn(router, 'navigateByUrl');
@@ -768,7 +780,7 @@ describe('abc: st', () => {
           page.updateColumn([
             { title: '1', index: 'id', fixed: 'left', width: '100px' },
             { title: '2', index: 'id', fixed: 'left', width: '100px' },
-            { title: '3', index: 'id', fixed: 'left', width: '100px' },
+            { title: '3', index: 'id', fixed: 'left', width: '100px' }
           ]);
           expect(page.getCell(1, 1).style.left).toBe('0px');
           expect(page.getCell(1, 2).style.left).toBe('100px');
@@ -779,7 +791,7 @@ describe('abc: st', () => {
           page.updateColumn([
             { title: '1', index: 'id', fixed: 'right', width: '100px' },
             { title: '2', index: 'id', fixed: 'right', width: '100px' },
-            { title: '3', index: 'id', fixed: 'right', width: '100px' },
+            { title: '3', index: 'id', fixed: 'right', width: '100px' }
           ]);
           expect(page.getCell(1, 1).style.right).toBe('200px');
           expect(page.getCell(1, 2).style.right).toBe('100px');
@@ -794,11 +806,14 @@ describe('abc: st', () => {
               title: 'user',
               children: [
                 { title: 'name', index: 'name' },
-                { title: 'age', index: 'age', colSpan: 1, rowSpan: 2 },
-              ],
-            },
+                { title: 'age', index: 'age', colSpan: 1, rowSpan: 2 }
+              ]
+            }
           ]);
-          page.expectElCount('.ant-table-thead .ant-table-row', 2).expectElCount('.ant-table-thead .ant-table-cell', 3).asyncEnd();
+          page
+            .expectElCount('.ant-table-thead .ant-table-row', 2)
+            .expectElCount('.ant-table-thead .ant-table-cell', 3)
+            .asyncEnd();
         }));
         it('should be auto set widthConfig when column has width value', fakeAsync(() => {
           page.updateColumn([
@@ -806,11 +821,14 @@ describe('abc: st', () => {
               title: 'user',
               children: [
                 { title: 'name', index: 'name' },
-                { title: 'age', index: 'age', width: 100 },
-              ],
-            },
+                { title: 'age', index: 'age', width: 100 }
+              ]
+            }
           ]);
-          page.expectElCount('.ant-table-thead .ant-table-row', 2).expectElCount('.ant-table-thead .ant-table-cell', 3).asyncEnd();
+          page
+            .expectElCount('.ant-table-thead .ant-table-row', 2)
+            .expectElCount('.ant-table-thead .ant-table-cell', 3)
+            .asyncEnd();
         }));
       });
     });
@@ -827,7 +845,6 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should only restore data', () => {
-        // tslint:disable-next-line:no-string-literal
         const dataSource: STDataSource = comp['dataSource'];
         spyOn(dataSource, 'process').and.callFake(() => of({} as any));
         fixture.detectChanges();
@@ -945,7 +962,9 @@ describe('abc: st', () => {
           ++load;
           return Promise.resolve({});
         });
-        const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
+        const pc = dl
+          .query(By.directive(NzPaginationComponent))
+          .injector.get<NzPaginationComponent>(NzPaginationComponent);
         expect(load).toBe(0);
         pc.onPageSizeChange(10);
         fixture.detectChanges();
@@ -1120,12 +1139,24 @@ describe('abc: st', () => {
         it('should be close other expaned', fakeAsync(() => {
           context.expandAccordion = true;
           context.expandRowByClick = true;
-          page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', false).expectData(2, 'expand', true).asyncEnd();
+          page
+            .cd()
+            .clickCell(1, 2)
+            .clickCell(2, 2)
+            .expectData(1, 'expand', false)
+            .expectData(2, 'expand', true)
+            .asyncEnd();
         }));
         it('should be keeping expaned', fakeAsync(() => {
           context.expandAccordion = false;
           context.expandRowByClick = true;
-          page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', true).expectData(2, 'expand', true).asyncEnd();
+          page
+            .cd()
+            .clickCell(1, 2)
+            .clickCell(2, 2)
+            .expectData(1, 'expand', true)
+            .expectData(2, 'expand', true)
+            .asyncEnd();
         }));
         it('should be stop propagation in button event', fakeAsync(() => {
           context.expandRowByClick = true;
@@ -1134,10 +1165,10 @@ describe('abc: st', () => {
               title: '',
               buttons: [
                 {
-                  text: 'btn',
-                },
-              ],
-            },
+                  text: 'btn'
+                }
+              ]
+            }
           ];
           page.cd().clickEl('.st__btn-text').expectData(1, 'expand', undefined).asyncEnd();
         }));
@@ -1147,7 +1178,12 @@ describe('abc: st', () => {
           context.expandRowByClick = false;
           context.data = deepCopy(USERS).slice(0, 1) as NzSafeAny[];
           context.data[0].showExpand = false;
-          page.cd().expectElCount('.ant-table-row-expand-icon', 0).clickCell(1, 2).expectChangeType('expand', false).asyncEnd();
+          page
+            .cd()
+            .expectElCount('.ant-table-row-expand-icon', 0)
+            .clickCell(1, 2)
+            .expectChangeType('expand', false)
+            .asyncEnd();
         }));
       });
     });
@@ -1164,14 +1200,14 @@ describe('abc: st', () => {
                 multiple: true,
                 menus: [
                   { text: 'f1', value: 'fv1' },
-                  { text: 'f2', value: 'fv2' },
+                  { text: 'f2', value: 'fv2' }
                 ],
                 confirmText: 'ok',
                 clearText: 'reset',
                 icon: 'aa',
-                fn: () => true,
-              },
-            },
+                fn: () => true
+              }
+            }
           ];
         });
         it('muse provide the fn function', fakeAsync(() => {
@@ -1257,13 +1293,13 @@ describe('abc: st', () => {
             {
               title: '',
               index: 'i',
-              sort: { default: 'ascend', compare: () => 1 },
+              sort: { default: 'ascend', compare: () => 1 }
             },
             {
               title: '',
               index: 'i',
-              sort: { default: 'descend', compare: () => 1 },
-            },
+              sort: { default: 'descend', compare: () => 1 }
+            }
           ];
         });
         describe('when single-sort', () => {
@@ -1287,7 +1323,9 @@ describe('abc: st', () => {
           it('should be sorting', fakeAsync(() => {
             page.cd();
             comp.sort(comp._columns[0], 0, 'descend');
-            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
+            const sortList = comp._columns
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
+              .map(item => item._sort!);
             expect(sortList.length).toBe(1);
             expect(sortList[0].default).toBe('descend');
             page.asyncEnd();
@@ -1299,7 +1337,9 @@ describe('abc: st', () => {
             page.cd();
             comp.sort(comp._columns[0], 0, 'descend');
             comp.sort(comp._columns[1], 0, 'ascend');
-            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
+            const sortList = comp._columns
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
+              .map(item => item._sort!);
             expect(sortList.length).toBe(2);
             expect(sortList[0].default).toBe('descend');
             expect(sortList[1].default).toBe('ascend');
@@ -1609,9 +1649,8 @@ describe('abc: st', () => {
     describe('#export', () => {
       let exportSrv: STExport;
       beforeEach(() => {
-        // tslint:disable-next-line:no-string-literal
         exportSrv = comp['exportSrv'] = {
-          export: jasmine.createSpy('export'),
+          export: jasmine.createSpy('export')
         } as any;
       });
       describe('without specified data', () => {
@@ -1715,8 +1754,8 @@ describe('abc: st', () => {
             .updateColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }],
-              },
+                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }]
+              }
             ])
             .expectElCount('.st__body tr td a', 0)
             .asyncEnd();
@@ -1726,8 +1765,8 @@ describe('abc: st', () => {
             .updateColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
-              },
+                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }]
+              }
             ])
             .expectElCount('.st__btn-disabled', PS)
             .asyncEnd();
@@ -1738,8 +1777,8 @@ describe('abc: st', () => {
           .updateColumn([
             {
               title: '',
-              buttons: [{ text: 'a', click: () => 'load', tooltip: 't' }],
-            },
+              buttons: [{ text: 'a', click: () => 'load', tooltip: 't' }]
+            }
           ])
           .expectElCount('.st__body [nz-tooltip]', PS)
           .asyncEnd();
@@ -1749,7 +1788,7 @@ describe('abc: st', () => {
       it('should be working', fakeAsync(() => {
         page.updateColumn([
           { index: 'id', resizable: true },
-          { index: 'id', resizable: true },
+          { index: 'id', resizable: true }
         ]);
         comp.colResize({ width: 100 }, { width: 10 } as _STColumn);
         expect(page._changeData.type).toBe('resize');
@@ -1759,7 +1798,7 @@ describe('abc: st', () => {
         page
           .updateColumn([
             { index: 'id', resizable: true },
-            { index: 'id', resizable: true },
+            { index: 'id', resizable: true }
           ])
           .expectElCount('nz-resize-handle', 1)
           .asyncEnd();
@@ -1812,9 +1851,9 @@ describe('abc: st', () => {
         providers: [
           {
             provide: ALAIN_CONFIG,
-            useValue: { st: { multiSort: { global: true } } } as AlainConfig,
-          },
-        ],
+            useValue: { st: { multiSort: { global: true } } } as AlainConfig
+          }
+        ]
       });
       expect(comp.multiSort).not.toBeUndefined();
     });
@@ -1824,9 +1863,9 @@ describe('abc: st', () => {
         providers: [
           {
             provide: ALAIN_CONFIG,
-            useValue: { st: { multiSort: { global: false } } } as AlainConfig,
-          },
-        ],
+            useValue: { st: { multiSort: { global: false } } } as AlainConfig
+          }
+        ]
       });
       expect(comp.multiSort).toBeUndefined();
     });
@@ -1836,7 +1875,7 @@ describe('abc: st', () => {
       genModule({
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
-          </st>`,
+          </st>`
       });
       page.updateColumn([{ title: '', index: 'id', renderTitle: 'id' }]);
       expect(page.getHead('id').querySelector('.id-title')!.textContent).toBe('ID');
@@ -1846,7 +1885,7 @@ describe('abc: st', () => {
       genModule({
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </st>`,
+          </st>`
       });
       page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
       expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
@@ -1856,7 +1895,7 @@ describe('abc: st', () => {
       genModule({
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </st>`,
+          </st>`
       });
       page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
       expect(page.getCell().querySelector('.j-id')).toBeNull();
@@ -1883,7 +1922,7 @@ describe('abc: st', () => {
       page.updateColumn([{ title: { i18n: curLang }, index: 'id' }]);
       page.expectHead(curLang, 'id');
       curLang = 'zh';
-      i18nSrv.use(curLang);
+      i18nSrv.use(curLang, {});
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     }));
   });
@@ -1920,7 +1959,7 @@ describe('abc: st', () => {
      */
     getCell(row: number = 1, column: number = 1): HTMLElement {
       const cell = (dl.nativeElement as HTMLElement).querySelector(
-        `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`,
+        `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`
       ) as HTMLElement;
       return cell;
     }
@@ -1941,6 +1980,7 @@ describe('abc: st', () => {
     }
     /**
      * 断言单元格内容，下标从 `1` 开始
+     *
      * @param value 当 `null` 时，表示无单元格
      * @param cls 对单元格进一步筛选
      * @param isContain 是否包含条件
@@ -1963,7 +2003,9 @@ describe('abc: st', () => {
     }
     /** 获取标头 */
     getHead(name: string): HTMLElement {
-      const el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th[data-col="${name}"]`) as HTMLElement;
+      const el = (dl.nativeElement as HTMLElement).querySelector(
+        `.ant-table-thead th[data-col="${name}"]`
+      ) as HTMLElement;
       return el;
     }
     clickHead(name: string, cls: string): this {
@@ -1987,7 +2029,7 @@ describe('abc: st', () => {
     expectColumn(title: string, path: string, valule: any): this {
       const ret = deepGet(
         comp._columns.find(w => (w.title as STColumnTitle).text === title),
-        path,
+        path
       );
       expect(ret).toBe(valule);
       return this;
@@ -2090,7 +2132,7 @@ describe('abc: st', () => {
         target: el,
         preventDefault: jasmine.createSpy(),
         stopPropagation: jasmine.createSpy(),
-        ...event,
+        ...event
       } as any);
       return this.cd();
     }
@@ -2144,7 +2186,7 @@ describe('abc: st', () => {
       (error)="error()"
     >
     </st>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('st', { static: true })
@@ -2176,7 +2218,7 @@ class TestComponent {
   customRequest?: (options: STCustomRequestOptions) => Observable<any>;
   contextmenu: STContextmenuFn | null = _ => [
     { text: 'a', fn: jasmine.createSpy() },
-    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] },
+    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
   ];
 
   error(): void {}
@@ -2198,13 +2240,13 @@ class TestComponent {
         {{ item.id }}
       </ng-template>
     </st>
-  `,
+  `
 })
 class TestExpandComponent extends TestComponent {}
 
 @Component({
   template: ` <div class="widget-id-value">{{ id }}</div>
-    <div class="widget-record-value">{{ record?.id }}</div>`,
+    <div class="widget-record-value">{{ record?.id }}</div>`
 })
 class TestWidgetComponent {
   id: number;

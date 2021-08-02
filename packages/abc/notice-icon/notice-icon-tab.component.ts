@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
 import { LocaleData } from '@delon/theme';
+
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -7,7 +9,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   exportAs: 'noticeIconTab',
   templateUrl: './notice-icon-tab.component.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NoticeIconTabComponent {
   @Input() locale: LocaleData = {};

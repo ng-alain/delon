@@ -9,12 +9,13 @@ import {
   OnInit,
   Optional,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { DelonLocaleService, LocaleData } from '@delon/theme';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Component({
   selector: 'tag-select',
@@ -25,11 +26,11 @@ import { takeUntil } from 'rxjs/operators';
     '[class.tag-select-rtl]': `dir === 'rtl'`,
     '[class.tag-select-rtl__has-expand]': `dir === 'rtl' && expandable`,
     '[class.tag-select__has-expand]': 'expandable',
-    '[class.tag-select__expanded]': 'expand',
+    '[class.tag-select__expanded]': 'expand'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_expandable: BooleanInput;
@@ -43,7 +44,11 @@ export class TagSelectComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() expandable = true;
   @Output() readonly change = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonLocaleService, @Optional() private directionality: Directionality, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private i18n: DelonLocaleService,
+    @Optional() private directionality: Directionality,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.dir = this.directionality.value;

@@ -1,4 +1,5 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ITokenModel } from '../token/interface';
 import { SessionStorageStore } from './session-storage.service';
 
@@ -6,7 +7,7 @@ describe('auth: session-storage', () => {
   const store = new SessionStorageStore();
   const KEY = 'token';
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
 
   beforeEach(() => {

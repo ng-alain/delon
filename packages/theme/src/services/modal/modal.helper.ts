@@ -1,8 +1,10 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
-import { deepMerge } from '@delon/util/other';
+import { Observable, Observer } from 'rxjs';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, Observer } from 'rxjs';
+
+import { deepMerge } from '@delon/util/other';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
@@ -38,14 +40,18 @@ export class ModalHelper {
    * // 关闭
    * this.nzModalRef.destroy();
    */
-  create(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<NzSafeAny> {
+  create(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'lg',
         exact: true,
-        includeTabs: false,
+        includeTabs: false
       },
-      options,
+      options
     );
     return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, includeTabs, modalOptions } = options as ModalHelperOptions;
@@ -70,10 +76,10 @@ export class ModalHelper {
         nzContent: comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
-        nzComponentParams: params,
+        nzComponentParams: params
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: any) => {
+      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -103,64 +109,15 @@ export class ModalHelper {
    * // 关闭
    * this.nzModalRef.destroy();
    */
-  createStatic(comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>, params?: NzSafeAny, options?: ModalHelperOptions): Observable<any> {
+  createStatic(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<NzSafeAny> {
     const modalOptions = {
       nzMaskClosable: false,
-      ...(options && options.modalOptions),
+      ...(options && options.modalOptions)
     };
     return this.create(comp, params, { ...options, modalOptions });
-  }
-
-  /**
-   * @deprecated Will be removed in 12.0.0, Pls used `create` instead
-   *
-   * 打开对话框
-   *
-   * @example
-   * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
-   * // 对于组件的成功&关闭的处理说明
-   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
-   * this.nzModalRef.close(data);
-   * this.nzModalRef.close();
-   * // 关闭
-   * this.nzModalRef.destroy();
-   */
-  open(
-    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
-    params?: NzSafeAny,
-    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptions,
-  ): Observable<any> {
-    return this.create(comp, params, {
-      size,
-      modalOptions: options,
-      exact: false,
-    });
-  }
-
-  /**
-   * @deprecated Will be removed in 12.0.0, Pls used `createStatic` instead
-   *
-   * 静态框，点击蒙层不允许关闭
-   *
-   * @example
-   * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
-   * // 对于组件的成功&关闭的处理说明
-   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
-   * this.nzModalRef.close(data);
-   * this.nzModalRef.close();
-   * // 关闭
-   * this.nzModalRef.destroy();
-   */
-  static(
-    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
-    params?: NzSafeAny,
-    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptions,
-  ): Observable<any> {
-    return this.open(comp, params, size, {
-      nzMaskClosable: false,
-      ...options,
-    });
   }
 }

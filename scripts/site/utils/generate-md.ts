@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { highlight } from '../converters/highlight';
 import { escapeHTML, genAttr, generateSluggedId, isHeading, isStandalone } from './utils';
+
 const JsonML = require('jsonml.js/lib/utils');
 
 let headingList: any[] = [];
@@ -11,7 +13,7 @@ const converters = [highlight()].concat([
         node = node.replace('(deprecated)', `<i class="deprecated" title="已过期(Deprecated)"></i>`);
       }
       return node;
-    },
+    }
   ],
   [
     (node: any) => JsonML.isElement(node) && isHeading(node),
@@ -23,9 +25,11 @@ const converters = [highlight()].concat([
       const childrenHtml = children.map(toHtml).join('');
       // const goTo = tagName === 'h2' ? `<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a>` : '';
       const copy =
-        /h[0-9]{1}/g.test(tagName) && +tagName.substr(1) > 1 ? `<a class="lake-link"><i data-anchor="${sluggedId}"></i></a>` : ``;
+        /h[0-9]{1}/g.test(tagName) && +tagName.substr(1) > 1
+          ? `<a class="lake-link"><i data-anchor="${sluggedId}"></i></a>`
+          : ``;
       return `<${tagName} id="${sluggedId}">${copy}${childrenHtml}</${tagName}>`;
-    },
+    }
   ],
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'img',
@@ -33,7 +37,6 @@ const converters = [highlight()].concat([
       const attrs = JsonML.getAttributes(node);
       const ret: any[] = [];
       if (attrs) {
-        // tslint:disable-next-line: forin
         for (const key in attrs) {
           let value = attrs[key];
           if (key === 'src' && ~value.indexOf(' | ')) {
@@ -47,7 +50,7 @@ const converters = [highlight()].concat([
         }
       }
       return `<img ${ret.join(' ')} />`;
-    },
+    }
   ],
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
@@ -55,26 +58,28 @@ const converters = [highlight()].concat([
       const attrs = { ...JsonML.getAttributes(node) };
       let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
       if (~attrs.href.indexOf('ng-alain.com')) target = '';
-      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
-    },
+      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node)
+        .map(toHtml)
+        .join('')}</a>`;
+    }
   ],
   [
     (node: any) => !Array.isArray(node),
     (node: any, index: number) => {
       if (!node.url) return '';
       return `<!--${node.url}-->`;
-    },
+    }
   ],
   [
     () => true,
     (node: any) => {
       const tagName = JsonML.getTagName(node);
       const attrs = genAttr({ ...JsonML.getAttributes(node) });
-      return `${tagName ? `<${tagName}${attrs ? ' ' + attrs : ''}>` : ''}${
+      return `${tagName ? `<${tagName}${attrs ? ` ${attrs}` : ''}>` : ''}${
         isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('') + (tagName ? `</${tagName}>` : '')
       }`;
-    },
-  ],
+    }
+  ]
 ]);
 
 export function toHtml(markdownData: any[], codeEscape: boolean = true) {
@@ -90,11 +95,11 @@ export function toHtml(markdownData: any[], codeEscape: boolean = true) {
           code = code.includes(`&lt;`) && code.includes(`&gt;`) ? code : escapeHTML(code);
         } else if ((lang === 'ts' || lang === 'typescript') && code.includes(`template: `)) {
           code = code.replace(/template: `([^`]+)`/g, (_tFullword: string, tHtml: string) => {
-            return 'template: `' + escapeHTML(tHtml) + '`';
+            return `template: \`${escapeHTML(tHtml)}\``;
           });
         }
         return `<pre class="hljs language-${lang}"><code>${code}</code></pre>`;
-      },
+      }
     );
   } else {
     //  && ~headingList.indexOf(ret)
@@ -128,7 +133,7 @@ export function generateMd(markdownData: any) {
     .map(arr => arr[1]);
 
   const apiStartIndex = contentChildren.findIndex(
-    (node: any) => JsonML.getTagName(node) === 'h2' && /^API/.test(JsonML.getChildren(node)[0]),
+    (node: any) => JsonML.getTagName(node) === 'h2' && /^API/.test(JsonML.getChildren(node)[0])
   );
 
   const ret: any = {};

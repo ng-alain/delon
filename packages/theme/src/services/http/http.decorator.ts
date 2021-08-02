@@ -1,9 +1,12 @@
-// tslint:disable: only-arrow-functions typedef
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
-import { ACLService } from '@delon/acl';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, throwError } from 'rxjs';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { ACLService } from '@delon/acl';
+
 import { _HttpClient } from './http.client';
 
 /**
@@ -65,7 +68,7 @@ export function BaseHeaders(
     | HttpHeaders
     | {
         [header: string]: string | string[];
-      },
+      }
 ) {
   return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
@@ -84,7 +87,7 @@ function makeParam(paramName: string) {
       }
       tParams.push({
         key,
-        index,
+        index
       });
     };
   };
@@ -122,7 +125,7 @@ export const Headers = makeParam('headers');
  */
 export const Payload = makeParam('payload')();
 
-function getValidArgs(data: any, key: string, args: any[]): {} | undefined {
+function getValidArgs(data: any, key: string, args: any[]): NzSafeAny {
   if (!data[key] || !Array.isArray(data[key]) || data[key].length <= 0) {
     return undefined;
   }
@@ -131,11 +134,9 @@ function getValidArgs(data: any, key: string, args: any[]): {} | undefined {
 
 function genBody(data?: any, payload?: any): any {
   if (Array.isArray(data) || Array.isArray(payload)) {
-    // tslint:disable-next-line:prefer-object-spread
     return Object.assign([], data, payload);
   }
-  // tslint:disable-next-line:prefer-object-spread
-  return Object.assign({}, data, payload);
+  return { ...data, ...payload };
 }
 
 export type METHOD_TYPE = 'OPTIONS' | 'GET' | 'POST' | 'DELETE' | 'PUT' | 'HEAD' | 'PATCH' | 'JSONP' | 'FORM';
@@ -149,7 +150,9 @@ function makeMethod(method: METHOD_TYPE) {
         const injector = (this as NzSafeAny).injector as Injector;
         const http = injector.get(_HttpClient, null) as _HttpClient;
         if (http == null) {
-          throw new TypeError(`Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`);
+          throw new TypeError(
+            `Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`
+          );
         }
 
         const baseData = setParam(this);
@@ -168,7 +171,7 @@ function makeMethod(method: METHOD_TYPE) {
             return throwError({
               url: requestUrl,
               status: 401,
-              statusText: `From Http Decorator`,
+              statusText: `From Http Decorator`
             });
           }
           delete options.acl;
@@ -203,7 +206,7 @@ function makeMethod(method: METHOD_TYPE) {
           body: supportedBody ? genBody(getValidArgs(data, 'body', args), payload) : null,
           params: !supportedBody ? { ...params, ...payload } : params,
           headers: { ...baseData.baseHeaders, ...headers },
-          ...options,
+          ...options
         });
       };
 
