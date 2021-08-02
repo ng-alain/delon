@@ -7,13 +7,12 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { I18NService, MetaService } from '@core';
-
-import { NzMessageService } from 'ng-zorro-antd/message';
-
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { deepCopy } from '@delon/util/other';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { I18NService, MetaService } from '@core';
 
 declare var hljs: any;
 

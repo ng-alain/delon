@@ -1,7 +1,6 @@
 /* eslint-disable import/no-unassigned-import */
 // Configuration for vscode-debug only.
 import * as glob from 'glob';
-
 import 'jasmine';
 import { join, relative } from 'path';
 

@@ -4,9 +4,8 @@ import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@a
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil } from 'rxjs/operators';
 
-import { NzMessageService } from 'ng-zorro-antd/message';
-
 import { RTL, RTLService, SettingsService } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-layout',

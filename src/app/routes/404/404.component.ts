@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 
-import { I18NService } from '@core';
-
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+
+import { I18NService } from '@core';
 
 @Component({
   selector: 'not-found',

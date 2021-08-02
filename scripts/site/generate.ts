@@ -82,7 +82,7 @@ function generateModule(config: ModuleConfig) {
       const demoArr = contentObj[lan].content.split(/(<!--demo\([^)]+\)-->)/g);
       if (demoArr.length > 1) {
         contentObj[lan].content = demoArr
-          .map(html => {
+          .map((html: any) => {
             if (html.startsWith('<!--')) return html;
             return `<section class="markdown">${html}</section>`;
           })
@@ -94,7 +94,7 @@ function generateModule(config: ModuleConfig) {
     });
 
     const newList = demos.data.filter(
-      w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0
+      (w: any) => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0
     );
 
     exampleModules.list.push(...newList);
@@ -114,8 +114,8 @@ function generateModule(config: ModuleConfig) {
     files.forEach(item => {
       // #region generate document file
 
-      const content = {};
-      const urls = {};
+      const content: any = {};
+      const urls: any = {};
       const contentMetas: any = {};
       const i18n = Object.keys(item.data).length > 1;
       // const titleBuffer = {};

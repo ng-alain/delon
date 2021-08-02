@@ -20,10 +20,9 @@ import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
-import * as ts from 'typescript';
-
 import * as fs from 'fs';
 import * as path from 'path';
+import * as ts from 'typescript';
 
 import { getSourceFile } from './ast';
 import { getProject } from './workspace';

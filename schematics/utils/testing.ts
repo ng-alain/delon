@@ -1,5 +1,4 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-
 import { join } from 'path';
 
 import { Schema as NgAddSchema } from '../ng-add/schema';

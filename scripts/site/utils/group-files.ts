@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as path from 'path';
 
 import { ModuleDirConfig, SiteConfig } from '../interfaces';
@@ -16,15 +17,15 @@ export function groupFiles(
   srcPaths.forEach(srcPath => {
     klawSync(srcPath, {
       nodir: false,
-      filter: item => {
+      filter: (item: any) => {
         if (config.hasSubDir && item.stats.isDirectory()) return true;
         return (
           path.extname(item.path) === '.md' && item.stats.size > 1 && !item.path.includes(`${path.sep}demo${path.sep}`)
         );
       }
     })
-      .filter(item => path.extname(item.path) === '.md')
-      .forEach(item => {
+      .filter((item: { path: string }) => path.extname(item.path) === '.md')
+      .forEach((item: any) => {
         const key = config.reName
           ? config.reName
           : path

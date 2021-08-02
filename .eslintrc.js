@@ -121,7 +121,7 @@ module.exports = {
           {
             alphabetize: { order: 'asc', caseInsensitive: false },
             'newlines-between': 'always',
-            groups: ['external', 'internal', ['unknown', 'parent', 'sibling', 'index']],
+            groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
             pathGroups: [
               {
                 pattern: '{@angular/**,rxjs,rxjs/operators}',
