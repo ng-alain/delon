@@ -10,6 +10,7 @@
         [nzActive]="true"
         [nzParagraph]="{ rows: 3 }"
         [nzAvatar]="{ size: 'large', shape: 'circle' }"
+        class="d-block"
       >
         <ng-container *ngIf="!breadcrumb; else breadcrumb!">
           <nz-breadcrumb *ngIf="paths && paths.length > 0">
