@@ -15,12 +15,13 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { SFNumberWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -29,7 +30,8 @@ export class DemoComponent {
       integer: { type: 'integer', default: 10 },
       unit: { type: 'number', default: 10, ui: { unit: '%' } as SFNumberWidgetSchema },
       prefix: { type: 'number', default: 10, ui: { prefix: '$' } as SFNumberWidgetSchema },
-    },
+      hideStep: { type: 'number', default: 10, ui: { hideStep: true } as SFNumberWidgetSchema }
+    }
   };
 
   constructor(private msg: NzMessageService) {}
