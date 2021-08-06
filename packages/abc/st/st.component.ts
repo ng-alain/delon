@@ -50,6 +50,8 @@ import { ST_DEFAULT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
+  STClickRowClassName,
+  STClickRowClassNameType,
   STColumn,
   STColumnButton,
   STColumnFilterMenu,
@@ -191,6 +193,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     };
   }
   @Input() rowClassName: STRowClassName;
+  @Input() clickRowClassName?: STClickRowClassName | null;
   @Input()
   set widthMode(value: STWidthMode) {
     this._widthMode = { ...this.cog.widthMode, ...value };
@@ -512,7 +515,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
   _rowClick(e: Event, item: STData, index: number): void {
-    if ((e.target as HTMLElement).nodeName === 'INPUT') return;
+    const el = e.target as HTMLElement;
+    if (el.nodeName === 'INPUT') return;
     const { expand, expandRowByClick, rowClickTime } = this;
     if (!!expand && item.showExpand !== false && expandRowByClick) {
       item.expand = !item.expand;
@@ -525,12 +529,32 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     setTimeout(() => {
       const data = { e, item, index };
       if (this.rowClickCount === 1) {
+        this._clickRowClassName(el, item, index);
         this.changeEmit('click', data);
       } else {
         this.changeEmit('dblClick', data);
       }
       this.rowClickCount = 0;
     }, rowClickTime);
+  }
+
+  private _clickRowClassName(el: HTMLElement, item: STData, index: number): void {
+    const cr = this.clickRowClassName;
+    if (cr == null) return;
+    const config = {
+      exclusive: false,
+      ...(typeof cr === 'string' ? { fn: () => cr } : cr)
+    } as STClickRowClassNameType;
+    const className = config.fn(item, index);
+    const trEl = el.closest('tr') as HTMLElement;
+    if (config.exclusive) {
+      trEl.parentElement!!.querySelectorAll('tr').forEach((a: HTMLElement) => a.classList.remove(className));
+    }
+    if (trEl.classList.contains(className)) {
+      trEl.classList.remove(className);
+    } else {
+      trEl.classList.add(className);
+    }
   }
 
   _expandChange(item: STData, expand: boolean): void {

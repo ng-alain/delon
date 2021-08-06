@@ -62,6 +62,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[size]` | Size of table | `'small','middle','default'` | `'default'` | ✅ |
 | `[widthMode]` | Set the table width mode | `STWidthMode` | - | ✅ |
 | `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | - | ✅ |
+| `[clickRowClassName]` | Row class name of click the row | `string, STClickRowClassNameType` | - | ✅ |
 | `[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null` | - |
 | `[loadingIndicator]` | The spinning indicator | `TemplateRef<void>` | - | ✅ |
 | `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0` | ✅ |

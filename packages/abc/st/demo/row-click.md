@@ -19,15 +19,23 @@ Use `(change)` to implement click line callback, because DOM events can't distin
 
 ```ts
 import { Component } from '@angular/core';
-import { STChange, STColumn } from '@delon/abc/st';
+
+import { STChange, STClickRowClassNameType, STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st [data]="url" [req]="{ params: params }" [columns]="columns" (change)="_click($event)"></st>`,
+  template: ` <st
+    [data]="url"
+    [req]="{ params: params }"
+    [columns]="columns"
+    (change)="_click($event)"
+    [clickRowClassName]="clickRowClassName"
+  ></st>`
 })
 export class DemoComponent {
   url = `/users?results=3`;
   params = { a: 1, b: 2 };
+  clickRowClassName: STClickRowClassNameType = { exclusive: true, fn: () => 'text-error' };
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '邮箱', index: 'email' },
@@ -38,10 +46,10 @@ export class DemoComponent {
         {
           text: 'btn',
           type: 'link',
-          click: e => console.log('btn click', e),
-        },
-      ],
-    },
+          click: e => console.log('btn click', e)
+        }
+      ]
+    }
   ];
 
   _click(e: STChange): void {
