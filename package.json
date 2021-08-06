@@ -173,7 +173,8 @@
     "eslint-plugin-jsdoc": "~36.0.6",
     "eslint-plugin-prefer-arrow": "~1.2.3",
     "eslint-plugin-prettier": "~3.4.0",
-    "lint-staged": "^11.1.2"
+    "lint-staged": "^11.1.2",
+    "raw-loader": "^4.0.2"
   },
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [
