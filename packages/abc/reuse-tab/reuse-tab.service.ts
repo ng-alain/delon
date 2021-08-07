@@ -8,7 +8,7 @@ import {
   Router,
   ROUTER_CONFIGURATION
 } from '@angular/router';
-import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Observable, timer, Unsubscribable } from 'rxjs';
 
 import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
@@ -433,6 +433,12 @@ export class ReuseTabService implements OnDestroy {
       }
       this._cached.push(item);
     } else {
+      // Current handler is null when activate routes
+      // For better reliability, we need to wait for the component to be attached before call _onReuseInit
+      const cahcedComponentRef = this._cached[idx]._handle?.componentRef;
+      if (_handle == null && cahcedComponentRef != null) {
+        timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
+      }
       this._cached[idx] = item;
     }
     this.removeUrlBuffer = null;
@@ -457,13 +463,7 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
-    if (ret) {
-      const compRef = data!._handle.componentRef;
-      if (compRef) {
-        this.componentRef = compRef;
-        this.runHook('_onReuseInit', compRef);
-      }
-    } else {
+    if (!ret) {
       this._cachedChange.next({ active: 'add', url, list: this._cached });
     }
     return ret;
