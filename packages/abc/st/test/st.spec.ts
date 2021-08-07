@@ -35,6 +35,8 @@ import { STComponent } from '../st.component';
 import {
   STChange,
   STChangeType,
+  STClickRowClassName,
+  STClickRowClassNameType,
   STColumn,
   STColumnBadge,
   STColumnFilter,
@@ -1371,6 +1373,59 @@ describe('abc: st', () => {
         el.click();
         page.cd().expectChangeType('click', false);
       }));
+      describe('clickRowClassName', () => {
+        it('should be null', fakeAsync(() => {
+          context.clickRowClassName = null;
+          page.cd();
+          const trEl = (page.getCell() as HTMLElement).closest('tr') as HTMLElement;
+          const oldClassName = trEl.classList.value;
+          trEl.click();
+          page.cd(100);
+          expect(trEl.classList.value).toBe(oldClassName);
+        }));
+        it('should be string', fakeAsync(() => {
+          context.clickRowClassName = 'aa';
+          page.cd();
+          const trEl = (page.getCell() as HTMLElement).closest('tr') as HTMLElement;
+          expect(trEl.classList).not.toContain('aa');
+          trEl.click();
+          page.cd(100);
+          expect(trEl.classList).toContain('aa');
+          trEl.click();
+          page.cd(100);
+          expect(trEl.classList).not.toContain('aa');
+        }));
+        it('should be exclusive with false', fakeAsync(() => {
+          context.clickRowClassName = { exclusive: false, fn: () => 'bb' } as STClickRowClassNameType;
+          page.cd();
+          [1, 2].forEach(idx => {
+            const trEl = (page.getCell(idx) as HTMLElement).closest('tr') as HTMLElement;
+            expect(trEl.classList).not.toContain('bb');
+            trEl.click();
+            page.cd(100);
+            expect(trEl.classList).toContain('bb');
+          });
+          const len = ((page.getCell() as HTMLElement).closest('tbody') as HTMLElement).querySelectorAll(
+            'tr.bb'
+          ).length;
+          expect(len).toBe(2);
+        }));
+        it('should be exclusive with true', fakeAsync(() => {
+          context.clickRowClassName = { exclusive: true, fn: () => 'bb' } as STClickRowClassNameType;
+          page.cd();
+          [1, 2].forEach(idx => {
+            const trEl = (page.getCell(idx) as HTMLElement).closest('tr') as HTMLElement;
+            expect(trEl.classList).not.toContain('bb');
+            trEl.click();
+            page.cd(100);
+            expect(trEl.classList).toContain('bb');
+          });
+          const len = ((page.getCell() as HTMLElement).closest('tbody') as HTMLElement).querySelectorAll(
+            'tr.bb'
+          ).length;
+          expect(len).toBe(1);
+        }));
+      });
     });
     describe('[public method]', () => {
       describe('#load', () => {
@@ -2178,6 +2233,7 @@ describe('abc: st', () => {
       [noResult]="noResult"
       [widthConfig]="widthConfig"
       [rowClickTime]="rowClickTime"
+      [clickRowClassName]="clickRowClassName"
       [showHeader]="showHeader"
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
@@ -2207,6 +2263,7 @@ class TestComponent {
   noResult = 'noResult';
   widthConfig: string[] = [];
   rowClickTime = 200;
+  clickRowClassName?: STClickRowClassName | null = 'text-error';
   responsive = false;
   responsiveHideHeaderFooter = false;
   expandRowByClick = false;

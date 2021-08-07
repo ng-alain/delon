@@ -62,6 +62,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[size]` | table大小 | `'small','middle','default'` | `'default'` | ✅ |
 | `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | - | ✅ |
 | `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | - | ✅ |
+| `[clickRowClassName]` | 点击行切换类名 | `string, STClickRowClassNameType` | - | ✅ |
 | `[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null` | - |
 | `[loadingIndicator]` | 加载指示符 | `TemplateRef<void>` | - | ✅ |
 | `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0` | ✅ |

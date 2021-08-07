@@ -1080,6 +1080,16 @@ export interface STError {
 }
 
 export type STRowClassName<T extends STData = any> = (record: T, index: number) => string;
+export type STClickRowClassName<T extends STData = any> = string | STClickRowClassNameType<T>;
+export interface STClickRowClassNameType<T extends STData = any> {
+  fn: (record: T, index: number) => string;
+  /**
+   * Whether mutually exclusive, default: `false`
+   *
+   * 是否互斥，默认：`false`
+   */
+  exclusive?: boolean;
+}
 
 export interface STColumnGroupType {
   column: STColumn;
