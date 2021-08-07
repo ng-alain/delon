@@ -14,6 +14,21 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [12.1.0](https://github.com/ng-alain/delon/compare/12.0.3...12.1.0) (2021-08-07)
+
+### Bug Fixes
+
+* **abc:page-header:** 修复很多标签时无法自动滚动 ([#1304](https://github.com/ng-alain/delon/issues/1304)) ([90677bb](https://github.com/ng-alain/delon/commit/90677bb3341a8b5286f65e55e3d5183a69f7e4a3))
+* **abc:reuse-tab:** 修复重复触发 `_onReuseInit` 事件 ([#1308](https://github.com/ng-alain/delon/issues/1308)) ([4282fc2](https://github.com/ng-alain/delon/commit/4282fc2ea1556a0b4e0459e9c9385edf7fb0f670))
+* **cli:** 移除测试用例过期属性 ([#1305](https://github.com/ng-alain/delon/issues/1305)) ([259a1c2](https://github.com/ng-alain/delon/commit/259a1c2a90f5473081807b3af2895d68b9375e07))
+
+### Features
+
+* **abc:exception:** 新增 `backRouterLink` 属性 ([#1299](https://github.com/ng-alain/delon/issues/1299)) ([6a94dbd](https://github.com/ng-alain/delon/commit/6a94dbd6ae80ce5ae4176d28731e373e0c26ee55))
+* **abc:st:** 新增点击行切换类名 `clickRowClassName` 属性 ([#1307](https://github.com/ng-alain/delon/issues/1307)) ([5e5978d](https://github.com/ng-alain/delon/commit/5e5978d1fbd5eaf96f252871cbcc766bad8f2381))
+* **form:** `number` 新增 `hideStep` 属性用于隐藏步骤图标 ([#1303](https://github.com/ng-alain/delon/issues/1303)) ([f895bf0](https://github.com/ng-alain/delon/commit/f895bf0abbfc88dc4154bd57ef65b8321dae6fb9))
+
+
 ## [12.0.3](https://github.com/ng-alain/delon/compare/12.0.2...12.0.3) (2021-08-01)
 
 ### Bug Fixes
