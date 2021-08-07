@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -513,7 +513,7 @@ describe('abc: reuse-tab(service)', () => {
       snapshot.routeConfig.loadChildren = {};
       expect(srv.retrieve(getSnapshot(2))).toBeNull();
     });
-    it(`should be run _onReuseInit event hook`, () => {
+    it(`should be run _onReuseInit event hook`, fakeAsync(() => {
       const handle = {
         componentRef: {
           instance: {
@@ -524,8 +524,10 @@ describe('abc: reuse-tab(service)', () => {
       const snapshot = getSnapshot(3);
       // handle
       srv.store(snapshot, handle);
-      srv.shouldAttach(snapshot);
+      // mock activate router
+      srv.store(snapshot, null);
+      tick(101);
       expect(handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
-    });
+    }));
   });
 });
