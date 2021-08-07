@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type ExceptionType = 403 | 404 | 500;
 
@@ -89,6 +90,8 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   set desc(value: string) {
     this._desc = this.dom.bypassSecurityTrustHtml(value);
   }
+
+  @Input() backRouterLink: string | NzSafeAny[] = '/';
 
   checkContent(): void {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
