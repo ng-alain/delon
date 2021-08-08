@@ -489,7 +489,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       } else {
         el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
       }
-      return;
     }
   }
 

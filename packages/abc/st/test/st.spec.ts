@@ -1064,7 +1064,7 @@ describe('abc: st', () => {
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
         page.go(2);
-        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        expect(el.scrollIntoView).toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be enforce to the top via load', fakeAsync(() => {
