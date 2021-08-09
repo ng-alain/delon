@@ -1098,6 +1098,17 @@ describe('abc: st', () => {
         expect(context.comp.cdkVirtualScrollViewport.checkViewportSize).toHaveBeenCalled();
         page.asyncEnd();
       }));
+      it('should be working in only x is set', fakeAsync(() => {
+        context.page.toTop = true;
+        context.scroll = { x: '100px' };
+        page.cd();
+        expect(context.comp.cdkVirtualScrollViewport == null).toBe(true);
+        const bodyEl = page.getEl('.ant-table-body, .ant-table-content');
+        spyOn(bodyEl, 'scrollTo');
+        page.cd().go(2);
+        expect(bodyEl.scrollTo).toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
