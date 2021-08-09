@@ -1064,7 +1064,7 @@ describe('abc: st', () => {
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
         page.go(2);
-        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        expect(el.scrollIntoView).toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be enforce to the top via load', fakeAsync(() => {
@@ -1096,6 +1096,17 @@ describe('abc: st', () => {
         spyOn(context.comp.cdkVirtualScrollViewport, 'checkViewportSize');
         page.cd().go(2);
         expect(context.comp.cdkVirtualScrollViewport.checkViewportSize).toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('should be working in only x is set', fakeAsync(() => {
+        context.page.toTop = true;
+        context.scroll = { x: '100px' };
+        page.cd();
+        expect(context.comp.cdkVirtualScrollViewport == null).toBe(true);
+        const bodyEl = page.getEl('.ant-table-body, .ant-table-content');
+        spyOn(bodyEl, 'scrollTo');
+        page.cd().go(2);
+        expect(bodyEl.scrollTo).toHaveBeenCalled();
         page.asyncEnd();
       }));
     });

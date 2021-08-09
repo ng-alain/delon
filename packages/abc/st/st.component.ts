@@ -477,6 +477,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _toTop(enforce?: boolean): void {
     if (!(enforce == null ? this.page.toTop : enforce)) return;
     const el = this.el.nativeElement as HTMLElement;
+    el.scrollIntoView();
+    // fix header height
+    this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
     if (this.scroll) {
       if (this.cdkVirtualScrollViewport) {
         this.cdkVirtualScrollViewport.scrollTo({
@@ -486,11 +489,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       } else {
         el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
       }
-      return;
     }
-    el.scrollIntoView();
-    // fix header height
-    this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
   }
 
   _change(type: 'pi' | 'ps', options?: STLoadOptions): void {
