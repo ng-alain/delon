@@ -119,7 +119,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - 值为 `none` 表示手动添加按钮，且不保留容器
    * - 使用 `spanLabelFixed` 固定标签宽度时，若无 `render.class` 则默认为居中状态
    */
-  @Input() button: SFButton | 'none' = {};
+  @Input() button?: SFButton | 'none' | null = {};
   /**
    * 是否实时校验，默认：`true`
    * - `true` 每一次都校验
