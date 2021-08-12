@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 
+import { ArrayService } from '@delon/util/array';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFValue } from '../../interface';
@@ -99,7 +100,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
 
   private getOrgData(values: SFValue): SFSchemaEnum | SFSchemaEnum[] {
     if (!Array.isArray(values)) {
-      return this.data.find(w => w.value === values)!;
+      return this.injector.get(ArrayService).findTree(this.data, item => item.value === values)!;
     }
     return values.map(value => {
       let item: SFSchemaEnum | null = null;
