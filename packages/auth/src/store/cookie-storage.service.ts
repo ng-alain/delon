@@ -18,8 +18,8 @@ export class CookieStorageStore implements IStore {
     return JSON.parse(this.srv.get(key) || '{}') || {};
   }
 
-  set(key: string, value: ITokenModel | null): boolean {
-    this.srv.put(key, JSON.stringify(value));
+  set(key: string, value: ITokenModel | null | undefined): boolean {
+    this.srv.put(key, value != null ? JSON.stringify(value) : '{}');
     return true;
   }
 
