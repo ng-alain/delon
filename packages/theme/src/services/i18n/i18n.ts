@@ -1,7 +1,8 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { AlainConfigService, AlainThemeI18nConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from '../http/http.client';
@@ -57,11 +58,12 @@ export interface AlainI18NService {
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainI18nToken', {
   providedIn: 'root',
-  factory: () => new AlainI18NServiceFake()
+  factory: () => new AlainI18NServiceFake(inject(AlainConfigService))
 });
 
 @Injectable()
 export abstract class AlainI18nBaseService implements AlainI18NService {
+  private cog: AlainThemeI18nConfig;
   protected _change$ = new BehaviorSubject<string | null>(null);
   protected _currentLang: string = '';
   protected _defaultLang: string = '';
@@ -79,6 +81,12 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     return this._data;
   }
 
+  constructor(cogSrv: AlainConfigService) {
+    this.cog = cogSrv.merge('themeI18n', {
+      interpolation: ['{{', '}}']
+    })!;
+  }
+
   abstract use(lang: string, data?: Record<string, string>): void;
 
   abstract getLangs(): NzSafeAny[];
@@ -88,7 +96,14 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     if (!content) return path;
 
     if (params) {
-      Object.keys(params).forEach(key => (content = content.replace(new RegExp(`{{${key}}}`, 'g'), `${params[key]}`)));
+      const interpolation = this.cog.interpolation!!;
+      Object.keys(params).forEach(
+        key =>
+          (content = content.replace(
+            new RegExp(`${interpolation[0]}\s?${key}\s?${interpolation[1]}`, 'g'),
+            `${params[key]}`
+          ))
+      );
     }
     return content;
   }
