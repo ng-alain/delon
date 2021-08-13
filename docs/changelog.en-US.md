@@ -14,6 +14,16 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [12.1.1](https://github.com/ng-alain/delon/compare/12.1.0...12.1.1) (2021-08-13)
+
+### Bug Fixes
+
+* **abc:st:** fix invalid `toTop` when only `scroll.x` is set ([#1311](https://github.com/ng-alain/delon/issues/1311)) ([c07e1fa](https://github.com/ng-alain/delon/commit/c07e1fa688d7dbf4cbf593c08886b6346e5de46c))
+* **auth:** fix invalid write token value in cookie type ([#1316](https://github.com/ng-alain/delon/issues/1316)) ([fd97e51](https://github.com/ng-alain/delon/commit/fd97e51fd37d4e011940e3ae518a0fa24badf819))
+* **form:widget:select:** fix invalid `orgData` of `change`event ([#1312](https://github.com/ng-alain/delon/issues/1312)) ([527c212](https://github.com/ng-alain/delon/commit/527c212ae4ded1ba7c3b36ea039d8d72cb22fd59))
+* **form:** fix invlid type in `button` ([#1314](https://github.com/ng-alain/delon/issues/1314)) ([d289411](https://github.com/ng-alain/delon/commit/d2894115b1ef9e898303952307e4f5ead6f64bc5))
+
+
 # [12.1.0](https://github.com/ng-alain/delon/compare/12.0.3...12.1.0) (2021-08-07)
 
 ### Bug Fixes
