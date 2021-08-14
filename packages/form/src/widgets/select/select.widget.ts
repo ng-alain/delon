@@ -99,20 +99,11 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   private getOrgData(values: SFValue): SFSchemaEnum | SFSchemaEnum[] {
+    const srv = this.injector.get(ArrayService);
     if (!Array.isArray(values)) {
-      return this.injector.get(ArrayService).findTree(this.data, (item: SFSchemaEnum) => item.value === values)!;
+      return srv.findTree(this.data, (item: SFSchemaEnum) => item.value === values)!;
     }
-    return values.map(value => {
-      let item: SFSchemaEnum | null = null;
-      if (this.hasGroup) {
-        this.data.forEach(list => {
-          item = list.children?.find(w => w.value === value)!;
-        });
-      } else {
-        item = this.data.find(w => w.value === value)!;
-      }
-      return item;
-    });
+    return values.map(value => srv.findTree(this.data, (item: SFSchemaEnum) => item.value === value));
   }
 
   openChange(status: boolean): void {
