@@ -60,15 +60,16 @@ describe('abc: utils', () => {
   describe('#deepMerge', () => {
     let original: NzSafeAny;
     it('should working', () => {
-      const fn = () => {};
+      const fn1 = () => {};
+      const fn2 = () => {};
       const time = new Date();
-      original = { a: 1, b: { c: 'c' }, fn, arr2: [], str: 'str', time, bool: true };
+      original = { a: 1, b: { c: 'c' }, fn: fn1, arr2: [], str: 'str', time, bool: true };
 
-      deepMerge(original, { b: { d: 'd' }, arr: [2] });
+      deepMerge(original, { b: { d: 'd' }, arr: [2], fn: fn2 });
 
       expect(original.b.c).toBe('c');
       expect(original.b.d).toBe('d');
-      expect(original.fn).toBe(fn);
+      expect(original.fn).toBe(fn2);
       expect(original.arr.length).toBe(1);
       expect(original.arr2.length).toBe(0);
       expect(original.str).toBe('str');
