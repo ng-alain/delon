@@ -44,7 +44,7 @@ export function deepCopy<T extends { [key: string]: NzSafeAny } = NzSafeAny>(obj
 export function deepMergeKey(original: unknown, arrayProcessMethod: boolean, ...objects: NzSafeAny[]): NzSafeAny {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
-  const isObject = (v: unknown) => typeof v === 'object' || typeof v === 'function';
+  const isObject = (v: unknown) => typeof v === 'object';
 
   const merge = (target: NzSafeAny, obj: NzSafeAny) => {
     Object.keys(obj)
@@ -54,6 +54,8 @@ export function deepMergeKey(original: unknown, arrayProcessMethod: boolean, ...
         const toValue = target[key];
         if (Array.isArray(toValue)) {
           target[key] = arrayProcessMethod ? fromValue : [...toValue, ...fromValue];
+        } else if (typeof fromValue === 'function') {
+          target[key] = fromValue;
         } else if (fromValue != null && isObject(fromValue) && toValue != null && isObject(toValue)) {
           target[key] = merge(toValue, fromValue);
         } else {
