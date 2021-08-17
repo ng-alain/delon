@@ -308,7 +308,7 @@ export class STDataSource {
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c) };
+          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '' };
         }
 
         return this.get(result[i], c, i);
