@@ -16,6 +16,7 @@ import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
+import { PriceModule } from '@delon/abc/price';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
 import { ResultModule } from '@delon/abc/result';
@@ -94,5 +95,6 @@ export const SHARED_DELON_MODULES = [
   FormatPipeModule,
   FilterPipeModule,
   AutoFocusModule,
-  LetModule
+  LetModule,
+  PriceModule
 ];
