@@ -2,7 +2,7 @@ import { InputBoolean, InputNumber, toBoolean, toNumber } from './convert';
 
 describe('util.#toBoolean', () => {
   [
-    { value: undefined, ret: undefined, au: true },
+    { value: undefined, ret: true, defaultValue: true },
     { value: undefined, ret: false },
     { value: null, ret: false },
     { value: '', ret: true },
@@ -15,12 +15,12 @@ describe('util.#toBoolean', () => {
     { value: {}, ret: true },
     { value: [], ret: true }
   ].forEach(item => {
-    const au = typeof item.au !== 'undefined';
+    const au = typeof item.defaultValue !== 'undefined';
     it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(item.ret)}]${
       au ? ', because allow undefined' : ''
     }`, () => {
       if (au) {
-        expect(toBoolean(item.value, item.au)).toBe(item.ret);
+        expect(toBoolean(item.value, item.defaultValue)).toBe(item.ret);
       } else {
         expect(toBoolean(item.value)).toBe(item.ret);
       }

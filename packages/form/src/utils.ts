@@ -15,8 +15,7 @@ export function isBlank(o: NzSafeAny): boolean {
 }
 
 export function toBool(value: NzSafeAny, defaultValue: boolean): boolean {
-  value = toBoolean(value, true);
-  return value == null ? defaultValue : value;
+  return toBoolean(value, defaultValue)!!;
 }
 
 export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {
