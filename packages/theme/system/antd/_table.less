@@ -1,5 +1,5 @@
-// 限定单元格的图像大小
 .@{ant-prefix}-table {
+  // 限定单元格的图像大小
   td {
     > img,
     .img {
@@ -8,6 +8,26 @@
       margin-right: @nz-table-img-margin-right;
       vertical-align: middle;
       border-radius: @nz-table-img-radius;
+    }
+  }
+
+  // 表格响应式
+  &-rep {
+    &__title {
+      display: none;
+    }
+    &__hide-header-footer {
+      .@{ant-prefix}-table-title,
+      .@{ant-prefix}-table-footer {
+        display: none;
+      }
+    }
+  }
+
+  // 奇偶背景
+  &-tbody {
+    > tr:nth-child(4n + 3) {
+      background: @nz-table-even-background;
     }
   }
 }
@@ -20,19 +40,6 @@
         margin-right: inherit;
         margin-left: @nz-table-img-margin-right;
       }
-    }
-  }
-}
-
-// 表格响应式
-.@{ant-prefix}-table-rep {
-  &__title {
-    display: none;
-  }
-  &__hide-header-footer {
-    .@{ant-prefix}-table-title,
-    .@{ant-prefix}-table-footer {
-      display: none;
     }
   }
 }
@@ -66,7 +73,7 @@
       }
       &-tbody {
         > tr {
-          &:nth-child(3n) {
+          &:nth-child(4n + 3) {
             background: @nz-table-rep-even-background;
           }
           > td {

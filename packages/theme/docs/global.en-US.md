@@ -108,6 +108,7 @@ By `nz-table`。
 | `@nz-table-img-margin-right` | `4px` | Image margin-right in the table |
 | `@nz-table-img-max-width` | `32px` | Image maximum width in the table |
 | `@nz-table-img-max-height` | `32px` | Image maximum height in the table |
+| `@nz-table-even-background` | `transparent` | Even background color in the table |
 | `@nz-table-rep-max-width` | `@mobile-max` | Triggering table response when mobile screen |
 | `@nz-table-rep-header-background` | `@border-color-split` | Table responsive: title background color |
 | `@nz-table-rep-even-background` | `#f9f9f9` | Table responsive: even background color |

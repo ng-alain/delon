@@ -108,6 +108,7 @@ title: 全局参数
 | `@nz-table-img-margin-right` | `4px` | 表格中的图片右外边距 |
 | `@nz-table-img-max-width` | `32px` | 表格中的图片最大宽度 |
 | `@nz-table-img-max-height` | `32px` | 表格中的图片最大高度 |
+| `@nz-table-even-background` | `transparent` | 奇偶背景 |
 | `@nz-table-rep-max-width` | `@mobile-max` | 当移动端屏幕时触发表格响应式 |
 | `@nz-table-rep-header-background` | `@border-color-split` | 表格响应式：标题背景色 |
 | `@nz-table-rep-even-background` | `#f9f9f9` | 表格响应式：偶数行背景色 |
