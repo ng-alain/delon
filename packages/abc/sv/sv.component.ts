@@ -36,11 +36,13 @@ const prefixCls = `sv`;
 export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
 
   @ViewChild('conEl', { static: false })
   private conEl: ElementRef;
   private el: HTMLElement;
   private clsMap: string[] = [];
+  _noColon = false;
 
   // #region fields
 
@@ -52,6 +54,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   @Input() @InputNumber(null) col: number;
   @Input() @InputBoolean(null) default: boolean;
   @Input() type: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() @InputBoolean(null) noColon: boolean;
 
   // #endregion
 
@@ -77,7 +80,8 @@ export class SVComponent implements AfterViewInit, OnChanges {
   }
 
   private setClass(): void {
-    const { el, ren, col, clsMap, type, rep } = this;
+    const { el, ren, col, clsMap, type, rep, noColon, parent } = this;
+    this._noColon = noColon != null ? noColon : parent.noColon;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     clsMap.push(...rep.genCls(col != null ? col : this.parent.col));

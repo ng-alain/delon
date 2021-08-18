@@ -45,9 +45,10 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[size]` | size of edit, forced ingores `error`, `extra` | `'default','compact'` | `'default'` | ✅ |
 | `[firstVisual]` | Immediately show validation error message | `boolean` | `false` | ✅ |
 | `[ingoreDirty]` | Whether to ignore the `dirty` check | `boolean` | `false` | ✅ |
-| `[line]` | whether separation line style | `boolean` | `false` |  |
-| `[title]` | Display title | `string,TemplateRef<void>` | - |  |
+| `[line]` | whether separation line style | `boolean` | `false` | - |
+| `[title]` | Display title | `string,TemplateRef<void>` | - | - |
 | `[errors]` | Batch modify `se` error value | `SEErrorRefresh[]` | - |  |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### se
 
@@ -65,6 +66,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[controlClass]` | Control area classes | `string` | - |
 | `[id]` | Custom `id` value of component | `string` | - |
 | `[line]` | whether separation line style (Inherited from `se-container`) | `boolean` | - |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### se-title
 

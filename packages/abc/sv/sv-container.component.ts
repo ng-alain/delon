@@ -24,6 +24,7 @@ export class SVContainerComponent {
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
 
   @Input() title: string | TemplateRef<void>;
   @Input() size: 'small' | 'large';
@@ -34,6 +35,7 @@ export class SVContainerComponent {
   /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
   @Input() @InputNumber() col: number;
   @Input() @InputBoolean() default: boolean;
+  @Input() @InputBoolean() noColon = false;
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sv', {

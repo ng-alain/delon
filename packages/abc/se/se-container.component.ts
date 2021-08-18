@@ -39,11 +39,13 @@ export class SEContainerComponent {
   static ngAcceptInputType_firstVisual: BooleanInput;
   static ngAcceptInputType_ingoreDirty: BooleanInput;
   static ngAcceptInputType_line: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
 
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
   @Input() @InputNumber(null) labelWidth: number;
+  @Input() @InputBoolean() noColon = false;
   @Input() title?: string | TemplateRef<void> | null;
 
   @Input()
