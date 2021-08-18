@@ -1,3 +1,9 @@
+.antTableEvenBG(@color) when (iscolor(@color)) {
+  > tr:nth-child(4n + 3) {
+    background: @nz-table-even-background;
+  }
+}
+
 .@{ant-prefix}-table {
   // 限定单元格的图像大小
   td {
@@ -26,11 +32,11 @@
 
   // 奇偶背景
   &-tbody {
-    > tr:nth-child(4n + 3) {
-      background: @nz-table-even-background;
-    }
+    .antTableEvenBG(@nz-table-even-background);
   }
 }
+
+// iscolor
 
 [dir='rtl'] {
   .@{ant-prefix}-table {
