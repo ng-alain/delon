@@ -2,7 +2,7 @@ import { InputBoolean, InputNumber, toBoolean, toNumber } from './convert';
 
 describe('util.#toBoolean', () => {
   [
-    { value: undefined, ret: undefined, defaultValue: true },
+    { value: undefined, ret: true, defaultValue: true },
     { value: undefined, ret: false },
     { value: null, ret: false },
     { value: '', ret: true },
