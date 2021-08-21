@@ -380,7 +380,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           property.description = this.fanyi(ui.descriptionI18n);
         }
         if (property.description) {
-          property._description = this.dom.bypassSecurityTrustHtml(property.description);
+          ui._description = this.dom.bypassSecurityTrustHtml(property.description);
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
         if (ui.hidden === false && ui.acl && this.aclSrv && !this.aclSrv.can(ui.acl)) {

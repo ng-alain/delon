@@ -34,6 +34,6 @@
     <div *ngIf="!ui.onlyVisual && showError" class="ant-form-item-explain ant-form-item-explain-error">
       <div @helpMotion>{{ error }}</div>
     </div>
-    <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="schema._description"></div>
+    <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="ui._description"></div>
   </div>
 </nz-form-item>
