@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 
@@ -9,41 +11,60 @@ describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;
   let srv: AlainI18NService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent]
-    });
-    fixture = TestBed.createComponent(TestComponent);
-    srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-    srv.use('en', {
-      simple: 'a',
-      param: 'a-{{value}}'
-    });
-    fixture.detectChanges();
-  });
-
   function check(result: string, id: string = 'simple'): void {
     const el = fixture.debugElement.query(By.css(`#${id}`)).nativeElement as HTMLElement;
 
     expect(el.textContent!.trim()).toBe(result);
   }
 
-  it('should working', () => {
-    check('a');
+  describe('', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AlainThemeModule.forRoot()],
+        declarations: [TestComponent]
+      });
+      fixture = TestBed.createComponent(TestComponent);
+      srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+      srv.use('en', {
+        simple: 'a',
+        param: 'a-{{value}}'
+      });
+      fixture.detectChanges();
+    });
+    it('should working', () => {
+      check('a');
+    });
+
+    it('should be param', () => {
+      fixture.componentInstance.key = 'param';
+      fixture.componentInstance.params = { value: '1' };
+      fixture.detectChanges();
+      check('a-1', 'param');
+    });
+
+    it('should be return path when is invalid', () => {
+      fixture.componentInstance.key = 'invalid';
+      fixture.detectChanges();
+      check('invalid');
+    });
   });
 
-  it('should be param', () => {
+  it('#interpolation', () => {
+    TestBed.configureTestingModule({
+      imports: [AlainThemeModule.forRoot()],
+      declarations: [TestComponent],
+      providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { interpolation: ['#', '#'] } } as AlainConfig }]
+    });
+    fixture = TestBed.createComponent(TestComponent);
+    srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+    srv.use('en', {
+      simple: 'a',
+      param: 'a-#value#'
+    });
     fixture.componentInstance.key = 'param';
     fixture.componentInstance.params = { value: '1' };
     fixture.detectChanges();
     check('a-1', 'param');
-  });
-
-  it('should be return path when is invalid', () => {
-    fixture.componentInstance.key = 'invalid';
-    fixture.detectChanges();
-    check('invalid');
   });
 });
 

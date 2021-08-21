@@ -24,7 +24,7 @@ import { AlainCacheConfig } from './cache/cache.type';
 import { AlainChartConfig } from './chart/chart.type';
 import { AlainMockConfig } from './mock/mock.type';
 import { AlainSFConfig } from './sf/sf.type';
-import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig } from './theme/index';
+import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig, AlainThemeI18nConfig } from './theme/index';
 import { AlainUtilArrayConfig } from './util/array.type';
 import { AlainUtilCurrencyConfig } from './util/currency.type';
 
@@ -55,6 +55,7 @@ export interface AlainConfig {
   utilCurrency?: AlainUtilCurrencyConfig;
   themeHttp?: AlainThemeHttpClientConfig;
   themeResponsive?: AlainThemeResponsiveConfig;
+  themeI18n?: AlainThemeI18nConfig;
 }
 
 export type AlainConfigKey = keyof AlainConfig;

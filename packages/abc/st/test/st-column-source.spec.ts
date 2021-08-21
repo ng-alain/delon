@@ -41,7 +41,7 @@ describe('st: column-source', () => {
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }): void {
     aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
-    i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
+    i18nSrv = other.i18n ? new MockI18NServiceFake({ merge: () => {} } as NzSafeAny) : null;
     rowSrv = new STRowSource();
     stWidgetRegistry = new STWidgetRegistry();
     srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, stWidgetRegistry);
