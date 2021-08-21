@@ -16,7 +16,15 @@ import { generateDemo } from './utils/generate-demo';
 import { generateExampleModule } from './utils/generate-example';
 import { groupFiles } from './utils/group-files';
 import { parseMd } from './utils/parse-md';
-import { genComponentName, generateDoc, genSelector, genUpperName, genUrl, includeAttributes } from './utils/utils';
+import {
+  genComponentName,
+  generateDoc,
+  genSelector,
+  genUpperName,
+  genUrl,
+  handleExploreStr,
+  includeAttributes
+} from './utils/utils';
 
 const target = process.argv[2];
 const isSyncSpecific = !!target && target !== 'init';
@@ -42,14 +50,16 @@ function generateModule(config: ModuleConfig) {
   };
 
   function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true) {
-    modules.imports.push(`import { ${componentName} } from './${name}/${filename}';`);
+    modules.imports.push(`import { ${componentName} } from './${handleExploreStr(name)}/${filename}';`);
     modules.components.push(componentName);
     if (needRouter) {
       if (modules.routes.length <= 0 && config.defaultRoute) {
         modules.routes.push(`{ path: '', redirectTo: '${config.defaultRoute}/zh', pathMatch: 'full' }`);
       }
-      modules.routes.push(`{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`);
-      modules.routes.push(`{ path: '${name}/:lang', component: ${componentName} }`);
+
+      const path_name = handleExploreStr(name, '-');
+      modules.routes.push(`{ path: '${path_name}', redirectTo: '${path_name}/zh', pathMatch: 'full' }`);
+      modules.routes.push(`{ path: '${path_name}/:lang', component: ${componentName} }`);
     }
   }
 
@@ -128,7 +138,7 @@ function generateModule(config: ModuleConfig) {
 
       // push meta
       const meta: Meta = {
-        name: item.key,
+        name: handleExploreStr(item.key, '-'),
         i18n,
         order: content[defaultLang].meta.order || -1,
         cols: content[defaultLang].meta.cols || 1,
@@ -141,7 +151,7 @@ function generateModule(config: ModuleConfig) {
       // #region generate demo files
       const demos = generateDemo(
         rootDir,
-        item.key,
+        meta.name,
         path.join(path.dirname(item.data[defaultLang]), 'demo'),
         meta.cols,
         config,
@@ -175,14 +185,14 @@ function generateModule(config: ModuleConfig) {
       }
       fileObject.codes = JSON.stringify(demoList);
       fileObject.item = JSON.stringify(fileObject.item);
-      generateDoc(fileObject, tpl, path.join(distPath, item.key, `index.ts`));
+      generateDoc(fileObject, tpl, path.join(distPath, meta.name, `index.ts`));
       // #endregion
 
       // #region register module
-      appendToModule(fileObject.componentName, item.key, 'index');
+      appendToModule(fileObject.componentName, meta.name, 'index');
       // demo
       demoList.forEach(demo => {
-        appendToModule(demo.componentName, item.key, demo.name, false);
+        appendToModule(demo.componentName, meta.name, demo.name, false);
       });
       // #endregion
     });

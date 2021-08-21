@@ -97,9 +97,20 @@ export function genUrl(rootDir: string, filePath: string) {
 }
 
 export function genComponentName(...names: string[]) {
-  return `${names.map(key => genUpperName(key)).join('')}Component`;
+  return `${names
+    .map(key =>
+      key
+        .split(/-\//g)
+        .map(key => genUpperName(key))
+        .join('')
+    )
+    .join('')}Component`;
 }
 
 export function genSelector(...names: string[]) {
-  return `app-${names.join('-')}`;
+  return `app-${names.map(vv => vv.replace(/-|\//g, '-')).join('-')}`;
+}
+
+export function handleExploreStr(str: string, cr: string = '/') {
+  return str.replace(/\\/g, cr);
 }
