@@ -51,7 +51,7 @@
         </ng-container>
       </div>
       <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{ error }}</div>
-      <div *ngIf="schema.description" [innerHTML]="schema._description" class="ant-form-extra"></div>
+      <div *ngIf="schema.description" [innerHTML]="ui._description" class="ant-form-extra"></div>
     </div>
   </div>
 </nz-form-item>

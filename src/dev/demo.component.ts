@@ -1,39 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { dateTimePickerUtil } from '@delon/util/date-time';
-
+import { SFCascaderWidgetSchema, SFCheckboxWidgetSchema, SFComponent, SFSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <p>value: {{ value | _date }}</p>
-    <nz-date-picker
-      [(ngModel)]="value"
-      nzFormat="yyyy-MM-dd HH:mm:ss"
-      [nzDisabledDate]="disabledDate"
-      [nzDisabledTime]="disabledDateTime"
-      nzShowTime
-    ></nz-date-picker>
-    <br />
-    <nz-date-picker nzMode="month" [nzDisabledDate]="disabledDate"></nz-date-picker>
-    <br />
-    <nz-date-picker nzMode="year" [nzDisabledDate]="disabledDate"></nz-date-picker>
-    <br />
-    <p>values: {{ values }}</p>
-    <nz-range-picker
-      [(ngModel)]="values"
-      [nzDisabledDate]="disabledDate"
-      [nzDisabledTime]="disabledDateTime"
-      nzShowTime
-      nzShowNow
-      nzFormat="yyyy-MM-dd HH:mm:ss"
-    ></nz-range-picker>
+    <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    result: {{ sf.valid | json }},
+    {{ sf.value | json }}
   `
 })
 export class DemoComponent {
-  value: Date;
-  values: Date[];
-  disabledDate = dateTimePickerUtil.disabledBeforeDate();
-  disabledDateTime = dateTimePickerUtil.disabledBeforeTime({ offsetSeconds: 60 * 5 });
-  // disabledDate = dateTimePickerUtil.disabledAfterDate();
-  // disabledDateTime = dateTimePickerUtil.disabledAfterTime();
+  // 表单对象
+  @ViewChild('sf', { static: false }) sf: SFComponent | undefined;
+  schema: SFSchema = {
+    properties: {
+      // 单个多选框
+      single: {
+        type: 'boolean',
+        title: '同意本协议',
+        description: '《用户协议》',
+        ui: {
+          widget: 'checkbox'
+        } as SFCascaderWidgetSchema,
+        default: true
+      },
+      // 多选框组
+      mulit: {
+        type: 'string',
+        title: 'Mulit',
+        enum: ['Apple', 'Pear', 'Orange'],
+        ui: {
+          widget: 'checkbox',
+          span: 8, // 指定每一项 8 个单元的布局
+          checkAll: false
+        } as SFCheckboxWidgetSchema
+      }
+    },
+    required: ['mulit'],
+    ui: { debug: true }
+  };
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
+    this.msg.success(`${this.sf?.valid},${JSON.stringify(value)}`);
+  }
 }
