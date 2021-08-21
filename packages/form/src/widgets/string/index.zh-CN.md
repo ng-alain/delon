@@ -32,6 +32,8 @@ type: Widgets
 | `[prefixIcon]` | 前缀图标，等同 `nzPrefixIcon` | `string` | - |
 | `[suffix]` | 带有后缀图标的 input，等同 `nzSuffix` | `string` | - |
 | `[suffixIcon]` | 后缀图标，等同 `nzSuffixIcon` | `string` | - |
+| `[changeDebounceTime]` | `change` 事件节流与顺序控制的阀值 | `number` | - |
+| `[changeMap]` | 转换数据，相当于 `switchMap` 操作 | `(val: string) => Observable<any>` | - |
 | `[change]` | 内容变更事件 | `(val: string) => void` | - |
 | `[focus]` | 焦点事件 | `(e: FocusEvent) => void` | - |
 | `[blur]` | 失焦事件 | `(e: FocusEvent) => void` | - |

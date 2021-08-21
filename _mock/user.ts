@@ -28,7 +28,7 @@ export const USERS = {
         },
         nat: ['CH', 'US', 'DE'][i % 3],
         gender: ['male', 'female'][i % 2],
-        email: `aaa${r(1, 10)}@qq.com`,
+        email: `aaa${i}-${r(1, 10)}@qq.com`,
         phone: `phone-${r(1000, 100000)}`,
         price: r(10, 10000000),
         registered: new Date()

@@ -1,5 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { createTestContext } from '@delon/testing';
 
@@ -79,6 +80,53 @@ describe('form: widget: string', () => {
     page.typeEvent(ev);
     expect((schema.properties!.a.ui as SFStringWidgetSchema).enter).toHaveBeenCalled();
   }));
+
+  describe('Debounce', () => {
+    it('should be working', fakeAsync(() => {
+      const schema: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            default: 'a',
+            ui: {
+              changeDebounceTime: 1,
+              changeMap: val => of(val),
+              change: jasmine.createSpy('change')
+            } as SFStringWidgetSchema
+          }
+        }
+      };
+      page.newSchema(schema);
+      const ui = schema.properties!.a.ui as SFStringWidgetSchema;
+      // change
+      page.typeChar('a');
+      page.dc(100);
+      expect(ui.change).toHaveBeenCalled();
+      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+    }));
+
+    it(`should be changeMap can't be set`, fakeAsync(() => {
+      const schema: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            default: 'a',
+            ui: {
+              changeDebounceTime: 1,
+              change: jasmine.createSpy('change')
+            } as SFStringWidgetSchema
+          }
+        }
+      };
+      page.newSchema(schema);
+      const ui = schema.properties!.a.ui as SFStringWidgetSchema;
+      // change
+      page.typeChar('a');
+      page.dc(100);
+      expect(ui.change).toHaveBeenCalled();
+      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+    }));
+  });
 
   it('[autofocus]', fakeAsync(() => {
     const schema: SFSchema = {
