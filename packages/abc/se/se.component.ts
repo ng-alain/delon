@@ -52,6 +52,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   static ngAcceptInputType_required: BooleanInput;
   static ngAcceptInputType_line: BooleanInput;
   static ngAcceptInputType_labelWidth: NumberInput;
+  static ngAcceptInputType_noColon: BooleanInput;
 
   private el: HTMLElement;
   private unsubscribe$ = new Subject<void>();
@@ -66,6 +67,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private isBindModel = false;
   invalid = false;
   _labelWidth: number | null = null;
+  _noColon: boolean | null = null;
   _error: string | TemplateRef<void>;
 
   // #region fields
@@ -84,6 +86,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   @Input() controlClass?: string | null = '';
   @Input() @InputBoolean(null) line: boolean;
   @Input() @InputNumber(null) labelWidth: number;
+  @Input() @InputBoolean(null) noColon: boolean;
 
   @Input()
   set id(value: string) {
@@ -135,7 +138,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep } = this;
+    const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep, noColon } = this;
+    this._noColon = noColon != null ? noColon : parent.noColon;
     this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;

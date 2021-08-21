@@ -1,5 +1,10 @@
 <div class="ant-form-item-label" [class.se__nolabel]="!label" [style.width.px]="_labelWidth">
-  <label *ngIf="label" [attr.for]="_id" class="se__label" [ngClass]="{ 'ant-form-item-required': required }">
+  <label
+    *ngIf="label"
+    [attr.for]="_id"
+    class="se__label"
+    [ngClass]="{ 'ant-form-item-required': required, 'se__no-colon': _noColon }"
+  >
     <span class="se__label-text">
       <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
     </span>

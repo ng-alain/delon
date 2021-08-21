@@ -216,6 +216,22 @@ describe('abc: edit', () => {
               page.expectText('.ant-form-item-explain', NEW_ERROR);
             });
           });
+          describe('#noColon', () => {
+            it('should working', () => {
+              context.noColon = true;
+              context.label = 'aa';
+              fixture.detectChanges();
+              expect(page.getEls('.se__no-colon').length).toBe(1);
+            });
+            it('should be inherit parent noColon value', () => {
+              context.parent_noColon = true;
+              context.noColon = undefined;
+              context.label = 'aa';
+              debugger;
+              fixture.detectChanges();
+              expect(page.getEls('.se__no-colon').length).toBe(1);
+            });
+          });
         });
         describe('#item', () => {
           describe('#col', () => {
@@ -525,6 +541,7 @@ describe('abc: edit', () => {
       [labelWidth]="parent_labelWidth"
       [gutter]="parent_gutter"
       [errors]="parent_errors"
+      [noColon]="parent_noColon"
     >
       <se-title>title</se-title>
       <se
@@ -539,6 +556,7 @@ describe('abc: edit', () => {
         [required]="required"
         [line]="line"
         [labelWidth]="labelWidth"
+        [noColon]="noColon"
       >
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
@@ -560,6 +578,7 @@ class TestComponent {
   parent_firstVisual = true;
   parent_ingoreDirty = false;
   parent_line = false;
+  parent_noColon = false;
   parent_title = 'title';
   parent_errors: SEErrorRefresh[] = [];
 
@@ -573,6 +592,7 @@ class TestComponent {
   col: number | null;
   controlClass = '';
   labelWidth: number | null = null;
+  noColon?: boolean | null = undefined;
 
   val = '';
   showModel = true;
