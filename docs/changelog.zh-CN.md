@@ -14,6 +14,13 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [12.2.1](https://github.com/ng-alain/delon/compare/12.2.0...12.2.1) (2021-08-22)
+
+### Bug Fixes
+
+* 修复Less无法编译 `.antTableEvenBG` ([#1329](https://github.com/ng-alain/delon/issues/1329)) ([f0fa5d5](https://github.com/ng-alain/delon/commit/f0fa5d526ac7789f4a4746829a6c682fc6579cf7))
+
+
 # [12.2.0](https://github.com/ng-alain/delon/compare/12.1.1...12.2.0) (2021-08-22)
 
 ### Scaffold
