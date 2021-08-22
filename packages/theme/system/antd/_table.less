@@ -1,4 +1,4 @@
-.antTableEvenBG(@color) when (iscolor(@color)) {
+.antTableEvenBG() when (iscolor(@nz-table-even-background)) {
   > tr:nth-child(4n + 3) {
     background: @nz-table-even-background;
   }
@@ -32,7 +32,7 @@
 
   // 奇偶背景
   &-tbody {
-    .antTableEvenBG(@nz-table-even-background);
+    .antTableEvenBG();
   }
 }
 
