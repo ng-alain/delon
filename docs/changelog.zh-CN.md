@@ -14,6 +14,32 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [12.2.0](https://github.com/ng-alain/delon/compare/12.1.1...12.2.0) (2021-08-22)
+
+### Scaffold
+
+* 新增 `PreloadOptionalModules` 可选预加载模块 ([#2055](https://github.com/ng-alain/ng-alain/issues/2055))
+* 新增支持国际化插值符号配置 `interpolation` ([#2062](https://github.com/ng-alain/ng-alain/issues/2062))
+* 修复语言键名大小写敏感 ([#2069](https://github.com/ng-alain/ng-alain/issues/2069))
+* 优化使用 `MatchControl` 替代自定义两个控件值的匹配 ([#2061](https://github.com/ng-alain/ng-alain/issues/2061))
+
+### Bug Fixes
+
+* **abc:st:** 修复 `safeType` 为 `text` 值时会渲染出 `undefined` 文本 ([#1322](https://github.com/ng-alain/delon/issues/1322)) ([c337d75](https://github.com/ng-alain/delon/commit/c337d75a7f2aa0d374c88db4e97dd51da8b604ce))
+* **form:widget:select:** 修复分组情况下 `change` 事件的 `orgData` 参数不正确 ([#1312](https://github.com/ng-alain/delon/issues/1312)) ([#1320](https://github.com/ng-alain/delon/issues/1320)) ([8c12822](https://github.com/ng-alain/delon/commit/8c12822a7d65cdcda7c34d9554d13c5a1ef981d9))
+* **sf:** 修复 `strict` 模式下产生：`unknown keyword: "_description"` 错误 ([#1327](https://github.com/ng-alain/delon/issues/1327)) ([554abd4](https://github.com/ng-alain/delon/commit/554abd469fa588548a1ec79d603201eeeafd1250))
+* **util:convert:** 修复 `InputBoolean` 默认值参数无效问题 ([#1323](https://github.com/ng-alain/delon/issues/1323)) ([386690c](https://github.com/ng-alain/delon/commit/386690cb1e194dc50c22450e71d0e0995a8b24bc))
+* **util:other:deep:** 修复无法深度合并函数 ([#1321](https://github.com/ng-alain/delon/issues/1321)) ([f2f181b](https://github.com/ng-alain/delon/commit/f2f181b8ba44eade220eececa546a5c84fa6f776))
+
+### Features
+
+* **abc:se,sv:** 新增 `noColon` 属性 ([#1324](https://github.com/ng-alain/delon/issues/1324)) ([9f2a031](https://github.com/ng-alain/delon/commit/9f2a0313310fbbcd610a26a33c77742734a3fe2e))
+* **form:string:** 新增 `changeDebounceTime`, `changeMap` 属性 ([#1315](https://github.com/ng-alain/delon/issues/1315)) ([3a8a26d](https://github.com/ng-alain/delon/commit/3a8a26d5a36513b2cdb6d51fb474c4eb7eaceb60))
+* **theme:i18n:** 新增可配置国际插值符合 `interpolation` ([#1318](https://github.com/ng-alain/delon/issues/1318)) ([e711865](https://github.com/ng-alain/delon/commit/e7118657fbb24c9f62c422e1b1029bfbe2cee541))
+* **theme:** 新增 `@nz-table-even-background` 表格奇偶背景色 ([#1325](https://github.com/ng-alain/delon/issues/1325)) ([71d3ef6](https://github.com/ng-alain/delon/commit/71d3ef6be7097d083af3967283d27c420c35e0e9))
+* **theme:** 新增可选预加载 `PreloadOptionalModules` 模块 ([#1310](https://github.com/ng-alain/delon/issues/1310)) ([6df8fd0](https://github.com/ng-alain/delon/commit/6df8fd029be8f877292d384e962d4c26161a8011))
+
+
 ## [12.1.1](https://github.com/ng-alain/delon/compare/12.1.0...12.1.1) (2021-08-13)
 
 ### Bug Fixes
