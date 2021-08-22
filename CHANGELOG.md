@@ -1,3 +1,12 @@
+## [12.2.1](https://github.com/ng-alain/delon/compare/12.2.0...12.2.1) (2021-08-22)
+
+
+### Bug Fixes
+
+* fix `.antTableEvenBG` in less complite ([#1329](https://github.com/ng-alain/delon/issues/1329)) ([f0fa5d5](https://github.com/ng-alain/delon/commit/f0fa5d526ac7789f4a4746829a6c682fc6579cf7))
+
+
+
 # [12.2.0](https://github.com/ng-alain/delon/compare/12.1.1...12.2.0) (2021-08-22)
 
 
