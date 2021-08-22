@@ -1,6 +1,6 @@
-.antTableEvenBG(@color) when (iscolor(@color)) {
+.antTableEvenBG(@color: none) when (iscolor(@color)) {
   > tr:nth-child(4n + 3) {
-    background: @nz-table-even-background;
+    background: @color;
   }
 }
 
