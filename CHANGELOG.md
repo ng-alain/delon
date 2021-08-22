@@ -1,3 +1,26 @@
+# [12.2.0](https://github.com/ng-alain/delon/compare/12.1.1...12.2.0) (2021-08-22)
+
+
+### Bug Fixes
+
+* **abc:st:** fix render `undefined` when `safeType` is `text` ([#1322](https://github.com/ng-alain/delon/issues/1322)) ([c337d75](https://github.com/ng-alain/delon/commit/c337d75a7f2aa0d374c88db4e97dd51da8b604ce))
+* **form:widget:select:** fix invalid `orgData` of `change` event ([#1312](https://github.com/ng-alain/delon/issues/1312)) ([#1320](https://github.com/ng-alain/delon/issues/1320)) ([8c12822](https://github.com/ng-alain/delon/commit/8c12822a7d65cdcda7c34d9554d13c5a1ef981d9))
+* **sf:** fix unknown keyword: "_description" in strict mode ([#1327](https://github.com/ng-alain/delon/issues/1327)) ([554abd4](https://github.com/ng-alain/delon/commit/554abd469fa588548a1ec79d603201eeeafd1250))
+* **site:gen:** path error for `util-pipes` in the `windows env` ([#1326](https://github.com/ng-alain/delon/issues/1326)) ([29302f5](https://github.com/ng-alain/delon/commit/29302f54bb92602c2c75ca0270e1df64bfca1a98))
+* **util:convert:** fix invalid `defaultValue` parament in `InputBoolean` ([#1323](https://github.com/ng-alain/delon/issues/1323)) ([386690c](https://github.com/ng-alain/delon/commit/386690cb1e194dc50c22450e71d0e0995a8b24bc))
+* **util:other:deep:** fix can't merge function in `deepMergeKey` ([#1321](https://github.com/ng-alain/delon/issues/1321)) ([f2f181b](https://github.com/ng-alain/delon/commit/f2f181b8ba44eade220eececa546a5c84fa6f776))
+
+
+### Features
+
+* **abc:se,sv:** add `noColon` property ([#1324](https://github.com/ng-alain/delon/issues/1324)) ([9f2a031](https://github.com/ng-alain/delon/commit/9f2a0313310fbbcd610a26a33c77742734a3fe2e))
+* **form:string:** add `changeDebounceTime`, `changeMap` property ([#1315](https://github.com/ng-alain/delon/issues/1315)) ([3a8a26d](https://github.com/ng-alain/delon/commit/3a8a26d5a36513b2cdb6d51fb474c4eb7eaceb60))
+* **theme:i18n:** add `interpolation` in global config ([#1318](https://github.com/ng-alain/delon/issues/1318)) ([e711865](https://github.com/ng-alain/delon/commit/e7118657fbb24c9f62c422e1b1029bfbe2cee541))
+* **theme:** add `[@nz-table-even-background](https://github.com/nz-table-even-background)` ([#1325](https://github.com/ng-alain/delon/issues/1325)) ([71d3ef6](https://github.com/ng-alain/delon/commit/71d3ef6be7097d083af3967283d27c420c35e0e9))
+* **theme:** add `PreloadOptionalModules` ([#1310](https://github.com/ng-alain/delon/issues/1310)) ([6df8fd0](https://github.com/ng-alain/delon/commit/6df8fd029be8f877292d384e962d4c26161a8011))
+
+
+
 ## [12.1.1](https://github.com/ng-alain/delon/compare/12.1.0...12.1.1) (2021-08-13)
 
 
