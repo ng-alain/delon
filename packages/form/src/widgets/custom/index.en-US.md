@@ -12,7 +12,7 @@ Make sure to specify **sf-template** a valid path value, for example:
 
 ```html
 <sf>
-  <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
+  <ng-template sf-template="formFieldName" let-i let-ui="ui" let-schema="schema">
   </ng-tempalte>
 </sf>
 ```
