@@ -95,3 +95,37 @@ statusProperty.widget.reset('2');
 // 或手动触发 `detectChanges`
 // statusProperty.widget.detectChanges();
 ```
+
+## 为什么无法校验 `required`
+
+从 Ajv 7.x 新增 [strict](https://ajv.js.org/options.html#strict-mode-options) 模式，并且默认为 `true`，当最基本的 `required` 都无法正确校验时，那大概率就是因为 Schema 包含了不符合 Json Schema 格式的信息，可以通过 `debug` 模式验证这一点：
+
+```ts
+schema: SFSchema = {
+  properties: {
+    month: {
+      type: 'string',
+      format: 'month'
+    }
+  },
+  required: ['month'],
+  ui: { debug: true }
+};
+```
+
+由于这里的 `format: 'month'` 并不是 Json Schema 标准，因此，你可以在 Console 面板得到错误：
+
+```
+Error: unknown format "month" ignored in schema at path "#/properties/month"
+```
+
+解决这一问题，只能通过全局配置设置 `strict` 为 `false`：
+
+```ts
+// src/app/global-config.module.ts
+const alainConfig: AlainConfig = {
+  sf: {
+    ajv: { strict: false }
+  }
+};
+```
