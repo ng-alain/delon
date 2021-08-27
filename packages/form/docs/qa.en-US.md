@@ -95,3 +95,37 @@ statusProperty.widget.reset('2');
 // Or manually trigger `detectChanges`
 // statusProperty.widget.detectChanges();
 ```
+
+## Why can't verify `required`
+
+Added [strict](https://ajv.js.org/options.html#strict-mode-options) mode from Ajv 7.x, and the default is `true`, when the most basic `required` is not correct When verifying, the high probability is that the Schema contains information that does not conform to the Json Schema format. This can be verified through the `debug` mode:
+
+```ts
+schema: SFSchema = {
+   properties: {
+     month: {
+       type:'string',
+       format:'month'
+     }
+   },
+   required: ['month'],
+   ui: {debug: true}
+};
+```
+
+Since the `format:'month'` here is not a Json Schema standard, you can get an error in the Console panel:
+
+```
+Error: unknown format "month" ignored in schema at path "#/properties/month"
+```
+
+To solve this problem, you can only set `strict` to `false` through the global configuration:
+
+```ts
+// src/app/global-config.module.ts
+const alainConfig: AlainConfig = {
+   sf: {
+     ajv: {strict: false}
+   }
+};
+```
