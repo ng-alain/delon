@@ -136,6 +136,15 @@
       "alias": "m",
       "x-prompt": "Specify which module name:"
     },
+    "tplName": {
+      "type": "string",
+      "description": "指定模板名称 (Specifies template name)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What template name would you like to use for the component:"
+    },
     "target": {
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
