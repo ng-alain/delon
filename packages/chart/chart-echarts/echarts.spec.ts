@@ -19,7 +19,9 @@ class MockLazyService {
       init: () => {
         return {
           setOption: jasmine.createSpy('setOption'),
-          dispose: jasmine.createSpy('dispose')
+          dispose: jasmine.createSpy('dispose'),
+          on: jasmine.createSpy('on'),
+          off: jasmine.createSpy('off')
         };
       }
     };
