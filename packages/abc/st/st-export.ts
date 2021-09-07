@@ -25,11 +25,17 @@ export class STExport {
             ret.t = 'n';
             break;
           case 'date':
-            ret.t = 'd';
+            // Can't be a empty value, it will cause `#NULL!`
+            // See https://github.com/SheetJS/sheetjs/blob/master/docbits/52_datatype.md
+            if (`${val}`.length > 0) {
+              ret.t = 'd';
+              // Number Formats: https://github.com/SheetJS/sheetjs/blob/master/docbits/63_numfmt.md
+              ret.z = col.dateFormat;
+            }
             break;
           case 'yn':
             const yn = col.yn!;
-            ret.v = ret.v === yn.truth ? yn.yes : yn.no;
+            ret.v = val === yn.truth ? yn.yes : yn.no;
             break;
         }
       }
