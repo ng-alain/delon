@@ -461,3 +461,13 @@ class TestComponent {
 | `[maxWidth]` | Maximum width of resizable elemen | `number` | `360` |
 | `[minWidth]` | Minimum width of resizable element | `number` | `60` |
 | `[preview]` | Enable preview when resizing | `boolean` | `true` |
+
+## Theme
+
+| Property | Description | Default
+|----|----|----|
+| `@st-btn-disabled-color` | Text color of the button | `rgba(0, 0, 0, 0.25)` |
+| `@st-title-optional-color` | Optional color of title | `rgba(0, 0, 0, 0.35)` |
+| `@st-resizable-handle-width` | Width of the rasizable handle | `1px` |
+| `@st-resizable-handle-height` | Height of the rasizable handle | `60%` |
+| `@st-resizable-handle-color` | Color of the rasizable handle | `@border-color-base` |

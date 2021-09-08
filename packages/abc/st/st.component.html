@@ -124,9 +124,9 @@
           [nzPreview]="$any(_c).resizable.preview"
           (nzResizeEnd)="colResize($event, _c)"
         >
-          <nz-resize-handle *ngIf="$any(!last && !$any(_c).resizable.disabled)" nzDirection="right"
-            ><i></i
-          ></nz-resize-handle>
+          <nz-resize-handle *ngIf="$any(!last && !$any(_c).resizable.disabled)" nzDirection="right">
+            <i></i>
+          </nz-resize-handle>
           <ng-template
             #renderTitle
             [ngTemplateOutlet]="_c.__renderTitle!"

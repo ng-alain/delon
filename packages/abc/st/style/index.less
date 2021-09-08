@@ -32,19 +32,27 @@
     }
   }
   // 调整表头宽度
-  .nz-resizable-handle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > i {
-      width: 1px;
-      height: 60%;
-      background: @border-color-split;
+  .nz-resizable {
+    &-handle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > i {
+        width: @st-resizable-handle-width;
+        height: @st-resizable-handle-height;
+        background: @st-resizable-handle-color;
+      }
     }
-  }
-  .nz-resizable-preview {
-    border-width: 0;
-    border-right-width: 1px;
+    &-preview {
+      border-width: 0;
+      border-right-width: 1px;
+    }
+    // 当存在排序时，增加与排序之间的间隔
+    &.@{ant-prefix}-table-column-has-sorters {
+      .nz-resizable-handle {
+        margin-right: 8px;
+      }
+    }
   }
   // 清除页码底部间距，在大部分列表中会包裹 `nz-card` 导致底部间距过大，若有需求可自行使用 `mb-md` 来调整
   .@{ant-prefix}-table ~ nz-pagination > .@{ant-prefix}-pagination {
