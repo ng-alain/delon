@@ -13,7 +13,7 @@ An Excel file operation based on [sheetjs](http://sheetjs.com/).
 
 ## Dependencies
 
-The sheetjs script file takes the form of lazy loading，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js`.
+The sheetjs script file takes the form of lazy loading，you can change the default CDN path (or use the [local path](https://angular.io/guide/workspace-config#asset-config)) via [Global Configuration](/docs/global-config). By default: `https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js`.
 
 ## API
 
