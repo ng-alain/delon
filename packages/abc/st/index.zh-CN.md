@@ -462,3 +462,13 @@ class TestComponent {
 | `[maxWidth]` | 最大宽度(超过边界部分忽略) | `number` | `360` |
 | `[minWidth]` | 最小宽度 | `number` | `60` |
 | `[preview]` | 开启预览 | `boolean` | `true` |
+
+## Theme
+
+| 成员 | 说明 | 默认值
+|----|----|----|
+| `@st-btn-disabled-color` | 禁用按钮的文本颜色 | `rgba(0, 0, 0, 0.25)` |
+| `@st-title-optional-color` | 标题可选文本颜色 | `rgba(0, 0, 0, 0.35)` |
+| `@st-resizable-handle-width` | 拖拽宽度 | `1px` |
+| `@st-resizable-handle-height` | 拖拽高度 | `60%` |
+| `@st-resizable-handle-color` | 拖拽颜色 | `@border-color-base` |
