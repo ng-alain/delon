@@ -46,8 +46,9 @@ export class TokenService implements ITokenService, OnDestroy {
   }
 
   set(data: ITokenModel): boolean {
+    const res = this.store.set(this._options.store_key!, data);
     this.change$.next(data);
-    return this.store.set(this._options.store_key!, data);
+    return res;
   }
 
   get(type?: NzSafeAny): NzSafeAny;
