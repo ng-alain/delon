@@ -69,7 +69,7 @@ const data = [
     name: 'n4',
     img: '4.jpg',
     currency: 40000,
-    date: '2018-1-4',
+    date: '',
     status: true,
     null: null,
     customYn: 'Y'
@@ -142,6 +142,15 @@ describe('abc: table: export', () => {
       const colInfo = ret.sheets.Sheet1['!cols'];
       expect(Array.isArray(colInfo)).toBe(true);
       expect(colInfo[0].wpx).toBe(width);
+    });
+
+    it('should be date format', async () => {
+      const dateFormat = 'yyyy-MM-d';
+      const ret: NzSafeAny = await srv.export({
+        data: [{ date: '2021-10-10' }],
+        columens: [{ index: 'date', type: 'date', dateFormat } as _STColumn]
+      });
+      expect(ret.sheets.Sheet1.A2.z).toBe(dateFormat);
     });
   });
 });
