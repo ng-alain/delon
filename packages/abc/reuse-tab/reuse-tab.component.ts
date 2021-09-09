@@ -160,7 +160,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (addCurrent) {
-      ls.push(this.genCurItem());
+      ls.splice(this.pos + 1, 0, this.genCurItem());
     }
 
     ls.forEach((item, index) => (item.index = index));
