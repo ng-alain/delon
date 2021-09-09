@@ -1,4 +1,7 @@
+import { colors } from '@angular/cli/utilities/color';
+
 import { chain, Rule, schematic, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
@@ -9,46 +12,48 @@ import { Schema as NgAddOptions } from './schema';
 const V = 12;
 
 function genRules(options: NgAddOptions): Rule {
-  const rules: Rule[] = [];
+  return () => {
+    const rules: Rule[] = [];
 
-  const applicationOptions: ApplicationOptions = { ...options };
-  rules.push(schematic('application', applicationOptions));
+    const applicationOptions: ApplicationOptions = { ...options };
+    rules.push(schematic('application', applicationOptions));
 
-  if (options.codeStyle) {
-    rules.push(schematic('plugin', { name: 'codeStyle', type: 'add' }));
-  }
+    if (options.codeStyle) {
+      rules.push(schematic('plugin', { name: 'codeStyle', type: 'add' }));
+    }
 
-  if (options.defaultLanguage) {
-    rules.push(
-      schematic('plugin', {
-        name: 'defaultLanguage',
-        type: 'add',
-        defaultLanguage: options.defaultLanguage
-      })
-    );
-  }
+    if (options.defaultLanguage) {
+      rules.push(
+        schematic('plugin', {
+          name: 'defaultLanguage',
+          type: 'add',
+          defaultLanguage: options.defaultLanguage
+        })
+      );
+    }
 
-  if (options.npm) {
-    rules.push(
-      schematic('plugin', {
-        name: 'networkEnv',
-        type: 'add',
-        packageManager: 'npm'
-      })
-    );
-  }
+    if (options.npm) {
+      rules.push(
+        schematic('plugin', {
+          name: 'networkEnv',
+          type: 'add',
+          packageManager: 'npm'
+        })
+      );
+    }
 
-  if (options.yarn) {
-    rules.push(
-      schematic('plugin', {
-        name: 'networkEnv',
-        type: 'add',
-        packageManager: 'yarn'
-      })
-    );
-  }
+    if (options.yarn) {
+      rules.push(
+        schematic('plugin', {
+          name: 'networkEnv',
+          type: 'add',
+          packageManager: 'yarn'
+        })
+      );
+    }
 
-  return chain(rules);
+    return chain(rules);
+  };
 }
 
 function getFiles(): string[] {
@@ -63,8 +68,22 @@ function isUseCNPM(): boolean {
   return res;
 }
 
+function finished(): Rule {
+  return (_: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+
+    context.logger.info(
+      colors.green(`
+✓  Congratulations, NG-ALAIN scaffold generation complete 🎉.
+
+NG-ALAIN documentation site: https://ng-alain.com
+`)
+    );
+  };
+}
+
 export default function (options: NgAddOptions): Rule {
-  return (tree: Tree) => {
+  return (tree: Tree, context: SchematicContext) => {
     if (isUseCNPM()) {
       throw new Error(
         `Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`
@@ -87,14 +106,6 @@ export default function (options: NgAddOptions): Rule {
       );
     }
 
-    return genRules(options);
+    return chain([genRules(options), finished()])(tree, context);
   };
-}
-
-export function finished(context: SchematicContext): void {
-  context.logger.info('');
-  context.logger.info(
-    `  ✓  Congratulations, NG-ALAIN scaffold generation complete. NG-ALAIN documentation site: https://ng-alain.com`
-  );
-  context.logger.info('');
 }
