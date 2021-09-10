@@ -14,6 +14,24 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [12.2.2](https://github.com/ng-alain/delon/compare/12.2.1...12.2.2) (2021-09-10)
+
+### Scaffold
+
+* fix `navigator.languages` return lowercase string in WebKit ([#2088](https://github.com/ng-alain/ng-alain/pull/2069))
+
+### Bug Fixes
+
+* **abc:reuse-tab:** fix adding new tab should be after the current ([#1345](https://github.com/ng-alain/delon/issues/1345)) ([d6438cf](https://github.com/ng-alain/delon/commit/d6438cf40cb6857ca4459278ec3b6e95fbbba738))
+* **abc:st:** fix `#NULL!` value when empty value and `type` is `date` ([#1338](https://github.com/ng-alain/delon/issues/1338)) ([52bac24](https://github.com/ng-alain/delon/commit/52bac241ab537eb829542bf6290b43cb0440d67c))
+* **abc:st:** fix between sorts space of resizable handle ([#1341](https://github.com/ng-alain/delon/issues/1341)) ([519adbe](https://github.com/ng-alain/delon/commit/519adbe9c5f86068d2b97acf3a3921b491470521))
+* **auth:** fix ensure `change` event and `get()` have consistent results ([#1339](https://github.com/ng-alain/delon/issues/1339)) ([fddb094](https://github.com/ng-alain/delon/commit/fddb0942d4e297f62d227e06230573ad314e9b65))
+* **cli:tpl:** fix incorrect arguments index of schema.json ([#1336](https://github.com/ng-alain/delon/issues/1336)) ([af62081](https://github.com/ng-alain/delon/commit/af620810ecdd93c8844755b303c995fe54dbe2b0))
+* **cli:tpl:** fix lose `tplName` property of `schema.json` ([#1335](https://github.com/ng-alain/delon/issues/1335)) ([0e7b4f4](https://github.com/ng-alain/delon/commit/0e7b4f471bf28257a19c130e78df26542b1d5d0f))
+* **form:** add `widget` index sign ([#1334](https://github.com/ng-alain/delon/issues/1334)) ([b192990](https://github.com/ng-alain/delon/commit/b192990cf9f7ecfe84aa7f252ab4d3cc33151885))
+* **util:format:** fix invalid mobile number starting with 198 ([#1331](https://github.com/ng-alain/delon/issues/1331)) ([a6faccd](https://github.com/ng-alain/delon/commit/a6faccd197857a08f07add7031975e56312d0424))
+
+
 ## [12.2.1](https://github.com/ng-alain/delon/compare/12.2.0...12.2.1) (2021-08-22)
 
 ### Bug Fixes
