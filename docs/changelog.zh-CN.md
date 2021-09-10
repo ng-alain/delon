@@ -14,6 +14,24 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [12.2.2](https://github.com/ng-alain/delon/compare/12.2.1...12.2.2) (2021-09-10)
+
+### Scaffold
+
+* 修复 WebKit 内核 `navigator.languages` 总是返回小写字符 ([#2088](https://github.com/ng-alain/ng-alain/pull/2069))
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复新增标签总是在当前标签之后 ([#1345](https://github.com/ng-alain/delon/issues/1345)) ([d6438cf](https://github.com/ng-alain/delon/commit/d6438cf40cb6857ca4459278ec3b6e95fbbba738))
+* **abc:st:** 修复 `type` 为 `date` 时空值会产生 `#NULL!` ([#1338](https://github.com/ng-alain/delon/issues/1338)) ([52bac24](https://github.com/ng-alain/delon/commit/52bac241ab537eb829542bf6290b43cb0440d67c))
+* **abc:st:** 修复拖拽与排序之间的间隔 ([#1341](https://github.com/ng-alain/delon/issues/1341)) ([519adbe](https://github.com/ng-alain/delon/commit/519adbe9c5f86068d2b97acf3a3921b491470521))
+* **auth:** 修复确保 `change` 事件与 `get()` 始终一致性 ([#1339](https://github.com/ng-alain/delon/issues/1339)) ([fddb094](https://github.com/ng-alain/delon/commit/fddb0942d4e297f62d227e06230573ad314e9b65))
+* **cli:tpl:** 修复 `index` 索引不正确 ([#1336](https://github.com/ng-alain/delon/issues/1336)) ([af62081](https://github.com/ng-alain/delon/commit/af620810ecdd93c8844755b303c995fe54dbe2b0))
+* **cli:tpl:** 修复缺少 `tplName` 属性 ([#1335](https://github.com/ng-alain/delon/issues/1335)) ([0e7b4f4](https://github.com/ng-alain/delon/commit/0e7b4f471bf28257a19c130e78df26542b1d5d0f))
+* **form:** 修复 `widget` 参数显示内置小部件名称 ([#1334](https://github.com/ng-alain/delon/issues/1334)) ([b192990](https://github.com/ng-alain/delon/commit/b192990cf9f7ecfe84aa7f252ab4d3cc33151885))
+* **util:format:** 修复手机号不支持 198 开头 ([#1331](https://github.com/ng-alain/delon/issues/1331)) ([a6faccd](https://github.com/ng-alain/delon/commit/a6faccd197857a08f07add7031975e56312d0424))
+
+
 ## [12.2.1](https://github.com/ng-alain/delon/compare/12.2.0...12.2.1) (2021-08-22)
 
 ### Bug Fixes
