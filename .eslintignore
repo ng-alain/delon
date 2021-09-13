@@ -2,7 +2,6 @@ dist/
 coverage/
 ng-alain/
 archive-docs/
-junit/
 schematics/**/files/**/*
 src/app/routes/gen/**/*
 src/templates/**/*

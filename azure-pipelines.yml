@@ -54,16 +54,6 @@ stages:
               summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
               reportDirectory: $(System.DefaultWorkingDirectory)/coverage
               failIfCoverageEmpty: true
-
-          - task: PublishTestResults@2
-            displayName: 'publish test results'
-            condition: succeededOrFailed()
-            inputs:
-              searchFolder: $(System.DefaultWorkingDirectory)/junit
-              failTaskOnFailedTests: true
-              testRunTitle: DELON
-              testResultsFormat: JUnit
-              testResultsFiles: '**/TESTS*.xml'
       - job: cli
         steps:
           - task: Npm@1

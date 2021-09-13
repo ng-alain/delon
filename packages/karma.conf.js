@@ -3,40 +3,29 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular', 'viewport'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-spec-reporter'),
-      require('karma-viewport'),
-      require('karma-junit-reporter'),
     ],
     client: {
       jasmine: {
         random: false,
       },
-      clearContext: true // leave Jasmine Spec Runner output visible in browser
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
       subdir: '.',
       dir: require('path').join(__dirname, '../coverage'),
-      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }, { type: 'cobertura' }],
+      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }],
     },
-    reporters: ['progress', 'kjhtml', 'spec', 'junit'],
-    junitReporter: {
-      outputDir: '../junit',
-    },
-    specReporter: {
-      maxLogLines: 5,
-      suppressErrorSummary: true,
-      suppressFailed: false,
-      suppressPassed: false,
-      suppressSkipped: true,
-      showSpecTiming: false,
-    },
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
