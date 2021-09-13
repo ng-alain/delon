@@ -467,6 +467,19 @@ class TestComponent {
 
 | 成员 | 说明 | 默认值
 |----|----|----|
+| `@nz-table-img-radius` | 图像圆角大小 | `4px` |
+| `@nz-table-img-margin-right` | 图像右边距 | `4px` |
+| `@nz-table-img-max-height` | 图像最大高度 | `32px` |
+| `@nz-table-img-max-width` | 图像最大宽度 | `32px` |
+| `@nz-table-even-background` | 行奇偶背景色 | `none` |
+| `@nz-table-rep-max-width` | 可视区域小于时触发 | `` |
+| `@nz-table-rep-min-width` | 可视区域大于时触发 | `` |
+| `@nz-table-rep-header-background` | 响应式下标题背景颜色 | `@border-color-split` |
+| `@nz-table-rep-even-background` | 响应式下奇偶颜色 | `#f9f9f9` |
+| `@nz-table-rep-column-name-color` | 响应式下文本颜色 | `rgba(0, 0, 0, 0.5)` |
+| `@nz-table-rep-column-name-text-align` | 响应式下标题文本对齐方式 | `right` |
+| `@nz-table-rep-column-name-width` | 响应式下标题宽度 | `100px` |
+| `@nz-table-rep-column-name-padding-right` | 响应式下标题与内容右边距 | `8px` |
 | `@st-btn-disabled-color` | 禁用按钮的文本颜色 | `rgba(0, 0, 0, 0.25)` |
 | `@st-title-optional-color` | 标题可选文本颜色 | `rgba(0, 0, 0, 0.35)` |
 | `@st-resizable-handle-width` | 拖拽宽度 | `1px` |
