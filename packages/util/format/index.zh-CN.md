@@ -23,8 +23,30 @@ type: Tools
 
 格式化掩码。
 
+| 字符 | 描述 |
+| --- | --- |
+| `0` | 任意数字，若该位置字符不符合，则默认为 `0` 填充 |
+| `9` | 任意数字 |
+| `#` | 任意字符 |
+| `U` | 转换大写 |
+| `L` | 转换小写 |
+| `*` | 转换为 `*` 字符 |
+
 ```ts
 formatMask('123', '(###)') => (123)
+formatMask('15900000000', '999****9999') => 159****0000
+formatMask('aBc', 'UUU') => ABC
+formatMask('ABc', 'LLL') => abc
+```
+
+或自定义Token：
+
+```ts
+const option: FormatMaskOption = {
+  mask: 'CC999',
+  tokens: { C: { pattern: /.*/, transform: char => (char === '你' ? 'N' : 'H') } }
+}
+formatMask('你好123', option) => NH123
 ```
 
 ### mega

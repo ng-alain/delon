@@ -18,7 +18,7 @@ module.exports = function (config) {
       jasmine: {
         random: false,
       },
-      clearContext: true // leave Jasmine Spec Runner output visible in browser
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
       subdir: '.',
