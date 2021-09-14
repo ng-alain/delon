@@ -26,6 +26,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
   private fixData: SFSchemaEnum[] = [];
+  private updateTyping = true;
 
   updateValue(item: NzAutocompleteOptionComponent): void {
     this.typing = item.nzLabel!;
@@ -67,12 +68,22 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
       debounceTime(time),
       startWith(''),
       mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
-      map(res => getEnum(res, null, this.schema.readOnly!))
+      map(res => {
+        const data = getEnum(res, null, this.schema.readOnly!);
+        console.log('map', data);
+        if (this.updateTyping) {
+          this.updateTyping = false;
+          this.typing = data.find(w => w.value === this.value)?.label ?? '';
+        }
+        return data;
+      })
     );
   }
 
   reset(value: SFValue): void {
-    this.typing = this.value;
+    this.typing = value;
+    console.log(value);
+    this.updateTyping = true;
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
