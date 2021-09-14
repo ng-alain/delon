@@ -70,7 +70,6 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
       mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
       map(res => {
         const data = getEnum(res, null, this.schema.readOnly!);
-        console.log('map', data);
         if (this.updateTyping) {
           this.updateTyping = false;
           this.typing = data.find(w => w.value === this.value)?.label ?? '';
@@ -82,7 +81,6 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
 
   reset(value: SFValue): void {
     this.typing = value;
-    console.log(value);
     this.updateTyping = true;
     if (this.isAsync) return;
     switch (this.ui.type) {
