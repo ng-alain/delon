@@ -29,3 +29,16 @@ Enter a number within certain range with the mouse or keyboard.
 | `[precision]` | precision of input value | - | - |
 | `[widgetWidth]` | Specify `nz-number` width | `number` | `90` |
 | `[hideStep]` | Hide step icon | `boolean` | `false` |
+
+## QA
+
+### Why can't modify `unit`
+
+All components of NG-ZORRO are in OnPush mode. A special case is that when the `unit` needs to be dynamically modified, it will only take effect when the `ngModel` change needs to be triggered once, so it's value needs to be changed, for example:
+
+```ts
+const ageProperty = this.sf.getProperty('/age')!;
+ageProperty.widget.ui.unit ='c';
+ageProperty.widget.setValue(null);
+ageProperty.widget.setValue(statusProperty.value);
+```
