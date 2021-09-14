@@ -98,6 +98,25 @@ describe('form: widget: autocomplete', () => {
         expect(res[0].value).toBe('1');
       });
     });
+    it('should be return label in async data', fakeAsync(() => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              default: '1',
+              ui: {
+                widget,
+                asyncData: () => of([{ label: 'label1', value: '1' }])
+              }
+            }
+          }
+        })
+        .time(100);
+      const selectWidget = page.getWidget<AutoCompleteWidget>(`sf-${widget}`);
+      expect(selectWidget.typing).toBe(`label1`);
+      page.asyncEnd();
+    }));
     it('with email of format', fakeAsync(() => {
       const config = mergeConfig(TestBed.inject(AlainConfigService));
       const typeValue = 'a';
