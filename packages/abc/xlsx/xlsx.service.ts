@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 
-import { saveAs } from 'file-saver';
 import isUtf8 from 'isutf8';
 
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
@@ -92,11 +91,16 @@ export class XlsxService {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()
         .then(() => {
-          const wb: NzSafeAny = XLSX.utils.book_new();
+          options = { format: 'xlsx', ...options };
+          const {
+            writeFile,
+            utils: { book_new, aoa_to_sheet, book_append_sheet }
+          } = XLSX;
+          const wb: NzSafeAny = book_new();
           if (Array.isArray(options.sheets)) {
             (options.sheets as XlsxExportSheet[]).forEach((value: XlsxExportSheet, index: number) => {
-              const ws: NzSafeAny = XLSX.utils.aoa_to_sheet(value.data);
-              XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
+              const ws: NzSafeAny = aoa_to_sheet(value.data);
+              book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
             });
           } else {
             wb.SheetNames = Object.keys(options.sheets);
@@ -105,14 +109,13 @@ export class XlsxService {
 
           if (options.callback) options.callback(wb);
 
-          const wbout: ArrayBuffer = XLSX.write(wb, {
-            bookType: 'xlsx',
+          const filename = options.filename || `export.${options.format}`;
+          writeFile(wb, filename, {
+            bookType: options.format,
             bookSST: false,
             type: 'array',
             ...options.opts
           });
-          const filename = options.filename || 'export.xlsx';
-          saveAs(new Blob([wbout], { type: 'application/octet-stream' }), filename);
 
           resolve({ filename, wb });
         })
