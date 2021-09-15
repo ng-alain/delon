@@ -103,7 +103,7 @@ copyFiles() {
     "${1}src/app/shared/utils/*|${2}application/files/src/app/shared/utils/"
     "${1}src/app/shared/json-schema/*|${2}application/files/src/app/shared/json-schema/"
     "${1}src/app/shared/st-widget/*|${2}application/files/src/app/shared/st-widget/"
-    "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
+    # "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
     "${1}src/app/global-config.module.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"

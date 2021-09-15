@@ -108,4 +108,12 @@ describe('NgAlainSchematic: application', () => {
       });
     });
   });
+
+  describe('#form', () => {
+    it(`should be export json-schema.ts in shared/index.ts`, async () => {
+      ({ runner, tree } = await createAlainApp({ form: false }));
+      const content = tree.readContent('/projects/foo/src/app/shared/index.ts');
+      expect(content).not.toContain(`json-schema`);
+    });
+  });
 });
