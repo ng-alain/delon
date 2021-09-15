@@ -132,6 +132,24 @@ describe('abc: xlsx', () => {
         }
       );
     });
+
+    it(`should be can't load xlsx when file is error`, (done: () => void) => {
+      genModule();
+      // eslint-disable-next-line prettier/prettier
+      spyOn(FileReader.prototype, 'readAsArrayBuffer').and.callFake(function (this: NzSafeAny) {
+        this.onerror();
+      });
+      srv.import(null as NzSafeAny).then(
+        () => {
+          expect(false).toBe(true);
+          done();
+        },
+        () => {
+          expect(true).toBe(true);
+          done();
+        }
+      );
+    });
   });
 
   describe('[#export]', () => {

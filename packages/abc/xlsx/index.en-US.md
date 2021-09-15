@@ -31,7 +31,7 @@ The sheetjs script file takes the form of lazy loading，you can change the defa
 |----------|-------------|------|---------|
 | `[sheets]` | Data source | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | - |
 | `[filename]` | file name of excel | `string` | `export.xlsx` |
-| `[opts]` | Excel options, see [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | - |
+| `[opts]` | Excel options, see [WritingOptions](https://github.com/SheetJS/sheetjs/blob/master/docbits/81_writeopts.md) | `WritingOptions` | - |
 | `[callback]` | Trigger before saving | `(wb: WorkBook) => void` | - |
 
 ### [xlsx]
