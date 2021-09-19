@@ -294,7 +294,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
-        const ui = {
+        const ui = deepCopy({
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
@@ -304,7 +304,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey]
-        } as SFUISchemaItemRun;
+        }) as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
