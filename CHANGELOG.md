@@ -1,3 +1,14 @@
+## [12.2.3](https://github.com/ng-alain/delon/compare/12.2.2...12.2.3) (2021-09-24)
+
+
+### Bug Fixes
+
+* **cli:** fix export json-schema when not choose form ([#1352](https://github.com/ng-alain/delon/issues/1352)) ([e71ea04](https://github.com/ng-alain/delon/commit/e71ea04dba044a29919b36b436d855164eeebc63))
+* **form:widget:autocomplete:** fix invalid typing when async data ([#1351](https://github.com/ng-alain/delon/issues/1351)) ([aca195a](https://github.com/ng-alain/delon/commit/aca195a10fc46dda51c8eefc8b9b28ced30da812))
+* **form:** fix `ui` value cross pollute ([#1355](https://github.com/ng-alain/delon/issues/1355)) ([65ac839](https://github.com/ng-alain/delon/commit/65ac839fedb34d4e18e959071e0b8c31e0aa6e96))
+
+
+
 ## [12.2.2](https://github.com/ng-alain/delon/compare/12.2.1...12.2.2) (2021-09-10)
 
 
