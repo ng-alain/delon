@@ -54,6 +54,7 @@ switchLanguage() {
 | 斯洛文尼亚文 | sl_SI |
 | 法文 | fr_FR |
 | 西班牙语 | es_ES |
+| 意大利语 | it_IT |
 
 ## 增加语言包
 
