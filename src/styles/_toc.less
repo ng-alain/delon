@@ -1,0 +1,28 @@
+.toc-affix {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+
+  .ant-anchor-ink-ball.visible {
+    display: none;
+  }
+
+  .ant-anchor .ant-anchor-link-active {
+    position: relative;
+    z-index: 2;
+    margin-left: -2px;
+    border-left: 2px solid #1890ff;
+  }
+
+  .ant-anchor-link-title {
+    max-width: 120px;
+  }
+  .ant-row-rtl & {
+    right: auto;
+    left: 20px;
+  }
+
+  @media (max-width: @mobile-max) {
+    display: none;
+  }
+}

@@ -1,93 +1,70 @@
-import { Component, Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { AlainThemeModule } from '../../theme.module';
-import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from './i18n';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 
 describe('theme: i18n', () => {
-  const i18n = new AlainI18NServiceFake();
+  let fixture: ComponentFixture<TestComponent>;
+  let srv: AlainI18NService;
 
-  it('#use', () => {
-    i18n.use('zh-CN');
-    expect(true).toBeTruthy();
-  });
+  function check(result: string, id: string = 'simple'): void {
+    const el = fixture.debugElement.query(By.css(`#${id}`)).nativeElement as HTMLElement;
 
-  it('#getLangs', () => {
-    expect(i18n.getLangs().length).toBe(0);
-  });
+    expect(el.textContent!.trim()).toBe(result);
+  }
 
-  it('#fanyi', () => {
-    expect(i18n.fanyi('index')).toBe('index');
-  });
-
-  describe('[i18n pipe]', () => {
-    let fixture: ComponentFixture<TestComponent>;
-    let srv: AlainI18NService;
-
-    @Injectable()
-    class MockI18NService extends AlainI18NServiceFake {
-      data: any = {};
-      use(_lang: string) {
-        this.data = {
-          simple: 'a',
-          param: 'a-{{value}}',
-          html: '<i>asdf</i>',
-        };
-      }
-      fanyi(key: string, data?: { [key: string]: string }, _isSafe?: boolean) {
-        let res = this.data[key] || '';
-        if (data) {
-          Object.keys(data).forEach(k => (res = res.replace(new RegExp(`{{${k}}}`, 'g'), data[k])));
-        }
-        return res;
-      }
-    }
-
-    function genModule() {
+  describe('', () => {
+    beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [AlainThemeModule.forRoot()],
-        declarations: [TestComponent],
-        providers: [
-          {
-            provide: ALAIN_I18N_TOKEN,
-            useClass: MockI18NService,
-            multi: false,
-          },
-        ],
+        declarations: [TestComponent]
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      srv.use('en');
+      srv.use('en', {
+        simple: 'a',
+        param: 'a-{{value}}'
+      });
       fixture.detectChanges();
-    }
-
-    function check(result: string, id = 'simple') {
-      const el = fixture.debugElement.query(By.css('#' + id)).nativeElement as HTMLElement;
-
-      expect(el.textContent!.trim()).toBe(result);
-    }
-
+    });
     it('should working', () => {
-      genModule();
       check('a');
     });
 
     it('should be param', () => {
-      genModule();
       fixture.componentInstance.key = 'param';
       fixture.componentInstance.params = { value: '1' };
       fixture.detectChanges();
       check('a-1', 'param');
     });
 
-    it('should be safeHtml', () => {
-      genModule();
-      fixture.componentInstance.key = 'html';
-      fixture.componentInstance.params = { value: '1' };
-      fixture.componentInstance.isSafe = true;
+    it('should be return path when is invalid', () => {
+      fixture.componentInstance.key = 'invalid';
       fixture.detectChanges();
-      check('asdf', 'html');
+      check('invalid');
     });
+  });
+
+  it('#interpolation', () => {
+    TestBed.configureTestingModule({
+      imports: [AlainThemeModule.forRoot()],
+      declarations: [TestComponent],
+      providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { interpolation: ['#', '#'] } } as AlainConfig }]
+    });
+    fixture = TestBed.createComponent(TestComponent);
+    srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+    srv.use('en', {
+      simple: 'a',
+      param: 'a-#value#'
+    });
+    fixture.componentInstance.key = 'param';
+    fixture.componentInstance.params = { value: '1' };
+    fixture.detectChanges();
+    check('a-1', 'param');
   });
 });
 
@@ -95,11 +72,9 @@ describe('theme: i18n', () => {
   template: `
     <div id="simple">{{ key | i18n }}</div>
     <div id="param">{{ key | i18n: params }}</div>
-    <div id="html" [innerHTML]="key | i18n: params:isSafe"></div>
-  `,
+  `
 })
 class TestComponent {
   key = 'simple';
   params = {};
-  isSafe = true;
 }

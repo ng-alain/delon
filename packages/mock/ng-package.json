@@ -8,5 +8,6 @@
     "umdModuleIds": {
       "@delon/util": "delon.util"
     }
-  }
+  },
+  "allowedNonPeerDependencies": ["mockjs", "@delon/util"]
 }

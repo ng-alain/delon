@@ -2,7 +2,7 @@
 title: g2-chart
 subtitle: 自定义图表
 cols: 1
-type: Components
+type: G2
 module: import { G2CustomModule } from '@delon/chart/custom';
 ---
 

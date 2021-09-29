@@ -6,29 +6,29 @@ export default {
     403: '抱歉，你无权访问该页面',
     404: '抱歉，你访问的页面不存在',
     500: '抱歉，服务器出错了',
-    backToHome: '返回首页',
+    backToHome: '返回首页'
   },
   noticeIcon: {
     emptyText: '暂无数据',
-    clearText: '清空',
+    clearText: '清空'
   },
   reuseTab: {
     close: '关闭标签',
     closeOther: '关闭其它标签',
     closeRight: '关闭右侧标签',
-    refresh: '刷新',
+    refresh: '刷新'
   },
   tagSelect: {
     expand: '展开',
-    collapse: '收起',
+    collapse: '收起'
   },
   miniProgress: {
-    target: '目标值：',
+    target: '目标值：'
   },
   st: {
     total: '共 {{total}} 条',
     filterConfirm: '确定',
-    filterReset: '重置',
+    filterReset: '重置'
   },
   sf: {
     submit: '提交',
@@ -72,7 +72,13 @@ export default {
       contains: `应当包含一个有效项`,
       formatExclusiveMaximum: `formatExclusiveMaximum 应当是布尔值`,
       formatExclusiveMinimum: `formatExclusiveMinimum 应当是布尔值`,
-      if: `应当匹配模式 "{failingKeyword}"`,
-    },
+      if: `应当匹配模式 "{failingKeyword}"`
+    }
   },
+  onboarding: {
+    skip: `跳过`,
+    prev: `上一项`,
+    next: `下一项`,
+    done: `完成`
+  }
 } as FullLocaleData;

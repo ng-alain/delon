@@ -1,6 +1,9 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { of } from 'rxjs';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
 import { SFStringWidgetSchema } from './schema';
@@ -26,10 +29,10 @@ describe('form: widget: string', () => {
           a: {
             type: 'string',
             ui: {
-              prefix: 'P',
-            },
-          },
-        },
+              prefix: 'P'
+            }
+          }
+        }
       })
       .checkCount('nz-input-group', 1);
   });
@@ -39,9 +42,9 @@ describe('form: widget: string', () => {
       properties: {
         a: {
           type: 'string',
-          format: 'color',
-        },
-      },
+          format: 'color'
+        }
+      }
     });
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('#000000');
@@ -56,10 +59,10 @@ describe('form: widget: string', () => {
             change: jasmine.createSpy('change'),
             focus: jasmine.createSpy('focus'),
             blur: jasmine.createSpy('blur'),
-            enter: jasmine.createSpy('enter'),
-          } as SFStringWidgetSchema,
-        },
-      },
+            enter: jasmine.createSpy('enter')
+          } as SFStringWidgetSchema
+        }
+      }
     };
     page.newSchema(schema);
     const ui = schema.properties!.a.ui as SFStringWidgetSchema;
@@ -76,5 +79,72 @@ describe('form: widget: string', () => {
     const ev = new KeyboardEvent('keyup', { code: 'Enter', key: 'Enter' });
     page.typeEvent(ev);
     expect((schema.properties!.a.ui as SFStringWidgetSchema).enter).toHaveBeenCalled();
+  }));
+
+  describe('Debounce', () => {
+    it('should be working', fakeAsync(() => {
+      const schema: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            default: 'a',
+            ui: {
+              changeDebounceTime: 1,
+              changeMap: val => of(val),
+              change: jasmine.createSpy('change')
+            } as SFStringWidgetSchema
+          }
+        }
+      };
+      page.newSchema(schema);
+      const ui = schema.properties!.a.ui as SFStringWidgetSchema;
+      // change
+      page.typeChar('a');
+      page.dc(100);
+      expect(ui.change).toHaveBeenCalled();
+      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+    }));
+
+    it(`should be changeMap can't be set`, fakeAsync(() => {
+      const schema: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            default: 'a',
+            ui: {
+              changeDebounceTime: 1,
+              change: jasmine.createSpy('change')
+            } as SFStringWidgetSchema
+          }
+        }
+      };
+      page.newSchema(schema);
+      const ui = schema.properties!.a.ui as SFStringWidgetSchema;
+      // change
+      page.typeChar('a');
+      page.dc(100);
+      expect(ui.change).toHaveBeenCalled();
+      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+    }));
+  });
+
+  it('[autofocus]', fakeAsync(() => {
+    const schema: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          ui: {
+            autofocus: true,
+            focus: jasmine.createSpy('focus')
+          } as SFStringWidgetSchema
+        }
+      }
+    };
+    page.newSchema(schema);
+    const el = page.getEl('.ant-input') as HTMLInputElement;
+    spyOn(el, 'focus');
+    tick(21);
+    fixture.detectChanges();
+    expect(el.focus).toHaveBeenCalled();
   }));
 });

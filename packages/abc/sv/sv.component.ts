@@ -10,10 +10,13 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import { ResponsiveService } from '@delon/theme';
-import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { isEmpty } from '@delon/util/browser';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { SVContainerComponent } from './sv-container.component';
 
 const prefixCls = `sv`;
@@ -24,27 +27,34 @@ const prefixCls = `sv`;
   templateUrl: './sv.component.html',
   host: {
     '[style.padding-left.px]': 'paddingValue',
-    '[style.padding-right.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVComponent implements AfterViewInit, OnChanges {
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_default: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
+
   @ViewChild('conEl', { static: false })
   private conEl: ElementRef;
   private el: HTMLElement;
   private clsMap: string[] = [];
+  _noColon = false;
 
   // #region fields
 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
+  @Input() optionalHelpColor: string;
   @Input() label: string | TemplateRef<void>;
   @Input() unit: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;
   @Input() @InputBoolean(null) default: boolean;
   @Input() type: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() @InputBoolean(null) noColon: boolean;
 
   // #endregion
 
@@ -61,7 +71,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
     el: ElementRef,
     @Host() @Optional() public parent: SVContainerComponent,
     private rep: ResponsiveService,
-    private ren: Renderer2,
+    private ren: Renderer2
   ) {
     if (parent == null) {
       throw new Error(`[sv] must include 'sv-container' component`);
@@ -69,8 +79,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
     this.el = el.nativeElement;
   }
 
-  private setClass() {
-    const { el, ren, col, clsMap, type, rep } = this;
+  private setClass(): void {
+    const { el, ren, col, clsMap, type, rep, noColon, parent } = this;
+    this._noColon = noColon != null ? noColon : parent.noColon;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     clsMap.push(...rep.genCls(col != null ? col : this.parent.col));
@@ -80,19 +91,21 @@ export class SVComponent implements AfterViewInit, OnChanges {
     clsMap.forEach(cls => ren.addClass(el, cls));
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setClass();
     this.checkContent();
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.setClass();
   }
 
-  checkContent() {
+  checkContent(): void {
     const { conEl } = this;
     const def = this.default;
-    if (!(def != null ? def : this.parent.default)) return;
+    if (!(def != null ? def : this.parent.default)) {
+      return;
+    }
     const el = conEl.nativeElement as HTMLElement;
     const cls = `sv__default`;
     if (el.classList.contains(cls)) {

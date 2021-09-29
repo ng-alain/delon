@@ -11,7 +11,7 @@ HTML5 player based on [plyr](https://github.com/sampotts/plyr).
 
 ## Dependencies
 
-The plyr script file takes the form of lazy loading，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js`, `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css`.
+The plyr script file takes the form of lazy loading，you can change the default CDN path (or use the [local path](https://angular.io/guide/workspace-config#asset-config)) via [Global Configuration](/docs/global-config). By default: `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js`, `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css`.
 
 ## API
 

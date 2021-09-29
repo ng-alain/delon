@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { AlainThemeModule } from '../../theme.module';
 import { SettingsService } from './settings.service';
 
 describe('Service: Settings', () => {
@@ -21,8 +24,8 @@ describe('Service: Settings', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [],
-      providers: [SettingsService],
+      imports: [AlainThemeModule],
+      providers: [SettingsService]
     });
     srv = TestBed.inject(SettingsService);
   });
@@ -30,8 +33,8 @@ describe('Service: Settings', () => {
   describe('#layout', () => {
     it('should be reset all', () => {
       srv.setLayout({
-        a: 1,
-      } as any);
+        a: 1
+      } as NzSafeAny);
       expect(srv.layout.a).toBe(1);
     });
 

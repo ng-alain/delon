@@ -14,7 +14,7 @@ type: Widgets
   - `date-time` 默认 `yyyy-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
   - `date`、`full-date` 默认 `yyyy-MM-dd`
   - `time`、`full-time` 默认 `HH:mm:ss`
-  - 非标准：`week` 默认 `yyyy-WW`
+  - 非标准：`week` 默认 `yyyy-ww`
   - 非标准：`month` 默认 `yyyy-MM`
 - 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过[全局配置](/docs/global-config)替换）数据格式化：
   - `string` 默认 `yyyy-MM-dd HH:mm:ss`
@@ -34,6 +34,7 @@ type: Widgets
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[mode]` | 渲染模式 | `date,week,month,year` | `date` |
+| `[rangeMode]` | 范围选择器的选择模式 | `date,week,month,year` | `date` |
 | `[size]` | 大小，等同 `nzSize` | `default,large,small` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[format]` | 数据格式化 | `string` | - |
@@ -50,5 +51,7 @@ type: Widgets
 | `[renderExtraFooter]` | 在面板中添加额外的页脚 | `string` | - |
 | `[showTime]` | 增加时间选择功能，`object` 类型为 [TimePickerOptions](https://ng.ant.design/components/time-picker/en#api) | `object,boolean` | `true` |
 | `[showToday]` | 是否展示“今天”按钮 | `boolean` | `true` |
+| `[inputReadOnly]` | 为 input 标签设置只读属性（避免在移动设备上触发小键盘） | `boolean` | `false` |
+| `[inline]` | 内联模式 | `boolean` | `false` |
 | `[onOk]` | 点击确定按钮的回调 | `(data: Date | Date[]) => void` | - |
 | `[change]` | 时间发生变化的回调 | `(data: Date | Date[]) => void` | - |

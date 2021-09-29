@@ -1,5 +1,11 @@
-// 限定单元格的图像大小
+.antTableEvenBG() when (iscolor(@nz-table-even-background)) {
+  > tr:nth-child(4n + 3) {
+    background: @nz-table-even-background;
+  }
+}
+
 .@{ant-prefix}-table {
+  // 限定单元格的图像大小
   td {
     > img,
     .img {
@@ -10,17 +16,34 @@
       border-radius: @nz-table-img-radius;
     }
   }
+
+  // 表格响应式
+  &-rep {
+    &__title {
+      display: none;
+    }
+    &__hide-header-footer {
+      .@{ant-prefix}-table-title,
+      .@{ant-prefix}-table-footer {
+        display: none;
+      }
+    }
+  }
+
+  // 奇偶背景
+  &-tbody {
+    .antTableEvenBG();
+  }
 }
 
-// 表格响应式
-.@{ant-prefix}-table-rep {
-  &__title {
-    display: none;
-  }
-  &__hide-header-footer {
-    .@{ant-prefix}-table-title,
-    .@{ant-prefix}-table-footer {
-      display: none;
+[dir='rtl'] {
+  .@{ant-prefix}-table {
+    td {
+      > img,
+      .img {
+        margin-right: inherit;
+        margin-left: @nz-table-img-margin-right;
+      }
     }
   }
 }
@@ -41,6 +64,10 @@
       }
     }
     .@{ant-prefix}-table {
+      table {
+        width: 100% !important;
+        table-layout: auto !important;
+      }
       &-thead {
         display: none;
       }
@@ -50,7 +77,7 @@
       }
       &-tbody {
         > tr {
-          &:nth-child(3n) {
+          &:nth-child(4n + 3) {
             background: @nz-table-rep-even-background;
           }
           > td {

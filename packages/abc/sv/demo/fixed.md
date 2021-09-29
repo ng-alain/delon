@@ -27,7 +27,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <sv label="Reject" type="danger" col="1"> OMG <a class="ml-sm" (click)="msg.success('to')">Fixed</a> </sv>
       <sv label="Long Optional Long Optional" optional="(RMB)">Optional</sv>
       <sv label="Optional" optionalHelp="Tips">Optional Help</sv>
-      <sv label="Default"></sv>
+      <sv label="Default" optionalHelp="The background color is #f50" optionalHelpColor="#f50"></sv>
       <sv [label]="label">
         <ng-template #label>
           <a nz-tooltip="test">long</a>

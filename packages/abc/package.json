@@ -21,12 +21,13 @@
     "component"
   ],
   "dependencies": {
-    "file-saver": "^2.0.2",
-    "ngx-countdown": "^9.0.0",
-    "qrious": "^4.0.2",
+    "isutf8": "@LIB-PLACEHOLDER",
+    "file-saver": "@LIB-PLACEHOLDER",
+    "jszip": "@LIB-PLACEHOLDER",
+    "xlsx": "@LIB-PLACEHOLDER",
+    "ngx-countdown": "@LIB-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
-  },
-  "sideEffects": false
+  }
 }

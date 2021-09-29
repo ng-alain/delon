@@ -27,7 +27,30 @@
     }
 
     this.genComment = function(value, ...comments) {
-      return value + '; /* AUTOGENERATE: ' + comments.join('|SPLIT|') + '*/';
+      return '/* AUTOGENERATE: ' + comments.join('|SPLIT|').replace(/(\{0\})/g, '"' + value + '"') + '*/';
+    }
+
+    this.genCommentColor = function(color, ...comments) {
+      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substr(1) + '/fff.png&text=+)';
+      return '/* AUTOGENERATE: ' + comments.map(c => c + imgColor).join('|SPLIT|').replace(/(\{0\})/g, '"' + color + '"') + '*/';
+    }
+
+    this.genCommentTypeColor = function(type, color) {
+      var comments = [];
+      switch (type) {
+        case 'text':
+          comments = ['Set the text color to {0}', '设置文本颜色为 {0}'];
+          break;
+        case 'background':
+          comments = ['Set the background light color to {0}', '设置背景颜色为 {0}'];
+          break;
+        case 'hoverBackground':
+          comments = ['Set the hover background color to {0}', '设置悬停时背景颜色为 {0}'];
+          break;
+      }
+      if (comments.length === 0) return '';
+      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substr(1) + '/fff.png&text=+)';
+      return '/* AUTOGENERATE: ' + comments.map(c => c + imgColor).join('|SPLIT|').replace(/(\{0\})/g, '"' + color + '"') + '*/';
     }
   })()`;
 }

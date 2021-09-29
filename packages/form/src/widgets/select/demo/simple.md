@@ -83,12 +83,14 @@ export class DemoComponent {
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  updateStatus() {
+  updateStatus(): void {
     const statusProperty = this.sf.getProperty('/status')!;
     statusProperty.schema.enum = ['1', '2', '3'];
     statusProperty.widget.reset('2');

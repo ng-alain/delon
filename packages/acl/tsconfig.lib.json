@@ -4,12 +4,8 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "@delon/util/*": ["../../dist/@delon/util/*"],
       "@delon/*": ["../../dist/@delon/*"]
     }
-  },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true
   }
 }

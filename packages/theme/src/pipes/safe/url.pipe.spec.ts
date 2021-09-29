@@ -10,7 +10,7 @@ describe('Pipe: url', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
@@ -18,8 +18,8 @@ describe('Pipe: url', () => {
 
   [
     { value: '', result: `` },
-    { value: 'https://ng-alain.com', result: `https://ng-alain.com` },
-  ].forEach((item: any) => {
+    { value: 'https://ng-alain.com', result: `https://ng-alain.com` }
+  ].forEach((item: { value: string; result: string }) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
       fixture.detectChanges();
@@ -30,7 +30,7 @@ describe('Pipe: url', () => {
 });
 
 @Component({
-  template: ` <a id="result" [href]="value | url"></a> `,
+  template: ` <a id="result" [href]="value | url"></a> `
 })
 class TestComponent {
   value = '';

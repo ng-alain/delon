@@ -1,30 +1,16 @@
-@search-form-enabled: false;
-@search-form-bg: #fbfbfb;
-@search-form-radius: 4px;
-
-@search__form-enabled: true;
-
-.search-form-mixin(@enabled) when(@enabled = true) {
-  .search-form {
-    margin-bottom: @layout-gutter * 2;
-    padding: @layout-gutter;
-    background: @search-form-bg;
-    border: @border-width-base @border-style-base @border-color-split;
-    border-radius: @search-form-radius;
-  }
-}
-.search-form-mixin(@search-form-enabled);
-
 .search__form-mixin(@enabled) when(@enabled = true) {
-  .search {
-    &__form {
-      .@{ant-prefix}-form-item {
-        margin-right: 0;
-        margin-bottom: @form-item-margin-bottom;
-      }
-      .@{ant-prefix}-form-item-control {
-        flex: 1;
-      }
+  /**
+   * Search form, [Demo](https://ng-alain.surge.sh/#/pro/list/table-list)
+   *
+   * 搜索表单, [示例](https://ng-alain.gitee.io/#/pro/list/table-list)
+   */
+  .search__form {
+    .@{ant-prefix}-form-item {
+      margin-right: 0;
+      margin-bottom: @form-item-margin-bottom;
+    }
+    .@{ant-prefix}-form-item-control {
+      flex: 1;
     }
   }
 }

@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsNgAlainAdd",
+  "title": "NgAlain Add Options Schema",
+  "type": "object",
+  "properties": {
+    "defaultLanguage": {
+      "type": "string",
+      "description": "Specify default language [https://ng-alain.com/docs/i18n].",
+      "default": "zh",
+      "x-prompt": {
+        "message": "Which default language would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "zh",
+            "label": "简体中文 (zh)"
+          },
+          {
+            "value": "en",
+            "label": "English (en)"
+          },
+          {
+            "value": "zh-Hant",
+            "label": "繁体中文 (zh-Hant)"
+          },
+          {
+            "value": "tr-TR",
+            "label": "Turkish (tr-TR)"
+          },
+          {
+            "value": "pl-PL",
+            "label": "Polish (pl-PL)"
+          },
+          {
+            "value": "el-GR",
+            "label": "Greek (el-GR)"
+          },
+          {
+            "value": "ko-KR",
+            "label": "Korean (ko-KR)"
+          },
+          {
+            "value": "hr-HR",
+            "label": "Croatian (hr-HR)"
+          },
+          {
+            "value": "sl-SI",
+            "label": "Slovenian (sl-SI)"
+          }
+        ]
+      }
+    },
+    "codeStyle": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate code style plugin",
+      "x-prompt": "Would you like to add code style plugin? (default: Y)"
+    },
+    "form": {
+      "type": "boolean",
+      "description": "Generate dynamic form (sf component) plugin",
+      "default": true,
+      "x-prompt": "Would you like to add dynamic form (sf component) plugin? (default: Y)"
+    },
+    "mock": {
+      "type": "boolean",
+      "description": "Generate mock plugin",
+      "default": true,
+      "x-prompt": "Would you like to add mock plugin? (default: Y)"
+    },
+    "i18n": {
+      "type": "boolean",
+      "description": "Generate i18n plugin",
+      "default": false,
+      "x-prompt": "Would you like to add i18n plugin? (default: N)"
+    },
+    "npm": {
+      "type": "boolean",
+      "description": "Generates .npmrc proxy to taobao.",
+      "default": false
+    },
+    "yarn": {
+      "type": "boolean",
+      "description": "Generates .yarnrc proxy to taobao.",
+      "default": false
+    }
+  }
+}

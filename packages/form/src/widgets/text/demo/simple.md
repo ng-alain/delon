@@ -20,9 +20,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>
-  `,
+  template: ` <sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
   loading = false;
@@ -41,8 +39,10 @@ export class DemoComponent {
     },
     required: ['name'],
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;

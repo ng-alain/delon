@@ -1,31 +1,23 @@
-import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
+  SimpleChanges,
   TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { G2Time } from '@delon/chart/core';
-import { AlainConfigService, deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
-import format from 'date-fns/format';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import type { Chart, Event, Types } from '@antv/g2';
+import { format } from 'date-fns';
+
+import { G2BaseComponent, G2Time } from '@delon/chart/core';
+import { toDate } from '@delon/util/date-time';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
-  /**
-   * 时间值
-   * @deprecated Use `time` instead
-   */
-  x?: G2Time;
   /**
    * 时间值
    */
@@ -40,7 +32,7 @@ export interface G2TimelineData {
   y4?: number;
   /** 指标5数据 */
   y5?: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2TimelineMap {
@@ -66,22 +58,25 @@ export interface G2TimelineClickItem {
 @Component({
   selector: 'g2-timeline',
   exportAs: 'g2Timeline',
-  templateUrl: './timeline.component.html',
+  template: `
+    <ng-container *nzStringTemplateOutlet="title">
+      <h4>{{ title }}</h4>
+    </ng-container>
+    <nz-skeleton *ngIf="!loaded"></nz-skeleton>
+    <div #container></div>
+  `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('container', { static: false }) private node: ElementRef;
-  private _chart: Chart;
-
-  get chart(): Chart {
-    return this._chart;
-  }
+export class G2TimelineComponent extends G2BaseComponent {
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_maxAxis: NumberInput;
+  static ngAcceptInputType_borderWidth: NumberInput;
+  static ngAcceptInputType_slider: BooleanInput;
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() @InputNumber() maxAxis = 2;
   @Input() data: G2TimelineData[] = [];
@@ -94,30 +89,23 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() padding: number[] = [40, 8, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
-  @Input() theme: string | Types.LooseObject;
-  @Output() clickItem = new EventEmitter<G2TimelineClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2TimelineClickItem>();
 
   // #endregion
 
-  constructor(private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
+  onlyChangeData = (changes: SimpleChanges): boolean => {
+    const tm = changes.titleMap;
+    return !(tm && !tm.firstChange && tm.currentValue !== tm.previousValue);
+  };
 
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  private install() {
+  install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
@@ -132,7 +120,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
     chart.tooltip({
       showCrosshairs: true,
-      shared: true,
+      shared: true
     });
 
     const sliderPadding = { ...[], ...padding };
@@ -143,10 +131,10 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         start: 0,
         end: 1,
         trendCfg: {
-          isArea: false,
+          isArea: false
         },
         minLimit: 2,
-        formatter: (val: Date) => format(val, maskSlider),
+        formatter: (val: Date) => format(val, maskSlider)
       });
     }
 
@@ -155,13 +143,24 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
-    this.attachChart();
+    chart.on(`legend-item:click`, (ev: Event) => {
+      const item = ev?.target?.get('delegateObject').item;
+      const id = item?.id;
+      const line = chart.geometries.find(w => w.getAttribute('position').getFields()[1] === id);
+      if (line) {
+        line.changeVisible(!item.unchecked);
+      }
+    });
+
+    this.changeData();
+
+    chart.render();
   }
 
-  private attachChart() {
+  changeData(): void {
     const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
     let data = [...this.data];
-    if (!_chart || !data || data.length <= 0) return;
+    if (!_chart || data.length <= 0) return;
 
     const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
 
@@ -170,8 +169,13 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       custom: true,
       items: arrAxis.map(id => {
         const key = `y${id}`;
-        return { name: titleMap[key], value: titleMap[key], marker: { style: { fill: colorMap[key] } } } as Types.LegendItem;
-      }),
+        return {
+          id: key,
+          name: titleMap[key],
+          value: key,
+          marker: { style: { fill: colorMap[key] } }
+        } as Types.LegendItem;
+      })
     });
 
     // border
@@ -181,13 +185,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     _chart.height = height;
     _chart.padding = padding;
 
-    // TODO: compatible
-    if (data.find(w => !!w.x) != null) {
-      deprecation10('g2-timeline', 'x', 'time');
-      data.forEach(item => {
-        item.time = new Date(item.x!);
-      });
-    }
     // 转换成日期类型
     data = data
       .map(item => {
@@ -204,34 +201,23 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       scaleOptions[key] = {
         alias: titleMap[key],
         max,
-        min: 0,
+        min: 0
       };
     });
     _chart.scale({
       time: {
         type: 'time',
         mask,
-        range: [0, 1],
+        range: [0, 1]
       },
-      ...scaleOptions,
+      ...scaleOptions
     });
 
     const initialRange = {
       start: data[0]._time,
-      end: data[data.length - 1]._time,
+      end: data[data.length - 1]._time
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
-    console.log(filterData);
     _chart.changeData(filterData);
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

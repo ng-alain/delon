@@ -1,12 +1,13 @@
 import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[acl]',
-  exportAs: 'acl',
+  exportAs: 'acl'
 })
 export class ACLDirective implements OnDestroy {
   private _value: ACLCanType;
@@ -22,7 +23,7 @@ export class ACLDirective implements OnDestroy {
     this.set(this.srv.parseAbility(value));
   }
 
-  private set(value: ACLCanType) {
+  private set(value: ACLCanType): void {
     this._value = value;
     const CLS = 'acl__hide';
     const el = this.el.nativeElement;

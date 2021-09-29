@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ng-alain.com/schema",
+  "title": "NG-ALAIN Configuration",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "theme": {
+      "$ref": "#/definitions/theme"
+    },
+    "colorLess": {
+      "$ref": "#/definitions/colorLess"
+    }
+  },
+  "definitions": {
+    "theme": {
+      "type": "object",
+      "description": "Custom theme,  more details please refer to https://ng-alain.com/theme/customize-theme#Switch-Theming",
+      "properties": {
+        "list": {
+          "description": "Theme list",
+          "type": "array",
+          "minItems": 1,
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/themeItem",
+                "required": ["theme"]
+              },
+              {
+                "$ref": "#/definitions/themeItem",
+                "required": ["key", "modifyVars"]
+              }
+            ]
+          }
+        },
+        "projectStylePath": {
+          "description": "Project entry style file path, default: `src/styles.less`",
+          "type": "string",
+          "default": "src/styles.less"
+        },
+        "additionalLibraries": {
+          "description": "Additional library style entries",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalThemeVars": {
+          "description": "Additional theme variables entries",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "min": {
+          "description": "Whether to compress, default: `true`",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["list"],
+      "additionalProperties": false
+    },
+    "themeItem": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "Unique identifier",
+          "type": "string"
+        },
+        "filePath": {
+          "description": "Save path after generation, default: `src/assets/style.{key}.css`",
+          "type": "string"
+        },
+        "theme": {
+          "description": "Theme type, can be set `dark` and `compact`, must choose between `theme` and `modifyVars`",
+          "type": "string",
+          "enum": ["dark", "compact"]
+        },
+        "projectThemeVar": {
+          "description": "Project theme less variables, except for `ng-zorro-antd`, `@delon/*`, and the specified `projectStylePath` file",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modifyVars": {
+          "description": "Custom Less variables, must choose between `theme` and `modifyVars`",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^@[-_a-zA-Z]+": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "colorLess": {
+      "type": "object",
+      "properties": {
+        "variables": {
+          "description": "Specify the name of the theme variables to be changed, default is `[ '@primary-color' ]`, Can be set all antd & ng-alain custom theme variables",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["@primary-color"]
+        },
+        "ngZorroAntd": {
+          "description": "Specify the ng-zorro-antd directory, defualt: `./node_modules/ng-zorro-antd/`",
+          "type": "string",
+          "default": "./node_modules/ng-zorro-antd/"
+        },
+        "styleFilePath": {
+          "description": "Project style entry, default: `./src/styles.less`",
+          "type": "string",
+          "default": "./src/styles.less"
+        },
+        "themeFilePath": {
+          "description": "Theme variable entry (muse includes `ng-zorro-antd` and user custom), default: `./src/styles/theme.less`",
+          "type": "string",
+          "default": "./src/styles/theme.less"
+        },
+        "outputFilePath": {
+          "description": "Specify output file path, default: `./src/assets/color.less`",
+          "type": "string",
+          "default": "./src/assets/color.less"
+        }
+      }
+    }
+  }
+}

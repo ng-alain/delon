@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { ControlUIWidget } from '../../widget';
 import { SFNumberWidgetSchema } from './schema';
 
@@ -6,14 +7,14 @@ import { SFNumberWidgetSchema } from './schema';
   selector: 'sf-number',
   templateUrl: './number.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
   min: number;
   max: number;
   step: number;
   formatter: (value: number) => string | number = value => value;
-  parser: (value: string) => string | number = value => value;
+  parser: (value: string) => string = value => value;
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
@@ -43,7 +44,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     if (ui.parser) this.parser = ui.parser;
   }
 
-  _setValue(val: number) {
+  _setValue(val: number): void {
     this.setValue(this.schema.type === 'integer' ? Math.floor(val) : val);
   }
 }

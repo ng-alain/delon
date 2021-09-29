@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
 
@@ -25,7 +27,7 @@ export class TitleService implements OnDestroy {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
     this.i18n$ = this.i18nSrv.change.pipe(filter(() => !!this.i18n$)).subscribe(() => this.setTitle());
   }
@@ -54,7 +56,8 @@ export class TitleService implements OnDestroy {
   default = `Not Page Name`;
 
   private getByElement(): string {
-    const el = (this.doc.querySelector('.alain-default__content-title h1') || this.doc.querySelector('.page-header__title')) as HTMLElement;
+    const el = (this.doc.querySelector('.alain-default__content-title h1') ||
+      this.doc.querySelector('.page-header__title')) as HTMLElement;
     if (el) {
       let text = '';
       el.childNodes.forEach(val => {
@@ -85,7 +88,7 @@ export class TitleService implements OnDestroy {
     return title || item.text!;
   }
 
-  private _setTitle(title?: string | string[]) {
+  private _setTitle(title?: string | string[]): void {
     if (!title) {
       title = this.getByRoute() || this.getByMenu() || this.getByElement() || this.default;
     }
@@ -110,14 +113,14 @@ export class TitleService implements OnDestroy {
   /**
    * Set the document title, will be delay `25ms`, pls refer to [#1261](https://github.com/ng-alain/ng-alain/issues/1261)
    */
-  setTitle(title?: string | string[]) {
+  setTitle(title?: string | string[]): void {
     setTimeout(() => this._setTitle(title), this.DELAY_TIME);
   }
 
   /**
    * Set i18n key of the document title
    */
-  setTitleByI18n(key: string, params?: {}) {
+  setTitleByI18n(key: string, params?: unknown): void {
     this.setTitle(this.i18nSrv.fanyi(key, params));
   }
 

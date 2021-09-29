@@ -19,32 +19,31 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <nz-table #basicTable [nzData]="dataSet"
-    nzTitle="This is title" class="ant-table-rep__hide-header-footer">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>
-          <span class="ant-table-rep__title">Name</span>
-          {{data.name}}
-        </td>
-        <td>
-          <span class="ant-table-rep__title">Age</span>
-          {{data.age}}
-        </td>
-        <td>
-          <span class="ant-table-rep__title">Address</span>
-          {{data.address}}
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+    <nz-table #basicTable [nzData]="dataSet" nzTitle="This is title" class="ant-table-rep__hide-header-footer">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>
+            <span class="ant-table-rep__title">Name</span>
+            {{ data.name }}
+          </td>
+          <td>
+            <span class="ant-table-rep__title">Age</span>
+            {{ data.age }}
+          </td>
+          <td>
+            <span class="ant-table-rep__title">Address</span>
+            {{ data.address }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
   `,
 })
 export class DemoComponent {

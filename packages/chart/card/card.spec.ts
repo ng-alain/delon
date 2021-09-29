@@ -1,6 +1,8 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { G2CardModule } from './card.module';
 
 describe('chart: card', () => {
@@ -11,7 +13,7 @@ describe('chart: card', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2CardModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -32,8 +34,15 @@ describe('chart: card', () => {
 
 @Component({
   template: `
-    <g2-card [title]="'销售额'" [bordered]="true" [total]="126560" footer="日访问量 12,423" [contentHeight]="contentHeight"> </g2-card>
-  `,
+    <g2-card
+      [title]="'销售额'"
+      [bordered]="true"
+      [total]="126560"
+      footer="日访问量 12,423"
+      [contentHeight]="contentHeight"
+    >
+    </g2-card>
+  `
 })
 class TestComponent {
   contentHeight: number | string = 46;

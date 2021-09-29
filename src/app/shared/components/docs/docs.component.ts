@@ -1,19 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { I18NService, MetaService } from '@core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { deepCopy } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy } from '@delon/util/browser';
+import { deepCopy } from '@delon/util/other';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { I18NService, MetaService } from '@core';
 
 declare var hljs: any;
 
 @Component({
   selector: 'app-docs',
-  templateUrl: './docs.component.html',
+  templateUrl: './docs.component.html'
 })
 export class DocsComponent implements OnInit, OnDestroy {
   private i18NChange$: Subscription;
@@ -23,7 +28,6 @@ export class DocsComponent implements OnInit, OnDestroy {
   isBrowser = true;
 
   @Input() codes: any[];
-
   @Input() item: any;
 
   constructor(
@@ -32,7 +36,8 @@ export class DocsComponent implements OnInit, OnDestroy {
     private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
-    platform: Platform,
+    private msg: NzMessageService,
+    platform: Platform
   ) {
     this.isBrowser = platform.isBrowser;
     this.i18NChange$ = this.i18n.change.pipe(filter(() => !!this.item)).subscribe(() => {
@@ -40,12 +45,12 @@ export class DocsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private genData() {
+  private genData(): void {
     const item = deepCopy(this.item);
     const ret: any = {
       demo: item.demo,
       urls: item.urls,
-      con: item.content[this.i18n.lang] || item.content[this.i18n.defaultLang],
+      con: item.content[this.i18n.currentLang] || item.content[this.i18n.defaultLang]
     };
 
     if (ret.demo && this.codes && this.codes.length) {
@@ -55,7 +60,7 @@ export class DocsComponent implements OnInit, OnDestroy {
           return {
             h: 3,
             id: a.id,
-            title: this.i18n.get(a.meta.title),
+            title: this.i18n.get(a.meta.title)
           };
         })
         .concat({ id: 'API', title: 'API', h: 2 });
@@ -87,15 +92,14 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private genDemoTitle() {
+  private genDemoTitle(): void {
     this.demoStr = this.i18n.fanyi('app.component.examples');
-    this.demoContent = this.sanitizer.bypassSecurityTrustHtml(`
-            ${this.demoStr}
-            <a onclick="window.location.hash='${this.demoStr}'" class="anchor">#</a>
-        `);
+    this.demoContent = this.sanitizer.bypassSecurityTrustHtml(
+      `<a class="lake-link"><i data-anchor="${this.demoStr}"></i></a>${this.demoStr}`
+    );
   }
 
-  private init() {
+  private init(): void {
     this.genData();
     this.genDemoTitle();
     if (!this.isBrowser) {
@@ -103,11 +107,16 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => {
       const elements = this.doc.querySelectorAll('[class*="language-"], [class*="lang-"]');
-      // tslint:disable-next-line:no-conditional-assignment
       for (let i = 0, element; (element = elements[i++]); ) {
         hljs.highlightBlock(element);
       }
     }, 250);
+  }
+
+  copyModule(): void {
+    copy(this.data.con.module).then(() => {
+      this.msg.success(this.i18n.fanyi('app.demo.copied'));
+    });
   }
 
   ngOnInit(): void {

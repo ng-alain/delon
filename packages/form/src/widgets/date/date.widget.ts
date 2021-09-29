@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { toDate } from '@delon/util';
-import format from 'date-fns/format';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { format } from 'date-fns';
+
+import { toDate } from '@delon/util/date-time';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
@@ -12,7 +15,7 @@ import { SFDateWidgetSchema } from './schema';
   selector: 'sf-date',
   templateUrl: './date.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
   private startFormat: string;
@@ -21,7 +24,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   mode: string;
   displayValue: Date | Date[] | null = null;
   displayFormat: string;
-  i: any;
+  i!: { allowClear: boolean; showToday: boolean };
 
   ngOnInit(): void {
     const { mode, end, displayFormat, allowClear, showToday } = this.ui;
@@ -52,20 +55,23 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     this.i = {
       allowClear: toBool(allowClear, true),
       // nz-date-picker
-      showToday: toBool(showToday, true),
+      showToday: toBool(showToday, true)
     };
   }
 
-  reset(value: SFValue) {
-    value = toDate(value, { formatString: this.startFormat, defaultValue: null });
+  reset(value: SFValue): void {
+    const toDateOptions = { formatString: this.startFormat, defaultValue: null };
+    if (Array.isArray(value)) {
+      value = value.map(v => toDate(v, toDateOptions));
+    } else {
+      value = toDate(value, toDateOptions);
+    }
     if (this.flatRange) {
-      this.displayValue =
-        value == null
-          ? []
-          : [
-              value,
-              toDate(this.endProperty.formData as NzSafeAny, { formatString: this.endFormat || this.startFormat, defaultValue: null }),
-            ];
+      const endValue = toDate(this.endProperty.formData as NzSafeAny, {
+        formatString: this.endFormat || this.startFormat,
+        defaultValue: null
+      });
+      this.displayValue = value == null || endValue == null ? [] : [value, endValue];
     } else {
       this.displayValue = value;
     }
@@ -76,7 +82,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
   }
 
-  _change(value: Date | Date[] | null, emitModelChange = true) {
+  _change(value: Date | Date[] | null, emitModelChange: boolean = true): void {
     if (emitModelChange && this.ui.change) {
       this.ui.change(value);
     }
@@ -98,11 +104,11 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
   }
 
-  _openChange(status: boolean) {
+  _openChange(status: boolean): void {
     if (this.ui.onOpenChange) this.ui.onOpenChange(status);
   }
 
-  _ok(value: any) {
+  _ok(value: NzSafeAny): void {
     if (this.ui.onOk) this.ui.onOk(value);
   }
 
@@ -110,7 +116,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     return (this.formProperty.parent!.properties as { [key: string]: FormProperty })[this.ui.end!];
   }
 
-  private setEnd(value: string | null) {
+  private setEnd(value: string | null): void {
     if (!this.flatRange) return;
 
     this.endProperty.setValue(value, true);

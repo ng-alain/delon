@@ -1,0 +1,14 @@
+// Configuration for IDEs only.
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "..",
+    "baseUrl": ".",
+    "paths": {
+      "@delon/theme/*": ["./*"],
+      "@delon/*": ["../*"]
+    }
+  },
+  "files": ["public_api.ts", "../typings.d.ts"],
+  "include": ["./**/*.ts"]
+}

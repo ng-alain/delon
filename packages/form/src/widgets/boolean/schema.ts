@@ -1,18 +1,22 @@
+import { TemplateRef } from '@angular/core';
+
+import { NzSizeDSType } from 'ng-zorro-antd/core/types';
+
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFBooleanWidgetSchema extends SFUISchemaItem {
   /**
    * Size of the `nz-switch`
    */
-  size?: 'default' | 'small';
+  size?: NzSizeDSType;
 
   /**
    * Content to be shown when the state is checked
    */
-  checkedChildren?: string;
+  checkedChildren?: string | TemplateRef<void>;
 
   /**
    * Content to be shown when the state is unchecked
    */
-  unCheckedChildren?: string;
+  unCheckedChildren?: string | TemplateRef<void>;
 }

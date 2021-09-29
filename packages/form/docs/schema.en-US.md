@@ -102,7 +102,7 @@ The implementation mechanism of `sf` causes that it couldn't handle error captur
 |-----------|-------------|------|---------------|
 | `[maxLength]` | Maximum length of string | `number` | - |
 | `[minLength]` | Minimum length of string | `number` | - |
-| `[pattern]` | Regular expression, must set if `format: 'regex'` has been set | `string` | - |
+| `[pattern]` | Regular expression | `string` | - |
 
 ### Array Type
 
@@ -157,7 +157,61 @@ schema: SFSchema = {
 
 For above configuraion, eventual behavior is showing `mobile` and `code` in UI when login method is `mobile`, otherwise, showing `name` and `pwd`.
 
-Actually, condition type is eventually parsed to `ui.visibleIf`, more information maybe added into condition type in the future.
+Actually, condition type is eventually parsed to `ui.visibleIf`, Convert it to the following:
+
+```ts
+{
+  properties: {
+    login_type: {
+      type: "string",
+      title: "登录方式",
+      enum: [
+        { label: "手机", value: "mobile" },
+        { label: "账密", value: "account" }
+      ],
+      default: "mobile",
+      ui: {
+        widget: "radio",
+        styleType: "button"
+      }
+    },
+    mobile: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    code: {
+      type: "number",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    name: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    },
+    pwd: {
+      type: "string",
+      ui: {
+        type: "password",
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    }
+  },
+  required: ["login_type"]
+};
+```
 
 ### Logic Type
 
@@ -211,7 +265,7 @@ Equals to `<sf [ui]="ui">`, a group of UI structure corresponds to JSON Schema s
 | `[order]` | Order of property | `string[]` | - |
 | `[asyncData]` | Asynchronized static data source | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
 | `[hidden]` | If hide | `boolean` | `false` |
-| `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
+| `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any, property: FormProperty) => boolean) }` | - |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
 
 **visibleIf**
@@ -220,7 +274,7 @@ Is visible with conditions, for example:
 
 - `visibleIf: { shown: [ true ] }`: show current property when `shown: true`
 - `visibleIf: { shown: [ '$ANY$' ] }`: show current property when `shown` is any value
-- `visibleIf: { shown: (value: any) => value > 0 }`: complex expression
+- `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`: complex expression
 
 ### Validation Type
 

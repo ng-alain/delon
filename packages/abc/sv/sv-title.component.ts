@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Host, OnInit, Optional, Renderer2, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Host,
+  OnInit,
+  Optional,
+  Renderer2,
+  ViewEncapsulation
+} from '@angular/core';
+
 import { SVContainerComponent } from './sv-container.component';
 
 @Component({
@@ -6,11 +16,11 @@ import { SVContainerComponent } from './sv-container.component';
   exportAs: 'svTitle',
   template: '<ng-content></ng-content>',
   host: {
-    '[class.sv__title]': 'true',
+    '[class.sv__title]': 'true'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;
@@ -21,14 +31,14 @@ export class SVTitleComponent implements OnInit {
     this.el = el.nativeElement;
   }
 
-  private setClass() {
+  private setClass(): void {
     const { gutter } = this.parent;
     const { el } = this;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setClass();
   }
 }

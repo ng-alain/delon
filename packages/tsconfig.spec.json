@@ -4,25 +4,14 @@
     "baseUrl": "./",
     "rootDir": "./",
     "target": "es5",
-    "types": [
-      "jasmine",
-      "node"
-    ],
+    "outDir": "../out-tsc/spec",
+    "types": ["jasmine", "node"],
     "paths": {
       "@delon/*": ["./*"]
     },
     "esModuleInterop": true,
     "noImplicitThis": false
   },
-  "files": [
-    "test.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ],
-  "exclude": [
-    "**/schematics/**/*"
-  ]
+  "files": ["test.ts", "polyfills.ts"],
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

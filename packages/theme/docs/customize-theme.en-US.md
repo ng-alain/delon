@@ -25,21 +25,16 @@ We have some official themes, try them out and give us some feedback!
 
 ### Method 1
 
-Import `theme-dark.less` or `theme-compact.less` in `src/styles.less` file.
+In the style file `src/styles/theme.less`, change `default` to `dark` or `compact` to override theme variables.
 
 ```less
-@import '~@delon/theme/system/index';
-@import '~@delon/abc/index';
-@import '~@delon/chart/index';
-@import '~@delon/theme/layout/default/index';
-@import '~@delon/theme/layout/fullscreen/index';
+// - `default` Default Theme
+// - `dark` 🌑 Dark Theme (supported in 9+)
+// - `compact` 📦 Compact Theme (supported in 9+)
+@import '~@delon/theme/theme-default.less';
 
-@import './styles/index';
-@import './styles/theme';
-
-// - `dark` Import the official dark less style file
-// - `compact`  Import the official compact less style file
-// @import '~@delon/theme/theme-dark.less';
+// ==========The following is the custom theme variable area==========
+// @primary-color: #f50;
 ```
 
 ### Method 2
@@ -75,51 +70,48 @@ Note: Make sure theme variables exist in global styles, not in component scope s
 1. Install Dependencies
 
 ```bash
-# yarn
-yarn add less -D less-plugin-clean-css -D less-plugin-npm-import -D
-# npm
-# npm i less -D less-plugin-clean-css -D less-plugin-npm-import -D
+# via yarn
+yarn add ng-alain-plugin-theme -D
+# via npm
+# npm i --save-dev less ng-alain-plugin-theme
 ```
 
-2. Script
+> [ng-alain-plugin-theme](https://github.com/ng-alain/plugin-theme) is to generate `color.less` and theme CSS files for NG-ALAIN.
 
-Take the dark theme, for example, use the less-compiler to compile the application's style entry file, and replace the style variables in the ` modifyVars`,  and output to target path.
+Add `theme` node in `ng-alain.json`:
 
-> A complete code, please refer to [theme.js](https://github.com/ng-alain/ng-alain/blob/master/scripts/theme.js)。
-
-```js
-const less = require('less');
-const LessPluginCleanCSS = require('less-plugin-clean-css');
-const LessPluginNpmImport = require('less-plugin-npm-import');
-const fs = require('fs');
-const darkThemeVars = require('@delon/theme/theme-dark');
-
-const appStyles = 'src/styles.less'; // style entry path for the application
-const themeContent = `@import '${appStyles}';`;
-
-less.render(themeContent, {
-  javascriptEnabled: true,
-  plugins: [new LessPluginNpmImport({ prefix: '~' }), new LessPluginCleanCSS({ advanced: true })],
-  modifyVars: {
-    ...darkThemeVars
+```json
+{
+  "$schema": "./node_modules/ng-alain/schema.json",
+  "theme": {
+    "list": [
+      {
+        "theme": "dark"
+      },
+      {
+        "key": "dust",
+        "modifyVars": {
+          "@primary-color": "#F5222D"
+        }
+      }
+    ]
   }
-}).then(data => {
-  fs.writeFileSync(
-    // output path for the theme style
-    'src/assets/style.dark.css',
-    data.css
-  )
-}).catch(e => {
-  // log the render error
-  console.error(e);
-});
+}
 ```
 
-3. Switch Theme at Runtime
+Finally, run the following command:
+
+```bash
+npx ng-alain-plugin-theme -t=themeCss
+```
+
+Two style files will be generated in `src/assets/style.dark.css` and `src/assets/style.dust.css`.
+
+2. Switch Theme at Runtime
 
 Dynamically create a `link` tag, dynamically load style files into the application, and remove them otherwise.
 
-> A complete code, please refer to [theme-btn](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default/theme-btn)。
+> You can also use the [theme-btn](https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/) component directly.
 
 ```ts
 changeTheme(theme: 'default' | 'dark'): void {

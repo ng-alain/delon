@@ -10,10 +10,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <notice-icon count="5"></notice-icon>
-  `
+  template: ` <notice-icon count="5"></notice-icon> `,
 })
-export class DemoComponent {
-}
+export class DemoComponent {}
 ```

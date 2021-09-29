@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { InputNumber } from '@delon/util';
+
+import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'number-info',
@@ -8,21 +9,23 @@ import { InputNumber } from '@delon/util';
   host: {
     '[class.number-info]': `true`,
     '[class.number-info__light]': `theme === 'light'`,
-    '[class.number-info__default]': `theme === 'default'`,
+    '[class.number-info__default]': `theme === 'default'`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NumberInfoComponent {
+  static ngAcceptInputType_gap: NumberInput;
+
   /** 标题 */
   @Input() title: string | TemplateRef<void>;
   /** 子标题 */
   @Input() subTitle: string | TemplateRef<void>;
   /** 总量 */
-  @Input() total: string | TemplateRef<void>;
+  @Input() total: string | number | TemplateRef<void>;
   /** 总量后缀 */
-  @Input() subTotal: string | TemplateRef<void>;
+  @Input() subTotal: string | number | TemplateRef<void>;
   /** 子总量 */
   @Input() suffix: string;
   /** 增加状态 */

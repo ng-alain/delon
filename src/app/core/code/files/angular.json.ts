@@ -16,9 +16,9 @@ export default {
             index: 'src/index.html',
             main: 'src/main.ts',
             polyfills: 'src/polyfills.ts',
-            tsConfig: 'src/tsconfig.app.json',
+            tsConfig: 'tsconfig.json',
             assets: ['src/assets'],
-            styles: ['src/styles.css'],
+            styles: ['src/styles.css']
           },
           configurations: {
             production: {
@@ -30,18 +30,18 @@ export default {
               aot: true,
               extractLicenses: true,
               vendorChunk: false,
-              buildOptimizer: true,
-            },
-          },
+              buildOptimizer: true
+            }
+          }
         },
         serve: {
           builder: '@angular-devkit/build-angular:dev-server',
           options: {
-            browserTarget: 'demo:build',
-          },
-        },
-      },
-    },
+            browserTarget: 'demo:build'
+          }
+        }
+      }
+    }
   },
-  defaultProject: 'demo',
+  defaultProject: 'demo'
 };

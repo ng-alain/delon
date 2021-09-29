@@ -6,29 +6,29 @@ export default {
     403: `죄송합니다.이 페이지에 액세스 할 수 없습니다.`,
     404: `죄송합니다. 해당 페이지가 없습니다.`,
     500: `죄송합니다, 서버 오류가 있습니다.`,
-    backToHome: '홈으로 돌아갑니다.',
+    backToHome: '홈으로 돌아갑니다.'
   },
   noticeIcon: {
     emptyText: '데이터 없음',
-    clearText: '지우기',
+    clearText: '지우기'
   },
   reuseTab: {
     close: '탭 닫기',
     closeOther: '다른 탭 닫기',
     closeRight: '오른쪽 탭 닫기',
-    refresh: '새롭게 하다',
+    refresh: '새롭게 하다'
   },
   tagSelect: {
     expand: '펼치기',
-    collapse: '접기',
+    collapse: '접기'
   },
   miniProgress: {
-    target: '대상: ',
+    target: '대상: '
   },
   st: {
     total: '전체 {{total}}건',
     filterConfirm: '확인',
-    filterReset: '초기화',
+    filterReset: '초기화'
   },
   sf: {
     submit: '제출',
@@ -72,7 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
+  onboarding: {
+    skip: `건너 뛰기`,
+    prev: `이전`,
+    next: `다음`,
+    done: `끝난`
+  }
 } as FullLocaleData;

@@ -12,11 +12,12 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'g2-water-wave',
@@ -25,9 +26,14 @@ import { debounceTime } from 'rxjs/operators';
   host: { '[class.g2-water-wave]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
+  static ngAcceptInputType_animate: BooleanInput;
+  static ngAcceptInputType_delay: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_percent: NumberInput;
+
   private resize$: Subscription | null = null;
   @ViewChild('container', { static: true }) private node: ElementRef;
   private timer: number;
@@ -48,10 +54,10 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private renderer: Renderer2,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    private platform: Platform,
+    private platform: Platform
   ) {}
 
-  private renderChart(isUpdate: boolean) {
+  private renderChart(isUpdate: boolean): void {
     if (!this.resize$) return;
 
     this.updateRadio();
@@ -59,6 +65,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     const { percent, color, node, animate } = this;
 
     const data = Math.min(Math.max(percent / 100, 0), 100);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     cancelAnimationFrame(this.timer);
 
@@ -87,7 +94,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     const circleOffset = -(Math.PI / 2);
     let circleLock = true;
 
-    // tslint:disable-next-line:binary-expression-operand-order
     for (let i = circleOffset; i < circleOffset + 2 * Math.PI; i += 1 / (8 * Math.PI)) {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
@@ -96,7 +102,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     ctx.strokeStyle = color;
     ctx.moveTo(cStartPoint[0], cStartPoint[1]);
 
-    function drawSin() {
+    function drawSin(): void {
       ctx.beginPath();
       ctx.save();
 
@@ -105,7 +111,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         const x = sp + (xOffset + i) / unit;
         const y = Math.sin(x) * currRange;
         const dx = i;
-        // tslint:disable-next-line:binary-expression-operand-order
         const dy = 2 * cR * (1 - currData) + (radius - cR) - unit * y;
 
         ctx.lineTo(dx, dy);
@@ -126,7 +131,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       ctx.restore();
     }
 
-    function render() {
+    function render(): void {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       if (circleLock && !isUpdate) {
         if (arcStack!.length) {
@@ -150,12 +155,10 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
           ctx.globalCompositeOperation = 'destination-over';
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
-          // tslint:disable-next-line:binary-expression-operand-order
           ctx.arc(radius, radius, bR, 0, 2 * Math.PI, true);
 
           ctx.beginPath();
           ctx.save();
-          // tslint:disable-next-line:binary-expression-operand-order
           ctx.arc(radius, radius, radius - 3 * lineWidth, 0, 2 * Math.PI, true);
 
           ctx.restore();
@@ -200,13 +203,17 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     // drawSin();
   }
 
-  updateRadio() {
+  private updateRadio(): void {
     const { offsetWidth } = this.el.nativeElement.parentNode;
     const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
     this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);
   }
 
-  private installResizeEvent() {
+  render(): void {
+    this.renderChart(false);
+  }
+
+  private installResizeEvent(): void {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.updateRadio());
@@ -217,7 +224,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       return;
     }
     this.installResizeEvent();
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(false), this.delay));
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.render(), this.delay));
   }
 
   ngOnChanges(): void {

@@ -3,9 +3,11 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTInterceptor } from './jwt.interceptor';
@@ -14,8 +16,8 @@ import { JWTTokenModel } from './jwt.model';
 function genModel(
   token:
     | string
-    | null = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`,
-) {
+    | null = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`
+): JWTTokenModel {
   const model = new JWTTokenModel();
   // from: https://jwt.io/
   model.token = token;
@@ -26,7 +28,7 @@ describe('auth: jwt.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
 
-  function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel) {
+  function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel): void {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
       imports: [
@@ -34,15 +36,15 @@ describe('auth: jwt.interceptor', () => {
         RouterTestingModule.withRoutes([
           {
             path: 'login',
-            component: MockComponent,
-          },
+            component: MockComponent
+          }
         ]),
-        DelonAuthModule,
+        DelonAuthModule
       ],
       providers: [
         { provide: ALAIN_CONFIG, useValue: { auth: options } },
-        { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
-      ],
+        { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
+      ]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
     http = TestBed.inject<HttpClient>(HttpClient);
@@ -69,7 +71,7 @@ describe('auth: jwt.interceptor', () => {
           expect(err.status).toBe(401);
           done();
           return of(err);
-        }),
+        })
       )
       .subscribe();
   });

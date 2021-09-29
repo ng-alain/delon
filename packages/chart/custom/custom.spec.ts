@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
 
@@ -11,7 +13,7 @@ describe('chart: custom', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2CustomModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, context } = createTestContext(TestComponent));
 
@@ -41,11 +43,11 @@ describe('chart: custom', () => {
 });
 
 @Component({
-  template: ` <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom> `,
+  template: ` <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom> `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2CustomComponent;
   resizeTime = 0;
-  render() {}
-  resize() {}
+  render(): void {}
+  resize(): void {}
 }

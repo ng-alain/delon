@@ -1,7 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+
 import { EllipsisComponent } from './ellipsis.component';
 import { EllipsisModule } from './ellipsis.module';
 
@@ -11,10 +14,10 @@ describe('abc: ellipsis', () => {
   let context: TestBaseComponent;
   let page: PageObject;
 
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [EllipsisModule],
-      declarations: [TestLengthComponent, TestLineComponent],
+      declarations: [TestLengthComponent, TestLineComponent]
     });
   }
 
@@ -75,20 +78,17 @@ describe('abc: ellipsis', () => {
       });
       describe('when support line clamp', () => {
         beforeEach(fakeAsync(() => {
-          // tslint:disable-next-line:no-string-literal
           page.comp['isSupportLineClamp'] = true;
           context.lines = 1;
           page.tick();
         }));
         it('should working', () => {
-          // tslint:disable-next-line:no-string-literal
           expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines as number);
         });
       });
       describe('when not support line clamp', () => {
         beforeEach(fakeAsync(() => {
-          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as any);
-          // tslint:disable-next-line:no-string-literal
+          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as NzSafeAny);
           page.comp['isSupportLineClamp'] = false;
           context.lines = 1;
           page.tick();
@@ -108,7 +108,6 @@ describe('abc: ellipsis', () => {
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
           spyOnProperty(el!, 'offsetHeight').and.returnValue(1);
-          // tslint:disable-next-line:no-string-literal
           page.comp['gen']();
           expect(page.getText()).not.toBe('There');
         });
@@ -146,7 +145,7 @@ describe('abc: ellipsis', () => {
       return this.root.querySelector(cls);
     }
 
-    checkCls(cls: string, count = 1): this {
+    checkCls(cls: string, count: number = 1): this {
       expect(this.root.querySelectorAll(cls).length).toBe(count);
       return this;
     }
@@ -164,7 +163,7 @@ describe('abc: ellipsis', () => {
       return this.text.substring(0, this.comp.targetCount);
     }
 
-    hasTooltip(result = true): this {
+    hasTooltip(result: boolean = true): this {
       const list = dl.queryAll(By.directive(NzTooltipDirective));
       if (result) {
         expect(list.length).toBeGreaterThan(0);
@@ -201,8 +200,10 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{ text }}</ellipsis>
-  `,
+    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{
+      text
+    }}</ellipsis>
+  `
 })
 class TestLengthComponent extends TestBaseComponent {}
 
@@ -217,6 +218,6 @@ class TestLengthComponent extends TestBaseComponent {}
       style="width: 1px; display: block;"
       ><div [innerHTML]="html"></div
     ></ellipsis>
-  `,
+  `
 })
 class TestLineComponent extends TestBaseComponent {}

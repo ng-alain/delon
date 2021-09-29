@@ -5,7 +5,10 @@ set -u -e -o pipefail
 
 cd $(dirname $0)/../..
 
+source ./scripts/ci/utils.sh
+
 DEBUG=false
+NOCSS=false
 PACKAGES=(util
   testing
   acl
@@ -26,6 +29,9 @@ for ARG in "$@"; do
     -debug)
       DEBUG=true
       ;;
+    -nocss)
+      NOCSS=true
+      ;;
   esac
 done
 
@@ -36,25 +42,6 @@ buildLess() {
   node ./scripts/build/fix-zorro-path.js
   echo 'build full css...'
   node ./scripts/build/generate-css.js
-  echo 'generate less var...'
-  node ./scripts/build/generate-less-vars.js
-}
-
-containsElement () {
-  local e
-  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
-  return 1
-}
-
-updateVersionReferences() {
-  NPM_DIR="$1"
-  (
-    echo "======    VERSION: Updating version references in ${NPM_DIR}"
-    cd ${NPM_DIR}
-    perl -p -i -e "s/ZORRO\-0\.0\.0\-PLACEHOLDER/${ZORROVERSION}/g" $(grep -ril ZORRO\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/^${VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-  )
 }
 
 addBanners() {
@@ -67,8 +54,10 @@ addBanners() {
   done
 }
 
-VERSION=$(node -p "require('./package.json').version")
-ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
+copySchemas() {
+  cp ${SOURCE}/abc/onboarding/schema.json ${DIST}/abc/onboarding/schema.json
+}
+
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 
 N="
@@ -95,15 +84,18 @@ build() {
       addBanners ${DIST}/${NAME}/bundles
       # license file
       cp ${PWD}/LICENSE ${DIST}/${NAME}/LICENSE
-      # package version
-      updateVersionReferences ${DIST}/${NAME}
     else
       echo "not yet!!!"
     fi
 
   done
 
-  buildLess
+  if [[ ${NOCSS} == false ]]; then
+    buildLess
+  fi
+  # package version
+  updateVersionReferences ${DIST}
+  copySchemas
 }
 
 build
@@ -112,11 +104,11 @@ echo 'FINISHED!'
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build-delon.sh -debug
-# clear | bash ./scripts/ci/build-delon.sh -n chart -debug
+# clear | bash ./scripts/ci/build-delon.sh -n chart -nocss
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/dist/@delon/*
-  DEBUG_TO=${PWD}/work/ng-alain-themes/node_modules/@delon/
+  DEBUG_FROM=${PWD}/work/delon/dist/@delon/theme/*
+  DEBUG_TO=${PWD}/work/ng11-strict/node_modules/@delon/theme
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

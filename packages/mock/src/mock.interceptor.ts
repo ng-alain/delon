@@ -7,12 +7,15 @@ import {
   HttpRequest,
   HttpResponse,
   HttpResponseBase,
-  HTTP_INTERCEPTORS,
+  HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { deepCopy } from '@delon/util';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
+
+import { deepCopy } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { MockRequest } from './interface';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
@@ -20,7 +23,7 @@ import { MockStatusError } from './status.error';
 class HttpMockInterceptorHandler implements HttpHandler {
   constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
 
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+  handle(req: HttpRequest<NzSafeAny>): Observable<HttpEvent<NzSafeAny>> {
     return this.interceptor.intercept(req, this.next);
   }
 }
@@ -29,7 +32,7 @@ class HttpMockInterceptorHandler implements HttpHandler {
 export class MockInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
     const src = this.injector.get(MockService);
     const config = src.config;
     const rule = src.getRule(req.method, req.url.split('?')[0]);
@@ -37,7 +40,7 @@ export class MockInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    let res: any;
+    let res: NzSafeAny;
     switch (typeof rule!.callback) {
       case 'function':
         const mockRequest: MockRequest = {
@@ -45,7 +48,7 @@ export class MockInterceptor implements HttpInterceptor {
           body: req.body,
           queryString: {},
           headers: {},
-          params: rule!.params,
+          params: rule!.params
         };
         const urlParams = req.url.split('?');
         if (urlParams.length > 1) {
@@ -75,7 +78,7 @@ export class MockInterceptor implements HttpInterceptor {
             headers: req.headers,
             status: e instanceof MockStatusError ? e.status : 400,
             statusText: e.statusText || 'Unknown Error',
-            error: e.error,
+            error: e.error
           });
         }
         break;
@@ -88,7 +91,7 @@ export class MockInterceptor implements HttpInterceptor {
       res = new HttpResponse({
         status: 200,
         url: req.url,
-        body: res,
+        body: res
       });
     }
 
@@ -97,8 +100,8 @@ export class MockInterceptor implements HttpInterceptor {
     }
 
     if (config.log) {
-      console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
-      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', res);
+      console.log(`%c👽${req.method}->${req.urlWithParams}->request`, 'background:#000;color:#bada55', req);
+      console.log(`%c👽${req.method}->${req.urlWithParams}->response`, 'background:#000;color:#bada55', res);
     }
 
     const res$ = res instanceof HttpErrorResponse ? throwError(res) : of(res);
@@ -107,9 +110,12 @@ export class MockInterceptor implements HttpInterceptor {
       const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
       const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
       if (lastInterceptors.length > 0) {
-        const chain = lastInterceptors.reduceRight((_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
-          handle: () => res$,
-        } as HttpBackend);
+        const chain = lastInterceptors.reduceRight(
+          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor),
+          {
+            handle: () => res$
+          } as HttpBackend
+        );
         return chain.handle(req).pipe(delay(config.delay!));
       }
     }

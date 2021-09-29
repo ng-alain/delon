@@ -5,11 +5,13 @@
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib",
+  "allowedNonPeerDependencies": [
     "file-saver",
     "date-fns",
     "qrious",
+    "isutf8",
+    "jszip",
+    "xlsx",
     "ngx-countdown",
     "@delon/theme",
     "@delon/util",

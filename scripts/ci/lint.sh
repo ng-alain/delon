@@ -21,10 +21,10 @@ for ARG in "$@"; do
 done
 
 if [[ ${TS} == true ]]; then
-  $(npm bin)/tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts' --fix
+  npm run lint:ts
 fi
 
 if [[ ${LESS} == true ]]; then
-  $(npm bin)/stylelint 'packages/**/*.less' --syntax less --fix
+  $(npm bin)/stylelint 'packages/**/*.less' --syntax less
 fi
 

@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { MetaService, MobileService } from '@core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { MetaService, MobileService } from '@core';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   host: {
-    '[class.main-wrapper]': 'true',
+    '[class.main-wrapper]': 'true'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
@@ -25,7 +26,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  to() {
+  to(): void {
     this.opened = false;
   }
 

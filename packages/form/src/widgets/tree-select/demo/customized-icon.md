@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 2
 debug: true
 title:
   zh-CN: 自定义图标

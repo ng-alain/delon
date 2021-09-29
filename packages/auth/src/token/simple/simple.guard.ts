@@ -1,5 +1,16 @@
 import { Inject, Injectable, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlSegment } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  CanLoad,
+  Route,
+  RouterStateSnapshot,
+  UrlSegment
+} from '@angular/router';
+
+import { AlainAuthConfig } from '@delon/util/config';
+
 import { CheckSimple, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleTokenModel } from './simple.model';
@@ -25,7 +36,7 @@ import { SimpleTokenModel } from './simple.model';
 export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   private url?: string;
 
-  private get cog() {
+  private get cog(): AlainAuthConfig {
     return this.srv.options;
   }
 

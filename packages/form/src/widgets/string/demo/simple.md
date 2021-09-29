@@ -15,12 +15,13 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { SFSchema, SFStringWidgetSchema, SFValueChange } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formValueChange)="valueChange($event)" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf [schema]="schema" (formValueChange)="valueChange($event)" (formSubmit)="submit($event)"></sf>`
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -34,8 +35,8 @@ export class DemoComponent {
           change: val => console.log(val),
           focus: e => console.log('focus', e),
           blur: e => console.log('blur', e),
-          enter: e => console.log('enter', e),
-        } as SFStringWidgetSchema,
+          enter: e => console.log('enter', e)
+        } as SFStringWidgetSchema
       },
       mobile: {
         type: 'string',
@@ -47,18 +48,32 @@ export class DemoComponent {
         format: 'id-card',
         title: '身份证号'
       },
+      regex: {
+        type: 'string',
+        pattern: `^[abc]+$`,
+        title: '正则表达式',
+        ui: {
+          placeholder: `^[abc]+$`
+        } as SFStringWidgetSchema
+      },
       color: {
         type: 'string',
         format: 'color',
-        title: '颜色'
-      },
+        title: '颜色',
+        ui: {
+          optionalHelp: {
+            text: '我是有背景颜色的喔',
+            bgColor: '#f50'
+          }
+        }
+      }
     },
-    required: ['name'],
+    required: ['name']
   };
 
-  constructor(public msg: NzMessageService) {}
+  constructor(private msg: NzMessageService) {}
 
-  submit(value: any): void {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 

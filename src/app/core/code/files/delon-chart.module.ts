@@ -17,6 +17,7 @@ import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { G2TimelineModule } from '@delon/chart/timeline';
 import { TrendModule } from '@delon/chart/trend';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
+import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 
 const MODULES = [
   G2BarModule,
@@ -34,6 +35,7 @@ const MODULES = [
   G2SingleBarModule,
   NumberInfoModule,
   TrendModule,
+  ChartEChartsModule,
 ];
 
 // #endregion

@@ -2,7 +2,7 @@
 title: g2-mini-area
 subtitle: 迷你区域图
 cols: 2
-type: Components
+type: G2
 module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 ---
 
@@ -14,6 +14,7 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
@@ -21,8 +22,8 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 | `[line]` | 是否显示描边 | `boolean` | `false` |
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
-| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
-| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
+| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
+| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
@@ -35,3 +36,4 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 |----|----|----|-----|
 | `[x]` | x轴 | `any` | - |
 | `[y]` | y轴 | `any` | - |
+| `[color]` | 轴颜色 | `string` | - |

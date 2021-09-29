@@ -42,7 +42,7 @@ type: Widgets
 | `[notFoundContent]` | 未找到时的内容 | `string` | `无匹配结果，轻敲空格完成输入` |
 | `[placement]` | 建议框位置 | `button,top` | `button` |
 | `[prefix]` | 触发弹出下拉框的字符 | `'string'` `'string[]'` | `@` |
-| `[valueWith]` | 建议选项的取值方法 | `(any) => string` | `(value: string) => string` |
+| `[valueWith]` | 建议选项的取值方法 | `(value: any) => string` | - |
 | `[select]` | 下拉框选择建议时回调 | `(value: any) => void` | - |
 | `[inputStyle]` | 文本框类型 | `text, textarea` | `text` |
 | `[autosize]` | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | `boolean,AutoSizeType` | `true` |

@@ -1,26 +1,29 @@
-import * as path from 'path';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
-import { getCode, genUpperName, genUrl, generateDoc } from './utils';
-import { toHtml } from './generate-md';
-import { ModuleConfig, SiteConfig } from '../interfaces';
-const MT = require('mark-twain');
-const JsonML = require('jsonml.js/lib/utils');
+import * as path from 'path';
 
-let exampleIndexTpl = null;
+import { ModuleConfig, SiteConfig } from '../interfaces';
+import { toHtml } from './generate-md';
+import { getCode, genUpperName, genUrl, generateDoc } from './utils';
+
+const JsonML = require('jsonml.js/lib/utils');
+const MT = require('mark-twain');
+
+let exampleIndexTpl: string | null = null;
 
 function fixExample(item: any, filePath: string, config: ModuleConfig) {
   item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
   const obj = {
-    selector: item.id + '-index',
+    selector: `${item.id}-index`,
     demos: `
-    <code-box [item]="item">
+    <code-box [item]="item" type="simple">
       <${item.id}></${item.id}>
     </code-box>`,
     componentName: item.componentIndexName,
-    item: JSON.stringify(item),
+    item: JSON.stringify(item)
   };
-  generateDoc(obj, exampleIndexTpl, filePath);
+  generateDoc(obj, exampleIndexTpl!!, filePath);
 }
 
 export function generateDemo(
@@ -29,7 +32,7 @@ export function generateDemo(
   dir: string,
   cols: number,
   config: ModuleConfig,
-  siteConfig: SiteConfig,
+  siteConfig: SiteConfig
 ) {
   if (!exampleIndexTpl) {
     exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
@@ -37,9 +40,9 @@ export function generateDemo(
   const ret: { tpl: { left: string[]; right: string[] }; data: any[] } = {
     tpl: {
       left: [],
-      right: [],
+      right: []
     },
-    data: [],
+    data: []
   };
 
   if (!fse.pathExistsSync(dir)) return ret;
@@ -71,7 +74,7 @@ export function generateDemo(
         code: ``,
         name: markdownData.name,
         urls: genUrl(rootDir, markdownData.filePath),
-        type: markdownData.meta.type || 'demo',
+        type: markdownData.meta.type || 'demo'
       };
 
       const contentChildren = JsonML.getChildren(markdownData.content);
@@ -96,11 +99,11 @@ export function generateDemo(
         const summaryRet: any = {};
         for (let i = 0; i < summaryChildren.length; i++) {
           const summaryNode = summaryChildren[i];
-          const summaryLang = '' + summaryNode[1];
+          const summaryLang = `${summaryNode[1]}`;
           if (JsonML.getTagName(summaryNode) === 'h2' && ~siteConfig.langs.indexOf(summaryLang)) {
             const nextLangPos = summaryChildren.slice(i + 1).findIndex((node: any) => JsonML.getTagName(node) === 'h2');
             summaryRet[summaryLang] = [''].concat(
-              nextLangPos === -1 ? summaryChildren.slice(i + 1) : summaryChildren.slice(i + 1, nextLangPos + 1),
+              nextLangPos === -1 ? summaryChildren.slice(i + 1) : summaryChildren.slice(i + 1, nextLangPos + 1)
             );
             if (nextLangPos === -1) break;
             i = nextLangPos;
@@ -120,7 +123,7 @@ export function generateDemo(
       } else {
         item.componentName = `${genUpperName(item.id)}Component`;
       }
-      item.code = ('' + item.code)
+      item.code = `${item.code}`
         .replace(/selector:[ ]?(['|"|`])([^'"`]+)/g, `selector: $1${item.id}`)
         .replace(/export class ([^ {]+)/g, `export class ${item.componentName}`);
       // save demo component

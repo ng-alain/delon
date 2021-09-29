@@ -39,7 +39,7 @@ import { Component } from '@angular/core';
         <se-container col="1">
           <se label="背景">
             <nz-input-group>
-              <div nz-row nzGutter="8">
+              <div nz-row [nzGutter]="8">
                 <div nz-col nzSpan="12">
                   <input nz-input type="color" [(ngModel)]="background" [ngModelOptions]="{ standalone: true }" />
                 </div>
@@ -57,7 +57,7 @@ import { Component } from '@angular/core';
           </se>
           <se label="前景">
             <nz-input-group>
-              <div nz-row nzGutter="8">
+              <div nz-row [nzGutter]="8">
                 <div nz-col nzSpan="12">
                   <input nz-input type="color" [(ngModel)]="foreground" [ngModelOptions]="{ standalone: true }" />
                 </div>
@@ -117,7 +117,7 @@ export class DemoComponent {
   padding = 10;
   size = 220;
 
-  change(dataURL: string) {
+  change(dataURL: string): void {
     console.log(dataURL);
   }
 }

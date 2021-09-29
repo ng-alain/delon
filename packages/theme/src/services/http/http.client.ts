@@ -1,9 +1,11 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { HttpClient, HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { delay, finalize, switchMap, tap } from 'rxjs/operators';
+
+import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -15,25 +17,41 @@ export type HttpObserve = 'body' | 'events' | 'response';
  * + 统一处理时间格式问题
  */
 @Injectable({ providedIn: 'root' })
-// tslint:disable-next-line:class-name
 export class _HttpClient {
   private cog: AlainThemeHttpClientConfig;
   constructor(private http: HttpClient, cogSrv: AlainConfigService) {
     this.cog = cogSrv.merge('themeHttp', {
       nullValueHandling: 'include',
-      dateValueHandling: 'timestamp',
+      dateValueHandling: 'timestamp'
     })!;
   }
 
-  private _loading = false;
+  private lc = 0;
 
-  /** 是否正在加载中 */
+  /**
+   * Get whether it's loading
+   *
+   * 获取是否正在加载中
+   */
   get loading(): boolean {
-    return this._loading;
+    return this.lc > 0;
+  }
+
+  /**
+   * Get the currently loading count
+   *
+   * 获取当前加载中的数量
+   */
+  get loadingCount(): number {
+    return this.lc;
   }
 
   parseParams(params: NzSafeAny): HttpParams {
     const newParams: NzSafeAny = {};
+    if (params instanceof HttpParams) {
+      return params;
+    }
+
     Object.keys(params).forEach(key => {
       let _data = params[key];
       // 忽略空值
@@ -47,29 +65,41 @@ export class _HttpClient {
     return new HttpParams({ fromObject: newParams });
   }
 
-  appliedUrl(url: string, params?: NzSafeAny) {
+  appliedUrl(url: string, params?: NzSafeAny): string {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];
-    // tslint:disable-next-line: forin
-    for (const key in params) {
+    Object.keys(params).forEach(key => {
       arr.push(`${key}=${params[key]}`);
-    }
+    });
     return url + arr.join('&');
   }
 
-  begin() {
-    Promise.resolve(null).then(() => (this._loading = true));
+  private setCount(count: number): void {
+    Promise.resolve(null).then(() => (this.lc = count <= 0 ? 0 : count));
   }
 
-  end() {
-    Promise.resolve(null).then(() => (this._loading = false));
+  private push(): void {
+    this.setCount(++this.lc);
+  }
+
+  private pop(): void {
+    this.setCount(--this.lc);
+  }
+
+  /**
+   * Clean loading count
+   *
+   * 清空加载中
+   */
+  cleanLoading(): void {
+    this.setCount(0);
   }
 
   // #region get
 
   /**
-   * GET：返回一个 `string` 类型
+   * **GET Request** Return a `string` type / 返回一个 `string` 类型
    */
   get(
     url: string,
@@ -80,11 +110,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * GET：返回一个 `HttpEvent<T>` 类型
+   * **GET Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   get<T>(
     url: string,
@@ -95,11 +126,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
-   * GET：返回一个 `HttpResponse<any>` 类型
+   * **GET Request** Return a `HttpResponse<any>` type / 返回一个 `HttpResponse<any>` 类型
    */
   get(
     url: string,
@@ -110,11 +142,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
-   * GET：返回一个 `HttpResponse<T>` 类型
+   * **GET Request** Return a `HttpResponse<T>` type / 返回一个 `HttpResponse<T>` 类型
    */
   get<T>(
     url: string,
@@ -125,11 +158,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<T>>;
 
   /**
-   * GET：返回一个 `any` 类型
+   * **GET Request** Return a `any` type / 返回一个 `any` 类型
    */
   get(
     url: string,
@@ -140,11 +174,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * GET：返回一个泛类型
+   * **GET Request** Return a generic type / 返回一个泛类型
    */
   get<T>(
     url: string,
@@ -155,12 +190,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * GET 请求
-   */
   get(
     url: string,
     params: any,
@@ -170,11 +203,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('GET', url, {
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -183,7 +217,7 @@ export class _HttpClient {
   // #region post
 
   /**
-   * POST：返回一个 `string` 类型
+   * **POST Request** Return a `string` type / 返回一个 `string` 类型
    */
   post(
     url: string,
@@ -195,11 +229,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * POST：返回一个 `HttpEvent<T>` 类型
+   * **POST Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   post<T>(
     url: string,
@@ -211,11 +246,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
-   * POST：返回一个 `HttpResponse<JSON>` 类型
+   * **POST Request** Return a `HttpResponse<any>` type / 返回一个 `HttpResponse<any>` 类型
    */
   post(
     url: string,
@@ -227,11 +263,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
-   * POST：返回一个 `any` 类型
+   * **POST Request** Return a `any` type / 返回一个 `any` 类型
    */
   post(
     url: string,
@@ -243,11 +280,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * POST：返回一个 `JSON` 类型
+   * **POST Request** Return a JSON type / 返回一个 `JSON` 类型
    */
   post<T>(
     url: string,
@@ -259,12 +297,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * POST 请求
-   */
   post(
     url: string,
     body: any,
@@ -275,12 +311,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('POST', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -289,7 +326,7 @@ export class _HttpClient {
   // #region delete
 
   /**
-   * DELETE：返回一个 `string` 类型
+   * **DELETE Request** Return a `string` type / 返回一个 `string` 类型
    */
   delete(
     url: string,
@@ -300,11 +337,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * DELETE：返回一个 `JSON` 类型
+   * **DELETE Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   delete(
     url: string,
@@ -315,11 +353,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
-   * DELETE：返回一个 `any` 类型
+   * **DELETE Request** Return a `any` type / 返回一个 `any` 类型
    */
   delete(
     url: string,
@@ -330,11 +369,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * DELETE：返回一个泛类型
+   * c返回一个泛类型
    */
   delete<T>(
     url: string,
@@ -345,12 +385,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * DELETE 请求
-   */
   delete(
     url: string,
     params: any,
@@ -360,11 +398,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('DELETE', url, {
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -373,20 +412,17 @@ export class _HttpClient {
   // #region jsonp
 
   /**
-   * `jsonp` 请求
+   * **JSONP Request**
    *
-   * @param url URL地址
-   * @param params 请求参数
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
   jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
-    this.begin();
-    return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(
-      tap(() => this.end()),
-      catchError(res => {
-        this.end();
-        return throwError(res);
-      }),
+    return of(null).pipe(
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
+      tap(() => this.push()),
+      switchMap(() => this.http.jsonp(this.appliedUrl(url, params), callbackParam)),
+      finalize(() => this.pop())
     );
   }
 
@@ -395,7 +431,7 @@ export class _HttpClient {
   // #region patch
 
   /**
-   * PATCH：返回一个 `string` 类型
+   * **PATCH Request** Return a `string` type / 返回一个 `string` 类型
    */
   patch(
     url: string,
@@ -407,11 +443,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * PATCH：返回一个 `HttpResponse<JSON>` 类型
+   * **PATCH Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   patch(
     url: string,
@@ -423,11 +460,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
-   * PATCH：返回一个 `any` 类型
+   * **PATCH Request** Return a `any` type / 返回一个 `any` 类型
    */
   patch(
     url: string,
@@ -439,11 +477,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * PATCH：返回一个 `JSON` 类型
+   * **PATCH Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   patch<T>(
     url: string,
@@ -455,12 +494,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * PATCH 请求
-   */
   patch(
     url: string,
     body: any,
@@ -471,12 +508,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('PATCH', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -485,7 +523,7 @@ export class _HttpClient {
   // #region put
 
   /**
-   * PUT：返回一个 `string` 类型
+   * **PUT Request** Return a `string` type / 返回一个 `string` 类型
    */
   put(
     url: string,
@@ -497,11 +535,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * PUT：返回一个 `HttpResponse<JSON>` 类型
+   * **PUT Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   put(
     url: string,
@@ -513,11 +552,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<{}>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
   /**
-   * PUT：返回一个 `any` 类型
+   * **PUT Request** Return a `any` type / 返回一个 `any` 类型
    */
   put(
     url: string,
@@ -529,11 +569,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * PUT：返回一个 `JSON` 类型
+   * **PUT Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   put<T>(
     url: string,
@@ -545,12 +586,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * PUT 请求
-   */
   put(
     url: string,
     body: any,
@@ -561,12 +600,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('PUT', url, {
       body,
       params,
-      ...options,
+      ...options
     });
   }
 
@@ -575,7 +615,7 @@ export class _HttpClient {
   // #region form
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `string` 类型
+   * **Form Request** Return a `string` type / 返回一个 `string` 类型
    */
   form(
     url: string,
@@ -587,11 +627,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpEvent<T>` 类型
+   * **Form Request** Return a `HttpEvent<T>` type / 返回一个 `HttpEvent<T>` 类型
    */
   form<T>(
     url: string,
@@ -603,11 +644,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<T>>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpResponse<JSON>` 类型
+   * **Form Request** Return a `HttpResponse<JSON>` type / 返回一个 `HttpResponse<JSON>` 类型
    */
   form(
     url: string,
@@ -619,11 +661,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<any>>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `any` 类型
+   * **Form Request** Return a `any` type / 返回一个 `any` 类型
    */
   form(
     url: string,
@@ -635,11 +678,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `JSON` 类型
+   * **Form Request** Return a `JSON` type / 返回一个 `JSON` 类型
    */
   form<T>(
     url: string,
@@ -651,12 +695,10 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<T>;
 
-  /**
-   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）
-   */
   form(
     url: string,
     body: any,
@@ -667,15 +709,16 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
     return this.request('POST', url, {
       body,
       params,
       ...options,
       headers: {
-        'content-type': `application/x-www-form-urlencoded`,
-      },
+        'content-type': `application/x-www-form-urlencoded`
+      }
     });
   }
 
@@ -683,7 +726,9 @@ export class _HttpClient {
 
   // #region request
 
-  /** 返回一个 `arraybuffer` 类型 */
+  /**
+   * **Request** Return a `ArrayBuffer` type / 返回一个 `ArrayBuffer` 类型
+   */
   request(
     method: string,
     url: string,
@@ -695,9 +740,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<ArrayBuffer>;
 
+  /**
+   * **Request** Return a `Blob` type / 返回一个 `Blob` 类型
+   */
   request(
     method: string,
     url: string,
@@ -709,9 +758,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<Blob>;
 
+  /**
+   * **Request** Return a `string` type / 返回一个 `string` 类型
+   */
   request(
     method: string,
     url: string,
@@ -723,9 +776,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<string>;
 
+  /**
+   * **Request** Return a `HttpEvent<ArrayBuffer>` type / 返回一个 `HttpEvent<ArrayBuffer>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -737,9 +794,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<ArrayBuffer>>;
 
+  /**
+   * **Request** Return a `HttpEvent<Blob>` type / 返回一个 `HttpEvent<Blob>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -751,9 +812,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<Blob>>;
 
+  /**
+   * **Request** Return a `HttpEvent<string>` type / 返回一个 `HttpEvent<string>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -765,9 +830,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<string>>;
 
+  /**
+   * **Request** Return a `HttpEvent<any>` type / 返回一个 `HttpEvent<any>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -779,9 +848,13 @@ export class _HttpClient {
       observe: 'events';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<any>>;
 
+  /**
+   * **Request** Return a `HttpEvent<R>` type / 返回一个 `HttpEvent<R>` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -793,9 +866,13 @@ export class _HttpClient {
       observe: 'events';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpEvent<R>>;
 
+  /**
+   * **Request** Return a `HttpResponse<ArrayBuffer>` type / 返回一个 `HttpResponse<ArrayBuffer>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -807,9 +884,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<ArrayBuffer>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Blob>` type / 返回一个 `HttpResponse<Blob>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -821,9 +902,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'blob';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<Blob>>;
 
+  /**
+   * **Request** Return a `HttpResponse<string>` type / 返回一个 `HttpResponse<string>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -835,9 +920,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType: 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<string>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Object>` type / 返回一个 `HttpResponse<Object>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -849,10 +938,13 @@ export class _HttpClient {
       observe: 'response';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
-    // tslint:disable-next-line: ban-types
-  ): Observable<HttpResponse<Object>>;
+      context?: HttpContext;
+    }
+  ): Observable<HttpResponse<NzSafeAny>>;
 
+  /**
+   * **Request** Return a `HttpResponse<R>` type / 返回一个 `HttpResponse<R>` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -864,9 +956,13 @@ export class _HttpClient {
       observe: 'response';
       responseType?: 'json';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<HttpResponse<R>>;
 
+  /**
+   * **Request** Return a `HttpResponse<Object>` type / 返回一个 `HttpResponse<Object>` 类型
+   */
   request(
     method: string,
     url: string,
@@ -878,10 +974,13 @@ export class _HttpClient {
       responseType?: 'json';
       reportProgress?: boolean;
       withCredentials?: boolean;
-    },
-    // tslint:disable-next-line: ban-types
-  ): Observable<Object>;
+      context?: HttpContext;
+    }
+  ): Observable<Record<string, unknown>>;
 
+  /**
+   * **Request** Return a `R` type / 返回一个 `R` 类型
+   */
   request<R>(
     method: string,
     url: string,
@@ -893,9 +992,13 @@ export class _HttpClient {
       responseType?: 'json';
       reportProgress?: boolean;
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<R>;
 
+  /**
+   * **Request** Return a `any` type / 返回一个 `any` 类型
+   */
   request(
     method: string,
     url: string,
@@ -907,7 +1010,8 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+      context?: HttpContext;
+    }
   ): Observable<any>;
 
   request(
@@ -921,18 +1025,16 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    } = {},
+      context?: HttpContext;
+    } = {}
   ): Observable<any> {
-    this.begin();
     if (options.params) options.params = this.parseParams(options.params);
     return of(null).pipe(
-      tap(() => this.begin()),
+      // Make sure to always be asynchronous, see issues: https://github.com/ng-alain/ng-alain/issues/1954
+      delay(0),
+      tap(() => this.push()),
       switchMap(() => this.http.request(method, url, options)),
-      tap(() => this.end()),
-      catchError(res => {
-        this.end();
-        return throwError(res);
-      }),
+      finalize(() => this.pop())
     );
   }
 

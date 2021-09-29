@@ -20,21 +20,25 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            remark: {
-                type: 'string',
-                title: '描述',
-                ui: {
-                    widget: 'tinymce'
-                }
-            }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      remark: {
+        type: 'string',
+        title: '描述',
+        ui: {
+          widget: 'tinymce',
+        },
+      },
+    },
+  };
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
+    this.msg.success(JSON.stringify(value));
+  }
 }
 ```

@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "https://github.com/ng-alain/delon/blob/master/packages/abc/onboarding/schema.json",
+  "title": "Onboarding Configuration",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Onboarding items",
+      "type": "string",
+      "default": []
+    },
+    "items": {
+      "description": "Onboarding items",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "selectors": {
+            "description": "The CSS selector, which identifies the html element you want to describe",
+            "type": "string",
+            "minLength": 1
+          },
+          "position": {
+            "description": "Positioning of the selector element, relative to the contents of the children",
+            "type": "string",
+            "enum": [
+              "top",
+              "left",
+              "right",
+              "bottom",
+              "topLeft",
+              "topRight",
+              "bottomLeft",
+              "bottomRight",
+              "leftTop",
+              "leftBottom",
+              "rightTop",
+              "rightBottom"
+            ],
+            "default": "bottomLeft"
+          },
+          "className": {
+            "description": "Class name of the panel",
+            "type": "string"
+          },
+          "lightStyle": {
+            "description": "Light style",
+            "type": "string"
+          },
+          "width": {
+            "description": "Width of the panel",
+            "type": "number"
+          },
+          "title": {
+            "description": "Title text of the panel",
+            "type": "string"
+          },
+          "content": {
+            "description": "Content text of the panel",
+            "type": "string"
+          },
+          "skip": {
+            "description": "Skip button of the panel, `null` Don't show",
+            "type": "string"
+          },
+          "prev": {
+            "description": "Prev button of the panel, `null` Don't show",
+            "type": "string"
+          },
+          "next": {
+            "description": "Next button of the panel, `null` Don't show",
+            "type": "string"
+          },
+          "done": {
+            "description": "Done button of the panel, `null` Don't show",
+            "type": "string"
+          },
+          "url": {
+            "description": "Target router url",
+            "type": "string"
+          },
+          "before": {
+            "description": "Callback before entering, triggered when call `next` operates",
+            "type": "number"
+          },
+          "after": {
+            "description": "Callback after entering, triggered when call `prev` operates",
+            "type": "number"
+          }
+        },
+        "required": ["selectors"]
+      }
+    },
+    "mask": {
+      "description": "Whether to show mask or not",
+      "type": "boolean",
+      "default": true
+    },
+    "maskClosable": {
+      "description": "Clicking on the mask (area outside the onboarding) to close the onboarding or not",
+      "type": "boolean",
+      "default": true
+    },
+    "showTotal": {
+      "description": "Whether to show total",
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

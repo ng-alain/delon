@@ -22,6 +22,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[labelWidth]` | label text of width | `number` | - | ✅ |
 | `[default]` | whether default text | `boolean` | `true` | ✅ |
 | `[title]` | Display title | `string,TemplateRef<void>` | - | - |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### sv
 
@@ -34,7 +35,20 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[type]` | type of view | `'primary','success','danger','warning'` | - |
 | `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### sv-title
 
 Display title.
+
+### sv-value
+
+值展示。
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[prefix]` | Prefix of value | `string` | - |
+| `[unit]` | Unit of value | `string` | - |
+| `[tooltip]` | Tooltip text of value | `string, TemplateRef<void>` | - |
+| `[size]` | Size of value | `'large','small','default'` | `default` |

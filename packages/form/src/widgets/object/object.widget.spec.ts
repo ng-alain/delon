@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFObjectWidgetSchema } from './schema';
 
@@ -24,10 +26,10 @@ describe('form: widget: object', () => {
         a: {
           type: 'object',
           properties: {
-            b: { type: 'string' },
-          },
-        },
-      },
+            b: { type: 'string' }
+          }
+        }
+      }
     });
     const property = page.getProperty('/a');
     property.setValue({ b: 1, c: 0 }, false);
@@ -45,9 +47,9 @@ describe('form: widget: object', () => {
             a: {
               type: 'object',
               title: 'a',
-              properties: {},
-            },
-          },
+              properties: {}
+            }
+          }
         })
         .checkCount('.sf__title', 0);
     });
@@ -60,9 +62,9 @@ describe('form: widget: object', () => {
             a: {
               type: 'object',
               title: 'a',
-              properties: {},
-            },
-          },
+              properties: {}
+            }
+          }
         })
         .checkCount('.sf__title', 1);
     });
@@ -76,9 +78,9 @@ describe('form: widget: object', () => {
               type: 'object',
               title: 'a',
               ui: { showTitle: false },
-              properties: {},
-            },
-          },
+              properties: {}
+            }
+          }
         })
         .checkCount('.sf__title', 0);
     });
@@ -87,7 +89,7 @@ describe('form: widget: object', () => {
         .newSchema({
           title: null,
           ui: { showTitle: true },
-          properties: {},
+          properties: {}
         })
         .checkCount('.sf__title', 0);
     });
@@ -97,9 +99,9 @@ describe('form: widget: object', () => {
           properties: {
             a: {
               title: 'a',
-              type: 'array',
-            },
-          },
+              type: 'array'
+            }
+          }
         })
         .checkCount('.sf__title', 0);
     });
@@ -111,7 +113,7 @@ describe('form: widget: object', () => {
         .newSchema({
           title: 'root',
           properties: {},
-          ui: { type: 'card' },
+          ui: { type: 'card' }
         })
         .checkCount('.sf__object-card', 1)
         .checkCount('.sf__object-card-fold', 0)
@@ -123,7 +125,7 @@ describe('form: widget: object', () => {
         .newSchema({
           title: 'root',
           properties: {},
-          ui: { type: 'card', showExpand: false } as SFObjectWidgetSchema,
+          ui: { type: 'card', showExpand: false } as SFObjectWidgetSchema
         })
         .checkCount('.sf__object-card', 1)
         .checkCount('.sf__object-card-fold', 0)

@@ -3,15 +3,17 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 
-import { InputNumber } from '@delon/util';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'quick-menu',
@@ -19,42 +21,48 @@ import { InputNumber } from '@delon/util';
   templateUrl: './quick-menu.component.html',
   host: {
     '[class.quick-menu]': 'true',
-    '(click)': '_click()',
+    '(click)': '_click()'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
-  // #endregion
+  static ngAcceptInputType_top: NumberInput;
+  static ngAcceptInputType_width: NumberInput;
+  static ngAcceptInputType_expand: BooleanInput;
 
   constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
   ctrlStyle: { [key: string]: string } = {};
-
-  // #region fields
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;
   @Input() @InputNumber() width = 200;
   @Input() bgColor: string;
   @Input() borderColor: string;
+  @Input() @InputBoolean() expand: boolean = false;
+  @Output() readonly expandChange = new EventEmitter<boolean>();
 
   private show = false;
-
   private initFlag = false;
 
-  _click() {
+  _click(): void {
     this.show = !this.show;
+    this.expandChange.emit(this.show);
     this.setStyle();
   }
 
-  private setStyle() {
+  private setStyle(): void {
     this.ctrlStyle = {
       'background-color': this.bgColor,
-      'border-color': this.borderColor,
+      'border-color': this.borderColor
     };
 
-    const res: string[] = [`top:${this.top}px`, `width:${this.width}px`, `margin-right:-${this.show ? 0 : this.width}px`];
+    const res: string[] = [
+      `top:${this.top}px`,
+      `width:${this.width}px`,
+      `margin-right:-${this.show ? 0 : this.width}px`
+    ];
     if (this.bgColor) {
       res.push(`background-color:${this.bgColor}`);
     }
@@ -64,11 +72,16 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
     this.cdr.detectChanges();
   }
+
   ngOnInit(): void {
     this.initFlag = true;
     this.setStyle();
   }
+
   ngOnChanges(): void {
-    if (this.initFlag) this.setStyle();
+    this.show = this.expand;
+    if (this.initFlag) {
+      this.setStyle();
+    }
   }
 }

@@ -38,7 +38,7 @@ export class DemoComponent {
   ];
 
   setRow(): void {
-    this.st.setRow(0, { price: 100000000 })
+    this.st.setRow(0, { price: 100000000 });
   }
 }
 ```

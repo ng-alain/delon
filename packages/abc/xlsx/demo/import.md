@@ -31,14 +31,14 @@ export class DemoComponent {
 
   constructor(private xlsx: XlsxService, private cdr: ChangeDetectorRef) {}
 
-  url() {
+  url(): void {
     this.xlsx.import(`./assets/demo.xlsx`).then(res => {
       this.data = res;
       this.cdr.detectChanges();
     });
   }
 
-  change(e: Event) {
+  change(e: Event): void {
     const node = e.target as HTMLInputElement;
     this.xlsx.import(node.files![0]).then(res => {
       this.data = res;

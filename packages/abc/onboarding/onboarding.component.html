@@ -1,0 +1,62 @@
+<div *ngIf="!running && config.mask" class="onboarding__mask" (click)="handleMask()"></div>
+<div
+  *ngIf="item"
+  class="onboarding__light"
+  [class.onboarding__light-hide]="running"
+  [attr.style]="item.lightStyle"
+  nz-popover
+  #popover="nzPopover"
+  [nzPopoverTitle]="item.title"
+  [nzPopoverContent]="content"
+  [nzPopoverVisible]="!running"
+  [nzPopoverTrigger]="null"
+  [nzPopoverPlacement]="item.position"
+  [nzPopoverOverlayClassName]="item.className"
+  [nzPopoverOverlayStyle]="{ 'max-width.px': item.width, direction: dir }"
+  [nzNoAnimation]="true"
+></div>
+<ng-template #content>
+  <ng-container *nzStringTemplateOutlet="item.content">
+    <div [innerHTML]="item.content"></div>
+  </ng-container>
+  <div class="flex-center-between onboarding__footer">
+    <span class="onboarding__total">
+      <ng-container *ngIf="config.showTotal">{{ active + 1 }}/{{ max }}</ng-container>
+    </span>
+    <div class="onboarding__btns">
+      <a
+        *ngIf="!last && item.skip !== null && item.skip !== undefined"
+        nz-button
+        nzType="link"
+        (click)="to('skip')"
+        nzSize="small"
+        data-btnType="skip"
+      >
+        <ng-container *nzStringTemplateOutlet="item.skip">{{ item.skip }}</ng-container>
+      </a>
+      <a *ngIf="!first && item.prev !== null" nz-button (click)="to('prev')" nzSize="small" data-btnType="prev">
+        <ng-container *nzStringTemplateOutlet="item.prev">{{ item.prev }}</ng-container>
+      </a>
+      <a
+        *ngIf="!last && item.next !== null && item.next !== undefined"
+        nz-button
+        (click)="to('next')"
+        nzType="primary"
+        nzSize="small"
+        data-btnType="next"
+      >
+        <ng-container *nzStringTemplateOutlet="item.next">{{ item.next }}</ng-container>
+      </a>
+      <a
+        *ngIf="last && item.done !== null && item.done !== undefined"
+        nz-button
+        (click)="to('done')"
+        nzType="primary"
+        nzSize="small"
+        data-btnType="done"
+      >
+        <ng-container *nzStringTemplateOutlet="item.done">{{ item.done }}</ng-container>
+      </a>
+    </div>
+  </div>
+</ng-template>

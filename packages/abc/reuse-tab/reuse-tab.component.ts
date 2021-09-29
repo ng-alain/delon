@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -15,14 +16,17 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { InputBoolean, InputNumber } from '@delon/util';
-import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
+
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
   ReuseContextCloseEvent,
@@ -32,7 +36,8 @@ import {
   ReuseTabCached,
   ReuseTabMatchMode,
   ReuseTabNotify,
-  ReuseTitle,
+  ReuseTabRouteParamMatchMode,
+  ReuseTitle
 } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 
@@ -44,13 +49,21 @@ import { ReuseTabService } from './reuse-tab.service';
     '[class.reuse-tab]': 'true',
     '[class.reuse-tab__line]': `tabType === 'line'`,
     '[class.reuse-tab__card]': `tabType === 'card'`,
+    '[class.reuse-tab__disabled]': `disabled`
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+  static ngAcceptInputType_debug: BooleanInput;
+  static ngAcceptInputType_max: NumberInput;
+  static ngAcceptInputType_tabMaxWidth: NumberInput;
+  static ngAcceptInputType_allowClose: BooleanInput;
+  static ngAcceptInputType_keepingScroll: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
+
   @ViewChild('tabset') private tabset: NzTabSetComponent;
   private unsubscribe$ = new Subject<void>();
   private updatePos$ = new Subject<void>();
@@ -78,9 +91,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarGutter: number;
   @Input() tabBarStyle: { [key: string]: string };
   @Input() tabType: 'line' | 'card' = 'line';
-  // tslint:disable-next-line:no-output-native
+  @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
+  @Input() @InputBoolean() disabled = false;
+  @Input() titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   @Output() readonly change = new EventEmitter<ReuseItem>();
-  // tslint:disable-next-line:no-output-native
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
   // #endregion
@@ -91,14 +105,15 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
+    private platform: Platform
   ) {}
 
   private genTit(title: ReuseTitle): string {
     return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }
 
-  private get curUrl() {
+  private get curUrl(): string {
     return this.srv.getUrl(this.route.snapshot);
   }
 
@@ -111,7 +126,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       closable: this.allowClose && this.srv.count > 0 && this.srv.getClosable(url, snapshotTrue),
       active: false,
       last: false,
-      index: 0,
+      index: 0
     };
   }
 
@@ -124,8 +139,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           closable: this.allowClose && item.closable && this.srv.count > 0,
           index,
           active: false,
-          last: false,
-        } as ReuseItem),
+          last: false
+        } as ReuseItem)
     );
 
     const url = this.curUrl;
@@ -145,7 +160,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (addCurrent) {
-      ls.push(this.genCurItem());
+      ls.splice(this.pos + 1, 0, this.genCurItem());
     }
 
     ls.forEach((item, index) => (item.index = index));
@@ -165,12 +180,12 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private refresh(item: ReuseItem): void {
-    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index);
+    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index, 'refresh');
   }
 
   // #region UI
 
-  contextMenuChange(res: ReuseContextCloseEvent) {
+  contextMenuChange(res: ReuseContextCloseEvent): void {
     let fn: (() => void) | null = null;
     switch (res.type) {
       case 'refresh':
@@ -202,7 +217,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  _to(index: number, cb?: () => void) {
+  _to(index: number, cb?: () => void): void {
     index = Math.max(0, Math.min(index, this.list.length - 1));
     const item = this.list[index];
     this.router.navigateByUrl(item.url).then(res => {
@@ -215,7 +230,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  _close(e: Event | null, idx: number, includeNonCloseable: boolean) {
+  _close(e: Event | null, idx: number, includeNonCloseable: boolean): boolean {
     if (e != null) {
       e.preventDefault();
       e.stopPropagation();
@@ -227,13 +242,17 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
-  activate(instance: any): void {
+  activate(instance: NzSafeAny): void {
     this.srv.componentRef = { instance };
   }
 
   // #endregion
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(50)).subscribe(() => {
       const url = this.srv.getUrl(this.route.snapshot);
       const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
@@ -262,8 +281,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         case 'override':
           if (res?.list?.length === this.list.length) {
             this.updatePos$.next();
+            return;
           }
-          return;
+          break;
       }
       this.genList(res);
     });
@@ -272,7 +292,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(
         filter(() => this.srv.inited),
         takeUntil(this.unsubscribe$),
-        debounceTime(100),
+        debounceTime(100)
       )
       .subscribe(() => this.genList({ active: 'title' }));
 
@@ -280,9 +300,14 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
+
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;
+    if (changes.routeParamMatchMode) this.srv.routeParamMatchMode = this.routeParamMatchMode;
     if (changes.keepingScroll) {
       this.srv.keepingScroll = this.keepingScroll;
       this.srv.keepingScrollContainer = this._keepingScrollContainer;

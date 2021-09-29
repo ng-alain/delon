@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { REP_TYPE } from '@delon/theme';
-import { AlainConfigService, InputBoolean, InputNumber, toNumber } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import type { REP_TYPE } from '@delon/theme';
+import { AlainConfigService } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SEErrorRefresh, SELayout } from './se.types';
 
 @Component({
@@ -22,31 +25,40 @@ import { SEErrorRefresh, SELayout } from './se.types';
     '[class.se__vertical]': `nzLayout === 'vertical'`,
     '[class.se__inline]': `nzLayout === 'inline'`,
     '[class.se__compact]': `size === 'compact'`,
-    '[style.margin-left.px]': `-(gutter / 2)`,
-    '[style.margin-right.px]': `-(gutter / 2)`,
+    '[style.margin-left.px]': `margin`,
+    '[style.margin-right.px]': `margin`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SEContainerComponent {
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_colInCon: NumberInput;
+  static ngAcceptInputType_labelWidth: NumberInput;
+  static ngAcceptInputType_firstVisual: BooleanInput;
+  static ngAcceptInputType_ingoreDirty: BooleanInput;
+  static ngAcceptInputType_line: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
+
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
   @Input() @InputNumber(null) labelWidth: number;
-  @Input() title: string | TemplateRef<void>;
+  @Input() @InputBoolean() noColon = false;
+  @Input() title?: string | TemplateRef<void> | null;
 
   @Input()
-  get gutter(): number {
+  get gutter(): number | string {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: number) {
+  set gutter(value: number | string) {
     this._gutter = toNumber(value);
   }
   private _gutter: number;
 
   @Input()
-  get nzLayout() {
+  get nzLayout(): SELayout {
     return this._nzLayout;
   }
   set nzLayout(value: SELayout) {
@@ -66,6 +78,10 @@ export class SEContainerComponent {
     this.setErrors(val);
   }
 
+  get margin(): number {
+    return -((this.gutter as number) / 2);
+  }
+
   get errorNotify(): Observable<SEErrorRefresh> {
     return this.errorNotify$.pipe(filter(v => v != null));
   }
@@ -78,7 +94,7 @@ export class SEContainerComponent {
       col: 2,
       labelWidth: 150,
       firstVisual: false,
-      ingoreDirty: false,
+      ingoreDirty: false
     });
   }
 

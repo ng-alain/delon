@@ -4,13 +4,17 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util';
+import { Observable } from 'rxjs';
+
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 import { SimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
 
-function genModel(token: string = `123`) {
+function genModel(token: string = `123`): SimpleTokenModel {
   const model = new SimpleTokenModel();
   model.token = token;
   model.uid = 1;
@@ -18,9 +22,10 @@ function genModel(token: string = `123`) {
 }
 
 class MockTokenService implements ITokenService {
-  [key: string]: any;
-  _data: any;
-  options: any;
+  [key: string]: NzSafeAny;
+  _data: NzSafeAny;
+  options: NzSafeAny;
+  refresh: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
     this._data = data;
     return true;
@@ -28,13 +33,13 @@ class MockTokenService implements ITokenService {
   get(): ITokenModel {
     return this._data;
   }
-  change(): any {
+  change(): NzSafeAny {
     return null;
   }
-  clear() {
+  clear(): void {
     this._data = null;
   }
-  get login_url() {
+  get login_url(): string {
     return '/login';
   }
 }
@@ -44,12 +49,12 @@ describe('auth: simple.interceptor', () => {
   let httpBed: HttpTestingController;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate'),
-    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
+    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: NzSafeAny) => {
       return new DefaultUrlSerializer().parse(value);
-    }),
+    })
   };
 
-  function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel) {
+  function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
@@ -58,10 +63,10 @@ describe('auth: simple.interceptor', () => {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,
-          multi: true,
+          multi: true
         },
-        { provide: DA_SERVICE_TOKEN, useClass: MockTokenService },
-      ],
+        { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
+      ]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
@@ -83,9 +88,9 @@ describe('auth: simple.interceptor', () => {
     it(`in body`, (done: () => void) => {
       genModule(
         {
-          token_send_place: 'body',
+          token_send_place: 'body'
         },
-        genModel('123'),
+        genModel('123')
       );
       http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
@@ -97,9 +102,9 @@ describe('auth: simple.interceptor', () => {
     it(`in url`, (done: () => void) => {
       genModule(
         {
-          token_send_place: 'url',
+          token_send_place: 'url'
         },
-        genModel('123'),
+        genModel('123')
       );
       http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
@@ -112,9 +117,9 @@ describe('auth: simple.interceptor', () => {
     it(`in url via full-domain`, (done: () => void) => {
       genModule(
         {
-          token_send_place: 'url',
+          token_send_place: 'url'
         },
-        genModel('123'),
+        genModel('123')
       );
       http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(() => {
         done();
@@ -129,16 +134,14 @@ describe('auth: simple.interceptor', () => {
   describe('[token template]', () => {
     const basicModel = genModel();
 
-    // tslint:disable-next-line:no-invalid-template-strings
     it('should be [Bearer ${token}]', (done: () => void) => {
       genModule(
         {
           token_send_place: 'header',
           token_send_key: 'Authorization',
-          // tslint:disable-next-line:no-invalid-template-strings
-          token_send_template: 'Bearer ${token}',
+          token_send_template: 'Bearer ${token}'
         },
-        basicModel,
+        basicModel
       );
 
       http.get('/test', { responseType: 'text' }).subscribe(() => {
@@ -149,16 +152,14 @@ describe('auth: simple.interceptor', () => {
       ret.flush('ok!');
     });
 
-    // tslint:disable-next-line:no-invalid-template-strings
     it('should be [Bearer ${uid}-${token}]', (done: () => void) => {
       genModule(
         {
           token_send_place: 'header',
           token_send_key: 'Authorization',
-          // tslint:disable-next-line:no-invalid-template-strings
-          token_send_template: 'Bearer ${uid}-${token}',
+          token_send_template: 'Bearer ${uid}-${token}'
         },
-        basicModel,
+        basicModel
       );
 
       http.get('/test', { responseType: 'text' }).subscribe(() => {

@@ -1,11 +1,23 @@
 <div class="ant-form-item-label" [class.se__nolabel]="!label" [style.width.px]="_labelWidth">
-  <label *ngIf="label" [attr.for]="_id" class="se__label" [ngClass]="{ 'ant-form-item-required': required }">
+  <label
+    *ngIf="label"
+    [attr.for]="_id"
+    class="se__label"
+    [ngClass]="{ 'ant-form-item-required': required, 'se__no-colon': _noColon }"
+  >
     <span class="se__label-text">
       <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
     </span>
     <span *ngIf="optional || optionalHelp" class="se__label-optional" [class.se__label-optional-no-text]="!optional">
       <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
-      <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
+      <i
+        *ngIf="optionalHelp"
+        nz-tooltip
+        [nzTooltipTitle]="optionalHelp"
+        [nzTooltipColor]="optionalHelpColor"
+        nz-icon
+        nzType="question-circle"
+      ></i>
     </span>
   </label>
 </div>
@@ -15,7 +27,7 @@
       <ng-content></ng-content>
     </div>
   </div>
-  <div class="ant-form-item-explain" *ngIf="showErr">
+  <div class="ant-form-item-explain ant-form-item-explain-error" *ngIf="showErr">
     <div @helpMotion>
       <ng-container *nzStringTemplateOutlet="_error">{{ _error }}</ng-container>
     </div>

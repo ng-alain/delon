@@ -1,24 +1,16 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+
+import type { Chart, Event } from '@antv/g2';
+
+import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniAreaData {
-  x: any;
-  y: any;
-  [key: string]: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
+  color?: string | null;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2MiniAreaClickItem {
@@ -31,22 +23,21 @@ export interface G2MiniAreaClickItem {
   exportAs: 'g2MiniArea',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
-  private _chart: Chart;
-
-  get chart(): Chart {
-    return this._chart;
-  }
+export class G2MiniAreaComponent extends G2BaseComponent {
+  static ngAcceptInputType_borderWidth: NumberInput;
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_fit: BooleanInput;
+  static ngAcceptInputType_line: BooleanInput;
+  static ngAcceptInputType_animate: BooleanInput;
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() color = 'rgba(24, 144, 255, 0.2)';
   @Input() borderColor = '#1890FF';
   @Input() @InputNumber() borderWidth = 2;
@@ -54,30 +45,41 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() fit = true;
   @Input() @InputBoolean() line = false;
   @Input() @InputBoolean() animate = true;
-  @Input() xAxis: any;
-  @Input() yAxis: any;
+  @Input() xAxis: NzSafeAny;
+  @Input() yAxis: NzSafeAny;
   @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Input() theme: string | Types.LooseObject;
-  @Output() clickItem = new EventEmitter<G2MiniAreaClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2MiniAreaClickItem>();
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
-
-  private install() {
-    const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line, theme } = this;
-    const chart = (this._chart = new Chart({
+  install(): void {
+    const {
+      el,
+      fit,
+      height,
+      padding,
+      xAxis,
+      yAxis,
+      yTooltipSuffix,
+      tooltipType,
+      line,
+      theme,
+      animate,
+      color,
+      borderColor,
+      borderWidth
+    } = this;
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
       padding,
-      theme,
+      theme
     }));
+    chart.animate(animate);
 
     if (!xAxis && !yAxis) {
       chart.axis(false);
@@ -96,32 +98,20 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     chart.legend(false);
-    const tooltipOption: Types.TooltipOption = {
-      showTitle: false,
-      showMarkers: true,
-      enterable: true,
-      domStyles: {
-        'g2-tooltip': { padding: '0px' },
-        'g2-tooltip-title': { display: 'none' },
-        'g2-tooltip-list-item': { margin: '4px' },
-      },
-    };
-    if (tooltipType === 'mini') {
-      tooltipOption.position = 'top';
-      tooltipOption.domStyles!['g2-tooltip'] = { padding: '0px', backgroundColor: 'transparent', boxShadow: 'none' };
-      tooltipOption.itemTpl = `<li>{value}</li>`;
-      tooltipOption.offset = 0;
-    }
-    chart.tooltip(tooltipOption);
+    chart.tooltip(genMiniTooltipOptions(tooltipType));
 
     chart
       .area()
       .position('x*y')
+      .color('x*y', (x, y) => {
+        const colorItem = this.data.find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color;
+      })
       .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
       .shape('smooth');
 
     if (line) {
-      chart.line().position('x*y').shape('smooth').tooltip(false);
+      chart.line().position('x*y').shape('smooth').color(borderColor).size(borderWidth).tooltip(false);
     }
 
     chart.on(`plot:click`, (ev: Event) => {
@@ -129,45 +119,14 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
+    this.changeData();
     chart.render();
-
-    this.attachChart();
   }
 
-  private attachChart() {
-    const { _chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
-    if (!_chart || !data || data.length <= 0) {
-      return;
-    }
-
-    const geoms = _chart.geometries;
-    geoms.forEach(g => g.color(color));
-    if (line) {
-      geoms[1].color(borderColor).size(borderWidth);
-    }
-
-    _chart.autoFit = fit;
-    _chart.height = height;
-    _chart.animate(animate);
-    _chart.padding = padding;
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
 
     _chart.changeData(data);
-  }
-
-  ngOnInit() {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { LazyService } from '@delon/util';
+import { Observable, of, throwError } from 'rxjs';
+
 import * as fs from 'file-saver';
-import { of, throwError } from 'rxjs';
+
+import { LazyService } from '@delon/util/other';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ZipModule } from './zip.module';
 import { ZipService } from './zip.service';
 
@@ -10,11 +14,11 @@ let isErrorRequest = false;
 let isClassZIP = false;
 let isErrorGenZip = false;
 class MockLazyService {
-  load() {
-    (window as any).JSZip = isClassZIP
+  load(): Promise<void> {
+    (window as NzSafeAny).JSZip = isClassZIP
       ? class JSZip {
-          file() {}
-          generateAsync() {
+          file(): void {}
+          generateAsync(): Promise<void> {
             return isErrorGenZip ? Promise.reject('') : Promise.resolve();
           }
         }
@@ -27,24 +31,24 @@ const DEFAULTMOCKJSZIP = {
   loadAsync: () => {
     return Promise.resolve();
   },
-  write: () => {},
+  write: () => {}
 };
 
 class MockHttpClient {
-  request() {
+  request(): Observable<null> {
     return isErrorRequest ? throwError(null) : of(null);
   }
 }
 
 describe('abc: zip', () => {
   let srv: ZipService;
-  function genModule() {
+  function genModule(): void {
     TestBed.configureTestingModule({
       imports: [ZipModule],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+        { provide: LazyService, useClass: MockLazyService }
+      ]
     });
     srv = TestBed.inject<ZipService>(ZipService);
   }
@@ -66,7 +70,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -81,7 +85,7 @@ describe('abc: zip', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
 
@@ -95,7 +99,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
   });
@@ -111,12 +115,12 @@ describe('abc: zip', () => {
       () => {
         expect(false).toBe(true);
         done();
-      },
+      }
     );
   });
 
   describe('#pushUrl', () => {
-    let zip: any;
+    let zip: NzSafeAny;
     beforeEach((done: () => void) => {
       isClassZIP = true;
       genModule();
@@ -134,7 +138,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be reject when bad request', (done: () => void) => {
@@ -147,13 +151,13 @@ describe('abc: zip', () => {
         () => {
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
   });
 
   describe('#save', () => {
-    let zip: any;
+    let zip: NzSafeAny;
     beforeEach((done: () => void) => {
       isClassZIP = true;
       genModule();
@@ -173,7 +177,7 @@ describe('abc: zip', () => {
         () => {
           expect(false).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be call callback', (done: () => void) => {
@@ -181,7 +185,7 @@ describe('abc: zip', () => {
       let count = 0;
       srv
         .save(zip, {
-          callback: () => ++count,
+          callback: () => ++count
         })
         .then(
           () => {
@@ -192,7 +196,7 @@ describe('abc: zip', () => {
           () => {
             expect(false).toBe(true);
             done();
-          },
+          }
         );
     });
     it('should be reject when generateAsync return error', (done: () => void) => {
@@ -207,7 +211,7 @@ describe('abc: zip', () => {
           expect(fs.saveAs).not.toHaveBeenCalled();
           expect(true).toBe(true);
           done();
-        },
+        }
       );
     });
     it('should be throw error when invalid zip', () => {

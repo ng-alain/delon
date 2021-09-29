@@ -4,12 +4,15 @@
     [attr.id]="id"
     [disabled]="disabled"
     [attr.disabled]="disabled"
-    [nzSize]="ui.size"
+    [nzSize]="ui.size!"
     [ngModel]="value"
-    (ngModelChange)="setValue($event)"
+    (ngModelChange)="change($event)"
     [attr.maxLength]="schema.maxLength || null"
     [attr.placeholder]="ui.placeholder"
     [nzAutosize]="autosize"
+    [nzBorderless]="ui.borderless"
+    (focus)="focus($event)"
+    (blur)="blur($event)"
   >
   </textarea>
 </sf-item-wrap>

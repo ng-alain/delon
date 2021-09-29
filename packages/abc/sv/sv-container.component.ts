@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { AlainConfigService, InputNumber } from '@delon/util';
+
+import { AlainConfigService } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'sv-container, [sv-container]',
@@ -11,13 +13,19 @@ import { AlainConfigService, InputNumber } from '@delon/util';
     '[class.sv__vertical]': `layout === 'vertical'`,
     '[class.sv__small]': `size === 'small'`,
     '[class.sv__large]': `size === 'large'`,
-    '[class.clearfix]': `true`,
+    '[class.clearfix]': `true`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SVContainerComponent {
+  static ngAcceptInputType_gutter: NumberInput;
+  static ngAcceptInputType_labelWidth: NumberInput;
+  static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_default: BooleanInput;
+  static ngAcceptInputType_noColon: BooleanInput;
+
   @Input() title: string | TemplateRef<void>;
   @Input() size: 'small' | 'large';
   /** 列表项间距，单位为 `px` */
@@ -26,7 +34,8 @@ export class SVContainerComponent {
   @Input() @InputNumber() labelWidth: number;
   /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
   @Input() @InputNumber() col: number;
-  @Input() default: boolean;
+  @Input() @InputBoolean() default: boolean;
+  @Input() @InputBoolean() noColon = false;
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sv', {
@@ -34,7 +43,7 @@ export class SVContainerComponent {
       gutter: 32,
       layout: 'horizontal',
       col: 3,
-      default: true,
+      default: true
     });
   }
 }

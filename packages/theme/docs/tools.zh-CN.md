@@ -14,10 +14,12 @@ ng-alain 认为这些工具类只会运用在内容区域，且秉承 Ant Design
 
 | 名称 | 公式 | 尺寸 | 说明 |
 | ---- | --- | --- | --- |
-| `xs` | $gutter / 2 | 4px | 超小号 |
-| `sm` | $gutter | 8px | 小号 |
-| `md` | $gutter * 2 | 16px | 中号 |
-| `lg` | $gutter * 3 | 24px | 大号 |
+| `xs` | $gutter / 2 | `4px` | 超小号 |
+| `sm` | $gutter | `8px` | 小号 |
+| `md` | $gutter * 2 | `16px` | 中号 |
+| `lg` | $gutter * 3 | `24px` | 大号 |
+| `xl` | $gutter * 4 | `32px` | 特大号 |
+| `xxl` | $gutter * 6 | `48px` | 超大号 |
 
 依这些规则，衍生出 `margin`、`padding`，其命名规则如下：
 
@@ -54,19 +56,19 @@ Ant Design 并没有按钮色这一说，而是以视觉效果为基准。默认
 而 ng-alain 依然不会破坏这种规则，但依 [色彩](//ant.design/docs/spec/colors-cn) 章节，产生了一种运用于文本、背景的色系类。
 
 | 名称 | 基本色 | 说明 |
-| ---- | --- | --- |
-| `red` | `#f5222d` | 薄暮：斗志、奔放 |
-| `volcano` | `#fa541c` | 火山：醒目、澎湃 |
-| `orange` | `#fa8c16` | 日暮：温暖、欢快 |
-| `gold` | `#faad14` | 金盏花：活力、积极 |
-| `yellow` | `#fadb14` | 日出：出生、阳光 |
-| `lime` | `#a0d911` | 青柠：自然、生机 |
-| `green` | `#52c41a` |  极光绿：健康、创新 |
-| `cyan` | `#13c2c2` | 明青：希望、坚强 |
-| `blue` | `#1890ff` | 拂晓蓝：包容、科技、普惠 |
-| `geekblue` | `#2f54eb` | 极客蓝：探索、钻研 |
-| `purple` | `#722ed1` | 酱紫：优雅、浪漫 |
-| `magenta` | `#eb2f96` | 法式洋红：平稳、中性 |
+|---|---|---|
+| `red`      | <div style="color:#fff;background-color:#f5222d;">#f5222d</div> | 薄暮：斗志、奔放        |
+| `volcano`  | <div style="color:#fff;background-color:#fa541c;">#fa541c</div> | 火山：醒目、澎湃        |
+| `orange`   | <div style="color:#fff;background-color:#fa8c16;">#fa8c16</div> | 日暮：温暖、欢快        |
+| `gold`     | <div style="color:#fff;background-color:#faad14;">#faad14</div> | 金盏花：活力、积极      |
+| `yellow`   | <div style="color:#fff;background-color:#fadb14;">#fadb14</div> | 日出：出生、阳光        |
+| `lime`     | <div style="color:#fff;background-color:#a0d911;">#a0d911</div> | 青柠：自然、生机        |
+| `green`    | <div style="color:#fff;background-color:#52c41a;">#f5222d</div> | 极光绿：健康、创新      |
+| `cyan`     | <div style="color:#fff;background-color:#13c2c2;">#13c2c2</div> | 明青：希望、坚强        |
+| `blue`     | <div style="color:#fff;background-color:#1890ff;">#1890ff</div> | 拂晓蓝：包容、科技、普惠 |
+| `geekblue` | <div style="color:#fff;background-color:#2f54eb;">#2f54eb</div> | 极客蓝：探索、钻研      |
+| `purple`   | <div style="color:#fff;background-color:#722ed1;">#722ed1</div> | 酱紫：优雅、浪漫        |
+| `magenta`  | <div style="color:#fff;background-color:#eb2f96;">#eb2f96</div> | 法式洋红：平稳、中性    |
 
 Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生色。这些颜色基本可以满足中后台设计中对于颜色的需求。
 
@@ -110,10 +112,14 @@ Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生
 
 | 别名 | 色系 |
 | ---- | --- |
-| `primary` | `blue` |
-| `success` | `green` |
-| `error` | `red` |
-| `warning` | `yellow` |
+| `primary` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `success` | `@green-6` <div style="color:#fff;background-color:#52c41a;">#52c41a</div> |
+| `error` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `warning` | `@gold-6` <div style="color:#fff;background-color:#faad14;">#faad14</div> |
+| `info` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `processing` | `@blue-6` <div style="color:#fff;background-color:#1890ff;">#1890ff</div> |
+| `highlight` | `@red-5` <div style="color:#fff;background-color:#ff4d4f;">#ff4d4f</div> |
+| `normal` | `#d9d9d9` <div style="color:#fff;background-color:#d9d9d9;">#d9d9d9</div> |
 
 示例：
 

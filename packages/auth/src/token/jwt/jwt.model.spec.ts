@@ -10,7 +10,7 @@ describe('auth: jwt.model', () => {
     sub: '1',
     name: 'cipchk',
     admin: true,
-    exp: 4670409600,
+    exp: 4670409600
   };
   const MAXTIME = new Date(2118, 1, 1, 0, 0, 0, 0);
 

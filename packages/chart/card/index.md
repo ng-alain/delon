@@ -2,7 +2,7 @@
 title: g2-card
 subtitle: 图表卡片
 cols: 2
-type: Components
+type: G2
 module: import { G2CardModule } from '@delon/chart/card';
 ---
 

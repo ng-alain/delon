@@ -30,7 +30,7 @@ export class DemoComponent implements OnInit {
   types = ['url', 'email', 'tel', 'cn', 'vcard'];
   value = '';
   type = '';
-  change(type: string) {
+  change(type: string): void {
     this.type = type;
     switch (type) {
       case 'url':

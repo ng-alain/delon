@@ -1,4 +1,7 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 
 /**
@@ -30,8 +33,10 @@ export enum ReuseTabMatchMode {
   /**
    * 对所有路由有效，可以配合 `excludes` 过滤无须复用路由
    */
-  URL,
+  URL
 }
+
+export type ReuseTabRouteParamMatchMode = 'strict' | 'loose';
 
 export interface ReuseTitle {
   text?: string;
@@ -61,7 +66,7 @@ export interface ReuseTabNotify {
   title?: ReuseTitle;
   item?: ReuseTabCached;
   list?: ReuseTabCached[];
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface ReuseItem {
@@ -112,8 +117,10 @@ export interface ReuseComponentRef {
 
 export type ReuseHookTypes = '_onReuseInit' | '_onReuseDestroy';
 
+export type ReuseHookOnReuseInitType = 'init' | 'refresh';
+
 export interface ReuseComponentInstance {
-  _onReuseInit: () => void;
+  _onReuseInit: (type: ReuseHookOnReuseInitType) => void;
   _onReuseDestroy: () => void;
   destroy: () => void;
 }

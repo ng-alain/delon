@@ -21,7 +21,8 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[col]` | 指定信息最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定 | `'1','2','3','4','5','6'` | `3` | ✅ |
 | `[labelWidth]` | 默认标签文本宽度 | `number` | - | ✅ |
 | `[default]` | 默认是否显示默认文本 | `boolean` | `true` | ✅ |
-| `[title]` | 标题 | `string,TemplateRef<void>` | - |  |
+| `[title]` | 标题 | `string,TemplateRef<void>` | - | - |
+| `[noColon]` | 默认是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
 ### sv
 
@@ -34,7 +35,20 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[type]` | 类型 | `'primary','success','danger','warning'` | - |
 | `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |
+| `[noColon]` | 是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
 ### sv-title
 
 用于展示标题，单独一行。
+
+### sv-value
+
+值展示。
+
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[prefix]` | 前缀 | `string` | - |
+| `[unit]` | 单位 | `string` | - |
+| `[tooltip]` | 文字提示内容 | `string, TemplateRef<void>` | - |
+| `[size]` | 大小 | `'large','small','default'` | `default` |

@@ -19,14 +19,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <sv-container col="4">
-    <sv label="primary" type="primary">hhhh</sv>
-    <sv label="success" type="success">hhhh</sv>
-    <sv label="warning" type="warning">hhhh</sv>
-    <sv label="danger" type="danger">hhhh</sv>
-  </sv-container>
+    <sv-container col="4">
+      <sv label="primary" type="primary">hhhh</sv>
+      <sv label="success" type="success">hhhh</sv>
+      <sv label="warning" type="warning">hhhh</sv>
+      <sv label="danger" type="danger">hhhh</sv>
+    </sv-container>
   `,
 })
-export class DemoComponent {
-}
+export class DemoComponent {}
 ```

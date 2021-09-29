@@ -11,10 +11,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <trend flag="up" reverseColor>12%</trend>
-  <trend flag="down" reverseColor class="ml-sm">11%</trend>
-  `
+    <trend flag="up" reverseColor>12%</trend>
+    <trend flag="down" reverseColor class="ml-sm">11%</trend>
+  `,
 })
-export class DemoComponent {
-}
+export class DemoComponent {}
 ```

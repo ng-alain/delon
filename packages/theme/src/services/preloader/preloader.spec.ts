@@ -1,7 +1,9 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { preloaderFinished } from './preloader';
 
 describe('theme: preloader', () => {
-  let cached: any = {};
+  let cached: NzSafeAny = {};
 
   beforeEach(() => {
     cached = {};
@@ -13,11 +15,11 @@ describe('theme: preloader', () => {
       cached[type] = {
         className: [],
         style: {
-          overflow: '',
+          overflow: ''
         },
-        addEventListener: (_key: string, fn: any) => {
+        addEventListener: (_key: string, fn: NzSafeAny) => {
           fn();
-        },
+        }
       };
       return cached[type];
     });
@@ -26,7 +28,7 @@ describe('theme: preloader', () => {
     preloaderFinished();
     expect(body.style.overflow).toBe('hidden');
 
-    (window as any).appBootstrap();
+    (window as NzSafeAny).appBootstrap();
     setTimeout(() => {
       expect(body.style.overflow).toBe('');
       expect(preloader.className).toContain('preloader-hidden');
@@ -41,17 +43,17 @@ describe('theme: preloader', () => {
       cached[type] = {
         className: [],
         style: {
-          overflow: '',
+          overflow: ''
         },
-        addEventListener: (_key: string, fn: any) => {
+        addEventListener: (_key: string, fn: NzSafeAny) => {
           fn();
-        },
+        }
       };
       return cached[type];
     });
 
     preloaderFinished();
-    (window as any).appBootstrap();
+    (window as NzSafeAny).appBootstrap();
     setTimeout(() => {
       expect(document.querySelector('.preloader')).toBeNull();
       done();

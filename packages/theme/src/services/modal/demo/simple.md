@@ -15,8 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { DrawerHelper } from '@delon/theme';
-import { DemoDrawerComponent } from '@shared';
+import { ModalHelper } from '@delon/theme';
+import { DemoModalComponent } from '@shared';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -27,16 +27,16 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   `,
 })
 export class DemoComponent {
-  constructor(private modalHelper: DrawerHelper, private msg: NzMessageService) {}
+  constructor(private modalHelper: ModalHelper, private msg: NzMessageService) {}
 
   open(): void {
-    this.modalHelper.create('View', DemoDrawerComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
+    this.modalHelper.create(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
       this.msg.info(res);
     });
   }
 
   static(): void {
-    this.modalHelper.static('View', DemoDrawerComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
+    this.modalHelper.createStatic(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {
       this.msg.info(res);
     });
   }

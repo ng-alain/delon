@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { AlainThemeModule } from '../../theme.module';
 
 describe('Pipe: keys', () => {
   let fixture: ComponentFixture<TestComponent>;
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     if (template) TestBed.overrideTemplate(TestComponent, template);
     fixture = TestBed.createComponent(TestComponent);
@@ -43,12 +45,12 @@ describe('Pipe: keys', () => {
     <ul id="result">
       <li *ngFor="let item of data | keys">{{ item.key }}</li>
     </ul>
-  `,
+  `
 })
 class TestComponent {
-  data: any = {
+  data: NzSafeAny = {
     name: 'cipchk',
-    address: { city: 'shanghai', district: 'changning' },
+    address: { city: 'shanghai', district: 'changning' }
   };
   dist = { 1: '正常', 2: '删除' };
 }

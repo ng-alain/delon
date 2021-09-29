@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
 import { map, tap } from 'rxjs/operators';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, getEnum } from '../../utils';
@@ -11,12 +14,12 @@ import { SFMentionWidgetSchema } from './schema';
   selector: 'sf-mention',
   templateUrl: './mention.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   @ViewChild('mentions', { static: true }) private mentionChild: NzMentionComponent;
   data: SFSchemaEnum[] = [];
-  i: any;
+  i: NzSafeAny;
   loading = false;
 
   ngOnInit(): void {
@@ -26,7 +29,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
       notFoundContent: notFoundContent || '无匹配结果，轻敲空格完成输入',
       placement: placement || 'bottom',
       prefix: prefix || '@',
-      autosize: typeof autosize === 'undefined' ? true : this.ui.autosize,
+      autosize: typeof autosize === 'undefined' ? true : this.ui.autosize
     };
 
     const { minimum, maximum } = this.schema;
@@ -43,22 +46,22 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
           return [{ keyword: 'mention', message: `最多提及 ${max} 次` }];
         }
         return null;
-      }) as any;
+      }) as NzSafeAny;
     }
   }
 
-  reset(_value: SFValue) {
+  reset(_value: SFValue): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
-  _select(options: any) {
+  _select(options: NzSafeAny): void {
     if (this.ui.select) this.ui.select(options);
   }
 
-  _search(option: MentionOnSearchTypes) {
+  _search(option: MentionOnSearchTypes): void {
     if (typeof this.ui.loadData !== 'function') return;
 
     this.loading = true;
@@ -66,7 +69,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
       .loadData(option)
       .pipe(
         tap(() => (this.loading = false)),
-        map(res => getEnum(res, null, this.schema.readOnly!)),
+        map(res => getEnum(res, null, this.schema.readOnly!))
       )
       .subscribe(res => {
         this.data = res;

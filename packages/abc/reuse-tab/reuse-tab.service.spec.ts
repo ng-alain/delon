@@ -1,24 +1,26 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 import { MenuService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { filter } from 'rxjs/operators';
+
 import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 class MockMenuService {
-  getPathByUrl(url: string) {
+  getPathByUrl(url: string): Array<{ text: string }> {
     return url === '/a/0' ? [] : [{ text: `标题` }];
   }
 }
 class MockRouter {
   navigateByUrl = jasmine.createSpy();
-  get events() {
+  get events(): NzSafeAny {
     return {
       subscribe: () => {
         return { unsubscribe: () => {} };
-      },
+      }
     };
   }
 }
@@ -30,29 +32,29 @@ describe('abc: reuse-tab(service)', () => {
 
   afterEach(() => srv.ngOnDestroy());
 
-  function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]) {
+  function genModule(providers: NzSafeAny[] = [{ provide: MenuService, useClass: MockMenuService }]): void {
     TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
+          deps: [ReuseTabService]
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
-        { provide: Router, useFactory: () => new MockRouter() },
-      ].concat(providers),
+        { provide: Router, useFactory: () => new MockRouter() }
+      ].concat(providers)
     });
     srv = TestBed.inject<ReuseTabService>(ReuseTabService);
     menuSrv = TestBed.inject<MenuService>(MenuService, undefined);
     router = TestBed.inject<Router>(Router) as NzSafeAny;
   }
 
-  function genCached(count: number, urlTpl: string = `a/{index}`) {
+  function genCached(count: number, urlTpl: string = `a/{index}`): void {
     srv.clear();
     Array(count)
       .fill({})
-      .forEach((_item: any, index: number) => {
+      .forEach((_item: NzSafeAny, index: number) => {
         srv.store(getSnapshot(index + 1, urlTpl), { a: 1 });
       });
   }
@@ -61,11 +63,11 @@ describe('abc: reuse-tab(service)', () => {
    * 模拟 Snapshot
    * - 1 => a/1
    */
-  function getSnapshot(index: number, urlTpl: string = `a/{index}`) {
+  function getSnapshot(index: number, urlTpl: string = `a/{index}`): NzSafeAny {
     return {
       routeConfig: {},
-      url: [urlTpl.replace(`{index}`, index + '')],
-    } as any;
+      url: [urlTpl.replace(`{index}`, `${index}`)]
+    } as NzSafeAny;
   }
 
   describe('[property]', () => {
@@ -214,7 +216,7 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get title from route data', () => {
         const title = 'aa';
-        expect(srv.getTitle('/', { data: { title } } as any).text).toBe(title);
+        expect(srv.getTitle('/', { data: { title } } as NzSafeAny).text).toBe(title);
       });
       it('should used ReuseTitle set title via service', () => {
         genCached(1, '/');
@@ -240,7 +242,7 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get closable from route data', () => {
         const closable = false;
-        expect(srv.getClosable('/', { data: { reuseClosable: closable } } as any)).toBe(closable);
+        expect(srv.getClosable('/', { data: { reuseClosable: closable } } as NzSafeAny)).toBe(closable);
       });
       it('should get closable from menu data', () => {
         const spy = spyOn(menuSrv, 'getPathByUrl');
@@ -294,8 +296,8 @@ describe('abc: reuse-tab(service)', () => {
       it('should be destroy component instance when remove a page', () => {
         const instance = {
           componentRef: {
-            destroy: jasmine.createSpy('destroy'),
-          },
+            destroy: jasmine.createSpy('destroy')
+          }
         };
         srv.store(getSnapshot(3), instance);
         srv.close('/a/3');
@@ -356,7 +358,7 @@ describe('abc: reuse-tab(service)', () => {
           expect(res!.active).toBe('refresh');
           _$.unsubscribe();
         },
-        () => expect(false).toBe(true),
+        () => expect(false).toBe(true)
       );
       srv.refresh(true);
     });
@@ -381,8 +383,8 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.getKeepingScroll('')).toBe(false);
       });
       it('should get keepingScroll from route data', () => {
-        expect(srv.getKeepingScroll('/', { data: { keepingScroll: false } } as any)).toBe(false);
-        expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as any)).toBe(true);
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: false } } as NzSafeAny)).toBe(false);
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as NzSafeAny)).toBe(true);
       });
       it('should get keepingScroll from menu data', () => {
         const spy = spyOn(menuSrv, 'getPathByUrl');
@@ -423,12 +425,12 @@ describe('abc: reuse-tab(service)', () => {
     it(`should route data first`, () => {
       const snapshotTrue = getSnapshot(0);
       snapshotTrue.data = {
-        reuse: true,
+        reuse: true
       };
       expect(srv.shouldDetach(snapshotTrue)).toBe(true);
       const snapshotFalse = getSnapshot(0);
       snapshotFalse.data = {
-        reuse: false,
+        reuse: false
       };
       expect(srv.shouldDetach(snapshotFalse)).toBe(false);
     });
@@ -467,9 +469,9 @@ describe('abc: reuse-tab(service)', () => {
       const handle = {
         componentRef: {
           instance: {
-            _onReuseDestroy: jasmine.createSpy('_onReuseDestroy'),
-          },
-        },
+            _onReuseDestroy: jasmine.createSpy('_onReuseDestroy')
+          }
+        }
       };
       srv.store(getSnapshot(3), handle);
       expect(handle.componentRef.instance._onReuseDestroy).toHaveBeenCalled();
@@ -499,7 +501,7 @@ describe('abc: reuse-tab(service)', () => {
     });
     it('should be retrieve when is cached', () => {
       genCached(1);
-      const handle: any = srv.retrieve(getSnapshot(1));
+      const handle: NzSafeAny = srv.retrieve(getSnapshot(1));
       expect(handle).not.toBeNull();
       expect(handle.a).toBe(1);
     });
@@ -511,19 +513,21 @@ describe('abc: reuse-tab(service)', () => {
       snapshot.routeConfig.loadChildren = {};
       expect(srv.retrieve(getSnapshot(2))).toBeNull();
     });
-    it(`should be run _onReuseInit event hook`, () => {
+    it(`should be run _onReuseInit event hook`, fakeAsync(() => {
       const handle = {
         componentRef: {
           instance: {
-            _onReuseInit: jasmine.createSpy('_onReuseInit'),
-          },
-        },
+            _onReuseInit: jasmine.createSpy('_onReuseInit')
+          }
+        }
       };
       const snapshot = getSnapshot(3);
       // handle
       srv.store(snapshot, handle);
-      srv.shouldAttach(snapshot);
+      // mock activate router
+      srv.store(snapshot, null);
+      tick(101);
       expect(handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
-    });
+    }));
   });
 });

@@ -11,7 +11,7 @@ module: import { MediaModule } from '@delon/abc/media';
 
 ## 依赖
 
-由于 plyr 脚本大小以及对视频播放并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用本地路径），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js`、`https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css`。
+由于 plyr 脚本大小以及对视频播放并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用[本地路径](https://angular.cn/guide/workspace-config#asset-config)），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js`、`https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css`。
 
 ## API
 

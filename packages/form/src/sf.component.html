@@ -2,20 +2,25 @@
   <ng-content></ng-content>
 </ng-template>
 <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-  <sf-item [formProperty]="rootProperty"></sf-item>
+  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty"></sf-item>
   <ng-container *ngIf="button !== 'none'; else con">
-    <nz-form-item [ngClass]="_btn.render!.class" class="sf-btns" [fixed-label]="_btn.render!.spanLabelFixed">
+    <nz-form-item
+      *ngIf="_btn.render"
+      [ngClass]="_btn.render!.class!"
+      class="sf-btns"
+      [fixed-label]="_btn.render!.spanLabelFixed!"
+    >
       <div
         nz-col
         class="ant-form-item-control"
-        [nzSpan]="_btn.render!.grid!.span"
-        [nzOffset]="_btn.render!.grid!.offset"
-        [nzXs]="_btn.render!.grid!.xs"
-        [nzSm]="_btn.render!.grid!.sm"
-        [nzMd]="_btn.render!.grid!.md"
-        [nzLg]="_btn.render!.grid!.lg"
-        [nzXl]="_btn.render!.grid!.xl"
-        [nzXXl]="_btn.render!.grid!.xxl"
+        [nzSpan]="btnGrid.span"
+        [nzOffset]="btnGrid.offset"
+        [nzXs]="btnGrid.xs"
+        [nzSm]="btnGrid.sm"
+        [nzMd]="btnGrid.md"
+        [nzLg]="btnGrid.lg"
+        [nzXl]="btnGrid.xl"
+        [nzXXl]="btnGrid.xxl"
       >
         <div class="ant-form-item-control-input">
           <div class="ant-form-item-control-input-content">
@@ -24,18 +29,18 @@
                 type="submit"
                 nz-button
                 data-type="submit"
-                [nzType]="_btn.submit_type"
-                [nzSize]="_btn.render!.size"
+                [nzType]="_btn.submit_type!"
+                [nzSize]="_btn.render!.size!"
                 [nzLoading]="loading"
                 [disabled]="liveValidate && !valid"
               >
                 <i
                   *ngIf="_btn.submit_icon"
                   nz-icon
-                  [nzType]="_btn.submit_icon.type"
-                  [nzTheme]="_btn.submit_icon.theme"
-                  [nzTwotoneColor]="_btn.submit_icon.twoToneColor"
-                  [nzIconfont]="_btn.submit_icon.iconfont"
+                  [nzType]="_btn.submit_icon.type!"
+                  [nzTheme]="_btn.submit_icon.theme!"
+                  [nzTwotoneColor]="_btn.submit_icon.twoToneColor!"
+                  [nzIconfont]="_btn.submit_icon.iconfont!"
                 ></i>
                 {{ _btn.submit }}
               </button>
@@ -44,18 +49,18 @@
                 type="button"
                 nz-button
                 data-type="reset"
-                [nzType]="_btn.reset_type"
-                [nzSize]="_btn.render!.size"
+                [nzType]="_btn.reset_type!"
+                [nzSize]="_btn.render!.size!"
                 [disabled]="loading"
                 (click)="reset(true)"
               >
                 <i
                   *ngIf="_btn.reset_icon"
                   nz-icon
-                  [nzType]="_btn.reset_icon.type"
-                  [nzTheme]="_btn.reset_icon.theme"
-                  [nzTwotoneColor]="_btn.reset_icon.twoToneColor"
-                  [nzIconfont]="_btn.reset_icon.iconfont"
+                  [nzType]="_btn.reset_icon.type!"
+                  [nzTheme]="_btn.reset_icon.theme!"
+                  [nzTwotoneColor]="_btn.reset_icon.twoToneColor!"
+                  [nzIconfont]="_btn.reset_icon.iconfont!"
                 ></i>
                 {{ _btn.reset }}
               </button>

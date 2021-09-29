@@ -19,38 +19,42 @@ Specifying `type="title"` means to customize the column for the title. Additiona
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
 
 @Component({
-  selector: 'components-st-render',
+  selector: 'app-demo',
   template: `
-  <div class="mb-md">
-    <nz-checkbox-group [(ngModel)]="customColumns" name="customColumns" (ngModelChange)="st.resetColumns({ emitReload: true })"></nz-checkbox-group>
-  </div>
-  <st #st [data]="users" [columns]="columns">
-    <ng-template st-row="customTitle" type="title" let-c>
-      {{ c.title.text }}
-      <span nz-dropdown [nzDropdownMenu]="menuTpl" nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight">
-        <i nz-icon nzType="down"></i>
-      </span>
-      <nz-dropdown-menu #menuTpl="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown p-sm">
-          <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" name="searchValue" class="width-sm mr-sm">
-          <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
-        </div>
-      </nz-dropdown-menu>
-    </ng-template>
-    <ng-template st-row="custom" let-item let-index="index">
-      <span nz-tooltip [nzTooltipTitle]="'年龄：' + item.age">tooltip: {{item.age}}-{{index}}</span>
-    </ng-template>
-  </st>
+    <div class="mb-md">
+      <nz-checkbox-group
+        [(ngModel)]="customColumns"
+        name="customColumns"
+        (ngModelChange)="st.resetColumns({ emitReload: true })"
+      ></nz-checkbox-group>
+    </div>
+    <st #st [data]="users" [columns]="columns">
+      <ng-template st-row="customTitle" type="title" let-c>
+        {{ c.title.text }}
+        <span nz-dropdown [nzDropdownMenu]="menuTpl" nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight">
+          <i nz-icon nzType="down"></i>
+        </span>
+        <nz-dropdown-menu #menuTpl="nzDropdownMenu">
+          <div class="ant-table-filter-dropdown p-sm">
+            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" name="searchValue" class="width-sm mr-sm" />
+            <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
+          </div>
+        </nz-dropdown-menu>
+      </ng-template>
+      <ng-template st-row="custom" let-item let-index="index">
+        <span nz-tooltip [nzTooltipTitle]="'年龄：' + item.age">tooltip: {{ item.age }}-{{ index }}</span>
+      </ng-template>
+    </st>
   `,
 })
-export class ComponentsStRenderComponent {
+export class DemoComponent {
   searchValue: string;
-  users: any[] = Array(10)
+  users: STData[] = Array(10)
     .fill({})
-    .map((_item: any, idx: number) => {
+    .map((_, idx) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,
@@ -73,6 +77,7 @@ export class ComponentsStRenderComponent {
     { label: '年龄', value: 'age', checked: true },
     { label: '自定义', value: 'custom', checked: true },
   ];
+
   isChoose(key: string): boolean {
     return !!this.customColumns.find(w => w.value === key && w.checked);
   }

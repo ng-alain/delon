@@ -59,7 +59,7 @@ export class DemoComponent implements OnInit {
 
   constructor(private msg: NzMessageService) {}
 
-  submit(value: any) {
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 

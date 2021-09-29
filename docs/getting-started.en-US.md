@@ -2,6 +2,7 @@
 order: 10
 title: Getting Started
 type: Basic
+i18n: need-update
 ---
 
 ## Foreword
@@ -42,6 +43,7 @@ ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
 npm start
+# Or use HMR mode by: npm run hmr
 ```
 
 > Please refer to [Schematics](/cli) for more details.
@@ -53,6 +55,7 @@ git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
 yarn
 npm start
+# Or use HMR mode by: npm run hmr
 ```
 
 > Note: Installing with the CLI is a clean scaffolding; using clone the git repository include all example pages.

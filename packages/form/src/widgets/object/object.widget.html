@@ -35,15 +35,16 @@
   [nzExtra]="ui.cardExtra"
   [nzSize]="ui.cardSize || 'small'"
   [nzActions]="ui.cardActions || []"
-  [nzBodyStyle]="ui.cardBodyStyle"
+  [nzBodyStyle]="ui.cardBodyStyle!"
   [nzBordered]="ui.cardBordered || true"
+  [nzBorderless]="ui.cardBorderless || false"
   class="sf__object-card"
   [class.sf__object-card-fold]="!expand"
 >
   <ng-template #cardTitleTpl>
     <div [class.point]="showExpand" (click)="changeExpand()">
       <i *ngIf="showExpand" nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs"></i>
-      {{title}}
+      {{ title }}
     </div>
   </ng-template>
   <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }"></ng-template>

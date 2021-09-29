@@ -1,15 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+
+import { AlainAuthConfig } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
 describe('auth: token.service', () => {
   let service: ITokenService;
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
   const JWTVALUE: ITokenModel = {
-    token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`,
+    token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`
   } as ITokenModel;
 
   beforeEach(() => {
@@ -79,8 +82,53 @@ describe('auth: token.service', () => {
       if (!res) return;
       expect(res).not.toBeNull();
       expect(res.token).toBe(VALUE.token);
+      expect(service.get()?.token).toBe(VALUE.token);
       done();
     });
     service.set(VALUE);
+  });
+
+  describe('#refresh', () => {
+    function updateConfig(config?: AlainAuthConfig): void {
+      const srvAny: NzSafeAny = service;
+      srvAny._options = { ...srvAny._options, enabledRefresh: true, ...config } as AlainAuthConfig;
+    }
+
+    beforeEach(() => updateConfig());
+
+    afterEach(() => (service as NzSafeAny).ngOnDestroy());
+
+    it('should be working', done => {
+      updateConfig({ refreshTime: 1, refreshOffset: 1 });
+      service.refresh.subscribe(() => {
+        expect(true).toBe(true);
+        done();
+      });
+      const expired = +new Date() + 20;
+      service.set({ token: 'a', expired });
+    });
+
+    it('should be working of jwt', done => {
+      updateConfig({ refreshTime: 1, refreshOffset: 1 });
+      service.refresh.subscribe(() => {
+        expect(true).toBe(true);
+        done();
+      });
+      const exp = +new Date() + 20;
+      service.set({ token: 'a', exp } as JWTTokenModel);
+    });
+
+    it('should be can not trigger refresh when expired is not present', done => {
+      updateConfig({ refreshTime: 1, refreshOffset: 1 });
+      service.refresh.subscribe(() => {
+        expect(true).toBe(false);
+        done();
+      });
+      service.set({ token: 'a', expired: 0 });
+      setTimeout(() => {
+        expect(true).toBe(true);
+        done();
+      });
+    });
   });
 });

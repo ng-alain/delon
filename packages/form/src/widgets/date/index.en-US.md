@@ -14,7 +14,7 @@ To select or input a date.
   - `date-time` default is `yyyy-MM-ddTHH:mm:ssZ`
   - `date`, `full-date` default is `yyyy-MM-dd`
   - `time`, `full-time` default is `HH:mm:ss`
-  - *Non-standard:* `week` default is `yyyy-WW`
+  - *Non-standard:* `week` default is `yyyy-ww`
   - *Non-standard:* `month` default is `yyyy-MM`
 - When `schema.format` is not specified, the data formatting (Allows you to reassign default values via [Global Configuration](/docs/global-config)) is determined by the `schema.type` type:
   - `string` default is `yyyy-MM-dd HH:mm:ss`
@@ -34,6 +34,7 @@ To select or input a date.
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[mode]` | Render mode | `date,week,month,year` | `date` |
+| `[rangeMode]` | Set picker mode of range picker | `date,week,month,year` | `date` |
 | `[size]` | Size of the `nz-date-picker` | `default,large,small` | - |
 | `[placeholder]` | Placeholder of date input | `string` | - |
 | `[displayFormat]` | Display format([nzFormat](https://ng.ant.design/components/date-picker/en#api)) | `string` | `yyyy-MM-dd HH:mm:ss` |
@@ -49,5 +50,7 @@ To select or input a date.
 | `[renderExtraFooter]` | render extra footer in panel | `string` | - |
 | `[showTime]` | to provide an additional time selection, the `object` type is [TimePickerOptions](https://ng.ant.design/components/time-picker/en#api) | `object,boolean` | `true` |
 | `[showToday]` | whether to show "Today" button | `boolean` | `true` |
+| `[inputReadOnly]` | Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices) | `boolean` | `false` |
+| `[inline]` | Inline mode of the date picker | `boolean` | `false` |
 | `[onOk]` | callback when click ok button | `(data: Date | Date[]) => void` | - |
 | `[change]` | Date change callback | `(data: Date | Date[]) => void` | - |

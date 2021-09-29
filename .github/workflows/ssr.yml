@@ -4,7 +4,7 @@ on: push
 
 jobs:
   website:
-    # if: "contains(github.event.commits[0].message, 'ssr')"
+    if: "startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -13,8 +13,12 @@ jobs:
       - name: install
         run: npm install
 
-      - name: build
+      - name: pre-build
         run: |
-          node scripts/ci/build-no-lvy
           npm run ssr:build
-          ls -al ./src/dist
+
+      # - name: to-delon-builds
+      #   run: |
+      #     bash ./scripts/ci/build-artifacts-site.sh -ssr
+      #   env:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}

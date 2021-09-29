@@ -4,6 +4,10 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "auth",
-    "entryFile": "public_api.ts"
-  }
+    "entryFile": "index.ts",
+    "umdModuleIds": {
+      "@delon/util": "delon.util"
+    }
+  },
+  "allowedNonPeerDependencies": ["@delon/util"]
 }

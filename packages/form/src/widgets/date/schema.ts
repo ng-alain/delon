@@ -1,12 +1,22 @@
-import { DisabledDateFn, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { DisabledDateFn, DisabledTimeFn, NzDatePickerSizeType, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
+
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFDateWidgetSchema extends SFUISchemaItem {
   mode?: 'date' | 'week' | 'month' | 'year' | 'range';
 
-  size?: SFDLSSize;
+  size?: NzDatePickerSizeType;
 
   placeholder?: string;
+
+  /**
+   * Inline mode of the date picker
+   *
+   * 内联模式
+   */
+  inline?: boolean;
 
   /**
    * **Just only support date-fns**
@@ -43,17 +53,22 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   /**
    * Localization configuration
    */
-  locale?: {};
+  locale?: NzDatePickerI18nInterface;
 
   /**
    * To customize the style of the popup calendar
    */
-  popupStyle?: {};
+  popupStyle?: { [klass: string]: NzSafeAny };
 
   /**
    * To customize the className of the popup calendar
    */
   dropdownClassName?: string;
+
+  /**
+   * Set picker mode of range picker, default: `date`
+   */
+  rangeMode?: 'date' | 'week' | 'month' | 'year';
 
   /**
    * A callback emitter, can be executed whether the popup calendar is popped up or closed
@@ -84,6 +99,11 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
    * Whether to show "Today" button, default: `true`
    */
   showToday?: boolean;
+
+  /**
+   * Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices), default: `false`
+   */
+  inputReadOnly?: boolean;
 
   /**
    * Callback when click ok button

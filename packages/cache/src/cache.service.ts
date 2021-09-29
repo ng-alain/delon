@@ -1,34 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { AlainCacheConfig, AlainConfigService } from '@delon/util';
-import addSeconds from 'date-fns/addSeconds';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+
+import { addSeconds } from 'date-fns';
+
+import { AlainCacheConfig, AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { CacheNotifyResult, CacheNotifyType, ICache, ICacheStore } from './interface';
 import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
 @Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
-  private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<string, BehaviorSubject<CacheNotifyResult>>();
+  private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<
+    string,
+    BehaviorSubject<CacheNotifyResult>
+  >();
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
   private freqTime: NzSafeAny;
   private cog: AlainCacheConfig;
 
-  constructor(cogSrv: AlainConfigService, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
+  constructor(
+    cogSrv: AlainConfigService,
+    @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore,
+    private http: HttpClient
+  ) {
     this.cog = cogSrv.merge('cache', {
       mode: 'promise',
       reName: '',
       prefix: '',
-      meta_key: '__cache_meta',
+      meta_key: '__cache_meta'
     })!;
     this.loadMeta();
     this.startExpireNotify();
   }
 
-  private deepGet(obj: NzSafeAny, path: string[], defaultValue?: NzSafeAny) {
+  private deepGet(obj: NzSafeAny, path: string[], defaultValue?: NzSafeAny): NzSafeAny {
     if (!obj) return defaultValue;
     if (path.length <= 1) {
       const checkObj = path.length ? obj[path[0]] : obj;
@@ -39,32 +49,32 @@ export class CacheService implements OnDestroy {
 
   // #region meta
 
-  private pushMeta(key: string) {
+  private pushMeta(key: string): void {
     if (this.meta.has(key)) return;
     this.meta.add(key);
     this.saveMeta();
   }
 
-  private removeMeta(key: string) {
+  private removeMeta(key: string): void {
     if (!this.meta.has(key)) return;
     this.meta.delete(key);
     this.saveMeta();
   }
 
-  private loadMeta() {
+  private loadMeta(): void {
     const ret = this.store.get(this.cog.meta_key!);
     if (ret && ret.v) {
       (ret.v as string[]).forEach(key => this.meta.add(key));
     }
   }
 
-  private saveMeta() {
+  private saveMeta(): void {
     const metaData: string[] = [];
     this.meta.forEach(key => metaData.push(key));
     this.store.set(this.cog.meta_key!, { v: metaData, e: 0 });
   }
 
-  getMeta() {
+  getMeta(): Set<string> {
     return this.meta;
   }
 
@@ -89,13 +99,13 @@ export class CacheService implements OnDestroy {
    * - `set('data/1', 1)`
    * - `set('data/1', 1, { expire: 10 })`
    */
-  set(key: string, data: {}, options?: { type?: 's'; expire?: number }): void;
+  set(key: string, data: unknown, options?: { type?: 's'; expire?: number }): void;
   /**
    * Persistent cached simple object and specify storage type, for example caching in memory:
    * - `set('data/1', 1, { type: 'm' })`
    * - `set('data/1', 1, { type: 'm', expire: 10 })`
    */
-  set(key: string, data: {}, options: { type: 'm' | 's'; expire?: number }): void;
+  set(key: string, data: unknown, options: { type: 'm' | 's'; expire?: number }): void;
   /**
    * 缓存对象
    */
@@ -109,14 +119,14 @@ export class CacheService implements OnDestroy {
        * 过期时间，单位 `秒`
        */
       expire?: number;
-    } = {},
+    } = {}
   ): NzSafeAny {
     let e = 0;
     const { type, expire } = this.cog;
     options = {
       type,
       expire,
-      ...options,
+      ...options
     };
     if (options.expire) {
       e = addSeconds(new Date(), options.expire).valueOf();
@@ -128,11 +138,11 @@ export class CacheService implements OnDestroy {
     return data.pipe(
       tap((v: NzSafeAny) => {
         this.save(options.type!, key, { v, e });
-      }),
+      })
     );
   }
 
-  private save(type: 'm' | 's', key: string, value: ICache) {
+  private save(type: 'm' | 's', key: string, value: ICache): void {
     if (type === 'm') {
       this.memory.set(key, value);
     } else {
@@ -153,7 +163,7 @@ export class CacheService implements OnDestroy {
       mode: 'promise';
       type?: 'm' | 's';
       expire?: number;
-    },
+    }
   ): Observable<T>;
   /** 获取缓存数据，若 `key` 不存在则 `key` 作为HTTP请求缓存后返回 */
   get(
@@ -162,7 +172,7 @@ export class CacheService implements OnDestroy {
       mode: 'promise';
       type?: 'm' | 's';
       expire?: number;
-    },
+    }
   ): Observable<NzSafeAny>;
   /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */
   get(
@@ -171,7 +181,7 @@ export class CacheService implements OnDestroy {
       mode: 'none';
       type?: 'm' | 's';
       expire?: number;
-    },
+    }
   ): NzSafeAny;
   get(
     key: string,
@@ -179,15 +189,15 @@ export class CacheService implements OnDestroy {
       mode?: 'promise' | 'none';
       type?: 'm' | 's';
       expire?: number;
-    } = {},
+    } = {}
   ): Observable<NzSafeAny> | NzSafeAny {
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
     const value = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
-        return this.http.get(key).pipe(
+        return (this.cog.request ? this.cog.request(key) : this.http.get(key)).pipe(
           map((ret: NzSafeAny) => this.deepGet(ret, this.cog.reName as string[], null)),
-          tap(v => this.set(key, v, { type: options.type as NzSafeAny, expire: options.expire })),
+          tap(v => this.set(key, v, { type: options.type as NzSafeAny, expire: options.expire }))
         );
       }
       return null;
@@ -214,11 +224,11 @@ export class CacheService implements OnDestroy {
   /**
    * 获取缓存，若不存在则设置持久化缓存基础对象
    */
-  tryGet(key: string, data: {}, options?: { type?: 's'; expire?: number }): NzSafeAny;
+  tryGet(key: string, data: unknown, options?: { type?: 's'; expire?: number }): NzSafeAny;
   /**
    * 获取缓存，若不存在则设置指定缓存类型进行缓存对象
    */
-  tryGet(key: string, data: {}, options: { type: 'm' | 's'; expire?: number }): NzSafeAny;
+  tryGet(key: string, data: unknown, options: { type: 'm' | 's'; expire?: number }): NzSafeAny;
 
   /**
    * 获取缓存，若不存在则设置缓存对象
@@ -233,7 +243,7 @@ export class CacheService implements OnDestroy {
        * 过期时间，单位 `秒`
        */
       expire?: number;
-    } = {},
+    } = {}
   ): NzSafeAny {
     const ret = this.getNone(key);
     if (ret === null) {
@@ -260,7 +270,7 @@ export class CacheService implements OnDestroy {
 
   // #region remove
 
-  private _remove(key: string, needNotify: boolean) {
+  private _remove(key: string, needNotify: boolean): void {
     if (needNotify) this.runNotify(key, 'remove');
     if (this.memory.has(key)) {
       this.memory.delete(key);
@@ -271,12 +281,12 @@ export class CacheService implements OnDestroy {
   }
 
   /** 移除缓存 */
-  remove(key: string) {
+  remove(key: string): void {
     this._remove(key, true);
   }
 
   /** 清空所有缓存 */
-  clear() {
+  clear(): void {
     this.notifyBuffer.forEach((_v, k) => this.runNotify(k, 'remove'));
     this.memory.clear();
     this.meta.forEach(key => this.store.remove(this.cog.prefix + key));
@@ -295,19 +305,19 @@ export class CacheService implements OnDestroy {
     this.startExpireNotify();
   }
 
-  private startExpireNotify() {
+  private startExpireNotify(): void {
     this.checkExpireNotify();
     this.runExpireNotify();
   }
 
-  private runExpireNotify() {
+  private runExpireNotify(): void {
     this.freqTime = setTimeout(() => {
       this.checkExpireNotify();
       this.runExpireNotify();
     }, this.freqTick);
   }
 
-  private checkExpireNotify() {
+  private checkExpireNotify(): void {
     const removed: string[] = [];
     this.notifyBuffer.forEach((_v, key) => {
       if (this.has(key) && this.getNone(key) === null) removed.push(key);
@@ -318,11 +328,11 @@ export class CacheService implements OnDestroy {
     });
   }
 
-  private abortExpireNotify() {
+  private abortExpireNotify(): void {
     clearTimeout(this.freqTime);
   }
 
-  private runNotify(key: string, type: CacheNotifyType) {
+  private runNotify(key: string, type: CacheNotifyType): void {
     if (!this.notifyBuffer.has(key)) return;
     this.notifyBuffer.get(key)!.next({ type, value: this.getNone(key) });
   }

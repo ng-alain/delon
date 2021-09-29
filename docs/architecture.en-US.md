@@ -1,9 +1,8 @@
 ---
 order: 20
-title:
-  en-US: Architecture
-  zh-CN: 体系结构
+title: Architecture
 type: Basic
+i18n: need-update
 ---
 
 NG-ALAIN scaffold is a front-end solution to support middleware and back-end application. It is based on [Angular](https://angular.io/) and [ng-zorro-antd](https://ng.ant.design/docs/introduce/en)(Angular implementation of Ant Design). The scaffold includes a set of common functionalities and business component libraries. It reduces lots of infrastructure development overwhelmingly and let you focus on business logic development.
@@ -58,8 +57,83 @@ Commonly used testing suite.
 
 [CLI Tool](/cli)
 
-## Document and Feedback
+## Directory Structure
 
-You can find all documents in [ng-alain.com](https://ng-alain.com).
+Schematic diagram of directory structure：
 
-The documents will be iteratively changed with scaffold's upgrade ([Change log](https://github.com/ng-alain/ng-alain/releases)). If you have any questions or requirements, please provide your feedback [here](https://github.com/ng-alain/ng-alain/issues). 
+```
+├── _mock                                       # Mock Data rule
+├── src
+│   ├── app
+│   │   ├── core                                # Core module
+│   │   │   ├── i18n
+│   │   │   ├── net
+│   │   │   │   └── default.interceptor.ts      # Default HTTP interceptor
+│   │   │   ├── services
+│   │   │   │   └── startup.service.ts          # Initialize project configuration
+│   │   │   └── core.module.ts                  # Core module file
+│   │   ├── layout                              # Core layout
+│   │   ├── routes
+│   │   │   ├── **                              # Business directory
+│   │   │   ├── routes.module.ts                # Service routing module
+│   │   │   └── routes-routing.module.ts        # Service routes registration
+│   │   ├── shared                              # Shared module
+│   │   │   ├── shared-delon.module.ts          # @Delon/* import of secondary shared modules
+│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO import of secondary shared modules
+│   │   │   └── shared.module.ts                # Shared module file
+│   │   ├── app.component.ts                    # Root component
+│   │   └── app.module.ts                       # Root module
+│   │   └── global-config.module.ts             # @delon & ng-zorro global config
+│   ├── assets                                  # Local static resource
+│   ├── environments                            # Environment variable configuration
+│   ├── styles                                  # Style directory
+└── └── style.less                              # Style guide entry
+```
+
+The following is a description and use of each directory and file.
+
+**_mock**
+
+The Mock data rules directory, if you create a project via [Command Line Tools](/cli), you can specify the `--mock` parameter to determine if the Mock function is required.
+
+**src/app/core/core.module.ts**
+
+The core module will only be imported once. Therefore, core service classes (eg, messages, data access, etc.) that are required for the entire ** business module should exist here.
+
+**src/app/core/i18n**
+
+[Internationalization](/docs/i18n) data loading and processing related classes. If you create a project via [Command Line Tool](/cli), you can specify the `-di` parameter to determine whether internationalization support is required.
+
+**src/app/core/net**
+
+The default interceptor, where you can handle request parameters, request exceptions, business exceptions, and so on.
+
+**src/app/core/services/startup.service.ts**
+
+Useful when you need to execute some remote data (eg application information, user information, etc.) before Angular launches.
+
+> It is a simple method and returns a `Promise` object, unless Angular will abort the launch unless `resolve(null)` is explicitly executed.
+
+**src/app/layout**
+
+Layout file code, refer to the page structure section.
+
+**src/app/routes**
+
+Business module, all your business code will be here.
+
+**src/app/shared/shared.module.ts**
+
+The shared module means that some third-party modules, custom components, and custom instructions that you need to use for the entire business module should exist here. In addition, for @delon & NG-ZORRO, two shared secondary module imports, `shared-delon.module.ts` and` shared-zorro.module.ts`.
+
+**src/app/global-config.module.ts**
+
+Global configuration for @delon & NG-ZORRO.
+
+**src/environments**
+
+The application environment variable contains the following values:
+
+- `SERVER_URL` All HTTP request prefixes
+- `production` Whether the production environment
+- `useHash` Whether the route is useHash mode

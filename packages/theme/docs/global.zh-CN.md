@@ -30,7 +30,7 @@ title: 全局参数
 | `@h4-font-size` | `16px` | h4字号 |
 | `@h5-font-size` | `14px` | h5字号 |
 | `@h6-font-size` | `12px` | h6字号 |
-| `@enable-all-colors` | `true` | 开启背景、文本颜色<br>例如：`.bg-teal`、`.text-teal`<br>有关颜色值见样式规则章节 |
+| `@enable-all-colors` | `false` | 开启背景、文本颜色<br>例如：`.bg-teal`、`.text-teal`<br>有关颜色值见样式规则章节 |
 | `@modal-sm` | `300px` | 小号对话框 |
 | `@modal-md` | `500px` | 中号对话框 |
 | `@modal-lg` | `900px` | 大号对话框 |
@@ -51,6 +51,23 @@ title: 全局参数
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | 美化滚动条的轨道颜色 |
 | `@scrollbar-thumb-color` | `#6e6e6e` | 美化滚动条小方块颜色 |
 | `@scrollbar-table-enabled` | `false` | 启用美化表格滚动条 |
+| `@rtl-enabled` | `false` | 是否支持 RTL |
+| `@enabled-util-align` | `true` | 是否启用工具类 align |
+| `@enabled-util-border` | `true` | 是否启用工具类 border |
+| `@enabled-util-code` | `true` | 是否启用工具类 code |
+| `@enabled-util-color` | `true` | 是否启用工具类 color |
+| `@enabled-util-display` | `true` | 是否启用工具类 display |
+| `@enabled-util-float` | `true` | 是否启用工具类 float |
+| `@enabled-util-icon` | `true` | 是否启用工具类 icon |
+| `@enabled-util-img` | `true` | 是否启用工具类 img |
+| `@enabled-util-position` | `true` | 是否启用工具类 position |
+| `@enabled-util-overflow` | `true` | 是否启用工具类 overflow |
+| `@enabled-util-responsive` | `true` | 是否启用工具类 responsive |
+| `@enabled-util-spacing` | `true` | 是否启用工具类 spacing |
+| `@enabled-util-text` | `true` | 是否启用工具类 text |
+| `@enabled-util-width` | `true` | 是否启用工具类 width |
+| `@enabled-util-scrollbar` | `true` | 是否启用工具类 scrollbar |
+| `@enabled-util-other` | `true` | 是否启用工具类 other |
 
 ## Ng补丁
 
@@ -61,6 +78,7 @@ title: 全局参数
 | `@preserve-white-spaces-enabled` | `true` | 解决开启 [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) 时按钮间可能会出现无缝  |
 | `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
 | `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
+| `@router-animation-enabled` | `false` | 是否启用路由切换动画 |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
 | `@router-animation-duration` | `1s` | 路由切换动画时长 |
 
@@ -90,6 +108,7 @@ title: 全局参数
 | `@nz-table-img-margin-right` | `4px` | 表格中的图片右外边距 |
 | `@nz-table-img-max-width` | `32px` | 表格中的图片最大宽度 |
 | `@nz-table-img-max-height` | `32px` | 表格中的图片最大高度 |
+| `@nz-table-even-background` | `none` | 奇偶背景 |
 | `@nz-table-rep-max-width` | `@mobile-max` | 当移动端屏幕时触发表格响应式 |
 | `@nz-table-rep-header-background` | `@border-color-split` | 表格响应式：标题背景色 |
 | `@nz-table-rep-even-background` | `#f9f9f9` | 表格响应式：偶数行背景色 |
@@ -104,10 +123,8 @@ title: 全局参数
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
-| `@badge-enabled` | `true` | bootstrap徽章 |
 | `@hafl-enabled` | `true` | 半图 |
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |
 | `@setting-drawer-enabled` | `true` | 主题设置 |
-| `@search-form-enabled` | `true` | 简化搜索框，[DEMO](https://ng-alain.surge.sh/) |
 | `@search__form-enabled` | `true` | Pro搜索框，[DEMO](https://ng-alain.surge.sh/) |

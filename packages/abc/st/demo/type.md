@@ -46,26 +46,27 @@ export class DemoComponent {
     { title: '行号', type: 'no' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age', type: 'number' },
+    { title: 'HTML', index: 'html', safeType: 'safeHtml' },
+    { title: 'Text', index: 'html', safeType: 'text' },
     { title: 'tag', index: 'tag', type: 'tag', tag: TAG },
     { title: 'badge', index: 'badge', type: 'badge', badge: BADGE },
     { title: 'Enum', index: 'enum', type: 'enum', enum: { 1: '壹', 2: '贰', 3: '叁' } },
     { title: 'yn', index: 'yn', type: 'yn' },
   ];
 
-  reload() {
+  reload(): void {
     this.users = Array(10)
       .fill({})
-      .map((_item: any, idx: number) => {
-        return {
-          id: idx + 1,
-          name: `name ${idx + 1}`,
-          age: r(10, 50),
-          tag: r(1, 5),
-          badge: r(1, 5),
-          enum: r(1, 3),
-          yn: [true, false][r(1, 5) % 2],
-        };
-      });
+      .map((_, idx) => ({
+        id: idx + 1,
+        name: `name ${idx + 1}`,
+        age: r(10, 50),
+        tag: r(1, 5),
+        badge: r(1, 5),
+        enum: r(1, 3),
+        yn: [true, false][r(1, 5) % 2],
+        html: `<strong>${idx + 1}</strong> Other`,
+      }));
   }
 
   constructor() {

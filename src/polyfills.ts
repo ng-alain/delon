@@ -1,5 +1,4 @@
-// tslint:disable:no-import-side-effect
-
+/* eslint-disable import/no-unassigned-import */
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -32,7 +31,8 @@
  */
 import '@webcomponents/custom-elements'; //  Custom Elements Polyfill
 import '@webcomponents/custom-elements/src/native-shim';
-import 'zone.js/dist/zone'; // Included with Angular CLI.
+// import './zone-flags';
+import 'zone.js'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

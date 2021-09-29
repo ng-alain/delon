@@ -23,18 +23,16 @@ To fix some columns and scroll inside other columns, and you must set `scroll.x`
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <st [data]="users" [columns]="columns" [scroll]="{x: '1300px'}"></st>
-  `,
+  template: ` <st [data]="users" [columns]="columns" [scroll]="{ x: '1300px' }"></st> `,
 })
 export class DemoComponent {
-  users: any[] = Array(10)
+  users: STData[] = Array(10)
     .fill({})
-    .map((_item: any, idx: number) => {
+    .map((_, idx) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,

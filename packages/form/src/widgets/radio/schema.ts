@@ -1,7 +1,10 @@
 import { Observable } from 'rxjs';
+
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnumType } from '../../schema';
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFRadioWidgetSchema extends SFUISchemaItem {
   /**
@@ -9,7 +12,7 @@ export interface SFRadioWidgetSchema extends SFUISchemaItem {
    */
   asyncData?: () => Observable<SFSchemaEnumType[]>;
 
-  size?: SFDLSSize;
+  size?: NzSizeLDSType;
 
   /**
    * radio 的样式，默认：`default`

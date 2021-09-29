@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: boolean', () => {
@@ -21,7 +23,7 @@ describe('form: widget: boolean', () => {
   it('#setValue', fakeAsync(() => {
     page
       .newSchema({
-        properties: { a: { type: 'boolean', default: true } },
+        properties: { a: { type: 'boolean', default: true } }
       })
       .dc(1)
       .checkCount('.ant-switch-checked', 1)
@@ -33,7 +35,7 @@ describe('form: widget: boolean', () => {
   it('should be default true via schema.default', () => {
     page
       .newSchema({
-        properties: { a: { type: 'boolean', default: true } },
+        properties: { a: { type: 'boolean', default: true } }
       })
       .checkValue('a', true);
   });
@@ -45,9 +47,9 @@ describe('form: widget: boolean', () => {
           properties: {
             a: {
               type: 'boolean',
-              ui: { checkedChildren: 'Y', unCheckedChildren: 'N' },
-            },
-          },
+              ui: { checkedChildren: 'Y', unCheckedChildren: 'N' }
+            }
+          }
         })
         .click(clickCls)
         .checkElText('.ant-switch-inner', 'Y')

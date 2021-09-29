@@ -9,11 +9,16 @@ import {
   OnChanges,
   OnDestroy,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { AlainConfigService, AlainQRConfig, InputNumber, LazyService } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { LazyService } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QROptions } from './qr.types';
 
@@ -24,39 +29,43 @@ import { QROptions } from './qr.types';
   host: {
     '[style.display]': `'inline-block'`,
     '[style.height.px]': 'size',
-    '[style.width.px]': 'size',
+    '[style.width.px]': 'size'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
+  static ngAcceptInputType_padding: NumberInput;
+  static ngAcceptInputType_size: NumberInput;
+  static ngAcceptInputType_delay: NumberInput;
+
   private lazy$: Subscription;
-  private qr: any;
+  private qr: NzSafeAny;
   private cog: AlainQRConfig;
   private option: QROptions;
   private inited = false;
 
   dataURL: string;
 
-  // #region fields
-
   @Input() background: string;
   @Input() backgroundAlpha: number;
   @Input() foreground: string;
   @Input() foregroundAlpha: number;
-  @Input() level: 'L' | 'M' | 'Q' | 'H';
+  @Input() level: string;
   @Input() mime: string;
   @Input() @InputNumber() padding: number;
   @Input() @InputNumber() size: number;
   @Input() value = '';
   @Input() @InputNumber() delay: number;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<string>();
 
-  // #endregion
-
-  constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService, private platform: Platform) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    configSrv: AlainConfigService,
+    private lazySrv: LazyService,
+    private platform: Platform
+  ) {
     this.cog = configSrv.merge('qr', QR_DEFULAT_CONFIG)!;
     Object.assign(this, this.cog);
   }
@@ -67,7 +76,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
 
     if (this.qr == null) {
-      this.qr = new (window as any).QRious();
+      this.qr = new (window as NzSafeAny).QRious();
     }
     this.qr.set(this.option);
     this.dataURL = this.qr.toDataURL();
@@ -84,7 +93,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    if ((window as any).QRious) {
+    if ((window as NzSafeAny).QRious) {
       this.initDelay();
       return;
     }
@@ -101,11 +110,11 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
       backgroundAlpha: this.backgroundAlpha,
       foreground: this.foreground,
       foregroundAlpha: this.foregroundAlpha,
-      level: this.level,
+      level: this.level as NzSafeAny,
       mime: this.mime,
       padding: this.padding,
       size: this.size,
-      value: this.toUtf8ByteArray(this.value),
+      value: this.toUtf8ByteArray(this.value)
     };
     this.option = option;
     this.init();

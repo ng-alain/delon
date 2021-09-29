@@ -18,13 +18,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <form nz-form #f="ngForm" se-container="1" labelWidth="150">
+  template: ` <form nz-form #f="ngForm" se-container="1" labelWidth="150">
     <se label="App Key" error="请填写" optional="(选填)" optionalHelp="通过控制台-查看KEY获取" extra="额外提示信息">
-      <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
+      <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required />
     </se>
     <se label="App Secret" error="请填写，最多32位">
-      <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32">
+      <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32" />
     </se>
     <se>
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
@@ -32,6 +31,6 @@ import { Component } from '@angular/core';
   </form>`,
 })
 export class DemoComponent {
-  i: any = {};
+  i: { ak?: string; sk?: string } = {};
 }
 ```

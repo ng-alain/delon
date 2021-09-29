@@ -14,8 +14,8 @@ title:
 Virtual scrolling combine with [cdk scrolling](https://material.angular.io/cdk/scrolling/overview) used to display large data, you can get `cdkVirtualScrollViewport` in `STComponent` and find more API [here](https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport).
 
 ```ts
-import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc/st';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { STColumn, STComponent, STPage } from '@delon/abc/st';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -34,14 +34,12 @@ export class DemoComponent implements AfterViewInit, OnDestroy {
     front: false,
     show: false,
   };
-  data: any[] = Array(2000)
+  data: Array<{ id: number; price: number }> = Array(2000)
     .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        price: ~~(Math.random() * 100),
-      };
-    });
+    .map((_, idx) => ({
+      id: idx + 1,
+      price: ~~(Math.random() * 100),
+    }));
   columns: STColumn[] = [
     { title: '编号', index: 'id', width: 100 },
     { title: '价格1', index: 'price', width: 100 },

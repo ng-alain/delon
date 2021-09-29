@@ -16,6 +16,10 @@
 @grey-9:  #262626;
 @grey-10: #000000;
 
+@color-light-index:      5;
+@color-basic-index:      6;
+@color-dark-index:       7;
+
 @color-light-position:      2;
 @color-basic-position:      3;
 @color-dark-position:       4;
@@ -38,10 +42,14 @@
 
 // Alias
 @aliasColors:
-    primary    blue,
-    success    green,
-    error      red,
-    warning    yellow;
+    primary    @primary-color,
+    success    @success-color,
+    error      @error-color,
+    warning    @warning-color,
+    info       @info-color,
+    processing @processing-color,
+    highlight  @highlight-color,
+    normal     @normal-color;
 
 // Grey patch
 @greyColorer: lighter @grey-3,
@@ -50,10 +58,12 @@
 // Layout Gutter
 @layout-gutter: 8px;
 
-@xs:    @layout-gutter / 2;
-@sm:    @layout-gutter;
-@md:    @layout-gutter * 2;
-@lg:    @layout-gutter * 3;
+@xs:    (@layout-gutter / 2); // 4px
+@sm:    @layout-gutter;     // 8px
+@md:    (@layout-gutter * 2); // 16px
+@lg:    (@layout-gutter * 3); // 24px
+@xl:    (@layout-gutter * 4); // 32px
+@xxl:   (@layout-gutter * 6); // 48px
 
 @grid-breakpoints:
     xs @screen-xs,
@@ -71,7 +81,12 @@
     xs @xs,
     sm @sm,
     md @md,
-    lg @lg;
+    lg @lg,
+    xl @xl,
+    xxl @xxl;
+
+// 是否启用RTL支持
+@rtl-enabled: true;
 
 // type
 @ul-ol-margin:      18px;
@@ -148,7 +163,7 @@
 @h5-font-size:            @font-size-base + 2;  // 14px
 @h6-font-size:            @font-size-base;      // 12px
 
-@enable-all-colors:           true;
+@enable-all-colors:           false;
 
 // Code
 @code-border-color:           #eee;
@@ -164,6 +179,15 @@
 @modal-md: 600px;
 @modal-sm: 300px;
 
+// router ant
+@router-animation-enabled: false;
+@router-animation-name: antFadeIn;
+@router-animation-duration: 1s;
+
+// 生成旋转数量
+@rotate-count: 24;
+
+// COMPONENTS
 @preserve-white-spaces-enabled: true;
 // 搜索框与表格
 @preserve-sf-and-st-spaces: @layout-gutter * 2;
@@ -175,12 +199,13 @@
 @nz-table-img-margin-right: 4px;
 @nz-table-img-max-height: 32px;
 @nz-table-img-max-width: 32px;
+@nz-table-even-background: none;
 @nz-table-rep-max-width: @mobile-max;
 @nz-table-rep-min-width: @nz-table-rep-max-width + 1;
 @nz-table-rep-header-background: @border-color-split;
 @nz-table-rep-even-background: #f9f9f9;
-@nz-table-rep-padding-vertical: @table-padding-vertical / 2;
-@nz-table-rep-padding-horizontal: @table-padding-horizontal / 2;
+@nz-table-rep-padding-vertical: (@table-padding-vertical / 2);
+@nz-table-rep-padding-horizontal: (@table-padding-horizontal / 2);
 @nz-table-rep-column-name-width: 100px;
 @nz-table-rep-column-name-text-align: right;
 @nz-table-rep-column-name-padding-right: 8px;
@@ -198,3 +223,38 @@
 
 @yn-yes-color: @blue-6;
 @yn-no-color: @grey-7;
+
+@setting-drawer-enabled: true;
+@setting-drawer-width: 500px;
+
+@theme-btn-enabled: true;
+
+@enabled-util-align: true;
+@enabled-util-border: true;
+@enabled-util-code: true;
+@enabled-util-color: true;
+@enabled-util-display: true;
+@enabled-util-float: true;
+@enabled-util-icon: true;
+@enabled-util-img: true;
+@enabled-util-position: true;
+@enabled-util-overflow: true;
+@enabled-util-responsive: true;
+@enabled-util-spacing: true;
+@enabled-util-text: true;
+@enabled-util-width: true;
+@enabled-util-scrollbar: true;
+@enabled-util-other: true;
+
+// 中心元素
+@abs-enabled: false;
+// 搜索表单
+@search__form-enabled: true;
+@search-form-bg: #fbfbfb;
+@search-form-radius: 4px;
+// 半图
+@hafl-enabled: true;
+@hafl-float-size: sm @layout-gutter * 8, md @layout-gutter * 10, lg @layout-gutter * 12;
+// 瀑布流
+@masonry-enabled: true;
+@masonry-column-gap: @layout-gutter * 2;

@@ -1,11 +1,21 @@
 import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, FormControlName, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControlName,
+  FormGroup,
+  FormsModule,
+  NgModel,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
 import { SEModule } from './se.module';
@@ -23,11 +33,11 @@ describe('abc: edit', () => {
   const moduleAction = () => {
     TestBed.configureTestingModule({
       imports: [SEModule, FormsModule, NzRadioModule, NoopAnimationsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   };
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
@@ -39,7 +49,7 @@ describe('abc: edit', () => {
     page = new PageObject();
   }
 
-  function createComp() {
+  function createComp(): void {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     page = new PageObject();
@@ -112,18 +122,31 @@ describe('abc: edit', () => {
           it('#title', () => {
             context.parent_title = `parent_title`;
             fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+            expect(page.getEl(`${prefixCls}title`).textContent).toContain(`parent_title`);
           });
-          it('#gutter', () => {
-            const gutter = 24;
-            const halfGutter = gutter / 2;
-            context.parent_gutter = gutter;
-            fixture.detectChanges();
-            expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
-            expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-            const itemCls = prefixCls + 'item';
-            expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
-            expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+          describe('#gutter', () => {
+            it('shoule gutter number working', () => {
+              const gutter = 24;
+              const halfGutter = gutter / 2;
+              context.parent_gutter = gutter;
+              fixture.detectChanges();
+              expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+              expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
+              const itemCls = `${prefixCls}item`;
+              expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
+              expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+            });
+            it('shoule gutter string working', () => {
+              const gutter = '24';
+              const halfGutter = Number(gutter) / 2;
+              context.parent_gutter = gutter;
+              fixture.detectChanges();
+              expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+              expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
+              const itemCls = `${prefixCls}item`;
+              expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
+              expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+            });
           });
           describe('#labelWidth', () => {
             it('should working', () => {
@@ -151,19 +174,19 @@ describe('abc: edit', () => {
           it('#layout', () => {
             context.parent_layout = 'horizontal';
             fixture.detectChanges();
-            page.expect(prefixCls + 'horizontal');
+            page.expect(`${prefixCls}horizontal`);
             context.parent_layout = 'vertical';
             fixture.detectChanges();
-            page.expect(prefixCls + 'vertical');
+            page.expect(`${prefixCls}vertical`);
             context.parent_layout = 'inline';
             fixture.detectChanges();
-            page.expect(prefixCls + 'inline');
-            page.expect(prefixCls + 'compact');
+            page.expect(`${prefixCls}inline`);
+            page.expect(`${prefixCls}compact`);
           });
           it('#size', () => {
             context.parent_size = 'compact';
             fixture.detectChanges();
-            page.expect(prefixCls + 'compact');
+            page.expect(`${prefixCls}compact`);
           });
           it('should be ingroed less than 0', () => {
             context.parent_col = 0;
@@ -191,6 +214,22 @@ describe('abc: edit', () => {
               changes.emit('INVALID');
               fixture.detectChanges();
               page.expectText('.ant-form-item-explain', NEW_ERROR);
+            });
+          });
+          describe('#noColon', () => {
+            it('should working', () => {
+              context.noColon = true;
+              context.label = 'aa';
+              fixture.detectChanges();
+              expect(page.getEls('.se__no-colon').length).toBe(1);
+            });
+            it('should be inherit parent noColon value', () => {
+              context.parent_noColon = true;
+              context.noColon = undefined;
+              context.label = 'aa';
+              debugger;
+              fixture.detectChanges();
+              expect(page.getEls('.se__no-colon').length).toBe(1);
             });
           });
         });
@@ -229,20 +268,20 @@ describe('abc: edit', () => {
           it('#label', () => {
             context.label = 'test-label';
             fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
+            expect(page.getEl(`${prefixCls}label`).textContent).toContain('test-label');
           });
           it('should be only horizontal will increase the responsive', () => {
             context.parent_layout = 'inline';
             context.label = 'aa';
             fixture.detectChanges();
-            page.expect(prefixCls + 'inline');
+            page.expect(`${prefixCls}inline`);
             page.expect('.ant-col-xs-24', 0);
           });
           it('#line', () => {
             context.parent_line = true;
             context.line = null;
             fixture.detectChanges();
-            page.expect(prefixCls + 'line');
+            page.expect(`${prefixCls}line`);
           });
         });
       });
@@ -321,7 +360,7 @@ describe('abc: edit', () => {
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
         imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-        declarations: [TestReactiveComponent],
+        declarations: [TestReactiveComponent]
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
@@ -353,7 +392,7 @@ describe('abc: edit', () => {
       it('in reactive form', () => {
         TestBed.configureTestingModule({
           imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-          declarations: [TestReactiveComponent],
+          declarations: [TestReactiveComponent]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);
         dl = fixture2.debugElement;
@@ -381,7 +420,7 @@ describe('abc: edit', () => {
           <ng-template #title>
             <a id="tip">tip</a>
           </ng-template>
-        </se-container>`,
+        </se-container>`
       );
       page.expect('#tip');
     });
@@ -394,7 +433,7 @@ describe('abc: edit', () => {
             </ng-template>
             Custom label
           </se>
-        </se-container>`,
+        </se-container>`
       );
       page.expect('#tip');
     });
@@ -469,7 +508,7 @@ describe('abc: edit', () => {
     getEls(cls: string): DebugElement[] {
       return dl.queryAll(By.css(cls));
     }
-    expect(cls: string, count = 1): this {
+    expect(cls: string, count: number = 1): this {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }
@@ -477,7 +516,7 @@ describe('abc: edit', () => {
       expect(this.getEl(cls).textContent?.trim()).toBe(text);
       return this;
     }
-    cd(time = 0): this {
+    cd(time: number = 0): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();
@@ -502,6 +541,7 @@ describe('abc: edit', () => {
       [labelWidth]="parent_labelWidth"
       [gutter]="parent_gutter"
       [errors]="parent_errors"
+      [noColon]="parent_noColon"
     >
       <se-title>title</se-title>
       <se
@@ -516,11 +556,12 @@ describe('abc: edit', () => {
         [required]="required"
         [line]="line"
         [labelWidth]="labelWidth"
+        [noColon]="noColon"
       >
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
     </form>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('seComp', { static: true })
@@ -528,7 +569,7 @@ class TestComponent {
   @ViewChild('viewComp', { static: true })
   viewComp: SEComponent;
 
-  parent_gutter: number | null = 32;
+  parent_gutter: string | number | null = 32;
   parent_colInCon: number | null;
   parent_col: number | null = 3;
   parent_labelWidth: number | null = null;
@@ -537,6 +578,7 @@ class TestComponent {
   parent_firstVisual = true;
   parent_ingoreDirty = false;
   parent_line = false;
+  parent_noColon = false;
   parent_title = 'title';
   parent_errors: SEErrorRefresh[] = [];
 
@@ -550,6 +592,7 @@ class TestComponent {
   col: number | null;
   controlClass = '';
   labelWidth: number | null = null;
+  noColon?: boolean | null = undefined;
 
   val = '';
   showModel = true;
@@ -566,14 +609,14 @@ class TestComponent {
         <input formControlName="dis" nz-input />
       </se>
     </form>
-  `,
+  `
 })
 class TestReactiveComponent {
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({
       userName: [null, [Validators.required]],
-      dis: { value: '', disabled: true },
+      dis: { value: '', disabled: true }
     });
   }
 }

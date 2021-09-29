@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AlainACLConfig, AlainConfigService } from '@delon/util';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
+
 import { ACL_DEFAULT_CONFIG } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
@@ -23,11 +25,11 @@ export class ACLService {
   }
 
   /** 获取所有数据 */
-  get data() {
+  get data(): { full: boolean; roles: string[]; abilities: Array<string | number> } {
     return {
       full: this.full,
       roles: this.roles,
-      abilities: this.abilities,
+      abilities: this.abilities
     };
   }
 
@@ -59,7 +61,8 @@ export class ACLService {
   /**
    * 设置当前用户角色或权限能力（会先清除所有）
    */
-  set(value: ACLType) {
+  set(value: ACLType): void {
+    this.full = false;
     this.abilities = [];
     this.roles = [];
     this.add(value);
@@ -69,7 +72,7 @@ export class ACLService {
   /**
    * 标识当前用户为全量，即不受限
    */
-  setFull(val: boolean) {
+  setFull(val: boolean): void {
     this.full = val;
     this.aclChange.next(val);
   }
@@ -77,21 +80,21 @@ export class ACLService {
   /**
    * 设置当前用户权限能力（会先清除所有）
    */
-  setAbility(abilities: Array<number | string>) {
+  setAbility(abilities: Array<number | string>): void {
     this.set({ ability: abilities } as ACLType);
   }
 
   /**
    * 设置当前用户角色（会先清除所有）
    */
-  setRole(roles: string[]) {
+  setRole(roles: string[]): void {
     this.set({ role: roles } as ACLType);
   }
 
   /**
    * 为当前用户增加角色或权限能力
    */
-  add(value: ACLType) {
+  add(value: ACLType): void {
     if (value.role && value.role.length > 0) {
       this.roles.push(...value.role);
     }
@@ -103,7 +106,7 @@ export class ACLService {
   /**
    * 为当前用户附加角色
    */
-  attachRole(roles: string[]) {
+  attachRole(roles: string[]): void {
     for (const val of roles) {
       if (!this.roles.includes(val)) {
         this.roles.push(val);
@@ -115,7 +118,7 @@ export class ACLService {
   /**
    * 为当前用户附加权限
    */
-  attachAbility(abilities: Array<number | string>) {
+  attachAbility(abilities: Array<number | string>): void {
     for (const val of abilities) {
       if (!this.abilities.includes(val)) {
         this.abilities.push(val);
@@ -127,7 +130,7 @@ export class ACLService {
   /**
    * 为当前用户移除角色
    */
-  removeRole(roles: string[]) {
+  removeRole(roles: string[]): void {
     for (const val of roles) {
       const idx = this.roles.indexOf(val);
       if (idx !== -1) {
@@ -140,7 +143,7 @@ export class ACLService {
   /**
    * 为当前用户移除权限
    */
-  removeAbility(abilities: Array<number | string>) {
+  removeAbility(abilities: Array<number | string>): void {
     for (const val of abilities) {
       const idx = this.abilities.indexOf(val);
       if (idx !== -1) {
@@ -176,9 +179,9 @@ export class ACLService {
       }
       if (t.ability && t.ability.length > 0) {
         if (t.mode === 'allOf') {
-          result = (t.ability as any[]).every(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).every(v => this.abilities.includes(v));
         } else {
-          result = (t.ability as any[]).some(v => this.abilities.includes(v));
+          result = (t.ability as Array<number | string>).some(v => this.abilities.includes(v));
         }
       }
     }

@@ -6,29 +6,29 @@ export default {
     403: `Üzgünüz, bu sayfaya erişiminiz yok`,
     404: `Maalesef bu sayfa mevcut değil`,
     500: `Üzgünüz, sunucu hatası`,
-    backToHome: `Ana Sayfa'ya geri dön`,
+    backToHome: `Ana Sayfa'ya geri dön`
   },
   noticeIcon: {
     emptyText: 'Veri yok',
-    clearText: 'Temiz',
+    clearText: 'Temiz'
   },
   reuseTab: {
     close: 'Sekmeyi Kapat',
     closeOther: 'Diğer sekmeleri kapat',
     closeRight: 'Sağdaki sekmeleri kapat',
-    refresh: 'täzele',
+    refresh: 'täzele'
   },
   tagSelect: {
     expand: 'Genişlet',
-    collapse: 'Daralt',
+    collapse: 'Daralt'
   },
   miniProgress: {
-    target: 'Hedef: ',
+    target: 'Hedef: '
   },
   st: {
     total: '{{range[0]}} ile {{range[1]}} arasında {{total}}',
     filterConfirm: 'Tamam',
-    filterReset: 'Sıfırla',
+    filterReset: 'Sıfırla'
   },
   sf: {
     submit: 'Gönder',
@@ -72,7 +72,13 @@ export default {
       contains: `Should contain a valid item`,
       formatExclusiveMaximum: `formatExclusiveMaximum should be boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum should be boolean`,
-      if: `Should match "{failingKeyword}" schema`,
-    },
+      if: `Should match "{failingKeyword}" schema`
+    }
   },
+  onboarding: {
+    skip: `Atla`,
+    prev: `Önceki`,
+    next: `Sonraki`,
+    done: `Bitti`
+  }
 } as FullLocaleData;

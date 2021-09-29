@@ -1,28 +1,49 @@
 <nz-affix class="toc-affix" *ngIf="isBrowser && data.con.toc?.length" nzOffsetTop="16">
   <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
-    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title"></nz-link>
+    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title">
+      <ng-container *ngIf="t.children && t.children.length > 0">
+        <nz-link *ngFor="let t2 of t.children" [nzHref]="'#' + t2.id" [nzTitle]="t2.title"></nz-link>
+      </ng-container>
+    </nz-link>
   </nz-anchor>
 </nz-affix>
 <ng-container *ngIf="meta.item">
-  <nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
+  <nz-alert
+    *ngIf="!meta.item.i18n || data.con.meta.i18n === 'need-update'"
+    [nzType]="'warning'"
+    [nzCloseable]="'true'"
+    nzBanner
+    [nzMessage]="message"
+    class="my-md"
+  >
     <ng-template #message>
-      This article has not been translated, hope that your can PR to translated it.
+      {{
+        data.con.meta.i18n === 'need-update'
+          ? 'This article need re-translated, hope that your can PR to translated it.'
+          : 'This article has not been translated, hope that your can PR to translated it.'
+      }}
       <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
     </ng-template>
   </nz-alert>
   <div class="markdown">
-    <h1>
-      {{ meta.item.title }}
-      <span *ngIf="meta.item.subtitle" class="subtitle">{{ meta.item.subtitle }}</span>
+    <h1 class="flex-center">
+      {{ meta.item.subtitle || meta.item.title }}
+      <div *ngIf="data.con.module" class="ml-sm">
+        <span
+          class="copy-import-module"
+          (click)="copyModule()"
+          nz-tooltip
+          [nzTooltipTitle]="('app.content.copy-import-module' | i18n) + data.con.module"
+        >
+          IMPORT MODULE
+        </span>
+      </div>
       <edit-button [item]="item"></edit-button>
     </h1>
   </div>
   <div *ngIf="data.con.content" class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
-  <div *ngIf="data.con.module" class="highlight">
-    <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
-  </div>
   <ng-container *ngIf="data.demo">
-    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
+    <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0" [innerHTML]="demoContent" routeTransfer></h2>
     <ng-content></ng-content>
   </ng-container>
   <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>

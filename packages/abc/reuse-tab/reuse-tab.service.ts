@@ -6,18 +6,25 @@ import {
   NavigationEnd,
   NavigationStart,
   Router,
-  ROUTER_CONFIGURATION,
+  ROUTER_CONFIGURATION
 } from '@angular/router';
-import { MenuService, ScrollService } from '@delon/theme';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-import { ReuseComponentRef, ReuseHookTypes, ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
+import { BehaviorSubject, Observable, timer, Unsubscribable } from 'rxjs';
 
-/**
- * 路由复用类，提供复用所需要一些基本接口
- *
- * **注：** 所有缓存数据来源于路由离开后才会产生
- */
+import { Menu, MenuService } from '@delon/theme';
+import { ScrollService } from '@delon/util/browser';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import {
+  ReuseComponentRef,
+  ReuseHookOnReuseInitType,
+  ReuseHookTypes,
+  ReuseTabCached,
+  ReuseTabMatchMode,
+  ReuseTabNotify,
+  ReuseTabRouteParamMatchMode,
+  ReuseTitle
+} from './reuse-tab.interfaces';
+
 @Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
   private _inited = false;
@@ -32,26 +39,38 @@ export class ReuseTabService implements OnDestroy {
   private positionBuffer: { [url: string]: [number, number] } = {};
   componentRef: ReuseComponentRef;
   debug = false;
+  routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
   excludes: RegExp[] = [];
 
-  private get snapshot() {
+  private get snapshot(): ActivatedRouteSnapshot {
     return this.injector.get(ActivatedRoute).snapshot;
   }
 
   // #region public
 
-  get inited() {
+  /**
+   * Get init status
+   *
+   * 是否已经初始化完成
+   */
+  get inited(): boolean {
     return this._inited;
   }
 
-  /** 当前路由地址 */
-  get curUrl() {
+  /**
+   * Current routing address
+   *
+   * 当前路由地址
+   */
+  get curUrl(): string {
     return this.getUrl(this.snapshot);
   }
 
-  /** 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件 */
+  /**
+   * 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件
+   */
   set max(value: number) {
     this._max = Math.min(Math.max(value, 2), 100);
     for (let i = this._cached.length; i > this._max; i--) {
@@ -62,7 +81,7 @@ export class ReuseTabService implements OnDestroy {
     this._keepingScroll = value;
     this.initScroll();
   }
-  get keepingScroll() {
+  get keepingScroll(): boolean {
     return this._keepingScroll;
   }
   keepingScrollContainer: Element;
@@ -71,7 +90,7 @@ export class ReuseTabService implements OnDestroy {
     return this._cached;
   }
   /** 获取当前缓存的路由总数 */
-  get count() {
+  get count(): number {
     return this._cached.length;
   }
   /** 订阅缓存变更通知 */
@@ -88,7 +107,7 @@ export class ReuseTabService implements OnDestroy {
       active: 'title',
       url,
       title: value,
-      list: this._cached,
+      list: this._cached
     });
   }
   /** 获取指定路径缓存所在位置，`-1` 表示无缓存 */
@@ -119,7 +138,7 @@ export class ReuseTabService implements OnDestroy {
    *
    * @param [includeNonCloseable=false] 是否强制包含不可关闭
    */
-  close(url: string, includeNonCloseable = false) {
+  close(url: string, includeNonCloseable: boolean = false): boolean {
     this.removeUrlBuffer = url;
 
     this.remove(url, includeNonCloseable);
@@ -134,7 +153,7 @@ export class ReuseTabService implements OnDestroy {
    *
    * @param [includeNonCloseable=false] 是否强制包含不可关闭
    */
-  closeRight(url: string, includeNonCloseable = false) {
+  closeRight(url: string, includeNonCloseable: boolean = false): boolean {
     const start = this.index(url);
     for (let i = this.count - 1; i > start; i--) {
       this.remove(i, includeNonCloseable);
@@ -152,7 +171,7 @@ export class ReuseTabService implements OnDestroy {
    *
    * @param [includeNonCloseable=false] 是否强制包含不可关闭
    */
-  clear(includeNonCloseable = false) {
+  clear(includeNonCloseable: boolean = false): void {
     this._cached.forEach(w => {
       if (!includeNonCloseable && w.closable) this.destroy(w._handle);
     });
@@ -166,6 +185,7 @@ export class ReuseTabService implements OnDestroy {
   }
   /**
    * 移动缓存数据
+   *
    * @param url 要移动的URL地址
    * @param position 新位置，下标从 `0` 开始
    *
@@ -181,7 +201,7 @@ export class ReuseTabService implements OnDestroy {
    * [ '/a/2', '/a/3', '/a/4', '/a/5', '/a/1' ]
    * ```
    */
-  move(url: string, position: number) {
+  move(url: string, position: number): void {
     const start = this._cached.findIndex(w => w.url === url);
     if (start === -1) return;
     const data = this._cached.slice();
@@ -191,13 +211,13 @@ export class ReuseTabService implements OnDestroy {
       active: 'move',
       url,
       position,
-      list: this._cached,
+      list: this._cached
     });
   }
   /**
    * 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由
    */
-  replace(newUrl: string) {
+  replace(newUrl: string): void {
     const url = this.curUrl;
     if (this.exists(url)) {
       this.close(url, true);
@@ -224,7 +244,7 @@ export class ReuseTabService implements OnDestroy {
     if (route && route.data && (route.data.titleI18n || route.data.title)) {
       return {
         text: route.data.title,
-        i18n: route.data.titleI18n,
+        i18n: route.data.titleI18n
       } as ReuseTitle;
     }
 
@@ -235,7 +255,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 清除标题缓存
    */
-  clearTitleCached() {
+  clearTitleCached(): void {
     this._titleCached = {};
   }
   /** 自定义当前 `closable` 状态 */
@@ -246,7 +266,7 @@ export class ReuseTabService implements OnDestroy {
     this._cachedChange.next({
       active: 'closable',
       closable: value,
-      list: this._cached,
+      list: this._cached
     });
   }
   /**
@@ -272,10 +292,10 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 清空 `closable` 缓存
    */
-  clearClosableCached() {
+  clearClosableCached(): void {
     this._closableCached = {};
   }
-  getTruthRoute(route: ActivatedRouteSnapshot) {
+  getTruthRoute(route: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
     let next = route;
     while (next.firstChild) next = next.firstChild;
     return next;
@@ -290,12 +310,10 @@ export class ReuseTabService implements OnDestroy {
       segments.push(next.url.join('/'));
       next = next.parent!;
     }
-    const url =
-      '/' +
-      segments
-        .filter(i => i)
-        .reverse()
-        .join('/');
+    const url = `/${segments
+      .filter(i => i)
+      .reverse()
+      .join('/')}`;
     return url;
   }
   /**
@@ -327,20 +345,19 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 刷新，触发一个 refresh 类型事件
    */
-  refresh(data?: any) {
+  refresh(data?: NzSafeAny): void {
     this._cachedChange.next({ active: 'refresh', data });
   }
   // #endregion
 
   // #region privates
 
-  private destroy(_handle: any) {
+  private destroy(_handle: NzSafeAny): void {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
   }
 
-  private di(...args: NzSafeAny[]) {
+  private di(...args: NzSafeAny[]): void {
     if (!this.debug) return;
-    // tslint:disable-next-line:no-console
     console.warn(...args);
   }
 
@@ -348,32 +365,39 @@ export class ReuseTabService implements OnDestroy {
 
   constructor(private injector: Injector, private menuService: MenuService) {}
 
-  init() {
+  init(): void {
     this.initScroll();
     this._inited = true;
   }
 
-  private getMenu(url: string) {
+  private getMenu(url: string): Menu | null | undefined {
     const menus = this.menuService.getPathByUrl(url);
     if (!menus || menus.length === 0) return null;
     return menus.pop();
   }
 
-  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number) {
+  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number, type: ReuseHookOnReuseInitType = 'init'): void {
     if (typeof comp === 'number') {
       const item = this._cached[comp];
       comp = item._handle.componentRef;
     }
-    if (comp == null) {
+    const compThis = comp.instance;
+    if (comp == null || !compThis) {
       return;
     }
-    if (comp.instance && typeof comp.instance[method] === 'function') {
-      comp.instance[method]();
+    const fn = compThis[method];
+    if (typeof fn !== 'function') {
+      return;
+    }
+    if (method === '_onReuseInit') {
+      fn.call(compThis, type);
+    } else {
+      (fn as () => void).call(compThis);
     }
   }
 
-  private hasInValidRoute(route: ActivatedRouteSnapshot) {
-    return !route.routeConfig || route.routeConfig.loadChildren || route.routeConfig.children;
+  private hasInValidRoute(route: ActivatedRouteSnapshot): boolean {
+    return !route.routeConfig || !!route.routeConfig.loadChildren || !!route.routeConfig.children;
   }
 
   /**
@@ -388,7 +412,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 存储
    */
-  store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
+  store(_snapshot: ActivatedRouteSnapshot, _handle: NzSafeAny): void {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
     const isAdd = idx === -1;
@@ -399,7 +423,7 @@ export class ReuseTabService implements OnDestroy {
       position: this.getKeepingScroll(url, _snapshot) ? this.positionBuffer[url] : null,
       url,
       _snapshot,
-      _handle,
+      _handle
     };
     if (isAdd) {
       if (this.count >= this._max) {
@@ -409,6 +433,12 @@ export class ReuseTabService implements OnDestroy {
       }
       this._cached.push(item);
     } else {
+      // Current handler is null when activate routes
+      // For better reliability, we need to wait for the component to be attached before call _onReuseInit
+      const cahcedComponentRef = this._cached[idx]._handle?.componentRef;
+      if (_handle == null && cahcedComponentRef != null) {
+        timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
+      }
       this._cached[idx] = item;
     }
     this.removeUrlBuffer = null;
@@ -433,13 +463,7 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
-    if (ret) {
-      const compRef = data!._handle.componentRef;
-      if (compRef) {
-        this.componentRef = compRef;
-        this.runHook('_onReuseInit', compRef);
-      }
-    } else {
+    if (!ret) {
       this._cachedChange.next({ active: 'add', url, list: this._cached });
     }
     return ret;
@@ -448,7 +472,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 提取复用数据
    */
-  retrieve(route: ActivatedRouteSnapshot): {} | null {
+  retrieve(route: ActivatedRouteSnapshot): NzSafeAny | null {
     if (this.hasInValidRoute(route)) return null;
     const url = this.getUrl(route);
     const data = this.get(url);
@@ -466,9 +490,11 @@ export class ReuseTabService implements OnDestroy {
 
     const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
     if (path.length > 0 && ~path.indexOf(':')) {
-      const futureUrl = this.getUrl(future);
-      const currUrl = this.getUrl(curr);
-      ret = futureUrl === currUrl;
+      if (this.routeParamMatchMode === 'strict') {
+        ret = this.getUrl(future) === this.getUrl(curr);
+      } else {
+        ret = path === ((curr.routeConfig && curr.routeConfig.path) || '');
+      }
     }
     this.di('=====================');
     this.di('#shouldReuseRoute', ret, `${this.getUrl(curr)}=>${this.getUrl(future)}`, future, curr);
@@ -494,7 +520,7 @@ export class ReuseTabService implements OnDestroy {
   }
 
   private get isDisabledInRouter(): boolean {
-    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as any);
+    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as NzSafeAny);
     return routerConfig.scrollPositionRestoration === 'disabled';
   }
 
@@ -502,7 +528,7 @@ export class ReuseTabService implements OnDestroy {
     return this.injector.get(ScrollService);
   }
 
-  private initScroll() {
+  private initScroll(): void {
     if (this._router$) {
       this._router$.unsubscribe();
     }

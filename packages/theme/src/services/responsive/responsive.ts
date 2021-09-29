@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainThemeResponsiveConfig } from '@delon/util';
+
+import { AlainConfigService, AlainThemeResponsiveConfig } from '@delon/util/config';
 
 export const REP_MAX = 6;
 
@@ -16,8 +17,8 @@ export class ResponsiveService {
         3: { xs: 24, sm: 12, md: 8 },
         4: { xs: 24, sm: 12, md: 8, lg: 6 },
         5: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4 },
-        6: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4, xxl: 2 },
-      },
+        6: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4, xxl: 2 }
+      }
     })!;
     if (
       Object.keys(this.cog.rules)
