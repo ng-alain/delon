@@ -2,7 +2,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { ResultComponent } from './result.component';
 import { ResultModule } from './result.module';
 
@@ -14,18 +17,18 @@ describe('abc: result', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ResultModule, HttpClientTestingModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 
-  function isText(cls: string, value: any) {
+  function isText(cls: string, value: NzSafeAny): void {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
     expect(el ? el.innerText.trim() : '').toBe(value);
   }
 
-  function isExists(cls: string, stauts: boolean = true) {
+  function isExists(cls: string, stauts: boolean = true): void {
     const res = dl.query(By.css(cls));
     if (stauts) {
       expect(res).not.toBeNull();
@@ -96,7 +99,7 @@ describe('abc: result', () => {
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #descriptionTpl><p id="descriptionTpl">descriptionTpl</p></ng-template>
     <ng-template #extraTpl><p id="extraTpl">extraTpl</p></ng-template>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

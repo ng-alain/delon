@@ -16,6 +16,5 @@
     "ng-alain",
     "angular",
     "testing"
-  ],
-  "sideEffects": false
+  ]
 }

@@ -14,26 +14,50 @@
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
         <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}"></i>
       </button>
-      <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" nz-button (click)="openOnStackBlitz()" class="ml-sm">
+      <button
+        nz-tooltip
+        [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
+        nz-button
+        (click)="openOnStackBlitz()"
+        class="ml-sm"
+      >
         <i nz-icon nzType="form"></i>
       </button>
-      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" nz-button (click)="onCopy()" class="ml-sm">
+      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()" class="ml-sm">
         <i nz-icon nzType="copy"></i>
       </button>
     </nz-button-group>
   </div>
 </div>
-<div nz-row class="border-bottom-1 pb-sm mb-md" nzGutter="24">
+<div nz-row class="border-bottom-1 pb-sm mb-md" [nzGutter]="24">
   <div nz-col [nzSpan]="12" [hidden]="!expand">
     <nz-tabset>
       <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
-        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor
+          #schemaEditor
+          [(ngModel)]="schema"
+          (ngModelChange)="run()"
+          [options]="editorOptions"
+          height="500px"
+        ></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
-        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor
+          #formCodeEditor
+          [(ngModel)]="formCode"
+          (ngModelChange)="run()"
+          [options]="editorOptions"
+          height="500px"
+        ></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
-        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor
+          #uiEditor
+          [(ngModel)]="uiCode"
+          (ngModelChange)="run()"
+          [options]="editorOptions"
+          height="500px"
+        ></nu-monaco-editor>
       </nz-tab>
     </nz-tabset>
   </div>

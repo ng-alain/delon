@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable } from '@angular/core';
+
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -14,7 +17,7 @@ import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { META as UtilMeta } from '../routes/gen/util/meta';
 import { I18NService } from './i18n/service';
 
-const FULLMETAS: Meta[] = [
+const FULLMETAS = [
   DocsMeta,
   ComponentsMeta,
   AuthMeta,
@@ -25,14 +28,16 @@ const FULLMETAS: Meta[] = [
   UtilMeta,
   FormMeta,
   CliMeta,
-  ThemeMeta,
-] as any;
+  ThemeMeta
+] as Meta[];
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
   private _platMenus: any[];
   private _menus: any[] | null;
   private _type: string;
+  private _data: any;
+  private _isPages = false;
   next: any;
   prev: any;
 
@@ -51,12 +56,63 @@ export class MetaService {
     }
   }
 
-  private _data: any;
-  private _isPages = false;
+  /** `true` 表示需要跳转404 */
+  set(url: string): boolean {
+    const category = this.getCatgory(url);
+    if (!category) return false;
+    const name = this.getPageName(url);
+    const data = category.list!.find(w => w.name === name) || null;
+    if (!data) return true;
+    this._data = {
+      ...data.meta![this.i18n.defaultLang],
+      ...data.meta![this.i18n.currentLang],
+      i18n: data.i18n,
+      name: data.name,
+      module_name: category.module || '',
+      github: category.github,
+      list: category.list
+    };
+    // fix title
+    if (typeof this._data.title === 'object') {
+      this._data.title = this._data.title[this.i18n.currentLang] || this._data.title[this.i18n.defaultLang];
+    }
 
-  private getCatgory(url: string) {
+    this.refPage(url);
+
+    return false;
+  }
+
+  get item(): any {
+    return this._data || null;
+  }
+
+  get github(): string {
+    return this._data.github;
+  }
+
+  get data(): MetaList[] {
+    return this._data.list;
+  }
+
+  get isPages(): boolean {
+    return this._isPages;
+  }
+
+  get menus(): any {
+    return this._menus;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  clearMenu(): void {
+    this._menus = null;
+  }
+
+  private getCatgory(url: string): Meta | undefined {
     const arr = url.split('?')[0].split('/');
-    if (arr.length <= 2) return false;
+    if (arr.length <= 2) return;
 
     let categoryName = arr[1].toLowerCase().trim();
     let category = FULLMETAS.find(w => w.name === categoryName);
@@ -70,62 +126,8 @@ export class MetaService {
     return category;
   }
 
-  private getPageName(url: string) {
+  private getPageName(url: string): string {
     return url.split('?')[0].split('/')[2].toLowerCase().trim();
-  }
-
-  /** `true` 表示需要跳转404 */
-  set(url: string): boolean {
-    const category = this.getCatgory(url);
-    if (!category) return false;
-    const name = this.getPageName(url);
-    const data = category.list!.find(w => w.name === name) || null;
-    if (!data) return true;
-    this._data = {
-      ...data.meta![this.i18n.defaultLang],
-      ...data.meta![this.i18n.lang],
-      i18n: data.i18n,
-      name: data.name,
-      module_name: category.module || '',
-      github: category.github,
-      list: category.list,
-    };
-    // fix title
-    if (typeof this._data.title === 'object') {
-      this._data.title = this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
-    }
-
-    this.refPage(url);
-
-    return false;
-  }
-
-  get item() {
-    return this._data || null;
-  }
-
-  get github(): string {
-    return this._data.github;
-  }
-
-  get data(): MetaList[] {
-    return this._data.list;
-  }
-
-  get isPages() {
-    return this._isPages;
-  }
-
-  get menus() {
-    return this._menus;
-  }
-
-  get type() {
-    return this._type;
-  }
-
-  clearMenu() {
-    this._menus = null;
   }
 
   private getType(url: string): string {
@@ -133,7 +135,7 @@ export class MetaService {
     return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
   }
 
-  refMenu(url: string) {
+  refMenu(url: string): void {
     if (!this.menus) {
       this.genMenus(url);
       return;
@@ -150,33 +152,36 @@ export class MetaService {
     if (!category) return;
 
     // todo: support level 2
-    const group: any[] = category.types!.map((item: any, index: number) => {
+    const group: any[] = category.types!.map((item, index: number) => {
       return {
         index,
-        title: item[this.i18n.lang] || item[this.i18n.defaultLang],
-        list: [],
+        title: item[this.i18n.currentLang] || item[this.i18n.defaultLang],
+        list: []
       };
     });
-    category.list!.forEach((item: any) => {
-      const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex(w => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
+    category.list!.forEach(item => {
+      const meta = item.meta![this.i18n.currentLang] || item.meta![this.i18n.defaultLang];
+      let typeIdx = category.types!.findIndex(
+        (w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
+      );
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
         groupItem = {
           index: typeIdx,
-          title: category.types![typeIdx][this.i18n.lang] || category.types![typeIdx][this.i18n.defaultLang],
-          list: [],
+          title: category.types![typeIdx][this.i18n.currentLang] || category.types![typeIdx][this.i18n.defaultLang],
+          list: []
         };
         group.push(groupItem);
       }
       const entry: any = {
-        url: (meta.url || item.route || `/${category.name}/${item.name}`) + `/${this.i18n.zone}`,
-        title: this.i18n.get(meta.title),
+        url: `${meta.url || item.route || `/${category.name}/${item.name}`}/${this.i18n.zone}`,
+        title: this.i18n.get(meta.title!),
         subtitle: meta.subtitle,
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,
         lib: typeof item.lib === 'boolean' ? item.lib : false,
+        deprecated: meta.deprecated
       };
       groupItem.list.push(entry);
     });
@@ -206,7 +211,7 @@ export class MetaService {
     return ret;
   }
 
-  private refPage(url: string) {
+  private refPage(url: string): void {
     this.next = null;
     this.prev = null;
     if (!this._menus) this.genMenus(url);
@@ -216,7 +221,7 @@ export class MetaService {
     if (idx + 1 <= this._platMenus.length) this.next = this._platMenus[idx + 1];
   }
 
-  search(q: string, childrenMax = 5): MetaSearchGroup[] {
+  search(q: string, childrenMax: number = 5): MetaSearchGroup[] {
     const zone = this.i18n.zone;
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {
@@ -227,14 +232,14 @@ export class MetaService {
           return {
             title: item._t,
             name: item.name,
-            url: (item.route || `/${type}/${item.name}`) + `/${zone}`,
+            url: `${item.route || `/${type}/${item.name}`}/${zone}`
           };
         });
       if (children != null && children.length) {
         res.push({
           title: g.name,
           type,
-          children: children.slice(0, childrenMax),
+          children: children.slice(0, childrenMax)
         });
       }
     }

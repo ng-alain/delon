@@ -4,12 +4,7 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "acl",
-    "entryFile": "public_api.ts",
-    "umdModuleIds": {
-      "@delon/util": "delon.util"
-    }
+    "entryFile": "index.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "tslib", "angular", "@delon/util"
-  ]
+  "allowedNonPeerDependencies": ["@delon/util"]
 }

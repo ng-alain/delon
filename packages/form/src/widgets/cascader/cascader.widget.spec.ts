@@ -1,6 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { CascaderWidget } from './cascader.widget';
 
@@ -24,13 +26,13 @@ describe('form: widget: cascader', () => {
       {
         value: 110000,
         label: '北京',
-        parent: 0,
+        parent: 0
       },
       {
         value: 120000,
         label: '上海',
-        parent: 0,
-      },
+        parent: 0
+      }
     ];
     page
       .newSchema({
@@ -39,9 +41,9 @@ describe('form: widget: cascader', () => {
             type: 'number',
             ui: { widget, triggerAction: ['hover'] },
             enum: data,
-            default: [120000],
-          },
-        },
+            default: [120000]
+          }
+        }
       })
       .dc(1);
     expect(page.getEl('.ant-cascader-picker-label').textContent!.trim()).toBe('上海');
@@ -55,8 +57,8 @@ describe('form: widget: cascader', () => {
         {
           value: 110000,
           label: '北京',
-          parent: 0,
-        },
+          parent: 0
+        }
       ];
       page.newSchema({
         properties: {
@@ -64,9 +66,9 @@ describe('form: widget: cascader', () => {
             type: 'number',
             ui: { widget, triggerAction: ['hover'] },
             enum: data,
-            default: [110000],
-          },
-        },
+            default: [110000]
+          }
+        }
       });
       const comp = page.getWidget<CascaderWidget>('sf-cascader');
       expect(comp.data.length).toBe(1);
@@ -82,11 +84,11 @@ describe('form: widget: cascader', () => {
               title: 'RealTime',
               ui: {
                 widget: 'cascader',
-                asyncData: jasmine.createSpy().and.returnValue(Promise.resolve()),
+                asyncData: jasmine.createSpy().and.returnValue(Promise.resolve())
               },
-              default: [110000],
-            },
-          },
+              default: [110000]
+            }
+          }
         })
         .typeEvent('click', 'nz-cascader')
         .time()
@@ -108,10 +110,10 @@ describe('form: widget: cascader', () => {
               change: jasmine.createSpy(),
               selectionChange: jasmine.createSpy(),
               select: jasmine.createSpy(),
-              clear: jasmine.createSpy(),
-            },
-          },
-        },
+              clear: jasmine.createSpy()
+            }
+          }
+        }
       });
       const comp = page.getWidget<CascaderWidget>('sf-cascader');
       const ui = page.getProperty('a').ui;

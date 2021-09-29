@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+
+import { ArrayService } from '@delon/util/array';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -10,13 +15,15 @@ import { SFSelectWidgetSchema } from './schema';
   selector: 'sf-select',
   templateUrl: './select.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
+  private search$ = new Subject<string>();
   i: SFSelectWidgetSchema;
   data: SFSchemaEnum[];
   _value: NzSafeAny;
   hasGroup = false;
+  loading = false;
 
   private checkGroup(list: SFSchemaEnum[]): void {
     this.hasGroup = (list || []).filter(w => w.group === true).length > 0;
@@ -37,6 +44,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       compareWith,
       optionHeightPx,
       optionOverflowSize,
+      showArrow
     } = this.ui;
     this.i = {
       autoClearSearchValue: toBool(autoClearSearchValue, true),
@@ -51,11 +59,30 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       maxTagCount: maxTagCount || undefined,
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
-      compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
+      showArrow: typeof showArrow !== 'boolean' ? undefined : showArrow,
+      compareWith: compareWith || ((o1: NzSafeAny, o2: NzSafeAny) => o1 === o2)
     };
+
+    const onSearch = this.ui.onSearch!;
+    if (onSearch) {
+      this.search$
+        .pipe(
+          takeUntil(this.sfItemComp!.unsubscribe$),
+          distinctUntilChanged(),
+          debounceTime(this.ui.searchDebounceTime || 300),
+          switchMap(text => onSearch(text)),
+          catchError(() => [])
+        )
+        .subscribe(list => {
+          this.data = list;
+          this.checkGroup(list);
+          this.loading = false;
+          this.detectChanges();
+        });
+    }
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
       this.data = list;
@@ -64,7 +91,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     });
   }
 
-  change(values: SFValue) {
+  change(values: SFValue): void {
     if (this.ui.change) {
       this.ui.change(values, this.getOrgData(values));
     }
@@ -72,39 +99,29 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   private getOrgData(values: SFValue): SFSchemaEnum | SFSchemaEnum[] {
+    const srv = this.injector.get(ArrayService);
     if (!Array.isArray(values)) {
-      return this.data.find(w => w.value === values)!;
+      return srv.findTree(this.data, (item: SFSchemaEnum) => item.value === values)!;
     }
-    return values.map(value => {
-      let item: SFSchemaEnum | null = null;
-      this.data.forEach(list => {
-        item = list.children?.find(w => w.value === value)!;
-      });
-      return item;
-    });
+    return values.map(value => srv.findTree(this.data, (item: SFSchemaEnum) => item.value === value));
   }
 
-  openChange(status: boolean) {
+  openChange(status: boolean): void {
     if (this.ui.openChange) {
       this.ui.openChange(status);
     }
   }
 
-  searchChange(text: string) {
-    if (this.ui.onSearch) {
-      this.ui.onSearch(text).then((list: SFSchemaEnum[]) => {
-        this.data = list;
-        this.checkGroup(list);
-        this.detectChanges();
-      });
-      return;
-    }
-    this.detectChanges();
-  }
-
-  scrollToBottom() {
+  scrollToBottom(): void {
     if (this.ui.scrollToBottom) {
       this.ui.scrollToBottom();
+    }
+  }
+
+  onSearch(value: string): void {
+    if (this.ui.onSearch) {
+      this.loading = true;
+      this.search$.next(value);
     }
   }
 }

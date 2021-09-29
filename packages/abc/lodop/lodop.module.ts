@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DelonUtilModule } from '@delon/util';
 
-@NgModule({
-  imports: [DelonUtilModule],
-})
+@NgModule({})
 export class LodopModule {}

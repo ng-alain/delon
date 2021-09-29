@@ -1,8 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
+
 import { TagSelectComponent } from './tag-select.component';
 import { TagSelectModule } from './tag-select.module';
 
@@ -14,7 +16,7 @@ describe('abc: tag-select', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TagSelectModule, DelonLocaleModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -62,7 +64,7 @@ describe('abc: tag-select', () => {
     <tag-select #comp [expandable]="expandable" (change)="change()">
       <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{ i.text }}</li>
     </tag-select>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -80,8 +82,8 @@ class TestComponent {
     { id: 9, text: '类目九', value: false },
     { id: 10, text: '类目十', value: false },
     { id: 11, text: '类目十一', value: false },
-    { id: 12, text: '类目十二', value: false },
+    { id: 12, text: '类目十二', value: false }
   ];
   expandable = true;
-  change() {}
+  change(): void {}
 }

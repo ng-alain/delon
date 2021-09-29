@@ -12,5 +12,5 @@
       "@antv/g2": "G2"
     }
   },
-  "whitelistedNonPeerDependencies": ["tslib", "@delon/theme", "@delon/util", "@antv/g2", "@antv/data-set"]
+  "allowedNonPeerDependencies": ["@delon/theme", "@delon/util", "@antv/g2", "@antv/data-set", "echarts"]
 }

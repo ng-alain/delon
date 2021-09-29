@@ -45,9 +45,10 @@ module: import { SEModule } from '@delon/abc/se';
 | `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `'default','compact'` | `'default'` | ✅ |
 | `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false` | ✅ |
 | `[ingoreDirty]` | 是否忽略 `dirty` 校验 | `boolean` | `false` | ✅ |
-| `[line]` | 分隔线 | `boolean` | `false` |  |
+| `[line]` | 分隔线 | `boolean` | `false` | - |
 | `[title]` | 标题 | `string,TemplateRef<void>` | - |  |
 | `[errors]` | 批量修改 `se` 错误消息描述 | `SEErrorRefresh[]` | - |  |
+| `[noColon]` | 默认是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
 ### se
 
@@ -58,12 +59,14 @@ module: import { SEModule } from '@delon/abc/se';
 | `[labelWidth]` | 标签文本宽度，单位：`px`（继承于 `se-container`） | `number` | - |
 | `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |
 | `[error]` | 错误描述 | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | - |
 | `[extra]` | 额外提示信息 | `string, TemplateRef<void>` | - |
 | `[required]` | 是否必填项标识符，若不设置自动根据表单元素是否有 `RequiredValidator` 校验来设置值 | `string` | - |
 | `[controlClass]` | 控件区域样式名 | `string` | - |
 | `[id]` | 自定义组件 `id` | `string` | - |
 | `[line]` | 分隔线（继承于 `se-container`） | `boolean` | - |
+| `[noColon]` | 是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
 ### se-title
 

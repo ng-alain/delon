@@ -1,7 +1,9 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
+
 import { TrendComponent } from './trend.component';
 import { TrendModule } from './trend.module';
 
@@ -13,13 +15,13 @@ describe('abc: trend', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TrendModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 
-  function isExists(cls: string, stauts: boolean = true) {
+  function isExists(cls: string, stauts: boolean = true): void {
     if (stauts) {
       expect(dl.query(By.css(cls))).not.toBeNull();
     } else {
@@ -32,11 +34,15 @@ describe('abc: trend', () => {
       context.flag = 'up';
       fixture.detectChanges();
       isExists('.anticon-caret-up');
+      const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
+      expect(el.dataset.flag).toBe('up');
     });
     it('width down', () => {
       context.flag = 'down';
       fixture.detectChanges();
       isExists('.anticon-caret-down');
+      const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
+      expect(el.dataset.flag).toBe('down');
     });
   });
 
@@ -75,7 +81,7 @@ describe('abc: trend', () => {
 });
 
 @Component({
-  template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor"></trend> `,
+  template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor"></trend> `
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: TrendComponent;

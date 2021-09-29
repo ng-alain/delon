@@ -1,6 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { ErrorCollectModule } from '../error-collect/error-collect.module';
 import { FooterToolbarModule } from './footer-toolbar.module';
 
@@ -12,11 +13,11 @@ describe('abc: footer-toolbar', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ErrorCollectModule, FooterToolbarModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   });
 
-  function create() {
+  function create(): void {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
@@ -48,7 +49,7 @@ describe('abc: footer-toolbar', () => {
       <footer-toolbar [extra]="extra">
         <ng-template #extra><div id="extra">1</div></ng-template>
       </footer-toolbar>
-      `,
+      `
       );
       create();
       expect(dl.queryAll(By.css('#extra')).length).toBe(1);
@@ -57,7 +58,7 @@ describe('abc: footer-toolbar', () => {
 });
 
 @Component({
-  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form> `,
+  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form> `
 })
 class TestComponent {
   errorCollect = true;

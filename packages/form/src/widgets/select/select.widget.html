@@ -1,45 +1,56 @@
 <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
   <nz-select
+    [nzId]="id"
     [nzDisabled]="disabled"
     [(ngModel)]="_value"
     (ngModelChange)="change($event)"
-    [nzSize]="ui.size"
-    [nzPlaceHolder]="ui.placeholder"
+    [nzSize]="ui.size!"
+    [nzPlaceHolder]="ui.placeholder!"
     [nzNotFoundContent]="ui.notFoundContent"
-    [nzDropdownClassName]="ui.dropdownClassName"
+    [nzDropdownClassName]="ui.dropdownClassName!"
     [nzAllowClear]="ui.allowClear"
-    [nzDropdownStyle]="ui.dropdownStyle"
-    [nzCustomTemplate]="ui.customTemplate"
-    [nzSuffixIcon]="ui.suffixIcon"
-    [nzRemoveIcon]="ui.removeIcon"
-    [nzClearIcon]="ui.clearIcon"
-    [nzMenuItemSelectedIcon]="ui.menuItemSelectedIcon"
-    [nzMaxTagPlaceholder]="ui.maxTagPlaceholder"
-    [nzDropdownRender]="ui.dropdownRender"
+    [nzDropdownStyle]="ui.dropdownStyle!"
+    [nzCustomTemplate]="ui.customTemplate!"
+    [nzSuffixIcon]="ui.suffixIcon!"
+    [nzRemoveIcon]="ui.removeIcon!"
+    [nzClearIcon]="ui.clearIcon!"
+    [nzMenuItemSelectedIcon]="ui.menuItemSelectedIcon!"
+    [nzMaxTagPlaceholder]="ui.maxTagPlaceholder!"
+    [nzDropdownRender]="ui.dropdownRender!"
     [nzAutoClearSearchValue]="i.autoClearSearchValue"
     [nzBorderless]="i.borderless"
     [nzAutoFocus]="i.autoFocus"
-    [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
+    [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth!"
     [nzServerSearch]="i.serverSearch"
-    [nzMaxMultipleCount]="i.maxMultipleCount"
-    [nzMode]="i.mode"
+    [nzMaxMultipleCount]="i.maxMultipleCount!"
+    [nzMode]="i.mode!"
     [nzShowSearch]="i.showSearch"
-    [nzTokenSeparators]="i.tokenSeparators"
-    [nzMaxTagCount]="i.maxTagCount"
-    [compareWith]="i.compareWith"
-    [nzOptionHeightPx]="i.optionHeightPx"
-    [nzOptionOverflowSize]="i.optionOverflowSize"
+    [nzShowArrow]="i.showArrow!"
+    [nzTokenSeparators]="i.tokenSeparators!"
+    [nzMaxTagCount]="i.maxTagCount!"
+    [compareWith]="i.compareWith!"
+    [nzOptionHeightPx]="i.optionHeightPx!"
+    [nzOptionOverflowSize]="i.optionOverflowSize!"
     (nzOpenChange)="openChange($event)"
-    (nzOnSearch)="searchChange($event)"
+    (nzOnSearch)="onSearch($event)"
     (nzScrollToBottom)="scrollToBottom()"
   >
-    <ng-container *ngIf="!hasGroup">
+    <ng-container *ngIf="!loading && !hasGroup">
       <nz-option *ngFor="let o of data" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
     </ng-container>
-    <ng-container *ngIf="hasGroup">
+    <ng-container *ngIf="!loading && hasGroup">
       <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
-        <nz-option *ngFor="let o of i.children" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
+        <nz-option
+          *ngFor="let o of i.children"
+          [nzLabel]="o.label"
+          [nzValue]="o.value"
+          [nzDisabled]="o.disabled"
+        ></nz-option>
       </nz-option-group>
     </ng-container>
+    <nz-option *ngIf="loading" nzDisabled nzCustomContent>
+      <i nz-icon nzType="loading"></i>
+      {{ ui.searchLoadingText }}
+    </nz-option>
   </nz-select>
 </sf-item-wrap>

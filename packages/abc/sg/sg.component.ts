@@ -8,10 +8,12 @@ import {
   OnChanges,
   Optional,
   Renderer2,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
+
 import { ResponsiveService } from '@delon/theme';
-import { InputNumber } from '@delon/util';
+import { InputNumber, NumberInput } from '@delon/util/decorator';
+
 import { SGContainerComponent } from './sg-container.component';
 
 const prefixCls = `sg`;
@@ -22,13 +24,15 @@ const prefixCls = `sg`;
   template: ` <ng-content></ng-content> `,
   host: {
     '[style.padding-left.px]': 'paddingValue',
-    '[style.padding-right.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SGComponent implements OnChanges, AfterViewInit {
+  static ngAcceptInputType_col: NumberInput;
+
   private el: HTMLElement;
   private clsMap: string[] = [];
   private inited = false;
@@ -43,7 +47,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
     el: ElementRef,
     private ren: Renderer2,
     @Optional() @Host() private parent: SGContainerComponent,
-    private rep: ResponsiveService,
+    private rep: ResponsiveService
   ) {
     if (parent == null) {
       throw new Error(`[sg] must include 'sg-container' component`);
@@ -60,7 +64,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
     return this;
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.inited) this.setClass();
   }
 

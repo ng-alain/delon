@@ -18,4 +18,5 @@ Exceptions page is used to provide feedback on specific abnormal state. Usually,
 | `[title]` | title | `string` | - |
 | `[desc]` | supplementary description | `string` | - |
 | `[img]` | the url of background image | `string` | - |
+| `[backRouterLink]` | Back of router link | `string, any[]` | `/` |
 | `ng-content` | suggested operations, a default 'Home' link will show if not set | `TemplateRef<void>` | - |

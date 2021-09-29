@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 import { NzMarks, NzSliderValue } from 'ng-zorro-antd/slider';
+
 import { ControlUIWidget } from '../../widget';
 import { SFSliderWidgetSchema } from './schema';
 
@@ -7,7 +9,7 @@ import { SFSliderWidgetSchema } from './schema';
   selector: 'sf-slider',
   templateUrl: './slider.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implements OnInit {
   min: number;
@@ -30,10 +32,10 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
   _formatter = (value: number) => {
     const { formatter } = this.ui;
     if (formatter) return formatter(value);
-    return value;
+    return `${value}`;
   };
 
-  _afterChange(value: NzSliderValue) {
+  _afterChange(value: NzSliderValue): void {
     const { afterChange } = this.ui;
     if (afterChange) return afterChange(value);
   }

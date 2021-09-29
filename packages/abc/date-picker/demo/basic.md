@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  result: {{i | json}}<br>
-  <range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
+    result: {{ i | json }}<br />
+    <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker>
   `,
 })
 export class DemoComponent {
-  i: any = {};
+  i: { start?: Date; end?: Date } = {};
 }
 ```

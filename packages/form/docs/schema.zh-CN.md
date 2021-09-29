@@ -102,7 +102,7 @@ JSON Schema 有完整的对每个属性的规范描述，`@delon/form` 当前是
 |----|----|----|-----|
 | `[maxLength]` | 定义字符串的最大长度 | `number` | - |
 | `[minLength]` | 定义字符串的最小长度 | `number` | - |
-| `[pattern]` | 验证输入字段正则表达式字符串，若指定 `format: 'regex'` 时务必指定 | `string` | - |
+| `[pattern]` | 验证输入字段正则表达式字符串 | `string` | - |
 
 ### 数组类型
 
@@ -157,7 +157,61 @@ schema: SFSchema = {
 
 上述的最终行为是当登录方式为 `mobile` 时UI显示 `mobile` 和 `code`，反之UI显示 `name` 和 `pwd`。
 
-其实条件类最终被解析成 `ui.visibleIf`，在未来可能会增加条件类的处理。
+其实条件类最终被解析成 `ui.visibleIf`，将其转换成如下：
+
+```ts
+{
+  properties: {
+    login_type: {
+      type: "string",
+      title: "登录方式",
+      enum: [
+        { label: "手机", value: "mobile" },
+        { label: "账密", value: "account" }
+      ],
+      default: "mobile",
+      ui: {
+        widget: "radio",
+        styleType: "button"
+      }
+    },
+    mobile: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    code: {
+      type: "number",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "mobile"
+        }
+      }
+    },
+    name: {
+      type: "string",
+      ui: {
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    },
+    pwd: {
+      type: "string",
+      ui: {
+        type: "password",
+        visibleIf: {
+          login_type: val => val === "account"
+        }
+      }
+    }
+  },
+  required: ["login_type"]
+};
+```
 
 ### 逻辑类
 
@@ -211,7 +265,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 | `[order]` | 属性顺序 | `string[]` | - |
 | `[asyncData]` | 异步静态数据源 | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
 | `[hidden]` | 是否隐藏渲染 | `boolean` | `false` |
-| `[visibleIf]` | 指定条件时才显示 | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
+| `[visibleIf]` | 指定条件时才显示 | `{ [key: string]: any[] | ((value: any, property: FormProperty) => boolean) }` | - |
 | `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | - |
 
 **visibleIf**
@@ -220,7 +274,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 
 - `visibleIf: { shown: [ true ] }`：当 `shown: true` 时才显示当前属性
 - `visibleIf: { shown: [ '$ANY$' ] }`：当 `shown` 包括任意值时
-- `visibleIf: { shown: (value: any) => value > 0 }`：复杂表达式
+- `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`：复杂表达式
 
 ### 校验类
 

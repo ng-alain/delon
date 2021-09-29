@@ -1,3 +1,5 @@
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface MenuIcon {
   /** Type for icon */
   type: 'class' | 'icon' | 'iconfont' | 'img';
@@ -11,10 +13,12 @@ export interface MenuIcon {
   twoToneColor?: string;
   /** Type of the icon from iconfont */
   iconfont?: string;
+  /** Rotate degrees */
+  rotate?: number;
 }
 
 export interface Menu {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
   /** Text of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
   text?: string;
   /** I18n key of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
@@ -42,7 +46,33 @@ export interface Menu {
   /** Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs */
   hideInBreadcrumb?: boolean;
   /** ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value */
-  acl?: any;
+  acl?:
+    | number
+    | number[]
+    | string
+    | string[]
+    | {
+        /**
+         * 角色
+         */
+        role?: string[];
+        /**
+         * 权限点
+         */
+        ability?: number[] | string[];
+
+        /**
+         * Validated against, default: `oneOf`
+         * - `allOf` the value validates against all the roles or abilities
+         * - `oneOf` the value validates against exactly one of the roles or abilities
+         */
+        mode?: 'allOf' | 'oneOf';
+
+        /**
+         * 是否取反，即结果为 `true` 时表示未授权
+         */
+        except?: boolean;
+      };
   /** Whether shortcut menu item */
   shortcut?: boolean;
   /** Wheter shortcut menu root node */
@@ -55,18 +85,15 @@ export interface Menu {
   key?: string;
   /** Children menu of menu item */
   children?: Menu[];
-  /** @inner Not recommended */
+}
+
+/** @inner Just only inner type */
+export interface MenuInner extends Menu {
   _id?: number;
-  /** @inner Not recommended */
   _parent?: Menu | null;
-  /** @inner Not recommended */
   _depth?: number;
-  /** @inner Not recommended */
   _hidden?: boolean;
-  /** @inner Not recommended */
   _selected?: boolean;
-  /** @inner Not recommended */
   _open?: boolean;
-  /** @inner Not recommended */
   _aclResult?: boolean;
 }

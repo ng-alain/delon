@@ -1,5 +1,6 @@
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+
 import { ExampleModules, SiteConfig } from '../interfaces';
 import { generateDoc } from './utils';
 
@@ -12,14 +13,18 @@ export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, o
   options.imports = options.list
     .map(
       i => `import { ${i.componentName} } from './${i.name}';
-    import { ${i.componentIndexName} } from './${i.name}_index';`,
+    import { ${i.componentIndexName} } from './${i.name}_index';`
     )
     .join(`\n`);
 
-  options.components = [...options.list.map(i => i.componentName), ...options.list.map(i => i.componentIndexName)].join(',');
+  options.components = [...options.list.map(i => i.componentName), ...options.list.map(i => i.componentIndexName)].join(
+    ','
+  );
 
   options.metadata = options.list
-    .map(i => `'example-${i.name}-index': { title: ${JSON.stringify(i.meta.title)}, component: ${i.componentIndexName} }`)
+    .map(
+      i => `'example-${i.name}-index': { title: ${JSON.stringify(i.meta.title)}, component: ${i.componentIndexName} }`
+    )
     .join(`,\n`);
 
   generateDoc(options, tpl, indexFilePath);

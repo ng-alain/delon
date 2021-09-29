@@ -1,6 +1,10 @@
 import { TemplateRef } from '@angular/core';
-import { ACLCanType } from '@delon/acl';
+
+import type { ACLCanType } from '@delon/acl';
+import type { NgClassType, NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
 import { ErrorSchema } from '../errors';
+import type { FormProperty } from '../model/form.property';
 
 export type SFPlacement =
   | 'top'
@@ -20,7 +24,7 @@ export type SFTrigger = 'click' | 'focus' | 'hover';
 
 export type SFLSSize = 'large' | 'small';
 
-export type SFDLSSize = 'default' | 'large' | 'small';
+export type SFDLSSize = NzSizeLDSType;
 
 export interface SFGridSizeSchema {
   span?: number | null;
@@ -55,15 +59,40 @@ export interface SFGridSchema {
   xxl?: number | SFGridSizeSchema;
 }
 
+export type SFBuiltInWidgets =
+  | 'text'
+  | 'string'
+  | 'number'
+  | 'integer'
+  | 'date'
+  | 'time'
+  | 'radio'
+  | 'checkbox'
+  | 'boolean'
+  | 'textarea'
+  | 'select'
+  | 'tree-select'
+  | 'tag'
+  | 'upload'
+  | 'transfer'
+  | 'slider'
+  | 'rate'
+  | 'autocomplete'
+  | 'cascader'
+  | 'mention'
+  | 'custom'
+  | 'array'
+  | 'object';
+
 export interface SFRenderSchema {
   /**
    * 指定采用什么小部件渲染，所有小部件名可[查阅文档](https://ng-alain.com/)
    */
-  widget?: string;
+  widget?: SFBuiltInWidgets | (string & {});
   /**
    * 自定义类，等同 `[ngClass]` 值
    */
-  class?: string | string[];
+  class?: NgClassType;
   /**
    * 元素组件大小
    */
@@ -89,6 +118,8 @@ export interface SFRenderSchema {
 export interface SFOptionalHelp {
   text?: string;
   i18n?: string;
+  /** 文字提示背景颜色 */
+  bgColor?: string;
   /** 图标，默认：`question-circle` */
   icon?: string;
   placement?: SFPlacement;
@@ -96,7 +127,7 @@ export interface SFOptionalHelp {
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   overlayClassName?: string;
-  overlayStyle?: { [key: string]: string };
+  overlayStyle?: NgStyleInterface;
 }
 
 export interface SFHorizontalLayoutSchema {
@@ -140,7 +171,7 @@ export interface SFSchemaI18n {
 
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema, SFSchemaI18n {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */
   debug?: boolean;
@@ -167,9 +198,9 @@ export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema
    * 有效格式包括：
    * - `visibleIf: { shown: [ true ] }`：当 `shown: true` 时才显示当前属性
    * - `visibleIf: { shown: [ '$ANY$' ] }`：当 `shown` 包括任意值时
-   * - `visibleIf: { shown: (value: any) => value > 0 }`：复杂表达式
+   * - `visibleIf: { shown: (value: any, property: FormProperty) => value > 0 }`：复杂表达式
    */
-  visibleIf?: { [key: string]: any[] | ((value: any) => boolean) };
+  visibleIf?: { [key: string]: NzSafeAny[] | ((value: NzSafeAny, property: FormProperty) => boolean) };
 
   /**
    * ACL 配置

@@ -32,16 +32,28 @@ alainProvides.push({
 
 **Add Component**
 
-> In `src/app/layout/default/default.component.html`
+> In `src/app/layout/basic/basic.component.ts`
 
 ```html
-<section class="alain-default__content">
-  <reuse-tab #reuseTab></reuse-tab>
-  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
-</section>
+<reuse-tab #reuseTab></reuse-tab>
+<router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**
+
+> In `src/app/layout/layout.module.ts`
+
+```ts
+import { ReuseTabModule } from '@delon/abc/reuse-tab'; // add
+@NgModule({
+  imports: [
+  // ...
+  ReuseTabModule, // add
+  ],
+  // ...
+})
+export class LayoutModule {}
+```
 
 ## Matching Mode
 
@@ -114,11 +126,18 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 Route reusing does not touch the Angular component lifecycle hooks (eg: `ngOnInit`, etc.), but often requires data to be refreshed during the reuse process, so two new lifecycle hooks are provided to temporarily resolve such problems.
 
-**_onReuseInit()**
+**OnReuseInit** Interface
 
-Triggered when the current route is in the reusing process.
+- `_onReuseInit(type?: ReuseHookOnReuseInitType): void;`
 
-**_onReuseDestroy()**
+Triggered when the current route is in the reusing process, The values of `type` are:
+
+-`init` when routing process
+-`refresh` when refresh action via tab
+
+**OnReuseDestroy** Interface
+
+- `_onReuseDestroy(): void;`
 
 Triggered when the current route allows reusing and leave route.
 
@@ -127,8 +146,8 @@ A simple example:
 ```ts
 @Component()
 export class DemoComponent {
-  _onReuseInit() {
-    console.log('_onReuseInit');
+  _onReuseInit(type: ReuseHookOnReuseInitType) {
+    console.log('_onReuseInit', type);
   }
   _onReuseDestroy() {
     console.log('_onReuseDestroy');
@@ -202,6 +221,9 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[tabBarGutter]` | The gap between tabs | `number` | - |
 | `[tabType]` | Basic style of tabs | `line, card` | `line` |
 | `[tabMaxWidth]` | The maximum width of each tab, unit: `px` | `number` | - |
+| `[routeParamMatchMode]` | Match the pattern when routing parameters are included, for example:`/view/:id`<br> - `strict` Strict mode `/view/1`, `/view/2` Different pages<br> - `loose` Loose mode `/view/1`, `/view/2` Same page and only one tab of component | `strict,loose` | `strict` |
+| `[disabled]` | Whether to disabled | `boolean` | `false` |
+| `[titleRender]` | Custom rendering of the title | `TemplateRef<{ $implicit: ReuseItem }>` | - |
 | `(close)` | Close callback event | `EventEmitter` | - |
 | `(change)` | Callback when switching | `EventEmitter` | - |
 

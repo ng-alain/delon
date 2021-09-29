@@ -1,10 +1,12 @@
-// tslint:disable
-const JsonML = require('jsonml.js/lib/utils');
-const mustache = require('mustache');
-import * as path from 'path';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
+import * as path from 'path';
+
 import { ModuleConfig } from '../interfaces';
+
+const JsonML = require('jsonml.js/lib/utils');
+const mustache = require('mustache');
 
 export function isHeading(node: any) {
   return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
@@ -35,6 +37,10 @@ export function getCode(node: any) {
   return JsonML.getChildren(JsonML.getChildren(node)[0] || '')[0] || '';
 }
 
+export function genValidId(id: string): string {
+  return id.replace(/[() `?]*/g, '');
+}
+
 export function generateSluggedId(children: any): { id: string; text: string } {
   const headingText = children
     .map((node: any) => {
@@ -47,10 +53,9 @@ export function generateSluggedId(children: any): { id: string; text: string } {
       return node;
     })
     .join('');
-  const sluggedId = headingText.trim().replace(/\s+/g, '-');
   return {
-    id: sluggedId,
-    text: headingText,
+    id: genValidId(headingText.trim()),
+    text: headingText
   };
 }
 
@@ -72,7 +77,7 @@ export function generateDoc(data: any, tpl: string, savePath: string) {
 
 export function genUpperName(name: string) {
   return name
-    .split('-')
+    .split(/-|\//g)
     .map(v => v.charAt(0).toUpperCase() + v.slice(1))
     .join('');
 }
@@ -82,7 +87,7 @@ export function includeAttributes(config: ModuleConfig, targetMeta: any) {
 
   targetMeta = targetMeta || {};
   for (const key of config.metaIncludeAttributes) {
-    targetMeta[key] = config[key];
+    targetMeta[key] = (config as any)[key];
   }
   return targetMeta;
 }
@@ -91,10 +96,21 @@ export function genUrl(rootDir: string, filePath: string) {
   return path.relative(rootDir, filePath).replace(/\\/g, `/`);
 }
 
-export function genComponentName(...names) {
-  return `${names.map(key => genUpperName(key)).join('')}Component`;
+export function genComponentName(...names: string[]) {
+  return `${names
+    .map(key =>
+      key
+        .split(/-\//g)
+        .map(key => genUpperName(key))
+        .join('')
+    )
+    .join('')}Component`;
 }
 
 export function genSelector(...names: string[]) {
-  return `app-${names.join('-')}`;
+  return `app-${names.map(vv => vv.replace(/-|\//g, '-')).join('-')}`;
+}
+
+export function handleExploreStr(str: string, cr: string = '/') {
+  return str.replace(/\\/g, cr);
 }

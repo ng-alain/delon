@@ -8,6 +8,7 @@ PWD=`pwd`
 readonly thisDir=$(cd $(dirname $0); pwd)
 
 cd $(dirname $0)/../..
+source ./scripts/ci/utils.sh
 
 BUILD=false
 TEST=false
@@ -38,74 +39,18 @@ for ARG in "$@"; do
   esac
 done
 
-VERSION=$(node -p "require('./package.json').version")
 if [[ ${INTEGRATION} == true ]]; then
   VERSION='latest'
 fi
 
-DEPENDENCIES=$(node -p "
-  const vs = require('./package.json').dependencies;
-  const dvs = require('./package.json').devDependencies;
-  [
-    'screenfull',
-    'ajv',
-    '@ngx-translate/core',
-    '@ngx-translate/http-loader',
-    'tslint-config-prettier',
-    'tslint-language-service',
-    'lint-staged',
-    'husky',
-    'stylelint-config-prettier',
-    'stylelint-config-rational-order',
-    'stylelint-config-standard',
-    'stylelint-declaration-block-no-ignored-properties',
-    'stylelint-order',
-    'stylelint',
-    'prettier',
-    '@antv/data-set',
-    '@antv/g2',
-    '@angularclass/hmr',
-    'ng-alain-codelyzer',
-    'ng-alain-sts',
-    'antd-theme-generator',
-    'less-plugin-clean-css',
-    'less-plugin-npm-import'
-  ].map(key => key.replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
-")
-ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 
 TSC=${PWD}/node_modules/.bin/tsc
 JASMINE=${PWD}/node_modules/.bin/jasmine
 
-SOURCE=${PWD}/packages/schematics
+SOURCE=${PWD}/schematics
 DIST=${PWD}/dist/ng-alain/
 tsconfigFile=${SOURCE}/tsconfig.json
-
-updateVersionReferences() {
-  NPM_DIR="$1"
-  (
-    cd ${NPM_DIR}
-
-    echo ">>> VERSION: Updating dependencies version references in ${NPM_DIR}"
-    local lib version
-    for dependencie in ${DEPENDENCIES[@]}
-    do
-      IFS=$'|' read -r lib version <<< "$dependencie"
-      # echo ">>>> update ${lib}: ${version}"
-      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    done
-
-    FIX_VERSION="${VERSION}"
-    if [[ ${FIX_VERSION} != "latest" ]]; then
-      FIX_VERSION="^${FIX_VERSION}"
-    fi
-    echo ">>> VERSION: Updating version references in ${NPM_DIR}"
-    perl -p -i -e "s/ZORRO\-0\.0\.0\-PLACEHOLDER/${ZORROVERSION}/g" $(grep -ril ZORRO\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/${FIX_VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-  )
-}
 
 copyFiles() {
   mkdir -p ${2}
@@ -113,18 +58,18 @@ copyFiles() {
     # i18n data
     "${1}src/assets/tmp/i18n|${2}application/files/i18n"
     # code styles
-    "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
-    "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
-    "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
-    "${1}.lintstagedrc.js|${2}application/files/root"
+    "${1}.eslintignore|${2}application/files/root/"
+    "${1}.eslintrc.js|${2}application/files/root/.eslintrc.js"
+    "${1}.prettierignore|${2}application/files/root/.prettierignore"
+    "${1}.prettierrc.js|${2}application/files/root/.prettierrc.js"
+    "${1}.stylelintrc|${2}application/files/root/.stylelintrc"
     "${1}.nvmrc|${2}application/files/root"
-    "${1}tslint.json|${2}application/files/root"
     "${1}proxy.conf.json|${2}application/files/root"
-    # cli
-    # "${1}_cli-tpl|${2}application/files/root/"
+    "${1}.husky|${2}application/files/root/.husky"
+    # ng-alain.json
+    "${1}ng-alain.json|${2}application/files/root/"
     # ci
-    "${1}.vscode|${2}application/files/root/__dot__vscode"
-    "${1}scripts/color-less.js|${2}application/files/root/scripts/"
+    "${1}.vscode|${2}application/files/root/.vscode"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"
@@ -132,16 +77,21 @@ copyFiles() {
     # mock
     "${1}_mock/_user.ts|${2}application/files/root/_mock/"
     # src
+    "${1}src/favicon.ico|${2}application/files/src/"
     "${1}src/typings.d.ts|${2}application/files/src/"
     "${1}src/environments|${2}application/files/src/"
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
+    "${1}src/test.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
     "${1}src/style-icons-auto.ts|${2}application/files/src/"
     "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
+    "${1}src/assets/color.less|${2}application/files/src/assets/"
+    "${1}src/assets/style.compact.css|${2}application/files/src/assets/"
+    "${1}src/assets/style.dark.css|${2}application/files/src/assets/"
     "${1}src/assets/*.svg|${2}application/files/src/assets/"
-    "${1}src/assets/tmp/img/*|${2}application/files/src/assets/tmp/img/"
+    "${1}src/assets/tmp/img/avatar.jpg|${2}application/files/src/assets/tmp/img/"
     "${1}src/assets/tmp/i18n/*|${2}application/files/src/assets/tmp/i18n/"
     "${1}src/assets/tmp/app-data.json|${2}application/files/src/assets/tmp/"
     # core
@@ -151,26 +101,27 @@ copyFiles() {
     "${1}src/app/core/README.md|${2}application/files/src/app/core/"
     # shared
     "${1}src/app/shared/utils/*|${2}application/files/src/app/shared/utils/"
+    "${1}src/app/shared/json-schema/*|${2}application/files/src/app/shared/json-schema/"
     "${1}src/app/shared/st-widget/*|${2}application/files/src/app/shared/st-widget/"
-    "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
+    # "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
     "${1}src/app/global-config.module.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
-    "${1}src/app/layout/fullscreen|${2}application/files/src/app/layout/"
+    "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
-    "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
-    # "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/components|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/header.component.ts|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/sidebar|${2}application/files/src/app/layout/default/"
+    "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
+    "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/user.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/clear-storage.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/fullscreen.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     # router
-    "${1}src/app/routes/callback|${2}application/files/src/app/routes/"
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
     "${1}src/app/routes/passport|${2}application/files/src/app/routes/"
+    # plugin
+    "${1}src/app/layout/basic/widgets/rtl.component.ts|${2}plugin/files/rtl/layout/basic/widgets/"
   )
   local from to
   for fields in ${paths[@]}
@@ -187,9 +138,14 @@ copyFiles() {
       fi
     fi
     if [[ ${from} != '' ]]; then
+      # echo "copy ${from} to ${to}"
       cp -fr $from $to
     fi
   done
+
+  # remove passport-routing & passport.module.ts
+  rm ${2}application/files/src/app/routes/passport/passport-routing.module.ts
+  rm ${2}application/files/src/app/routes/passport/passport.module.ts
 }
 
 cloneScaffold() {
@@ -217,10 +173,10 @@ buildCLI() {
     if [[ ${CLONE} == true ]]; then
       cloneScaffold
       echo ">>> copy delon/ng-alain files via travis mode"
-      copyFiles 'ng-alain/' ${DIST}/
+      copyFiles 'ng-alain/' ${DIST}
     else
       echo ">>> copy work/ng-alain files via dev mode"
-      copyFiles '../ng-alain/' ${DIST}/
+      copyFiles "${PWD}/ng-alain/" ${DIST}
     fi
   else
     echo ">>> can't copy files!"
@@ -252,7 +208,7 @@ integrationCli() {
   echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running ng g ng-alain:ng-add"
-  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true
+  ng g ng-alain:ng-add --defaultLanguage=en --codeStyle=true --form=true --mock=true --i18n=true
   echo ">>> Install dependencies"
   npm i
   echo ">>> Copy again ng-alain"
@@ -299,7 +255,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain-8/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng12/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

@@ -15,7 +15,6 @@ import { ImageModule } from '@delon/abc/image';
 import { LoadingModule } from '@delon/abc/loading';
 import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
-import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
@@ -23,18 +22,20 @@ import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
 import { SEModule } from '@delon/abc/se';
 import { SGModule } from '@delon/abc/sg';
-import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
 import { MediaModule } from '@delon/abc/media';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
+import { OnboardingModule } from '@delon/abc/onboarding';
+import { LetModule } from '@delon/abc/let';
+import { AutoFocusModule } from '@delon/abc/auto-focus';
+import { PdfModule } from '@delon/abc/pdf';
 
 const MODULES = [
   ErrorCollectModule,
   FooterToolbarModule,
-  SidebarNavModule,
   DownFileModule,
   ImageModule,
   AvatarListModule,
@@ -51,7 +52,6 @@ const MODULES = [
   FullContentModule,
   XlsxModule,
   ZipModule,
-  NumberToChineseModule,
   LodopModule,
   QuickMenuModule,
   QRModule,
@@ -61,6 +61,10 @@ const MODULES = [
   DatePickerModule,
   LoadingModule,
   MediaModule,
+  OnboardingModule,
+  LetModule,
+  AutoFocusModule,
+  PdfModule,
 ];
 
 @NgModule({ exports: MODULES })

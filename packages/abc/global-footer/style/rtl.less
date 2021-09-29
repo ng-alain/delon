@@ -1,0 +1,13 @@
+@{global-footer-prefix}-rtl {
+  direction: rtl;
+  @{global-footer-prefix} {
+    &__links {
+      &-item {
+        &:not(:last-child) {
+          margin-right: inherit;
+          margin-left: 40px;
+        }
+      }
+    }
+  }
+}

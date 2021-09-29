@@ -1,8 +1,10 @@
 export * from './st.interfaces';
+export * from './st.types';
 export * from './st-column-source';
 export * from './st-data-source';
 export * from './st-export';
 export * from './st-widget';
+export * from './st-widget-host.directive';
 export { STComponent } from './st.component';
 export { STRowDirective } from './st-row.directive';
 export * from './st.config';

@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import addSeconds from 'date-fns/addSeconds';
-import format from 'date-fns/format';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+
+import { addSeconds, format } from 'date-fns';
 import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 
 @Component({
@@ -9,7 +17,7 @@ import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdo
   template: ` <countdown #cd *ngIf="config" [config]="config" (event)="handleEvent($event)"></countdown> `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class CountDownComponent {
   @ViewChild('cd', { static: false }) readonly instance: CountdownComponent;
@@ -23,13 +31,13 @@ export class CountDownComponent {
   set target(value: number | Date) {
     this.config = {
       format: `HH:mm:ss`,
-      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : +format(value, 'x'),
+      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : +format(value, 't')
     };
   }
 
   @Output() readonly event = new EventEmitter<CountdownEvent>();
 
-  handleEvent(e: CountdownEvent) {
+  handleEvent(e: CountdownEvent): void {
     this.event.emit(e);
   }
 }

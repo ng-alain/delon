@@ -47,3 +47,5 @@ To select/input a time.
 | `[popupClassName]` | className of panel | `string` | - |
 | `[change]` | a callback function, can be executed when the selected time is changing | `(value: Date) => void` | - |
 | `[openChange]` | a callback function which will be called while panel opening/closing | `(status: boolean) => void` | - |
+| `[nowText]` | text of the Now button | `string` | - |
+| `[okText]` | text of the Ok button | `string` | - |

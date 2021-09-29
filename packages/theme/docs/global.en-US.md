@@ -30,7 +30,7 @@ title: Global Parameters
 | `@h4-font-size` | `16px` | h4 font size |
 | `@h5-font-size` | `14px` | h5 font size |
 | `@h6-font-size` | `12px` | h6 font size |
-| `@enable-all-colors` | `true` | Turn on background, text color<br>eg: `.bg-teal`、`.text-teal` |
+| `@enable-all-colors` | `false` | Turn on background, text color<br>eg: `.bg-teal`、`.text-teal` |
 | `@modal-sm` | `300px` | Small modal |
 | `@modal-md` | `500px` | Medium modal |
 | `@modal-lg` | `900px` | Large modal |
@@ -51,6 +51,23 @@ title: Global Parameters
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | Scrollbar track color |
 | `@scrollbar-thumb-color` | `#6e6e6e` | Scrollbar thumb color |
 | `@scrollbar-table-enabled` | `false` | Enable landscaping scrollbars of nz-table |
+| `@rtl-enabled` | `false` | Wheter support RTL |
+| `@enabled-util-align` | `true` | Whether to enable tools align |
+| `@enabled-util-border` | `true` | Whether to enable tools border |
+| `@enabled-util-code` | `true` | Whether to enable tools code |
+| `@enabled-util-color` | `true` | Whether to enable tools color |
+| `@enabled-util-display` | `true` | Whether to enable tools display |
+| `@enabled-util-float` | `true` | Whether to enable tools float |
+| `@enabled-util-icon` | `true` | Whether to enable tools icon |
+| `@enabled-util-img` | `true` | Whether to enable tools img |
+| `@enabled-util-position` | `true` | Whether to enable tools position |
+| `@enabled-util-overflow` | `true` | Whether to enable tools overflow |
+| `@enabled-util-responsive` | `true` | Whether to enable tools responsive |
+| `@enabled-util-spacing` | `true` | Whether to enable tools spacing |
+| `@enabled-util-text` | `true` | Whether to enable tools text |
+| `@enabled-util-width` | `true` | Whether to enable tools width |
+| `@enabled-util-scrollbar` | `true` | Whether to enable tools scrollbar |
+| `@enabled-util-other` | `true` | Whether to enable tools other |
 
 ## Ng patch
 
@@ -61,6 +78,7 @@ title: Global Parameters
 | `@preserve-white-spaces-enabled` | `true` | Fixed between buttons spacing when enabled [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) is true |
 | `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
 | `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
+| `@router-animation-enabled` | `false` | Whether to enable animation when route changing |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
 | `@router-animation-duration` | `1s` | Animation duration |
 
@@ -90,6 +108,7 @@ By `nz-table`。
 | `@nz-table-img-margin-right` | `4px` | Image margin-right in the table |
 | `@nz-table-img-max-width` | `32px` | Image maximum width in the table |
 | `@nz-table-img-max-height` | `32px` | Image maximum height in the table |
+| `@nz-table-even-background` | `none` | Even background color in the table |
 | `@nz-table-rep-max-width` | `@mobile-max` | Triggering table response when mobile screen |
 | `@nz-table-rep-header-background` | `@border-color-split` | Table responsive: title background color |
 | `@nz-table-rep-even-background` | `#f9f9f9` | Table responsive: even background color |
@@ -104,10 +123,8 @@ By `nz-table`。
 
 | Name | Default | Description |
 | --- | --- | --- |
-| `@badge-enabled` | `true` | Whether bootstrap badge |
 | `@hafl-enabled` | `true` | Whether hafl image |
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |
 | `@setting-drawer-enabled` | `true` | Whether setting drawer css |
-| `@search-form-enabled` | `true` | Simple style search form, [DEMO](https://ng-alain.surge.sh/) |
 | `@search__form-enabled` | `true` | Pro style search form, [DEMO](https://ng-alain.surge.sh/) |

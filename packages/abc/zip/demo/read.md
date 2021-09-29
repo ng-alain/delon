@@ -25,23 +25,21 @@ export class DemoComponent {
 
   constructor(private zip: ZipService, private cdr: ChangeDetectorRef) {}
 
-  private format(data: any) {
+  private format(data: { files: { [key: string]: { dir: string; date: Date } } }): void {
     const files = data.files;
-    this.data = Object.keys(files).map(key => {
-      return {
-        name: key,
-        dir: files[key].dir,
-        date: files[key].date,
-      };
-    });
+    this.data = Object.keys(files).map(key => ({
+      name: key,
+      dir: files[key].dir,
+      date: files[key].date,
+    }));
     this.cdr.detectChanges();
   }
 
-  url() {
+  url(): void {
     this.zip.read(`./assets/demo.zip`).then(res => this.format(res));
   }
 
-  change(e: Event) {
+  change(e: Event): void {
     const file = (e.target as HTMLInputElement).files![0];
     this.zip.read(file).then(res => this.format(res));
   }

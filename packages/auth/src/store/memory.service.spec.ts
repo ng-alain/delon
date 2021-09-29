@@ -5,7 +5,7 @@ describe('auth: memory', () => {
   const store = new MemoryStore();
   const KEY = 'token';
   const VALUE: ITokenModel = {
-    token: 'token data',
+    token: 'token data'
   } as ITokenModel;
 
   it('#get', () => {

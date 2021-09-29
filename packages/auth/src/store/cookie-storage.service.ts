@@ -1,27 +1,29 @@
+import { CookieService } from '@delon/util/browser';
+
 import { ITokenModel } from '../token/interface';
 import { IStore } from './interface';
 
-declare var Cookies: any;
-
 /**
- * `cookie` storage, muse be install [js-cookie](https://github.com/js-cookie/js-cookie) libary and import `"node_modules/js-cookie/dist/js.cookie.js"` in `angular.json`
+ * `cookie` storage
  *
  * ```ts
  * // global-config.module.ts
- * { provide: DA_STORE_TOKEN, useClass: CookieStorageStore }
+ * { provide: DA_STORE_TOKEN, useClass: CookieStorageStore, deps: [CookieService] }
  * ```
  */
 export class CookieStorageStore implements IStore {
+  constructor(private srv: CookieService) {}
+
   get(key: string): ITokenModel {
-    return JSON.parse(Cookies.get(key) || '{}') || {};
+    return JSON.parse(this.srv.get(key) || '{}') || {};
   }
 
-  set(key: string, value: ITokenModel | null): boolean {
-    Cookies.set(key, JSON.stringify(value));
+  set(key: string, value: ITokenModel | null | undefined): boolean {
+    this.srv.put(key, value != null ? JSON.stringify(value) : '{}');
     return true;
   }
 
-  remove(key: string) {
-    Cookies.remove(key);
+  remove(key: string): void {
+    this.srv.remove(key);
   }
 }

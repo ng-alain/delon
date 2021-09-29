@@ -15,14 +15,12 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema, SFCascaderWidgetSchema } from '@delon/form';
+import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -91,8 +89,10 @@ export class DemoComponent {
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

@@ -2,7 +2,7 @@
 @number-info-prefix: ~'.number-info';
 
 @{number-info-prefix} {
-  display: block;
+  display: inline-block;
   &__title {
     margin-bottom: 16px;
     color: @text-color;
@@ -35,13 +35,12 @@
     &-text {
       display: inline-block;
       height: 32px;
-      margin-right: 32px;
       color: @heading-color;
       font-size: 24px;
       line-height: 32px;
     }
     &-sub {
-      margin-right: 0;
+      margin-left: 32px;
       color: @text-color-secondary;
       font-size: @font-size-lg;
       vertical-align: top;
@@ -61,6 +60,21 @@
   &__light {
     @{number-info-prefix}__value-text {
       color: @text-color;
+    }
+  }
+  &:not(:first-child) {
+    position: relative;
+    margin-left: 32px;
+    padding-left: 32px;
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      margin: 8px 0;
+      background-color: @border-color-split;
+      content: '';
     }
   }
 }

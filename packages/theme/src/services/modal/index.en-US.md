@@ -14,15 +14,15 @@ Based on the `NzModalService` package, it solves some known issues:
 ```ts
 this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
 
-// Ok callback
+// Ok callback, Where `nzModalRef` refers to the variable name of the target component in the constructor `NzModalRef`
 // 1. considered successful
-this.subject.close(true);
-this.subject.close({ other: 1 });
+this.nzModalRef.close(true);
+this.nzModalRef.close({ other: 1 });
 // 2. considered error
-this.subject.close();
+this.nzModalRef.close();
 
 // Close
-this.subject.destroy();
+this.nzModalRef.destroy();
 ```
 
 There are includes `create` & `createStatic` methods to open the normal & static modal. Add a few parameters based on `NzModalService`.
@@ -31,7 +31,7 @@ There are includes `create` & `createStatic` methods to open the normal & static
 
 ```html
 <div class="modal-header">
-    <div class="modal-title">Title</div>
+  <div class="modal-title">Title</div>
 </div>
 
 Your body content

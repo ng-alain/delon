@@ -13,7 +13,7 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: '12.14.1'
+              versionSpec: '14.16.1'
             displayName: 'Install Node.js'
 
   - stage: artifacts

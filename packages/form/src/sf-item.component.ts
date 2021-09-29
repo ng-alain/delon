@@ -7,9 +7,10 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { Subject } from 'rxjs';
+
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
 import { TerminatorService } from './terminator.service';
@@ -21,9 +22,10 @@ let nextUniqueId = 0;
 @Component({
   selector: 'sf-item',
   exportAs: 'sfItem',
+  host: { '[class.sf__item]': 'true' },
   template: ` <ng-template #target></ng-template> `,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
@@ -37,7 +39,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 
-  onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>) {
+  onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>): void {
     this.widget = widget;
     const id = `_sf-${nextUniqueId++}`;
 
@@ -55,7 +57,8 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.ref = this.widgetFactory.createWidget(this.container, (this.formProperty.ui.widget || this.formProperty.schema.type) as string);
+    const p = this.formProperty;
+    this.ref = this.widgetFactory.createWidget(this.container, (p.ui.widget || p.schema.type) as string);
     this.onWidgetInstanciated(this.ref.instance);
   }
 

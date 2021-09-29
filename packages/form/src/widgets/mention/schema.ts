@@ -1,8 +1,11 @@
+import { Observable } from 'rxjs';
+
+import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { AutoSizeType } from 'ng-zorro-antd/input';
 import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
-import { Observable } from 'rxjs';
+
 import { SFSchemaEnumType } from '../../schema';
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFMentionWidgetSchema extends SFUISchemaItem {
   /**
@@ -10,7 +13,7 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
    */
   asyncData?: () => Observable<SFSchemaEnumType[]>;
 
-  size?: SFDLSSize;
+  size?: NzSizeLDSType;
 
   /**
    * 在文字框中显示提示讯息
@@ -40,12 +43,12 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
   /**
    * 建议选项的取值方法，默认：`item => item.label`
    */
-  valueWith?: (value: any) => string;
+  valueWith?: (value: NzSafeAny) => string;
 
   /**
    * 下拉框选择建议时回调
    */
-  select?: (value: any) => void;
+  select?: (value: NzSafeAny) => void;
 
   /**
    * 文本框类型，默认：`text`

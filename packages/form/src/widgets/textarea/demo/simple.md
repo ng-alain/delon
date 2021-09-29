@@ -20,9 +20,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -33,12 +31,17 @@ export class DemoComponent {
         ui: {
           widget: 'textarea',
           autosize: { minRows: 2, maxRows: 6 },
+          change: val => console.log('change', val),
+          focus: ev => console.log('focus', ev),
+          blur: ev => console.log('blur', ev),
         } as SFTextareaWidgetSchema,
       },
     },
   };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  constructor(private msg: NzMessageService) {}
+
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

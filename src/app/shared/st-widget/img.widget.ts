@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'st-widget-img',
   template: ` <img nz-tooltip nzTooltipTitle="Client it" [src]="img" class="img" style="cursor: pointer" /> `,
   host: {
-    '(click)': 'show()',
+    '(click)': 'show()'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class STImgWidget {
   static readonly KEY = 'img';

@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DecimalPipe, DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
@@ -17,37 +18,48 @@ import {
   TemplateRef,
   TrackByFunction,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
-  CNCurrencyPipe,
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
   LocaleData,
   ModalHelper,
-  YNPipe,
+  YNPipe
 } from '@delon/theme';
-import { AlainConfigService, AlainSTConfig, deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzTableComponent, NzTableData } from 'ng-zorro-antd/table';
-import { from, Observable, of, Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
+import { deepCopy, deepMergeKey } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { NzTableComponent } from 'ng-zorro-antd/table';
+
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
-import { ST_DEFULAT_CONFIG } from './st.config';
+import { ST_DEFAULT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
+  STClickRowClassName,
+  STClickRowClassNameType,
   STColumn,
   STColumnButton,
   STColumnFilterMenu,
+  STColumnSafeType,
   STColumnSelection,
+  STContextmenuFn,
+  STContextmenuItem,
+  STCustomRequestOptions,
   STData,
   STError,
   STExportOptions,
@@ -57,31 +69,48 @@ import {
   STReq,
   STRes,
   STResetColumnsOption,
+  STResizable,
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
-  STWidthMode,
+  STWidthMode
 } from './st.interfaces';
+import { _STColumn, _STDataValue, _STHeader } from './st.types';
 
 @Component({
   selector: 'st',
   exportAs: 'st',
   templateUrl: './st.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, DatePipe, YNPipe, DecimalPipe],
   host: {
     '[class.st]': `true`,
     '[class.st__p-left]': `page.placement === 'left'`,
     '[class.st__p-center]': `page.placement === 'center'`,
     '[class.st__width-strict]': `widthMode.type === 'strict'`,
     '[class.ant-table-rep]': `responsive`,
-    '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`,
+    '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+  static ngAcceptInputType_ps: NumberInput;
+  static ngAcceptInputType_pi: NumberInput;
+  static ngAcceptInputType_total: NumberInput;
+  static ngAcceptInputType_loadingDelay: NumberInput;
+  static ngAcceptInputType_bordered: BooleanInput;
+  static ngAcceptInputType_expandRowByClick: BooleanInput;
+  static ngAcceptInputType_expandAccordion: BooleanInput;
+  static ngAcceptInputType_rowClickTime: NumberInput;
+  static ngAcceptInputType_responsive: BooleanInput;
+  static ngAcceptInputType_responsiveHideHeaderFooter: BooleanInput;
+  static ngAcceptInputType_virtualScroll: BooleanInput;
+  static ngAcceptInputType_virtualItemSize: NumberInput;
+  static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
+  static ngAcceptInputType_virtualMinBufferPx: NumberInput;
+
+  private destroy$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;
   private cog: AlainSTConfig;
@@ -90,6 +119,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _res: STRes;
   private _page: STPage;
   private _widthMode: STWidthMode;
+  private customWidthConfig: boolean = false;
+  _widthConfig: string[] = [];
   locale: LocaleData = {};
   _loading = false;
   _data: STData[] = [];
@@ -98,12 +129,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
-  _headers: STColumn[][] = [];
-  _columns: STColumn[] = [];
-  @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
+  _headers: _STHeader[][] = [];
+  _columns: _STColumn[] = [];
+  contextmenuList: STContextmenuItem[] = [];
+  @ViewChild('table') readonly orgTable: NzTableComponent<STData>;
+  @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
-  get req() {
+  get req(): STReq {
     return this._req;
   }
   set req(value: STReq) {
@@ -111,7 +144,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   /** 返回体配置 */
   @Input()
-  get res() {
+  get res(): STRes {
     return this._res;
   }
   set res(value: STRes) {
@@ -122,7 +155,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._res = item;
   }
   @Input()
-  get page() {
+  get page(): STPage {
     return this._page;
   }
   set page(value: STPage) {
@@ -131,6 +164,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
+  @Input() contextmenu?: STContextmenuFn;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -143,47 +177,60 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() singleSort: STSingleSort;
   private _multiSort?: STMultiSort;
   @Input()
-  get multiSort() {
+  get multiSort(): NzSafeAny {
     return this._multiSort;
   }
   set multiSort(value: NzSafeAny) {
-    if ((typeof value === 'boolean' && !toBoolean(value)) || (typeof value === 'object' && Object.keys(value).length === 0)) {
+    if (
+      (typeof value === 'boolean' && !toBoolean(value)) ||
+      (typeof value === 'object' && Object.keys(value).length === 0)
+    ) {
       this._multiSort = undefined;
       return;
     }
     this._multiSort = {
-      ...(typeof value === 'object' ? value : {}),
+      ...(typeof value === 'object' ? value : {})
     };
   }
   @Input() rowClassName: STRowClassName;
+  @Input() clickRowClassName?: STClickRowClassName | null;
   @Input()
   set widthMode(value: STWidthMode) {
     this._widthMode = { ...this.cog.widthMode, ...value };
   }
-  get widthMode() {
+  get widthMode(): STWidthMode {
     return this._widthMode;
   }
-  @Input() header: string | TemplateRef<void>;
-  @Input() footer: string | TemplateRef<void>;
-  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
-  @Input() body: TemplateRef<STStatisticalResults>;
+  @Input()
+  set widthConfig(val: string[]) {
+    this._widthConfig = val;
+    this.customWidthConfig = val && val.length > 0;
+  }
+  private _resizable: STResizable;
+  @Input()
+  set resizable(val: STResizable | boolean | string) {
+    this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
+  }
+  @Input() header?: string | TemplateRef<void> | null;
+  @Input() @InputBoolean() showHeader = true;
+  @Input() footer?: string | TemplateRef<void> | null;
+  @Input() bodyHeader?: TemplateRef<STStatisticalResults> | null;
+  @Input() body?: TemplateRef<STStatisticalResults> | null;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
-  @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
-  @Input() noResult: string | TemplateRef<void>;
-  @Input() widthConfig: string[] = [];
+  @Input() expand: TemplateRef<{ $implicit: NzSafeAny; column: STColumn }>;
+  @Input() noResult?: string | TemplateRef<void> | null;
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
-  // tslint:disable-next-line:no-output-native
   @Output() readonly error = new EventEmitter<STError>();
-  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<STChange>();
   @Input() @InputBoolean() virtualScroll = false;
   @Input() @InputNumber() virtualItemSize = 54;
   @Input() @InputNumber() virtualMaxBufferPx = 200;
   @Input() @InputNumber() virtualMinBufferPx = 100;
-  @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
+  @Input() customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
+  @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
 
   /**
    * Get the number of the current page
@@ -199,7 +246,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._data;
   }
 
-  private get routerState() {
+  private get routerState(): { pi: number; ps: number; total: number } {
     const { pi, ps, total } = this;
     return { pi, ps, total };
   }
@@ -212,15 +259,16 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private exportSrv: STExport,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: NzSafeAny,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
+    private cms: NzContextMenuService
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
 
-    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.updateTotalTpl();
@@ -230,8 +278,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     i18nSrv.change
       .pipe(
-        takeUntil(this.unsubscribe$),
-        filter(() => this._columns.length > 0),
+        takeUntil(this.destroy$),
+        filter(() => this._columns.length > 0)
       )
       .subscribe(() => this.refreshColumns());
   }
@@ -249,31 +297,23 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.columnSource.setCog(cog);
   }
 
-  cd() {
+  cd(): this {
     this.cdr.detectChanges();
     return this;
   }
 
-  renderTotal(total: string, range: string[]) {
+  renderTotal(total: string, range: string[]): string {
     return this.totalTpl
       ? this.totalTpl.replace('{{total}}', total).replace('{{range[0]}}', range[0]).replace('{{range[1]}}', range[1])
       : '';
   }
 
-  isTruncate(column: STColumn): boolean {
-    return !!column.width && this.widthMode.strictBehavior === 'truncate' && column.type !== 'img';
-  }
-
-  columnClass(column: STColumn): string | null {
-    return column.className || (this.isTruncate(column) ? 'text-truncate' : null);
-  }
-
-  private changeEmit(type: STChangeType, data?: any) {
+  private changeEmit(type: STChangeType, data?: NzSafeAny): void {
     const res: STChange = {
       type,
       pi: this.pi,
       ps: this.ps,
-      total: this.total,
+      total: this.total
     };
     if (data != null) {
       res[type] = data;
@@ -289,7 +329,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * - 远程数据：不传递 `pi`、`ps` 两个参数
    */
   get filteredData(): Promise<STData[]> {
-    return this.loadData({ paginator: false } as any).then(res => res.list);
+    return this.loadData({ paginator: false } as NzSafeAny).then(res => res.list);
   }
 
   private updateTotalTpl(): void {
@@ -331,15 +371,16 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           multiSort,
           rowClassName,
           paginator: true,
-          ...options,
+          customRequest: this.customRequest || this.cog.customRequest,
+          ...options
         })
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(
           result => resolvePromise(result),
           error => {
             console.warn('st.loadDate', error);
             rejectPromise(error);
-          },
+          }
         );
     });
   }
@@ -361,13 +402,18 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       if (typeof result.pageShow !== 'undefined') {
         this._isPagination = result.pageShow;
       }
-      this._data = result.list as STData[];
+      this._data = result.list;
       this._statistical = result.statistical as STStatisticalResults;
       this.changeEmit('loaded', result.list);
+      // Should be re-render in next tike when using virtual scroll
+      // https://github.com/ng-alain/ng-alain/issues/1836
+      if (this.cdkVirtualScrollViewport) {
+        Promise.resolve().then(() => this.cdkVirtualScrollViewport.checkViewportSize());
+      }
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      if (!this.unsubscribe$.isStopped) {
+      if (!this.destroy$.isStopped) {
         this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
       }
@@ -376,7 +422,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   /** 清空所有数据 */
-  clear(cleanStatus = true): this {
+  clear(cleanStatus: boolean = true): this {
     if (cleanStatus) {
       this.clearStatus();
     }
@@ -396,7 +442,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param extraParams 重新指定 `extraParams` 值
    * @param options 选项
    */
-  load(pi = 1, extraParams?: {}, options?: STLoadOptions) {
+  load(pi: number = 1, extraParams?: NzSafeAny, options?: STLoadOptions): this {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
       this.req.params = options && options.merge ? { ...this.req.params, ...extraParams } : extraParams;
@@ -407,9 +453,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * 重新刷新当前页
+   *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: {}, options?: STLoadOptions) {
+  reload(extraParams?: NzSafeAny, options?: STLoadOptions): this {
     return this.load(-1, extraParams, options);
   }
 
@@ -422,24 +469,30 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: {}, options?: STLoadOptions) {
+  reset(extraParams?: NzSafeAny, options?: STLoadOptions): this {
     this.clearStatus().load(1, extraParams, options);
     return this;
   }
 
-  private _toTop(enforce?: boolean) {
+  private _toTop(enforce?: boolean): void {
     if (!(enforce == null ? this.page.toTop : enforce)) return;
     const el = this.el.nativeElement as HTMLElement;
-    if (this.scroll) {
-      el.querySelector('.ant-table-body')!.scrollTo(0, 0);
-      return;
-    }
     el.scrollIntoView();
     // fix header height
     this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
+    if (this.scroll) {
+      if (this.cdkVirtualScrollViewport) {
+        this.cdkVirtualScrollViewport.scrollTo({
+          top: 0,
+          left: 0
+        });
+      } else {
+        el.querySelector('.ant-table-body, .ant-table-content')?.scrollTo(0, 0);
+      }
+    }
   }
 
-  _change(type: 'pi' | 'ps', options?: STLoadOptions) {
+  _change(type: 'pi' | 'ps', options?: STLoadOptions): void {
     if (type === 'pi' || (type === 'ps' && this.pi <= Math.ceil(this.total / this.ps))) {
       this.loadPageData().then(() => this._toTop(options?.toTop));
     }
@@ -447,7 +500,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: STData, col: STColumn) {
+  _click(e: Event, item: STData, col: STColumn): boolean {
     e.preventDefault();
     e.stopPropagation();
     const res = col.click!(item, this);
@@ -456,12 +509,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     return false;
   }
-  private closeOtherExpand(item: STData) {
+  private closeOtherExpand(item: STData): void {
     if (this.expandAccordion === false) return;
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
-  _rowClick(e: Event, item: STData, index: number) {
-    if ((e.target as HTMLElement).nodeName === 'INPUT') return;
+  _rowClick(e: Event, item: STData, index: number): void {
+    const el = e.target as HTMLElement;
+    if (el.nodeName === 'INPUT') return;
     const { expand, expandRowByClick, rowClickTime } = this;
     if (!!expand && item.showExpand !== false && expandRowByClick) {
       item.expand = !item.expand;
@@ -474,6 +528,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     setTimeout(() => {
       const data = { e, item, index };
       if (this.rowClickCount === 1) {
+        this._clickRowClassName(el, item, index);
         this.changeEmit('click', data);
       } else {
         this.changeEmit('dblClick', data);
@@ -482,13 +537,33 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }, rowClickTime);
   }
 
-  _expandChange(item: STData, expand: boolean): void {
-    if (this.expandRowByClick) {
-      return;
+  private _clickRowClassName(el: HTMLElement, item: STData, index: number): void {
+    const cr = this.clickRowClassName;
+    if (cr == null) return;
+    const config = {
+      exclusive: false,
+      ...(typeof cr === 'string' ? { fn: () => cr } : cr)
+    } as STClickRowClassNameType;
+    const className = config.fn(item, index);
+    const trEl = el.closest('tr') as HTMLElement;
+    if (config.exclusive) {
+      trEl.parentElement!!.querySelectorAll('tr').forEach((a: HTMLElement) => a.classList.remove(className));
     }
+    if (trEl.classList.contains(className)) {
+      trEl.classList.remove(className);
+    } else {
+      trEl.classList.add(className);
+    }
+  }
+
+  _expandChange(item: STData, expand: boolean): void {
     item.expand = expand;
     this.closeOtherExpand(item);
     this.changeEmit('expand', item);
+  }
+
+  _stopPropagation(ev: Event): void {
+    ev.stopPropagation();
   }
 
   /**
@@ -499,7 +574,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * this.st.removeRow(stDataItem)
    * ```
    */
-  removeRow(data: STData | STData[] | number) {
+  removeRow(data: STData | STData[] | number): this {
     if (typeof data === 'number') {
       this._data.splice(data, 1);
     } else {
@@ -515,7 +590,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c =>
+        this._data.forEach((i, idx) => {
+          const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
+          i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
+        })
+      );
 
     return this.cd();
   }
@@ -529,10 +609,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * ```
    * this.st.setRow(0, { price: 100 })
    * this.st.setRow(0, { price: 100, name: 'asdf' })
+   * this.st.setRow(item, { price: 100 })
    * ```
    */
-  setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
+  setRow(index: number | STData, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
     options = { refreshSchema: false, emitReload: false, ...options };
+    if (typeof index !== 'number') {
+      index = this._data.indexOf(index);
+    }
     this._data[index] = deepMergeKey(this._data[index], false, item);
     this.optimizeData();
     if (options.refreshSchema) {
@@ -547,25 +631,25 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region sort
 
-  sort(col: STColumn, idx: number, value: any) {
+  sort(col: _STColumn, idx: number, value: NzSafeAny): void {
     if (this.multiSort) {
-      col._sort!.default = value;
-      col._sort!.tick = this.dataSource.nextSortTick;
+      col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
+      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this.cdr.detectChanges();
     this.loadPageData();
     const res = {
       value,
       map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
-      column: col,
+      column: col
     };
     this.changeEmit('sort', res);
   }
 
-  clearSort() {
-    this._columns.forEach(item => (item._sort!.default = null));
+  clearSort(): this {
+    this._columns.forEach(item => (item._sort.default = null));
     return this;
   }
 
@@ -573,27 +657,29 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region filter
 
-  private handleFilter(col: STColumn) {
+  private handleFilter(col: STColumn): void {
+    // 过滤表示一种数据的变化应重置页码为 `1`
+    this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
     this.loadPageData();
     this.changeEmit('filter', col);
   }
 
-  _filterConfirm(col: STColumn) {
+  _filterConfirm(col: _STColumn): void {
     this.handleFilter(col);
   }
 
-  _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean) {
+  _filterRadio(col: _STColumn, item: STColumnFilterMenu, checked: boolean): void {
     col.filter!.menus!.forEach(i => (i.checked = false));
     item.checked = checked;
   }
 
-  _filterClear(col: STColumn) {
+  _filterClear(col: _STColumn): void {
     this.columnSource.cleanFilter(col);
     this.handleFilter(col);
   }
 
-  clearFilter() {
+  clearFilter(): this {
     this._columns.filter(w => w.filter && w.filter.default === true).forEach(col => this.columnSource.cleanFilter(col));
     return this;
   }
@@ -626,7 +712,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._refCheck()._checkNotify();
   }
 
-  _checkSelection(i: STData, value: boolean) {
+  _checkSelection(i: STData, value: boolean): this {
     i.checked = value;
     return this._refCheck()._checkNotify();
   }
@@ -665,18 +751,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region buttons
 
-  _btnClick(record: STData, btn: STColumnButton, e?: Event) {
-    // should be stop propagation when expandRowByClick is true
-    if (e && this.expandRowByClick === true) {
-      e.stopPropagation();
+  _btnClick(record: STData, btn: STColumnButton, ev?: Event): void {
+    if (ev) {
+      ev.stopPropagation();
     }
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal!.paramsName!]: record };
-      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
         modal!.component,
         { ...obj, ...(modal!.params && modal!.params!(record)) },
-        deepMergeKey({}, true, this.cog.modal, modal),
+        deepMergeKey({}, true, this.cog.modal, modal)
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
@@ -689,7 +774,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           drawer!.title!,
           drawer!.component,
           { ...obj, ...(drawer!.params && drawer!.params!(record)) },
-          deepMergeKey({}, true, this.cog.drawer, drawer),
+          deepMergeKey({}, true, this.cog.drawer, drawer)
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -704,7 +789,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  private btnCallback(record: STData, btn: STColumnButton, modal?: any) {
+  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
       switch (btn.click) {
@@ -720,42 +805,81 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  _btnText(record: STData, btn: STColumnButton) {
-    return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
-  }
-
-  _validBtns(btns: STColumnButton[], item: STData, col: STColumn): STColumnButton[] {
-    return btns.filter(btn => {
-      const result = btn.iif!(item, btn, col);
-      const isRenderDisabled = btn.iifBehavior === 'disabled';
-      btn._result = result;
-      btn._disabled = !result && isRenderDisabled;
-      return result || isRenderDisabled;
-    });
-  }
-
   // #endregion
 
   // #region export
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
+   *
    * @param newData 重新指定数据；若为 `true` 表示使用 `filteredData` 数据
    * @param opt 额外参数
    */
-  export(newData?: STData[] | true, opt?: STExportOptions) {
-    (newData === true ? from(this.filteredData) : of(newData || this._data)).subscribe((res: STData[]) =>
+  export(newData?: STData[] | true, opt?: STExportOptions): void {
+    const data = Array.isArray(newData)
+      ? this.dataSource.optimizeData({ columns: this._columns, result: newData })
+      : this._data;
+    (newData === true ? from(this.filteredData) : of(data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
+        columens: this._columns,
         ...opt,
-        _d: res,
-        _c: this._columns,
-      }),
+        data: res
+      })
     );
   }
 
   // #endregion
 
-  get cdkVirtualScrollViewport() {
+  // #region resizable
+
+  colResize({ width }: NzResizeEvent, column: _STColumn): void {
+    column.width = `${width}px`;
+    this.changeEmit('resize', column);
+  }
+
+  // #endregion
+
+  // #region contextmenu
+  onContextmenu(event: MouseEvent): void {
+    if (!this.contextmenu) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    const colEl = (event.target as HTMLElement).closest('[data-col-index]') as HTMLElement;
+    if (!colEl) {
+      return;
+    }
+    const colIndex = Number(colEl.dataset.colIndex);
+    const rowIndex = Number((colEl.closest('tr') as HTMLElement).dataset.index);
+    const isTitle = isNaN(rowIndex);
+    const obs$ = this.contextmenu({
+      event,
+      type: isTitle ? 'head' : 'body',
+      rowIndex: isTitle ? null : rowIndex,
+      colIndex,
+      data: isTitle ? null : this.list[rowIndex],
+      column: this._columns[colIndex]
+    });
+    (isObservable(obs$) ? obs$ : of(obs$))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(res => res.length > 0)
+      )
+      .subscribe(res => {
+        this.contextmenuList = res.map(i => {
+          if (!Array.isArray(i.children)) {
+            i.children = [];
+          }
+          return i;
+        });
+        this.cdr.detectChanges();
+        this.cms.create(event, this.contextmenuTpl);
+      });
+  }
+  // #endregion
+
+  get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {
     return this.orgTable.cdkVirtualScrollViewport!;
   }
 
@@ -787,20 +911,45 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    const res = this.columnSource.process(this.columns);
+    const res = this.columnSource.process(this.columns as _STColumn[], {
+      widthMode: this.widthMode,
+      resizable: this._resizable,
+      safeType: this.cog.safeType as STColumnSafeType
+    });
     this._columns = res.columns;
     this._headers = res.headers;
-    if (this.widthConfig.length === 0 && res.headerWidths != null) {
-      this.widthConfig = res.headerWidths;
+    if (this.customWidthConfig === false && res.headerWidths != null) {
+      this._widthConfig = res.headerWidths;
     }
     return this;
   }
 
   private optimizeData(): void {
-    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this._data = this.dataSource.optimizeData({
+      columns: this._columns,
+      result: this._data,
+      rowClassName: this.rowClassName
+    });
   }
 
-  ngAfterViewInit() {
+  /**
+   * Return pure data, `st` internally maintains a set of data for caching, this part of data may affect the backend
+   *
+   * 返回纯净数据，`st` 内部会维护一组用于缓存的数据，这部分数据可能会影响后端
+   */
+  pureItem(itemOrIndex: STData | number): STData | null {
+    if (typeof itemOrIndex === 'number') {
+      itemOrIndex = this._data[itemOrIndex];
+    }
+    if (!itemOrIndex) {
+      return null;
+    }
+    const copyItem = deepCopy(itemOrIndex);
+    delete copyItem._values;
+    return copyItem;
+  }
+
+  ngAfterViewInit(): void {
     this.columnSource.restoreAllRender(this._columns);
   }
 
@@ -818,8 +967,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

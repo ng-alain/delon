@@ -45,9 +45,10 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[size]` | size of edit, forced ingores `error`, `extra` | `'default','compact'` | `'default'` | ✅ |
 | `[firstVisual]` | Immediately show validation error message | `boolean` | `false` | ✅ |
 | `[ingoreDirty]` | Whether to ignore the `dirty` check | `boolean` | `false` | ✅ |
-| `[line]` | whether separation line style | `boolean` | `false` |  |
-| `[title]` | Display title | `string,TemplateRef<void>` | - |  |
+| `[line]` | whether separation line style | `boolean` | `false` | - |
+| `[title]` | Display title | `string,TemplateRef<void>` | - | - |
 | `[errors]` | Batch modify `se` error value | `SEErrorRefresh[]` | - |  |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### se
 
@@ -58,12 +59,14 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[labelWidth]` | label text of width, unit is `px` (Inherited from `se-container`) | `number` | - |
 | `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
+| `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |
 | `[error]` | validation error message | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | - |
 | `[extra]` | The extra prompt message. It is similar to help. | `string, TemplateRef<void>` | - |
 | `[required]` | Whether required identifier, if not set, the value is automatically set according to whether the form element has `RequiredValidator` validation | `string` | - |
 | `[controlClass]` | Control area classes | `string` | - |
 | `[id]` | Custom `id` value of component | `string` | - |
 | `[line]` | whether separation line style (Inherited from `se-container`) | `boolean` | - |
+| `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
 ### se-title
 

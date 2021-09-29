@@ -4,7 +4,7 @@ title: 开始使用
 type: Documents
 ---
 
-`@delon/theme` 是 ng-alain 架手脚唯一必须引入的模块。它包含了非常多[主题样式参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通用性[服务](/theme/menu)、[管道](/theme/date)。
+`@delon/theme` 是 ng-alain 脚手架唯一必须引入的模块。它包含了非常多[主题样式参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通用性[服务](/theme/menu)、[管道](/theme/date)。
 
 ## 样式
 
@@ -12,7 +12,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 ## 布局
 
-脚手架提供两种布局：[默认布局](/theme/default)、[全屏布局](/theme/fullscreen)，脚手架并不包含两种布局样式文件，它位于 `@delon/theme` 类库当中。
+脚手架提供两种布局：[默认布局](/theme/layout-default)、[空白布局](/theme/layout-blank)，脚手架并不包含两种布局样式文件，它位于 `@delon/theme` 类库当中。
 
 ## 脚手架样式
 
@@ -48,7 +48,7 @@ ng-alain 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并
 要改变的参数统一放在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) LESS文件中，所有参数包括：
 
 - [全局参数](/theme/global)
-- [默认布局](/theme/default)
-- [全屏布局](/theme/fullscreen)
+- [默认布局](/theme/layout-default)
+- [空白布局](/theme/layout-blank)
 
 如果以上变量不能满足你的定制需求，可以给我们提 issue。

@@ -9,6 +9,7 @@ import {
   DownloadOutline,
   EditOutline,
   EllipsisOutline,
+  FacebookOutline,
   FolderOpenOutline,
   FolderOutline,
   FormOutline,
@@ -27,9 +28,10 @@ import {
   StarOutline,
   ThunderboltFill,
   ToolOutline,
+  TwitterOutline,
   UserOutline,
   VerticalLeftOutline,
-  VerticalRightOutline,
+  VerticalRightOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
@@ -41,6 +43,7 @@ export const ICONS = [
   DownloadOutline,
   EditOutline,
   EllipsisOutline,
+  FacebookOutline,
   FolderOpenOutline,
   FolderOutline,
   FormOutline,
@@ -59,7 +62,8 @@ export const ICONS = [
   StarOutline,
   ThunderboltFill,
   ToolOutline,
+  TwitterOutline,
   UserOutline,
   VerticalLeftOutline,
-  VerticalRightOutline,
+  VerticalRightOutline
 ];

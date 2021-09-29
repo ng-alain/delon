@@ -1,8 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { QuickMenuComponent } from './quick-menu.component';
 import { QuickMenuModule } from './quick-menu.module';
 
@@ -14,7 +16,7 @@ describe('abc: quick-menu', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [QuickMenuModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
 
     ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -25,7 +27,7 @@ describe('abc: quick-menu', () => {
     return dl.query(By.css(cls)).nativeElement as HTMLElement;
   }
 
-  function style(name: string, value: string) {
+  function style(name: string, value: string): void {
     const el = getEl();
     expect((el.style as NzSafeAny)[name]).toBe(value);
   }
@@ -59,10 +61,28 @@ describe('abc: quick-menu', () => {
       style('width', '200px');
     });
   });
+
+  it('#expand', () => {
+    spyOn(context, 'expandChange');
+    context.expand = true;
+    fixture.detectChanges();
+    getEl().click();
+    fixture.detectChanges();
+    expect(context.expandChange).toHaveBeenCalled();
+  });
 });
 
 @Component({
-  template: ` <quick-menu #comp [width]="width" [bgColor]="bgColor" [borderColor]="borderColor"></quick-menu> `,
+  template: `
+    <quick-menu
+      #comp
+      [width]="width"
+      [bgColor]="bgColor"
+      [borderColor]="borderColor"
+      [expand]="expand"
+      (expandChange)="expandChange()"
+    ></quick-menu>
+  `
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -70,4 +90,6 @@ class TestComponent {
   width = 200;
   bgColor: string;
   borderColor: string;
+  expand = false;
+  expandChange(): void {}
 }

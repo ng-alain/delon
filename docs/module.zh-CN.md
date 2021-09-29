@@ -24,6 +24,8 @@ type: Other
 
 我们叫它共享模块；它不应该出现 `providers`，因为 `ShareModule` 会在所有业务模块中被导入，这会导致服务被覆盖。
 
+NG-ZORRO、@delon/abc、@delon/chart 等从版本11开始由一次性导入改成按需导入，为此 NG-ALAIN 提炼了两个文件 `shared-delon.module.ts`、`shared-zorro.module.ts` 将一些整个项目经常用到的模块合并成一个叫 `SharedModule` 模块内，这也就是为什么需要在业务模块内第一时间导入它。虽然这种方式可以减少不必要的导入代码，但同时也会引起编译速度，因此不建议把所有组件都放进 `SharedModule` 内，尽可能将需要用到的模块三次以上使用才放进这里；否则务必在业务模块内自行导入。
+
 ## 2) 建议
 
 ------------

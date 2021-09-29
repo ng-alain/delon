@@ -1,44 +1,50 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { I18NService } from '@core';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+
 import AOS from 'aos';
+
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ZoneOutside } from '@delon/util/decorator';
+
+import { I18NService } from '@core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   host: {
-    '[class.home-wrapper]': 'true',
-  },
+    '[class.home-wrapper]': 'true'
+  }
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   list = [
     { type: 'basic', url: 'https://ng-alain.github.io/ng-alain' },
     { type: 'pro', url: 'https://e.ng-alain.com/theme/pro' },
     { type: 'ms', url: 'https://e.ng-alain.com/theme/ms' },
-    { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' },
+    { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' }
   ];
+  themes = ['pro', 'ms', 'yun'];
   get isBrowser(): boolean {
     return this.platform.isBrowser;
   }
   constructor(
     @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
-    private ngZone: NgZone,
+    public ngZone: NgZone,
     @Inject(DOCUMENT) private doc: Document,
-    private platform: Platform,
+    private platform: Platform
   ) {}
 
   private get body(): HTMLElement {
     return this.doc.querySelector('body') as HTMLElement;
   }
 
+  @ZoneOutside()
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-    this.ngZone.runOutsideAngular(() => AOS.init());
+    AOS.init();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.body.classList.add(`index-page`);
   }
 

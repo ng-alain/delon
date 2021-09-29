@@ -1,5 +1,7 @@
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface LocaleData {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface ExceptionLocaleData extends LocaleData {
@@ -18,7 +20,6 @@ export interface ReuseTabLocaleData extends LocaleData {
   close: string;
   closeOther: string;
   closeRight: string;
-  clear: string;
   refresh: string;
 }
 
@@ -85,12 +86,20 @@ export interface SFErrorLocaleData extends LocaleData {
   if: string;
 }
 
+export interface OnboardingLocaleData extends LocaleData {
+  skip: string;
+  prev: string;
+  next: string;
+  done: string;
+}
+
 export interface FullLocaleData {
   abbr: string;
   exception: ExceptionLocaleData;
   noticeIcon: NoticeIconLocaleData;
   reuseTab: ReuseTabLocaleData;
   tagSelect: TagSelectLocaleData;
+  onboarding: OnboardingLocaleData;
   miniProgress: MiniProgressLocaleData;
   st: STLocaleData;
   sf: SFLocaleData;

@@ -1,8 +1,11 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
-import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
+import { debounceTime, map, mergeMap, startWith } from 'rxjs/operators';
+
+import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -13,18 +16,19 @@ import { SFAutoCompleteWidgetSchema } from './schema';
   selector: 'sf-autocomplete',
   templateUrl: './autocomplete.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
-  i: any = {};
+  i: NzSafeAny = {};
   list: Observable<SFSchemaEnum[]>;
   typing: string = '';
   @ViewChild(NgModel, { static: false }) private ngModel: NgModel;
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
   private fixData: SFSchemaEnum[] = [];
+  private updateTyping = true;
 
-  updateValue(item: NzAutocompleteOptionComponent) {
+  updateValue(item: NzAutocompleteOptionComponent): void {
     this.typing = item.nzLabel!;
     const data: SFSchemaEnum = item.nzValue;
     this.setValue(data.value);
@@ -46,12 +50,13 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     this.i = {
       backfill: toBool(backfill, false),
       defaultActiveFirstOption: toBool(defaultActiveFirstOption, true),
-      width: nzWidth || undefined,
+      width: nzWidth || undefined
     };
 
     let filterOptionValue = filterOption == null ? true : filterOption;
     if (typeof filterOptionValue === 'boolean') {
-      filterOptionValue = (input: string, option: SFSchemaEnum) => option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
+      filterOptionValue = (input: string, option: SFSchemaEnum) =>
+        option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
     }
     this.filterOption = filterOptionValue;
 
@@ -62,17 +67,31 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     this.list = this.ngModel.valueChanges!.pipe(
       debounceTime(time),
       startWith(''),
-      flatMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
-      map(res => getEnum(res, null, this.schema.readOnly!)),
+      mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
+      map(res => {
+        const data = getEnum(res, null, this.schema.readOnly!);
+        console.log('map', data);
+        if (this.updateTyping) {
+          this.updateTyping = false;
+          this.typing = data.find(w => w.value === this.value)?.label ?? '';
+        }
+        return data;
+      })
     );
   }
 
-  reset(value: SFValue) {
-    this.typing = this.value;
+  reset(value: SFValue): void {
+    this.typing = value;
+    console.log(value);
+    this.updateTyping = true;
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(this.schema.enum! || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly!);
+        this.fixData = getCopyEnum(
+          this.schema.enum! || this.formProperty.options.uiEmailSuffixes,
+          null,
+          this.schema.readOnly!
+        );
         break;
       default:
         this.fixData = getCopyEnum(this.schema.enum!, value, this.schema.readOnly!);
@@ -80,7 +99,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     }
   }
 
-  private filterData(input: string) {
+  private filterData(input: string): Observable<SFSchemaEnum[]> | Observable<string[]> {
     switch (this.ui.type) {
       case 'email':
         return this.addEmailSuffix(input);
@@ -89,7 +108,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     }
   }
 
-  private addEmailSuffix(value: string) {
+  private addEmailSuffix(value: string): Observable<string[]> {
     return of(!value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`));
   }
 }

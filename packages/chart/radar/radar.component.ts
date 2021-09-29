@@ -1,28 +1,24 @@
-import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
   TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import { Chart, Event, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+
+import type { Chart, Event } from '@antv/g2';
+
+import { G2BaseComponent } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2RadarData {
   name: string;
   label: string;
   value: number;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export interface G2RadarClickItem {
@@ -36,24 +32,21 @@ export interface G2RadarClickItem {
   templateUrl: './radar.component.html',
   host: {
     '[style.height.px]': 'height',
-    '[class.g2-radar]': 'true',
+    '[class.g2-radar]': 'true'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('container', { static: true }) private node: ElementRef;
-  private _chart: Chart;
-  legendData: any[] = [];
+export class G2RadarComponent extends G2BaseComponent {
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_hasLegend: BooleanInput;
+  static ngAcceptInputType_tickCount: NumberInput;
 
-  get chart(): Chart {
-    return this._chart;
-  }
+  legendData: NzSafeAny[] = [];
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() @InputNumber() height = 0;
   @Input() padding: number | number[] | 'auto' = [44, 30, 16, 30];
@@ -61,28 +54,23 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() tickCount = 4;
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
-  @Input() theme: string | Types.LooseObject;
-  @Output() clickItem = new EventEmitter<G2RadarClickItem>();
+  @Output() readonly clickItem = new EventEmitter<G2RadarClickItem>();
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
-
-  private getHeight() {
+  private getHeight(): number {
     return this.height - (this.hasLegend ? 80 : 22);
   }
 
-  private install() {
-    const { node, padding, theme } = this;
+  install(): void {
+    const { node, padding, theme, tickCount } = this;
 
-    const chart = (this._chart = new Chart({
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height: this.getHeight(),
       padding,
-      theme,
+      theme
     }));
 
     chart.coordinate('polar');
@@ -90,17 +78,17 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     chart.axis('label', {
       line: null,
       label: {
-        offset: 8,
+        offset: 8
       },
       grid: {
         line: {
           style: {
             stroke: '#e9e9e9',
             lineWidth: 1,
-            lineDash: [0, 0],
-          },
-        },
-      },
+            lineDash: [0, 0]
+          }
+        }
+      }
     });
     chart.axis('value', {
       grid: {
@@ -109,49 +97,43 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
           style: {
             stroke: '#e9e9e9',
             lineWidth: 1,
-            lineDash: [0, 0],
-          },
-        },
-      },
+            lineDash: [0, 0]
+          }
+        }
+      }
+    });
+    chart.scale({
+      value: {
+        min: 0,
+        tickCount
+      }
     });
     chart.filter('name', (name: string) => {
       const legendItem = this.legendData.find(w => w.name === name);
       return legendItem ? legendItem.checked !== false : true;
     });
 
-    chart.line().position('label*value');
-
+    chart.line().position('label*value').color('name', this.colors);
     chart.point().position('label*value').shape('circle').size(3);
-
-    chart.render();
 
     chart.on(`point:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
-    this.attachChart();
+    this.changeData();
+
+    chart.render();
   }
 
-  private attachChart() {
-    const { _chart, padding, data, colors, tickCount } = this;
-    if (!_chart || !data || data.length <= 0) return;
-
-    _chart.height = this.getHeight();
-    _chart.padding = padding;
-    _chart.scale({
-      value: {
-        min: 0,
-        tickCount,
-      },
-    });
-
-    _chart.geometries.forEach(g => g.color('name', colors));
+  changeData(): void {
+    const { _chart, data } = this;
+    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
     _chart.changeData(data);
 
     this.ngZone.run(() => this.genLegend());
   }
 
-  private genLegend() {
+  private genLegend(): void {
     const { hasLegend, cdr, _chart } = this;
     if (!hasLegend) return;
 
@@ -161,7 +143,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
         name: origin.name,
         color: item[0].color,
         checked: true,
-        value: item.reduce((p, n) => p + n._origin.value, 0),
+        value: item.reduce((p, n) => p + n._origin.value, 0)
       };
 
       return result;
@@ -170,27 +152,13 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     cdr.detectChanges();
   }
 
-  _click(i: number) {
+  _click(i: number): void {
     const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    _chart.render();
+    _chart.render(true);
   }
 
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
+  onChanges(): void {
     this.legendData.forEach(i => (i.checked = true));
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as path from 'path';
-import { SiteConfig, ModuleDirConfig } from '../interfaces';
+
+import { ModuleDirConfig, SiteConfig } from '../interfaces';
+
 const klawSync = require('klaw-sync');
 
 export function groupFiles(
@@ -7,23 +10,29 @@ export function groupFiles(
   config: ModuleDirConfig,
   isSyncSpecific: boolean,
   target: string,
-  siteConfig: SiteConfig,
+  siteConfig: SiteConfig
 ) {
-  const files: { key: string; data: { [key: string]: string } }[] = [];
+  const files: Array<{ key: string; data: { [key: string]: string } }> = [];
   const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
   srcPaths.forEach(srcPath => {
     klawSync(srcPath, {
       nodir: false,
-      filter: item => {
+      filter: (item: any) => {
         if (config.hasSubDir && item.stats.isDirectory()) return true;
         return (
           path.extname(item.path) === '.md' && item.stats.size > 1 && !item.path.includes(`${path.sep}demo${path.sep}`)
         );
-      },
+      }
     })
-      .filter(item => path.extname(item.path) === '.md')
-      .forEach(item => {
-        const key = path.relative(srcPath, config.hasSubDir ? path.dirname(item.path) : item.path.split('.')[0]).trim();
+      .filter((item: { path: string }) => path.extname(item.path) === '.md')
+      .forEach((item: any) => {
+        const key = config.reName
+          ? config.reName
+          : path
+              .relative(srcPath, config.hasSubDir ? path.dirname(item.path) : item.path.split('.')[0])
+              .split('/')
+              .join('-')
+              .trim();
         if (key.length === 0) return;
         if (isSyncSpecific && key !== target) return;
         if (config.ignores && ~config.ignores.indexOf(key)) return;
@@ -32,7 +41,7 @@ export function groupFiles(
         if (!sourceItem) {
           sourceItem = {
             key,
-            data: {},
+            data: {}
           };
           files.push(sourceItem);
         }

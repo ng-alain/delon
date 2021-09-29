@@ -1,0 +1,60 @@
+{
+  "schematics": {
+    "ng-add": {
+      "factory": "./ng-add",
+      "description": "Create an Alain workspace.",
+      "schema": "./ng-add/schema.json",
+      "aliases": ["alain-shell"]
+    },
+    "ng-update": {
+      "factory": "./ng-update/index#updateToV12",
+      "schema": "./ng-update/upgrade-rules/v12/schema.json",
+      "description": "Create an Alain workspace."
+    },
+    "application": {
+      "factory": "./application",
+      "schema": "./application/schema.json",
+      "description": "Create an Alain application."
+    },
+    "plugin": {
+      "factory": "./plugin",
+      "schema": "./plugin/schema.json",
+      "description": "Enable or disable ng-alain plugin."
+    },
+    "module": {
+      "factory": "./module",
+      "schema": "./module/schema.json",
+      "description": "Create a ng alain module."
+    },
+    "empty": {
+      "factory": "./empty",
+      "schema": "./empty/schema.json",
+      "description": "Create a ng alain empty page."
+    },
+    "list": {
+      "factory": "./list",
+      "schema": "./list/schema.json",
+      "description": "Create a ng alain list page."
+    },
+    "view": {
+      "factory": "./view",
+      "schema": "./view/schema.json",
+      "description": "Create a ng alain view page."
+    },
+    "edit": {
+      "factory": "./edit",
+      "schema": "./edit/schema.json",
+      "description": "Create a ng alain edit page."
+    },
+    "curd": {
+      "factory": "./curd",
+      "schema": "./curd/schema.json",
+      "description": "Create a ng alain curd pages (includes: list, edit, view pages)."
+    },
+    "tpl": {
+      "factory": "./tpl",
+      "schema": "./tpl/schema.json",
+      "description": "Create a ng alain custom template pages."
+    }
+  }
+}

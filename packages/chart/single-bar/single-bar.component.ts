@@ -1,39 +1,32 @@
-import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
-import { Chart, Types } from '@antv/g2';
-import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
+import { ChangeDetectionStrategy, Component, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+
+import type { Chart } from '@antv/g2';
+
+import { G2BaseComponent } from '@delon/chart/core';
+import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'g2-single-bar',
   exportAs: 'g2SingleBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
-  private _chart: Chart;
-
-  get chart(): Chart {
-    return this._chart;
-  }
+export class G2SingleBarComponent extends G2BaseComponent {
+  static ngAcceptInputType_height: NumberInput;
+  static ngAcceptInputType_barSize: NumberInput;
+  static ngAcceptInputType_min: NumberInput;
+  static ngAcceptInputType_max: NumberInput;
+  static ngAcceptInputType_value: NumberInput;
+  static ngAcceptInputType_line: BooleanInput;
 
   // #region fields
 
-  @Input() @InputNumber() delay = 0;
   @Input() plusColor = '#40a9ff';
   @Input() minusColor = '#ff4d4f';
   @Input() @InputNumber() height = 60;
@@ -42,38 +35,36 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() max = 100;
   @Input() @InputNumber() value = 0;
   @Input() @InputBoolean() line = false;
-  @Input() format: (value: number, item: {}, index: number) => string;
+  @Input() format: (value: number, item: NzSafeAny, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
-  @Input() textStyle: any = { fontSize: 12, color: '#595959' };
-  @Input() theme: string | Types.LooseObject;
+  @Input() textStyle: { [key: string]: NzSafeAny } = { fontSize: 12, color: '#595959' };
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
-    configSrv.attachKey(this, 'chart', 'theme');
-  }
-
-  private install() {
-    const { el, height, padding, textStyle, line, format, theme } = this;
-    const chart = (this._chart = new Chart({
+  install(): void {
+    const { el, height, padding, textStyle, line, format, theme, min, max, plusColor, minusColor, barSize } = this;
+    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
-      theme,
+      theme
     }));
     chart.legend(false);
     chart.axis(false);
+    chart.scale({ value: { max, min } });
     chart.tooltip(false);
     chart.coordinate().transpose();
     chart
       .interval()
       .position('1*value')
+      .color('value', (val: number) => (val > 0 ? plusColor : minusColor))
+      .size(barSize)
       .label('value', () => ({
         formatter: format,
         style: {
-          ...textStyle,
-        },
+          ...textStyle
+        }
       }));
 
     if (line) {
@@ -82,40 +73,23 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
         end: ['50%', '100%'],
         style: {
           stroke: '#e8e8e8',
-          lineDash: [0, 0],
-        },
+          lineDash: [0, 0]
+        }
       });
     }
 
+    this.changeData();
+
     chart.render();
-
-    this.attachChart();
   }
 
-  private attachChart() {
-    const { _chart, height, padding, value, min, max, plusColor, minusColor, barSize } = this;
+  onlyChangeData = (changes: SimpleChanges): boolean => {
+    return Object.keys(changes).length === 1 && !!changes.value;
+  };
+
+  changeData(): void {
+    const { _chart, value } = this;
     if (!_chart) return;
-    _chart.scale({ value: { max, min } });
-    _chart.height = height;
-    _chart.padding = padding;
-    _chart.geometries[0].color('value', (val: number) => (val > 0 ? plusColor : minusColor)).size(barSize);
     _chart.changeData([{ value }]);
-  }
-
-  ngOnInit() {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.attachChart());
-  }
-
-  ngOnDestroy(): void {
-    if (this._chart) {
-      this.ngZone.runOutsideAngular(() => this._chart.destroy());
-    }
   }
 }

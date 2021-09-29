@@ -1,5 +1,5 @@
 ---
-type: Components
+type: G2
 title: number-info
 subtitle: NumberInfo
 cols: 2
@@ -16,9 +16,9 @@ Often used in data cards for highlighting the business data.
 |----------|-------------|------|---------|
 | `[title]` | title | `TemplateRef<void>` | - |
 | `[subTitle]` | subtitle | `TemplateRef<void>` | - |
-| `[total]` | total amount | `string` | - |
+| `[total]` | total amount | `string, number` | - |
 | `[suffix]` | total amount suffix | `string` | - |
-| `[subTotal]` | total amount of additional information | `string` | - |
+| `[subTotal]` | total amount of additional information | `string, number` | - |
 | `[status]` | increase state | `'up','down'` | - |
 | `[theme]` | state style | `'light','default'` | `'light'` |
 | `[gap]` | set the spacing (pixels) between numbers and descriptions | `number` | 8 |

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../dist/schematics-test",
+    "noEmitOnError": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "types": ["jasmine", "node"]
+  },
+  "exclude": ["*/files/**/*"]
+}

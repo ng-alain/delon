@@ -50,7 +50,7 @@ export class AppModule { }
 
 ## 非Angular组件
 
-引用一个非 Angular 组件实际上是一个 JavaScript 类库，例如二维码类库 [qrious](https://neocotic.com/qrious/)，这是一个纯洁的 JavaScript 类库（建议尽可能使用纯洁类库而非带有依赖其他）。
+引用一个非 Angular 组件实际上是一个 JavaScript 类库，例如二维码类库 [qrious](https://github.com/neocotic/qrious/)，这是一个纯洁的 JavaScript 类库（建议尽可能使用纯洁类库而非带有依赖其他）。
 
 ### 安装依赖包
 

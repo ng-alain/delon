@@ -15,7 +15,7 @@ Save the table data as Excel.
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc/st';
+import { STColumn, STComponent, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
@@ -28,20 +28,18 @@ import { STColumn, STComponent } from '@delon/abc/st';
 })
 export class DemoComponent {
   @ViewChild('st', { static: false }) st: STComponent;
-  data: any[] = Array(10000)
+  data: STData[] = Array(10000)
     .fill({})
-    .map((_item: any, index: number) => {
-      return {
-        id: index + 1,
-        picture: {
-          thumbnail: `https://randomuser.me/api/portraits/thumb/women/${Math.min(index + 1, 30)}.jpg`,
-        },
-        email: `e${index + 1}@qq.com`,
-        phone: `phone - ${index + 1}`,
-        price: Math.ceil(Math.random() * 10000000) + 10000000,
-        registered: new Date(),
-      };
-    });
+    .map((_, index) => ({
+      id: index + 1,
+      picture: {
+        thumbnail: `https://dummyimage.com/100x100&text=${Math.min(index + 1, 30)}`,
+      },
+      email: `e${index + 1}@qq.com`,
+      phone: `phone - ${index + 1}`,
+      price: Math.ceil(Math.random() * 10000000) + 10000000,
+      registered: new Date(),
+    }));
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     {

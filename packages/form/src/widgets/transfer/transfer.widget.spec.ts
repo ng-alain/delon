@@ -1,7 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
+
+import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
@@ -15,7 +18,7 @@ describe('form: widget: transfer', () => {
     left: '[data-direction="left"]',
     right: '[data-direction="right"]',
     leftBtn: '.ant-transfer-operation .ant-btn:first-child',
-    rightBtn: '.ant-transfer-operation .ant-btn:last-child',
+    rightBtn: '.ant-transfer-operation .ant-btn:last-child'
   };
 
   configureSFTestSuite();
@@ -36,29 +39,29 @@ describe('form: widget: transfer', () => {
             { title: 'DNS管理', value: 10 },
             { title: 'ECS管理', value: 11 },
             { title: 'OSS管理', value: 12 },
-            { title: 'RDS管理', value: 13 },
+            { title: 'RDS管理', value: 13 }
           ],
           ui: {
             widget,
             titles: ['未拥有', '已拥有'],
-            selectChange: jasmine.createSpy(),
+            selectChange: jasmine.createSpy()
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page
       .newSchema(s)
-      .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
+      .typeEvent('click', `${CLS.left} .ant-transfer-list-content-item label`)
       .typeEvent('click', CLS.rightBtn);
 
     expect((page.getValue('a') as number[]).length).toBe(2);
 
-    page.typeEvent('click', CLS.right + ' .ant-transfer-list-content-item label').typeEvent('click', CLS.leftBtn);
+    page.typeEvent('click', `${CLS.right} .ant-transfer-list-content-item label`).typeEvent('click', CLS.leftBtn);
 
     expect((page.getValue('a') as number[]).length).toBe(1);
 
-    expect((s.properties!.a.ui as any).selectChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).selectChange).toHaveBeenCalled();
 
     page.asyncEnd();
   }));
@@ -73,14 +76,14 @@ describe('form: widget: transfer', () => {
             { title: 'DNS管理', value: 10 },
             { title: 'ECS管理', value: 11 },
             { title: 'OSS管理', value: 12 },
-            { title: 'RDS管理', value: 13 },
+            { title: 'RDS管理', value: 13 }
           ],
           ui: {
-            widget,
+            widget
           },
-          default: 10,
-        },
-      },
+          default: 10
+        }
+      }
     };
     page.newSchema(s).dc(1);
     expect(page.getEl(CLS.right).textContent!.trim()).toContain('DNS管理');
@@ -99,23 +102,23 @@ describe('form: widget: transfer', () => {
               { title: 'DNS管理', value: 10 },
               { title: 'ECS管理', value: 11 },
               { title: 'OSS管理', value: 12 },
-              { title: 'RDS管理', value: 13 },
+              { title: 'RDS管理', value: 13 }
             ],
             ui: {
               widget,
               titles: ['未拥有', '已拥有'],
-              change: jasmine.createSpy(),
+              change: jasmine.createSpy()
             },
-            default: 10,
-          },
-        },
+            default: 10
+          }
+        }
       };
       page
         .newSchema(s)
-        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
+        .typeEvent('click', `${CLS.left} .ant-transfer-list-content-item label`)
         .typeEvent('click', CLS.rightBtn);
 
-      expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
+      expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
 
       page.asyncEnd();
     }));
@@ -130,23 +133,23 @@ describe('form: widget: transfer', () => {
               { title: 'DNS管理', value: 10 },
               { title: 'ECS管理', value: 11 },
               { title: 'OSS管理', value: 12 },
-              { title: 'RDS管理', value: 13 },
+              { title: 'RDS管理', value: 13 }
             ],
             ui: {
               widget,
               titles: ['未拥有', '已拥有'],
-              canMove: jasmine.createSpy().and.returnValue(of([])),
+              canMove: jasmine.createSpy().and.returnValue(of([]))
             },
-            default: 10,
-          },
-        },
+            default: 10
+          }
+        }
       };
       page
         .newSchema(s)
-        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
+        .typeEvent('click', `${CLS.left} .ant-transfer-list-content-item label`)
         .typeEvent('click', CLS.rightBtn);
 
-      expect((s.properties!.a.ui as any).canMove).toHaveBeenCalled();
+      expect((s.properties!.a.ui as NzSafeAny).canMove).toHaveBeenCalled();
 
       page.asyncEnd();
     }));
@@ -162,21 +165,21 @@ describe('form: widget: transfer', () => {
                 { title: 'DNS管理', value: 10 },
                 { title: 'ECS管理', value: 11 },
                 { title: 'OSS管理', value: 12 },
-                { title: 'RDS管理', value: 13 },
+                { title: 'RDS管理', value: 13 }
               ],
               ui: {
                 widget,
-                showSearch: true,
+                showSearch: true
               },
-              default: 10,
-            },
-          },
+              default: 10
+            }
+          }
         };
         page
           .newSchema(s)
-          .checkCount(CLS.left + ' .ant-transfer-list-content-item', 3)
-          .typeChar('O', CLS.left + ' .ant-input')
-          .checkCount(CLS.left + ' .ant-transfer-list-content-item', 1)
+          .checkCount(`${CLS.left} .ant-transfer-list-content-item`, 3)
+          .typeChar('O', `${CLS.left} .ant-input`)
+          .checkCount(`${CLS.left} .ant-transfer-list-content-item`, 1)
           .asyncEnd();
       }));
       it('shoule be defined', fakeAsync(() => {
@@ -189,25 +192,25 @@ describe('form: widget: transfer', () => {
                 { title: 'DNS管理', value: 10 },
                 { title: 'ECS管理', value: 11 },
                 { title: 'OSS管理', value: 12 },
-                { title: 'RDS管理', value: 13 },
+                { title: 'RDS管理', value: 13 }
               ],
               ui: {
                 widget,
                 titles: ['未拥有', '已拥有'],
                 showSearch: true,
-                searchChange: jasmine.createSpy(),
+                searchChange: jasmine.createSpy()
               },
-              default: 10,
-            },
-          },
+              default: 10
+            }
+          }
         };
         page
           .newSchema(s)
-          .checkCount(CLS.left + ' .ant-transfer-list-content-item', 3)
-          .typeChar('O', CLS.left + ' .ant-input')
-          .checkCount(CLS.left + ' .ant-transfer-list-content-item', 1)
+          .checkCount(`${CLS.left} .ant-transfer-list-content-item`, 3)
+          .typeChar('O', `${CLS.left} .ant-input`)
+          .checkCount(`${CLS.left} .ant-transfer-list-content-item`, 1)
           .asyncEnd();
-        expect((s.properties!.a.ui as any).searchChange).toHaveBeenCalled();
+        expect((s.properties!.a.ui as NzSafeAny).searchChange).toHaveBeenCalled();
       }));
     });
   });

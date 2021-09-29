@@ -23,7 +23,7 @@ export class LocalStorageStore implements IStore {
     return true;
   }
 
-  remove(key: string) {
+  remove(key: string): void {
     localStorage.removeItem(key);
   }
 }

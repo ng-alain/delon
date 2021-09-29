@@ -1,31 +1,43 @@
 import { Injectable, Optional } from '@angular/core';
-import { XlsxService } from '@delon/abc/xlsx';
-import { deepGet } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
+import { deepGet } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { STColumn, STExportOptions } from './st.interfaces';
+import { _STColumn } from './st.types';
 
 @Injectable()
 export class STExport {
   constructor(@Optional() private xlsxSrv: XlsxService) {}
 
-  private _stGet(item: any, col: STColumn, index: number): any {
-    const ret: { [key: string]: any } = { t: 's', v: '' };
+  private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
+    const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
 
     if (col.format) {
       ret.v = col.format(item, col, index);
     } else {
-      const val = deepGet(item, col.index as string[], '');
+      const val = item._values ? item._values[colIndex].text : deepGet(item, col.index as string[], '');
       ret.v = val;
-      switch (col.type) {
-        case 'currency':
-          ret.t = 'n';
-          break;
-        case 'date':
-          ret.t = 'd';
-          break;
-        case 'yn':
-          ret.v = ret.v === col.ynTruth ? col.ynYes || '是' : col.ynNo || '否';
-          break;
+      if (val != null) {
+        switch (col.type) {
+          case 'currency':
+            ret.t = 'n';
+            break;
+          case 'date':
+            // Can't be a empty value, it will cause `#NULL!`
+            // See https://github.com/SheetJS/sheetjs/blob/master/docbits/52_datatype.md
+            if (`${val}`.length > 0) {
+              ret.t = 'd';
+              // Number Formats: https://github.com/SheetJS/sheetjs/blob/master/docbits/63_numfmt.md
+              ret.z = col.dateFormat;
+            }
+            break;
+          case 'yn':
+            const yn = col.yn!;
+            ret.v = val === yn.truth ? yn.yes : yn.no;
+            break;
+        }
       }
     }
 
@@ -34,42 +46,47 @@ export class STExport {
     return ret;
   }
 
-  private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
+  private genSheet(opt: STExportOptions): { [sheet: string]: unknown } {
     const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
-    const colData = opt._c!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
-    const cc = colData.length;
-    const dc = opt._d!.length;
-
-    // column
-    for (let i = 0; i < cc; i++) {
-      const tit = colData[i].title;
-      sheet[`${String.fromCharCode(i + 65)}1`] = {
-        t: 's',
-        v: typeof tit === 'object' ? tit.text : tit,
-      };
+    const dataLen = opt.data!.length;
+    let validColCount = 0;
+    let loseCount = 0;
+    const columns = opt.columens! as _STColumn[];
+    if (columns.findIndex(w => w._width != null) !== -1) {
+      // wpx: width in screen pixels https://github.com/SheetJS/sheetjs#column-properties
+      sheet['!cols'] = columns.map(col => ({ wpx: col._width }));
     }
-
-    // content
-    for (let i = 0; i < dc; i++) {
-      for (let j = 0; j < cc; j++) {
-        sheet[`${String.fromCharCode(j + 65)}${i + 2}`] = this._stGet(opt._d![i], colData[j], i);
+    for (let colIdx = 0; colIdx < columns.length; colIdx++) {
+      const col = columns[colIdx];
+      if (col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0)) {
+        ++loseCount;
+        continue;
+      }
+      ++validColCount;
+      const columnName = this.xlsxSrv.numberToSchema(colIdx + 1 - loseCount);
+      sheet[`${columnName}1`] = {
+        t: 's',
+        v: typeof col.title === 'object' ? col.title.text : col.title
+      };
+      for (let dataIdx = 0; dataIdx < dataLen; dataIdx++) {
+        sheet[`${columnName}${dataIdx + 2}`] = this._stGet(opt.data![dataIdx], col, dataIdx, colIdx);
       }
     }
 
-    if (cc > 0 && dc > 0) {
-      sheet['!ref'] = `A1:${String.fromCharCode(cc + 65 - 1)}${dc + 1}`;
+    if (validColCount > 0 && dataLen > 0) {
+      sheet['!ref'] = `A1:${this.xlsxSrv.numberToSchema(validColCount)}${dataLen + 1}`;
     }
 
     return sheets;
   }
 
-  export(opt: STExportOptions) {
+  async export(opt: STExportOptions): Promise<XlsxExportResult> {
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,
       filename: opt.filename,
-      callback: opt.callback,
+      callback: opt.callback
     });
   }
 }

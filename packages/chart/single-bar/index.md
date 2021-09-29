@@ -2,7 +2,7 @@
 title: g2-single-bar
 subtitle: 单一柱状图
 cols: 1
-type: Components
+type: G2
 module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 ---
 
@@ -14,13 +14,14 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[plusColor]` | 图表颜色 | `string` | `#40a9ff` |
 | `[minusColor]` | 负值图表颜色 | `string` | `#ff4d4f` |
 | `[height]` | 图表高度 | `number` | `60` |
 | `[barSize]` | 柱状高度 | `number` | `30` |
-| `[min]` | 最大值，若小于0表示显示负值 | `number` | `0` |
-| `[max]` | 最小值 | `number` | `100` |
+| `[min]` | 最小值 | `number` | `0` |
+| `[max]` | 最大值，若小于0表示显示负值 | `number` | `100` |
 | `[padding]` | 图表内部间距 | `any` | `0` |
 | `[value]` | 值 | `number` | `0` |
 | `[format]` | 显示值格式 | `(value: number) => string` | - |

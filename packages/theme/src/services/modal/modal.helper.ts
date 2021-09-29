@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
-import { deepMerge } from '@delon/util';
-import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
+import { Injectable, TemplateRef, Type } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
+
+import { deepMerge } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
@@ -31,22 +33,26 @@ export class ModalHelper {
    * @example
    * this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
-  create(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+  create(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<NzSafeAny> {
     options = deepMerge(
       {
         size: 'lg',
         exact: true,
-        includeTabs: false,
+        includeTabs: false
       },
-      options,
+      options
     );
-    return new Observable((observer: Observer<any>) => {
+    return new Observable((observer: Observer<NzSafeAny>) => {
       const { size, includeTabs, modalOptions } = options as ModalHelperOptions;
       let cls = '';
       let width = '';
@@ -69,10 +75,10 @@ export class ModalHelper {
         nzContent: comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
-        nzComponentParams: params,
+        nzComponentParams: params
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: any) => {
+      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -96,62 +102,21 @@ export class ModalHelper {
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
    * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
+   * // 成功，其中 `nzModalRef` 指目标组件在构造函数 `NzModalRef` 变量名
+   * this.nzModalRef.close(data);
+   * this.nzModalRef.close();
    * // 关闭
-   * this.NzModalRef.destroy();
+   * this.nzModalRef.destroy();
    */
-  createStatic(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+  createStatic(
+    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
+    params?: NzSafeAny,
+    options?: ModalHelperOptions
+  ): Observable<NzSafeAny> {
     const modalOptions = {
       nzMaskClosable: false,
-      ...(options && options.modalOptions),
+      ...(options && options.modalOptions)
     };
     return this.create(comp, params, { ...options, modalOptions });
-  }
-
-  /**
-   * 打开对话框
-   * @param comp 组件
-   * @param params 组件参数
-   * @param size 大小；例如：lg、600，默认：lg
-   *
-   * @example
-   * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
-   * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
-   * // 关闭
-   * this.NzModalRef.destroy();
-   */
-  open(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
-    return this.create(comp, params, {
-      size,
-      modalOptions: options,
-      exact: false,
-    });
-  }
-
-  /**
-   * 静态框，点击蒙层不允许关闭
-   * @param comp 组件
-   * @param params 组件参数
-   * @param size 大小；例如：lg、600，默认：lg
-   *
-   * @example
-   * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
-   * // 对于组件的成功&关闭的处理说明
-   * // 成功
-   * this.NzModalRef.close(data);
-   * this.NzModalRef.close();
-   * // 关闭
-   * this.NzModalRef.destroy();
-   */
-  static(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
-    return this.open(comp, params, size, {
-      nzMaskClosable: false,
-      ...options,
-    });
   }
 }

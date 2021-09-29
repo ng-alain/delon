@@ -20,19 +20,42 @@ NG-ALAIN 提供一套非常丰富的 Schematics 模板，可以快速创建符�
 ng g ng-alain:module sys
 ```
 
-CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing.module.ts` 文件，前者是系统设置模块组件定义文件；后者是系统设置模块路由配置文件。当然为了使模块跟主模块产生联系，还需要至 `src/app/routes/routes-routing.module.ts` 文件内注册新建的业务模块：
+CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing.module.ts` 文件，前者是系统设置模块组件定义文件；后者是系统设置模块路由配置文件。
 
 ```ts
-{
-  path: '',
-  component: LayoutDefaultComponent,
-  children: [
-    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
-  ]
-}
+// sys.module.ts
+import { NgModule, Type } from '@angular/core';
+import { SharedModule } from '@shared';
+import { SysRoutingModule } from './sys-routing.module';
+
+const COMPONENTS: Type<void>[] = [];
+
+@NgModule({
+  imports: [SharedModule, SysRoutingModule],
+  declarations: COMPONENTS,
+})
+export class SysModule {}
 ```
 
-这样，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
+模块的作用是导入我们需要的模块，所有 NG-ZORRO、@delon/abc、@delon/chart 等都是按需求加载模块，当前业务页需要哪里外部组件就导入哪些，为了减少这些导入动作，NG-ALAIN 提炼了两个文件 `shared-delon.module.ts`、`shared-zorro.module.ts` 将一些整个项目经常用到的模块合并成一个叫 `SharedModule` 模块内，这也就是为什么需要在业务模块内第一时间导入它。注意：不建议把所有组件都放进 `SharedModule` 内，尽可能将需要用到的模块以二或三次以上使用才放进这里。
+
+以及路由配置模块：
+
+```ts
+// sys-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class SysRoutingModule {}
+```
+
+至此，你可以放心在 `sys` 目录中开始开发像菜单管理、日志、系统配置等业务页面。
 
 ## 二、页面
 
@@ -53,19 +76,3 @@ ng g ng-alain:view view -m=sys -t=log
 ```
 
 `-t=log` 表示希望把创建的文件放进至 `sys/log/view` 下面。
-
-## 三、IDE
-
-除了 ng-alain 提供的 cli 命令行以外，推荐使用 [Visual Studio Code](https://code.visualstudio.com/) IDE，因为 ng-alain 针对 VSCode 增加一些额外的特性，可以更好的帮助你开发。
-
-> 或者直接使用 [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) 套件。
-
-### 代码片断
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### Class样式智能提醒
-
-ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
-
-- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)

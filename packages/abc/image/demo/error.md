@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'components-image-error',
   template: `
-  <button nz-button (click)="src='//a.com/1.png'">Load an error image</button>
-  <div style="margin-top: 8px;">
-    <img [_src]="src" error="./assets/img/logo-color.svg">
-  </div>
-  `
+    <button nz-button (click)="src = '//a.com/1.png'">Load an error image</button>
+    <div style="margin-top: 8px;">
+      <img [_src]="src" error="./assets/img/logo-color.svg" />
+    </div>
+  `,
 })
 export class ComponentsImageErrorComponent {
   src = './assets/img/avatar.jpg';

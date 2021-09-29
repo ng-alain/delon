@@ -4,9 +4,18 @@
   "newProjectRoot": "projects",
   "projects": {
     "site": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -16,69 +25,57 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets"],
+            "assets": ["src/assets", "src/manifest.webmanifest"],
             "styles": [
-              "node_modules/ngx-simplemde/lib/index.less",
               "node_modules/aos/dist/aos.css",
-              "node_modules/docsearch.js/dist/cdn/docsearch.css",
               "src/styles.less"
             ],
             "scripts": [
-              "node_modules/aos/dist/aos.js",
-              "node_modules/simplemde-antd/dist/simplemde.min.js",
-              "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/docsearch.js/dist/cdn/docsearch.js"
+              "node_modules/aos/dist/aos.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "codesandbox/lib/api/define",
+              "hammerjs",
+              "ajv",
+              "file-saver",
+              "ajv-formats",
+              "date-fns"
             ]
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "outputHashing": "all",
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
-            "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
-                }
-              ]
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "site:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "site:build:production"
             },
-            "hmr": {
-              "browserTarget": "site:build:hmr",
-              "hmr": true
+            "development": {
+              "browserTarget": "site:build:development"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["src/tsconfig.json"],
-            "exclude": ["**/node_modules/**"]
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
@@ -132,6 +129,16 @@
       "projectType": "library",
       "prefix": "",
       "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "fix": true,
+            "lintFilePatterns": [
+              "packages/**/*.ts",
+              "packages/**/*.html"
+            ]
+          }
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -139,8 +146,8 @@
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": "packages/polyfills.ts",
             "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": ["node_modules/ajv/dist/ajv.bundle.js"],
-            "codeCoverageExclude": ["packages/schematics/**", "packages/testing/**"]
+            "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
+            "codeCoverageExclude": ["schematics/**", "packages/testing/**"]
           }
         }
       }

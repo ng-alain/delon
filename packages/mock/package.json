@@ -25,5 +25,9 @@
     "angular",
     "component"
   ],
-  "sideEffects": false
+  "dependencies": {
+    "mockjs": "@LIB-PLACEHOLDER",
+    "@types/mockjs": "@LIB-PLACEHOLDER",
+    "@delon/util": "PEER-0.0.0-PLACEHOLDER"
+  }
 }

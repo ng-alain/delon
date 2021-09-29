@@ -13,35 +13,55 @@ type: Service
 
 ### SettingsService
 
-| 名称                                  | 类型       | 返回值                       | 描述           |
-| ------------------------------------- | ---------- | ---------------------------- | -------------- |
-| `layout`                              | `property` | `Layout`                     | 布局信息       |
-| `app`                                 | `property` | `App`                        | 项目信息       |
-| `user`                                | `property` | `User`                       | 用户信息       |
-| `notify`                              | `property` | `Observable<SettingsNotify>` | 变更通知       |
-| `setLayout(name: string, value: any)` | `method`   | `boolean`                    | 设置布局属性值 |
-| `setApp(value: App)`                  | `method`   | `boolean`                    | 设置项目信息   |
-| `setUser(value: User)`                | `method`   | `boolean`                    | 设置用户信息   |
+| 名称 | 类型 | 返回值 | 描述 |
+|----|----|-----|----|
+| `layout` | `property` | `Layout` | 布局信息 |
+| `app` | `property` | `App` | 项目信息 |
+| `user` | `property` | `User` | 用户信息 |
+| `notify` | `property` | `Observable<SettingsNotify>` | 当布局、项目、用户信息变更时通知 |
+| `setLayout(name: string, value: any)` | `method` | `boolean` | 设置布局属性值 |
+| `setApp(value: App)` | `method` | `boolean` | 设置项目信息 |
+| `setUser(value: User)` | `method` | `boolean` | 设置用户信息 |
 
 ### App
 
-| 参数            | 说明     | 类型     | 默认值 |
-|-----------------|--------|----------|--------|
-| `[name]`        | 应用名称 | `string` | -      |
-| `[description]` | 应用描述 | `string` | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[name]` | 应用名称 | `string` | - |
+| `[description]` | 应用描述 | `string` | - |
 
 ### User
 
-| 参数       | 说明         | 类型     | 默认值 |
-|------------|------------|----------|--------|
-| `[name]`   | 当前用户名称 | `string` | -      |
-| `[avatar]` | 当前用户头像 | `string` | -      |
-| `[email]`  | 当前用户邮箱 | `string` | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[name]` | 当前用户名称 | `string` | - |
+| `[avatar]` | 当前用户头像 | `string` | - |
+| `[email]` | 当前用户邮箱 | `string` | - |
 
 ### Layout
 
-| 参数          | 说明         | 类型      | 默认值  |
-|---------------|------------|-----------|---------|
-| `[collapsed]` | 是否折叠菜单 | `boolean` | -       |
-| `[lang]`      | 当前语言     | `string`  | -       |
-| `[colorWeak]` | 色弱模式     | `boolean` | `false` |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[collapsed]` | 是否折叠菜单 | `boolean` | - |
+| `[lang]` | 当前语言 | `string` | - |
+| `[colorWeak]` | 色弱模式 | `boolean` | `false` |
+
+## 常见问题
+
+**如何更改本地存储键名？**
+
+允许通过 `global-config.module.ts` 全局配置文件，增加 `ALAIN_SETTING_KEYS` 的配置，例如：
+
+```diff
+ const alainProvides = [
+  { provide: ALAIN_CONFIG, useValue: alainConfig },
++ {
++   provide: ALAIN_SETTING_KEYS,
++   useValue: {
++     layout: 'new-layout',
++     user: 'new-user',
++     app: 'new-app',
++   },
++ },
+];
+```

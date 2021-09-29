@@ -1,6 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { DelonACLModule } from './acl.module';
 import { ACLService } from './acl.service';
 
@@ -14,7 +15,7 @@ describe('acl: directive', () => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
       imports: [DelonACLModule.forRoot()],
-      providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }],
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }]
     });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -26,33 +27,33 @@ describe('acl: directive', () => {
     context.srv.setFull(true);
     context.role = 'user';
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.' + CLS)).length).toBe(0);
+    expect(dl.queryAll(By.css(`.${CLS}`)).length).toBe(0);
   });
 
   it('should hide when not full', () => {
     context.srv.setFull(false);
     context.role = 'user';
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.' + CLS)).length).toBe(1);
+    expect(dl.queryAll(By.css(`.${CLS}`)).length).toBe(1);
   });
 
   it('should show when ability', () => {
     context.srv.setAbility([1, 2, 3]);
     context.ability = 2;
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.' + CLS)).length).toBe(0);
+    expect(dl.queryAll(By.css(`.${CLS}`)).length).toBe(0);
   });
 
   it('should hide when not ability', () => {
     context.srv.setAbility([1, 2, 3]);
     context.ability = 4;
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.' + CLS)).length).toBe(1);
+    expect(dl.queryAll(By.css(`.${CLS}`)).length).toBe(1);
   });
 });
 
 @Component({
-  template: ` <button [acl]="role" [acl-ability]="ability"></button> `,
+  template: ` <button [acl]="role" [acl-ability]="ability"></button> `
 })
 class TestComponent {
   role = 'admin';

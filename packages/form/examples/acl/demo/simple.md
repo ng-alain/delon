@@ -49,9 +49,8 @@ export class DemoComponent {
     },
     required: ['name'],
   };
-  constructor(public msg: NzMessageService, public acl: ACLService) {
-  }
-  submit(value: any) {
+  constructor(private msg: NzMessageService, public acl: ACLService) {}
+  submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
   }
 }

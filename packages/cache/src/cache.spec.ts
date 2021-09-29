@@ -1,12 +1,13 @@
-// tslint:disable:no-string-literal
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlainThemeModule, _HttpClient } from '@delon/theme';
-import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
 import { ICache } from './interface';
@@ -20,7 +21,7 @@ describe('cache: service', () => {
   }
 
   beforeEach(() => {
-    let data: any = {};
+    let data: NzSafeAny = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;
@@ -36,14 +37,14 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule(options?: AlainCacheConfig) {
-    const providers: any[] = [];
+  function genModule(options?: AlainCacheConfig): void {
+    const providers: NzSafeAny[] = [];
     if (options) {
       providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
     }
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, AlainThemeModule.forRoot(), DelonCacheModule],
-      providers,
+      imports: [HttpClientTestingModule, DelonCacheModule],
+      providers
     });
 
     srv = TestBed.inject<CacheService>(CacheService);
@@ -51,7 +52,7 @@ describe('cache: service', () => {
 
   it('should be specify a global config', () => {
     genModule({ expire: 100, type: 'm' });
-    const saveSpy = spyOn(srv as any, 'save');
+    const saveSpy = spyOn(srv as NzSafeAny, 'save');
     srv.set(KEY, 'a');
     const args = saveSpy.calls.first().args;
     expect(args[0]).toBe('m');
@@ -131,8 +132,8 @@ describe('cache: service', () => {
           KEY,
           JSON.stringify({
             e: 1000,
-            v: 1,
-          } as ICache),
+            v: 1
+          } as ICache)
         );
         expect(srv.getNone(KEY)).toBeNull();
       });
@@ -190,14 +191,16 @@ describe('cache: service', () => {
           done();
         });
       });
-      it('should be return value via http request', fakeAsync(() => {
-        const http = TestBed.inject(_HttpClient);
-        const get$ = srv.tryGet(KEY, http.get('/'));
-        expect(http.loading).toBeFalsy();
-        get$.subscribe();
-        tick();
-        expect(http.loading).toBeTruthy();
-      }));
+      it('should be return value via http request', done => {
+        const http = TestBed.inject(HttpClient);
+        srv.tryGet(KEY, http.get('/')).subscribe((ret: NzSafeAny) => {
+          expect(ret.a).toBe(1);
+          done();
+        });
+        TestBed.inject(HttpTestingController as Type<HttpTestingController>)
+          .expectOne(() => true)
+          .flush({ a: 1 });
+      });
     });
 
     describe('#has', () => {
@@ -234,12 +237,12 @@ describe('cache: service', () => {
     describe('#clear', () => {
       it('shoule be return null', () => {
         srv.set(KEY, 10, { type: 'm' });
-        srv.set(KEY + '1', 100);
+        srv.set(`${KEY}1`, 100);
         expect(srv.getNone(KEY)).toBe(10);
-        expect(srv.getNone(KEY + '1')).toBe(100);
+        expect(srv.getNone(`${KEY}1`)).toBe(100);
         srv.clear();
         expect(srv.getNone(KEY)).toBeNull();
-        expect(srv.getNone(KEY + '1')).toBeNull();
+        expect(srv.getNone(`${KEY}1`)).toBeNull();
       });
       it('should be notify a remove event', (done: () => void) => {
         srv
@@ -259,9 +262,9 @@ describe('cache: service', () => {
       const tree = {
         responsne: {
           list: [],
-          total: 10,
+          total: 10
         },
-        status: 'ok',
+        status: 'ok'
       };
       it('should be get [status]', () => {
         expect(srv['deepGet'](tree, ['status'])).toBe(tree.status);
@@ -346,13 +349,23 @@ describe('cache: service', () => {
       localStorage.setItem(
         meta_key,
         JSON.stringify({
-          v: [KEY],
-        }),
+          v: [KEY]
+        })
       );
     });
     beforeEach(() => genModule());
     it('should be loaded history keys', () => {
       expect(srv.getMeta().has(KEY)).toBe(true);
     });
+  });
+
+  it('should be custom request', async () => {
+    const returnValue = 11;
+    const request = jasmine.createSpy('request').and.callFake(() => of(returnValue));
+    genModule({ request });
+    expect(request).not.toHaveBeenCalled();
+    const res = await srv.get('/data/1', { mode: 'promise', type: 'm' }).toPromise();
+    expect(request).toHaveBeenCalled();
+    expect(res).toBe(returnValue);
   });
 });

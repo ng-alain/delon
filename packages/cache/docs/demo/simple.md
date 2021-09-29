@@ -22,23 +22,23 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-demo',
   template: `
-  <p>value: {{ value | json }}</p>
-  <div class="pt-sm">
-    Basic:
-    <button nz-button (click)="srv.set(key, newValue)">Set</button>
-    <button nz-button (click)="value = srv.getNone(key)">Get</button>
-    <button nz-button (click)="srv.remove(key)">Remove</button>
-    <button nz-button (click)="srv.clear()">Clear</button>
-  </div>
-  <div class="pt-sm">
-    Key is valid request:
-    <button nz-button (click)="getByHttp()">Get</button>
-  </div>
-  <div class="pt-sm">
-    Notify:
-    <button nz-button (click)="registerNotify()">Register</button>
-    <button nz-button (click)="unRegisterNotify()">UnRegister</button>
-  </div>
+    <p>value: {{ value | json }}</p>
+    <div class="pt-sm">
+      Basic:
+      <button nz-button (click)="srv.set(key, newValue)">Set</button>
+      <button nz-button (click)="value = srv.getNone(key)">Get</button>
+      <button nz-button (click)="srv.remove(key)">Remove</button>
+      <button nz-button (click)="srv.clear()">Clear</button>
+    </div>
+    <div class="pt-sm">
+      Key is valid request:
+      <button nz-button (click)="getByHttp()">Get</button>
+    </div>
+    <div class="pt-sm">
+      Notify:
+      <button nz-button (click)="registerNotify()">Register</button>
+      <button nz-button (click)="unRegisterNotify()">UnRegister</button>
+    </div>
   `,
 })
 export class DemoComponent implements OnDestroy {
@@ -46,19 +46,19 @@ export class DemoComponent implements OnDestroy {
   key = 'demo';
   private notify$: Subscription;
 
-  get newValue() {
+  get newValue(): number {
     return +new Date();
   }
 
   constructor(public srv: CacheService, private msg: NzMessageService) {}
 
-  getByHttp() {
+  getByHttp(): void {
     this.srv.get(`https://randomuser.me/api/?results=1`).subscribe(res => {
       this.value = res;
     });
   }
 
-  registerNotify() {
+  registerNotify(): void {
     if (this.notify$) this.notify$.unsubscribe();
     this.notify$ = this.srv.notify(this.key).subscribe(res => {
       if (res == null) {
@@ -69,11 +69,11 @@ export class DemoComponent implements OnDestroy {
     });
   }
 
-  unRegisterNotify() {
+  unRegisterNotify(): void {
     this.srv.cancelNotify(this.key);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.notify$) this.notify$.unsubscribe();
   }
 }

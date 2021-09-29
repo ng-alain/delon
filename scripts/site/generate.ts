@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from 'fs';
 import * as path from 'path';
+
 import {
   ContentTemplateData,
   ExampleModules,
@@ -8,13 +10,21 @@ import {
   MetaTemplateData,
   ModuleConfig,
   ModuleTemplateData,
-  SiteConfig,
+  SiteConfig
 } from './interfaces';
 import { generateDemo } from './utils/generate-demo';
 import { generateExampleModule } from './utils/generate-example';
 import { groupFiles } from './utils/group-files';
 import { parseMd } from './utils/parse-md';
-import { genComponentName, generateDoc, genSelector, genUpperName, genUrl, includeAttributes } from './utils/utils';
+import {
+  genComponentName,
+  generateDoc,
+  genSelector,
+  genUpperName,
+  genUrl,
+  handleExploreStr,
+  includeAttributes
+} from './utils/utils';
 
 const target = process.argv[2];
 const isSyncSpecific = !!target && target !== 'init';
@@ -26,29 +36,30 @@ const siteConfig = require(path.join(rootDir, 'src/site.config.js')) as SiteConf
 const defaultLang = siteConfig.defaultLang;
 
 const exampleModules: ExampleModules = {
-  list: [],
+  list: []
 };
 
 function generateModule(config: ModuleConfig) {
   const distPath = path.join(rootDir, config.dist);
 
-  // tslint:disable-next-line: prefer-object-spread
   const metas: Meta[] = Object.assign([], config.extraRouteMeta);
   const modules: any = {
     imports: [],
     components: [],
-    routes: [],
+    routes: []
   };
 
   function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true) {
-    modules.imports.push(`import { ${componentName} } from './${name}/${filename}';`);
+    modules.imports.push(`import { ${componentName} } from './${handleExploreStr(name)}/${filename}';`);
     modules.components.push(componentName);
     if (needRouter) {
       if (modules.routes.length <= 0 && config.defaultRoute) {
         modules.routes.push(`{ path: '', redirectTo: '${config.defaultRoute}/zh', pathMatch: 'full' }`);
       }
-      modules.routes.push(`{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`);
-      modules.routes.push(`{ path: '${name}/:lang', component: ${componentName} }`);
+
+      const path_name = handleExploreStr(name, '-');
+      modules.routes.push(`{ path: '${path_name}', redirectTo: '${path_name}/zh', pathMatch: 'full' }`);
+      modules.routes.push(`{ path: '${path_name}/:lang', component: ${componentName} }`);
     }
   }
 
@@ -81,7 +92,7 @@ function generateModule(config: ModuleConfig) {
       const demoArr = contentObj[lan].content.split(/(<!--demo\([^)]+\)-->)/g);
       if (demoArr.length > 1) {
         contentObj[lan].content = demoArr
-          .map(html => {
+          .map((html: any) => {
             if (html.startsWith('<!--')) return html;
             return `<section class="markdown">${html}</section>`;
           })
@@ -92,7 +103,9 @@ function generateModule(config: ModuleConfig) {
       }
     });
 
-    const newList = demos.data.filter(w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0);
+    const newList = demos.data.filter(
+      (w: any) => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0
+    );
 
     exampleModules.list.push(...newList);
   }
@@ -105,14 +118,14 @@ function generateModule(config: ModuleConfig) {
       dirConfig,
       isSyncSpecific,
       target,
-      siteConfig,
+      siteConfig
     );
 
     files.forEach(item => {
       // #region generate document file
 
-      const content = {};
-      const urls = {};
+      const content: any = {};
+      const urls: any = {};
       const contentMetas: any = {};
       const i18n = Object.keys(item.data).length > 1;
       // const titleBuffer = {};
@@ -125,18 +138,25 @@ function generateModule(config: ModuleConfig) {
 
       // push meta
       const meta: Meta = {
-        name: item.key,
+        name: handleExploreStr(item.key, '-'),
         i18n,
         order: content[defaultLang].meta.order || -1,
         cols: content[defaultLang].meta.cols || 1,
-        meta: contentMetas,
+        meta: contentMetas
       };
       metas.push(meta);
 
       // #endregion
 
       // #region generate demo files
-      const demos = generateDemo(rootDir, item.key, path.join(path.dirname(item.data[defaultLang]), 'demo'), meta.cols, config, siteConfig);
+      const demos = generateDemo(
+        rootDir,
+        meta.name,
+        path.join(path.dirname(item.data[defaultLang]), 'demo'),
+        meta.cols,
+        config,
+        siteConfig
+      );
       // #endregion
 
       // #region generate document file
@@ -150,10 +170,11 @@ function generateModule(config: ModuleConfig) {
           cols: meta.cols,
           urls,
           content,
-          demo: isDemo,
+          demo: isDemo
+          // i18n: meta.i18n,
         } as any,
         demos: '',
-        demo: isDemo,
+        demo: isDemo
       };
       if (fileObject.demo) {
         fixDemo(fileObject, demos);
@@ -164,14 +185,14 @@ function generateModule(config: ModuleConfig) {
       }
       fileObject.codes = JSON.stringify(demoList);
       fileObject.item = JSON.stringify(fileObject.item);
-      generateDoc(fileObject, tpl, path.join(distPath, item.key, `index.ts`));
+      generateDoc(fileObject, tpl, path.join(distPath, meta.name, `index.ts`));
       // #endregion
 
       // #region register module
-      appendToModule(fileObject.componentName, item.key, 'index');
+      appendToModule(fileObject.componentName, meta.name, 'index');
       // demo
       demoList.forEach(demo => {
-        appendToModule(demo.componentName, item.key, demo.name, false);
+        appendToModule(demo.componentName, meta.name, demo.name, false);
       });
       // #endregion
     });
@@ -185,7 +206,7 @@ function generateModule(config: ModuleConfig) {
   generateDoc(
     { data: JSON.stringify(metaObj) } as MetaTemplateData,
     fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
-    path.join(distPath, `meta.ts`),
+    path.join(distPath, `meta.ts`)
   );
   // #endregion
 
@@ -195,17 +216,18 @@ function generateModule(config: ModuleConfig) {
     moduleName: genUpperName(config.name),
     imports: modules.imports.join('\r\n'),
     components: modules.components.join(',\r\n'),
-    routes: modules.routes.join(',\r\n'),
+    routes: modules.routes.join(',\r\n')
   };
   generateDoc(
     moduleObj,
     fs.readFileSync(path.join(rootDir, config.template.module)).toString('utf8'),
-    path.join(distPath, `${config.name}.module.ts`),
+    path.join(distPath, `${config.name}.module.ts`)
   );
   // #endregion
 }
 
 for (const m of siteConfig.modules) {
+  // if (m.module !== 'docs') continue;
   generateModule(m);
 }
 
@@ -213,4 +235,4 @@ if (exampleModules.list.length > 0) {
   generateExampleModule(rootDir, siteConfig, exampleModules);
 }
 
-console.log('site generate finished!');
+console.log(`✅ Site generated successfully`);

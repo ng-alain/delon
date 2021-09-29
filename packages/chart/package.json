@@ -25,10 +25,10 @@
     "component"
   ],
   "dependencies": {
-    "@antv/g2": "^4.0.8",
-    "@antv/data-set": "^0.11.4",
+    "@antv/data-set": "@LIB-PLACEHOLDER",
+    "@antv/g2": "@LIB-PLACEHOLDER",
+    "echarts": "@LIB-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
-  },
-  "sideEffects": false
+  }
 }

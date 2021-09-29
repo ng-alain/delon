@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
@@ -9,26 +11,21 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     </div>
     <p>参数：{{ record | json }}</p>
     <div class="modal-footer">
-      <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="cancel()">
-        Cancel
-      </button>
-      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()">
-        OK
-      </button>
+      <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="cancel()"> Cancel </button>
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()"> OK </button>
     </div>
-  `,
+  `
 })
 export class DemoModalComponent {
-  @Input()
-  record: any;
+  @Input() record: NzSafeAny;
 
   constructor(private modal: NzModalRef) {}
 
-  ok() {
+  ok(): void {
     this.modal.destroy(`new time: ${+new Date()}`);
   }
 
-  cancel() {
+  cancel(): void {
     this.modal.destroy();
   }
 }

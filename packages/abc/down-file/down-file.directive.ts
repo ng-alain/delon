@@ -1,37 +1,32 @@
 import { HttpResponse } from '@angular/common/http';
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
+import { finalize } from 'rxjs/operators';
+
 import { saveAs } from 'file-saver';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import { _HttpClient } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
   selector: '[down-file]',
   exportAs: 'downFile',
   host: {
-    '(click)': '_click()',
-  },
+    '(click)': '_click($event)'
+  }
 })
 export class DownFileDirective {
   private isFileSaverSupported = true;
-  /** URL请求参数 */
-  @Input('http-data') httpData: {};
-  /** URL请求参数 */
-  @Input('http-body') httpBody: {};
-  /** 请求类型 */
+  @Input('http-data') httpData: NzSafeAny;
+  @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
-  /** 下载地址 */
   @Input('http-url') httpUrl: string;
-  /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
   @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
-  /** 成功回调 */
-  // tslint:disable-next-line:no-output-native
+  @Input() pre: (ev: MouseEvent) => Promise<boolean>;
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
-  /** 错误回调 */
-  // tslint:disable-next-line:no-output-native
-  @Output() readonly error = new EventEmitter<any>();
+  @Output() readonly error = new EventEmitter<NzSafeAny>();
 
   private getDisposition(data: string | null): NzSafeAny {
-    const arr: Array<{}> = (data || '')
+    const arr: Array<Record<string, string>> = (data || '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {
@@ -61,8 +56,10 @@ export class DownFileDirective {
     el.classList[status ? 'add' : 'remove'](`down-file__disabled`);
   }
 
-  _click() {
-    if (!this.isFileSaverSupported) {
+  async _click(ev: MouseEvent): Promise<void> {
+    if (!this.isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
+      ev.stopPropagation();
+      ev.preventDefault();
       return;
     }
     this.setDisabled(true);
@@ -71,8 +68,9 @@ export class DownFileDirective {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',
-        body: this.httpBody,
+        body: this.httpBody
       })
+      .pipe(finalize(() => this.setDisabled(false)))
       .subscribe(
         (res: HttpResponse<Blob>) => {
           if (res.status !== 200 || res.body!.size <= 0) {
@@ -83,12 +81,15 @@ export class DownFileDirective {
           let fileName = this.fileName;
           if (typeof fileName === 'function') fileName = fileName(res);
           fileName =
-            fileName || disposition[`filename*`] || disposition[`filename`] || res.headers.get('filename') || res.headers.get('x-filename');
+            fileName ||
+            disposition[`filename*`] ||
+            disposition[`filename`] ||
+            res.headers.get('filename') ||
+            res.headers.get('x-filename');
           saveAs(res.body!, decodeURI(fileName as string));
           this.success.emit(res);
         },
-        err => this.error.emit(err),
-        () => this.setDisabled(false),
+        err => this.error.emit(err)
       );
   }
 }

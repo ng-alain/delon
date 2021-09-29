@@ -15,13 +15,17 @@ Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData, STChange } from '@delon/abc/st';
+import { STChange, STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `<st [data]="url" [columns]="columns"
-        [req]="{params: params}" [res]="{process: dataProcess}"
-        (change)="change($event)"></st>`,
+  template: `<st
+    [data]="url"
+    [columns]="columns"
+    [req]="{ params: params }"
+    [res]="{ process: dataProcess }"
+    (change)="change($event)"
+  ></st>`,
 })
 export class DemoComponent {
   url = `/users?total=100`;
@@ -33,11 +37,11 @@ export class DemoComponent {
     { title: '电话', index: 'phone' },
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
-  change(e: STChange) {
+  change(e: STChange): void {
     console.log('change', e);
   }
-  dataProcess(data: STData[]) {
-    return data.map((i: STData, index: number) => {
+  dataProcess(data: STData[]): STData[] {
+    return data.map((i, index) => {
       i.disabled = index === 0;
       return i;
     });

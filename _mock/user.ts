@@ -1,5 +1,4 @@
 import { MockRequest, MockStatusError } from '@delon/mock';
-// import * as Mock from 'mockjs';
 
 const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -7,9 +6,10 @@ export const USERS = {
   // 支持值为 Object 和 Array
   'GET /users': (req: MockRequest) => {
     const total = +(req.queryString.total || 100);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = {
       list: [],
-      total,
+      total
     };
     const onlyList = req.queryString!.field === 'list';
     let num = onlyList ? total : +req.queryString.ps;
@@ -20,18 +20,18 @@ export const USERS = {
       res.list.push({
         id: i + 1,
         picture: {
-          thumbnail: `https://randomuser.me/api/portraits/thumb/${r(0, 1) === 0 ? 'men' : 'women'}/${r(1, 50)}.jpg`,
+          thumbnail: `https://dummyimage.com/100x100&text=${r(1, 50)}`
         },
         name: {
           last: `last-${r(1, 10)}`,
-          first: `first-${r(10, 20)}`,
+          first: `first-${r(10, 20)}`
         },
         nat: ['CH', 'US', 'DE'][i % 3],
         gender: ['male', 'female'][i % 2],
-        email: `aaa${r(1, 10)}@qq.com`,
+        email: `aaa${i}-${r(1, 10)}@qq.com`,
         phone: `phone-${r(1000, 100000)}`,
         price: r(10, 10000000),
-        registered: new Date(),
+        registered: new Date()
       });
     }
     return onlyList ? res.list : res;
@@ -55,5 +55,5 @@ export const USERS = {
   },
   '/user/:id/upload': (req: MockRequest) => {
     return { id: req.params.id, name: 'upload' };
-  },
+  }
 };

@@ -15,8 +15,8 @@ Global load indicator is generally used when an operation needs to interrupt the
 
 | Name | Description |
 |------|-------------|
-| `open(options?: LoadingShowOptions)` | Open |
-| `close()` | Close |
+| `open(options?: LoadingShowOptions)` | Open a new loading indicator |
+| `close()` | Turn off a loading indicator |
 
 ### LoadingShowOptions
 

@@ -8,23 +8,18 @@ module: import { DownFileModule } from '@delon/abc/down-file';
 
 A file download based on `blob`.
 
-## Dependencies
-
-```
-yarn add file-saver
-```
-
 ## API
 
 ### [down-file]
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[http-data]` | Parameter of request | `any` | - |
-| `[http-body]` | Body of request | `any` | - |
+| `[http-data]` | Parameter of request | `{}` | - |
+| `[http-body]` | Body of request | `{}` | - |
 | `[http-method]` | Method of request | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` |
 | `[http-url]` | Url of request | `string` | - |
 | `[file-name]` | Specify a file name | `string, (rep: HttpResponse<Blob>) => string` | - |
+| `[pre]` | Callback of download | `(ev: MouseEvent) => Promise<boolean>` | - |
 | `(success)` | Success callback | `EventEmitter<HttpResponse<Blob>>` | - |
 | `(error)` | Error callback | `EventEmitter<any>` | - |
 

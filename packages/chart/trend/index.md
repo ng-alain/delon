@@ -1,5 +1,5 @@
 ---
-type: Components
+type: G2
 title: trend
 subtitle: 趋势标记
 cols: 1

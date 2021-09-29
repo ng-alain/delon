@@ -1,11 +1,11 @@
-// tslint:disable-next-line: interface-name
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface ICache {
-  v: any;
+  v: NzSafeAny;
   /** 过期时间戳，`0` 表示不过期 */
   e: number;
 }
 
-// tslint:disable-next-line: interface-name
 export interface ICacheStore {
   get(key: string): ICache | null;
 
@@ -18,5 +18,5 @@ export type CacheNotifyType = 'set' | 'remove' | 'expire';
 
 export interface CacheNotifyResult {
   type: CacheNotifyType;
-  value?: any;
+  value?: NzSafeAny;
 }

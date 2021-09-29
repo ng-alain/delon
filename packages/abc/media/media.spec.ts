@@ -1,18 +1,20 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
-import { LazyService } from '@delon/util';
+import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+
 import { MediaComponent } from './media.component';
 import { MediaModule } from './media.module';
 import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
 class MockPlyr {
   source: NzSafeAny = {};
-  on(_key: string, fn: () => void) {
+  on(_key: string, fn: () => void): void {
     fn();
   }
-  destroy() {}
+  destroy(): void {}
 }
 
 describe('abc: media', () => {
@@ -26,7 +28,7 @@ describe('abc: media', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MediaModule],
-      declarations: [TestComponent, TestCustomVideoComponent],
+      declarations: [TestComponent, TestCustomVideoComponent]
     });
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
@@ -76,24 +78,23 @@ describe('abc: media', () => {
       fixture2.detectChanges();
       tick();
       fixture2.detectChanges();
-      // tslint:disable-next-line: no-string-literal
       expect(fixture2.componentInstance.comp['videoEl'].dataset.type).toBe(`custom`);
     }));
   });
 
   class PageObject {
-    cd(time = 0): this {
+    cd(time: number = 0): this {
       fixture.detectChanges();
       tick(time);
       fixture.detectChanges();
       return this;
     }
 
-    get player() {
+    get player(): NzSafeAny {
       return context.comp.player;
     }
 
-    end() {
+    end(): void {
       discardPeriodicTasks();
       flush();
     }
@@ -101,7 +102,9 @@ describe('abc: media', () => {
 });
 
 @Component({
-  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()"></media> `,
+  template: `
+    <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()"></media>
+  `
 })
 class TestComponent {
   @ViewChild('comp') comp: MediaComponent;
@@ -109,9 +112,10 @@ class TestComponent {
   source: string | PlyrMediaSource = '1.mp4';
   options: NzSafeAny;
   delay = 0;
-  ready() {}
+  ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media> <media [source]="source"></media>`,
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media>
+    <media [source]="source"></media>`
 })
 class TestCustomVideoComponent extends TestComponent {}

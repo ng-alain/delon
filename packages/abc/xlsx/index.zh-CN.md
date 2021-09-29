@@ -13,11 +13,7 @@ module: import { XlsxModule } from '@delon/abc/xlsx';
 
 ## 依赖
 
-```
-yarn add file-saver
-```
-
-由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用本地路径），默认情况下使用 `//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js`。
+由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用[本地路径](https://angular.cn/guide/workspace-config#asset-config)），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js`。
 
 ## API
 
@@ -27,6 +23,7 @@ yarn add file-saver
 |----|----|----|-----|
 | `import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | - |
 | `export(options: XlsxExportOptions)` | 导出Excel | `Promise<void>` | - |
+| `numberToSchema(val: number)` | 数值转符号名 | `string` | - |
 
 ### XlsxExportOptions
 
@@ -44,9 +41,3 @@ xlsx 指令。
 ```html
 <div [xlsx]="XlsxExportOptions">导出</div>
 ```
-
-## 常见问题
-
-### csv格式
-
-文件编码格式必须是 UTF8 with BOM 才能解析。

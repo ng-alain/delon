@@ -48,3 +48,5 @@ type: Widgets
 | `[popupClassName]` | 弹出层类名 | `string` | - |
 | `[change]` | 时间发生变化的回调 | `(value: Date) => void` | - |
 | `[openChange]` | 面板打开/关闭时的回调 | `(status: boolean) => void` | - |
+| `[nowText]` | 此刻按钮文本 | `string` | - |
+| `[okText]` | 确认按钮文本 | `string` | - |

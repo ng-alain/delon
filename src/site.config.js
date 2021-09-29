@@ -70,6 +70,10 @@ module.exports = {
           'zh-CN': '业务',
           'en-US': 'Business',
         },
+        {
+          'zh-CN': '其它',
+          'en-US': 'Other',
+        },
       ],
       extraRouteMeta: [
         {
@@ -353,16 +357,16 @@ module.exports = {
           'en-US': 'Documents',
         },
         {
-          'zh-CN': '类型',
-          'en-US': 'Type',
+          'zh-CN': '工具类',
+          'en-US': 'Tools',
         },
         {
-          'zh-CN': '模板',
-          'en-US': 'Template',
+          'zh-CN': '管道',
+          'en-US': 'Pipes',
         },
       ],
       module: '@delon/util',
-      defaultRoute: 'getting-started',
+      defaultRoute: 'array',
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
@@ -378,8 +382,8 @@ module.exports = {
           hasSubDir: false,
         },
         {
-          src: ['./packages/util/src'],
-          // ignores: [ 'README.md' ],
+          src: ['./packages/util'],
+          ignores: ['docs'],
           template: {
             content: './src/templates/content.ts',
           },
@@ -465,8 +469,12 @@ module.exports = {
           'en-US': 'Documents',
         },
         {
-          'zh-CN': '组件',
-          'en-US': 'Components',
+          'zh-CN': 'G2',
+          'en-US': 'G2',
+        },
+        {
+          'zh-CN': 'ECharts',
+          'en-US': 'ECharts',
         },
       ],
       module: '@delon/chart',
@@ -515,7 +523,7 @@ module.exports = {
       },
       dir: [
         {
-          src: ['./packages/schematics/docs'],
+          src: ['./schematics/docs'],
           template: {
             content: './src/templates/content.ts',
           },
@@ -562,11 +570,28 @@ module.exports = {
           hasSubDir: false,
         },
         {
-          src: ['./packages/theme/layout'],
+          src: ['./packages/theme/layout-default'],
           template: {
             content: './src/templates/content.ts',
           },
-          hasSubDir: true,
+          reName: 'layout-default',
+          hasSubDir: false,
+        },
+        {
+          src: ['./packages/theme/layout-blank'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          reName: 'layout-blank',
+          hasSubDir: false,
+        },
+        {
+          src: ['./packages/theme/theme-btn'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          reName: 'theme-btn',
+          hasSubDir: false,
         },
         {
           src: ['./packages/theme/src/pipes'],

@@ -7,7 +7,7 @@ import { FullLocaleData, LocaleData } from './locale.types';
 
 @Injectable()
 export class DelonLocaleService {
-  private _locale: FullLocaleData;
+  private _locale: FullLocaleData = zhCN;
   private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
   constructor(@Inject(DELON_LOCALE) locale: FullLocaleData | null) {
@@ -35,12 +35,15 @@ export class DelonLocaleService {
   }
 }
 
-export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(exist: DelonLocaleService, locale: FullLocaleData): DelonLocaleService {
+export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(
+  exist: DelonLocaleService,
+  locale: FullLocaleData
+): DelonLocaleService {
   return exist || new DelonLocaleService(locale);
 }
 
 export const DELON_LOCALE_SERVICE_PROVIDER: Provider = {
   provide: DelonLocaleService,
   useFactory: DELON_LOCALE_SERVICE_PROVIDER_FACTORY,
-  deps: [[new Optional(), new SkipSelf(), DelonLocaleService], DELON_LOCALE],
+  deps: [[new Optional(), new SkipSelf(), DelonLocaleService], DELON_LOCALE]
 };

@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Data, Route, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  CanLoad,
+  Data,
+  Route,
+  Router,
+  RouterStateSnapshot
+} from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
@@ -24,7 +34,7 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
     data = {
       guard: null,
       guard_url: this.srv.guard_url,
-      ...data,
+      ...data
     };
     const guard: ACLCanType | Observable<ACLCanType> = data.guard;
     return (guard && guard instanceof Observable ? guard : of(guard != null ? (guard as ACLCanType) : null)).pipe(
@@ -32,7 +42,7 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
       tap(v => {
         if (v) return;
         this.router.navigateByUrl(data.guard_url);
-      }),
+      })
     );
   }
 

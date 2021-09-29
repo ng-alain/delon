@@ -19,8 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <form nz-form #f="ngForm" se-container gutter="32">
+  template: ` <form nz-form #f="ngForm" se-container gutter="32">
     <se label="App Key" [error]="{ required: '请填写', pattern: '只能包含a-z, 0-9之间' }">
       <input
         type="text"
@@ -51,7 +50,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   </form>`,
 })
 export class DemoComponent {
-  i: any = {};
+  i: { ak?: string; sk?: string } = {};
 
   constructor(public msg: NzMessageService) {}
 }

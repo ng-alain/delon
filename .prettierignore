@@ -2,6 +2,7 @@
 **/*.svg
 # **/*.html
 **/test.ts
+src/index.html
 
 .stylelintrc
 .prettierrc
@@ -14,8 +15,7 @@ dist/
 package.json
 src/app/routes/gen/
 src/templates/
-packages/schematics/**/files/
-packages/schematics/**/test-cases/
+schematics/**/files/
 packages/theme/system/mixins/_freak.less
 packages/theme/system/mixins/_functions.less
 theme-default.less

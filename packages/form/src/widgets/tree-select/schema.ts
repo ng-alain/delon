@@ -1,8 +1,11 @@
 import { TemplateRef } from '@angular/core';
-import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
 import { Observable } from 'rxjs';
+
+import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   /**
@@ -10,7 +13,7 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
    */
   asyncData?: () => Observable<SFSchemaEnumType[]>;
 
-  size?: SFDLSSize;
+  size?: NzSizeLDSType;
 
   placeholder?: string;
 
@@ -27,7 +30,7 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉菜单的 style 属性
    */
-  dropdownStyle?: object;
+  dropdownStyle?: NgStyleInterface;
 
   /**
    * 下拉菜单的 className 属性
@@ -98,6 +101,26 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
    * 自定义节点
    */
   treeTemplate?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
+
+  /**
+   * The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualItemSize?: number;
+
+  /**
+   *  The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualMaxBufferPx?: number;
+
+  /**
+   * The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api), Default: `28`
+   */
+  virtualMinBufferPx?: number;
+
+  /**
+   * The height of virtual scroll
+   */
+  virtualHeight?: string | null;
 
   /**
    * 如何在输入框显示所选的节点值的方法

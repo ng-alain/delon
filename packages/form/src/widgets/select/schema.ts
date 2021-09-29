@@ -1,7 +1,9 @@
 import { TemplateRef } from '@angular/core';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzOptionComponent } from 'ng-zorro-antd/select';
 import { Observable } from 'rxjs';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzOptionComponent, NzSelectModeType } from 'ng-zorro-antd/select';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
 import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
@@ -22,7 +24,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 与 [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) 相同
    */
-  compareWith?: (o1: any, o2: any) => boolean;
+  compareWith?: (o1: NzSafeAny, o2: NzSafeAny) => boolean;
 
   /**
    * 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效，默认：`true`
@@ -57,7 +59,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉菜单的 style 属性
    */
-  dropdownStyle?: {};
+  dropdownStyle?: { [key: string]: string } | null;
 
   /**
    * 是否使用服务端搜索，当为 `true` 时，将不再在前端对 `nz-option` 进行过滤，默认：`false`
@@ -72,7 +74,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 设置 `nz-select` 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签
    */
-  mode?: 'default' | 'multiple' | 'tags';
+  mode?: NzSelectModeType;
 
   /**
    * 当下拉列表为空时显示的内容
@@ -89,10 +91,21 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
    */
   onSearch?: (text: string) => Promise<SFSchemaEnum[]>;
 
+  /** 搜索抖动时间，默认：`300` */
+  searchDebounceTime?: number;
+
+  /** 搜索加载中文本 */
+  searchLoadingText?: string;
+
   /**
    * 在 `tags` 和 `multiple` 模式下自动分词的分隔符
    */
   tokenSeparators?: string[];
+
+  /**
+   * 是否显示箭头，默认：单选为 `true`，多选为 `false`
+   */
+  showArrow?: boolean;
 
   /**
    * 最多显示多少个 tag
@@ -107,27 +120,27 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 自定义的选择框后缀图标
    */
-  suffixIcon?: TemplateRef<any> | string;
+  suffixIcon?: TemplateRef<NzSafeAny> | string;
 
   /**
    * 自定义的多选框清除图标
    */
-  removeIcon?: TemplateRef<any>;
+  removeIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 自定义的多选框清空图标
    */
-  clearIcon?: TemplateRef<any>;
+  clearIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 自定义当前选中的条目图标
    */
-  menuItemSelectedIcon?: TemplateRef<any>;
+  menuItemSelectedIcon?: TemplateRef<NzSafeAny>;
 
   /**
    * 隐藏 tag 时显示的内容
    */
-  maxTagPlaceholder?: TemplateRef<{ $implicit: any[] }>;
+  maxTagPlaceholder?: TemplateRef<{ $implicit: NzSafeAny[] }>;
 
   /**
    * 下拉菜单中每个 Option 的高度，默认：`32`

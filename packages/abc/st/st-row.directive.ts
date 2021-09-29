@@ -5,15 +5,15 @@ export class STRowSource {
   private titles: { [key: string]: TemplateRef<void> } = {};
   private rows: { [key: string]: TemplateRef<void> } = {};
 
-  add(type: string, path: string, ref: TemplateRef<void>) {
+  add(type: string, path: string, ref: TemplateRef<void>): void {
     this[type === 'title' ? 'titles' : 'rows'][path] = ref;
   }
 
-  getTitle(path: string) {
+  getTitle(path: string): TemplateRef<void> {
     return this.titles[path];
   }
 
-  getRow(path: string) {
+  getRow(path: string): TemplateRef<void> {
     return this.rows[path];
   }
 }

@@ -2,8 +2,10 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
+
 import { SGContainerComponent } from './sg-container.component';
 import { SGComponent } from './sg.component';
 import { SGModule } from './sg.module';
@@ -19,11 +21,11 @@ describe('abc: grid', () => {
   const moduleAction = () => {
     TestBed.configureTestingModule({
       imports: [SGModule, NoopAnimationsModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   };
 
-  function genModule(template?: string) {
+  function genModule(template?: string): void {
     moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
@@ -52,7 +54,7 @@ describe('abc: grid', () => {
           fixture.detectChanges();
           expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
           expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
-          const itemCls = prefixCls + 'item';
+          const itemCls = `${prefixCls}item`;
           expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
         });
@@ -116,7 +118,7 @@ describe('abc: grid', () => {
     getEls(cls: string): DebugElement[] {
       return dl.queryAll(By.css(cls));
     }
-    expect(cls: string, count = 1): this {
+    expect(cls: string, count: number = 1): this {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }
@@ -128,7 +130,7 @@ describe('abc: grid', () => {
     <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
       <sg #viewComp [col]="col"></sg>
     </div>
-  `,
+  `
 })
 class TestComponent {
   @ViewChild('sgComp', { static: true })

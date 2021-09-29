@@ -1,6 +1,9 @@
+import { NzButtonType } from 'ng-zorro-antd/button';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { SFHorizontalLayoutSchema, SFRenderSchema } from './schema/ui';
 
-export type SFValue = any;
+export type SFValue = NzSafeAny;
 
 export type SFLayout = 'horizontal' | 'vertical' | 'inline';
 
@@ -52,13 +55,13 @@ export interface SFButton {
   /** 提交按钮文本，默认：`提交` */
   submit?: string;
   /** 提交按钮类型，默认：`primary` */
-  submit_type?: string;
+  submit_type?: NzButtonType;
   /** 提交按钮图标 */
   submit_icon?: SFButtonIcon;
   /** 重置按钮文本，`null `或 `undefined` 表示不需要该按钮，默认：`重置` */
   reset?: string;
   /** 重置按钮类型，默认：`default` */
-  reset_type?: string;
+  reset_type?: NzButtonType;
   /** 重置按钮图标 */
   reset_icon?: SFButtonIcon;
   /** 按钮样式，主要用于指定按钮 `grid`、`class` 属性 */
@@ -81,3 +84,17 @@ export interface SFButtonIcon {
 }
 
 export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {}
+
+export interface SFIcon {
+  type?: string;
+
+  theme?: 'fill' | 'outline' | 'twotone';
+
+  twotoneColor?: string;
+
+  rotate?: number;
+
+  spin?: boolean;
+
+  iconfont?: string;
+}

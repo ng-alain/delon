@@ -46,19 +46,7 @@ import { DelonFormModule } from '@delon/form';
 export class AppModule { }
 ```
 
-虽然默认 `@delon/form` 校验是 [ajv](http://epoberezkin.github.io/ajv/)，但这并不是唯一的选择，你可以覆盖 `SchemaValidatorFactory` 使用其他校验类库，所以 `ajv` 并没有强制依赖；其实从另一个点来看将这种第三方类库统一在 `scripts` 加载才是更合理的，因此你依然要自己安装 `ajv` 并在 `angular.json` 中导入它：
-
-```bash
-yarn add ajv @types/ajv
-```
-
-angular.json
-
-```json
-"scripts": [
-  "node_modules/ajv/dist/ajv.bundle.js"
-]
-```
+虽然默认 `@delon/form` 校验是 [ajv](https://ajv.js.org/)，但这并不是唯一的选择，你可以覆盖 `SchemaValidatorFactory` 使用其他校验类库。
 
 **全局配置**
 
@@ -66,7 +54,7 @@ angular.json
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | - |
+| `[ajv]` | [ajv](https://github.com/ajv-validator/ajv/blob/master/docs/api.md#options) 参数 | `Ajv.Options` | - |
 | `[ingoreKeywords]` | 是否忽略某些数据类型校验（[所有类型](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)） | `string[]` | `[ 'type', 'enum' ]` |
 | `[liveValidate]` | 是否实时校验 | `boolean` | `true` |
 | `[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null` |

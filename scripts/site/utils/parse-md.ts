@@ -1,8 +1,10 @@
 import * as fse from 'fs-extra';
-const MT = require('mark-twain');
+
 import { SiteConfig } from '../interfaces';
 import { toc } from '../plugins/toc';
 import { generateMd } from './generate-md';
+
+const MT = require('mark-twain');
 
 export function parseMd(file: string, siteConfig: SiteConfig) {
   let mt = null;

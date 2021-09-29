@@ -33,8 +33,19 @@
 .modal {
   &-header {
     /**
-      * 对话框顶部区域，用于对话框目标组件内使用
-      * The header of the modal for for use in modal target components
+      * The top area of the nz-modal, used when customizing modal component
+      *
+      * 模态框顶部，用于自定义模态框组件时自定义顶部时使用，一般完整用法：
+      * ```html
+      * <div class="modal-header">
+      *   <div class="modal-title">Title</div>
+      * </div>
+      * This is content
+      * <div class="modal-footer">
+      *   <button nz-button (click)="cancel()">Cancel</button>
+      *   <button nz-button nzType="primary" (click)="ok()">OK</button>
+      * </div>
+      * ```
       */
     display: flex;
     justify-content: space-between;
@@ -45,6 +56,16 @@
     border-radius: @border-radius-base @border-radius-base 0 0;
   }
   &-title {
+    /**
+      * The top area title of the nz-modal, for example:
+      *
+      * 模态框顶部标题，例如：
+      * ```html
+      * <div class="modal-header">
+      *   <div class="modal-title">Title</div>
+      * </div>
+      * ```
+      */
     margin: 0;
     color: @modal-heading-color;
     font-weight: 500;
@@ -66,8 +87,9 @@
 
   &-footer {
     /**
-      * 对话框底部区域，用于对话框目标组件内使用
-      * The footer of the modal for for use in modal target components
+      * The footer area of the nz-modal
+      *
+      * 模态框底部区域
       */
     margin: @margin-lg -@margin-lg -@margin-lg -@margin-lg;
     padding: @modal-footer-padding-vertical @modal-footer-padding-horizontal;
@@ -77,8 +99,9 @@
   }
   &-include-tabs {
     /**
-      * 对话框内容是否包裹 `nz-tabs`，清除带来的多余边距
       * Whether the content of the modal is wrapped with `nz-tabs`, to clear the extra margin
+      *
+      * 模态框内容是否包裹 `nz-tabs`，清除带来的多余边距
       */
     nz-tabset {
       margin-top: -16px;
@@ -86,8 +109,9 @@
   }
   &-body-nopadding {
     /**
-      * 清除对话框内容内边距
       * Clear inner margin of modal content
+      *
+      * 模态框-清除对话框内容内边距
       */
     .@{ant-prefix}-modal-body {
       padding: 0 !important;

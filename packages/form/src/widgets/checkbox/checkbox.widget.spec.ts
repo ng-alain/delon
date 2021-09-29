@@ -1,6 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
 import { CheckboxWidget } from './checkbox.widget';
@@ -25,8 +28,8 @@ describe('form: widget: checkbox', () => {
   it('#setValue', fakeAsync(() => {
     page.newSchema({
       properties: {
-        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] },
-      },
+        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
+      }
     });
     page.setValue('/a', 'item1').dc(1);
     expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item1');
@@ -39,8 +42,8 @@ describe('form: widget: checkbox', () => {
       .newSchema({
         properties: {
           a: { type: 'string', ui: { widget } },
-          b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } },
-        },
+          b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } }
+        }
       })
       .checkCount(chekcWrapCls, 1)
       .click(chekcWrapCls)
@@ -51,7 +54,7 @@ describe('form: widget: checkbox', () => {
     const title = 'test';
     page
       .newSchema({
-        properties: { a: { type: 'string', title, ui: { widget } } },
+        properties: { a: { type: 'string', title, ui: { widget } } }
       })
       .checkElText(labelCls, '')
       .checkElText(chekcWrapCls, title);
@@ -62,8 +65,8 @@ describe('form: widget: checkbox', () => {
     page
       .newSchema({
         properties: {
-          a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] },
-        },
+          a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] }
+        }
       })
       .time(1000)
       .checkElText(labelCls, title)
@@ -82,11 +85,11 @@ describe('form: widget: checkbox', () => {
             ui: {
               widget: 'checkbox',
               span: 8, // 指定每一项 8 个单元的布局
-              checkAll: true,
+              checkAll: true
             },
-            default: ['Apple'],
-          },
-        },
+            default: ['Apple']
+          }
+        }
       });
       const comp = page.getWidget<CheckboxWidget>('sf-checkbox');
       const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox');
@@ -105,11 +108,11 @@ describe('form: widget: checkbox', () => {
               enum: ['Apple', 'Pear', 'Orange'],
               ui: {
                 widget: 'checkbox',
-                checkAll: true,
+                checkAll: true
               },
-              default: ['Apple'],
-            },
-          },
+              default: ['Apple']
+            }
+          }
         })
         .checkCount('.sf__checkbox-all .ant-checkbox-indeterminate', 1);
     });
@@ -121,12 +124,12 @@ describe('form: widget: checkbox', () => {
         a: {
           type: 'string',
           ui: { widget, span: 8, change: jasmine.createSpy() },
-          enum: ['item1', 'item2'],
-        },
-      },
+          enum: ['item1', 'item2']
+        }
+      }
     };
     page.newSchema(s).time(1000).checkCount('nz-checkbox-wrapper', 1).click('.ant-col-8 label').asyncEnd();
     expect(page.getValue('a').length).toBe(1);
-    expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
+    expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
   }));
 });

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+
+import { cleanCdkOverlayHtml } from '@delon/testing';
+
 import { LoadingModule } from './loading.module';
 import { LoadingService } from './loading.service';
 
@@ -10,7 +13,7 @@ describe('abc: loading', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LoadingModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
     srv = TestBed.inject(LoadingService);
     fixture = TestBed.createComponent(TestComponent);
@@ -18,13 +21,10 @@ describe('abc: loading', () => {
 
   afterEach(() => {
     srv.ngOnDestroy();
-    const el = document.querySelector('.cdk-overlay-container') as HTMLElement;
-    if (el != null) {
-      el.innerHTML = '';
-    }
+    cleanCdkOverlayHtml();
   });
 
-  function check(cls: string, count: number) {
+  function check(cls: string, count: number): void {
     tick();
     fixture.detectChanges();
     expect(srv.instance != null).toBe(true);
@@ -45,7 +45,7 @@ describe('abc: loading', () => {
     tick(1000);
   }));
 
-  describe('#dealy', () => {
+  describe('#delay', () => {
     it(`should be can appear when close without delay`, fakeAsync(() => {
       srv.open({ delay: 1000 });
       tick(500);

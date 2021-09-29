@@ -71,7 +71,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DemoComponent {
   validateForm: FormGroup;
-  i: any = {};
+  i: { ak?: string; sk?: string } = {};
   ngModelErrors: SEErrorRefresh[] = [];
   reactiveErrors: SEErrorRefresh[] = [];
 

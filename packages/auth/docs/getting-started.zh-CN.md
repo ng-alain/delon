@@ -77,7 +77,9 @@ export class AppModule { }
 | `[token_send_place]` | `header,body,url` | `header` | 发送token参数位置 | ✅ |
 | `[login_url]` | `string` | `/login` | 登录页路由地址 | ✅ |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略 URL 地址清单 | ✅ |
-| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录标识号，若请求参数中带有该KEY表示忽略TOKEN | ✅ |
+| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录标识号，若请求参数中带有该KEY表示忽略TOKEN校验与添加动作，同时真实请求时会移除该数据 | ✅ |
 | `[executeOtherInterceptors]` | `boolean` | `true` | 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法 | ✅ |
+| `[refreshTime]` | `number` | `3000` | 刷新时长（单位：ms） | ✅ |
+| `[refreshOffset]` | `number` | `6000` | 偏移值（单位：ms），建议根据 `refreshTime` 倍数来设置 | ✅ |
 
 > 可以通过[全局配置](/docs/global-config)覆盖它们。

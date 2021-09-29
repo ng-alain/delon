@@ -6,6 +6,9 @@ yarn-error.log
 /coverage
 /coverage-report
 /junit
+/archive-docs
+
+.eslintcache
 
 .tmp
 .lib
@@ -19,10 +22,11 @@ report.*.json
 
 src/app/routes/gen
 src/assets/color.less
-src/assets/compact.css
-src/assets/dark.css
+src/assets/style.compact.css
+src/assets/style.dark.css
 /scaffold
 /_scaffold
 /ng-alain
 /integration
 scripts/build/var.less
+/schematics/plugin/files/rtl

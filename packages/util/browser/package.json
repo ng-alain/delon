@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "browser",
+      "entryFile": "index.ts"
+    }
+  }
+}

@@ -32,16 +32,28 @@ alainProvides.push({
 
 **添加组件**
 
-> 位置 `src/app/layout/default/default.component.html`
+> 位置 `src/app/layout/basic/basic.component.ts`
 
 ```html
-<section class="alain-default__content">
-  <reuse-tab #reuseTab></reuse-tab>
-  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
-</section>
+<reuse-tab #reuseTab></reuse-tab>
+<router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
+
+> 位置 `src/app/layout/layout.module.ts`
+```ts
+import { ReuseTabModule } from '@delon/abc/reuse-tab'; // 新增 import
+
+@NgModule({
+  imports: [
+  // ...
+  ReuseTabModule, // 导入模块
+  ],
+  // ...
+})
+export class LayoutModule {}
+```
 
 ## 匹配模式
 
@@ -114,21 +126,30 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 路由复用不会触发现Angular组件生命周期钩子（例如：`ngOnInit` 等），但是往往需要在复用过程中刷新数据，因此提供了两种新生命周期钩子用于临时解决这类问题。
 
-**_onReuseInit()**
+**OnReuseInit** 接口
 
-当目前路由在复用过程中时触发。
+- `_onReuseInit(type?: ReuseHookOnReuseInitType): void;`
 
-**_onReuseDestroy()**
+当目前路由在复用过程中时触发，`type` 值分别为：
+
+- `init` 当路由复用时
+- `refresh` 当触发刷新动作时
+
+**OnReuseDestroy** 接口
+
+- `_onReuseDestroy(): void;`
 
 当目前路由允许复用且进入新路由时触发。
 
 > 以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换，一个简单的示例：
 
 ```ts
+import { OnReuseDestroy, OnReuseInit, ReuseHookOnReuseInitType } from '@delon/abc/reuse-tab';
+
 @Component()
-export class DemoComponent {
-  _onReuseInit() {
-    console.log('_onReuseInit');
+export class DemoComponent implements OnReuseInit, OnReuseDestroy {
+  _onReuseInit(type: ReuseHookOnReuseInitType) {
+    console.log('_onReuseInit', type);
   }
   _onReuseDestroy() {
     console.log('_onReuseDestroy');
@@ -202,6 +223,9 @@ export class DemoComponent {
 | `[tabBarGutter]` | tabs 之间的间隙 | `number` | - |
 | `[tabType]` | tabs 页签的基本样式 | `line, card` | `line` |
 | `[tabMaxWidth]` | tabs 页签每一项最大宽度，单位：`px` | `number` | - |
+| `[routeParamMatchMode]` | 包含路由参数时匹配模式，例如：`/view/:id`<br> - `strict` 严格模式 `/view/1`、`/view/2` 不同页<br> - `loose` 宽松模式 `/view/1`、`/view/2` 相同页且只呈现一个标签 | `strict,loose` | `strict` |
+| `[disabled]` | 是否禁用 | `boolean` | `false` |
+| `[titleRender]` | 自定义标题渲染 | `TemplateRef<{ $implicit: ReuseItem }>` | - |
 | `(close)` | 关闭回调 | `EventEmitter` | - |
 | `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | - |
 

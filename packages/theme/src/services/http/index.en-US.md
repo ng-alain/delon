@@ -57,9 +57,9 @@ export class DelonModule {
 
 ### API
 
-| Property            | Description     | Type               | Default     |
-| ------------------- | --------------- | ------------------ | ----------- |
-| `nullValueHandling` | Null processing | `include,ignore`   | `include`   |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `nullValueHandling` | Null processing | `include,ignore` | `include` |
 | `dateValueHandling` | Time processing | `timestamp,ignore` | `timestamp` |
 
 ## Decorators
@@ -136,13 +136,13 @@ class RestService extends BaseApi {
 
 #### HttpOptions
 
-| Property          | Description                         | Type                         | Default |
-| ----------------- | ----------------------------------- | ---------------------------- | ------- |
-| `acl`             | ACL config, depends on `@delon/acl` | `any`                        | -       |
-| `observe`         | Specify response content            | `body,events,response`       | -       |
-| `responseType`    | Specify content format              | `arraybuffer,blob,json,text` | -       |
-| `reportProgress`  | Whether monitor progress events     | `boolean`                    | -       |
-| `withCredentials` | Set withCredentials                 | `boolean`                    | -       |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `acl` | ACL config, depends on `@delon/acl` | `any` | - |
+| `observe` | Specify response content | `body,events,response` | - |
+| `responseType` | Specify content format | `arraybuffer,blob,json,text` | - |
+| `reportProgress` | Whether monitor progress events | `boolean` | - |
+| `withCredentials` | Set withCredentials | `boolean` | - |
 
 ### Parameter decorators
 

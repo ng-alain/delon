@@ -2,6 +2,7 @@ import { Component, NgModule, NgModuleFactoryLoader } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
+
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { JWTGuard } from './jwt.guard';
@@ -18,30 +19,30 @@ describe('auth: JWTGuard', () => {
           {
             path: 'home',
             component: MockComponent,
-            canActivate: [JWTGuard],
+            canActivate: [JWTGuard]
           },
           {
             path: 'my',
             canActivateChild: [JWTGuard],
-            children: [{ path: 'profile', component: MockComponent }],
+            children: [{ path: 'profile', component: MockComponent }]
           },
           {
             path: 'lazy',
             canLoad: [JWTGuard],
-            loadChildren: 'expected',
+            loadChildren: 'expected'
           },
           {
             path: 'login',
-            component: MockComponent,
-          },
+            component: MockComponent
+          }
         ]),
-        DelonAuthModule,
-      ],
+        DelonAuthModule
+      ]
     });
     srv = TestBed.inject(DA_SERVICE_TOKEN);
     router = TestBed.inject<Router>(Router);
     srv.set({
-      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`,
+      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`
     });
   });
 

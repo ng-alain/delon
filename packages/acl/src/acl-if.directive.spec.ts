@@ -1,6 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
 import { DelonACLModule } from './acl.module';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
@@ -16,7 +17,7 @@ describe('acl-if: directive', () => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
       imports: [DelonACLModule.forRoot()],
-      providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }],
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }]
     });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -138,7 +139,7 @@ describe('acl-if: directive', () => {
     </ng-template>
     <div *aclIf="role; then null; else nullThenElseBlock"></div>
     <ng-template #nullThenElseBlock><span class="nullThenElseBlock"></span></ng-template>
-  `,
+  `
 })
 class TestComponent {
   role: ACLCanType = 'admin';

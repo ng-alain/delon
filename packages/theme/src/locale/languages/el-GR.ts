@@ -6,29 +6,29 @@ export default {
     403: `Λυπούμαστε, δεν έχετε πρόσβαση σε αυτήν τη σελίδα`,
     404: `Λυπούμαστε, η σελίδα αυτή δεν βρέθηκε`,
     500: `Λυπούμαστε, σφάλμα διακομιστή`,
-    backToHome: 'Επιστροφή στην αρχική σελίδα',
+    backToHome: 'Επιστροφή στην αρχική σελίδα'
   },
   noticeIcon: {
     emptyText: 'Δεν υπάρχουν δεδομένα',
-    clearText: 'Καθαρισμός',
+    clearText: 'Καθαρισμός'
   },
   reuseTab: {
     close: 'Κλείσιμο καρτέλας',
     closeOther: 'Κλείσιμο των άλλων καρτέλων',
     closeRight: 'Κλείσιμο των καρτελών δεξιά',
-    refresh: 'Ανανέωση',
+    refresh: 'Ανανέωση'
   },
   tagSelect: {
     expand: 'Επέκταση',
-    collapse: 'Σύμπτυξη',
+    collapse: 'Σύμπτυξη'
   },
   miniProgress: {
-    target: 'Στόχος: ',
+    target: 'Στόχος: '
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} από {{total}}',
     filterConfirm: 'ΟΚ',
-    filterReset: 'Επαναφορά',
+    filterReset: 'Επαναφορά'
   },
   sf: {
     submit: 'Υποβολή',
@@ -72,13 +72,13 @@ export default {
       contains: `Πρέπει να περιέχει κάποιο έγκυρο στοιχείο`,
       formatExclusiveMaximum: `formatExclusiveMaximum πρέπει να είναι boolean`,
       formatExclusiveMinimum: `formatExclusiveMinimum πρέπει να είναι boolean`,
-      if: `Πρέπει να ταιριάζει στην δομή "{failingKeyword}"`,
-    },
+      if: `Πρέπει να ταιριάζει στην δομή "{failingKeyword}"`
+    }
   },
   onboarding: {
-    skip: `Παράλειψη`,
-    prev: `Προηγούμενο`,
+    skip: `Παραλείπω`,
+    prev: `Προηγ`,
     next: `Επόμενο`,
-    done: `Ολοκληρώθηκε`,
-  },
+    done: `Ολοκληρώθηκε`
+  }
 } as FullLocaleData;

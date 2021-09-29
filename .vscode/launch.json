@@ -19,7 +19,7 @@
       "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
       "protocol": "inspector",
       "internalConsoleOptions": "openOnSessionStart",
-      "args": ["${workspaceFolder}/scripts/site/generate.ts", "fullscreen"],
+      "args": ["${workspaceFolder}/scripts/site/generate.ts", "getting-started"],
       "env": {
         "TS_NODE_PROJECT": "${workspaceFolder}/scripts/site/tsconfig.json",
         "TS_NODE_TRANSPILE_ONLY": "true"
@@ -35,9 +35,9 @@
       "sourceMaps": true,
       "internalConsoleOptions": "openOnSessionStart",
       "env": {
-        "TS_NODE_PROJECT": "${workspaceFolder}/packages/schematics/tsconfig.json"
+        "TS_NODE_PROJECT": "${workspaceFolder}/schematics/tsconfig.json"
       },
-      "args": ["${workspaceFolder}/packages/schematics/test.ts"]
+      "args": ["${workspaceFolder}/schematics/test.ts"]
     }
   ]
 }

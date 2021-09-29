@@ -2,11 +2,11 @@ import { SFValue } from '../interface';
 import { AtomicProperty } from './atomic.property';
 
 export class NumberProperty extends AtomicProperty {
-  fallbackValue() {
+  fallbackValue(): null {
     return null;
   }
 
-  setValue(value: SFValue, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean): void {
     if (typeof value === 'string') {
       if (value.length) {
         value = value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value, 10);

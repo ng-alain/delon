@@ -10,15 +10,15 @@ type: Widgets
 
 ### schema 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[enum]` | 数据源 | `SFSchemaEnumType[]` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[enum]` | 数据源 | `SFSchemaEnumType[]` | - |
 
 ### ui 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
-`[mode]` | 设定标签工作的模式 | `'closeable'｜'default'｜'checkable'` | `'checkable'`
-`[onClose]` | 关闭时的回调，在 `nzMode="closable"` 时可用 | `(e:MouseEvent) => void` | -
-`[checkedChange]` | 设置标签的选中状态的回调 | `(status: boolean) => void` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | - |
+| `[mode]` | 设定标签工作的模式 | `'closeable'｜'default'｜'checkable'` | `'checkable'` |
+| `[onClose]` | 关闭时的回调，在 `nzMode="closable"` 时可用 | `(e:MouseEvent) => void` | - |
+| `[checkedChange]` | 设置标签的选中状态的回调 | `(status: boolean) => void` | - |

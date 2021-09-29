@@ -1,4 +1,6 @@
-export default (componentName: string) => `import { NgModule, APP_INITIALIZER, VERSION as VERSION_NG } from '@angular/core';
+export default (
+  componentName: string
+) => `import { NgModule, APP_INITIALIZER, VERSION as VERSION_NG } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +24,6 @@ import { DelonFormModule } from '@delon/form';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
-import { DelonUtilModule } from '@delon/util';
 import { StartupService, StartupServiceFactory } from './startup.service';
 import { GlobalConfigModule } from './global-config.module';
 
@@ -49,7 +50,6 @@ imports: [
     DemoDelonChartModule,
     DelonACLModule.forRoot(),
     DelonCacheModule,
-    DelonUtilModule,
     DelonAuthModule,
     DelonFormModule.forRoot(),
     GlobalConfigModule.forRoot(),
@@ -70,9 +70,12 @@ bootstrap:    [ ${componentName} ]
 export class AppModule {
   constructor() {
     setTimeout(() => {
-      document.querySelector('#VERSION').innerHTML = \`
-      VERSIONS: angular(\${VERSION_NG.full}), ng-zorro-antd(\${VERSION_ZORRO.full}), @delon(\${VERSION_ALAIN.full})
-      \`;
+      const el = document.querySelector('#VERSION');
+      if (el != null) {
+        el.innerHTML = \`
+        VERSIONS: angular(\${VERSION_NG.full}), ng-zorro-antd(\${VERSION_ZORRO.full}), @delon(\${VERSION_ALAIN.full})
+        \`;
+      }
     }, 1000);
   }
 }

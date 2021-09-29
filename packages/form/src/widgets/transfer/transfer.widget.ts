@@ -1,6 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { Observable, of } from 'rxjs';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import {
+  TransferCanMove,
+  TransferChange,
+  TransferItem,
+  TransferSearchChange,
+  TransferSelectChange
+} from 'ng-zorro-antd/transfer';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -11,11 +20,11 @@ import { SFTransferWidgetSchema } from './schema';
   selector: 'sf-transfer',
   templateUrl: './transfer.widget.html',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   list: SFSchemaEnum[] = [];
-  i: any;
+  i!: { titles: string[]; operations: string[]; itemUnit: string; itemsUnit: string };
   private _data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {
@@ -24,18 +33,18 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
       titles: titles || ['', ''],
       operations: operations || ['', ''],
       itemUnit: itemUnit || '项',
-      itemsUnit: itemsUnit || '项',
+      itemsUnit: itemsUnit || '项'
     };
   }
 
-  reset(value: SFValue) {
+  reset(value: SFValue): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       let formData = value;
       if (!Array.isArray(formData)) {
         formData = [formData];
       }
       list.forEach((item: SFSchemaEnum) => {
-        if (~(formData as any[]).indexOf(item.value)) {
+        if (~(formData as NzSafeAny[]).indexOf(item.value)) {
           item.direction = 'right';
         }
       });
@@ -46,10 +55,10 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     });
   }
 
-  private notify() {
+  private notify(): void {
     this.formProperty.setValue(
       this._data.map(i => i.value),
-      false,
+      false
     );
   }
 
@@ -57,22 +66,22 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
     return this.ui.canMove ? this.ui.canMove(arg) : of(arg.list);
   };
 
-  _change(options: TransferChange) {
+  _change(options: TransferChange): void {
     if (options.to === 'right') {
       this._data = this._data.concat(...options.list);
     } else {
-      this._data = this._data.filter((w: any) => options.list.indexOf(w) === -1);
+      this._data = this._data.filter((w: SFSchemaEnum) => options.list.indexOf(w as TransferItem) === -1);
     }
     if (this.ui.change) this.ui.change(options);
     this.notify();
   }
 
-  _searchChange(options: TransferSearchChange) {
+  _searchChange(options: TransferSearchChange): void {
     if (this.ui.searchChange) this.ui.searchChange(options);
     this.detectChanges();
   }
 
-  _selectChange(options: TransferSelectChange) {
+  _selectChange(options: TransferSelectChange): void {
     if (this.ui.selectChange) this.ui.selectChange(options);
     this.detectChanges();
   }

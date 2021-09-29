@@ -23,7 +23,7 @@ NG-ALAIN 本身是一个 Angular CLI 项目，因此也可以参照 [Build](http
 ```json
 {
   "scripts": {
-    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod"
+    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build"
   }
 }
 ```
@@ -34,33 +34,19 @@ NG-ALAIN 本身是一个 Angular CLI 项目，因此也可以参照 [Build](http
 
 ### 分析构建文件体积
 
-**方法 1**
-
 如果构建文件很大，可以通过 `analyze` 命令构建并分析依赖模块的体积分布，从而优化你的代码。
 
 ```bash
 npm run analyze
 ```
 
-受限于 [#10589](https://github.com/angular/angular-cli/issues/10589)，需要安装全局 `webpack-bundle-analyzer` 包：
+查看分析页：
 
 ```bash
-npm i -g webpack-bundle-analyzer@latest
-cd dist/<project name>
-webpack-bundle-analyzer stats.json
+npm run analyze:view
 ```
 
-![](./assets/screenshot/analyzer.png)
-
-**方法 2**
-
-使用以下命令打包：
-
-```bash
-ng build --prod --sourcemaps
-```
-
-然后通过 [source-map-explorer](https://github.com/danvk/source-map-explorer/blob/master/README.md) 帮你在生产环境构建之后探查 JavaScript 包，来分析每个模块所占的体积大小。
+![](./assets/screenshot/bundle-size.png)
 
 ## 发布
 
@@ -71,7 +57,7 @@ ng build --prod --sourcemaps
 如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `-d` 参数指定一个 cdn 地址。
 
 ```bash
-ng build --prod -d=//cdn.ng-alain.com/
+ng build -d=//cdn.ng-alain.com/
 ```
 
 这样生成的 `index.html` 内 `*.js`、`*.css` 会自动加上 `//cdn.ng-alain.com/*.js`。

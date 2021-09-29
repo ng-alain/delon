@@ -1,13 +1,20 @@
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createTestContext } from '@delon/testing';
-import { AlainThemeModule } from '@delon/theme';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of, throwError } from 'rxjs';
+
+import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
+import { AlainThemeModule, _HttpClient } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ModalOptions } from 'ng-zorro-antd/modal';
+
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
 
-const SRC = 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
+const SRC =
+  'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -16,8 +23,8 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ImageModule, AlainThemeModule, HttpClientTestingModule],
-      declarations: [TestComponent],
+      imports: [ImageModule, AlainThemeModule, HttpClientTestingModule, NoopAnimationsModule],
+      declarations: [TestComponent]
     });
   });
 
@@ -27,7 +34,6 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestComponent));
-    fixture.detectChanges();
   });
 
   it('should be support qlogo auto size', () => {
@@ -70,19 +76,18 @@ describe('abc: _src', () => {
   });
 
   describe('#useHttp', () => {
-    let httpBed: HttpTestingController;
+    let _http: _HttpClient;
     const BASE64 = 'test-base64-image';
     const mockFileReader = {
       result: '',
       readAsDataURL: (_blob: Blob) => {},
       onloadend: () => {},
-      onerror: () => {},
+      onerror: () => {}
     };
     beforeEach(() => {
-      spyOn(window, 'FileReader').and.returnValue(mockFileReader as any);
-      httpBed = TestBed.inject(HttpTestingController);
+      spyOn(window, 'FileReader').and.returnValue(mockFileReader as NzSafeAny);
+      _http = TestBed.inject(_HttpClient);
       context.useHttp = true;
-      fixture.detectChanges();
     });
 
     it('should working', () => {
@@ -90,8 +95,8 @@ describe('abc: _src', () => {
         mockFileReader.result = BASE64;
         mockFileReader.onloadend();
       });
-      const ret = httpBed.expectOne(req => req.url.startsWith('./assets')) as TestRequest;
-      ret.flush(new Blob([BASE64]));
+      spyOn(_http, 'get').and.returnValue(of(new Blob([BASE64])));
+      fixture.detectChanges();
       expect(getEl().src).toContain(BASE64);
     });
 
@@ -100,8 +105,8 @@ describe('abc: _src', () => {
         mockFileReader.result = BASE64;
         mockFileReader.onloadend();
       });
-      const ret = httpBed.expectOne(req => req.url.startsWith('./assets')) as TestRequest;
-      ret.error({} as any);
+      spyOn(_http, 'get').and.returnValue(throwError({}));
+      fixture.detectChanges();
       expect(getEl().src).toContain('error.svg');
     });
 
@@ -110,15 +115,46 @@ describe('abc: _src', () => {
         mockFileReader.result = BASE64;
         mockFileReader.onerror();
       });
-      const ret = httpBed.expectOne(req => req.url.startsWith('./assets')) as TestRequest;
-      ret.flush(new Blob([BASE64]));
+      spyOn(_http, 'get').and.returnValue(of(new Blob([BASE64])));
+      fixture.detectChanges();
       expect(getEl().src).toContain('error.svg');
     });
+  });
+
+  describe('#preview', () => {
+    afterEach(cleanCdkOverlayHtml);
+    it('should be working', fakeAsync(() => {
+      context.previewSrc = `${SRC}`;
+      fixture.detectChanges();
+      getEl().click();
+      tick(1000);
+      fixture.detectChanges();
+      const el = document.querySelector('.img-fluid') as HTMLImageElement;
+      expect(el != null).toBe(true);
+      expect(el.src.endsWith(SRC)).toBe(true);
+    }));
+    it('should be ingore click when previewSrc is null', fakeAsync(() => {
+      context.previewSrc = null;
+      fixture.detectChanges();
+      getEl().click();
+      tick(1000);
+      fixture.detectChanges();
+      const el = document.querySelector('.img-fluid') as HTMLImageElement;
+      expect(el != null).toBe(false);
+    }));
   });
 });
 
 @Component({
-  template: ` <img [_src]="src" #comp="_src" [size]="size" [error]="error" [useHttp]="useHttp" />`,
+  template: ` <img
+    [_src]="src"
+    #comp="_src"
+    [size]="size"
+    [error]="error"
+    [useHttp]="useHttp"
+    [previewSrc]="previewSrc"
+    [previewModalOptions]="previewModalOptions"
+  />`
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: ImageDirective;
@@ -126,4 +162,6 @@ class TestComponent {
   size = 64;
   error = 'error.svg';
   useHttp = false;
+  previewSrc: string | null;
+  previewModalOptions: ModalOptions;
 }
