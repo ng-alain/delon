@@ -31,7 +31,7 @@ module: import { XlsxModule } from '@delon/abc/xlsx';
 |----|----|----|-----|
 | `[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | - |
 | `[filename]` | Excel文件名 | `string` | `export.xlsx` |
-| `[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | - |
+| `[opts]` | Excel写入选项，见 [WritingOptions](https://github.com/SheetJS/sheetjs/blob/master/docbits/81_writeopts.md) | `WritingOptions` | - |
 | `[callback]` | 保存前触发 | `(wb: WorkBook) => void` | - |
 
 ### [xlsx]
