@@ -42,8 +42,8 @@ publishToNext() {
 }
 
 syncTaobao() {
-  (cd ${ROOT}/@delon; for p in `ls .`; do curl -X PUT https://npm.taobao.org/sync/@delon/$p?sync_upstream=true; done)
-  curl -X PUT https://npm.taobao.org/sync/ng-alain?sync_upstream=true
+  (cd ${ROOT}/@delon; for p in `ls .`; do curl -X PUT https://npmmirror.com/sync/@delon/$p?sync_upstream=true; done)
+  curl -X PUT https://npmmirror.com/sync/ng-alain?sync_upstream=true
 }
 
 clone
