@@ -7,6 +7,7 @@ import { NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { ChartEChartsOn } from '.';
 import { ChartEChartsComponent } from './echarts.component';
 import { ChartEChartsModule } from './echarts.module';
 import { ChartEChartsEvent, ChartEChartsOption } from './echarts.types';
@@ -18,7 +19,9 @@ class MockLazyService {
       init: () => {
         return {
           setOption: jasmine.createSpy('setOption'),
-          dispose: jasmine.createSpy('dispose')
+          dispose: jasmine.createSpy('dispose'),
+          on: jasmine.createSpy('on'),
+          off: jasmine.createSpy('off')
         };
       }
     };
@@ -92,6 +95,7 @@ describe('chart: chart-echarts', () => {
       [option]="option"
       [theme]="theme"
       [initOpt]="initOpt"
+      [on]="on"
       (events)="handleEvents($event)"
     ></chart-echarts>
   `
@@ -103,5 +107,16 @@ class TestComponent {
   theme?: string | Record<string, unknown> | null = null;
   option: ChartEChartsOption = {};
   initOpt: NzSafeAny;
+  on: ChartEChartsOn[] = [
+    {
+      eventName: 'click',
+      handler: console.log
+    },
+    {
+      eventName: 'click',
+      query: 'series',
+      handler: console.log
+    }
+  ];
   handleEvents(_: ChartEChartsEvent): void {}
 }
