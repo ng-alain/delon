@@ -466,6 +466,19 @@ class TestComponent {
 
 | Property | Description | Default
 |----|----|----|
+| `@nz-table-img-radius` | Radius size for the image in td | `4px` |
+| `@nz-table-img-margin-right` | Margin right for the image in td | `4px` |
+| `@nz-table-img-max-height` | Max height for the image in td | `32px` |
+| `@nz-table-img-max-width` | Max width for the image in td | `32px` |
+| `@nz-table-even-background` | Even background for the row | `none` |
+| `@nz-table-rep-max-width` | Trigger when the viewable area is less than | `` |
+| `@nz-table-rep-min-width` | Trigger when the visible area is greater than | `` |
+| `@nz-table-rep-header-background` | Header background in responsive | `@border-color-split` |
+| `@nz-table-rep-even-background` | Event background in responsive | `#f9f9f9` |
+| `@nz-table-rep-column-name-color` | Name color in responsive | `rgba(0, 0, 0, 0.5)` |
+| `@nz-table-rep-column-name-text-align` | Name text align in responsive | `right` |
+| `@nz-table-rep-column-name-width` | Name column width in responsive | `100px` |
+| `@nz-table-rep-column-name-padding-right` | Right padding of title and content in responsive | `8px` |
 | `@st-btn-disabled-color` | Text color of the button | `rgba(0, 0, 0, 0.25)` |
 | `@st-title-optional-color` | Optional color of title | `rgba(0, 0, 0, 0.35)` |
 | `@st-resizable-handle-width` | Width of the rasizable handle | `1px` |
