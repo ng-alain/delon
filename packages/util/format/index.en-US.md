@@ -52,8 +52,30 @@ format('this is ${user.name}', { user: { name: 'asdf' } }, true)
 
 Format mask.
 
+| Character | Description |
+| --- | --- |
+| `0` | Any numbers, if the character at that position does not match, the default is `0` to fill |
+| `9` | Any numbers |
+| `#` | Any letter |
+| `U` | Convert to uppercase |
+| `L` | Convert to lowercase |
+| `*` | Convert to `*` character |
+
 ```ts
 formatMask('123', '(###)') => (123)
+formatMask('15900000000', '999****9999') => 159****0000
+formatMask('aBc', 'UUU') => ABC
+formatMask('ABc', 'LLL') => abc
+```
+
+Or custom Token:
+
+```ts
+const option: FormatMaskOption = {
+  mask: 'CC999',
+  tokens: { C: { pattern: /.*/, transform: char => (char === '你' ? 'N' : 'H') } }
+}
+formatMask('你好123', option) => NH123
 ```
 
 ## REGEX

@@ -1,6 +1,6 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { format, formatMask } from './string';
+import { format, formatMask, FormatMaskOption } from './string';
 
 describe('util: string', () => {
   describe('#format', () => {
@@ -32,16 +32,30 @@ describe('util: string', () => {
   });
 
   describe('#formatMask', () => {
-    const data: Array<{ value: string; mask: string; result: string }> = [
+    const data: Array<{ value: string; mask: string | FormatMaskOption; result: string }> = [
       { value: '123', mask: '(###)', result: '(123)' },
       { value: '15900000000', mask: '+86 ###########', result: '+86 15900000000' },
-      { value: '123', mask: '#-#-#', result: '1-2-3' }
+      { value: '123', mask: '#-#-#', result: '1-2-3' },
+      { value: '15900000000', mask: '999****9999', result: '159****0000' },
+      { value: 'aBc', mask: 'UUU', result: 'ABC' },
+      { value: 'ABc', mask: 'LLL', result: 'abc' },
+      { value: '15900000000', mask: '+86 999-9999-9999', result: '+86 159-0000-0000' },
+      { value: '1', mask: '900', result: '100' }
     ];
     for (const item of data) {
       it(`should be return ${item.result} when value is '${item.value}' and mask is '${item.mask}'`, () => {
         expect(formatMask(item.value, item.mask)).toBe(item.result);
       });
     }
+
+    it('should be custom token', () => {
+      expect(
+        formatMask('你好123', {
+          mask: 'CC999',
+          tokens: { C: { pattern: /.*/, transform: char => (char === '你' ? 'N' : 'H') } }
+        })
+      ).toBe('NH123');
+    });
 
     it('should be return empty when is invalid string', () => {
       expect(formatMask(null as NzSafeAny, '#')).toBe('');
