@@ -1,0 +1,73 @@
+<%
+const { utils, route, config } = it;
+const { requestBodyInfo, responseBodyInfo, specificArgNameResolver } = route;
+const { _, getInlineParseContent, getParseContent, parseSchema, getComponentByRef, require } = utils;
+const { parameters, path, method, payload, query, formData, security, requestParams } = route.request;
+const { type, errorType, contentTypes } = route.response;
+const { HTTP_CLIENT, RESERVED_REQ_PARAMS_ARG_NAMES } = config.constants;
+const routeDocs = includeFile("route-docs", { config, route, utils });
+const queryName = (query && query.name) || "query";
+const pathParams = _.values(parameters);
+const pathParamsNames = _.map(pathParams, "name");
+
+const isFetchTemplate = config.httpClientType === HTTP_CLIENT.FETCH;
+
+const optionsParam = {
+  name: 'options',
+  optional: true,
+  type: `STAHttpOptions`
+}
+
+const argToTmpl = ({ name, optional, type, defaultValue }) => `${name}${!defaultValue && optional ? '?' : ''}: ${type}${defaultValue ? ` = ${defaultValue}` : ''}`;
+
+const rawWrapperArgs = config.extractRequestParams ?
+    _.compact([
+        requestParams && {
+          name: pathParams.length ? `{ ${_.join(pathParamsNames, ", ")}, ...${queryName} }` : queryName,
+          optional: false,
+          type: getInlineParseContent(requestParams),
+        },
+        ...(!requestParams ? pathParams : []),
+        payload,
+        optionsParam,
+    ]) :
+    _.compact([
+        ...pathParams,
+        query,
+        payload,
+        optionsParam,
+    ])
+
+const wrapperArgs = _
+    // Sort by optionality
+    .sortBy(rawWrapperArgs, [o => o.optional])
+    .map(argToTmpl)
+    .join(', ')
+
+const bodyTmpl = _.get(payload, "name") || null;
+const queryTmpl = (query != null && queryName) || null;
+const securityTmpl = security ? 'true' : null;
+
+const requestContentKind = {
+  "URL_ENCODED": "application/x-www-form-urlencoded",
+  "FORM_DATA": "multipart/form-data",
+}[requestBodyInfo.contentKind]
+const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKind + "`" : null;
+%>
+
+/**
+<%~ routeDocs.description %>
+
+ * <% /* Here you can add some other JSDoc tags */ %>
+
+<%~ routeDocs.lines %>
+
+ */
+<%~ route.routeName.usage %>(<%~ wrapperArgs %>): Observable<<%~ type %>> {
+  return this.request('<%~ _.upperCase(method) %>', `<%~ path %>`, {
+    <%~ queryTmpl ? `params: ${queryTmpl},` : '' %>
+    <%~ bodyTmpl ? `body: ${bodyTmpl},` : '' %>
+    <%~ headersTmpl ? `headers: { ${headersTmpl} },` : '' %>
+    ...options,
+  });
+}

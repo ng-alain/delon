@@ -1,0 +1,29 @@
+<%
+const { utils, route, config, apiConfig, modelTypes } = it;
+const { _, classNameCase, require } = utils;
+const apiClassName = classNameCase(route.moduleName);
+const routes = route.routes;
+const tag = _.find(apiConfig.tags, { name: route.moduleName })
+const dataContracts = _.map(modelTypes, "name");
+%>
+
+import { Injectable } from '@angular/core';
+import type { HttpContext } from '@angular/common/http';
+import type { _HttpHeaders, HttpObserve } from '@delon/theme';
+import { Observable } from 'rxjs';
+
+import { STABaseService, STAHttpOptions } from './base.service';
+<% if (dataContracts.length) { %>
+import type { <%~ dataContracts.join(", ") %> } from './models'
+<% } %>
+
+/**
+ * <%~ tag?.description %>
+
+ */
+@Injectable({ providedIn: 'root' })
+export class <%= apiClassName %>Service extends STABaseService {
+  <% routes.forEach((route) => { %>
+    <%~ includeFile('./procedure-call.eta', { ...it, route }) %>
+  <% }) %>
+}

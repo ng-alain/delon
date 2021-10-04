@@ -1,0 +1,34 @@
+<%
+const { apiConfig, generateResponses, config } = it;
+%>
+import type { HttpContext } from '@angular/common/http';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { HttpObserve, _HttpClient, _HttpHeaders } from '@delon/theme';
+import { Observable } from 'rxjs';
+
+export interface STAHttpOptions {
+  body?: any;
+  headers?: _HttpHeaders;
+  params?: any;
+  observe?: HttpObserve;
+  reportProgress?: boolean;
+  responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+  withCredentials?: boolean;
+  context?: HttpContext;
+  baseUrl?: string;
+}
+
+export const STA_BASE_URL = new InjectionToken<string>('STA_BASE_URL');
+
+@Injectable()
+export class STABaseService {
+  readonly baseUrl: string = '<%~ apiConfig.baseUrl %>';
+
+  constructor(@Optional() @Inject(STA_BASE_URL) private globalBaseUrl: string, protected http: _HttpClient) {}
+
+  protected request<T, R>(method: string, path: string, options?: STAHttpOptions): Observable<R> {
+    const url = `${options?.baseUrl ?? this.globalBaseUrl ?? this.baseUrl}${path}`;
+    delete options?.baseUrl;
+    return this.http.request(method, url, options);
+  }
+}

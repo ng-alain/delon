@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsNgAlainSTAComponent",
+  "title": "Ng Alain Swagger To API Options Schema",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "config": {
+      "type": "string",
+      "default": "sta.json",
+      "description": "指定配置文件路径 (Specify the configuration file path)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name for swagger project name, Default: proxy",
+      "default": "proxy"
+    },
+    "url": {
+      "type": "string",
+      "description": "URL to swagger schema, Choose one of filePath and url."
+    },
+    "filePath": {
+      "type": "string",
+      "description": "Path to swagger schema, Choose one of filePath and url."
+    },
+    "output": {
+      "type": "string",
+      "description": "Path to folder where will been located the created api module, Default: /src/app/${name}"
+    }
+  }
+}
