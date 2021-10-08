@@ -24,6 +24,10 @@ if (req) {
     req.type = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Request`;
   }
 }
+let res = type
+if (res && res.includes(':')) {
+  res = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Response`;
+}
 
 const rawWrapperArgs = _.compact([
   ...pathParams,
@@ -52,7 +56,7 @@ const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKin
 <%~ routeDocs.lines %>
 
  */
-<%~ route.routeName.usage %>(<%~ wrapperArgs %>): Observable<<%~ type %>> {
+<%~ route.routeName.usage %>(<%~ wrapperArgs %>): Observable<<%~ res %>> {
   return this.request('<%~ _.upperCase(method) %>', `<%~ path %>`, {
     <%~ query ? `params: req,` : '' %>
     <%~ payload ? `body: req,` : '' %>

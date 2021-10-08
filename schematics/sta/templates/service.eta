@@ -7,12 +7,18 @@ const rawTagName = _.first(_.first(routes)?.raw?.tags)
 const tag = _.find(apiConfig.tags, { name: rawTagName })
 const tagDescription  = formatDescription(tag?.description, true)
 const dataContracts = _.map(modelTypes, "name");
-const dtoContracts = _.union(routes.map(i => {
-  const { query, payload } = i.request;
-  const request = (query && query.type) || (payload && payload.type)
-  if (!request?.includes('{')) return ''
-  return classNameCase(i.raw.moduleName) + classNameCase(i.routeName.usage) + 'Request';
-}).filter(w => w.length > 0));
+const dtoContracts = _.union([
+  ...routes.map(i => {
+    const { query, payload } = i.request;
+    const request = (query && query.type) || (payload && payload.type)
+    if (!request?.includes(':')) return ''
+    return classNameCase(i.raw.moduleName) + classNameCase(i.routeName.usage) + 'Request';
+  }),
+  ...routes.map(i => {
+    if (!i.response?.type?.includes(':')) return ''
+    return classNameCase(i.raw.moduleName) + classNameCase(i.routeName.usage) + 'Response';
+  })
+]).filter(w => w.length > 0);
 %>
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
