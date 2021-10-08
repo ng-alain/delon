@@ -108,13 +108,23 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
     tree.create(`${basePath}/base.service.ts`, filePrefix + res.formatTSContent(baseServiceContent));
 
     // Tag Service
+    const dtoTypeTpl = res.getTemplate({ name: 'dto-type', fileName: 'dto-type.eta' });
     const serviceTpl = res.getTemplate({ name: 'service', fileName: 'service.eta' });
     res.configuration.routes.combined.forEach(route => {
-      const moduleContent = res.renderTemplate(serviceTpl, {
+      // dto
+      const dtoContent = res.renderTemplate(dtoTypeTpl, {
         ...res.configuration,
         route
       });
-      tree.create(`${basePath}/${route.moduleName}.service.ts`, filePrefix + res.formatTSContent(moduleContent));
+      tree.create(`${basePath}/${route.moduleName}.dtos.ts`, filePrefix + res.formatTSContent(dtoContent));
+      indexList.push(`${route.moduleName}.dtos`);
+
+      // service
+      const serviceContent = res.renderTemplate(serviceTpl, {
+        ...res.configuration,
+        route
+      });
+      tree.create(`${basePath}/${route.moduleName}.service.ts`, filePrefix + res.formatTSContent(serviceContent));
       indexList.push(`${route.moduleName}.service`);
     });
     // Index
