@@ -34,7 +34,7 @@ export class TokenService implements ITokenService, OnDestroy {
   }
 
   get login_url(): string | undefined {
-    return this._options.login_url as string;
+    return this._options.login_url?.toString();
   }
 
   get referrer(): AuthReferrer {
