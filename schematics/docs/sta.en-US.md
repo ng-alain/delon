@@ -25,3 +25,9 @@ ng g ng-alain:sta --name=<Swagger name> --url=<Remote URL> --filePath=<Local Swa
 | `url` | - | URL to swagger schema, Choose one of filePath and url. |
 | `filePath` | - | Path to swagger schema, Choose one of filePath and url. |
 | `output` | `src/app/${name}` | Path to folder where will been located the created api module |
+
+## FAQ
+
+### Strange method name in the service?
+
+By default, it will be processed according to the `operationId` item, otherwise it will be automatically combined according to the `path` and `method`.

@@ -155,7 +155,7 @@ function genProxy(config: STAConfig): Rule {
         cleanOutput: true,
         generateUnionEnums: true,
         generateClient: true,
-        extractRequestParams: true,
+        extractRequestParams: false,
         generateResponses: true,
         generateRouteTypes: true,
         generateApi: true,
