@@ -71,7 +71,7 @@ export class AppModule { }
 | `[token_send_key]` | `string` | Token | Send token parameter name | ✅ |
 | `[token_send_template]` | `string` | `${token}` | Send a token template with a `${property name}` placeholder | ✅ |
 | `[token_send_place]` | `header,body,url` | `header` | Send token parameter position | ✅ |
-| `[login_url]` | `string` | `/login` | Login page routing address | ✅ |
+| `[login_url]` | `string, (injector: Injector) => string` | `/login` | Login page routing address | ✅ |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses | ✅ |
 | `[allow_anonymous_key]` | `string` | `_allow_anonymous` | Anonymous login KEY identification, if the request parameter with the KEY is to ignore token check and add action, the key value will be removed when the request is truth | ✅ |
 | `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing | ✅ |
