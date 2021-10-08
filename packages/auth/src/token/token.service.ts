@@ -1,4 +1,4 @@
-import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
+import { inject, Inject, Injectable, Injector, OnDestroy } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ export class TokenService implements ITokenService, OnDestroy {
     return this.refresh$.pipe(share());
   }
 
-  get login_url(): string | undefined {
+  get login_url(): string | ((injector: Injector) => string) | undefined {
     return this._options.login_url;
   }
 

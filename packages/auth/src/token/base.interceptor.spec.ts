@@ -70,6 +70,7 @@ describe('auth: base.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
   let router: Router;
+  let navigateSpy: jasmine.Spy;
   const MockDoc = {
     location: {
       href: ''
@@ -93,7 +94,7 @@ describe('auth: base.interceptor', () => {
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
     router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigate');
+    navigateSpy = spyOn(router, 'navigate');
     http = TestBed.inject<HttpClient>(HttpClient);
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
@@ -186,7 +187,7 @@ describe('auth: base.interceptor', () => {
           (err: NzSafeAny) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
+              expect(navigateSpy).toHaveBeenCalled();
               done();
             }, 20);
           }
@@ -204,6 +205,23 @@ describe('auth: base.interceptor', () => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
+              done();
+            }, 20);
+          }
+        );
+      });
+      it('with function', done => {
+        genModule({ login_url: () => '/404' }, genModel(SimpleTokenModel, null));
+        http.get('/test', { responseType: 'text' }).subscribe(
+          () => {
+            expect(false).toBe(true);
+            done();
+          },
+          (err: NzSafeAny) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(navigateSpy).toHaveBeenCalled();
+              expect(navigateSpy.calls.first().args[0][0]).toBe('/404');
               done();
             }, 20);
           }

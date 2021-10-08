@@ -26,10 +26,11 @@ export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: stri
   (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url || router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
-      if (/^https?:\/\//g.test(options.login_url!)) {
-        injector.get(DOCUMENT).location.href = options.login_url as string;
+      const url = typeof options.login_url === 'function' ? options.login_url(injector) : options.login_url!;
+      if (/^https?:\/\//g.test(url)) {
+        injector.get(DOCUMENT).location.href = url as string;
       } else {
-        router.navigate([options.login_url]);
+        router.navigate([url]);
       }
     });
   }

@@ -1,3 +1,5 @@
+import { Injector } from '@angular/core';
+
 export interface AlainAuthConfig {
   /**
    * 存储KEY值，默认：`_token`
@@ -30,7 +32,7 @@ export interface AlainAuthConfig {
   /**
    * 登录页路由地址，默认：`/login`
    */
-  login_url?: string;
+  login_url?: string | ((injector: Injector) => string);
   /**
    * 忽略TOKEN的URL地址列表，默认值为：`[/\/login/, /assets\//, /passport\//]`
    */
