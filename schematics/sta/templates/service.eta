@@ -22,7 +22,7 @@ const dtoContracts = _.union([
 %>
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { STABaseService, STAHttpOptions } from './base.service';
+import { STABaseService, STAHttpOptions } from './_base.service';
 <% if (dataContracts.length) { %>
 import type { <%~ dataContracts.join(", ") %> } from './models'
 <% } %>

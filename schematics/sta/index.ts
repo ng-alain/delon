@@ -94,7 +94,7 @@ function cleanOutput(p: string) {
 }
 
 function fix(output: string, res: GenerateApiOutput, tree: Tree, context: SchematicContext) {
-  const indexList = [`models`, `base.service`];
+  const indexList = [`models`, `_base.service`];
   const basePath = normalize(join(project.root, output.replace(process.cwd(), '')));
   try {
     // definitions
@@ -105,19 +105,23 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
     // Base Service
     const baseServiceTpl = res.getTemplate({ name: 'baseService', fileName: 'base.service.eta' });
     const baseServiceContent = res.renderTemplate(baseServiceTpl, { ...res.configuration });
-    tree.create(`${basePath}/base.service.ts`, filePrefix + res.formatTSContent(baseServiceContent));
+    tree.create(`${basePath}/_base.service.ts`, filePrefix + res.formatTSContent(baseServiceContent));
 
     // Tag Service
     const dtoTypeTpl = res.getTemplate({ name: 'dto-type', fileName: 'dto-type.eta' });
     const serviceTpl = res.getTemplate({ name: 'service', fileName: 'service.eta' });
     res.configuration.routes.combined.forEach(route => {
       // dto
-      const dtoContent = res.renderTemplate(dtoTypeTpl, {
-        ...res.configuration,
-        route
-      });
-      tree.create(`${basePath}/${route.moduleName}.dtos.ts`, filePrefix + res.formatTSContent(dtoContent));
-      indexList.push(`${route.moduleName}.dtos`);
+      const dtoContent = res.formatTSContent(
+        res.renderTemplate(dtoTypeTpl, {
+          ...res.configuration,
+          route
+        })
+      );
+      if (dtoContent.trim().length > 10) {
+        tree.create(`${basePath}/${route.moduleName}.dtos.ts`, filePrefix + dtoContent);
+        indexList.push(`${route.moduleName}.dtos`);
+      }
 
       // service
       const serviceContent = res.renderTemplate(serviceTpl, {
