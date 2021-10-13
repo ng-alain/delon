@@ -24,6 +24,9 @@ export interface STAConfig {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   generateApiParams?: any;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  spec?: any;
 }
 
 const filePrefix = `/* eslint-disable */
@@ -120,6 +123,7 @@ function genProxy(config: STAConfig): Rule {
         name: `${config.name}.ts`,
         url: config.url,
         input: config.filePath,
+        spec: config.spec,
         output,
         templates,
         toJS: false,
