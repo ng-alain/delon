@@ -30,7 +30,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<Remote URL> --filePath=<Local Swa
 
 ### Path and Service Association
 
-By default, the first `tags` of `path` is merged into one Service. Please use `[a-zA-Z][-_a-zA-Z]+` to describe `tag` as much as possible.
+By default, the first `tags` of each `path` will be merged into one Service. Please use `[a-zA-Z][-_a-zA-Z]+` to describe `tag` as much as possible.
 
 ### Strange method name in the service?
 
