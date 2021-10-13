@@ -10,12 +10,44 @@ Markdown编辑器。
 
 ## 如何使用
 
+**安装依赖**  
+
+由于Markdown编辑器依赖第三方插件[ngx-simplemde](https://github.com/cipchk/ngx-simplemde)，所以使用时应首先安装依赖  
+
+`npm install ngx-simplemde`
+
 **导入模块**
 
-默认需要自行在两个地方注册 `SimplemdeModule`。
+- 使用最新脚手架搭建出的项目提供了第三方控件注册入口: `src/app/shared/json-schema/json-schema.module.ts`
+- 需将`MarkdownWidget`在`JsonSchemaModule`中进行声明
 
-- 在 `AppModule` 导入 `SimplemdeModule.forRoot({})` 允许指定一个全局配置
-- 在 `SharedModule` 导入 `SimplemdeModule` 确保所有子模块可以使用
+```ts
+export const SCHEMA_THIRDS_COMPONENTS = [MarkdownWidget];
+
+@NgModule({
+  declarations: SCHEMA_THIRDS_COMPONENTS,
+  imports: [
+    SharedModule,
+    DelonFormModule.forRoot(),
+    SimplemdeModule.forRoot({ style: 'default' }),
+  ],
+  exports: SCHEMA_THIRDS_COMPONENTS
+})
+export class JsonSchemaModule {
+}
+```
+
+**控件注册**
+
+- 将控件注册到`WidgetRegistry`注册表中
+
+```ts
+export class JsonSchemaModule {
+  constructor(widgetRegistry: WidgetRegistry) {
+    widgetRegistry.register(MarkdownWidget.KEY, MarkdownWidget);
+  }
+}
+```
 
 **导入资源**
 
@@ -23,11 +55,26 @@ Markdown编辑器。
 
 ```json
 "styles": [
-  "node_modules/ngx-simplemde/src/index.css",
-],
-"scripts": [
-  "node_modules/simplemde-antd/dist/simplemde.min.js",
+  "src/styles.less"
 ]
+"scripts": [
+  "node_modules/simplemde-antd/dist/simplemde.min.js"
+]
+```
+
+**导入样式**
+
+使用`style.less`作为样式入口后，需将`ngx-simplemde`的样式文件导入进去，并定义一些自定义变量
+
+```less
+// src/style.less
+@import '~ngx-simplemde/index.less';
+// Change existing parameters here:
+@simplemde-icon-url: '//at.alicdn.com/t/font_700857_mnodkd1cp9l766r';
+@simplemde-statusbar-lines: 'Lins:';
+@simplemde-statusbar-words: 'words:';
+@simplemde-statusbar-characters: '字符：';
+@simplemde-statusbar-counts: '字数：';
 ```
 
 ## 源代码
