@@ -3,7 +3,7 @@ import { colors } from '@angular/cli/utilities/color';
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
-import { rmdirSync, mkdirSync } from 'fs';
+import { rmdirSync, mkdirSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
 import { generateApi, GenerateApiOutput } from 'swagger-typescript-api';
 
@@ -22,10 +22,8 @@ export interface STAConfig {
 
   output?: string;
 
-  templates?: string;
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  spec?: any;
+  generateApiParams?: any;
 }
 
 const filePrefix = `/* eslint-disable */
@@ -37,40 +35,6 @@ const filePrefix = `/* eslint-disable */
  */
 
 `;
-
-export const DEFAULT_SPEC = {
-  openapi: '3.0.1',
-  info: {
-    title: 'Title',
-    version: '1.0.0'
-  },
-  tags: [
-    {
-      name: 'user'
-    }
-  ],
-  paths: {
-    '/user': {
-      get: {
-        summary: 'Info',
-        tags: ['user'],
-        responses: {
-          '200': {
-            description: 'Success',
-            content: {
-              'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {}
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
 
 function addPathInTsConfig(name: string): Rule {
   return (tree: Tree) => {
@@ -142,16 +106,11 @@ function genProxy(config: STAConfig): Rule {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info(colors.blue(`- Name: ${config.name}`));
     const output = (config.output = resolve(process.cwd(), config.output ?? `./src/app/${config.name}`));
-    const templates = config.templates ?? resolve(__dirname, './templates');
-    let dataType: 'url' | 'filePath' | 'spec' = 'spec';
+    const templates = resolve(__dirname, './templates');
     if (config.url) {
-      dataType = 'url';
       context.logger.info(colors.blue(`- Using url data: ${config.url}`));
     } else if (config.filePath) {
-      dataType = 'filePath';
       context.logger.info(colors.blue(`- Using file data: ${config.filePath}`));
-    } else {
-      context.logger.info(colors.blue(`- Using spec data`));
     }
     context.logger.info(colors.blue(`- Output: ${output}`));
 
@@ -159,7 +118,6 @@ function genProxy(config: STAConfig): Rule {
       context.logger.info(colors.blue(`Start generating...`));
       generateApi({
         name: `${config.name}.ts`,
-        spec: dataType !== 'spec' ? null : DEFAULT_SPEC,
         url: config.url,
         input: config.filePath,
         output,
@@ -170,10 +128,13 @@ function genProxy(config: STAConfig): Rule {
         generateUnionEnums: true,
         generateClient: true,
         extractRequestParams: false,
-        generateResponses: true,
+        generateResponses: false,
         generateRouteTypes: true,
         generateApi: true,
-        silent: true
+        silent: true,
+        disableStrictSSL: true,
+        moduleNameFirstTag: true,
+        ...config.generateApiParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any)
         .then((res: GenerateApiOutput) => {
@@ -194,11 +155,25 @@ function finished(): Rule {
   };
 }
 
+function tryLoadConfig(configPath?: string): STAConfig | null {
+  if (!configPath || configPath.length <= 0) return null;
+
+  try {
+    const configFile = resolve(process.cwd(), configPath);
+    if (existsSync(configFile)) {
+      return require(configFile);
+    }
+  } catch (err) {
+    console.error('Invalid config file', err);
+  }
+}
+
 export default function (options: Schema): Rule {
-  return async (tree: Tree, context: SchematicContext) => {
+  return async (tree: Tree) => {
     project = (await getProject(tree, options.project)).project;
-    const config = {
+    const config: STAConfig = {
       name: 'proxy',
+      ...tryLoadConfig(options.config),
       ...options
     };
 

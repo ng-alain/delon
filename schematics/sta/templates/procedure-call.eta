@@ -48,10 +48,12 @@ const requestContentKind = {
 const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKind + "`" : null;
 %>
 
-/**
+/**<% if (routeDocs.description) {%>
+
 <%~ routeDocs.description %>
 
  * <% /* Here you can add some other JSDoc tags */ %>
+<% } %>
 
 <%~ routeDocs.lines %>
 
