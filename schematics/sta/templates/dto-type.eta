@@ -4,7 +4,7 @@ const { _ } = utils;
 const dataContracts = config.modular ? _.map(modelTypes, "name") : [];
 %>
 <% if (dataContracts.length) { %>
-import type { <%~ dataContracts.join(", ") %> } from "./models"
+import type { <%~ dataContracts.join(", ") %> } from "../models"
 
 <% } %>
 <% it.route.routes.forEach((route) => { %>

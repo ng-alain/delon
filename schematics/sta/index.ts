@@ -78,6 +78,7 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
     const dtoTypeTpl = res.getTemplate({ name: 'dto-type', fileName: 'dto-type.eta' });
     const serviceTpl = res.getTemplate({ name: 'service', fileName: 'service.eta' });
     res.configuration.routes.combined.forEach(route => {
+      const routeIndex: string[] = [];
       // dto
       const dtoContent = res.formatTSContent(
         res.renderTemplate(dtoTypeTpl, {
@@ -86,8 +87,8 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
         })
       );
       if (dtoContent.trim().length > 10) {
-        tree.create(`${basePath}/${route.moduleName}.dtos.ts`, filePrefix + dtoContent);
-        indexList.push(`${route.moduleName}.dtos`);
+        tree.create(`${basePath}/${route.moduleName}/dtos.ts`, filePrefix + dtoContent);
+        routeIndex.push(`dtos`);
       }
 
       // service
@@ -95,8 +96,15 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
         ...res.configuration,
         route
       });
-      tree.create(`${basePath}/${route.moduleName}.service.ts`, filePrefix + res.formatTSContent(serviceContent));
-      indexList.push(`${route.moduleName}.service`);
+      tree.create(`${basePath}/${route.moduleName}/service.ts`, filePrefix + res.formatTSContent(serviceContent));
+      routeIndex.push(`service`);
+
+      // index.ts
+      tree.create(
+        `${basePath}/${route.moduleName}/index.ts`,
+        filePrefix + routeIndex.map(name => `export * from './${name}';`).join('\n')
+      );
+      indexList.push(`${route.moduleName}/index`);
     });
     // Index
     tree.create(`${basePath}/index.ts`, filePrefix + indexList.map(name => `export * from './${name}';`).join('\n'));
