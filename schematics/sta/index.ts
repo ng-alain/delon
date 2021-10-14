@@ -24,6 +24,11 @@ export interface STAConfig {
 
   responseDataField?: string;
 
+  /**
+   * httpClient request type, Default: `delon`
+   */
+  httpClientType?: 'angular' | 'delon';
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   generateApiParams?: any;
 
@@ -149,6 +154,10 @@ function genProxy(config: STAConfig): Rule {
         disableStrictSSL: true,
         moduleNameFirstTag: true,
         hooks: {
+          onInit: c => {
+            c.httpClientType = config.httpClientType;
+            return c;
+          },
           onPrepareConfig: c => {
             if (!config.responseDataField) return c;
 

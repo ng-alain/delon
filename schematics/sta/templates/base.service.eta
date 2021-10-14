@@ -1,9 +1,10 @@
 <%
 const { apiConfig, generateResponses, config } = it;
+const useDelonClient = config.httpClientType === 'delon';
 %>
-import type { HttpContext } from '@angular/common/http';
+import { HttpContext<% if (!useDelonClient) {%>, HttpClient<%}%> } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { HttpObserve, _HttpClient, _HttpHeaders } from '@delon/theme';
+import { HttpObserve<% if (useDelonClient) {%>, _HttpClient<%}%>, _HttpHeaders } from '@delon/theme';
 import { Observable } from 'rxjs';
 
 export interface STAHttpOptions {
@@ -24,7 +25,7 @@ export const STA_BASE_URL = new InjectionToken<string>('STA_BASE_URL');
 export class STABaseService {
   readonly baseUrl: string = '<%~ apiConfig.baseUrl %>';
 
-  constructor(@Optional() @Inject(STA_BASE_URL) private globalBaseUrl: string, protected http: _HttpClient) {}
+  constructor(@Optional() @Inject(STA_BASE_URL) private globalBaseUrl: string, protected http: <% if (useDelonClient) {%>_<%}%>HttpClient) {}
 
   protected request<T, R>(method: string, path: string, options?: STAHttpOptions): Observable<R> {
     const url = `${options?.baseUrl ?? this.globalBaseUrl ?? this.baseUrl}${path}`;

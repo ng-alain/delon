@@ -30,6 +30,11 @@
     "responseDataField": {
       "type": "string",
       "description": "The real data field of Response"
+    },
+    "httpClientType": {
+      "type": "string",
+      "default": "delon",
+      "description": "httpClient request type, Default: `delon`"
     }
   }
 }

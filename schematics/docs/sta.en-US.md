@@ -26,6 +26,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<Remote URL> --filePath=<Local Swa
 | `filePath` | - | Path to swagger schema, Choose one of filePath and url. |
 | `output` | `src/app/${name}` | Path to folder where will been located the created api module |
 | `responseDataField` | - | The real data field of Response |
+| `httpClientType` | `delon` | HttpClient request method, 1. `delon` use `_HttpClient` of `@delon/theme`, 2. `angular` use `HttpClient` |
 
 ## FAQ
 

@@ -26,6 +26,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<远程URL地址> --filePath=<本�
 | `filePath` | - | 本地 Swagger.json 文件路径，`url` 与 `filePath` 必须二选一 |
 | `output` | `src/app/${name}` | 输出目录 |
 | `responseDataField` | - | Response 的真实数据字段 |
+| `httpClientType` | `delon` | HttpClient 请求方式，1. `delon` 使用 `@delon/theme` 的 `_HttpClient`，2. `angular` 使用 `HttpClient` |
 
 ## 常见问题
 

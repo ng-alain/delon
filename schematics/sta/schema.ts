@@ -23,5 +23,10 @@ export interface Schema {
    */
   responseDataField?: string;
 
+  /**
+   * httpClient request type, Default: `delon`
+   */
+  httpClientType?: 'angular' | 'delon';
+
   project?: string;
 }
