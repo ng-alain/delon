@@ -18,5 +18,10 @@ export interface Schema {
    */
   output?: string;
 
+  /**
+   * The real data field of Response
+   */
+  responseDataField?: string;
+
   project?: string;
 }

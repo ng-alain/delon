@@ -22,6 +22,8 @@ export interface STAConfig {
 
   output?: string;
 
+  responseDataField?: string;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   generateApiParams?: any;
 
@@ -146,6 +148,26 @@ function genProxy(config: STAConfig): Rule {
         silent: true,
         disableStrictSSL: true,
         moduleNameFirstTag: true,
+        hooks: {
+          onPrepareConfig: c => {
+            if (!config.responseDataField) return c;
+
+            c.routes.combined?.forEach(moduleInfo => {
+              moduleInfo.routes.forEach(routeInfo => {
+                const responseBodyContentFirstType = Object.keys(routeInfo.responseBodySchema?.content).pop();
+                if (!responseBodyContentFirstType) return;
+                const responseBodyRef = c.utils.getComponentByRef(
+                  routeInfo.responseBodySchema.content[responseBodyContentFirstType].schema.$ref
+                );
+                if (!responseBodyRef) return;
+                const fieldProperty = responseBodyRef.typeData?.properties?.[config.responseDataField];
+                if (!fieldProperty) return;
+                routeInfo.response.type = fieldProperty.$parsed.content ?? 'any';
+              });
+            });
+            return c;
+          }
+        },
         ...config.generateApiParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any)

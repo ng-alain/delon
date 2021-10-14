@@ -25,6 +25,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<远程URL地址> --filePath=<本�
 | `url` | - | 远程 Swagger.json 文件，`url` 与 `filePath` 必须二选一 |
 | `filePath` | - | 本地 Swagger.json 文件路径，`url` 与 `filePath` 必须二选一 |
 | `output` | `src/app/${name}` | 输出目录 |
+| `responseDataField` | - | Response 的真实数据字段 |
 
 ## 常见问题
 
@@ -35,3 +36,17 @@ ng g ng-alain:sta --name=<Swagger name> --url=<远程URL地址> --filePath=<本�
 ### 服务内奇怪的方法名？
 
 默认情况下，会根据 `operationId` 项目来处理，否则会自动根据 `path` 与 `method` 组合。
+
+### 全局Response
+
+当所有 `path` 有固定输出格式时，比如成功、异常都有统一格式时都返回时：
+
+```json
+{
+  "status": 200,
+  "error": "Error Message",
+  "result": {}
+}
+```
+
+若是通过拦截器来处理异常消息时，订阅时只需要始终获取 `result` 字段数据时，可以通过指定 `--responseDataField="result"` 来解决。
