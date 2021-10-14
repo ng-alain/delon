@@ -49,9 +49,9 @@ describe('Schematic: sta', () => {
   it('should be working', async () => {
     await run();
     [`_base.service.ts`, `models.ts`, `index.ts`].forEach(name => {
-      expect(tree.exists(`/projects/foo/src/app/proxy/${name}`)).toBe(true);
+      expect(tree.exists(`/projects/foo/src/app/_sta/${name}`)).toBe(true);
     });
     const tsConfig = tree.readContent(`tsconfig.json`);
-    expect(tsConfig).toContain(`@proxy`);
+    expect(tsConfig).toContain(`@sta`);
   });
 });

@@ -12,8 +12,8 @@
     },
     "name": {
       "type": "string",
-      "description": "Name for swagger project name, Default: proxy",
-      "default": "proxy"
+      "description": "Name for swagger project name, Default: sta",
+      "default": "sta"
     },
     "url": {
       "type": "string",

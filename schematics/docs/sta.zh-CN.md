@@ -21,7 +21,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<远程URL地址> --filePath=<本�
 
 | 参数名 | 默认 | 描述 |
 |-----|----|----|
-| `name` | `proxy` | Swagger 项目名称 |
+| `name` | `sta` | Swagger 项目名称 |
 | `url` | - | 远程 Swagger.json 文件，`url` 与 `filePath` 必须二选一 |
 | `filePath` | - | 本地 Swagger.json 文件路径，`url` 与 `filePath` 必须二选一 |
 | `output` | `src/app/${name}` | 输出目录 |

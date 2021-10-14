@@ -21,7 +21,7 @@ ng g ng-alain:sta --name=<Swagger name> --url=<Remote URL> --filePath=<Local Swa
 
 | Name | Default | Description |
 |------|---------|-------------|
-| `name` | `proxy` | Name for swagger project name |
+| `name` | `sta` | Name for swagger project name |
 | `url` | - | URL to swagger schema, Choose one of filePath and url. |
 | `filePath` | - | Path to swagger schema, Choose one of filePath and url. |
 | `output` | `src/app/${name}` | Path to folder where will been located the created api module |

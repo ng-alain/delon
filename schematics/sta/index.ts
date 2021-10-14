@@ -48,8 +48,8 @@ function addPathInTsConfig(name: string): Rule {
     if (!json.compilerOptions) json.compilerOptions = {};
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
     const paths = json.compilerOptions.paths;
-    paths[`@${name}`] = [`src/app/${name}/index`];
-    paths[`@${name}/*`] = [`src/app/${name}/*`];
+    paths[`@${name}`] = [`src/app/_${name}/index`];
+    paths[`@${name}/*`] = [`src/app/_${name}/*`];
     writeJSON(tree, 'tsconfig.json', json);
     return tree;
   };
@@ -118,7 +118,7 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
 function genProxy(config: STAConfig): Rule {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info(colors.blue(`- Name: ${config.name}`));
-    const output = (config.output = resolve(process.cwd(), config.output ?? `./src/app/${config.name}`));
+    const output = (config.output = resolve(process.cwd(), config.output ?? `./src/app/_${config.name}`));
     const templates = resolve(__dirname, './templates');
     if (config.url) {
       context.logger.info(colors.blue(`- Using url data: ${config.url}`));
@@ -206,7 +206,7 @@ export default function (options: Schema): Rule {
   return async (tree: Tree) => {
     project = (await getProject(tree, options.project)).project;
     const config: STAConfig = {
-      name: 'proxy',
+      name: 'sta',
       ...tryLoadConfig(options.config),
       ...options
     };

@@ -5,7 +5,7 @@ export interface Schema {
   config?: string;
 
   /**
-   * Name for swagger project name, Default: `proxy`
+   * Name for swagger project name, Default: `sta`
    */
   name?: string;
 
