@@ -54,6 +54,7 @@ Note: `en_US` is the package name, follow below.
 | Slovenian | sl_SI |
 | French | fr_FR |
 | Spanish | es_ES |
+| Italian | it_IT |
 
 ## Add a new language
 
