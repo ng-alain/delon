@@ -53,7 +53,7 @@ type: Service
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[type]` | 类型 | `class,icon,iconfont,img` | `icon` |
+| `[type]` | 类型；`img`, `svg` 类型需要 `14px` 宽与高尺寸 | `class,icon,iconfont,img,svg` | `icon` |
 | `[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | - |
 | `[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline` |
 | `[spin]` | 是否有旋转动画 | `boolean` | `false` |

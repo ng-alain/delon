@@ -257,6 +257,10 @@ describe('theme: layout-default-nav', () => {
         updateIcon({ type: 'img', value: '1.jpg' });
         page.checkCount('.sidebar-nav__item-img', 1);
       });
+      it('with svg', () => {
+        updateIcon({ type: 'svg', value: '<svg></svg>' });
+        page.checkCount('.sidebar-nav__item-svg', 1);
+      });
     });
 
     describe('[collapsed]', () => {

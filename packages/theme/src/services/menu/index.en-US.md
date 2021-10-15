@@ -56,7 +56,7 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[type]` | Type for icon | `class,icon,iconfont,img` | `icon` |
+| `[type]` | Type for icon; `img`, `svg` Size uses `14px` width and height | `class,icon,iconfont,img,svg` | `icon` |
 | `[value]` | Value for the icon, can be set Class Name, nz-icon of `nzType`, image | `string` | - |
 | `[theme]` | Type of the ant design icon | `outline,twotone,fill` | `outline` |
 | `[spin]` | Rotate icon with animation | `boolean` | `false` |
