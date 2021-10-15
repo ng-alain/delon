@@ -1,10 +1,16 @@
+import { SafeHtml } from '@angular/platform-browser';
+
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface MenuIcon {
-  /** Type for icon */
-  type: 'class' | 'icon' | 'iconfont' | 'img';
+  /**
+   * Type for icon
+   *
+   * - `img`, `svg` Size uses `14px` width and height
+   */
+  type: 'class' | 'icon' | 'iconfont' | 'img' | 'svg';
   /** Value for the icon, can be set Class Name, nz-icon of `nzType`, image */
-  value?: string;
+  value?: string | SafeHtml;
   /** Type of the ant design icon, default: `outline` */
   theme?: 'outline' | 'twotone' | 'fill';
   /** Rotate icon with animation, default: `false` */
