@@ -20,7 +20,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { Menu, MenuInner, MenuService, SettingsService } from '@delon/theme';
+import { Menu, MenuIcon, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -266,6 +266,10 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
         }
         if (this.openStrictly) {
           i._open = i.open != null ? i.open : false;
+        }
+        const icon = i.icon as MenuIcon;
+        if (icon && icon.type === 'svg' && typeof icon.value === 'string') {
+          icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!!);
         }
       });
       this.list = menuSrv.menus.filter((w: Nav) => w._hidden !== true);

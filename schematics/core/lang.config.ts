@@ -30,7 +30,8 @@ export const LANGS_CONFIG: LangConfig[] = [
   { langs: ['ja'], zorro: 'ja_JP', delon: 'ja_JP' },
   { langs: ['sl'], zorro: 'sl_SI', delon: 'sl_SI', fileName: 'sl-SI.json' },
   { langs: ['fr'], zorro: 'fr_FR', delon: 'fr_FR', fileName: 'fr-FR.json' },
-  { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' }
+  { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' },
+  { langs: ['it'], zorro: 'it_IT', delon: 'it_IT', fileName: 'it-IT.json' }
 ];
 
 export function getLangConfig(lang: string): LangConfig {

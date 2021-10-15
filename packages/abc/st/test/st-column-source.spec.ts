@@ -600,6 +600,10 @@ describe('st: column-source', () => {
         const res = srv.process([{ title: '1', index: 'id', children: [] }], options);
         expect(res.headers.length).toBe(1);
       });
+      it('working iif', () => {
+        const res = srv.process([{ title: '1', index: 'id', children: [{ index: 'id', iif: () => false }] }], options);
+        expect(res.headers.length).toBe(1);
+      });
     });
     describe('[resizable]', () => {
       it('should be working', () => {

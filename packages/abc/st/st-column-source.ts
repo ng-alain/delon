@@ -325,6 +325,9 @@ export class STColumnSource {
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
         continue;
       }
+      if (Array.isArray(item.children) && item.children.length > 0) {
+        item.children = this.cleanCond(item.children);
+      }
       res.push(item);
     }
     return res;

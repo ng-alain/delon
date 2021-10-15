@@ -76,8 +76,8 @@ export default {
     }
   },
   onboarding: {
-    skip: `Παραλείπω`,
-    prev: `Προηγ`,
+    skip: `Παράλειψη`,
+    prev: `Προηγούμενο`,
     next: `Επόμενο`,
     done: `Ολοκληρώθηκε`
   }
