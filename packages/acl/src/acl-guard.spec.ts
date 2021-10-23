@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { ACLGuard } from './acl-guard';
 import { DelonACLModule } from './acl.module';
 import { ACLService } from './acl.service';
-import { ACLType } from './acl.type';
+import { ACLGuardFunctionType, ACLGuardType, ACLType } from './acl.type';
 
 describe('acl: guard', () => {
   let srv: ACLGuard;
@@ -66,12 +66,30 @@ describe('acl: guard', () => {
       });
   });
 
+  it(`should load route via function`, (done: () => void) => {
+    srv
+      .canActivate(
+        {
+          data: {
+            guard: ((_srv, _injector) => {
+              return of('user');
+            }) as ACLGuardFunctionType
+          }
+        } as any,
+        null
+      )
+      .subscribe(res => {
+        expect(res).toBeTruthy();
+        done();
+      });
+  });
+
   it(`should load route via Observable`, (done: () => void) => {
     srv
       .canActivate(
         {
           data: {
-            guard: of('user')
+            guard: of('user') as ACLGuardType
           }
         } as any,
         null

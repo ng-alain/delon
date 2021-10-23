@@ -4,7 +4,12 @@
  * TODO: 尝试增加 `@delon/core` 类库用于处理这种通用型
  */
 
+import { Injector } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+import type { ACLService } from './acl.service';
 
 export interface ACLType {
   /**
@@ -32,3 +37,6 @@ export interface ACLType {
 }
 
 export type ACLCanType = number | number[] | string | string[] | ACLType;
+
+export type ACLGuardFunctionType = (srv: ACLService, injector: Injector) => Observable<ACLCanType>;
+export type ACLGuardType = ACLCanType | Observable<ACLCanType> | ACLGuardFunctionType;
