@@ -18,13 +18,13 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
+    this.step = multipleOf || 1;
     if (typeof minimum !== 'undefined') {
-      this.min = exclusiveMinimum ? minimum + 1 : minimum;
+      this.min = exclusiveMinimum ? minimum + this.step : minimum;
     }
     if (typeof maximum !== 'undefined') {
-      this.max = exclusiveMaximum ? maximum - 1 : maximum;
+      this.max = exclusiveMaximum ? maximum - this.step : maximum;
     }
-    this.step = multipleOf || 1;
     if (type === 'integer') {
       this.min = Math.trunc(this.min);
       this.max = Math.trunc(this.max);
