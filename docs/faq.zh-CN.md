@@ -26,6 +26,10 @@ Angular 下常见错误，使用 Reactive Forms 需要额外引入 `ReactiveForm
 
 NG-ZORRO 及 @delon/* 组件默认在 OnPush 模式下工作，mutate 对象或者数组不会触发 Angular 的变更检测，请使用 immutable 方式。
 
+### 如何使用@delon每日构建版本
+
+NG-ALAIN 提供一个 [delon-builds](https://github.com/ng-alain/delon-builds.git) 仓储作为每日构建版本，它并不是最终稳定版本，但包含最新已修复BUG、最新功能，要使用可以根据脚手架提供的 [delon.sh](https://github.com/ng-alain/ng-alain/blob/master/scripts/_ci/delon.sh) 来获取。
+
 ## 安装
 
 ### 为什么找不到 ng-zorro-antd/src/*.less 样式？
