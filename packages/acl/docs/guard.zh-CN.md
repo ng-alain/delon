@@ -17,20 +17,30 @@ const routes: Routes = [
   {
     path: 'auth',
     canActivate: [ ACLGuard ],
-    data: { guard: 'user1' }
+    data: { guard: 'user1' as ACLGuardType }
   },
   {
     path: 'auth',
     canActivate: [ ACLGuard ],
     data: {
-      guard: <ACLType>{
+      guard: {
         role: [ 'user1' ],
         ability: [ 10, 'USER-EDIT' ],
         mode: 'allOf'
-      },
+      } as ACLGuardType,
       guard_url: '/no-permisseion'
     }
   },
+  {
+    path: 'obs',
+    canActivate: [ ACLGuard ],
+    data: {
+      guard: ((_srv, _injector) => {
+        return of('user');
+      }) as ACLGuardFunctionType,
+      guard_url: '/no-permisseion'
+    }
+  }
 ]
 ```
 
