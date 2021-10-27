@@ -48,7 +48,7 @@ describe('form: widget: text', () => {
     it('with true', () => {
       const s: SFSchema = {
         properties: {
-          a: { type: 'string', default: html, ui: { widget, html: true } as SFTextWidgetSchema }
+          a: { type: 'string', default: html, ui: { widget } as SFTextWidgetSchema }
         }
       };
       page.newSchema(s).checkCount('.sf__text-html', 1);
