@@ -15,6 +15,7 @@ Text in form.
 
 ### ui
 
-| Property        | Description               | Type     | Default |
-| --------------- | ------------------------- | -------- | ------- |
-| `[defaultText]` | Default text of this item | `string` | `-`     |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[defaultText]` | Default text of this item | `string` | `-` |
+| `[html]` | Whether to support HTML | `boolean` | `true` |
