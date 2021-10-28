@@ -175,7 +175,7 @@
     "eslint-plugin-prettier": "~3.4.1",
     "lint-staged": "^11.1.2",
     "raw-loader": "^4.0.2",
-    "swagger-typescript-api": "~9.2.0"
+    "swagger-typescript-api": "~9.3.0"
   },
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [
