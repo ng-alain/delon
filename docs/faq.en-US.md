@@ -26,6 +26,32 @@ Common mistakes under Angular, the use of Reactive Forms requires the introducti
 
 The NG-ZORRO and @delon/* components work in OnPush mode by default. Mutate objects or arrays do not trigger Angular's change detection. Use the immutable method.
 
+### How to use @delon daily build version
+
+NG-ALAIN provides a [delon-builds](https://github.com/ng-alain/delon-builds.git) repository as a daily build version. It's not the final stable version, but contains the latest fixed BUG, To use the latest features, you can create `delon.sh` in the root directory:
+
+```bash
+#!/usr/bin/env bash
+set -e
+echo "Download latest @delon version"
+rm -rf delon-builds
+git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+rm -rf node_modules/@delon
+rm -rf node_modules/ng-alain
+rsync -am delon-builds/ node_modules/
+NG_ALAIN_VERSION=$(node -p "require('./node_modules/ng-alain/package.json').version")
+rm -rf delon-builds
+echo "Using ng-alain version: ${NG_ALAIN_VERSION}"
+```
+
+When you need to use the daily build version of @delon, you only need to run:
+
+```bash
+bash delon.sh
+```
+
+> If in Windows environment, please use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) to execute Bash scripts.
+
 ## Installation
 
 ### Why can't I find the ng-zorro-antd/src/*.less style?

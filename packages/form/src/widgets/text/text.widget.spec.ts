@@ -5,6 +5,7 @@ import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { SFTextWidgetSchema } from './schema';
 
 describe('form: widget: text', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -40,5 +41,28 @@ describe('form: widget: text', () => {
       properties: { a: { type: 'string', ui: { widget, defaultText: '~' } } }
     };
     page.newSchema(s).checkElText('.ant-form-item-control', '~');
+  });
+
+  describe('#html', () => {
+    const html = `<span>1</span>`;
+    it('with true', () => {
+      const s: SFSchema = {
+        properties: {
+          a: { type: 'string', default: html, ui: { widget } as SFTextWidgetSchema }
+        }
+      };
+      page.newSchema(s).checkCount('.sf__text-html', 1);
+      expect(page.getEl('.ant-form-item-control').innerText).toBe('1');
+    });
+
+    it('with false', () => {
+      const s: SFSchema = {
+        properties: {
+          a: { type: 'string', default: html, ui: { widget, html: false } as SFTextWidgetSchema }
+        }
+      };
+      page.newSchema(s).checkCount('.sf__text-html', 0);
+      expect(page.getEl('.ant-form-item-control').innerText).toBe(html);
+    });
   });
 });
