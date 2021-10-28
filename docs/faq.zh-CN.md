@@ -28,7 +28,29 @@ NG-ZORRO 及 @delon/* 组件默认在 OnPush 模式下工作，mutate 对象或�
 
 ### 如何使用@delon每日构建版本
 
-NG-ALAIN 提供一个 [delon-builds](https://github.com/ng-alain/delon-builds.git) 仓储作为每日构建版本，它并不是最终稳定版本，但包含最新已修复BUG、最新功能，要使用可以根据脚手架提供的 [delon.sh](https://github.com/ng-alain/ng-alain/blob/master/scripts/_ci/delon.sh) 来获取。
+NG-ALAIN 提供一个 [delon-builds](https://github.com/ng-alain/delon-builds.git) 仓储作为每日构建版本，它并不是最终稳定版本，但包含最新已修复BUG、最新功能，要使用可以在根目录创建 `delon.sh`：
+
+```bash
+#!/usr/bin/env bash
+set -e
+echo "Download latest @delon version"
+rm -rf delon-builds
+git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+rm -rf node_modules/@delon
+rm -rf node_modules/ng-alain
+rsync -am delon-builds/ node_modules/
+NG_ALAIN_VERSION=$(node -p "require('./node_modules/ng-alain/package.json').version")
+rm -rf delon-builds
+echo "Using ng-alain version: ${NG_ALAIN_VERSION}"
+```
+
+当需要使用@delon的每日构建版本，只需要在运行：
+
+```bash
+bash delon.sh
+```
+
+> 如果是 Windows 环境，请使用 [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) 来执行 Bash 脚本。
 
 ## 安装
 
