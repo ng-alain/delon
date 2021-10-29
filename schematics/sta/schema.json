@@ -34,6 +34,7 @@
     "httpClientType": {
       "type": "string",
       "default": "delon",
+      "enum": [ "delon", "angular" ],
       "description": "httpClient request type, Default: `delon`"
     }
   }
