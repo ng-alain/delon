@@ -14,6 +14,24 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [12.3.0](https://github.com/ng-alain/delon/compare/12.2.3...12.3.0) (2021-10-30)
+
+### Bug Fixes
+
+* **abc:st:** fix `iif` of group columns ([#1363](https://github.com/ng-alain/delon/issues/1363)) ([14eb035](https://github.com/ng-alain/delon/commit/14eb0351d62ec57d64010a910f8054350e9c9734))
+* **form:number:** fix exclusive range when step be set ([#1366](https://github.com/ng-alain/delon/issues/1366)) ([68b5c5b](https://github.com/ng-alain/delon/commit/68b5c5b726e6cdf7d55bf4ba271d4e5f299d8cbb))
+
+### Features
+
+* **abc:xlsx:** add support `csv` file ([#1354](https://github.com/ng-alain/delon/issues/1354)) ([826b93f](https://github.com/ng-alain/delon/commit/826b93f1c41247fd9385ebf4f11b99e10a5449a3))
+* **acl:** support function of `guard` ([#1365](https://github.com/ng-alain/delon/issues/1365)) ([bf2ff5d](https://github.com/ng-alain/delon/commit/bf2ff5d5be9d0f94ff949a0574b35cba3648aa77))
+* adding Italian locale ([#1357](https://github.com/ng-alain/delon/issues/1357)) ([52b237a](https://github.com/ng-alain/delon/commit/52b237ade8f9c13f95cc0cc84eba17f8cbda51f1))
+* **chart:echarts:** add `on` property ([#1337](https://github.com/ng-alain/delon/issues/1337)) ([442abcc](https://github.com/ng-alain/delon/commit/442abcc89d63aaab9664330ce0ecc6034d6d3888))
+* **form:widget:text:** add `html`property ([#1367](https://github.com/ng-alain/delon/issues/1367)) ([d07bcdd](https://github.com/ng-alain/delon/commit/d07bcdd55f0d749a2d66c8b3fcdde651ad947cf5))
+* **theme:menu:** support `svg` type ([#1364](https://github.com/ng-alain/delon/issues/1364)) ([36c43e2](https://github.com/ng-alain/delon/commit/36c43e2efee9564a6c7f41ff8247858b7d248aca))
+* **util:format:** add token mode in format mask ([#1349](https://github.com/ng-alain/delon/issues/1349)) ([152cc50](https://github.com/ng-alain/delon/commit/152cc504e0dc83d65ae571fdf0919bcfbd6e1cdb))
+
+
 ## [12.2.3](https://github.com/ng-alain/delon/compare/12.2.2...12.2.3) (2021-09-24)
 
 ### Bug Fixes
