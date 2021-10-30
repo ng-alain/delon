@@ -22,7 +22,9 @@
   ],
   "schematics": "./collection.json",
   "dependencies": {
-    "swagger-typescript-api": "@LIB-PLACEHOLDER"
+    "swagger-typescript-api": "@LIB-PLACEHOLDER",
+    "got": "@LIB-PLACEHOLDER",
+    "swagger2openapi": "@LIB-PLACEHOLDER"
   },
   "ng-update": {
     "migrations": "./migration.json",
