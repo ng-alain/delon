@@ -34,6 +34,8 @@ export class I18NService extends AlainI18nBaseService {
     if (!this.platform.isBrowser) {
       return undefined;
     }
+    if (localStorage.lang) return localStorage.lang;
+
     const winNav: NzSafeAny = window.navigator;
     if (typeof window === 'undefined' || typeof winNav === 'undefined') {
       return undefined;
@@ -54,6 +56,9 @@ export class I18NService extends AlainI18nBaseService {
   }
 
   use(lang: LangType, _?: Record<string, string>, emit?: boolean): void {
+    if (this.platform.isBrowser) {
+      localStorage.lang = lang;
+    }
     this._currentLang = lang as string;
     this._data = lang === 'en-US' ? ENUS : ZHCN;
     this.zorroI18n.setLocale(lang === 'en-US' ? en_US : zh_CN);

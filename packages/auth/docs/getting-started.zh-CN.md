@@ -61,7 +61,7 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
 export class AppModule { }
 ```
 
-**为什么需要HTTP_INTERCEPTORS**
+**为什么需要手动注册HTTP_INTERCEPTORS**
 
 默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 @delon/auth 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
@@ -83,3 +83,9 @@ export class AppModule { }
 | `[refreshOffset]` | `number` | `6000` | 偏移值（单位：ms），建议根据 `refreshTime` 倍数来设置 | ✅ |
 
 > 可以通过[全局配置](/docs/global-config)覆盖它们。
+
+## FAQ
+
+### 解决同域下多个NG-ALAIN项目Token污染问题
+
+可以在每个项目里通过[全局配置](/docs/global-config)修改 `store_key` 用于区分。
