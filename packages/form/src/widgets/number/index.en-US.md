@@ -17,6 +17,7 @@ Enter a number within certain range with the mouse or keyboard.
 | `[maximum]` | max value | `number` | - |
 | `[exclusiveMaximum]` | Indicate whether maximum are exclusive of the value | `boolean` | - |
 | `[multipleOf]` | Restricted to a multiple of a given number, | `number` | `1` |
+| `[change]` | Change event for the number | `(val?: number) => void` | - |
 
 ### ui
 
