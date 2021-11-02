@@ -154,7 +154,7 @@ describe('form: widget: number', () => {
       const schema: SFSchema = {
         properties: {
           a: {
-            type: 'string',
+            type: 'number',
             ui: {
               change: jasmine.createSpy('change')
             } as SFNumberWidgetSchema
@@ -163,7 +163,7 @@ describe('form: widget: number', () => {
       };
       page.newSchema(schema);
       const ui = schema.properties!.a.ui as SFNumberWidgetSchema;
-      page.typeChar('a', '.ant-input');
+      page.typeChar(1, 'input');
       expect(ui.change).toHaveBeenCalled();
     }));
   });
