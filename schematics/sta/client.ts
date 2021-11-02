@@ -6,6 +6,7 @@ import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angul
 import { readFileSync, rmdirSync, mkdirSync, existsSync } from 'fs';
 import got from 'got';
 
+import { convertSwagger as convertSpec, createComponents } from './generator';
 import { STAConfig } from './types';
 
 export class STAClient {
@@ -38,14 +39,17 @@ export class STAClient {
       try {
         return JSON.parse(body);
       } catch (ex) {
-        throw new SchematicsException(`Unable to convert JSON, body: ${body}`);
+        throw new SchematicsException(`Unable to convert swagger JSON, body: ${body}`);
       }
     }
     return body;
   }
 
   private async createGenerator(): Promise<Rule> {
-    const spec = await this.getSwaggerFile();
+    const schemaObj = this.cog.spec ?? (await this.getSwaggerFile());
+    if (!schemaObj) throw new SchematicsException(`Swagger json is null`);
+    const spec = await convertSpec(schemaObj);
+    const components = createComponents(spec, this.cog);
     return chain([]);
   }
 
@@ -56,6 +60,11 @@ export class STAClient {
   }
 
   exec(): Rule {
-    return chain([this.createGenerator, this.finished]);
+    return chain([
+      async (tree: Tree, _context: SchematicContext) => {
+        const generator = await this.createGenerator();
+      },
+      this.finished()
+    ]);
   }
 }

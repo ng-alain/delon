@@ -9,7 +9,6 @@ import { generateApi, GenerateApiOutput } from 'swagger-typescript-api';
 
 import { readJSON, writeJSON } from '../utils/json';
 import { getProject } from '../utils/workspace';
-import { STAClient } from './client';
 import { Schema } from './schema';
 import { STAConfig } from './types';
 
@@ -199,6 +198,7 @@ export default function (options: Schema): Rule {
       ...options
     };
 
-    return chain([addPathInTsConfig(config.name), new STAClient(config, project).exec(), finished()]);
+    // new STAClient(config, project).exec()
+    return chain([addPathInTsConfig(config.name), genProxy(config), finished()]);
   };
 }
