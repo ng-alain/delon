@@ -13,7 +13,7 @@ type: Widgets
 ```html
 <sf>
   <ng-template sf-template="formFieldName" let-i let-ui="ui" let-schema="schema">
-  </ng-tempalte>
+  </ng-template>
 </sf>
 ```
 
