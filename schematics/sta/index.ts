@@ -3,7 +3,8 @@ import { colors } from '@angular/cli/utilities/color';
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
-import { rmdirSync, mkdirSync, existsSync } from 'fs';
+import { rmdirSync, mkdirSync, existsSync, readFileSync } from 'fs';
+import { parse } from 'jsonc-parser';
 import { resolve, join } from 'path';
 import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-typescript-api';
 
@@ -209,7 +210,7 @@ function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfi
     const configFile = resolve(process.cwd(), configPath);
     context.logger.info(colors.blue(`- Use config file: ${configFile}`));
     if (existsSync(configFile)) {
-      return require(configFile);
+      return parse(readFileSync(configFile).toString('utf8'));
     }
   } catch (err) {
     throw new SchematicsException(`Invalid config file ${err}`);
