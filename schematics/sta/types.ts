@@ -14,9 +14,15 @@ export interface STAConfig {
    */
   httpClientType?: 'angular' | 'delon';
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  generateApiParams?: any;
+  /**
+   * swagger-typescript-api [options](https://github.com/acacode/swagger-typescript-api#-usage)
+   */
+  generateApiOptions?: unknown;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  spec?: any;
+  spec?: unknown;
+
+  /**
+   * Model name prefix
+   */
+  modelTypePrefix?: string;
 }

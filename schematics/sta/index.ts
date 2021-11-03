@@ -5,7 +5,7 @@ import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
 import { rmdirSync, mkdirSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
-import { generateApi, GenerateApiOutput } from 'swagger-typescript-api';
+import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-typescript-api';
 
 import { readJSON, writeJSON } from '../utils/json';
 import { getProject } from '../utils/workspace';
@@ -112,7 +112,7 @@ function genProxy(config: STAConfig): Rule {
 
     return new Promise<void>(resolve => {
       context.logger.info(colors.blue(`Start generating...`));
-      generateApi({
+      const options = {
         name: `${config.name}.ts`,
         url: config.url,
         input: config.filePath,
@@ -131,33 +131,59 @@ function genProxy(config: STAConfig): Rule {
         silent: true,
         disableStrictSSL: true,
         moduleNameFirstTag: true,
+        defaultResponseType: 'any',
+        typePrefix: config.modelTypePrefix,
         hooks: {
-          onInit: c => {
+          onInit: (c: { httpClientType: string }) => {
             c.httpClientType = config.httpClientType;
             return c;
           },
           onPrepareConfig: c => {
             if (!config.responseDataField) return c;
 
+            const getDeepDataType = (ref: string) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              let typeData = c.utils.getComponentByRef(ref)?.typeData as any;
+              while (typeData != null && Array.isArray(typeData.allOf) && typeData.allOf.length > 0) {
+                typeData = c.utils.getComponentByRef(typeData.allOf[0].$ref)?.typeData;
+              }
+              return typeData;
+            };
+
             c.routes.combined?.forEach(moduleInfo => {
-              moduleInfo.routes.forEach(routeInfo => {
-                const responseBodyContentFirstType = Object.keys(routeInfo.responseBodySchema?.content).pop();
-                if (!responseBodyContentFirstType) return;
-                const responseBodyRef = c.utils.getComponentByRef(
-                  routeInfo.responseBodySchema.content[responseBodyContentFirstType].schema.$ref
-                );
-                if (!responseBodyRef) return;
-                const fieldProperty = responseBodyRef.typeData?.properties?.[config.responseDataField];
-                if (!fieldProperty) return;
-                routeInfo.response.type = fieldProperty.$parsed.content ?? 'any';
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              moduleInfo.routes.forEach((routeInfo: any) => {
+                if (!routeInfo.responseBodySchema) return;
+                try {
+                  const responseBodyContentFirstType = Object.keys(routeInfo.responseBodySchema?.content).pop();
+                  if (!responseBodyContentFirstType) return;
+
+                  const ref = routeInfo.responseBodySchema.content[responseBodyContentFirstType].schema.$ref;
+                  const resDataType = getDeepDataType(ref);
+                  if (!resDataType) return;
+                  const fieldProperty = resDataType.properties?.[config.responseDataField];
+                  if (!fieldProperty) return;
+                  routeInfo.response.type = fieldProperty.$parsed.content ?? 'any';
+                } catch (ex) {
+                  throw new SchematicsException(`Parse data field error: ${ex}`);
+                }
               });
             });
             return c;
+          },
+          onFormatTypeName: formattedModelName => {
+            if (!config.modelTypePrefix) return formattedModelName;
+
+            if (formattedModelName.startsWith(config.modelTypePrefix + config.modelTypePrefix)) {
+              return formattedModelName.substring(config.modelTypePrefix.length);
+            }
+            return formattedModelName;
           }
         },
-        ...config.generateApiParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any)
+        ...(config.generateApiOptions as any)
+      } as GenerateApiParams;
+      generateApi(options)
         .then((res: GenerateApiOutput) => {
           cleanOutput(output);
           fix(output, res, tree, context);
@@ -176,27 +202,35 @@ function finished(): Rule {
   };
 }
 
-function tryLoadConfig(configPath?: string): STAConfig | null {
+function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfig | null {
   if (!configPath || configPath.length <= 0) return null;
 
   try {
     const configFile = resolve(process.cwd(), configPath);
+    context.logger.info(colors.blue(`- Use config file: ${configFile}`));
     if (existsSync(configFile)) {
       return require(configFile);
     }
   } catch (err) {
-    console.error('Invalid config file', err);
+    throw new SchematicsException(`Invalid config file ${err}`);
   }
 }
 
 export default function (options: Schema): Rule {
-  return async (tree: Tree) => {
+  return async (tree: Tree, context: SchematicContext) => {
     project = (await getProject(tree, options.project)).project;
     const config: STAConfig = {
       name: 'sta',
-      ...tryLoadConfig(options.config),
-      ...options
+      ...options,
+      ...tryLoadConfig(context, options.config)
     };
+    if (typeof config.generateApiOptions === 'string') {
+      try {
+        config.generateApiOptions = JSON.parse(config.generateApiOptions);
+      } catch (ex) {
+        throw new SchematicsException(`Parse generateApiParams error: '${config.generateApiOptions}' => ${ex}`);
+      }
+    }
 
     // new STAClient(config, project).exec()
     return chain([addPathInTsConfig(config.name), genProxy(config), finished()]);

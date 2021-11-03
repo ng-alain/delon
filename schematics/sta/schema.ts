@@ -28,5 +28,12 @@ export interface Schema {
    */
   httpClientType?: 'angular' | 'delon';
 
+  /**
+   * Model name prefix
+   */
+  modelTypePrefix?: string;
+
+  generateApiOptions?: string;
+
   project?: string;
 }

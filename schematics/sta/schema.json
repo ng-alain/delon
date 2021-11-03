@@ -36,6 +36,17 @@
       "default": "delon",
       "enum": [ "delon", "angular" ],
       "description": "httpClient request type, Default: `delon`"
+    },
+    "modelTypePrefix": {
+      "type": "string",
+      "default": "",
+      "description": "Model name prefix"
+    },
+    "generateApiOptions": {
+      "anyOf": [
+        { "type": "string", "default": "{}" },
+        { "type": "object" }
+      ]
     }
   }
 }
