@@ -91,7 +91,7 @@ describe('Schematic: ng-update: v12Rule', () => {
                 "builder": "@angular-devkit/build-angular:dev-server",
                 "options": {
                   "browserTarget": "ng-alain:build",
-                  "proxyConfig": "proxy.conf.json"
+                  "proxyConfig": "proxy.conf.js"
                 },
                 "configurations": {
                   "production": {
@@ -257,7 +257,7 @@ describe('Schematic: ng-update: v12Rule', () => {
                 "builder": "@angular-devkit/build-angular:dev-server",
                 "options": {
                   "browserTarget": "app-ui:build",
-                  "proxyConfig": "proxy.conf.json"
+                  "proxyConfig": "proxy.conf.js"
                 },
                 "configurations": {
                   "production": {

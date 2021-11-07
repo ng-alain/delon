@@ -75,13 +75,13 @@ Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://l
 
 而正常解决跨域问题有两种方法，一是让后端开发环境直接支持跨域请求（不推荐，但最简单），二是利用 Angular Cli 提供[代理支持](https://webpack.js.org/configuration/dev-server/#devserver-proxy)，开发代理服务器会将 Angular 发送的请求的域和端口转发给后端服务器，CORS 是浏览器的安全限制，在代理服务器与后端服务器之前并不存在 CORS 的问题，这也就是为什么很多人会尝试明明在 Postman 能请求，而在 Angular 下无法请求的原因所在。
 
-假定所有后端请求都是以 `/api` 为前缀时，就可以在 `proxy.conf.json` 配置所有这个前缀都转向新的后端，例如：
+假定所有后端请求都是以 `/api` 为前缀时，就可以在 `proxy.conf.js` 配置所有这个前缀都转向新的后端，例如：
 
-```json
-{
-  "/api": {
-    "target": "http://192.168.1.100/api",
-    "secure": false
+```js
+module.exports = {
+  '/api': {
+    target: 'http://192.168.1.100/api',
+    secure: false
   }
 }
 ```
