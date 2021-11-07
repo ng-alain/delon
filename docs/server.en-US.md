@@ -74,13 +74,13 @@ Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://l
 
 There are usually two ways to solve cross-domain problems. One is to allow the back-end development environment to directly support CORS requests (not recommended, but simplest), the second is to use Angular Cli to provide [Proxy Support](https://webpack.js.org/configuration/dev-server/#devserver-proxy), the development proxy server will forward the domain and port of the request sent by Angular to the backend Server, CORS is a security restriction of the browser. There is no problem with CORS before the proxy server and the backend server. This is why many people try to make it clear that they can be requested in Postman but not in Angular.
 
-Assuming that all backend requests are prefixed with `/api`, you can configure all this prefix in `proxy.conf.json` to forward to the new backend, for example:
+Assuming that all backend requests are prefixed with `/api`, you can configure all this prefix in `proxy.conf.js` to forward to the new backend, for example:
 
-```json
-{
-  "/api": {
-    "target": "http://192.168.1.100/api",
-    "secure": false
+```js
+module.exports = {
+  '/api': {
+    target: 'http://192.168.1.100/api',
+    secure: false
   }
 }
 ```

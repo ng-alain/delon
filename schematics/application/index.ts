@@ -68,10 +68,10 @@ function removeOrginalFiles(): Rule {
 function fixAngularJson(options: ApplicationOptions): Rule {
   return updateWorkspace(async workspace => {
     const p = getProjectFromWorkspace(workspace, options.project);
-    // Add proxy.conf.json
+    // Add proxy.conf.js
     const serveTarget = p.targets?.get(BUILD_TARGET_SERVE);
     if (serveTarget.options == null) serveTarget.options = {};
-    serveTarget.options.proxyConfig = 'proxy.conf.json';
+    serveTarget.options.proxyConfig = 'proxy.conf.js';
     // 调整budgets
     const budgets = (getProjectTarget(p, BUILD_TARGET_BUILD, 'configurations').production as JsonObject)
       .budgets as Array<{
