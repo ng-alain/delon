@@ -77,7 +77,7 @@
     "file-saver": "^2.0.5",
     "ng-github-button": "^12.0.0",
     "ng-zorro-antd": "^12.0.1",
-    "ngx-color": "^7.2.0",
+    "ngx-color": "~7.2.0",
     "ngx-countdown": "^12.0.1",
     "ngx-highlight-js": "^12.0.0",
     "ngx-tinymce": "^12.0.0",
