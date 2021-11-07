@@ -1,14 +1,10 @@
-import { Component, DebugElement, NgModule, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { PreloadingStrategy, Route, Router, RouterModule, RouterPreloader } from '@angular/router';
+import { NavigationCancel, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -24,218 +20,152 @@ describe('theme: layout-default', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  describe('', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule, AlainThemeModule],
-        declarations: [TestComponent]
-      });
-
-      ({ fixture, dl, context } = createTestContext(TestComponent));
-      page = new PageObject();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule, AlainThemeModule],
+      declarations: [TestComponent]
     });
 
-    it('should be custom nav', () => {
-      context.nav = context.navTpl;
+    ({ fixture, dl, context } = createTestContext(TestComponent));
+    page = new PageObject();
+  });
+
+  it('should be custom nav', () => {
+    context.nav = context.navTpl;
+    fixture.detectChanges();
+    page.expectEl('.custom-nav', true);
+    page.expectEl('layout-default-nav', false);
+  });
+
+  it('should be custom aside user', () => {
+    context.asideUser = context.asideUserTpl;
+    fixture.detectChanges();
+    page.expectEl('.custom-aside-user', true);
+  });
+
+  it('should be custom content', () => {
+    context.content = context.contentTpl;
+    fixture.detectChanges();
+    page.expectEl('.custom-content', true);
+  });
+
+  it('should be toggle collapsed', () => {
+    const srv = TestBed.inject(SettingsService);
+    let collapsed = false;
+    spyOnProperty(srv, 'layout').and.returnValue({ collapsed });
+    fixture.detectChanges();
+    const el = page.getEl('.alain-default__nav-item--collapse');
+    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+    collapsed = true;
+    el.click();
+    fixture.detectChanges();
+    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+  });
+
+  it('#colorWeak', () => {
+    const srv = TestBed.inject(SettingsService);
+    spyOnProperty(srv, 'layout').and.returnValue({ colorWeak: true });
+    fixture.detectChanges();
+    expect(document.body.classList).toContain(`color-weak`);
+  });
+
+  describe('#options', () => {
+    it('#logoLink', () => {
+      context.options = { logoLink: '/home' };
       fixture.detectChanges();
-      page.expectEl('.custom-nav', true);
-      page.expectEl('layout-default-nav', false);
+      const el = page.getEl<HTMLLinkElement>('.alain-default__header-logo-link');
+      expect(el.href.endsWith('/home')).toBe(true);
     });
 
-    it('should be custom aside user', () => {
-      context.asideUser = context.asideUserTpl;
+    it('#logoFixWidth', () => {
+      context.options = { logoFixWidth: 100 };
       fixture.detectChanges();
-      page.expectEl('.custom-aside-user', true);
+      const el = page.getEl('.alain-default__header-logo');
+      expect(el.style.width).toBe(`100px`);
     });
 
-    it('should be custom content', () => {
-      context.content = context.contentTpl;
+    it('#hideAside', () => {
+      context.options = { hideAside: true };
       fixture.detectChanges();
-      page.expectEl('.custom-content', true);
-    });
-
-    it('should be toggle collapsed', () => {
-      const srv = TestBed.inject(SettingsService);
-      let collapsed = false;
-      spyOnProperty(srv, 'layout').and.returnValue({ collapsed });
-      fixture.detectChanges();
-      const el = page.getEl('.alain-default__nav-item--collapse');
-      expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
-      collapsed = true;
-      el.click();
-      fixture.detectChanges();
-      expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
-    });
-
-    it('#colorWeak', () => {
-      const srv = TestBed.inject(SettingsService);
-      spyOnProperty(srv, 'layout').and.returnValue({ colorWeak: true });
-      fixture.detectChanges();
-      expect(document.body.classList).toContain(`color-weak`);
-    });
-
-    describe('#options', () => {
-      it('#logoLink', () => {
-        context.options = { logoLink: '/home' };
-        fixture.detectChanges();
-        const el = page.getEl<HTMLLinkElement>('.alain-default__header-logo-link');
-        expect(el.href.endsWith('/home')).toBe(true);
-      });
-
-      it('#logoFixWidth', () => {
-        context.options = { logoFixWidth: 100 };
-        fixture.detectChanges();
-        const el = page.getEl('.alain-default__header-logo');
-        expect(el.style.width).toBe(`100px`);
-      });
-
-      it('#hideAside', () => {
-        context.options = { hideAside: true };
-        fixture.detectChanges();
-        page.expectEl(`.alain-default__hide-aside`).expectEl(`.alain-default__nav-item--collapse`, false);
-      });
-    });
-
-    describe('RTL', () => {
-      it('should be toggle collapsed', () => {
-        const srv = TestBed.inject(SettingsService);
-        let collapsed = false;
-        spyOnProperty(srv, 'layout').and.returnValue({ collapsed, direction: 'rtl' });
-        fixture.detectChanges();
-        const el = page.getEl('.alain-default__nav-item--collapse');
-        expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
-        collapsed = true;
-        el.click();
-        fixture.detectChanges();
-        expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
-      });
+      page.expectEl(`.alain-default__hide-aside`).expectEl(`.alain-default__nav-item--collapse`, false);
     });
   });
 
-  describe('Module Fetching', () => {
-    const lazyLoadChildrenSpy = jasmine.createSpy('lazymodule');
-    const mockPreloaderFactory = (): PreloadingStrategy => {
-      class DelayedPreLoad implements PreloadingStrategy {
-        preload(_route: Route, fn: () => Observable<NzSafeAny>): Observable<NzSafeAny> {
-          return fn().pipe(catchError(() => of(null)));
-          // const routeName =
-          //     route.loadChildren ? (route.loadChildren as jasmine.Spy).and.identity : 'noChildren';
-          // return delayLoadObserver$.pipe(
-          //     filter(unpauseList => unpauseList.indexOf(routeName) !== -1),
-          //     take(1),
-          //     switchMap(() => {
-          //       return fn().pipe(catchError(() => of(null)));
-          //     }),
-          // );
-        }
-      }
-      return new DelayedPreLoad();
-    };
-    let layoutComp: LayoutComponent;
+  describe('RTL', () => {
+    it('should be toggle collapsed', () => {
+      const srv = TestBed.inject(SettingsService);
+      let collapsed = false;
+      spyOnProperty(srv, 'layout').and.returnValue({ collapsed, direction: 'rtl' });
+      fixture.detectChanges();
+      const el = page.getEl('.alain-default__nav-item--collapse');
+      expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+      collapsed = true;
+      el.click();
+      fixture.detectChanges();
+      expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+    });
+  });
 
-    @Component({ template: '<layout-default #comp><router-outlet></router-outlet></layout-default>' })
-    class LayoutComponent {
-      @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;
+  describe('lazy load', () => {
+    let msgSrv: NzMessageService;
+    function lazyTick() {
+      tick(101);
+    }
+    function lazyStart() {
+      context.comp.processEv(new RouteConfigLoadStart({}));
+      lazyTick();
     }
 
-    @Component({ template: '' })
-    class LazyLoadedComponent {}
+    function lazyError() {
+      context.comp.processEv(new NavigationError(0, '/', {}));
+      lazyTick();
+    }
 
-    @NgModule({
-      declarations: [LayoutComponent, LazyLoadedComponent]
-    })
-    class SharedModule {}
+    function lazyCancel(reason: string = 'cancel') {
+      context.comp.processEv(new NavigationCancel(0, '/', reason));
+      lazyTick();
+    }
 
-    @NgModule({
-      imports: [SharedModule, RouterModule.forChild([{ path: 'LoadedModule1', component: LazyLoadedComponent }])]
-    })
-    class LoadedModule1 {}
+    function lazyEnd() {
+      context.comp.processEv(new RouteConfigLoadEnd({}));
+      lazyTick();
+    }
 
-    beforeEach(() => {
-      lazyLoadChildrenSpy.calls.reset();
-      TestBed.configureTestingModule({
-        declarations: [LayoutComponent],
-        imports: [
-          LayoutDefaultModule,
-          NzIconTestModule,
-          NoopAnimationsModule,
-          RouterTestingModule.withRoutes([{ path: 'lazy', loadChildren: lazyLoadChildrenSpy }]),
-          AlainThemeModule
-        ],
-        providers: [{ provide: PreloadingStrategy, useFactory: mockPreloaderFactory }]
-      });
-      layoutComp = TestBed.createComponent(LayoutComponent).componentInstance;
+    beforeEach(fakeAsync(() => {
+      lazyStart();
+      msgSrv = TestBed.inject(NzMessageService);
+    }));
+
+    it('should toggle fetching status when load lzay config', fakeAsync(() => {
+      expect(context.comp.isFetching).toBe(true);
+      lazyEnd();
+    }));
+
+    describe('when error', () => {
+      it('should be invalid module', fakeAsync(() => {
+        const spy = spyOn(msgSrv, 'error');
+        lazyError();
+        expect(context.comp.isFetching).toBe(false);
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.first().args[0]).toContain('Could not load ');
+        lazyEnd();
+      }));
+      it('should be custom error', fakeAsync(() => {
+        const spy = spyOn(msgSrv, 'error');
+        context.customError = 'test';
+        fixture.detectChanges();
+        lazyError();
+        expect(context.comp.isFetching).toBe(false);
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.first().args[0]).toBe('test');
+        lazyEnd();
+      }));
+      it('should be cancel load config', fakeAsync(() => {
+        lazyCancel();
+        expect(context.comp.isFetching).toBe(false);
+        lazyEnd();
+      }));
     });
-
-    it('should working', fakeAsync(() => {
-      const preloader = TestBed.inject(RouterPreloader);
-      const router = TestBed.inject(Router);
-      const msgSrv = TestBed.inject(NzMessageService);
-      lazyLoadChildrenSpy.and.returnValue(of(LoadedModule1));
-
-      // App start activation of preloader
-      preloader.preload().subscribe(() => {});
-      tick();
-      expect(layoutComp.comp.isFetching).toBe(true, 'Shoule be true when router is just begin start and not end');
-      router.navigateByUrl('/lazy/LoadedModule1');
-      tick(101);
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
-      const errSpy = spyOn(msgSrv, 'error');
-      try {
-        router.navigateByUrl('/lazy/invalid-module');
-        tick(101);
-      } catch {}
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
-      expect(errSpy).toHaveBeenCalled();
-      expect(errSpy.calls.first().args[0]).toContain('Could not load ');
-    }));
-
-    it('should be custom error', fakeAsync(() => {
-      const preloader = TestBed.inject(RouterPreloader);
-      const router = TestBed.inject(Router);
-      const msgSrv = TestBed.inject(NzMessageService);
-      lazyLoadChildrenSpy.and.returnValue(of(LoadedModule1));
-
-      // App start activation of preloader
-      preloader.preload().subscribe(() => {});
-      tick();
-      expect(layoutComp.comp.isFetching).toBe(true, 'Shoule be true when router is just begin start and not end');
-      router.navigateByUrl('/lazy/LoadedModule1');
-      tick(101);
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
-      layoutComp.comp.customError = `CUSTOM_ERROR`;
-      const errSpy = spyOn(msgSrv, 'error');
-      try {
-        router.navigateByUrl('/lazy/invalid-module');
-        tick(101);
-      } catch {}
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
-      expect(errSpy).toHaveBeenCalled();
-      expect(errSpy.calls.first().args[0]).toBe(`CUSTOM_ERROR`);
-    }));
-
-    it('should be not show error when is null', fakeAsync(() => {
-      const preloader = TestBed.inject(RouterPreloader);
-      const router = TestBed.inject(Router);
-      const msgSrv = TestBed.inject(NzMessageService);
-      lazyLoadChildrenSpy.and.returnValue(of(LoadedModule1));
-
-      // App start activation of preloader
-      preloader.preload().subscribe(() => {});
-      tick();
-      expect(layoutComp.comp.isFetching).toBe(true, 'Shoule be true when router is just begin start and not end');
-      router.navigateByUrl('/lazy/LoadedModule1');
-      tick(101);
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
-      layoutComp.comp.customError = null;
-      const errSpy = spyOn(msgSrv, 'error');
-      try {
-        router.navigateByUrl('/lazy/invalid-module');
-        tick(101);
-      } catch {}
-      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
-      expect(errSpy).not.toHaveBeenCalled();
-    }));
   });
 
   class PageObject {
@@ -253,6 +183,7 @@ describe('theme: layout-default', () => {
 @Component({
   template: `
     <layout-default
+      #comp
       [options]="options"
       [asideUser]="asideUser"
       [nav]="nav"
@@ -279,6 +210,7 @@ describe('theme: layout-default', () => {
   `
 })
 class TestComponent {
+  @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;
   @ViewChild('asideUserTpl', { static: true }) asideUserTpl!: TemplateRef<void>;
   @ViewChild('navTpl', { static: true }) navTpl!: TemplateRef<void>;
   @ViewChild('contentTpl', { static: true }) contentTpl!: TemplateRef<void>;

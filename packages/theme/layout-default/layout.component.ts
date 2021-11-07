@@ -17,7 +17,8 @@ import {
   NavigationError,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
-  Router
+  Router,
+  Event
 } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -64,33 +65,35 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
 
   constructor(
     router: Router,
-    msgSrv: NzMessageService,
+    private msgSrv: NzMessageService,
     private settings: SettingsService,
     private el: ElementRef,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
-    router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
-      if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
-        this.isFetching = true;
+    router.events.pipe(takeUntil(this.destroy$)).subscribe(ev => this.processEv(ev));
+  }
+
+  processEv(ev: Event): void {
+    if (!this.isFetching && ev instanceof RouteConfigLoadStart) {
+      this.isFetching = true;
+    }
+    if (ev instanceof NavigationError || ev instanceof NavigationCancel) {
+      this.isFetching = false;
+      const err = this.customError === null ? null : this.customError ?? `Could not load ${ev.url} route`;
+      if (err && ev instanceof NavigationError) {
+        this.msgSrv.error(err, { nzDuration: 1000 * 3 });
       }
-      if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
+      return;
+    }
+    if (!(ev instanceof NavigationEnd || ev instanceof RouteConfigLoadEnd)) {
+      return;
+    }
+    if (this.isFetching) {
+      setTimeout(() => {
         this.isFetching = false;
-        const err = this.customError == null ? null : this.customError ?? `Could not load ${evt.url} route`;
-        if (err && evt instanceof NavigationError) {
-          msgSrv.error(err, { nzDuration: 1000 * 3 });
-        }
-        return;
-      }
-      if (!(evt instanceof NavigationEnd || evt instanceof RouteConfigLoadEnd)) {
-        return;
-      }
-      if (this.isFetching) {
-        setTimeout(() => {
-          this.isFetching = false;
-        }, 100);
-      }
-    });
+      }, 100);
+    }
   }
 
   private setClass(): void {
