@@ -213,6 +213,29 @@ describe('theme: layout-default', () => {
       expect(errSpy).toHaveBeenCalled();
       expect(errSpy.calls.first().args[0]).toBe(`CUSTOM_ERROR`);
     }));
+
+    it('should be not show error when is empty string', fakeAsync(() => {
+      const preloader = TestBed.inject(RouterPreloader);
+      const router = TestBed.inject(Router);
+      const msgSrv = TestBed.inject(NzMessageService);
+      lazyLoadChildrenSpy.and.returnValue(of(LoadedModule1));
+
+      // App start activation of preloader
+      preloader.preload().subscribe(() => {});
+      tick();
+      expect(layoutComp.comp.isFetching).toBe(true, 'Shoule be true when router is just begin start and not end');
+      router.navigateByUrl('/lazy/LoadedModule1');
+      tick(101);
+      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
+      layoutComp.comp.customError = ``;
+      const errSpy = spyOn(msgSrv, 'error');
+      try {
+        router.navigateByUrl('/lazy/invalid-module');
+        tick(101);
+      } catch {}
+      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
+      expect(errSpy).not.toHaveBeenCalled();
+    }));
   });
 
   class PageObject {
