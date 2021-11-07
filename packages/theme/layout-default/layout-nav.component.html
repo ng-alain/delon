@@ -55,14 +55,7 @@
         <i class="sidebar-nav__sub-arrow"></i>
       </a>
       <!-- badge -->
-      <div
-        *ngIf="i.badge"
-        [attr.title]="i.badge"
-        class="badge badge-{{ i.badgeStatus }}"
-        [class.badge-dot]="i.badgeDot"
-      >
-        <em>{{ i.badge }}</em>
-      </div>
+      <nz-badge *ngIf="i.badge" [nzCount]="i.badge" [nzDot]="i.badgeDot" nzStandalone [nzOverflowCount]="9"></nz-badge>
       <ul *ngIf="i.children.length > 0" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ i._depth }}">
         <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: i.children }"></ng-template>
       </ul>
