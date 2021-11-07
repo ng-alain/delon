@@ -669,21 +669,23 @@ describe('abc: reuse-tab', () => {
       page.clickContentMenu('refresh');
       expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
-    it('should be call _onReuseInit when refresh non-active tab', fakeAsync(() => {
+    it('should be not trigger _onReuseInit when refresh non-active tab', fakeAsync(() => {
       createComp(
         `<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`
       );
       page.to('#a').to('#b').openContextMenu(0);
-      spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
-      page.clickContentMenu('refresh');
-      expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
+      expect(page.getContentMenu('refresh') == null).toBe(true);
+      // spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
+      // page.clickContentMenu('refresh');
+      // expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
-    it('should be call _onReuseInit when refresh non-active tab and not define (activate) event', fakeAsync(() => {
+    it('should be not trigger _onReuseInit when refresh non-active tab and not define (activate) event', fakeAsync(() => {
       createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet></router-outlet>`);
       page.to('#a').to('#b').openContextMenu(0);
-      spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
-      page.clickContentMenu('refresh');
-      expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
+      expect(page.getContentMenu('refresh') == null).toBe(true);
+      // spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
+      // page.clickContentMenu('refresh');
+      // expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
   });
 
@@ -796,8 +798,11 @@ describe('abc: reuse-tab', () => {
       this.cd();
       return this;
     }
+    getContentMenu(type: string): Element | null {
+      return document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
+    }
     clickContentMenu(type: string): this {
-      const el = document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
+      const el = this.getContentMenu(type);
       expect(el).not.toBeNull(`the ${type} is invalid element of content menu container`);
       (el as HTMLElement).click();
       return this.cd();

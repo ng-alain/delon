@@ -1,6 +1,6 @@
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ElementRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
@@ -31,21 +31,12 @@ export class ReuseTabContextService {
   open(context: ReuseContextEvent): void {
     this.remove();
     const { event, item, customContextMenu } = context;
-    const fakeElement = new ElementRef({
-      getBoundingClientRect: (): ClientRect => ({
-        bottom: event.clientY,
-        height: 0,
-        left: event.clientX,
-        right: event.clientX,
-        top: event.clientY,
-        width: 0
-      })
-    });
+    const { x, y } = event;
     const positions = [
       new ConnectionPositionPair({ originX: 'start', originY: 'bottom' }, { overlayX: 'start', overlayY: 'top' }),
       new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
     ];
-    const positionStrategy = this.overlay.position().flexibleConnectedTo(fakeElement).withPositions(positions);
+    const positionStrategy = this.overlay.position().flexibleConnectedTo({ x, y }).withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
       panelClass: 'reuse-tab__cm',
