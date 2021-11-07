@@ -549,6 +549,10 @@ module.exports = {
           'en-US': 'Service',
         },
         {
+          'zh-CN': '路由',
+          'en-US': 'Router',
+        },
+        {
           'zh-CN': '管道',
           'en-US': 'Pipe',
         },
@@ -591,6 +595,13 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           reName: 'theme-btn',
+          hasSubDir: false,
+        },
+        {
+          src: ['./packages/theme/src/router'],
+          template: {
+            content: './src/templates/content.ts',
+          },
           hasSubDir: false,
         },
         {

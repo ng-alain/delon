@@ -61,6 +61,10 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
 export class AppModule { }
 ```
 
+**Why do I need to manually register HTTP_INTERCEPTORS**
+
+The default `DelonAuthModule` does not register any HTTP interceptor, because of `@delon/auth` provides multiple different [authentication styles](/auth/getting-started#AuthenticationStyle).
+
 ## AlainAuthConfig
 
 | Property | Description | Type | Default | Global Config |
@@ -79,3 +83,9 @@ export class AppModule { }
 | `[refreshOffset]` | `number` | `6000` | Offset value (unit: ms), it is recommended to set according to the multiple of `refreshTime` | ✅ |
 
 > You can override them via [Global Configuration](/docs/global-config).
+
+## FAQ
+
+### Solve the Token pollution problem of multiple NG-ALAIN projects in the same domain
+
+You can modify the `store_key` for distinction in each project through [Global Configuration](/docs/global-config).
