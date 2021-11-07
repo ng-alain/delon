@@ -33,6 +33,7 @@ type: Widgets
 | `[precision]` | 等同 `nzPrecision` | - | - |
 | `[widgetWidth]` | 指定 `nz-number` 宽度 | `number` | `90` |
 | `[hideStep]` | 隐藏步数操作区 | `boolean` | `false` |
+| `[change]` | 变更事件 | `(val?: number) => void` | - |
 
 ## QA
 

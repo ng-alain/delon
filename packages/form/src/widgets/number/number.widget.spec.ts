@@ -5,6 +5,7 @@ import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { SFNumberWidgetSchema } from './schema';
 
 describe('form: widget: number', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -147,6 +148,23 @@ describe('form: widget: number', () => {
       page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();
       expect(ui.parser).toHaveBeenCalled();
+    }));
+
+    it('#event', fakeAsync(() => {
+      const schema: SFSchema = {
+        properties: {
+          a: {
+            type: 'number',
+            ui: {
+              change: jasmine.createSpy('change')
+            } as SFNumberWidgetSchema
+          }
+        }
+      };
+      page.newSchema(schema);
+      const ui = schema.properties!.a.ui as SFNumberWidgetSchema;
+      page.typeChar(1, 'input');
+      expect(ui.change).toHaveBeenCalled();
     }));
   });
 });
