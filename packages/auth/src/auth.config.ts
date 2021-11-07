@@ -8,6 +8,7 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   token_send_template: '${token}',
   token_send_place: 'header',
   login_url: '/login',
+  keep_querystring: true,
   ignores: [/\/login/, /assets\//, /passport\//],
   allow_anonymous_key: `_allow_anonymous`,
   executeOtherInterceptors: true,

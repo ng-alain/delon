@@ -31,7 +31,7 @@ export interface ITokenService {
   /**
    * 授权失败后跳转路由路径（支持外部链接地址），通过设置[全局配置](https://ng-alain.com/docs/global-config)来改变
    */
-  readonly login_url: string | undefined;
+  readonly login_url: string;
 
   /**
    * 当前请求页面的来源页面的地址

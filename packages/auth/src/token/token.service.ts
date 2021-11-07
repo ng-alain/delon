@@ -1,4 +1,5 @@
 import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 
@@ -10,7 +11,7 @@ import { DA_STORE_TOKEN, IStore } from '../store/interface';
 import { AuthReferrer, ITokenModel, ITokenService } from './interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
-  return new TokenService(inject(AlainConfigService), inject(DA_STORE_TOKEN));
+  return new TokenService(inject(AlainConfigService), inject(DA_STORE_TOKEN), inject(Router));
 }
 
 /**
@@ -24,7 +25,7 @@ export class TokenService implements ITokenService, OnDestroy {
   private _referrer: AuthReferrer = {};
   private _options: AlainAuthConfig;
 
-  constructor(configSrv: AlainConfigService, @Inject(DA_STORE_TOKEN) private store: IStore) {
+  constructor(configSrv: AlainConfigService, @Inject(DA_STORE_TOKEN) private store: IStore, private router: Router) {
     this._options = mergeConfig(configSrv);
   }
 
@@ -33,8 +34,15 @@ export class TokenService implements ITokenService, OnDestroy {
     return this.refresh$.pipe(share());
   }
 
-  get login_url(): string | undefined {
-    return this._options.login_url;
+  get login_url(): string {
+    const url = this._options.login_url!;
+    if (this._options.keep_querystring !== false) {
+      console.log(this.router);
+      // this.router.createUrlTree()
+      // this.router.parseUrl(url)
+      // this.router.url
+    }
+    return url;
   }
 
   get referrer(): AuthReferrer {

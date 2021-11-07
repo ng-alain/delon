@@ -23,13 +23,15 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
 
 export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: string): void {
   const router = injector.get<Router>(Router);
-  (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url || router.url;
+  const srv = injector.get(DA_SERVICE_TOKEN) as ITokenService;
+  srv.referrer!.url = url || router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
-      if (/^https?:\/\//g.test(options.login_url!)) {
-        injector.get(DOCUMENT).location.href = options.login_url as string;
+      const loginUrl = srv.login_url;
+      if (/^https?:\/\//g.test(loginUrl!)) {
+        injector.get(DOCUMENT).location.href = loginUrl;
       } else {
-        router.navigate([options.login_url]);
+        router.navigate([loginUrl]);
       }
     });
   }

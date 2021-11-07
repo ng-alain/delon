@@ -32,6 +32,10 @@ export interface AlainAuthConfig {
    */
   login_url?: string;
   /**
+   * 保持登录页路由的QueryString，默认：`true`
+   */
+  keep_querystring?: boolean;
+  /**
    * 忽略TOKEN的URL地址列表，默认值为：`[/\/login/, /assets\//, /passport\//]`
    */
   ignores?: RegExp[];
