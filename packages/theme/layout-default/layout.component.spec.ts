@@ -214,7 +214,7 @@ describe('theme: layout-default', () => {
       expect(errSpy.calls.first().args[0]).toBe(`CUSTOM_ERROR`);
     }));
 
-    it('should be not show error when is empty string', fakeAsync(() => {
+    it('should be not show error when is null', fakeAsync(() => {
       const preloader = TestBed.inject(RouterPreloader);
       const router = TestBed.inject(Router);
       const msgSrv = TestBed.inject(NzMessageService);
@@ -227,7 +227,7 @@ describe('theme: layout-default', () => {
       router.navigateByUrl('/lazy/LoadedModule1');
       tick(101);
       expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
-      layoutComp.comp.customError = ``;
+      layoutComp.comp.customError = null;
       const errSpy = spyOn(msgSrv, 'error');
       try {
         router.navigateByUrl('/lazy/invalid-module');

@@ -100,7 +100,7 @@ export class LayoutBasicComponent {
 | `[asideUser]` | 侧边用户信息 | `TemplateRef<void>` | `-` |
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
-| `[customError]` | 自定义异常路由错误消息 | `string` | `Could not load ${evt.url} route` |
+| `[customError]` | 自定义异常路由错误消息，当 `null` 时表示不显示错误消息 | `string, null` | `Could not load ${evt.url} route` |
 
 ### LayoutDefaultOptions
 
