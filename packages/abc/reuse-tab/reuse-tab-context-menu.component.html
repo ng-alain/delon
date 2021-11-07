@@ -1,5 +1,11 @@
 <ul nz-menu>
-  <li nz-menu-item (click)="click($event, 'refresh')" data-type="refresh" [innerHTML]="i18n.refresh"></li>
+  <li
+    *ngIf="item.active"
+    nz-menu-item
+    (click)="click($event, 'refresh')"
+    data-type="refresh"
+    [innerHTML]="i18n.refresh"
+  ></li>
   <li
     nz-menu-item
     (click)="click($event, 'close')"

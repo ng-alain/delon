@@ -41,4 +41,9 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
    * 隐藏步数操作区
    */
   hideStep?: boolean;
+
+  /**
+   * 变更事件
+   */
+  change?: (val?: number) => void;
 }
