@@ -65,7 +65,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_disabled: BooleanInput;
 
   @ViewChild('tabset') private tabset: NzTabSetComponent;
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private updatePos$ = new Subject<void>();
   private _keepingScrollContainer: Element;
   list: ReuseItem[] = [];
@@ -253,7 +253,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(50)).subscribe(() => {
+    this.updatePos$.pipe(takeUntil(this.destroy$), debounceTime(50)).subscribe(() => {
       const url = this.srv.getUrl(this.route.snapshot);
       const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
       if (ls.length === 0) {
@@ -273,7 +273,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    this.srv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
+    this.srv.change.pipe(takeUntil(this.destroy$)).subscribe(res => {
       switch (res?.active) {
         case 'title':
           this.updateTitle(res);
@@ -291,7 +291,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.i18nSrv.change
       .pipe(
         filter(() => this.srv.inited),
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         debounceTime(100)
       )
       .subscribe(() => this.genList({ active: 'title' }));
@@ -319,7 +319,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
+    const { destroy$: unsubscribe$ } = this;
     unsubscribe$.next();
     unsubscribe$.complete();
   }
