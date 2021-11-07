@@ -160,6 +160,15 @@ describe('theme: layout-default', () => {
         expect(spy.calls.first().args[0]).toBe('test');
         lazyEnd();
       }));
+      it('should be custom error is null', fakeAsync(() => {
+        const spy = spyOn(msgSrv, 'error');
+        context.customError = null;
+        fixture.detectChanges();
+        lazyError();
+        expect(context.comp.isFetching).toBe(false);
+        expect(spy).not.toHaveBeenCalled();
+        lazyEnd();
+      }));
       it('should be cancel load config', fakeAsync(() => {
         lazyCancel();
         expect(context.comp.isFetching).toBe(false);
@@ -218,5 +227,5 @@ class TestComponent {
   asideUser: TemplateRef<void>;
   nav: TemplateRef<void>;
   content: TemplateRef<void>;
-  customError?: string;
+  customError?: string | null;
 }
