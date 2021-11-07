@@ -57,6 +57,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   @Input() asideUser: TemplateRef<void>;
   @Input() nav: TemplateRef<void>;
   @Input() content: TemplateRef<void>;
+  @Input() customError?: string;
 
   private destroy$ = new Subject<void>();
   isFetching = false;
@@ -76,7 +77,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
         this.isFetching = false;
         if (evt instanceof NavigationError) {
-          msgSrv.error(`Could not load ${evt.url} route`, { nzDuration: 1000 * 3 });
+          msgSrv.error(this.customError ?? `Could not load ${evt.url} route`, { nzDuration: 1000 * 3 });
         }
         return;
       }

@@ -180,13 +180,38 @@ describe('theme: layout-default', () => {
       router.navigateByUrl('/lazy/LoadedModule1');
       tick(101);
       expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
+      const errSpy = spyOn(msgSrv, 'error');
       try {
-        spyOn(msgSrv, 'error');
         router.navigateByUrl('/lazy/invalid-module');
         tick(101);
-        expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
-        expect(msgSrv.error).toHaveBeenCalled();
       } catch {}
+      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
+      expect(errSpy).toHaveBeenCalled();
+      expect(errSpy.calls.first().args[0]).toContain('Could not load ');
+    }));
+
+    it('should be custom error', fakeAsync(() => {
+      const preloader = TestBed.inject(RouterPreloader);
+      const router = TestBed.inject(Router);
+      const msgSrv = TestBed.inject(NzMessageService);
+      lazyLoadChildrenSpy.and.returnValue(of(LoadedModule1));
+
+      // App start activation of preloader
+      preloader.preload().subscribe(() => {});
+      tick();
+      expect(layoutComp.comp.isFetching).toBe(true, 'Shoule be true when router is just begin start and not end');
+      router.navigateByUrl('/lazy/LoadedModule1');
+      tick(101);
+      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is end');
+      layoutComp.comp.customError = `CUSTOM_ERROR`;
+      const errSpy = spyOn(msgSrv, 'error');
+      try {
+        router.navigateByUrl('/lazy/invalid-module');
+        tick(101);
+      } catch {}
+      expect(layoutComp.comp.isFetching).toBe(false, 'Shoule be false when lazy router is invalid module');
+      expect(errSpy).toHaveBeenCalled();
+      expect(errSpy.calls.first().args[0]).toBe(`CUSTOM_ERROR`);
     }));
   });
 
@@ -204,7 +229,13 @@ describe('theme: layout-default', () => {
 
 @Component({
   template: `
-    <layout-default [options]="options" [asideUser]="asideUser" [nav]="nav" [content]="content">
+    <layout-default
+      [options]="options"
+      [asideUser]="asideUser"
+      [nav]="nav"
+      [content]="content"
+      [customError]="customError"
+    >
       <layout-default-header-item direction="left">
         <span class="header-left">left</span>
       </layout-default-header-item>
@@ -232,4 +263,5 @@ class TestComponent {
   asideUser: TemplateRef<void>;
   nav: TemplateRef<void>;
   content: TemplateRef<void>;
+  customError?: string;
 }
