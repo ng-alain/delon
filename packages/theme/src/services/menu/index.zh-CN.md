@@ -38,7 +38,7 @@ type: Service
 | `icon` | 图标，指[示例](//ng-alain.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效 | `string | MenuIcon` | - |
 | `badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | - |
 | `badgeDot` | 徽标数，显示小红点 | `boolean` | - |
-| `badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `string` | - |
+| `badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
 | `disabled` | 是否禁用菜单 | `boolean` | `false` |
 | `hide` | 是否隐藏菜单 | `boolean` | `false` |
 | `hideInBreadcrumb` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | - |

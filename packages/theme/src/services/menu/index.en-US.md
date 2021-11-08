@@ -40,7 +40,7 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 | `icon` | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | - |
 | `badge` | Badget for the menu item when `group` is `true` | `number` | - |
 | `badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | - |
-| `badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | - |
+| `badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
 | `disabled` | Whether disable for the menu item | `boolean` | `false` |
 | `hide` | Whether hidden for the menu item | `boolean` | `false` |
 | `hideInBreadcrumb` | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | - |
