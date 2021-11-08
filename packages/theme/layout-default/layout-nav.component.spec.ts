@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -96,7 +97,13 @@ describe('theme: layout-default-nav', () => {
 
   function createModule(): void {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), AlainThemeModule, HttpClientTestingModule, LayoutDefaultModule],
+      imports: [
+        NoopAnimationsModule,
+        RouterModule.forRoot([]),
+        AlainThemeModule,
+        HttpClientTestingModule,
+        LayoutDefaultModule
+      ],
       declarations: [TestComponent],
       providers: [
         { provide: ACLService, useClass: MockACLService },
@@ -290,7 +297,7 @@ describe('theme: layout-default-nav', () => {
           mockMenu[0].children![0].badge = 1;
           menuSrv.add(mockMenu);
           fixture.detectChanges();
-          expect(page.getEl('.badge') != null).toBe(true);
+          expect(page.getEl('.ant-badge') != null).toBe(true);
           page.showSubMenu();
           expect(page.getEl('.sidebar-nav__floating-container .sidebar-nav__item', true) != null).toBe(true);
         });
