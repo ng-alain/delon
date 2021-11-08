@@ -14,7 +14,7 @@ describe('NgAlainSchematic: plugin: networkEnv', () => {
     describe('when add', () => {
       it(`should add .npmrc`, () => {
         expect(tree.exists(npmrc)).toBe(true);
-        expect(tree.readContent(npmrc)).toContain(`registry=https://registry.npm.taobao.org`);
+        expect(tree.readContent(npmrc)).toContain(`registry=https://registry.npmmirror.com`);
       });
     });
 
@@ -39,7 +39,7 @@ describe('NgAlainSchematic: plugin: networkEnv', () => {
     describe('when add', () => {
       it(`should add .yarnrc`, () => {
         expect(tree.exists(yarnrc)).toBe(true);
-        expect(tree.readContent(yarnrc)).toContain(`registry "https://registry.npm.taobao.org"`);
+        expect(tree.readContent(yarnrc)).toContain(`registry "https://registry.npmmirror.com"`);
       });
     });
 
