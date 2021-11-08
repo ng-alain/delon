@@ -22,8 +22,8 @@ Npm 默认从国外源来下载包信息，鉴于国内环境因素，在开始�
 
 ```bash
 # 设置淘宝源
-npm config set registry https://registry.npm.taobao.org
-npm config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
+npm config set registry https://registry.npmmirror.com
+npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass
 # 恢复默认源
 npm config delete registry
 npm config delete sass_binary_site

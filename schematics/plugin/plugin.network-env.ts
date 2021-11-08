@@ -5,17 +5,17 @@ import { PluginOptions } from './interface';
 const CONFIG = {
   npm: {
     path: `./.npmrc`,
-    content: `sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
-phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs/
-electron_mirror=https://npm.taobao.org/mirrors/electron/
-registry=https://registry.npm.taobao.org`
+    content: `sass_binary_site=https://npmmirror.com/mirrors/node-sass/
+phantomjs_cdnurl=https://npmmirror.com/mirrors/phantomjs/
+electron_mirror=https://npmmirror.com/mirrors/electron/
+registry=https://registry.npmmirror.com`
   },
   yarn: {
     path: `./.yarnrc`,
-    content: `sass_binary_site "https://npm.taobao.org/mirrors/node-sass/"
-phantomjs_cdnurl "https://npm.taobao.org/mirrors/phantomjs/"
-electron_mirror "https://npm.taobao.org/mirrors/electron/"
-registry "https://registry.npm.taobao.org"`
+    content: `sass_binary_site "https://npmmirror.com/mirrors/node-sass/"
+phantomjs_cdnurl "https://npmmirror.com/mirrors/phantomjs/"
+electron_mirror "https://npmmirror.com/mirrors/electron/"
+registry "https://registry.npmmirror.com"`
   }
 };
 
