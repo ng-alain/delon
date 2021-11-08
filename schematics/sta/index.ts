@@ -219,6 +219,12 @@ function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfi
 
 export default function (options: Schema): Rule {
   return async (tree: Tree, context: SchematicContext) => {
+    context.logger.info(
+      colors.yellow(
+        `The ng g ng-alain:sta is currently in testing status and may change before the major version of '13'`
+      )
+    );
+
     project = (await getProject(tree, options.project)).project;
     const config: STAConfig = {
       name: 'sta',
@@ -233,7 +239,6 @@ export default function (options: Schema): Rule {
       }
     }
 
-    // new STAClient(config, project).exec()
     return chain([addPathInTsConfig(config.name), genProxy(config), finished()]);
   };
 }
