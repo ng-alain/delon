@@ -17,7 +17,7 @@ class MockACLService {
 
 describe('Service: Menu', () => {
   let srv: MenuService;
-  const DATA = [
+  const DATA: Menu[] = [
     {
       text: 'dashboard',
       link: '/dashboard',

@@ -134,21 +134,14 @@
   }
 
   // Badge
-  .badge {
+  .@{ant-prefix}-badge {
     position: absolute;
-    right: @layout-gutter * 2;
-    @badge-height: @layout-gutter * 2;
-
-    &:not(.badge-dot) {
-      top: ((@alain-default-aside-nav-item-height - @badge-height) / 2);
-      height: @badge-height;
-      padding: 0 4px;
-      overflow: hidden;
-      line-height: @badge-height;
-    }
+    top: @alain-default-aside-nav-padding-top-bottom;
+    right: @layout-gutter;
 
     &-dot {
-      top: ((@alain-default-aside-nav-item-height - @layout-gutter) / 2);
+      top: 10px !important;
+      right: @layout-gutter * 2 !important;
     }
   }
 
@@ -286,7 +279,8 @@
           margin-left: @layout-gutter;
         }
       }
-      .badge {
+
+      .@{ant-prefix}-badge {
         right: inherit;
         left: @layout-gutter * 2;
       }

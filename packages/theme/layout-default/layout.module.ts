@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageModule } from 'ng-zorro-antd/message';
@@ -30,7 +31,8 @@ const COMPONENTS = [
     NzIconModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzMessageModule
+    NzMessageModule,
+    NzBadgeModule
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS
