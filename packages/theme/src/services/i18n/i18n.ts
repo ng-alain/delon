@@ -119,7 +119,7 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     return res;
   }
 
-  abstract use(lang: string, data?: Record<string, string | unknown>): void;
+  abstract use(lang: string, data?: Record<string, unknown>): void;
 
   abstract getLangs(): NzSafeAny[];
 
