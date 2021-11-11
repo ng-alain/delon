@@ -47,6 +47,19 @@ describe('theme: i18n', () => {
       fixture.detectChanges();
       check('invalid');
     });
+
+    it('#flatData', () => {
+      srv.use('en', {
+        name: 'Name',
+        sys: {
+          '': 'System',
+          title: 'Title'
+        }
+      });
+      expect(srv.fanyi('name')).toBe(`Name`);
+      expect(srv.fanyi('sys')).toBe(`System`);
+      expect(srv.fanyi('sys.title')).toBe(`Title`);
+    });
   });
 
   it('#interpolation', () => {
