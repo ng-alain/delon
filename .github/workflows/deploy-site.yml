@@ -35,11 +35,11 @@ jobs:
           emptyCommits: false
 
       - name: deploy-to-surge-pre
-        uses: jacobtomlinson/gha-find-replace@master
+        uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: '/delon/'
           replace: '/'
-          include: '\.html$'
+          include: '**/*.html'
 
       - name: deploy-to-surge
         uses: dswistowski/surge-sh-action@v1
