@@ -480,6 +480,7 @@ class TestComponent {
 | `@nz-table-rep-column-name-text-align` | 响应式下标题文本对齐方式 | `right` |
 | `@nz-table-rep-column-name-width` | 响应式下标题宽度 | `100px` |
 | `@nz-table-rep-column-name-padding-right` | 响应式下标题与内容右边距 | `8px` |
+| `@table-row-hover-bg` | 行悬停背景色 | `#fafafa` |
 | `@st-btn-disabled-color` | 禁用按钮的文本颜色 | `rgba(0, 0, 0, 0.25)` |
 | `@st-title-optional-color` | 标题可选文本颜色 | `rgba(0, 0, 0, 0.35)` |
 | `@st-resizable-handle-width` | 拖拽宽度 | `1px` |

@@ -479,6 +479,7 @@ class TestComponent {
 | `@nz-table-rep-column-name-text-align` | Name text align in responsive | `right` |
 | `@nz-table-rep-column-name-width` | Name column width in responsive | `100px` |
 | `@nz-table-rep-column-name-padding-right` | Right padding of title and content in responsive | `8px` |
+| `@table-row-hover-bg` | Hover background color of the row | `#fafafa` |
 | `@st-btn-disabled-color` | Text color of the button | `rgba(0, 0, 0, 0.25)` |
 | `@st-title-optional-color` | Optional color of title | `rgba(0, 0, 0, 0.35)` |
 | `@st-resizable-handle-width` | Width of the rasizable handle | `1px` |
