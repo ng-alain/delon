@@ -1,0 +1,68 @@
+<%
+const { utils, route, config } = it;
+const { requestBodyInfo, responseBodyInfo, specificArgNameResolver, raw, routeName } = route;
+const { _, classNameCase, getInlineParseContent, getParseContent, parseSchema, getComponentByRef, require } = utils;
+const { parameters, path, method, payload, query, formData, security, requestParams } = route.request;
+const { type, errorType, contentTypes } = route.response;
+const { HTTP_CLIENT, RESERVED_REQ_PARAMS_ARG_NAMES } = config.constants;
+const routeDocs = includeFile("route-docs", { config, route, utils });
+const req = query || payload ? { ...query, ...payload } : null;
+const reqName = req?.name || "req";
+const pathParams = _.values(parameters);
+
+const optionsParam = {
+  name: 'options',
+  optional: true,
+  type: `STAHttpOptions`
+}
+
+const argToTmpl = ({ name, optional, type, defaultValue }) => `${name}${!defaultValue && optional ? '?' : ''}: ${type}${defaultValue ? ` = ${defaultValue}` : ''}`;
+
+if (req) {
+  req.name = 'req';
+  if (req.type.includes(':')) {
+    req.type = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Request`;
+  }
+}
+let res = type
+if (res && res.includes(':')) {
+  res = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Response`;
+}
+
+const rawWrapperArgs = _.compact([
+  ...pathParams,
+  req,
+  optionsParam,
+]);
+
+const wrapperArgs = _
+    // Sort by optionality
+    .sortBy(rawWrapperArgs, [o => o.optional])
+    .map(argToTmpl)
+    .join(', ')
+
+const requestContentKind = {
+  "URL_ENCODED": "application/x-www-form-urlencoded",
+  "FORM_DATA": "multipart/form-data",
+}[requestBodyInfo.contentKind]
+const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKind + "`" : null;
+%>
+
+/**<% if (routeDocs.description) {%>
+
+<%~ routeDocs.description %>
+
+ * <% /* Here you can add some other JSDoc tags */ %>
+<% } %>
+
+<%~ routeDocs.lines %>
+
+ */
+<%~ route.routeName.usage %>(<%~ wrapperArgs %>): Observable<<%~ res %>> {
+  return this.request('<%~ _.upperCase(method) %>', `<%~ path %>`, {
+    <%~ query ? `params: req,` : '' %>
+    <%~ payload ? `body: req,` : '' %>
+    <%~ headersTmpl ? `headers: { ${headersTmpl} },` : '' %>
+    ...options,
+  });
+}

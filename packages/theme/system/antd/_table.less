@@ -65,8 +65,11 @@
     }
     .@{ant-prefix}-table {
       table {
-        width: 100% !important;
         table-layout: auto !important;
+      }
+      table, col {
+        width: 100% !important;
+        min-width: auto !important;
       }
       &-thead {
         display: none;

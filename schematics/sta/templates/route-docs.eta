@@ -1,0 +1,30 @@
+<%
+const { config, route, utils } = it;
+const { _, formatDescription, fmtToJSDocLine, classNameCase, require } = utils;
+const { raw, request, routeName } = route;
+
+const jsDocDescription = [
+  raw.summary ? fmtToJSDocLine(raw.summary, { eol: false }) : null,
+  raw.description ? formatDescription(raw.description, true) : null,
+].filter(v => v != null).join(' - ');
+const jsDocLines = _.compact([
+    // ` * @name ${classNameCase(routeName.usage)}`,
+    ` * @request ${_.upperCase(request.method)}:${raw.route}`,
+    raw.deprecated && ` * @deprecated`,
+    routeName.duplicate && ` * @originalName ${routeName.original}`,
+    routeName.duplicate && ` * @duplicate`,
+    request.security && ` * @secure`,
+    ...(config.generateResponses && raw.responsesTypes.length
+    ? raw.responsesTypes.map(
+        ({ type, status, description, isSuccess }) =>
+            ` * @response ${status !== 'default' ? `\`${status}\` ` : ''}\`${type}\` ${description}`,
+        )
+    : []),
+]).join("\n");
+
+
+return {
+  description: jsDocDescription,
+  lines: jsDocLines,
+}
+%>

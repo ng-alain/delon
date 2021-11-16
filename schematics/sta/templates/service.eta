@@ -1,0 +1,44 @@
+<%
+const { utils, route, config, apiConfig, modelTypes } = it;
+const { _, classNameCase, require, formatDescription } = utils;
+const apiClassName = classNameCase(route.moduleName);
+const routes = route.routes;
+const rawTagName = _.first(_.first(routes)?.raw?.tags)
+const tag = _.find(apiConfig.tags, { name: rawTagName })
+const tagDescription  = formatDescription(tag?.description, true)
+const dataContracts = _.map(modelTypes, "name");
+const dtoContracts = _.union([
+  ...routes.map(i => {
+    const { query, payload } = i.request;
+    const request = (query && query.type) || (payload && payload.type)
+    if (!request?.includes(':')) return ''
+    return classNameCase(i.raw.moduleName) + classNameCase(i.routeName.usage) + 'Request';
+  }),
+  ...routes.map(i => {
+    if (!i.response?.type?.includes(':')) return ''
+    return classNameCase(i.raw.moduleName) + classNameCase(i.routeName.usage) + 'Response';
+  })
+]).filter(w => w.length > 0);
+%>
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { STABaseService, STAHttpOptions } from '../_base.service';
+<% if (dataContracts.length) { %>
+import type { <%~ dataContracts.join(", ") %> } from '../models'
+<% } %>
+<% if (dtoContracts.length) { %>
+import type { <%~ dtoContracts.join(", ") %> } from './dtos'
+<% } %>
+
+<% if (tagDescription?.length > 0) { %>
+/**
+ * <%~ tagDescription %>
+
+ */
+<% } %>
+@Injectable({ providedIn: 'root' })
+export class <%= apiClassName %>Service extends STABaseService {
+  <% routes.forEach((route) => { %>
+    <%~ includeFile('./procedure-call.eta', { ...it, route }) %>
+  <% }) %>
+}

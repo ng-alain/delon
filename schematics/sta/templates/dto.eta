@@ -1,0 +1,17 @@
+<%
+const { route, utils, config } = it;
+const { _, classNameCase, require } = utils;
+const { query, payload, pathParams, headers } = route.request;
+const routeNamespace = classNameCase(it.moduleName) + classNameCase(route.routeName.usage);
+const request = (query && query.type) || (payload && payload.type)
+const isInterface = request?.includes(':')
+%>
+
+<% if (isInterface && request) { %>
+export <%~ isInterface ? 'interface' : 'type' %> <%~ routeNamespace %>Request<%~ isInterface ? '' : ' =' %> <%~ request %>;
+
+<% } %>
+<% if (route.response.type?.includes(':') && route.response.type !== "void") { %>
+export interface <%~ routeNamespace %>Response <%~ route.response.type %>;
+
+<% } %>

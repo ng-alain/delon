@@ -102,7 +102,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return deepGet(file.response, this.i.resReName, file.response);
   }
 
-  private pureValue(fileList: NzUploadFile[]): void {
+  private pureValue(fileList: NzUploadFile[]): NzSafeAny {
     fileList
       .filter(file => !file.url)
       .forEach(file => {
