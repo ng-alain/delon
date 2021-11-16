@@ -21,6 +21,9 @@
     "schematics"
   ],
   "schematics": "./collection.json",
+  "dependencies": {
+    "swagger-typescript-api": "@LIB-PLACEHOLDER"
+  },
   "ng-update": {
     "migrations": "./migration.json",
     "packageGroup": [
