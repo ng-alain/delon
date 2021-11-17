@@ -54,6 +54,7 @@ import {
   STClickRowClassNameType,
   STColumn,
   STColumnButton,
+  STColumnFilter,
   STColumnFilterMenu,
   STColumnSafeType,
   STColumnSelection,
@@ -672,6 +673,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _filterRadio(col: _STColumn, item: STColumnFilterMenu, checked: boolean): void {
     col.filter!.menus!.forEach(i => (i.checked = false));
     item.checked = checked;
+    this._filterNotify(item);
   }
 
   _filterClear(col: _STColumn): void {
@@ -686,6 +688,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   _filterClick($event: MouseEvent): void {
     $event.stopPropagation();
+  }
+
+  _filterMultipleNotify(f: STColumnFilter): void {
+    this._filterNotify(f.menus?.filter(w => w.checked));
+  }
+
+  _filterNotify(value?: unknown): void {
+    this.changeEmit('filterChange', value);
   }
   // #endregion
 

@@ -142,14 +142,15 @@
                 <div *ngIf="_c.selections!.length > 0" class="ant-table-selection">
                   <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: true }">
                   </ng-template>
-                  <div
-                    *ngIf="_c.selections!.length"
-                    nz-dropdown
-                    nzPlacement="bottomLeft"
-                    [nzDropdownMenu]="selectionMenu"
-                    class="ant-table-selection-down st__checkall-selection"
-                  >
-                    <i nz-icon nzType="down"></i>
+                  <div *ngIf="_c.selections!.length" class="ant-table-selection-extra">
+                    <div
+                      nz-dropdown
+                      nzPlacement="bottomLeft"
+                      [nzDropdownMenu]="selectionMenu"
+                      class="ant-table-selection-down st__checkall-selection"
+                    >
+                      <i nz-icon nzType="down"></i>
+                    </div>
                   </div>
                   <nz-dropdown-menu #selectionMenu="nzDropdownMenu">
                     <ul nz-menu class="ant-table-selection-menu">
@@ -200,12 +201,15 @@
                         nz-input
                         [attr.placeholder]="$any(_f).menus[0].text"
                         [(ngModel)]="$any(_f).menus[0].value"
+                        (ngModelChange)="_filterNotify($event)"
                       />
                     </div>
                     <ul *ngSwitchDefault nz-menu>
                       <ng-container *ngIf="_f.multiple">
                         <li nz-menu-item *ngFor="let filter of _f.menus">
-                          <label nz-checkbox [(ngModel)]="filter.checked">{{ filter.text }}</label>
+                          <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="_filterMultipleNotify(_f)">
+                            {{ filter.text }}
+                          </label>
                         </li>
                       </ng-container>
                       <ng-container *ngIf="!_f.multiple">
@@ -214,8 +218,9 @@
                             nz-radio
                             [ngModel]="filter.checked"
                             (ngModelChange)="_filterRadio(h.column, filter, $event)"
-                            >{{ filter.text }}</label
                           >
+                            {{ filter.text }}
+                          </label>
                         </li>
                       </ng-container>
                     </ul>

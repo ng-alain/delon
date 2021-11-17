@@ -997,6 +997,7 @@ export type STChangeType =
   | 'radio'
   | 'sort'
   | 'filter'
+  | 'filterChange'
   | 'click'
   | 'dblClick'
   | 'expand'
@@ -1058,6 +1059,10 @@ export interface STChange<T extends STData = any> {
    * `resize` 参数
    */
   resize?: STColumn;
+  /**
+   * `filterChange` 参数，支持 `keyword`、`radio`、`checkbox` 三种类型的数据
+   */
+  filterChange?: unknown;
 }
 
 /** 行单击参数 */
