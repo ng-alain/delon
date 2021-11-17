@@ -1,6 +1,7 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -95,12 +96,14 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
   checkContent(): void {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
+    this.cdr.detectChanges();
   }
 
   constructor(
     private i18n: DelonLocaleService,
     private dom: DomSanitizer,
-    @Optional() private directionality: Directionality
+    @Optional() private directionality: Directionality,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
