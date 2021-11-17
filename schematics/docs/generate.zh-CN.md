@@ -11,6 +11,20 @@ type: Documents
 
 ng-alain 在此基础上增加了很多很酷的骚操作。
 
+默认情况下所有的代码统一存放于 `app/routes` 下面，可通过 `ng-alain.json` 指向其他目录，例如：
+
+```json
+{
+  "$schema": "./node_modules/ng-alain/schema.json",
+  "projects": {
+    // 表示 ng-alain 项目都存放于 `app/pages` 下
+    "ng-alain": {
+      "routesRoot": "app/pages"
+    }
+  }
+}
+```
+
 ## 命令格式
 
 ```bash
