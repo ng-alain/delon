@@ -214,7 +214,8 @@
           <span *ngIf="responsive" class="ant-table-rep__title">
             <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: c.title }"></ng-template>
           </span>
-          <span>
+          <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="cIdx" (n)="_handleTd($event)"></st-td>
+          <span *ngIf="false">
             <ng-template
               #render
               [ngTemplateOutlet]="c.__render!"

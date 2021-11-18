@@ -74,7 +74,7 @@ import {
   STStatisticalResults,
   STWidthMode
 } from './st.interfaces';
-import { _STColumn, _STDataValue, _STHeader } from './st.types';
+import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from './st.types';
 
 @Component({
   selector: 'st',
@@ -794,6 +794,23 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   // #endregion
+
+  _handleTd(ev: _STTdNotify) {
+    switch (ev.type) {
+      case 'checkbox':
+        this._refCheck()._checkNotify();
+        break;
+      case 'radio':
+        this.changeEmit('radio', ev.item);
+        break;
+      case 'load':
+        this.load();
+        break;
+      case 'reload':
+        this.reload();
+        break;
+    }
+  }
 
   // #region export
 
