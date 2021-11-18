@@ -413,6 +413,11 @@ describe('abc: st', () => {
           expect(page.getCell().classList).toContain('asdf');
           page.asyncEnd();
         }));
+        it('should be custom class in row', fakeAsync(() => {
+          page.updateColumn([{ title: '', index: 'id', className: 'asdf' }]);
+          page.comp.setRow(0, { className: 'aaa' });
+          page.cd().expectElCount('.aaa', 1).asyncEnd();
+        }));
       });
       describe('[buttons]', () => {
         it(`should be pop confirm when type=del`, fakeAsync(() => {

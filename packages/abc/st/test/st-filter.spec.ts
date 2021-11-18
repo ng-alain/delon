@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -7,6 +9,8 @@ import { STComponent } from '../st.component';
 import { STColumnFilter } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 import { PageObject, TestComponent, genModule } from './base.spec';
+
+registerLocaleData(zh);
 
 describe('abc: st-filter', () => {
   let page: PageObject<TestComponent>;
@@ -122,6 +126,25 @@ describe('abc: st-filter', () => {
       expect(m.value).toBe(undefined);
     });
   });
+  it('when type is number', fakeAsync(() => {
+    const f = page.context.columns[0].filter!;
+    f.type = 'number';
+    f.number = {};
+    page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-number', 1).asyncEnd();
+  }));
+  it('when type is date', fakeAsync(() => {
+    page.updateColumn([
+      {
+        type: 'date',
+        index: 'date',
+        filter: {
+          type: 'date',
+          date: {}
+        }
+      }
+    ]);
+    page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-date', 1).asyncEnd();
+  }));
   it('when type is custom', fakeAsync(() => {
     const f = page.context.columns[0].filter!;
     f.type = 'custom';
