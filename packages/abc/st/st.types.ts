@@ -4,7 +4,7 @@ import { SafeHtml } from '@angular/platform-browser';
 
 import { STColumn, STColumnButton, STColumnSafeType, STData, STSortMap } from './st.interfaces';
 
-export type _STTdNotifyType = 'checkbox' | 'radio' | 'load' | 'reload';
+export type _STTdNotifyType = 'checkbox' | 'radio';
 export interface _STTdNotify {
   type: _STTdNotifyType;
   item: STData;

@@ -419,22 +419,13 @@ describe('abc: st', () => {
           const columns: STColumn[] = [
             {
               title: '',
-              buttons: [
-                { text: 'del', type: 'del' },
-                {
-                  type: 'del',
-                  click: jasmine.createSpy(),
-                  popTitle: 'confirm?'
-                }
-              ]
+              buttons: [{ text: 'del', type: 'del', click: jasmine.createSpy() }]
             }
           ];
-          page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]');
-          // mock trigger
-          comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
-          expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
-          comp._btnClick(comp._data[0], comp._columns[0].buttons![1]);
-          expect(columns[0].buttons![1].click).toHaveBeenCalled();
+          page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]').click('.st__btn-text').cd();
+          expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+          page.click('.ant-popover-buttons .ant-btn-primary').cd();
+          expect(columns[0].buttons![0].click).toHaveBeenCalled();
           page.asyncEnd();
         }));
         it('should custom render text via format', fakeAsync(() => {
@@ -462,27 +453,6 @@ describe('abc: st', () => {
             }
           ];
           page.updateColumn(columns).expectElCount('.j-btn-format', PS).asyncEnd();
-        }));
-        it('#614', fakeAsync(() => {
-          const columns: STColumn[] = [
-            {
-              title: '',
-              buttons: [
-                { text: 'del', type: 'del' },
-                {
-                  text: 'del',
-                  type: 'del',
-                  click: jasmine.createSpy(),
-                  popTitle: 'confirm?'
-                }
-              ]
-            }
-          ];
-          page.updateColumn(columns);
-          // mock trigger
-          comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
-          expect(true).toBe(true);
-          page.asyncEnd();
         }));
         describe('[condition]', () => {
           it('should be hide menu in first row', fakeAsync(() => {
