@@ -31,6 +31,20 @@ Will be generated `trade.module.ts`, `trade-routing.module.ts` in the `routes/tr
 
 The module imports `SharedModule` and some import and export specifications, and you can't destroy these variable names (like this: `COMPONENTS`, `routes`).
 
+By default, all the codes are stored under `app/routes`, which can be pointed to other folder through `ng-alain.json`, for example:
+
+```json
+{
+   "$schema": "./node_modules/ng-alain/schema.json",
+   "projects": {
+     // Indicates that ng-alain projects are stored under `app/pages`
+     "ng-alain": {
+       "routesRoot": "app/pages"
+     }
+   }
+}
+```
+
 ## Business page
 
 - `empty` Blank page

@@ -3,10 +3,21 @@ import { ProjectDefinition, WorkspaceDefinition } from '@angular-devkit/core/src
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 
+import { readJSON } from './json';
+
 export const BUILD_TARGET_BUILD = 'build';
 export const BUILD_TARGET_TEST = 'test';
 export const BUILD_TARGET_SERVE = 'serve';
 export const BUILD_TARGET_LINT = 'lint';
+export const NG_ALAIN_JSON = `ng-alain.json`;
+
+export interface NgAlainDefinition {
+  projects?: { [key: string]: NgAlainProjectDefinition };
+}
+
+export interface NgAlainProjectDefinition {
+  routesRoot?: string;
+}
 
 function getProjectName(workspace: WorkspaceDefinition, name?: string): string | null {
   if (name && workspace.projects.has(name)) {
@@ -25,17 +36,24 @@ function getProjectName(workspace: WorkspaceDefinition, name?: string): string |
   return null;
 }
 
+export function getNgAlainJson(tree: Tree): NgAlainDefinition | undefined {
+  if (!tree.exists(NG_ALAIN_JSON)) return undefined;
+
+  return readJSON(tree, NG_ALAIN_JSON);
+}
+
 export async function getProject(
   tree: Tree,
   projectName?: string
-): Promise<{ project: ProjectDefinition; name: string }> {
+): Promise<{ project: ProjectDefinition; name: string; alainProject: NgAlainProjectDefinition }> {
   const workspace = await getWorkspace(tree);
   projectName = getProjectName(workspace, projectName);
   if (!projectName || !workspace.projects.has(projectName)) {
     throw new SchematicsException(`No project named "${projectName}" exists.`);
   }
   const project = getProjectFromWorkspace(workspace, projectName);
-  return { project, name: projectName };
+  const alainProject = (getNgAlainJson(tree)?.projects ?? {})[projectName] ?? {};
+  return { project, name: projectName, alainProject };
 }
 
 export function addAssetsToTarget(
