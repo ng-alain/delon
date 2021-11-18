@@ -18,6 +18,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
+import { STFilterComponent } from './st-filter.component';
 import { STRowDirective } from './st-row.directive';
 import { STWidgetHostDirective } from './st-widget-host.directive';
 import { STComponent } from './st.component';
@@ -44,7 +45,7 @@ const COMPONENTS = [STComponent, STRowDirective, STWidgetHostDirective];
     NzToolTipModule,
     NzResizableModule
   ],
-  declarations: COMPONENTS,
+  declarations: [...COMPONENTS, STFilterComponent],
   exports: COMPONENTS
 })
 export class STModule {}

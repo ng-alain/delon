@@ -307,7 +307,7 @@ class TestComponent {
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[type]` | Type of the filter, `keyword` render by input | `default,keyword` | `default` |
+| `[type]` | Type of the filter, `keyword` render by input | `default,keyword,custom` | `default` |
 | `[menus]` | Filter menu config | `STColumnFilterMenu[]` | - |
 | `[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: STData) => boolean` | - |
 | `[default]` | Whether the `data` is filtered | `boolean` | - |
@@ -317,6 +317,7 @@ class TestComponent {
 | `[clearText]` | Text of the clear button | `string` | - |
 | `[key]` | Unique key of this column, default is `index` property value | `string` | - |
 | `[reName]` | Map name | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
+| `[custom]` | Custom template | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
 
 ### STColumnFilterMenu
 

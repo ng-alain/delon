@@ -307,7 +307,7 @@ class TestComponent {
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[type]` | 类型，`keyword` 文本框形式 | `default,keyword` | `default` |
+| `[type]` | 类型，`keyword` 文本框形式 | `default,keyword,custom` | `default` |
 | `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | - |
 | `[fn]` | 本地数据的筛选函数 | `(filter: STColumnFilterMenu, record: STData) => boolean` | - |
 | `[default]` | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | - |
@@ -317,6 +317,7 @@ class TestComponent {
 | `[clearText]` | filter 清除按钮文本 | `string` | - |
 | `[key]` | 远程数据的过滤时后端相对应的KEY，默认使用 `index` 属性 | `string` | - |
 | `[reName]` | 远程数据的过滤时后端相对应的VALUE | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
+| `[custom]` | 自定义模版 | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
 
 ### STColumnFilterMenu
 

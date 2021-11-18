@@ -1,181 +1,72 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CommonModule } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of, Subject, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 
-import { dispatchDropDown } from '@delon/testing';
 import {
-  ALAIN_I18N_TOKEN,
   DatePipe,
-  DelonLocaleModule,
   DelonLocaleService,
   DrawerHelper,
   en_US,
   ModalHelper,
-  _HttpClient
+  _HttpClient,
+  AlainI18NService
 } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { deepCopy } from '@delon/util/other';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
-import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
 import { STComponent } from '../st.component';
 import {
-  STChange,
-  STChangeType,
-  STClickRowClassName,
   STClickRowClassNameType,
   STColumn,
   STColumnBadge,
-  STColumnFilter,
   STColumnTag,
-  STColumnTitle,
-  STContextmenuFn,
   STContextmenuItem,
-  STCustomRequestOptions,
-  STMultiSort,
-  STPage,
-  STReq,
-  STRes,
-  STResReNameType,
-  STWidthMode
+  STResReNameType
 } from '../st.interfaces';
-import { STModule } from '../st.module';
 import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
-
-const MOCKDATE = new Date();
-const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
-const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
-
-function genData(count: number): any[] {
-  return Array(count)
-    .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
-        yn: idx % 2 === 0,
-        date: MOCKDATE,
-        img: MOCKIMG,
-        num: 11111111111.4556,
-        status: Math.floor(Math.random() * 5) + 1,
-        tag: r(1, 5),
-        prices: {
-          fix: `fix${idx + 1}`,
-          total: Math.ceil(Math.random() * 10) + 200
-        }
-      };
-    });
-}
-
-const PS = 3;
-const DEFAULTCOUNT = PS + 1;
-const USERS: any[] = genData(DEFAULTCOUNT);
-
-const i18nResult = 'zh';
-@Injectable()
-class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string): string {
-    return i18nResult;
-  }
-}
-
-class MockNzI18nService {
-  getDateLocale(): null {
-    return null;
-  }
-}
+import {
+  PS,
+  DEFAULTCOUNT,
+  USERS,
+  MOCKDATE,
+  MOCKIMG,
+  genData,
+  MockNzI18nService,
+  PageObject,
+  TestComponent,
+  genModule
+} from './base.spec';
 
 describe('abc: st', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
   let dl: DebugElement;
-  let page: PageObject;
   let comp: STComponent;
   let i18nSrv: AlainI18NService;
   let registerWidget: STWidgetRegistry;
-
-  function genModule(other: {
-    template?: string;
-    i18n?: boolean;
-    minColumn?: boolean;
-    providers?: any[];
-    createComp?: boolean;
-  }): void {
-    other = {
-      template: '',
-      i18n: false,
-      minColumn: false,
-      providers: [],
-      createComp: true,
-      ...other
-    };
-    const imports = [
-      NoopAnimationsModule,
-      CommonModule,
-      FormsModule,
-      HttpClientTestingModule,
-      RouterTestingModule.withRoutes([]),
-      NzModalModule,
-      NzDrawerModule,
-      STModule,
-      DelonLocaleModule
-    ];
-    const providers = [
-      {
-        provide: ALAIN_I18N_TOKEN,
-        useClass: MockI18NServiceFake
-      }
-    ];
-    if (other.providers!.length > 0) {
-      providers.push(...other.providers!);
-    }
-    TestBed.configureTestingModule({
-      imports,
-      declarations: [TestComponent, TestExpandComponent, TestWidgetComponent],
-      providers
-    });
-    if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
-    registerWidget = TestBed.inject(STWidgetRegistry);
-    registerWidget.register('test', TestWidgetComponent);
-    // ALAIN_I18N_TOKEN 默认为 root 会导致永远都会存在
-    i18nSrv = TestBed.inject(ALAIN_I18N_TOKEN);
-    if (other.createComp) {
-      createComp(other.minColumn, TestComponent);
-    }
-  }
-
-  function createComp<T extends TestComponent>(minColumn: boolean = false, type: Type<T>): void {
-    fixture = TestBed.createComponent(type);
-    dl = fixture.debugElement;
-    context = dl.componentInstance;
-    context.data = deepCopy(USERS);
-    if (minColumn) {
-      context.columns = [{ title: '', index: 'id' }];
-    }
-    page = new PageObject();
-  }
+  let page: PageObject<TestComponent>;
 
   afterEach(() => comp.ngOnDestroy());
 
+  function refAssign() {
+    fixture = page.fixture;
+    context = page.context;
+    dl = page.dl;
+    comp = page.comp;
+    i18nSrv = page.i18nSrv;
+    registerWidget = page.registerWidget;
+  }
+
   describe('', () => {
     beforeEach(() => {
-      genModule({ createComp: false });
-      createComp(true, TestComponent);
+      page = genModule(TestComponent, { minColumn: true })!;
+      refAssign();
     });
     describe('#columns', () => {
       describe('[title]', () => {
@@ -1110,256 +1001,6 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
     });
-    describe('#expand', () => {
-      beforeEach(() => createComp(true, TestExpandComponent));
-      it('should be switch expand via expand icon', fakeAsync(() => {
-        page.cd();
-        const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
-        page.expectData(1, 'expand', undefined);
-        el.click();
-        page.expectData(1, 'expand', true).asyncEnd();
-      }));
-      describe('should be expanded when click row if expandRowByClick', () => {
-        it('with true', fakeAsync(() => {
-          context.expandRowByClick = true;
-          page.cd();
-          const el = page.getCell(1, 2);
-          page.expectData(1, 'expand', undefined);
-          el.click();
-          page.expectData(1, 'expand', true).expectChangeType('expand').asyncEnd();
-        }));
-        it('with false', fakeAsync(() => {
-          context.expandRowByClick = false;
-          page.cd();
-          const el = page.getCell(1, 2);
-          page.expectData(1, 'expand', undefined);
-          el.click();
-          page.expectData(1, 'expand', undefined).asyncEnd();
-        }));
-        it('should be click icon when with true', fakeAsync(() => {
-          context.expandRowByClick = true;
-          page
-            .cd()
-            .expectData(1, 'expand', undefined)
-            .clickCell('.ant-table-row-expand-icon')
-            .expectData(1, 'expand', true)
-            .expectChangeType('expand')
-            .asyncEnd();
-        }));
-      });
-      describe('expandRowByClick', () => {
-        it('should be close other expaned', fakeAsync(() => {
-          context.expandAccordion = true;
-          context.expandRowByClick = true;
-          page
-            .cd()
-            .clickCell(1, 2)
-            .clickCell(2, 2)
-            .expectData(1, 'expand', false)
-            .expectData(2, 'expand', true)
-            .asyncEnd();
-        }));
-        it('should be keeping expaned', fakeAsync(() => {
-          context.expandAccordion = false;
-          context.expandRowByClick = true;
-          page
-            .cd()
-            .clickCell(1, 2)
-            .clickCell(2, 2)
-            .expectData(1, 'expand', true)
-            .expectData(2, 'expand', true)
-            .asyncEnd();
-        }));
-        it('should be stop propagation in button event', fakeAsync(() => {
-          context.expandRowByClick = true;
-          context.columns = [
-            {
-              title: '',
-              buttons: [
-                {
-                  text: 'btn'
-                }
-              ]
-            }
-          ];
-          page.cd().clickEl('.st__btn-text').expectData(1, 'expand', undefined).asyncEnd();
-        }));
-      });
-      describe('should be set showExpand in row data', () => {
-        it(`muse be hide expand icon`, fakeAsync(() => {
-          context.expandRowByClick = false;
-          context.data = deepCopy(USERS).slice(0, 1) as NzSafeAny[];
-          context.data[0].showExpand = false;
-          page
-            .cd()
-            .expectElCount('.ant-table-row-expand-icon', 0)
-            .clickCell(1, 2)
-            .expectChangeType('expand', false)
-            .asyncEnd();
-        }));
-      });
-    });
-    describe('[filter]', () => {
-      describe('in local-data', () => {
-        let filter: STColumnFilter;
-        let firstCol: _STColumn;
-        beforeEach(() => {
-          context.columns = [
-            {
-              title: '',
-              index: 'i',
-              filter: {
-                multiple: true,
-                menus: [
-                  { text: 'f1', value: 'fv1' },
-                  { text: 'f2', value: 'fv2' }
-                ],
-                confirmText: 'ok',
-                clearText: 'reset',
-                icon: 'aa',
-                fn: () => true
-              }
-            }
-          ];
-        });
-        it('muse provide the fn function', fakeAsync(() => {
-          spyOn(console, 'warn');
-          context.columns[0].filter!.fn = null;
-          page.cd();
-          firstCol = comp._columns[0];
-          filter = firstCol.filter as STColumnFilter;
-          comp._filterRadio(firstCol, filter.menus![0], true);
-          comp._filterRadio(firstCol, filter.menus![1], true);
-          comp._filterConfirm(firstCol);
-          page.cd();
-          expect(console.warn).toHaveBeenCalled();
-          page.asyncEnd();
-        }));
-        describe('when is single', () => {
-          beforeEach(() => {
-            context.columns[0].filter!.multiple = false;
-            fixture.detectChanges();
-            firstCol = comp._columns[0];
-            filter = firstCol.filter as STColumnFilter;
-            comp._filterRadio(firstCol, filter.menus![0], true);
-            comp._filterRadio(firstCol, filter.menus![1], true);
-            comp._filterConfirm(firstCol);
-          });
-          it('should be filter', () => {
-            const res = filter.menus!.filter(w => w.checked);
-            expect(res.length).toBe(1);
-          });
-          it('should be clean', () => {
-            comp.clearFilter();
-            const res = filter.menus!.filter(w => w.checked);
-            expect(res.length).toBe(0);
-          });
-        });
-        describe('when is multiple', () => {
-          beforeEach(() => {
-            context.columns[0].filter!.multiple = true;
-            fixture.detectChanges();
-            firstCol = comp._columns[0];
-            filter = firstCol.filter as STColumnFilter;
-            filter.menus![0].checked = true;
-            filter.menus![1].checked = true;
-            comp._filterConfirm(firstCol);
-          });
-          it('should be filter', () => {
-            const res = filter.menus!.filter(w => w.checked);
-            expect(res.length).toBe(2);
-          });
-          it('should be clean', () => {
-            comp._filterClear(firstCol);
-            const res = filter.menus!.filter(w => w.checked);
-            expect(res.length).toBe(0);
-          });
-        });
-        describe('when type is keyword', () => {
-          beforeEach(() => {
-            context.columns[0].filter!.type = 'keyword';
-            context.columns[0].filter!.default = true;
-            context.columns[0].filter!.menus![0].value = 'a';
-            fixture.detectChanges();
-            firstCol = comp._columns[0];
-            filter = firstCol.filter!;
-          });
-          it('should be filter', () => {
-            expect(context.change).not.toHaveBeenCalled();
-            comp._filterConfirm(firstCol);
-            expect(context.change).toHaveBeenCalled();
-          });
-          it('should be clean', () => {
-            const m = filter.menus![0];
-            expect(m.value).toBe('a');
-            context.comp.clearFilter();
-            expect(m.value).toBe(undefined);
-          });
-        });
-      });
-    });
-    describe('[sort]', () => {
-      describe('in local-data', () => {
-        beforeEach(() => {
-          context.columns = [
-            {
-              title: '',
-              index: 'i',
-              sort: { default: 'ascend', compare: () => 1 }
-            },
-            {
-              title: '',
-              index: 'i',
-              sort: { default: 'descend', compare: () => 1 }
-            }
-          ];
-        });
-        describe('when single-sort', () => {
-          beforeEach(() => (context.multiSort = false));
-          it('muse provide the compare function', fakeAsync(() => {
-            spyOn(console, 'warn');
-            page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as any }]);
-            comp.sort(comp._columns[0], 0, 'descend');
-            page.cd();
-            expect(console.warn).toHaveBeenCalled();
-            page.asyncEnd();
-          }));
-          it('should be auto generate compose when sort is true', fakeAsync(() => {
-            context.data = [{ i: 1 }, { i: 2 }];
-            page.updateColumn([{ title: '', index: 'i', sort: true }]);
-            comp.sort(comp._columns[0], 0, 'descend');
-            page.cd();
-            expect(context.comp.list[0].i).toBe(2);
-            page.asyncEnd();
-          }));
-          it('should be sorting', fakeAsync(() => {
-            page.cd();
-            comp.sort(comp._columns[0], 0, 'descend');
-            const sortList = comp._columns
-              .filter(item => item._sort && item._sort.enabled && item._sort.default)
-              .map(item => item._sort!);
-            expect(sortList.length).toBe(1);
-            expect(sortList[0].default).toBe('descend');
-            page.asyncEnd();
-          }));
-        });
-        describe('when multi-sort', () => {
-          beforeEach(() => (context.multiSort = true));
-          it('should be sorting', fakeAsync(() => {
-            page.cd();
-            comp.sort(comp._columns[0], 0, 'descend');
-            comp.sort(comp._columns[1], 0, 'ascend');
-            const sortList = comp._columns
-              .filter(item => item._sort && item._sort.enabled && item._sort.default)
-              .map(item => item._sort!);
-            expect(sortList.length).toBe(2);
-            expect(sortList[0].default).toBe('descend');
-            expect(sortList[1].default).toBe('ascend');
-            page.asyncEnd();
-          }));
-        });
-      });
-    });
     describe('[row events]', () => {
       beforeEach(fakeAsync(() => {
         context.rowClickTime = 10;
@@ -1752,25 +1393,6 @@ describe('abc: st', () => {
         });
       });
     });
-    describe('#multiSort', () => {
-      it('with true', () => {
-        context.multiSort = true;
-        fixture.detectChanges();
-        expect(typeof comp.multiSort).toBe('object');
-      });
-      it('with false', () => {
-        context.multiSort = false;
-        fixture.detectChanges();
-        expect(comp.multiSort).toBeUndefined();
-      });
-      it('with object', () => {
-        context.multiSort = { key: 'aa' };
-        fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(typeof ms).toBe('object');
-        expect(ms.key).toBe('aa');
-      });
-    });
     describe('#widthMode', () => {
       describe('with type is strict', () => {
         it('shoule be add text-truncate class when className is empty and behavior is truncate', fakeAsync(() => {
@@ -1908,60 +1530,33 @@ describe('abc: st', () => {
       }));
     });
   });
-
-  describe('#multiSort', () => {
-    it('should default is mulit sorting by config', () => {
-      genModule({
-        minColumn: true,
-        providers: [
-          {
-            provide: ALAIN_CONFIG,
-            useValue: { st: { multiSort: { global: true } } } as AlainConfig
-          }
-        ]
-      });
-      expect(comp.multiSort).not.toBeUndefined();
-    });
-    it('should default non-mulit sorting by config', () => {
-      genModule({
-        minColumn: true,
-        providers: [
-          {
-            provide: ALAIN_CONFIG,
-            useValue: { st: { multiSort: { global: false } } } as AlainConfig
-          }
-        ]
-      });
-      expect(comp.multiSort).toBeUndefined();
-    });
-  });
   describe('[custom render template]', () => {
     it('with column title', fakeAsync(() => {
-      genModule({
+      page = genModule(TestComponent, {
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
           </st>`
-      });
+      })!;
       page.updateColumn([{ title: '', index: 'id', renderTitle: 'id' }]);
       expect(page.getHead('id').querySelector('.id-title')!.textContent).toBe('ID');
       page.asyncEnd();
     }));
     it('should be custom row', fakeAsync(() => {
-      genModule({
+      page = genModule(TestComponent, {
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
-      });
+      })!;
       page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
       expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
       page.asyncEnd();
     }));
     it('allow invalid id', fakeAsync(() => {
-      genModule({
+      page = genModule(TestComponent, {
         template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
-      });
+      })!;
       page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
       expect(page.getCell().querySelector('.j-id')).toBeNull();
       page.asyncEnd();
@@ -1970,7 +1565,8 @@ describe('abc: st', () => {
   describe('[i18n]', () => {
     let curLang = 'en';
     beforeEach(() => {
-      genModule({ i18n: true });
+      page = genModule(TestComponent, { i18n: true })!;
+      refAssign();
       spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
     });
     it('should working', fakeAsync(() => {
@@ -1991,331 +1587,4 @@ describe('abc: st', () => {
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     }));
   });
-  class PageObject {
-    _changeData: STChange;
-    changeSpy: jasmine.Spy;
-    constructor() {
-      spyOn(context, 'error');
-      this.changeSpy = spyOn(context, 'change').and.callFake(((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny);
-      comp = context.comp;
-    }
-    get(cls: string): DebugElement {
-      return dl.query(By.css(cls));
-    }
-    getEl(cls: string): HTMLElement {
-      const el = dl.query(By.css(cls));
-      expect(el).not.toBeNull();
-      return el.nativeElement as HTMLElement;
-    }
-    clickEl(cls: string): this {
-      const el = this.getEl(cls);
-      el.click();
-      return this.cd();
-    }
-    click(cls: string): this {
-      const el = this.getEl(cls);
-      expect(el).not.toBeNull();
-      el.click();
-      fixture.detectChanges();
-      return this;
-    }
-    /**
-     * 获取单元格，下标从 `1` 开始
-     */
-    getCell(row: number = 1, column: number = 1): HTMLElement {
-      const cell = (dl.nativeElement as HTMLElement).querySelector(
-        `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`
-      ) as HTMLElement;
-      return cell;
-    }
-    /**
-     * 单击单元格，下标从 `1` 开始
-     */
-    clickCell(rowOrCls: number | string = 1, column: number = 1, cls?: string): this {
-      if (typeof rowOrCls === 'string') {
-        cls = rowOrCls.toString();
-        rowOrCls = 1;
-      }
-      let el = this.getCell(rowOrCls, column);
-      if (cls) {
-        el = el.querySelector(cls) as HTMLElement;
-      }
-      el.click();
-      return this.cd();
-    }
-    /**
-     * 断言单元格内容，下标从 `1` 开始
-     *
-     * @param value 当 `null` 时，表示无单元格
-     * @param cls 对单元格进一步筛选
-     * @param isContain 是否包含条件
-     */
-    expectCell(value: string | null, row: number = 1, column: number = 1, cls?: string, isContain?: boolean): this {
-      let cell = this.getCell(row, column);
-      if (cls) {
-        cell = cell.querySelector(cls) as HTMLElement;
-      }
-      if (value == null) {
-        expect(cell).toBeNull();
-      } else {
-        if (isContain === true) {
-          expect(cell.innerHTML).toContain(value);
-        } else {
-          expect(cell.innerText.trim()).toBe(value);
-        }
-      }
-      return this;
-    }
-    /** 获取标头 */
-    getHead(name: string): HTMLElement {
-      const el = (dl.nativeElement as HTMLElement).querySelector(
-        `.ant-table-thead th[data-col="${name}"]`
-      ) as HTMLElement;
-      return el;
-    }
-    clickHead(name: string, cls: string): this {
-      const el = this.getHead(name).querySelector(cls) as HTMLElement;
-      expect(el).not.toBeNull();
-      el.click();
-      fixture.detectChanges();
-      return this;
-    }
-    expectHead(value: string, name: string, cls?: string): this {
-      let cell = this.getHead(name);
-      if (cls) cell = cell.querySelector(cls) as HTMLElement;
-      if (value == null) {
-        expect(cell).toBeNull();
-      } else {
-        expect(cell.innerText.trim()).toBe(value);
-      }
-      return this;
-    }
-    /** 断言组件内 `_columns` 值 */
-    expectColumn(title: string, path: string, valule: any): this {
-      const ret = deepGet(
-        comp._columns.find(w => (w.title as STColumnTitle).text === title),
-        path
-      );
-      expect(ret).toBe(valule);
-      return this;
-    }
-    /** 断言组件内 `_data` 值，下标从 `1` 开始 */
-    expectData(row: number, path: string, valule: any): this {
-      const ret = deepGet(comp._data[row - 1], path);
-      expect(ret).toBe(valule);
-      return this;
-    }
-    /** 切换分页 */
-    go(pi: number = 2): this {
-      this.getEl(`.ant-pagination [title="${pi}"]`).click();
-      return this.cd();
-    }
-    cd(time: number = 1000): this {
-      fixture.detectChanges();
-      tick(time);
-      fixture.detectChanges();
-      return this;
-    }
-    updateData(data: NzSafeAny): this {
-      context.data = data;
-      return this.cd();
-    }
-    updateColumn(columns: STColumn[], pi: number = 1, ps: number = PS): this {
-      context.columns = columns;
-      context.pi = pi;
-      context.ps = ps;
-      return this.cd();
-    }
-    expectCompData(path: string, value: any): this {
-      expect(deepGet(comp, path)).toBe(value);
-      return this;
-    }
-    expectDataTotal(value: number): this {
-      expect(deepGet(comp, 'total')).toBe(value);
-      return this;
-    }
-    expectTotalPage(value: number): this {
-      const a = dl.query(By.css('nz-pagination')).componentInstance as NzPaginationComponent;
-      expect(a.getLastIndex(a.nzTotal, a.nzPageSize)).toBe(value);
-      return this;
-    }
-    expectCurrentPageTotal(value: number): this {
-      expect(comp._data.length).toBe(value);
-      return this;
-    }
-    expectCompDataPi(value: number): this {
-      expect(deepGet(comp, 'pi')).toBe(value);
-      return this;
-    }
-    expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
-      const els = document.querySelectorAll(cls);
-      expect(els.length).toBe(count, expectationFailOutput);
-      return this;
-    }
-    expectElContent(cls: string, content: string, expectationFailOutput?: string): this {
-      const el = document.querySelector(cls);
-      if (content == null) {
-        expect(el).toBeNull(expectationFailOutput);
-      } else {
-        expect(el!.textContent!.trim()).toBe(content, expectationFailOutput);
-      }
-      return this;
-    }
-    expectChangeType(type: STChangeType, called: boolean = true): this {
-      const callAll = this.changeSpy.calls.all();
-      const args = callAll[callAll.length - 1].args[0];
-      if (called) {
-        expect(args.type).toBe(type);
-      } else {
-        expect(args.type).not.toBe(type);
-      }
-      return this;
-    }
-    openDropDownInHead(nams: string): this {
-      dispatchDropDown(dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)), 'click');
-      fixture.detectChanges();
-      return this;
-    }
-    openDropDownInRow(row: number = 1): this {
-      dispatchDropDown(dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)), 'mouseleave');
-      fixture.detectChanges();
-      return this;
-    }
-    openContextMenu(col: number, row?: number, event?: any): this {
-      let el: HTMLElement;
-      if (typeof row === 'number') {
-        el = this.getCell(row, col);
-      } else {
-        el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
-      }
-      if (!el) {
-        expect(false).toBe(true, `not found col: ${col}, row: ${row} element`);
-        return this;
-      }
-
-      context.comp.onContextmenu({
-        target: el,
-        preventDefault: jasmine.createSpy(),
-        stopPropagation: jasmine.createSpy(),
-        ...event
-      } as any);
-      return this.cd();
-    }
-    clickContentMenu(idx: number): this {
-      const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
-      expect(el).not.toBeNull(`the index: ${idx} is invalid element of content menu container`);
-      const fn = context.comp.contextmenuList[idx - 1].fn;
-      expect(fn).not.toHaveBeenCalled();
-      (el as HTMLElement).click();
-      this.cd();
-      expect(fn).toHaveBeenCalled();
-      return this;
-    }
-    asyncEnd(): this {
-      flush();
-      discardPeriodicTasks();
-      return this;
-    }
-  }
 });
-
-@Component({
-  template: `
-    <st
-      #st
-      [data]="data"
-      [req]="req"
-      [res]="res"
-      [columns]="columns"
-      [ps]="ps"
-      [pi]="pi"
-      [total]="total"
-      [page]="page"
-      [responsive]="responsive"
-      [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
-      [widthMode]="widthMode"
-      [loading]="loading"
-      [loadingDelay]="loadingDelay"
-      [virtualScroll]="virtualScroll"
-      [bordered]="bordered"
-      [size]="size"
-      [scroll]="scroll"
-      [multiSort]="multiSort"
-      [noResult]="noResult"
-      [widthConfig]="widthConfig"
-      [rowClickTime]="rowClickTime"
-      [clickRowClassName]="clickRowClassName"
-      [showHeader]="showHeader"
-      [contextmenu]="contextmenu"
-      [customRequest]="customRequest"
-      (change)="change($event)"
-      (error)="error()"
-    >
-    </st>
-  `
-})
-class TestComponent {
-  @ViewChild('st', { static: true })
-  comp: STComponent;
-  data: string | any[] | Observable<any[]> | null = deepCopy(USERS);
-  res: STRes = {};
-  req: STReq = {};
-  columns: STColumn[];
-  ps = PS;
-  pi: number;
-  total: number;
-  page: STPage = {};
-  loading: boolean | null = null;
-  loadingDelay: number;
-  bordered: boolean;
-  size: 'small' | 'middle' | 'default';
-  scroll: { y?: string; x?: string };
-  multiSort: boolean | STMultiSort;
-  noResult = 'noResult';
-  widthConfig: string[] = [];
-  rowClickTime = 200;
-  clickRowClassName?: STClickRowClassName | null = 'text-error';
-  responsive = false;
-  responsiveHideHeaderFooter = false;
-  expandRowByClick = false;
-  expandAccordion = false;
-  widthMode: STWidthMode = {};
-  virtualScroll = false;
-  showHeader = true;
-  customRequest?: (options: STCustomRequestOptions) => Observable<any>;
-  contextmenu: STContextmenuFn | null = _ => [
-    { text: 'a', fn: jasmine.createSpy() },
-    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
-  ];
-
-  error(): void {}
-  change(): void {}
-}
-
-@Component({
-  template: `
-    <st
-      #st
-      [data]="data"
-      [columns]="columns"
-      [expand]="expand"
-      [expandRowByClick]="expandRowByClick"
-      [expandAccordion]="expandAccordion"
-      (change)="change($event)"
-    >
-      <ng-template #expand let-item let-index="index" let-column="column">
-        {{ item.id }}
-      </ng-template>
-    </st>
-  `
-})
-class TestExpandComponent extends TestComponent {}
-
-@Component({
-  template: ` <div class="widget-id-value">{{ id }}</div>
-    <div class="widget-record-value">{{ record?.id }}</div>`
-})
-class TestWidgetComponent {
-  id: number;
-  record: any;
-}

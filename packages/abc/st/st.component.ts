@@ -54,8 +54,6 @@ import {
   STClickRowClassNameType,
   STColumn,
   STColumnButton,
-  STColumnFilter,
-  STColumnFilterMenu,
   STColumnSafeType,
   STColumnSelection,
   STContextmenuFn,
@@ -658,7 +656,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region filter
 
-  private handleFilter(col: STColumn): void {
+  _handleFilter(col: _STColumn, confirm: boolean): void {
+    if (!confirm) {
+      this.columnSource.cleanFilter(col);
+    }
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
@@ -666,36 +667,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('filter', col);
   }
 
-  _filterConfirm(col: _STColumn): void {
-    this.handleFilter(col);
-  }
-
-  _filterRadio(col: _STColumn, item: STColumnFilterMenu, checked: boolean): void {
-    col.filter!.menus!.forEach(i => (i.checked = false));
-    item.checked = checked;
-    this._filterNotify(item);
-  }
-
-  _filterClear(col: _STColumn): void {
-    this.columnSource.cleanFilter(col);
-    this.handleFilter(col);
+  handleFilterNotify(value?: unknown): void {
+    this.changeEmit('filterChange', value);
   }
 
   clearFilter(): this {
     this._columns.filter(w => w.filter && w.filter.default === true).forEach(col => this.columnSource.cleanFilter(col));
     return this;
-  }
-
-  _filterClick($event: MouseEvent): void {
-    $event.stopPropagation();
-  }
-
-  _filterMultipleNotify(f: STColumnFilter): void {
-    this._filterNotify(f.menus?.filter(w => w.checked));
-  }
-
-  _filterNotify(value?: unknown): void {
-    this.changeEmit('filterChange', value);
   }
   // #endregion
 

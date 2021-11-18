@@ -173,69 +173,14 @@
             </ng-container>
           </ng-container>
           <ng-container *ngIf="_c.filter">
-            <div
+            <st-filter
               nz-th-extra
-              *let="_c.filter as _f"
-              class="ant-table-filter-trigger-container st__filter"
-              [class.ant-table-filter-trigger-container-open]="$any(_f).visible"
-            >
-              <span
-                class="ant-table-filter-trigger"
-                [class.active]="$any(_f).visible || _f.default"
-                nz-dropdown
-                [nzDropdownMenu]="filterMenu"
-                nzTrigger="click"
-                [nzClickHide]="false"
-                [(nzVisible)]="$any(_f).visible"
-                nzOverlayClassName="st__filter-wrap"
-                (click)="_filterClick($event)"
-              >
-                <i nz-icon [nzType]="$any(_f).icon.type" [nzTheme]="$any(_f).icon.theme"></i>
-              </span>
-              <nz-dropdown-menu #filterMenu="nzDropdownMenu">
-                <div class="ant-table-filter-dropdown">
-                  <ng-container [ngSwitch]="_f.type">
-                    <div *ngSwitchCase="'keyword'" class="st__filter-keyword">
-                      <input
-                        type="text"
-                        nz-input
-                        [attr.placeholder]="$any(_f).menus[0].text"
-                        [(ngModel)]="$any(_f).menus[0].value"
-                        (ngModelChange)="_filterNotify($event)"
-                      />
-                    </div>
-                    <ul *ngSwitchDefault nz-menu>
-                      <ng-container *ngIf="_f.multiple">
-                        <li nz-menu-item *ngFor="let filter of _f.menus">
-                          <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="_filterMultipleNotify(_f)">
-                            {{ filter.text }}
-                          </label>
-                        </li>
-                      </ng-container>
-                      <ng-container *ngIf="!_f.multiple">
-                        <li nz-menu-item *ngFor="let filter of _f.menus">
-                          <label
-                            nz-radio
-                            [ngModel]="filter.checked"
-                            (ngModelChange)="_filterRadio(h.column, filter, $event)"
-                          >
-                            {{ filter.text }}
-                          </label>
-                        </li>
-                      </ng-container>
-                    </ul>
-                  </ng-container>
-                  <div class="ant-table-filter-dropdown-btns">
-                    <a class="ant-table-filter-dropdown-link confirm" (click)="$any(_f).visible = false">
-                      <span (click)="_filterConfirm(h.column)">{{ _f.confirmText || locale.filterConfirm }}</span>
-                    </a>
-                    <a class="ant-table-filter-dropdown-link clear" (click)="$any(_f).visible = false">
-                      <span (click)="_filterClear(h.column)">{{ _f.clearText || locale.filterReset }}</span>
-                    </a>
-                  </div>
-                </div>
-              </nz-dropdown-menu>
-            </div>
+              [col]="h.column"
+              [f]="_c.filter"
+              [locale]="locale"
+              (n)="handleFilterNotify($event)"
+              (handle)="_handleFilter(_c, $event)"
+            ></st-filter>
           </ng-container>
         </th>
       </ng-container>

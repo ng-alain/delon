@@ -15,9 +15,10 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { STChange, STColumn, STData } from '@delon/abc/st';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+
+import { STChange, STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
@@ -28,7 +29,7 @@ import { delay } from 'rxjs/operators';
       <button (click)="st.clearStatus(); st.reload()" nz-button>Clear Status</button>
     </div>
     <st #st [data]="users" [columns]="columns" (change)="change($event)"></st>
-  `,
+  `
 })
 export class DemoComponent implements OnInit {
   users: STData[] = [];
@@ -40,40 +41,41 @@ export class DemoComponent implements OnInit {
       selections: [
         {
           text: '小于25岁',
-          select: data => data.forEach(item => (item.checked = item.age < 25)),
+          select: data => data.forEach(item => (item.checked = item.age < 25))
         },
         {
           text: '大于25岁',
-          select: data => data.forEach(item => (item.checked = item.age >= 25)),
-        },
-      ],
+          select: data => data.forEach(item => (item.checked = item.age >= 25))
+        }
+      ]
     },
     {
       title: '姓名',
       index: 'name',
       sort: {
-        compare: (a, b) => a.name.length - b.name.length,
+        compare: (a, b) => a.name.length - b.name.length
       },
       filter: {
         type: 'keyword',
-        fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1,
-      },
+        menus: [{ text: '输入后按回车搜索', value: '' }],
+        fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1
+      }
     },
     {
       title: '年龄',
       index: 'age',
       sort: {
-        compare: (a, b) => a.age - b.age,
+        compare: (a, b) => a.age - b.age
       },
       filter: {
         menus: [
           { text: '20岁以下', value: [0, 20] },
           { text: '20-25岁', value: [20, 25] },
-          { text: '25岁以上', value: [25, 100] },
+          { text: '25岁以上', value: [25, 100] }
         ],
         fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
-        multiple: false,
-      },
+        multiple: false
+      }
     },
     {
       title: '状态',
@@ -84,9 +86,17 @@ export class DemoComponent implements OnInit {
         2: { text: 'Error', color: 'error' },
         3: { text: 'Processing', color: 'processing' },
         4: { text: 'Default', color: 'default' },
-        5: { text: 'Warning', color: 'warning' },
+        5: { text: 'Warning', color: 'warning' }
       },
-    },
+      filter: {
+        menus: [
+          { text: 'Success', value: 1 },
+          { text: 'Error', value: 2 }
+        ],
+        fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
+        multiple: true
+      }
+    }
   ];
 
   ngOnInit(): void {
@@ -96,7 +106,7 @@ export class DemoComponent implements OnInit {
         id: idx + 1,
         name: `name ${idx + 1}`,
         age: Math.ceil(Math.random() * 10) + 20,
-        status: Math.floor(Math.random() * 5) + 1,
+        status: Math.floor(Math.random() * 5) + 1
       }));
     of(data)
       .pipe(delay(500))
