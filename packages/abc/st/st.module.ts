@@ -6,10 +6,12 @@ import { LetModule } from '@delon/abc/let';
 import { DelonACLModule } from '@delon/acl';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -44,7 +46,9 @@ const COMPONENTS = [STComponent, STRowDirective, STWidgetHostDirective];
     NzTagModule,
     NzInputModule,
     NzToolTipModule,
-    NzResizableModule
+    NzResizableModule,
+    NzInputNumberModule,
+    NzDatePickerModule
   ],
   declarations: [...COMPONENTS, STFilterComponent, STTdComponent],
   exports: COMPONENTS

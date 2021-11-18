@@ -245,6 +245,7 @@ class TestComponent {
 | `[disabled]` | 选择框或单选框 `disabled` 值 | `boolean` | - |
 | `[expand]` | 是否展开状态 | `boolean` | - |
 | `[showExpand]` | 是否显示展开按钮 | `boolean` | - |
+| `[className]` | 行样式 | `string` | - |
 
 ### STColumn<T extends STData = any>
 
@@ -307,7 +308,7 @@ class TestComponent {
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[type]` | 类型，`keyword` 文本框形式 | `default,keyword,custom` | `default` |
+| `[type]` | 类型，`keyword` 文本框形式 | `default,keyword,number,date,custom` | `default` |
 | `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | - |
 | `[fn]` | 本地数据的筛选函数 | `(filter: STColumnFilterMenu, record: STData) => boolean` | - |
 | `[default]` | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | - |
@@ -318,6 +319,10 @@ class TestComponent {
 | `[key]` | 远程数据的过滤时后端相对应的KEY，默认使用 `index` 属性 | `string` | - |
 | `[reName]` | 远程数据的过滤时后端相对应的VALUE | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
 | `[custom]` | 自定义模版 | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
+| `[showOPArea]` | 是否显示操作区域 | `boolean` | `true` |
+| `[placeholder]` | 在文字框中显示提示讯息 | `boolean` | `true` |
+| `[number]` | 类型为 `number` 的配置项 | `Object` | - |
+| `[date]` | 类型为 `date` 的配置项 | `Object` | - |
 
 ### STColumnFilterMenu
 

@@ -9,6 +9,7 @@ import type { ACLCanType } from '@delon/acl';
 import type { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import type { CurrencyFormatOptions } from '@delon/util/format';
 import type { NgClassType, NgStyleInterface } from 'ng-zorro-antd/core/types';
+import type { DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 import type { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import type { ModalOptions } from 'ng-zorro-antd/modal';
 import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
@@ -192,21 +193,35 @@ export interface STPage {
  */
 export interface STData {
   /**
+   * Select or radio button `checked` status value
+   *
    * 选择框或单选框状态值
    */
   checked?: boolean;
   /**
+   * Select or radio button `disabled` status value
+   *
    * 选择框或单选框 `disabled` 值
    */
   disabled?: boolean;
   /**
+   * Whether to expand the status value
+   *
    * 是否展开状态
    */
   expand?: boolean;
   /**
+   * Whether show expand icon
+   *
    * 是否显示展开按钮
    */
   showExpand?: boolean;
+  /**
+   * Class name of the row
+   *
+   * 行样式
+   */
+  className?: string;
 
   [key: string]: any;
 }
@@ -513,9 +528,11 @@ export interface STColumnFilter<T extends STData = any> {
    * 搜索方式
    * - `defualt` 默认形式
    * - `keyword` 文本框形式
+   * - `number` 数字框形式
+   * - `date` 日期形式
    * - `custom` 自定义模式
    */
-  type?: 'default' | 'keyword' | 'custom';
+  type?: 'default' | 'keyword' | 'number' | 'date' | 'custom';
   /**
    * 表头的筛选菜单项，至少一项才会生效
    * - 当 `type='keyword'` 时可为空
@@ -564,6 +581,34 @@ export interface STColumnFilter<T extends STData = any> {
    * 自定义过滤器
    */
   custom?: TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>;
+
+  /**
+   * Whether to display the operation area, default: `true`
+   *
+   * 是否显示操作区域，默认：`true`
+   */
+  showOPArea?: boolean;
+
+  /**
+   * 在文字框中显示提示讯息
+   */
+  placeholder?: string;
+
+  number?: {
+    precision?: number;
+    min?: number;
+    max?: number;
+    step?: number;
+  };
+
+  date?: {
+    range?: boolean;
+    mode?: 'year' | 'month' | 'week' | 'date';
+    showToday?: boolean;
+    showNow?: boolean;
+    disabledDate?: (d: Date) => boolean;
+    disabledTime?: DisabledTimeFn;
+  };
 }
 
 export interface STColumnFilterMenu {

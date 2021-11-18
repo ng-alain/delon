@@ -19,6 +19,7 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { STChange, STColumn, STData } from '@delon/abc/st';
+import { dateTimePickerUtil } from '@delon/util/date-time';
 
 @Component({
   selector: 'app-demo',
@@ -27,6 +28,7 @@ import { STChange, STColumn, STData } from '@delon/abc/st';
       <button (click)="st.clear()" nz-button>Clear Data</button>
       <button (click)="st.reload()" nz-button>Reload Data</button>
       <button (click)="st.clearStatus(); st.reload()" nz-button>Clear Status</button>
+      <button (click)="st.setRow(0, { className: 'text-success' })" nz-button>Update Row ClassName</button>
     </div>
     <st #st [data]="users" [columns]="columns" (change)="change($event)"></st>
   `
@@ -57,7 +59,7 @@ export class DemoComponent implements OnInit {
       },
       filter: {
         type: 'keyword',
-        menus: [{ text: '输入后按回车搜索', value: '' }],
+        placeholder: '输入后按回车搜索',
         fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1
       }
     },
@@ -68,13 +70,13 @@ export class DemoComponent implements OnInit {
         compare: (a, b) => a.age - b.age
       },
       filter: {
-        menus: [
-          { text: '20岁以下', value: [0, 20] },
-          { text: '20-25岁', value: [20, 25] },
-          { text: '25岁以上', value: [25, 100] }
-        ],
-        fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
-        multiple: false
+        type: 'number',
+        placeholder: '范围 10 ~ 100 之间',
+        number: {
+          min: 10,
+          max: 100
+        },
+        fn: (filter, record) => (filter.value != null ? record.age >= +filter.value : true)
       }
     },
     {
@@ -96,6 +98,20 @@ export class DemoComponent implements OnInit {
         fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
         multiple: true
       }
+    },
+    {
+      title: 'Date',
+      index: 'created',
+      type: 'date',
+      filter: {
+        type: 'date',
+        date: {
+          mode: 'date',
+          showToday: false,
+          disabledDate: dateTimePickerUtil.disabledAfterDate()
+        },
+        fn: () => true
+      }
     }
   ];
 
@@ -106,7 +122,8 @@ export class DemoComponent implements OnInit {
         id: idx + 1,
         name: `name ${idx + 1}`,
         age: Math.ceil(Math.random() * 10) + 20,
-        status: Math.floor(Math.random() * 5) + 1
+        status: Math.floor(Math.random() * 5) + 1,
+        created: new Date()
       }));
     of(data)
       .pipe(delay(500))

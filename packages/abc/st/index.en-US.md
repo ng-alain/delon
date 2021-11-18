@@ -245,6 +245,7 @@ class TestComponent {
 | `[disabled]` | Select or radio button `disabled` status value | `boolean` | - |
 | `[expand]` | Whether to expand the status value | `boolean` | - |
 | `[showExpand]` | Whether show expand icon | `boolean` | - |
+| `[className]` | Class name of the row | `string` | - |
 
 ### STColumn<T extends STData = any>
 
@@ -307,7 +308,7 @@ class TestComponent {
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[type]` | Type of the filter, `keyword` render by input | `default,keyword,custom` | `default` |
+| `[type]` | Type of the filter, `keyword` render by input | `default,keyword,number,date,custom` | `default` |
 | `[menus]` | Filter menu config | `STColumnFilterMenu[]` | - |
 | `[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: STData) => boolean` | - |
 | `[default]` | Whether the `data` is filtered | `boolean` | - |
@@ -318,6 +319,10 @@ class TestComponent {
 | `[key]` | Unique key of this column, default is `index` property value | `string` | - |
 | `[reName]` | Map name | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
 | `[custom]` | Custom template | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
+| `[showOPArea]` | Whether to display the operation area | `boolean` | `true` |
+| `[placeholder]` | placeholder | `boolean` | `true` |
+| `[number]` | Option for the type is `number` | `Object` | - |
+| `[date]` | Option for the type is `date` | `Object` | - |
 
 ### STColumnFilterMenu
 
