@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
 
 import { LocaleData } from '@delon/theme';
 
-import { _STColumn } from '.';
 import { STColumnFilter, STColumnFilterMenu, STIcon } from './st.interfaces';
+import { _STColumn } from './st.types';
 
 @Component({
   selector: 'st-filter',
