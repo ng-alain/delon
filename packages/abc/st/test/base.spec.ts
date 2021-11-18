@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -411,11 +411,12 @@ export class PageObject<T extends TestComponent> {
       (error)="error()"
     >
     </st>
+    <ng-template #tpl><span>In tpl</span></ng-template>
   `
 })
 export class TestComponent {
-  @ViewChild('st', { static: true })
-  comp: STComponent;
+  @ViewChild('st', { static: true }) readonly comp: STComponent;
+  @ViewChild('tpl', { static: true }) readonly tpl: TemplateRef<NzSafeAny>;
   data: string | NzSafeAny[] | Observable<NzSafeAny[]> | null = deepCopy(USERS);
   res: STRes = {};
   req: STReq = {};

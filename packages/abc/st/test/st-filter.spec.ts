@@ -26,7 +26,7 @@ describe('abc: st-filter', () => {
 
     page.context.columns = [
       {
-        title: '',
+        title: 'a',
         index: 'i',
         filter: {
           multiple: true,
@@ -122,4 +122,10 @@ describe('abc: st-filter', () => {
       expect(m.value).toBe(undefined);
     });
   });
+  it('when type is custom', fakeAsync(() => {
+    const f = page.context.columns[0].filter!;
+    f.type = 'custom';
+    f.custom = page.context.tpl;
+    page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-custom', 1).asyncEnd();
+  }));
 });
