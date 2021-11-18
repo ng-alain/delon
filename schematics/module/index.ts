@@ -19,7 +19,7 @@ import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
 
-import { getProject } from '../utils';
+import { getProject, refreshPathRoot } from '../utils';
 import { Schema as ModuleSchema } from './schema';
 
 function addDeclarationToNgModule(options: ModuleSchema): Rule {
@@ -97,11 +97,10 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
 
 export default function (schema: ModuleSchema): Rule {
   return async (tree: Tree) => {
-    const project = (await getProject(tree, schema.project)).project;
+    const proj = await getProject(tree, schema.project);
 
-    if (schema.path === undefined) {
-      schema.path = `/${project.sourceRoot}/app/routes`;
-    }
+    refreshPathRoot(proj.project, schema, proj.alainProject);
+
     if (schema.module) {
       schema.module = findModuleFromOptions(tree, schema);
     }

@@ -25,7 +25,7 @@ import * as path from 'path';
 import * as ts from 'typescript';
 
 import { getSourceFile } from './ast';
-import { getProject } from './workspace';
+import { getProject, NgAlainProjectDefinition } from './workspace';
 
 const TEMPLATE_FILENAME_RE = /\.template$/;
 
@@ -77,15 +77,28 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string): strin
   return strings.classify(ret.join('-'));
 }
 
-function resolveSchema(tree: Tree, project: ProjectDefinition, schema: CommonSchema): void {
+export function refreshPathRoot(
+  project: ProjectDefinition,
+  schema: CommonSchema,
+  alainProject: NgAlainProjectDefinition
+): void {
+  if (schema.path === undefined) {
+    schema.path = `/${path.join(project.sourceRoot!, alainProject?.routesRoot ?? 'app/routes')}`;
+  }
+}
+
+function resolveSchema(
+  tree: Tree,
+  project: ProjectDefinition,
+  schema: CommonSchema,
+  alainProject: NgAlainProjectDefinition
+): void {
   // module name
   if (!schema.module) {
     throw new SchematicsException(`Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`);
   }
   // path
-  if (schema.path === undefined) {
-    schema.path = `/${project.sourceRoot}/app/routes`;
-  }
+  refreshPathRoot(project, schema, alainProject);
 
   schema.path += `/${schema.module}`;
 
@@ -205,10 +218,10 @@ export function buildAlain(schema: CommonSchema): Rule {
   return async (tree: Tree) => {
     const res = await getProject(tree, schema.project);
     if (schema.project && res.name !== schema.project) {
-      throw new Error(`The specified project does not match '${schema.project}', current: ${res.name}`);
+      throw new SchematicsException(`The specified project does not match '${schema.project}', current: ${res.name}`);
     }
     const project = res.project;
-    resolveSchema(tree, project, schema);
+    resolveSchema(tree, project, schema, res.alainProject);
 
     schema.componentName = buildComponentName(schema, project.prefix);
 

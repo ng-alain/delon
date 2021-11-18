@@ -63,8 +63,15 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
   return { runner: alainRunner, tree };
 }
 
-export async function createAlainAndModuleApp(name: string = 'trade', ngAddOptions?: object): Promise<AppResult> {
+export async function createAlainAndModuleApp(
+  name: string = 'trade',
+  ngAddOptions?: object,
+  alainData?: unknown
+): Promise<AppResult> {
   const res = await createAlainApp(ngAddOptions);
+  if (alainData != null) {
+    res.tree.create('ng-alain.json', JSON.stringify(alainData));
+  }
   res.tree = await res.runner
     .runSchematicAsync('module', { name, project: APPNAME, routing: true }, res.tree)
     .toPromise();

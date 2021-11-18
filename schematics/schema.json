@@ -12,6 +12,15 @@
     },
     "colorLess": {
       "$ref": "#/definitions/colorLess"
+    },
+    "projects": {
+      "type": "object",
+      "patternProperties": {
+        "^(?:@[a-zA-Z0-9_-]+/)?[a-zA-Z0-9_-]+$": {
+          "$ref": "#/definitions/project"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "definitions": {
@@ -130,6 +139,16 @@
           "description": "Specify output file path, default: `./src/assets/color.less`",
           "type": "string",
           "default": "./src/assets/color.less"
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "routesRoot": {
+          "type": "string",
+          "description": "The root of the routes files structure. (default: app/routes)",
+          "default": "app/routes"
         }
       }
     }
