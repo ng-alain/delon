@@ -17,7 +17,28 @@ ng-alain adds cool operations based on this.
 ng g ng-alain:[command name] [name] [options]
 ```
 
+Examples:
+
+```bash
+# Generate a trade module
+ng g ng-alain:trade
+# Generate a TradeListComponent List component under the trade module
+ng g ng-alain:list list -m=trade
+# Generate a ListComponent List component under the trade module
+ng g ng-alain:list list -m=trade -withoutModulePrefixInComponentName=true
+# Generate a TradeEditComponent Edit component under the trade module
+ng g ng-alain:edit edit -m=trade
+```
+
 > ng-alain has own file structure specification, which can cause exceptions when you break this file structure.
+
+| Option | Description |
+| ---- | --- |
+| `-m` | Allows specification of the declaring module. |
+| `-target` | Specifies relative path, could be set like `bus/list` |
+| `-modal` | Specifies using modal mode |
+| `-withoutPrefix` | Without prefix to selectors |
+| `-withoutModulePrefixInComponentName` | Without prefix to component name |
 
 ## Module
 
