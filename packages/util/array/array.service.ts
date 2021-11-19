@@ -46,7 +46,7 @@ export class ArrayService {
       ...options
     } as ArrayServiceTreeToArrOptions;
     const result: Array<{ [key: string]: any }> = [];
-    const inFn = (list: ReadonlyArray<{ [key: string]: any }>, parent: T | null, deep: number = 0) => {
+    const inFn = (list: ReadonlyArray<{ [key: string]: any }>, parent: T | null, deep: number = 0): void => {
       for (const i of list) {
         i[opt.deepMapName!] = deep;
         i[opt.parentMapName!] = parent;
@@ -166,7 +166,7 @@ export class ArrayService {
       childrenMapName: this.c.childrenMapName,
       ...options
     };
-    const inFn = (data: readonly T[], parent: T | null, deep: number) => {
+    const inFn = (data: readonly T[], parent: T | null, deep: number): void => {
       for (const item of data) {
         cb(item, parent, deep);
         const childrenVal = (item as { [key: string]: any })[options!.childrenMapName!];

@@ -60,8 +60,8 @@ describe('abc: utils', () => {
   describe('#deepMerge', () => {
     let original: NzSafeAny;
     it('should working', () => {
-      const fn1 = () => {};
-      const fn2 = () => {};
+      const fn1 = (): NzSafeAny => {};
+      const fn2 = (): NzSafeAny => {};
       const time = new Date();
       original = { a: 1, b: { c: 'c' }, fn: fn1, arr2: [], str: 'str', time, bool: true };
 

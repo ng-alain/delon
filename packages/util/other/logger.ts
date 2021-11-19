@@ -18,21 +18,17 @@ function notRecorded(...args: NzSafeAny[]): boolean {
 }
 
 function consoleCommonBehavior(consoleFunc: (...args: NzSafeAny) => void, ...args: NzSafeAny[]): void {
-  if (ngDevMode && notRecorded(...args)) {
+  if ((typeof ngDevMode === 'undefined' || ngDevMode) && notRecorded(...args)) {
     consoleFunc(...args);
   }
 }
 
 // Warning should only be printed in dev mode and only once.
-export const warn = (...args: NzSafeAny[]) =>
+export const warn = (...args: NzSafeAny[]): void =>
   consoleCommonBehavior((...arg: NzSafeAny[]) => console.warn(PREFIX, ...arg), ...args);
 
-export const deprecation11 = (comp: string, from: string, to?: string) => {
-  warnDeprecation(`${comp} => '${from}' is going to be removed in 11.0.0${to ? `, Please use '${to}' instead` : ``}.`);
-};
-
-export const warnDeprecation = (...args: NzSafeAny[]) => {
-  if (ngDevMode) {
+export const warnDeprecation = (...args: NzSafeAny[]): NzSafeAny => {
+  if (typeof ngDevMode === 'undefined' || ngDevMode) {
     return () => {};
   }
   const stack = new Error().stack;
@@ -40,8 +36,8 @@ export const warnDeprecation = (...args: NzSafeAny[]) => {
 };
 
 // Log should only be printed in dev mode.
-export const log = (...args: NzSafeAny[]) => {
-  if (ngDevMode) {
+export const log = (...args: NzSafeAny[]): void => {
+  if (typeof ngDevMode === 'undefined' || ngDevMode) {
     console.log(PREFIX, ...args);
   }
 };

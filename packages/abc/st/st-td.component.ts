@@ -162,7 +162,7 @@ export class STTdComponent {
     private drawerHelper: DrawerHelper
   ) {}
 
-  private report(type: _STTdNotifyType) {
+  private report(type: _STTdNotifyType): void {
     this.n.emit({ type, item: this.i, col: this.c });
   }
 

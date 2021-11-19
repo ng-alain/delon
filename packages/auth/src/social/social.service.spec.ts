@@ -80,7 +80,7 @@ describe('auth: social.service', () => {
       });
 
       it(`${item.type} via window`, fakeAsync(() => {
-        const mockWindowOpen = () => {
+        const mockWindowOpen = (): { closed: boolean } => {
           TestBed.inject(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         };
@@ -97,7 +97,7 @@ describe('auth: social.service', () => {
     });
 
     it(`should be return null model if set a null in window`, fakeAsync(() => {
-      const mockWindowOpen = () => {
+      const mockWindowOpen = (): { closed: boolean } => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       };
@@ -110,7 +110,7 @@ describe('auth: social.service', () => {
 
     it(`can't get model until closed`, fakeAsync(() => {
       spyOn(srv, 'ngOnDestroy');
-      const mockWindowOpen = () => {
+      const mockWindowOpen = (): { closed: boolean } => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       };

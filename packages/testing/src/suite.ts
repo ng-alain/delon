@@ -29,6 +29,6 @@ export class TestContext<T> {
   }
 }
 
-export const createTestContext = <T>(component: Type<T>) => {
+export const createTestContext = <T>(component: Type<T>): TestContext<T> => {
   return new TestContext<T>(TestBed.createComponent<T>(component));
 };

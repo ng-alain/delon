@@ -697,7 +697,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  _handleTd(ev: _STTdNotify) {
+  _handleTd(ev: _STTdNotify): void {
     switch (ev.type) {
       case 'checkbox':
         this._refCheck()._checkNotify();

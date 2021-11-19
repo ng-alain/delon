@@ -39,7 +39,7 @@ import { STWidgetRegistry } from './../st-widget';
 export const MOCKDATE = new Date();
 export const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
 
-const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+const r = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 export function genData(count: number): NzSafeAny[] {
   return Array(count)
     .fill({})

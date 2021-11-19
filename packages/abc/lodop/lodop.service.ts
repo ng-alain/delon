@@ -89,7 +89,7 @@ export class LodopService implements OnDestroy {
 
     const url = `${this.cog.url}?name=${this.cog.name}`;
     let checkMaxCount = this.cog.checkMaxCount as number;
-    const onResolve = (status: NzSafeAny, error?: NzSafeAny) => {
+    const onResolve = (status: NzSafeAny, error?: NzSafeAny): void => {
       this._init.next({
         ok: status === 'ok',
         status,
@@ -97,7 +97,7 @@ export class LodopService implements OnDestroy {
         lodop: this._lodop!
       });
     };
-    const checkStatus = () => {
+    const checkStatus = (): void => {
       --checkMaxCount;
       if (this._lodop!.webskt && this._lodop!.webskt.readyState === 1) {
         onResolve('ok');

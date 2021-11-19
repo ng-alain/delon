@@ -11,7 +11,7 @@ export function groupFiles(
   isSyncSpecific: boolean,
   target: string,
   siteConfig: SiteConfig
-) {
+): any {
   const files: Array<{ key: string; data: { [key: string]: string } }> = [];
   const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
   srcPaths.forEach(srcPath => {

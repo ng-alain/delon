@@ -116,12 +116,12 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     this.setValue(this.pureValue(fileList));
   }
 
-  handleRemove = () => {
+  handleRemove = (): boolean => {
     this._setValue(this.fileList);
     return true;
   };
 
-  handlePreview = (file: NzUploadFile) => {
+  handlePreview = (file: NzUploadFile): void => {
     if (this.ui.preview) {
       this.ui.preview(file);
       return;

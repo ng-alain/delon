@@ -138,7 +138,7 @@ export class STColumnSource {
   }
 
   private fixedCoerce(list: _STColumn[]): void {
-    const countReduce = (a: number, b: _STColumn) => a + +b.width!.toString().replace('px', '');
+    const countReduce = (a: number, b: _STColumn): number => a + +b.width!.toString().replace('px', '');
     // left width
     list
       .filter(w => w.fixed && w.fixed === 'left' && w.width)

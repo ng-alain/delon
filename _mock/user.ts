@@ -1,6 +1,6 @@
 import { MockRequest, MockStatusError } from '@delon/mock';
 
-const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+const r = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 
 export const USERS = {
   // 支持值为 Object 和 Array

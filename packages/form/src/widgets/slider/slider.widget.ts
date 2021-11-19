@@ -29,7 +29,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
     this.included = typeof included === 'undefined' ? true : included;
   }
 
-  _formatter = (value: number) => {
+  _formatter = (value: number): string => {
     const { formatter } = this.ui;
     if (formatter) return formatter(value);
     return `${value}`;

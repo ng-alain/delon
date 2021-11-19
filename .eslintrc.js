@@ -112,6 +112,13 @@ module.exports = {
         '@typescript-eslint/naming-convention': 'off',
         '@typescript-eslint/no-unused-expressions': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
+        '@typescript-eslint/explicit-function-return-type': [
+          'error',
+          {
+            allowExpressions: true,
+            allowConciseArrowFunctionExpressionsStartingWithVoid: true
+          }
+        ],
         'prefer-arrow/prefer-arrow-functions': 'off',
         'import/no-duplicates': 'error',
         'import/no-unused-modules': 'error',

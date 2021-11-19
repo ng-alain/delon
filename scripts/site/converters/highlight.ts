@@ -3,7 +3,7 @@ import { getCode } from '../utils/utils';
 
 const JsonML = require('jsonml.js/lib/utils');
 
-export function highlight() {
+export function highlight(): any {
   return [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'pre',
     (node: any, index: number) => {

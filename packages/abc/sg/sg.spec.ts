@@ -18,7 +18,7 @@ describe('abc: grid', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  const moduleAction = () => {
+  const moduleAction = (): void => {
     TestBed.configureTestingModule({
       imports: [SGModule, NoopAnimationsModule],
       declarations: [TestComponent]

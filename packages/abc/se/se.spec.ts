@@ -30,7 +30,7 @@ describe('abc: edit', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  const moduleAction = () => {
+  const moduleAction = (): void => {
     TestBed.configureTestingModule({
       imports: [SEModule, FormsModule, NzRadioModule, NoopAnimationsModule],
       declarations: [TestComponent]

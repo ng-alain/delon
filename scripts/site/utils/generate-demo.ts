@@ -12,7 +12,7 @@ const MT = require('mark-twain');
 
 let exampleIndexTpl: string | null = null;
 
-function fixExample(item: any, filePath: string, config: ModuleConfig) {
+function fixExample(item: any, filePath: string, config: ModuleConfig): void {
   item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
   const obj = {
     selector: `${item.id}-index`,
@@ -33,7 +33,7 @@ export function generateDemo(
   cols: number,
   config: ModuleConfig,
   siteConfig: SiteConfig
-) {
+): any {
   if (!exampleIndexTpl) {
     exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
   }

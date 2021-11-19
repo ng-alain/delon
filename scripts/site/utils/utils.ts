@@ -8,15 +8,15 @@ import { ModuleConfig } from '../interfaces';
 const JsonML = require('jsonml.js/lib/utils');
 const mustache = require('mustache');
 
-export function isHeading(node: any) {
+export function isHeading(node: any): any {
   return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
 }
 
-export function isStandalone(tagName: string) {
+export function isStandalone(tagName: string): boolean {
   return tagName === 'hr' || tagName === 'br' || tagName === 'img';
 }
 
-export function escapeHTML(str: string, escapeQuotes: boolean = false) {
+export function escapeHTML(str: string, escapeQuotes: boolean = false): string {
   if (!str || typeof str !== 'string') {
     return '';
   }
@@ -33,7 +33,7 @@ export function escapeHTML(str: string, escapeQuotes: boolean = false) {
   return escaped;
 }
 
-export function getCode(node: any) {
+export function getCode(node: any): any {
   return JsonML.getChildren(JsonML.getChildren(node)[0] || '')[0] || '';
 }
 
@@ -59,7 +59,7 @@ export function generateSluggedId(children: any): { id: string; text: string } {
   };
 }
 
-export function genAttr(attr: any) {
+export function genAttr(attr: any): string {
   const ret: any[] = [];
   if (attr) {
     for (const key in attr) {
@@ -69,20 +69,20 @@ export function genAttr(attr: any) {
   return ret.join(' ');
 }
 
-export function generateDoc(data: any, tpl: string, savePath: string) {
+export function generateDoc(data: any, tpl: string, savePath: string): void {
   fse.ensureDirSync(path.dirname(savePath));
   const content = mustache.render(tpl, data);
   fs.writeFileSync(savePath, content, { flag: 'w+' });
 }
 
-export function genUpperName(name: string) {
+export function genUpperName(name: string): string {
   return name
     .split(/-|\//g)
     .map(v => v.charAt(0).toUpperCase() + v.slice(1))
     .join('');
 }
 
-export function includeAttributes(config: ModuleConfig, targetMeta: any) {
+export function includeAttributes(config: ModuleConfig, targetMeta: any): any {
   if (!config.metaIncludeAttributes || !Array.isArray(config.metaIncludeAttributes)) return;
 
   targetMeta = targetMeta || {};
@@ -92,11 +92,11 @@ export function includeAttributes(config: ModuleConfig, targetMeta: any) {
   return targetMeta;
 }
 
-export function genUrl(rootDir: string, filePath: string) {
+export function genUrl(rootDir: string, filePath: string): string {
   return path.relative(rootDir, filePath).replace(/\\/g, `/`);
 }
 
-export function genComponentName(...names: string[]) {
+export function genComponentName(...names: string[]): string {
   return `${names
     .map(key =>
       key
@@ -107,10 +107,10 @@ export function genComponentName(...names: string[]) {
     .join('')}Component`;
 }
 
-export function genSelector(...names: string[]) {
+export function genSelector(...names: string[]): string {
   return `app-${names.map(vv => vv.replace(/-|\//g, '-')).join('-')}`;
 }
 
-export function handleExploreStr(str: string, cr: string = '/') {
+export function handleExploreStr(str: string, cr: string = '/'): string {
   return str.replace(/\\/g, cr);
 }

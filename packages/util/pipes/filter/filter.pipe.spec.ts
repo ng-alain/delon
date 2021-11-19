@@ -31,5 +31,5 @@ describe('Pipe: filter', () => {
 class TestComponent {
   list = [1, 2, 3];
   other = 4;
-  matcher = (item: number) => item > 1;
+  matcher = (item: number): boolean => item > 1;
 }

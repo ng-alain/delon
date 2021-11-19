@@ -39,7 +39,7 @@ const exampleModules: ExampleModules = {
   list: []
 };
 
-function generateModule(config: ModuleConfig) {
+function generateModule(config: ModuleConfig): void {
   const distPath = path.join(rootDir, config.dist);
 
   const metas: Meta[] = Object.assign([], config.extraRouteMeta);
@@ -49,7 +49,7 @@ function generateModule(config: ModuleConfig) {
     routes: []
   };
 
-  function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true) {
+  function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true): void {
     modules.imports.push(`import { ${componentName} } from './${handleExploreStr(name)}/${filename}';`);
     modules.components.push(componentName);
     if (needRouter) {
@@ -63,14 +63,14 @@ function generateModule(config: ModuleConfig) {
     }
   }
 
-  function fixMDClass(fileObject: any) {
+  function fixMDClass(fileObject: any): void {
     const contentObj = fileObject.item.content;
     Object.keys(contentObj).forEach(lan => {
       contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
     });
   }
 
-  function fixDemo(fileObject: any, demos: any) {
+  function fixDemo(fileObject: any, demos: any): void {
     const demoHTML: string[] = [];
     demoHTML.push(`<div nz-row [nzGutter]="16">`);
     if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
@@ -86,7 +86,7 @@ function generateModule(config: ModuleConfig) {
     fixMDClass(fileObject);
   }
 
-  function fixExample(fileObject: any, demos: any) {
+  function fixExample(fileObject: any, demos: any): void {
     const contentObj = fileObject.item.content;
     Object.keys(contentObj).forEach(lan => {
       const demoArr = contentObj[lan].content.split(/(<!--demo\([^)]+\)-->)/g);

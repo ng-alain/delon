@@ -17,7 +17,7 @@ describe('abc: view', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  const moduleAction = () => {
+  const moduleAction = (): void => {
     TestBed.configureTestingModule({
       imports: [SVModule],
       declarations: [TestComponent]

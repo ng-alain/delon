@@ -62,7 +62,7 @@ export class LazyService {
       }
 
       this.list[path] = true;
-      const onSuccess = (item: LazyResult) => {
+      const onSuccess = (item: LazyResult): void => {
         this.cached[path] = item;
         resolve(item);
         this._notify.next([item]);
