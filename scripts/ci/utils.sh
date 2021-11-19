@@ -49,7 +49,8 @@ DEPENDENCIES=$(node -p "
     'eslint-plugin-prettier',
     'prettier',
     'husky',
-    'lint-staged'
+    'lint-staged',
+    'swagger-typescript-api'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")
