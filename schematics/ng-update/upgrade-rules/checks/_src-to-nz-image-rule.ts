@@ -10,7 +10,7 @@ export class SrcToNzImageRule extends Migration<UpgradeData> {
   enabled = this.targetVersion === TargetVersion.V12;
 
   visitTemplate(template: ResolvedResource): void {
-    const deprecatedComponent = (deprecated: string) => {
+    const deprecatedComponent = (deprecated: string): void => {
       findInputsOnElementWithAttr(template.content, '_src', [deprecated]).forEach(offset => {
         this.failures.push({
           filePath: template.filePath,

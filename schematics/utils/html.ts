@@ -29,7 +29,7 @@ export function getTag(tree: Tree, src: string, tagName: string): { startOffset:
   } as any) as any;
 
   let resNode: any;
-  const visit = (nodes: any[]) => {
+  const visit = (nodes: any[]): void => {
     nodes.forEach(node => {
       const element = node as any;
       if (element.nodeName === tagName) {
@@ -60,7 +60,7 @@ export function getTagInV4(_host: Tree, src: string, tagName: string): { startOf
   } as any);
 
   let resNode;
-  const visit = (nodes: any[]) => {
+  const visit = (nodes: any[]): void => {
     nodes.forEach(node => {
       const element: any = node;
       if (element.tagName === tagName) {

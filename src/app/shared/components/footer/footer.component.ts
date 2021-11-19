@@ -62,7 +62,7 @@ export class FooterComponent implements OnInit {
   }
 
   changeColor(res: NzSafeAny): void {
-    const changeColor = () => {
+    const changeColor = (): void => {
       this.ngZone.runOutsideAngular(() => {
         (window as NzSafeAny).less
           .modifyVars({

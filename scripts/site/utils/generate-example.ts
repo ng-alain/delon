@@ -4,7 +4,7 @@ import * as path from 'path';
 import { ExampleModules, SiteConfig } from '../interfaces';
 import { generateDoc } from './utils';
 
-export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, options: ExampleModules) {
+export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, options: ExampleModules): void {
   const targetDir = path.join(rootDir, `./src/app/routes/gen/examples`);
   const indexFilePath = path.join(targetDir, `index.ts`);
   const tpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples)).toString('utf8');

@@ -8,7 +8,7 @@ import { LazyService } from './lazy.service';
 let isIE = false;
 let testStatus = 'ok';
 class MockDocument {
-  getElementsByTagName = () => {
+  getElementsByTagName = (): NzSafeAny => {
     return [
       {
         appendChild: (node: NzSafeAny) => {
@@ -26,7 +26,7 @@ class MockDocument {
       }
     ];
   };
-  createElement = () => {
+  createElement = (): NzSafeAny => {
     const ret: NzSafeAny = {
       testStatus,
       onload: () => {}
@@ -61,9 +61,9 @@ describe('utils: lazy', () => {
     });
     it('should be load a js resource unit stauts is complete', (done: () => void) => {
       isIE = true;
-      const mockGetElementsByTagName = () => {
+      const mockGetElementsByTagName = (): NzSafeAny => {
         const mockObj = new MockDocument().getElementsByTagName();
-        mockObj[0].appendChild = node => {
+        mockObj[0].appendChild = (node: NzSafeAny): void => {
           node.readyState = 'mock-status';
           node.onreadystatechange();
           node.readyState = 'complete';
@@ -71,7 +71,7 @@ describe('utils: lazy', () => {
         };
         return mockObj;
       };
-      spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName as NzSafeAny);
+      spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName);
       srv.change.subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();

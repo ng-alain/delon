@@ -54,7 +54,7 @@ describe('abc: st', () => {
 
   afterEach(() => comp.ngOnDestroy());
 
-  function refAssign() {
+  function refAssign(): void {
     fixture = page.fixture;
     context = page.context;
     dl = page.dl;

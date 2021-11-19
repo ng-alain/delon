@@ -288,7 +288,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       uiSchema: SFUISchemaItemRun,
       parentUiSchema: SFUISchemaItemRun,
       uiRes: SFUISchemaItemRun
-    ) => {
+    ): void => {
       if (!Array.isArray(schema.required)) schema.required = [];
 
       Object.keys(schema.properties!).forEach(key => {
@@ -533,7 +533,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return false;
     }
-    const fn = (property: FormProperty) => {
+    const fn = (property: FormProperty): void => {
       property._runValidation();
       if (!(property instanceof PropertyGroup) || !property.properties) return;
       if (Array.isArray(property.properties)) {

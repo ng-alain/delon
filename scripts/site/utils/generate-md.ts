@@ -82,7 +82,7 @@ const converters = [highlight()].concat([
   ]
 ]);
 
-export function toHtml(markdownData: any[], codeEscape: boolean = true) {
+export function toHtml(markdownData: any[], codeEscape: boolean = true): any {
   const pair: any = converters.filter((converter: any) => {
     return converter[0](markdownData);
   })[0];
@@ -125,7 +125,7 @@ function fixAngular(html: string): string {
   return res;
 }
 
-export function generateMd(markdownData: any) {
+export function generateMd(markdownData: any): any {
   const contentChildren = JsonML.getChildren(markdownData.content);
   headingList = contentChildren
     .filter(node => JsonML.isElement(node) && isHeading(node))

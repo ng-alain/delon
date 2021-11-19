@@ -62,7 +62,7 @@ export class XlsxService {
    */
   import(fileOrUrl: File | string): Promise<{ [key: string]: NzSafeAny[][] }> {
     return new Promise<{ [key: string]: NzSafeAny[][] }>((resolve, reject) => {
-      const r = (data: NzSafeAny) => this.ngZone.run(() => resolve(this.read(data)));
+      const r = (data: NzSafeAny): void => this.ngZone.run(() => resolve(this.read(data)));
       this.init()
         .then(() => {
           // from url

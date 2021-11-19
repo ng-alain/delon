@@ -32,7 +32,7 @@ export class MenuService implements OnDestroy {
   }
 
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
-    const inFn = (list: Menu[], parentMenu: Menu | null, depth: number) => {
+    const inFn = (list: Menu[], parentMenu: Menu | null, depth: number): void => {
       for (const item of list) {
         callback(item, parentMenu, depth);
         if (item.children && item.children.length > 0) {

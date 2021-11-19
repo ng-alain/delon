@@ -24,7 +24,7 @@ const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.o
 // g['document'] = win.document;
 
 // The Express app is exported so that it can be used by serverless Functions.
-export function app() {
+export function app(): any {
   const server = express();
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
@@ -56,7 +56,7 @@ export function app() {
   return server;
 }
 
-function run() {
+function run(): void {
   const port = process.env.PORT || 80;
 
   // Start up the Node server

@@ -6,7 +6,8 @@ import { generateMd } from './generate-md';
 
 const MT = require('mark-twain');
 
-export function parseMd(file: string, siteConfig: SiteConfig) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseMd(file: string, siteConfig: SiteConfig): any {
   let mt = null;
   try {
     mt = MT(fse.readFileSync(file, { encoding: 'utf-8' }));

@@ -40,7 +40,7 @@ export class ZipService {
   @ZoneOutside()
   read(fileOrUrl: File | string, options?: NzSafeAny): Promise<NzSafeAny> {
     return new Promise<NzSafeAny>((resolve, reject) => {
-      const resolveCallback = (data: NzSafeAny) => {
+      const resolveCallback = (data: NzSafeAny): void => {
         this.ngZone.run(() => resolve(data));
       };
       this.init().then(() => {
