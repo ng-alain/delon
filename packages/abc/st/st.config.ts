@@ -47,7 +47,6 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
     trigger: 'click',
     placement: 'top'
   },
-  rowClickTime: 200,
   btnIcon: {
     theme: 'outline',
     spin: false

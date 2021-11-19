@@ -151,7 +151,12 @@
       ></ng-template>
     </ng-container>
     <ng-template #bodyTpl let-i let-index="index">
-      <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [ngClass]="i._rowClassName">
+      <tr
+        [attr.data-index]="index"
+        (click)="_rowClick($event, i, index, false)"
+        (dblclick)="_rowClick($event, i, index, true)"
+        [ngClass]="i._rowClassName"
+      >
         <td
           *ngIf="expand"
           [nzShowExpand]="expand && i.showExpand !== false"

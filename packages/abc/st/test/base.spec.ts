@@ -408,7 +408,6 @@ export class PageObject<T extends TestComponent> {
       [multiSort]="multiSort"
       [noResult]="noResult"
       [widthConfig]="widthConfig"
-      [rowClickTime]="rowClickTime"
       [clickRowClassName]="clickRowClassName"
       [showHeader]="showHeader"
       [contextmenu]="contextmenu"
@@ -439,7 +438,6 @@ export class TestComponent {
   multiSort: boolean | STMultiSort;
   noResult = 'noResult';
   widthConfig: string[] = [];
-  rowClickTime = 200;
   clickRowClassName?: STClickRowClassName | null = 'text-error';
   responsive = false;
   responsiveHideHeaderFooter = false;

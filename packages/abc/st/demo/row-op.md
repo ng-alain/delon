@@ -1,19 +1,19 @@
 ---
 order: 4
 title:
-  zh-CN: 行事件
-  en-US: Row event
+  zh-CN: 行操作
+  en-US: Row OP
 ---
 
 ## zh-CN
 
-利用 `(change)` 实现点击行回调，因于DOM事件在同一元素上无法区分单或双击，若明确不需要双击事件，可以设定 `rowClickTime` 值为 `0` 以防止 `200ms` 迟延。
+利用 `setRow(0, { className: 'text-red' })` 实现第1行动态设置样式，也可以通过 `clickRowClassName` 实现行点击样式交互。
 
 > 打开控制面板了解打印明细。
 
 ## en-US
 
-Use `(change)` to implement click line callback, because DOM events can't distinguish single or double click on the same HTML element. If you don't need double-click event, you can set `rowClickTime` value to `0` to prevent `200ms` delay.
+Use `setRow(0, {className:'text-red' })` to dynamically set the style of the first row, or use `clickRowClassName` to implement row click style interaction.
 
 > Open the control panel for print details.
 
@@ -24,13 +24,15 @@ import { STChange, STClickRowClassNameType, STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st
-    [data]="url"
-    [req]="{ params: params }"
-    [columns]="columns"
-    (change)="_click($event)"
-    [clickRowClassName]="clickRowClassName"
-  ></st>`
+  template: ` <button nz-button (click)="st.setRow(0, { className: 'text-success' })"> Via setRow method </button>
+    <st
+      #st
+      [data]="url"
+      [req]="{ params: params }"
+      [columns]="columns"
+      (change)="_click($event)"
+      [clickRowClassName]="clickRowClassName"
+    ></st>`
 })
 export class DemoComponent {
   url = `/users?results=3`;
