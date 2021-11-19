@@ -170,6 +170,7 @@ describe('abc: zip', () => {
       spyOn(fs, 'saveAs');
       srv.save(zip, { filename: '123.zip' }).then(
         () => {
+          // eslint-disable-next-line deprecation/deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           expect(true).toBe(true);
           done();
@@ -190,6 +191,7 @@ describe('abc: zip', () => {
         .then(
           () => {
             expect(count).toBe(1);
+            // eslint-disable-next-line deprecation/deprecation
             expect(fs.saveAs).toHaveBeenCalled();
             done();
           },
@@ -208,6 +210,7 @@ describe('abc: zip', () => {
           done();
         },
         () => {
+          // eslint-disable-next-line deprecation/deprecation
           expect(fs.saveAs).not.toHaveBeenCalled();
           expect(true).toBe(true);
           done();

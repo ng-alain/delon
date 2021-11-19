@@ -184,28 +184,28 @@ describe('abc: reuse-tab(service)', () => {
       let count = 5;
       genCached(count);
       // index
-      expect(srv.index('/a/1')).toBe(0, `'index' muse be contain '/a/1'`);
-      expect(srv.index('/a/b')).toBe(-1, `'index' muse be not contain '/a/b'`);
+      expect(srv.index('/a/1')).withContext(`'index' muse be contain '/a/1'`).toBe(0);
+      expect(srv.index('/a/b')).withContext(`'index' muse be not contain '/a/b'`).toBe(-1);
       // exists
-      expect(srv.exists('/a/1')).toBe(true, `'exists' muse be contain '/a/1'`);
-      expect(srv.exists('/a/b')).toBe(false, `'exists' muse be not contain '/a/b'`);
+      expect(srv.exists('/a/1')).withContext(`'exists' muse be contain '/a/1'`).toBe(true);
+      expect(srv.exists('/a/b')).withContext(`'exists' muse be not contain '/a/b'`).toBe(false);
       // get
-      expect(srv.get('/a/1')).not.toBeNull(`'get' muse be return cache data`);
-      expect(srv.get('/a/b')).toBeNull(`'get' muse be return null`);
-      expect(srv.get()).toBeNull(`'get' muse be return null if null`);
+      expect(srv.get('/a/1')).withContext(`'get' muse be return cache data`).not.toBeNull();
+      expect(srv.get('/a/b')).withContext(`'get' muse be return null`).toBeNull();
+      expect(srv.get()).withContext(`'get' muse be return null if null`).toBeNull();
       // remove
       srv.close('/a/1');
       --count;
-      expect(srv.count).toBe(count, `'remove' muse be return ${count} when has removed`);
+      expect(srv.count).withContext(`'remove' muse be return ${count} when has removed`).toBe(count);
       srv.close('/a/b');
-      expect(srv.count).toBe(count, `'remove' muse be return ${count} when invalid url`);
+      expect(srv.count).withContext(`'remove' muse be return ${count} when invalid url`).toBe(count);
       // items
-      expect(srv.items.length).toBe(count, `'items' muse be return ${count} length`);
+      expect(srv.items.length).withContext(`'items' muse be return ${count} length`).toBe(count);
       // count
-      expect(srv.count).toBe(count, `'count' muse be return ${count}`);
+      expect(srv.count).withContext(`'count' muse be return ${count}`).toBe(count);
       // clear
       srv.clear();
-      expect(srv.count).toBe(0, `'clear' muse be return 0`);
+      expect(srv.count).withContext(`'clear' muse be return 0`).toBe(0);
     });
     describe('#title', () => {
       it('should reset title via service', () => {

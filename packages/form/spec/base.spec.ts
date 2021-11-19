@@ -309,7 +309,7 @@ export class SFPage {
   typeEvent(eventName: string | Event, cls: string = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {
-      expect(true).toBe(false, `won't found '${cls}' class element`);
+      expect(true).withContext(`won't found '${cls}' class element`).toBe(false);
       return this;
     }
     dispatchFakeEvent(node, eventName);

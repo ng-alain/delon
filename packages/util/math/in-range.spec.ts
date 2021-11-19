@@ -21,7 +21,7 @@ describe('util.inRange', () => {
           inRange(value, start, end);
         }).toThrow();
       } else {
-        expect(inRange(value, start, end)).toBe(item.v, `${item.k} must be ${item.v}`);
+        expect(inRange(value, start, end)).withContext(`${item.k} must be ${item.v}`).toBe(item.v);
       }
     }
   });
