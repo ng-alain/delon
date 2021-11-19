@@ -978,7 +978,6 @@ describe('abc: st', () => {
     });
     describe('[row events]', () => {
       beforeEach(fakeAsync(() => {
-        context.rowClickTime = 10;
         page.cd();
       }));
       it(`should be row click`, fakeAsync(() => {
@@ -987,10 +986,8 @@ describe('abc: st', () => {
       }));
       it(`should be row double click`, fakeAsync(() => {
         const cell = page.getCell() as HTMLElement;
-        cell.click();
-        cell.click();
-        fixture.detectChanges();
-        tick(100);
+        (cell.closest('tr') as HTMLElement).dispatchEvent(new Event('dblclick'));
+        page.cd();
         expect(page._changeData.type).toBe('dblClick');
       }));
       it('should be ingore input', fakeAsync(() => {

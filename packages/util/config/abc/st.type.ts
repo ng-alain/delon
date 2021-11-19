@@ -297,10 +297,6 @@ export interface AlainSTConfig {
     icon?: string;
   };
   /**
-   * 行单击多少时长之类为双击（单位：毫秒），默认：`200`
-   */
-  rowClickTime?: number;
-  /**
    * 过滤按钮确认文本
    */
   filterConfirmText?: string;

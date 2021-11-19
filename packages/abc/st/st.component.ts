@@ -90,7 +90,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_bordered: BooleanInput;
   static ngAcceptInputType_expandRowByClick: BooleanInput;
   static ngAcceptInputType_expandAccordion: BooleanInput;
-  static ngAcceptInputType_rowClickTime: NumberInput;
   static ngAcceptInputType_responsive: BooleanInput;
   static ngAcceptInputType_responsiveHideHeaderFooter: BooleanInput;
   static ngAcceptInputType_virtualScroll: BooleanInput;
@@ -102,7 +101,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private data$: Subscription;
   private totalTpl = ``;
   private cog: AlainSTConfig;
-  private rowClickCount = 0;
   private _req: STReq;
   private _res: STRes;
   private _page: STPage;
@@ -208,7 +206,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: NzSafeAny; column: STColumn }>;
   @Input() noResult?: string | TemplateRef<void> | null;
-  @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
   @Output() readonly error = new EventEmitter<STError>();
@@ -485,29 +482,24 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
 
-  _rowClick(e: Event, item: STData, index: number): void {
+  _rowClick(e: Event, item: STData, index: number, dbl: boolean): void {
     const el = e.target as HTMLElement;
     if (el.nodeName === 'INPUT') return;
-    const { expand, expandRowByClick, rowClickTime } = this;
+    const { expand, expandRowByClick } = this;
     if (!!expand && item.showExpand !== false && expandRowByClick) {
       item.expand = !item.expand;
       this.closeOtherExpand(item);
       this.changeEmit('expand', item);
       return;
     }
-    ++this.rowClickCount;
-    if (this.rowClickCount !== 1) return;
+
     const data = { e, item, index };
-    if (this.rowClickCount === 1) {
+    if (dbl) {
+      this.changeEmit('dblClick', data);
+    } else {
       this._clickRowClassName(el, item, index);
       this.changeEmit('click', data);
     }
-    setTimeout(() => {
-      if (this.rowClickCount !== 1) {
-        this.changeEmit('dblClick', data);
-      }
-      this.rowClickCount = 0;
-    }, rowClickTime);
   }
 
   private _clickRowClassName(el: HTMLElement, item: STData, index: number): void {
