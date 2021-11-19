@@ -533,7 +533,7 @@ describe('form: component', () => {
       });
       it('#setValue, shoule be throw error when invlaid path', () => {
         expect(() => {
-          context.comp.setValue('/invalid-path', name);
+          context.comp.setValue('/invalid-path', 'name');
         }).toThrow();
       });
     });

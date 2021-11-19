@@ -309,15 +309,21 @@ export class PageObject<T extends TestComponent> {
   }
   expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
     const els = document.querySelectorAll(cls);
-    expect(els.length).toBe(count, expectationFailOutput);
+    expect(els.length)
+      .withContext(expectationFailOutput ?? `HtmlElement length muse be: ${count}`)
+      .toBe(count);
     return this;
   }
   expectElContent(cls: string, content: string, expectationFailOutput?: string): this {
     const el = document.querySelector(cls);
     if (content == null) {
-      expect(el).toBeNull(expectationFailOutput);
+      expect(el)
+        .withContext(expectationFailOutput ?? ``)
+        .toBeNull();
     } else {
-      expect(el!.textContent!.trim()).toBe(content, expectationFailOutput);
+      expect(el!.textContent!.trim())
+        .withContext(expectationFailOutput ?? ``)
+        .toBe(content);
     }
     return this;
   }
@@ -349,7 +355,7 @@ export class PageObject<T extends TestComponent> {
       el = (this.dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
     }
     if (!el) {
-      expect(false).toBe(true, `not found col: ${col}, row: ${row} element`);
+      expect(false).withContext(`not found col: ${col}, row: ${row} element`).toBe(true);
       return this;
     }
 
@@ -363,7 +369,7 @@ export class PageObject<T extends TestComponent> {
   }
   clickContentMenu(idx: number): this {
     const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
-    expect(el).not.toBeNull(`the index: ${idx} is invalid element of content menu container`);
+    expect(el).withContext(`the index: ${idx} is invalid element of content menu container`).not.toBeNull();
     const fn = this.context.comp.contextmenuList[idx - 1].fn;
     expect(fn).not.toHaveBeenCalled();
     (el as HTMLElement).click();

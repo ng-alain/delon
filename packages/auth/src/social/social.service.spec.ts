@@ -75,7 +75,7 @@ describe('auth: social.service', () => {
         const ret = TestBed.inject(DOCUMENT).location.href;
         Object.keys(item.be).forEach(key => {
           const expected = `${key}=${item.be[key]}`;
-          expect(ret).toContain(expected, `muse contain "${expected}"`);
+          expect(ret).withContext(`muse contain "${expected}"`).toContain(expected);
         });
       });
 

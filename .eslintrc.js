@@ -12,7 +12,7 @@ module.exports = {
         project: ['tsconfig.json'],
         createDefaultProgram: true
       },
-      plugins: ['@typescript-eslint', 'jsdoc', 'import'],
+      plugins: ['@typescript-eslint', 'jsdoc', 'import', 'deprecation'],
       extends: [
         'plugin:@angular-eslint/recommended',
         'plugin:@angular-eslint/template/process-inline-templates',
@@ -170,7 +170,8 @@ module.exports = {
         'no-shadow': 'off',
         '@angular-eslint/no-input-rename': 'off',
         'prefer-const': 'off',
-        'max-len': 'off'
+        'max-len': 'off',
+        'deprecation/deprecation': 'warn'
       }
     },
     {

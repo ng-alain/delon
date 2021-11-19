@@ -22,18 +22,16 @@ describe('util: date-time', () => {
       expect(dateTimePickerUtil.format(NOW, 'yyyy')).toBe('2000');
     });
     it('#disabledBeforeDate', () => {
-      expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).toBe(false, `Shoule be not include today`);
-      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW)).toBe(
-        true,
-        `Shoule be not today, because of offset`
-      );
+      expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).withContext(`Shoule be not include today`).toBe(false);
+      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW))
+        .withContext(`Shoule be not today, because of offset`)
+        .toBe(true);
     });
     it('#disabledAfterDate', () => {
-      expect(dateTimePickerUtil.disabledAfterDate()(NOW)).toBe(false, `Shoule be not include today`);
-      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW)).toBe(
-        true,
-        `Shoule be not today, because of offset`
-      );
+      expect(dateTimePickerUtil.disabledAfterDate()(NOW)).withContext(`Shoule be not include today`).toBe(false);
+      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW))
+        .withContext(`Shoule be not today, because of offset`)
+        .toBe(true);
     });
     describe('disabled time', () => {
       function checkRes(

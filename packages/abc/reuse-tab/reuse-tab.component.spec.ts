@@ -766,10 +766,10 @@ describe('abc: reuse-tab', () => {
     close(pos: number): this {
       const ls = document.querySelectorAll('.anticon-close');
       if (pos > ls.length) {
-        expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
+        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
         return this;
       } else if (ls.length === 0) {
-        expect(false).toBe(true, `invalid close element`);
+        expect(false).withContext(`invalid close element`).toBe(true);
         return this;
       }
       (ls[pos] as HTMLElement).click();
@@ -778,10 +778,10 @@ describe('abc: reuse-tab', () => {
     go(pos: number): this {
       const ls = document.querySelectorAll('.ant-tabs-tab');
       if (pos > ls.length) {
-        expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
+        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
         return this;
       } else if (ls.length === 0) {
-        expect(false).toBe(true, `invalid item element`);
+        expect(false).withContext(`invalid item element`).toBe(true);
         return this;
       }
       rtComp._to(pos);
@@ -791,7 +791,7 @@ describe('abc: reuse-tab', () => {
     openContextMenu(pos: number, eventArgs?: NzSafeAny): this {
       const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
-        expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
+        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
         return this;
       }
       (ls[pos] as HTMLElement).dispatchEvent(new MouseEvent('contextmenu', eventArgs));
@@ -803,7 +803,7 @@ describe('abc: reuse-tab', () => {
     }
     clickContentMenu(type: string): this {
       const el = this.getContentMenu(type);
-      expect(el).not.toBeNull(`the ${type} is invalid element of content menu container`);
+      expect(el).withContext(`the ${type} is invalid element of content menu container`).not.toBeNull();
       (el as HTMLElement).click();
       return this.cd();
     }

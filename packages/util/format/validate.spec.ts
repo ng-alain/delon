@@ -82,7 +82,9 @@ export const TEST_DATA = {
 describe('utils: format-validate', () => {
   function process(methodName: keyof typeof v, data: Array<{ k: string; v: boolean }>): void {
     for (const item of data) {
-      expect((v[methodName] as NzSafeAny)(item.k)).toBe(item.v, `[${methodName}] ${item.k} must be ${item.v}`);
+      expect((v[methodName] as NzSafeAny)(item.k))
+        .withContext(`[${methodName}] ${item.k} must be ${item.v}`)
+        .toBe(item.v);
     }
   }
 
