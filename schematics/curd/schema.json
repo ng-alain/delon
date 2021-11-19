@@ -114,7 +114,12 @@
     },
     "withoutPrefix": {
       "type": "boolean",
-      "description": "组件名不加前缀 (Without prefix to selectors)",
+      "description": "指定选择器名不加前缀 (Without prefix to selectors)",
+      "default": false
+    },
+    "withoutModulePrefixInComponentName": {
+      "type": "boolean",
+      "description": "组件名不加模块名前缀 (Without prefix to component name)",
       "default": false
     },
     "module": {
