@@ -313,9 +313,9 @@ export class STDataSource {
 
         return this.get(result[i], c, i);
       });
-      if (rowClassName) {
-        result[i]._rowClassName = rowClassName(result[i], i);
-      }
+      result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
+        .filter(w => !!w)
+        .join(' ');
     }
     return result;
   }

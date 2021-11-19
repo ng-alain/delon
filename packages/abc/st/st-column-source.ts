@@ -190,15 +190,44 @@ export class STColumnSource {
 
     let res: STColumnFilter | null = item.filter;
     res.type = res.type || 'default';
+    res.showOPArea = res.showOPArea !== false;
 
     let icon = 'filter';
     let iconTheme = 'fill';
-    if (res.type === 'keyword') {
-      if (res.menus == null || res.menus!.length === 0) {
-        res.menus = [{ value: '' }];
-      }
-      icon = 'search';
-      iconTheme = 'outline';
+    let fixMenus = true;
+    let value: NzSafeAny = undefined;
+    switch (res.type) {
+      case 'keyword':
+        icon = 'search';
+        iconTheme = 'outline';
+        break;
+      case 'number':
+        icon = 'search';
+        iconTheme = 'outline';
+        res.number = {
+          step: 1,
+          min: -Infinity,
+          max: Infinity,
+          ...res.number
+        };
+        break;
+      case 'date':
+        icon = 'calendar';
+        iconTheme = 'outline';
+        res.date = {
+          range: false,
+          mode: 'date',
+          showToday: true,
+          showNow: false,
+          ...res.date
+        };
+        break;
+      default:
+        fixMenus = false;
+        break;
+    }
+    if (fixMenus && (res.menus == null || res.menus!.length === 0)) {
+      res.menus = [{ value }];
     }
 
     if (res.menus!.length === 0) {

@@ -21,13 +21,15 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData } from '@delon/abc/st';
+
 import { DemoDrawerComponent, DemoModalComponent } from '@shared';
+
+import { STChange, STColumn, STData } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st [data]="users" [columns]="columns"></st> `,
+  template: ` <st [data]="users" [columns]="columns" (change)="change($event)"></st> `
 })
 export class DemoComponent {
   constructor(private message: NzMessageService) {}
@@ -37,7 +39,7 @@ export class DemoComponent {
     .map((_, idx) => ({
       id: idx + 1,
       name: `name ${idx + 1}`,
-      age: Math.ceil(Math.random() * 10) + 20,
+      age: Math.ceil(Math.random() * 10) + 20
     }));
   columns: STColumn[] = [
     { title: '序号', type: 'no' },
@@ -52,25 +54,25 @@ export class DemoComponent {
           icon: 'edit',
           type: 'modal',
           modal: {
-            component: DemoModalComponent,
+            component: DemoModalComponent
           },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`),
+          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
         },
         {
           text: 'Drawer',
           type: 'drawer',
           drawer: {
             title: '编辑',
-            component: DemoDrawerComponent,
+            component: DemoDrawerComponent
           },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`),
+          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
         },
         {
           icon: 'check-circle',
           click: record => this.message.info(`check-${record.name}`),
           iif: record => record.id % 2 === 0,
           iifBehavior: 'disabled',
-          tooltip: `Is disabled button`,
+          tooltip: `Is disabled button`
         },
         {
           icon: 'delete',
@@ -78,40 +80,44 @@ export class DemoComponent {
           pop: {
             title: 'Yar you sure?',
             okType: 'danger',
-            icon: 'star',
+            icon: 'star'
           },
           click: (record, _modal, comp) => {
             this.message.success(`成功删除【${record.name}】`);
             comp!.removeRow(record);
           },
-          iif: record => record.id % 2 === 0,
+          iif: record => record.id % 2 === 0
         },
         {
           text: '更多',
           children: [
             {
               text: record => (record.id === 1 ? `过期` : `正常`),
-              click: record => this.message.error(`${record.id === 1 ? `过期` : `正常`}【${record.name}】`),
+              click: record => this.message.error(`${record.id === 1 ? `过期` : `正常`}【${record.name}】`)
             },
             {
               text: `审核`,
               click: record => this.message.info(`check-${record.name}`),
               iif: record => record.id % 2 === 0,
               iifBehavior: 'disabled',
-              tooltip: 'This is tooltip',
+              tooltip: 'This is tooltip'
             },
             {
-              type: 'divider',
+              type: 'divider'
             },
             {
               text: `重新开始`,
               icon: 'edit',
-              click: record => this.message.success(`重新开始【${record.name}】`),
-            },
-          ],
-        },
-      ],
-    },
+              click: record => this.message.success(`重新开始【${record.name}】`)
+            }
+          ]
+        }
+      ]
+    }
   ];
+
+  change(e: STChange): void {
+    console.log(e);
+  }
 }
 ```

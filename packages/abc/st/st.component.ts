@@ -20,20 +20,10 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import {
-  AlainI18NService,
-  ALAIN_I18N_TOKEN,
-  DatePipe,
-  DelonLocaleService,
-  DrawerHelper,
-  LocaleData,
-  ModalHelper,
-  YNPipe
-} from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleService, LocaleData, YNPipe } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
@@ -53,8 +43,6 @@ import {
   STClickRowClassName,
   STClickRowClassNameType,
   STColumn,
-  STColumnButton,
-  STColumnFilterMenu,
   STColumnSafeType,
   STColumnSelection,
   STContextmenuFn,
@@ -75,7 +63,7 @@ import {
   STStatisticalResults,
   STWidthMode
 } from './st.interfaces';
-import { _STColumn, _STDataValue, _STHeader } from './st.types';
+import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from './st.types';
 
 @Component({
   selector: 'st',
@@ -246,19 +234,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._data;
   }
 
-  private get routerState(): { pi: number; ps: number; total: number } {
-    const { pi, ps, total } = this;
-    return { pi, ps, total };
-  }
-
   constructor(
     @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
     private cdr: ChangeDetectorRef,
-    private router: Router,
     private el: ElementRef,
     private exportSrv: STExport,
-    private modalHelper: ModalHelper,
-    private drawerHelper: DrawerHelper,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
@@ -500,19 +480,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: STData, col: STColumn): boolean {
-    e.preventDefault();
-    e.stopPropagation();
-    const res = col.click!(item, this);
-    if (typeof res === 'string') {
-      this.router.navigateByUrl(res, { state: this.routerState });
-    }
-    return false;
-  }
   private closeOtherExpand(item: STData): void {
     if (this.expandAccordion === false) return;
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));
   }
+
   _rowClick(e: Event, item: STData, index: number): void {
     const el = e.target as HTMLElement;
     if (el.nodeName === 'INPUT') return;
@@ -657,7 +629,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region filter
 
-  private handleFilter(col: STColumn): void {
+  _handleFilter(col: _STColumn, confirm: boolean): void {
+    if (!confirm) {
+      this.columnSource.cleanFilter(col);
+    }
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
@@ -665,27 +640,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('filter', col);
   }
 
-  _filterConfirm(col: _STColumn): void {
-    this.handleFilter(col);
-  }
-
-  _filterRadio(col: _STColumn, item: STColumnFilterMenu, checked: boolean): void {
-    col.filter!.menus!.forEach(i => (i.checked = false));
-    item.checked = checked;
-  }
-
-  _filterClear(col: _STColumn): void {
-    this.columnSource.cleanFilter(col);
-    this.handleFilter(col);
+  handleFilterNotify(value?: unknown): void {
+    this.changeEmit('filterChange', value);
   }
 
   clearFilter(): this {
     this._columns.filter(w => w.filter && w.filter.default === true).forEach(col => this.columnSource.cleanFilter(col));
     return this;
-  }
-
-  _filterClick($event: MouseEvent): void {
-    $event.stopPropagation();
   }
   // #endregion
 
@@ -712,11 +673,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._refCheck()._checkNotify();
   }
 
-  _checkSelection(i: STData, value: boolean): this {
-    i.checked = value;
-    return this._refCheck()._checkNotify();
-  }
-
   _rowSelection(row: STColumnSelection): this {
     row.select(this._data);
     return this._refCheck()._checkNotify();
@@ -739,73 +695,18 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  _refRadio(checked: boolean, item: STData): this {
-    // if (item.disabled === true) return;
-    this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
-    item.checked = checked;
-    this.changeEmit('radio', item);
-    return this;
-  }
-
   // #endregion
 
-  // #region buttons
-
-  _btnClick(record: STData, btn: STColumnButton, ev?: Event): void {
-    if (ev) {
-      ev.stopPropagation();
-    }
-    if (btn.type === 'modal' || btn.type === 'static') {
-      const { modal } = btn;
-      const obj = { [modal!.paramsName!]: record };
-      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
-        modal!.component,
-        { ...obj, ...(modal!.params && modal!.params!(record)) },
-        deepMergeKey({}, true, this.cog.modal, modal)
-      )
-        .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
-      return;
-    } else if (btn.type === 'drawer') {
-      const { drawer } = btn;
-      const obj = { [drawer!.paramsName!]: record };
-      this.drawerHelper
-        .create(
-          drawer!.title!,
-          drawer!.component,
-          { ...obj, ...(drawer!.params && drawer!.params!(record)) },
-          deepMergeKey({}, true, this.cog.drawer, drawer)
-        )
-        .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe(res => this.btnCallback(record, btn, res));
-      return;
-    } else if (btn.type === 'link') {
-      const clickRes = this.btnCallback(record, btn);
-      if (typeof clickRes === 'string') {
-        this.router.navigateByUrl(clickRes, { state: this.routerState });
-      }
-      return;
-    }
-    this.btnCallback(record, btn);
-  }
-
-  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
-    if (!btn.click) return;
-    if (typeof btn.click === 'string') {
-      switch (btn.click) {
-        case 'load':
-          this.load();
-          break;
-        case 'reload':
-          this.reload();
-          break;
-      }
-    } else {
-      return btn.click(record, modal, this);
+  _handleTd(ev: _STTdNotify) {
+    switch (ev.type) {
+      case 'checkbox':
+        this._refCheck()._checkNotify();
+        break;
+      case 'radio':
+        this.changeEmit('radio', ev.item);
+        break;
     }
   }
-
-  // #endregion
 
   // #region export
 
