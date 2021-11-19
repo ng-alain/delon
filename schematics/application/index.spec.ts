@@ -19,9 +19,10 @@ describe('NgAlainSchematic: application', () => {
       expect(packageJson.dependencies['@delon/cache']).toBeDefined();
       expect(packageJson.dependencies['@delon/mock']).toBeDefined();
     });
-    it('should be add vscode extensions confir', () => {
+    it('should be add vscode extensions config', () => {
       const filePath = '.vscode/extensions.json';
-      expect(tree.exists(filePath)).withContext(`Not found [${filePath}]`).toBe(true);
+      // eslint-disable-next-line deprecation/deprecation
+      expect(tree.exists(filePath)).toBe(true, `Not found [${filePath}]`);
       const json = JSON.parse(tree.readContent(filePath));
       expect(json != null).toBe(true);
       expect(json.recommendations[0]).toBe('cipchk.ng-alain-extension-pack');
