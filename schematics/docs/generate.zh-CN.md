@@ -39,7 +39,7 @@ ng g ng-alain:module trade
 # trade 模块下生成一个 TradeListComponent List组件
 ng g ng-alain:list list -m=trade
 # trade 模块下生成一个 ListComponent List组件
-ng g ng-alain:list list -m=trade -withoutModulePrefixInComponentName=true
+ng g ng-alain:list list -m=trade --withoutModulePrefixInComponentName=true
 # trade 模块下生成一个 TradeEditComponent Edit组件
 ng g ng-alain:edit edit -m=trade
 ```
@@ -48,11 +48,11 @@ ng g ng-alain:edit edit -m=trade
 
 | 参数 | 描述 |
 | ---- | --- |
-| `-m` | 指定目标模块 |
-| `-target` | 指定目标路径，支持 `bus/list` 写法 |
-| `-modal` | 指定是否使用模态框 |
-| `-withoutPrefix` | 指定选择器名不加前缀 |
-| `-withoutModulePrefixInComponentName` | 组件名不加模块名前缀 |
+| `-m` 或 `--module` | 指定目标模块 |
+| `-t` 或 `--target` | 指定目标路径，支持 `bus/list` 写法 |
+| `--modal` | 指定是否使用模态框 |
+| `--withoutPrefix` | 指定选择器名不加前缀 |
+| `--withoutModulePrefixInComponentName` | 组件名不加模块名前缀 |
 
 ## Module 模块
 
