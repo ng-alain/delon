@@ -35,7 +35,7 @@ ng g ng-alain:[command name] [name] [options]
 
 ```bash
 # 生成一个 trade 模块
-ng g ng-alain:trade
+ng g ng-alain:module trade
 # trade 模块下生成一个 TradeListComponent List组件
 ng g ng-alain:list list -m=trade
 # trade 模块下生成一个 ListComponent List组件

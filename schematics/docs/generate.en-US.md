@@ -21,7 +21,7 @@ Examples:
 
 ```bash
 # Generate a trade module
-ng g ng-alain:trade
+ng g ng-alain:module trade
 # Generate a TradeListComponent List component under the trade module
 ng g ng-alain:list list -m=trade
 # Generate a ListComponent List component under the trade module
