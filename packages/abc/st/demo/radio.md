@@ -15,27 +15,33 @@ Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { STChange, STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `<st
-    [data]="url"
-    [columns]="columns"
-    [req]="{ params: params }"
-    [res]="{ process: dataChange }"
-    (change)="change($event)"
-  ></st>`,
+  template: ` <div class="mb-md">
+      <button nz-button (click)="st.setRow(1, { checked: true })">Radio second</button>
+      <button nz-button (click)="st.clearRadio()">Clean</button>
+    </div>
+    <st
+      #st
+      [data]="url"
+      [columns]="columns"
+      [req]="{ params: params }"
+      [res]="{ process: dataChange }"
+      (change)="change($event)"
+    ></st>`
 })
 export class DemoComponent {
   url = `/users?total=300`;
   params = { a: 1, b: 2 };
   columns: STColumn[] = [
-    { title: '编号', index: 'id', type: 'radio' },
+    { title: '编号', index: 'id', type: 'radio', width: 70 },
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
-    { title: '注册时间', type: 'date', index: 'registered' },
+    { title: '注册时间', type: 'date', index: 'registered' }
   ];
 
   change(ret: STChange): void {

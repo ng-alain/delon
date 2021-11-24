@@ -17,7 +17,7 @@
     [nzDisabled]="_allCheckedDisabled"
     [(ngModel)]="_allChecked"
     [nzIndeterminate]="_indeterminate"
-    (ngModelChange)="_checkAll()"
+    (ngModelChange)="checkAll()"
     [class.ant-table-selection-select-all-custom]="custom"
   ></label>
 </ng-template>
