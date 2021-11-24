@@ -15,17 +15,23 @@ Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { STChange, STColumn, STData } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `<st
-    [data]="url"
-    [columns]="columns"
-    [req]="{ params: params }"
-    [res]="{ process: dataProcess }"
-    (change)="change($event)"
-  ></st>`,
+  template: ` <div class="mb-md">
+      <button nz-button (click)="st.checkAll(true)">All</button>
+      <button nz-button (click)="st.clearCheck()">Clean</button>
+    </div>
+    <st
+      #st
+      [data]="url"
+      [columns]="columns"
+      [req]="{ params: params }"
+      [res]="{ process: dataProcess }"
+      (change)="change($event)"
+    ></st>`
 })
 export class DemoComponent {
   url = `/users?total=100`;
@@ -35,7 +41,7 @@ export class DemoComponent {
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
-    { title: '注册时间', type: 'date', index: 'registered' },
+    { title: '注册时间', type: 'date', index: 'registered' }
   ];
   change(e: STChange): void {
     console.log('change', e);
@@ -43,6 +49,7 @@ export class DemoComponent {
   dataProcess(data: STData[]): STData[] {
     return data.map((i, index) => {
       i.disabled = index === 0;
+      if (index === 1) i.checked = true;
       return i;
     });
   }

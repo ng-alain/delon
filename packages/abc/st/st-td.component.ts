@@ -14,7 +14,7 @@ import { DrawerHelper, ModalHelper } from '@delon/theme';
 import { deepMergeKey } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { STComponent } from '.';
+import { STComponent } from './st.component';
 import { STColumnButton, STData } from './st.interfaces';
 import { _STColumn, _STTdNotify, _STTdNotifyType } from './st.types';
 
@@ -83,7 +83,7 @@ import { _STColumn, _STTdNotify, _STTdNotifyType } from './st.types';
           nz-radio
           [nzDisabled]="i.disabled"
           [ngModel]="i.checked"
-          (ngModelChange)="_radio($event)"
+          (ngModelChange)="_radio()"
         ></label>
         <a
           *ngSwitchCase="'link'"
@@ -171,9 +171,9 @@ export class STTdComponent {
     this.report('checkbox');
   }
 
-  _radio(checked: boolean): void {
+  _radio(): void {
     this.data.filter(w => !w.disabled).forEach(i => (i.checked = false));
-    this.i.checked = checked;
+    this.i.checked = true;
     this.report('radio');
   }
 

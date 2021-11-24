@@ -279,6 +279,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
+  private refreshData(): this {
+    this._data = [...this._data];
+    return this.cd();
+  }
+
   renderTotal(total: string, range: string[]): string {
     return this.totalTpl
       ? this.totalTpl.replace('{{total}}', total).replace('{{range[0]}}', range[0]).replace('{{range[1]}}', range[1])
@@ -562,7 +567,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         })
       );
 
-    return this.cd();
+    return this.refreshData();
   }
 
   /**
@@ -588,8 +593,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.resetColumns({ emitReload: options.emitReload });
       return this;
     }
-    this.cdr.detectChanges();
-    return this;
+    return this.refreshData();
   }
 
   // #endregion
@@ -647,7 +651,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /** 清除所有 `checkbox` */
   clearCheck(): this {
-    return this._checkAll(false);
+    return this.checkAll(false);
   }
 
   private _refCheck(): this {
@@ -660,10 +664,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.cd();
   }
 
-  _checkAll(checked?: boolean): this {
+  checkAll(checked?: boolean): this {
     checked = typeof checked === 'undefined' ? this._allChecked : checked;
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = checked));
-    return this._refCheck()._checkNotify();
+    return this._refCheck()._checkNotify().refreshData();
   }
 
   _rowSelection(row: STColumnSelection): this {
@@ -685,7 +689,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   clearRadio(): this {
     this._data.filter(w => w.checked).forEach(item => (item.checked = false));
     this.changeEmit('radio', null);
-    return this;
+    return this.refreshData();
   }
 
   // #endregion
@@ -697,6 +701,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         break;
       case 'radio':
         this.changeEmit('radio', ev.item);
+        this.refreshData();
         break;
     }
   }
