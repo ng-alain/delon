@@ -14,6 +14,17 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [12.4.2](https://github.com/ng-alain/delon/compare/12.4.1...12.4.2) (2021-11-24)
+
+### Bug Fixes
+
+* **abc:st:** 修复数据变更时无法渲染 ([#1398](https://github.com/ng-alain/delon/issues/1398)) ([8151a53](https://github.com/ng-alain/delon/commit/8151a5345f011449b4e2ece8bfe92cc69d8a1f08))
+
+### Performance Improvements
+
+* **cli:** 更新 $schema 标记至 draft-07 标准 ([#1397](https://github.com/ng-alain/delon/issues/1397)) ([b9ea6cd](https://github.com/ng-alain/delon/commit/b9ea6cdd23620bf86c42a842e52108d9520b36dc))
+
+
 # [12.4.0](https://github.com/ng-alain/delon/compare/12.3.0...12.4.0) (2021-11-19)
 
 ### Scaffold
