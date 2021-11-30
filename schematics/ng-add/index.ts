@@ -1,6 +1,6 @@
 import { colors } from '@angular/cli/utilities/color';
 
-import { chain, Rule, schematic, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { chain, Rule, schematic, Tree, SchematicContext, SchematicsException } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
@@ -82,18 +82,31 @@ NG-ALAIN documentation site: https://ng-alain.com
   };
 }
 
+export function getNodeMajorVersion(): number {
+  return +process.version.match(/^v(\d+)/)[1];
+}
+
 export default function (options: NgAddOptions): Rule {
   return (tree: Tree, context: SchematicContext) => {
     if (isUseCNPM()) {
-      throw new Error(
+      throw new SchematicsException(
         `Sorry, Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`
+      );
+    }
+
+    const nodeVersion = getNodeMajorVersion();
+    const allowNodeVersions = [12, 14];
+    if (!allowNodeVersions.some(v => nodeVersion === v)) {
+      const versions = allowNodeVersions.join(', ');
+      throw new SchematicsException(
+        `Sorry, currently only supports ${versions} major version number of node, pls refer to https://gist.github.com/LayZeeDK/c822cc812f75bb07b7c55d07ba2719b3`
       );
     }
 
     const pkg = readPackage(tree);
 
     if (pkg.devDependencies['ng-alain']) {
-      throw new Error(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
+      throw new SchematicsException(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
     }
 
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
@@ -101,7 +114,7 @@ export default function (options: NgAddOptions): Rule {
       ngCoreVersion = ngCoreVersion.substr(1);
     }
     if (!ngCoreVersion.startsWith(`${V}.`)) {
-      throw new Error(
+      throw new SchematicsException(
         `Sorry, the current version only supports angular ${V}.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@${V}] (or via npm: [npm install -g @angular/cli@${V}])`
       );
     }
