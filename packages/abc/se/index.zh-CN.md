@@ -57,6 +57,7 @@ module: import { SEModule } from '@delon/abc/se';
 | `[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定（继承于 `se-container`） | `'1','2','3','4','5','6'` | - |
 | `[label]` | 标签文本 | `string, TemplateRef<void>` | - |
 | `[labelWidth]` | 标签文本宽度，单位：`px`（继承于 `se-container`） | `number` | - |
+| `[hideLabel]` | 是否隐藏当前 `label` | `boolean` | `false` |
 | `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
 | `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |

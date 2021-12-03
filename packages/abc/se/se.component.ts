@@ -39,6 +39,7 @@ let nextUniqueId = 0;
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
+    '[class.se__hide-label]': 'hideLabel',
     '[class.ant-form-item-has-error]': 'invalid',
     '[class.ant-form-item-with-help]': 'showErr'
   },
@@ -53,6 +54,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   static ngAcceptInputType_line: BooleanInput;
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_noColon: BooleanInput;
+  static ngAcceptInputType_hideLabel: BooleanInput;
 
   private el: HTMLElement;
   private unsubscribe$ = new Subject<void>();
@@ -87,6 +89,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   @Input() @InputBoolean(null) line: boolean;
   @Input() @InputNumber(null) labelWidth: number;
   @Input() @InputBoolean(null) noColon: boolean;
+  @Input() @InputBoolean() hideLabel = false;
 
   @Input()
   set id(value: string) {
