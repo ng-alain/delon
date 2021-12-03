@@ -70,7 +70,7 @@ function upgradeThirdVersion(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     addPackage(
       tree,
-      [`tslib@^2.2.0`, `ngx-ueditor@DEP-0.0.0-PLACEHOLDER`, `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`],
+      [`tslib@DEP-0.0.0-PLACEHOLDER`, `ngx-ueditor@DEP-0.0.0-PLACEHOLDER`, `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`],
       'dependencies'
     );
     logStart(context, `Upgrade third libs (ngx-ueditor, ngx-tinymce) version number`);
