@@ -9,5 +9,5 @@
       "@delon/util": "delon.util"
     }
   },
-  "allowedNonPeerDependencies": ["@delon/util"]
+  "allowedNonPeerDependencies": ["@delon/util", "@angular/cdk"]
 }

@@ -10,5 +10,5 @@
       "extend": "Extend"
     }
   },
-  "allowedNonPeerDependencies": ["date-fns", "extend", "@ant-design/icons-angular"]
+  "allowedNonPeerDependencies": ["date-fns", "extend", "@ant-design/icons-angular", "@angular/cdk"]
 }
