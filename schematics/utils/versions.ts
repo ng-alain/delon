@@ -14,7 +14,11 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
     tree,
     ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(name => `@delon/${name}@${version}`)
   );
-  addPackage(tree, [`ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`, `@angular/cdk@DEP-0.0.0-PLACEHOLDER`]);
+  addPackage(tree, [
+    `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
+    `@angular/cdk@DEP-0.0.0-PLACEHOLDER`,
+    'ajv@DEP-0.0.0-PLACEHOLDER'
+  ]);
   addPackage(
     tree,
     [
@@ -41,7 +45,6 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
     ],
     'devDependencies'
   );
-  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER']);
 }
 
 export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {
