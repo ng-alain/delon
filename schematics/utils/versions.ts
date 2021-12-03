@@ -36,7 +36,9 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
       `source-map-explorer@DEP-0.0.0-PLACEHOLDER`,
       `@angular/language-service@DEP-0.0.0-PLACEHOLDER`,
-      `@delon/testing@${version}`
+      `@delon/testing@${version}`,
+      `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
+      `@angular/cdk@DEP-0.0.0-PLACEHOLDER`
     ],
     'devDependencies'
   );
