@@ -20,6 +20,7 @@
     "angular"
   ],
   "dependencies": {
+    "@angular/cdk": "@LIB-PLACEHOLDER",
     "extend": "@LIB-PLACEHOLDER"
   }
 }

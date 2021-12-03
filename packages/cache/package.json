@@ -25,6 +25,7 @@
     "component"
   ],
   "dependencies": {
+    "@angular/cdk": "@LIB-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER"
   }
 }

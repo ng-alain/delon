@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "ng-zorro-antd": "@LIB-PLACEHOLDER",
+    "@angular/cdk": "@LIB-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER"
   }
