@@ -41,7 +41,7 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
     ],
     'devDependencies'
   );
-  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER', 'ajv-formats@DEP-0.0.0-PLACEHOLDER']);
+  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER']);
 }
 
 export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {
