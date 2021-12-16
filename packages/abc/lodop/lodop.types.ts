@@ -167,6 +167,15 @@ export interface Lodop extends CLodop {
     strContent: string
   ): void;
 
+  /** 增加PDF */
+  ADD_PRINT_PDF(
+    Top: number | string,
+    Left: number | string,
+    Width: number | string,
+    Height: number | string,
+    strContent: string
+  ): void;
+
   /** 装载文档式模板 */
   ADD_PRINT_DATA(strDataStyle: string, varDataValue: NzSafeAny): void;
 

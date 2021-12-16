@@ -32,8 +32,7 @@ stages:
               filePath: 'scripts/ci/build-artifacts.sh'
 
   - stage: test
-    dependsOn:
-      - env
+    dependsOn: env
     jobs:
       - job: packages
         steps:
@@ -66,14 +65,17 @@ stages:
               testResultsFiles: '**/TESTS*.xml'
       - job: cli
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '14.16.1'
+            displayName: 'Install Node.js'
           - task: Npm@1
             inputs:
               command: 'install'
           - script: npm run test:cli
 
   - stage: lint
-    dependsOn:
-      - env
+    dependsOn: env
     jobs:
       - job: packages
         steps:
