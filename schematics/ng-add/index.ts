@@ -7,6 +7,7 @@ import { join } from 'path';
 
 import { Schema as ApplicationOptions } from '../application/schema';
 import { readPackage } from '../utils';
+import { getNodeMajorVersion } from '../utils/node';
 import { Schema as NgAddOptions } from './schema';
 
 const V = 12;
@@ -80,10 +81,6 @@ NG-ALAIN documentation site: https://ng-alain.com
 `)
     );
   };
-}
-
-export function getNodeMajorVersion(): number {
-  return +process.version.match(/^v(\d+)/)[1];
 }
 
 export default function (options: NgAddOptions): Rule {

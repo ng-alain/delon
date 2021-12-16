@@ -1,7 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
+import * as nodeUtils from '../utils/node';
 import { createAlainApp } from '../utils/testing';
-import * as index from './index';
 
 describe('Schematic: ng-add', () => {
   let runner: SchematicTestRunner;
@@ -13,8 +13,13 @@ describe('Schematic: ng-add', () => {
     expect(packageJson.dependencies['@delon/theme']).toBeDefined();
   });
 
-  it('should throw errr when node version is not valid range', () => {
-    spyOn(index, 'getNodeMajorVersion').and.returnValue(10);
-    expect(async () => await createAlainApp()).toThrowError();
+  it('should throw errr when node version is not valid range', async () => {
+    spyOn(nodeUtils, 'getNodeMajorVersion').and.returnValue(10);
+    try {
+      await createAlainApp();
+      expect(true).toBe(false);
+    } catch (ex) {
+      expect(true).toBe(true);
+    }
   });
 });
