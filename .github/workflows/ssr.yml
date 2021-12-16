@@ -11,11 +11,11 @@ jobs:
         uses: actions/checkout@master
 
       - name: install
-        run: npm install
+        run: yarn install
 
       - name: pre-build
         run: |
-          npm run ssr:build
+          yarn run ssr:build
 
       # - name: to-delon-builds
       #   run: |
