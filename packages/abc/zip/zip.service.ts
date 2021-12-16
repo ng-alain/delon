@@ -23,7 +23,7 @@ export class ZipService {
     private ngZone: NgZone
   ) {
     this.cog = configSrv.merge('zip', {
-      url: '//cdn.bootcss.com/jszip/3.3.0/jszip.min.js',
+      url: 'https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js',
       utils: []
     })!;
   }

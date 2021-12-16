@@ -18,10 +18,7 @@ export class MediaService {
     this._cog = this.cogSrv.merge(
       'media',
       {
-        urls: [
-          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js',
-          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css'
-        ]
+        urls: ['https://cdn.jsdelivr.net/npm/plyr/dist/plyr.min.js', 'https://cdn.jsdelivr.net/npm/plyr/dist/plyr.css']
       },
       val
     )!;
