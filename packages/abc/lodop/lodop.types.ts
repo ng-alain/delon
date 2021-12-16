@@ -157,7 +157,7 @@ export interface Lodop extends CLodop {
     ChartType: number,
     strHtml: string
   ): void;
-  
+
   /** 增加PDF */
   ADD_PRINT_PDF(
     Top: number | string,
