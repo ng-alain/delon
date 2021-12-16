@@ -1,7 +1,7 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { debounceTime, map, mergeMap, startWith } from 'rxjs/operators';
+import { debounceTime, map, mergeMap, startWith, takeUntil } from 'rxjs/operators';
 
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -26,7 +26,6 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
   private fixData: SFSchemaEnum[] = [];
-  private updateTyping = true;
 
   updateValue(item: NzAutocompleteOptionComponent): void {
     this.typing = item.nzLabel!;
@@ -68,21 +67,24 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
       debounceTime(time),
       startWith(''),
       mergeMap(input => (this.isAsync ? asyncData!(input) : this.filterData(input))),
-      map(res => {
-        const data = getEnum(res, null, this.schema.readOnly!);
-        if (this.updateTyping) {
-          this.updateTyping = false;
-          this.typing = data.find(w => w.value === this.value)?.label ?? '';
-        }
-        return data;
-      })
+      map(res => getEnum(res, null, this.schema.readOnly!))
     );
   }
 
   reset(value: SFValue): void {
+    if (this.isAsync) {
+      this.ui.asyncData!(value)
+        .pipe(
+          takeUntil(this.sfItemComp!.unsubscribe$),
+          map(res => getEnum(res, null, this.schema.readOnly!))
+        )
+        .subscribe(data => {
+          this.typing = data.find(w => w.value === this.value)?.label ?? '';
+        });
+      return;
+    }
+
     this.typing = value;
-    this.updateTyping = true;
-    if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
         this.fixData = getCopyEnum(
