@@ -99,7 +99,7 @@ export default function (options: NgAddOptions): Rule {
     if (!allowNodeVersions.some(v => nodeVersion === v)) {
       const versions = allowNodeVersions.join(', ');
       throw new SchematicsException(
-        `Sorry, currently only supports ${versions} major version number of node, pls refer to https://gist.github.com/LayZeeDK/c822cc812f75bb07b7c55d07ba2719b3`
+        `Sorry, currently only supports ${versions} major version number of node (Got ${process.version}), pls refer to https://gist.github.com/LayZeeDK/c822cc812f75bb07b7c55d07ba2719b3`
       );
     }
 
