@@ -1,7 +1,7 @@
 import { AlainQRConfig } from '@delon/util/config';
 
 export const QR_DEFULAT_CONFIG: AlainQRConfig = {
-  lib: `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`,
+  lib: `https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js`,
   background: 'white',
   backgroundAlpha: 1,
   foreground: 'black',

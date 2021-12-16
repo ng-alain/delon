@@ -22,8 +22,8 @@ export class XlsxService {
     private ngZone: NgZone
   ) {
     this.cog = configSrv.merge('xlsx', {
-      url: 'https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/xlsx.full.min.js',
-      modules: [`https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.8/cpexcel.min.js`]
+      url: 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js',
+      modules: [`https://cdn.jsdelivr.net/npm/xlsx/dist/cpexcel.js`]
     })!;
   }
   private cog: AlainXlsxConfig;
