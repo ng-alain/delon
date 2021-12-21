@@ -29,17 +29,19 @@ async function withGithub(url, json, method) {
 }
 
 (async function run() {
-  const comments = await withGithub(`https://api.github.com/repos/${REPO}/issues/${PR}/comments`);
+  const commentUrl = `https://api.github.com/repos/${REPO}/issues/${PR}/comments`;
+  console.log(`commentUrl`, commentUrl);
+  const comments = await withGithub(commentUrl);
+  console.log(`comments data`, comments);
 
   // Find my comment
   const updateComment = comments.find(({ body }) => body.includes(REPLACE_MARK));
-  // eslint-disable-next-line no-console
   console.log('Origin comment:', updateComment);
 
   // Update
   let res;
   if (!updateComment) {
-    res = await withGithub(`https://api.github.com/repos/${REPO}/issues/${PR}/comments`, {
+    res = await withGithub(commentUrl, {
       body: wrappedComment,
     });
   } else {
@@ -52,6 +54,5 @@ async function withGithub(url, json, method) {
     );
   }
 
-  // eslint-disable-next-line no-console
   console.log(res);
 })();
