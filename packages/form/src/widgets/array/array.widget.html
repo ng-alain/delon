@@ -1,6 +1,6 @@
 <nz-form-item [class.ant-form-item-with-help]="showError">
   <div nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
-    <label>
+    <label [class.ant-form-item-required]="ui.required">
       {{ schema.title }}
       <span class="sf__optional">
         {{ ui.optional }}
