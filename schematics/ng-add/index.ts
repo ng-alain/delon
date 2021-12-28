@@ -10,7 +10,7 @@ import { readPackage } from '../utils';
 import { getNodeMajorVersion } from '../utils/node';
 import { Schema as NgAddOptions } from './schema';
 
-const V = 12;
+const V = 13;
 
 function genRules(options: NgAddOptions): Rule {
   return () => {

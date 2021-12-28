@@ -2,7 +2,7 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 
 import { APPNAME, createAlainApp } from '../utils/testing';
 
-describe('NgAlainSchematic: plugin: ie', () => {
+xdescribe('NgAlainSchematic: plugin: ie', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 

@@ -21,9 +21,8 @@ stages:
     jobs:
       - job: build
         steps:
-          - task: Npm@1
-            inputs:
-              command: 'install'
+          - script: yarn install
+              displayName: 'Install'
           - task: Bash@3
             env:
               ACCESS_TOKEN: $(ACCESS_TOKEN)
@@ -36,11 +35,10 @@ stages:
     jobs:
       - job: packages
         steps:
-          - task: Npm@1
-            inputs:
-              command: 'install'
+          - script: yarn install
+              displayName: 'Install'
           - script: |
-              npm run test
+              yarn run test
               cat ./coverage/lcov.info | ./node_modules/.bin/codecov
             env:
               CODECOV_TOKEN: $(CODECOV_TOKEN)
@@ -69,20 +67,18 @@ stages:
             inputs:
               versionSpec: '14.16.1'
             displayName: 'Install Node.js'
-          - task: Npm@1
-            inputs:
-              command: 'install'
-          - script: npm run test:cli
+          - script: yarn install
+              displayName: 'Install'
+          - script: yarn run test:cli
 
   - stage: lint
     dependsOn: env
     jobs:
       - job: packages
         steps:
-          - task: Npm@1
-            inputs:
-              command: 'install'
-          - script: npm run lint
+          - script: yarn install
+              displayName: 'Install'
+          - script: yarn run lint
 
   - stage: site
     dependsOn:
@@ -95,16 +91,15 @@ stages:
             displayName: 'Checkout'
             clean: true
             fetchDepth: 1
-          - task: Npm@1
-            inputs:
-              command: 'install'
+          - script: yarn install
+              displayName: 'Install'
           - script: |
               node ./scripts/azure/github-comment.js "[Preview Preparing...](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
             displayName: 'Comment on github'
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
-          - script: npm run site:build
+          - script: yarn run site:build
             displayName: 'Build sites'
           - script: ls -al src/dist/browser/
             displayName: 'List build'
@@ -134,7 +129,7 @@ stages:
             displayName: 'Checkout'
             clean: true
             fetchDepth: 1
-          - script: npm install
+          - script: yarn install
             displayName: 'Install modules'
           - script: |
               node ./scripts/azure/github-comment.js "[Preview Failed](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
