@@ -7,6 +7,7 @@
       min-height: 100%;
       background: @popover-background;
     }
+
     &__body {
       &-item {
         display: flex;
@@ -14,23 +15,28 @@
         justify-content: space-between;
         padding-top: 12px;
         padding-bottom: 12px;
+
         &:first-child {
           padding-top: 0;
         }
+
         &:last-child {
           padding-bottom: 0;
         }
       }
     }
+
     &__title {
       margin-bottom: 12px;
       color: @heading-color;
       font-size: 14px;
       line-height: 22px;
     }
+
     &__theme {
       margin-top: 24px;
       overflow: hidden;
+
       &-tag {
         float: left;
         width: 20px;
@@ -43,6 +49,7 @@
         cursor: pointer;
       }
     }
+
     &__handle {
       position: fixed;
       top: 240px;
@@ -60,10 +67,12 @@
       cursor: pointer;
       transition: right @animation-duration-slow @ease-base-in;
       pointer-events: auto;
+
       &-icon {
         color: #fff;
         font-size: 20px;
       }
+
       &-opened {
         right: @setting-drawer-width;
         z-index: @zindex-modal-mask + 1;

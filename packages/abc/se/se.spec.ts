@@ -227,7 +227,6 @@ describe('abc: edit', () => {
               context.parent_noColon = true;
               context.noColon = undefined;
               context.label = 'aa';
-              debugger;
               fixture.detectChanges();
               expect(page.getEls('.se__no-colon').length).toBe(1);
             });

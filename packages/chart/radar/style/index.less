@@ -3,14 +3,17 @@
 
 @{g2-radar-prefix} {
   display: block;
+
   &__legend {
     margin-top: 16px;
+
     &-item {
       position: relative;
       color: @text-color-secondary;
       line-height: 22px;
       text-align: center;
       cursor: pointer;
+
       &::after {
         position: absolute;
         top: 8px;
@@ -20,10 +23,12 @@
         background-color: @border-color-split;
         content: '';
       }
+
       &:last-child::after {
         display: none;
       }
     }
+
     &-title {
       margin-top: 4px;
       margin-bottom: 0;
@@ -32,6 +37,7 @@
       font-size: 24px;
       line-height: 32px;
     }
+
     &-dot {
       position: relative;
       top: -1px;

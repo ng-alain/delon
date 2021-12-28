@@ -33,7 +33,7 @@ export class DownFileDirective {
         const strArr = v.split('=');
         const utfId = `UTF-8''`;
         let value = strArr[1];
-        if (value.startsWith(utfId)) value = value.substr(utfId.length);
+        if (value.startsWith(utfId)) value = value.substring(utfId.length);
         return { [strArr[0].trim()]: value };
       });
     return arr.reduce((_o, item) => item, {});
@@ -71,8 +71,8 @@ export class DownFileDirective {
         body: this.httpBody
       })
       .pipe(finalize(() => this.setDisabled(false)))
-      .subscribe(
-        (res: HttpResponse<Blob>) => {
+      .subscribe({
+        next: (res: HttpResponse<Blob>) => {
           if (res.status !== 200 || res.body!.size <= 0) {
             this.error.emit(res);
             return;
@@ -89,7 +89,7 @@ export class DownFileDirective {
           saveAs(res.body!, decodeURI(fileName as string));
           this.success.emit(res);
         },
-        err => this.error.emit(err)
-      );
+        error: err => this.error.emit(err)
+      });
   }
 }

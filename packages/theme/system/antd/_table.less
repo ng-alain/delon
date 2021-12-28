@@ -22,6 +22,7 @@
     &__title {
       display: none;
     }
+
     &__hide-header-footer {
       .@{ant-prefix}-table-title,
       .@{ant-prefix}-table-footer {
@@ -57,6 +58,7 @@
       color: @nz-table-rep-column-name-color;
       text-align: @nz-table-rep-column-name-text-align;
     }
+
     &__hide-header-footer {
       .@{ant-prefix}-table-title,
       .@{ant-prefix}-table-footer {
@@ -67,22 +69,27 @@
       table {
         table-layout: auto !important;
       }
+
       table, col {
         width: 100% !important;
         min-width: auto !important;
       }
+
       &-thead {
         display: none;
       }
+
       &-title {
         text-align: center;
         background: @nz-table-rep-header-background;
       }
+
       &-tbody {
         > tr {
           &:nth-child(4n + 3) {
             background: @nz-table-rep-even-background;
           }
+
           > td {
             display: flex;
             align-items: center;

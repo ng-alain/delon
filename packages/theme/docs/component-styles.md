@@ -12,7 +12,7 @@ title: 组件样式
 
 ```less
 // 导入 Less 变量参数
-@import '~@delon/theme/index';
+@import '@delon/theme/index';
 
 :host {
   // 组件宿主样式
@@ -48,17 +48,17 @@ title: 组件样式
 NG-ALAIN 至从 `9.3.x` 开始内置暗黑与紧凑两种主题，对于全局只需要修改 [styles.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles.less) 一个参数，例如切换为暗黑主题：
 
 ```diff
-- // @import '~@delon/theme/theme-dark.less';
-+ @import '~@delon/theme/theme-dark.less';
+- // @import '@delon/theme/theme-dark.less';
++ @import '@delon/theme/theme-dark.less';
 ```
 
-> 若是紧凑，只需要换成 `@import '~@delon/theme/theme-compact.less';`。
+> 若是紧凑，只需要换成 `@import '@delon/theme/theme-compact.less';`。
 
 同时，对于组件样式的引入也全部替换成：
 
 ```diff
-- @import '~@delon/theme/index';
-+ @import '~@delon/theme/theme-dark';
+- @import '@delon/theme/index';
++ @import '@delon/theme/theme-dark';
 ```
 
 ## 动态主题
@@ -67,7 +67,7 @@ NG-ALAIN 至从 `9.3.x` 开始内置暗黑与紧凑两种主题，对于全局�
 
 ```less
 // 导入 Less 变量参数
-@import '~@delon/theme/index';
+@import '@delon/theme/index';
 
 :host {
   // 组件宿主样式

@@ -23,13 +23,12 @@ import { AppService, CodeService, I18NService } from '@core';
 export class CodeBoxComponent implements OnDestroy {
   private _item: any;
   private _orgItem: any;
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
   copied = false;
   theme = 'default';
 
   @Input()
   set item(value: any) {
-    debugger;
     if (!this._orgItem) {
       this._orgItem = deepCopy(value);
     }

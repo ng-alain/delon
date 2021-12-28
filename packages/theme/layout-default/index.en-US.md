@@ -13,7 +13,7 @@ The default layout all parameters are prefixed with `@alain-default-`.
 Import in `src/styles.less`:
 
 ```less
-@import '~@delon/theme/layout-default/style/index';
+@import '@delon/theme/layout-default/style/index';
 ```
 
 ### 2. Using `layout-default` component

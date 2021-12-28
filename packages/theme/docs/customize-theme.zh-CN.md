@@ -31,7 +31,7 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 // - `default` 默认主题
 // - `dark` 🌑 暗黑主题（9+ 支持）
 // - `compact` 📦 紧凑主题（9+ 支持）
-@import '~@delon/theme/theme-default.less';
+@import '@delon/theme/theme-default.less';
 
 // ==========The following is the custom theme variable area==========
 // @primary-color: #f50;
@@ -150,18 +150,18 @@ export class DashboardAnalysisComponent {}
 
 ```less
 // analysis.component.less
-@import '~@delon/theme/index';
+@import '@delon/theme/index';
 :host ::ng-deep { 
   color: @text-color;
 }
 ```
 
-由于组件内定义的样式独立运行在 Angular 下面，是无法根据 `@import '~@delon/theme/theme-compact.less';` 的引入来整体切换成暗黑系，如果你希望在组件内也同样使用暗黑系，则必须将：
+由于组件内定义的样式独立运行在 Angular 下面，是无法根据 `@import '@delon/theme/theme-compact.less';` 的引入来整体切换成暗黑系，如果你希望在组件内也同样使用暗黑系，则必须将：
 
 ```diff
 // analysis.component.less
-- @import '~@delon/theme/index';
-+ @import '~@delon/theme/theme-dark';
+- @import '@delon/theme/index';
++ @import '@delon/theme/theme-dark';
 ```
 
 或者，重新针对某一个主题重新定义：

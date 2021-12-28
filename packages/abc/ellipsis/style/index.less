@@ -10,15 +10,18 @@ ellipsis {
   width: 100%;
   overflow: hidden;
   word-break: break-all;
+
   &__lines {
     position: relative;
   }
+
   &__line-clamp {
     position: relative;
-    display: -webkit-box;
+    display: box;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   &__shadow {
     position: absolute;
     z-index: -999;

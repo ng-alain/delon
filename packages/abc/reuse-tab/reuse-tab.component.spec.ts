@@ -54,7 +54,7 @@ describe('abc: reuse-tab', () => {
                 { path: 'c', component: CComponent },
                 { path: 'd', component: DComponent },
                 { path: 'e', component: EComponent, data: { titleI18n: 'i18n' } },
-                { path: 'lazy', loadChildren: 'lazy' },
+                { path: 'lazy', loadChildren: jasmine.createSpy('lazy') },
                 {
                   path: 'leave',
                   component: DComponent,

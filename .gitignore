@@ -19,6 +19,7 @@ yarn-error.log
 debug.log
 __ngcc_entry_points__.json
 report.*.json
+/.angular/cache
 
 src/app/routes/gen
 src/assets/color.less

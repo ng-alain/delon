@@ -421,7 +421,7 @@ export interface STColumn<T extends STData = any> {
 
   /**
    * 调整表头配置
-   * - 注意：**不要忘记**在 `src/styles` 下增加 `nz-resizable` Less 样式文件：`@import '~ng-zorro-antd/resizable/style/entry.less';`
+   * - 注意：**不要忘记**在 `src/styles` 下增加 `nz-resizable` Less 样式文件：`@import 'ng-zorro-antd/resizable/style/entry.less';`
    * - **不支持多表头**
    */
   resizable?: STResizable | boolean;

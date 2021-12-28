@@ -55,6 +55,7 @@
     border-bottom: @border-width-base @border-style-base @border-color-split;
     border-radius: @border-radius-base @border-radius-base 0 0;
   }
+
   &-title {
     /**
       * The top area title of the nz-modal, for example:
@@ -72,12 +73,14 @@
     font-size: @font-size-lg;
     line-height: 22px;
     word-wrap: break-word;
+
     small {
       margin-left: @layout-gutter;
       color: @muted-color;
       font-size: 12px;
     }
   }
+
   &-spin {
     display: block;
     min-height: 150px;
@@ -97,6 +100,7 @@
     border-top: @border-width-base @border-style-base @border-color-split;
     border-radius: 0 0 @border-radius-base @border-radius-base;
   }
+
   &-include-tabs {
     /**
       * Whether the content of the modal is wrapped with `nz-tabs`, to clear the extra margin
@@ -107,6 +111,7 @@
       margin-top: -16px;
     }
   }
+
   &-body-nopadding {
     /**
       * Clear inner margin of modal content

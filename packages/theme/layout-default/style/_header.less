@@ -8,14 +8,17 @@
     padding: 0 @alain-default-header-padding;
     background-color: @alain-default-header-bg;
     box-shadow: @alain-default-header-box-shadow;
+
     &-logo {
       width: @alain-default-aside-wd;
       margin-left: -@alain-default-header-padding;
       transition: width 0.2s @alain-default-ease;
+
       &-link {
         display: block;
         text-align: center;
       }
+
       &-expanded,
       &-collapsed {
         max-width: 100%;
@@ -23,14 +26,17 @@
         vertical-align: middle;
         animation: fadeIn 1s;
       }
+
       &-collapsed {
         display: none;
       }
+
       &-expanded {
         display: inline-block;
       }
     }
   }
+
   &__nav {
     display: flex;
     align-items: center;
@@ -46,14 +52,17 @@
       flex: 1;
       justify-content: space-between;
     }
+
     > li {
       display: inline-block;
       vertical-align: middle;
     }
+
     &-item,
     nz-badge {
       color: #fff;
     }
+
     &-item {
       display: block;
       min-width: 50px;
@@ -64,10 +73,12 @@
       outline: none;
       cursor: pointer;
       transition: background-color 300ms;
+
       &:hover {
         color: #fff;
         background-color: rgba(255, 255, 255, 0.2) !important;
       }
+
       > i,
       &-icon {
         font-size: @alain-default-header-icon-fs !important;
@@ -88,6 +99,7 @@
     margin: 0 @layout-gutter * 3;
     .@{ant-prefix}-input {
       padding-left: 0;
+
       &:focus {
         box-shadow: none;
       }
@@ -98,6 +110,7 @@
       color: #fff;
       background-color: rgba(255, 255, 255, 0.2);
       border: none;
+
       &::placeholder {
         color: #fff;
         opacity: 1;
@@ -115,12 +128,14 @@
         transition: color 300ms, transform 400ms;
       }
     }
+
     &-focus {
       .@{ant-prefix}-input,
       .@{ant-prefix}-input-group-addon,
       .@{ant-prefix}-input-affix-wrapper {
         color: @grey-8;
         background-color: #f3f3f3;
+
         &::placeholder {
           color: @grey-8;
           opacity: 1;
@@ -149,9 +164,11 @@
       padding: 0 @alain-default-header-padding;
       background-color: #fff;
       transition: transform 300ms;
+
       &-toggled {
         display: flex;
       }
+
       &:not(&-toggled) {
         transform: translate3d(0, -105%, 0);
       }
@@ -166,9 +183,11 @@
   @{alain-default-prefix}__header {
     &-logo {
       width: @alain-default-aside-collapsed-wd;
+
       &-collapsed {
         display: inline-block;
       }
+
       &-expanded {
         display: none;
       }
@@ -183,9 +202,11 @@
   @{alain-default-prefix}__header {
     &-logo {
       width: @alain-default-aside-collapsed-wd;
+
       &-collapsed {
         display: inline;
       }
+
       &-expanded {
         display: none;
       }

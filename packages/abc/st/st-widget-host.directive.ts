@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -10,19 +10,14 @@ export class STWidgetHostDirective implements OnInit {
   @Input() record: STData;
   @Input() column: STColumn;
 
-  constructor(
-    private stWidgetRegistry: STWidgetRegistry,
-    private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  constructor(private stWidgetRegistry: STWidgetRegistry, private viewContainerRef: ViewContainerRef) {}
 
   ngOnInit(): void {
     const widget = this.column.widget!;
     const componentType = this.stWidgetRegistry.get(widget.type);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType as NzSafeAny);
 
     this.viewContainerRef.clear();
-    const componentRef = this.viewContainerRef.createComponent(componentFactory);
+    const componentRef = this.viewContainerRef.createComponent(componentType);
     const { record, column } = this;
     const data: { [key: string]: NzSafeAny } = widget.params ? widget.params({ record, column }) : { record };
     Object.keys(data).forEach(key => {

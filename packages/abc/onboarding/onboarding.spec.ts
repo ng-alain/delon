@@ -108,7 +108,7 @@ describe('abc: onboarding', () => {
 
   it('should be done when before is throw error', fakeAsync(() => {
     spyOn(srv, 'done');
-    page.start({ items: [{ before: throwError(''), selectors: '#a' }] });
+    page.start({ items: [{ before: throwError(() => Error('')), selectors: '#a' }] });
     expect(srv.done).toHaveBeenCalled();
   }));
 

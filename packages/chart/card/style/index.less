@@ -3,17 +3,21 @@
 
 @{g2-card-prefix} {
   position: relative;
+
   &__top {
     position: relative;
     width: 100%;
     overflow: hidden;
+
     &-margin {
       margin-bottom: 12px;
     }
+
     &-has-margin {
       margin-bottom: 20px;
     }
   }
+
   &__meta {
     &-wrap {
       float: left;
@@ -23,6 +27,7 @@
     color: @text-color-secondary;
     font-size: @font-size-base;
     line-height: 22px;
+
     &-action {
       position: absolute;
       top: 4px;
@@ -31,15 +36,18 @@
       cursor: pointer;
     }
   }
+
   &__avatar {
     position: relative;
     top: 4px;
     float: left;
     margin-right: 20px;
+
     img {
       border-radius: 100%;
     }
   }
+
   &__total {
     height: 38px;
     margin-top: 4px;
@@ -52,14 +60,17 @@
     text-overflow: ellipsis;
     word-break: break-all;
   }
+
   &__desc {
     width: 100%;
     margin-bottom: 12px;
   }
+
   &__footer {
     margin-top: 8px;
     padding-top: 9px;
     border-top: 1px solid @border-color-split;
+
     & > * {
       position: relative;
     }

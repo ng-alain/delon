@@ -69,6 +69,11 @@
           "description": "Whether to compress, default: `true`",
           "type": "boolean",
           "default": true
+        },
+        "debug": {
+          "description": "Whether to debug, default: `false`",
+          "type": "boolean",
+          "default": false
         }
       },
       "required": ["list"],
@@ -139,6 +144,11 @@
           "description": "Specify output file path, default: `./src/assets/color.less`",
           "type": "string",
           "default": "./src/assets/color.less"
+        },
+        "debug": {
+          "description": "Whether to debug, default: `false`",
+          "type": "boolean",
+          "default": false
         }
       }
     },

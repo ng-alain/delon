@@ -10,6 +10,7 @@
   backface-visibility: hidden;
   transition: width 0.2s @alain-default-ease, translate 0.2s @alain-default-ease;
   -webkit-overflow-scrolling: touch;
+
   &::after {
     position: absolute;
     top: 0;
@@ -18,6 +19,7 @@
     border-right: 1px solid @alain-default-content-heading-border;
     content: '';
   }
+
   &-inner {
     height: 100%;
     overflow-x: hidden;
@@ -30,8 +32,8 @@
     -ms-scroll-rails: none;
     -ms-content-zoom-limit-min: 100%;
     -ms-content-zoom-limit-max: 500%;
-    -ms-scroll-snap-type: proximity;
-    -ms-scroll-snap-points-x: snaplist(100%, 200%, 300%, 400%, 500%);
+    scroll-snap-type: proximity;
+    scroll-snap-points-x: snaplist(100%, 200%, 300%, 400%, 500%);
     // Firefox
     scrollbar-width: none;
     // Chrome
@@ -39,9 +41,11 @@
       width: @alain-default-aside-scrollbar-height;
       height: @alain-default-aside-scrollbar-width;
     }
+
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 @alain-default-aside-scrollbar-width @alain-default-aside-scrollbar-track-color;
+      box-shadow: inset 0 0 @alain-default-aside-scrollbar-width @alain-default-aside-scrollbar-track-color;
     }
+
     &::-webkit-scrollbar-thumb {
       background-color: @alain-default-aside-scrollbar-thumb-color;
     }

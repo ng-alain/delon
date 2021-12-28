@@ -357,13 +357,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           ...options
         })
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          result => resolvePromise(result),
-          error => {
+        .subscribe({
+          next: result => resolvePromise(result),
+          error: error => {
             console.warn('st.loadDate', error);
             rejectPromise(error);
           }
-        );
+        });
     });
   }
 

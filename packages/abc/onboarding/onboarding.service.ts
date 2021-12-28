@@ -131,10 +131,10 @@ export class OnboardingService implements OnDestroy {
 
     this.running$ = of(true)
       .pipe(pipe.apply(this, pipes))
-      .subscribe(
-        () => this.cancelRunning().updateRunning(false),
-        () => this.done()
-      );
+      .subscribe({
+        next: () => this.cancelRunning().updateRunning(false),
+        error: () => this.done()
+      });
   }
 
   /**

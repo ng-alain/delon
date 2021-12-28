@@ -65,7 +65,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('formCodeEditor') private formCodeEditor: NuMonacoEditorComponent;
   @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
   files: Array<{ name: string; title: string; cache?: string }> = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },

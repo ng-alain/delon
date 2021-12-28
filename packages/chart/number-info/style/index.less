@@ -3,11 +3,13 @@
 
 @{number-info-prefix} {
   display: inline-block;
+
   &__title {
     margin-bottom: 16px;
     color: @text-color;
     font-size: @font-size-lg;
     transition: all 0.3s;
+
     &-sub {
       height: 22px;
       overflow: hidden;
@@ -19,6 +21,7 @@
       word-break: break-all;
     }
   }
+
   &__value {
     margin-top: 4px;
     overflow: hidden;
@@ -26,12 +29,14 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     word-break: break-all;
+
     &-suffix {
       margin-left: 4px;
       color: @text-color;
       font-size: 16px;
       font-style: normal;
     }
+
     &-text {
       display: inline-block;
       height: 32px;
@@ -39,33 +44,40 @@
       font-size: 24px;
       line-height: 32px;
     }
+
     &-sub {
       margin-left: 32px;
       color: @text-color-secondary;
       font-size: @font-size-lg;
       vertical-align: top;
+
       .anticon {
         margin-left: 4px;
         font-size: 12px;
         transform: scale(0.82);
       }
+
       .anticon-caret-up {
         color: @red-6;
       }
+
       .anticon-caret-down {
         color: @green-6;
       }
     }
   }
+
   &__light {
     @{number-info-prefix}__value-text {
       color: @text-color;
     }
   }
+
   &:not(:first-child) {
     position: relative;
     margin-left: 32px;
     padding-left: 32px;
+
     &::after {
       position: absolute;
       top: 0;
