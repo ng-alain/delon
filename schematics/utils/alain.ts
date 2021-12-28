@@ -19,7 +19,7 @@ import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
-import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
+import { validateHtmlSelector } from '@schematics/angular/utility/validation';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
@@ -134,7 +134,6 @@ function resolveSchema(
   // html selector
   schema.selector = schema.selector || buildSelector(schema, project.prefix);
 
-  validateName(schema.name);
   validateHtmlSelector(schema.selector);
 }
 
