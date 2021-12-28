@@ -2,14 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "loading",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "@angular/cdk/overlay": "ng.cdk.overlay",
-        "@angular/cdk/portal": "ng.cdk.portal",
-        "ng-zorro-antd/icon": "ng-zorro-antd/icon",
-        "ng-zorro-antd/spin": "ng-zorro-antd/spin",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

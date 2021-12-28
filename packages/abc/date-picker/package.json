@@ -2,11 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "datePicker",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "ng-zorro-antd/date-picker": "ng-zorro-antd/date-picker",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

@@ -2,12 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "pie",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
-        "ng-zorro-antd/divider": "ng-zorro-antd/divider",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

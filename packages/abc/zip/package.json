@@ -2,11 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "zip",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "file-saver": "saveAs",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

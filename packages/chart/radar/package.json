@@ -2,12 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "radar",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
-        "ng-zorro-antd/grid": "ng-zorro-antd/grid",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

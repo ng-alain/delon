@@ -2,11 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "globalFooter",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "@delon/util": "delon.util",
-        "@delon/theme": "delon.theme"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

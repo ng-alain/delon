@@ -2,10 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "autoFocus",
-      "entryFile": "index.ts",
-      "umdModuleIds": {
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "index.ts"
     }
   }
 }

@@ -2,12 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "avatarList",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "ng-zorro-antd/avatar": "ng-zorro-antd/avatar",
-        "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

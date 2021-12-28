@@ -2,25 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "table",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "ng-zorro-antd/badge": "ng-zorro-antd/badge",
-        "ng-zorro-antd/checkbox": "ng-zorro-antd/checkbox",
-        "ng-zorro-antd/divider": "ng-zorro-antd/divider",
-        "ng-zorro-antd/dropdown": "ng-zorro-antd/dropdown",
-        "ng-zorro-antd/icon": "ng-zorro-antd/icon",
-        "ng-zorro-antd/menu": "ng-zorro-antd/menu",
-        "ng-zorro-antd/popconfirm": "ng-zorro-antd/popconfirm",
-        "ng-zorro-antd/radio": "ng-zorro-antd/radio",
-        "ng-zorro-antd/table": "ng-zorro-antd/table",
-        "ng-zorro-antd/tag": "ng-zorro-antd/tag",
-        "ng-zorro-antd/input": "ng-zorro-antd/input",
-        "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
-        "@delon/abc/xlsx": "delon.abc.xlsx",
-        "@delon/theme": "delon.theme",
-        "@delon/acl": "delon.acl",
-        "@delon/util": "delon.util"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }

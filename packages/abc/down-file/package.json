@@ -2,12 +2,7 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "downFile",
-      "entryFile": "public_api.ts",
-      "umdModuleIds": {
-        "file-saver": "saveAs",
-        "ng-zorro-antd": "ng-zorro-antd",
-        "@delon/theme": "delon.theme"
-      }
+      "entryFile": "public_api.ts"
     }
   }
 }
