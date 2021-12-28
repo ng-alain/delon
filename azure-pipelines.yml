@@ -22,7 +22,7 @@ stages:
       - job: build
         steps:
           - script: yarn install
-              displayName: 'Install'
+            displayName: 'Install'
           - task: Bash@3
             env:
               ACCESS_TOKEN: $(ACCESS_TOKEN)
@@ -36,7 +36,7 @@ stages:
       - job: packages
         steps:
           - script: yarn install
-              displayName: 'Install'
+            displayName: 'Install'
           - script: |
               yarn run test
               cat ./coverage/lcov.info | ./node_modules/.bin/codecov
@@ -68,7 +68,7 @@ stages:
               versionSpec: '14.16.1'
             displayName: 'Install Node.js'
           - script: yarn install
-              displayName: 'Install'
+            displayName: 'Install'
           - script: yarn run test:cli
 
   - stage: lint
@@ -77,7 +77,7 @@ stages:
       - job: packages
         steps:
           - script: yarn install
-              displayName: 'Install'
+            displayName: 'Install'
           - script: yarn run lint
 
   - stage: site
@@ -92,7 +92,7 @@ stages:
             clean: true
             fetchDepth: 1
           - script: yarn install
-              displayName: 'Install'
+            displayName: 'Install'
           - script: |
               node ./scripts/azure/github-comment.js "[Preview Preparing...](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
             displayName: 'Comment on github'
