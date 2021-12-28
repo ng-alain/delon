@@ -27,12 +27,12 @@ export class ArrayProperty extends PropertyGroup {
 
   getProperty(path: string): FormProperty | undefined {
     const subPathIdx = path.indexOf(SF_SEQ);
-    const pos = +(subPathIdx !== -1 ? path.substr(0, subPathIdx) : path);
+    const pos = +(subPathIdx !== -1 ? path.substring(0, subPathIdx) : path);
     const list = this.properties as PropertyGroup[];
     if (isNaN(pos) || pos >= list.length) {
       return undefined;
     }
-    const subPath = path.substr(subPathIdx + 1);
+    const subPath = path.substring(subPathIdx + 1);
     return list[pos].getProperty(subPath);
   }
 

@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
 import { TerminatorService } from './terminator.service';
-import { Widget } from './widget';
+import type { Widget } from './widget';
 import { WidgetFactory } from './widget.factory';
 
 let nextUniqueId = 0;

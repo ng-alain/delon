@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "reuseTab",
+    "entryFile": "public_api.ts"
+  }
+}

@@ -108,7 +108,7 @@ export default function (options: NgAddOptions): Rule {
 
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
     if (/^[\^|\~]/g.test(ngCoreVersion)) {
-      ngCoreVersion = ngCoreVersion.substr(1);
+      ngCoreVersion = ngCoreVersion.substring(1);
     }
     if (!ngCoreVersion.startsWith(`${V}.`)) {
       throw new SchematicsException(

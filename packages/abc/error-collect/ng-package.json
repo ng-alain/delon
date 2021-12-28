@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "errorCollect",
+    "entryFile": "public_api.ts"
+  }
+}

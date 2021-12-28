@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "datePicker",
+    "entryFile": "public_api.ts"
+  }
+}

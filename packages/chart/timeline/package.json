@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "timeline",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

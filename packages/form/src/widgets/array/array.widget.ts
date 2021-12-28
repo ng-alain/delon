@@ -3,7 +3,7 @@ import { SafeHtml } from '@angular/platform-browser';
 
 import { NzButtonType } from 'ng-zorro-antd/button';
 
-import { FormProperty } from '../../model/form.property';
+import type { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
 @Component({

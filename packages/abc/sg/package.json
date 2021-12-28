@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "grid",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

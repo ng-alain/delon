@@ -36,7 +36,7 @@ import { LayoutDefaultOptions } from './types';
   exportAs: 'layoutDefault',
   template: `
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
-    <layout-default-header></layout-default-header>
+    <layout-default-header [options]="options" [items]="headerItems"></layout-default-header>
     <div *ngIf="!options.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-inner">
         <ng-container *ngTemplateOutlet="asideUser"></ng-container>

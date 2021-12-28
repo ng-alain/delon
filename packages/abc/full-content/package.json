@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "fullContent",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

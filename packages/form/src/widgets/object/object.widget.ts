@@ -4,10 +4,10 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
-import { SFGridSchema } from '../../schema/ui';
+import type { SFGridSchema } from '../../schema/ui';
 import { toBool } from '../../utils';
 import { ObjectLayoutWidget } from '../../widget';
-import { SFObjectWidgetRenderType } from './schema';
+import type { SFObjectWidgetRenderType } from './schema';
 
 @Component({
   selector: 'sf-object',

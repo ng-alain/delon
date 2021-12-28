@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "single-bar",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

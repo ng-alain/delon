@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "tag-cloud",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

@@ -140,7 +140,7 @@ export class CurrencyService {
     let symbol = '';
     if (integer.startsWith('-')) {
       symbol = options.minusSymbol!;
-      integer = integer.substr(1);
+      integer = integer.substring(1);
     }
     if (/^-?\d+$/.test(value)) {
       decimal = null;
@@ -212,7 +212,7 @@ export class CurrencyService {
         const j = integerCount - i - 1;
         const isZero = i > 1 && n !== 0 && integer[i - 1] === '0';
         const cnZero = isZero ? '零' : '';
-        const isEmpptyUnit = (n === 0 && j % 4 !== 0) || integer.substr(i - 3, 4) === '0000';
+        const isEmpptyUnit = (n === 0 && j % 4 !== 0) || integer.substring(i - 3, 4) === '0000';
         const descMark = cnDesc;
         let cnNum = unit.num[n];
 

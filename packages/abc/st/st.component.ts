@@ -7,6 +7,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Host,
   Inject,
   Input,
   OnChanges,
@@ -20,10 +21,20 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { AlainI18NService, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleService, LocaleData, YNPipe } from '@delon/theme';
+import {
+  AlainI18NService,
+  ALAIN_I18N_TOKEN,
+  DatePipe,
+  DelonLocaleService,
+  DrawerHelper,
+  LocaleData,
+  ModalHelper,
+  YNPipe
+} from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
@@ -43,6 +54,7 @@ import {
   STClickRowClassName,
   STClickRowClassNameType,
   STColumn,
+  STColumnButton,
   STColumnSafeType,
   STColumnSelection,
   STContextmenuFn,
@@ -868,5 +880,117 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+}
+
+@Component({
+  selector: 'st-td',
+  templateUrl: './st-td.component.html',
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
+})
+export class STTdComponent {
+  @Input() c: _STColumn;
+  @Input() cIdx: number;
+  @Input() data: STData[];
+  @Input() i: STData;
+  @Input() index: number;
+  @Output() readonly n = new EventEmitter<_STTdNotify>();
+
+  private get routerState(): { pi: number; ps: number; total: number } {
+    const { pi, ps, total } = this.stComp;
+    return { pi, ps, total };
+  }
+
+  constructor(
+    @Host() private stComp: STComponent,
+    private router: Router,
+    private modalHelper: ModalHelper,
+    private drawerHelper: DrawerHelper
+  ) {}
+
+  private report(type: _STTdNotifyType): void {
+    this.n.emit({ type, item: this.i, col: this.c });
+  }
+
+  _checkbox(value: boolean): void {
+    this.i.checked = value;
+    this.report('checkbox');
+  }
+
+  _radio(): void {
+    this.data.filter(w => !w.disabled).forEach(i => (i.checked = false));
+    this.i.checked = true;
+    this.report('radio');
+  }
+
+  _link(e: Event): boolean {
+    this._stopPropagation(e);
+    const res = this.c.click!(this.i, this.stComp);
+    if (typeof res === 'string') {
+      this.router.navigateByUrl(res, { state: this.routerState });
+    }
+    return false;
+  }
+
+  _stopPropagation(ev: Event): void {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  _btn(btn: STColumnButton, ev?: Event): void {
+    if (ev) {
+      ev.stopPropagation();
+    }
+    const record = this.i;
+    if (btn.type === 'modal' || btn.type === 'static') {
+      const { modal } = btn;
+      const obj = { [modal!.paramsName!]: record };
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
+        modal!.component,
+        { ...obj, ...(modal!.params && modal!.params!(record)) },
+        deepMergeKey({}, true, this.stComp['cog'].modal, modal)
+      )
+        .pipe(filter(w => typeof w !== 'undefined'))
+        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
+      return;
+    } else if (btn.type === 'drawer') {
+      const { drawer } = btn;
+      const obj = { [drawer!.paramsName!]: record };
+      this.drawerHelper
+        .create(
+          drawer!.title!,
+          drawer!.component,
+          { ...obj, ...(drawer!.params && drawer!.params!(record)) },
+          deepMergeKey({}, true, this.stComp['cog'].drawer, drawer)
+        )
+        .pipe(filter(w => typeof w !== 'undefined'))
+        .subscribe(res => this.btnCallback(record, btn, res));
+      return;
+    } else if (btn.type === 'link') {
+      const clickRes = this.btnCallback(record, btn);
+      if (typeof clickRes === 'string') {
+        this.router.navigateByUrl(clickRes, { state: this.routerState });
+      }
+      return;
+    }
+    this.btnCallback(record, btn);
+  }
+
+  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
+    if (!btn.click) return;
+    if (typeof btn.click === 'string') {
+      switch (btn.click) {
+        case 'load':
+          this.stComp.load();
+          break;
+        case 'reload':
+          this.stComp.reload();
+          break;
+      }
+    } else {
+      return btn.click(record, modal, this.stComp);
+    }
   }
 }

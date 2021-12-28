@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "avatarList",
+    "entryFile": "public_api.ts"
+  }
+}

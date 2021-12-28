@@ -28,12 +28,12 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { mergeConfig } from './config';
-import { ErrorData } from './errors';
+import type { ErrorData } from './errors';
 import { SFButton, SFLayout, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
-import { SFSchema } from './schema/index';
-import { SFOptionalHelp, SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import type { SFSchema } from './schema/index';
+import type { SFOptionalHelp, SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { TerminatorService } from './terminator.service';
 import { di, resolveIfSchema, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';

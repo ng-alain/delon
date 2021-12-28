@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "trend",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "water-wave",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

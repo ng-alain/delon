@@ -21,7 +21,7 @@ async function genCss(name, min) {
   less.render
     .call(less, content, {
       plugins,
-      paths: ['/node_modules/ng-zorro-antd/src/'],
+      paths: ['node_modules/'],
       javascriptEnabled: true,
     })
     .then(({ css }) => {

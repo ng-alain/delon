@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "g2Custom",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

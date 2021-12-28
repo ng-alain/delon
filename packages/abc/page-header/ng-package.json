@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "pageHeader",
+    "entryFile": "public_api.ts"
+  }
+}

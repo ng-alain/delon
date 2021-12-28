@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "autoFocus",
-      "entryFile": "index.ts"
-    }
-  }
-}

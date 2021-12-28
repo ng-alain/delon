@@ -29,7 +29,7 @@ function parseExtraArgs(options: Schema): void {
   }
   options.extraArgs = {};
   org.forEach(val => {
-    const argArr = val.substr(2).split('=');
+    const argArr = val.substring(2).split('=');
     if (argArr.length === 2) {
       options.extraArgs[argArr[0]] = argArr[1];
     }

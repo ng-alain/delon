@@ -32,8 +32,5 @@
       }
     ],
     "no-invalid-double-slash-comments": null
-  },
-  "ignoreFiles": [
-    "src/assets/**/*"
-  ]
+  }
 }

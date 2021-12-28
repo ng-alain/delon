@@ -158,10 +158,12 @@ function makeMethod(method: METHOD_TYPE) {
         const data = setParam(baseData, targetKey);
 
         let requestUrl = url || '';
-        requestUrl = [baseData.baseUrl || '', requestUrl.startsWith('/') ? requestUrl.substr(1) : requestUrl].join('/');
+        requestUrl = [baseData.baseUrl || '', requestUrl.startsWith('/') ? requestUrl.substring(1) : requestUrl].join(
+          '/'
+        );
         // fix last split
         if (requestUrl.length > 1 && requestUrl.endsWith('/')) {
-          requestUrl = requestUrl.substr(0, requestUrl.length - 1);
+          requestUrl = requestUrl.substring(0, requestUrl.length - 1);
         }
 
         if (options.acl) {

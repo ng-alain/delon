@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "media",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

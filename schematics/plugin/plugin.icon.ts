@@ -156,9 +156,9 @@ function getNgValue(attr: Attribute): string[] | null {
   // type="{{value ? 'icon' : 'icon' }}"
   // type="align-{{value ? 'icon' : 'icon' }}"
   if (!attr.name.startsWith('[')) {
-    const prefix = templatVarIndex > 0 ? str.substr(0, templatVarIndex) : '';
+    const prefix = templatVarIndex > 0 ? str.substring(0, templatVarIndex) : '';
     if (templatVarIndex !== -1) {
-      return fixValue(str.substr(templatVarIndex), prefix);
+      return fixValue(str.substring(templatVarIndex), prefix);
     }
     return [str];
   }

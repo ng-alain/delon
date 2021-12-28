@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "flatModuleFile": "mini-bar",
-      "entryFile": "public_api.ts"
-    }
-  }
-}

@@ -15,7 +15,7 @@ import type { ModalOptions } from 'ng-zorro-antd/modal';
 import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import type { NzTablePaginationType } from 'ng-zorro-antd/table';
 
-import { STComponent } from './st.component';
+import type { STComponent } from './st.component';
 
 export type STColumnSafeType = 'text' | 'html' | 'safeHtml';
 

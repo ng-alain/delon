@@ -1,10 +1,10 @@
-import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
-import { Widget } from './widget';
+import type { Widget } from './widget';
 
 export class WidgetRegistry {
   private _widgets: { [type: string]: Widget<FormProperty, SFUISchemaItem> } = {};
@@ -37,7 +37,7 @@ export class WidgetRegistry {
 
 @Injectable()
 export class WidgetFactory {
-  constructor(private registry: WidgetRegistry, private resolver: ComponentFactoryResolver) {}
+  constructor(private registry: WidgetRegistry) {}
 
   createWidget(container: ViewContainerRef, type: string): ComponentRef<Widget<FormProperty, SFUISchemaItem>> {
     if (!this.registry.has(type)) {
@@ -45,8 +45,6 @@ export class WidgetFactory {
     }
 
     const componentClass = this.registry.getType(type) as NzSafeAny;
-    const componentFactory =
-      this.resolver.resolveComponentFactory<Widget<FormProperty, SFUISchemaItem>>(componentClass);
-    return container.createComponent(componentFactory);
+    return container.createComponent(componentClass);
   }
 }

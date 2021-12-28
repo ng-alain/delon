@@ -184,7 +184,7 @@
       "eslint --fix"
     ],
     "packages/**/*.less": [
-      "stylelint --fix"
+      "npm run lint:style"
     ]
   }
 }

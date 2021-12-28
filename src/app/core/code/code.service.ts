@@ -61,7 +61,7 @@ export class CodeService {
   //   ].forEach(key => {
   //     const includeVersion = key.lastIndexOf(`@`);
   //     if (includeVersion > 1) {
-  //       res[key.substr(0, includeVersion)] = key.substr(includeVersion + 1);
+  //       res[key.substring(0, includeVersion)] = key.substring(includeVersion + 1);
   //       return;
   //     }
   //     const version = key.startsWith('@delon')
@@ -140,7 +140,7 @@ export class CodeService {
   }
 
   private get genStartupService(): string {
-    return startupServiceTS({ ajvVersion: pkg.dependencies.ajv.substr(1) });
+    return startupServiceTS({ ajvVersion: pkg.dependencies.ajv.substring(1) });
   }
 
   private get genMock(): { [key: string]: string } {
