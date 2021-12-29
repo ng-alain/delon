@@ -4,21 +4,7 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "theme",
-    "entryFile": "public_api.ts",
-    "umdModuleIds": {
-      "@angular/cdk/overlay": "ng.cdk.overlay",
-      "@angular/cdk/portal": "ng.cdk.portal",
-      "ng-zorro-antd/drawer": "ng-zorro-antd/drawer",
-      "ng-zorro-antd/modal": "ng-zorro-antd/modal",
-      "ng-zorro-antd/icon": "ng-zorro-antd/icon",
-      "ng-zorro-antd/i18n": "ng-zorro-antd/i18n",
-      "date-fns": "DateFns",
-      "@delon/acl": "delon.acl",
-      "@delon/util/browser": "delon.util.browser",
-      "@delon/util/config": "delon.util.config",
-      "@delon/util/date-time": "delon.util.date-time",
-      "@delon/util/other": "delon.util.other"
-    }
+    "entryFile": "public_api.ts"
   },
   "allowedNonPeerDependencies": ["date-fns", "ng-zorro-antd", "@delon/acl", "@delon/util", "@ant-design/icons-angular"]
 }

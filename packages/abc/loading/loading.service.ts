@@ -16,7 +16,7 @@ export class LoadingService implements OnDestroy {
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
   private opt: LoadingShowOptions | null = null;
   private cog: AlainLoadingConfig;
-  private n$ = new Subject();
+  private n$ = new Subject<void>();
   private loading$: Subscription;
 
   get instance(): LoadingDefaultComponent | null {
@@ -40,7 +40,7 @@ export class LoadingService implements OnDestroy {
     })!;
     this.loading$ = this.n$
       .asObservable()
-      .pipe(debounce(() => timer(this.opt!.delay)))
+      .pipe(debounce(() => timer(this.opt!.delay!)))
       .subscribe(() => this.create());
   }
 

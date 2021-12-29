@@ -4,10 +4,7 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "mock",
-    "entryFile": "public_api.ts",
-    "umdModuleIds": {
-      "@delon/util": "delon.util"
-    }
+    "entryFile": "public_api.ts"
   },
   "allowedNonPeerDependencies": ["mockjs", "@delon/util"]
 }

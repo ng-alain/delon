@@ -54,7 +54,7 @@ describe('abc: reuse-tab', () => {
                 { path: 'c', component: CComponent },
                 { path: 'd', component: DComponent },
                 { path: 'e', component: EComponent, data: { titleI18n: 'i18n' } },
-                { path: 'lazy', loadChildren: 'lazy' },
+                { path: 'lazy', loadChildren: jasmine.createSpy('lazy') },
                 {
                   path: 'leave',
                   component: DComponent,
@@ -155,15 +155,15 @@ describe('abc: reuse-tab', () => {
       }));
       it('should show next tab when closed a has next tab', fakeAsync(() => {
         srv.max = 10;
-        page
-          .to('#b')
-          .to('#c')
-          .go(1)
-          // a, b/1, c
-          .expectUrl(1, '/b/1')
-          .close(1)
-          .expectUrl(1, '/c')
-          .end();
+        // debugger;
+        page.to('#b');
+        page.to('#c');
+        page.go(1);
+        // a, b/1, c
+        page.expectUrl(1, '/b/1');
+        page.close(1);
+        page.expectUrl(1, '/c');
+        page.end();
       }));
       it('issues-363', fakeAsync(() => {
         page.to('#b').expectCount(2).close(1).expectCount(1).expectAttr(0, 'closable', false).end();

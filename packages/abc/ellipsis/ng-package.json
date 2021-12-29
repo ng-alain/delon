@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "ellipsis",
+    "entryFile": "public_api.ts"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "count-down",
+    "entryFile": "public_api.ts"
+  }
+}

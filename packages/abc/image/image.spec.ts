@@ -39,20 +39,20 @@ describe('abc: _src', () => {
   it('should be support qlogo auto size', () => {
     context.src = `${SRC}0`;
     fixture.detectChanges();
-    expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
+    expect(getEl().src).toContain(`${SRC.substring(5)}${context.size}`);
   });
 
   it('should be support qlogo auto size when not full original address', () => {
     context.src = `${SRC}${context.size}`;
     fixture.detectChanges();
-    expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
+    expect(getEl().src).toContain(`${SRC.substring(5)}${context.size}`);
   });
 
   it('should be auto resize when is qlogo thum', () => {
     context.src = `${SRC}32`;
     context.size = 96;
     fixture.detectChanges();
-    expect(getEl().src).toContain(`${SRC.substr(5)}${context.size}`);
+    expect(getEl().src).toContain(`${SRC.substring(5)}${context.size}`);
   });
 
   it('should be custom error src', () => {
@@ -105,7 +105,7 @@ describe('abc: _src', () => {
         mockFileReader.result = BASE64;
         mockFileReader.onloadend();
       });
-      spyOn(_http, 'get').and.returnValue(throwError({}));
+      spyOn(_http, 'get').and.returnValue(throwError(() => {}));
       fixture.detectChanges();
       expect(getEl().src).toContain('error.svg');
     });

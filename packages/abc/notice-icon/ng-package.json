@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "noticeIcon",
+    "entryFile": "public_api.ts"
+  }
+}

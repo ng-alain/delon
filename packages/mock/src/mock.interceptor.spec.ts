@@ -10,10 +10,10 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Component, NgModule, NgModuleFactoryLoader, Type } from '@angular/core';
+import { Component, NgModule, Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -71,7 +71,7 @@ describe('mock: interceptor', () => {
         RouterTestingModule.withRoutes([
           {
             path: 'lazy',
-            loadChildren: 'expected'
+            loadChildren: jasmine.createSpy('expected')
           }
         ]),
         DelonMockModule.forRoot({ data })
@@ -152,28 +152,28 @@ describe('mock: interceptor', () => {
       });
     });
     it('should response HttpStatus: 404', (done: () => void) => {
-      http.get('/404').subscribe(
-        () => {
+      http.get('/404').subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        () => {
+        error: () => {
           expect(true).toBe(true);
           done();
         }
-      );
+      });
     });
     it('muse be use MockStatusError to throw status error', (done: () => void) => {
-      http.get('/500').subscribe(
-        () => {
+      http.get('/500').subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        () => {
+        error: () => {
           expect(true).toBe(true);
           done();
         }
-      );
+      });
     });
     it('should request POST', (done: () => void) => {
       http.post('/users/1', { data: true }, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
@@ -211,17 +211,17 @@ describe('mock: interceptor', () => {
     });
     it('with error request', (done: () => void) => {
       genModule(DATA, { delay: 1, log: false });
-      http.get('/404').subscribe(
-        () => {
+      http.get('/404').subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        () => {
+        error: () => {
           expect(console.log).not.toHaveBeenCalled();
           expect(true).toBe(true);
           done();
         }
-      );
+      });
     });
   });
 
@@ -229,8 +229,6 @@ describe('mock: interceptor', () => {
     beforeEach(() => genModule(DATA, { delay: 1 }));
 
     it('should work', fakeAsync(() => {
-      const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
-      const router = TestBed.inject<Router>(Router);
       @Component({
         selector: 'lazy',
         template: '<router-outlet></router-outlet>'
@@ -254,9 +252,11 @@ describe('mock: interceptor', () => {
       })
       class LazyModule {}
 
-      loader.stubbedModules = { expected: LazyModule };
       const fixture = TestBed.createComponent(RootComponent);
       fixture.detectChanges();
+
+      const router = TestBed.inject<Router>(Router);
+      router.resetConfig([{ path: 'lazy', loadChildren: () => LazyModule }]);
       router.navigateByUrl(`/lazy/child`);
       tick(500);
       fixture.detectChanges();
@@ -271,7 +271,7 @@ describe('mock: interceptor', () => {
       ]);
     });
 
-    it('shoul working', done => {
+    it('should working', done => {
       otherRes = new HttpResponse({ body: { a: 1 } });
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();

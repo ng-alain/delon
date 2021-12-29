@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "quickMenu",
+    "entryFile": "public_api.ts"
+  }
+}

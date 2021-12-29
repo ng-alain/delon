@@ -17,14 +17,17 @@
     &-bar {
       margin-bottom: 4px;
     }
+
     &-nav {
       .@{ant-prefix}-tabs-tab {
         margin-right: 32px;
         padding: 12px 16px;
+
         &:last-child {
           margin-right: 0;
         }
       }
+
       &-scroll {
         text-align: center;
       }
@@ -33,20 +36,25 @@
   .@{ant-prefix}-list {
     max-height: 400px;
     overflow: auto;
+
     &-item {
       padding-right: 24px;
       padding-left: 24px;
       overflow: hidden;
       cursor: pointer;
       transition: all 0.3s;
+
       &:last-child {
         border-bottom: 0;
       }
+
       &:hover {
         background: @primary-1;
       }
+
       &-meta {
         width: 100%;
+
         &-title {
           margin-bottom: 8px;
           font-weight: normal;
@@ -58,16 +66,19 @@
       }
     }
   }
+
   &__notfound {
     padding: 73px 0 88px;
     color: @text-color-secondary;
     text-align: center;
+
     &-img {
       display: inline-block;
       height: 76px;
       margin-bottom: 16px;
     }
   }
+
   &__clear {
     height: 46px;
     color: @text-color;
@@ -77,26 +88,32 @@
     border-radius: 0 0 @border-radius-base @border-radius-base;
     cursor: pointer;
     transition: all 0.3s;
+
     &:hover {
       color: @heading-color;
     }
   }
+
   &__item {
     .@{ant-prefix}-badge-count {
       top: -10px;
     }
+
     &-read {
       opacity: 0.4;
     }
+
     &-desc {
       font-size: 12px;
       line-height: @line-height-base;
     }
+
     &-time {
       margin-top: 4px;
       font-size: 12px;
       line-height: @line-height-base;
     }
+
     &-extra {
       float: right;
       margin-top: -1.5px;

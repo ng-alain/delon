@@ -101,9 +101,9 @@ describe('mock: service', () => {
 
     it('should be exact match priority', () => {
       const detail1Rule = srv.getRule('GET', '/users/1') as MockRule;
-      expect((detail1Rule.callback as NzSafeAny).rank).not.toBeUndefined();
+      expect(typeof detail1Rule.callback).toBe('object');
       const detail2Rule = srv.getRule('GET', '/users/2') as MockRule;
-      expect(detail2Rule.callback.name).toBe('/users/:id');
+      expect(typeof detail2Rule.callback).toBe('function');
     });
   });
 

@@ -58,11 +58,7 @@ class MockTokenService implements ITokenService {
 let otherRes = new HttpResponse();
 class OtherInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
-    return next.handle(req.clone()).pipe(
-      catchError(() => {
-        return throwError(otherRes);
-      })
-    );
+    return next.handle(req.clone()).pipe(catchError(() => throwError(() => otherRes)));
   }
 }
 
@@ -73,6 +69,9 @@ describe('auth: base.interceptor', () => {
   const MockDoc = {
     location: {
       href: ''
+    },
+    querySelectorAll(): NzSafeAny {
+      return {};
     }
   };
 
@@ -178,69 +177,69 @@ describe('auth: base.interceptor', () => {
     describe('should be navigate to login', () => {
       it('with navigate', done => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http.get('/test', { responseType: 'text' }).subscribe(
-          () => {
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
             expect(false).toBe(true);
             done();
           },
-          (err: NzSafeAny) => {
+          error: (err: NzSafeAny) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
               done();
             }, 20);
           }
-        );
+        });
       });
       it('with location', done => {
         const login_url = 'https://ng-alain.com/login';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
-        http.get('/test', { responseType: 'text' }).subscribe(
-          () => {
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
             expect(false).toBe(true);
             done();
           },
-          (err: NzSafeAny) => {
+          error: (err: NzSafeAny) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
               done();
             }, 20);
           }
-        );
+        });
       });
     });
 
     it('should be not navigate to login when token_invalid_redirect: false', done => {
       genModule({ token_invalid_redirect: false }, genModel(SimpleTokenModel, null));
-      http.get('/test', { responseType: 'text' }).subscribe(
-        () => {
+      http.get('/test', { responseType: 'text' }).subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        (err: NzSafeAny) => {
+        error: (err: NzSafeAny) => {
           expect(err.status).toBe(401);
           done();
         }
-      );
+      });
     });
   });
 
   describe('[referrer]', () => {
     it('should be always router url', done => {
       genModule({ executeOtherInterceptors: false }, genModel(SimpleTokenModel, null));
-      http.get('/to-test', { responseType: 'text' }).subscribe(
-        () => {
+      http.get('/to-test', { responseType: 'text' }).subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        () => {
+        error: () => {
           const tokenSrv = TestBed.inject(DA_SERVICE_TOKEN) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe('/');
           done();
         }
-      );
+      });
     });
   });
 
@@ -254,16 +253,16 @@ describe('auth: base.interceptor', () => {
     it('shoul working', done => {
       otherRes = new HttpResponse({ body: { a: 1 } });
       const url = '/to-test?a=1';
-      http.get(url, { responseType: 'text' }).subscribe(
-        () => {
+      http.get(url, { responseType: 'text' }).subscribe({
+        next: () => {
           expect(false).toBe(true);
           done();
         },
-        err => {
+        error: err => {
           expect(err.body.a).toBe(1);
           done();
         }
-      );
+      });
     });
   });
 });

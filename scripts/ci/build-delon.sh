@@ -9,7 +9,8 @@ source ./scripts/ci/utils.sh
 
 DEBUG=false
 NOCSS=false
-PACKAGES=(util
+PACKAGES=(
+  util
   testing
   acl
   theme
@@ -18,7 +19,8 @@ PACKAGES=(util
   cache
   chart
   mock
-  form)
+  form
+)
 NODE_PACKAGES=(cli)
 
 for ARG in "$@"; do

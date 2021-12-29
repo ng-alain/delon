@@ -5,29 +5,35 @@
   display: inline-block;
   font-size: @font-size-base;
   line-height: 22px;
+
   &__up,
   &__down {
     position: relative;
     top: 1px;
     margin-left: 4px;
+
     i {
       font-size: 12px;
       transform: scale(0.83);
     }
   }
+
   &__up {
     color: @red-6;
   }
+
   &__down {
     top: -1px;
     color: @green-6;
   }
+
   &__grey {
     @{trend-prefix}__up,
     @{trend-prefix}__down {
       color: @text-color;
     }
   }
+
   &__reverse {
     @{trend-prefix}__up {
       color: @green-6;

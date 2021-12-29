@@ -4,9 +4,6 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "testing",
-    "entryFile": "public_api.ts",
-    "umdModuleIds": {
-      "ng-zorro-antd/dropdown": "ng-zorro-antd/dropdown"
-    }
+    "entryFile": "public_api.ts"
   }
 }

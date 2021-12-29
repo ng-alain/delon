@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { SFValue } from './interface';
-import { FormProperty, PropertyGroup } from './model/form.property';
+import type { SFValue } from './interface';
+import type { FormProperty, PropertyGroup } from './model/form.property';
 
 export const ERRORSDEFAULT = {
   'false schema': `布尔模式出错`,

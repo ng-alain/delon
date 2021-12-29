@@ -1,4 +1,4 @@
-import { UpgradeData } from '@angular/cdk/schematics';
+import { symbolRemoval, UpgradeData } from '@angular/cdk/schematics';
 
 import {
   attributeSelectors,
@@ -21,5 +21,6 @@ export const ruleUpgradeData: UpgradeData = {
   inputNames,
   methodCallChecks,
   outputNames,
-  propertyNames
+  propertyNames,
+  symbolRemoval
 };

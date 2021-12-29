@@ -1,8 +1,6 @@
-_freak.less
-_functions.less
-_spacing.less
-_border.less
-_color.less
-_badge.less
-_half-float.less
-src/assets/color.less
+packages/theme/system/mixins/**/*
+src/assets/**/*
+
+packages/theme/system/utils/_border.less
+packages/theme/system/utils/_color.less
+packages/theme/system/utils/_spacing.less

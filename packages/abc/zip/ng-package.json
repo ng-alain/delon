@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "zip",
+    "entryFile": "public_api.ts"
+  }
+}

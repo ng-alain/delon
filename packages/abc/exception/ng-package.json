@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "exception",
+    "entryFile": "public_api.ts"
+  }
+}

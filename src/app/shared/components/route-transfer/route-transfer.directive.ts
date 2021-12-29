@@ -44,7 +44,7 @@ export class RouteTransferDirective {
     const url = targetEl.dataset.url;
 
     if (targetEl.dataset.toc || (url && url!.startsWith('#'))) {
-      this.clickToc(targetEl.dataset.toc || url!.substr(1).replace(/ /g, '-'));
+      this.clickToc(targetEl.dataset.toc || url!.substring(1).replace(/ /g, '-'));
       e.preventDefault();
       e.stopPropagation();
       return;

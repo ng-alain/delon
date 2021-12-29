@@ -15,8 +15,6 @@ describe('chart: radar', () => {
       page.genComp(TestComponent, true);
     }));
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', () => {
       page.isCanvas().isExists('.g2-radar__legend');
       page.context.hasLegend = false;

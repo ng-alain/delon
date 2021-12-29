@@ -85,8 +85,8 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
       return null;
     }
 
-    const scrollTop = win.pageYOffset || doc.documentElement.scrollTop || doc.body.scrollTop;
-    const scrollLeft = win.pageXOffset || doc.documentElement.scrollLeft || doc.body.scrollLeft;
+    const scrollTop = win.scrollY || doc.documentElement.scrollTop || doc.body.scrollTop;
+    const scrollLeft = win.scrollX || doc.documentElement.scrollLeft || doc.body.scrollLeft;
     const rect = el.getBoundingClientRect();
     const top = rect.top + scrollTop;
     const left = rect.left + scrollLeft;

@@ -31,7 +31,7 @@
     }
 
     this.genCommentColor = function(color, ...comments) {
-      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substr(1) + '/fff.png&text=+)';
+      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substring(1) + '/fff.png&text=+)';
       return '/* AUTOGENERATE: ' + comments.map(c => c + imgColor).join('|SPLIT|').replace(/(\{0\})/g, '"' + color + '"') + '*/';
     }
 
@@ -49,7 +49,7 @@
           break;
       }
       if (comments.length === 0) return '';
-      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substr(1) + '/fff.png&text=+)';
+      var imgColor = ' ![Color](https://dummyimage.com/20x20/' + color.substring(1) + '/fff.png&text=+)';
       return '/* AUTOGENERATE: ' + comments.map(c => c + imgColor).join('|SPLIT|').replace(/(\{0\})/g, '"' + color + '"') + '*/';
     }
   })()`;

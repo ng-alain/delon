@@ -69,7 +69,7 @@ After using `style.less` as the style entry, you need to import the style file o
 
 ```less
 // src/style.less
-@import '~ngx-simplemde/index.less';
+@import 'ngx-simplemde/index.less';
 // Change existing parameters here:
 @simplemde-icon-url: '//at.alicdn.com/t/font_700857_mnodkd1cp9l766r';
 @simplemde-statusbar-lines: 'Lins:';

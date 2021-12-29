@@ -5,16 +5,19 @@
   display: flex;
   align-items: center;
   height: 100%;
+
   &__img-block {
     flex: 0 0 62.5%;
     width: 62.5%;
     padding-right: 152px;
     zoom: 1;
+
     &::before,
     &::after {
       display: table;
       content: ' ';
     }
+
     &::after {
       clear: both;
       height: 0;
@@ -22,6 +25,7 @@
       visibility: hidden;
     }
   }
+
   &__img {
     float: right;
     width: 100%;
@@ -31,8 +35,10 @@
     background-position: 50% 50%;
     background-size: 100% 100%;
   }
+
   &__cont {
     flex: auto;
+
     &-title {
       margin-bottom: 24px;
       color: #434e59;
@@ -40,12 +46,14 @@
       font-size: 72px;
       line-height: 72px;
     }
+
     &-desc {
       margin-bottom: 16px;
       color: @text-color-secondary;
       font-size: 20px;
       line-height: 28px;
     }
+
     &-actions {
       .@{ant-prefix}-btn:not(:last-child) {
         margin-right: 8px;
@@ -66,6 +74,7 @@
   @{exception-prefix} {
     display: block;
     text-align: center;
+
     &__img-block {
       margin: 0 auto 24px;
       padding-right: 0;

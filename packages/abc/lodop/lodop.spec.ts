@@ -96,17 +96,17 @@ describe('abc: lodop', () => {
     });
     it('should be multi get', (done: () => void) => {
       genModule();
-      concat(srv.lodop, srv.lodop).subscribe(
-        () => {
+      concat(srv.lodop, srv.lodop).subscribe({
+        next: () => {
           expect(loadCount).toBe(1);
           expect(true).toBe(true);
           done();
         },
-        () => {
+        error: () => {
           expect(false).toBe(true);
           done();
         }
-      );
+      });
     });
     it('#checkMaxCount', (done: () => void) => {
       cog.lodop!.checkMaxCount = 2;

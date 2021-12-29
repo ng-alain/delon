@@ -6,6 +6,7 @@
   padding: @page-header-padding;
   background-color: @page-header-bg;
   border-bottom: @border-width-base @border-style-base @border-color-split;
+
   &__wide {
     max-width: @page-header-wide;
     margin: auto;
@@ -15,21 +16,26 @@
   }
   .@{ant-prefix}-tabs {
     margin: 0 0 (-(@margin-md + 1)) 0;
+
     &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
   }
+
   &__detail {
     display: flex;
   }
+
   &__row {
     display: flex;
     width: 100%;
   }
+
   &__logo {
     flex: 0 1 auto;
     margin-right: @margin-md;
     padding-top: 1px;
+
     img {
       display: block;
       width: 28px;
@@ -37,16 +43,19 @@
       border-radius: @border-radius-base;
     }
   }
+
   &__title {
     color: @heading-color;
     font-weight: 500;
     font-size: 20px;
+
     small {
       padding-left: @layout-gutter;
       font-weight: normal;
       font-size: 14px;
     }
   }
+
   &__action {
     min-width: 266px;
     margin-left: 56px;
@@ -101,6 +110,7 @@
     &__row {
       display: block;
     }
+
     &__action,
     &__extra {
       margin-left: 0;

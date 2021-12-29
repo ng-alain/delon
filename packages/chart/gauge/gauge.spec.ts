@@ -14,8 +14,6 @@ describe('chart: gauge', () => {
       page = new PageG2<TestComponent>().makeModule(G2GaugeModule, TestComponent);
     }));
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', () => {
       expect(page.chart.geometries[0].data[0].value).toBe(10);
       page.context.percent = 30;

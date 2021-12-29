@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   OnDestroy,
+  QueryList,
   TemplateRef
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -12,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { App, SettingsService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { LayoutDefaultComponent } from './layout.component';
+import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
 interface LayoutDefaultHeaderItem {
@@ -60,13 +62,12 @@ interface LayoutDefaultHeaderItem {
 export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
+  @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
+  @Input() options: LayoutDefaultOptions;
+
   left: LayoutDefaultHeaderItem[] = [];
   middle: LayoutDefaultHeaderItem[] = [];
   right: LayoutDefaultHeaderItem[] = [];
-
-  get options(): LayoutDefaultOptions {
-    return this.parent.options;
-  }
 
   get app(): App {
     return this.settings.app;
@@ -84,14 +85,10 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     return `menu-${type}`;
   }
 
-  constructor(
-    private settings: SettingsService,
-    private parent: LayoutDefaultComponent,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private settings: SettingsService, private cdr: ChangeDetectorRef) {}
 
   private refresh(): void {
-    const arr = this.parent.headerItems.toArray();
+    const arr = this.items.toArray();
     this.left = arr.filter(i => i.direction === 'left');
     this.middle = arr.filter(i => i.direction === 'middle');
     this.right = arr.filter(i => i.direction === 'right');
@@ -99,7 +96,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.parent.headerItems.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
+    this.items.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
     this.refresh();
   }
 

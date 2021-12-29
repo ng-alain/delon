@@ -5,6 +5,7 @@
   + .cdk-overlay-container {
     z-index: @onboarding-zindex;
   }
+
   &__mask {
     position: fixed;
     top: 0;
@@ -15,9 +16,11 @@
     background-color: @onboarding-mask-background-color;
     opacity: @onboarding-mask-opacity;
   }
+
   &__item {
     position: absolute;
   }
+
   &__light {
     position: absolute;
     z-index: @onboarding-zindex;
@@ -34,9 +37,11 @@
       transition: @onboarding-changing-ant;
     }
   }
+
   &__footer {
     margin-top: 8px;
   }
+
   &__total {
     color: @text-color;
   }
@@ -46,6 +51,7 @@
     33% {
       box-shadow: color(@onboarding-light-ant-color) 0 0 0 2px, @onboarding-light-ant-color 0 0 0;
     }
+
     66%,
     100% {
       box-shadow: @onboarding-light-ant-color 0 0 0 2px, fade(@onboarding-light-ant-color, 1%) 0 0 0 10px;

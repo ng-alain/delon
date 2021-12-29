@@ -145,26 +145,32 @@
   &__value {
     display: inline-flex;
     align-items: center;
+
     &-prefix,
     &-unit {
       color: @sv-value-prefix-unit-color;
       font-size: @sv-value-prefix-unit-font-size;
       font-style: normal;
     }
+
     &-prefix {
       padding-right: 3px;
     }
+
     &-text {
       // font-weight: 700;
       font-size: @sv-value-default-value-font-size;
     }
+
     &-unit {
       padding-left: 3px;
     }
+
     &:not(:first-child) {
       position: relative;
       margin-left: @sv-value-mulit-padding;
       padding-left: @sv-value-mulit-padding + @sv-value-mulit-content-width;
+
       &::before {
         position: absolute;
         left: 0;
@@ -173,6 +179,7 @@
         content: @sv-value-mulit-content;
       }
     }
+
     &-small {
       @{sv-prefix}__value {
         &-text {
@@ -180,6 +187,7 @@
         }
       }
     }
+
     &-large {
       @{sv-prefix}__value {
         &-text {

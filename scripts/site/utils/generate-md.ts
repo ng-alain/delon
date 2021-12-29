@@ -25,7 +25,7 @@ const converters = [highlight()].concat([
       const childrenHtml = children.map(toHtml).join('');
       // const goTo = tagName === 'h2' ? `<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a>` : '';
       const copy =
-        /h[0-9]{1}/g.test(tagName) && +tagName.substr(1) > 1
+        /h[0-9]{1}/g.test(tagName) && +tagName.substring(1) > 1
           ? `<a class="lake-link"><i data-anchor="${sluggedId}"></i></a>`
           : ``;
       return `<${tagName} id="${sluggedId}">${copy}${childrenHtml}</${tagName}>`;
@@ -120,7 +120,7 @@ function fixAngular(html: string): string {
     return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
   });
   if (res.startsWith('<article>') && res.endsWith('</article>')) {
-    res = res.substr(9, res.length - 19);
+    res = res.substring(9, res.length - 19);
   }
   return res;
 }

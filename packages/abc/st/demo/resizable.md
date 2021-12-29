@@ -9,7 +9,7 @@ title:
 
 基于 [nz-resizable](https://ng.ant.design/experimental/resizable/zh) 调整表头宽度。
 
-> - 注意：不要忘记在 `src/styles` 下导入 `nz-resizable` Less 样式文件（`@import '~ng-zorro-antd/resizable/style/entry.less';`）
+> - 注意：不要忘记在 `src/styles` 下导入 `nz-resizable` Less 样式文件（`@import 'ng-zorro-antd/resizable/style/entry.less';`）
 > - **不支持多表头**
 
 ## en-US

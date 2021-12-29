@@ -11,7 +11,7 @@ import { SFSchema, SFSchemaType } from '../schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
-import { Widget } from '../widget';
+import type { Widget } from '../widget';
 
 export abstract class FormProperty {
   private _errors: ErrorData[] | null = null;
@@ -158,7 +158,7 @@ export abstract class FormProperty {
     let result = null;
     if (path[0] === SF_SEQ) {
       base = this.findRoot();
-      result = base.getProperty(path.substr(1));
+      result = base.getProperty(path.substring(1));
     } else {
       while (result === null && prop.parent !== null) {
         prop = base = prop.parent;
@@ -359,11 +359,11 @@ export abstract class PropertyGroup extends FormProperty {
 
   getProperty(path: string): FormProperty | undefined {
     const subPathIdx = path.indexOf(SF_SEQ);
-    const propertyId = subPathIdx !== -1 ? path.substr(0, subPathIdx) : path;
+    const propertyId = subPathIdx !== -1 ? path.substring(0, subPathIdx) : path;
 
     let property = (this.properties as { [key: string]: FormProperty })[propertyId];
     if (property !== null && subPathIdx !== -1 && property instanceof PropertyGroup) {
-      const subPath = path.substr(subPathIdx + 1);
+      const subPath = path.substring(subPathIdx + 1);
       property = (property as PropertyGroup).getProperty(subPath)!;
     }
     return property;

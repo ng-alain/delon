@@ -11,7 +11,7 @@ title: 空白布局
 在 `src/styles.less` 引入：
 
 ```less
-@import '~@delon/theme/layout-blank/style/index';
+@import '@delon/theme/layout-blank/style/index';
 ```
 
 ## 参数

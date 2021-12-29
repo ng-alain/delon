@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "lodop",
+    "entryFile": "public_api.ts"
+  }
+}

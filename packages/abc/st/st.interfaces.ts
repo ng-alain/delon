@@ -15,7 +15,7 @@ import type { ModalOptions } from 'ng-zorro-antd/modal';
 import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 import type { NzTablePaginationType } from 'ng-zorro-antd/table';
 
-import { STComponent } from './st.component';
+import type { STComponent } from './st.component';
 
 export type STColumnSafeType = 'text' | 'html' | 'safeHtml';
 
@@ -421,7 +421,7 @@ export interface STColumn<T extends STData = any> {
 
   /**
    * 调整表头配置
-   * - 注意：**不要忘记**在 `src/styles` 下增加 `nz-resizable` Less 样式文件：`@import '~ng-zorro-antd/resizable/style/entry.less';`
+   * - 注意：**不要忘记**在 `src/styles` 下增加 `nz-resizable` Less 样式文件：`@import 'ng-zorro-antd/resizable/style/entry.less';`
    * - **不支持多表头**
    */
   resizable?: STResizable | boolean;

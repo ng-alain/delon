@@ -30,6 +30,9 @@
               "node_modules/aos/dist/aos.css",
               "src/styles.less"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
             "scripts": [
               "node_modules/aos/dist/aos.js"
             ],
@@ -125,6 +128,7 @@
       }
     },
     "delon": {
+      "sourceRoot": "packages",
       "root": "packages",
       "projectType": "library",
       "prefix": "",

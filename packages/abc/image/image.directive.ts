@@ -67,10 +67,10 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
   private update(): void {
     this.getSrc(this.src, true)
       .pipe(takeUntil(this.destroy$), take(1))
-      .subscribe(
-        src => (this.imgEl.src = src),
-        () => this.setError()
-      );
+      .subscribe({
+        next: src => (this.imgEl.src = src),
+        error: () => this.setError()
+      });
   }
 
   private getSrc(data: string, isSize: boolean): Observable<string> {
@@ -90,7 +90,7 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
 
   private getByHttp(url: string): Observable<string> {
     if (!this.platform.isBrowser) {
-      return throwError(`Not supported`);
+      return throwError(() => Error(`Not supported`));
     }
 
     return new Observable((observer: Observer<string>) => {
@@ -101,15 +101,15 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
           take(1),
           finalize(() => observer.complete())
         )
-        .subscribe(
-          (blob: Blob) => {
+        .subscribe({
+          next: (blob: Blob) => {
             const reader = new FileReader();
             reader.onloadend = () => observer.next(reader.result as string);
             reader.onerror = () => observer.error(`Can't reader image data by ${url}`);
             reader.readAsDataURL(blob);
           },
-          () => observer.error(`Can't access remote url ${url}`)
-        );
+          error: () => observer.error(`Can't access remote url ${url}`)
+        });
     });
   }
 

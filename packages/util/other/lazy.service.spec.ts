@@ -8,6 +8,9 @@ import { LazyService } from './lazy.service';
 let isIE = false;
 let testStatus = 'ok';
 class MockDocument {
+  querySelectorAll(): NzSafeAny {
+    return {};
+  }
   getElementsByTagName = (): NzSafeAny => {
     return [
       {

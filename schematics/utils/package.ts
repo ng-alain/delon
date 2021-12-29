@@ -33,7 +33,7 @@ export function addPackage(
   pkg.forEach(p => {
     if (!json[type][p]) {
       const pos = p.lastIndexOf('@');
-      json[type][p.substr(0, pos)] = p.substr(pos + 1);
+      json[type][p.substring(0, pos)] = p.substring(pos + 1);
     }
   });
 
@@ -58,7 +58,7 @@ export function removePackage(
   if (json == null) return tree;
 
   if (!Array.isArray(pkg)) pkg = [pkg];
-  pkg.forEach(p => delete json[type][p.indexOf('@') !== -1 ? p.substr(0, p.lastIndexOf('@')) : p]);
+  pkg.forEach(p => delete json[type][p.indexOf('@') !== -1 ? p.substring(0, p.lastIndexOf('@')) : p]);
 
   writePackage(tree, json);
   return tree;
