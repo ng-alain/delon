@@ -60,6 +60,7 @@ const ui = {
 | `[addType]` | 添加按钮类型，等同 `nzType` | `string` | `dashed` |
 | `[removable]` | 是否包含移除按钮 | `boolean` | `true` |
 | `[removeTitle]` | 移除按钮文本 | `string` | `移除` |
+| `[required]` | 当前项是否为必填，仅影响样式 | `boolean` | - |
 | `[$items]` | 数组元素类型UI描述 | `SFUISchema` | `移除` |
 | `(add)` | 添加回调，`property` 表示添加后的表单属性 | `(property: FormProperty) => void` | - |
 | `(remove)` | 移除回调 | `(index: number) => void` | - |

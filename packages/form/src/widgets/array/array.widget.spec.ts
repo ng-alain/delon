@@ -66,6 +66,13 @@ describe('form: widget: array', () => {
       .setValue('/arr', [])
       .checkCount('.sf__array-item', 0);
   });
+  it('#required', () => {
+    const s = deepCopy(schema) as SFSchema;
+    s.properties!.arr.ui = {
+      required: true
+    } as SFArrayWidgetSchema;
+    page.newSchema(s).checkCount('.ant-form-item-required', 1);
+  });
   describe('#removable', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
