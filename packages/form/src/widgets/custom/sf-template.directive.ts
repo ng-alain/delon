@@ -7,7 +7,7 @@ import { SFComponent } from '../../sf.component';
   selector: '[sf-template]'
 })
 export class SFTemplateDirective implements OnInit {
-  @Input('sf-template') path: string;
+  @Input('sf-template') path!: string;
 
   constructor(private templateRef: TemplateRef<void>, private table: SFComponent) {}
 

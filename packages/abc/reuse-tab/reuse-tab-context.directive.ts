@@ -11,8 +11,8 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
   }
 })
 export class ReuseTabContextDirective {
-  @Input('reuse-tab-context-menu') item: ReuseItem;
-  @Input() customContextMenu: ReuseCustomContextMenu[];
+  @Input('reuse-tab-context-menu') item!: ReuseItem;
+  @Input() customContextMenu!: ReuseCustomContextMenu[];
 
   constructor(private srv: ReuseTabContextService) {}
 

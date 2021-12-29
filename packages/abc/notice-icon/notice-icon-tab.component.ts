@@ -13,7 +13,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 })
 export class NoticeIconTabComponent {
   @Input() locale: LocaleData = {};
-  @Input() data: NoticeItem;
+  @Input() data!: NoticeItem;
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
 

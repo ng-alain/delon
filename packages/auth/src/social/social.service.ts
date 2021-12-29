@@ -14,9 +14,9 @@ export type SocialOpenType = 'href' | 'window';
 
 @Injectable()
 export class SocialService implements OnDestroy {
-  private _win: Window | null;
+  private _win: Window | null = null;
   private _winTime: NzSafeAny;
-  private observer: Observer<ITokenModel | null>;
+  private observer!: Observer<ITokenModel | null>;
 
   constructor(
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,

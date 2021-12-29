@@ -19,12 +19,12 @@ import { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
 
 @Directive()
 export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem> implements AfterViewInit {
-  formProperty: T;
-  error: string;
+  formProperty!: T;
+  error?: string;
   showError = false;
   id = '';
-  schema: SFSchema;
-  ui: UIT;
+  schema!: SFSchema;
+  ui!: UIT;
   firstVisual = false;
 
   @HostBinding('class')

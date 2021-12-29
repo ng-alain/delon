@@ -571,12 +571,12 @@ describe('abc: edit', () => {
 })
 class TestComponent {
   @ViewChild('seComp', { static: true })
-  seComp: SEContainerComponent;
+  seComp!: SEContainerComponent;
   @ViewChild('viewComp', { static: true })
-  viewComp: SEComponent;
+  viewComp!: SEComponent;
 
   parent_gutter: string | number | null = 32;
-  parent_colInCon: number | null;
+  parent_colInCon?: number | null;
   parent_col: number | null = 3;
   parent_labelWidth: number | null = null;
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
@@ -588,14 +588,14 @@ class TestComponent {
   parent_title = 'title';
   parent_errors: SEErrorRefresh[] = [];
 
-  optional: string;
-  optionalHelp: string;
+  optional?: string;
+  optionalHelp?: string;
   error: string | TemplateRef<void> | { [key: string]: string | TemplateRef<void> } = 'required';
-  extra: string;
-  label: string;
-  required: boolean | null;
-  line: boolean | null;
-  col: number | null;
+  extra?: string;
+  label?: string;
+  required?: boolean | null;
+  line?: boolean | null;
+  col?: number | null;
   controlClass = '';
   labelWidth: number | null = null;
   noColon?: boolean | null = undefined;

@@ -19,7 +19,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: NzSafeAny;
   type: SFObjectWidgetRenderType = 'default';
   list: NzSafeAny[] = [];
-  title: string;
+  title?: string;
   showExpand = true;
   expand = true;
 

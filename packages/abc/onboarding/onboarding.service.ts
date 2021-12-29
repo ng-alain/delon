@@ -24,9 +24,9 @@ import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingService implements OnDestroy {
-  private compRef: ComponentRef<OnboardingComponent>;
-  private op$: Subscription;
-  private config: OnboardingConfig;
+  private compRef!: ComponentRef<OnboardingComponent>;
+  private op$!: Subscription;
+  private config!: OnboardingConfig;
   private active = 0;
   private running$: Subscription | null = null;
   private _running = false;
@@ -130,7 +130,7 @@ export class OnboardingService implements OnDestroy {
     this.updateRunning(true);
 
     this.running$ = of(true)
-      .pipe(pipe.apply(this, pipes))
+      .pipe(pipe.apply(this, pipes as NzSafeAny) as NzSafeAny)
       .subscribe({
         next: () => this.cancelRunning().updateRunning(false),
         error: () => this.done()

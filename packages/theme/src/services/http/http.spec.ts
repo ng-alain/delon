@@ -195,10 +195,10 @@ describe('theme: http.client', () => {
       });
 
       it('should be catch error', fakeAsync(() => {
-        http.get(URL).subscribe(
-          () => (res = false),
-          () => (res = true)
-        );
+        http.get(URL).subscribe({
+          next: () => (res = false),
+          error: () => (res = true)
+        });
         tick();
         backend.expectOne(() => true).flush(null, { status: 500, statusText: 'Server Error' });
         expect(res).toBe(true);
@@ -378,10 +378,10 @@ describe('theme: http.client', () => {
       }));
 
       it('should be catch error', fakeAsync(() => {
-        http.jsonp(URL).subscribe(
-          () => (res = false),
-          () => (res = true)
-        );
+        http.jsonp(URL).subscribe({
+          next: () => (res = false),
+          error: () => (res = true)
+        });
         tick();
         backend.expectOne(() => true).flush(null, { status: 500, statusText: 'Server Error' });
         expect(true).toBe(true);

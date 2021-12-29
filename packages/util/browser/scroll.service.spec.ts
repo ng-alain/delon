@@ -57,8 +57,8 @@ describe('Util: ScrollService', () => {
         expect(position[1]).toBe(11);
       });
       it('with Window', () => {
-        window.pageXOffset = 10;
-        window.pageYOffset = 11;
+        window.scrollX = 10;
+        window.scrollY = 11;
         const position = srv.getScrollPosition();
         expect(position[0]).toBe(10);
         expect(position[1]).toBe(11);
@@ -104,14 +104,14 @@ describe('Util: ScrollService', () => {
       it('should scroll all the way to the top if close enough', () => {
         const element: Element = new MockElement() as NzSafeAny;
 
-        (window as NzSafeAny).pageYOffset = 25;
+        (window as NzSafeAny).scrollY = 25;
         srv.scrollToElement(element);
 
         expect(element.scrollIntoView).toHaveBeenCalled();
         expect(window.scrollBy).toHaveBeenCalledWith(0, 0);
         (window.scrollBy as jasmine.Spy).calls.reset();
 
-        (window as NzSafeAny).pageYOffset = 15;
+        (window as NzSafeAny).scrollY = 15;
         srv.scrollToElement(element);
 
         expect(element.scrollIntoView).toHaveBeenCalled();

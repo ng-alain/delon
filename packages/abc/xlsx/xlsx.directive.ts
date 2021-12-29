@@ -11,7 +11,7 @@ import { XlsxExportOptions } from './xlsx.types';
   }
 })
 export class XlsxDirective {
-  @Input('xlsx') data: XlsxExportOptions;
+  @Input('xlsx') data!: XlsxExportOptions;
 
   constructor(private srv: XlsxService) {}
 

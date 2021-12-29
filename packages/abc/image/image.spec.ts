@@ -157,11 +157,11 @@ describe('abc: _src', () => {
   />`
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: ImageDirective;
+  @ViewChild('comp', { static: true }) comp!: ImageDirective;
   src = './assets/img/logo.svg';
   size = 64;
   error = 'error.svg';
   useHttp = false;
-  previewSrc: string | null;
-  previewModalOptions: ModalOptions;
+  previewSrc?: string | null;
+  previewModalOptions?: ModalOptions;
 }

@@ -23,9 +23,9 @@ export class ImageDirective implements OnChanges, OnInit, OnDestroy {
   static ngAcceptInputType_size: NumberInput;
   static ngAcceptInputType_useHttp: BooleanInput;
 
-  @Input('_src') src: string;
-  @Input() @InputNumber() size: number;
-  @Input() error: string;
+  @Input('_src') src!: string;
+  @Input() @InputNumber() size!: number;
+  @Input() error!: string;
   @Input() @InputBoolean() useHttp = false;
   @Input() previewSrc!: string;
   @Input() previewModalOptions!: ModalOptions;

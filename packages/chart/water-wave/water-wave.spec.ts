@@ -56,7 +56,7 @@ describe('chart: water-wave', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2WaterWaveComponent;
+  @ViewChild('comp', { static: true }) comp!: G2WaterWaveComponent;
   title = 'title';
   color = '#1890FF';
   height = 100;

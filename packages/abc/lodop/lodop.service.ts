@@ -10,7 +10,7 @@ import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
   private defaultConfig: AlainLodopConfig;
-  private _cog: AlainLodopConfig;
+  private _cog!: AlainLodopConfig;
   private pending = false;
   private _lodop: Lodop | null = null;
   private _init = new Subject<LodopResult>();

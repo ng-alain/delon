@@ -19,9 +19,9 @@ export class DownFileDirective {
   @Input('http-data') httpData: NzSafeAny;
   @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
-  @Input('http-url') httpUrl: string;
-  @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
-  @Input() pre: (ev: MouseEvent) => Promise<boolean>;
+  @Input('http-url') httpUrl!: string;
+  @Input('file-name') fileName?: string | ((rep: HttpResponse<Blob>) => string);
+  @Input() pre?: (ev: MouseEvent) => Promise<boolean>;
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
   @Output() readonly error = new EventEmitter<NzSafeAny>();
 

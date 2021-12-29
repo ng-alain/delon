@@ -10,7 +10,7 @@ import { ACLCanType } from './acl.type';
   exportAs: 'acl'
 })
 export class ACLDirective implements OnDestroy {
-  private _value: ACLCanType;
+  private _value!: ACLCanType;
   private change$: Subscription;
 
   @Input('acl')

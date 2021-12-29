@@ -20,7 +20,7 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
 export class TokenService implements ITokenService, OnDestroy {
   private refresh$ = new Subject<ITokenModel>();
   private change$ = new BehaviorSubject<ITokenModel | null>(null);
-  private interval$: Subscription;
+  private interval$?: Subscription;
   private _referrer: AuthReferrer = {};
   private _options: AlainAuthConfig;
 

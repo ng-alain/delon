@@ -77,10 +77,10 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   // #region fields
 
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void> | null;
   @Input() @InputNumber() maxAxis = 2;
   @Input() data: G2TimelineData[] = [];
-  @Input() titleMap: G2TimelineMap;
+  @Input() titleMap?: G2TimelineMap | null;
   @Input() colorMap: G2TimelineMap = { y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' };
   @Input() mask: string = 'HH:mm';
   @Input() maskSlider: string = 'HH:mm';
@@ -171,7 +171,7 @@ export class G2TimelineComponent extends G2BaseComponent {
         const key = `y${id}`;
         return {
           id: key,
-          name: titleMap[key],
+          name: titleMap![key],
           value: key,
           marker: { style: { fill: colorMap[key] } }
         } as Types.LegendItem;
@@ -199,7 +199,7 @@ export class G2TimelineComponent extends G2BaseComponent {
     arrAxis.forEach(id => {
       const key = `y${id}`;
       scaleOptions[key] = {
-        alias: titleMap[key],
+        alias: titleMap![key],
         max,
         min: 0
       };

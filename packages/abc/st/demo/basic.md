@@ -27,7 +27,7 @@ import { STColumn, STComponent } from '@delon/abc/st';
 export class DemoComponent {
   url = `/users?total=2&field=list`;
   params = { a: 1, b: 2 };
-  @ViewChild('st', { static: false }) private st: STComponent;
+  @ViewChild('st', { static: false }) private st!: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'id', width: 80 },
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },

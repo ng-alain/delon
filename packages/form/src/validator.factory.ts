@@ -22,8 +22,8 @@ export abstract class SchemaValidatorFactory {
 
 @Injectable()
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
-  protected ajv: Ajv;
-  protected options: AlainSFConfig;
+  protected ajv!: Ajv;
+  protected options!: AlainSFConfig;
 
   constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService, private ngZone: NgZone) {
     super();

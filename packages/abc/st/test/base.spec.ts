@@ -130,7 +130,7 @@ export function genModule<T extends TestComponent>(
 }
 
 export class PageObject<T extends TestComponent> {
-  _changeData: STChange;
+  _changeData!: STChange;
   changeSpy: jasmine.Spy;
   readonly fixture: ComponentFixture<T>;
   readonly context: T;
@@ -420,22 +420,22 @@ export class PageObject<T extends TestComponent> {
   `
 })
 export class TestComponent {
-  @ViewChild('st', { static: true }) readonly comp: STComponent;
-  @ViewChild('tpl', { static: true }) readonly tpl: TemplateRef<NzSafeAny>;
+  @ViewChild('st', { static: true }) readonly comp!: STComponent;
+  @ViewChild('tpl', { static: true }) readonly tpl!: TemplateRef<NzSafeAny>;
   data: string | NzSafeAny[] | Observable<NzSafeAny[]> | null = deepCopy(USERS);
   res: STRes = {};
   req: STReq = {};
-  columns: STColumn[];
+  columns!: STColumn[];
   ps = PS;
-  pi: number;
-  total: number;
+  pi?: number;
+  total?: number;
   page: STPage = {};
   loading: boolean | null = null;
-  loadingDelay: number;
-  bordered: boolean;
-  size: 'small' | 'middle' | 'default';
-  scroll: { y?: string; x?: string };
-  multiSort: boolean | STMultiSort;
+  loadingDelay?: number;
+  bordered?: boolean;
+  size?: 'small' | 'middle' | 'default';
+  scroll?: { y?: string; x?: string };
+  multiSort?: boolean | STMultiSort;
   noResult = 'noResult';
   widthConfig: string[] = [];
   clickRowClassName?: STClickRowClassName | null = 'text-error';
@@ -479,6 +479,6 @@ export class TestExpandComponent extends TestComponent {}
     <div class="widget-record-value">{{ record?.id }}</div>`
 })
 export class TestWidgetComponent {
-  id: number;
+  id!: number;
   record: NzSafeAny;
 }

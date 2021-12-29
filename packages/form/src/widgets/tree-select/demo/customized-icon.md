@@ -33,7 +33,7 @@ import { NzTreeNode } from 'ng-zorro-antd/tree';
 export class DemoComponent implements OnInit {
   @ViewChild('customTpl', { static: true }) private customTpl!: TemplateRef<{ $implicit: NzTreeNode }>;
 
-  schema: SFSchema;
+  schema?: SFSchema;
 
   ngOnInit(): void {
     this.schema = {

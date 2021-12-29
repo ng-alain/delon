@@ -15,7 +15,7 @@ import { SFTreeSelectWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> implements OnInit {
-  i: SFTreeSelectWidgetSchema;
+  i!: SFTreeSelectWidgetSchema;
   data: SFSchemaEnum[] = [];
   asyncData = false;
 

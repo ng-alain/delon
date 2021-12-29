@@ -28,14 +28,14 @@ let nextUniqueId = 0;
   encapsulation: ViewEncapsulation.None
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
-  private ref: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
+  private ref!: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
   readonly unsubscribe$ = new Subject<void>();
   widget: Widget<FormProperty, SFUISchemaItem> | null = null;
 
-  @Input() formProperty: FormProperty;
+  @Input() formProperty!: FormProperty;
 
   @ViewChild('target', { read: ViewContainerRef, static: true })
-  container: ViewContainerRef;
+  container!: ViewContainerRef;
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 

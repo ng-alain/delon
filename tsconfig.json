@@ -27,6 +27,7 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "strictFunctionTypes": true,
+    "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "noImplicitAny": true,

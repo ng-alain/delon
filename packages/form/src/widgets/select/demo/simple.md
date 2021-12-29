@@ -28,7 +28,7 @@ import { delay } from 'rxjs/operators';
   `,
 })
 export class DemoComponent {
-  @ViewChild('sf', { static: false }) private sf: SFComponent;
+  @ViewChild('sf', { static: false }) private sf!: SFComponent;
   schema: SFSchema = {
     properties: {
       status: {

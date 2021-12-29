@@ -33,13 +33,13 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   static ngAcceptInputType_expand: BooleanInput;
 
   constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
-  ctrlStyle: { [key: string]: string } = {};
+  ctrlStyle: { [key: string]: string | undefined } = {};
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;
   @Input() @InputNumber() width = 200;
-  @Input() bgColor: string;
-  @Input() borderColor: string;
+  @Input() bgColor?: string;
+  @Input() borderColor?: string;
   @Input() @InputBoolean() expand: boolean = false;
   @Output() readonly expandChange = new EventEmitter<boolean>();
 

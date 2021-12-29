@@ -80,7 +80,7 @@ class MockWindow {
   open(): void {}
 }
 class MockLocation {
-  private url: string;
+  private url!: string;
   get href(): string {
     return this.url;
   }
@@ -624,7 +624,7 @@ describe('theme: layout-default-nav', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
-  comp: LayoutDefaultNavComponent;
+  comp!: LayoutDefaultNavComponent;
   disabledAcl = false;
   autoCloseUnderPad = false;
   recursivePath = false;

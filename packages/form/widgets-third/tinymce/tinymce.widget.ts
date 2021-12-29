@@ -20,8 +20,8 @@ import { ControlWidget } from '@delon/form';
 export class TinymceWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'tinymce';
 
-  config: Record<string, unknown>;
-  loading: string;
+  config!: Record<string, unknown>;
+  loading!: string;
 
   ngOnInit(): void {
     this.loading = this.ui.loading || '加载中……';

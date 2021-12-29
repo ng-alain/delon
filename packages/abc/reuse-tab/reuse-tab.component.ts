@@ -64,21 +64,21 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_keepingScroll: BooleanInput;
   static ngAcceptInputType_disabled: BooleanInput;
 
-  @ViewChild('tabset') private tabset: NzTabSetComponent;
+  @ViewChild('tabset') private tabset!: NzTabSetComponent;
   private destroy$ = new Subject<void>();
-  private _keepingScrollContainer: Element;
+  private _keepingScrollContainer?: Element;
   list: ReuseItem[] = [];
-  item: ReuseItem;
+  item?: ReuseItem;
   pos = 0;
 
   // #region fields
 
   @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
-  @Input() i18n: ReuseContextI18n;
+  @Input() i18n?: ReuseContextI18n;
   @Input() @InputBoolean() debug = false;
-  @Input() @InputNumber() max: number;
-  @Input() @InputNumber() tabMaxWidth: number;
-  @Input() excludes: RegExp[];
+  @Input() @InputNumber() max?: number;
+  @Input() @InputNumber() tabMaxWidth?: number;
+  @Input() excludes?: RegExp[];
   @Input() @InputBoolean() allowClose = true;
   @Input() @InputBoolean() keepingScroll = false;
   @Input()
@@ -86,9 +86,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this._keepingScrollContainer = typeof value === 'string' ? this.doc.querySelector(value) : value;
   }
   @Input() customContextMenu: ReuseCustomContextMenu[] = [];
-  @Input() tabBarExtraContent: TemplateRef<void>;
-  @Input() tabBarGutter: number;
-  @Input() tabBarStyle: { [key: string]: string };
+  @Input() tabBarExtraContent?: TemplateRef<void>;
+  @Input() tabBarGutter?: number;
+  @Input() tabBarStyle: { [key: string]: string } | null = null;
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   @Input() @InputBoolean() disabled = false;
@@ -304,8 +304,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    if (changes.max) this.srv.max = this.max;
-    if (changes.excludes) this.srv.excludes = this.excludes;
+    if (changes.max) this.srv.max = this.max!;
+    if (changes.excludes) this.srv.excludes = this.excludes!;
     if (changes.mode) this.srv.mode = this.mode;
     if (changes.routeParamMatchMode) this.srv.routeParamMatchMode = this.routeParamMatchMode;
     if (changes.keepingScroll) {
@@ -319,8 +319,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { destroy$: unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

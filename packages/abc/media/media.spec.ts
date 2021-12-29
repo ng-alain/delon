@@ -107,7 +107,7 @@ describe('abc: media', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp') comp: MediaComponent;
+  @ViewChild('comp') comp!: MediaComponent;
   type: PlyrMediaType = 'video';
   source: string | PlyrMediaSource = '1.mp4';
   options: NzSafeAny;

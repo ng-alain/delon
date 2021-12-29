@@ -51,6 +51,6 @@ describe('Pipe: mega', () => {
   template: ` <p id="result">{{ value | mega: options }}</p> `
 })
 class TestComponent {
-  value: number;
+  value?: number;
   options: CurrencyMegaOptions = {};
 }

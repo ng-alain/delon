@@ -104,8 +104,8 @@ describe('chart: pie', () => {
   `
 })
 class TestMiniComponent {
-  @ViewChild('comp', { static: true }) comp: G2PieComponent;
-  data: NzSafeAny[];
+  @ViewChild('comp', { static: true }) comp!: G2PieComponent;
+  data?: NzSafeAny[];
   color: string | null = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';
   total = 'total';
@@ -113,11 +113,11 @@ class TestMiniComponent {
   hasLegend = false;
   inner = 0.75;
   padding: number[] = [12, 0, 12, 0];
-  percent: number;
+  percent?: number;
   tooltip = true;
   lineWidth = 0;
   select = true;
-  colors: string[];
+  colors?: string[];
 }
 
 @Component({
@@ -142,7 +142,7 @@ class TestMiniComponent {
   `
 })
 class TestFullComponent {
-  @ViewChild('comp', { static: true }) comp: G2PieComponent;
+  @ViewChild('comp', { static: true }) comp!: G2PieComponent;
   data: NzSafeAny[] = [];
   color = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';
@@ -151,10 +151,10 @@ class TestFullComponent {
   hasLegend = true;
   inner = 0.75;
   padding: number[] = [12, 0, 12, 0];
-  percent: number;
+  percent?: number;
   tooltip = true;
   lineWidth = 0;
   select = true;
-  colors: string[];
+  colors?: string[];
   delay = 0;
 }

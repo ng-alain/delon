@@ -25,7 +25,7 @@ import { delay, tap } from 'rxjs/operators';
   template: ` <sf #sf [schema]="schema" [formData]="data" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
-  @ViewChild('sf', { static: false }) private sf: SFComponent;
+  @ViewChild('sf', { static: false }) private sf!: SFComponent;
   data = {
     province: 'Zhejiang',
     city: 'Ningbo',

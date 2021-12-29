@@ -37,7 +37,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input() @InputNumber(null) col: number;
+  @Input() @InputNumber(null) col: number | null = null;
 
   get paddingValue(): number {
     return this.parent.gutter / 2;

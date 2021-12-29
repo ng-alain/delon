@@ -51,20 +51,20 @@ describe('theme: ModalHelper', () => {
     }));
     describe('#exact width true', () => {
       it('should be not trigger subscript when return a undefined value', fakeAsync(() => {
-        modal.create(TestModalComponent, { ret: undefined }, { includeTabs: true, exact: true }).subscribe(
-          () => {
+        modal.create(TestModalComponent, { ret: undefined }, { includeTabs: true, exact: true }).subscribe({
+          next: () => {
             expect(false).toBeTruthy();
             flush();
           },
-          () => {
+          error: () => {
             expect(false).toBeTruthy();
             flush();
           },
-          () => {
+          complete: () => {
             expect(true).toBeTruthy();
             flush();
           }
-        );
+        });
         fixture.detectChanges();
         tick(1000);
         fixture.detectChanges();

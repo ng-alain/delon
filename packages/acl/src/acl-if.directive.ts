@@ -12,7 +12,7 @@ import { ACLCanType } from './acl.type';
 export class ACLIfDirective implements OnDestroy {
   static ngAcceptInputType_except: boolean | string | undefined | null;
 
-  private _value: ACLCanType;
+  private _value!: ACLCanType;
   private _change$: Subscription;
   private _thenTemplateRef: TemplateRef<void> | null = null;
   private _elseTemplateRef: TemplateRef<void> | null = null;

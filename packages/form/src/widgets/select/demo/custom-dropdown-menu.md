@@ -51,10 +51,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   ],
 })
 export class DemoComponent implements OnInit {
-  @ViewChild('sf', { static: false }) private sf: SFComponent;
+  @ViewChild('sf', { static: false }) private sf!: SFComponent;
   @ViewChild('dropdownRender', { static: true }) private dropdownRender!: TemplateRef<void>;
 
-  schema: SFSchema;
+  schema?: SFSchema;
   statusList: string[] = ['1', '2', '3'];
 
   constructor(private msg: NzMessageService) {}

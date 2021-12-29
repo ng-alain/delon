@@ -25,7 +25,7 @@ class MockTokenService implements ITokenService {
   [key: string]: NzSafeAny;
   _data: NzSafeAny;
   options: NzSafeAny;
-  refresh: Observable<ITokenModel>;
+  refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
     this._data = data;
     return true;
@@ -82,7 +82,7 @@ describe('auth: simple.interceptor', () => {
         done();
       });
       const req = httpBed.expectOne('/test') as TestRequest;
-      expect(req.request.headers.get('token')).toBe(basicModel.token);
+      expect(req.request.headers.get('token')).toBe(basicModel.token!);
       req.flush('ok!');
     });
     it(`in body`, (done: () => void) => {

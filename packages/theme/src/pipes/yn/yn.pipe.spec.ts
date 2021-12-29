@@ -91,5 +91,5 @@ class TestComponent {
   value = true;
   yes?: string;
   no?: string;
-  mode: YNMode;
+  mode?: YNMode;
 }

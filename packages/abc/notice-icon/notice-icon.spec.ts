@@ -133,7 +133,7 @@ describe('abc: notice-icon', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
-  comp: NoticeIconComponent;
+  comp!: NoticeIconComponent;
   data: NoticeItem[] = [
     {
       title: 'test',
@@ -179,7 +179,7 @@ class TestComponent {
   ];
   count = 10;
   loading = false;
-  popoverVisible: boolean;
+  popoverVisible?: boolean;
   select(): void {}
   clear(): void {}
   popupVisibleChange(): void {}

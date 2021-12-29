@@ -39,12 +39,12 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
 
   private _p: NzSafeAny;
-  private videoEl: HTMLElement;
+  private videoEl!: HTMLElement;
   private time: NzSafeAny;
   private notify$: Subscription;
 
   @Input() type: PlyrMediaType = 'video';
-  @Input() source: string | PlyrMediaSource;
+  @Input() source?: string | PlyrMediaSource;
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
   @Output() readonly ready = new EventEmitter<NzSafeAny>();

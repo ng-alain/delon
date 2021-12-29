@@ -6,7 +6,7 @@ import { LazyService } from '@delon/util/other';
 
 @Injectable({ providedIn: 'root' })
 export class MediaService {
-  private _cog: AlainMediaConfig;
+  private _cog!: AlainMediaConfig;
   private loading = false;
   private loaded = false;
   private notify$ = new Subject<void>();

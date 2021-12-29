@@ -52,7 +52,7 @@ describe('chart: single-bar', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2SingleBarComponent;
+  @ViewChild('comp', { static: true }) comp!: G2SingleBarComponent;
   value = 10;
   plusColor = '#40a9ff';
   minusColor = '#ff4d4f';
@@ -61,7 +61,7 @@ class TestComponent {
   min = 0;
   max = 100;
   line = false;
-  format: (value: number) => string;
+  format?: (value: number) => string;
   padding: NzSafeAny = 0;
   textStyle: NzSafeAny = { fontSize: 12, color: '#595959' };
   delay = 0;

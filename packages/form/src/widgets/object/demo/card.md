@@ -28,8 +28,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   `,
 })
 export class DemoComponent implements OnInit {
-  @ViewChild('extra', { static: true }) private extra: TemplateRef<void>;
-  schema: SFSchema;
+  @ViewChild('extra', { static: true }) private extra!: TemplateRef<void>;
+  schema?: SFSchema;
 
   constructor(public msg: NzMessageService) {}
 

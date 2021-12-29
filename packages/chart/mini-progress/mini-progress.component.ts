@@ -25,13 +25,13 @@ export class G2MiniProgressComponent implements OnChanges {
   static ngAcceptInputType_strokeWidth: NumberInput;
 
   @Input() color = '#1890FF';
-  @Input() @InputNumber() target: number;
-  @Input() @InputNumber() percent: number;
-  @Input() @InputNumber() strokeWidth: number;
+  @Input() @InputNumber() target?: number | null;
+  @Input() @InputNumber() percent?: number | null;
+  @Input() @InputNumber() strokeWidth?: number | null;
 
   constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
-  private fixNum(value: number): number {
+  private fixNum(value: number | undefined | null): number {
     return Math.min(Math.max(toNumber(value), 0), 100);
   }
 

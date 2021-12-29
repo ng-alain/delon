@@ -39,22 +39,22 @@ export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_noColon: BooleanInput;
 
   @ViewChild('conEl', { static: false })
-  private conEl: ElementRef;
+  private conEl!: ElementRef;
   private el: HTMLElement;
   private clsMap: string[] = [];
   _noColon = false;
 
   // #region fields
 
-  @Input() optional: string | TemplateRef<void>;
-  @Input() optionalHelp: string | TemplateRef<void>;
-  @Input() optionalHelpColor: string;
-  @Input() label: string | TemplateRef<void>;
-  @Input() unit: string | TemplateRef<void>;
-  @Input() @InputNumber(null) col: number;
-  @Input() @InputBoolean(null) default: boolean;
-  @Input() type: 'primary' | 'success' | 'danger' | 'warning';
-  @Input() @InputBoolean(null) noColon: boolean;
+  @Input() optional?: string | TemplateRef<void> | null;
+  @Input() optionalHelp?: string | TemplateRef<void> | null;
+  @Input() optionalHelpColor?: string;
+  @Input() label?: string | TemplateRef<void> | null;
+  @Input() unit?: string | TemplateRef<void> | null;
+  @Input() @InputNumber(null) col?: number | null;
+  @Input() @InputBoolean(null) default?: boolean | null;
+  @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() @InputBoolean(null) noColon?: boolean | null;
 
   // #endregion
 
@@ -62,7 +62,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
     return this.parent && this.parent.gutter / 2;
   }
 
-  get labelWidth(): number | null {
+  get labelWidth(): number | null | undefined {
     const { labelWidth, layout } = this.parent;
     return layout === 'horizontal' ? labelWidth : null;
   }

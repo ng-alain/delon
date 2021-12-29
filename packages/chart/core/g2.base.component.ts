@@ -46,10 +46,10 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
   @Input() @InputBoolean() repaint = true;
 
-  @ViewChild('container', { static: true }) protected node: ElementRef;
-  protected resize$: Subscription;
+  @ViewChild('container', { static: true }) protected node!: ElementRef;
+  protected resize$?: Subscription;
   protected destroy$ = new Subject<void>();
-  protected _chart: Chart;
+  protected _chart!: Chart;
   loaded = false;
 
   @Input() @InputNumber() delay = 0;

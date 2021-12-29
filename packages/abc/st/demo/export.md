@@ -27,7 +27,7 @@ import { STColumn, STComponent, STData } from '@delon/abc/st';
   `,
 })
 export class DemoComponent {
-  @ViewChild('st', { static: false }) st: STComponent;
+  @ViewChild('st', { static: false }) st!: STComponent;
   data: STData[] = Array(10000)
     .fill({})
     .map((_, index) => ({

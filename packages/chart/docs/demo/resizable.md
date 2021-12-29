@@ -35,7 +35,7 @@ import { NzResizeEvent } from 'ng-zorro-antd/resizable';
   </div>`,
 })
 export class DemoComponent {
-  @ViewChild('bar') private readonly barComp: G2BarComponent;
+  @ViewChild('bar') private readonly barComp!: G2BarComponent;
   width = 400;
   height = 200;
   private id = -1;

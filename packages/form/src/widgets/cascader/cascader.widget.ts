@@ -16,12 +16,12 @@ import { SFCascaderWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
-  clearText: string;
-  showArrow: boolean;
-  showInput: boolean;
-  triggerAction: string[];
+  clearText!: string;
+  showArrow!: boolean;
+  showInput!: boolean;
+  triggerAction!: string[];
   data: SFSchemaEnum[] = [];
-  loadData: (node: NzCascaderOption, index: number) => PromiseLike<NzSafeAny>;
+  loadData?: (node: NzCascaderOption, index: number) => PromiseLike<NzSafeAny>;
 
   ngOnInit(): void {
     const { clearText, showArrow, showInput, triggerAction, asyncData } = this.ui;

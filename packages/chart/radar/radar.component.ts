@@ -47,7 +47,7 @@ export class G2RadarComponent extends G2BaseComponent {
 
   // #region fields
 
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void> | null;
   @Input() @InputNumber() height = 0;
   @Input() padding: number | number[] | 'auto' = [44, 30, 16, 30];
   @Input() @InputBoolean() hasLegend = true;

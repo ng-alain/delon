@@ -418,15 +418,15 @@ describe('abc: page-header', () => {
 
 class TestBaseComponent {
   @ViewChild('comp', { static: true })
-  comp: PageHeaderComponent;
+  comp!: PageHeaderComponent;
   title: string | null = '所属类目';
-  autoBreadcrumb: boolean;
-  autoTitle: boolean;
-  syncTitle: boolean;
-  home: string;
-  homeLink: string;
-  homeI18n: string;
-  fixed: boolean;
+  autoBreadcrumb?: boolean;
+  autoTitle?: boolean;
+  syncTitle?: boolean;
+  home?: string;
+  homeLink?: string;
+  homeI18n?: string;
+  fixed?: boolean;
   loading = false;
   wide = false;
 }

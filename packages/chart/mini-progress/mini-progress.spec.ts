@@ -49,7 +49,7 @@ describe('chart: mini-progress', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2MiniProgressComponent;
+  @ViewChild('comp', { static: true }) comp!: G2MiniProgressComponent;
   color = '#1890FF';
   target: number = 1;
   percent: number = 10;

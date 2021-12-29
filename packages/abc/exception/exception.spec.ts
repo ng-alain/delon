@@ -69,9 +69,9 @@ describe('abc: exception', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
-  comp: ExceptionComponent;
-  type: 403 | 404 | 500;
-  img: string;
-  title: string;
-  desc: string;
+  comp!: ExceptionComponent;
+  type?: 403 | 404 | 500;
+  img?: string;
+  title?: string;
+  desc?: string;
 }

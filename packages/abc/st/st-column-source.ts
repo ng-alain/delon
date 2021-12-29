@@ -25,13 +25,13 @@ import { _STColumn, _STHeader } from './st.types';
 
 export interface STColumnSourceProcessOptions {
   widthMode: STWidthMode;
-  resizable: STResizable;
+  resizable?: STResizable;
   safeType: STColumnSafeType;
 }
 
 @Injectable()
 export class STColumnSource {
-  private cog: AlainSTConfig;
+  private cog!: AlainSTConfig;
 
   constructor(
     private dom: DomSanitizer,

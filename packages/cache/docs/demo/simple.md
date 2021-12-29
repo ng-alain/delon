@@ -44,7 +44,7 @@ import { Subscription } from 'rxjs';
 export class DemoComponent implements OnDestroy {
   value: any;
   key = 'demo';
-  private notify$: Subscription;
+  private notify$?: Subscription;
 
   get newValue(): number {
     return +new Date();

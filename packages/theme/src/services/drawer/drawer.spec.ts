@@ -46,17 +46,17 @@ describe('theme: DrawerHelper', () => {
       .create('', TestDrawerComponent, {
         ret: 'destroy'
       })
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           expect(false).toBeTruthy();
           done();
         },
-        () => {},
-        () => {
+        error: () => {},
+        complete: () => {
           expect(true).toBeTruthy();
           done();
         }
-      );
+      });
     fixture.detectChanges();
   });
 
@@ -231,18 +231,18 @@ describe('theme: DrawerHelper', () => {
             exact: true
           }
         )
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             expect(false).toBe(true);
           },
-          () => {
+          error: () => {
             expect(false).toBe(true);
           },
-          () => {
+          complete: () => {
             expect(true).toBe(true);
             done();
           }
-        );
+        });
       fixture.detectChanges();
     });
     it('width false, should be always subscript', done => {
@@ -257,16 +257,16 @@ describe('theme: DrawerHelper', () => {
             exact: false
           }
         )
-        .subscribe(
-          res => {
+        .subscribe({
+          next: res => {
             expect(res).toBe(undefined);
             done();
           },
-          () => {
+          error: () => {
             expect(false).toBe(true);
             done();
           }
-        );
+        });
       fixture.detectChanges();
     });
   });

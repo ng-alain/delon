@@ -32,11 +32,11 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_loading: BooleanInput;
   static ngAcceptInputType_popoverVisible: BooleanInput;
 
-  private i18n$: Subscription;
+  private i18n$!: Subscription;
   locale: LocaleData = {};
 
   @Input() data: NoticeItem[] = [];
-  @Input() @InputNumber() count: number;
+  @Input() @InputNumber() count?: number;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() popoverVisible = false;
   @Input() btnClass?: NgClassType;

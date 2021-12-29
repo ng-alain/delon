@@ -188,7 +188,7 @@ describe('abc: ellipsis', () => {
 });
 
 class TestBaseComponent {
-  @ViewChild('comp', { static: true }) comp: EllipsisComponent;
+  @ViewChild('comp', { static: true }) comp!: EllipsisComponent;
   tooltip = false;
   length: number | null = 10;
   lines: number | null = 3;

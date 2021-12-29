@@ -86,10 +86,10 @@ describe('abc: quick-menu', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
-  comp: QuickMenuComponent;
+  comp!: QuickMenuComponent;
   width = 200;
-  bgColor: string;
-  borderColor: string;
+  bgColor?: string;
+  borderColor?: string;
   expand = false;
   expandChange(): void {}
 }

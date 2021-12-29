@@ -29,7 +29,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   `,
 })
 export class DemoComponent {
-  @ViewChild('sf', { static: true }) comp: SFComponent;
+  @ViewChild('sf', { static: true }) comp!: SFComponent;
   schema = this.i18nSchema;
 
   private get i18nSchema(): SFSchema {

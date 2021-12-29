@@ -54,10 +54,10 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
-  @Input() options: LayoutDefaultOptions;
-  @Input() asideUser: TemplateRef<void>;
-  @Input() nav: TemplateRef<void>;
-  @Input() content: TemplateRef<void>;
+  @Input() options!: LayoutDefaultOptions;
+  @Input() asideUser: TemplateRef<void> | null = null;
+  @Input() nav: TemplateRef<void> | null = null;
+  @Input() content: TemplateRef<void> | null = null;
   @Input() customError?: string | null;
 
   private destroy$ = new Subject<void>();
@@ -103,7 +103,7 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
       ['alain-default']: true,
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
-      [`alain-default__hide-aside`]: this.options.hideAside
+      [`alain-default__hide-aside`]: this.options!.hideAside
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');

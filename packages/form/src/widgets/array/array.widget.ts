@@ -14,9 +14,9 @@ import { ArrayLayoutWidget } from '../../widget';
   encapsulation: ViewEncapsulation.None
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
-  addTitle: SafeHtml;
-  addType: NzButtonType;
-  removeTitle: string | null;
+  addTitle!: SafeHtml;
+  addType!: NzButtonType;
+  removeTitle?: string | null;
   arraySpan = 8;
 
   get addDisabled(): boolean {

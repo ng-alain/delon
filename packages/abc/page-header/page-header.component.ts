@@ -53,8 +53,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
 
   private destroy$ = new Subject<void>();
-  @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
-  @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
+  @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
+  @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
   isBrowser = true;
   dir: Direction = 'ltr';
@@ -68,8 +68,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   // #region fields
 
-  _title: string | null;
-  _titleTpl: TemplateRef<NzSafeAny>;
+  _title: string | null = null;
+  _titleTpl: TemplateRef<NzSafeAny> | null = null;
   @Input()
   set title(value: string | TemplateRef<void> | null) {
     if (value instanceof TemplateRef) {
@@ -87,13 +87,13 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() home?: string;
   @Input() homeLink?: string;
   @Input() homeI18n?: string;
-  @Input() @InputBoolean() autoBreadcrumb: boolean;
-  @Input() @InputBoolean() autoTitle: boolean;
-  @Input() @InputBoolean() syncTitle: boolean;
-  @Input() @InputBoolean() fixed: boolean;
-  @Input() @InputNumber() fixedOffsetTop: number;
+  @Input() @InputBoolean() autoBreadcrumb!: boolean;
+  @Input() @InputBoolean() autoTitle!: boolean;
+  @Input() @InputBoolean() syncTitle!: boolean;
+  @Input() @InputBoolean() fixed!: boolean;
+  @Input() @InputNumber() fixedOffsetTop!: number;
   @Input() breadcrumb?: TemplateRef<NzSafeAny> | null = null;
-  @Input() @InputBoolean() recursiveBreadcrumb: boolean;
+  @Input() @InputBoolean() recursiveBreadcrumb!: boolean;
   @Input() logo?: TemplateRef<void> | null = null;
   @Input() action?: TemplateRef<void> | null = null;
   @Input() content?: TemplateRef<void> | null = null;

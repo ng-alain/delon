@@ -7,7 +7,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
   private el: HTMLDivElement;
   private _inited = false;
 
-  @Input('fixed-label') @InputNumber() num: number;
+  @Input('fixed-label') @InputNumber() num?: number | null;
 
   private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;

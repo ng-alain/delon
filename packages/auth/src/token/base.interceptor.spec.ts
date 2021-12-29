@@ -36,7 +36,7 @@ class MockTokenService implements ITokenService {
   _data: NzSafeAny;
   options: NzSafeAny;
   referrer: AuthReferrer = {};
-  refresh: Observable<ITokenModel>;
+  refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
     this._data = data;
     return true;

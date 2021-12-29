@@ -665,9 +665,9 @@ describe('abc: reuse-tab', () => {
         `<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`
       );
       page.to('#a').openContextMenu(0);
-      spyOn(srv.componentRef.instance, '_onReuseInit');
+      spyOn(srv.componentRef!.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
-      expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
+      expect(srv.componentRef!.instance._onReuseInit).toHaveBeenCalled();
     }));
     it('should be not trigger _onReuseInit when refresh non-active tab', fakeAsync(() => {
       createComp(
@@ -858,8 +858,8 @@ class AppComponent {}
 })
 class LayoutComponent {
   @ViewChild('comp', { static: true })
-  comp: ReuseTabComponent;
-  @ViewChild('titleRender', { static: true }) titleRenderTpl: TemplateRef<{ $implicit: ReuseItem }>;
+  comp!: ReuseTabComponent;
+  @ViewChild('titleRender', { static: true }) titleRenderTpl!: TemplateRef<{ $implicit: ReuseItem }>;
   mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
   debug = false;
   max: number = 3;
@@ -869,7 +869,7 @@ class LayoutComponent {
   keepingScrollContainer: Window | Element | string | null = null;
   customContextMenu: ReuseCustomContextMenu[] = [];
   tabType: 'line' | 'card' = 'line';
-  tabMaxWidth: number;
+  tabMaxWidth?: number;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   disabled = false;
   titleRender?: TemplateRef<{ $implicit: ReuseItem }>;

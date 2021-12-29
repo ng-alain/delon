@@ -51,9 +51,9 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_openStrictly: BooleanInput;
   static ngAcceptInputType_maxLevelIcon: NumberInput;
 
-  private bodyEl: HTMLBodyElement;
+  private bodyEl!: HTMLBodyElement;
   private destroy$ = new Subject<void>();
-  private floatingEl: HTMLDivElement;
+  private floatingEl!: HTMLDivElement;
   dir: Direction = 'ltr';
   list: Nav[] = [];
 

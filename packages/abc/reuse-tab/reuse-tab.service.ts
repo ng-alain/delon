@@ -34,10 +34,10 @@ export class ReuseTabService implements OnDestroy {
   private _cached: ReuseTabCached[] = [];
   private _titleCached: { [url: string]: ReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
-  private _router$: Unsubscribable;
-  private removeUrlBuffer: string | null;
+  private _router$?: Unsubscribable;
+  private removeUrlBuffer: string | null = null;
   private positionBuffer: { [url: string]: [number, number] } = {};
-  componentRef: ReuseComponentRef;
+  componentRef?: ReuseComponentRef;
   debug = false;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   mode = ReuseTabMatchMode.Menu;
@@ -84,7 +84,7 @@ export class ReuseTabService implements OnDestroy {
   get keepingScroll(): boolean {
     return this._keepingScroll;
   }
-  keepingScrollContainer: Element;
+  keepingScrollContainer?: Element;
   /** 获取已缓存的路由 */
   get items(): ReuseTabCached[] {
     return this._cached;
@@ -376,15 +376,19 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number, type: ReuseHookOnReuseInitType = 'init'): void {
+  runHook(
+    method: ReuseHookTypes,
+    comp: ReuseComponentRef | number | undefined,
+    type: ReuseHookOnReuseInitType = 'init'
+  ): void {
     if (typeof comp === 'number') {
       const item = this._cached[comp];
       comp = item._handle.componentRef;
     }
-    const compThis = comp.instance;
-    if (comp == null || !compThis) {
+    if (comp == null || !comp.instance) {
       return;
     }
+    const compThis = comp.instance;
     const fn = compThis[method];
     if (typeof fn !== 'function') {
       return;

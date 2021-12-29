@@ -31,7 +31,7 @@ import { STColumn, STComponent } from '@delon/abc/st';
 })
 export class DemoComponent {
   url = `/users?total=100`;
-  @ViewChild('st', { static: false }) private st: STComponent;
+  @ViewChild('st', { static: false }) private st!: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'id', width: 80 },
     {

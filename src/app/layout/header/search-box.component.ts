@@ -20,7 +20,7 @@ declare const docsearch: NzSafeAny;
 })
 export class HeaderSearchComponent implements AfterViewInit {
   @ViewChild('searchInput', { static: false })
-  searchInput: ElementRef<HTMLInputElement>;
+  searchInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,

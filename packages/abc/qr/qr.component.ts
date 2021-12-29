@@ -40,24 +40,24 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_size: NumberInput;
   static ngAcceptInputType_delay: NumberInput;
 
-  private lazy$: Subscription;
+  private lazy$?: Subscription;
   private qr: NzSafeAny;
   private cog: AlainQRConfig;
-  private option: QROptions;
+  private option!: QROptions;
   private inited = false;
 
-  dataURL: string;
+  dataURL!: string;
 
-  @Input() background: string;
-  @Input() backgroundAlpha: number;
-  @Input() foreground: string;
-  @Input() foregroundAlpha: number;
-  @Input() level: string;
-  @Input() mime: string;
-  @Input() @InputNumber() padding: number;
-  @Input() @InputNumber() size: number;
+  @Input() background?: string;
+  @Input() backgroundAlpha?: number;
+  @Input() foreground?: string;
+  @Input() foregroundAlpha?: number;
+  @Input() level?: string;
+  @Input() mime?: string;
+  @Input() @InputNumber() padding?: number;
+  @Input() @InputNumber() size?: number;
   @Input() value = '';
-  @Input() @InputNumber() delay: number;
+  @Input() @InputNumber() delay?: number;
   @Output() readonly change = new EventEmitter<string>();
 
   constructor(

@@ -116,9 +116,9 @@ import { _STColumn } from './st.types';
 })
 export class STFilterComponent {
   visible = false;
-  @Input() col: _STColumn;
+  @Input() col!: _STColumn;
   @Input() locale: LocaleData = {};
-  @Input() f: STColumnFilter;
+  @Input() f!: STColumnFilter;
   @Output() readonly n = new EventEmitter<unknown>();
   @Output() readonly handle = new EventEmitter<boolean>();
   get icon(): STIcon {

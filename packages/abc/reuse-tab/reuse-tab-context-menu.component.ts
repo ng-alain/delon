@@ -30,7 +30,7 @@ import {
   encapsulation: ViewEncapsulation.None
 })
 export class ReuseTabContextMenuComponent implements OnInit {
-  private _i18n: ReuseContextI18n;
+  private _i18n!: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
     this._i18n = {
@@ -41,9 +41,9 @@ export class ReuseTabContextMenuComponent implements OnInit {
   get i18n(): ReuseContextI18n {
     return this._i18n;
   }
-  @Input() item: ReuseItem;
-  @Input() event: MouseEvent;
-  @Input() customContextMenu: ReuseCustomContextMenu[];
+  @Input() item!: ReuseItem;
+  @Input() event!: MouseEvent;
+  @Input() customContextMenu!: ReuseCustomContextMenu[];
   @Output() readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable(): boolean {

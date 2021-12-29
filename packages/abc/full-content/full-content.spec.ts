@@ -176,9 +176,9 @@ describe('abc: full-content', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: FullContentComponent;
+  @ViewChild('comp', { static: true }) comp!: FullContentComponent;
   fullscreen: boolean = false;
-  hideTitle: boolean;
+  hideTitle?: boolean;
   padding = 24;
   change(): void {}
 }

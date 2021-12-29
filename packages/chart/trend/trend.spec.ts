@@ -84,8 +84,8 @@ describe('abc: trend', () => {
   template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor"></trend> `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: TrendComponent;
-  flag: 'up' | 'down';
-  colorful: boolean;
-  reverseColor: boolean;
+  @ViewChild('comp', { static: true }) comp!: TrendComponent;
+  flag?: 'up' | 'down';
+  colorful?: boolean;
+  reverseColor?: boolean;
 }
