@@ -39,6 +39,10 @@ const MOCKMENUS = [
             target: '_top'
           }
         ]
+      },
+      {
+        text: 'widgets',
+        disabled: true
       }
     ]
   }
@@ -361,6 +365,17 @@ describe('theme: layout-default-nav', () => {
           fixture.detectChanges();
           expect(router.navigateByUrl).not.toHaveBeenCalled();
         });
+        it('muse be hide when move to other item', () => {
+          createComp();
+          setSrv.layout.collapsed = true;
+          fixture.detectChanges();
+          page.showSubMenu();
+          expect(page.isShowSubMenu()).toBe(true);
+          const widgetEl = page.getEl<HTMLElement>('.sidebar-nav__item-disabled', true);
+          widgetEl!.dispatchEvent(new Event('mouseenter'));
+          fixture.detectChanges();
+          expect(page.isShowSubMenu()).toBe(false);
+        });
       });
       it('#52', () => {
         createComp();
@@ -588,6 +603,9 @@ describe('theme: layout-default-nav', () => {
       const conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       if (resultExpectHide) expect(conEl).toBeNull();
       else expect(conEl).not.toBeNull();
+    }
+    isShowSubMenu(): boolean {
+      return page.getEl(floatingShowCls, true) != null;
     }
   }
 });

@@ -32,6 +32,7 @@
         [attr.data-id]="i._id"
         class="sidebar-nav__item-link"
         [ngClass]="{ 'sidebar-nav__item-disabled': i.disabled }"
+        (mouseenter)="closeSubMenu()"
       >
         <ng-container *ngIf="i._needIcon">
           <ng-container *ngIf="!collapsed">
