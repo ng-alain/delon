@@ -12,8 +12,8 @@ export interface MatchRouterOptions {
   selector: '[matchRouter]'
 })
 export class MatchRouterDirective implements AfterViewInit, OnDestroy {
-  private _options: MatchRouterOptions;
-  private url$: Subscription;
+  private _options!: MatchRouterOptions;
+  private url$?: Subscription;
 
   @Input('matchRouter')
   set options(val: MatchRouterOptions) {

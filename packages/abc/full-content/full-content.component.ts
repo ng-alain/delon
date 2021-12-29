@@ -44,16 +44,16 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   static ngAcceptInputType_hideTitle: BooleanInput;
   static ngAcceptInputType_padding: NumberInput;
 
-  private bodyEl: HTMLElement;
+  private bodyEl!: HTMLElement;
   private inited = false;
-  private srv$: Subscription;
-  private route$: Subscription;
+  private srv$?: Subscription;
+  private route$?: Subscription;
   private id = `_full-content-${Math.random().toString(36).substring(2)}`;
   private scroll$: Subscription | null = null;
 
   _height = 0;
 
-  @Input() @InputBoolean() fullscreen: boolean;
+  @Input() @InputBoolean() fullscreen?: boolean;
   @Input() @InputBoolean() hideTitle = true;
   @Input() @InputNumber() padding = 24;
   @Output() readonly fullscreenChange = new EventEmitter<boolean>();
@@ -146,7 +146,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   ngOnDestroy(): void {
     this.removeInBody();
     this.scroll$!.unsubscribe();
-    this.srv$.unsubscribe();
-    this.route$.unsubscribe();
+    this.srv$?.unsubscribe();
+    this.route$?.unsubscribe();
   }
 }

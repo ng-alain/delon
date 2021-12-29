@@ -266,9 +266,9 @@ describe('abc: view', () => {
 })
 class TestComponent {
   @ViewChild('svComp', { static: true })
-  svComp: SVContainerComponent;
+  svComp!: SVContainerComponent;
   @ViewChild('viewComp', { static: true })
-  viewComp: SVComponent;
+  viewComp!: SVComponent;
   parent_size: 'small' | 'large' = 'large';
   parent_layout: 'horizontal' | 'vertical' = 'horizontal';
   parent_labelWidth: number | null = null;
@@ -277,12 +277,12 @@ class TestComponent {
   parent_default: boolean = true;
   parent_title = 'title';
 
-  label: string;
-  optional: string;
-  optionalHelp: string;
+  label?: string;
+  optional?: string;
+  optionalHelp?: string;
   content = '1';
-  col: number | null;
-  default: boolean;
-  unit: string;
-  type: 'primary' | 'success' | 'danger' | 'warning';
+  col?: number | null;
+  default?: boolean;
+  unit?: string;
+  type?: 'primary' | 'success' | 'danger' | 'warning';
 }

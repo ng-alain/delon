@@ -5,7 +5,7 @@ import { ITokenModel } from '../interface';
 export class SimpleTokenModel implements ITokenModel {
   [key: string]: NzSafeAny;
 
-  token: string;
+  token: string | null | undefined;
 
   expired?: number;
 }

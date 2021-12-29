@@ -33,6 +33,6 @@ describe('Pipe: price', () => {
   template: ` <p id="result">{{ value | price: options }}</p> `
 })
 class TestComponent {
-  value: number;
+  value?: number;
   options: CurrencyFormatOptions = {};
 }

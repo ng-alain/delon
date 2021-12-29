@@ -236,7 +236,7 @@ class TestComponent {
 
   fileName: string | ((rep: HttpResponse<Blob>) => string) | null = 'demo中文';
 
-  pre: (ev: MouseEvent) => Promise<boolean>;
+  pre?: (ev: MouseEvent) => Promise<boolean>;
 
   success(): void {}
 

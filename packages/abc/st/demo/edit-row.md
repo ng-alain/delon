@@ -38,7 +38,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   `,
 })
 export class DemoComponent {
-  @ViewChild('st') private st: STComponent;
+  @ViewChild('st') private st!: STComponent;
   users: STData[] = Array(10)
     .fill({})
     .map((_, idx) => {

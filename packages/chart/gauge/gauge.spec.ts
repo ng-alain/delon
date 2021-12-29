@@ -29,7 +29,7 @@ describe('chart: gauge', () => {
   template: ` <g2-gauge #comp [title]="'核销率'" height="164" [percent]="percent" [delay]="delay"></g2-gauge> `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2GaugeComponent;
+  @ViewChild('comp', { static: true }) comp!: G2GaugeComponent;
   percent = 10;
   delay = 0;
 }

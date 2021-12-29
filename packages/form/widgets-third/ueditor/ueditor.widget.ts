@@ -34,9 +34,9 @@ import { ControlWidget } from '@delon/form';
 export class UeditorWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'ueditor';
 
-  config: Record<string, unknown>;
-  loading: string;
-  delay: number;
+  config!: Record<string, unknown>;
+  loading!: string;
+  delay!: number;
 
   ngOnInit(): void {
     this.loading = this.ui.loading || '加载中……';

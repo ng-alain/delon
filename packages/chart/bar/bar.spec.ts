@@ -87,13 +87,13 @@ describe('chart: bar', () => {
   `
 })
 class TestComponent implements OnInit {
-  @ViewChild('comp', { static: true }) comp: G2BarComponent;
+  @ViewChild('comp', { static: true }) comp!: G2BarComponent;
   data: G2BarData[] = [];
   delay = 0;
-  @ViewChild('titleTpl', { static: true }) titleTpl: TemplateRef<void>;
+  @ViewChild('titleTpl', { static: true }) titleTpl!: TemplateRef<void>;
   title: string | TemplateRef<void> | null = 'title';
   height = PageG2Height;
-  padding: number[];
+  padding?: number[];
   autoLabel = false;
   color = 'rgba(24, 144, 255, 0.85)';
   clickItem(): void {}

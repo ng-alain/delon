@@ -19,17 +19,17 @@ export class NumberInfoComponent {
   static ngAcceptInputType_gap: NumberInput;
 
   /** 标题 */
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void> | null;
   /** 子标题 */
-  @Input() subTitle: string | TemplateRef<void>;
+  @Input() subTitle?: string | TemplateRef<void> | null;
   /** 总量 */
-  @Input() total: string | number | TemplateRef<void>;
+  @Input() total?: string | number | TemplateRef<void> | null;
   /** 总量后缀 */
-  @Input() subTotal: string | number | TemplateRef<void>;
+  @Input() subTotal?: string | number | TemplateRef<void> | null;
   /** 子总量 */
-  @Input() suffix: string;
+  @Input() suffix?: string | null;
   /** 增加状态 */
-  @Input() status: 'up' | 'down';
+  @Input() status?: 'up' | 'down';
   /** 状态样式 */
   @Input() theme: 'light' | 'default' = 'light';
   /** 设置数字和描述直接的间距（像素） */

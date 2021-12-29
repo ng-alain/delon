@@ -48,7 +48,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_width: NumberInput;
   static ngAcceptInputType_height: NumberInput;
 
-  @ViewChild('container', { static: true }) private node: ElementRef;
+  @ViewChild('container', { static: true }) private node!: ElementRef;
   private destroy$ = new Subject<void>();
   private _chart: ChartECharts | null = null;
   private _theme?: string | Record<string, unknown> | null;
@@ -59,7 +59,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     height?: number;
     locale?: NzSafeAny;
   };
-  private _option: ChartEChartsOption;
+  private _option!: ChartEChartsOption;
   _width = '100%';
   _height = '400px';
 
@@ -137,7 +137,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
       this._initOpt
     )) as ChartECharts;
     this.emit('init');
-    this.setOption(this._option!);
+    this.setOption(this._option);
     // on
     this.on.forEach(item => {
       if (item.query != null) {

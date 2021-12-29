@@ -13,7 +13,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class STImgWidget {
   static readonly KEY = 'img';
 
-  img: string;
+  img!: string;
 
   constructor(private msg: NzMessageService) {}
 

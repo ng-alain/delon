@@ -16,7 +16,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   data: SFSchemaEnum[] = [];
   allChecked = false;
   indeterminate = false;
-  grid_span: number;
+  grid_span!: number;
   labelTitle: string = ``;
   inited = false;
 

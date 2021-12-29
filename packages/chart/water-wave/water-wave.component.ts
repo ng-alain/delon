@@ -35,17 +35,17 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   static ngAcceptInputType_percent: NumberInput;
 
   private resize$: Subscription | null = null;
-  @ViewChild('container', { static: true }) private node: ElementRef;
-  private timer: number;
+  @ViewChild('container', { static: true }) private node!: ElementRef;
+  private timer!: number;
 
   // #region fields
 
   @Input() @InputBoolean() animate = true;
   @Input() @InputNumber() delay = 0;
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void> | null;
   @Input() color = '#1890FF';
   @Input() @InputNumber() height = 160;
-  @Input() @InputNumber() percent: number;
+  @Input() @InputNumber() percent?: number;
 
   // #endregion
 
@@ -64,7 +64,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     const { percent, color, node, animate } = this;
 
-    const data = Math.min(Math.max(percent / 100, 0), 100);
+    const data = Math.min(Math.max(percent! / 100, 0), 100);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     cancelAnimationFrame(this.timer);

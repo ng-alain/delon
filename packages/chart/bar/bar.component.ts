@@ -53,7 +53,7 @@ export class G2BarComponent extends G2BaseComponent {
 
   // #region fields
 
-  @Input() title: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() @InputNumber() height = 0;
   @Input() padding: number | number[] | 'auto' = 'auto';

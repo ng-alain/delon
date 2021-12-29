@@ -44,9 +44,9 @@ export class ResultComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() title: string | TemplateRef<void>;
-  @Input() description: string | TemplateRef<void>;
-  @Input() extra: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void>;
+  @Input() description?: string | TemplateRef<void>;
+  @Input() extra?: string | TemplateRef<void>;
   dir: Direction = 'ltr';
 
   constructor(@Optional() private directionality: Directionality) {}

@@ -9,7 +9,7 @@ import type { Widget } from './widget';
 export class WidgetRegistry {
   private _widgets: { [type: string]: Widget<FormProperty, SFUISchemaItem> } = {};
 
-  private defaultWidget: Widget<FormProperty, SFUISchemaItem>;
+  private defaultWidget!: Widget<FormProperty, SFUISchemaItem>;
 
   get widgets(): { [type: string]: Widget<FormProperty, SFUISchemaItem> } {
     return this._widgets;

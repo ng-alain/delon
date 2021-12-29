@@ -5,7 +5,7 @@ export class STRowSource {
   private titles: { [key: string]: TemplateRef<void> } = {};
   private rows: { [key: string]: TemplateRef<void> } = {};
 
-  add(type: string, path: string, ref: TemplateRef<void>): void {
+  add(type: string | undefined, path: string, ref: TemplateRef<void>): void {
     this[type === 'title' ? 'titles' : 'rows'][path] = ref;
   }
 
@@ -20,9 +20,9 @@ export class STRowSource {
 
 @Directive({ selector: '[st-row]' })
 export class STRowDirective implements OnInit {
-  @Input('st-row') id: string;
+  @Input('st-row') id!: string;
 
-  @Input() type: 'title';
+  @Input() type?: 'title';
 
   constructor(private ref: TemplateRef<void>, @Host() private source: STRowSource) {}
 

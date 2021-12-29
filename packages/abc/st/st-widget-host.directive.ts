@@ -7,8 +7,8 @@ import { STColumn, STData } from './st.interfaces';
 
 @Directive({ selector: '[st-widget-host]' })
 export class STWidgetHostDirective implements OnInit {
-  @Input() record: STData;
-  @Input() column: STColumn;
+  @Input() record!: STData;
+  @Input() column!: STColumn;
 
   constructor(private stWidgetRegistry: STWidgetRegistry, private viewContainerRef: ViewContainerRef) {}
 

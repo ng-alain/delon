@@ -25,18 +25,18 @@ export class G2CardComponent implements OnChanges {
 
   /** 是否显示边框 */
   @Input() @InputBoolean() bordered = false;
-  @Input() avatar: string | TemplateRef<void>;
-  @Input() title: string | TemplateRef<void>;
-  @Input() action: string | TemplateRef<void>;
+  @Input() avatar?: string | TemplateRef<void> | null;
+  @Input() title?: string | TemplateRef<void> | null;
+  @Input() action?: string | TemplateRef<void> | null;
   @Input() total = '';
   _height = 'auto';
-  _orgHeight: number | string;
+  _orgHeight!: number | string;
   @Input()
   set contentHeight(value: number | string) {
     this._orgHeight = value;
     this._height = typeof value === 'number' ? (this._height = `${value}px`) : value;
   }
-  @Input() footer: string | TemplateRef<void>;
+  @Input() footer?: string | TemplateRef<void> | null;
   /** 是否显示Loading */
   @Input() @InputBoolean() loading = false;
 

@@ -51,7 +51,7 @@ import { STColumn, STData } from '@delon/abc/st';
   `,
 })
 export class DemoComponent {
-  searchValue: string;
+  searchValue?: string;
   users: STData[] = Array(10)
     .fill({})
     .map((_, idx) => {

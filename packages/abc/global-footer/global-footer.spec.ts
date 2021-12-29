@@ -15,7 +15,7 @@ class MockWindow {
   open(): void {}
 }
 class MockLocation {
-  private url: string;
+  private url!: string;
   get href(): string {
     return this.url;
   }

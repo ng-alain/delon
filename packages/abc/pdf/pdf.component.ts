@@ -63,7 +63,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _pdf: NzSafeAny;
   private loadingTask: NzSafeAny;
   private _src: NzSafeAny;
-  private lastSrc: string;
+  private lastSrc?: string;
   private _pi = 1;
   private _total = 0;
   private _showAll = true;
@@ -121,7 +121,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
   @Input() @InputBoolean() autoReSize = true;
   @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
-  @Input() @InputNumber() delay: number;
+  @Input() @InputNumber() delay?: number;
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
 
   get loading(): boolean {

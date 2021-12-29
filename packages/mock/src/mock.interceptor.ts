@@ -72,7 +72,7 @@ export class MockInterceptor implements HttpInterceptor {
 
         try {
           res = rule!.callback.call(this, mockRequest);
-        } catch (e) {
+        } catch (e: NzSafeAny) {
           res = new HttpErrorResponse({
             url: req.url,
             headers: req.headers,
@@ -104,7 +104,7 @@ export class MockInterceptor implements HttpInterceptor {
       console.log(`%c👽${req.method}->${req.urlWithParams}->response`, 'background:#000;color:#bada55', res);
     }
 
-    const res$ = res instanceof HttpErrorResponse ? throwError(res) : of(res);
+    const res$ = res instanceof HttpErrorResponse ? throwError(() => res) : of(res);
 
     if (config.executeOtherInterceptors) {
       const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);

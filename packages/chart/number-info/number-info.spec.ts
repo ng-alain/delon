@@ -58,7 +58,7 @@ describe('abc: number-info', () => {
 
   describe('#total', () => {
     it('with string', () => {
-      expect(context.total).toBe(context.comp.total);
+      expect(context.total).toBe(context.comp.total!);
     });
     it('with template', () => {
       context.total = context.totalTpl;
@@ -113,11 +113,11 @@ describe('abc: number-info', () => {
   `
 })
 class TestComponent {
-  @ViewChild('ni', { static: true }) comp: NumberInfoComponent;
-  @ViewChild('titleTpl', { static: true }) titleTpl: TemplateRef<void>;
-  @ViewChild('subTitleTpl', { static: true }) subTitleTpl: TemplateRef<void>;
-  @ViewChild('totalTpl', { static: true }) totalTpl: TemplateRef<void>;
-  @ViewChild('subTotalTpl', { static: true }) subTotalTpl: TemplateRef<void>;
+  @ViewChild('ni', { static: true }) comp!: NumberInfoComponent;
+  @ViewChild('titleTpl', { static: true }) titleTpl!: TemplateRef<void>;
+  @ViewChild('subTitleTpl', { static: true }) subTitleTpl!: TemplateRef<void>;
+  @ViewChild('totalTpl', { static: true }) totalTpl!: TemplateRef<void>;
+  @ViewChild('subTotalTpl', { static: true }) subTotalTpl!: TemplateRef<void>;
   title: string | TemplateRef<void> = 'title';
   subTitle: string | TemplateRef<void> = 'subTitle';
   total: string | number | TemplateRef<void> = 'total';

@@ -9,8 +9,8 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
   encapsulation: ViewEncapsulation.None
 })
 export class AvatarListItemComponent {
-  @Input() src: string;
-  @Input() text: string;
-  @Input() icon: string;
-  @Input() tips: string;
+  @Input() src?: string;
+  @Input() text?: string;
+  @Input() icon?: string;
+  @Input() tips?: string;
 }

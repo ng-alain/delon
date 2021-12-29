@@ -44,6 +44,7 @@ import { SEErrorRefresh, SELayout } from './se.types';
   encapsulation: ViewEncapsulation.None
 })
 export class SEContainerComponent {
+  static ngAcceptInputType_gutter: NumberInput;
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
@@ -53,20 +54,20 @@ export class SEContainerComponent {
   static ngAcceptInputType_noColon: BooleanInput;
 
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
-  @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
-  @Input() @InputNumber(null) col: REP_TYPE;
-  @Input() @InputNumber(null) labelWidth: number;
+  @Input('se-container') @InputNumber(null) colInCon?: REP_TYPE;
+  @Input() @InputNumber(null) col!: REP_TYPE;
+  @Input() @InputNumber(null) labelWidth!: number;
   @Input() @InputBoolean() noColon = false;
   @Input() title?: string | TemplateRef<void> | null;
 
   @Input()
-  get gutter(): number | string {
+  get gutter(): number {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: number | string) {
+  set gutter(value: number) {
     this._gutter = toNumber(value);
   }
-  private _gutter: number;
+  private _gutter!: number;
 
   @Input()
   get nzLayout(): SELayout {
@@ -78,11 +79,11 @@ export class SEContainerComponent {
       this.size = 'compact';
     }
   }
-  private _nzLayout: SELayout;
+  private _nzLayout!: SELayout;
 
-  @Input() size: 'default' | 'compact';
-  @Input() @InputBoolean() firstVisual: boolean;
-  @Input() @InputBoolean() ingoreDirty: boolean;
+  @Input() size!: 'default' | 'compact';
+  @Input() @InputBoolean() firstVisual!: boolean;
+  @Input() @InputBoolean() ingoreDirty!: boolean;
   @Input() @InputBoolean() line = false;
   @Input()
   set errors(val: SEErrorRefresh[]) {

@@ -61,9 +61,9 @@ export class DemoComponent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormValidatorComponent implements OnInit, OnDestroy {
-  @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
-  @ViewChild('formCodeEditor') private formCodeEditor: NuMonacoEditorComponent;
-  @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
+  @ViewChild('schemaEditor') private schemaEditor!: NuMonacoEditorComponent;
+  @ViewChild('formCodeEditor') private formCodeEditor!: NuMonacoEditorComponent;
+  @ViewChild('uiEditor') private uiEditor!: NuMonacoEditorComponent;
 
   private destroy$ = new Subject<void>();
   files: Array<{ name: string; title: string; cache?: string }> = [
@@ -76,12 +76,12 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
   layout: SFLayout = 'horizontal';
   name: string;
   title: string;
-  schema: string;
-  schemaData: SFSchema;
-  formCode: string;
-  formData: {};
-  uiCode: string;
-  uiSchema: {};
+  schema!: string;
+  schemaData!: SFSchema;
+  formCode!: string;
+  formData!: {};
+  uiCode!: string;
+  uiSchema!: {};
   expand = true;
   editorOptions = { language: 'json', theme: 'vs' };
 

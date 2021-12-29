@@ -46,14 +46,14 @@ export class ZipService {
       this.init().then(() => {
         // from url
         if (typeof fileOrUrl === 'string') {
-          this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
-            (res: ArrayBuffer) => {
+          this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe({
+            next: (res: ArrayBuffer) => {
               JSZip.loadAsync(res, options).then((ret: NzSafeAny) => resolveCallback(ret));
             },
-            (err: NzSafeAny) => {
+            error: (err: NzSafeAny) => {
               reject(err);
             }
-          );
+          });
           return;
         }
         // from file
@@ -86,15 +86,15 @@ export class ZipService {
   pushUrl(zip: NzSafeAny, path: string, url: string): Promise<void> {
     this.check(zip);
     return new Promise<void>((resolve, reject) => {
-      this.http.request('GET', url, { responseType: 'arraybuffer' }).subscribe(
-        (res: ArrayBuffer) => {
+      this.http.request('GET', url, { responseType: 'arraybuffer' }).subscribe({
+        next: (res: ArrayBuffer) => {
           zip.file(path, res);
           resolve();
         },
-        (error: NzSafeAny) => {
+        error: (error: NzSafeAny) => {
           reject({ url, error });
         }
-      );
+      });
     });
   }
 

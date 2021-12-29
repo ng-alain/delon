@@ -6,7 +6,7 @@ import { LazyService } from '@delon/util/other';
 
 @Injectable({ providedIn: 'root' })
 export class ChartEChartsService implements OnDestroy {
-  private _cog: AlainChartConfig;
+  private _cog!: AlainChartConfig;
   private loading = false;
   private loaded = false;
   private notify$ = new Subject<void>();

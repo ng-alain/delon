@@ -17,7 +17,7 @@ import { SFMentionWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
-  @ViewChild('mentions', { static: true }) private mentionChild: NzMentionComponent;
+  @ViewChild('mentions', { static: true }) private mentionChild!: NzMentionComponent;
   data: SFSchemaEnum[] = [];
   i: NzSafeAny;
   loading = false;

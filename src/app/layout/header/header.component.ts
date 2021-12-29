@@ -26,7 +26,7 @@ const pkg = require('../../../../package.json');
 })
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
-  isMobile: boolean;
+  isMobile!: boolean;
   oldVersionList = [`11.x`, `10.x`, `9.x`, `8.x`, `1.x`];
   currentVersion = pkg.version;
   delonLibs: Array<{ name: string; default?: string }> = [

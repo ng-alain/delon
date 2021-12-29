@@ -323,16 +323,16 @@ describe('theme: http.decorator', () => {
       tokens.ACLService = {
         can: () => false
       };
-      srv.ACL_User().subscribe(
-        () => {
+      srv.ACL_User().subscribe({
+        next: () => {
           expect(true).toBe(false);
           done();
         },
-        err => {
+        error: err => {
           expect(err.status).toBe(401);
           done();
         }
-      );
+      });
     });
   });
 });

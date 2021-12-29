@@ -13,8 +13,8 @@ import {
 
 @Injectable()
 export class ReuseTabContextService {
-  private ref: OverlayRef | null;
-  i18n: ReuseContextI18n;
+  private ref: OverlayRef | null = null;
+  i18n?: ReuseContextI18n;
 
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
   close: Subject<ReuseContextCloseEvent> = new Subject<ReuseContextCloseEvent>();
@@ -44,7 +44,7 @@ export class ReuseTabContextService {
     });
     const comp = this.ref.attach(new ComponentPortal(ReuseTabContextMenuComponent));
     const instance = comp.instance;
-    instance.i18n = this.i18n;
+    instance.i18n = this.i18n!;
     instance.item = { ...item };
     instance.customContextMenu = customContextMenu as ReuseCustomContextMenu[];
     instance.event = event;

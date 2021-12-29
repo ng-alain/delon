@@ -12,7 +12,7 @@ export class ReuseTabContextComponent implements OnDestroy {
   private sub$: Subscription = new Subscription();
 
   @Input()
-  set i18n(value: ReuseContextI18n) {
+  set i18n(value: ReuseContextI18n | undefined) {
     this.srv.i18n = value;
   }
 

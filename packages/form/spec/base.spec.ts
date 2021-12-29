@@ -364,7 +364,7 @@ export class SFPage {
   `
 })
 export class TestFormComponent {
-  @ViewChild('comp', { static: true }) comp: SFComponent;
+  @ViewChild('comp', { static: true }) comp!: SFComponent;
   mode: 'default' | 'search' | 'edit' = 'default';
   layout = 'horizontal';
   schema: SFSchema | null = SCHEMA.user;
@@ -372,7 +372,7 @@ export class TestFormComponent {
   formData: NzSafeAny;
   button: SFButton | 'none' | null | undefined = {};
   liveValidate = true;
-  autocomplete: 'on' | 'off';
+  autocomplete?: 'on' | 'off';
   firstVisual = true;
   onlyVisual = false;
   disabled = false;

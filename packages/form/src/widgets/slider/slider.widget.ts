@@ -12,11 +12,11 @@ import { SFSliderWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implements OnInit {
-  min: number;
-  max: number;
-  step: number;
-  marks: NzMarks | null;
-  included: boolean;
+  min!: number;
+  max!: number;
+  step!: number;
+  marks: NzMarks | null = null;
+  included!: boolean;
 
   ngOnInit(): void {
     const { minimum, maximum, multipleOf } = this.schema;

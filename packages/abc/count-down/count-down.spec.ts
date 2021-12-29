@@ -59,7 +59,7 @@ describe('abc: count-down', () => {
   `
 })
 class TestComponent {
-  config: CountdownConfig;
-  target: number | Date;
+  config?: CountdownConfig;
+  target?: number | Date;
   handleEvent(): void {}
 }

@@ -19,7 +19,7 @@ import { I18NService, MetaService } from '@core';
   `
 })
 export class EditButtonComponent {
-  _full: string;
+  _full!: string;
 
   @Input()
   set item(data: { urls: string }) {

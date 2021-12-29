@@ -98,7 +98,7 @@ class TestComponent implements OnInit {
   freq = 20;
   offsetTop = 65 + 16;
   @ViewChild('ec', { static: true })
-  comp: ErrorCollectComponent;
+  comp!: ErrorCollectComponent;
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({

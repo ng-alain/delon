@@ -19,7 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DemoComponent {
   key = 'test-key';
-  value: string;
+  value?: string;
 
   constructor(private cookieSrv: CookieService, private msg: NzMessageService) {
     this.get();

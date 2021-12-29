@@ -13,7 +13,7 @@ import { SFStringWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implements OnInit {
-  type: string;
+  type!: string;
   private change$: BehaviorSubject<string> | null = null;
 
   ngOnInit(): void {

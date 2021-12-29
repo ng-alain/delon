@@ -58,10 +58,10 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
 
   private el: HTMLElement;
   private unsubscribe$ = new Subject<void>();
-  @ContentChild(NgModel, { static: true }) private readonly ngModel: NgModel;
+  @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
   @ContentChild(FormControlName, { static: true })
-  private readonly formControlName: FormControlName;
-  @ViewChild('contentElement', { static: true }) private readonly contentElement: ElementRef;
+  private readonly formControlName?: FormControlName;
+  @ViewChild('contentElement', { static: true }) private readonly contentElement!: ElementRef;
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
@@ -70,25 +70,25 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   invalid = false;
   _labelWidth: number | null = null;
   _noColon: boolean | null = null;
-  _error: string | TemplateRef<void>;
+  _error?: string | TemplateRef<void>;
 
   // #region fields
 
   @Input() optional?: string | TemplateRef<void> | null = null;
   @Input() optionalHelp?: string | TemplateRef<void> | null = null;
-  @Input() optionalHelpColor: string;
+  @Input() optionalHelpColor?: string;
   @Input()
   set error(val: SEErrorType) {
     this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;
   }
   @Input() extra?: string | TemplateRef<void> | null;
   @Input() label?: string | TemplateRef<void> | null;
-  @Input() @InputNumber(null) col: number;
+  @Input() @InputNumber(null) col?: number | null;
   @Input() @InputBoolean() required = false;
   @Input() controlClass?: string | null = '';
-  @Input() @InputBoolean(null) line: boolean;
-  @Input() @InputNumber(null) labelWidth: number;
-  @Input() @InputBoolean(null) noColon: boolean;
+  @Input() @InputBoolean(null) line?: boolean | null;
+  @Input() @InputNumber(null) labelWidth?: number | null;
+  @Input() @InputBoolean(null) noColon?: boolean | null;
   @Input() @InputBoolean() hideLabel = false;
 
   @Input()
@@ -114,7 +114,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     return this.parent.size === 'compact';
   }
 
-  private get ngControl(): NgModel | FormControlName {
+  private get ngControl(): NgModel | FormControlName | null | undefined {
     return this.ngModel || this.formControlName;
   }
 
@@ -136,7 +136,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
       )
       .subscribe(item => {
         this.error = item.error;
-        this.updateStatus(this.ngControl.invalid!);
+        this.updateStatus(this.ngControl!.invalid!);
       });
   }
 
@@ -184,12 +184,12 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   private updateStatus(invalid: boolean): void {
-    if (this.ngControl.disabled || this.ngControl.isDisabled) {
+    if (this.ngControl?.disabled || this.ngControl?.isDisabled) {
       return;
     }
     this.invalid =
-      !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl.dirty ? false : invalid;
-    const errors = this.ngControl.errors;
+      !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
+    const errors = this.ngControl?.errors;
     if (errors != null && Object.keys(errors).length > 0) {
       const key = Object.keys(errors)[0] || '';
       const err = this.errorData[key];
@@ -225,7 +225,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.inited = true;
     if (this.onceFlag) {
       Promise.resolve().then(() => {
-        this.updateStatus(this.ngControl.invalid!);
+        this.updateStatus(this.ngControl?.invalid!);
         this.onceFlag = false;
       });
     }

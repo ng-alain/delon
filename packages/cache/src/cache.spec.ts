@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
@@ -364,7 +364,7 @@ describe('cache: service', () => {
     const request = jasmine.createSpy('request').and.callFake(() => of(returnValue));
     genModule({ request });
     expect(request).not.toHaveBeenCalled();
-    const res = await srv.get('/data/1', { mode: 'promise', type: 'm' }).toPromise();
+    const res = await firstValueFrom(srv.get('/data/1', { mode: 'promise', type: 'm' }));
     expect(request).toHaveBeenCalled();
     expect(res).toBe(returnValue);
   });

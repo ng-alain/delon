@@ -14,7 +14,7 @@ import { MetaService, MobileService } from '@core';
 })
 export class ContentComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  isMobile: boolean;
+  isMobile!: boolean;
   opened = false;
 
   constructor(public meta: MetaService, private mobileSrv: MobileService, private cdr: ChangeDetectorRef) {}

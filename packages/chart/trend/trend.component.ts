@@ -24,7 +24,7 @@ export class TrendComponent {
   static ngAcceptInputType_reverseColor: BooleanInput;
 
   /** 上升下降标识 */
-  @Input() flag: 'up' | 'down';
+  @Input() flag?: 'up' | 'down';
   /** 是否彩色标记 */
   @Input() @InputBoolean() colorful = true;
   /** 颜色反转 */

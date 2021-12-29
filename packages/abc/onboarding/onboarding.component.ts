@@ -44,9 +44,9 @@ interface OnboardingLightData {
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {
   private time: NzSafeAny;
-  private prevSelectorEl: HTMLElement;
-  config: OnboardingConfig;
-  item: OnboardingItem;
+  private prevSelectorEl?: HTMLElement;
+  config!: OnboardingConfig;
+  item!: OnboardingItem;
   active = 0;
   max = 0;
   readonly op = new EventEmitter<OnboardingOpType>();

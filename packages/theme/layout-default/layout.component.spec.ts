@@ -224,8 +224,8 @@ class TestComponent {
   @ViewChild('navTpl', { static: true }) navTpl!: TemplateRef<void>;
   @ViewChild('contentTpl', { static: true }) contentTpl!: TemplateRef<void>;
   options: LayoutDefaultOptions = {};
-  asideUser: TemplateRef<void>;
-  nav: TemplateRef<void>;
-  content: TemplateRef<void>;
+  asideUser?: TemplateRef<void> | null;
+  nav?: TemplateRef<void> | null;
+  content?: TemplateRef<void> | null;
   customError?: string | null;
 }

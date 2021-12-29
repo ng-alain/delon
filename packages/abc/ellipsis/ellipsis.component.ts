@@ -33,19 +33,19 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_fullWidthRecognition: BooleanInput;
 
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
-  @ViewChild('orgEl', { static: false }) private orgEl: ElementRef;
-  @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl: ElementRef;
-  @ViewChild('shadowTextEl', { static: false }) private shadowTextEl: ElementRef;
+  @ViewChild('orgEl', { static: false }) private orgEl!: ElementRef;
+  @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl!: ElementRef;
+  @ViewChild('shadowTextEl', { static: false }) private shadowTextEl!: ElementRef;
   private inited = false;
-  orgHtml: SafeHtml;
+  orgHtml!: SafeHtml;
   type = 'default';
   cls = {};
   text = '';
   targetCount = 0;
 
   @Input() @InputBoolean() tooltip = false;
-  @Input() @InputNumber(null) length: number;
-  @Input() @InputNumber(null) lines: number;
+  @Input() @InputNumber(null) length?: number;
+  @Input() @InputNumber(null) lines?: number;
   @Input() @InputBoolean() fullWidthRecognition = false;
   @Input() tail = '...';
 
@@ -153,15 +153,15 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       }
       const lengthText = el.textContent!;
       const textLength = fullWidthRecognition ? this.getStrFullLength(lengthText) : lengthText.length;
-      if (textLength <= length || length < 0) {
+      if (textLength <= length! || length! < 0) {
         this.text = lengthText;
       } else {
         let displayText: string;
-        if (length - tail.length <= 0) {
+        if (length! - tail.length <= 0) {
           displayText = '';
         } else {
           displayText = fullWidthRecognition
-            ? this.cutStrByFullLength(lengthText, length)
+            ? this.cutStrByFullLength(lengthText, length!)
             : lengthText.slice(0, length);
         }
         this.text = displayText + tail;
@@ -172,7 +172,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
       const lineText = orgNode.innerText || orgNode.textContent!;
       const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
-      const targetHeight = lines * lineHeight;
+      const targetHeight = lines! * lineHeight;
       this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
 
       if (orgNode.offsetHeight <= targetHeight) {

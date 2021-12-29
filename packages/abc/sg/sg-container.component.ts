@@ -23,9 +23,9 @@ export class SGContainerComponent {
   static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_col: NumberInput;
 
-  @Input() @InputNumber() gutter: number;
-  @Input('sg-container') @InputNumber(null) colInCon: REP_TYPE;
-  @Input() @InputNumber(null) col: REP_TYPE;
+  @Input() @InputNumber() gutter!: number;
+  @Input('sg-container') @InputNumber(null) colInCon?: REP_TYPE;
+  @Input() @InputNumber(null) col!: REP_TYPE;
 
   get marginValue(): number {
     return -(this.gutter / 2);

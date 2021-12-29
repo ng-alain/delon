@@ -31,7 +31,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   `,
 })
 export class DemoComponent {
-  @ViewChild('pie', { static: false }) readonly pie: G2PieComponent;
+  @ViewChild('pie', { static: false }) readonly pie!: G2PieComponent;
   salesPieData: G2PieData[] = [];
   total = '';
 

@@ -33,7 +33,7 @@ export class G2CustomComponent extends G2BaseComponent {
 
   // #region fields
 
-  @Input() @InputNumber() height: number;
+  @Input() @InputNumber() height?: number;
   @Input() @InputNumber() resizeTime = 0;
   @Output() readonly render = new EventEmitter<ElementRef>();
   @Output() readonly resize = new EventEmitter<ElementRef>();

@@ -101,7 +101,7 @@ describe('chart: chart-echarts', () => {
   `
 })
 class TestComponent {
-  @ViewChild('cmp') readonly cmp: ChartEChartsComponent;
+  @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;
   width: NumberInput = 600;
   height: NumberInput = 400;
   theme?: string | Record<string, unknown> | null = null;

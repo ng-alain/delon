@@ -110,13 +110,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
   private destroy$ = new Subject<void>();
-  private data$: Subscription;
+  private data$?: Subscription;
   private totalTpl = ``;
-  private cog: AlainSTConfig;
-  private _req: STReq;
-  private _res: STRes;
-  private _page: STPage;
-  private _widthMode: STWidthMode;
+  private cog!: AlainSTConfig;
+  private _req!: STReq;
+  private _res!: STRes;
+  private _page!: STPage;
+  private _widthMode!: STWidthMode;
   private customWidthConfig: boolean = false;
   _widthConfig: string[] = [];
   locale: LocaleData = {};
@@ -130,7 +130,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
   contextmenuList: STContextmenuItem[] = [];
-  @ViewChild('table') readonly orgTable: NzTableComponent<STData>;
+  @ViewChild('table') readonly orgTable!: NzTableComponent<STData>;
   @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
@@ -160,7 +160,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._page = { ...this.cog.page, ...value };
     this.updateTotalTpl();
   }
-  @Input() data: string | STData[] | Observable<STData[]>;
+  @Input() data!: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
   @Input() contextmenu?: STContextmenuFn;
   @Input() @InputNumber() ps = 10;
@@ -168,11 +168,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputNumber() total = 0;
   @Input() loading: boolean | null = null;
   @Input() @InputNumber() loadingDelay = 0;
-  @Input() loadingIndicator: TemplateRef<void>;
+  @Input() loadingIndicator: TemplateRef<void> | null = null;
   @Input() @InputBoolean() bordered = false;
-  @Input() size: 'small' | 'middle' | 'default';
-  @Input() scroll: { y?: string; x?: string };
-  @Input() singleSort: STSingleSort;
+  @Input() size!: 'small' | 'middle' | 'default';
+  @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
+  @Input() singleSort?: STSingleSort;
   private _multiSort?: STMultiSort;
   @Input()
   get multiSort(): NzSafeAny {
@@ -190,7 +190,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       ...(typeof value === 'object' ? value : {})
     };
   }
-  @Input() rowClassName: STRowClassName;
+  @Input() rowClassName?: STRowClassName;
   @Input() clickRowClassName?: STClickRowClassName | null;
   @Input()
   set widthMode(value: STWidthMode) {
@@ -204,7 +204,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._widthConfig = val;
     this.customWidthConfig = val && val.length > 0;
   }
-  private _resizable: STResizable;
+  private _resizable?: STResizable;
   @Input()
   set resizable(val: STResizable | boolean | string) {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
@@ -216,10 +216,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() body?: TemplateRef<STStatisticalResults> | null;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
-  @Input() expand: TemplateRef<{ $implicit: NzSafeAny; column: STColumn }>;
+  @Input() expand: TemplateRef<{ $implicit: NzSafeAny; column: STColumn }> | null = null;
   @Input() noResult?: string | TemplateRef<void> | null;
   @Input() @InputBoolean() responsive: boolean = true;
-  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
+  @Input() @InputBoolean() responsiveHideHeaderFooter?: boolean;
   @Output() readonly error = new EventEmitter<STError>();
   @Output() readonly change = new EventEmitter<STChange>();
   @Input() @InputBoolean() virtualScroll = false;
@@ -891,11 +891,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   encapsulation: ViewEncapsulation.None
 })
 export class STTdComponent {
-  @Input() c: _STColumn;
-  @Input() cIdx: number;
-  @Input() data: STData[];
-  @Input() i: STData;
-  @Input() index: number;
+  @Input() c!: _STColumn;
+  @Input() cIdx!: number;
+  @Input() data!: STData[];
+  @Input() i!: STData;
+  @Input() index!: number;
   @Output() readonly n = new EventEmitter<_STTdNotify>();
 
   private get routerState(): { pi: number; ps: number; total: number } {

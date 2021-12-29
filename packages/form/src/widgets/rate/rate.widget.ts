@@ -11,10 +11,10 @@ import { SFRateWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements OnInit {
-  count: number;
-  allowHalf: boolean;
-  allowClear: boolean;
-  autoFocus: boolean;
+  count!: number;
+  allowHalf!: boolean;
+  allowClear!: boolean;
+  autoFocus!: boolean;
   hasText = false;
 
   get text(): string {

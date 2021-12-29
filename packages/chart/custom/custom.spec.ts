@@ -44,7 +44,7 @@ describe('chart: custom', () => {
   template: ` <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom> `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2CustomComponent;
+  @ViewChild('comp', { static: true }) comp!: G2CustomComponent;
   resizeTime = 0;
   render(): void {}
   resize(): void {}

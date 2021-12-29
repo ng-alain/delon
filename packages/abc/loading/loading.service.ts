@@ -12,7 +12,7 @@ import { LoadingShowOptions } from './loading.types';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService implements OnDestroy {
-  private _overlayRef: OverlayRef;
+  private _overlayRef?: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
   private opt: LoadingShowOptions | null = null;
   private cog: AlainLoadingConfig;

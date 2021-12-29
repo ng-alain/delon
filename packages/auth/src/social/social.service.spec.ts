@@ -28,7 +28,7 @@ class MockDocument {
 }
 
 class MockLocation {
-  private url: string;
+  private url!: string;
 
   get href(): string {
     return this.url;

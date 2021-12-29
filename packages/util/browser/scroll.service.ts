@@ -31,7 +31,7 @@ export class ScrollService {
     if (element && element !== win) {
       return [(element as Element).scrollLeft, (element as Element).scrollTop];
     } else {
-      return [win.pageXOffset, win.pageYOffset];
+      return [win.scrollX, win.scrollY];
     }
   }
 
@@ -67,8 +67,8 @@ export class ScrollService {
     if (win && win.scrollBy) {
       win.scrollBy(0, element!.getBoundingClientRect().top - topOffset);
 
-      if (win.pageYOffset < 20) {
-        win.scrollBy(0, -win.pageYOffset);
+      if (win.scrollY < 20) {
+        win.scrollBy(0, -win.scrollY);
       }
     }
   }

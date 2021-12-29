@@ -23,12 +23,12 @@ export class G2GaugeComponent extends G2BaseComponent {
 
   // #region fields
 
-  @Input() title: string;
-  @Input() @InputNumber() height: number;
+  @Input() title?: string;
+  @Input() @InputNumber() height?: number;
   @Input() color = '#2f9cff';
-  @Input() bgColor: string; // = '#f0f2f5';
-  @Input() format: (text: string, item: NzSafeAny, index: number) => string;
-  @Input() @InputNumber() percent: number;
+  @Input() bgColor?: string; // = '#f0f2f5';
+  @Input() format?: (text: string, item: NzSafeAny, index: number) => string;
+  @Input() @InputNumber() percent?: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
 
   // #endregion
@@ -127,7 +127,7 @@ export class G2GaugeComponent extends G2BaseComponent {
     });
     _chart.annotation().arc({
       start: [0, 0.95],
-      end: [data[0].value, 0.95],
+      end: [data[0].value!, 0.95],
       style: {
         stroke: color,
         lineWidth: 12,

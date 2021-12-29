@@ -13,7 +13,7 @@ import { SFTagWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
-  data: SFSchemaEnum[];
+  data: SFSchemaEnum[] = [];
 
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {

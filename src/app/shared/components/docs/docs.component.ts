@@ -22,12 +22,12 @@ declare var hljs: any;
 })
 export class DocsComponent implements OnInit, OnDestroy {
   private i18NChange$: Subscription;
-  demoStr: string;
-  demoContent: SafeHtml;
+  demoStr!: string;
+  demoContent!: SafeHtml;
   data: any = {};
   isBrowser = true;
 
-  @Input() codes: any[];
+  @Input() codes!: any[];
   @Input() item: any;
 
   constructor(

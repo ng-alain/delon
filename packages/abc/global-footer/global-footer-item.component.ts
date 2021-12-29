@@ -13,8 +13,8 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 export class GlobalFooterItemComponent {
   static ngAcceptInputType_blankTarget: BooleanInput;
 
-  @ViewChild('host', { static: true }) host: TemplateRef<void>;
+  @ViewChild('host', { static: true }) host!: TemplateRef<void>;
 
-  @Input() href: string;
-  @Input() @InputBoolean() blankTarget: boolean;
+  @Input() href?: string;
+  @Input() @InputBoolean() blankTarget?: boolean;
 }

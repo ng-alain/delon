@@ -20,9 +20,9 @@ import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdo
   encapsulation: ViewEncapsulation.None
 })
 export class CountDownComponent {
-  @ViewChild('cd', { static: false }) readonly instance: CountdownComponent;
+  @ViewChild('cd', { static: false }) readonly instance!: CountdownComponent;
 
-  @Input() config: CountdownConfig;
+  @Input() config?: CountdownConfig;
 
   /**
    * 目标时间

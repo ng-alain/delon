@@ -35,7 +35,7 @@ export class G2SingleBarComponent extends G2BaseComponent {
   @Input() @InputNumber() max = 100;
   @Input() @InputNumber() value = 0;
   @Input() @InputBoolean() line = false;
-  @Input() format: (value: number, item: NzSafeAny, index: number) => string;
+  @Input() format?: (value: number, item: NzSafeAny, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() textStyle: { [key: string]: NzSafeAny } = { fontSize: 12, color: '#595959' };
 

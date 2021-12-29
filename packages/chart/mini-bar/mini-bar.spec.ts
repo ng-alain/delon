@@ -60,7 +60,7 @@ describe('chart: mini-bar', () => {
   `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2MiniBarComponent;
+  @ViewChild('comp', { static: true }) comp!: G2MiniBarComponent;
   data: NzSafeAny[] = [
     { x: 1, y: 10 },
     { x: 2, y: 20 }

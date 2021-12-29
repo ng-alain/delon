@@ -63,7 +63,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
-  @Input() options: LayoutDefaultOptions;
+  @Input() options!: LayoutDefaultOptions;
 
   left: LayoutDefaultHeaderItem[] = [];
   middle: LayoutDefaultHeaderItem[] = [];

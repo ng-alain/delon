@@ -15,7 +15,7 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
   encapsulation: ViewEncapsulation.None
 })
 export class LoadingDefaultComponent {
-  options: LoadingShowOptions;
+  options!: LoadingShowOptions;
   dir: Direction = 'ltr';
 
   get icon(): LoadingIcon {

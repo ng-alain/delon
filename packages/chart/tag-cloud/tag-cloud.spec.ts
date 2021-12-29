@@ -43,7 +43,7 @@ describe('chart: tag-cloud', () => {
   template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data" [delay]="delay"></g2-tag-cloud> `
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp: G2TagCloudComponent;
+  @ViewChild('comp', { static: true }) comp!: G2TagCloudComponent;
   data: G2TagCloudData[] = [
     { name: 'China1', value: 1 },
     { name: 'China2', value: 2 },

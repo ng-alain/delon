@@ -17,7 +17,7 @@ import { InputBoolean } from '@delon/util/decorator';
 })
 export class IconComponent {
   @Input()
-  type: string;
+  type!: string;
 
   @Input()
   theme: 'fill' | 'outline' | 'twotone' = 'outline';
@@ -27,8 +27,8 @@ export class IconComponent {
   spin = false;
 
   @Input()
-  twoToneColor: string;
+  twoToneColor!: string;
 
   @Input()
-  iconfont: string;
+  iconfont!: string;
 }

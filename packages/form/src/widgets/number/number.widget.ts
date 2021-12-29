@@ -10,9 +10,9 @@ import { SFNumberWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
-  min: number;
-  max: number;
-  step: number;
+  min!: number;
+  max!: number;
+  step!: number;
   formatter: (value: number) => string | number = value => value;
   parser: (value: string) => string = value => value;
 

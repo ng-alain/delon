@@ -37,9 +37,9 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_type: ExceptionType | string;
 
   private destroy$ = new Subject<void>();
-  @ViewChild('conTpl', { static: true }) private conTpl: ElementRef;
+  @ViewChild('conTpl', { static: true }) private conTpl!: ElementRef;
 
-  _type: ExceptionType;
+  _type!: ExceptionType;
   locale: LocaleData = {};
   hasCon = false;
   dir: Direction = 'ltr';

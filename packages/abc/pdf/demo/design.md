@@ -111,7 +111,7 @@ import { Subject } from 'rxjs';
   `,
 })
 export class DemoComponent implements OnInit {
-  @ViewChild('pdf') private comp: PdfComponent;
+  @ViewChild('pdf') private comp!: PdfComponent;
   src = `https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf`;
   pi = 1;
   total = 0;

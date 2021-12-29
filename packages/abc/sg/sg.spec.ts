@@ -134,13 +134,13 @@ describe('abc: grid', () => {
 })
 class TestComponent {
   @ViewChild('sgComp', { static: true })
-  sgComp: SGContainerComponent;
+  sgComp!: SGContainerComponent;
   @ViewChild('viewComp', { static: true })
-  viewComp: SGComponent;
+  viewComp!: SGComponent;
 
   parent_gutter: number | null = 32;
-  parent_colInCon: number | null;
+  parent_colInCon: number | null = null;
   parent_col: number | null = 3;
 
-  col: number | null;
+  col: number | null = null;
 }

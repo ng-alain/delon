@@ -20,10 +20,10 @@ import { SFAutoCompleteWidgetSchema } from './schema';
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
   i: NzSafeAny = {};
-  list: Observable<SFSchemaEnum[]>;
+  list!: Observable<SFSchemaEnum[]>;
   typing: string = '';
-  @ViewChild(NgModel, { static: false }) private ngModel: NgModel;
-  private filterOption: (input: string, option: SFSchemaEnum) => boolean;
+  @ViewChild(NgModel, { static: false }) private ngModel!: NgModel;
+  private filterOption!: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
   private fixData: SFSchemaEnum[] = [];
 

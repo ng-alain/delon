@@ -18,12 +18,12 @@ import { SFDateWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
-  private startFormat: string;
-  private endFormat: string;
+  private startFormat!: string;
+  private endFormat?: string;
   private flatRange = false;
-  mode: string;
+  mode!: string;
   displayValue: Date | Date[] | null = null;
-  displayFormat: string;
+  displayFormat!: string;
   i!: { allowClear: boolean; showToday: boolean };
 
   ngOnInit(): void {

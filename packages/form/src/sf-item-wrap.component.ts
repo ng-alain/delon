@@ -14,11 +14,11 @@ import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 })
 export class SFItemWrapComponent {
   _showTitle: boolean = false;
-  @Input() id: string;
-  @Input() schema: SFSchema;
-  @Input() ui: SFUISchemaItem;
-  @Input() showError: boolean;
-  @Input() error: string;
+  @Input() id?: string;
+  @Input() schema!: SFSchema;
+  @Input() ui!: SFUISchemaItem;
+  @Input() showError?: boolean;
+  @Input() error?: string;
   @Input()
   set showTitle(val: boolean | string | null | undefined) {
     this._showTitle = !!val;

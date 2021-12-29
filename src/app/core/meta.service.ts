@@ -33,9 +33,9 @@ const FULLMETAS = [
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
-  private _platMenus: any[];
-  private _menus: any[] | null;
-  private _type: string;
+  private _platMenus!: any[];
+  private _menus: any[] | null = null;
+  private _type!: string;
   private _data: any;
   private _isPages = false;
   next: any;

@@ -14,7 +14,7 @@ import { SFRadioWidgetSchema } from './schema';
 })
 export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   data: SFSchemaEnum[] = [];
-  styleType: boolean;
+  styleType!: boolean;
 
   reset(value: SFValue): void {
     this.styleType = (this.ui.styleType || 'default') === 'default';
