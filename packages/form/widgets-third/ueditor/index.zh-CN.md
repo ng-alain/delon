@@ -15,7 +15,7 @@ Ueditor富文本。
 
 由于Tinymce编辑器依赖第三方插件[ngx-ueditor](https://github.com/cipchk/ngx-ueditor)，所以使用时应首先安装依赖
 
-`npm install ngx-ueditor`
+`yarn add ngx-ueditor`
 
 **导入模块**
 

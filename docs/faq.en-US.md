@@ -58,7 +58,7 @@ bash delon.sh
 
 Two situations:
 
-- Using `cnpm` to install dependencies, you will not be able to find style files. This is because `cnpm` is in the form of a soft link path, which causes the `ng-zorro-antd` folder name to change, so it is recommended to use the `npm` install dependency package instead.
+- Using `cnpm` to install dependencies, you will not be able to find style files. This is because `cnpm` is in the form of a soft link path, which causes the `ng-zorro-antd` folder name to change, so it is recommended to use the `yarn` install dependency package instead.
 - The `ng-zorro-antd` version is too old to cause some components to fail to load into the appropriate style
 
 ### How to use Taobao source correctly?
@@ -67,8 +67,6 @@ The simplest is to use the [networkEnv](/cli/plugin#networkEnv) plugin.
 
 Or manually repair:
 
-**yarn**
-
 ```bash
 yarn config set registry https://registry.npmmirror.com
 yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
@@ -76,32 +74,6 @@ yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
 yarn config delete registry
 yarn config delete sass_binary_site
 ```
-
-**npm**
-
-```bash
-npm config set registry https://registry.npmmirror.com
-npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass
-# restore
-npm config delete registry
-npm config delete sass_binary_site
-```
-
-Angular Cli use `npm` to install dependencies by default, if you want change to `yarn`, you can set Angular Cli to use `yarn` globally by default:
-
-```bash
-ng config -g cli.packageManager yarn
-```
-
-### No such file or directory
-
-This question is difficult to explain, npm has a long building [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515), and finally gives a reluctant answer:
-
-1. Make sure to install the latest npm version: `npm i -g npm`
-2. Remove `node_modules` and `package-lock.json`
-3. `npm i`
-
-Finally, repeat the above steps if you still can't!
 
 ## Configuration
 

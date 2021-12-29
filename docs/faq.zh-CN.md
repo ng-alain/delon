@@ -58,7 +58,7 @@ bash delon.sh
 
 两种情况：
 
-- 使用 `cnpm` 安装依赖包，会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `npm` 安装依赖包。
+- 使用 `cnpm` 安装依赖包，会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `yarn` 安装依赖包，如果是网络因素，请参考下方的如何正确使用淘宝源。
 - `ng-zorro-antd` 版本过旧导致部分组件无法加载到相应样式
 
 ### 如何正确使用淘宝源？
@@ -67,8 +67,6 @@ bash delon.sh
 
 或手动修复：
 
-**yarn**
-
 ```bash
 yarn config set registry https://registry.npmmirror.com
 yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
@@ -76,32 +74,6 @@ yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
 yarn config delete registry
 yarn config delete sass_binary_site
 ```
-
-**npm**
-
-```bash
-npm config set registry https://registry.npmmirror.com
-npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass
-# 恢复
-npm config delete registry
-npm config delete sass_binary_site
-```
-
-Angular Cli 默认是使用 `npm` 来安装依赖，如果你习惯使用 `yarn` 来安装依赖，可以设置 Angular Cli 全局默认使用 `yarn`：
-
-```bash
-ng config -g cli.packageManager yarn
-```
-
-### no such file or directory
-
-这个问题很难解释，npm 有一个长楼 [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515)，并且最后给出一种勉强答案：
-
-1. 确保安装最新 npm 版本：`npm i -g npm`
-2. 删除 `node_modules` 和 `package-lock.json`
-3. `npm i`
-
-最后，依然不行就再重复以上步骤！
 
 ## 配置
 
