@@ -11,22 +11,21 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ## 环境搭建
 
-Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，如果习惯使用 [Yarn](https://yarnpkg.com/) 需要单独额外安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
+Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，但**推荐使用** [Yarn](https://yarnpkg.com/) 但你需要单独额外安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
 
 ```bash
 node -v # 查看 Node.js 当前版本
-npm -v  # 查看 Npm 当前版本
+yarn -v # 查看 Yarn 当前版本
 ```
 
-Npm 默认从国外源来下载包信息，鉴于国内环境因素，在开始下一步前先设定淘宝提供 Npm 源镜像：
+Yarn 默认从国外源来下载包信息，鉴于国内环境因素，在开始下一步前先设定淘宝提供镜像：
 
 ```bash
-# 设置淘宝源
-npm config set registry https://registry.npmmirror.com
-npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass
-# 恢复默认源
-npm config delete registry
-npm config delete sass_binary_site
+yarn config set registry https://registry.npmmirror.com
+yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
+# restore
+yarn config delete registry
+yarn config delete sass_binary_site
 ```
 
 > 也可以使用 [nrm](https://www.npmjs.com/package/nrm) 包，可以快速切换不同国内镜像源。
@@ -35,13 +34,10 @@ npm config delete sass_binary_site
 
 ### 全局 Angular Cli
 
-安装之前请先确保本地已经安装全局 Angular Cli（当前最高只支持 Angular 12），只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
+安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
 
 ```bash
-# Via yarn
-yarn global add @angular/cli@12
-# Or via npm
-# npm install -g @angular/cli@12
+yarn global add @angular/cli
 ```
 
 ### 创建NG-ALAIN项目
@@ -49,7 +45,7 @@ yarn global add @angular/cli@12
 NG-ALAIN 必须先创建一个全新的 Angular 项目，可以通过终端窗口中运行：
 
 ```bash
-ng new my-project --style less --routing
+ng new my-project --style less --routing --package-manager yarn
 ```
 
 > 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
@@ -66,13 +62,13 @@ NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一�
 > ```bash
 > git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 > cd my-project
-> npm install
+> yarn install
 > ```
 
 ### 运行
 
 ```bash
-npm start
+yarn start
 ```
 
 启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。

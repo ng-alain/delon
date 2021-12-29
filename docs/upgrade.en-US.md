@@ -10,7 +10,7 @@ In [Architecture](/docs/architecture) we have described the overall composition 
 
 ## Publishing rule
 
-Similar to `@angular/*`, the version number of the `@delon/*` class library will be a version number ([![NPM version](https:/) at each iteration, regardless of whether a class library has been modified. /img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)).
+Similar to `@angular/*`, the version number of the `@delon/*` class library will be a version number ([![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)) at each iteration, regardless of whether a class library has been modified.
 
 At the same time, please follow the following publishing rules and update version number:
 
@@ -20,10 +20,9 @@ At the same time, please follow the following publishing rules and update versio
 
 ## How to upgrade?
 
-
 ### Method 1: Command (Recommend)
 
-Unless it's a major version update (Similar to upgrading from `10.0.0` to `11.0.0`), you only need to run the following command:
+Unless it's a major version update (Similar to upgrading from `12.0.0` to `13.0.0`), you only need to run the following command:
 
 ```bash
 ng update ng-alain
@@ -34,10 +33,10 @@ ng update ng-alain
 Modify `package.json` All class libraries starting with `@delon/` are the latest version number:
 
 ```
-"@delon/theme": "^0.7.1"
+"@delon/theme": "^12.0.0"
 ```
 
-Replace `^0.7.1` with the latest version number.
+Replace `^12.0.0` with the latest version number.
 
 Finally, reinstall the dependencies.
 

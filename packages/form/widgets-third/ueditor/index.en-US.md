@@ -12,7 +12,7 @@ Ueditor Rich Text.
 
 Since the Ueditor relies on a third-party plug-in [ngx-ueditor](https://github.com/cipchk/ngx-ueditor), the dependency should be installed first when using it
 
-`npm install ngx-ueditor`
+`yarn add ngx-ueditor`
 
 
 **Import module**    
