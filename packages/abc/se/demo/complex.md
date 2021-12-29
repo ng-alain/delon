@@ -16,6 +16,8 @@ Use `col` to build complex irregular layouts.
 ```ts
 import { Component } from '@angular/core';
 
+import { STColumn } from '@delon/abc/st';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -67,11 +69,14 @@ import { Component } from '@angular/core';
       <se label="Long Long Long Long Long Long Label" col="1">
         <textarea [(ngModel)]="i.comment" name="comment" nz-input rows="2" placeholder="write any thing"></textarea>
       </se>
+      <se hideLabel col="1">
+        <st [columns]="columns" size="small"></st>
+      </se>
       <se col="1">
         <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
       </se>
     </form>
-  `,
+  `
 })
 export class DemoComponent {
   i = {
@@ -83,7 +88,8 @@ export class DemoComponent {
     phoneNumberPrefix: '+86',
     phoneNumber: '',
     agree: true,
-    comment: '',
+    comment: ''
   };
+  columns: STColumn[] = [{ title: 'id' }];
 }
 ```

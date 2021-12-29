@@ -57,6 +57,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) (Inherited from `se-container`) | `'1','2','3','4','5','6'` | - |
 | `[label]` | Label | `string, TemplateRef<void>` | - |
 | `[labelWidth]` | label text of width, unit is `px` (Inherited from `se-container`) | `number` | - |
+| `[hideLabel]` | Whether to hide the current label | `boolean` | `false` |
 | `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
 | `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |

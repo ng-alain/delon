@@ -227,10 +227,15 @@ describe('abc: edit', () => {
               context.parent_noColon = true;
               context.noColon = undefined;
               context.label = 'aa';
-              debugger;
               fixture.detectChanges();
               expect(page.getEls('.se__no-colon').length).toBe(1);
             });
+          });
+          it('#hideLabel', () => {
+            context.hideLabel = true;
+            fixture.detectChanges();
+            expect(page.getEls('.se__hide-label').length).toBe(1);
+            expect(page.getEls('.se__nolabel').length).toBe(1);
           });
         });
         describe('#item', () => {
@@ -557,6 +562,7 @@ describe('abc: edit', () => {
         [line]="line"
         [labelWidth]="labelWidth"
         [noColon]="noColon"
+        [hideLabel]="hideLabel"
       >
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
@@ -593,6 +599,7 @@ class TestComponent {
   controlClass = '';
   labelWidth: number | null = null;
   noColon?: boolean | null = undefined;
+  hideLabel: boolean = false;
 
   val = '';
   showModel = true;

@@ -1,4 +1,4 @@
-<div class="ant-form-item-label" [class.se__nolabel]="!label" [style.width.px]="_labelWidth">
+<div class="ant-form-item-label" [class.se__nolabel]="hideLabel || !label" [style.width.px]="_labelWidth">
   <label
     *ngIf="label"
     [attr.for]="_id"
