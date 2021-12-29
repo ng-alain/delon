@@ -46,9 +46,9 @@ describe('form: widget: cascader', () => {
         }
       })
       .dc(1);
-    expect(page.getEl('.ant-cascader-picker-label').textContent!.trim()).toBe('上海');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('上海');
     page.setValue('/a', 110000).dc(1);
-    expect(page.getEl('.ant-cascader-picker-label').textContent!.trim()).toBe('北京');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('北京');
   }));
 
   describe('[data source]', () => {

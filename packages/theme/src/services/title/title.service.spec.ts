@@ -33,6 +33,14 @@ describe('Service: Title', () => {
         }
       };
     }
+    querySelectorAll(): NzSafeAny {
+      return {
+        childNodes: [],
+        firstChild: {
+          textContent: 'a'
+        }
+      };
+    }
   }
 
   let title: TestTitleService;

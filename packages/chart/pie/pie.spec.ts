@@ -18,8 +18,6 @@ describe('chart: pie', () => {
       page.context.percent = 10;
     });
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', fakeAsync(() => {
       page
         .dcFirst()

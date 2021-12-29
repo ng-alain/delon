@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -29,7 +29,7 @@ describe('auth: JWTGuard', () => {
           {
             path: 'lazy',
             canLoad: [JWTGuard],
-            loadChildren: jasmine.createSpy('expected')
+            loadChildren: () => AModule
           },
           {
             path: 'login',
@@ -90,3 +90,6 @@ describe('auth: JWTGuard', () => {
 
 @Component({ template: '' })
 class MockComponent {}
+
+@NgModule({})
+class AModule {}

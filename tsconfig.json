@@ -4,7 +4,6 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
@@ -18,6 +17,7 @@
       "es2020",
       "dom"
     ],
+    "typeRoots": ["node_modules/@types/!(node)"],
     "paths": {
       "@delon/*": ["./packages/*"],
       "@shared": ["./src/app/shared"],
@@ -25,6 +25,7 @@
     },
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "noImplicitReturns": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
@@ -32,6 +33,5 @@
     "noImplicitThis": true,
     "types": ["jasmine"],
     "allowSyntheticDefaultImports": true
-  },
-  "exclude": ["node_modules", "tmp"]
+  }
 }

@@ -15,8 +15,6 @@ describe('chart: timeline', () => {
       page.genComp(TestComponent);
     });
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', fakeAsync(() => {
       page.context.position = 'left';
       page.dcFirst();

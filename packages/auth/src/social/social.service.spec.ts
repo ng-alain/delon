@@ -22,6 +22,9 @@ const mockRouter = {
 
 class MockDocument {
   location = new MockLocation();
+  querySelectorAll(): NzSafeAny {
+    return {};
+  }
 }
 
 class MockLocation {

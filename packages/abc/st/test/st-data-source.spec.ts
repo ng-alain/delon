@@ -428,8 +428,8 @@ describe('abc: table: data-souce', () => {
             expect(false).toBe(true);
             done();
           },
-          error: err => {
-            expect(err).toBe('aa');
+          error: (err: Error) => {
+            expect(err.message).toBe('aa');
             done();
           }
         });

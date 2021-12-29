@@ -229,7 +229,6 @@ describe('mock: interceptor', () => {
     beforeEach(() => genModule(DATA, { delay: 1 }));
 
     it('should work', fakeAsync(() => {
-      const router = TestBed.inject<Router>(Router);
       @Component({
         selector: 'lazy',
         template: '<router-outlet></router-outlet>'
@@ -253,10 +252,11 @@ describe('mock: interceptor', () => {
       })
       class LazyModule {}
 
-      router.resetConfig([{ path: '', loadChildren: () => LazyModule }]);
-
       const fixture = TestBed.createComponent(RootComponent);
       fixture.detectChanges();
+
+      const router = TestBed.inject<Router>(Router);
+      router.resetConfig([{ path: 'lazy', loadChildren: () => LazyModule }]);
       router.navigateByUrl(`/lazy/child`);
       tick(500);
       fixture.detectChanges();
@@ -271,7 +271,7 @@ describe('mock: interceptor', () => {
       ]);
     });
 
-    it('shoul working', done => {
+    it('should working', done => {
       otherRes = new HttpResponse({ body: { a: 1 } });
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();

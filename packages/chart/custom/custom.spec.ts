@@ -21,8 +21,6 @@ describe('chart: custom', () => {
     spyOn(context, 'resize');
   });
 
-  afterEach(() => context.comp.ngOnDestroy());
-
   it('should be working', fakeAsync(() => {
     expect(context.render).not.toHaveBeenCalled();
     fixture.detectChanges();

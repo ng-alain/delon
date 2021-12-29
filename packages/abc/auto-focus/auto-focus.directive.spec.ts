@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AutoFocusDirective } from './auto-focus.directive';
 import { AutoFocusModule } from './auto-focus.module';
 
-const TICK = 51;
+const TIME = 50;
 
 describe('abc: auto-focus', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -22,36 +22,36 @@ describe('abc: auto-focus', () => {
     spyOn(context, 'focus');
   });
 
-  function toggle(status: boolean = true): void {
-    context.showInput = status;
+  it('should be working', done => {
+    context.showInput = true;
     fixture.detectChanges();
-    tick(TICK);
-    fixture.detectChanges();
-  }
+    setTimeout(() => {
+      expect(context.focus).toHaveBeenCalled();
+      done();
+    }, TIME);
+  });
 
-  it('should be working', fakeAsync(() => {
-    toggle();
-    expect(context.focus).toHaveBeenCalled();
-  }));
-
-  it('should be not when enabled is false', fakeAsync(() => {
+  it('should be not when enabled is false', done => {
     context.enabled = false;
-    toggle();
-    expect(context.focus).not.toHaveBeenCalled();
-  }));
+    context.showInput = true;
+    fixture.detectChanges();
+    setTimeout(() => {
+      expect(context.focus).not.toHaveBeenCalled();
+      done();
+    }, TIME);
+  });
 });
 
 @Component({
   template: `
     <div *ngIf="showInput" class="mt-md">
-      <input auto-focus (focus)="focus()" [delay]="delay" [enabled]="enabled" />
+      <input auto-focus (focus)="focus()" delay="1" [enabled]="enabled" />
     </div>
   `
 })
 class TestComponent {
-  @ViewChild(AutoFocusDirective) comp: AutoFocusDirective;
+  @ViewChild(AutoFocusDirective) comp!: AutoFocusDirective;
   showInput = false;
-  delay = 50;
   enabled = true;
   focus(): void {}
 }

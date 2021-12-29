@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -29,7 +29,7 @@ describe('auth: SimpleGuard', () => {
           {
             path: 'lazy',
             canLoad: [SimpleGuard],
-            loadChildren: jasmine.createSpy('expected')
+            loadChildren: () => AModule
           },
           {
             path: 'login',
@@ -88,3 +88,6 @@ describe('auth: SimpleGuard', () => {
 
 @Component({ template: '' })
 class MockComponent {}
+
+@NgModule({})
+class AModule {}

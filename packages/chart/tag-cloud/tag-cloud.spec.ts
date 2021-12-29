@@ -15,8 +15,6 @@ describe('chart: tag-cloud', () => {
       page.genComp(TestComponent);
     });
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be repaint when window resize', fakeAsync(() => {
       page.dcFirst();
       spyOn(page.chart, 'changeData');

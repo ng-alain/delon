@@ -15,8 +15,6 @@ describe('chart: bar', () => {
       page = new PageG2<TestComponent>().makeModule(G2BarModule, TestComponent);
     }));
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', () => {
       page.newData([{ x: `1月`, y: 10 }]).isYScalesCount(1);
     });
