@@ -2,16 +2,13 @@ import { copy } from './copy';
 
 describe('abc: utils', () => {
   describe('#copy', () => {
-    it('should be copy a string', (done: () => void) => {
-      copy('test')
-        .then(() => {
-          expect(true).toBe(true);
-          done();
-        })
-        .catch(() => {
-          expect(false).toBe(true);
-          done();
-        });
+    it('should be copy a string', async () => {
+      try {
+        await copy('test');
+        expect(true).toBe(true);
+      } catch (ex) {
+        expect(false).toBe(true);
+      }
     });
   });
 });
