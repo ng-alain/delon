@@ -18,7 +18,7 @@ module.exports = function (config) {
       jasmine: {
         random: false,
       },
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: true // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
       subdir: '.',
@@ -45,14 +45,12 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox'],
-      },
+        flags: ['--disable-gpu', '--no-sandbox']
+      }
     },
     singleRun: false,
     restartOnFileChange: true,
-    browserDisconnectTimeout: 1800000,
-    browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 3000000,
-    captureTimeout: 1800000,
+    browserDisconnectTimeout: 1000 * 60 * 10, // (Default: 2000)
+    browserNoActivityTimeout: 1000 * 60 // (Default: 10000)
   });
 };
