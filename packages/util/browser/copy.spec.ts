@@ -2,13 +2,10 @@ import { copy } from './copy';
 
 describe('abc: utils', () => {
   describe('#copy', () => {
-    it('should be copy a string', async () => {
-      try {
-        await copy('test');
-        expect(true).toBe(true);
-      } catch (ex) {
-        expect(false).toBe(true);
-      }
+    it('should be copy a string', () => {
+      const writeTextSpy = spyOn(navigator.clipboard, 'writeText');
+      copy('test');
+      expect(writeTextSpy).toHaveBeenCalled();
     });
   });
 });
