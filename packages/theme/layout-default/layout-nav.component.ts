@@ -38,7 +38,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   templateUrl: './layout-nav.component.html',
   host: {
     '(click)': '_click()',
-    '(document:click)': '_docClick()'
+    '(document:click)': 'closeSubMenu()'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -223,7 +223,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  _docClick(): void {
+  closeSubMenu(): void {
     if (this.collapsed) {
       this.hideAll();
     }
