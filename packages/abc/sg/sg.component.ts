@@ -40,7 +40,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
   @Input() @InputNumber(null) col: number | null = null;
 
   get paddingValue(): number {
-    return this.parent.gutter! / 2;
+    return this.parent.gutter / 2;
   }
 
   constructor(

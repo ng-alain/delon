@@ -12,7 +12,7 @@ import { SGModule } from './sg.module';
 
 const prefixCls = `.sg__`;
 
-describe('abc: grid', () => {
+describe('abc: sg', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -139,8 +139,8 @@ class TestComponent {
   viewComp!: SGComponent;
 
   parent_gutter: number | null = 32;
-  parent_colInCon: number | null = null;
+  parent_colInCon!: number | null;
   parent_col: number | null = 3;
 
-  col: number | null = null;
+  col!: number | null;
 }
