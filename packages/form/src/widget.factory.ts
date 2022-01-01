@@ -41,7 +41,9 @@ export class WidgetFactory {
 
   createWidget(container: ViewContainerRef, type: string): ComponentRef<Widget<FormProperty, SFUISchemaItem>> {
     if (!this.registry.has(type)) {
-      console.warn(`No widget for type "${type}"`);
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`No widget for type "${type}"`);
+      }
     }
 
     const componentClass = this.registry.getType(type) as NzSafeAny;

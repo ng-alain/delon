@@ -19,8 +19,10 @@ export function toBool(value: NzSafeAny, defaultValue: boolean): boolean {
 }
 
 export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {
-  if (ui.debug) {
-    console.warn(...args);
+  if (typeof ngDevMode === 'undefined' || ngDevMode) {
+    if (ui.debug) {
+      console.warn(...args);
+    }
   }
 }
 

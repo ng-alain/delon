@@ -5,6 +5,7 @@
     "rootDir": ".",
     "paths": {
       "@delon/*": ["../../dist/@delon/*"]
-    }
+    },
+    "types": ["../dev-mode-types"]
   }
 }

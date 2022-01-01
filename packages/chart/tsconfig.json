@@ -9,9 +9,6 @@
       "@delon/*": ["../*"]
     }
   },
-  "files": [
-    "public_api.ts",
-    "../typings.d.ts"
-  ],
-  "include": ["./**/*.ts"]
+  "files": ["public_api.ts"],
+  "include": ["./**/*.ts", "../dev-mode-types.d.ts"]
 }

@@ -52,8 +52,6 @@ describe('abc: st', () => {
   let registerWidget: STWidgetRegistry;
   let page: PageObject<TestComponent>;
 
-  afterEach(() => comp.ngOnDestroy());
-
   function refAssign(): void {
     fixture = page.fixture;
     context = page.context;

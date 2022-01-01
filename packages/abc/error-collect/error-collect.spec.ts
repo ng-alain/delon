@@ -35,10 +35,6 @@ describe('abc: error-collect', () => {
     }
   }
 
-  afterEach(() => {
-    if (context) context.comp.ngOnDestroy();
-  });
-
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
     it('should be collect error', (done: () => void) => {

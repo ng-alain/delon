@@ -12,5 +12,5 @@
   "files": [
     "public_api.ts"
   ],
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "../dev-mode-types.d.ts"]
 }

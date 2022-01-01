@@ -27,7 +27,6 @@ describe('abc: notice-icon', () => {
   });
 
   afterEach(() => {
-    context.comp.ngOnDestroy();
     cleanCdkOverlayHtml();
   });
 

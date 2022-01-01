@@ -82,7 +82,9 @@ export class STColumnSource {
 
       if (item.type === 'modal' || item.type === 'static') {
         if (item.modal == null || item.modal.component == null) {
-          console.warn(`[st] Should specify modal parameter when type is modal or static`);
+          if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            console.warn(`[st] Should specify modal parameter when type is modal or static`);
+          }
           item.type = 'none';
         } else {
           item.modal = { ...{ paramsName: 'record', size: 'lg' }, ...modal, ...item.modal };
@@ -91,7 +93,9 @@ export class STColumnSource {
 
       if (item.type === 'drawer') {
         if (item.drawer == null || item.drawer.component == null) {
-          console.warn(`[st] Should specify drawer parameter when type is drawer`);
+          if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            console.warn(`[st] Should specify drawer parameter when type is drawer`);
+          }
           item.type = 'none';
         } else {
           item.drawer = { ...{ paramsName: 'record', size: 'lg' }, ...drawer, ...item.drawer };
@@ -280,7 +284,9 @@ export class STColumnSource {
     if (item.type !== 'widget') return;
     if (item.widget == null || !this.stWidgetRegistry.has(item.widget.type)) {
       delete item.type;
-      warn(`st: No widget for type "${item.widget?.type}"`);
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        warn(`st: No widget for type "${item.widget?.type}"`);
+      }
     }
   }
 
