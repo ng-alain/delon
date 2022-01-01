@@ -47,8 +47,6 @@ describe('chart: pie', () => {
       page.dcFirst();
     }));
 
-    afterEach(() => page.context.comp.ngOnDestroy());
-
     it('should be working', () => {
       page.isExists('.g2-pie__legend').isDataCount('geometries', 3);
     });

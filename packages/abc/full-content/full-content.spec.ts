@@ -39,8 +39,6 @@ describe('abc: full-content', () => {
     el = dl.query(By.css('full-content')).nativeElement as HTMLElement;
   }
 
-  afterEach(() => context && context.comp && context.comp.ngOnDestroy());
-
   describe('#fullscreen', () => {
     beforeEach(() => createComp());
     it('with true', () => {
