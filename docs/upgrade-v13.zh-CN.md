@@ -35,4 +35,12 @@ hot: true
 
 ## 常见问题
 
-`...`
+**Git无法提交**
+
+升级步骤是逐步运行，每一步都需要 `git commit`，若遇到：
+
+```
+Must use import to load ES Module: /Users/cipchk/Desktop/work/ng-alain/node_modules/@angular/compiler/fesm2015/compiler.mjs
+```
+
+可以注释掉 `.husky/pre-commit` 中的 `npx` 开头的行，在升级完成后再次打开。

@@ -34,4 +34,12 @@ hot: true
 
 ### Common Problems
 
-`...`
+**Git cannot submit**
+
+The upgrade steps are run step by step, each step requires `git commit`, if you encounter:
+
+```
+Must use import to load ES Module: /Users/cipchk/Desktop/work/ng-alain/node_modules/@angular/compiler/fesm2015/compiler.mjs
+```
+
+You can comment out the line starting with `npx` in `.husky/pre-commit` and open it again after the upgrade is complete.
