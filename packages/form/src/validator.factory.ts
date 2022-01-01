@@ -62,10 +62,10 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       try {
         this.ngZone.runOutsideAngular(() => this.ajv.validate(schema, value));
       } catch (e) {
-        // swallow errors thrown in ajv due to invalid schemas, these
-        // still get displayed
-        if (extraOptions.debug) {
-          if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+          // swallow errors thrown in ajv due to invalid schemas, these
+          // still get displayed
+          if (extraOptions.debug) {
             console.warn(e);
           }
         }
