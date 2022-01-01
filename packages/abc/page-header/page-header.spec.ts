@@ -283,7 +283,7 @@ describe('abc: page-header', () => {
         fixture.detectChanges();
         checkValue('.page-header__title', i18n);
       });
-      it('in home', fakeAsync(() => {
+      it('in home', () => {
         menuSrv.add([
           {
             text: 'root',
@@ -306,10 +306,8 @@ describe('abc: page-header', () => {
         context.homeI18n = 'homeI18n';
         context.autoBreadcrumb = true;
         fixture.detectChanges();
-        tick(100);
-        fixture.detectChanges();
         expect(i18n.fanyi).toHaveBeenCalled();
-      }));
+      });
     });
   });
 
