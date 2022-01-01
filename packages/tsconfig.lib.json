@@ -7,7 +7,7 @@
     "inlineSources": true,
     "stripInternal": true
   },
-  "files": ["public_api.ts", "./dev-mode-types.d.ts"],
+  "files": ["public_api.ts"],
   "exclude": ["*.spec.ts"],
   "angularCompilerOptions": {
     "strictInputAccessModifiers": true,
