@@ -9,6 +9,6 @@
       "@delon/*": ["../*"]
     }
   },
-  "files": ["index.ts", "../typings.d.ts"],
-  "include": ["./**/*.ts"]
+  "files": ["index.ts"],
+  "include": ["./**/*.ts", "../dev-mode-types.d.ts"]
 }

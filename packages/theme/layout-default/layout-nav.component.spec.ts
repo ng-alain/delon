@@ -131,8 +131,6 @@ describe('theme: layout-default-nav', () => {
     if (callback) callback();
   }
 
-  afterEach(() => context.comp.ngOnDestroy());
-
   describe('', () => {
     beforeEach(() => createModule());
 

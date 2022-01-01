@@ -16,8 +16,10 @@ function propDecoratorFactory<T, D>(
   ): NzSafeAny {
     const privatePropName = `$$__${propName}`;
 
-    if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-      warn(`The prop "${privatePropName}" is already exist, it will be overrided by ${name} decorator.`);
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
+        warn(`The prop "${privatePropName}" is already exist, it will be overrided by ${name} decorator.`);
+      }
     }
 
     Object.defineProperty(target, privatePropName, {

@@ -37,7 +37,6 @@ describe('abc: qr', () => {
   }
 
   afterEach(() => {
-    if (context.comp && context.comp.ngOnDestroy) context.comp.ngOnDestroy();
     delete win.QRious;
   });
 

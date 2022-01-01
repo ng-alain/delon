@@ -372,7 +372,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .subscribe({
           next: result => resolvePromise(result),
           error: error => {
-            console.warn('st.loadDate', error);
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+              console.warn('st.loadDate', error);
+            }
             rejectPromise(error);
           }
         });

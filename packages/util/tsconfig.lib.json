@@ -6,6 +6,7 @@
     "paths": {
       "@delon/util/*": ["../../dist/@delon/util/*"],
       "@delon/*": ["../../dist/@delon/*"]
-    }
+    },
+    "types": ["../dev-mode-types"]
   }
 }

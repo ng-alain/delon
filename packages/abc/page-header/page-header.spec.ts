@@ -72,8 +72,6 @@ describe('abc: page-header', () => {
     expect(el.textContent!.trim()).toBe(value);
   }
 
-  afterEach(() => context.comp.ngOnDestroy());
-
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
