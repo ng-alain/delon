@@ -132,7 +132,9 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
 
     const pos = this.getLightData();
     if (pos == null) {
-      console.warn(`Did not matches selectors [${this.item.selectors}]`);
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`Did not matches selectors [${this.item.selectors}]`);
+      }
       return;
     }
 

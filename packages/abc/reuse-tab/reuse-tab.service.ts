@@ -358,7 +358,9 @@ export class ReuseTabService implements OnDestroy {
 
   private di(...args: NzSafeAny[]): void {
     if (!this.debug) return;
-    console.warn(...args);
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      console.warn(...args);
+    }
   }
 
   // #endregion

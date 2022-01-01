@@ -505,7 +505,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     if (this._renders.has(path)) {
-      console.warn(`Duplicate definition "${path}" custom widget`);
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`Duplicate definition "${path}" custom widget`);
+      }
       return;
     }
     this._renders.set(path, templateRef);

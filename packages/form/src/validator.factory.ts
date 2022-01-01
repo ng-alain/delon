@@ -65,7 +65,9 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
         // swallow errors thrown in ajv due to invalid schemas, these
         // still get displayed
         if (extraOptions.debug) {
-          console.warn(e);
+          if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            console.warn(e);
+          }
         }
       }
       let errors = this.ajv.errors;

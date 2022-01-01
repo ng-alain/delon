@@ -141,7 +141,9 @@ export class STDataSource {
               if (values.length === 0) return;
               const onFilter = filter.fn;
               if (typeof onFilter !== 'function') {
-                console.warn(`[st] Muse provide the fn function in filter`);
+                if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                  console.warn(`[st] Muse provide the fn function in filter`);
+                }
                 return;
               }
               result = result.filter(record => values.some(v => onFilter(v, record)));
@@ -370,7 +372,9 @@ export class STDataSource {
       return;
     }
     if (typeof sortItem.compare !== 'function') {
-      console.warn(`[st] Muse provide the compare function in sort`);
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`[st] Muse provide the compare function in sort`);
+      }
       return;
     }
 

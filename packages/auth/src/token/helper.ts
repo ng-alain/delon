@@ -17,7 +17,9 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   try {
     return model != null && !!model.token && !model.isExpired(offset);
   } catch (err: NzSafeAny) {
-    console.warn(`${err.message}, jump to login_url`);
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      console.warn(`${err.message}, jump to login_url`);
+    }
     return false;
   }
 }
