@@ -2,8 +2,17 @@ import { colors } from '@angular/cli/utilities/color';
 
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import { addPackage, logStart } from '../../../utils';
+import { addPackage, logStart, readPackage } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
+
+function removeIE(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    const pkg = readPackage(tree);
+    if (!pkg.scripts['ie:start']) return;
+
+    context.logger.warn(colors.yellow(`TIPS: Starting from NG-ALAIN 13 will no longer support IE`));
+  };
+}
 
 function upgradeThirdVersion(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -26,6 +35,6 @@ export function v13Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);
-    return chain([upgradeThirdVersion(), finished()]);
+    return chain([removeIE(), upgradeThirdVersion(), finished()]);
   };
 }
