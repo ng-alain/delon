@@ -6,21 +6,6 @@ title:
 type: Advance
 ---
 
-## IE 优化
-
-NG-ALAIN 默认开启了对 IE 的支持，这给包体及样式增加了一定大小，倘若你很在意并且不需要 `IE10` 及以下的版本支持的话：
-
-```
-// browserslist
-> 0.5%
-last 2 versions
-Firefox ESR
-not dead
-# IE 9-11
-not ie <= 10
-not ie_mob <= 10
-```
-
 ## 包体大小优化
 
 分为JavaScript脚本文件和CSS文件，以下只描述脚本部分，有关CSS文件请参考[优化主题系统](/theme/performance)。
