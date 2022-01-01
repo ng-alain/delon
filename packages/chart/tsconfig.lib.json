@@ -8,5 +8,5 @@
       "@delon/*": ["../../dist/@delon/*"]
     }
   },
-  "files": ["public_api.ts", "../typings.d.ts"]
+  "files": ["public_api.ts"]
 }
