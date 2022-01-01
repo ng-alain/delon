@@ -6,21 +6,6 @@ title:
 type: Advance
 ---
 
-## IE Performance
-
-NG-ALAIN has IE support enabled by default. Which adds a certain size to the package and style. If you are very concerned and don't need `IE10` and below support, you can adjust the two configurations:
-
-```
-// browserslist
-> 0.5%
-last 2 versions
-Firefox ESR
-not dead
-# IE 9-11
-not ie <= 10
-not ie_mob <= 10
-```
-
 ## Envelope size optimization
 
 Divided into JavaScript script files and CSS files. The following only describes the script part. For the CSS file, please refer to [Optimize Theme System](/theme/performance).
