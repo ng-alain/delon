@@ -44,3 +44,10 @@ Must use import to load ES Module: /Users/cipchk/Desktop/work/ng-alain/node_modu
 ```
 
 可以注释掉 `.husky/pre-commit` 中的 `npx` 开头的行，在升级完成后再次打开。
+
+**关于tsconfig.json的升级**
+
+Angular13 增加两个配置，使代码更加安全，`ng update` 并不会自动修复，建议按需求手动处理：
+
+- `noImplicitOverride`: 显示的使用 `override` 标记是否覆盖基类（可能涉及页面 `i18n.service.ts`）
+- `noPropertyAccessFromIndexSignature`：不允许通过索引签名访问，例如：`this.form.controls.name` 需要变更为 `this.form.controls['name']`（或 `this.form.get('name')!`）

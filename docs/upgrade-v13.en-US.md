@@ -43,3 +43,10 @@ Must use import to load ES Module: /Users/cipchk/Desktop/work/ng-alain/node_modu
 ```
 
 You can comment out the line starting with `npx` in `.husky/pre-commit` and open it again after the upgrade is complete.
+
+**About the upgrade of tsconfig.json**
+
+Angular13 adds two configurations to make the code more secure. `ng update` will not be automatically repaired. It is recommended to handle it manually as required:
+
+-`noImplicitOverride`: Show whether the use of `override` tag overrides the base class (may involve the page `i18n.service.ts`)
+-`noPropertyAccessFromIndexSignature`: Access through index signature is not allowed, for example: `this.form.controls.name` needs to be changed to `this.form.controls['name']` (or `this.form.get('name' )!`)
