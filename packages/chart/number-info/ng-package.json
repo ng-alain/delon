@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "number-info",
     "entryFile": "public_api.ts"
   }
 }

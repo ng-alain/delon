@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "table",
+    "flatModuleFile": "st",
     "entryFile": "public_api.ts"
   }
 }

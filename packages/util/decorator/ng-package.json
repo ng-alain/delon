@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "decorator",
     "entryFile": "index.ts"
   }
 }

@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "pie",
     "entryFile": "public_api.ts"
   }
 }

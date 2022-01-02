@@ -150,3 +150,18 @@ export function getProjectTarget(
 
   return options;
 }
+
+export function addStylePreprocessorOptionsToAllProject(workspace: WorkspaceDefinition): void {
+  workspace.projects.forEach(project => {
+    const build = project.targets.get(BUILD_TARGET_BUILD);
+    if (build == null || build.options == null) return;
+    if (build.options.stylePreprocessorOptions == null) {
+      build.options.stylePreprocessorOptions = {};
+    }
+    let includePaths: string[] = build.options.stylePreprocessorOptions['includePaths'] ?? [];
+    if (!Array.isArray(includePaths)) includePaths = [];
+    if (includePaths.includes(`node_modules/`)) return;
+    includePaths.push(`node_modules/`);
+    build.options.stylePreprocessorOptions['includePaths'] = includePaths;
+  });
+}

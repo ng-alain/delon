@@ -1,7 +1,7 @@
 
 {
   "lib": {
-    "flatModuleFile": "layout-blank",
+    "flatModuleFile": "theme-btn",
     "entryFile": "public_api.ts"
   }
 }

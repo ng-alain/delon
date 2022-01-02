@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "edit",
+    "flatModuleFile": "se",
     "entryFile": "public_api.ts"
   }
 }

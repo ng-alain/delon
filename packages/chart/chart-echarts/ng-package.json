@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "chart-echarts",
     "entryFile": "public_api.ts"
   }
 }

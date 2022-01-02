@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "footerToolbar",
+    "flatModuleFile": "footer-toolbar",
     "entryFile": "public_api.ts"
   }
 }

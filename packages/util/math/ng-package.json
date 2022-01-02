@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "math",
     "entryFile": "index.ts"
   }
 }

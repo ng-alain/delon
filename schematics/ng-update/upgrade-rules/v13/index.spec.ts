@@ -18,10 +18,17 @@ describe('Schematic: ng-update: v13Rule', () => {
     await runner.runSchematicAsync('migration-v13', {}, tree).toPromise();
   }
 
-  it(`should be add yarn`, async () => {
+  it(`should be working`, async () => {
+    tree.create(
+      `1.less`,
+      `@import '~@delon/theme/index';
+@import '~ng-zorro-antd/';`
+    );
     await runMigration();
     const content = tree.readContent('angular.json');
+    expect(content).toContain(`stylePreprocessorOptions`);
     expect(content).toContain(`"packageManager": "yarn"`);
+    expect(tree.readContent('1.less')).not.toContain(`@import '~@delon`);
   });
 
   it(`should be tips not support ie`, async () => {

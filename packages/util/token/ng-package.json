@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "token",
     "entryFile": "index.ts"
   }
 }

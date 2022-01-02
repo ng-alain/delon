@@ -50,9 +50,10 @@ ng new my-project --style less --routing --package-manager yarn
 
 > 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
 
-当提示 `Packages installed successfully.` 表示创建成功，接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
+接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
 
 ```bash
+cd my-project
 ng add ng-alain
 ```
 

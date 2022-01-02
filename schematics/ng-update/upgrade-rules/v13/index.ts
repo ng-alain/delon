@@ -3,8 +3,33 @@ import { colors } from '@angular/cli/utilities/color';
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
-import { addPackage, logStart, readPackage } from '../../../utils';
+import { addPackage, addStylePreprocessorOptionsToAllProject, logStart, readPackage } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
+
+function addStylePreprocessorOptions(): Rule {
+  return updateWorkspace(async workspace => {
+    addStylePreprocessorOptionsToAllProject(workspace);
+  });
+}
+
+// Using ~ is deprecated and can be removed from your code
+function fixLessResolver(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    logStart(
+      context,
+      `Removed deprecated ~ in less file, pls refer to https://github.com/webpack-contrib/less-loader#imports`
+    );
+    tree.visit(path => {
+      if (!path.endsWith(`.less`)) return;
+      const content = tree
+        .read(path)
+        .toString('utf8')
+        .replace(/^(@import ['"]{1})~/gm, '$1');
+
+      tree.overwrite(path, content);
+    });
+  };
+}
 
 function removeIE(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -36,7 +61,7 @@ function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {
     context.logger.info(
       colors.green(
-        `  ✓  Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2174`
+        `  ✓ Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2174`
       )
     );
   };
@@ -46,6 +71,13 @@ export function v13Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);
-    return chain([removeIE(), upgradeThirdVersion(), addYarn(context), finished()]);
+    return chain([
+      removeIE(),
+      addStylePreprocessorOptions(),
+      fixLessResolver(),
+      upgradeThirdVersion(),
+      addYarn(context),
+      finished()
+    ]);
   };
 }

@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "radar",
     "entryFile": "public_api.ts"
   }
 }
