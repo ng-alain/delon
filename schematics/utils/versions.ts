@@ -17,7 +17,6 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
   addPackage(
     tree,
     [
-      `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
       `@angular-eslint/builder@DEP-0.0.0-PLACEHOLDER`,
       `@angular-eslint/eslint-plugin@DEP-0.0.0-PLACEHOLDER`,
       `@angular-eslint/eslint-plugin-template@DEP-0.0.0-PLACEHOLDER`,
@@ -41,7 +40,11 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
     ],
     'devDependencies'
   );
-  addPackage(tree, ['ajv@DEP-0.0.0-PLACEHOLDER', 'ajv-formats@DEP-0.0.0-PLACEHOLDER']);
+  addPackage(tree, [
+    `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
+    'ajv@DEP-0.0.0-PLACEHOLDER',
+    'ajv-formats@DEP-0.0.0-PLACEHOLDER'
+  ]);
 }
 
 export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {
