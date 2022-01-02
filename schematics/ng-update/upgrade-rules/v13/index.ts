@@ -4,7 +4,14 @@ import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics'
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
-import { addPackage, addStylePreprocessorOptionsToAllProject, logStart, readPackage } from '../../../utils';
+import {
+  addPackage,
+  addStylePreprocessorOptionsToAllProject,
+  logStart,
+  readContent,
+  readPackage,
+  writePackage
+} from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 
 function addStylePreprocessorOptions(): Rule {
@@ -51,6 +58,23 @@ function addYarn(context: SchematicContext): Rule {
   });
 }
 
+function upgradeKarmaCoverage(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    const karmaConfJs = 'karma.conf.js';
+    const pkg = readPackage(tree);
+    if (!pkg.devDependencies || !pkg.devDependencies['karma-coverage-istanbul-reporter'] || !tree.exists(karmaConfJs))
+      return;
+    delete pkg.devDependencies['karma-coverage-istanbul-reporter'];
+    writePackage(tree, pkg);
+
+    // update karma.conf.js
+    const content = readContent(tree, karmaConfJs).replace(`karma-coverage-istanbul-reporter`, 'karma-coverage');
+    tree.overwrite(karmaConfJs, content);
+
+    logStart(context, `karma-coverage instead of karma-coverage-istanbul-reporter`);
+  };
+}
+
 function upgradeThirdVersion(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     addPackage(tree, [`ngx-ueditor@DEP-0.0.0-PLACEHOLDER`, `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`], 'dependencies');
@@ -78,6 +102,7 @@ export function v13Rule(): Rule {
       removeIE(),
       addStylePreprocessorOptions(),
       fixLessResolver(),
+      upgradeKarmaCoverage(),
       upgradeThirdVersion(),
       addYarn(context),
       finished()
