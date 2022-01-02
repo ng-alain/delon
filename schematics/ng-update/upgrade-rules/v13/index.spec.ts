@@ -18,6 +18,12 @@ describe('Schematic: ng-update: v13Rule', () => {
     await runner.runSchematicAsync('migration-v13', {}, tree).toPromise();
   }
 
+  it(`should be add yarn`, async () => {
+    await runMigration();
+    const content = tree.readContent('angular.json');
+    expect(content).toContain(`"packageManager": "yarn"`);
+  });
+
   it(`should be tips not support ie`, async () => {
     tree.overwrite(`package.json`, JSON.stringify({ scripts: { 'ie:start': 'npm' } }));
     await runMigration();
