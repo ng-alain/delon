@@ -1,6 +1,7 @@
 import { colors } from '@angular/cli/utilities/color';
 
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addPackage, addStylePreprocessorOptionsToAllProject, logStart, readPackage } from '../../../utils';
@@ -59,6 +60,8 @@ function upgradeThirdVersion(): Rule {
 
 function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+
     context.logger.info(
       colors.green(
         `  ✓ Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2174`
