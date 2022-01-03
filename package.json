@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "13.0.0-beta.2",
+  "version": "13.0.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -124,7 +124,7 @@
     "@types/parse5": "^6.0.3",
     "karma-summary-reporter": "^3.0.0",
     "karma-parallel": "^0.3.1",
-    "chalk": "^5.0.0",
+    "chalk": "^4.1.0",
     "codecov": "^3.8.3",
     "conventional-changelog-cli": "^2.2.2",
     "fs-extra": "^9.0.0",
