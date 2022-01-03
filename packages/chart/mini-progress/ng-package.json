@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "mini-progress",
     "entryFile": "public_api.ts"
   }
 }

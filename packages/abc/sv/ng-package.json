@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "view",
+    "flatModuleFile": "sv",
     "entryFile": "public_api.ts"
   }
 }

@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "array",
     "entryFile": "index.ts"
   }
 }

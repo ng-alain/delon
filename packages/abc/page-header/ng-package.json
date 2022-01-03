@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "pageHeader",
+    "flatModuleFile": "page-header",
     "entryFile": "public_api.ts"
   }
 }

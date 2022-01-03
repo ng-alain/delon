@@ -20,7 +20,7 @@ export default {
     '@angular/platform-browser-dynamic': '~12.1.1',
     '@angular/router': '~12.1.1',
     rxjs: '~6.6.0',
-    tslib: '^2.2.0',
+    tslib: '^2.3.1',
     'zone.js': '~0.11.4'
   },
   devDependencies: {

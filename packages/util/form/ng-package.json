@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "form",
     "entryFile": "index.ts"
   }
 }

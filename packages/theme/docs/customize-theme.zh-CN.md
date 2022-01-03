@@ -44,7 +44,7 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 样式文件中：
 
 ```css
-@import "~@delon/theme/dark.css";
+@import "@delon/theme/dark.css";
 ```
 
 `angular.json` 中

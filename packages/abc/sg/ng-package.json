@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "grid",
+    "flatModuleFile": "sg",
     "entryFile": "public_api.ts"
   }
 }

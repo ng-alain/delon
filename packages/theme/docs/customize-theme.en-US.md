@@ -44,7 +44,7 @@ If the project does not use Less, you can include `dark.css` or `compact.css` in
 CSS file：
 
 ```css
-@import "~@delon/theme/dark.css";
+@import "@delon/theme/dark.css";
 ```
 
 angular.json

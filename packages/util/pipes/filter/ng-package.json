@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "pipe-filter",
     "entryFile": "index.ts"
   }
 }

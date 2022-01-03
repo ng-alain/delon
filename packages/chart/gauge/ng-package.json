@@ -1,5 +1,6 @@
 {
   "lib": {
+    "flatModuleFile": "gauge",
     "entryFile": "public_api.ts"
   }
 }
