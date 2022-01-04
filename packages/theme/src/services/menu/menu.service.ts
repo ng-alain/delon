@@ -31,6 +31,8 @@ export class MenuService implements OnDestroy {
     return this._change$.pipe(share());
   }
 
+  visit<T extends Menu = Menu>(data: T[], callback: (item: T, parentMenum: T | null, depth?: number) => void): void;
+  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void;
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
     const inFn = (list: Menu[], parentMenu: Menu | null, depth: number): void => {
       for (const item of list) {
@@ -106,6 +108,8 @@ export class MenuService implements OnDestroy {
   /**
    * 重置菜单，可能I18N、用户权限变动时需要调用刷新
    */
+  resume<T extends Menu = Menu>(callback?: (item: T, parentMenum: T | null, depth?: number) => void): void;
+  resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void;
   resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
     let i = 1;
     const shortcuts: Menu[] = [];

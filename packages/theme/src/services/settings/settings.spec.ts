@@ -4,6 +4,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AlainThemeModule } from '../../theme.module';
 import { SettingsService } from './settings.service';
+import { App, User, Layout } from './types';
 
 describe('Service: Settings', () => {
   let srv: SettingsService;
@@ -31,10 +32,15 @@ describe('Service: Settings', () => {
   });
 
   describe('#layout', () => {
+    interface TestLayout extends Layout {
+      test: boolean;
+    }
+    it(`should be get`, () => {
+      srv.setLayout<TestLayout>({ test: false } as NzSafeAny);
+      expect(srv.getLayout<TestLayout>().test).toBe(false);
+    });
     it('should be reset all', () => {
-      srv.setLayout({
-        a: 1
-      } as NzSafeAny);
+      srv.setLayout({ a: 1 } as NzSafeAny);
       expect(srv.layout.a).toBe(1);
     });
 
@@ -55,9 +61,14 @@ describe('Service: Settings', () => {
   });
 
   describe('#app', () => {
+    interface TestApp extends App {
+      year: number;
+    }
     it(`can set`, () => {
       srv.setApp({ name: 'a' });
       expect(srv.app.name).toBe('a');
+      srv.setApp<TestApp>({ year: 100 });
+      expect(srv.getApp<TestApp>().year).toBe(100);
     });
     it(`can get`, () => {
       expect(srv.app).not.toBeNull();
@@ -73,9 +84,14 @@ describe('Service: Settings', () => {
   });
 
   describe('#user', () => {
+    interface TestUser extends User {
+      id: number;
+    }
     it(`can set`, () => {
       srv.setUser({ name: 'a' });
       expect(srv.user.name).toBe('a');
+      srv.setUser<TestUser>({ id: 1 });
+      expect(srv.getUser<TestUser>().id).toBe(1);
     });
     it(`can get`, () => {
       expect(srv.user).not.toBeNull();
