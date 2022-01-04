@@ -5,6 +5,8 @@ export default {
     outDir: './dist/out-tsc',
     forceConsistentCasingInFileNames: true,
     strict: true,
+    noImplicitOverride: true,
+    noPropertyAccessFromIndexSignature: true,
     noImplicitReturns: true,
     noFallthroughCasesInSwitch: true,
     sourceMap: true,
@@ -15,9 +17,10 @@ export default {
     importHelpers: true,
     target: 'es2017',
     module: 'es2020',
-    lib: ['es2018', 'dom']
+    lib: ['es2020', 'dom']
   },
   angularCompilerOptions: {
+    enableIvy: true,
     enableI18nLegacyMessageIdFormat: false,
     strictInjectionParameters: true,
     strictInputAccessModifiers: true,

@@ -82,11 +82,12 @@ export class CodeBoxComponent implements OnDestroy {
     this.check();
   }
 
-  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz', includeCli: boolean = false): void {
+  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz', _: boolean = false): void {
     if (ide === 'StackBlitz') {
       this.codeSrv.openOnStackBlitz(this.item.code);
     } else {
-      this.codeSrv.openOnCodeSandbox(this.item.code, includeCli);
+      this.msg.warning(`CodeSandbox does not support Angular 13, pls use StackBlitz!`);
+      // this.codeSrv.openOnCodeSandbox(this.item.code, includeCli);
     }
   }
 
