@@ -78,8 +78,7 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
   }
 
   setLayout<T extends Layout = Layout>(name: T, value?: NzSafeAny): boolean;
-  setLayout(name: string, value?: NzSafeAny): boolean;
-  setLayout(name: L, value?: NzSafeAny): boolean;
+  setLayout(name: string | L, value?: NzSafeAny): boolean;
   setLayout(name: string | L, value?: NzSafeAny): boolean {
     if (typeof name === 'string') {
       (this.layout as Layout)[name] = value;
