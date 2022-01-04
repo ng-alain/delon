@@ -68,32 +68,18 @@ export class LazyService {
         this._notify.next([item]);
       };
 
-      const node = this.doc.createElement('script') as NzSafeAny;
+      const node = this.doc.createElement('script') as HTMLScriptElement;
       node.type = 'text/javascript';
       node.src = path;
-      node.charset = 'utf-8';
       if (innerContent) {
         node.innerHTML = innerContent;
       }
-      if (node.readyState) {
-        // IE
-        node.onreadystatechange = () => {
-          if (node.readyState === 'loaded' || node.readyState === 'complete') {
-            node.onreadystatechange = null;
-            onSuccess({
-              path,
-              status: 'ok'
-            });
-          }
-        };
-      } else {
-        node.onload = () =>
-          onSuccess({
-            path,
-            status: 'ok'
-          });
-      }
-      node.onerror = (error: NzSafeAny) =>
+      node.onload = () =>
+        onSuccess({
+          path,
+          status: 'ok'
+        });
+      node.onerror = error =>
         onSuccess({
           path,
           status: 'error',

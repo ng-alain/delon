@@ -65,7 +65,7 @@ describe('theme: http.client', () => {
           .pipe(catchError(_err => of(null)))
           .subscribe();
         tick();
-        backend.expectOne(() => true).error(new ErrorEvent('404'));
+        backend.expectOne(() => true).error(new ProgressEvent('404'));
         expect(http.loading).toBe(false);
       }));
 

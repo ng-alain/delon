@@ -730,7 +730,7 @@ describe('abc: st', () => {
       });
       describe('Http Request', () => {
         it('when error request', done => {
-          spyOn(_http, 'request').and.returnValue(throwError('cancel'));
+          spyOn(_http, 'request').and.returnValue(throwError(() => 'cancel'));
           context.data = '/mock';
           fixture.detectChanges();
           fixture.whenStable().then(() => {
