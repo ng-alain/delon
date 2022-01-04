@@ -5,7 +5,6 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LazyService } from './lazy.service';
 
-let isIE = false;
 let testStatus = 'ok';
 class MockDocument {
   querySelectorAll(): NzSafeAny {
@@ -34,7 +33,6 @@ class MockDocument {
       testStatus,
       onload: () => {}
     };
-    if (isIE) ret.readyState = 'loading';
     return ret;
   };
 }
@@ -43,7 +41,6 @@ describe('utils: lazy', () => {
   let srv: LazyService;
   let doc: Document;
   beforeEach(() => {
-    isIE = false;
     testStatus = 'ok';
     TestBed.configureTestingModule({
       providers: [{ provide: DOCUMENT, useClass: MockDocument }]
@@ -51,36 +48,6 @@ describe('utils: lazy', () => {
     srv = TestBed.inject(LazyService);
     srv.clear();
     doc = TestBed.inject(DOCUMENT);
-  });
-
-  describe('#IE', () => {
-    it('should be load a js resource', done => {
-      isIE = true;
-      srv.change.subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
-      srv.load(['/1.js']);
-    });
-    it('should be load a js resource unit stauts is complete', (done: () => void) => {
-      isIE = true;
-      const mockGetElementsByTagName = (): NzSafeAny => {
-        const mockObj = new MockDocument().getElementsByTagName();
-        mockObj[0].appendChild = (node: NzSafeAny): void => {
-          node.readyState = 'mock-status';
-          node.onreadystatechange();
-          node.readyState = 'complete';
-          node.onreadystatechange();
-        };
-        return mockObj;
-      };
-      spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName);
-      srv.change.subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
-      srv.load(['/1.js']);
-    });
   });
 
   describe('Scripts', () => {
