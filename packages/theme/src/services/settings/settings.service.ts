@@ -77,6 +77,8 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     return this.notify$.asObservable();
   }
 
+  setLayout<T extends Layout = Layout>(name: T, value?: NzSafeAny): boolean;
+  setLayout(name: string | L, value?: NzSafeAny): boolean;
   setLayout(name: string | L, value?: NzSafeAny): boolean {
     if (typeof name === 'string') {
       (this.layout as Layout)[name] = value;
@@ -87,16 +89,29 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     this.notify$.next({ type: 'layout', name, value } as NzSafeAny);
     return true;
   }
+  getLayout<T>(): T {
+    return this._layout as unknown as T;
+  }
 
+  setApp<T extends App = App>(value: T): void;
+  setApp(value: A): void;
   setApp(value: A): void {
     this._app = value;
     this.setData(this.KEYS.app, value);
     this.notify$.next({ type: 'app', value });
   }
+  getApp<T>(): T {
+    return this._app as unknown as T;
+  }
 
+  setUser<T extends User = User>(value: T): void;
+  setUser(value: U): void;
   setUser(value: U): void {
     this._user = value;
     this.setData(this.KEYS.user, value);
     this.notify$.next({ type: 'user', value });
+  }
+  getUser<T>(): T {
+    return this._user as unknown as T;
   }
 }

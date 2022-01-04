@@ -52,6 +52,7 @@ export class TokenService implements ITokenService, OnDestroy {
   }
 
   get(type?: NzSafeAny): NzSafeAny;
+  get<T extends ITokenModel>(type?: new () => T): T;
   get<T extends ITokenModel>(type?: new () => T): T {
     const data = this.store.get(this._options.store_key!);
     return type ? (Object.assign(new type(), data) as T) : (data as T);
