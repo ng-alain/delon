@@ -106,7 +106,6 @@ export class CodeService {
       '@delon/util',
       'ajv',
       'ajv-formats',
-      '@ant-design/icons-angular',
       ...dependencies
     ].forEach(k => (res.dependencies[k] = '*'));
     if (includeCli) {
@@ -128,9 +127,12 @@ export class CodeService {
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
-    res.dependencies['@angular/cdk'] = mainVersion;
-    res.dependencies['core-js'] = `~3.8.3`;
+    ['@angular/cdk', '@ant-design/icons-angular', 'ngx-countdown'].forEach(type => {
+      res.dependencies[type] = mainVersion;
+    });
+    // res.dependencies['core-js'] = `~3.8.3`;
     if (!includeCli) res;
+    console.log(res);
 
     return res;
   }
