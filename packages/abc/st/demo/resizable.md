@@ -16,7 +16,7 @@ title:
 
 Resize the table header base on [nz-resizable](https://ng.ant.design/experimental/resizable/en).
 
-> - Note: Don't forget to import the `nz-resizable` Less style (`@import'ng-zorro-antd/resizable/style/entry.less';`) file in `src/styles`.
+> - Note: Don't forget to import the `nz-resizable` Less style (`@import'~ng-zorro-antd/resizable/style/entry.less';`) file in `src/styles`.
 > - **Multiple headers not supported**
 
 ```ts
