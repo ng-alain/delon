@@ -32,7 +32,7 @@
     "lint": "bash scripts/ci/lint.sh -ts -less",
     "lint:ts": "eslint --cache . --ext .ts,.html",
     "lint:fix": "eslint --fix --cache . --ext .ts,.html",
-    "lint:style": "stylelint 'packages/**/*.less'",
+    "lint:style": "npx stylelint 'packages/**/*.less'",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "test:cli": "bash scripts/ci/build-schematics.sh -t -clone",
     "test:integration": "bash scripts/ci/build-schematics.sh -b -t -clone -integration",
