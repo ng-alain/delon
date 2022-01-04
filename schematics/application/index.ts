@@ -142,7 +142,7 @@ function addCodeStylesToPackageJson(): Rule {
     if (json == null) return tree;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `ng lint --fix`;
-    json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
+    json.scripts['lint:style'] = `npx stylelint \"src/**/*.less\" --fix`;
     json.scripts['prepare'] = 'husky install';
     writePackage(tree, json);
     // fix polyfills.ts
