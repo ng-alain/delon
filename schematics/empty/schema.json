@@ -140,6 +140,22 @@
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
       "alias": "t"
+    },
+    "service": {
+      "type": "string",
+      "description": "The service file to use in the new component.",
+      "default": "Ignore",
+      "enum": ["Ignore", "None", "Root"],
+      "x-prompt": {
+        "message": "Which service injectors would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "Ignore", "label": "Ignore generation of Service files" },
+          { "value": "Root", "label": "Use \"@Injectable({ providedIn: 'root' })\"" },
+          { "value": "None", "label": "Use \"@Injectable()\" (Should be automatically register to the nearest module)" }
+        ]
+      },
+      "x-user-analytics": 20
     }
   },
   "required": ["name", "module"]

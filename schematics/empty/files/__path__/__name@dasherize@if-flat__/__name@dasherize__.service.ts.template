@@ -1,0 +1,9 @@
+import { Injectable } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+
+@Injectable(<% if(service === 'Root') { %>{ providedIn: 'root' }<% } %>)
+export class <%= serviceName %> {
+
+  constructor(private http: _HttpClient) { }
+
+}

@@ -36,12 +36,14 @@ export interface CommonSchema extends ComponentSchema {
   schematicName?: string;
   target?: string;
   componentName?: string;
+  serviceName?: string;
   importModulePath?: string;
   routerModulePath?: string;
   selector?: string;
   withoutPrefix?: boolean;
   withoutModulePrefixInComponentName?: boolean;
   skipTests?: boolean;
+  service?: 'Ignore' | 'None' | 'Root';
   flat?: boolean;
   modal?: boolean;
 }
@@ -68,13 +70,13 @@ function buildSelector(schema: CommonSchema, projectPrefix: string): string {
   return ret.join('-');
 }
 
-function buildComponentName(schema: CommonSchema, _projectPrefix: string): string {
+function buildName(schema: CommonSchema, prefix: 'Component' | 'Service'): string {
   const ret: string[] = schema.withoutModulePrefixInComponentName === true ? [] : [schema.module!];
   if (schema.target && schema.target.length > 0) {
     ret.push(...schema.target.split('/'));
   }
   ret.push(schema.name!);
-  ret.push(`Component`);
+  ret.push(prefix);
   return strings.classify(ret.join('-'));
 }
 
@@ -223,13 +225,15 @@ export function buildAlain(schema: CommonSchema): Rule {
     const project = res.project;
     resolveSchema(tree, project, schema, res.alainProject);
 
-    schema.componentName = buildComponentName(schema, project.prefix);
+    schema.componentName = buildName(schema, 'Component');
+    schema.serviceName = buildName(schema, 'Service');
 
     // Don't support inline
     schema.inlineTemplate = false;
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),
+      schema.service === 'Ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),
       schema.skipTests ? filter(filePath => !filePath.endsWith('.spec.ts.template')) : noop(),
       schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__style__.template')) : noop(),
       schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html.template')) : noop(),
