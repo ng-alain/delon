@@ -9,7 +9,7 @@ export default function (options: CURDOptions): Rule {
   delete options.name;
 
   [
-    { name: 'list', options: { name, modal: false } },
+    { name: 'list', options: { name, modal: false, service: options.service } },
     { name: 'edit', options: { name: 'edit', modal: true, target: name } },
     { name: 'view', options: { name: 'view', modal: true, target: name } }
   ].forEach(item => rules.push(schematic(item.name, { ...options, ...item.options })));

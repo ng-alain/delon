@@ -17,4 +17,5 @@ export interface Schema extends ComponentSchema {
    * 指定是否使用模态框 (Specifies using modal mode)
    */
   modal?: boolean;
+  service?: 'ignore' | 'none' | 'root';
 }

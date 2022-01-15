@@ -141,6 +141,22 @@
       "default": true,
       "description": "指定是否使用模态框 (Specifies using modal mode)",
       "x-prompt": "Would you like to modal mode?"
+    },
+    "service": {
+      "type": "string",
+      "description": "The service file to use in the new component.",
+      "default": "ignore",
+      "enum": ["ignore", "none", "root"],
+      "x-prompt": {
+        "message": "Which service injectors would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "ignore", "label": "Ignore generation of Service files" },
+          { "value": "root", "label": "Use \"@Injectable({ providedIn: 'root' })\"" },
+          { "value": "none", "label": "Use \"@Injectable()\" (Should be automatically register to the nearest module)" }
+        ]
+      },
+      "x-user-analytics": 20
     }
   },
   "required": ["name", "module"]

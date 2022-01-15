@@ -144,15 +144,15 @@
     "service": {
       "type": "string",
       "description": "The service file to use in the new component.",
-      "default": "Ignore",
-      "enum": ["Ignore", "None", "Root"],
+      "default": "ignore",
+      "enum": ["ignore", "none", "root"],
       "x-prompt": {
         "message": "Which service injectors would you like to use?",
         "type": "list",
         "items": [
-          { "value": "Ignore", "label": "Ignore generation of Service files" },
-          { "value": "Root", "label": "Use \"@Injectable({ providedIn: 'root' })\"" },
-          { "value": "None", "label": "Use \"@Injectable()\" (Should be automatically register to the nearest module)" }
+          { "value": "ignore", "label": "Ignore generation of Service files" },
+          { "value": "root", "label": "Use \"@Injectable({ providedIn: 'root' })\"" },
+          { "value": "none", "label": "Use \"@Injectable()\" (Should be automatically register to the nearest module)" }
         ]
       },
       "x-user-analytics": 20

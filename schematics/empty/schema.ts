@@ -13,5 +13,5 @@ export interface Schema extends ComponentSchema {
    * 组件名不加模块名前缀 (Without prefix to component name), Default: `false`
    */
   withoutModulePrefixInComponentName?: boolean;
-  service?: 'Ignore' | 'None' | 'Root';
+  service?: 'ignore' | 'none' | 'root';
 }

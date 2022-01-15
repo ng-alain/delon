@@ -47,7 +47,7 @@ export interface CommonSchema extends ComponentSchema {
   withoutPrefix?: boolean;
   withoutModulePrefixInComponentName?: boolean;
   skipTests?: boolean;
-  service?: 'Ignore' | 'None' | 'Root';
+  service?: 'ignore' | 'none' | 'root';
   flat?: boolean;
   modal?: boolean;
 }
@@ -80,6 +80,10 @@ function buildName(schema: CommonSchema, prefix: 'Component' | 'Service'): strin
     ret.push(...schema.target.split('/'));
   }
   ret.push(schema.name!);
+  // 服务类自动过滤 list, empty 两个页面的后缀
+  if (prefix === 'Service' && ['list', 'empty'].includes(schema.name)) {
+    ret.pop();
+  }
   ret.push(prefix);
   return strings.classify(ret.join('-'));
 }
@@ -146,6 +150,7 @@ function resolveSchema(
 export function addImportToModule(tree: Tree, filePath: string, symbolName: string, fileName: string): void {
   const source = getSourceFile(tree, filePath);
   const change = insertImport(source, filePath, symbolName, fileName) as InsertChange;
+  if (change.path == null) return;
   const declarationRecorder = tree.beginUpdate(filePath);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
   tree.commitUpdate(declarationRecorder);
@@ -156,6 +161,7 @@ export function addProviderToModule(tree: Tree, filePath: string, serviceName: s
   const changes = _addProviderToModule(source, filePath, serviceName, importPath);
   const declarationRecorder = tree.beginUpdate(filePath);
   changes.forEach(change => {
+    if (change.path == null) return;
     if (change instanceof InsertChange) {
       declarationRecorder.insertLeft(change.pos, change.toAdd);
     }
@@ -229,7 +235,7 @@ function addDeclaration(schema: CommonSchema): Rule {
     }
 
     // service
-    if (schema.service === 'None') {
+    if (schema.service === 'none') {
       addProviderToModule(
         tree,
         schema.importModulePath!,
@@ -259,7 +265,7 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),
-      schema.service === 'Ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),
+      schema.service === 'ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),
       schema.skipTests ? filter(filePath => !filePath.endsWith('.spec.ts.template')) : noop(),
       schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__style__.template')) : noop(),
       schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html.template')) : noop(),

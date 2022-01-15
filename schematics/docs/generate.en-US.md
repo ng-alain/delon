@@ -24,6 +24,8 @@ Examples:
 ng g ng-alain:module trade
 # Generate a TradeListComponent List component under the trade module
 ng g ng-alain:list list -m=trade
+# Generate a TradeListComponent List component and TradeService class under the trade module
+ng g ng-alain:list list -m=trade --service=root
 # Generate a ListComponent List component under the trade module
 ng g ng-alain:list list -m=trade --withoutModulePrefixInComponentName=true
 # Generate a TradeEditComponent Edit component under the trade module
@@ -39,6 +41,7 @@ ng g ng-alain:edit edit -m=trade
 | `--modal` | Specifies using modal mode |
 | `--withoutPrefix` | Without prefix to selectors |
 | `--withoutModulePrefixInComponentName` | Without prefix to component name |
+| `--service` | Specifies how to generate service classes, can be set: `ignore`, `root`, `none` |
 
 ## Module
 
