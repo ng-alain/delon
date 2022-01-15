@@ -115,6 +115,8 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
+    this.ready.next(chart);
+
     this.changeData();
     chart.render();
   }

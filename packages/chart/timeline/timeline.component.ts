@@ -152,6 +152,8 @@ export class G2TimelineComponent extends G2BaseComponent {
       }
     });
 
+    this.ready.next(chart);
+
     this.changeData();
 
     chart.render();

@@ -24,3 +24,4 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 | `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
 | `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
