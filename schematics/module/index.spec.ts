@@ -33,4 +33,20 @@ describe('NgAlainSchematic: module', () => {
     const content = tree.readContent('/projects/foo/src/app/app.module.ts');
     expect(content).toContain(`import { TradeModule } from './trade/trade.module';`);
   });
+
+  it('shuold be include service', async () => {
+    tree = await runner.runSchematicAsync('module', { ...defaultOptions, service: 'none' }, tree).toPromise();
+    const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
+    const contentModule = tree.readContent('/projects/foo/src/app/routes/trade/trade.module.ts');
+    expect(content).toContain(`@Injectable()`);
+    expect(content).toContain(`TradeService`);
+    expect(contentModule).toContain(`import { TradeService } from './trade.service';`);
+  });
+
+  it('shuold be include root service', async () => {
+    tree = await runner.runSchematicAsync('module', { ...defaultOptions, service: 'root' }, tree).toPromise();
+    const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
+    expect(content).toContain(`@Injectable({ providedIn: 'root' })`);
+    expect(content).toContain(`TradeService`);
+  });
 });

@@ -38,6 +38,8 @@ ng g ng-alain:[command name] [name] [options]
 ng g ng-alain:module trade
 # trade 模块下生成一个 TradeListComponent List组件
 ng g ng-alain:list list -m=trade
+# trade 模块下生成一个 TradeEditComponent List组件 及 TradeService 服务类
+ng g ng-alain:list list -m=trade --service=root
 # trade 模块下生成一个 ListComponent List组件
 ng g ng-alain:list list -m=trade --withoutModulePrefixInComponentName=true
 # trade 模块下生成一个 TradeEditComponent Edit组件
@@ -53,6 +55,7 @@ ng g ng-alain:edit edit -m=trade
 | `--modal` | 指定是否使用模态框 |
 | `--withoutPrefix` | 指定选择器名不加前缀 |
 | `--withoutModulePrefixInComponentName` | 组件名不加模块名前缀 |
+| `--service` | 指定如何生成服务类，包含：`ignore`、`root`、`none` |
 
 ## Module 模块
 

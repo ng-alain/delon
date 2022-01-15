@@ -51,4 +51,11 @@ describe('Schematic: list', () => {
       expect(e.message).toContain(`already exists`);
     }
   });
+
+  it('shuold be include service', async () => {
+    tree = await runner.runSchematicAsync('list', { name: 'list', module: 'trade', service: 'none' }, tree).toPromise();
+    const servicePath = '/projects/foo/src/app/routes/trade/list/list.service.ts';
+    expect(tree.readContent(servicePath)).toContain(`@Injectable()`);
+    expect(tree.readContent(modulePath)).toContain(`TradeService`);
+  });
 });

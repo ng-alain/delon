@@ -15,7 +15,11 @@ import {
   url
 } from '@angular-devkit/schematics';
 import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
-import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
+import {
+  findNode,
+  insertImport,
+  addProviderToModule as _addProviderToModule
+} from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
@@ -36,12 +40,14 @@ export interface CommonSchema extends ComponentSchema {
   schematicName?: string;
   target?: string;
   componentName?: string;
+  serviceName?: string;
   importModulePath?: string;
   routerModulePath?: string;
   selector?: string;
   withoutPrefix?: boolean;
   withoutModulePrefixInComponentName?: boolean;
   skipTests?: boolean;
+  service?: 'ignore' | 'none' | 'root';
   flat?: boolean;
   modal?: boolean;
 }
@@ -68,13 +74,17 @@ function buildSelector(schema: CommonSchema, projectPrefix: string): string {
   return ret.join('-');
 }
 
-function buildComponentName(schema: CommonSchema, _projectPrefix: string): string {
+function buildName(schema: CommonSchema, prefix: 'Component' | 'Service'): string {
   const ret: string[] = schema.withoutModulePrefixInComponentName === true ? [] : [schema.module!];
   if (schema.target && schema.target.length > 0) {
     ret.push(...schema.target.split('/'));
   }
   ret.push(schema.name!);
-  ret.push(`Component`);
+  // 服务类自动过滤 list, empty 两个页面的后缀
+  if (prefix === 'Service' && ['list', 'empty'].includes(schema.name)) {
+    ret.pop();
+  }
+  ret.push(prefix);
   return strings.classify(ret.join('-'));
 }
 
@@ -140,8 +150,22 @@ function resolveSchema(
 export function addImportToModule(tree: Tree, filePath: string, symbolName: string, fileName: string): void {
   const source = getSourceFile(tree, filePath);
   const change = insertImport(source, filePath, symbolName, fileName) as InsertChange;
+  if (change.path == null) return;
   const declarationRecorder = tree.beginUpdate(filePath);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
+  tree.commitUpdate(declarationRecorder);
+}
+
+export function addProviderToModule(tree: Tree, filePath: string, serviceName: string, importPath: string): void {
+  const source = getSourceFile(tree, filePath);
+  const changes = _addProviderToModule(source, filePath, serviceName, importPath);
+  const declarationRecorder = tree.beginUpdate(filePath);
+  changes.forEach(change => {
+    if (change.path == null) return;
+    if (change instanceof InsertChange) {
+      declarationRecorder.insertLeft(change.pos, change.toAdd);
+    }
+  });
   tree.commitUpdate(declarationRecorder);
 }
 
@@ -171,10 +195,10 @@ export function addValueToVariable(
   tree.commitUpdate(declarationRecorder);
 }
 
-function getRelativePath(filePath: string, schema: CommonSchema): string {
+function getRelativePath(filePath: string, schema: CommonSchema, prefix: 'component' | 'service'): string {
   const importPath = `/${schema.path}/${schema.flat ? '' : `${strings.dasherize(schema.name!)}/`}${strings.dasherize(
     schema.name!
-  )}.component`;
+  )}.${prefix}`;
   return buildRelativePath(filePath, importPath);
 }
 
@@ -189,7 +213,7 @@ function addDeclaration(schema: CommonSchema): Rule {
       tree,
       schema.importModulePath!,
       schema.componentName!,
-      getRelativePath(schema.importModulePath!, schema)
+      getRelativePath(schema.importModulePath!, schema, 'component')
     );
     addValueToVariable(tree, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
 
@@ -200,13 +224,23 @@ function addDeclaration(schema: CommonSchema): Rule {
         tree,
         schema.routerModulePath!,
         schema.componentName!,
-        getRelativePath(schema.routerModulePath!, schema)
+        getRelativePath(schema.routerModulePath!, schema, 'component')
       );
       addValueToVariable(
         tree,
         schema.routerModulePath!,
         'routes',
         `{ path: '${schema.name}', component: ${schema.componentName} }`
+      );
+    }
+
+    // service
+    if (schema.service === 'none') {
+      addProviderToModule(
+        tree,
+        schema.importModulePath!,
+        schema.serviceName!,
+        getRelativePath(schema.importModulePath!, schema, 'service')
       );
     }
 
@@ -223,13 +257,15 @@ export function buildAlain(schema: CommonSchema): Rule {
     const project = res.project;
     resolveSchema(tree, project, schema, res.alainProject);
 
-    schema.componentName = buildComponentName(schema, project.prefix);
+    schema.componentName = buildName(schema, 'Component');
+    schema.serviceName = buildName(schema, 'Service');
 
     // Don't support inline
     schema.inlineTemplate = false;
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),
+      schema.service === 'ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),
       schema.skipTests ? filter(filePath => !filePath.endsWith('.spec.ts.template')) : noop(),
       schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__style__.template')) : noop(),
       schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html.template')) : noop(),
