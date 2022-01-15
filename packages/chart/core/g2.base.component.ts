@@ -117,16 +117,6 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  protected fixDark(): void {
-    if (this.theme !== 'dark') return;
-
-    this._chart.theme({
-      styleSheet: {
-        backgroundColor: 'transparent'
-      }
-    });
-  }
-
   ngOnDestroy(): void {
     if (this.resize$) {
       this.resize$.unsubscribe();

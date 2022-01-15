@@ -55,7 +55,6 @@ export class G2MiniBarComponent extends G2BaseComponent {
       padding,
       theme
     }));
-    this.fixDark();
     chart.scale({
       x: {
         type: 'cat'

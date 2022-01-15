@@ -75,7 +75,6 @@ export class G2GaugeComponent extends G2BaseComponent {
       padding,
       theme
     }));
-    this.fixDark();
     chart.legend(false);
     chart.animate(false);
     chart.tooltip(false);

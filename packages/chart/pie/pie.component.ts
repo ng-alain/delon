@@ -143,7 +143,6 @@ export class G2PieComponent extends G2BaseComponent {
       padding,
       theme
     }));
-    this.fixDark();
     chart.animate(animate);
 
     if (!tooltip) {

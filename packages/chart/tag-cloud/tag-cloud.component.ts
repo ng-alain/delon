@@ -87,7 +87,6 @@ export class G2TagCloudComponent extends G2BaseComponent {
       width: this.width,
       theme
     }));
-    this.fixDark();
     chart.scale({
       x: { nice: false },
       y: { nice: false }
