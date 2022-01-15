@@ -41,14 +41,15 @@ describe('Schematic: empty', () => {
       tree = await runner
         .runSchematicAsync('empty', { name: 'list', module: 'trade', service: 'None' }, tree)
         .toPromise();
-      expect(tree.readContent(servicePath)).not.toContain(`@Injectable()`);
+      expect(tree.readContent(servicePath)).toContain(`@Injectable()`);
+      expect(tree.readContent(modulePath)).toContain(`TradeListService`);
     });
 
     it('shuold be include root service', async () => {
       tree = await runner
         .runSchematicAsync('empty', { name: 'list', module: 'trade', service: 'Root' }, tree)
         .toPromise();
-      expect(tree.readContent(servicePath)).not.toContain(`@Injectable({ providedIn: 'root' })`);
+      expect(tree.readContent(servicePath)).toContain(`@Injectable({ providedIn: 'root' })`);
     });
   });
 

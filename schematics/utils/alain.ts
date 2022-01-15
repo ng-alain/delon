@@ -15,7 +15,11 @@ import {
   url
 } from '@angular-devkit/schematics';
 import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
-import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
+import {
+  findNode,
+  insertImport,
+  addProviderToModule as _addProviderToModule
+} from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
@@ -147,6 +151,18 @@ export function addImportToModule(tree: Tree, filePath: string, symbolName: stri
   tree.commitUpdate(declarationRecorder);
 }
 
+export function addProviderToModule(tree: Tree, filePath: string, serviceName: string, importPath: string): void {
+  const source = getSourceFile(tree, filePath);
+  const changes = _addProviderToModule(source, filePath, serviceName, importPath);
+  const declarationRecorder = tree.beginUpdate(filePath);
+  changes.forEach(change => {
+    if (change instanceof InsertChange) {
+      declarationRecorder.insertLeft(change.pos, change.toAdd);
+    }
+  });
+  tree.commitUpdate(declarationRecorder);
+}
+
 export function addValueToVariable(
   tree: Tree,
   filePath: string,
@@ -173,10 +189,10 @@ export function addValueToVariable(
   tree.commitUpdate(declarationRecorder);
 }
 
-function getRelativePath(filePath: string, schema: CommonSchema): string {
+function getRelativePath(filePath: string, schema: CommonSchema, prefix: 'component' | 'service'): string {
   const importPath = `/${schema.path}/${schema.flat ? '' : `${strings.dasherize(schema.name!)}/`}${strings.dasherize(
     schema.name!
-  )}.component`;
+  )}.${prefix}`;
   return buildRelativePath(filePath, importPath);
 }
 
@@ -191,7 +207,7 @@ function addDeclaration(schema: CommonSchema): Rule {
       tree,
       schema.importModulePath!,
       schema.componentName!,
-      getRelativePath(schema.importModulePath!, schema)
+      getRelativePath(schema.importModulePath!, schema, 'component')
     );
     addValueToVariable(tree, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
 
@@ -202,13 +218,23 @@ function addDeclaration(schema: CommonSchema): Rule {
         tree,
         schema.routerModulePath!,
         schema.componentName!,
-        getRelativePath(schema.routerModulePath!, schema)
+        getRelativePath(schema.routerModulePath!, schema, 'component')
       );
       addValueToVariable(
         tree,
         schema.routerModulePath!,
         'routes',
         `{ path: '${schema.name}', component: ${schema.componentName} }`
+      );
+    }
+
+    // service
+    if (schema.service === 'None') {
+      addProviderToModule(
+        tree,
+        schema.importModulePath!,
+        schema.serviceName!,
+        getRelativePath(schema.importModulePath!, schema, 'service')
       );
     }
 
