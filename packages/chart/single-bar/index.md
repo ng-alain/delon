@@ -27,3 +27,4 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 | `[format]` | 显示值格式 | `(value: number) => string` | - |
 | `[textStyle]` | 显示值样式 | `any` | `{ fontSize: 12, color: '#595959' }` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |

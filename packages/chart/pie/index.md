@@ -35,6 +35,7 @@ module: import { G2PieModule } from '@delon/chart/pie';
 | `[ratio]` | 百分比配置项 | `G2PieRatio` | `{ text: '占比', inverse: '反比', color: '', inverseColor: '#F0F2F5' }` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `EventEmitter<G2PieClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
 
 ### G2PieData
 

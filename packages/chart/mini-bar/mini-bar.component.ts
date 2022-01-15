@@ -55,6 +55,7 @@ export class G2MiniBarComponent extends G2BaseComponent {
       padding,
       theme
     }));
+    this.fixDark();
     chart.scale({
       x: {
         type: 'cat'
@@ -79,6 +80,8 @@ export class G2MiniBarComponent extends G2BaseComponent {
     chart.on(`interval:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
+
+    this.ready.next(chart);
 
     this.changeData();
     chart.render();

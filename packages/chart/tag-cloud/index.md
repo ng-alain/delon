@@ -21,6 +21,7 @@ module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 | `[data]` | 数据 | `G2TagCloudData[]` | `[]` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `EventEmitter<G2TagCloudClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
 
 ### G2TagCloudData
 

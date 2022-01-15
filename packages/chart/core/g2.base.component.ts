@@ -3,11 +3,13 @@ import {
   ChangeDetectorRef,
   Directive,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -54,6 +56,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() @InputNumber() delay = 0;
   @Input() theme: string | Types.LooseObject;
+  @Output() readonly ready = new EventEmitter<Chart>();
 
   /** 检查是否只变更数据 */
   onlyChangeData?: (changes: SimpleChanges) => boolean;
@@ -112,6 +115,16 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       this._chart.destroy();
     }
     return this;
+  }
+
+  protected fixDark(): void {
+    if (this.theme !== 'dark') return;
+
+    this._chart.theme({
+      styleSheet: {
+        backgroundColor: 'transparent'
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -72,6 +72,7 @@ export class G2RadarComponent extends G2BaseComponent {
       padding,
       theme
     }));
+    this.fixDark();
 
     chart.coordinate('polar');
     chart.legend(false);
@@ -119,6 +120,8 @@ export class G2RadarComponent extends G2BaseComponent {
     chart.on(`point:click`, (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
+
+    this.ready.next(chart);
 
     this.changeData();
 

@@ -75,6 +75,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       padding,
       theme
     }));
+    this.fixDark();
     chart.legend(false);
     chart.animate(false);
     chart.tooltip(false);
@@ -100,6 +101,8 @@ export class G2GaugeComponent extends G2BaseComponent {
       grid: null
     });
     chart.point().position('value*1').shape('pointer');
+
+    this.ready.next(chart);
 
     this.changeData();
 
@@ -140,7 +143,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       content: title,
       style: {
         fontSize: 12,
-        fill: 'rgba(0, 0, 0, 0.43)',
+        fill: this.theme === 'dark' ? 'rgba(255, 255, 255, 0.43)' : 'rgba(0, 0, 0, 0.43)',
         textAlign: 'center'
       }
     });
@@ -149,7 +152,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       content: `${val} %`,
       style: {
         fontSize: 20,
-        fill: 'rgba(0, 0, 0, 0.85)',
+        fill: this.theme === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
         textAlign: 'center'
       },
       offsetY: 15

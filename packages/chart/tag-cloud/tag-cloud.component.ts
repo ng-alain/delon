@@ -87,6 +87,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       width: this.width,
       theme
     }));
+    this.fixDark();
     chart.scale({
       x: { nice: false },
       y: { nice: false }
@@ -115,6 +116,8 @@ export class G2TagCloudComponent extends G2BaseComponent {
     chart.on('tag-cloud-text:click', (ev: Event) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
+
+    this.ready.next(chart);
 
     this.changeData();
     chart.render();

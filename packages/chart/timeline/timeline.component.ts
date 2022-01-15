@@ -107,6 +107,7 @@ export class G2TimelineComponent extends G2BaseComponent {
       padding,
       theme
     }));
+    this.fixDark();
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
     for (let i = 2; i <= maxAxis; i++) {
@@ -151,6 +152,8 @@ export class G2TimelineComponent extends G2BaseComponent {
         line.changeVisible(!item.unchecked);
       }
     });
+
+    this.ready.next(chart);
 
     this.changeData();
 
