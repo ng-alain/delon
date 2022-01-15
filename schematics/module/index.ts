@@ -86,10 +86,17 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
     }
     const recorder = tree.beginUpdate(modulePath);
     const moduleName = strings.classify(`${options.name}Module`);
-    const code = `{ path: '${options.name}', loadChildren: () => import('./${options.name}/${options.name}.module').then((m) => m.${moduleName}) },`;
     let pos = childrenNode.parent.end;
+    const validLines = childrenNode.parent
+      .getText()
+      .trim()
+      .split('\n')
+      .map(v => v.trim())
+      .filter(v => v.length > 1 && !v.startsWith('//'));
+    const comma = validLines.pop()?.endsWith(',') === false ? ', ' : '';
+    const code = `${comma} { path: '${options.name}', loadChildren: () => import('./${options.name}/${options.name}.module').then((m) => m.${moduleName}) }`;
     // Insert it just before the `]`.
-    recorder.insertRight(--pos, code);
+    recorder.insertRight(pos - 1, code);
     tree.commitUpdate(recorder);
     return tree;
   };
