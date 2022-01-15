@@ -86,7 +86,7 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
     }
     const recorder = tree.beginUpdate(modulePath);
     const moduleName = strings.classify(`${options.name}Module`);
-    const code = `{ path: '${options.name}', loadChildren: () => import('./${options.name}/${options.name}.module').then((m) => m.${moduleName}) },`;
+    const code = `, { path: '${options.name}', loadChildren: () => import('./${options.name}/${options.name}.module').then((m) => m.${moduleName}) }`;
     let pos = childrenNode.parent.end;
     // Insert it just before the `]`.
     recorder.insertRight(--pos, code);
