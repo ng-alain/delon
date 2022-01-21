@@ -31,8 +31,10 @@
         <ng-content></ng-content>
       </div>
     </div>
-    <div *ngIf="!ui.onlyVisual && showError" class="ant-form-item-explain ant-form-item-explain-error">
-      <div @helpMotion>{{ error }}</div>
+    <div *ngIf="!ui.onlyVisual && showError" @helpMotion class="ant-form-item-explain ant-form-item-explain-connected">
+      <div role="alert" class="ant-form-item-explain-error">
+        {{ error }}
+      </div>
     </div>
     <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="ui._description"></div>
   </div>
