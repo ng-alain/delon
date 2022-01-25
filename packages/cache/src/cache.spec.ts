@@ -110,6 +110,15 @@ describe('cache: service', () => {
         srv.set(KEY, 2);
         expect(srv.getNone(KEY)).toBe(2);
       });
+      it('should be can not notify when emitNotify is false', () => {
+        let result = true;
+        srv
+          .notify(KEY)
+          .pipe(filter(v => v != null))
+          .subscribe(() => (result = false));
+        srv.set(KEY, 1, { emitNotify: false });
+        expect(result).toBe(true);
+      });
     });
 
     describe('#get', () => {
