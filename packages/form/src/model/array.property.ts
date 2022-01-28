@@ -1,4 +1,5 @@
 import { AlainSFConfig } from '@delon/util/config';
+import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SF_SEQ } from '../const';
@@ -64,8 +65,8 @@ export class ArrayProperty extends PropertyGroup {
 
   private addProperty(formData: Record<string, unknown>): FormProperty {
     const newProperty = this.formPropertyFactory.createProperty(
-      this.schema.items!,
-      this.ui.$items,
+      deepCopy(this.schema.items!),
+      deepCopy(this.ui.$items),
       formData,
       this as PropertyGroup
     ) as ObjectProperty;
