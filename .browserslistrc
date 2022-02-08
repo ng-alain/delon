@@ -11,6 +11,7 @@
 last 1 Chrome version
 last 1 Firefox version
 last 2 Edge major versions
-last 2 Safari major versions
+# fixed https://github.com/angular/angular-cli/issues/22606
+# last 2 Safari major versions
 last 2 iOS major versions
 Firefox ESR
