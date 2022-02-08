@@ -29,7 +29,7 @@ export class HeaderComponent implements AfterViewInit {
   isMobile!: boolean;
   oldVersionList = [`12.x`, `11.x`, `10.x`, `9.x`, `8.x`, `1.x`];
   currentVersion = pkg.version;
-  delonLibs: Array<{ name: string; default?: string }> = [
+  delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
     { name: 'auth' },
     { name: 'acl' },
@@ -48,8 +48,9 @@ export class HeaderComponent implements AfterViewInit {
     cli: { regex: /^\/cli/ },
     delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ }
   };
+  delonType?: string;
 
-  private getWin(): Window {
+  private get win(): Window {
     return (this.doc as Document).defaultView || window;
   }
 
@@ -65,6 +66,7 @@ export class HeaderComponent implements AfterViewInit {
   ) {
     router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
       this.menuVisible = false;
+      this.genDelonType();
     });
     this.mobileSrv.change.subscribe(res => {
       this.isMobile = res;
@@ -75,18 +77,28 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   private updateGitee(): void {
-    this.showGitee = this.i18n.currentLang === 'zh-CN' && this.getWin().location.host.indexOf('gitee') === -1;
+    this.showGitee = this.i18n.currentLang === 'zh-CN' && this.win.location.host.indexOf('gitee') === -1;
+    this.cdr.detectChanges();
+  }
+
+  private genDelonType(): void {
+    if (!this.inited) return;
+
+    // delonType
+    const match = (this.doc.location.pathname as string).match(this.regexs.delon.regex);
+    this.delonType = match == null ? undefined : match[1];
     this.cdr.detectChanges();
   }
 
   ngAfterViewInit(): void {
     this.inited = true;
     this.updateGitee();
+    this.genDelonType();
   }
 
   toVersion(version: string): void {
     if (version !== this.currentVersion) {
-      this.getWin().location.href = `https://ng-alain.com/version/${version}/`;
+      this.win.location.href = `https://ng-alain.com/version/${version}/`;
     }
   }
 

@@ -43,13 +43,13 @@ export class HeaderSearchComponent implements AfterViewInit {
       const curHost = location.hostname;
       const isLocal = curHost.includes('localhost');
       docsearch({
-        // appId: '2WSH9IUML3',
-        apiKey: 'abc8efef8b964f6ab0629f0ded98ab29',
-        indexName: 'ng-alain',
+        appId: 'KNI4PDQPLT',
+        apiKey: 'f77b841e2a1f87742bef959fe09cc80e',
+        indexName: `ng-alain-${this.i18n.zone}`,
         inputSelector: '#search-box input',
         algoliaOptions: {
-          hitsPerPage: 5,
-          facetFilters: [`tags:${this.i18n.zone}`]
+          hitsPerPage: 5
+          // facetFilters: [`tags:${this.i18n.zone}`]
         },
         handleSelected: (_input: NzSafeAny, _event: NzSafeAny, suggestion: { url: string }) => {
           const url = suggestion?.url || '';
