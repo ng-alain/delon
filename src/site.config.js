@@ -366,7 +366,7 @@ module.exports = {
         },
       ],
       module: '@delon/util',
-      defaultRoute: 'array',
+      defaultRoute: 'getting-started',
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {

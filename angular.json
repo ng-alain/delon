@@ -122,7 +122,7 @@
           "options": {
             "browserTarget": "site:build:production",
             "serverTarget": "site:server:production",
-            "routes": ["/", "zh", "en"]
+            "routesFile": "scripts/site/route-paths.txt"
           },
           "configurations": {
             "production": {}

@@ -38,6 +38,17 @@ const defaultLang = siteConfig.defaultLang;
 const exampleModules: ExampleModules = {
   list: []
 };
+const routerPaths: string[] = ['/'];
+
+function pushRouterPath(name: string, p: string): void {
+  routerPaths.push(`/${name}/${p}/en`);
+  routerPaths.push(`/${name}/${p}/zh`);
+}
+
+function saveRouterPath(): void {
+  const filePath = path.join(rootDir, 'scripts/site/route-paths.txt');
+  fs.writeFileSync(filePath, Array.from(new Set(routerPaths)).join('\n'), { flag: 'w+' });
+}
 
 function generateModule(config: ModuleConfig): void {
   const distPath = path.join(rootDir, config.dist);
@@ -60,6 +71,8 @@ function generateModule(config: ModuleConfig): void {
       const path_name = handleExploreStr(name, '-');
       modules.routes.push(`{ path: '${path_name}', redirectTo: '${path_name}/zh', pathMatch: 'full' }`);
       modules.routes.push(`{ path: '${path_name}/:lang', component: ${componentName} }`);
+
+      pushRouterPath(config.name, path_name);
     }
   }
 
@@ -121,7 +134,7 @@ function generateModule(config: ModuleConfig): void {
       siteConfig
     );
 
-    files.forEach(item => {
+    files.forEach((item: any) => {
       // #region generate document file
 
       const content: any = {};
@@ -191,7 +204,7 @@ function generateModule(config: ModuleConfig): void {
       // #region register module
       appendToModule(fileObject.componentName, meta.name, 'index');
       // demo
-      demoList.forEach(demo => {
+      demoList.forEach((demo: { componentName: string; name: string }) => {
         appendToModule(demo.componentName, meta.name, demo.name, false);
       });
       // #endregion
@@ -234,5 +247,8 @@ for (const m of siteConfig.modules) {
 if (exampleModules.list.length > 0) {
   generateExampleModule(rootDir, siteConfig, exampleModules);
 }
+
+// save routerPaths
+saveRouterPath();
 
 console.log(`✅ Site generated successfully`);
