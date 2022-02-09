@@ -50,8 +50,8 @@ export class HeaderSearchComponent implements AfterViewInit {
         inputSelector: '#search-box input',
         algoliaOptions: {
           hitsPerPage: 5,
-          queryLanguages: [this.i18n.zone]
-          // facetFilters: [`tags:${this.i18n.zone}`]
+          // queryLanguages: [this.i18n.zone]
+          facetFilters: [`tags:${this.i18n.zone}`]
         },
         handleSelected: (_input: NzSafeAny, _event: NzSafeAny, suggestion: { url: string }) => {
           const url = suggestion?.url || '';
