@@ -127,7 +127,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
       if (str.charAt(i) !== '%') {
         result.push(str.charCodeAt(i));
       } else {
-        result.push(parseInt(str.substr(i + 1, 2), 16));
+        result.push(parseInt(str.substring(i + 1, i + 3), 16));
         i += 2;
       }
     }
