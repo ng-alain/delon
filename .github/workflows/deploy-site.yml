@@ -21,6 +21,7 @@ jobs:
           node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --base-href /delon/
           yarn run site:helper
           yarn run site:minify
+          yarn run site:sitemap
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           cp ./Dockerfile.docs ./src/dist/browser/Dockerfile.docs
           cp -r ./_nginx/ ./src/dist/browser/_nginx
