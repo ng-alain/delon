@@ -56,7 +56,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() mime?: string;
   @Input() @InputNumber() padding?: number;
   @Input() @InputNumber() size?: number;
-  @Input() value = '';
+  @Input() value: string | (() => string) = '';
   @Input() @InputNumber() delay?: number;
   @Output() readonly change = new EventEmitter<string>();
 
@@ -114,7 +114,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
       mime: this.mime,
       padding: this.padding,
       size: this.size,
-      value: this.toUtf8ByteArray(this.value)
+      value: typeof this.value === 'function' ? this.value() : this.toUtf8ByteArray(this.value)
     };
     this.option = option;
     this.init();

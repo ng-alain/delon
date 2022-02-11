@@ -18,7 +18,7 @@ Qr libary is lazy loading by default，you can change the default CDN path (or u
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
-| `[value]` | Value encoded within the QR code | `string` | - |  |
+| `[value]` | Value encoded within the QR code | `string | () => string` | - |  |
 | `[background]` | Background colour of the QR code | `string` | `white` | ✅ |
 | `[backgroundAlpha]` | Background alpha of the QR code | `number` | `1` | ✅ |
 | `[foreground]` | Foreground colour of the QR code | `string` | `white` | ✅ |
