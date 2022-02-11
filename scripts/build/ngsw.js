@@ -4,13 +4,13 @@ const fs = require('fs-extra');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const ROOT = path.resolve(__dirname, '../../')
+const ROOT = path.resolve(__dirname, '../..')
 const browserOutput = path.join(ROOT, 'src/dist/browser')
 
 async function runNGSWConfig() {
   return new Promise((res, reject) => {
     spawn
-    const childProcess = spawn('node_modules/.bin/ngsw-config', ['dist/browser', 'ngsw-config.json'], {
+    const childProcess = spawn('node_modules/.bin/ngsw-config', ['src/dist/browser', 'ngsw-config.json'], {
       env: { ...process.env },
       cwd: ROOT,
       stdio: ['pipe', 'ignore', 'ignore']
