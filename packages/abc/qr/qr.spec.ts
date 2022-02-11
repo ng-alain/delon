@@ -66,6 +66,12 @@ describe('abc: qr', () => {
       fixture.detectChanges();
       expect(context.change).toHaveBeenCalled();
     });
+
+    it('should be function value', () => {
+      context.value = () => `1`;
+      fixture.detectChanges();
+      expect(context.change).toHaveBeenCalled();
+    });
   });
 
   it('should be lazy load libary', () => {
@@ -105,7 +111,7 @@ class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: QRComponent;
 
-  value = 'https://ng-alain.com/';
+  value: string | (() => string) = 'https://ng-alain.com/';
   background = 'white';
   backgroundAlpha = 1.0;
   foreground = 'black';

@@ -17,7 +17,7 @@ module: import { QRModule } from '@delon/abc/qr';
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
-| `[value]` | 值 | `string` | - |  |
+| `[value]` | 值 | `string | () => string` | - |  |
 | `[background]` | 背景 | `string` | `white` | ✅ |
 | `[backgroundAlpha]` | 背景透明级别，范围：`0-1` 之间 | `number` | `1` | ✅ |
 | `[foreground]` | 前景 | `string` | `white` | ✅ |
