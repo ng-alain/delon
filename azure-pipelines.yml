@@ -43,8 +43,6 @@ stages:
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
               echo "Deploy to $DEPLOY_DOMAIN"
               cp ./src/dist/browser/index.html ./src/dist/browser/404.html
-              echo 'version' >> dist/browser/.surgeignore
-              echo 'issue-helper' >> dist/browser/.surgeignore
               npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
             displayName: 'Deploy Site'
             env:

@@ -21,8 +21,6 @@ jobs:
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           cp ./Dockerfile.docs ./src/dist/browser/Dockerfile.docs
           cp -r ./_nginx/ ./src/dist/browser/_nginx
-          echo 'version' >> dist/browser/.surgeignore
-          echo 'issue-helper' >> dist/browser/.surgeignore
 
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v2
