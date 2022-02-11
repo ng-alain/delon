@@ -17,14 +17,12 @@ jobs:
       - name: build
         # Copy dockerfile.docs & _nginx just only for ng-alain.com
         run: |
-          yarn run site:gen
-          node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --base-href /delon/
-          yarn run site:helper
-          yarn run site:minify
-          yarn run site:sitemap
+          yarn run site:build
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           cp ./Dockerfile.docs ./src/dist/browser/Dockerfile.docs
           cp -r ./_nginx/ ./src/dist/browser/_nginx
+          echo 'version' >> dist/browser/.surgeignore
+          echo 'issue-helper' >> dist/browser/.surgeignore
 
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v2
@@ -35,13 +33,6 @@ jobs:
           PUBLISH_DIR: ./src/dist/browser
         with:
           emptyCommits: false
-
-      - name: deploy-to-surge-pre
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          find: '/delon/'
-          replace: '/'
-          include: '**/*.html'
 
       - name: deploy-to-surge
         uses: dswistowski/surge-sh-action@v1

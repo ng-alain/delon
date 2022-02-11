@@ -14,22 +14,33 @@ order: 2
 One subscription and multiple use.
 
 ```ts
+import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { interval } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 @Component({
   selector: 'app-demo',
   template: `
-    <ng-container *let="timer$ | async as time">
-      <p>Timer value: {{ time }}</p>
-      <p>Timer value: {{ time }}</p>
-      <p>Timer value: {{ time }}</p>
+    <ng-container *ngIf="timer$ !== null">
+      <ng-container *let="timer$ | async as time">
+        <p>Timer value: {{ time }}</p>
+        <p>Timer value: {{ time }}</p>
+        <p>Timer value: {{ time }}</p>
+      </ng-container>
     </ng-container>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoComponent {
-  timer$ = interval(1000).pipe(startWith(0));
+  timer$: NzSafeAny | null = null;
+
+  constructor(platform: Platform) {
+    if (!platform.isBrowser) return;
+
+    this.timer$ = interval(1000).pipe(startWith(0));
+  }
 }
 ```

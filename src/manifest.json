@@ -1,11 +1,11 @@
 {
-  "name": "site",
-  "short_name": "site",
+  "name": "一个基于 Antd 中后台前端解决方案 - NG-ALAIN",
+  "short_name": "NG-ALAIN",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

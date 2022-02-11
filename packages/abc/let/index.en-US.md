@@ -4,7 +4,7 @@ order: 1
 title: let
 subtitle: Let
 cols: 1
-module: import { LetModule } from '@delon/abc/lett';
+module: import { LetModule } from '@delon/abc/let';
 ---
 
 Allows to reuse computed value in several places in template to avoid recalculations of getters or many `async` pipes.

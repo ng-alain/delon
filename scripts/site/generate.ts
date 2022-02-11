@@ -47,7 +47,7 @@ function pushRouterPath(name: string, p: string): void {
 
 function saveRouterPath(): void {
   const filePath = path.join(rootDir, 'scripts/site/route-paths.txt');
-  fs.writeFileSync(filePath, Array.from(new Set(routerPaths)).join('\n'), { flag: 'w+' });
+  fs.writeFileSync(filePath, Array.from(new Set(routerPaths)).sort().join('\n'), { flag: 'w+' });
 }
 
 function generateModule(config: ModuleConfig): void {

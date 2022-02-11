@@ -77,7 +77,7 @@ async function minifyFile(filePath, type) {
 const distFiles = {
   html: ['index.html', '404.html'],
   js: ['ngsw-worker.js', 'worker-basic.min.js', 'safety-worker.js'],
-  json: ['ngsw.json'],
+  json: ['manifest.json'],
 };
 const ROOT_DIR = `${path.resolve(__dirname, '../../')}/src/dist/browser`;
 

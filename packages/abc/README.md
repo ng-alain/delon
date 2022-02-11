@@ -4,7 +4,7 @@ Common business components of ng-alain.
 
 ## Links
 
-+ [Document](https://ng-alain.com/components) ([Surge Mirror](https://ng-alain-doc.surge.sh/components) - [国内镜像](https://ng-alain.gitee.io/delon/components))
++ [Document](https://ng-alain.com/components) ([Surge Mirror](https://ng-alain-doc.surge.sh/components)
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 

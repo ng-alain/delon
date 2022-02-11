@@ -5,9 +5,20 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
-        "files": ["/favicon.ico", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"],
-        "urls": ["https://gw.alipayobjects.com/**", "https://img.alicdn.com/**", "https://dummyimage.com/**"]
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/*.css",
+          "/*.js",
+          "!/*-es5*.js"
+        ],
+        "urls": [
+          "https://gw.alipayobjects.com/**",
+          "https://img.alicdn.com/**",
+          "https://dummyimage.com/**"
+        ]
       }
     },
     {
@@ -15,7 +26,9 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"]
+        "files": [
+          "/assets/**"
+        ]
       }
     }
   ],

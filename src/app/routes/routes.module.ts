@@ -13,7 +13,7 @@ const routes: Route[] = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', redirectTo: 'zh', pathMatch: 'full' },
+      { path: '', redirectTo: 'en', pathMatch: 'full' },
       { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
       { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
       // #region region routers

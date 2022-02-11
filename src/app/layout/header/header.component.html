@@ -39,9 +39,6 @@
         {{ 'app.header.menu.themes' | i18n }}
       </a>
     </li>
-    <li *ngIf="showGitee" nz-menu-item>
-      <a href="https://ng-alain.gitee.io/delon/" target="_blank"> 国内镜像 </a>
-    </li>
     <ng-container *ngIf="isMobile">
       <a nz-menu-item href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a>
       <li nz-menu-item (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')">

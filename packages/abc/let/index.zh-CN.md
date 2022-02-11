@@ -4,7 +4,7 @@ order: 1
 title: let
 subtitle: 定义
 cols: 1
-module: import { LetModule } from '@delon/abc/lett';
+module: import { LetModule } from '@delon/abc/let';
 ---
 
 允许在模板内复用计算值（包含异步），避免重复重新计算。
