@@ -41,10 +41,11 @@
     "analyze": "npm run ng-high-memory build -- --source-map",
     "analyze:view": "source-map-explorer src/dist/browser/*.js",
     "site:gen": "node scripts/site/main init && ng-alain-plugin-theme -t=themeCss && ng-alain-plugin-theme -t=colorLess",
-    "site:build": "npm run site:gen && npm run ng-high-memory build && npm run site:helper && npm run site:minify && npm run site:sitemap",
+    "site:build": "npm run site:gen && npm run ssr:prerender && npm run site:ngsw && npm run site:minify && npm run site:sitemap && npm run site:helper",
     "site:helper": "bash scripts/ci/helper.sh",
     "site:minify": "node scripts/build/minify.js",
     "site:sitemap": "node scripts/build/sitemap.js",
+    "site:ngsw": "node scripts/build/ngsw.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
@@ -52,8 +53,7 @@
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js",
     "ssr": "npm run ng-high-memory run site:serve-ssr",
     "ssr:serve": "node src/dist/server/main.js",
-    "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
-    "ssr:prerender": "npm run site:build && npm run ng-high-memory run site:prerender"
+    "ssr:prerender": "ng run site:prerender"
   },
   "dependencies": {
     "@angular/animations": "~13.2.0",

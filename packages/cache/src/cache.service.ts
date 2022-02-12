@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -26,7 +27,8 @@ export class CacheService implements OnDestroy {
   constructor(
     cogSrv: AlainConfigService,
     @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore,
-    private http: HttpClient
+    private http: HttpClient,
+    private platform: Platform
   ) {
     this.cog = cogSrv.merge('cache', {
       mode: 'promise',
@@ -34,6 +36,7 @@ export class CacheService implements OnDestroy {
       prefix: '',
       meta_key: '__cache_meta'
     })!;
+    if (!platform.isBrowser) return;
     this.loadMeta();
     this.startExpireNotify();
   }
@@ -133,6 +136,8 @@ export class CacheService implements OnDestroy {
       emitNotify?: boolean;
     } = {}
   ): NzSafeAny {
+    if (!this.platform.isBrowser) return;
+
     let e = 0;
     const { type, expire } = this.cog;
     options = {
@@ -210,6 +215,8 @@ export class CacheService implements OnDestroy {
       emitNotify?: boolean;
     } = {}
   ): Observable<NzSafeAny> | NzSafeAny {
+    if (!this.platform.isBrowser) return null;
+
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
     const value = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
@@ -282,6 +289,8 @@ export class CacheService implements OnDestroy {
       emitNotify?: boolean;
     } = {}
   ): NzSafeAny {
+    if (!this.platform.isBrowser) return null;
+
     const ret = this.getNone(key);
     if (ret === null) {
       if (!(data instanceof Observable)) {
@@ -319,11 +328,15 @@ export class CacheService implements OnDestroy {
 
   /** 移除缓存 */
   remove(key: string): void {
+    if (!this.platform.isBrowser) return;
+
     this._remove(key, true);
   }
 
   /** 清空所有缓存 */
   clear(): void {
+    if (!this.platform.isBrowser) return;
+
     this.notifyBuffer.forEach((_v, k) => this.runNotify(k, 'remove'));
     this.memory.clear();
     this.meta.forEach(key => this.store.remove(this.cog.prefix + key));

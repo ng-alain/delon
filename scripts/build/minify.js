@@ -34,7 +34,7 @@ async function minifyHtml(content) {
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
     trimCustomFragments: true,
-    useShortDoctype: true,
+    useShortDoctype: true
   });
 }
 
@@ -75,9 +75,23 @@ async function minifyFile(filePath, type) {
 }
 
 const distFiles = {
-  html: ['index.html', '404.html'],
+  html: [
+    'index.html',
+    '404.html',
+    'acl/**/index.html',
+    'auth/**/index.html',
+    'cache/**/index.html',
+    'chart/**/index.html',
+    'cli/**/index.html',
+    'components/**/index.html',
+    'docs/**/index.html',
+    'form/**/index.html',
+    'mock/**/index.html',
+    'theme/**/index.html',
+    'util/**/index.html',
+  ],
   js: ['ngsw-worker.js', 'worker-basic.min.js', 'safety-worker.js'],
-  json: ['ngsw.json'],
+  json: ['manifest.json'],
 };
 const ROOT_DIR = `${path.resolve(__dirname, '../../')}/src/dist/browser`;
 
@@ -85,7 +99,11 @@ async function minifyFiles() {
   for (const type of Object.keys(distFiles)) {
     const paths = distFiles[type].map(pattern => glob.sync(pattern, { cwd: ROOT_DIR })).reduce((a, b) => [...a, ...b], []);
     for (const contentPath of paths) {
-      await minifyFile(path.resolve(ROOT_DIR, contentPath), type);
+      try {
+        await minifyFile(path.resolve(ROOT_DIR, contentPath), type);
+      } catch (ex) {
+        console.log(`${contentPath}: `, ex)
+      }
     }
   }
 }

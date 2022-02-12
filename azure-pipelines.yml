@@ -16,7 +16,7 @@ stages:
               versionSpec: '14.17.0'
             displayName: 'Install Node.js'
 
-  - stage: artifacts
+  - stage: build
     dependsOn: env
     jobs:
       - job: build
@@ -29,6 +29,50 @@ stages:
             inputs:
               targetType: 'filePath'
               filePath: 'scripts/ci/build-artifacts.sh'
+            displayName: 'Build artifacts'
+          - script: |
+              node ./scripts/azure/github-comment.js "[Preview Preparing...](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
+            displayName: 'Comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+          - script: |
+              yarn run site:build
+            displayName: 'Build site'
+          - script: |
+              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
+              echo "Deploy to $DEPLOY_DOMAIN"
+              cp ./src/dist/browser/index.html ./src/dist/browser/404.html
+              npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
+            displayName: 'Deploy Site'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+              SURGE_LOGIN: $(SURGE_LOGIN)
+              SURGE_TOKEN: $(SURGE_TOKEN)
+          - script: |
+              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
+              node ./scripts/azure/github-comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
+            displayName: 'Update comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+      - job: Build_Failed
+        dependsOn: Build
+        condition: failed()
+        steps:
+          - checkout: self
+            displayName: 'Checkout'
+            clean: true
+            fetchDepth: 1
+          - script: yarn install
+            displayName: 'Install modules'
+          - script: |
+              node ./scripts/azure/github-comment.js "[Preview Failed](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
+            displayName: 'Comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
 
   - stage: test
     dependsOn: env
@@ -75,61 +119,3 @@ stages:
           - script: yarn install
             displayName: 'Install'
           - script: yarn run lint
-
-  - stage: site
-    dependsOn:
-      - env
-      - artifacts
-    jobs:
-      - job: Build
-        steps:
-          - checkout: self
-            displayName: 'Checkout'
-            clean: true
-            fetchDepth: 1
-          - script: yarn install
-            displayName: 'Install'
-          - script: |
-              node ./scripts/azure/github-comment.js "[Preview Preparing...](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
-            displayName: 'Comment on github'
-            env:
-              ACCESS_REPO: $(ACCESS_REPO)
-              ACCESS_TOKEN: $(ACCESS_TOKEN)
-          - script: yarn run site:build
-            displayName: 'Build sites'
-          - script: ls -al src/dist/browser/
-            displayName: 'List build'
-          - script: |
-              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
-              echo "Deploy to $DEPLOY_DOMAIN"
-              cp ./src/dist/browser/index.html ./src/dist/browser/404.html
-              npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
-            displayName: 'Deploy Site'
-            env:
-              ACCESS_REPO: $(ACCESS_REPO)
-              ACCESS_TOKEN: $(ACCESS_TOKEN)
-              SURGE_LOGIN: $(SURGE_LOGIN)
-              SURGE_TOKEN: $(SURGE_TOKEN)
-          - script: |
-              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
-              node ./scripts/azure/github-comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
-            displayName: 'Update comment on github'
-            env:
-              ACCESS_REPO: $(ACCESS_REPO)
-              ACCESS_TOKEN: $(ACCESS_TOKEN)
-      - job: Build_Failed
-        dependsOn: Build
-        condition: failed()
-        steps:
-          - checkout: self
-            displayName: 'Checkout'
-            clean: true
-            fetchDepth: 1
-          - script: yarn install
-            displayName: 'Install modules'
-          - script: |
-              node ./scripts/azure/github-comment.js "[Preview Failed](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
-            displayName: 'Comment on github'
-            env:
-              ACCESS_REPO: $(ACCESS_REPO)
-              ACCESS_TOKEN: $(ACCESS_TOKEN)

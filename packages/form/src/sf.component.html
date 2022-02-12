@@ -5,7 +5,7 @@
   <sf-item *ngIf="rootProperty" [formProperty]="rootProperty"></sf-item>
   <ng-container *ngIf="button !== 'none'; else con">
     <nz-form-item
-      *ngIf="_btn.render"
+      *ngIf="_btn && _btn.render"
       [ngClass]="_btn.render!.class!"
       class="sf-btns"
       [fixed-label]="_btn.render!.spanLabelFixed!"

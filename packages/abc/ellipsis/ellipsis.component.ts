@@ -57,6 +57,10 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     );
   }
 
+  private get win(): NzSafeAny {
+    return this.doc.defaultView || window;
+  }
+
   constructor(
     private el: ElementRef,
     private ngZone: NgZone,
@@ -171,7 +175,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       const { shadowOrgEl, shadowTextEl } = this;
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
       const lineText = orgNode.innerText || orgNode.textContent!;
-      const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
+      const lineHeight = parseInt(this.win.getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
       const targetHeight = lines! * lineHeight;
       this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
 

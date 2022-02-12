@@ -41,7 +41,6 @@ export class HeaderComponent implements AfterViewInit {
     { name: 'cli' }
   ];
   menuVisible = false;
-  showGitee = false;
   regexs = {
     docs: { regex: /^\/docs/ },
     components: { regex: /^\/components/ },
@@ -76,23 +75,17 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
-  private updateGitee(): void {
-    this.showGitee = this.i18n.currentLang === 'zh-CN' && this.win.location.host.indexOf('gitee') === -1;
-    this.cdr.detectChanges();
-  }
-
   private genDelonType(): void {
     if (!this.inited) return;
 
     // delonType
-    const match = (this.doc.location.pathname as string).match(this.regexs.delon.regex);
+    const match = this.router.url.match(this.regexs.delon.regex);
     this.delonType = match == null ? undefined : match[1];
     this.cdr.detectChanges();
   }
 
   ngAfterViewInit(): void {
     this.inited = true;
-    this.updateGitee();
     this.genDelonType();
   }
 
