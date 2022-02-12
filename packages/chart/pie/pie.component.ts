@@ -93,9 +93,7 @@ export class G2PieComponent extends G2BaseComponent {
 
   // #endregion
 
-  get block(): boolean {
-    return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
-  }
+  block: boolean = false;
 
   private fixData(): void {
     const { percent, color } = this;
@@ -118,6 +116,11 @@ export class G2PieComponent extends G2BaseComponent {
         y: 100 - percent!
       }
     ];
+  }
+
+  private updateBlock(): void {
+    this.block = this._chart && this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
+    this.cdr.detectChanges();
   }
 
   install(): void {
@@ -176,13 +179,18 @@ export class G2PieComponent extends G2BaseComponent {
       }
     });
 
-    chart.on(`interval:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
-    });
+    chart
+      .on(`interval:click`, (ev: Event) => {
+        this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+      })
+      .on('afterrender', () => {
+        this.ngZone.run(() => this.updateBlock());
+      });
 
     this.ready.next(chart);
 
     this.changeData();
+
     chart.render();
   }
 
@@ -196,6 +204,7 @@ export class G2PieComponent extends G2BaseComponent {
       item.percent = totalSum === 0 ? 0 : item.y / totalSum;
     }
     _chart.changeData(data);
+
     this.ngZone.run(() => this.genLegend());
   }
 
