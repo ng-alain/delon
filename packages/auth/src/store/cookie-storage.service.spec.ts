@@ -27,36 +27,41 @@ describe('auth: cookie-storage', () => {
     expect(ret).not.toBeNull();
   });
 
-  describe('[property]', () => {
-    it('#get', () => {
-      store.set(KEY, VALUE);
-      const ret = store.get(KEY);
-      expect(ret).not.toBeNull();
-      expect(ret.token).toBe(VALUE.token);
-      const invalidRet = store.get('asdf');
-      expect(invalidRet).not.toBeNull();
-      expect(invalidRet.token).toBeUndefined();
-    });
+  it('should be parse error', () => {
+    data['error'] = `{a`;
+    const ret = store.get('error');
+    console.log(ret);
+  });
 
-    it('#set', () => {
-      store.set(KEY, VALUE);
-      let ret = store.get(KEY);
-      expect(ret).not.toBeNull();
-      expect(ret.token).toBe(VALUE.token);
+  it('#get', () => {
+    store.set(KEY, VALUE);
+    const ret = store.get(KEY);
+    expect(ret).not.toBeNull();
+    expect(ret.token).toBe(VALUE.token);
 
-      // when is null or undefined
-      store.set(KEY, undefined);
-      ret = store.get(KEY);
-      expect(ret).not.toBeNull();
-      expect(Object.keys(ret).length).toBe(0);
-    });
+    const invalidRet = store.get('asdf');
+    expect(invalidRet).not.toBeNull();
+    expect(invalidRet.token).toBeUndefined();
+  });
 
-    it('#remove', () => {
-      store.set(KEY, VALUE);
-      store.remove(KEY);
-      const ret = store.get(KEY);
-      expect(ret).not.toBeNull();
-      expect(ret.token).toBeUndefined();
-    });
+  it('#set', () => {
+    store.set(KEY, VALUE);
+    let ret = store.get(KEY);
+    expect(ret).not.toBeNull();
+    expect(ret.token).toBe(VALUE.token);
+
+    // when is null or undefined
+    store.set(KEY, undefined);
+    ret = store.get(KEY);
+    expect(ret).not.toBeNull();
+    expect(Object.keys(ret).length).toBe(0);
+  });
+
+  it('#remove', () => {
+    store.set(KEY, VALUE);
+    store.remove(KEY);
+    const ret = store.get(KEY);
+    expect(ret).not.toBeNull();
+    expect(ret.token).toBeUndefined();
   });
 });
