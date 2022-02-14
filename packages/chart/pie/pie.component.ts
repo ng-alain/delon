@@ -139,7 +139,7 @@ export class G2PieComponent extends G2BaseComponent {
       percentColor,
       colors
     } = this;
-    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
+    const chart: Chart = (this._chart = new this.winG2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height,

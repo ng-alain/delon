@@ -75,7 +75,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     if (this.isAsync) {
       this.ui.asyncData!(value)
         .pipe(
-          takeUntil(this.sfItemComp!.unsubscribe$),
+          takeUntil(this.sfItemComp!.destroy$),
           map(res => getEnum(res, null, this.schema.readOnly!))
         )
         .subscribe(data => {

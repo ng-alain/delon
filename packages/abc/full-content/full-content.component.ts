@@ -15,8 +15,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -46,10 +46,8 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   private bodyEl!: HTMLElement;
   private inited = false;
-  private srv$?: Subscription;
-  private route$?: Subscription;
   private id = `_full-content-${Math.random().toString(36).substring(2)}`;
-  private scroll$: Subscription | null = null;
+  private destroy$ = new Subject<void>();
 
   _height = 0;
 
@@ -106,16 +104,22 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     this.updateCls();
 
     // when window resize
-    this.scroll$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
+    fromEvent(window, 'resize')
+      .pipe(takeUntil(this.destroy$), debounceTime(200))
       .subscribe(() => this.updateHeight());
 
     // when servier changed
-    this.srv$ = this.srv.change.pipe(filter(res => res !== null)).subscribe(() => this.toggle());
+    this.srv.change
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(res => res !== null)
+      )
+      .subscribe(() => this.toggle());
 
     // when router changed
-    this.route$ = this.router.events
+    this.router.events
       .pipe(
+        takeUntil(this.destroy$),
         filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
         debounceTime(200)
       )
@@ -145,8 +149,8 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   ngOnDestroy(): void {
     this.removeInBody();
-    this.scroll$!.unsubscribe();
-    this.srv$?.unsubscribe();
-    this.route$?.unsubscribe();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

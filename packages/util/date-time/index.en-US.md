@@ -34,7 +34,7 @@ getTimeDistance('week')
 **Parameters**
 
 - `type` Shortcut type, with `-` for last time, if specified `number` type for days
-  - `today`, `-today` Today or yesterday
+  - `today`, `-today`, `yesterday` Today or yesterday
   - `week`, `-week` This week or last week
   - `month`, `-month` This month or last month
   - `year`, `-year` This year or last year

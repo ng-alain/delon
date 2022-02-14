@@ -1,3 +1,4 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -54,6 +55,15 @@ describe('abc: error-collect', () => {
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
       }, 21);
+    });
+
+    it('#rtl', () => {
+      expect(dl.query(By.css('.error-collect-rtl'))).toBeNull();
+      debugger;
+      const srv = TestBed.inject(Directionality);
+      srv.change.emit('rtl');
+      fixture.detectChanges();
+      expect(dl.query(By.css('.error-collect-rtl'))).not.toBeNull();
     });
   });
 

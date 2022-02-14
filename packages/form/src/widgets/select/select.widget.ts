@@ -67,7 +67,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     if (onSearch) {
       this.search$
         .pipe(
-          takeUntil(this.sfItemComp!.unsubscribe$),
+          takeUntil(this.sfItemComp!.destroy$),
           distinctUntilChanged(),
           debounceTime(this.ui.searchDebounceTime || 300),
           switchMap(text => onSearch(text)),

@@ -13,14 +13,14 @@ import { MetaService, MobileService } from '@core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isMobile!: boolean;
   opened = false;
 
   constructor(public meta: MetaService, private mobileSrv: MobileService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.mobileSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
+    this.mobileSrv.change.pipe(takeUntil(this.destroy$)).subscribe(res => {
       this.isMobile = res;
       this.cdr.detectChanges();
     });
@@ -31,8 +31,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

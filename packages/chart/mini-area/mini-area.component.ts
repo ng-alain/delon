@@ -71,7 +71,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       borderColor,
       borderWidth
     } = this;
-    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
+    const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,

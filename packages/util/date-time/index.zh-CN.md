@@ -34,7 +34,7 @@ getTimeDistance('week')
 **参数**
 
 - `type` 快捷类型，带 `-` 表示过去一个时间，若指定 `number` 表示天数
-  - `today`、`-today` 今天或昨天
+  - `today`、`-today`、`yesterday` 今天或昨天
   - `week`、`-week` 本周或上周
   - `month`、`-month` 本月或上月
   - `year`、`-year` 今年或去年

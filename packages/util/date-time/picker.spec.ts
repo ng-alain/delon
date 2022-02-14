@@ -14,6 +14,9 @@ describe('util: date-time', () => {
       mockNOW = NOW;
       spyOnProperty(dateTimePickerUtil, 'now').and.callFake(() => mockNOW);
     });
+    it('#now', () => {
+      expect(dateTimePickerUtil.now instanceof Date).toBe(true);
+    });
     it('#removeTime', () => {
       expect(dateTimePickerUtil.removeTime(addSeconds(NOW, 1)).getSeconds()).toBe(0);
     });

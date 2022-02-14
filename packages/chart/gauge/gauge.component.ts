@@ -35,7 +35,7 @@ export class G2GaugeComponent extends G2BaseComponent {
 
   install(): void {
     // 自定义Shape 部分
-    (window as NzSafeAny).G2.registerShape('point', 'pointer', {
+    this.winG2.registerShape('point', 'pointer', {
       draw(cfg: NzSafeAny, container: NzSafeAny) {
         const group = container.addGroup({});
         // 获取极坐标系下画布中心点
@@ -68,7 +68,7 @@ export class G2GaugeComponent extends G2BaseComponent {
 
     const { el, height, padding, format, theme } = this;
 
-    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
+    const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: true,
       height,

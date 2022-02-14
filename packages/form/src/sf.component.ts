@@ -85,7 +85,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_noColon: BooleanInput;
   static ngAcceptInputType_cleanValue: BooleanInput;
 
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
   private _valid = true;
@@ -247,7 +247,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
-    this.localeSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.localeSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
         this.validator({ emitError: false, onlyRoot: false });
@@ -263,7 +263,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       merge(...(refSchemas as Array<Observable<NzSafeAny>>))
         .pipe(
           filter(() => this._inited),
-          takeUntil(this.unsubscribe$)
+          takeUntil(this.destroy$)
         )
         .subscribe(() => this.refreshSchema());
     }
@@ -648,8 +648,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.cleanRootSub();
     this.terminator.destroy();
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

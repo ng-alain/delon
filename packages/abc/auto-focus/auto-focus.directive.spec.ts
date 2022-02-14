@@ -1,11 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { AutoFocusDirective } from './auto-focus.directive';
 import { AutoFocusModule } from './auto-focus.module';
-
-const TIME = 50;
 
 describe('abc: auto-focus', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,7 +10,7 @@ describe('abc: auto-focus', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, AutoFocusModule],
+      imports: [AutoFocusModule],
       declarations: [TestComponent]
     });
 
@@ -22,24 +19,24 @@ describe('abc: auto-focus', () => {
     spyOn(context, 'focus');
   });
 
-  it('should be working', done => {
+  it('should be working', fakeAsync(() => {
     context.showInput = true;
     fixture.detectChanges();
-    setTimeout(() => {
+    tick(2);
+    fixture.whenStable().then(() => {
       expect(context.focus).toHaveBeenCalled();
-      done();
-    }, TIME);
-  });
+    });
+  }));
 
-  it('should be not when enabled is false', done => {
+  it('should be not when enabled is false', fakeAsync(() => {
     context.enabled = false;
     context.showInput = true;
     fixture.detectChanges();
-    setTimeout(() => {
+    tick(2);
+    fixture.whenStable().then(() => {
       expect(context.focus).not.toHaveBeenCalled();
-      done();
-    }, TIME);
-  });
+    });
+  }));
 });
 
 @Component({

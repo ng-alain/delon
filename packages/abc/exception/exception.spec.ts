@@ -1,3 +1,4 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -54,6 +55,14 @@ describe('abc: exception', () => {
     expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
       en_US.exception['403']
     );
+  });
+
+  it('#rtl', () => {
+    expect(dl.query(By.css('.exception-rtl'))).toBeNull();
+    const srv = TestBed.inject(Directionality);
+    srv.change.emit('rtl');
+    fixture.detectChanges();
+    expect(dl.query(By.css('.exception-rtl'))).not.toBeNull();
   });
 });
 

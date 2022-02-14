@@ -32,7 +32,7 @@ module.exports = {
         '@angular-eslint/component-class-suffix': [
           'error',
           {
-            suffixes: ['Directive', 'Component', 'Base', 'Widget', 'Property']
+            suffixes: ['Directive', 'Component', 'Base', 'Widget', 'Property', 'HarnessTest']
           }
         ],
         '@angular-eslint/directive-class-suffix': [

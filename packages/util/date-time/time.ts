@@ -24,17 +24,19 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
  *
  * @param type 类型，带 `-` 表示过去一个时间，若指定 `number` 表示天数
  * @param time 开始时间
+ * @param ignoreMaxTime 忽略追加结束日期的最大时间值
  */
 export function getTimeDistance(
   type: 'today' | '-today' | 'yesterday' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
-  time?: Date | string | number
+  time?: Date | string | number,
+  options?: { ignoreMaxTime?: boolean }
 ): [Date, Date] {
   time = time
     ? typeof time === 'string'
       ? parse(time, 'yyyy-MM-dd HH:mm:ss', new Date())
       : new Date(time)
     : new Date();
-  const options: { weekStartsOn: 1 } = { weekStartsOn: 1 };
+  const opt: { weekStartsOn: 1 } = { weekStartsOn: 1 };
 
   let res: [Date, Date];
   switch (type) {
@@ -48,10 +50,10 @@ export function getTimeDistance(
       res = [addDays(time, -1), addDays(time, -1)];
       break;
     case 'week':
-      res = [startOfWeek(time, options), endOfWeek(time, options)];
+      res = [startOfWeek(time, opt), endOfWeek(time, opt)];
       break;
     case '-week':
-      res = [startOfWeek(subWeeks(time, 1), options), endOfWeek(subWeeks(time, 1), options)];
+      res = [startOfWeek(subWeeks(time, 1), opt), endOfWeek(subWeeks(time, 1), opt)];
       break;
     case 'month':
       res = [startOfMonth(time), endOfMonth(time)];
@@ -69,7 +71,7 @@ export function getTimeDistance(
       res = type > 0 ? [time, addDays(time, type)] : [addDays(time, type), time];
       break;
   }
-  return fixEndTimeOfRange(res);
+  return options?.ignoreMaxTime ? res : fixEndTimeOfRange(res);
 }
 
 /**
@@ -88,7 +90,7 @@ export type ToDateOptions = string | { formatString?: string; defaultValue?: NzS
  * @param formatString If parsing fails try to parse the date by pressing `formatString`
  * @param defaultValue If parsing fails returned default value, default: `new Date(NaN)`
  */
-export function toDate(value: Date | string | number, options?: ToDateOptions): Date {
+export function toDate(value?: Date | string | number | null, options?: ToDateOptions): Date {
   if (typeof options === 'string') options = { formatString: options };
   const { formatString, defaultValue } = {
     formatString: 'yyyy-MM-dd HH:mm:ss',

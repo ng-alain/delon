@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -15,11 +16,11 @@ export class AutoFocusDirective implements AfterViewInit, OnDestroy {
   @Input() @InputBoolean() enabled = true;
   @Input() @InputNumber() delay = 300;
 
-  constructor(private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef) {}
+  constructor(private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private platform: Platform) {}
 
   ngAfterViewInit(): void {
     const el = this.el.nativeElement;
-    if (!(el instanceof HTMLElement) || !this.enabled) {
+    if (!this.platform.isBrowser || !(el instanceof HTMLElement) || !this.enabled) {
       return;
     }
     this._focusoutTimeout = setTimeout(() => {

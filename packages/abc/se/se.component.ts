@@ -57,7 +57,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   static ngAcceptInputType_hideLabel: BooleanInput;
 
   private el: HTMLElement;
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName?: FormControlName;
@@ -131,7 +131,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.el = el.nativeElement;
     parent.errorNotify
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
       )
       .subscribe(item => {
@@ -161,9 +161,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (!this.ngControl || this.isBindModel) return;
 
     this.isBindModel = true;
-    this.ngControl
-      .statusChanges!.pipe(takeUntil(this.unsubscribe$))
-      .subscribe(res => this.updateStatus(res === 'INVALID'));
+    this.ngControl.statusChanges!.pipe(takeUntil(this.destroy$)).subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
@@ -232,8 +230,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }
