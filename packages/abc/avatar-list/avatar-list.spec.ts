@@ -1,3 +1,4 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -53,6 +54,15 @@ describe('abc: avatar-list', () => {
       fixture.detectChanges();
       expect(dl.queryAll(By.css('.avatar-list__item')).length).toBe(5);
     });
+  });
+
+  it('#rtl', () => {
+    expect(dl.query(By.css('.avatar-list-rtl'))).toBeNull();
+    debugger;
+    const srv = TestBed.inject(Directionality);
+    srv.change.emit('rtl');
+    fixture.detectChanges();
+    expect(dl.query(By.css('.avatar-list-rtl'))).not.toBeNull();
   });
 });
 

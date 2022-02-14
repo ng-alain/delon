@@ -62,7 +62,7 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
     if (dueTime == null || dueTime <= 0 || changeFn == null) return;
 
     this.change$ = new BehaviorSubject<string>(this.value);
-    let obs = this.change$.asObservable().pipe(debounceTime(dueTime), takeUntil(this.sfItemComp!.unsubscribe$));
+    let obs = this.change$.asObservable().pipe(debounceTime(dueTime), takeUntil(this.sfItemComp!.destroy$));
     if (this.ui.changeMap != null) {
       obs = obs.pipe(switchMap(this.ui.changeMap));
     }

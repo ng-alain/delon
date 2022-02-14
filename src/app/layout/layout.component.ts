@@ -23,7 +23,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   }
 })
 export class LayoutComponent implements OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isFetching = false;
   render = true;
 
@@ -35,7 +35,7 @@ export class LayoutComponent implements OnDestroy {
     rtl: RTLService
   ) {
     rtl.change.subscribe(() => this.fixDirection());
-    router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
+    router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -51,7 +51,7 @@ export class LayoutComponent implements OnDestroy {
     });
     router.events
       .pipe(
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.destroy$),
         filter(ev => ev instanceof NavigationEnd),
         delay(100)
       )
@@ -75,8 +75,8 @@ export class LayoutComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

@@ -22,7 +22,7 @@ import { I18NService, MetaService } from '@core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   count = 0;
 
   @Output() readonly to = new EventEmitter<string>();
@@ -38,13 +38,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.cdr.markForCheck());
+    this.i18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => this.cdr.markForCheck());
     this.count = this.meta.menus?.reduce((p: number, c: NzSafeAny) => (p += c.list.length), 0);
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

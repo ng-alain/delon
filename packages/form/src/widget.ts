@@ -65,7 +65,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
+      .pipe(takeUntil(this.sfItemComp!.destroy$))
       .subscribe((errors: ErrorData[] | null) => {
         if (errors == null) return;
         di(this.ui, 'errorsChanges', this.formProperty.path, errors);
@@ -122,9 +122,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
   afterViewInit(): void {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
-      .subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.destroy$)).subscribe(() => this.cd.detectChanges());
   }
 }
 
@@ -134,8 +132,6 @@ export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSch
   afterViewInit(): void {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
-      .subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.destroy$)).subscribe(() => this.cd.detectChanges());
   }
 }

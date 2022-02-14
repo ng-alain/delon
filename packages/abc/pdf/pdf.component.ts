@@ -58,7 +58,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_removePageBorders: BooleanInput;
 
   inited = false;
-  private unsubscribe$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private lib: string = '';
   private _pdf: NzSafeAny;
   private loadingTask: NzSafeAny;
@@ -454,7 +454,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       .pipe(
         debounceTime(100),
         filter(() => this.autoReSize && this._pdf),
-        takeUntil(this.unsubscribe$)
+        takeUntil(this.destroy$)
       )
       .subscribe(() => this.updateSize());
   }
@@ -466,9 +466,9 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
 
     this.destroy();
   }

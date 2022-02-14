@@ -29,7 +29,7 @@ let nextUniqueId = 0;
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref!: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
-  readonly unsubscribe$ = new Subject<void>();
+  readonly destroy$ = new Subject<void>();
   widget: Widget<FormProperty, SFUISchemaItem> | null = null;
 
   @Input() formProperty!: FormProperty;
@@ -63,9 +63,9 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
-    unsubscribe$.next();
-    unsubscribe$.complete();
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
     this.ref.destroy();
   }
 }
