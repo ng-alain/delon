@@ -20,7 +20,7 @@ export class G2Service implements OnDestroy {
       {
         theme: '',
         libs: [
-          'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.14/dist/g2.min.js',
+          'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.46/dist/g2.min.js',
           'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.8/dist/data-set.js'
         ]
       } as AlainChartConfig,

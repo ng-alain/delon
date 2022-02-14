@@ -29,6 +29,10 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     return this._chart;
   }
 
+  get winG2(): NzSafeAny {
+    return (window as NzSafeAny).G2;
+  }
+
   constructor(
     protected srv: G2Service,
     protected el: ElementRef<HTMLElement>,
@@ -86,7 +90,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.onInit();
-    if ((window as NzSafeAny).G2) {
+    if (this.winG2) {
       this.load();
     } else {
       this.srv.libLoad();

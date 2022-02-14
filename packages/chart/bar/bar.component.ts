@@ -72,7 +72,7 @@ export class G2BarComponent extends G2BaseComponent {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
-    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
+    const chart: Chart = (this._chart = new this.winG2.Chart({
       container,
       autoFit: true,
       height: this.getHeight(),

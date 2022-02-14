@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { G2Service } from '../core';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
 
@@ -38,6 +40,14 @@ describe('chart: custom', () => {
     tick(2);
     expect(context.resize).toHaveBeenCalled();
   }));
+
+  it('should be load scripts by cdn', () => {
+    const srv = TestBed.inject(G2Service);
+    spyOn(srv, 'libLoad');
+    spyOnProperty(context.comp, 'winG2').and.returnValue(null as NzSafeAny);
+    fixture.detectChanges();
+    expect(srv.libLoad).toHaveBeenCalled();
+  });
 });
 
 @Component({

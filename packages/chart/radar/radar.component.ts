@@ -65,7 +65,7 @@ export class G2RadarComponent extends G2BaseComponent {
   install(): void {
     const { node, padding, theme, tickCount } = this;
 
-    const chart: Chart = (this._chart = new (window as NzSafeAny).G2.Chart({
+    const chart: Chart = (this._chart = new this.winG2.Chart({
       container: node.nativeElement,
       autoFit: true,
       height: this.getHeight(),
