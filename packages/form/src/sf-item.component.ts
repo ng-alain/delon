@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  TemplateRef,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation
@@ -23,7 +24,10 @@ let nextUniqueId = 0;
   selector: 'sf-item',
   exportAs: 'sfItem',
   host: { '[class.sf__item]': 'true' },
-  template: ` <ng-template #target></ng-template> `,
+  template: `
+    <ng-template #target></ng-template>
+    <ng-container *ngTemplateOutlet="footer"></ng-container>
+  `,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
@@ -33,9 +37,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   widget: Widget<FormProperty, SFUISchemaItem> | null = null;
 
   @Input() formProperty!: FormProperty;
+  @Input() footer: TemplateRef<void> | null = null;
 
   @ViewChild('target', { read: ViewContainerRef, static: true })
-  container!: ViewContainerRef;
+  private container!: ViewContainerRef;
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 
