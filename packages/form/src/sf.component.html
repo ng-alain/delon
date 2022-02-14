@@ -1,8 +1,7 @@
 <ng-template #con>
   <ng-content></ng-content>
 </ng-template>
-<form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty"></sf-item>
+<ng-template #btnTpl>
   <ng-container *ngIf="button !== 'none'; else con">
     <nz-form-item
       *ngIf="_btn && _btn.render"
@@ -70,4 +69,7 @@
       </div>
     </nz-form-item>
   </ng-container>
+</ng-template>
+<form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
+  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty" [footer]="btnTpl"></sf-item>
 </form>
