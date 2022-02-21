@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Inject,
   InjectionToken,
   Input,
@@ -11,6 +12,7 @@ import {
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   Renderer2
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -45,6 +47,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   ];
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
+  @Output() readonly themeChange = new EventEmitter<string>();
   private destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
 
@@ -83,6 +86,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
       return;
     }
     this.theme = theme;
+    this.themeChange.emit(theme);
     this.renderer.setAttribute(this.doc.body, 'data-theme', theme);
     const dom = this.doc.getElementById(this.KEYS);
     if (dom) {

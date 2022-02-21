@@ -7,6 +7,8 @@ import { delay, filter, takeUntil } from 'rxjs/operators';
 import { RTL, RTLService, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+import { AppService, SiteTheme } from '../core/app.service';
+
 @Component({
   selector: 'app-layout',
   template: `
@@ -15,7 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
       <router-outlet></router-outlet>
       <nz-back-top></nz-back-top>
-      <theme-btn></theme-btn>
+      <theme-btn (themeChange)="themeChange($event)"></theme-btn>
     </ng-container>
   `,
   host: {
@@ -32,7 +34,8 @@ export class LayoutComponent implements OnDestroy {
     msg: NzMessageService,
     private settingsSrv: SettingsService,
     private location: Location,
-    rtl: RTLService
+    rtl: RTLService,
+    private appSrv: AppService
   ) {
     rtl.change.subscribe(() => this.fixDirection());
     router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
@@ -72,6 +75,10 @@ export class LayoutComponent implements OnDestroy {
       fragment = '';
     }
     this.location.replaceState(path, (direction === RTL ? `?direction=${RTL}` : '') + fragment);
+  }
+
+  themeChange(theme: string): void {
+    this.appSrv.setTheme(theme as SiteTheme);
   }
 
   ngOnDestroy(): void {

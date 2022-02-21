@@ -18,3 +18,4 @@ module: import { ThemeBtnModule } from '@delon/theme/theme-btn';
 | `[types]` | 类型列表 | `ThemeBtnType[]` | `[ { key: 'default', text: 'Default Theme' }, { key: 'dark', text: 'Dark Theme' }, { key: 'compact', text: 'Compact Theme' }, ]` |
 | `[devTips]` | 开发提示 | `String` | `When the dark.css file can't be found, you need to run it once: npm run theme` |
 | `[deployUrl]` | 文件将部署到的 URL，一般到使用 `ng b --deploy-url` 时需要 | `String` | `-` |
+| `(themeChange)` | 主题变更通知 | `EventEmitter<string>` | `-` |
