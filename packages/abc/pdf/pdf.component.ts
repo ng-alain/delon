@@ -17,7 +17,7 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject, timer } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 import { AlainConfigService } from '@delon/util/config';
@@ -191,11 +191,20 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private initDelay(): void {
+    if (!this.win.pdfjsLib) {
+      throw new Error(
+        `No window.pdfjsLib found, please make sure that cdn or local path exists, the current referenced path is: ${JSON.stringify(
+          this.lib
+        )}`
+      );
+    }
     this.inited = true;
     this.cdr.detectChanges();
     this.win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
 
-    setTimeout(() => this.load(), this.delay);
+    timer(this.delay ?? 0)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.load());
   }
 
   setLoading(status: boolean): void {
@@ -277,13 +286,13 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
 
     if (this._rotation !== 0 || currentViewer.pagesRotation !== this._rotation) {
-      setTimeout(() => {
+      this.timeExec(() => {
         currentViewer.pagesRotation = this._rotation;
       });
     }
 
     if (this.stickToPage) {
-      setTimeout(() => {
+      this.timeExec(() => {
         currentViewer.currentPageNumber = this._pi;
       });
     }
@@ -291,9 +300,19 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.updateSize();
   }
 
+  private timeExec(fn: () => void): void {
+    this.ngZone.runOutsideAngular(() => {
+      timer(0)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => this.ngZone.runOutsideAngular(() => fn()));
+    });
+  }
+
   @ZoneOutside()
   private updateSize(): void {
     const currentViewer = this.pageViewer;
+    if (!currentViewer) return;
+
     this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
       const { _rotation, _zoom } = this;
       const rotation = _rotation || page.rotate;
