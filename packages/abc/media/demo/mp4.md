@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
       <button nz-button (click)="media.player.pause()">Pause</button>
       <button nz-button (click)="media.player.restart()">Restart</button>
     </div>
-    <media #media [source]="mp4" style="height: 200px"></media>
+    <media #media [source]="mp4"></media>
   `,
 })
 export class DemoComponent {

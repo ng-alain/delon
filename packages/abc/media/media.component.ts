@@ -14,7 +14,8 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -39,9 +40,8 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;
 
   private _p: NzSafeAny;
-  private videoEl!: HTMLElement;
-  private time: NzSafeAny;
-  private notify$: Subscription;
+  private videoEl?: HTMLElement;
+  private destroy$ = new Subject<void>();
 
   @Input() type: PlyrMediaType = 'video';
   @Input() source?: string | PlyrMediaSource;
@@ -57,15 +57,20 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     private el: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private srv: MediaService,
-    public ngZone: NgZone,
+    private ngZone: NgZone,
     private platform: Platform
   ) {
-    this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
+    this.srv
+      .notify()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.initDelay());
   }
 
   @ZoneOutside()
   private initDelay(): void {
-    this.time = setTimeout(() => this.init(), this.delay);
+    timer(this.delay)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.ngZone.runOutsideAngular(() => this.init()));
   }
 
   private init(): void {
@@ -83,12 +88,14 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
       ...this.srv.cog.options
     }));
 
-    player.on('ready', () => this.ready.next(player));
+    player.on('ready', () => this.ngZone.run(() => this.ready.next(player)));
 
     this.uploadSource();
   }
 
   private ensureElement(): void {
+    if (this.videoEl != null) return;
+
     const { type } = this;
     let el = this.el.nativeElement.querySelector(type) as HTMLElement;
     if (!el) {
@@ -125,9 +132,11 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearTimeout(this.time);
     this.destroy();
     this._p = null;
-    this.notify$.unsubscribe();
+
+    const { destroy$ } = this;
+    destroy$.next();
+    destroy$.complete();
   }
 }

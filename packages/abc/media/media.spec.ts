@@ -78,7 +78,7 @@ describe('abc: media', () => {
       fixture2.detectChanges();
       tick();
       fixture2.detectChanges();
-      expect(fixture2.componentInstance.comp['videoEl'].dataset.type).toBe(`custom`);
+      expect(fixture2.componentInstance.comp['videoEl']!.dataset.type).toBe(`custom`);
     }));
   });
 

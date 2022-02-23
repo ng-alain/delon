@@ -24,7 +24,7 @@ import { PlyrMediaSource, PlyrMediaType } from '@delon/abc/media';
       <button nz-button (click)="play('video')">Change Play Video</button>
       <button nz-button (click)="play('audio')">Change Play Audio</button>
     </div>
-    <media #media [source]="source" [options]="options" style="height: 200px;"></media>
+    <media #media [source]="source" [options]="options"></media>
   `,
 })
 export class DemoComponent {
