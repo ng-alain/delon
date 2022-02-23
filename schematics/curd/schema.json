@@ -43,7 +43,6 @@
       "description": "Include template inline in the component.ts file. By default, an external template file is created and referenced in the component.ts file.",
       "type": "boolean",
       "default": false,
-      "alias": "t",
       "x-user-analytics": 10
     },
     "viewEncapsulation": {
