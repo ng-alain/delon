@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
+import type Plyr from 'plyr';
+
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 
-import { MediaComponent } from './media.component';
+import { MediaComponent, MediaType } from './media.component';
 import { MediaModule } from './media.module';
-import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
 class MockPlyr {
   source: NzSafeAny = {};
@@ -108,8 +109,8 @@ describe('abc: media', () => {
 })
 class TestComponent {
   @ViewChild('comp') comp!: MediaComponent;
-  type: PlyrMediaType = 'video';
-  source: string | PlyrMediaSource = '1.mp4';
+  type: MediaType = 'video';
+  source: string | Plyr.SourceInfo = '1.mp4';
   options: NzSafeAny;
   delay = 0;
   ready(): void {}

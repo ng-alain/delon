@@ -152,6 +152,7 @@
     "source-map-explorer": "^2.5.2",
     "xlsx": "^0.17.4",
     "jszip": "^3.7.1",
+    "plyr": "^3.6.12",
     "screenfull": "^6.0.0",
     "less-bundle-promise": "^1.0.7",
     "ng-alain-codelyzer": "^0.0.1",

@@ -24,3 +24,11 @@ The plyr script file takes the form of lazy loading，you can change the default
 | `[options]` | Source options of the media, please refer to [plyr options](https://github.com/sampotts/plyr#options) | `any` | - | ✅ |
 | `[delay]` | Delay init plyr player, unit: ms | `number` | - | - |
 | `(ready)` | Ready callback | `EventEmitter<Plyr>` | - | - |
+
+## FAQ
+
+### How to use Plyr types more friendly
+
+```ts
+import type Plyr from 'plyr';
+```

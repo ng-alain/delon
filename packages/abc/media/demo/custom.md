@@ -15,7 +15,8 @@ Specify `source` and` options` to customize the player.
 
 ```ts
 import { Component } from '@angular/core';
-import { PlyrMediaSource, PlyrMediaType } from '@delon/abc/media';
+
+import type Plyr from 'plyr';
 
 @Component({
   selector: 'app-demo',
@@ -25,21 +26,21 @@ import { PlyrMediaSource, PlyrMediaType } from '@delon/abc/media';
       <button nz-button (click)="play('audio')">Change Play Audio</button>
     </div>
     <media #media [source]="source" [options]="options"></media>
-  `,
+  `
 })
 export class DemoComponent {
-  source: PlyrMediaSource = {
+  source: Plyr.SourceInfo = {
     type: 'video',
     sources: [
       {
-        src: ``,
-      },
+        src: ``
+      }
     ],
     // 字幕
-    tracks: [],
+    tracks: []
   };
 
-  options = {
+  options: Plyr.Options = {
     // If you any problems, open `debug` and you can quickly find the issues
     debug: true,
     // controls: ['play-large'],
@@ -48,15 +49,15 @@ export class DemoComponent {
       play: '播放',
       pause: '暂停',
       speed: '速度',
-      normal: '正常',
-    },
+      normal: '正常'
+    }
   };
 
   constructor() {
     this.play('video');
   }
 
-  play(type: PlyrMediaType): void {
+  play(type: 'audio' | 'video'): void {
     this.source.type = type;
     if (type === 'video') {
       this.source.sources[0].src = `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`;
