@@ -97,8 +97,8 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
       el = this.renderer.createElement(type);
       (el as HTMLVideoElement).controls = true;
       this.el.nativeElement.appendChild(el);
-      this.videoEl = el;
     }
+    this.videoEl = el;
   }
 
   private destroy(): void {
