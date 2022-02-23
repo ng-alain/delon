@@ -311,6 +311,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ZoneOutside()
   private updateSize(): void {
     const currentViewer = this.pageViewer;
+    if (!currentViewer) return;
+
     this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
       const { _rotation, _zoom } = this;
       const rotation = _rotation || page.rotate;
