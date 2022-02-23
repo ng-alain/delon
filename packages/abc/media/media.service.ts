@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 import { AlainConfigService, AlainMediaConfig } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
@@ -42,6 +43,6 @@ export class MediaService {
   }
 
   notify(): Observable<void> {
-    return this.notify$.asObservable();
+    return this.notify$.asObservable().pipe(share());
   }
 }

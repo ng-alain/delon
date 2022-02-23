@@ -24,3 +24,11 @@ module: import { MediaModule } from '@delon/abc/media';
 | `[options]` | 播放器参数 [plyr options](https://github.com/sampotts/plyr#options) | `any` | - | ✅ |
 | `[delay]` | 延迟初始化，单位：毫秒 | `number` | - | - |
 | `(ready)` | 准备就绪回调 | `EventEmitter<Plyr>` | - | - |
+
+## FAQ
+
+### 如何更友好的使用 Plyr 类型
+
+```ts
+import type Plyr from 'plyr';
+```

@@ -25,6 +25,7 @@
     "file-saver": "@LIB-PLACEHOLDER",
     "jszip": "@LIB-PLACEHOLDER",
     "xlsx": "@LIB-PLACEHOLDER",
+    "plyr": "@LIB-PLACEHOLDER",
     "ngx-countdown": "@LIB-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",

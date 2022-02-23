@@ -12,6 +12,7 @@
     "isutf8",
     "jszip",
     "xlsx",
+    "plyr",
     "ngx-countdown",
     "@delon/theme",
     "@delon/util",
