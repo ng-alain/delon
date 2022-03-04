@@ -14,6 +14,18 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [13.2.1](https://github.com/ng-alain/delon/compare/13.2.0...13.2.1) (2022-03-04)
+
+### Bug Fixes
+
+* **abc:media:** 修复 `cannot redefine property` 错误 ([#1447](https://github.com/ng-alain/delon/issues/1447)) ([475e5cb](https://github.com/ng-alain/delon/commit/475e5cb639dee52952eacde9c5c70677167e50e6))
+* **abc:pdf:** 修复确保 `container` 绝对位置错误 ([#1448](https://github.com/ng-alain/delon/issues/1448)) ([c2ed8a7](https://github.com/ng-alain/delon/commit/c2ed8a7e8cdbc976561cbd30eb5b54d1fae975be))
+* **chart:pie:** 修复开发环境下 ECAIHBC 错误 ([#1440](https://github.com/ng-alain/delon/issues/1440)) ([43595f2](https://github.com/ng-alain/delon/commit/43595f21c82618f5de284397bd736522f4b928f4))
+* **cli:** 修复重复 `-t` 别名问题 ([#1443](https://github.com/ng-alain/delon/issues/1443)) ([e44df08](https://github.com/ng-alain/delon/commit/e44df0855d923e57a5dfef511aac1540663f5d8d))
+* **form:tree-select:** 修复错误 `checkfStrictly` ([#1446](https://github.com/ng-alain/delon/issues/1446)) ([90498f0](https://github.com/ng-alain/delon/commit/90498f06c52e9e8f94f2e61d05b28977889db687))
+* **form:** 修复 `inline` 布局按钮错位问题 ([#1442](https://github.com/ng-alain/delon/issues/1442)) ([1e836f8](https://github.com/ng-alain/delon/commit/1e836f8b93dd6925245d018e85f52c0b8da6a659))
+
+
 # [13.2.0](https://github.com/ng-alain/delon/compare/13.1.0...13.2.0) (2022-02-12)
 
 ### Bug Fixes
