@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { AppService, CodeService, I18NService } from '@core';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CodeBoxComponent implements OnDestroy {
+export class CodeBoxComponent implements OnInit, OnDestroy {
   private _item: any;
   private _orgItem: any;
   private destroy$ = new Subject<void>();
@@ -56,7 +56,9 @@ export class CodeBoxComponent implements OnDestroy {
     private codeSrv: CodeService,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.theme = data;
       this.check();
