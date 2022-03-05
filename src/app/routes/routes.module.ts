@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
+import { AlainI18NGuard } from '@delon/theme';
+
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
@@ -12,10 +14,10 @@ const routes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
+    canActivateChild: [AlainI18NGuard],
     children: [
       { path: '', redirectTo: 'en', pathMatch: 'full' },
-      { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
-      { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      { path: ':lang', component: HomeComponent, data: { titleI18n: 'slogan' } },
       // #region region routers
       { path: 'docs', loadChildren: () => import('./gen/docs/docs.module').then(m => m.DocsModule) },
       {

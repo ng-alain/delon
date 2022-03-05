@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 
-import { I18NService, LangType, MetaService, MobileService } from '@core';
+import { I18NService, MetaService, MobileService } from '@core';
 
 @Component({
   selector: 'app-root',
@@ -62,13 +62,6 @@ export class AppComponent {
       }
 
       if (urlLang) {
-        const lang = i18n.getFullLang(urlLang);
-
-        // update i18n
-        if (i18n.currentLang !== lang) {
-          i18n.use(lang as LangType);
-          meta.clearMenu();
-        }
         meta.refMenu(url);
       }
 
@@ -79,5 +72,7 @@ export class AppComponent {
       const item = meta.getPathByUrl(url);
       title.setTitle(item ? item.title || item.subtitle : '');
     });
+
+    i18n.change.subscribe(_ => meta.clearMenu());
   }
 }

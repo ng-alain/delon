@@ -5,4 +5,11 @@ export interface AlainThemeI18nConfig {
    * 改写默认的插值表达式起止分界符（{{ 和 }}）。
    */
   interpolation?: [string, string];
+
+  /**
+   * Internationalization code URL guard parameter name, default: `i18n`
+   *
+   * 国际化代码 URL 守卫参数名，默认：`i18n`
+   */
+  paramNameOfUrlGuard?: string;
 }

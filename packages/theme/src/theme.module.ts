@@ -38,7 +38,7 @@ const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 
 @NgModule({
   imports: [CommonModule, RouterModule, OverlayModule, NzI18nModule],
-  declarations: [...PIPES],
+  declarations: PIPES,
   providers: [
     {
       provide: ALAIN_SETTING_KEYS,
@@ -59,14 +59,14 @@ export class AlainThemeModule {
   static forRoot(): ModuleWithProviders<AlainThemeModule> {
     return {
       ngModule: AlainThemeModule,
-      providers: [...HELPERS]
+      providers: HELPERS
     };
   }
 
   static forChild(): ModuleWithProviders<AlainThemeModule> {
     return {
       ngModule: AlainThemeModule,
-      providers: [...HELPERS]
+      providers: HELPERS
     };
   }
 }
