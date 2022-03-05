@@ -53,7 +53,6 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
     this.widget.schema = this.formProperty.schema;
     this.widget.ui = ui;
     this.widget.id = id;
-    this.widget.firstVisual = ui.firstVisual as boolean;
     this.formProperty.widget = widget;
   }
 

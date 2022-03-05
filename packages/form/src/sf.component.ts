@@ -418,7 +418,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       onlyVisual: this.options.onlyVisual,
       size: this.options.size,
       liveValidate: this.liveValidate,
-      firstVisual: this.firstVisual,
       ...this.options.ui,
       ...(_schema as NzSafeAny).ui,
       ...this.ui['*']

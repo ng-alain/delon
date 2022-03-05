@@ -3,12 +3,13 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { AlainSFConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 
 import { SF_SEQ } from '../const';
-import { ErrorData } from '../errors';
-import { SFFormValueChange, SFUpdateValueAndValidity, SFValue } from '../interface';
-import { SFSchema, SFSchemaType } from '../schema';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
+import type { ErrorData } from '../errors';
+import type { SFFormValueChange, SFUpdateValueAndValidity, SFValue } from '../interface';
+import type { SFSchema, SFSchemaType } from '../schema';
+import type { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFVisibleIfReturn } from '../schema/ui';
 import { isBlank } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
 import type { Widget } from '../widget';
@@ -29,6 +30,7 @@ export abstract class FormProperty {
   _value: SFValue = null;
   widget!: Widget<FormProperty, SFUISchemaItem>;
   path: string;
+  propertyId?: string;
 
   constructor(
     schemaValidatorFactory: SchemaValidatorFactory,
@@ -324,7 +326,23 @@ export abstract class FormProperty {
               map(res => {
                 const vi = visibleIf[dependencyPath];
                 if (typeof vi === 'function') {
-                  return vi(res.value, property);
+                  const viFnRes = vi(res.value, property);
+                  // 同步更新 required
+                  if (typeof viFnRes === 'object') {
+                    const fixViFnRes = { show: false, required: false, ...viFnRes } as SFVisibleIfReturn;
+                    const parentRequired = this.parent?.schema.required!;
+                    if (parentRequired && this.propertyId) {
+                      const idx = parentRequired.findIndex(w => w === this.propertyId);
+                      if (fixViFnRes.required) {
+                        if (idx === -1) parentRequired.push(this.propertyId);
+                      } else {
+                        if (idx !== -1) parentRequired.splice(idx, 1);
+                      }
+                      this.ui._required = fixViFnRes.required;
+                    }
+                    return fixViFnRes.show!;
+                  }
+                  return viFnRes;
                 }
                 if (vi.indexOf('$ANY$') !== -1) {
                   return res.value.length > 0;
@@ -354,6 +372,24 @@ export abstract class FormProperty {
   }
 
   // #endregion
+
+  /**
+   * Update the feedback status of the widget
+   *
+   * 更新小部件的反馈状态
+   */
+  updateFeedback(status: NzFormControlStatusType = null, icon?: string | null): void {
+    this.ui.feedback = status;
+    this.ui.feedbackIcon =
+      icon ||
+      {
+        error: 'close-circle-fill',
+        validating: 'loading',
+        success: 'check-circle-fill',
+        warning: 'exclamation-circle-fill'
+      }[status!];
+    this.widget.detectChanges();
+  }
 }
 
 export abstract class PropertyGroup extends FormProperty {

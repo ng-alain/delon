@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 
 import type { SFValue } from './interface';
 import type { FormProperty, PropertyGroup } from './model/form.property';
@@ -64,10 +65,6 @@ export interface ErrorSchema {
    */
   errors?: { [key: string]: string | ((obj: ErrorData) => string) };
   /**
-   * 是否立即呈现错误视觉，默认：`false`
-   */
-  firstVisual?: boolean;
-  /**
    * 是否只展示错误视觉不显示错误文本，默认：`false`
    */
   onlyVisual?: boolean;
@@ -90,4 +87,11 @@ export interface ErrorSchema {
     formProperty: FormProperty,
     form: PropertyGroup
   ) => ErrorData[] | Observable<ErrorData[]>;
+
+  /**
+   * 表单状态值，只支持 `this.sf.getProperty('/department')?.updateFeedback('validating')` 调用方式
+   */
+  feedback?: NzFormControlStatusType;
+
+  feedbackIcon?: string | null;
 }

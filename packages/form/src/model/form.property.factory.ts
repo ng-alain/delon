@@ -135,6 +135,8 @@ export class FormPropertyFactory {
       }
     }
 
+    newProperty.propertyId = propertyId;
+
     if (newProperty instanceof PropertyGroup) {
       this.initializeRoot(newProperty);
     }
