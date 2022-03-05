@@ -52,6 +52,7 @@ describe('theme: i18n', () => {
     });
 
     it('#flatData', () => {
+      srv.use('en');
       srv.use('en', {
         name: 'Name',
         sys: {
@@ -88,7 +89,14 @@ describe('theme: i18n', () => {
       TestBed.configureTestingModule({
         imports: [
           AlainThemeModule.forRoot(),
-          RouterTestingModule.withRoutes([{ path: ':i18n', component: TestComponent, canActivate: [AlainI18NGuard] }])
+          RouterTestingModule.withRoutes([
+            {
+              path: ':i18n',
+              component: TestComponent,
+              canActivate: [AlainI18NGuard],
+              canActivateChild: [AlainI18NGuard]
+            }
+          ])
         ],
         declarations: [TestComponent]
       });
