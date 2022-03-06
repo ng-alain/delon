@@ -345,7 +345,7 @@ export abstract class FormProperty {
                   return viFnRes;
                 }
                 if (vi.indexOf('$ANY$') !== -1) {
-                  return res.value.length > 0;
+                  return res.value && res.value.length > 0;
                 } else {
                   return vi.indexOf(res.value) !== -1;
                 }
@@ -373,11 +373,6 @@ export abstract class FormProperty {
 
   // #endregion
 
-  /**
-   * Update the feedback status of the widget
-   *
-   * 更新小部件的反馈状态
-   */
   updateFeedback(status: NzFormControlStatusType = null, icon?: string | null): void {
     this.ui.feedback = status;
     this.ui.feedbackIcon =

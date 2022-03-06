@@ -7,11 +7,11 @@ order: 2
 
 ## zh-CN
 
-利用 `visibleIf` 实现更加灵活的条件表达式，可以同时支持显示与可选项。
+利用 `visibleIf` 实现更加灵活的条件表达式，可以同时支持显示与可选项；利用 `updateFeedback` 可以更新反馈状态。
 
 ## en-US
 
-Use `visibleIf` to implement more flexible conditional expressions, which can support both display and required items.
+Use `visibleIf` to implement more flexible conditional expressions, which can support both display and required items. Feedback status can be updated with `updateFeedback`.
 
 ```ts
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -50,7 +50,7 @@ export class DemoComponent implements OnInit, OnDestroy {
         ui: {
           changeDebounceTime: 100,
           change: q => {
-            this.sf.getProperty('/department')?.updateFeedback('validating');
+            this.sf.updateFeedback('/department', 'validating');
             this.searchDepartment$.next(q);
           },
           visibleIf: {
@@ -149,7 +149,7 @@ export class DemoComponent implements OnInit, OnDestroy {
         departmentProperty.schema.enum = list;
         departmentProperty.schema.default = list[0];
         departmentProperty.widget.reset(list[0]);
-        this.sf.getProperty('/department')?.updateFeedback();
+        this.sf.updateFeedback('/department');
       });
   }
 

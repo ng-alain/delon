@@ -340,19 +340,6 @@ describe('form: component', () => {
         });
       });
 
-      describe('#firstVisual', () => {
-        it('with false', () => {
-          context.firstVisual = false;
-          fixture.detectChanges();
-          page.checkCount('.ant-form-item-explain', 0);
-        });
-        it('with true', () => {
-          context.firstVisual = true;
-          fixture.detectChanges();
-          page.checkCount('.ant-form-item-explain', 2);
-        });
-      });
-
       describe('#onlyVisual', () => {
         it('with false', () => {
           context.onlyVisual = false;
@@ -536,6 +523,20 @@ describe('form: component', () => {
           context.comp.setValue('/invalid-path', 'name');
         }).toThrow();
       });
+      it('#updateFeedback', () => {
+        const namePath = '/name';
+        context.comp.updateFeedback(namePath, 'error');
+        page.dc().checkCount('.ant-form-item-has-error', 1).checkCount('.ant-form-item-has-feedback', 1);
+        context.comp.updateFeedback(namePath, 'success', 'left');
+        page
+          .dc()
+          .checkCount('.ant-form-item-has-success', 1)
+          .checkCount('.ant-form-item-has-feedback', 1)
+          .checkCount('.anticon-left', 1);
+        context.comp.updateFeedback(namePath);
+
+        page.dc().checkCount('.ant-form-item-has-feedback', 0);
+      });
     });
 
     describe('[Custom Validator]', () => {
@@ -717,6 +718,23 @@ describe('form: component', () => {
         };
         page.newSchema(s).checkError(`应当是 0.01 的整数倍`);
       });
+    });
+  });
+
+  describe('#firstVisual', () => {
+    beforeEach(() => {
+      genModule();
+      ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    });
+    it('with false', () => {
+      context.firstVisual = false;
+      createComp();
+      page.checkCount('.ant-form-item-explain', 0);
+    });
+    it('with true', () => {
+      context.firstVisual = true;
+      createComp();
+      page.checkCount('.ant-form-item-explain', 2);
     });
   });
 

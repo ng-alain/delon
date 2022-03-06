@@ -26,10 +26,11 @@ import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 
 import { mergeConfig } from './config';
 import type { ErrorData } from './errors';
-import { SFButton, SFLayout, SFValueChange } from './interface';
+import type { SFButton, SFLayout, SFMode, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import type { SFSchema } from './schema/index';
@@ -45,8 +46,6 @@ export function useFactory(
 ): FormPropertyFactory {
   return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
 }
-
-export type SFMode = 'default' | 'search' | 'edit';
 
 @Component({
   selector: 'sf, [sf]',
@@ -221,6 +220,23 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       throw new Error(`Invalid path: ${path}`);
     }
     item.resetValue(value, false);
+    return this;
+  }
+
+  /**
+   * Update the feedback status of the widget
+   *
+   * 更新小部件的反馈状态
+   *
+   * ```ts
+   * // Validate status of the widget
+   * this.sf.updateFeedback('/name', 'validating');
+   * // Clean validate status of the widget
+   * this.sf.updateFeedback('/name');
+   * ```
+   */
+  updateFeedback(path: string, status: NzFormControlStatusType = null, icon?: string | null): this {
+    this.getProperty(path)?.updateFeedback(status, icon);
     return this;
   }
 

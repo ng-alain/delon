@@ -160,6 +160,7 @@ export class HomeComponent {
 | `getProperty` | 根据路径获取表单元素属性 | `FormProperty` |
 | `getValue` | 根据路径获取表单元素当前值 | `any` |
 | `setValue` | 根据路径设置某个表单元素属性值，若路径不存在会产生异常 | `this` |
+| `updateFeedback` | 根据路径设置某个表单元素反馈状态 | `this` |
 
 > **注：** 所有 path 采用 `/` 来分隔，例如：`/user/name`、`/arr/0/name`。
 

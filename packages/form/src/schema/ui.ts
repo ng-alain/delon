@@ -215,7 +215,7 @@ export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema
   /**
    * ACL 配置
    */
-  acl?: ACLCanType;
+  acl?: ACLCanType | null;
 }
 
 /**
