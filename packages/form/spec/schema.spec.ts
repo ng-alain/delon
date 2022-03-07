@@ -406,6 +406,61 @@ describe('form: schema', () => {
     });
   });
 
+  describe('#visibleIf', () => {
+    it('should be working', () => {
+      page
+        .newSchema({
+          properties: {
+            login_type: {
+              type: 'string',
+              enum: ['m', 'p'],
+              default: 'm',
+              ui: {
+                widget: 'radio',
+                class: 'j-login_type'
+              }
+            },
+            mobile: { type: 'string', ui: { class: 'j-mobile', visibleIf: { login_type: ['m'] } } },
+            code: {
+              type: 'string',
+              ui: {
+                class: 'j-code',
+                visibleIf: { login_type: val => (val === 'm' ? { required: true, show: false } : null) }
+              }
+            },
+            code2: {
+              type: 'string',
+              ui: {
+                class: 'j-code2',
+                visibleIf: { login_type: val => (val === 'm' ? { required: false, show: true } : null) }
+              }
+            },
+            name: { type: 'string', ui: { class: 'j-name', visibleIf: { login_type: ['p'] } } },
+            any: {
+              type: 'string',
+              ui: {
+                class: 'j-any',
+                visibleIf: {
+                  login_type: ['$ANY$']
+                }
+              }
+            }
+          },
+          required: ['login_type']
+        })
+        .checkCount('.j-mobile', 1)
+        .checkCount('.j-code', 0)
+        .checkCount('.j-name', 0)
+        .checkCount('.j-any', 1);
+      expect(page.getProperty('/code').ui._required).toBe(true);
+      expect(page.getProperty('/code2').ui._required).toBe(false);
+      const labels = page.getEl('.j-login_type nz-radio-group').querySelectorAll('label');
+      expect(labels.length).toBe(2);
+      labels[1].click();
+      page.checkCount('.j-mobile', 0).checkCount('.j-name', 1).checkCount('.j-any', 1);
+    });
+  });
+
   describe('[order]', () => {
     function genKeys(): string {
       return JSON.stringify(Object.keys((context.comp.rootProperty as ObjectProperty).properties!));

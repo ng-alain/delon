@@ -159,7 +159,8 @@ export class HomeComponent {
 | `validator` | Manually verify a form | `void` |
 | `getProperty` | Get a form property via path | `FormProperty` |
 | `getValue` | Get value via path | `any` |
-| `setValue` | Set value via path, shoudl be throw error when invalid path | `this` |
+| `setValue` | Set value via path, should be throw error when invalid path | `this` |
+| `updateFeedback` | Set feedback status via path | `this` |
 
 > **Note:** All paths are separated by `/`, for example: `/user/name`, `/arr/0/name`.
 

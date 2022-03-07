@@ -2,6 +2,11 @@
   [style.width.px]="ui.width"
   [class.ant-form-item-has-error]="showError"
   [class.ant-form-item-with-help]="showError"
+  [class.ant-form-item-has-success]="ui.feedback === 'success'"
+  [class.ant-form-item-has-warning]="ui.feedback === 'warning'"
+  [class.ant-form-item-has-error]="ui.feedback === 'error'"
+  [class.ant-form-item-is-validating]="ui.feedback === 'validating'"
+  [class.ant-form-item-has-feedback]="ui.feedback"
 >
   <div nz-col *ngIf="_showTitle" [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
     <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
@@ -30,6 +35,9 @@
       <div class="ant-form-item-control-input-content">
         <ng-content></ng-content>
       </div>
+      <span class="ant-form-item-children-icon">
+        <i *ngIf="ui.feedbackIcon" nz-icon [nzType]="ui.feedbackIcon"></i>
+      </span>
     </div>
     <div *ngIf="!ui.onlyVisual && showError" @helpMotion class="ant-form-item-explain ant-form-item-explain-connected">
       <div role="alert" class="ant-form-item-explain-error">

@@ -199,6 +199,8 @@
 /form/cascader/zh
 /form/checkbox/en
 /form/checkbox/zh
+/form/conditional/en
+/form/conditional/zh
 /form/custom/en
 /form/custom/zh
 /form/customize/en

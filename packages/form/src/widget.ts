@@ -5,17 +5,17 @@ import { takeUntil } from 'rxjs/operators';
 import { LocaleData } from '@delon/theme';
 import { NgClassType, NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { ErrorData } from './errors';
-import { SFValue } from './interface';
+import type { ErrorData } from './errors';
+import type { SFValue } from './interface';
 import { ArrayProperty } from './model/array.property';
 import { FormProperty } from './model/form.property';
 import { ObjectProperty } from './model/object.property';
-import { SFSchema } from './schema';
-import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
+import type { SFSchema } from './schema';
+import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 import { SFItemComponent } from './sf-item.component';
 import { SFComponent } from './sf.component';
 import { di } from './utils';
-import { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
+import type { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
 
 @Directive()
 export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem> implements AfterViewInit {
@@ -25,7 +25,6 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   id = '';
   schema!: SFSchema;
   ui!: UIT;
-  firstVisual = false;
 
   @HostBinding('class')
   get cls(): NgClassType {
@@ -68,16 +67,17 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
       .pipe(takeUntil(this.sfItemComp!.destroy$))
       .subscribe((errors: ErrorData[] | null) => {
         if (errors == null) return;
+
         di(this.ui, 'errorsChanges', this.formProperty.path, errors);
 
         // 不显示首次校验视觉
-        if (this.firstVisual) {
+        const firstVisual = this.sfComp?.firstVisual;
+        if (firstVisual || (!firstVisual && this.sfComp?._inited)) {
           this.showError = errors.length > 0;
           this.error = this.showError ? (errors[0].message as string) : '';
 
           this.cd.detectChanges();
         }
-        this.firstVisual = true;
       });
     this.afterViewInit();
   }

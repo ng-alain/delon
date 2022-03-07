@@ -2,8 +2,8 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 
-import { SFSchema } from './schema/index';
-import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
+import type { SFSchema } from './schema/index';
+import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 
 @Component({
   selector: 'sf-item-wrap',

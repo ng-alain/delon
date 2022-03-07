@@ -7,6 +7,8 @@ export type SFValue = NzSafeAny;
 
 export type SFLayout = 'horizontal' | 'vertical' | 'inline';
 
+export type SFMode = 'default' | 'search' | 'edit';
+
 export interface SFFormValueChange {
   path: string | null;
   pathValue: SFValue;

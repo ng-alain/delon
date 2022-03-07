@@ -7,8 +7,9 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import { SF_SEQ } from './const';
-import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import type { SFValue } from './interface';
+import type { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
+import type { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFVisibleIf } from './schema/ui';
 
 export function isBlank(o: NzSafeAny): boolean {
   return o == null;
@@ -93,12 +94,12 @@ function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
     schema.required = schema.required.concat(schema.else!.required!);
   }
 
-  const visibleIf: NzSafeAny = {};
-  const visibleElse: NzSafeAny = {};
+  const visibleIf: SFVisibleIf = {};
+  const visibleElse: SFVisibleIf = {};
   ifKeys.forEach(key => {
     const cond = schema.if!.properties![key].enum;
-    visibleIf[key] = cond;
-    if (hasElse) visibleElse[key] = (value: NzSafeAny) => !cond!.includes(value);
+    visibleIf[key] = cond!;
+    if (hasElse) visibleElse[key] = (value: SFValue) => !cond!.includes(value);
   });
 
   schema.then!.required!.forEach(key => (ui[`$${key}`].visibleIf = visibleIf));
