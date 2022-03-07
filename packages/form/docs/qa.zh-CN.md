@@ -129,3 +129,9 @@ const alainConfig: AlainConfig = {
   }
 };
 ```
+
+## 如何切换显示或隐藏某元素
+
+```ts
+this.sf.getProperty('/mobile')?.setVisible(status)?.widget?.detectChanges();
+```

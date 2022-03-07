@@ -23,7 +23,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
+  template: `
+    <button type="button" nz-button (click)="toggleMobile(false)">Hide mobile</button>
+    <button type="button" nz-button (click)="toggleMobile(true)">Show mobile</button>
+    <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `
 })
 export class DemoComponent implements OnInit, OnDestroy {
   @ViewChild('sf', { static: true }) sf!: SFComponent;
@@ -50,7 +54,7 @@ export class DemoComponent implements OnInit, OnDestroy {
         ui: {
           changeDebounceTime: 100,
           change: q => {
-            this.sf.updateFeedback('/department', 'validating');
+            this.sf.getProperty('/department')?.updateFeedback('validating');
             this.searchDepartment$.next(q);
           },
           visibleIf: {
@@ -125,7 +129,8 @@ export class DemoComponent implements OnInit, OnDestroy {
         }
       }
     },
-    required: ['login_type']
+    required: ['login_type'],
+    ui: { debug: true }
   };
 
   constructor(private msg: NzMessageService) {}
@@ -149,8 +154,13 @@ export class DemoComponent implements OnInit, OnDestroy {
         departmentProperty.schema.enum = list;
         departmentProperty.schema.default = list[0];
         departmentProperty.widget.reset(list[0]);
-        this.sf.updateFeedback('/department');
+        this.sf.getProperty('/department')?.updateFeedback();
       });
+  }
+
+  toggleMobile(status: boolean): void {
+    const mobileProperty = this.sf.getProperty('/mobile');
+    mobileProperty?.setVisible(status)?.widget?.detectChanges();
   }
 
   submit(value: {}): void {

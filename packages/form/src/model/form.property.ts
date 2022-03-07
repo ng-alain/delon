@@ -303,13 +303,14 @@ export abstract class FormProperty {
    * Set the hide or display of widget
    * 设置小部件的隐藏或显示
    */
-  setVisible(visible: boolean): void {
+  setVisible(visible: boolean): this {
     this._visible = visible;
     this._visibilityChanges.next(visible);
     // 渲染时需要重新触发 reset
     if (visible) {
       this.resetValue(this.value, true);
     }
+    return this;
   }
 
   _bindVisibility(): void {
