@@ -144,7 +144,7 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
 @Injectable({ providedIn: 'root' })
 export class AlainI18NServiceFake extends AlainI18nBaseService {
   use(lang: string, data: Record<string, unknown>): void {
-    this._data = this.flatData(data, []);
+    this._data = this.flatData(data ?? {}, []);
     this._currentLang = lang;
     this._change$.next(lang);
   }

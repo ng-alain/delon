@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
+import { AlainI18NGuard } from './i18n-url.guard';
 
 describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -49,6 +52,7 @@ describe('theme: i18n', () => {
     });
 
     it('#flatData', () => {
+      srv.use('en');
       srv.use('en', {
         name: 'Name',
         sys: {
@@ -78,6 +82,69 @@ describe('theme: i18n', () => {
     fixture.componentInstance.params = { value: '1' };
     fixture.detectChanges();
     check('a-1', 'param');
+  });
+
+  describe('Change i18n via url', () => {
+    it('should be working', fakeAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          AlainThemeModule.forRoot(),
+          RouterTestingModule.withRoutes([
+            {
+              path: ':i18n',
+              component: TestComponent,
+              canActivate: [AlainI18NGuard],
+              canActivateChild: [AlainI18NGuard]
+            }
+          ])
+        ],
+        declarations: [TestComponent]
+      });
+      fixture = TestBed.createComponent(TestComponent);
+      srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+      spyOn(srv, 'use');
+      const router = TestBed.inject<Router>(Router) as Router;
+      router.navigateByUrl(`/zh`);
+      tick();
+      expect(srv.use).toHaveBeenCalled();
+    }));
+
+    it('should be can not work', fakeAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          AlainThemeModule.forRoot(),
+          RouterTestingModule.withRoutes([
+            { path: ':invalid', component: TestComponent, canActivate: [AlainI18NGuard] }
+          ])
+        ],
+        declarations: [TestComponent]
+      });
+      fixture = TestBed.createComponent(TestComponent);
+      srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+      spyOn(srv, 'use');
+      const router = TestBed.inject<Router>(Router) as Router;
+      router.navigateByUrl(`/zh`);
+      tick();
+      expect(srv.use).not.toHaveBeenCalled();
+    }));
+
+    it('should be working', fakeAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          AlainThemeModule.forRoot(),
+          RouterTestingModule.withRoutes([{ path: ':lang', component: TestComponent, canActivate: [AlainI18NGuard] }])
+        ],
+        declarations: [TestComponent],
+        providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { paramNameOfUrlGuard: 'lang' } } as AlainConfig }]
+      });
+      fixture = TestBed.createComponent(TestComponent);
+      srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+      spyOn(srv, 'use');
+      const router = TestBed.inject<Router>(Router) as Router;
+      router.navigateByUrl(`/zh`);
+      tick();
+      expect(srv.use).toHaveBeenCalled();
+    }));
   });
 });
 
