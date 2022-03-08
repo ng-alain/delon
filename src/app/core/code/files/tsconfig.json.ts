@@ -17,7 +17,8 @@ export default {
     importHelpers: true,
     target: 'es2017',
     module: 'es2020',
-    lib: ['es2020', 'dom']
+    lib: ['es2020', 'dom'],
+    allowSyntheticDefaultImports: true
   },
   angularCompilerOptions: {
     enableIvy: true,

@@ -146,7 +146,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: string) =>
       (obj[offset] || '').trim()
     );
-    this.codeSrv.openOnStackBlitz(componentCode);
+    this.codeSrv.openOnStackBlitz('sf-validator', componentCode);
   }
 
   onCopy(): void {

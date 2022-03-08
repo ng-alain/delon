@@ -21,6 +21,7 @@ import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import packageJSON from './files/package.json';
 import polyfillTS from './files/polyfill';
 import readme from './files/readme-cli';
+import sandboxConfigJSON from './files/sandbox.config.json';
 import startupServiceTS from './files/startup.service';
 import tsconfigJSON from './files/tsconfig.json';
 
@@ -174,11 +175,12 @@ export class CodeService {
     };
   }
 
-  openOnStackBlitz(appComponentCode: string): void {
+  openOnStackBlitz(title: string, appComponentCode: string): void {
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli: false });
+    packageJson.name = title;
     sdk.openProject(
       {
         title: 'NG-ALAIN',
@@ -214,12 +216,13 @@ export class CodeService {
     );
   }
 
-  openOnCodeSandbox(appComponentCode: string, includeCli: boolean = false): void {
+  openOnCodeSandbox(title: string, appComponentCode: string, includeCli: boolean = false): void {
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli });
+    packageJson.name = title;
     const files: {
       [key: string]: {
         content: string;
@@ -301,16 +304,7 @@ export class CodeService {
         isBinary: false
       };
       files['sandbox.config.json'] = {
-        content: JSON.stringify(
-          {
-            template: 'node',
-            container: {
-              node: 14
-            }
-          },
-          null,
-          2
-        ),
+        content: `${JSON.stringify(sandboxConfigJSON, null, 2)}`,
         isBinary: false
       };
     }
