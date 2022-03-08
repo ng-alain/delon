@@ -11,6 +11,27 @@
   ],
   "rules": {
     "function-name-case": ["lower", { "ignoreFunctions": ["/colorPalette/"] }],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": [
+          "fade",
+          "tint",
+          "darken",
+          "ceil",
+          "fadein",
+          "floor",
+          "unit",
+          "shade",
+          "lighten",
+          "percentage",
+          "-",
+          "~`colorPalette",
+          "snaplist",
+          "fade-out"
+        ]
+      }
+    ],
     "no-descending-specificity": null,
     "no-invalid-position-at-import-rule": null,
     "declaration-empty-line-before": null,
