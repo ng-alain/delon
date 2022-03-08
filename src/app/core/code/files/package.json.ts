@@ -1,5 +1,6 @@
 export default {
   name: 'ng-alain',
+  tags: ['NG-ALAIN'],
   version: '0.0.0',
   scripts: {
     ng: 'ng',
