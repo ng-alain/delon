@@ -19,10 +19,7 @@ export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   reset(value: SFValue): void {
     this.styleType = (this.ui.styleType || 'default') === 'default';
     getData(this.schema, this.ui, value).subscribe(list => {
-      this.data = list.map(i => {
-        i.label = this.dom.bypassSecurityTrustHtml(i.label);
-        return i;
-      });
+      this.data = list;
       this.detectChanges();
     });
   }
