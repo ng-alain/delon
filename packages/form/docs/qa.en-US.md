@@ -129,3 +129,10 @@ const alainConfig: AlainConfig = {
    }
 };
 ```
+
+## How to toggle show or hide an element
+
+```ts
+this.sf.getProperty('/mobile')?.setVisible(status).widget.detectChanges();
+```
+
