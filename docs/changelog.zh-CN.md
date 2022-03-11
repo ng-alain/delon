@@ -14,6 +14,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [13.3.0](https://github.com/ng-alain/delon/compare/13.2.1...13.3.0) (2022-03-11)
+
+### Bug Fixes
+
+* **sf:widget:radio:** 修复 `SafeHtml` 问题 ([#1454](https://github.com/ng-alain/delon/issues/1454)) ([4b12d0c](https://github.com/ng-alain/delon/commit/4b12d0cb10fabd97cd82f719eb527947ca16b236))
+
+### Features
+
+* **form:** 新增 `feedback` 反馈状态相关属性与操作 ([#1452](https://github.com/ng-alain/delon/issues/1452)) ([1305849](https://github.com/ng-alain/delon/commit/1305849545316ac6ea7b117245f58d1caa2ca155))
+* **theme:i18n:** 新增 `AlainI18NGuard` 守卫，用于国际化体现在URL上 ([#1451](https://github.com/ng-alain/delon/issues/1451)) ([4340c15](https://github.com/ng-alain/delon/commit/4340c151682d63460b9c8a872194370b72113b13))
+* **theme:theme-btn:** 新增 `themeChange` 事件 ([#1445](https://github.com/ng-alain/delon/issues/1445)) ([4326e73](https://github.com/ng-alain/delon/commit/4326e73df0c275ad334ba9516142506100bf1223))
+
+
 ## [13.2.1](https://github.com/ng-alain/delon/compare/13.2.0...13.2.1) (2022-03-04)
 
 ### Bug Fixes
