@@ -58,7 +58,6 @@ describe('abc: avatar-list', () => {
 
   it('#rtl', () => {
     expect(dl.query(By.css('.avatar-list-rtl'))).toBeNull();
-    debugger;
     const srv = TestBed.inject(Directionality);
     srv.change.emit('rtl');
     fixture.detectChanges();

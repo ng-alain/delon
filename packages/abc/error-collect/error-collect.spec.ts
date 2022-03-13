@@ -59,7 +59,6 @@ describe('abc: error-collect', () => {
 
     it('#rtl', () => {
       expect(dl.query(By.css('.error-collect-rtl'))).toBeNull();
-      debugger;
       const srv = TestBed.inject(Directionality);
       srv.change.emit('rtl');
       fixture.detectChanges();

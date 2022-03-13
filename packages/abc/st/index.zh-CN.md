@@ -100,6 +100,7 @@ module: import { STModule } from '@delon/abc/st';
 | `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | 加载指定页 |
 | `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页 |
 | `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除） |
+| `addRow(data: STData | STData[], options?: { index?: number })` | 添加行 |
 | `removeRow(data: STData | STData[] | number)` | 移除行 |
 | `setRow(index: number | STData, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean })` | 修改行数据，支持部分字段更新 |
 | `pureItem(itemOrIndex: STData | number)` | 返回纯净数据，`st` 内部会维护一组用于缓存的数据，这部分数据可能会影响后端 |
