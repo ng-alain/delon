@@ -162,7 +162,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data!: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
-  @Input() contextmenu?: STContextmenuFn;
+  @Input() contextmenu?: STContextmenuFn | null;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -172,7 +172,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
   @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
-  @Input() singleSort?: STSingleSort;
+  @Input() singleSort?: STSingleSort | null;
   private _multiSort?: STMultiSort;
   @Input()
   get multiSort(): NzSafeAny {
@@ -190,7 +190,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       ...(typeof value === 'object' ? value : {})
     };
   }
-  @Input() rowClassName?: STRowClassName;
+  @Input() rowClassName?: STRowClassName | null;
   @Input() clickRowClassName?: STClickRowClassName | null;
   @Input()
   set widthMode(value: STWidthMode) {
