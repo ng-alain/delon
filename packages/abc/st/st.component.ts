@@ -162,7 +162,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   @Input() data!: string | STData[] | Observable<STData[]>;
   @Input() columns: STColumn[] = [];
-  @Input() contextmenu?: STContextmenuFn;
+  @Input() contextmenu?: STContextmenuFn | null;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
   @Input() @InputNumber() total = 0;
@@ -172,7 +172,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
   @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
-  @Input() singleSort?: STSingleSort;
+  @Input() singleSort?: STSingleSort | null;
   private _multiSort?: STMultiSort;
   @Input()
   get multiSort(): NzSafeAny {
@@ -190,7 +190,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       ...(typeof value === 'object' ? value : {})
     };
   }
-  @Input() rowClassName?: STRowClassName;
+  @Input() rowClassName?: STRowClassName | null;
   @Input() clickRowClassName?: STClickRowClassName | null;
   @Input()
   set widthMode(value: STWidthMode) {
@@ -550,6 +550,34 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     ev.stopPropagation();
   }
 
+  private _refColAndData(): this {
+    this._columns
+      .filter(w => w.type === 'no')
+      .forEach(c =>
+        this._data.forEach((i, idx) => {
+          const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
+          i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
+        })
+      );
+
+    return this.refreshData();
+  }
+
+  /**
+   * Add a rows in the table, like this:
+   *
+   * ```
+   * this.st.addRow(stDataItem)
+   * ```
+   *
+   * **TIPS:** Don't change the `total` value, it is recommended to use the `reload` method if needed
+   */
+  addRow(data: STData | STData[], options?: { index?: number }): this {
+    if (!Array.isArray(data)) data = [data];
+    this._data.splice(options?.index ?? 0, 0, ...(data as STData[]));
+    return this.optimizeData()._refColAndData();
+  }
+
   /**
    * Remove a row in the table, like this:
    *
@@ -557,6 +585,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * this.st.removeRow(0)
    * this.st.removeRow(stDataItem)
    * ```
+   *
+   * **TIPS:** Don't change the `total` value, it is recommended to use the `reload` method if needed
    */
   removeRow(data: STData | STData[] | number): this {
     if (typeof data === 'number') {
@@ -571,17 +601,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .filter(pos => pos !== -1)
         .forEach(pos => this._data.splice(pos, 1));
     }
-    // recalculate no
-    this._columns
-      .filter(w => w.type === 'no')
-      .forEach(c =>
-        this._data.forEach((i, idx) => {
-          const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
-          i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
-        })
-      );
-
-    return this.refreshData();
+    return this._refColAndData();
   }
 
   /**
@@ -837,12 +857,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  private optimizeData(): void {
+  private optimizeData(): this {
     this._data = this.dataSource.optimizeData({
       columns: this._columns,
       result: this._data,
       rowClassName: this.rowClassName
     });
+    return this;
   }
 
   /**

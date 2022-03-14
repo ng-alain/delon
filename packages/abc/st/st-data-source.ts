@@ -43,9 +43,9 @@ export interface STDataSourceOptions {
   res: STRes;
   page: STPage;
   columns: _STColumn[];
-  singleSort?: STSingleSort;
+  singleSort?: STSingleSort | null;
   multiSort?: STMultiSort;
-  rowClassName?: STRowClassName;
+  rowClassName?: STRowClassName | null;
   customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
 }
 
@@ -305,7 +305,7 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
+  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
@@ -392,7 +392,7 @@ export class STDataSource {
   }
 
   getReqSortMap(
-    singleSort: STSingleSort | undefined,
+    singleSort: STSingleSort | undefined | null,
     multiSort: STMultiSort | undefined,
     columns: _STColumn[]
   ): STMultiSortResultType {

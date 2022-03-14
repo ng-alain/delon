@@ -1167,6 +1167,13 @@ describe('abc: st', () => {
           expect(comp.clearSort).toHaveBeenCalled();
         }));
       });
+      it('#addRow', fakeAsync(() => {
+        page.cd().expectCurrentPageTotal(PS);
+        comp.addRow({ id: 100 }).cd();
+        page.expectCurrentPageTotal(PS + 1).expectCell('100', 1, 1);
+        comp.addRow([{ id: 101 }], { index: 2 }).cd();
+        page.expectCurrentPageTotal(PS + 2).expectCell('101', 3, 1);
+      }));
       describe('#removeRow', () => {
         it('shoule be working', fakeAsync(() => {
           page.cd().expectCurrentPageTotal(PS);

@@ -7,13 +7,13 @@ title:
 
 ## zh-CN
 
-利用 `setRow(0, { className: 'text-red' })` 实现第1行动态设置样式，也可以通过 `clickRowClassName` 实现行点击样式交互。
+利用 `addRow`、`removeRow`、`setRow` 方法对行的操作。
 
 > 打开控制面板了解打印明细。
 
 ## en-US
 
-Use `setRow(0, {className:'text-red' })` to dynamically set the style of the first row, or use `clickRowClassName` to implement row click style interaction.
+Operations on rows using `addRow`, `removeRow`, `setRow` methods.
 
 > Open the control panel for print details.
 
@@ -24,7 +24,9 @@ import { STChange, STClickRowClassNameType, STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <button nz-button (click)="st.setRow(0, { className: 'text-success' })"> Via setRow method </button>
+  template: ` <button nz-button (click)="st.addRow({ id: 1000, email: 'add@email.com', phone: '123' })"> addRow</button>
+    <button nz-button (click)="st.removeRow(0)"> removeRow index: 0 </button>
+    <button nz-button (click)="st.setRow(0, { className: 'text-success' })"> Via setRow method </button>
     <st
       #st
       [data]="url"
@@ -41,17 +43,7 @@ export class DemoComponent {
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '邮箱', index: 'email' },
-    { title: '电话', index: 'phone' },
-    {
-      title: '',
-      buttons: [
-        {
-          text: 'btn',
-          type: 'link',
-          click: e => console.log('btn click', e)
-        }
-      ]
-    }
+    { title: '电话', index: 'phone' }
   ];
 
   _click(e: STChange): void {
