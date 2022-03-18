@@ -596,12 +596,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         data = [data];
       }
 
-      (data as STData[])
-        .map(item => this._data.indexOf(item))
-        .filter(pos => pos !== -1)
-        .forEach(pos => this._data.splice(pos, 1));
+      const curData = this._data;
+      for (var i = curData.length; i--; ) {
+        if (data.indexOf(curData[i]) !== -1) {
+          curData.splice(i, 1);
+        }
+      }
     }
-    return this._refColAndData();
+    return this._refCheck()._refColAndData();
   }
 
   /**
