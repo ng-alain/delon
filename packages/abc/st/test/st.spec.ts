@@ -1193,6 +1193,13 @@ describe('abc: st', () => {
           comp.removeRow([null]);
           page.expectCurrentPageTotal(PS);
         }));
+        it('shoule be support mulit-rows', fakeAsync(() => {
+          page.cd().expectCurrentPageTotal(PS);
+          page.expectData(1, 'id', 1);
+          comp.removeRow([comp._data[0], comp._data[2]]);
+          page.expectCurrentPageTotal(PS - 2);
+          page.expectData(1, 'id', 2);
+        }));
       });
       describe('#setRow', () => {
         it('should be working', fakeAsync(() => {

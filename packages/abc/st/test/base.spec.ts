@@ -260,9 +260,13 @@ export class PageObject<T extends TestComponent> {
     return this;
   }
   /** 断言组件内 `_data` 值，下标从 `1` 开始 */
-  expectData(row: number, path: string, valule: NzSafeAny): this {
+  expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
     const ret = deepGet(this.comp._data[row - 1], path);
-    expect(ret).toBe(valule);
+    if (options?.message != null) {
+      expect(ret).withContext(options?.message).toBe(valule);
+    } else {
+      expect(ret).toBe(valule);
+    }
     return this;
   }
   /** 切换分页 */
