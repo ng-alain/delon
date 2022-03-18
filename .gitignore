@@ -20,6 +20,7 @@ debug.log
 __ngcc_entry_points__.json
 report.*.json
 /.angular/cache
+/.husky/_
 
 src/app/routes/gen
 src/assets/color.less
