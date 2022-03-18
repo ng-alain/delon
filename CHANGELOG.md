@@ -1,3 +1,18 @@
+# [13.4.0](https://github.com/ng-alain/delon/compare/13.3.0...13.4.0) (2022-03-18)
+
+
+### Bug Fixes
+
+* **abc:st:** fix misalignment when removing multiple rows ([#1459](https://github.com/ng-alain/delon/issues/1459)) ([82b20f4](https://github.com/ng-alain/delon/commit/82b20f43ffaf797a9a5d714d28dac6fb4989d4d5))
+* **chart:card:** fix support html of `total` property ([#1458](https://github.com/ng-alain/delon/issues/1458)) ([e703cee](https://github.com/ng-alain/delon/commit/e703ceea8966816910a76eb74244b62a9122dff2))
+
+
+### Features
+
+* **abc:st:** add `addRow` method ([#1457](https://github.com/ng-alain/delon/issues/1457)) ([d26c8ba](https://github.com/ng-alain/delon/commit/d26c8ba8f31bed9f42b3ec66790600e9e4f67342))
+
+
+
 # [13.3.0](https://github.com/ng-alain/delon/compare/13.2.1...13.3.0) (2022-03-11)
 
 
