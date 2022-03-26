@@ -14,6 +14,15 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [13.4.1](https://github.com/ng-alain/delon/compare/13.4.0...13.4.1) (2022-03-26)
+
+### Bug Fixes
+
+* **cli:** fix can't use `ng g ng-alain` command in subdirectories ([#1462](https://github.com/ng-alain/delon/issues/1462)) ([5f449c6](https://github.com/ng-alain/delon/commit/5f449c6b381822c01cddf5ff0b7eaa82ec042f1b))
+* **cli:** fix deprecated `--syntax` of lint-staged ([#1463](https://github.com/ng-alain/delon/issues/1463)) ([b42e6ae](https://github.com/ng-alain/delon/commit/b42e6aeed08934d42e4c11e329500c2219d0871a))
+* **sf:widget:array:** fix misalignment ([#1464](https://github.com/ng-alain/delon/issues/1464)) ([4f388f1](https://github.com/ng-alain/delon/commit/4f388f150a0481510dbe41473cc31fdf4ae76469))
+
+
 # [13.4.0](https://github.com/ng-alain/delon/compare/13.3.0...13.4.0) (2022-03-18)
 
 ### Bug Fixes
