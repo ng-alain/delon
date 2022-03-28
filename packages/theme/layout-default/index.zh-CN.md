@@ -235,3 +235,11 @@ export class LayoutBasicComponent {
 **如何更新某个菜单项**
 
 当调用 `MenuService.setItem(key, newValue)` 时会自动重新渲染主菜单，其中 `key` 必须是存在值，请参考 [Menu](/theme/menu#Menu) 的定义。
+
+**如何控制菜单展开**
+
+利用 `SettingsService.setLayout` 对 `collapsed` 进行操作，例如：
+
+```ts
+SettingsService.setLayout('collapsed', status);
+```

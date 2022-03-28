@@ -236,3 +236,10 @@ Although unlimited levels are supported, please keep no more than four levels (i
 
 The menu will be re-rendered via calling `MenuService.setItem(key, newValue)`, please refer to the definition of [Menu](/theme/menu#Menu).
 
+**How to control menu expand**
+
+Use `SettingsService.setLayout` to operate on `collapsed`, for example:
+
+```ts
+SettingsService.setLayout('collapsed', status);
+````
