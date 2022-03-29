@@ -8,18 +8,29 @@ title: 基础样例
 ```ts
 import { Component } from '@angular/core';
 
+interface TagSelectDemoItem {
+  id: number;
+  text: string;
+  value: boolean;
+}
+
 @Component({
   selector: 'app-demo',
   template: `
     <tag-select>
-      <nz-tag *ngFor="let i of categories; let idx = index" nzMode="checkable" [(nzChecked)]="i.value" (nzCheckedChange)="change($event)">
+      <nz-tag
+        *ngFor="let i of categories; let idx = index"
+        nzMode="checkable"
+        [(nzChecked)]="i.value"
+        (nzCheckedChange)="change(i)"
+      >
         {{ i.text }}
       </nz-tag>
     </tag-select>
-  `,
+  `
 })
 export class DemoComponent {
-  categories = [
+  categories: TagSelectDemoItem[] = [
     { id: 0, text: '全部', value: false },
     { id: 1, text: '类目一', value: false },
     { id: 2, text: '类目二', value: false },
@@ -35,11 +46,15 @@ export class DemoComponent {
     { id: 12, text: '类目十二', value: false },
     { id: 13, text: '类目十三', value: false },
     { id: 14, text: '类目十四', value: false },
-    { id: 15, text: '类目十五', value: false },
+    { id: 15, text: '类目十五', value: false }
   ];
 
-  change(status: boolean): void {
-    this.categories.forEach(i => (i.value = status));
+  change(item: TagSelectDemoItem): void {
+    if (item.id === 0) {
+      this.categories.forEach(i => (i.value = item.value));
+      return;
+    }
+    this.categories.find(w => w.id === 0)!.value = false;
   }
 }
 ```
