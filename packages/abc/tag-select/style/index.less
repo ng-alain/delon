@@ -1,10 +1,12 @@
 @import '../../../theme/theme-default.less';
 @tag-select-prefix: ~'.tag-select';
+@tag-select-height: @tag-line-height + 2px; // 2px is top & bottom border width
 
 @{tag-select-prefix} {
   position: relative;
   display: block;
-  max-height: 24px;
+  max-height: @tag-select-height + @tag-select-margin;
+  margin-top: -@tag-select-margin;
   margin-left: -8px;
   overflow: hidden;
   line-height: @line-height-base;
@@ -20,18 +22,23 @@
     padding-right: 50px;
   }
   .@{ant-prefix}-tag {
-    margin-right: 24px;
-    padding: 0 8px;
+    margin-top: @tag-select-margin;
+    margin-right: @tag-select-item-margin-right;
   }
 
   &__trigger {
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 0 !important;
+    color: @primary-color;
 
-    &-icon {
-      margin-left: 8px;
-      font-size: 12px;
+    > .anticon {
+      margin-left: 2px;
+      font-size: 8px;
+      transition: transform .24s;
     }
   }
 }

@@ -38,22 +38,22 @@ describe('abc: tag-select', () => {
     spyOn(context, 'change');
     const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
-    expect(triEl.innerHTML).toContain('展开');
+    expect(triEl.innerHTML.trim()).toContain('展开');
     // expect(triEl.querySelector('.anticon-up')).toBeNull();
     // expect(triEl.querySelector('.anticon-down')).not.toBeNull();
     triEl.click();
     fixture.detectChanges();
-    expect(triEl.innerHTML).toContain('收起');
+    expect(triEl.innerHTML.trim()).toContain('收起');
     // expect(triEl.querySelector('.anticon-up')).not.toBeNull();
     // expect(triEl.querySelector('.anticon-down')).toBeNull();
     expect(context.change).toHaveBeenCalled();
   });
   it('#i18n', () => {
     const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
-    expect(triEl.innerText).toContain(zh_CN.tagSelect.expand);
+    expect(triEl.innerText.trim()).toContain(zh_CN.tagSelect.expand);
     TestBed.inject<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
     fixture.detectChanges();
-    expect(triEl.innerText).toBe(en_US.tagSelect.expand);
+    expect(triEl.innerText.trim()).toBe(en_US.tagSelect.expand);
   });
 });
 
