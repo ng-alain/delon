@@ -1,3 +1,12 @@
+## [13.4.2](https://github.com/ng-alain/delon/compare/13.4.1...13.4.2) (2022-04-01)
+
+
+### Bug Fixes
+
+* **abc:tag-select:** fix style misalignment ([#1467](https://github.com/ng-alain/delon/issues/1467)) ([a16921e](https://github.com/ng-alain/delon/commit/a16921ed3923d29103c2b37f61a9db11fe293acc))
+
+
+
 ## [13.4.1](https://github.com/ng-alain/delon/compare/13.4.0...13.4.1) (2022-03-26)
 
 
