@@ -1,3 +1,4 @@
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -49,7 +50,8 @@ import { ReuseTabService } from './reuse-tab.service';
     '[class.reuse-tab]': 'true',
     '[class.reuse-tab__line]': `tabType === 'line'`,
     '[class.reuse-tab__card]': `tabType === 'card'`,
-    '[class.reuse-tab__disabled]': `disabled`
+    '[class.reuse-tab__disabled]': `disabled`,
+    '[class.reuse-tab-rtl]': `dir === 'rtl'`
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
@@ -70,6 +72,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   list: ReuseItem[] = [];
   item?: ReuseItem;
   pos = 0;
+  dir: Direction = 'ltr';
 
   // #region fields
 
@@ -105,7 +108,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: NzSafeAny,
-    private platform: Platform
+    private platform: Platform,
+    @Optional() private directionality: Directionality
   ) {}
 
   private genTit(title: ReuseTitle): string {
@@ -269,6 +273,12 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
+    this.dir = this.directionality.value;
+    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+
     if (!this.platform.isBrowser) {
       return;
     }

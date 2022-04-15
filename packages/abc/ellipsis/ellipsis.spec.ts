@@ -100,7 +100,7 @@ describe('abc: ellipsis', () => {
         }));
         it('should be not innerText', fakeAsync(() => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el!, 'innerText').and.returnValue(null);
+          spyOnProperty(el!, 'innerText').and.returnValue(null as NzSafeAny);
           context.lines = 2;
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
