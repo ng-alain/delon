@@ -106,6 +106,7 @@ In addition, in layout operations, you can subscribe to layout changes through `
 
 | Property | Description | Type | Default |
 |----|----|----|-----|
+| `[logo]` | Custom Logo Area | `TemplateRef<void>` | - |
 | `[logoExpanded]` | Logo url of expanded status | `string` | `./assets/logo-full.svg` |
 | `[logoCollapsed]` | Logo url of collapsed status | `string` | `./assets/logo.svg` |
 | `[logoFixWidth]` | Specify a fixed logo width | `number` | - |
