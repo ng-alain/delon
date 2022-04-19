@@ -31,6 +31,10 @@ export class MenuService implements OnDestroy {
     return this._change$.pipe(share());
   }
 
+  get menus(): Menu[] {
+    return this.data;
+  }
+
   visit<T extends Menu = Menu>(data: T[], callback: (item: T, parentMenum: T | null, depth?: number) => void): void;
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void;
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
@@ -171,10 +175,6 @@ export class MenuService implements OnDestroy {
     });
   }
 
-  get menus(): Menu[] {
-    return this.data;
-  }
-
   /**
    * 清空菜单
    */
@@ -183,6 +183,9 @@ export class MenuService implements OnDestroy {
     this._change$.next(this.data);
   }
 
+  /**
+   * @deprecated Will be removed in 15.0.0, Pls used `find` instead
+   */
   getHit(data: Menu[], url: string, recursive: boolean = false, cb: ((i: Menu) => void) | null = null): Menu | null {
     let item: Menu | null = null;
 
@@ -209,6 +212,56 @@ export class MenuService implements OnDestroy {
   }
 
   /**
+   * Use `url` or `key` to find menus
+   *
+   * 利用 `url` 或 `key` 查找菜单
+   */
+  find(options: {
+    key?: string | null;
+    url?: string | null;
+    recursive?: boolean | null;
+    cb?: ((i: Menu) => void) | null;
+    /**
+     * Use the current menu data by default
+     *
+     * 默认使用当前菜单数据
+     */
+    data?: Menu[] | null;
+  }): Menu | null {
+    const opt = { recursive: false, ...options };
+    if (opt.key != null) {
+      return this.getItem(opt.key);
+    }
+
+    let url = opt.url;
+
+    let item: Menu | null = null;
+
+    while (!item && url) {
+      this.visit(opt.data ?? this.data, i => {
+        if (opt.cb) {
+          opt.cb(i);
+        }
+        if (i.link != null && i.link === url) {
+          item = i;
+        }
+      });
+
+      if (!opt.recursive) break;
+
+      if (/[?;]/g.test(url)) {
+        url = url.split(/[?;]/g)[0];
+      } else {
+        url = url.split('/').slice(0, -1).join('/');
+      }
+    }
+
+    return item;
+  }
+
+  /**
+   * @deprecated Will be removed in 15.0.0, Pls used `find` and `setItem` instead
+   *
    * 根据URL设置菜单 `_open` 属性
    * - 若 `recursive: true` 则会自动向上递归查找
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
@@ -236,7 +289,7 @@ export class MenuService implements OnDestroy {
    */
   getPathByUrl(url: string, recursive: boolean = false): Menu[] {
     const ret: Menu[] = [];
-    let item = this.getHit(this.data, url, recursive) as MenuInner;
+    let item = this.find({ url, recursive }) as MenuInner;
 
     if (!item) return ret;
 
