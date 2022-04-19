@@ -265,6 +265,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
+    this.delay = this.options.delay as boolean;
     this.localeSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {

@@ -91,4 +91,10 @@ export interface AlainSFConfig {
    * 指定 `format: 'email'` 的默认Email后缀，默认：`['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']`
    */
   uiEmailSuffixes?: string[];
+  /**
+   * Whether to delay rendering, should be manually call `refreshSchema()`
+   *
+   * 是否延迟渲染，需要手动调用 `refreshSchema()`
+   */
+  delay?: boolean;
 }

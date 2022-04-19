@@ -69,6 +69,7 @@ Please refer to [Global Configuration](/docs/global-config), the members are as 
 | `[uiTimeStringFormat]` | Time widget default format | `string` | `HH:mm:ss` |
 | `[uiTimeNumberFormat]` | Time widget default format | `string` | `T` |
 | `[uiEmailSuffixes]` | Specify the default Email suffix for `format: 'email'` | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` |
+| `[delay]` | Whether to delay rendering, should be manually call `refreshSchema()` | `boolean` | `false` |
 
 For example, Build a email and name form:
 
