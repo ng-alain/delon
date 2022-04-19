@@ -106,6 +106,7 @@ export class LayoutBasicComponent {
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[logo]` | 自定义 Logo 区域 | `TemplateRef<void>` | - |
 | `[logoExpanded]` | 展开时 Logo 地址 | `string` | `./assets/logo-full.svg` |
 | `[logoCollapsed]` | 收缩时 Logo 地址 | `string` | `./assets/logo.svg` |
 | `[logoFixWidth]` | 指定固定 Logo 宽度 | `number` | - |
