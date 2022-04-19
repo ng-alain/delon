@@ -721,6 +721,15 @@ describe('form: component', () => {
     });
   });
 
+  it('#delay', () => {
+    genModule();
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    context.delay = true;
+    spyOn(context.comp, 'refreshSchema');
+    fixture.detectChanges();
+    expect(context.comp.refreshSchema).not.toHaveBeenCalled();
+  });
+
   describe('#firstVisual', () => {
     beforeEach(() => {
       genModule();

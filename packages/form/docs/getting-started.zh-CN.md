@@ -120,6 +120,7 @@ export class HomeComponent {
 | `[noColon]` | 是否不显示 `label` 后面的冒号 | `boolean` | `false` |
 | `[compact]` | 是否紧凑 | `boolean` | `false` |
 | `[cleanValue]` | 是否清理未定义 Schema 的数据 | `boolean` | `false` |
+| `[delay]` | 是否延迟渲染，需要手动调用 `refreshSchema()` | `boolean` | `false` |
 | `(formChange)` | 数据变更时回调 | `EventEmitter<{}>` | - |
 | `(formValueChange)` | 值数据变更时回调 | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | 提交表单时回调 | `EventEmitter<{}>` | - |

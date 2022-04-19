@@ -355,6 +355,7 @@ export class SFPage {
       [loading]="loading"
       [noColon]="noColon"
       [cleanValue]="cleanValue"
+      [delay]="delay"
       (formChange)="formChange($event)"
       (formValueChange)="formValueChange($event)"
       (formSubmit)="formSubmit($event)"
@@ -379,6 +380,7 @@ export class TestFormComponent {
   loading = false;
   noColon = false;
   cleanValue = false;
+  delay = false;
 
   formChange(): void {}
   formValueChange(): void {}

@@ -120,6 +120,7 @@ export class HomeComponent {
 | `[noColon]` | Whether to not display `:` after label text. | `boolean` | `false` |
 | `[compact]` | Whether compact style | `boolean` | `false` |
 | `[cleanValue]` | Whether to clean up data for undefined Schema | `boolean` | `false` |
+| `[delay]` | Whether to delay rendering, should be manually call `refreshSchema()` | `boolean` | `false` |
 | `(formChange)` | Callback when data changes | `EventEmitter<{}>` | - |
 | `(formValueChange)` | Callback when value changes | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | Callback when submitting the form | `EventEmitter<{}>` | - |
