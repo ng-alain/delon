@@ -69,6 +69,7 @@ export class AppModule { }
 | `[uiTimeStringFormat]` | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss` |
 | `[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`T` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `T` |
 | `[uiEmailSuffixes]` | 指定 `format: 'email'` 的默认Email后缀 | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` |
+| `[delay]` | 是否延迟渲染，需要手动调用 `refreshSchema()` | `boolean` | `false` |
 
 构建一个邮箱、姓名表单：
 
@@ -120,6 +121,7 @@ export class HomeComponent {
 | `[noColon]` | 是否不显示 `label` 后面的冒号 | `boolean` | `false` |
 | `[compact]` | 是否紧凑 | `boolean` | `false` |
 | `[cleanValue]` | 是否清理未定义 Schema 的数据 | `boolean` | `false` |
+| `[delay]` | 是否延迟渲染，需要手动调用 `refreshSchema()` | `boolean` | `false` |
 | `(formChange)` | 数据变更时回调 | `EventEmitter<{}>` | - |
 | `(formValueChange)` | 值数据变更时回调 | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | 提交表单时回调 | `EventEmitter<{}>` | - |

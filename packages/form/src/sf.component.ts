@@ -83,6 +83,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_disabled: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
   static ngAcceptInputType_cleanValue: BooleanInput;
+  static ngAcceptInputType_delay: BooleanInput;
 
   private destroy$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
@@ -166,6 +167,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() disabled = false;
   @Input() @InputBoolean() noColon = false;
   @Input() @InputBoolean() cleanValue = false;
+  @Input() @InputBoolean() delay = false;
   @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
   @Output() readonly formChange = new EventEmitter<Record<string, unknown>>();
   @Output() readonly formSubmit = new EventEmitter<Record<string, unknown>>();
@@ -196,8 +198,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 根据[路径](https://ng-alain.com/form/qa#path)获取表单元素属性
    */
-  getProperty(path: string): FormProperty | null {
-    return this.rootProperty!.searchProperty(path);
+  getProperty(path: string): FormProperty | null | undefined {
+    return this.rootProperty?.searchProperty(path);
   }
 
   /**
@@ -206,7 +208,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * 根据[路径](https://ng-alain.com/form/qa#path)获取表单元素值
    */
   getValue(path: string): NzSafeAny {
-    return this.getProperty(path)!.value;
+    return this.getProperty(path)?.value;
   }
 
   /**
@@ -263,6 +265,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
+    this.delay = this.options.delay as boolean;
     this.localeSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
@@ -511,7 +514,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this.cdr.detectChanges();
       return;
     }
-    this.refreshSchema();
+    if (!this.delay) {
+      this.refreshSchema();
+    }
   }
 
   /** @internal */
@@ -531,7 +536,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private attachCustomRender(): void {
     this._renders.forEach((tpl, path) => {
-      const property = this.rootProperty!.searchProperty(path);
+      const property = this.rootProperty?.searchProperty(path);
       if (property == null) {
         return;
       }
@@ -547,7 +552,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - `onlyRoot` 只对根进行检验，不进行向下逐个递归，根已经包含整个 Json Schema，默认：`true`
    */
   validator(options: { emitError?: boolean; onlyRoot?: boolean } = { emitError: true, onlyRoot: true }): boolean {
-    if (!this.platform.isBrowser) {
+    if (this.rootProperty == null || !this.platform.isBrowser) {
       return false;
     }
     const fn = (property: FormProperty): void => {
@@ -643,10 +648,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * @param [emit] 是否触发 `formReset` 事件，默认：`false`
    */
   reset(emit: boolean = false): this {
-    if (!this.platform.isBrowser) {
+    if (this.rootProperty == null || !this.platform.isBrowser) {
       return this;
     }
-    this.rootProperty!.resetValue(this.formData, false);
+    this.rootProperty.resetValue(this.formData, false);
     Promise.resolve().then(() => this.cdr.detectChanges());
     if (emit) {
       this.formReset.emit(this.value);
