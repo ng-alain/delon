@@ -150,8 +150,7 @@ export class STColumnSource {
     if (curCog == null || btnSize <= 0) return;
 
     const cog: STColumnMaxMultipleButton = {
-      count: 2,
-      text: '更多',
+      ...this.cog.maxMultipleButton,
       ...(typeof curCog === 'number' ? { count: curCog } : curCog)
     };
 
