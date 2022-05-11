@@ -249,11 +249,11 @@ export class STColumnSource {
         fixMenus = false;
         break;
     }
-    if (fixMenus && (res.menus == null || res.menus!.length === 0)) {
+    if (fixMenus && res.menus?.length === 0) {
       res.menus = [{ value }];
     }
 
-    if (res.menus!.length === 0) {
+    if (res.menus?.length === 0) {
       return null;
     }
 
@@ -276,14 +276,10 @@ export class STColumnSource {
     this.updateDefault(res);
 
     if (this.acl) {
-      res.menus = res.menus!.filter(w => this.acl.can(w.acl!));
+      res.menus = res.menus?.filter(w => this.acl.can(w.acl!));
     }
 
-    if (res.menus!.length <= 0) {
-      res = null;
-    }
-
-    return res;
+    return res.menus?.length === 0 ? null : res;
   }
 
   private restoreRender(item: _STColumn): void {
@@ -541,6 +537,8 @@ export class STColumnSource {
   }
 
   updateDefault(filter: STColumnFilter): this {
+    if (filter.menus == null) return this;
+
     if (filter.type === 'default') {
       filter.default = filter.menus!.findIndex(w => w.checked!) !== -1;
     } else {
