@@ -226,7 +226,6 @@ export abstract class FormProperty {
   }
 
   private setCustomErrors(errors: ErrorData[], list: ErrorData[]): void {
-    // fix error format
     const hasCustomError = list != null && list.length > 0;
     if (hasCustomError) {
       list.forEach(err => {
@@ -236,19 +235,8 @@ export abstract class FormProperty {
         err.keyword = null;
       });
     }
-    this._errors = this.mergeErrors(errors, list);
+    this._errors = list && Array.isArray(list) ? errors.concat(...list) : errors;
     this.setErrors(this._errors);
-  }
-
-  private mergeErrors(errors: ErrorData[], newErrors: ErrorData | ErrorData[]): ErrorData[] {
-    if (newErrors) {
-      if (Array.isArray(newErrors)) {
-        errors = errors.concat(...newErrors);
-      } else {
-        errors.push(newErrors);
-      }
-    }
-    return errors;
   }
 
   /**
