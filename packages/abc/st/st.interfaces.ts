@@ -285,6 +285,14 @@ export interface STColumn<T extends STData = any> {
    */
   buttons?: Array<STColumnButton<T>>;
   /**
+   * Max button option can be showed, and the extra part are auto generated under `more`
+   *
+   * 配置最多显示多少个按钮，多余部分自动生成至 `更多` 下面
+   *
+   * > 注意：若在 `buttons` 下配置过按钮组会导致其失效
+   */
+  maxMultipleButton?: STColumnMaxMultipleButton | number;
+  /**
    * 自定义渲染ID
    *
    * @example
@@ -768,6 +776,18 @@ export interface STColumnButton<T extends STData = any> {
   className?: NgClassType;
 
   [key: string]: any;
+}
+
+export interface STColumnMaxMultipleButton {
+  /**
+   * 更多按钮文本，默认：`更多`
+   */
+  text?: string;
+
+  /**
+   * 超出数量自动合并，默认：`2`
+   */
+  count?: number;
 }
 
 export type IifBehaviorType = 'hide' | 'disabled';

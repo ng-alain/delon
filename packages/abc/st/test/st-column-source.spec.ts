@@ -529,6 +529,37 @@ describe('st: column-source', () => {
           });
         });
       });
+      describe('#maxMultipleButton', () => {
+        it('with number', () => {
+          const res = srv.process(
+            [{ maxMultipleButton: 1, buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }] }],
+            options
+          ).columns[0].buttons!;
+          expect(res.length).toBe(2);
+          expect(res[1].children?.length).toBe(2);
+        });
+        it('with object', () => {
+          const res = srv.process(
+            [
+              {
+                maxMultipleButton: { text: 'More', count: 2 },
+                buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+              }
+            ],
+            options
+          ).columns[0].buttons!;
+          expect(res.length).toBe(3);
+          expect(res[2].text).toBe('More');
+          expect(res[2].children?.length).toBe(1);
+        });
+        it('when the number is less than count', () => {
+          const res = srv.process(
+            [{ maxMultipleButton: 4, buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }] }],
+            options
+          ).columns[0].buttons!;
+          expect(res.length).toBe(3);
+        });
+      });
     });
     describe('[render]', () => {
       beforeEach(() => {

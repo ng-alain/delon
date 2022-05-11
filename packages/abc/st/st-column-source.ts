@@ -15,6 +15,7 @@ import {
   STColumnButtonPop,
   STColumnFilter,
   STColumnGroupType,
+  STColumnMaxMultipleButton,
   STColumnSafeType,
   STIcon,
   STResizable,
@@ -32,6 +33,7 @@ export interface STColumnSourceProcessOptions {
 @Injectable()
 export class STColumnSource {
   private cog!: AlainSTConfig;
+  private voidIIf = (): boolean => true;
 
   constructor(
     private dom: DomSanitizer,
@@ -131,7 +133,7 @@ export class STColumnSource {
 
   private btnCoerceIf(list: STColumnButton[]): void {
     for (const item of list) {
-      if (!item.iif) item.iif = () => true;
+      if (!item.iif) item.iif = this.voidIIf;
       item.iifBehavior = item.iifBehavior || this.cog.iifBehavior;
       if (item.children && item.children.length > 0) {
         this.btnCoerceIf(item.children);
@@ -139,6 +141,23 @@ export class STColumnSource {
         item.children = [];
       }
     }
+  }
+
+  private fixMaxMultiple(col: _STColumn): void {
+    const curCog = col.maxMultipleButton;
+    const btns = col.buttons!;
+    const btnSize = btns.length;
+    if (curCog == null || btnSize <= 0) return;
+
+    const cog: STColumnMaxMultipleButton = {
+      ...this.cog.maxMultipleButton,
+      ...(typeof curCog === 'number' ? { count: curCog } : curCog)
+    };
+
+    if (cog.count! >= btnSize) return;
+
+    col.buttons = btns.slice(0, cog.count);
+    col.buttons.push({ text: cog.text, children: btns.slice(cog.count), iif: this.voidIIf });
   }
 
   private fixedCoerce(list: _STColumn[]): void {
@@ -470,6 +489,7 @@ export class STColumnSource {
       item.filter = this.filterCoerce(item) as STColumnFilter;
       // buttons
       item.buttons = this.btnCoerce(item.buttons!);
+      this.fixMaxMultiple(item);
       // widget
       this.widgetCoerce(item);
       // restore custom row

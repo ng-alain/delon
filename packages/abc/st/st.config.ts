@@ -71,5 +71,9 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
     truth: true,
     yes: '是',
     mode: 'icon'
+  },
+  maxMultipleButton: {
+    text: '更多',
+    count: 2
   }
 };
