@@ -336,7 +336,7 @@ export class STDataSource {
   private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
     const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
       return deepCopy(btns).filter(btn => {
-        const result = typeof item.iif === 'function' ? btn.iif!(item, btn, col) : true;
+        const result = typeof btn.iif === 'function' ? btn.iif(item, btn, col) : true;
         const isRenderDisabled = btn.iifBehavior === 'disabled';
         btn._result = result;
         btn._disabled = !result && isRenderDisabled;
