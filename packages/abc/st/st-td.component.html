@@ -1,8 +1,8 @@
-<ng-template #btnTpl let-i>
+<ng-template #btnTpl let-i let-child="child">
   <ng-container *ngIf="!i.tooltip">
     <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
   </ng-container>
-  <span *ngIf="i.tooltip" nz-tooltip [nzTooltipTitle]="i.tooltip">
+  <span *ngIf="i.tooltip" nz-tooltip [nzTooltipTitle]="i.tooltip" [class.d-block]="child" [class.width-100]="child">
     <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
   </span>
 </ng-template>
@@ -97,14 +97,16 @@
       <ul nz-menu>
         <ng-container *ngFor="let subBtn of btn.children!">
           <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
-            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn }"> </ng-template>
+            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }">
+            </ng-template>
           </li>
           <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
         </ng-container>
       </ul>
     </nz-dropdown-menu>
     <span *ngIf="btn.children!.length === 0" [class.st__btn-disabled]="btn._disabled">
-      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn }"> </ng-template>
+      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }">
+      </ng-template>
     </span>
     <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
   </ng-container>
