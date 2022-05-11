@@ -9,7 +9,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
 import { ST_DEFAULT_CONFIG } from '../st.config';
-import { STColumnFilterMenu, STData } from '../st.interfaces';
+import { STColumnButton, STColumnFilterMenu, STData } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 
 const DEFAULT = {
@@ -85,6 +85,7 @@ describe('abc: table: data-souce', () => {
     http = new MockHttpClient();
     currencySrv = new MockCurrencyService();
     srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, mockDomSanitizer as any);
+    srv.setCog(ST_DEFAULT_CONFIG);
   }
 
   describe('[local data]', () => {
@@ -884,6 +885,55 @@ describe('abc: table: data-souce', () => {
         const btns = res.list[0]._values[1].buttons;
         expect(Array.isArray(btns)).toBe(true);
         expect(btns.length).toBe(2);
+        done();
+      });
+    });
+  });
+
+  describe('#maxMultipleButton', () => {
+    beforeEach(() => genModule());
+
+    it('with number', done => {
+      options.data = [{ id: 1 }];
+      options.columns = [
+        {
+          maxMultipleButton: 1,
+          buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+        }
+      ] as _STColumn[];
+      srv.process(options).subscribe(res => {
+        const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+        expect(btns.length).toBe(2);
+        expect(btns[1].children?.length).toBe(2);
+        done();
+      });
+    });
+
+    it('with object', done => {
+      options.data = [{ id: 1 }];
+      options.columns = [
+        {
+          maxMultipleButton: { text: 'More', count: 2 },
+          buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+        }
+      ] as _STColumn[];
+      srv.process(options).subscribe(res => {
+        const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+        expect(btns.length).toBe(3);
+        expect(btns[2]._text).toBe('More');
+        expect(btns[2].children?.length).toBe(1);
+        done();
+      });
+    });
+
+    it('when the number is less than count', done => {
+      options.data = [{ id: 1 }];
+      options.columns = [
+        { maxMultipleButton: 4, buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }] }
+      ] as _STColumn[];
+      srv.process(options).subscribe(res => {
+        const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+        expect(btns.length).toBe(3);
         done();
       });
     });

@@ -340,10 +340,9 @@ export class STDataSource {
         const isRenderDisabled = btn.iifBehavior === 'disabled';
         btn._result = result;
         btn._disabled = !result && isRenderDisabled;
-        if (btn.children!.length > 0) {
+        if (btn.children?.length) {
           btn.children = fn(btn.children!);
         }
-        delete btn.iif;
         return result || isRenderDisabled;
       });
     };
@@ -353,7 +352,7 @@ export class STDataSource {
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
         btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
-        if (btn.children!.length > 0) {
+        if (btn.children?.length) {
           btn.children = fnText(btn.children!);
         }
       }
