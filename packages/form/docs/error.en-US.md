@@ -120,6 +120,17 @@ schema: SFSchema = {
 
 **Note：** Because a new instance is generated in every time of validation, some control operations are not able to do, e.g. `debounceTime`.
 
+### setErrors
+
+Use the `setErrors` method to adjust error messages.
+
+```ts
+this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
+this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
+// Clean current error messages
+this.sf.getProperty('/name')?.setErrors([]);
+```
+
 ## Visual
 
 Can configure [global config](/docs/global-config) or `ui.onlyVisual` to control if only show error visual but not error message.

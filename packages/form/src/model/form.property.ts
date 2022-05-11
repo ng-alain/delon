@@ -233,7 +233,7 @@ export abstract class FormProperty {
         if (!err.message) {
           throw new Error(`The custom validator must contain a 'message' attribute to viewed error text`);
         }
-        err._custom = true;
+        err.keyword = null;
       });
     }
     this._errors = this.mergeErrors(errors, list);
@@ -251,36 +251,48 @@ export abstract class FormProperty {
     return errors;
   }
 
-  protected setErrors(errors: ErrorData[], emitFormat: boolean = true): void {
-    if (emitFormat && errors && !this.ui.onlyVisual) {
+  /**
+   * Set the current error message
+   *
+   * 设置当前错误消息
+   *
+   * @param emitFormat 若提供的消息带有 `{xx}` 会自动根据参数进行转化，包含自定义函数
+   *
+   * @example
+   *
+   * this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
+   * this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
+   * this.sf.getProperty('/name')?.setErrors([]); // Clean error
+   */
+  setErrors(errors: ErrorData | ErrorData[], emitFormat: boolean = true): void {
+    let arrErrs = Array.isArray(errors) ? errors : [errors];
+
+    if (emitFormat && arrErrs && !this.ui.onlyVisual) {
       const l = (this.widget && this.widget.l.error) || {};
-      errors = errors.map((err: ErrorData) => {
-        let message =
-          err._custom === true && err.message
+      arrErrs = arrErrs.map((err: ErrorData) => {
+        let message: string | ((err: ErrorData) => string) =
+          err.keyword == null && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword] || this._options.errors![err.keyword] || l[err.keyword] || ``;
+            : (this.ui.errors || {})[err.keyword!] || this._options.errors![err.keyword!] || l[err.keyword!] || ``;
 
         if (message && typeof message === 'function') {
-          message = message(err) as string;
+          message = message(err);
         }
 
         if (message) {
-          if (~(message as string).indexOf('{')) {
-            message = (message as string).replace(
-              /{([\.a-zA-Z0-9]+)}/g,
-              (_v: string, key: string) => err.params![key] || ''
-            );
+          if (~message.indexOf('{') && err.params) {
+            message = message.replace(/{([\.a-zA-Z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
           }
-          err.message = message as string;
+          err.message = message;
         }
         return err;
       });
     }
-    this._errors = errors;
-    this._errorsChanges.next(errors);
+    this._errors = arrErrs;
+    this._errorsChanges.next(arrErrs);
     // Should send errors to parent field
     if (this._parent) {
-      this._parent.setParentAndPlatErrors(errors, this.path);
+      this._parent.setParentAndPlatErrors(arrErrs, this.path);
     }
   }
 
