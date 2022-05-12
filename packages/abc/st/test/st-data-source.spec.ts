@@ -890,51 +890,83 @@ describe('abc: table: data-souce', () => {
     });
   });
 
-  describe('#maxMultipleButton', () => {
+  describe('[buttons]', () => {
     beforeEach(() => genModule());
 
-    it('with number', done => {
+    it('text with function', done => {
       options.data = [{ id: 1 }];
       options.columns = [
         {
-          maxMultipleButton: 1,
-          buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+          buttons: [{ text: (_, __) => `fn` }]
         }
       ] as _STColumn[];
       srv.process(options).subscribe(res => {
         const btns: STColumnButton[] = res.list[0]._values[0].buttons;
-        expect(btns.length).toBe(2);
-        expect(btns[1].children?.length).toBe(2);
+        expect(btns.length).toBe(1);
+        expect(btns[0]._text).toBe('fn');
         done();
       });
     });
 
-    it('with object', done => {
+    it('text with null value', done => {
       options.data = [{ id: 1 }];
       options.columns = [
         {
-          maxMultipleButton: { text: 'More', count: 2 },
-          buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+          buttons: [{ text: undefined }]
         }
       ] as _STColumn[];
       srv.process(options).subscribe(res => {
         const btns: STColumnButton[] = res.list[0]._values[0].buttons;
-        expect(btns.length).toBe(3);
-        expect(btns[2]._text).toBe('More');
-        expect(btns[2].children?.length).toBe(1);
+        expect(btns.length).toBe(1);
+        expect(btns[0]._text).toBe('');
         done();
       });
     });
 
-    it('when the number is less than count', done => {
-      options.data = [{ id: 1 }];
-      options.columns = [
-        { maxMultipleButton: 4, buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }] }
-      ] as _STColumn[];
-      srv.process(options).subscribe(res => {
-        const btns: STColumnButton[] = res.list[0]._values[0].buttons;
-        expect(btns.length).toBe(3);
-        done();
+    describe('#maxMultipleButton', () => {
+      it('with number', done => {
+        options.data = [{ id: 1 }];
+        options.columns = [
+          {
+            maxMultipleButton: 1,
+            buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+          }
+        ] as _STColumn[];
+        srv.process(options).subscribe(res => {
+          const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+          expect(btns.length).toBe(2);
+          expect(btns[1].children?.length).toBe(2);
+          done();
+        });
+      });
+
+      it('with object', done => {
+        options.data = [{ id: 1 }];
+        options.columns = [
+          {
+            maxMultipleButton: { text: 'More', count: 2 },
+            buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }]
+          }
+        ] as _STColumn[];
+        srv.process(options).subscribe(res => {
+          const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+          expect(btns.length).toBe(3);
+          expect(btns[2]._text).toBe('More');
+          expect(btns[2].children?.length).toBe(1);
+          done();
+        });
+      });
+
+      it('when the number is less than count', done => {
+        options.data = [{ id: 1 }];
+        options.columns = [
+          { maxMultipleButton: 4, buttons: [{ text: 'btn1' }, { text: 'btn2' }, { text: 'btn3' }] }
+        ] as _STColumn[];
+        srv.process(options).subscribe(res => {
+          const btns: STColumnButton[] = res.list[0]._values[0].buttons;
+          expect(btns.length).toBe(3);
+          done();
+        });
       });
     });
   });

@@ -4,12 +4,23 @@ import { SafeHtml } from '@angular/platform-browser';
 
 import { STColumn, STColumnButton, STColumnSafeType, STData, STSortMap } from './st.interfaces';
 
+/**
+ * @inner
+ */
 export type _STTdNotifyType = 'checkbox' | 'radio';
+
+/**
+ * @inner
+ */
 export interface _STTdNotify {
   type: _STTdNotifyType;
   item: STData;
   col: _STColumn;
 }
+
+/**
+ * @inner
+ */
 export interface _STColumn extends STColumn {
   children?: _STColumn[];
 
@@ -32,6 +43,9 @@ export interface _STColumn extends STColumn {
   __render?: TemplateRef<any>;
 }
 
+/**
+ * @inner
+ */
 export interface _STHeader {
   /**
    * 是否有子列
@@ -42,11 +56,17 @@ export interface _STHeader {
   column: _STColumn;
 }
 
+/**
+ * @inner
+ */
 export interface _STColumnButton<T extends STData = any> extends STColumnButton<T> {
   _text?: string;
   children?: Array<_STColumnButton<T>>;
 }
 
+/**
+ * @inner
+ */
 export interface _STDataValue {
   text: string;
   _text: SafeHtml;
