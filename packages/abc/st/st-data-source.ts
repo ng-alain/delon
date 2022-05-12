@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
+import type { AlainSTConfig } from '@delon/util/config';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -14,6 +15,7 @@ import {
   STColumn,
   STColumnFilter,
   STColumnFilterMenu,
+  STColumnMaxMultipleButton,
   STCustomRequestOptions,
   STData,
   STMultiSort,
@@ -66,6 +68,7 @@ export interface STDataSourceResult {
 
 @Injectable()
 export class STDataSource {
+  private cog!: AlainSTConfig;
   private sortTick = 0;
 
   constructor(
@@ -76,6 +79,10 @@ export class STDataSource {
     private currencySrv: CurrencyService,
     private dom: DomSanitizer
   ) {}
+
+  setCog(val: AlainSTConfig): void {
+    this.cog = val;
+  }
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
     let data$: Observable<STData[]>;
@@ -329,14 +336,13 @@ export class STDataSource {
   private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
     const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
       return deepCopy(btns).filter(btn => {
-        const result = btn.iif!(item, btn, col);
+        const result = typeof btn.iif === 'function' ? btn.iif(item, btn, col) : true;
         const isRenderDisabled = btn.iifBehavior === 'disabled';
         btn._result = result;
         btn._disabled = !result && isRenderDisabled;
-        if (btn.children!.length > 0) {
+        if (btn.children?.length) {
           btn.children = fn(btn.children!);
         }
-        delete btn.iif;
         return result || isRenderDisabled;
       });
     };
@@ -346,14 +352,31 @@ export class STDataSource {
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
         btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
-        if (btn.children!.length > 0) {
+        if (btn.children?.length) {
           btn.children = fnText(btn.children!);
         }
       }
       return btns;
     };
 
-    return fnText(res);
+    return this.fixMaxMultiple(fnText(res), col);
+  }
+
+  private fixMaxMultiple(btns: _STColumnButton[], col: STColumn): _STColumnButton[] {
+    const curCog = col.maxMultipleButton;
+    const btnSize = btns.length;
+    if (curCog == null || btnSize <= 0) return btns;
+
+    const cog: STColumnMaxMultipleButton = {
+      ...this.cog.maxMultipleButton,
+      ...(typeof curCog === 'number' ? { count: curCog } : curCog)
+    };
+
+    if (cog.count! >= btnSize) return btns;
+
+    const newBtns: _STColumnButton[] = btns.slice(0, cog.count);
+    newBtns.push({ _text: cog.text, children: btns.slice(cog.count) });
+    return newBtns;
   }
 
   // #region sort

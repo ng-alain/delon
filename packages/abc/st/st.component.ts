@@ -284,6 +284,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.multiSort = copyMultiSort;
     }
     this.columnSource.setCog(cog);
+    this.dataSource.setCog(cog);
   }
 
   cd(): this {
