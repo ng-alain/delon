@@ -120,6 +120,17 @@ schema: SFSchema = {
 
 **注意：** 由于每一次校验都是重新实例一次，因此无法做一些控制的操作，例如：去抖 `debounceTime`。
 
+### setErrors
+
+利用 `setErrors` 方法来调整错误信息。
+
+```ts
+this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
+this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
+// 清理当前错误消息
+this.sf.getProperty('/name')?.setErrors();
+```
+
 ## 视觉
 
 可以通过设置[全局配置](/docs/global-config)或 `ui.onlyVisual` 属性控制只展示错误视觉不显示错误文本。

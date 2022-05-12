@@ -46,11 +46,28 @@ export const ERRORSDEFAULT = {
 export interface ErrorData {
   [key: string]: NzSafeAny;
 
-  keyword: string;
+  /**
+   * When specifying `keyword`, you can use `sf` built-in some common types [ERRORSDEFAULT](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4) , direct conversion. Or use the `message` parameter to specify an error message.
+   *
+   * 当指定 `keyword` 时，可以利用 `sf` 内置一些常见类型 [ERRORSDEFAULT](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)，直接转化。或者使用 `message` 参数来指定错误消息。
+   */
+  keyword?: string | null;
   dataPath?: string;
+  data?: unknown;
   schemaPath?: string;
-  params?: { [key: string]: NzSafeAny };
-  message?: string;
+  instancePath?: string;
+  /**
+   * Parameters required for template parsing
+   *
+   * 指定模板解析所需要的参数
+   */
+  params?: Record<string, NzSafeAny>;
+  /**
+   * Specify error message
+   *
+   * 指定错误消息
+   */
+  message?: string | ((err: ErrorData) => string);
 }
 
 export interface ErrorSchema {
