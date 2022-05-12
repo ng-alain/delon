@@ -128,7 +128,7 @@ Use the `setErrors` method to adjust error messages.
 this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
 this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
 // Clean current error messages
-this.sf.getProperty('/name')?.setErrors([]);
+this.sf.getProperty('/name')?.setErrors();
 ```
 
 ## Visual

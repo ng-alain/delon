@@ -250,9 +250,9 @@ export abstract class FormProperty {
    *
    * this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
    * this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
-   * this.sf.getProperty('/name')?.setErrors([]); // Clean error
+   * this.sf.getProperty('/name')?.setErrors(); // Clean error
    */
-  setErrors(errors: ErrorData | ErrorData[], emitFormat: boolean = true): void {
+  setErrors(errors: ErrorData | ErrorData[] = [], emitFormat: boolean = true): void {
     let arrErrs = Array.isArray(errors) ? errors : [errors];
 
     if (emitFormat && arrErrs && !this.ui.onlyVisual) {

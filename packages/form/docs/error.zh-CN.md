@@ -128,7 +128,7 @@ schema: SFSchema = {
 this.sf.getProperty('/name')?.setErrors({ keyword: 'required' });
 this.sf.getProperty('/name')?.setErrors({ message: 'Please input your username!' });
 // 清理当前错误消息
-this.sf.getProperty('/name')?.setErrors([]);
+this.sf.getProperty('/name')?.setErrors();
 ```
 
 ## 视觉

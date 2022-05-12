@@ -732,7 +732,9 @@ describe('form: component', () => {
         const aProp = context.comp.getProperty('/a');
         aProp?.setErrors({ message: 'AA' });
         page.checkError(`AA`);
-        aProp?.setErrors([]);
+        aProp?.setErrors([{ message: 'BB' }]);
+        page.checkError(`BB`);
+        aProp?.setErrors();
         page.checkError(``);
       });
     });
