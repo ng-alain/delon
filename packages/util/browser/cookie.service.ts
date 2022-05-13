@@ -75,7 +75,7 @@ export class CookieService {
    *
    * 设置指定 Cookie 键的值
    */
-  put(key: string, value: string | undefined, options?: CookieOptions): void {
+  put(key: string, value: string, options?: CookieOptions): void {
     if (!this.platform.isBrowser) {
       return;
     }
@@ -102,7 +102,7 @@ export class CookieService {
    * 移除指定 Cookie
    */
   remove(key: string, options?: CookieOptions): void {
-    this.put(key, undefined, options);
+    this.put(key, '', options);
   }
 
   /**

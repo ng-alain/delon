@@ -49,7 +49,7 @@ describe('Util: CookieService', () => {
 
     it('remove', () => {
       srv.remove(KEY);
-      expect(srv.get(KEY)).toContain(``);
+      expect(srv.get(KEY)).toBe(``);
     });
 
     it('removeAll', () => {
