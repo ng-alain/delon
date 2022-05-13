@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
-import { ACLService } from '@delon/acl';
+import { ACLService, ACLCanType } from '@delon/acl';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from './http.client';
@@ -22,7 +22,7 @@ export abstract class BaseApi {
 
 export interface HttpOptions {
   /** ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 */
-  acl?: any;
+  acl?: ACLCanType;
   observe?: 'body' | 'events' | 'response';
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
   reportProgress?: boolean;
@@ -201,7 +201,7 @@ function makeMethod(method: METHOD_TYPE) {
         }
 
         const payload = getValidArgs(data, 'payload', args);
-        const supportedBody = method === 'POST' || method === 'PUT';
+        const supportedBody = ['POST', 'PUT', 'PATCH', 'DELETE'].some(v => v === method);
 
         return http.request(method, requestUrl, {
           body: supportedBody ? genBody(getValidArgs(data, 'body', args), payload) : null,

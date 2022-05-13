@@ -332,6 +332,7 @@ export class _HttpClient {
     url: string,
     params: any,
     options: {
+      body?: any;
       headers?: _HttpHeaders;
       observe?: 'body';
       reportProgress?: boolean;
@@ -348,6 +349,7 @@ export class _HttpClient {
     url: string,
     params: any,
     options: {
+      body?: any;
       headers?: _HttpHeaders;
       observe: 'response';
       reportProgress?: boolean;
@@ -364,6 +366,7 @@ export class _HttpClient {
     url: string,
     params?: any,
     options?: {
+      body?: any;
       headers?: _HttpHeaders;
       observe?: 'body' | 'events' | 'response';
       reportProgress?: boolean;
@@ -380,6 +383,7 @@ export class _HttpClient {
     url: string,
     params?: any,
     options?: {
+      body?: any;
       headers?: _HttpHeaders;
       observe?: 'body' | 'events' | 'response';
       reportProgress?: boolean;
@@ -393,6 +397,7 @@ export class _HttpClient {
     url: string,
     params: any,
     options: {
+      body?: any;
       headers?: _HttpHeaders;
       observe?: 'body' | 'events' | 'response';
       reportProgress?: boolean;
