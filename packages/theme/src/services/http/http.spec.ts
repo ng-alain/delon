@@ -334,6 +334,15 @@ describe('theme: http.client', () => {
         expect(typeof res).toBe('number');
         expect(res).toBe(1);
       }));
+
+      it(`allow body request`, fakeAsync(() => {
+        http.delete(URL, null, { body: BODY }).subscribe(_ => (res = _));
+        tick();
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        ret.flush(OK);
+        expect(res).toBe(OK);
+      }));
     });
 
     describe('[jsonp]', () => {
