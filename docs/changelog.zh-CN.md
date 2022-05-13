@@ -14,6 +14,25 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [13.5.0](https://github.com/ng-alain/delon/compare/13.4.2...13.5.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **abc:st:** 修复菜单的空安全值 ([#1475](https://github.com/ng-alain/delon/issues/1475)) ([6f13f22](https://github.com/ng-alain/delon/commit/6f13f2287a26387e5f0ad5087b56d14d0a48882d))
+* **form:** 修复同时修改 `disabled` 与 `loading` 导致刷新 Schema ([#1473](https://github.com/ng-alain/delon/issues/1473)) ([59660f9](https://github.com/ng-alain/delon/commit/59660f915922b786738769d41a91d28e79b9a774))
+* **theme:layout-default:** 修复 RTL 下中等屏幕错位 ([#1469](https://github.com/ng-alain/delon/issues/1469)) ([f5950f6](https://github.com/ng-alain/delon/commit/f5950f6a968a0f9a6ccf05e9d5c7d0c5a64635d8))
+* **util:cookie:** 修复 `remove` 错误写入值 ([#1479](https://github.com/ng-alain/delon/issues/1479)) ([66a4eb2](https://github.com/ng-alain/delon/commit/66a4eb257b33bab26082172f874ab227768a0ed7))
+
+### Features
+
+* **abc:st:** 增加 `maxMultipleButton` 最多可显示按钮属性，并多余部分自动生成至 `更多` 下面 ([#1474](https://github.com/ng-alain/delon/issues/1474)) ([f949623](https://github.com/ng-alain/delon/commit/f94962339cc32c2cae57a53cdbee7f7939e2a69b))
+* **form:** 增加 `delay` 延迟渲染，需要手动触发 ([#1471](https://github.com/ng-alain/delon/issues/1471)) ([64bf0a4](https://github.com/ng-alain/delon/commit/64bf0a4f8b8ac7b5f1bac5ce608ff6d2aa4f2f67))
+* **form:** 增加导出 `setErrors` 方法，用于自定义维护元素错误消息 ([#1476](https://github.com/ng-alain/delon/issues/1476)) ([b501c58](https://github.com/ng-alain/delon/commit/b501c5840eb555d08367d04caec192be74dc14fc))
+* **theme:http:** 新增允许 `PATCH` 与 `DELETE` 支持 body 请求体 ([#1478](https://github.com/ng-alain/delon/issues/1478)) ([2e250e4](https://github.com/ng-alain/delon/commit/2e250e4c6a50d2c522c26062eef5c7073e01d44d))
+* **theme:layout-defualt:** 新增支持自定义 LOGO 区域 ([#1470](https://github.com/ng-alain/delon/issues/1470)) ([69dc29d](https://github.com/ng-alain/delon/commit/69dc29d20ea11e92e17edf07ae2321674841b114))
+
+
 ## [13.4.2](https://github.com/ng-alain/delon/compare/13.4.1...13.4.2) (2022-04-01)
 
 ### Bug Fixes
