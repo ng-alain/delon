@@ -54,7 +54,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() foregroundAlpha?: number;
   @Input() level?: string;
   @Input() mime?: string;
-  @Input() @InputNumber() padding?: number;
+  @Input() @InputNumber(null) padding?: number;
   @Input() @InputNumber() size?: number;
   @Input() value: string | (() => string) = '';
   @Input() @InputNumber() delay?: number;

@@ -35,3 +35,11 @@ Qr libary is lazy loading by default，you can change the default CDN path (or u
 ### Custom LOGO
 
 Refer to [#100](https://github.com/neocotic/qrious/issues/100#issuecomment-308249343).
+
+### Why not center
+
+Please refer to [#111](https://github.com/neocotic/qrious/issues/111) for the reason. The solution is to set `padding` to `null`, for example:
+
+```html
+<qr [value]="value" [padding]="null"></qr>
+````
