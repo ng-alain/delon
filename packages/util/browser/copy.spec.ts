@@ -1,11 +1,31 @@
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { copy } from './copy';
 
 describe('abc: utils', () => {
   describe('#copy', () => {
-    it('should be copy a string', () => {
-      const writeTextSpy = spyOn(navigator.clipboard, 'writeText');
-      copy('test');
-      expect(writeTextSpy).toHaveBeenCalled();
+    it('should be copy a string', (done: () => void) => {
+      copy('test')
+        .then(() => {
+          expect(true).toBe(true);
+          done();
+        })
+        .catch(() => {
+          expect(false).toBe(true);
+          done();
+        });
+    });
+    it('[[boundary]]', (done: () => void) => {
+      spyOn(document, 'createElement').and.returnValue({ parentNode: null } as NzSafeAny);
+      copy('test')
+        .then(() => {
+          expect(false).toBe(true);
+          done();
+        })
+        .catch(() => {
+          expect(true).toBe(true);
+          done();
+        });
     });
   });
 });
