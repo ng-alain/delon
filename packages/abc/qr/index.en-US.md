@@ -10,7 +10,27 @@ module: import { QRModule } from '@delon/abc/qr';
 Generate a QR code based on [qrious](https://github.com/neocotic/qrious).
 
 
-Qr libary is lazy loading by default，you can change the default CDN path (or use the [local path](https://angular.io/guide/workspace-config#asset-config)) via [Global Configuration](/docs/global-config). By default: `https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js`. Or install dependence via `npm i --save qrious`, and import script path in `angular.json`.
+Qr libary is lazy loading by default，you can change the default CDN path via [Global Configuration](/docs/global-config). By default: `https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js`. Or install dependence via `npm i --save qrious`, and import script path in `angular.json`.
+
+**Use local path**
+
+```json
+// angular.json
+{
+  "glob": "**/qrious.min.js",
+  "input": "./node_modules/qrious/dist",
+  "output": "assets/qrious/"
+}
+```
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  qr: {
+    lib: '/assets/qrious/qrious.min.js'
+  }
+};
+```
 
 ## API
 

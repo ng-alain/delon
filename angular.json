@@ -28,7 +28,37 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/manifest.json", "src/robots.txt"],
+            "assets": [
+              "src/assets",
+              "src/manifest.json",
+              "src/robots.txt",
+              {
+                "glob": "**/{xlsx.full.min,cpexcel}.js",
+                "input": "./node_modules/xlsx/dist",
+                "output": "assets/xlsx/"
+              },
+              {
+                "glob": "**/jszip.min.js",
+                "input": "./node_modules/jszip/dist",
+                "output": "assets/jszip/"
+              },
+              {
+                "glob": "**/qrious.min.js",
+                "input": "./node_modules/qrious/dist",
+                "output": "assets/qrious/"
+              },
+              {
+                "glob": "**/(build|web)/**",
+                "input": "./node_modules/pdfjs-dist/",
+                "ignore": ["*.js.map", "*.d.ts"],
+                "output": "assets/pdfjs/"
+              },
+              {
+                "glob": "**/{plyr.min.js,plyr.css,plyr.svg}",
+                "input": "./node_modules/plyr/dist",
+                "output": "assets/plyr/"
+              }
+            ],
             "styles": [
               "node_modules/aos/dist/aos.css",
               "src/styles.less"

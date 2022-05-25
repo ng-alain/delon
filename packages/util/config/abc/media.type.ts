@@ -1,4 +1,4 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type Plyr from 'plyr';
 
 export interface AlainMediaConfig {
   /**
@@ -8,5 +8,5 @@ export interface AlainMediaConfig {
   /**
    * Please refer to [plyr options](https://github.com/sampotts/plyr#options)
    */
-  options?: NzSafeAny;
+  options?: Plyr.Options;
 }
