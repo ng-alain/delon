@@ -13,7 +13,28 @@ An Excel file operation based on [sheetjs](http://sheetjs.com/).
 
 ## Dependencies
 
-The sheetjs script file takes the form of lazy loading，you can change the default CDN path (or use the [local path](https://angular.io/guide/workspace-config#asset-config)) via [Global Configuration](/docs/global-config). By default: `https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js`.
+The sheetjs script file takes the form of lazy loading，you can change the default CDN path via [Global Configuration](/docs/global-config). By default: `https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js`.
+
+**Use local path**
+
+```json
+// angular.json
+{
+  "glob": "**/{xlsx.full.min,cpexcel}.js",
+  "input": "./node_modules/xlsx/dist",
+  "output": "assets/xlsx/"
+}
+```
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  xlsx: {
+    url: '/assets/xlsx/xlsx.full.min.js',
+    modules: [`/assets/xlsx/cpexcel.js`]
+  }
+};
+```
 
 ## API
 
