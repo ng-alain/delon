@@ -14,5 +14,6 @@ export * from './src/token/jwt/jwt.guard';
 export * from './src/token/simple/simple.model';
 export * from './src/token/simple/simple.interceptor';
 export * from './src/token/simple/simple.guard';
+export * from './src/token';
 export * from './src/auth.config';
 export * from './src/auth.module';

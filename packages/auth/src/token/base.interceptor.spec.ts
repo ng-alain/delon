@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import {
   HttpClient,
+  HttpContext,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -20,6 +21,7 @@ import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../auth.module';
+import { ALLOW_ANONYMOUS } from '../token';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
@@ -125,6 +127,14 @@ describe('auth: base.interceptor', () => {
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
       });
+    });
+
+    it('#ALLOW_ANONYMOUS', () => {
+      genModule({}, genModel(SimpleTokenModel, null));
+      http.get('/user', { context: new HttpContext().set(ALLOW_ANONYMOUS, true) }).subscribe();
+      const ret = httpBed.expectOne(() => true);
+      expect(ret.request.headers.get('Authorization')).toBeNull();
+      ret.flush('ok!');
     });
 
     describe('#with allow_anonymous_key', () => {
