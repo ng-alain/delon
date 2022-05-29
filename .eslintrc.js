@@ -131,7 +131,7 @@ module.exports = {
             groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
             pathGroups: [
               {
-                pattern: '{@angular/**,rxjs,rxjs/operators}',
+                pattern: '{@angular/**,rxjs}',
                 group: 'external',
                 position: 'before'
               },

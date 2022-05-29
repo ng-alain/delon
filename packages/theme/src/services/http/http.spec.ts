@@ -3,8 +3,7 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { of, catchError } from 'rxjs';
 
 import { AlainThemeHttpClientConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';

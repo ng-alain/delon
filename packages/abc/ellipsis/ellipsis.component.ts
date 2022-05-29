@@ -13,7 +13,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { take } from 'rxjs/operators';
+import { take } from 'rxjs';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

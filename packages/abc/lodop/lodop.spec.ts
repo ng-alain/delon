@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { concat } from 'rxjs';
-import { filter, mergeMap, tap } from 'rxjs/operators';
+import { concat, filter, mergeMap, tap } from 'rxjs';
 
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';

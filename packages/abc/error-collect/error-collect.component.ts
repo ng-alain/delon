@@ -13,8 +13,7 @@ import {
   Optional,
   ViewEncapsulation
 } from '@angular/core';
-import { interval, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { interval, Subject, takeUntil } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
 import { InputNumber } from '@delon/util/decorator';

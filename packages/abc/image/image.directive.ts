@@ -1,7 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { Observable, Observer, of, Subject, throwError } from 'rxjs';
-import { filter, finalize, take, takeUntil } from 'rxjs/operators';
+import { Observable, Observer, of, Subject, throwError, filter, finalize, take, takeUntil } from 'rxjs';
 
 import { _HttpClient } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';

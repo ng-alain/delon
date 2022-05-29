@@ -1,6 +1,5 @@
 import { PreloadingStrategy, Route } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, catchError } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 

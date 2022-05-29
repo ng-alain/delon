@@ -9,8 +9,7 @@ import {
   Router,
   RouterStateSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, of, map, tap } from 'rxjs';
 
 import { ACLService } from './acl.service';
 import { ACLCanType, ACLGuardType } from './acl.type';
