@@ -2,8 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, map } from 'rxjs';
 
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import type { AlainSTConfig } from '@delon/util/config';

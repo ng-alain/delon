@@ -15,8 +15,7 @@ Use `visibleIf` to implement more flexible conditional expressions, which can su
 
 ```ts
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { catchError, delay, switchMap } from 'rxjs/operators';
+import { Observable, of, Subject, catchError, delay, switchMap } from 'rxjs';
 
 import { SFComponent, SFSchema, SFSelectWidgetSchema, SFStringWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';

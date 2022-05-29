@@ -15,8 +15,7 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { of, delay } from 'rxjs';
 
 import { STChange, STColumn, STData } from '@delon/abc/st';
 import { dateTimePickerUtil } from '@delon/util/date-time';

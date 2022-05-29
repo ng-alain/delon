@@ -7,8 +7,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { fromEvent, debounceTime, takeUntil } from 'rxjs';
 
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';

@@ -1,6 +1,5 @@
 import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, filter } from 'rxjs';
 
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';

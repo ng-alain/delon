@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { filter } from 'rxjs/operators';
+import { filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';

@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, debounceTime, switchMap, takeUntil } from 'rxjs';
 
 import { SFValue } from '../../interface';
 import { ControlUIWidget } from '../../widget';

@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs';
 
 import { saveAs } from 'file-saver';
 

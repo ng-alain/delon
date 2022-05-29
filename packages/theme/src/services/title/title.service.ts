@@ -2,8 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, filter } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 

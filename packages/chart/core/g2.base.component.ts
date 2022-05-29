@@ -13,8 +13,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription, filter, takeUntil } from 'rxjs';
 
 import type { Chart, Types } from '@antv/g2';
 

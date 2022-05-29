@@ -17,8 +17,7 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, Subject, timer } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject, timer, debounceTime, filter, takeUntil } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';

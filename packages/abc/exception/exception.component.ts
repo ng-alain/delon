@@ -12,8 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';

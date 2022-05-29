@@ -7,8 +7,7 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { fromEvent, debounceTime, filter, takeUntil } from 'rxjs';
 
 import type { Chart, Event } from '@antv/g2';
 
