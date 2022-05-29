@@ -1,7 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, filter } from 'rxjs';
 
 export interface MatchRouterOptions {
   regex: RegExp;

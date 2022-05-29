@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, InjectionToken } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
-import { distinctUntilChanged, map, share, startWith } from 'rxjs/operators';
+import { fromEvent, Observable, distinctUntilChanged, map, share, startWith } from 'rxjs';
 
 /**
  * Use the `visibilitychange` event to monitor whether the browser tab is visible, which is generally used when the user leaves the browser tab to temp interrupt the backend to continue sending requests

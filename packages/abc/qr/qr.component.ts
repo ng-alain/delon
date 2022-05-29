@@ -11,8 +11,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, filter } from 'rxjs';
 
 import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
 import { InputNumber, NumberInput } from '@delon/util/decorator';

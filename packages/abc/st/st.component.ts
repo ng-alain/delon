@@ -22,8 +22,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, isObservable, Observable, of, Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { from, isObservable, Observable, of, Subject, Subscription, filter, takeUntil } from 'rxjs';
 
 import {
   AlainI18NService,

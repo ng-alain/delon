@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN, RTLService } from '@delon/theme';
 import { copy } from '@delon/util/browser';

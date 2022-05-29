@@ -12,8 +12,7 @@ import {
   Optional
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, pipe, Subscription } from 'rxjs';
-import { delay, switchMap } from 'rxjs/operators';
+import { of, pipe, Subscription, delay, switchMap } from 'rxjs';
 
 import { DelonLocaleService } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
