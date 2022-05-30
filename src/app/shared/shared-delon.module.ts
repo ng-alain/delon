@@ -8,7 +8,6 @@ import { ErrorCollectModule } from '@delon/abc/error-collect';
 import { ExceptionModule } from '@delon/abc/exception';
 import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
-import { ImageModule } from '@delon/abc/image';
 import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
@@ -55,7 +54,6 @@ export const SHARED_DELON_MODULES = [
   SVModule,
   SEModule,
   SGModule,
-  ImageModule,
   LoadingModule,
   QRModule,
   OnboardingModule,
