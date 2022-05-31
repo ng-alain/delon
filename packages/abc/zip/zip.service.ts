@@ -69,13 +69,13 @@ export class ZipService {
 
   /** 创建 Zip 实例，用于创建压缩文件 */
   create(): Promise<jsZipType | null> {
-    return new Promise<jsZipType | null>((resolve, reject) => {
+    return new Promise<jsZipType | null>(resolve => {
       this.init()
         .then(() => {
           const zipFile = new JSZip();
           resolve(zipFile);
         })
-        .catch(() => reject());
+        .catch(() => resolve(null));
     });
   }
 

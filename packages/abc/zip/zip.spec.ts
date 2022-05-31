@@ -104,19 +104,19 @@ describe('abc: zip', () => {
     });
   });
 
-  it('#create', (done: () => void) => {
-    isClassZIP = true;
-    genModule();
-    srv.create().then(
-      () => {
-        expect(true).toBe(true);
-        done();
-      },
-      () => {
-        expect(false).toBe(true);
-        done();
-      }
-    );
+  describe('#create', () => {
+    it('should be working', () => {
+      isClassZIP = true;
+      genModule();
+      srv.create().then(res => expect(res == null).toBe(false));
+    });
+
+    it('should be error', () => {
+      genModule();
+      const lazySrv = TestBed.inject<LazyService>(LazyService);
+      spyOn(lazySrv, 'load').and.returnValue(Promise.reject());
+      srv.create().then(res => expect(res == null).toBe(true));
+    });
   });
 
   describe('#pushUrl', () => {
