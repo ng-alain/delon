@@ -73,7 +73,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
             <nz-switch [(ngModel)]="outline"></nz-switch>
           </se>
           <se *ngIf="outline" [label]="null">
-            <nz-empty *ngIf="outlineList == null"></nz-empty>
+            <nz-empty *ngIf="outlineList === null"></nz-empty>
             <ng-template #outlineTpl let-ls let-level="level">
               <li *ngFor="let i of ls" [style.paddingLeft.px]="level * 16">
                 <a (click)="navigateTo(i.dest)">{{ i.title }}</a>
@@ -137,7 +137,7 @@ export class DemoComponent implements OnInit {
   zoom = 1;
   autoReSize = true;
   outline = false;
-  outlineList: NzSafeAny;
+  outlineList: NzSafeAny = null;
   q = '';
   search$ = new Subject<string>();
 
@@ -199,7 +199,7 @@ export class DemoComponent implements OnInit {
   }
 
   navigateTo(dest: string): void {
-    this.comp.linkService.navigateTo(dest);
+    this.comp.linkService?.goToDestination(dest);
   }
 }
 ```
