@@ -112,8 +112,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private platform: Platform,
     @Optional() private directionality: Directionality,
-    @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
-    @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
+    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
+    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
   ) {}
 
   private genTit(title: ReuseTitle): string {
