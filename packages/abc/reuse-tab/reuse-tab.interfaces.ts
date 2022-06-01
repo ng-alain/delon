@@ -71,8 +71,7 @@ export interface ReuseTabNotify {
     | 'closeRight'
     | 'move'
     | 'refresh'
-    | 'loadState'
-    | 'saveState';
+    | 'loadState';
   url?: string;
   title?: ReuseTitle;
   item?: ReuseTabCached;
