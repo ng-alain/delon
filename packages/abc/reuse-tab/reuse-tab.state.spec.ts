@@ -38,5 +38,8 @@ describe('abc: reuse-tab(state)', () => {
     expect(ret.length).toBe(VALUES.length);
     store.remove(KEY);
     expect(store.get(KEY).length).toBe(0);
+    // when set null
+    store.update(KEY, null as NzSafeAny);
+    expect(store.get(KEY).length).toBe(0);
   });
 });
