@@ -20,7 +20,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, debounceTime, filter, takeUntil } from 'rxjs';
+import { Subject, debounceTime, filter, takeUntil, of } from 'rxjs';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -29,6 +29,7 @@ import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
+  ReuseCanClose,
   ReuseContextCloseEvent,
   ReuseContextI18n,
   ReuseCustomContextMenu,
@@ -95,6 +96,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   @Input() @InputBoolean() disabled = false;
   @Input() titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
+  @Input() canClose?: ReuseCanClose;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
@@ -239,9 +241,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       e.stopPropagation();
     }
     const item = this.list[idx];
-    this.srv.close(item.url, includeNonCloseable);
-    this.close.emit(item);
-    this.cdr.detectChanges();
+    (this.canClose ? this.canClose({ item, includeNonCloseable }) : of(true)).pipe(filter(v => v)).subscribe(() => {
+      this.srv.close(item.url, includeNonCloseable);
+      this.close.emit(item);
+      this.cdr.detectChanges();
+    });
     return false;
   }
 
