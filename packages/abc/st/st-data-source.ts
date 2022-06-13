@@ -108,7 +108,7 @@ export class STDataSource {
           } else {
             const reName = res.reName!;
             if (typeof reName === 'function') {
-              const fnRes = reName(result, { pi, ps });
+              const fnRes = reName(result, { pi, ps, total });
               ret = fnRes.list;
               retTotal = fnRes.total;
             } else {
