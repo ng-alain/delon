@@ -106,14 +106,21 @@ export class STDataSource {
             retPs = retTotal;
             showPage = false;
           } else {
-            // list
-            ret = deepGet(result, res.reName!.list as string[], []);
-            if (ret == null || !Array.isArray(ret)) {
-              ret = [];
+            const reName = res.reName!;
+            if (typeof reName === 'function') {
+              const fnRes = reName(result, { pi, ps });
+              ret = fnRes.list;
+              retTotal = fnRes.total;
+            } else {
+              // list
+              ret = deepGet(result, reName.list as string[], []);
+              if (ret == null || !Array.isArray(ret)) {
+                ret = [];
+              }
+              // total
+              const resultTotal = reName.total && deepGet(result, reName.total as string[], null);
+              retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
-            // total
-            const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
-            retTotal = resultTotal == null ? total || 0 : +resultTotal;
           }
           return deepCopy(ret);
         })
