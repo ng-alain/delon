@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "chart-observer-size",
+    "entryFile": "public-api.ts"
+  }
+}

@@ -107,6 +107,8 @@
 /components/media/zh
 /components/notice-icon/en
 /components/notice-icon/zh
+/components/observers/en
+/components/observers/zh
 /components/onboarding/en
 /components/onboarding/zh
 /components/page-header/en
