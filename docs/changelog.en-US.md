@@ -14,6 +14,14 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [13.5.2](https://github.com/ng-alain/delon/compare/13.5.1...13.5.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* fix 'null' is not assignable to type 'NzFormControlStatusType' ([#1502](https://github.com/ng-alain/delon/issues/1502)) ([aa6c77b](https://github.com/ng-alain/delon/commit/aa6c77b606b4104dc063f30983a4bc520193fb19))
+
+
 ## [13.5.1](https://github.com/ng-alain/delon/compare/13.5.0...13.5.1) (2022-06-06)
 
 ### Bug Fixes
