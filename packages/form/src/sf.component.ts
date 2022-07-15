@@ -236,7 +236,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * this.sf.updateFeedback('/name');
    * ```
    */
-  updateFeedback(path: string, status: NzFormControlStatusType = null, icon?: string | null): this {
+  updateFeedback(path: string, status: NzFormControlStatusType = '', icon?: string | null): this {
     this.getProperty(path)?.updateFeedback(status, icon);
     return this;
   }

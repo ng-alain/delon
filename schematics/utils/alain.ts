@@ -137,7 +137,7 @@ function resolveSchema(
   }
   // fill target
   if (schema.target) {
-    schema.path += `/${schema.target}`;
+    schema.path += strings.dasherize(`/${schema.target}`);
   }
 
   schema.routerModulePath = schema.importModulePath!.replace('.module.ts', '-routing.module.ts');
