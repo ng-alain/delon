@@ -213,7 +213,7 @@ export class CacheService implements OnDestroy {
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return (this.cog.request ? this.cog.request(key) : this.http.get(key)).pipe(
-          map((ret: any) => deepGet(ret, this.cog.reName as string[], null)),
+          map((ret: any) => deepGet(ret, this.cog.reName as string[], ret)),
           tap(v =>
             this.set(key, v, {
               type: options.type as any,
