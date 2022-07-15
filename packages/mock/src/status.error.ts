@@ -1,7 +1,7 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export class MockStatusError {
   statusText?: string;
 
-  constructor(public status: number, public error?: NzSafeAny) {}
+  constructor(public status: number, public error?: any) {}
 }

@@ -1,5 +1,3 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ITokenModel } from '../token/interface';
 import { SessionStorageStore } from './session-storage.service';
 
@@ -11,7 +9,8 @@ describe('auth: session-storage', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    let data: { [key: string]: NzSafeAny } = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let data: { [key: string]: any } = {};
 
     spyOn(sessionStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;

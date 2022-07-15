@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
@@ -7,7 +8,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
@@ -22,9 +22,9 @@ function genModel(token: string = `123`): SimpleTokenModel {
 }
 
 class MockTokenService implements ITokenService {
-  [key: string]: NzSafeAny;
-  _data: NzSafeAny;
-  options: NzSafeAny;
+  [key: string]: any;
+  _data: any;
+  options: any;
   refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
     this._data = data;
@@ -33,7 +33,7 @@ class MockTokenService implements ITokenService {
   get(): ITokenModel {
     return this._data;
   }
-  change(): NzSafeAny {
+  change(): any {
     return null;
   }
   clear(): void {
@@ -49,7 +49,7 @@ describe('auth: simple.interceptor', () => {
   let httpBed: HttpTestingController;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate'),
-    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: NzSafeAny) => {
+    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
       return new DefaultUrlSerializer().parse(value);
     })
   };

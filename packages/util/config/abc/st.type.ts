@@ -3,9 +3,9 @@ import { TemplateRef, TrackByFunction } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
-import { ModalOptions } from 'ng-zorro-antd/modal';
-import { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
+import type { NzDrawerOptions } from 'ng-zorro-antd/drawer';
+import type { ModalOptions } from 'ng-zorro-antd/modal';
+import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
 
 export interface AlainSTConfig {
   /**

@@ -1,13 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpRequest } from '@angular/common/http';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 export class MockOptions {
-  data?: NzSafeAny;
+  data?: any;
 }
 
 export interface MockCachedRule {
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 
   method: string;
 
@@ -17,29 +16,29 @@ export interface MockCachedRule {
 
   segments: string[];
 
-  callback(req: MockRequest): NzSafeAny;
+  callback(req: MockRequest): any;
 }
 
 export interface MockRule {
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 
   method: string;
 
   url: string;
 
   /** 路由参数 */
-  params?: NzSafeAny;
+  params?: any;
 
-  callback(req: MockRequest): NzSafeAny;
+  callback(req: MockRequest): any;
 }
 
 export interface MockRequest {
   /** 路由参数 */
-  params?: NzSafeAny;
+  params?: any;
   /** URL参数 */
-  queryString?: NzSafeAny;
-  headers?: NzSafeAny;
-  body?: NzSafeAny;
+  queryString?: any;
+  headers?: any;
+  body?: any;
   /** 原始 `HttpRequest` */
-  original: HttpRequest<NzSafeAny>;
+  original: HttpRequest<any>;
 }

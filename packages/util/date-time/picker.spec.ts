@@ -1,7 +1,7 @@
 import { addDays, addSeconds } from 'date-fns';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DisabledTimeConfig } from 'ng-zorro-antd/date-picker';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { DisabledTimeConfig } from 'ng-zorro-antd/date-picker';
 
 import { dateTimePickerUtil } from './picker';
 
