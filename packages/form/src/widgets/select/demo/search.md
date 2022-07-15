@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 import { SFSchema, SFSchemaEnum, SFSelectWidgetSchema } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-demo',

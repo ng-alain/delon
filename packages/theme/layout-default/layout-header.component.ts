@@ -8,8 +8,7 @@ import {
   QueryList,
   TemplateRef
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { App, SettingsService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

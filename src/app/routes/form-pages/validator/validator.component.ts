@@ -7,8 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 

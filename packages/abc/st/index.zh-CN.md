@@ -259,6 +259,7 @@ class TestComponent {
 | `[renderTitle]` | 标题自定义渲染ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STColumn; index: number }>` | - |
 | `[default]` | 当不存在数据（值类型为 `undefined`）时以默认值替代 | `string` | - |
 | `[buttons]` | 按钮组 | `STColumnButton[]` | - |
+| `[maxMultipleButton]` | 配置最多显示多少个按钮，多余部分自动生成至 `更多` 下面 | `STColumnMaxMultipleButton, number` | - |
 | `[width]` | 列宽（数字型表示 `px` 值，**注意：** 若固定列必须是数字），例如：`100`、`10%`、`100px` | `string,number` | - |
 | `[fixed]` | 固定前后列，当指定时务必指定 `width` 否则视为无效 | `left,right` | - |
 | `[format]` | 格式化列值 | `(item: STData, col: STColumn, index: number) => string` | - |

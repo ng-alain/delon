@@ -1,6 +1,5 @@
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription, share } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

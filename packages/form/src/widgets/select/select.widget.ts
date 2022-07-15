@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 
 import { ArrayService } from '@delon/util/array';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

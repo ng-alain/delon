@@ -9,9 +9,30 @@ module: import { PdfModule } from '@delon/abc/pdf';
 
 Pdf view based on [pdf.js](https://mozilla.github.io/pdf.js/).
 
-pdf.js libary is lazy loading by default，you can change the default root CDN path (or use the [local path](https://angular.io/guide/workspace-config#asset-config)) via [Global Configuration](/docs/global-config).
+pdf.js libary is lazy loading by default，you can change the default root CDN path via [Global Configuration](/docs/global-config).
 
 > The component inspired by [ng2-pdf-viewer](https://github.com/VadimDez/ng2-pdf-viewer).
+
+**Use local path**
+
+```json
+// angular.json
+{
+  "glob": "**/(build|web)/**",
+  "input": "./node_modules/pdfjs-dist/",
+  "ignore": ["*.js.map", "*.d.ts"],
+  "output": "assets/pdfjs/"
+}
+```
+
+```ts
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  pdf: {
+    lib: '/assets/pdfjs/'
+  }
+};
+```
 
 ## API
 

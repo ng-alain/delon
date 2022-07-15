@@ -10,7 +10,7 @@ const nextVersions = {
   ...nextJson.devDependencies,
 };
 const name = (process.argv.length >= 2 ? process.argv[2] : '') || 'ng-alain';
-const packagePath = path.resolve(__dirname, `../../../${name}/package.json`);
+const packagePath = path.resolve(__dirname, name.startsWith('../') ? name : `../../../${name}/package.json`);
 console.log(`Use packagePath: ` + packagePath);
 if (!fs.existsSync(packagePath)) {
   throw Error(`所选的文件不存在, ${packagePath}`)

@@ -3,8 +3,7 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { of, catchError } from 'rxjs';
 
 import { AlainThemeHttpClientConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
@@ -333,6 +332,15 @@ describe('theme: http.client', () => {
         backend.expectOne(() => true).flush(1);
         expect(typeof res).toBe('number');
         expect(res).toBe(1);
+      }));
+
+      it(`allow body request`, fakeAsync(() => {
+        http.delete(URL, null, { body: BODY }).subscribe(_ => (res = _));
+        tick();
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        ret.flush(OK);
+        expect(res).toBe(OK);
       }));
     });
 

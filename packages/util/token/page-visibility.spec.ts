@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { first } from 'rxjs/operators';
+import { first } from 'rxjs';
 
 import { PAGE_VISIBILITY } from './page-visibility';
 

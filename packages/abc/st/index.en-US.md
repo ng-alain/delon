@@ -259,6 +259,7 @@ class TestComponent {
 | `[renderTitle]` | Title custom render template ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STColumn; index: number }>` | - |
 | `[default]` | Replace with default value when no data exists (value typeof is `undefined`) | `string` | - |
 | `[buttons]` | Buttons of this column | `STColumnButton[]` | - |
+| `[maxMultipleButton]` | Max button option can be showed, and the extra part are auto generated under `more` | `STColumnMaxMultipleButton, number` | - |
 | `[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | - |
 | `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | - |
 | `[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | - |

@@ -718,7 +718,35 @@ describe('form: component', () => {
         };
         page.newSchema(s).checkError(`应当是 0.01 的整数倍`);
       });
+
+      it('#setErrors', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'number',
+              title: '单价'
+            }
+          }
+        };
+        page.newSchema(s);
+        const aProp = context.comp.getProperty('/a');
+        aProp?.setErrors({ message: 'AA' });
+        page.checkError(`AA`);
+        aProp?.setErrors([{ message: 'BB' }]);
+        page.checkError(`BB`);
+        aProp?.setErrors();
+        page.checkError(``);
+      });
     });
+  });
+
+  it('#delay', () => {
+    genModule();
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    context.delay = true;
+    spyOn(context.comp, 'refreshSchema');
+    fixture.detectChanges();
+    expect(context.comp.refreshSchema).not.toHaveBeenCalled();
   });
 
   describe('#firstVisual', () => {

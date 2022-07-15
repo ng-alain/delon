@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, share } from 'rxjs/operators';
+import { BehaviorSubject, Observable, filter, share } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 

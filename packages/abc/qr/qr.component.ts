@@ -11,8 +11,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, filter } from 'rxjs';
 
 import { AlainConfigService, AlainQRConfig } from '@delon/util/config';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
@@ -54,7 +53,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() foregroundAlpha?: number;
   @Input() level?: string;
   @Input() mime?: string;
-  @Input() @InputNumber() padding?: number;
+  @Input() @InputNumber(null) padding?: number;
   @Input() @InputNumber() size?: number;
   @Input() value: string | (() => string) = '';
   @Input() @InputNumber() delay?: number;

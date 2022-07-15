@@ -14,6 +14,38 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [13.5.1](https://github.com/ng-alain/delon/compare/13.5.0...13.5.1) (2022-06-06)
+
+### Bug Fixes
+
+* **abc:qr:** fix can't center ([#1481](https://github.com/ng-alain/delon/issues/1481)) ([12354f1](https://github.com/ng-alain/delon/commit/12354f17b3e203a74c6ebf85a723f9a3ff066e6d))
+* **cli:** fix folder name case sensitive ([#1494](https://github.com/ng-alain/delon/issues/1494)) ([c80d102](https://github.com/ng-alain/delon/commit/c80d102bcc4410dca6b57b34c03cb457dbbdadca))
+* **util:copy:** fix invalid `copy` in latest chrome ([#1483](https://github.com/ng-alain/delon/issues/1483)) ([b3072ac](https://github.com/ng-alain/delon/commit/b3072ac04c0b343ca9a4bf613c60a9bdf9c39df6))
+
+### Performance Improvements
+
+* `rxjs/operators` export site has been deprecated ([#1485](https://github.com/ng-alain/delon/issues/1485)) ([d8efc02](https://github.com/ng-alain/delon/commit/d8efc02fdd23906e89c84fbd6f4b6569cea0c8e7))
+
+
+# [13.5.0](https://github.com/ng-alain/delon/compare/13.4.2...13.5.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **abc:st:** fix safe null check of menus ([#1475](https://github.com/ng-alain/delon/issues/1475)) ([6f13f22](https://github.com/ng-alain/delon/commit/6f13f2287a26387e5f0ad5087b56d14d0a48882d))
+* **form:** fix modify `disabled` & `loading` to cause refresh schema ([#1473](https://github.com/ng-alain/delon/issues/1473)) ([59660f9](https://github.com/ng-alain/delon/commit/59660f915922b786738769d41a91d28e79b9a774))
+* **theme:layout-default:** fix RTL will misalignment in medium screen ([#1469](https://github.com/ng-alain/delon/issues/1469)) ([f5950f6](https://github.com/ng-alain/delon/commit/f5950f6a968a0f9a6ccf05e9d5c7d0c5a64635d8))
+* **util:cookie:** fix wrong set value of `remove` ([#1479](https://github.com/ng-alain/delon/issues/1479)) ([66a4eb2](https://github.com/ng-alain/delon/commit/66a4eb257b33bab26082172f874ab227768a0ed7))
+
+### Features
+
+* **abc:st:** add `maxMultipleButton` of column ([#1474](https://github.com/ng-alain/delon/issues/1474)) ([f949623](https://github.com/ng-alain/delon/commit/f94962339cc32c2cae57a53cdbee7f7939e2a69b))
+* **form:** add `delay` property ([#1471](https://github.com/ng-alain/delon/issues/1471)) ([64bf0a4](https://github.com/ng-alain/delon/commit/64bf0a4f8b8ac7b5f1bac5ce608ff6d2aa4f2f67))
+* **form:** export `setErrors` method ([#1476](https://github.com/ng-alain/delon/issues/1476)) ([b501c58](https://github.com/ng-alain/delon/commit/b501c5840eb555d08367d04caec192be74dc14fc))
+* **theme:http:** allow `PATCH` and `DELETE` to support request body ([#1478](https://github.com/ng-alain/delon/issues/1478)) ([2e250e4](https://github.com/ng-alain/delon/commit/2e250e4c6a50d2c522c26062eef5c7073e01d44d))
+* **theme:layout-defualt:** support custom logo area ([#1470](https://github.com/ng-alain/delon/issues/1470)) ([69dc29d](https://github.com/ng-alain/delon/commit/69dc29d20ea11e92e17edf07ae2321674841b114))
+
+
 ## [13.4.2](https://github.com/ng-alain/delon/compare/13.4.1...13.4.2) (2022-04-01)
 
 ### Bug Fixes

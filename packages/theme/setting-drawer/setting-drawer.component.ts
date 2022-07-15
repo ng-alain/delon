@@ -12,8 +12,7 @@ import {
   OnInit,
   Optional
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';

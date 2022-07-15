@@ -1,6 +1,6 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter } from 'rxjs';
 
 import { MenuService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';

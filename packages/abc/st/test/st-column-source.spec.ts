@@ -453,7 +453,7 @@ describe('st: column-source', () => {
       describe('#iif', () => {
         it('should be running', () => {
           const res = srv.process([{ title: '', buttons: [{ text: '' }] }], options).columns[0].buttons![0];
-          expect(res.iif!(null!, null!, null!)).toBe(true);
+          expect(res.iif == null).toBe(true);
         });
         it('should be support condition', () => {
           const res = srv.process([{ title: '', buttons: [{ text: '', iif: () => false }] }], options).columns[0]

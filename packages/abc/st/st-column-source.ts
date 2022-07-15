@@ -131,7 +131,6 @@ export class STColumnSource {
 
   private btnCoerceIf(list: STColumnButton[]): void {
     for (const item of list) {
-      if (!item.iif) item.iif = () => true;
       item.iifBehavior = item.iifBehavior || this.cog.iifBehavior;
       if (item.children && item.children.length > 0) {
         this.btnCoerceIf(item.children);
@@ -234,7 +233,7 @@ export class STColumnSource {
       res.menus = [{ value }];
     }
 
-    if (res.menus!.length === 0) {
+    if (res.menus?.length === 0) {
       return null;
     }
 
@@ -257,14 +256,10 @@ export class STColumnSource {
     this.updateDefault(res);
 
     if (this.acl) {
-      res.menus = res.menus!.filter(w => this.acl.can(w.acl!));
+      res.menus = res.menus?.filter(w => this.acl.can(w.acl!));
     }
 
-    if (res.menus!.length <= 0) {
-      res = null;
-    }
-
-    return res;
+    return res.menus?.length === 0 ? null : res;
   }
 
   private restoreRender(item: _STColumn): void {
@@ -354,7 +349,7 @@ export class STColumnSource {
     const res: _STColumn[] = [];
     const copyList = deepCopy(list);
     for (const item of copyList) {
-      if (item.iif && !item.iif(item)) {
+      if (typeof item.iif === 'function' && !item.iif(item)) {
         continue;
       }
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
@@ -521,6 +516,8 @@ export class STColumnSource {
   }
 
   updateDefault(filter: STColumnFilter): this {
+    if (filter.menus == null) return this;
+
     if (filter.type === 'default') {
       filter.default = filter.menus!.findIndex(w => w.checked!) !== -1;
     } else {

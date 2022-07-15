@@ -20,8 +20,7 @@ import {
   Router,
   Event
 } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
