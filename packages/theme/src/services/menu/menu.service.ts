@@ -14,8 +14,11 @@ import { Menu, MenuIcon, MenuInner } from './interface';
 export class MenuService implements OnDestroy {
   private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private i18n$: Subscription;
-
   private data: Menu[] = [];
+  /**
+   * 是否完全受控菜单打开状态，默认：`false`
+   */
+  openStrictly = false;
 
   constructor(
     @Optional()
@@ -106,6 +109,8 @@ export class MenuService implements OnDestroy {
 
     // acl
     item._aclResult = item.acl && this.aclService ? this.aclService.can(item.acl) : true;
+
+    item.open = item.open != null ? item.open : false;
   }
 
   /**
@@ -183,34 +188,6 @@ export class MenuService implements OnDestroy {
   }
 
   /**
-   * @deprecated Will be removed in 15.0.0, Pls used `find` instead
-   */
-  getHit(data: Menu[], url: string, recursive: boolean = false, cb: ((i: Menu) => void) | null = null): Menu | null {
-    let item: Menu | null = null;
-
-    while (!item && url) {
-      this.visit(data, i => {
-        if (cb) {
-          cb(i);
-        }
-        if (i.link != null && i.link === url) {
-          item = i;
-        }
-      });
-
-      if (!recursive) break;
-
-      if (/[?;]/g.test(url)) {
-        url = url.split(/[?;]/g)[0];
-      } else {
-        url = url.split('/').slice(0, -1).join('/');
-      }
-    }
-
-    return item;
-  }
-
-  /**
    * Use `url` or `key` to find menus
    *
    * 利用 `url` 或 `key` 查找菜单
@@ -259,29 +236,6 @@ export class MenuService implements OnDestroy {
   }
 
   /**
-   * @deprecated Will be removed in 15.0.0, Pls used `find` and `setItem` instead
-   *
-   * 根据URL设置菜单 `_open` 属性
-   * - 若 `recursive: true` 则会自动向上递归查找
-   *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
-   */
-  openedByUrl(url: string | null, recursive: boolean = false): void {
-    if (!url) return;
-
-    let findItem = this.getHit(this.data, url, recursive, (i: MenuInner) => {
-      i._selected = false;
-      i._open = false;
-    }) as MenuInner;
-    if (findItem == null) return;
-
-    do {
-      findItem._selected = true;
-      findItem._open = true;
-      findItem = findItem._parent!;
-    } while (findItem);
-  }
-
-  /**
    * 根据url获取菜单列表
    * - 若 `recursive: true` 则会自动向上递归查找
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
@@ -316,8 +270,8 @@ export class MenuService implements OnDestroy {
   /**
    * Set menu based on `key`
    */
-  setItem(key: string, value: Menu): void {
-    const item = this.getItem(key);
+  setItem(key: string | Menu, value: Menu, options?: { emit?: boolean }): void {
+    const item = typeof key === 'string' ? this.getItem(key) : key;
     if (item == null) return;
 
     Object.keys(value).forEach(k => {
@@ -325,11 +279,109 @@ export class MenuService implements OnDestroy {
     });
     this.fixItem(item);
 
-    this._change$.next(this.data);
+    if (options?.emit !== false) this._change$.next(this.data);
+  }
+
+  /**
+   * Open menu based on `key` or menu object
+   */
+  open(keyOrItem: string | Menu | null, options?: { emit?: boolean }): void {
+    let item = typeof keyOrItem === 'string' ? this.find({ key: keyOrItem }) : keyOrItem;
+    if (item == null) return;
+
+    this.visit(this.menus, (i: MenuInner) => {
+      i._selected = false;
+      if (!this.openStrictly) i.open = false;
+    });
+
+    do {
+      item._selected = true;
+      item.open = true;
+      item = item._parent;
+    } while (item);
+    if (options?.emit !== false) this._change$.next(this.data);
+  }
+
+  openAll(status?: boolean): void {
+    this.toggleOpen(null, { allStatus: status });
+  }
+
+  toggleOpen(keyOrItem: string | Menu | null, options?: { allStatus?: boolean; emit?: boolean }): void {
+    let item = typeof keyOrItem === 'string' ? this.find({ key: keyOrItem }) : keyOrItem;
+    if (item == null) {
+      this.visit(this.menus, (i: MenuInner) => {
+        i._selected = false;
+        i.open = options?.allStatus === true;
+      });
+    } else {
+      if (!this.openStrictly) {
+        this.visit(this.menus, (i: MenuInner) => {
+          if (i !== item) i.open = false;
+        });
+        let pItem = item._parent;
+        while (pItem) {
+          pItem.open = true;
+          pItem = pItem._parent;
+        }
+      }
+      item.open = !item.open;
+    }
+    if (options?.emit !== false) this._change$.next(this.data);
   }
 
   ngOnDestroy(): void {
     this._change$.unsubscribe();
     this.i18n$.unsubscribe();
+  }
+
+  /**
+   * @deprecated Will be removed in 15.0.0, Pls used `find` instead
+   */
+  getHit(data: Menu[], url: string, recursive: boolean = false, cb: ((i: Menu) => void) | null = null): Menu | null {
+    let item: Menu | null = null;
+
+    while (!item && url) {
+      this.visit(data, i => {
+        if (cb) {
+          cb(i);
+        }
+        if (i.link != null && i.link === url) {
+          item = i;
+        }
+      });
+
+      if (!recursive) break;
+
+      if (/[?;]/g.test(url)) {
+        url = url.split(/[?;]/g)[0];
+      } else {
+        url = url.split('/').slice(0, -1).join('/');
+      }
+    }
+
+    return item;
+  }
+
+  /**
+   * @deprecated Will be removed in 15.0.0, Pls used `find` and `setItem` instead
+   *
+   * 根据URL设置菜单 `_open` 属性
+   * - 若 `recursive: true` 则会自动向上递归查找
+   *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
+   */
+  openedByUrl(url: string | null, recursive: boolean = false): void {
+    if (!url) return;
+
+    let findItem = this.getHit(this.data, url, recursive, (i: MenuInner) => {
+      i._selected = false;
+      i._open = false;
+    }) as MenuInner;
+    if (findItem == null) return;
+
+    do {
+      findItem._selected = true;
+      findItem._open = true;
+      findItem = findItem._parent!;
+    } while (findItem);
   }
 }

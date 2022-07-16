@@ -59,7 +59,12 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() disabledAcl = false;
   @Input() @InputBoolean() autoCloseUnderPad = true;
   @Input() @InputBoolean() recursivePath = true;
-  @Input() @InputBoolean() openStrictly = false;
+  @Input()
+  @InputBoolean()
+  set openStrictly(value: boolean) {
+    this.openStrictly = value;
+    this.menuSrv.openStrictly = value;
+  }
   @Input() @InputNumber() maxLevelIcon = 3;
   @Output() readonly select = new EventEmitter<Menu>();
 
@@ -201,18 +206,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   toggleOpen(item: Nav): void {
-    if (!this.openStrictly) {
-      this.menuSrv.visit(this.list, (i: Nav) => {
-        if (i !== item) i._open = false;
-      });
-      let pItem = item._parent as Nav;
-      while (pItem) {
-        pItem._open = true;
-        pItem = pItem._parent!;
-      }
-    }
-    item._open = !item._open;
-    this.cdr.markForCheck();
+    this.menuSrv.toggleOpen(item);
   }
 
   _click(): void {
@@ -228,33 +222,9 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  private refOpen(item: Nav | null): void {
-    const { menuSrv, openStrictly } = this;
-    menuSrv.visit(this.menuSrv.menus, (i: Nav) => {
-      i._selected = false;
-      if (!openStrictly) {
-        i._open = false;
-      }
-    });
-
-    if (item == null) return;
-
-    do {
-      item._selected = true;
-      if (!openStrictly) {
-        item._open = true;
-      }
-      item = item._parent!;
-    } while (item);
-  }
-
-  // private openByKey(key: string): void {
-  //   this.refOpen(this.menuSrv.getItem(key));
-  // }
-
   private openByUrl(url: string | null): void {
     const { menuSrv, recursivePath } = this;
-    this.refOpen(menuSrv.find({ url, recursive: recursivePath }));
+    this.menuSrv.open(menuSrv.find({ url, recursive: recursivePath }));
   }
 
   ngOnInit(): void {
@@ -271,14 +241,12 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
             i._hidden = true;
           }
         }
-        i._open = i.open != null ? i.open : false;
         const icon = i.icon as MenuIcon;
         if (icon && icon.type === 'svg' && typeof icon.value === 'string') {
           icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!!);
         }
       });
       this.list = menuSrv.menus.filter((w: Nav) => w._hidden !== true);
-      console.log(this.list);
       cdr.detectChanges();
     });
     router.events.pipe(takeUntil(destroy$)).subscribe(e => {
