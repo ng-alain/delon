@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable, Optional } from '@angular/core';
 
 import { deepMergeKey } from '@delon/util/other';
@@ -23,11 +24,11 @@ export class AlainConfigService {
   }
 
   attach<T extends AlainConfigKey>(componentThis: unknown, componentName: T, defaultValues: AlainConfig[T]): void {
-    Object.assign(componentThis, this.merge(componentName, defaultValues));
+    Object.assign(componentThis as any, this.merge(componentName, defaultValues));
   }
 
   attachKey<T extends AlainConfigKey>(componentThis: unknown, componentName: T, key: string): void {
-    Object.assign(componentThis, this.get(componentName, key));
+    Object.assign(componentThis as any, this.get(componentName, key));
   }
 
   set<T extends AlainConfigKey>(componentName: T, value: AlainConfig[T]): void {
