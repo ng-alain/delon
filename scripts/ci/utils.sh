@@ -52,6 +52,7 @@ DEPENDENCIES=$(node -p "
     'prettier',
     'husky',
     'lint-staged',
+    'rxjs',
     'swagger-typescript-api'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
