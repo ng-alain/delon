@@ -30,19 +30,19 @@ module.exports = {
           }
         ],
         '@angular-eslint/component-class-suffix': [
-          'error',
+          'off',
           {
             suffixes: ['Directive', 'Component', 'Base', 'Widget', 'Property', 'HarnessTest']
           }
         ],
         '@angular-eslint/directive-class-suffix': [
-          'error',
+          'off',
           {
             suffixes: ['Directive', 'Component', 'Base', 'Widget']
           }
         ],
         '@angular-eslint/directive-selector': [
-          'error',
+          'off',
           {
             type: 'attribute',
             prefix: ['nz']

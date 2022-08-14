@@ -12,6 +12,7 @@ import { LetModule } from '@delon/abc/let';
 import { LoadingModule } from '@delon/abc/loading';
 import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
+import { ObserversModule } from '@delon/abc/observers';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
@@ -67,6 +68,7 @@ export const SHARED_DELON_MODULES = [
   TagSelectModule,
   NoticeIconModule,
   QuickMenuModule,
+  ObserversModule,
   G2BarModule,
   G2CardModule,
   G2CustomModule,
