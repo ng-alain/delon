@@ -3,8 +3,8 @@ import { FullLocaleData } from '../locale.types';
 export default {
   abbr: 'zh-TW',
   exception: {
-    403: '抱歉，你無權訪問該頁麵',
-    404: '抱歉，你訪問的頁麵不存在',
+    403: '抱歉，你無權訪問該頁面',
+    404: '抱歉，你訪問的頁面不存在',
     500: '抱歉，服務器出錯了',
     backToHome: '返回首頁'
   },
