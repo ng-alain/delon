@@ -52,9 +52,18 @@ describe('abc: utils', () => {
     });
   });
 
-  it('#deepCopy', () => {
-    const a = { number: 1 };
-    expect(deepCopy(a).number).toBe(a.number);
+  describe('#deepCopy', () => {
+    it('should be working', () => {
+      const a = { number: 1 };
+      expect(deepCopy(a).number).toBe(a.number);
+    });
+    it('when is null', () => {
+      expect(deepCopy(null)).toBe(null);
+    });
+    it('when proto is false', () => {
+      const res = deepCopy(Object.create({ a: 1 }), { proto: false });
+      expect(Object.keys(res).length).toBe(0);
+    });
   });
 
   describe('#deepMerge', () => {
