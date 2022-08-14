@@ -1,4 +1,4 @@
-import { ModalOptions } from 'ng-zorro-antd/modal';
+import type { ModalOptions } from 'ng-zorro-antd/modal';
 
 export interface AlainImageConfig {
   /**

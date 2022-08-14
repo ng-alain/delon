@@ -1,14 +1,13 @@
-import { colors } from '@angular/cli/utilities/color';
-
 import { chain, Rule, schematic, Tree, SchematicContext, SchematicsException } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import * as colors from 'ansi-colors';
 
 import { Schema as ApplicationOptions } from '../application/schema';
 import { readJSON, readPackage } from '../utils';
 import { getNodeMajorVersion } from '../utils/node';
 import { Schema as NgAddOptions } from './schema';
 
-const V = 13;
+const V = 14;
 
 function genRules(options: NgAddOptions): Rule {
   return () => {

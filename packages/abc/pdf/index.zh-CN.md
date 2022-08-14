@@ -57,6 +57,18 @@ const alainConfig: AlainConfig = {
 | `[delay]` | 延迟初始化，单位：毫秒 | `number` | - | - |
 | `(change)` | 变更时回调 | `EventEmitter<PdfChangeEvent>` | - | - |
 
+### 组件属性
+
+提供一些常用的API接口。
+
+| 名称 | 说明 |
+| --- | ---- |
+| `pdf` | 当前 PDF 实例 |
+| `eventBus` | PDF 文件的事件总线，例如：查找文档等 |
+| `findController` | 查找控制器，不够新版本已经被 `eventBus` 替代 |
+| `pageViewer` | 查看控件 |
+| `linkService` | 导航服务 |
+
 ## 常见问题
 
 ### 为什么有时需要指定高度

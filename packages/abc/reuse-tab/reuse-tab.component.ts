@@ -41,6 +41,7 @@ import {
   ReuseTitle
 } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
+import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
 @Component({
   selector: 'reuse-tab, [reuse-tab]',
@@ -65,6 +66,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_allowClose: BooleanInput;
   static ngAcceptInputType_keepingScroll: BooleanInput;
   static ngAcceptInputType_disabled: BooleanInput;
+  static ngAcceptInputType_storageState: BooleanInput;
 
   @ViewChild('tabset') private tabset!: NzTabSetComponent;
   private destroy$ = new Subject<void>();
@@ -84,6 +86,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() excludes?: RegExp[];
   @Input() @InputBoolean() allowClose = true;
   @Input() @InputBoolean() keepingScroll = false;
+  @Input() @InputBoolean() storageState = false;
   @Input()
   set keepingScrollContainer(value: string | Element) {
     this._keepingScrollContainer = typeof value === 'string' ? this.doc.querySelector(value) : value;
@@ -110,7 +113,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private platform: Platform,
-    @Optional() private directionality: Directionality
+    @Optional() private directionality: Directionality,
+    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
+    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
   ) {}
 
   private genTit(title: ReuseTitle): string {
@@ -141,6 +146,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           url: item.url,
           title: this.genTit(item.title),
           closable: this.allowClose && item.closable && this.srv.count > 0,
+          position: item.position,
           index,
           active: false,
           last: false
@@ -186,6 +192,12 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   private refresh(item: ReuseItem): void {
     this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index, 'refresh');
+  }
+
+  private saveState(): void {
+    if (!this.srv.inited || !this.storageState) return;
+
+    this.stateSrv.update(this.stateKey, this.list);
   }
 
   // #region UI
@@ -271,6 +283,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.tabset.nzSelectedIndex = pos;
     this.list = ls;
     this.cdr.detectChanges();
+    this.saveState();
   }
 
   // #endregion
@@ -325,6 +338,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.srv.keepingScroll = this.keepingScroll;
       this.srv.keepingScrollContainer = this._keepingScrollContainer;
     }
+    if (changes.storageState) this.srv.storageState = this.storageState;
 
     this.srv.debug = this.debug;
 

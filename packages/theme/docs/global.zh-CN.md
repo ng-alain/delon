@@ -39,6 +39,10 @@ title: 全局参数
 | `@drawer-md` | `500px` | 中号抽屉 |
 | `@drawer-lg` | `900px` | 大号抽屉 |
 | `@drawer-xl` | `1200px` | 超大号抽屉 |
+| `@drawer-sm-height` | `200px` | 小号抽屉 |
+| `@drawer-md-height` | `400px` | 中号抽屉 |
+| `@drawer-lg-height` | `600px` | 大号抽屉 |
+| `@drawer-xl-height` | `800px` | 超大号抽屉 |
 | `@code-border-color` | `#eee` | `<code>` 边框颜色 |
 | `@code-bg` | `#f7f7f7` | `<code>` 背景颜色 |
 | `@widths`  | `xs @layout-gutter * 10`<br>`sm @layout-gutter * 20`<br>`md @layout-gutter * 30`<br>`lg @layout-gutter * 40`<br>`xl @layout-gutter * 50`<br>`xxl @layout-gutter * 50` | 宽度 |

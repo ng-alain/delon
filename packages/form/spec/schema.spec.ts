@@ -459,6 +459,58 @@ describe('form: schema', () => {
       labels[1].click();
       page.checkCount('.j-mobile', 0).checkCount('.j-name', 1).checkCount('.j-any', 1);
     });
+    it('logical or', fakeAsync(() => {
+      page.newSchema({
+        properties: {
+          show: {
+            type: 'boolean',
+            ui: {
+              visibleIf: { t1: ['$ANY$'], t2: ['$ANY$'] },
+              visibleIfLogical: 'or',
+              class: 'vi-show'
+            }
+          },
+          t1: {
+            type: 'string',
+            ui: { class: 'vi-t1' }
+          },
+          t2: {
+            type: 'string',
+            ui: { class: 'vi-t2' }
+          }
+        }
+      });
+      page.typeChar('t1', '.vi-t1 input');
+      page.checkCount('.vi-show', 1);
+      page.typeChar('t2', '.vi-t2 input');
+      page.checkCount('.vi-show', 1);
+    }));
+    it('logical and', fakeAsync(() => {
+      page.newSchema({
+        properties: {
+          show: {
+            type: 'boolean',
+            ui: {
+              visibleIf: { t1: ['$ANY$'], t2: ['$ANY$'] },
+              visibleIfLogical: 'and',
+              class: 'vi-show'
+            }
+          },
+          t1: {
+            type: 'string',
+            ui: { class: 'vi-t1' }
+          },
+          t2: {
+            type: 'string',
+            ui: { class: 'vi-t2' }
+          }
+        }
+      });
+      page.typeChar('t1', '.vi-t1 input');
+      page.checkCount('.vi-show', 0);
+      page.typeChar('t2', '.vi-t2 input');
+      page.checkCount('.vi-show', 1);
+    }));
   });
 
   describe('[order]', () => {

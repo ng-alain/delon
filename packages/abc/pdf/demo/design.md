@@ -15,9 +15,11 @@ Provide rich interfaces for customization.
 
 ```ts
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { PdfChangeEvent, PdfComponent, PdfZoomScale } from '@delon/abc/pdf';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Subject } from 'rxjs';
+
+import { PdfChangeEvent, PdfComponent, PdfZoomScale } from '@delon/abc/pdf';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'components-pdf-design',
@@ -71,21 +73,31 @@ import { Subject } from 'rxjs';
             <nz-switch [(ngModel)]="outline"></nz-switch>
           </se>
           <se *ngIf="outline" [label]="null">
-            <nz-empty *ngIf="outlineList == null"></nz-empty>
+            <nz-empty *ngIf="outlineList === null"></nz-empty>
             <ng-template #outlineTpl let-ls let-level="level">
               <li *ngFor="let i of ls" [style.paddingLeft.px]="level * 16">
                 <a (click)="navigateTo(i.dest)">{{ i.title }}</a>
                 <ul *ngIf="i.items && i.items.length > 0">
-                  <ng-container *ngTemplateOutlet="outlineTpl; context: { $implicit: i.items, level: level + 1 }"></ng-container>
+                  <ng-container
+                    *ngTemplateOutlet="outlineTpl; context: { $implicit: i.items, level: level + 1 }"
+                  ></ng-container>
                 </ul>
               </li>
             </ng-template>
             <ul *ngIf="outlineList">
-              <ng-container *ngTemplateOutlet="outlineTpl; context: { $implicit: outlineList, level: 0 }"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="outlineTpl; context: { $implicit: outlineList, level: 0 }"
+              ></ng-container>
             </ul>
           </se>
           <se label="Search pdf">
-            <input #qIpt nz-input placeholder="Search..." (input)="search$.next(qIpt.value)" (keyup.enter)="search$.next(qIpt.value)" />
+            <input
+              #qIpt
+              nz-input
+              placeholder="Search..."
+              (input)="search$.next(qIpt.value)"
+              (keyup.enter)="search$.next(qIpt.value)"
+            />
           </se>
         </div>
       </div>
@@ -108,7 +120,7 @@ import { Subject } from 'rxjs';
         ></pdf>
       </div>
     </div>
-  `,
+  `
 })
 export class DemoComponent implements OnInit {
   @ViewChild('pdf') private comp!: PdfComponent;
@@ -125,7 +137,7 @@ export class DemoComponent implements OnInit {
   zoom = 1;
   autoReSize = true;
   outline = false;
-  outlineList: any;
+  outlineList: NzSafeAny = null;
   q = '';
   search$ = new Subject<string>();
 
@@ -135,14 +147,14 @@ export class DemoComponent implements OnInit {
     this.search$.subscribe((q: string) => {
       if (q !== this.q) {
         this.q = q;
-        this.comp.findController.executeCommand('find', {
+        this.comp.eventBus?.dispatch('find', {
           query: this.q,
-          highlightAll: true,
+          highlightAll: true
         });
       } else {
-        this.comp.findController.executeCommand('findagain', {
+        this.comp.eventBus?.dispatch('findagain', {
           query: this.q,
-          highlightAll: true,
+          highlightAll: true
         });
       }
     });
@@ -172,22 +184,22 @@ export class DemoComponent implements OnInit {
 
   beforeUpload = (file: NzUploadFile): boolean => {
     const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.src = e.target.result;
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.src = e.target!.result as string;
       this.cdr.detectChanges();
     };
-    reader.readAsArrayBuffer(file as any);
+    reader.readAsArrayBuffer(file as unknown as Blob);
     return false;
   };
 
   loadOutline(): void {
-    this.comp.pdf.getOutline().then((outline: any[]) => {
+    this.comp.pdf?.getOutline().then(outline => {
       this.outlineList = outline;
     });
   }
 
-  navigateTo(dest: any): void {
-    this.comp.linkService.navigateTo(dest);
+  navigateTo(dest: string): void {
+    this.comp.linkService?.goToDestination(dest);
   }
 }
 ```

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
@@ -5,7 +6,6 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, Observable, of, filter } from 'rxjs';
 
 import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
@@ -20,7 +20,7 @@ describe('cache: service', () => {
   }
 
   beforeEach(() => {
-    let data: NzSafeAny = {};
+    let data: any = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;
@@ -37,7 +37,7 @@ describe('cache: service', () => {
   });
 
   function genModule(options?: AlainCacheConfig): void {
-    const providers: NzSafeAny[] = [];
+    const providers: any[] = [];
     if (options) {
       providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
     }
@@ -51,7 +51,7 @@ describe('cache: service', () => {
 
   it('should be specify a global config', () => {
     genModule({ expire: 100, type: 'm' });
-    const saveSpy = spyOn(srv as NzSafeAny, 'save');
+    const saveSpy = spyOn(srv as any, 'save');
     srv.set(KEY, 'a');
     const args = saveSpy.calls.first().args;
     expect(args[0]).toBe('m');
@@ -203,14 +203,14 @@ describe('cache: service', () => {
         });
       });
       it('should be return value via memory', (done: () => void) => {
-        srv.tryGet(KEY, of(10), { type: 'm' }).subscribe((ret: NzSafeAny) => {
+        srv.tryGet(KEY, of(10), { type: 'm' }).subscribe((ret: any) => {
           expect(ret).toBe(10);
           done();
         });
       });
       it('should be return value via http request', done => {
         const http = TestBed.inject(HttpClient);
-        srv.tryGet(KEY, http.get('/')).subscribe((ret: NzSafeAny) => {
+        srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
           expect(ret.a).toBe(1);
           done();
         });
@@ -272,35 +272,6 @@ describe('cache: service', () => {
         srv.freq = 10;
         srv.set(KEY, 1, { expire: 1 });
         srv.clear();
-      });
-    });
-
-    describe('#deepGet', () => {
-      const tree = {
-        responsne: {
-          list: [],
-          total: 10
-        },
-        status: 'ok'
-      };
-      it('should be get [status]', () => {
-        expect(srv['deepGet'](tree, ['status'])).toBe(tree.status);
-      });
-      it('should be get [responsne.totle]', () => {
-        expect(srv['deepGet'](tree, ['responsne', 'total'])).toBe(tree.responsne.total);
-      });
-      it('should be return default value when not exist deep key', () => {
-        const def = 'aa';
-        const res = srv['deepGet'](tree, ['responsne', 'totala'], def);
-        expect(res).toBe(def);
-      });
-      it('should be return default value when not exist key', () => {
-        const def = 'aa';
-        expect(srv['deepGet'](tree, ['status11'], def)).toBe(def);
-      });
-      it('should be return default value when source object is null', () => {
-        const def = 'aa';
-        expect(srv['deepGet'](null, ['status11'], def)).toBe(def);
       });
     });
 

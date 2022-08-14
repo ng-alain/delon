@@ -13,7 +13,7 @@ type: Service
 
 根据以下顺序获取 `title` 值：
 
-1. 路由配置 `{ data: { title: 'page name', titleI18n: 'page-name' } }`
+1. 路由配置 `{ data: { title: 'page name', titleI18n: 'page-name' } as RouteTitle }`
 2. 根据当前 URL 解析菜单数据
 3. 页面 `alain-default__content-title` 或 `page-header__title` 中获取 `h1` 内容
 4. 默认标题名
@@ -23,6 +23,7 @@ type: Service
 | 名称                                           | 类型       | 描述           |
 | ---------------------------------------------- | ---------- | -------------- |
 | `default`                                      | `property` | 设置默认标题名 |
+| `selector`                                      | `property` | 设置默认CSS选择器字符串 |
 | `separator`                                    | `property` | 设置分隔符     |
 | `prefix`                                       | `property` | 设置前缀       |
 | `suffix`                                       | `property` | 设置后缀       |

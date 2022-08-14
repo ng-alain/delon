@@ -1,7 +1,7 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -104,8 +104,8 @@ class TestComponent implements OnInit {
   offsetTop = 65 + 16;
   @ViewChild('ec', { static: true })
   comp!: ErrorCollectComponent;
-  validateForm: FormGroup;
-  constructor(fb: FormBuilder) {
+  validateForm: UntypedFormGroup;
+  constructor(fb: UntypedFormBuilder) {
     this.validateForm = fb.group({
       email: [null, [Validators.required, Validators.email]]
     });

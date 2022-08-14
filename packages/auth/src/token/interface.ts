@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AlainAuthConfig } from '@delon/util/config';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
@@ -12,7 +12,7 @@ export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TO
 });
 
 export interface ITokenModel {
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 
   token: string | null | undefined;
 
@@ -57,14 +57,14 @@ export interface ITokenService {
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
-  get(type?: NzSafeAny): ITokenModel | null;
+  get(type?: any): ITokenModel | null;
 
   /**
    * 获取Token，形式包括：
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
-  get<T extends ITokenModel>(type?: NzSafeAny): T;
+  get<T extends ITokenModel>(type?: any): T;
 
   /**
    * 清除 Token 信息，当用户退出登录时调用。

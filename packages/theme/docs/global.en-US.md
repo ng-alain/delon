@@ -39,6 +39,10 @@ title: Global Parameters
 | `@drawer-md` | `500px` | Medium drawer |
 | `@drawer-lg` | `900px` | Large drawer |
 | `@drawer-lg` | `1200px` | Extra large drawer |
+| `@drawer-sm-height` | `200px` | Small drawer for height |
+| `@drawer-md-height` | `400px` | Medium drawer for height |
+| `@drawer-lg-height` | `600px` | Large drawer for height |
+| `@drawer-xl-height` | `800px` | Extra large drawer for height |
 | `@code-border-color` | `#eee` | `<code>` border color |
 | `@code-bg` | `#f7f7f7` | `<code>` background color |
 | `@widths`  | `xs @layout-gutter * 10`<br>`sm @layout-gutter * 20`<br>`md @layout-gutter * 30`<br>`lg @layout-gutter * 40`<br>`xl @layout-gutter * 50`<br>`xxl @layout-gutter * 50` | width |

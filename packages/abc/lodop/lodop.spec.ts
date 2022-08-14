@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { concat, filter, mergeMap, tap } from 'rxjs';
+import { concat, filter, mergeMap, take, tap } from 'rxjs';
 
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
@@ -156,7 +156,7 @@ describe('abc: lodop', () => {
     });
     it('#reset', (done: () => void) => {
       genModule();
-      srv.lodop.subscribe(res => {
+      srv.lodop.pipe(take(1)).subscribe(res => {
         expect(res).not.toBeNull();
         expect(true).toBe(true);
         done();

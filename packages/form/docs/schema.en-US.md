@@ -264,8 +264,9 @@ Equals to `<sf [ui]="ui">`, a group of UI structure corresponds to JSON Schema s
 | `[debug]` | Debug mode | `boolean` | - |
 | `[order]` | Order of property | `string[]` | - |
 | `[asyncData]` | Asynchronized static data source | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
-| `[hidden]` | If hide | `boolean` | `false` |
+| `[hidden]` | Whether to hide | `boolean` | `false` |
 | `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any, property: FormProperty) => boolean) }` | - |
+| `[visibleIfLogical]` | The logical used when specifying multiple `visibleIf` | `or, and` | `or` |
 | `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
 
 **visibleIf**
