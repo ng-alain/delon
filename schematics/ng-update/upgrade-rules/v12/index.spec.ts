@@ -137,8 +137,7 @@ describe('Schematic: ng-update: v12Rule', () => {
               }
             }
           }
-        },
-        "defaultProject": "ng-alain"
+        }
       }
       `
     );
@@ -305,7 +304,6 @@ describe('Schematic: ng-update: v12Rule', () => {
             }
           }
         },
-        "defaultProject": "app-ui",
         "cli": {
           "analytics": false
         },

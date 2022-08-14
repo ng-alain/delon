@@ -1,6 +1,5 @@
-import { colors } from '@angular/cli/utilities/color';
-
 import { SchematicContext } from '@angular-devkit/schematics';
+import * as colors from 'ansi-colors';
 
 export function logStart(context: SchematicContext, message: string): void {
   context.logger.info(`  ${colors.green('✓')} ${message}`);

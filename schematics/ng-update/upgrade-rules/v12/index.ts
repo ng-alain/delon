@@ -1,7 +1,6 @@
-import { colors } from '@angular/cli/utilities/color';
-
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
+import * as colors from 'ansi-colors';
 
 import {
   addPackage,
