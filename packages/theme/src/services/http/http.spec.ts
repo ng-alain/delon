@@ -95,7 +95,7 @@ describe('theme: http.client', () => {
         const ret = backend.expectOne(() => true) as TestRequest;
         for (const key in p) {
           let v = p[key] as any;
-          if (v instanceof Date) v = v.valueOf();
+          if (v instanceof Date) v = v.valueOf().toString();
           expect(ret.request.params.get(key)).withContext(`param "${key}" muse be "${v}"`).toBe(v);
         }
         ret.flush(OK);

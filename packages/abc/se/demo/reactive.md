@@ -23,13 +23,18 @@ Support for reactive forms.
 
 ```ts
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: ` <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32" ingoreDirty>
-    <se label="App Key" required [error]="{ required: 'Please input your username!', pattern: 'Incorrect format, muse be A' }">
+    <se
+      label="App Key"
+      required
+      [error]="{ required: 'Please input your username!', pattern: 'Incorrect format, muse be A' }"
+    >
       <input formControlName="userName" nz-input placeholder="Username" />
     </se>
     <se label="App Secret" required error="Please input your Password!">
@@ -39,17 +44,15 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
       <button nz-button nzType="link" type="button" (click)="updateValue()">Update value via patchValue</button>
     </se>
-  </form>`,
+  </form>`
 })
 export class DemoComponent {
-  validateForm: FormGroup;
-  constructor(fb: FormBuilder, private msg: NzMessageService) {
-    this.validateForm = fb.group({
-      userName: [null, [Validators.required, Validators.pattern(/A/)]],
-      password: [null, [Validators.required]],
-      remember: [true],
-    });
-  }
+  validateForm = new FormGroup({
+    userName: new FormControl<string | null>(null, [Validators.required, Validators.pattern(/A/)]),
+    password: new FormControl(null, [Validators.required]),
+    remember: new FormControl(true)
+  });
+  constructor(private msg: NzMessageService) {}
 
   submitForm(): void {
     this.msg.success(JSON.stringify(this.validateForm.value));

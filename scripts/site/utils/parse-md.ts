@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fse from 'fs-extra';
 
 import { SiteConfig } from '../interfaces';
@@ -6,9 +7,8 @@ import { generateMd } from './generate-md';
 
 const MT = require('mark-twain');
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseMd(file: string, siteConfig: SiteConfig): any {
-  let mt = null;
+  let mt: any = null;
   try {
     mt = MT(fse.readFileSync(file, { encoding: 'utf-8' }));
   } catch (err) {
@@ -17,7 +17,7 @@ export function parseMd(file: string, siteConfig: SiteConfig): any {
   }
 
   const result = generateMd(mt);
-  result.meta = mt.meta;
+  result.meta = mt!!.meta;
   result.toc = toc(mt, siteConfig);
 
   return result;

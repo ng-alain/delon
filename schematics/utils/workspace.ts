@@ -24,16 +24,7 @@ function getProjectName(workspace: WorkspaceDefinition, name?: string): string |
     return name;
   }
 
-  if (workspace.projects.size === 1) {
-    return Array.from(workspace.projects.keys())[0];
-  }
-
-  const defaultProject = workspace.extensions.defaultProject;
-  if (defaultProject && typeof defaultProject === 'string') {
-    return defaultProject;
-  }
-
-  return null;
+  return Array.from(workspace.projects.keys()).pop() ?? null;
 }
 
 export function getNgAlainJson(tree: Tree): NgAlainDefinition | undefined {
@@ -124,10 +115,10 @@ export function removeAllowedCommonJsDependencies(key: string, projectName?: str
   });
 }
 
-export function getProjectFromWorkspace(
-  workspace: WorkspaceDefinition,
-  projectName: string = workspace.extensions.defaultProject as string
-): ProjectDefinition {
+export function getProjectFromWorkspace(workspace: WorkspaceDefinition, projectName: string): ProjectDefinition {
+  if (!projectName) {
+    projectName = Array.from(workspace.projects.keys()).pop() ?? null;
+  }
   const project = workspace.projects.get(projectName);
 
   if (!project) {

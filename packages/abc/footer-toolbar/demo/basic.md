@@ -7,7 +7,7 @@ title: 基础
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-demo',
@@ -22,17 +22,14 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
         <button nz-button nzType="primary">Submit</button>
       </footer-toolbar>
     </form>
-  `,
+  `
 })
 export class DemoComponent implements OnInit {
-  form: FormGroup;
-  constructor(fb: FormBuilder) {
-    this.form = fb.group({
-      name: [null, Validators.required],
-    });
-  }
+  form = new FormGroup({
+    name: new FormControl(null, [Validators.required])
+  });
 
-  get name(): AbstractControl {
+  get name(): FormControl<string | null> {
     return this.form.controls.name;
   }
 
