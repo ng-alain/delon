@@ -73,10 +73,15 @@ export interface AlainSTConfig {
      * 重命名返回参数 `total`、`list`，默认：`{ list: ['list'], total: ['total'] }`
      * - `{ total: 'Total' }` => Total 会被当作 `total`
      */
-    reName?: {
-      total?: string | string[];
-      list?: string | string[];
-    };
+    reName?:
+      | {
+          total?: string | string[];
+          list?: string | string[];
+        }
+      | ((
+          result: NzSafeAny,
+          options: { pi: number; ps: number; total: number }
+        ) => { total: number; list: NzSafeAny[] });
     /**
      * 数据预处理
      */

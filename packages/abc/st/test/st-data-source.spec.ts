@@ -393,6 +393,16 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
+      it('should be function re-name config', done => {
+        options.res.reName = () => ({ total: 1, list: [{ a: 'L1' }] });
+        spyOn(http, 'request').and.callFake(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
+        srv.process(options).subscribe(res => {
+          expect(res.total).toBe(1);
+          expect(res.list.length).toBe(1);
+          expect(res.list[0].a).toBe('L1');
+          done();
+        });
+      });
       it('should be return empty when result is not array', done => {
         options.res.reName = { total: 'T', list: 'L' };
         spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
