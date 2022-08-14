@@ -47,6 +47,30 @@ describe('form: widget: array', () => {
     page.newSchema(schema).checkCount('.sf__array-item', 0).add().checkCount('.sf__array-item', 1);
     expect((schema.properties!.arr.ui as NzSafeAny).add).toHaveBeenCalled();
   });
+  it(`should be minItems`, () => {
+    page.newSchema({
+      properties: {
+        arr: {
+          type: 'array',
+          minItems: 2,
+          items: {
+            type: 'object',
+            properties: {
+              a: { type: 'string' }
+            }
+          }
+        }
+      }
+    });
+    page
+      .add()
+      .checkCount('.sf__array-remove', 0)
+      .add()
+      .checkCount('.sf__array-remove', 0)
+      .add()
+      .checkCount('.sf__array-remove', 3)
+      .checkCount('.sf__array-item', 3);
+  });
   it(`should be maximum ${maxItems}`, () => {
     page
       .newSchema(schema)

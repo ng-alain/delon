@@ -27,7 +27,13 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   get showRemove(): boolean {
-    return !this.disabled && !!this.removeTitle;
+    if (this.disabled || !this.removeTitle) return false;
+    if (
+      this.schema.minItems != null &&
+      (this.formProperty.properties as FormProperty[]).length <= this.schema.minItems!
+    )
+      return false;
+    return true;
   }
 
   ngOnInit(): void {
