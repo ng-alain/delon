@@ -1,5 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
@@ -13,7 +12,7 @@ describe('acl: service', () => {
   let srv: ACLService;
 
   beforeEach(() => {
-    srv = new ACLService({ merge: (_: NzSafeAny, def: NzSafeAny) => def } as NzSafeAny);
+    srv = new ACLService({ merge: (_: any, def: any) => def } as any);
     srv.set({ role: [ADMIN] } as ACLType);
   });
 
@@ -110,7 +109,7 @@ describe('acl: service', () => {
     });
     it('should be allow ability is string in can method by preCan', () => {
       const preCanSpy = jasmine.createSpy();
-      srv = new ACLService({ merge: () => ({ preCan: preCanSpy }) } as NzSafeAny);
+      srv = new ACLService({ merge: () => ({ preCan: preCanSpy }) } as any);
       srv.attachAbility([ABILITY_CREATE]);
       srv.can(ABILITY_CREATE);
       expect(preCanSpy).toHaveBeenCalled();

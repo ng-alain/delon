@@ -7,8 +7,6 @@
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import type { ACLService } from './acl.service';
 
 export interface ACLType {
@@ -33,7 +31,8 @@ export interface ACLType {
    */
   except?: boolean;
 
-  [key: string]: NzSafeAny;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }
 
 export type ACLCanType = number | number[] | string | string[] | ACLType;

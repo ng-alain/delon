@@ -1,5 +1,5 @@
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DisabledTimeFn, NzDateMode, PresetRanges, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import type { DisabledTimeFn, NzDateMode, PresetRanges, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
 
 export interface AlainDateRangePickerConfig {
   /**

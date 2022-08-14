@@ -1,17 +1,16 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITokenModel } from '../token/interface';
 import { CookieStorageStore } from './cookie-storage.service';
 
 describe('auth: cookie-storage', () => {
-  let data: { [key: string]: NzSafeAny } = {};
+  let data: { [key: string]: any } = {};
   const store = new CookieStorageStore({
     put: jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value)),
     get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
     remove: jasmine.createSpy('remove').and.callFake((key: string) => {
       delete data[key];
     })
-  } as NzSafeAny);
+  } as any);
   const KEY = 'token';
   const VALUE: ITokenModel = {
     token: 'token data'

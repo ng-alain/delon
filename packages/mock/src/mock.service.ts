@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MockCachedRule, MockOptions, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';
@@ -21,13 +21,13 @@ export class MockService implements OnDestroy {
    *
    * 重新设置请求数据
    */
-  setData(data: NzSafeAny): void {
+  setData(data: any): void {
     this.applyMock(data);
   }
 
   // #region parse rule
 
-  private applyMock(data: NzSafeAny): void {
+  private applyMock(data: any): void {
     this.cached = [];
     try {
       this.realApplyMock(data);
@@ -36,7 +36,7 @@ export class MockService implements OnDestroy {
     }
   }
 
-  private realApplyMock(data: NzSafeAny): void {
+  private realApplyMock(data: any): void {
     if (!data) return;
     Object.keys(data).forEach((key: string) => {
       const rules = data[key];
@@ -64,7 +64,7 @@ export class MockService implements OnDestroy {
     this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
   }
 
-  private genRule(key: string, callback: NzSafeAny): MockCachedRule {
+  private genRule(key: string, callback: any): MockCachedRule {
     let method = 'GET';
     let url = key;
 
@@ -99,7 +99,7 @@ export class MockService implements OnDestroy {
     };
   }
 
-  private outputError(error: NzSafeAny): void {
+  private outputError(error: any): void {
     const filePath = error.message.split(': ')[0];
     const errors = (error.stack as string)
       .split('\n')
@@ -119,7 +119,7 @@ export class MockService implements OnDestroy {
 
   getRule(method: string, url: string): MockRule | null {
     method = (method || 'GET').toUpperCase();
-    const params: NzSafeAny = {};
+    const params: any = {};
     const list = this.cached.filter(w => w.method === method && (w.martcher ? w.martcher.test(url) : w.url === url));
     if (list.length === 0) return null;
     const ret = list.find(w => w.url === url) || list[0];

@@ -1,9 +1,8 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 import { ITokenModel } from '../interface';
 
 export class SimpleTokenModel implements ITokenModel {
-  [key: string]: NzSafeAny;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 
   token: string | null | undefined;
 

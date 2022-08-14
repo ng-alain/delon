@@ -1,5 +1,4 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';
 
@@ -33,12 +32,12 @@ export interface JWT {
    */
   jti: string;
 
-  [key: string]: NzSafeAny;
-  [key: number]: NzSafeAny;
+  [key: string]: any;
+  [key: number]: any;
 }
 
 export class JWTTokenModel implements ITokenModel {
-  [key: string]: NzSafeAny;
+  [key: string]: any;
 
   token: string | null | undefined;
 
