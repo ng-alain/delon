@@ -1,0 +1,10 @@
+// TODO: 由于 https://github.com/ant-design/ant-design/pull/34694 的重构，导致需要 NG-ZORRO 需要额外进行支持
+// 暂时按以下进行解决以此修复 https://github.com/ng-alain/ng-alain/issues/2275 的问题
+@{sf-prefix} {
+  &__item {
+    .@{ant-prefix}-select,
+    .@{ant-prefix}-cascader-picker {
+      width: 100%;
+    }
+  }
+}
