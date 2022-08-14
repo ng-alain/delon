@@ -225,6 +225,7 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[disabled]` | Whether to disabled | `boolean` | `false` |
 | `[titleRender]` | Custom rendering of the title | `TemplateRef<{ $implicit: ReuseItem }>` | - |
 | `[storageState]` | Whether to store the state, keep the last browser state | `boolean` | `false` |
+| `[canClose]` | A function to determine what should be closed | `(options: { item: ReuseItem; includeNonCloseable: boolean }) => Observable<boolean>` | - |
 | `(close)` | Close callback event | `EventEmitter` | - |
 | `(change)` | Callback when switching | `EventEmitter` | - |
 

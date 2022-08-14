@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -136,3 +137,5 @@ export interface ReuseComponentInstance {
   _onReuseDestroy: () => void;
   destroy: () => void;
 }
+
+export type ReuseCanClose = (options: { item: ReuseItem; includeNonCloseable: boolean }) => Observable<boolean>;
