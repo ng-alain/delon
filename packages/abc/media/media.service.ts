@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { Observable, Subject, share } from 'rxjs';
 
 import { AlainConfigService, AlainMediaConfig } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';

@@ -17,8 +17,7 @@ Coordinating the selection of provinces and cities is a common use case and demo
 import { Component, ViewChild } from '@angular/core';
 import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { of, delay, tap } from 'rxjs';
 
 @Component({
   selector: 'app-demo',

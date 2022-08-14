@@ -89,7 +89,8 @@
 
   &__action,
   &__extra {
-    text-align: right;
+    display: flex;
+    justify-content: end;
   }
 
   &__extra {
@@ -113,8 +114,8 @@
 
     &__action,
     &__extra {
+      justify-content: start;
       margin-left: 0;
-      text-align: left;
     }
   }
   @media screen and (max-width: @screen-sm) {

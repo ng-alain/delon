@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay, finalize, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, delay, finalize, switchMap, tap } from 'rxjs';
 
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

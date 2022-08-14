@@ -12,8 +12,7 @@ import {
   QueryList,
   ViewEncapsulation
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';

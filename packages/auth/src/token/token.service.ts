@@ -1,9 +1,7 @@
 import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, interval, Observable, Subject, Subscription } from 'rxjs';
-import { filter, map, share } from 'rxjs/operators';
+import { BehaviorSubject, interval, Observable, Subject, Subscription, filter, map, share } from 'rxjs';
 
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { mergeConfig } from '../auth.config';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';
@@ -51,7 +49,8 @@ export class TokenService implements ITokenService, OnDestroy {
     return res;
   }
 
-  get(type?: NzSafeAny): NzSafeAny;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get(type?: any): any;
   get<T extends ITokenModel>(type?: new () => T): T;
   get<T extends ITokenModel>(type?: new () => T): T {
     const data = this.store.get(this._options.store_key!);

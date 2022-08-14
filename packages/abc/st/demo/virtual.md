@@ -16,8 +16,7 @@ Virtual scrolling combine with [cdk scrolling](https://material.angular.io/cdk/s
 ```ts
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STPage } from '@delon/abc/st';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-demo',

@@ -17,8 +17,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { merge, Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { merge, Observable, Subject, filter, takeUntil } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
@@ -237,7 +236,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * this.sf.updateFeedback('/name');
    * ```
    */
-  updateFeedback(path: string, status: NzFormControlStatusType = null, icon?: string | null): this {
+  updateFeedback(path: string, status: NzFormControlStatusType = '', icon?: string | null): this {
     this.getProperty(path)?.updateFeedback(status, icon);
     return this;
   }

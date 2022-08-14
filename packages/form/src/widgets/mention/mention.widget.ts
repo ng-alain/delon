@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';

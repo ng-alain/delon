@@ -21,7 +21,7 @@ function fixChildren(list: TocItem[]): TocItem[] {
       if (!result[resultPointer].children) {
         result[resultPointer].children = [];
       }
-      result[resultPointer].children.push(item);
+      result[resultPointer].children!!.push(item);
     } else {
       parentH = item.h;
       ++resultPointer;

@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 

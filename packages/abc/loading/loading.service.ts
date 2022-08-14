@@ -2,8 +2,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy, Optional } from '@angular/core';
-import { Subject, Subscription, timer } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import { Subject, Subscription, timer, debounce } from 'rxjs';
 
 import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
 
@@ -57,7 +56,10 @@ export class LoadingService implements OnDestroy {
     });
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
     const dir = this.configSrv.get('loading')!.direction || this.directionality.value;
-    Object.assign(this.instance, { options: this.opt, dir });
+    if (this.instance != null) {
+      this.instance!!.options = this.opt;
+      this.instance!!.dir = dir;
+    }
     this.compRef.changeDetectorRef.markForCheck();
   }
 

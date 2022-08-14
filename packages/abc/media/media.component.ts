@@ -14,8 +14,7 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { Subject, timer } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { Subject, timer, takeUntil, take } from 'rxjs';
 
 import type Plyr from 'plyr';
 

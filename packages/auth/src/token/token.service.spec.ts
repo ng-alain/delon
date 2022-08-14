@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
 import { AlainAuthConfig } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
@@ -16,7 +16,7 @@ describe('auth: token.service', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    let data: { [key: string]: NzSafeAny } = {};
+    let data: { [key: string]: any } = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;
@@ -90,13 +90,13 @@ describe('auth: token.service', () => {
 
   describe('#refresh', () => {
     function updateConfig(config?: AlainAuthConfig): void {
-      const srvAny: NzSafeAny = service;
+      const srvAny: any = service;
       srvAny._options = { ...srvAny._options, enabledRefresh: true, ...config } as AlainAuthConfig;
     }
 
     beforeEach(() => updateConfig());
 
-    afterEach(() => (service as NzSafeAny).ngOnDestroy());
+    afterEach(() => (service as any).ngOnDestroy());
 
     it('should be working', done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });

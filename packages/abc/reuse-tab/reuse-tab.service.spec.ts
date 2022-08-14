@@ -1,12 +1,13 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter } from 'rxjs';
 
 import { MenuService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
+import { ReuseItem, ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
+import { ReuseTabLocalStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 class MockMenuService {
@@ -40,6 +41,14 @@ describe('abc: reuse-tab(service)', () => {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
           deps: [ReuseTabService]
+        },
+        {
+          provide: REUSE_TAB_STORAGE_KEY,
+          useValue: '_reuse-tab-state'
+        },
+        {
+          provide: REUSE_TAB_STORAGE_STATE,
+          useFactory: () => new ReuseTabLocalStorageState()
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
         { provide: Router, useFactory: () => new MockRouter() }
@@ -529,5 +538,18 @@ describe('abc: reuse-tab(service)', () => {
       tick(101);
       expect(handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
+  });
+
+  it('#storageState', () => {
+    genModule();
+    const stateSrv = TestBed.inject(REUSE_TAB_STORAGE_STATE);
+    spyOn(stateSrv, 'get').and.returnValue([
+      { title: 'ti1', url: '/a' } as ReuseItem,
+      { title: 'ti2', url: '/b' } as ReuseItem,
+      { title: 'ti3', url: '/c' } as ReuseItem
+    ]);
+    srv.storageState = true;
+    srv.init();
+    expect(srv.items.length).toBe(3);
   });
 });

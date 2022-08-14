@@ -12,6 +12,7 @@ import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabComponent } from './reuse-tab.component';
+import { ReuseTabLocalStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
 const COMPONENTS = [ReuseTabComponent];
 const NOEXPORTS = [ReuseTabContextMenuComponent, ReuseTabContextComponent, ReuseTabContextDirective];
@@ -19,6 +20,16 @@ const NOEXPORTS = [ReuseTabContextMenuComponent, ReuseTabContextComponent, Reuse
 @NgModule({
   imports: [CommonModule, RouterModule, DelonLocaleModule, NzMenuModule, NzTabsModule, NzIconModule, OverlayModule],
   declarations: [...COMPONENTS, ...NOEXPORTS],
+  providers: [
+    {
+      provide: REUSE_TAB_STORAGE_KEY,
+      useValue: '_reuse-tab-state'
+    },
+    {
+      provide: REUSE_TAB_STORAGE_STATE,
+      useFactory: () => new ReuseTabLocalStorageState()
+    }
+  ],
   exports: COMPONENTS
 })
 export class ReuseTabModule {}

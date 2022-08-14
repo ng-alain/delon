@@ -39,8 +39,8 @@ describe('form: widget: mention', () => {
     page
       .newSchema(s)
       .typeChar('@')
-      .checkCount('.ant-mention-dropdown-item', DATA.length, true)
-      .typeEvent('click', '.ant-mention-dropdown-item');
+      .checkCount('.ant-mentions-dropdown-menu-item', DATA.length, true)
+      .typeEvent('click', '.ant-mentions-dropdown-menu-item');
 
     expect((s.properties!.a.ui as NzSafeAny).select).toHaveBeenCalled();
   }));
@@ -69,6 +69,6 @@ describe('form: widget: mention', () => {
         }
       }
     };
-    page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mention-dropdown-item', '1', true);
+    page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mentions-dropdown-menu-item', '1', true);
   }));
 });

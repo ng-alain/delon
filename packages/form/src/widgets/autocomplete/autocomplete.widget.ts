@@ -1,7 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { debounceTime, map, mergeMap, startWith, takeUntil } from 'rxjs/operators';
+import { Observable, of, debounceTime, map, mergeMap, startWith, takeUntil } from 'rxjs';
 
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

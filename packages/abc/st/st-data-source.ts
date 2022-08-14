@@ -2,8 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, map } from 'rxjs';
 
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import type { AlainSTConfig } from '@delon/util/config';
@@ -107,14 +106,21 @@ export class STDataSource {
             retPs = retTotal;
             showPage = false;
           } else {
-            // list
-            ret = deepGet(result, res.reName!.list as string[], []);
-            if (ret == null || !Array.isArray(ret)) {
-              ret = [];
+            const reName = res.reName!;
+            if (typeof reName === 'function') {
+              const fnRes = reName(result, { pi, ps, total });
+              ret = fnRes.list;
+              retTotal = fnRes.total;
+            } else {
+              // list
+              ret = deepGet(result, reName.list as string[], []);
+              if (ret == null || !Array.isArray(ret)) {
+                ret = [];
+              }
+              // total
+              const resultTotal = reName.total && deepGet(result, reName.total as string[], null);
+              retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
-            // total
-            const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
-            retTotal = resultTotal == null ? total || 0 : +resultTotal;
           }
           return deepCopy(ret);
         })

@@ -17,8 +17,13 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, Subject, timer } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject, timer, debounceTime, filter, takeUntil } from 'rxjs';
+
+import type { PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
+import type { EventBus } from 'pdfjs-dist/types/web/interfaces';
+import type { PDFFindController } from 'pdfjs-dist/types/web/pdf_find_controller';
+import type { PDFLinkService } from 'pdfjs-dist/types/web/pdf_link_service';
+import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
 
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
@@ -60,10 +65,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   inited = false;
   private destroy$ = new Subject<void>();
   private lib: string = '';
-  private _pdf: NzSafeAny;
-  private loadingTask: NzSafeAny;
+  private _pdf?: PDFDocumentProxy | null;
+  private loadingTask?: PDFDocumentLoadingTask;
   private _src: NzSafeAny;
-  private lastSrc?: string;
+  private lastSrc?: NzSafeAny;
   private _pi = 1;
   private _total = 0;
   private _showAll = true;
@@ -72,12 +77,13 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _renderText = true;
   private _loading = false;
 
-  private multiPageViewer: NzSafeAny;
-  private multiPageLinkService: NzSafeAny;
-  private multiPageFindController: NzSafeAny;
-  private singlePageViewer: NzSafeAny;
-  private singlePageLinkService: NzSafeAny;
-  private singlePageFindController: NzSafeAny;
+  private multiPageViewer?: PDFViewer;
+  private multiPageLinkService?: PDFLinkService;
+  private multiPageFindController?: PDFFindController;
+  private singlePageViewer?: PDFViewer;
+  private singlePageLinkService?: PDFLinkService;
+  private singlePageFindController?: PDFFindController;
+  private _eventBus?: EventBus;
 
   @Input() set src(dataOrBuffer: NzSafeAny) {
     this._src = dataOrBuffer;
@@ -87,7 +93,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @InputNumber()
   set pi(val: number) {
     this._pi = this.getValidPi(val);
-    if (this._pdf) {
+    if (this.pageViewer) {
       this.pageViewer.scrollPageIntoView({ pageNumber: this._pi });
     }
   }
@@ -97,12 +103,12 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
   @Input() @InputBoolean() set renderText(val: boolean) {
     this._renderText = val;
-    if (this._pdf) {
+    if (this.pageViewer) {
       this.pageViewer.textLayerMode = this._textLayerMode;
       this.resetDoc();
     }
   }
-  @Input() textLayerMode: PdfTextLayerMode = PdfTextLayerMode.ENABLE;
+  @Input() textLayerMode = PdfTextLayerMode.ENABLE;
   @Input() @InputBoolean() showBorders = false;
   @Input() @InputBoolean() stickToPage = false;
   @Input() @InputBoolean() originalSize = true;
@@ -120,7 +126,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this._rotation = val;
   }
   @Input() @InputBoolean() autoReSize = true;
-  @Input() externalLinkTarget: PdfExternalLinkTarget = PdfExternalLinkTarget.BLANK;
+  @Input() externalLinkTarget = PdfExternalLinkTarget.BLANK;
   @Input() @InputNumber() delay?: number;
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
 
@@ -128,20 +134,24 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._loading;
   }
 
-  get pdf(): NzSafeAny {
+  get pdf(): PDFDocumentProxy | undefined | null {
     return this._pdf;
   }
 
-  get findController(): NzSafeAny {
+  get findController(): PDFFindController | undefined {
     return this._showAll ? this.multiPageFindController : this.singlePageFindController;
   }
 
-  get pageViewer(): NzSafeAny {
+  get pageViewer(): PDFViewer | undefined {
     return this._showAll ? this.multiPageViewer : this.singlePageViewer;
   }
 
-  get linkService(): NzSafeAny {
+  get linkService(): PDFLinkService | undefined {
     return this._showAll ? this.multiPageLinkService : this.singlePageLinkService;
+  }
+
+  get eventBus(): EventBus | undefined {
+    return this._eventBus;
   }
 
   private get _textLayerMode(): PdfTextLayerMode {
@@ -232,11 +242,11 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     });
     this.setLoading(true);
-    const loadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
+    const loadingTask: PDFDocumentLoadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
     loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
-    (loadingTask.promise as PromiseLike<void>)
+    (loadingTask.promise as PromiseLike<PDFDocumentProxy>)
       .then(
-        (pdf: NzSafeAny) => {
+        pdf => {
           this._pdf = pdf;
           this.lastSrc = _src;
           this._total = pdf.numPages;
@@ -250,7 +260,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
           this.resetDoc();
           this.render();
         },
-        (error: NzSafeAny) => this.emit('error', { error })
+        error => this.emit('error', { error })
       )
       .then(() => this.setLoading(false));
   }
@@ -263,20 +273,20 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     this.cleanDoc();
 
-    this.findController.setDocument(pdf);
-    this.pageViewer.setDocument(pdf);
-    this.linkService.setDocument(pdf, null);
+    this.findController!.setDocument(pdf);
+    this.pageViewer!.setDocument(pdf);
+    this.linkService!.setDocument(pdf, null);
   }
 
   private cleanDoc(): void {
-    this.multiPageViewer.setDocument(null);
-    this.singlePageViewer.setDocument(null);
+    this.multiPageViewer!.setDocument(null as NzSafeAny);
+    this.singlePageViewer!.setDocument(null as NzSafeAny);
 
-    this.multiPageLinkService.setDocument(null, null);
-    this.singlePageLinkService.setDocument(null, null);
+    this.multiPageLinkService!.setDocument(null, null);
+    this.singlePageLinkService!.setDocument(null, null);
 
-    this.multiPageFindController.setDocument(null);
-    this.singlePageFindController.setDocument(null);
+    this.multiPageFindController!.setDocument(null as NzSafeAny);
+    this.singlePageFindController!.setDocument(null as NzSafeAny);
   }
 
   private render(): void {
@@ -313,7 +323,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     const currentViewer = this.pageViewer;
     if (!currentViewer) return;
 
-    this._pdf.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
+    this._pdf!.getPage(currentViewer.currentPageNumber).then(page => {
       const { _rotation, _zoom } = this;
       const rotation = _rotation || page.rotate;
       const viewportWidth =
@@ -383,8 +393,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.setupSinglePageViewer();
   }
 
-  private createEventBus(): NzSafeAny {
-    const eventBus = new this.win.pdfjsViewer.EventBus();
+  private createEventBus(): EventBus {
+    const eventBus: EventBus = new this.win.pdfjsViewer.EventBus();
     eventBus.on(`pagesinit`, (ev: NzSafeAny) => {
       this.emit('pages-init', { ev });
     });
@@ -407,16 +417,16 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private setupMultiPageViewer(): void {
     const VIEWER = this.win.pdfjsViewer;
 
-    const eventBus = this.createEventBus();
-    const linkService = (this.multiPageLinkService = new VIEWER.PDFLinkService({
+    const eventBus = (this._eventBus = this.createEventBus());
+    const linkService: PDFLinkService = (this.multiPageLinkService = new VIEWER.PDFLinkService({
       eventBus
     }));
-    const findController = (this.multiPageFindController = new VIEWER.PDFFindController({
+    const findController: PDFFindController = (this.multiPageFindController = new VIEWER.PDFFindController({
       eventBus,
       linkService
     }));
 
-    const viewer = (this.multiPageViewer = new VIEWER.PDFViewer({
+    const viewer: PDFViewer = (this.multiPageViewer = new VIEWER.PDFViewer({
       eventBus,
       container: this.el,
       removePageBorders: !this.showBorders,
@@ -431,10 +441,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     const VIEWER = this.win.pdfjsViewer;
 
     const eventBus = this.createEventBus();
-    const linkService = (this.singlePageLinkService = new VIEWER.PDFLinkService({
+    const linkService: PDFLinkService = (this.singlePageLinkService = new VIEWER.PDFLinkService({
       eventBus
     }));
-    const findController = (this.singlePageFindController = new VIEWER.PDFFindController({
+    const findController: PDFFindController = (this.singlePageFindController = new VIEWER.PDFFindController({
       eventBus,
       linkService
     }));
@@ -472,7 +482,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     fromEvent(this.win, 'resize')
       .pipe(
         debounceTime(100),
-        filter(() => this.autoReSize && this._pdf),
+        filter(() => this.autoReSize && this._pdf != null),
         takeUntil(this.destroy$)
       )
       .subscribe(() => this.updateSize());

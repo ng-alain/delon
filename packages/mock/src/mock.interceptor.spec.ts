@@ -14,8 +14,7 @@ import { Component, NgModule, Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { Observable, map } from 'rxjs';
 
 import * as Mock from 'mockjs';
 
@@ -49,7 +48,7 @@ const DATA = {
 let otherRes = new HttpResponse();
 class OtherInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req.clone()).pipe(mapTo(otherRes));
+    return next.handle(req.clone()).pipe(map(() => otherRes));
   }
 }
 

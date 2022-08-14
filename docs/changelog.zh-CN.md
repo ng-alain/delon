@@ -14,6 +14,27 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [13.5.2](https://github.com/ng-alain/delon/compare/13.5.1...13.5.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* fix 'null' is not assignable to type 'NzFormControlStatusType' ([#1502](https://github.com/ng-alain/delon/issues/1502)) ([aa6c77b](https://github.com/ng-alain/delon/commit/aa6c77b606b4104dc063f30983a4bc520193fb19))
+
+
+## [13.5.1](https://github.com/ng-alain/delon/compare/13.5.0...13.5.1) (2022-06-06)
+
+### Bug Fixes
+
+* **abc:qr:** 修复无法垂直居中 ([#1481](https://github.com/ng-alain/delon/issues/1481)) ([12354f1](https://github.com/ng-alain/delon/commit/12354f17b3e203a74c6ebf85a723f9a3ff066e6d))
+* **cli:** 修复区分大小写目录名 ([#1494](https://github.com/ng-alain/delon/issues/1494)) ([c80d102](https://github.com/ng-alain/delon/commit/c80d102bcc4410dca6b57b34c03cb457dbbdadca))
+* **util:copy:** 修复 `copy` 无法在最新 Chrome 下使用 ([#1483](https://github.com/ng-alain/delon/issues/1483)) ([b3072ac](https://github.com/ng-alain/delon/commit/b3072ac04c0b343ca9a4bf613c60a9bdf9c39df6))
+
+### Performance Improvements
+
+* 优化 `rxjs/operators` 导出已经过期 ([#1485](https://github.com/ng-alain/delon/issues/1485)) ([d8efc02](https://github.com/ng-alain/delon/commit/d8efc02fdd23906e89c84fbd6f4b6569cea0c8e7))
+
+
 # [13.5.0](https://github.com/ng-alain/delon/compare/13.4.2...13.5.0) (2022-05-13)
 
 

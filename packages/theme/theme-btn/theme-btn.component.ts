@@ -15,8 +15,7 @@ import {
   Output,
   Renderer2
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

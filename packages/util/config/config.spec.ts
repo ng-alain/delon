@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { AlainChartConfig } from './chart/chart.type';
+import type { AlainChartConfig } from './chart/chart.type';
 import { AlainConfigService } from './config.service';
 
 describe('util: config', () => {

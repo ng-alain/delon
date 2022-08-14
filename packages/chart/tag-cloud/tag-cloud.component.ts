@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { fromEvent, debounceTime, filter } from 'rxjs';
 
 import type { Chart, Event } from '@antv/g2';
 

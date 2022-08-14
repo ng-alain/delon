@@ -52,6 +52,7 @@
         ]
       }
     ],
-    "no-invalid-double-slash-comments": null
+    "no-invalid-double-slash-comments": null,
+    "indentation": [ 2 ]
   }
 }

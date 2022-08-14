@@ -15,8 +15,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject, debounceTime, filter, takeUntil } from 'rxjs';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

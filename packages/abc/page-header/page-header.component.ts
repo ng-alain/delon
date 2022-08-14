@@ -18,8 +18,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { merge, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { merge, Subject, filter, takeUntil } from 'rxjs';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
