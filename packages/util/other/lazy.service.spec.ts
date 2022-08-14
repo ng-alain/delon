@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { take } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -52,10 +53,13 @@ describe('utils: lazy', () => {
 
   describe('Scripts', () => {
     it('should be load a js resource', done => {
-      srv.change.subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+      srv.change
+        .pipe(take(1))
+        .pipe(take(1))
+        .subscribe(res => {
+          expect(res[0].status).toBe('ok');
+          done();
+        });
       srv.load('/1.js');
     });
     it('should be custom content', () => {
@@ -69,7 +73,7 @@ describe('utils: lazy', () => {
 
   describe('Styles', () => {
     it('should be load a css resource', done => {
-      srv.change.subscribe(res => {
+      srv.change.pipe(take(1)).subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
       });
@@ -118,7 +122,7 @@ describe('utils: lazy', () => {
 
   it('should be bad resource', done => {
     testStatus = 'bad';
-    srv.change.subscribe(res => {
+    srv.change.pipe(take(1)).subscribe(res => {
       expect(res[0].status).toBe('error');
       done();
     });
