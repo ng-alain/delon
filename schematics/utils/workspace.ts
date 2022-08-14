@@ -156,3 +156,14 @@ export function addStylePreprocessorOptionsToAllProject(workspace: WorkspaceDefi
     build.options.stylePreprocessorOptions['includePaths'] = includePaths;
   });
 }
+
+export function addSchematicCollections(workspace: WorkspaceDefinition): void {
+  const cli = workspace.extensions.cli as Record<string, unknown>;
+  if (cli && cli.schematicCollections) return;
+  if (cli == null) workspace.extensions.cli = {};
+  let schematicCollections = workspace.extensions.cli['schematicCollections'] as string[];
+  if (!Array.isArray(schematicCollections)) schematicCollections = [];
+  if (!schematicCollections.includes(`@schematics/angular`)) schematicCollections.push(`@schematics/angular`);
+  if (!schematicCollections.includes(`ng-alain`)) schematicCollections.push(`ng-alain`);
+  workspace.extensions.cli['schematicCollections'] = schematicCollections;
+}
