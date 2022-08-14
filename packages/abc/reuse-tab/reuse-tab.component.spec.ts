@@ -19,6 +19,7 @@ import {
 } from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
+import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 let i18nResult = 'zh';
@@ -644,6 +645,16 @@ describe('abc: reuse-tab', () => {
         }));
       });
     });
+
+    it('#storageState', fakeAsync(() => {
+      layoutComp.storageState = true;
+      page.cd();
+      const stateSrv = TestBed.inject(REUSE_TAB_STORAGE_STATE);
+      spyOn(stateSrv, 'update');
+      page.to('#b');
+      expect(stateSrv.update).toHaveBeenCalled();
+      page.end();
+    }));
   });
 
   describe('[refresh]', () => {
@@ -846,6 +857,7 @@ class AppComponent {}
       [routeParamMatchMode]="routeParamMatchMode"
       [disabled]="disabled"
       [titleRender]="titleRender"
+      [storageState]="storageState"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -871,6 +883,7 @@ class LayoutComponent {
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   disabled = false;
   titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
+  storageState = false;
   change(): void {}
   close(): void {}
 }

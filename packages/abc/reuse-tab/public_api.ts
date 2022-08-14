@@ -8,3 +8,4 @@ export { ReuseTabStrategy } from './reuse-tab.strategy';
 export { ReuseTabModule } from './reuse-tab.module';
 export * from './reuse-tab.interfaces';
 export * from './lifecycle_hooks';
+export * from './reuse-tab.state';
