@@ -95,7 +95,7 @@ export class StartupService {
       );
   }
   <% } %>
-  private viaMock(): Observable<void> {
+  private viaMock(): void {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
     //   this.router.navigateByUrl(this.tokenService.login_url!);
@@ -134,8 +134,6 @@ export class StartupService {
     ]);
     // Can be set page suffix title, https://ng-alain.com/theme/title
     this.titleService.suffix = app.name;
-
-    return of();
   }
 
   load(): Observable<void> {
@@ -143,6 +141,6 @@ export class StartupService {
     // return this.viaHttp();
     // mock: Don’t use it in a production environment. ViaMock is just to simulate some data to make the scaffolding work normally
     // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-    return <% if (i18n) { %>this.viaMockI18n();<% } else { %>this.viaMock();<% } %>
+    return <% if (i18n) { %>this.viaMockI18n();<% } else { %>of(this.viaMock());<% } %>
   }
 }
