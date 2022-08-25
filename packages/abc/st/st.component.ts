@@ -147,8 +147,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set res(value: STRes) {
     const item = (this._res = deepMergeKey({}, true, this.cog.res, value));
     const reName = item.reName!;
-    if (!Array.isArray(reName.list)) reName.list = reName.list!.split('.');
-    if (!Array.isArray(reName.total)) reName.total = reName.total!.split('.');
+    if (typeof reName !== 'function') {
+      if (!Array.isArray(reName.list)) reName.list = reName.list!.split('.');
+      if (!Array.isArray(reName.total)) reName.total = reName.total!.split('.');
+    }
     this._res = item;
   }
   @Input()

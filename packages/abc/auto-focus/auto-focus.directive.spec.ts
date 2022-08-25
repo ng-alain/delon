@@ -22,7 +22,8 @@ describe('abc: auto-focus', () => {
   it('should be working', fakeAsync(() => {
     context.showInput = true;
     fixture.detectChanges();
-    tick(2);
+    tick(301);
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(context.focus).toHaveBeenCalled();
     });

@@ -106,14 +106,21 @@ export class STDataSource {
             retPs = retTotal;
             showPage = false;
           } else {
-            // list
-            ret = deepGet(result, res.reName!.list as string[], []);
-            if (ret == null || !Array.isArray(ret)) {
-              ret = [];
+            const reName = res.reName!;
+            if (typeof reName === 'function') {
+              const fnRes = reName(result, { pi, ps, total });
+              ret = fnRes.list;
+              retTotal = fnRes.total;
+            } else {
+              // list
+              ret = deepGet(result, reName.list as string[], []);
+              if (ret == null || !Array.isArray(ret)) {
+                ret = [];
+              }
+              // total
+              const resultTotal = reName.total && deepGet(result, reName.total as string[], null);
+              retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
-            // total
-            const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
-            retTotal = resultTotal == null ? total || 0 : +resultTotal;
           }
           return deepCopy(ret);
         })
@@ -266,7 +273,8 @@ export class STDataSource {
   private getByRemote(url: string, options: STDataSourceOptions): Observable<unknown> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
-    let params = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let params: { [param: string]: any } = {};
     const reName = req.reName as STReqReNameType;
     if (paginator) {
       if (req.type === 'page') {
@@ -287,6 +295,11 @@ export class STDataSource {
       ...this.getReqSortMap(singleSort, multiSort, columns),
       ...this.getReqFilterMap(columns)
     };
+    if (options.req.ignoreParamNull == true) {
+      Object.keys(params).forEach(key => {
+        if (params[key] == null) delete params[key];
+      });
+    }
 
     let reqOptions: STRequestOptions = {
       params,

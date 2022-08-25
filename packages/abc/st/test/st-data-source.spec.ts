@@ -367,6 +367,16 @@ describe('abc: table: data-souce', () => {
           });
         });
       });
+      it('should be ignoreParamNull', done => {
+        options.req.ignoreParamNull = true;
+        options.req.params = { a: null, b: 1 };
+        options.req.process = res => {
+          expect(Object.keys(res.params!!)).not.toContain(`a`);
+          expect(Object.keys(res.params!!)).toContain(`b`);
+          return res;
+        };
+        srv.process(options).subscribe(() => done());
+      });
     });
     describe('[response]', () => {
       beforeEach(() => {
@@ -390,6 +400,16 @@ describe('abc: table: data-souce', () => {
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
+          done();
+        });
+      });
+      it('should be function re-name config', done => {
+        options.res.reName = () => ({ total: 1, list: [{ a: 'L1' }] });
+        spyOn(http, 'request').and.callFake(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
+        srv.process(options).subscribe(res => {
+          expect(res.total).toBe(1);
+          expect(res.list.length).toBe(1);
+          expect(res.list[0].a).toBe('L1');
           done();
         });
       });

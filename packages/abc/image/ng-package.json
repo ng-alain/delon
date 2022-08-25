@@ -1,6 +1,0 @@
-{
-  "lib": {
-    "flatModuleFile": "image",
-    "entryFile": "public_api.ts"
-  }
-}

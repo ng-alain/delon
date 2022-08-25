@@ -3,10 +3,19 @@ order: 1
 title: 解压
 ---
 
-读取Zip文件信息（含内容），支持 File、URL 形式
+## zh-CN
+
+读取Zip文件信息（含内容），支持 File、URL 形式。
+
+## en-US
+
+Read Zip file information (including content), support File, URL form.
 
 ```ts
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+
+import type jsZipType from 'jszip';
+
 import { ZipService } from '@delon/abc/zip';
 
 @Component({
@@ -18,19 +27,19 @@ import { ZipService } from '@delon/abc/zip';
       <li *ngFor="let i of data">{{ i | json }}</li>
     </ol>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoComponent {
-  data: any;
+  data: Array<{ name: string; dir: boolean; date: Date }> = [];
 
   constructor(private zip: ZipService, private cdr: ChangeDetectorRef) {}
 
-  private format(data: { files: { [key: string]: { dir: string; date: Date } } }): void {
+  private format(data: jsZipType): void {
     const files = data.files;
     this.data = Object.keys(files).map(key => ({
       name: key,
       dir: files[key].dir,
-      date: files[key].date,
+      date: files[key].date
     }));
     this.cdr.detectChanges();
   }

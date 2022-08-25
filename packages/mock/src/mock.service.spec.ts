@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
 import * as Mock from 'mockjs';
 
 import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonMockModule } from '../index';
 import { MockOptions, MockRequest, MockRule } from './interface';
@@ -93,10 +93,10 @@ describe('mock: service', () => {
 
     it('should be full url priority', () => {
       const editRule = srv.getRule('GET', '/users/1/edit') as MockRule;
-      const editRes = editRule.callback(editRule as NzSafeAny);
+      const editRes = editRule.callback(editRule as any);
       expect(editRes.s).toBe('edit');
       const detailRule = srv.getRule('GET', '/users/1') as MockRule;
-      expect((detailRule.callback as NzSafeAny).rank).not.toBeUndefined();
+      expect((detailRule.callback as any).rank).not.toBeUndefined();
     });
 
     it('should be exact match priority', () => {
@@ -135,7 +135,7 @@ describe('mock: service', () => {
       expect(srv.rules.length).toBe(1);
       const rule = srv.getRule('GET', '/users') as MockRule;
       expect(rule).not.toBeNull();
-      expect((rule.callback as NzSafeAny).a).toBe(2);
+      expect((rule.callback as any).a).toBe(2);
     });
 
     it('should be throw invalid method error', () => {

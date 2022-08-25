@@ -1,4 +1,4 @@
-import { Injectable, Injector, OnDestroy } from '@angular/core';
+import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -24,6 +24,7 @@ import {
   ReuseTabRouteParamMatchMode,
   ReuseTitle
 } from './reuse-tab.interfaces';
+import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
 @Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
@@ -43,6 +44,7 @@ export class ReuseTabService implements OnDestroy {
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
   excludes: RegExp[] = [];
+  storageState = false;
 
   private get snapshot(): ActivatedRouteSnapshot {
     return this.injector.get(ActivatedRoute).snapshot;
@@ -365,11 +367,28 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(private injector: Injector, private menuService: MenuService) {}
+  constructor(
+    private injector: Injector,
+    private menuService: MenuService,
+    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
+    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
+  ) {}
 
   init(): void {
     this.initScroll();
     this._inited = true;
+    this.loadState();
+  }
+
+  private loadState(): void {
+    if (!this.storageState) return;
+
+    this._cached = this.stateSrv.get(this.stateKey).map(v => ({
+      title: { text: v.title },
+      url: v.url,
+      position: v.position
+    }));
+    this._cachedChange.next({ active: 'loadState' });
   }
 
   private getMenu(url: string): Menu | null | undefined {
@@ -385,7 +404,7 @@ export class ReuseTabService implements OnDestroy {
   ): void {
     if (typeof comp === 'number') {
       const item = this._cached[comp];
-      comp = item._handle.componentRef;
+      comp = item._handle?.componentRef;
     }
     if (comp == null || !comp.instance) {
       return;

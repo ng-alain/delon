@@ -21,7 +21,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { OnboardingComponent } from './onboarding.component';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class OnboardingService implements OnDestroy {
   private compRef!: ComponentRef<OnboardingComponent>;
   private op$!: Subscription;
@@ -47,6 +47,7 @@ export class OnboardingService implements OnDestroy {
   constructor(
     private i18n: DelonLocaleService,
     private appRef: ApplicationRef,
+    // TODO: Tracking https://github.com/angular/angular/issues/45263
     private resolver: ComponentFactoryResolver,
     private router: Router,
     private injector: Injector,

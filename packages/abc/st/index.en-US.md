@@ -138,10 +138,11 @@ class TestComponent {
 |----------|-------------|------|---------|---------------|
 | `[type]` | Pagination type, `page` used `pi`, `ps`; `skip` used `skip`, `limit` | `page,skip` | `page` | ✅ |
 | `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | - | - |
+| `[ignoreParamNull]` | Whether to ignore `null` or `unfind` values in parameters | `Boolean` |`false` | ✅ |
 | `[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` | ✅ |
 | `[body]` | Request body (only method is POST) | `any` | - | - |
 | `[headers]` | Request header | `any` | - | ✅ |
-| `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
+| `[reName]` | Map name `pi`、`ps` | `STReqReNameType, ((result: any, options: { pi: number; ps: number; total: number }) => { total: number; list: T[] })` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }` | ✅ |
 | `[allInBody]` | Whether to request all parameter data into `body` (except `url` itself parameter) | `boolean` | `false` | ✅ |
 | `[lazyLoad]` | Whether to delay loading data in first render `st` component | `boolean` | `false` | ✅ |
 | `[process]` | Pre-request data processing | `(requestOptions: STRequestOptions) => STRequestOptions` | - | ✅ |

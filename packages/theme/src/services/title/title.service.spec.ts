@@ -3,6 +3,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -10,7 +11,7 @@ import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu } from '../menu/interface';
 import { MenuService } from '../menu/menu.service';
-import { TitleService } from './title.service';
+import { RouteTitle, TitleService } from './title.service';
 
 describe('Service: Title', () => {
   let getPathByUrlData: NzSafeAny;
@@ -141,6 +142,25 @@ describe('Service: Title', () => {
         tick(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(alain);
       }));
+      it('with observable', fakeAsync(() => {
+        genModule([
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              firstChild: {
+                snapshot: {
+                  data: {
+                    title: of('a')
+                  } as RouteTitle
+                }
+              }
+            }
+          }
+        ]);
+        srv.setTitle();
+        tick(srv.DELAY_TIME + 1);
+        expect(title.setTitle).toHaveBeenCalledWith('a');
+      }));
       it('without', fakeAsync(() => {
         genModule([
           {
@@ -206,6 +226,13 @@ describe('Service: Title', () => {
       }));
       it('without element', fakeAsync(() => {
         genModule([]);
+        srv.setTitle();
+        tick(srv.DELAY_TIME + 1);
+        expect(title.setTitle).toHaveBeenCalledWith(notPageName);
+      }));
+      it('without custom selector', fakeAsync(() => {
+        genModule([]);
+        srv.selector = 'test';
         srv.setTitle();
         tick(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(notPageName);

@@ -23,6 +23,7 @@ Get the `title` value according to the following order:
 | Name                                           | Type       | Description                     |
 | ---------------------------------------------- | ---------- | ------------------------------- |
 | `default`                                      | `property` | Default title of document title |
+| `selector`                                      | `property` | Set the default CSS selector string |
 | `separator`                                    | `property` | Separator                       |
 | `prefix`                                       | `property` | Prefix of document title        |
 | `suffix`                                       | `property` | Suffix of document title        |

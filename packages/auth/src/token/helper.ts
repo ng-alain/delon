@@ -3,7 +3,6 @@ import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlainAuthConfig } from '@delon/util/config';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DA_SERVICE_TOKEN, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
@@ -16,9 +15,9 @@ export function CheckSimple(model: SimpleTokenModel | null): boolean {
 export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   try {
     return model != null && !!model.token && !model.isExpired(offset);
-  } catch (err: NzSafeAny) {
+  } catch (err: unknown) {
     if (typeof ngDevMode === 'undefined' || ngDevMode) {
-      console.warn(`${err.message}, jump to login_url`);
+      console.warn(`${(err as { message: string }).message}, jump to login_url`);
     }
     return false;
   }

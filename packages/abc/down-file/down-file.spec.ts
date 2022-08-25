@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';

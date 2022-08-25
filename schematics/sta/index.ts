@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { colors } from '@angular/cli/utilities/color';
 
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
+import * as colors from 'ansi-colors';
 import { rmdirSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { parse } from 'jsonc-parser';
 import { resolve, join } from 'path';

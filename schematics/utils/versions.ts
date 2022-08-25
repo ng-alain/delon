@@ -30,21 +30,19 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       `eslint-plugin-jsdoc@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-prefer-arrow@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-prettier@DEP-0.0.0-PLACEHOLDER`,
+      `eslint-plugin-deprecation@DEP-0.0.0-PLACEHOLDER`,
       `prettier@DEP-0.0.0-PLACEHOLDER`,
       `husky@DEP-0.0.0-PLACEHOLDER`,
       `ng-alain@${version}`,
       `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
       `source-map-explorer@DEP-0.0.0-PLACEHOLDER`,
       `@angular/language-service@DEP-0.0.0-PLACEHOLDER`,
+      `rxjs@DEP-0.0.0-PLACEHOLDER`,
       `@delon/testing@${version}`
     ],
     'devDependencies'
   );
-  addPackage(tree, [
-    `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`,
-    'ajv@DEP-0.0.0-PLACEHOLDER',
-    'ajv-formats@DEP-0.0.0-PLACEHOLDER'
-  ]);
+  addPackage(tree, [`ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`]);
 }
 
 export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {

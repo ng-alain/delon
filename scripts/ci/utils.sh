@@ -49,9 +49,11 @@ DEPENDENCIES=$(node -p "
     'eslint-plugin-jsdoc',
     'eslint-plugin-prefer-arrow',
     'eslint-plugin-prettier',
+    'eslint-plugin-deprecation',
     'prettier',
     'husky',
     'lint-staged',
+    'rxjs',
     'swagger-typescript-api'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")

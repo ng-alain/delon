@@ -15,7 +15,8 @@ Using `errors` you can reset `error` values for all `se` components in batches.
 
 ```ts
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { SEErrorRefresh } from '@delon/abc/se';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -67,27 +68,26 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
       </se>
     </form>
-  `,
+  `
 })
 export class DemoComponent {
-  validateForm: FormGroup;
+  validateForm = new FormGroup({
+    userName: new FormControl<string | null>(null, [Validators.required, Validators.pattern(/A/)]),
+    password: new FormControl(null, [Validators.required]),
+    remember: new FormControl(true)
+  });
+
   i: { ak?: string; sk?: string } = {};
   ngModelErrors: SEErrorRefresh[] = [];
   reactiveErrors: SEErrorRefresh[] = [];
 
-  constructor(fb: FormBuilder, public msg: NzMessageService) {
-    this.validateForm = fb.group({
-      userName: [null, [Validators.required, Validators.pattern(/A/)]],
-      password: [null, [Validators.required]],
-      remember: [true],
-    });
-  }
+  constructor(public msg: NzMessageService) {}
 
   resetErrors(): void {
     this.ngModelErrors = [{ name: 'ak', error: 'Required field, and can only contain a-z, 0-9' }];
     this.reactiveErrors = [
       { name: 'userName', error: 'Required username' },
-      { name: 'password', error: 'Required password' },
+      { name: 'password', error: 'Required password' }
     ];
   }
 }

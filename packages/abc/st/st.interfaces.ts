@@ -60,6 +60,12 @@ export interface STReq {
    * - `{ status: 'new' }` => `url?pi=1&ps=10&status=new`
    */
   params?: any;
+  /**
+   * Whether to ignore `null` or `unfind` values in parameters
+   *
+   * 是否忽略参数中 `null` 或 `undefind` 值
+   */
+  ignoreParamNull?: Boolean;
   /** 请求方法，默认：`GET` */
   method?: string;
   /** 请求体 `body` */
@@ -115,7 +121,9 @@ export interface STRes<T extends STData = any> {
    * 重命名返回参数 `total`、`list`
    * - `{ total: 'Total' }` => Total 会被当作 `total`
    */
-  reName?: STResReNameType;
+  reName?:
+    | STResReNameType
+    | ((result: any, options: { pi: number; ps: number; total: number }) => { total: number; list: T[] });
   /**
    * 数据预处理
    */

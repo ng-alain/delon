@@ -3,7 +3,7 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
@@ -12,6 +12,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import {
+  ReuseCanClose,
   ReuseCustomContextMenu,
   ReuseItem,
   ReuseTabMatchMode,
@@ -19,6 +20,7 @@ import {
 } from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
+import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 let i18nResult = 'zh';
@@ -165,6 +167,12 @@ describe('abc: reuse-tab', () => {
       }));
       it('issues-363', fakeAsync(() => {
         page.to('#b').expectCount(2).close(1).expectCount(1).expectAttr(0, 'closable', false).end();
+      }));
+      it('#canClose', fakeAsync(() => {
+        layoutComp.canClose = () => of(false);
+        page.cd().to('#b').expectCount(2).close(1).expectCount(2);
+        layoutComp.canClose = () => of(true);
+        page.cd().to('#b').expectCount(2).close(1).expectCount(1).end();
       }));
     });
 
@@ -644,6 +652,16 @@ describe('abc: reuse-tab', () => {
         }));
       });
     });
+
+    it('#storageState', fakeAsync(() => {
+      layoutComp.storageState = true;
+      page.cd();
+      const stateSrv = TestBed.inject(REUSE_TAB_STORAGE_STATE);
+      spyOn(stateSrv, 'update');
+      page.to('#b');
+      expect(stateSrv.update).toHaveBeenCalled();
+      page.end();
+    }));
   });
 
   describe('[refresh]', () => {
@@ -846,6 +864,8 @@ class AppComponent {}
       [routeParamMatchMode]="routeParamMatchMode"
       [disabled]="disabled"
       [titleRender]="titleRender"
+      [storageState]="storageState"
+      [canClose]="canClose"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -871,6 +891,8 @@ class LayoutComponent {
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   disabled = false;
   titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
+  storageState = false;
+  canClose?: ReuseCanClose;
   change(): void {}
   close(): void {}
 }

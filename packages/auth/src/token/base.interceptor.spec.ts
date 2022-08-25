@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
 import {
   HttpClient,
@@ -16,24 +17,23 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, throwError, catchError } from 'rxjs';
 
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
-function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): NzSafeAny {
-  const model: NzSafeAny = new modelType();
+function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
+  const model: any = new modelType();
   model.token = token;
   model.uid = 1;
   return model;
 }
 
 class MockTokenService implements ITokenService {
-  [key: string]: NzSafeAny;
-  _data: NzSafeAny;
-  options: NzSafeAny;
+  [key: string]: any;
+  _data: any;
+  options: any;
   referrer: AuthReferrer = {};
   refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
@@ -43,7 +43,7 @@ class MockTokenService implements ITokenService {
   get(): ITokenModel {
     return this._data;
   }
-  change(): NzSafeAny {
+  change(): any {
     return null;
   }
   clear(): void {
@@ -56,7 +56,7 @@ class MockTokenService implements ITokenService {
 
 let otherRes = new HttpResponse();
 class OtherInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req.clone()).pipe(catchError(() => throwError(() => otherRes)));
   }
 }
@@ -69,12 +69,12 @@ describe('auth: base.interceptor', () => {
     location: {
       href: ''
     },
-    querySelectorAll(): NzSafeAny {
+    querySelectorAll(): any {
       return {};
     }
   };
 
-  function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: NzSafeAny[] = []): void {
+  function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
@@ -103,7 +103,7 @@ describe('auth: base.interceptor', () => {
       it(`should be ignore /login`, done => {
         genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
 
-        http.get('/login', { responseType: 'text' }).subscribe(done);
+        http.get('/login', { responseType: 'text' }).subscribe(() => done());
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBeNull();
         req.flush('ok!');
@@ -111,7 +111,7 @@ describe('auth: base.interceptor', () => {
 
       it('should be empty ignore', done => {
         genModule({ ignores: [] }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(done);
+        http.get('/login', { responseType: 'text' }).subscribe(() => done());
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
@@ -119,7 +119,7 @@ describe('auth: base.interceptor', () => {
 
       it('should be undefined', done => {
         genModule({ ignores: undefined }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(done);
+        http.get('/login', { responseType: 'text' }).subscribe(() => done());
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
@@ -130,7 +130,7 @@ describe('auth: base.interceptor', () => {
       describe('in params', () => {
         it(`should working`, done => {
           genModule({}, genModel(SimpleTokenModel, null));
-          http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+          http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(() => done());
           const ret = httpBed.expectOne(() => true);
           expect(ret.request.params.has('_allow_anonymous')).toBe(false);
           expect(ret.request.headers.get('Authorization')).toBeNull();
@@ -143,7 +143,7 @@ describe('auth: base.interceptor', () => {
               responseType: 'text',
               params: { _allow_anonymous: '' }
             })
-            .subscribe(done);
+            .subscribe(() => done());
           const ret = httpBed.expectOne(() => true);
           expect(ret.request.headers.get('Authorization')).toBeNull();
           ret.flush('ok!');
@@ -152,7 +152,7 @@ describe('auth: base.interceptor', () => {
       describe('in url', () => {
         it(`should working`, done => {
           genModule({}, genModel(SimpleTokenModel, null));
-          http.get('/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+          http.get('/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(() => done());
           const ret = httpBed.expectOne(() => true);
           expect(ret.request.url).toBe(`/user`);
           expect(ret.request.headers.get('Authorization')).toBeNull();
@@ -162,7 +162,7 @@ describe('auth: base.interceptor', () => {
           genModule({}, genModel(SimpleTokenModel, null));
           http
             .get('https://ng-alain.com/api/user?a=1&_allow_anonymous=1&other=a&cn=中文', { responseType: 'text' })
-            .subscribe(done);
+            .subscribe(() => done());
           const ret = httpBed.expectOne(() => true);
           expect(ret.request.url).toBe(`https://ng-alain.com/api/user?a=1&other=a&cn=%E4%B8%AD%E6%96%87`);
           expect(ret.request.headers.get('Authorization')).toBeNull();
@@ -181,7 +181,7 @@ describe('auth: base.interceptor', () => {
             expect(false).toBe(true);
             done();
           },
-          error: (err: NzSafeAny) => {
+          error: (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
@@ -198,7 +198,7 @@ describe('auth: base.interceptor', () => {
             expect(false).toBe(true);
             done();
           },
-          error: (err: NzSafeAny) => {
+          error: (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
@@ -216,7 +216,7 @@ describe('auth: base.interceptor', () => {
           expect(false).toBe(true);
           done();
         },
-        error: (err: NzSafeAny) => {
+        error: (err: any) => {
           expect(err.status).toBe(401);
           done();
         }

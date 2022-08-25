@@ -49,15 +49,15 @@ export function generateDemo(
 
   const demos: any[] = fse.readdirSync(dir).map(name => {
     const filePath = path.join(dir, name);
-    let mt = null;
+    let mt: any = null;
     try {
       mt = MT(fse.readFileSync(filePath, { encoding: 'utf-8' }));
     } catch (err) {
       console.error(`invalid ${filePath}`, err);
       return;
     }
-    mt.name = name.replace('.md', '');
-    mt.filePath = filePath;
+    mt!!.name = name.replace('.md', '');
+    mt!!.filePath = filePath;
     return mt;
   });
 

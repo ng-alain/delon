@@ -1,16 +1,15 @@
 import {
   AfterViewInit,
-  ComponentFactoryResolver,
   ComponentRef,
   Directive,
   EventEmitter,
   Host,
-  Injector,
   Input,
   OnDestroy,
   Optional,
   Output,
-  TemplateRef
+  TemplateRef,
+  ViewContainerRef
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -73,8 +72,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     private dom: DomSanitizer,
     configSrv: AlainConfigService,
     @Host() @Optional() private nativeComp: NzRangePickerComponent,
-    private resolver: ComponentFactoryResolver,
-    private injector: Injector
+    private vcr: ViewContainerRef
   ) {
     assert(
       !!nativeComp,
@@ -164,8 +162,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       extraFooter = undefined;
     } else {
       if (!this.shortcutFactory) {
-        const factory = this.resolver.resolveComponentFactory(RangePickerShortcutTplComponent);
-        this.shortcutFactory = factory.create(this.injector);
+        this.shortcutFactory = this.vcr.createComponent(RangePickerShortcutTplComponent);
       }
       const { instance } = this.shortcutFactory;
       instance.list = list!;

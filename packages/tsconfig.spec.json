@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./",
-    "target": "es5",
     "outDir": "../out-tsc/spec",
     "types": ["jasmine", "node"],
     "paths": {

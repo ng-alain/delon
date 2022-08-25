@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   HttpBackend,
   HttpErrorResponse,
@@ -13,7 +14,6 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable, of, throwError, delay } from 'rxjs';
 
 import { deepCopy } from '@delon/util/other';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MockRequest } from './interface';
 import { MockService } from './mock.service';
@@ -22,7 +22,7 @@ import { MockStatusError } from './status.error';
 class HttpMockInterceptorHandler implements HttpHandler {
   constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
 
-  handle(req: HttpRequest<NzSafeAny>): Observable<HttpEvent<NzSafeAny>> {
+  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
     return this.interceptor.intercept(req, this.next);
   }
 }
@@ -31,7 +31,7 @@ class HttpMockInterceptorHandler implements HttpHandler {
 export class MockInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
-  intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const src = this.injector.get(MockService);
     const config = src.config;
     const rule = src.getRule(req.method, req.url.split('?')[0]);
@@ -39,7 +39,7 @@ export class MockInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    let res: NzSafeAny;
+    let res: any;
     switch (typeof rule!.callback) {
       case 'function':
         const mockRequest: MockRequest = {
@@ -71,7 +71,7 @@ export class MockInterceptor implements HttpInterceptor {
 
         try {
           res = rule!.callback.call(this, mockRequest);
-        } catch (e: NzSafeAny) {
+        } catch (e: any) {
           res = new HttpErrorResponse({
             url: req.url,
             headers: req.headers,

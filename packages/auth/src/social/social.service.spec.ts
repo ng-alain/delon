@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DelonAuthModule } from '../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
@@ -15,14 +14,14 @@ const mockRouter = {
   url: '',
   navigate: jasmine.createSpy('navigate'),
   navigateByUrl: jasmine.createSpy('navigateByUrl'),
-  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: NzSafeAny) => {
+  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
     return new DefaultUrlSerializer().parse(value);
   })
 };
 
 class MockDocument {
   location = new MockLocation();
-  querySelectorAll(): NzSafeAny {
+  querySelectorAll(): any {
     return {};
   }
 }
@@ -72,7 +71,7 @@ describe('auth: social.service', () => {
   afterEach(() => srv.ngOnDestroy());
 
   describe('#login', () => {
-    [MockAuth0].forEach((item: NzSafeAny) => {
+    [MockAuth0].forEach((item: any) => {
       it(`${item.type} via href`, () => {
         srv.login(item.url, '/', { type: 'href' });
         const ret = TestBed.inject(DOCUMENT).location.href;
@@ -87,7 +86,7 @@ describe('auth: social.service', () => {
           TestBed.inject(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         };
-        spyOn(window, 'open').and.callFake(mockWindowOpen as NzSafeAny);
+        spyOn(window, 'open').and.callFake(mockWindowOpen as any);
         srv.login(item.url).subscribe(() => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
@@ -104,7 +103,7 @@ describe('auth: social.service', () => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as NzSafeAny);
+      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
@@ -117,7 +116,7 @@ describe('auth: social.service', () => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as NzSafeAny);
+      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
@@ -157,10 +156,10 @@ describe('auth: social.service', () => {
         be: 'throw'
       },
       { summary: 'via ITokenModel', url: swtData, be: swtData }
-    ].forEach((item: NzSafeAny) => {
+    ].forEach((item: any) => {
       it(`${item.summary}`, () => {
         if (item.be === 'throw') {
-          const router = TestBed.inject<Router>(Router) as NzSafeAny;
+          const router = TestBed.inject<Router>(Router) as any;
           router.url = item.url;
           expect(() => {
             srv.callback(null);
