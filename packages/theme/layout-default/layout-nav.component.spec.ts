@@ -181,11 +181,11 @@ describe('theme: layout-default-nav', () => {
         createComp();
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
-        expect(data[0].children![0]._open).toBeUndefined();
+        expect(data[0].children![0].open).toBe(false);
         const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__item-link');
         subTitleEl!.click();
         fixture.detectChanges();
-        expect(data[0].children![0]._open).toBe(true);
+        expect(data[0].children![0].open).toBe(true);
       });
 
       it('should be reset menu when service is changed', () => {
@@ -221,6 +221,30 @@ describe('theme: layout-default-nav', () => {
         page.checkText('.sidebar-nav__item', `text 1`);
         menuSrv.add([{ i18n: 'i18n <strong>1</strong>' }]);
         page.checkText('.sidebar-nav__item', `i18n 1`);
+      });
+
+      it('should be hide when children are hide', () => {
+        createComp();
+        menuSrv.add([
+          {
+            text: 'parent',
+            children: [
+              { text: 'l1', hide: true },
+              { text: 'l2', hide: false }
+            ]
+          }
+        ]);
+        page.checkCount('.sidebar-nav__group-title', 1);
+        menuSrv.add([
+          {
+            text: 'parent',
+            children: [
+              { text: 'l1', hide: true },
+              { text: 'l2', hide: true }
+            ]
+          }
+        ]);
+        page.checkCount('.sidebar-nav__group-title', 0);
       });
     });
 

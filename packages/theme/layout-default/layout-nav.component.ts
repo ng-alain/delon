@@ -62,7 +62,6 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   @Input()
   @InputBoolean()
   set openStrictly(value: boolean) {
-    this.openStrictly = value;
     this.menuSrv.openStrictly = value;
   }
   @Input() @InputNumber() maxLevelIcon = 3;
@@ -246,7 +245,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
           icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!!);
         }
       });
-      this.list = menuSrv.menus.filter((w: Nav) => w._hidden !== true);
+      this.fixHide(data);
+      this.list = data.filter((w: Nav) => w._hidden !== true);
       cdr.detectChanges();
     });
     router.events.pipe(takeUntil(destroy$)).subscribe(e => {
@@ -270,6 +270,21 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     });
     this.openByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloating());
+  }
+
+  private fixHide(ls: Nav[]): void {
+    const inFn = (list: Nav[]): void => {
+      for (const item of list) {
+        if (item.children && item.children.length > 0) {
+          inFn(item.children);
+          if (!item._hidden) {
+            item._hidden = item.children.every((v: Nav) => v._hidden);
+          }
+        }
+      }
+    };
+
+    inFn(ls);
   }
 
   ngOnDestroy(): void {
