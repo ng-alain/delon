@@ -40,6 +40,12 @@ export interface AlainSTConfig {
      * - `skip` 使用 `skip`，`limit` 组合
      */
     type?: 'page' | 'skip';
+    /**
+     * Whether to ignore `null` or `unfind` values in parameters
+     *
+     * 是否忽略参数中 `null` 或 `undefind` 值
+     */
+    ignoreParamNull?: Boolean;
     /** 请求方法，默认：`GET` */
     method?: string;
     /** 请求体 `Header` */

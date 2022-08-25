@@ -138,6 +138,7 @@ class TestComponent {
 |----|----|----|-----|------|
 | `[type]` | 分页类型，`page` 使用 `pi`，`ps` 组合；`skip` 使用 `skip`，`limit` 组合 | `page,skip` | `page` | ✅ |
 | `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | - | - |
+| `[ignoreParamNull]` | 是否忽略参数中 `null` 或 `undefind` 值 | `Boolean` |`false` | ✅ |
 | `[method]` | 请求方法 | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` | ✅ |
 | `[body]` | 请求体 `body`，当 `method: POST` 时有效 | `any` | - | - |
 | `[headers]` | 请求体 `headers` | `any` | - | ✅ |

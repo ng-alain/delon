@@ -367,6 +367,16 @@ describe('abc: table: data-souce', () => {
           });
         });
       });
+      it('should be ignoreParamNull', done => {
+        options.req.ignoreParamNull = true;
+        options.req.params = { a: null, b: 1 };
+        options.req.process = res => {
+          expect(Object.keys(res.params!!)).not.toContain(`a`);
+          expect(Object.keys(res.params!!)).toContain(`b`);
+          return res;
+        };
+        srv.process(options).subscribe(() => done());
+      });
     });
     describe('[response]', () => {
       beforeEach(() => {
