@@ -36,7 +36,13 @@
     (nzScrollToBottom)="scrollToBottom()"
   >
     <ng-container *ngIf="!loading && !hasGroup">
-      <nz-option *ngFor="let o of data" [nzLabel]="o.label" [nzValue]="o.value" [nzDisabled]="o.disabled"></nz-option>
+      <nz-option
+        *ngFor="let o of data"
+        [nzLabel]="o.label"
+        [nzValue]="o.value"
+        [nzHide]="o.hide"
+        [nzDisabled]="o.disabled"
+      ></nz-option>
     </ng-container>
     <ng-container *ngIf="!loading && hasGroup">
       <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
@@ -45,6 +51,7 @@
           [nzLabel]="o.label"
           [nzValue]="o.value"
           [nzDisabled]="o.disabled"
+          [nzHide]="o.hide"
         ></nz-option>
       </nz-option-group>
     </ng-container>
