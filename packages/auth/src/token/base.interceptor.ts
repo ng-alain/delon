@@ -37,13 +37,14 @@ export abstract class BaseInterceptor implements HttpInterceptor {
   abstract setReq(req: HttpRequest<any>, options: AlainAuthConfig): HttpRequest<any>;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.context.get(ALLOW_ANONYMOUS)) return next.handle(req);
+
     const options = mergeConfig(this.injector.get(AlainConfigService));
     if (Array.isArray(options.ignores)) {
       for (const item of options.ignores) {
         if (item.test(req.url)) return next.handle(req);
       }
     }
-    if (req.context.get(ALLOW_ANONYMOUS)) return next.handle(req);
 
     const ingoreKey = options.allow_anonymous_key!;
     let ingored = false;
