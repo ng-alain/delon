@@ -23,6 +23,7 @@ import {
   addHeadStyle,
   addHtmlToBody,
   addPackage,
+  addSchematicCollections,
   addStylePreprocessorOptionsToAllProject,
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
@@ -89,6 +90,7 @@ function fixAngularJson(options: ApplicationOptions): Rule {
     }
 
     addStylePreprocessorOptionsToAllProject(workspace);
+    addSchematicCollections(workspace);
   });
 }
 
