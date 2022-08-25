@@ -138,6 +138,7 @@ class TestComponent {
 |----------|-------------|------|---------|---------------|
 | `[type]` | Pagination type, `page` used `pi`, `ps`; `skip` used `skip`, `limit` | `page,skip` | `page` | ✅ |
 | `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | - | - |
+| `[ignoreParamNull]` | Whether to ignore `null` or `unfind` values in parameters | `Boolean` |`false` | ✅ |
 | `[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'` | ✅ |
 | `[body]` | Request body (only method is POST) | `any` | - | - |
 | `[headers]` | Request header | `any` | - | ✅ |
