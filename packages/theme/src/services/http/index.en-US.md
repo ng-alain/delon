@@ -153,3 +153,31 @@ class RestService extends BaseApi {
 - `@Payload` Request Payload
   - Supported body (like`POST`, `PUT`) as a body data, equivalent to `@Body`
   - Not supported body (like `GET`, `DELETE` etc) as a `QueryString`
+
+### CUSTOM_ERROR
+
+Whether to customize the handling of exception messages.
+
+```ts
+this.http.post(`login`, {
+ name: 'cipchk', pwd: '123456'
+}, {
+ context: new HttpContext()
+             .set(ALLOW_ANONYMOUS, true)
+             .set(CUSTOM_ERROR, true)
+}).subscribe({
+ next: console.log,
+ error: console.log
+});
+```
+
+### IGNORE_BASE_URL
+
+Whether to ignore API prefixes.
+
+```ts
+// When environment.api.baseUrl set '/api'
+
+this.http.get(`/path`) // Request Url: /api/path
+this.http.get(`/path`, { context: new HttpContext().set(IGNORE_BASE_URL, true) }) // Request Url: /path
+```

@@ -153,3 +153,33 @@ class RestService extends BaseApi {
 - `@Payload` 请求负载
   - 当支持 Body 时（例如：`POST`、`PUT`）为内容体等同 `@Body`
   - 当不支持 Body 时（例如：`GET`、`DELETE` 等）为 `QueryString`
+
+## HttpContext
+
+### CUSTOM_ERROR
+
+是否自定义处理异常消息。
+
+```ts
+this.http.post(`login`, {
+ name: 'cipchk', pwd: '123456'
+}, {
+ context: new HttpContext()
+             .set(ALLOW_ANONYMOUS, true)
+             .set(CUSTOM_ERROR, true)
+}).subscribe({
+ next: console.log,
+ error: console.log
+});
+```
+
+### IGNORE_BASE_URL
+
+是否忽略API前缀。
+
+```ts
+// When environment.api.baseUrl set '/api'
+
+this.http.get(`/path`) // Request Url: /api/path
+this.http.get(`/path`, { context: new HttpContext().set(IGNORE_BASE_URL, true) }) // Request Url: /path
+```
