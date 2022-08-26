@@ -4,6 +4,16 @@ subtitle: Deep get,copy,merge,lazy,assert
 type: Tools
 ---
 
+## omit
+
+Omit specified keys from an object.
+
+```ts
+omit({ a: 1, b: 2, c: 3 }, 'a') // { b: 2, c: 3 }
+omit({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { b: 2 }
+omit({ a: 1, b: 2 }, key => key === 'a') // { a: 1 }
+```
+
 ## deepGet
 
 Gets the value at `path` of `object`, like `_.get` in lodash.
