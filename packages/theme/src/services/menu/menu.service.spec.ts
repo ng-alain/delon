@@ -258,6 +258,8 @@ describe('Service: Menu', () => {
         srv.setItem('a', { text: 'b', badge: 10 });
         expect(srv.getItem('a')!.text).toBe('b');
         expect(srv.getItem('a')!.badge).toBe(10);
+        srv.setItem(newMenus[0], { text: 'obj' });
+        expect(srv.getItem('a')!.text).toBe('obj');
       });
       it('should be ingore update when not found key', () => {
         const newMenus = [{ text: 'a', key: 'a' }];
@@ -375,6 +377,14 @@ describe('Service: Menu', () => {
 
     describe('#open', () => {
       beforeEach(() => srv.add(deepCopy(DATA)));
+      it('should be working', () => {
+        expect(srv.menus[0].open).toBe(false);
+        srv.open('db');
+        expect(srv.menus[0].open).toBe(true);
+        srv.open(srv.menus[1]);
+        expect(srv.menus[0].open).toBe(false);
+        expect(srv.menus[1].open).toBe(true);
+      });
       it('open all', () => {
         srv.openAll(false);
         expect(srv.menus.every(v => v.open === false)).toBe(true);
