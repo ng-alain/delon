@@ -1,5 +1,6 @@
 import { SafeHtml } from '@angular/platform-browser';
 
+import type { ACLCanType } from '@delon/acl';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface MenuIcon {
@@ -52,40 +53,16 @@ export interface Menu {
   /** Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs */
   hideInBreadcrumb?: boolean;
   /** ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value */
-  acl?:
-    | number
-    | number[]
-    | string
-    | string[]
-    | {
-        /**
-         * 角色
-         */
-        role?: string[];
-        /**
-         * 权限点
-         */
-        ability?: number[] | string[];
-
-        /**
-         * Validated against, default: `oneOf`
-         * - `allOf` the value validates against all the roles or abilities
-         * - `oneOf` the value validates against exactly one of the roles or abilities
-         */
-        mode?: 'allOf' | 'oneOf';
-
-        /**
-         * 是否取反，即结果为 `true` 时表示未授权
-         */
-        except?: boolean;
-      };
+  acl?: ACLCanType;
   /** Whether shortcut menu item */
   shortcut?: boolean;
   /** Wheter shortcut menu root node */
   shortcutRoot?: boolean;
   /** Whether to allow reuse, need to cooperate with the `reuse-tab` component */
   reuse?: boolean;
-  /** Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component */
+  /**
+   * Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component
+   */
   open?: boolean;
   /** Unique identifier of the menu item, can be used in `getItem`,` setItem` to update a menu */
   key?: string;
@@ -100,6 +77,5 @@ export interface MenuInner extends Menu {
   _depth?: number;
   _hidden?: boolean;
   _selected?: boolean;
-  _open?: boolean;
   _aclResult?: boolean;
 }

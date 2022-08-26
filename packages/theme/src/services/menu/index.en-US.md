@@ -15,13 +15,18 @@ This is because menus it's essential part of the applications, And it can be use
 
 ### MenuService
 
-| Method | Parameter | Description |
-|--------|-----------|-------------|
-| `add` | `items: Menu[]` | Setting menu data |
-| `clear` | - | Clear menu data |
-| `resume` | `callback: Funection` | Reset menu, may need call when I18N, user acl changed |
-| `openedByUrl` | `url, recursive = false` | Set menu `_open` attribute by URL (`_open` expands the submenu) |
-| `getPathByUrl` | `url, recursive = false` | Get menu list based on url |
+| Method | Description |
+|--------|-----------|
+| `add` | Setting menu data |
+| `clear` | Clear menu data |
+| `resume` | Reset menu, may need call when I18N, user acl changed |
+| `find` | Find a menu item by `url` or `key` |
+| `getItem` | Get menu item based on `key` |
+| `getPathByUrl` | Get menu list based on url |
+| `setItem` | Set menu item |
+| `open` | Open of the menu |
+| `toggleOpen` | Toggle menu open or close |
+| `openAll` | Toggle all menu open or close |
 
 **recursive**
 
@@ -41,6 +46,7 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 | `badge` | Badget for the menu item when `group` is `true` | `number` | - |
 | `badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | - |
 | `badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
+| `open` | Whether open for the menu item | `boolean` | `false` |
 | `disabled` | Whether disable for the menu item | `boolean` | `false` |
 | `hide` | Whether hidden for the menu item | `boolean` | `false` |
 | `hideInBreadcrumb` | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | - |

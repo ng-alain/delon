@@ -21,13 +21,17 @@ describe('Service: Menu', () => {
     {
       text: 'dashboard',
       link: '/dashboard',
+      key: 'db',
+      open: false,
       children: [
-        { text: 'v1', link: '/dashboard/v1' },
+        { text: 'v1', link: '/dashboard/v1', key: 'v1' },
         { text: 'v2', link: '/dashboard/v2' }
       ]
     },
     {
       text: 'text',
+      key: 'text',
+      open: false,
       children: [{ text: 'sub text', link: '/text/sub', shortcut: true }]
     },
     { text: 'text', link: '/test', badge: 10 },
@@ -254,6 +258,8 @@ describe('Service: Menu', () => {
         srv.setItem('a', { text: 'b', badge: 10 });
         expect(srv.getItem('a')!.text).toBe('b');
         expect(srv.getItem('a')!.badge).toBe(10);
+        srv.setItem(newMenus[0], { text: 'obj' });
+        expect(srv.getItem('a')!.text).toBe('obj');
       });
       it('should be ingore update when not found key', () => {
         const newMenus = [{ text: 'a', key: 'a' }];
@@ -345,6 +351,61 @@ describe('Service: Menu', () => {
         const icon: NzSafeAny = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('img');
+      });
+    });
+
+    describe('#find', () => {
+      beforeEach(() => srv.add(deepCopy(DATA)));
+      it('via key', () => {
+        expect(srv.find({ key: 'v1' }) != null).toBe(true);
+      });
+      it('via url', () => {
+        const cb = jasmine.createSpy('callback_via_key');
+        expect(srv.find({ url: `/dashboard/v1`, cb: cb }) != null).toBe(true);
+        expect(cb).toHaveBeenCalled();
+      });
+      it('not found', () => {
+        expect(srv.find({ url: `/notfound` }) != null).toBe(false);
+      });
+      it('recursive up find', () => {
+        expect(srv.find({ url: `/dashboard/v1/1`, recursive: true }) != null).toBe(true);
+      });
+      it('recursive up find include querystring', () => {
+        expect(srv.find({ url: `/dashboard/v1/1?a=1`, recursive: true }) != null).toBe(true);
+      });
+    });
+
+    describe('#open', () => {
+      beforeEach(() => srv.add(deepCopy(DATA)));
+      it('should be working', () => {
+        expect(srv.menus[0].open).toBe(false);
+        srv.open('db');
+        expect(srv.menus[0].open).toBe(true);
+        srv.open(srv.menus[1]);
+        expect(srv.menus[0].open).toBe(false);
+        expect(srv.menus[1].open).toBe(true);
+      });
+      it('open all', () => {
+        srv.openAll(false);
+        expect(srv.menus.every(v => v.open === false)).toBe(true);
+        srv.openAll(true);
+        expect(srv.menus.every(v => v.open === true)).toBe(true);
+      });
+      it('toggle open', () => {
+        let initStatus = srv.menus[0].open;
+        srv.toggleOpen('db');
+        expect(srv.menus[0].open).toBe(!initStatus);
+      });
+      it('toggle open when strictly', () => {
+        srv.openStrictly = true;
+        const dbStatus = srv.menus[0].open;
+        const textStatus = srv.menus[1].open;
+        srv.toggleOpen('db');
+        expect(srv.menus[0].open).toBe(!dbStatus);
+        expect(srv.menus[1].open).toBe(textStatus);
+        srv.toggleOpen('text');
+        expect(srv.menus[0].open).toBe(!dbStatus);
+        expect(srv.menus[1].open).toBe(!textStatus);
       });
     });
   });
