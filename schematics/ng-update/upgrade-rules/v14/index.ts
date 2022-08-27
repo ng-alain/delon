@@ -3,7 +3,13 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import * as colors from 'ansi-colors';
 
-import { addAllowedCommonJsDependencies, addPackage, addSchematicCollections, logStart } from '../../../utils';
+import {
+  addAllowedCommonJsDependencies,
+  addAllowSyntheticDefaultImports,
+  addPackage,
+  addSchematicCollections,
+  logStart
+} from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 
 function fixSchematicCollections(context: SchematicContext): Rule {
@@ -53,6 +59,7 @@ export function v14Rule(): Rule {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);
     return chain([
+      addAllowSyntheticDefaultImports(),
       // Configuring CommonJS dependencies
       // https://angular.io/guide/build#configuring-commonjs-dependencies
       addAllowedCommonJsDependencies([]),

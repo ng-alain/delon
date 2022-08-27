@@ -3,7 +3,7 @@ import { ProjectDefinition, WorkspaceDefinition } from '@angular-devkit/core/src
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 
-import { readJSON } from './json';
+import { readJSON, writeJSON } from './json';
 
 export const BUILD_TARGET_BUILD = 'build';
 export const BUILD_TARGET_TEST = 'test';
@@ -113,6 +113,17 @@ export function removeAllowedCommonJsDependencies(key: string, projectName?: str
 
     targetOptions.allowedCommonJsDependencies = list.sort();
   });
+}
+
+export function addAllowSyntheticDefaultImports(value: boolean = true): Rule {
+  return (tree: Tree) => {
+    const json = readJSON(tree, 'tsconfig.json', 'compilerOptions');
+    if (json == null) return tree;
+    if (!json.compilerOptions) json.compilerOptions = {};
+    json.compilerOptions['allowSyntheticDefaultImports'] = value;
+    writeJSON(tree, 'tsconfig.json', json);
+    return tree;
+  };
 }
 
 export function getProjectFromWorkspace(workspace: WorkspaceDefinition, projectName: string): ProjectDefinition {
