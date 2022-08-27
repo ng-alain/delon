@@ -37,12 +37,11 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
       `source-map-explorer@DEP-0.0.0-PLACEHOLDER`,
       `@angular/language-service@DEP-0.0.0-PLACEHOLDER`,
-      `rxjs@DEP-0.0.0-PLACEHOLDER`,
       `@delon/testing@${version}`
     ],
     'devDependencies'
   );
-  addPackage(tree, [`ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`]);
+  addPackage(tree, [`rxjs@DEP-0.0.0-PLACEHOLDER`, `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`]);
 }
 
 export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {
