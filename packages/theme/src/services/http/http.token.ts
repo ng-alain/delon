@@ -31,3 +31,10 @@ export const CUSTOM_ERROR = new HttpContextToken(() => false);
  * this.http.get(`/path`, { context: new HttpContext().set(IGNORE_BASE_URL, true) }) // Request Url: /path
  */
 export const IGNORE_BASE_URL = new HttpContextToken(() => false);
+
+/**
+ * Whether to return raw response body
+ *
+ * 是否原样返回请求Body
+ */
+export const RAW_BODY = new HttpContextToken(() => false);

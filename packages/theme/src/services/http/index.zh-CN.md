@@ -183,3 +183,7 @@ this.http.post(`login`, {
 this.http.get(`/path`) // Request Url: /api/path
 this.http.get(`/path`, { context: new HttpContext().set(IGNORE_BASE_URL, true) }) // Request Url: /path
 ```
+
+### RAW_BODY
+
+是否原样返回请求Body。
