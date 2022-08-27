@@ -91,7 +91,7 @@ export function addAllowedCommonJsDependencies(items: string[], projectName?: st
     }
 
     const result = new Set<string>(...list);
-    ['ajv', 'ajv-formats'].forEach(key => result.add(key));
+    ['ajv', 'ajv-formats', 'mockjs', 'file-saver', 'extend'].forEach(key => result.add(key));
 
     targetOptions.allowedCommonJsDependencies = Array.from(result).sort();
   });
