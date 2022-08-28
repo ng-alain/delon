@@ -97,6 +97,7 @@ copyFiles() {
     # core
     "${1}src/app/core/i18n|${2}application/files/src/app/core/"
     "${1}src/app/core/net|${2}application/files/src/app/core/"
+    "${1}src/app/core/start-page.guard.ts|${2}application/files/src/app/core/"
     "${1}src/app/core/module-import-guard.ts|${2}application/files/src/app/core/"
     "${1}src/app/core/README.md|${2}application/files/src/app/core/"
     # shared
