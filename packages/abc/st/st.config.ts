@@ -11,6 +11,7 @@ export const ST_DEFAULT_CONFIG: AlainSTConfig = {
     method: 'GET',
     allInBody: false,
     lazyLoad: false,
+    ignoreParamNull: false,
     reName: { pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }
   },
   res: {

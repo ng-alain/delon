@@ -13,13 +13,18 @@ type: Service
 
 ### MenuService
 
-| 方法 | 参数 | 描述 |
-|----|----|----|
-| `add` | `items: Menu[]` | 设置菜单数据 |
-| `clear` | - | 清空菜单数据 |
-| `resume` | `callback: Funection` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
-| `openedByUrl` | `url, recursive = false` | 根据URL设置菜单 `_open` 属性（`_open`用于是否展开菜单的条件值） |
-| `getPathByUrl` | `url, recursive = false` | 根据url获取菜单列表 |
+| 方法 | 描述 |
+|----|----|
+| `add` | 设置菜单数据 |
+| `clear` | 清空菜单数据 |
+| `resume` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
+| `find` | 利用 `url` 或 `key` 查找菜单 |
+| `getItem` | 根据 `key` 获取菜单 |
+| `getPathByUrl` | 根据url获取菜单列表 |
+| `setItem` | 设置菜单值 |
+| `open` | 展开某菜单 |
+| `toggleOpen` | 切换菜单的展开或关闭 |
+| `openAll` | 展开或关闭所有菜单 |
 
 **recursive**
 
@@ -39,6 +44,7 @@ type: Service
 | `badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | - |
 | `badgeDot` | 徽标数，显示小红点 | `boolean` | - |
 | `badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
+| `open` | 是否打开菜单 | `boolean` | `false` |
 | `disabled` | 是否禁用菜单 | `boolean` | `false` |
 | `hide` | 是否隐藏菜单 | `boolean` | `false` |
 | `hideInBreadcrumb` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | - |

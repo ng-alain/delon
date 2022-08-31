@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { startPageGuard } from '@core';
 import { SimpleGuard } from '@delon/auth';
 import { environment } from '@env/environment';
 // layout
@@ -19,7 +20,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [SimpleGuard],
+    canActivate: [startPageGuard, SimpleGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘'<% if (!i18n) { %>, titleI18n: 'dashboard'<% } %> } },

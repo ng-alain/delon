@@ -3,7 +3,7 @@ import { ProjectDefinition, WorkspaceDefinition } from '@angular-devkit/core/src
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 
-import { readJSON } from './json';
+import { readJSON, writeJSON } from './json';
 
 export const BUILD_TARGET_BUILD = 'build';
 export const BUILD_TARGET_TEST = 'test';
@@ -91,7 +91,7 @@ export function addAllowedCommonJsDependencies(items: string[], projectName?: st
     }
 
     const result = new Set<string>(...list);
-    ['ajv', 'ajv-formats'].forEach(key => result.add(key));
+    ['ajv', 'ajv-formats', 'mockjs', 'file-saver', 'extend'].forEach(key => result.add(key));
 
     targetOptions.allowedCommonJsDependencies = Array.from(result).sort();
   });
@@ -113,6 +113,17 @@ export function removeAllowedCommonJsDependencies(key: string, projectName?: str
 
     targetOptions.allowedCommonJsDependencies = list.sort();
   });
+}
+
+export function addAllowSyntheticDefaultImports(value: boolean = true): Rule {
+  return (tree: Tree) => {
+    const json = readJSON(tree, 'tsconfig.json', 'compilerOptions');
+    if (json == null) return tree;
+    if (!json.compilerOptions) json.compilerOptions = {};
+    json.compilerOptions['allowSyntheticDefaultImports'] = value;
+    writeJSON(tree, 'tsconfig.json', json);
+    return tree;
+  };
 }
 
 export function getProjectFromWorkspace(workspace: WorkspaceDefinition, projectName: string): ProjectDefinition {
@@ -155,4 +166,15 @@ export function addStylePreprocessorOptionsToAllProject(workspace: WorkspaceDefi
     includePaths.push(`node_modules/`);
     build.options.stylePreprocessorOptions['includePaths'] = includePaths;
   });
+}
+
+export function addSchematicCollections(workspace: WorkspaceDefinition): void {
+  const cli = workspace.extensions.cli as Record<string, unknown>;
+  if (cli && cli.schematicCollections) return;
+  if (cli == null) workspace.extensions.cli = {};
+  let schematicCollections = workspace.extensions.cli['schematicCollections'] as string[];
+  if (!Array.isArray(schematicCollections)) schematicCollections = [];
+  if (!schematicCollections.includes(`@schematics/angular`)) schematicCollections.push(`@schematics/angular`);
+  if (!schematicCollections.includes(`ng-alain`)) schematicCollections.push(`ng-alain`);
+  workspace.extensions.cli['schematicCollections'] = schematicCollections;
 }

@@ -4,6 +4,16 @@ subtitle: 深获取、拷贝、合并、延迟、断言
 type: Tools
 ---
 
+## omit
+
+忽略 `obj` 指定属性。
+
+```ts
+omit({ a: 1, b: 2, c: 3 }, 'a') // { b: 2, c: 3 }
+omit({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { b: 2 }
+omit({ a: 1, b: 2 }, key => key === 'a') // { a: 1 }
+```
+
 ## deepGet
 
 类似 `_.get`，根据 `path` 获取安全值。

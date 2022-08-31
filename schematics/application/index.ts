@@ -19,10 +19,12 @@ import { updateWorkspace } from '@schematics/angular/utility/workspace';
 import { getLangData } from '../core/lang.config';
 import {
   addAllowedCommonJsDependencies,
+  addAllowSyntheticDefaultImports,
   addAssetsToTarget,
   addHeadStyle,
   addHtmlToBody,
   addPackage,
+  addSchematicCollections,
   addStylePreprocessorOptionsToAllProject,
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
@@ -89,6 +91,7 @@ function fixAngularJson(options: ApplicationOptions): Rule {
     }
 
     addStylePreprocessorOptionsToAllProject(workspace);
+    addSchematicCollections(workspace);
   });
 }
 
@@ -353,6 +356,7 @@ export default function (options: ApplicationOptions): Rule {
       // Configuring CommonJS dependencies
       // https://angular.io/guide/build#configuring-commonjs-dependencies
       addAllowedCommonJsDependencies([]),
+      addAllowSyntheticDefaultImports(),
       // ci
       addRunScriptToPackageJson(),
       addPathsToTsConfig(),

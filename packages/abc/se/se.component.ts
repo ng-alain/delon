@@ -23,6 +23,7 @@ import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SEContainerComponent } from './se-container.component';
@@ -43,6 +44,7 @@ let nextUniqueId = 0;
     '[class.ant-form-item-with-help]': 'showErr'
   },
   preserveWhitespaces: false,
+  providers: [NzFormStatusService],
   animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -120,6 +122,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   constructor(
     el: ElementRef,
     @Optional() @Host() private parent: SEContainerComponent,
+    private statusSrv: NzFormStatusService,
     private rep: ResponsiveService,
     private ren: Renderer2,
     private cdr: ChangeDetectorRef
@@ -192,6 +195,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
       const err = this.errorData[key];
       this._error = err != null ? err : this.errorData[''] || '';
     }
+
+    this.statusSrv.formStatusChanges.next({ status: this.invalid ? 'error' : '', hasFeedback: false });
 
     this.cdr.detectChanges();
   }
