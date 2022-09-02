@@ -217,7 +217,7 @@ describe('st: column-source', () => {
     });
     describe('[className]', () => {
       it('should be custom class name', () => {
-        page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', '_className');
+        page.expectValue([{ title: '', className: 'aa' }], 'aa', '_className');
       });
       it('should be auto text-right when type is number', () => {
         page.expectValue([{ title: '', type: 'number' }], 'text-right', '_className');
