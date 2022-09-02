@@ -440,16 +440,19 @@ export class STColumnSource {
       }
       item._isTruncate = !!item.width && options.widthMode.strictBehavior === 'truncate' && item.type !== 'img';
       // className
-      if (!item.className) {
-        item.className = (
+      item._className = [
+        (
           {
             number: 'text-right',
             currency: 'text-right',
             date: 'text-center'
           } as NzSafeAny
-        )[item.type!];
-      }
-      item._className = item.className || (item._isTruncate ? 'text-truncate' : null);
+        )[item.type!],
+        item._isTruncate ? 'text-truncate' : null,
+        item.className
+      ]
+        .filter(w => !!w)
+        .join(' ');
       // width
       if (typeof item.width === 'number') {
         item._width = item.width;

@@ -217,16 +217,16 @@ describe('st: column-source', () => {
     });
     describe('[className]', () => {
       it('should be custom class name', () => {
-        page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', 'className');
+        page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', '_className');
       });
       it('should be auto text-right when type is number', () => {
-        page.expectValue([{ title: '', type: 'number' }], 'text-right', 'className');
+        page.expectValue([{ title: '', type: 'number' }], 'text-right', '_className');
       });
       it('should be auto text-right when type is currency', () => {
-        page.expectValue([{ title: '', type: 'currency' }], 'text-right', 'className');
+        page.expectValue([{ title: '', type: 'currency' }], 'text-right', '_className');
       });
       it('should be auto text-center when type is date', () => {
-        page.expectValue([{ title: '', type: 'date' }], 'text-center', 'className');
+        page.expectValue([{ title: '', type: 'date' }], 'text-center', '_className');
       });
     });
     describe('[iif]', () => {
