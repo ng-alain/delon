@@ -1,3 +1,4 @@
+import { JsonObject } from '@angular-devkit/core';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
@@ -19,6 +20,139 @@ describe('Schematic: ng-update: v14Rule', () => {
   }
 
   it(`should be working`, async () => {
+    tree.overwrite(
+      '/angular.json',
+      `{
+      "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+      "version": 1,
+      "newProjectRoot": "projects",
+      "projects": {
+        "ng-alain": {
+          "projectType": "application",
+          "root": "",
+          "sourceRoot": "src",
+          "prefix": "app",
+          "schematics": {
+            "@schematics/angular:component": {
+              "style": "less"
+            },
+            "@schematics/angular:application": {
+              "strict": true
+            }
+          },
+          "architect": {
+            "build": {
+              "builder": "@angular-devkit/build-angular:browser",
+              "options": {
+                "outputPath": "dist",
+                "index": "src/index.html",
+                "main": "src/main.ts",
+                "tsConfig": "tsconfig.app.json",
+                "polyfills": "src/polyfills.ts",
+                "assets": ["src/assets", "src/favicon.ico"],
+                "styles": ["src/styles.less"],
+                "scripts": [],
+                "allowedCommonJsDependencies": ["@antv/g2", "ajv", "ajv-formats", "date-fns", "file-saver"],
+                "stylePreprocessorOptions": {
+                  "includePaths": [
+                    "node_modules/"
+                  ]
+                }
+              },
+              "configurations": {
+                "production": {
+                  "fileReplacements": [
+                    {
+                      "replace": "src/environments/environment.ts",
+                      "with": "src/environments/environment.prod.ts"
+                    }
+                  ],
+                  "outputHashing": "all",
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "2mb",
+                      "maximumError": "6mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "6kb",
+                      "maximumError": "10kb"
+                    }
+                  ]
+                },
+                "development": {
+                  "buildOptimizer": false,
+                  "optimization": false,
+                  "vendorChunk": true,
+                  "extractLicenses": false,
+                  "sourceMap": true,
+                  "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production"
+            },
+            "serve": {
+              "builder": "@angular-devkit/build-angular:dev-server",
+              "options": {
+                "browserTarget": "ng-alain:build",
+                "proxyConfig": "proxy.conf.js"
+              },
+              "configurations": {
+                "production": {
+                  "browserTarget": "ng-alain:build:production"
+                },
+                "development": {
+                  "browserTarget": "ng-alain:build:development"
+                }
+              },
+              "defaultConfiguration": "development"
+            },
+            "extract-i18n": {
+              "builder": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "browserTarget": "ng-alain:build"
+              }
+            },
+            "test": {
+              "builder": "@angular-devkit/build-angular:karma",
+              "options": {
+                "main": "src/test.ts",
+                "polyfills": "src/polyfills.ts",
+                "karmaConfig": "karma.conf.js",
+                "tsConfig": "tsconfig.spec.json",
+                "scripts": [],
+                "styles": [],
+                "assets": ["src/assets"]
+              }
+            },
+            "lint": {
+              "builder": "@angular-eslint/builder:lint",
+              "options": {
+                "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+              }
+            },
+            "e2e": {
+              "builder": "@angular-devkit/build-angular:protractor",
+              "options": {
+                "protractorConfig": "e2e/protractor.conf.js",
+                "devServerTarget": "ng-alain:serve"
+              },
+              "configurations": {
+                "production": {
+                  "devServerTarget": "ng-alain:serve:production"
+                }
+              }
+            }
+          }
+        }
+      },
+      "defaultProject": "ng-alain",
+      "cli": {
+        "packageManager": "yarn"
+      }
+    }`
+    );
     tree.create(
       `.eslintrc.js`,
       `
@@ -151,7 +285,7 @@ describe('Schematic: ng-update: v14Rule', () => {
       `
     );
     await runMigration();
-    const content = tree.readContent('angular.json');
-    expect(content).toContain(`schematicCollections`);
+    const content = tree.readJson('angular.json') as JsonObject;
+    expect((content.cli as { schematicCollections: string[] }).schematicCollections).toContain(`ng-alain`);
   });
 });
