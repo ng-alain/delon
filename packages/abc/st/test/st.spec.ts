@@ -1388,17 +1388,16 @@ describe('abc: st', () => {
             .expectElCount(`td.text-truncate`, context.comp._data.length)
             .asyncEnd();
         }));
-        // // TODO: https://github.com/ng-alain/ng-alain/issues/2295
-        // it('should be ingore add text-truncate class when className is non-empty', fakeAsync(() => {
-        //   context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
-        //   page
-        //     .cd()
-        //     .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
-        //     .expectElCount(`.st__width-strict`, 1)
-        //     .expectElCount(`.text-truncate`, context.comp._data.length)
-        //     .expectElCount(`td.aaaa`, context.comp._data.length)
-        //     .asyncEnd();
-        // }));
+        it('should be ingore add text-truncate class when className is non-empty', fakeAsync(() => {
+          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          page
+            .cd()
+            .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
+            .expectElCount(`.st__width-strict`, 1)
+            .expectElCount(`.text-truncate`, context.comp._data.length)
+            .expectElCount(`td.aaaa`, context.comp._data.length)
+            .asyncEnd();
+        }));
         it('should be ingore add text-truncate class when type is img', fakeAsync(() => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
           page
