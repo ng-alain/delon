@@ -237,7 +237,10 @@ describe('st: column-source', () => {
         expect(obj['text-truncate']).toBe(true);
       });
       it('should be remove duplicates', () => {
-        const res = srv.process([{ title: '', type: 'date', className: 'text-center' }], options).columns;
+        const res = srv.process(
+          [{ title: '', type: 'date', className: ['text-center', 'text-center'] }],
+          options
+        ).columns;
         expect((res[0]._className as string[]).length).toBe(1);
         expect(res[0]._className).toContain('text-center');
       });

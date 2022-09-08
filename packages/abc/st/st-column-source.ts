@@ -383,16 +383,18 @@ export class STColumnSource {
       return;
     }
 
-    if (typeof rawClassName === 'object') {
+    const rawClassNameIsArray = Array.isArray(rawClassName);
+    if (!rawClassNameIsArray && typeof rawClassName === 'object') {
       const objClassNames: NgClassInterface = rawClassName;
       builtInClassNames.forEach(key => (objClassNames[key] = true));
       item._className = objClassNames;
       return;
     }
 
-    const arrayClassNames = Array.isArray(rawClassName) ? Array.from(rawClassName as string[]) : [rawClassName];
+    const arrayClassNames = rawClassNameIsArray ? Array.from(rawClassName as string[]) : [rawClassName];
     arrayClassNames.splice(0, 0, ...builtInClassNames);
     item._className = [...new Set(arrayClassNames)].filter(w => !!w);
+    console.log(arrayClassNames);
   }
 
   process(
