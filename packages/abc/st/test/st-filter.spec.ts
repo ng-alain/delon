@@ -151,4 +151,20 @@ describe('abc: st-filter', () => {
     f.custom = page.context.tpl;
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-custom', 1).asyncEnd();
   }));
+  it('#showOPArea', fakeAsync(() => {
+    const f = page.context.columns[0].filter!;
+    f.type = 'custom';
+    f.custom = page.context.tpl;
+    f.showOPArea = false;
+    page
+      .cd()
+      .click(`.ant-table-filter-trigger`)
+      .cd()
+      .expectElCount('.st__filter-custom', 1)
+      .expectElCount('.close_in_tpl', 1)
+      .clickEl('.close_in_tpl')
+      .cd(1000)
+      .expectElCount('.close_in_tpl', 0)
+      .asyncEnd();
+  }));
 });

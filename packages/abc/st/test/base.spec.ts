@@ -420,7 +420,10 @@ export class PageObject<T extends TestComponent> {
       (error)="error()"
     >
     </st>
-    <ng-template #tpl><span>In tpl</span></ng-template>
+    <ng-template #tpl let-handle="handle">
+      <span>In tpl</span>
+      <a class="close_in_tpl" (click)="handle.close()">close</a>
+    </ng-template>
   `
 })
 export class TestComponent {

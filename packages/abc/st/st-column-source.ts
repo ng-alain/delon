@@ -225,6 +225,8 @@ export class STColumnSource {
           ...res.date
         };
         break;
+      case 'custom':
+        break;
       default:
         fixMenus = false;
         break;
