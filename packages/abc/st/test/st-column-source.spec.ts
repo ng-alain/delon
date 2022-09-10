@@ -3,7 +3,7 @@
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STColumnSource, STColumnSourceProcessOptions } from '../st-column-source';
 import { STRowSource } from '../st-row.directive';
@@ -217,16 +217,32 @@ describe('st: column-source', () => {
     });
     describe('[className]', () => {
       it('should be custom class name', () => {
-        page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', 'className');
+        page.expectValue([{ title: '', className: 'aa' }], 'aa', '_className', true);
       });
       it('should be auto text-right when type is number', () => {
-        page.expectValue([{ title: '', type: 'number' }], 'text-right', 'className');
+        page.expectValue([{ title: '', type: 'number' }], 'text-right', '_className', true);
       });
       it('should be auto text-right when type is currency', () => {
-        page.expectValue([{ title: '', type: 'currency' }], 'text-right', 'className');
+        page.expectValue([{ title: '', type: 'currency' }], 'text-right', '_className', true);
       });
       it('should be auto text-center when type is date', () => {
-        page.expectValue([{ title: '', type: 'date' }], 'text-center', 'className');
+        page.expectValue([{ title: '', type: 'date' }], 'text-center', '_className', true);
+      });
+      it('should be working when className is object', () => {
+        const res = srv.process([{ title: '', width: 10, type: 'number', className: { a: true, b: false } }], {
+          widthMode: { strictBehavior: 'truncate' },
+          safeType: 'html'
+        }).columns;
+        const obj = res[0]._className as NgClassInterface;
+        expect(obj['text-truncate']).toBe(true);
+      });
+      it('should be remove duplicates', () => {
+        const res = srv.process(
+          [{ title: '', type: 'date', className: ['text-center', 'text-center'] }],
+          options
+        ).columns;
+        expect((res[0]._className as string[]).length).toBe(1);
+        expect(res[0]._className).toContain('text-center');
       });
     });
     describe('[iif]', () => {
@@ -729,10 +745,14 @@ describe('st: column-source', () => {
   });
 
   class PageObject {
-    expectValue(columns: STColumn[], value: any, path: string = 'indexKey'): this {
+    expectValue(columns: STColumn[], value: any, path: string = 'indexKey', contain: boolean = false): this {
       const newColumns = srv.process(columns, options).columns;
       expect(newColumns.length).toBeGreaterThan(0);
-      expect(deepGet(newColumns[0], path)).toBe(value);
+      if (contain) {
+        expect(deepGet(newColumns[0], path)).toContain(value);
+      } else {
+        expect(deepGet(newColumns[0], path)).toBe(value);
+      }
       return this;
     }
     expectBtnValue(columns: STColumn[], value: any, path: string = 'indexKey'): this {

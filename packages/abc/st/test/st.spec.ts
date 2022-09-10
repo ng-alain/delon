@@ -1394,7 +1394,7 @@ describe('abc: st', () => {
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`.text-truncate`, 0)
+            .expectElCount(`.text-truncate`, context.comp._data.length)
             .expectElCount(`td.aaaa`, context.comp._data.length)
             .asyncEnd();
         }));
