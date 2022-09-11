@@ -82,7 +82,7 @@ const ICONS = [
         </nz-dropdown-menu>
       </ng-template>
       <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
-      <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+      <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
     </layout-default>
     <setting-drawer></setting-drawer>
   `,
@@ -216,6 +216,10 @@ export class DevLayoutComponent implements OnInit {
   toggleLang(): void {
     this.lang = this.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
     this.i18n.use(this.lang);
+  }
+
+  attach(v: unknown): void {
+    console.log(v);
   }
 
   ngOnInit(): void {

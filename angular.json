@@ -75,7 +75,9 @@
               "ajv",
               "file-saver",
               "ajv-formats",
-              "date-fns"
+              "date-fns",
+              "extend",
+              "aos"
             ]
           },
           "configurations": {
