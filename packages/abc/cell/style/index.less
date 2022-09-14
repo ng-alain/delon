@@ -1,0 +1,49 @@
+@import '../../../theme/theme-default.less';
+@cell-prefix: ~'.cell';
+
+@{cell-prefix} {
+  display: inline-flex;
+
+  &__has-unit {
+    align-items: baseline;
+  }
+
+  &__default {
+    color: @cell-default-color;
+  }
+
+  &__primary {
+    color: @primary-color;
+  }
+
+  &__success {
+    color: @success-color;
+  }
+
+  &__danger {
+    color: @error-color;
+  }
+
+  &__warning {
+    color: @warning-color;
+  }
+
+  &__large {
+    font-size: @cell-large;
+  }
+
+  &__small {
+    font-size: @cell-small;
+  }
+
+  .img {
+    vertical-align: middle;
+    border-radius: 4px;
+  }
+
+  .unit {
+    margin-left: 2px;
+    color: @cell-unit-color;
+    font-size: @cell-unit-font-size;
+  }
+}
