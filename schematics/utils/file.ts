@@ -18,6 +18,16 @@ export function readContent(tree: Tree, filePath: string): string {
   return tree.read(filePath).toString('utf-8');
 }
 
+export function findFile(tree: Tree, fileName: string): string | undefined {
+  let res: string = undefined;
+  tree.visit(path => {
+    if (res == null && path.endsWith(fileName)) {
+      res = path;
+    }
+  });
+  return res;
+}
+
 export interface OverWriteFileOptions {
   tree: Tree;
   filePath: string;

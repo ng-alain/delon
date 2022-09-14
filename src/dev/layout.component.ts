@@ -218,10 +218,6 @@ export class DevLayoutComponent implements OnInit {
     this.i18n.use(this.lang);
   }
 
-  attach(v: unknown): void {
-    console.log(v);
-  }
-
   ngOnInit(): void {
     this.menuSrv.add(this.menus);
   }

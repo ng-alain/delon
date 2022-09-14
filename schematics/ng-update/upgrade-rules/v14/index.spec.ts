@@ -1,6 +1,7 @@
 import { JsonObject } from '@angular-devkit/core';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
+import { findFile } from '../../../utils/file';
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
 describe('Schematic: ng-update: v14Rule', () => {
@@ -287,5 +288,18 @@ describe('Schematic: ng-update: v14Rule', () => {
     await runMigration();
     const content = tree.readJson('angular.json') as JsonObject;
     expect((content.cli as { schematicCollections: string[] }).schematicCollections).toContain(`ng-alain`);
+  });
+
+  it('#fixReuseTabActiviteInHtml', async () => {
+    const layoutPath = findFile(tree, 'basic/basic.component.ts')!;
+    tree.overwrite(
+      layoutPath,
+      `
+    <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+    `
+    );
+    await runMigration();
+    const content = tree.get(layoutPath)!.content.toString('utf8');
+    expect(content).toContain(`(attach)`);
   });
 });
