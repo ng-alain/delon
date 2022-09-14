@@ -82,7 +82,7 @@ const ICONS = [
         </nz-dropdown-menu>
       </ng-template>
       <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
-      <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+      <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
     </layout-default>
     <setting-drawer></setting-drawer>
   `,

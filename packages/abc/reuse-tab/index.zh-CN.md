@@ -36,7 +36,7 @@ alainProvides.push({
 
 ```html
 <reuse-tab #reuseTab></reuse-tab>
-<router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
+<router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
 ```
 
 > **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
