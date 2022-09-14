@@ -629,21 +629,25 @@ export interface STColumnFilter<T extends STData = any> {
 
 export interface STColumnFilterHandle {
   /**
-   * Close pannel
+   * Close pannel, if `result` is set, it will trigger confirm or reset action
    *
-   * 关闭面板
+   * 关闭面板，当指定 `result` 时会触发确认或重置动作
    */
-  close: () => void;
+  close: (result?: boolean) => void;
 
   /**
-   * 触发确认
+   * Trigger confirm (You can call `close` to close the panel)
+   *
+   * 触发确认（可以调用 `close` 来关闭面板）
    */
-  confirm: () => void;
+  confirm: () => STColumnFilterHandle;
 
   /**
-   * 触发重置
+   * Trigger reset (You can call `close` to close the panel)
+   *
+   * 触发重置（可以调用 `close` 来关闭面板）
    */
-  reset: () => void;
+  reset: () => STColumnFilterHandle;
 }
 
 export interface STColumnFilterMenu {

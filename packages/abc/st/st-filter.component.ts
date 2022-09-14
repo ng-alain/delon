@@ -149,16 +149,20 @@ export class STFilterComponent {
     this.n.emit(item);
   }
 
-  close(): void {
+  close(result?: boolean): void {
+    if (result != null) this.handle.emit(result);
+
     this.visible = false;
     this.cdr.detectChanges();
   }
 
-  confirm(): void {
+  confirm(): this {
     this.handle.emit(true);
+    return this;
   }
 
-  reset(): void {
+  reset(): this {
     this.handle.emit(false);
+    return this;
   }
 }

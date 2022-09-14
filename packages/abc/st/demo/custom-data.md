@@ -159,12 +159,7 @@ export class DemoComponent implements OnInit {
   close(f: STColumnFilter, handle: STColumnFilterHandle, result: boolean): void {
     this.msg.info(`Process result: ${result}${result ? '(only name 2)' : ''}`);
     f.menus = [{ value: result ? 'name 2' : null }];
-    if (result) {
-      handle.confirm();
-    } else {
-      handle.reset();
-    }
-    handle.close();
+    handle.close(result);
   }
 
   change(e: STChange): void {
