@@ -80,14 +80,14 @@ export class Cell implements OnChanges, OnDestroy {
   res?: CellTextResult;
   showDefault = false;
 
-  @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
-  @Input() size?: 'large' | 'small' | 'default';
   @Input() value?: unknown;
   @Input() default = '-';
   @Input() defaultCondition?: unknown = null;
   @Input() options?: CellOptions;
   @Input() @InputBoolean() truncate = false;
   @Input() @InputBoolean() loading = false;
+  @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() size?: 'large' | 'small';
 
   get safeOpt(): CellOptions {
     return this.res?.options!;

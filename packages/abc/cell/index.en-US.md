@@ -1,18 +1,59 @@
 ---
-type: Other
-title: auto-focus
-subtitle: Auto focus
+type: CURD
+title: cell
+subtitle: Cell Data
 cols: 1
-module: import { AutoFocusModule } from '@delon/abc/auto-focus';
+order: 2
+module: import { CellModule } from '@delon/abc/cell';
 ---
 
-Allows to focus HTML-element right after its appearance, By default, it will take effect for `input` and `textarea` with `[autofocus="autofocus"]`.
+Cell formatting is supported for multiple data types.
 
 ## API
 
-### [auto-focus]
+### [cell]
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[enabled]` | Whether enabled of auto focus | `boolean` | `true` |
-| `[delay]` | Delay of the focus (unit: ms) | `number` | `300` |
+| `[value]` | Value of the cell | `unknown` | - |
+| `[options]` | Option of the cell | `CellOptions` | - |
+| `[default]` | Default value of the cell | `string` | `-` |
+| `[defaultCondition]` | Default value condition | `unknown` | `null` |
+| `[truncate]` | Whether truncate text | `boolean` | `false` |
+| `[loading]` | Whether loading | `boolean` | `false` |
+| `[type]` | Type of the cell | `primary,success,danger,warning` | - |
+| `[size]` | Size of the cell | `large,small` | - |
+
+
+### CellOptions
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[type]` | Render type of the cell | - | - |
+| `[tooltip]` | Text popup tip  | `string` | - |
+| `[mask]` | Format mask, [Document](https://ng-alain.com/util/format/en#formatMask) | `string, FormatMaskOption` | - |
+| `[widget]` | Widget config | `{key?: string, data?: string}` | - |
+| `[date]` | Date config | `{format?: string}` | - |
+| `[mega]` | Large number format filter, [Document](https://ng-alain.com/util/format/en#mega) | `CurrencyMegaOptions` | - |
+| `[currency]` | Currency config | `CurrencyFormatOptions` | - |
+| `[boolean]` | Boolean config | `YNOptions` | - |
+| `[img]` | Image config | `{ size?: number }` | - |
+| `[link]` | Link config | `{ url?: string; target?: string }` | - |
+| `[html]` | HTML config | `{ safe?: string }` | - |
+| `[badge]` | Badge config | `{ data?: CellBadge }` | - |
+| `[tag]` | Tag config | `{ data?: CellTag }` | - |
+
+**Type**
+
+- `string` String
+- `number` Number
+- `mega` Large number format filter, [Document](https://ng-alain.com/util/format/en#mega)
+- `currency` Currency
+- `boolean` Boolean
+- `date` Date
+- `img` Image
+- `link` Link
+- `html` HTML
+- `badge` Badge
+- `tag` Tag
+- `widget` Custom widget

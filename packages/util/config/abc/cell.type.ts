@@ -1,5 +1,6 @@
 import type { YNOptions } from '@delon/theme';
-import type { CurrencyFormatOptions } from '@delon/util/format';
+
+import type { CurrencyFormatOptions } from '../../format/currency.types';
 
 export interface AlainCellConfig {
   /**
