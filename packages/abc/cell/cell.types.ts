@@ -2,7 +2,12 @@ import type { Type } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
 import type { Observable } from 'rxjs';
 
-import type { CurrencyFormatOptions, CurrencyMegaOptions, FormatMaskOption } from '@delon/util/format';
+import type {
+  CurrencyCNYOptions,
+  CurrencyFormatOptions,
+  CurrencyMegaOptions,
+  FormatMaskOption
+} from '@delon/util/format';
 import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
 export interface CellTextUnit {
@@ -34,6 +39,7 @@ export type CellType =
   | 'number'
   | 'mega'
   | 'currency'
+  | 'cny'
   | 'boolean'
   | 'date'
   | 'img'
@@ -84,6 +90,13 @@ export interface CellOptions {
    * 货币
    */
   currency?: CurrencyFormatOptions;
+
+  /**
+   * Converted into RMB notation
+   *
+   * 转化成人民币表示法
+   */
+  cny?: CurrencyCNYOptions;
 
   /**
    * 布尔

@@ -17,7 +17,7 @@ import type {
   CellType,
   CellWidget,
   CellWidgetFn
-} from './types';
+} from './cell.types';
 
 @Injectable({ providedIn: 'root' })
 export class CellService {
@@ -40,6 +40,12 @@ export class CellService {
       type: 'fn',
       ref: (value, opt) => {
         return { text: this.currency.format(value as number, opt.currency) };
+      }
+    },
+    cny: {
+      type: 'fn',
+      ref: (value, opt) => {
+        return { text: this.currency.cny(value as number, opt.cny) };
       }
     },
     boolean: {

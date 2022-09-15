@@ -50,6 +50,32 @@ export interface AlainCellConfig {
   };
 
   /**
+   * Converted into RMB notation
+   *
+   * 转化成人民币表示法
+   */
+  cny?: {
+    /**
+     * The starting unit of the value, `yuan` means 元, `cent` means 分, default: `yuan`
+     *
+     * 值的起始单位，`yuan` 元，`cent` 分，默认：`yuan`
+     */
+    startingUnit?: 'yuan' | 'cent';
+    /**
+     * Whether to return to uppercase notation, default: `true`
+     *
+     * 是否返回大写表示法，默认：`true`
+     */
+    inWords?: boolean;
+    /**
+     * Specify negative sign, default: `negative`
+     *
+     * 指定负数符号，默认：`负`
+     */
+    minusSymbol?: string;
+  };
+
+  /**
    * 布尔
    */
   boolean?: {

@@ -20,8 +20,8 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
-import { CellService } from './service';
-import type { CellOptions, CellTextResult, CellWidgetData } from './types';
+import { CellService } from './cell.service';
+import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
 
 @Component({
   selector: '[cell]',
@@ -73,7 +73,7 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Cell implements OnChanges, OnDestroy {
+export class CellComponent implements OnChanges, OnDestroy {
   static ngAcceptInputType_truncate: BooleanInput;
   static ngAcceptInputType_loading: BooleanInput;
 
@@ -132,7 +132,7 @@ export class Cell implements OnChanges, OnDestroy {
     el.nativeElement.dataset.type = this.safeOpt.type;
   }
 
-  ngOnChanges(changes: { [p in keyof Cell]?: SimpleChange }): void {
+  ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
     if (changes.value) {
       this.destroy$?.unsubscribe();
       this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {

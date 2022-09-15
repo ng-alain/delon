@@ -49,6 +49,7 @@ Cell formatting is supported for multiple data types.
 - `number` Number
 - `mega` Large number format filter, [Document](https://ng-alain.com/util/format/en#mega)
 - `currency` Currency
+- `cny` Converted into RMB notation
 - `boolean` Boolean
 - `date` Date
 - `img` Image, support large image preview

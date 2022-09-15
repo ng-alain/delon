@@ -48,6 +48,7 @@ module: import { CellModule } from '@delon/abc/cell';
 - `number` 数字
 - `mega` 大数据格式化
 - `currency` 货币
+- `cny` 转化成人民币表示法
 - `boolean` 布尔
 - `date` 日期
 - `img` 图像，支持大图预览

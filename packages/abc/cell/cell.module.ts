@@ -7,14 +7,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { Cell } from './cell.component';
-import { CellHost } from './host.directive';
+import { CellHostDirective } from './cell-host.directive';
+import { CellComponent } from './cell.component';
 
-const COMPS = [Cell];
+const COMPS = [CellComponent];
 
 @NgModule({
   imports: [CommonModule, NzBadgeModule, NzTagModule, NzToolTipModule, NzIconModule, NzImageModule],
-  declarations: [...COMPS, CellHost],
+  declarations: [...COMPS, CellHostDirective],
   exports: COMPS
 })
 export class CellModule {}

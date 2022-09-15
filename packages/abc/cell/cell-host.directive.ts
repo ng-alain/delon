@@ -1,10 +1,10 @@
 import { Directive, Input, OnInit, Type, ViewContainerRef } from '@angular/core';
 
-import { CellService } from './service';
-import { CellWidgetData } from './types';
+import { CellService } from './cell.service';
+import { CellWidgetData } from './cell.types';
 
 @Directive({ selector: '[cell-widget-host]' })
-export class CellHost implements OnInit {
+export class CellHostDirective implements OnInit {
   @Input() data!: CellWidgetData;
 
   constructor(private srv: CellService, private viewContainerRef: ViewContainerRef) {}

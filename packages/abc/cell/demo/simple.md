@@ -34,9 +34,21 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       </div>
       <div nz-col nzSpan="8"> mask => <span cell value="15900000000" [options]="{ mask: '999****9999' }"></span> </div>
       <div nz-col nzSpan="8"> currency => <span cell value="100000" [options]="{ type: 'currency' }"></span> </div>
+      <div nz-col nzSpan="8"> cny => <span cell value="100000" [options]="{ type: 'cny' }"></span> </div>
       <div nz-col nzSpan="8">
         img =>
         <span cell value="https://randomuser.me/api/portraits/thumb/women/46.jpg" [options]="{ type: 'img' }"></span>
+      </div>
+      <div nz-col nzSpan="8">
+        img list =>
+        <span
+          cell
+          [value]="[
+            'https://randomuser.me/api/portraits/thumb/women/46.jpg',
+            'https://randomuser.me/api/portraits/thumb/women/47.jpg'
+          ]"
+          [options]="{ type: 'img' }"
+        ></span>
       </div>
       <div nz-col nzSpan="8">
         link =>
