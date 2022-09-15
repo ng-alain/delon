@@ -138,8 +138,8 @@ export class CellComponent implements OnChanges, OnDestroy {
       this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
         this.res = res;
         this.showDefault = this.value == this.defaultCondition;
-        this._text = res?.result?.text ?? this.default ?? '';
-        this._unit = res?.result?.unit;
+        this._text = res.result.text ?? '';
+        this._unit = res.result.unit;
         this.cdr.detectChanges();
         this.setClass();
       });

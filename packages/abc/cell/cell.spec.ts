@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { createTestContext } from '@delon/testing';
+import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
 import { NzImageService } from 'ng-zorro-antd/image';
 
@@ -32,6 +32,7 @@ describe('abc: cell', () => {
 
   describe('', () => {
     beforeEach(moduleAction);
+    afterEach(() => cleanCdkOverlayHtml());
 
     describe('', () => {
       beforeEach(() => {
@@ -52,6 +53,7 @@ describe('abc: cell', () => {
           page.update('1234', { mask: '*99*' }).check('*23*');
         });
         it('is number', () => {
+          page.update(100).check('100');
           page.update(1000, { type: 'number' }).check('1000');
         });
         it('is boolean', () => {
@@ -135,13 +137,17 @@ describe('abc: cell', () => {
           page
             .update('1', { badge: { data: { '1': { text: 'A' } } } })
             .check('A')
-            .count('.ant-badge-status-default', 1);
+            .count('.ant-badge-status-default', 1)
+            .update('2', {})
+            .check('2');
         });
         it('is tag', () => {
           page
             .update('1', { tag: { data: { '1': { text: 'A', color: '#f50' } } } })
             .check('A')
-            .count('.ant-tag-has-color', 1);
+            .count('.ant-tag-has-color', 1)
+            .update('2', {})
+            .check('2');
         });
         describe('is widget', () => {
           it('shoule be working', () => {
@@ -162,7 +168,7 @@ describe('abc: cell', () => {
       });
     });
 
-    xdescribe('[property]', () => {
+    describe('[property]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestComponent));
         page = new PageObject();
