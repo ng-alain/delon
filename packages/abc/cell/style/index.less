@@ -36,6 +36,12 @@
     font-size: @cell-small;
   }
 
+  &[data-type="img"] {
+    .img:not(:last-child) {
+      margin-right: @cell-img-space;
+    }
+  }
+
   .img {
     vertical-align: middle;
     border-radius: 4px;

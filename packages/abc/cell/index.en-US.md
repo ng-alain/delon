@@ -37,7 +37,7 @@ Cell formatting is supported for multiple data types.
 | `[mega]` | Large number format filter, [Document](https://ng-alain.com/util/format/en#mega) | `CurrencyMegaOptions` | - |
 | `[currency]` | Currency config | `CurrencyFormatOptions` | - |
 | `[boolean]` | Boolean config | `YNOptions` | - |
-| `[img]` | Image config | `{ size?: number }` | - |
+| `[img]` | Image config, support large image preview | `{ size?: number; big?: boolean }` | - |
 | `[link]` | Link config | `{ url?: string; target?: string }` | - |
 | `[html]` | HTML config | `{ safe?: string }` | - |
 | `[badge]` | Badge config | `{ data?: CellBadge }` | - |
@@ -51,7 +51,7 @@ Cell formatting is supported for multiple data types.
 - `currency` Currency
 - `boolean` Boolean
 - `date` Date
-- `img` Image
+- `img` Image, support large image preview
 - `link` Link
 - `html` HTML
 - `badge` Badge

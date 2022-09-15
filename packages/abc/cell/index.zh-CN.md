@@ -36,7 +36,7 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[mega]` | 大数据格式化配置 | `CurrencyMegaOptions` | - |
 | `[currency]` | 货币配置 | `CurrencyFormatOptions` | - |
 | `[boolean]` | 布尔配置 | `YNOptions` | - |
-| `[img]` | 图像配置 | `{ size?: number }` | - |
+| `[img]` | 图像配置，支持大图预览 | `{ size?: number; big?: boolean }` | - |
 | `[link]` | 链接配置 | `{ url?: string; target?: string }` | - |
 | `[html]` | HTML 配置 | `{ safe?: string }` | - |
 | `[badge]` | 徽章配置 | `{ data?: CellBadge }` | - |
@@ -50,7 +50,7 @@ module: import { CellModule } from '@delon/abc/cell';
 - `currency` 货币
 - `boolean` 布尔
 - `date` 日期
-- `img` 图像
+- `img` 图像，支持大图预览
 - `link` 链接
 - `html` HTML
 - `badge` 徽章

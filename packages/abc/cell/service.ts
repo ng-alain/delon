@@ -49,9 +49,8 @@ export class CellService {
     },
     img: {
       type: 'fn',
-      ref: (value, opt) => {
-        const size = opt.img!!.size;
-        return { text: value ? `<img src="${value}" width="${size}" height="${size}" class="img">` : '' };
+      ref: value => {
+        return { text: Array.isArray(value) ? value : [value] };
       }
     }
   };
@@ -64,7 +63,7 @@ export class CellService {
   ) {
     this.globalOptions = configSrv.merge('cell', {
       date: { format: 'yyyy-MM-dd HH:mm:ss' },
-      img: { size: 32 }
+      img: { size: 32, big: true }
     })!;
   }
 
@@ -121,8 +120,8 @@ export class CellService {
     }
 
     return (typeof value === 'function' ? (value as CellFuValue)(value, opt) : of(res.result)).pipe(
-      map(str => {
-        res.result = str;
+      map(text => {
+        res.result = text;
         res.type = type;
         switch (type) {
           case 'badge':

@@ -1,12 +1,12 @@
 import type { Type } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
-import type { YNOptions } from '@delon/theme';
 import type { CurrencyFormatOptions, CurrencyMegaOptions, FormatMaskOption } from '@delon/util/format';
+import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
 export interface CellTextUnit {
-  text?: string | SafeHtml;
+  text?: string | SafeHtml | string[];
   color?: string;
   unit?: string;
 }
@@ -88,13 +88,24 @@ export interface CellOptions {
   /**
    * 布尔
    */
-  boolean?: YNOptions;
+  boolean?: {
+    yes?: string;
+    no?: string;
+    mode?: 'full' | 'icon' | 'text';
+  };
 
   /**
-   * 图像
+   * Image config, support large image preview
+   *
+   * 图像配置，支持大图预览
    */
   img?: {
     size?: number;
+    /**
+     * 点击查看大图，若 `true` 表示直接使用当前作为大图
+     */
+    big?: boolean | ((value: unknown) => string);
+    previewOptions?: NzImagePreviewOptions;
   };
 
   /**

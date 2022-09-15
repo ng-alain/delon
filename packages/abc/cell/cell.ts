@@ -2,10 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Inject,
   Input,
   OnChanges,
   OnDestroy,
+  Renderer2,
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
@@ -13,8 +15,10 @@ import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { updateHostClass } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
+import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
 import { CellService } from './service';
 import type { CellOptions, CellTextResult, CellWidgetData } from './types';
@@ -36,6 +40,17 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './types';
         </nz-tag>
         <nz-badge *ngSwitchCase="'badge'" [nzStatus]="res?.result?.color" nzText="{{ _text }}"></nz-badge>
         <ng-template *ngSwitchCase="'widget'" cell-widget-host [data]="hostData"></ng-template>
+        <ng-container *ngSwitchCase="'img'">
+          <img
+            *ngFor="let i of $any(_text)"
+            [attr.src]="i"
+            [attr.height]="safeOpt.img?.size"
+            [attr.width]="safeOpt.img?.size"
+            (click)="_showImg(i)"
+            class="img"
+            [class.point]="safeOpt.img?.big"
+          />
+        </ng-container>
         <ng-container *ngSwitchDefault>
           <span *ngIf="!isText" [innerHTML]="_text" [attr.title]="truncate ? value : null"></span>
           <span *ngIf="isText" [innerText]="_text" [attr.title]="truncate ? value : null"></span>
@@ -53,17 +68,6 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './types';
     </ng-template>
     <span *ngIf="loading; else textWrap" nz-icon nzType="loading"></span>
   `,
-  host: {
-    '[class.cell]': `true`,
-    '[class.cell__default]': `showDefault`,
-    '[class.cell__primary]': `type === 'primary'`,
-    '[class.cell__success]': `type === 'success'`,
-    '[class.cell__danger]': `type === 'danger'`,
-    '[class.cell__warning]': `type === 'warning'`,
-    '[class.cell__large]': `size === 'large'`,
-    '[class.cell__small]': `size === 'small'`,
-    '[class.cell__has-unit]': `_unit`
-  },
   exportAs: 'cell',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -109,9 +113,24 @@ export class Cell implements OnChanges, OnDestroy {
     private srv: CellService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private el: ElementRef<HTMLElement>,
+    private renderer: Renderer2,
+    private imgSrv: NzImageService,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(WINDOW) private win: any
   ) {}
+
+  private setClass(): void {
+    const { el, renderer } = this;
+    updateHostClass(el.nativeElement, renderer, {
+      [`cell`]: true,
+      [`cell__default`]: this.showDefault,
+      [`cell__${this.type}`]: this.type != null,
+      [`cell__${this.size}`]: this.size != null,
+      [`cell__has-unit`]: this._unit
+    });
+    el.nativeElement.dataset.type = this.safeOpt.type;
+  }
 
   ngOnChanges(changes: { [p in keyof Cell]?: SimpleChange }): void {
     if (changes.value) {
@@ -119,9 +138,10 @@ export class Cell implements OnChanges, OnDestroy {
       this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
         this.res = res;
         this.showDefault = this.value == this.defaultCondition;
-        this._text = res?.result.text ?? this.default ?? '';
+        this._text = res?.result?.text ?? this.default ?? '';
         this._unit = res?.result?.unit;
         this.cdr.detectChanges();
+        this.setClass();
       });
     }
   }
@@ -142,6 +162,23 @@ export class Cell implements OnChanges, OnDestroy {
     } else {
       (this.win as Window).open(url, link?.target);
     }
+  }
+
+  _showImg(img: string): void {
+    const config = this.safeOpt.img;
+    if (config == null || config.big == null) return;
+
+    let idx = -1;
+    const list = (this._text as string[]).map((p, index) => {
+      if (idx === -1 && p === img) idx = index;
+      return typeof config.big === 'function' ? config.big(p) : p;
+    });
+    this.imgSrv
+      .preview(
+        list.map(p => ({ src: p } as NzImage)),
+        config.previewOptions
+      )
+      .switchTo(idx);
   }
 
   ngOnDestroy(): void {
