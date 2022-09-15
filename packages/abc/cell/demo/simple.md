@@ -17,6 +17,8 @@ Simplest of usage.
 import { Component, OnInit } from '@angular/core';
 import { delay, finalize, of } from 'rxjs';
 
+import { subDays } from 'date-fns';
+
 import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
 
 @Component({
@@ -29,6 +31,7 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
     </div>
     <div nz-row nzGutter="16" class="mt-md">
       <div *ngFor="let i of baseList" nz-col nzSpan="8"> {{ i | json }} => <span cell [value]="i"></span> </div>
+      <div nz-col nzSpan="8"> date-fn => <span cell [value]="day3" [options]="{ date: { format: 'fn' } }"></span> </div>
       <div nz-col nzSpan="8">
         mega => <span cell value="15900000000" size="large" [options]="{ type: 'mega' }"></span>
       </div>
@@ -123,6 +126,7 @@ export class DemoComponent implements OnInit {
   baseList = ['string', true, false, 100, 1000000, new Date()];
   typeList = ['primary', 'success', 'danger', 'warning'];
   now = new Date();
+  day3 = subDays(new Date(), 3);
   HTML = `<strong>Strong</string>`;
   status: CellBadge = {
     WAIT: { text: '等待' },

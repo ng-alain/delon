@@ -33,7 +33,7 @@ Cell formatting is supported for multiple data types.
 | `[tooltip]` | Text popup tip  | `string` | - |
 | `[mask]` | Format mask, [Document](https://ng-alain.com/util/format/en#formatMask) | `string, FormatMaskOption` | - |
 | `[widget]` | Widget config | `{key?: string, data?: string}` | - |
-| `[date]` | Date config | `{format?: string}` | - |
+| `[date]` | Date config, supports `minutes ago` formatting | `{format?: string}` | - |
 | `[mega]` | Large number format filter, [Document](https://ng-alain.com/util/format/en#mega) | `CurrencyMegaOptions` | - |
 | `[currency]` | Currency config | `CurrencyFormatOptions` | - |
 | `[boolean]` | Boolean config | `YNOptions` | - |

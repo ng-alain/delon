@@ -32,7 +32,7 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[tooltip]` | 文字提示 | `string` | - |
 | `[mask]` | 格式化掩码, 参考[文档](https://ng-alain.com/util/format/zh#formatMask) | `string, FormatMaskOption` | - |
 | `[widget]` | 小部件配置 | `{key?: string, data?: string}` | - |
-| `[date]` | 日期配置 | `{format?: string}` | - |
+| `[date]` | 日期配置，支持 `几分钟前` 格式化 | `{format?: string}` | - |
 | `[mega]` | 大数据格式化配置 | `CurrencyMegaOptions` | - |
 | `[currency]` | 货币配置 | `CurrencyFormatOptions` | - |
 | `[boolean]` | 布尔配置 | `YNOptions` | - |

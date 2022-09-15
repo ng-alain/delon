@@ -70,11 +70,14 @@ export interface CellOptions {
   };
 
   /**
-   * 日期
+   * Date config, supports `minutes ago` formatting
+   *
+   * 日期配置，支持 `几分钟前` 格式化
    */
   date?: {
     /**
      * 格式化字符，默认：`yyyy-MM-dd HH:mm:ss`
+     * - 若值为 `fn` 时，渲染为 `几分钟前`
      */
     format?: string;
   };
