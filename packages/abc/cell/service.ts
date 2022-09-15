@@ -6,6 +6,7 @@ import { yn } from '@delon/theme';
 import { AlainCellConfig, AlainConfigService } from '@delon/util/config';
 import { formatDate } from '@delon/util/date-time';
 import { CurrencyService, formatMask } from '@delon/util/format';
+import { deepMerge } from '@delon/util/other';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import type {
@@ -102,7 +103,7 @@ export class CellService {
   }
 
   fixOptions(options?: CellOptions): CellOptions {
-    return { ...this.globalOptions, ...options };
+    return deepMerge({}, this.globalOptions, options);
   }
 
   get(value: unknown, options?: CellOptions): Observable<CellTextResult> {
