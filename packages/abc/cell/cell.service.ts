@@ -74,10 +74,6 @@ export class CellService {
     })!;
   }
 
-  registerFu(key: string, fn: CellWidgetFn): void {
-    this.widgets[key] = { type: 'fn', ref: fn };
-  }
-
   registerWidget(key: string, widget: Type<unknown>): void {
     this.widgets[key] = { type: 'widget', ref: widget };
   }
@@ -96,15 +92,16 @@ export class CellService {
 
     // Auto detection
     if (options.widget != null) return 'widget';
-    else if (typeOf === 'number') return 'number';
     else if (options.mega != null) return 'mega';
     else if (options.currency != null) return 'currency';
-    else if (typeOf === 'boolean' || options.boolean != null) return 'boolean';
+    else if (options.cny != null) return 'cny';
     else if (options.img != null) return 'img';
     else if (options.link != null) return 'link';
     else if (options.html != null) return 'html';
     else if (options.badge != null) return 'badge';
     else if (options.tag != null) return 'tag';
+    else if (typeOf === 'number') return 'number';
+    else if (typeOf === 'boolean' || options.boolean != null) return 'boolean';
     else return 'string';
   }
 
@@ -132,8 +129,10 @@ export class CellService {
         res.type = type;
         switch (type) {
           case 'badge':
+            res.result = { color: 'default', ...(opt.badge?.data ?? {})[value as string] };
+            break;
           case 'tag':
-            res.result = ((type === 'badge' ? opt.badge : opt.tag)?.data ?? {})[value as string];
+            res.result = (opt.tag?.data ?? {})[value as string];
             break;
           case 'html':
             res.safeHtml = opt.html?.safe;

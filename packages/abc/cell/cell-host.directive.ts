@@ -1,5 +1,7 @@
 import { Directive, Input, OnInit, Type, ViewContainerRef } from '@angular/core';
 
+import { warn } from '@delon/util/other';
+
 import { CellService } from './cell.service';
 import { CellWidgetData } from './cell.types';
 
@@ -13,6 +15,9 @@ export class CellHostDirective implements OnInit {
     const widget = this.data.options!.widget!;
     const componentType = this.srv.getWidget(widget.key!)?.ref as Type<unknown>;
     if (componentType == null) {
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        warn(`cell: No widget for type "${widget.key}"`);
+      }
       return;
     }
 

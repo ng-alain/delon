@@ -124,10 +124,10 @@ export class CellComponent implements OnChanges, OnDestroy {
     const { el, renderer } = this;
     updateHostClass(el.nativeElement, renderer, {
       [`cell`]: true,
-      [`cell__default`]: this.showDefault,
       [`cell__${this.type}`]: this.type != null,
       [`cell__${this.size}`]: this.size != null,
-      [`cell__has-unit`]: this._unit
+      [`cell__has-unit`]: this._unit,
+      [`cell__has-default`]: this.showDefault
     });
     el.nativeElement.dataset.type = this.safeOpt.type;
   }
@@ -143,16 +143,14 @@ export class CellComponent implements OnChanges, OnDestroy {
         this.cdr.detectChanges();
         this.setClass();
       });
+    } else {
+      this.setClass();
     }
   }
 
-  private _stopPropagation(ev: Event): void {
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
   _link(e: Event): void {
-    this._stopPropagation(e);
+    e.preventDefault();
+    e.stopPropagation();
     const link = this.safeOpt.link;
     const url = link?.url;
     if (url == null) return;
@@ -166,7 +164,7 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   _showImg(img: string): void {
     const config = this.safeOpt.img;
-    if (config == null || config.big == null) return;
+    if (config == null || config.big === false) return;
 
     let idx = -1;
     const list = (this._text as string[]).map((p, index) => {

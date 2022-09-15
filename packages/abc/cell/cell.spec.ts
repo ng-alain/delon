@@ -1,0 +1,296 @@
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+
+import { createTestContext } from '@delon/testing';
+import { WINDOW } from '@delon/util/token';
+import { NzImageService } from 'ng-zorro-antd/image';
+
+import { CellComponent } from './cell.component';
+import { CellModule } from './cell.module';
+import { CellService } from './cell.service';
+import { CellFuValue, CellOptions, CellWidgetData } from './cell.types';
+
+const DATE = new Date(2022, 0, 1, 1, 2, 3);
+
+describe('abc: cell', () => {
+  let fixture: ComponentFixture<TestComponent>;
+  let dl: DebugElement;
+  let context: TestComponent;
+  let page: PageObject;
+
+  const moduleAction = (): void => {
+    TestBed.configureTestingModule({
+      imports: [CellModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+      declarations: [TestComponent, TestWidget]
+    });
+  };
+
+  describe('', () => {
+    beforeEach(moduleAction);
+
+    describe('', () => {
+      beforeEach(() => {
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        page = new PageObject();
+      });
+
+      it('value support functionn', () => {
+        const fn: CellFuValue = () => of({ text: 'via fn' });
+        page.update(fn).check('via fn');
+      });
+
+      describe('#type', () => {
+        it('is string', () => {
+          page.update('1').check('1');
+        });
+        it('is string and mask', () => {
+          page.update('1234', { mask: '*99*' }).check('*23*');
+        });
+        it('is number', () => {
+          page.update(1000, { type: 'number' }).check('1000');
+        });
+        it('is boolean', () => {
+          page.update(false).count('.yn__no', 1).update(true).count('.yn__no', 0).count('.yn__yes', 1);
+        });
+        it('is mega', () => {
+          page.update(1000000, { mega: {} }).check('1万');
+        });
+        it('is currency', () => {
+          page.update(1000000, { currency: {} }).check('1,000,000');
+        });
+        it('is cny', () => {
+          page.update(1000000, { cny: {} }).check('壹佰万元整');
+        });
+        it('is date', () => {
+          page.update(DATE, { date: {} }).check('2022-01-01 01:02:03');
+          page.update(+DATE).check('2022-01-01 01:02:03');
+        });
+        describe('is img', () => {
+          it('should be working', () => {
+            page.update('1.jpg', { img: {} }).count('.img', 1).click('.img').count('.ant-image-preview', 1, true);
+          });
+          it('when array string', () => {
+            page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2);
+          });
+          it('should be preview array', () => {
+            const imgSrv = TestBed.inject(NzImageService);
+            spyOn(imgSrv, 'preview').and.returnValue({
+              switchTo: () => {}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any);
+            page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2).click('.img');
+            expect(imgSrv.preview).toHaveBeenCalled();
+          });
+          it('should be disabled preview when big is false', () => {
+            const imgSrv = TestBed.inject(NzImageService);
+            spyOn(imgSrv, 'preview');
+            page
+              .update(['1.jpg', '2.jpg'], { img: { big: false } })
+              .count('.img', 2)
+              .click('.img');
+            expect(imgSrv.preview).not.toHaveBeenCalled();
+          });
+          it('should be reset big image', () => {
+            page.update(['1.jpg', '2.jpg'], { img: { big: src => `new${src}` } }).click('.img');
+            const el = document.querySelector('.ant-image-preview-img') as HTMLImageElement;
+            expect(el.src).toContain(`new1.jpg`);
+          });
+        });
+        it('is html', () => {
+          page
+            .update(`<strong>1</strong>`, { html: { safe: 'html' } })
+            .check('1')
+            .update(`<strong>2</strong>`, { html: { safe: 'text' } })
+            .check(`<strong>2</strong>`);
+        });
+        describe('is link', () => {
+          it('navgation router', () => {
+            const router = TestBed.inject(Router);
+            spyOn(router, 'navigateByUrl');
+            page.update('to', { link: { url: '/router' } }).click('a');
+            expect(router.navigateByUrl).toHaveBeenCalled();
+          });
+          it('navgation window.open', () => {
+            const win = TestBed.inject(WINDOW);
+            spyOn(win, 'open');
+            page.update('to', { link: { url: 'https://a.com' } }).click('a');
+            expect(win.open).toHaveBeenCalled();
+          });
+          it('should be disabled', () => {
+            const router = TestBed.inject(Router);
+            spyOn(router, 'navigateByUrl');
+            const win = TestBed.inject(WINDOW);
+            spyOn(win, 'open');
+            page.update('to', { link: {} }).click('a');
+            expect(router.navigateByUrl).not.toHaveBeenCalled();
+            expect(win.open).not.toHaveBeenCalled();
+          });
+        });
+        it('is badge', () => {
+          page
+            .update('1', { badge: { data: { '1': { text: 'A' } } } })
+            .check('A')
+            .count('.ant-badge-status-default', 1);
+        });
+        it('is tag', () => {
+          page
+            .update('1', { tag: { data: { '1': { text: 'A', color: '#f50' } } } })
+            .check('A')
+            .count('.ant-tag-has-color', 1);
+        });
+        describe('is widget', () => {
+          it('shoule be working', () => {
+            const srv = TestBed.inject(CellService);
+            srv.registerWidget(TestWidget.KEY, TestWidget);
+            page.update('1', { widget: { key: TestWidget.KEY, data: 'new data' } }).check('1-new data');
+          });
+          it('when key is invalid', () => {
+            spyOn(console, 'warn');
+            page.update('1', { widget: { key: 'invalid', data: 'new data' } });
+            expect(console.warn).toHaveBeenCalled();
+          });
+        });
+      });
+
+      it('#unit', () => {
+        page.update({ text: '1', unit: '%' }).check('1', '.cell span').check('%', '.unit');
+      });
+    });
+
+    xdescribe('[property]', () => {
+      beforeEach(() => {
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        page = new PageObject();
+      });
+
+      it('#type', () => {
+        context.type = 'primary';
+        fixture.detectChanges();
+        page.count('.cell__primary', 1);
+        context.type = 'success';
+        fixture.detectChanges();
+        page.count('.cell__success', 1);
+      });
+
+      it('#size', () => {
+        context.size = 'large';
+        fixture.detectChanges();
+        page.count('.cell__large', 1);
+        context.size = 'small';
+        fixture.detectChanges();
+        page.count('.cell__small', 1);
+      });
+
+      it('#loading', () => {
+        context.loading = true;
+        fixture.detectChanges();
+        page.count('.anticon-loading', 1);
+        context.loading = false;
+        fixture.detectChanges();
+        page.count('.anticon-loading', 0);
+      });
+
+      it('should be render title when truncate is true', () => {
+        context.value = '111';
+        context.truncate = true;
+        fixture.detectChanges();
+        expect(page.getEl('.cell span').getAttribute('title')).toBe(context.value as string);
+      });
+
+      it('#default', () => {
+        context.default = '*';
+        context.defaultCondition = '1';
+        context.value = '1';
+        fixture.detectChanges();
+        page.count('.cell__has-default', 1);
+        context.value = '2';
+        fixture.detectChanges();
+        page.count('.cell__has-default', 0);
+      });
+    });
+  });
+
+  class PageObject {
+    update(value: unknown, options?: CellOptions): this {
+      context.value = value;
+      if (options != null) context.options = options;
+      fixture.detectChanges();
+      return this;
+    }
+    check(text: string, cls?: string, contain = false): this {
+      const el = this.getEl(cls ?? '.cell');
+      expect(el != null).toBe(true);
+      if (contain) {
+        expect(el.innerText.trim()).toContain(text);
+      } else {
+        expect(el.innerText.trim()).toBe(text);
+      }
+      return this;
+    }
+    click(cls: string): this {
+      const el = dl.query(By.css(cls)).nativeElement;
+      expect(el != null).toBe(true);
+      el.click();
+      fixture.detectChanges();
+      return this;
+    }
+    getEl(cls: string): HTMLElement {
+      return dl.query(By.css(cls)).nativeElement;
+    }
+    getEls(cls: string): DebugElement[] {
+      return dl.queryAll(By.css(cls));
+    }
+    count(cls: string, count: number = 1, viaBody = false): this {
+      if (viaBody) {
+        expect(document.querySelectorAll(cls).length).toBe(count);
+      } else {
+        expect(this.getEls(cls).length).toBe(count);
+      }
+      return this;
+    }
+  }
+});
+
+@Component({
+  template: `{{ data.value }}-{{ data.options.widget.data }}`
+})
+class TestWidget {
+  static readonly KEY = 'test';
+
+  data!: CellWidgetData;
+}
+
+@Component({
+  template: `
+    <span
+      #comp
+      cell
+      [value]="value"
+      [default]="default"
+      [defaultCondition]="defaultCondition"
+      [options]="options"
+      [truncate]="truncate"
+      [loading]="loading"
+      [type]="type"
+      [size]="size"
+    ></span>
+  `
+})
+class TestComponent {
+  @ViewChild('comp', { static: true })
+  comp!: CellComponent;
+
+  value?: unknown;
+  default = '-';
+  defaultCondition?: unknown = null;
+  options?: CellOptions;
+  truncate = false;
+  loading = false;
+  type?: 'primary' | 'success' | 'danger' | 'warning';
+  size?: 'large' | 'small';
+}
