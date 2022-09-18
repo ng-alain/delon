@@ -8,7 +8,6 @@ import {
   OnChanges,
   OnDestroy,
   Renderer2,
-  SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
@@ -24,7 +23,7 @@ import { CellService } from './cell.service';
 import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
 
 @Component({
-  selector: '[cell]',
+  selector: 'cell, [cell]',
   template: `
     <ng-template #text>
       <ng-container [ngSwitch]="res?.type">
@@ -88,10 +87,41 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() default = '-';
   @Input() defaultCondition?: unknown = null;
   @Input() options?: CellOptions;
+  @Input() unit?: string;
   @Input() @InputBoolean() truncate = false;
   @Input() @InputBoolean() loading = false;
   @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
   @Input() size?: 'large' | 'small';
+
+  /**
+   * 货币快捷项
+   *
+   * @example
+   * <cell [currency]="1000"></cell>
+   * 等同于
+   * <cell [value]="1000" [options]="{type: 'currency'}"></cell>
+   */
+  @Input()
+  set currency(value: number) {
+    this.value = value;
+    this.options = { type: 'currency' };
+    this.updateValue();
+  }
+
+  /**
+   * 日期快捷项
+   *
+   * @example
+   * <cell [date]="1000"></cell>
+   * 等同于
+   * <cell [value]="1000" [options]="{type: 'date'}"></cell>
+   */
+  @Input()
+  set date(value: number | string | Date) {
+    this.value = value;
+    this.options = { type: 'date' };
+    this.updateValue();
+  }
 
   get safeOpt(): CellOptions {
     return this.res?.options!;
@@ -120,6 +150,18 @@ export class CellComponent implements OnChanges, OnDestroy {
     @Inject(WINDOW) private win: any
   ) {}
 
+  private updateValue(): void {
+    this.destroy$?.unsubscribe();
+    this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
+      this.res = res;
+      this.showDefault = this.value == this.defaultCondition;
+      this._text = res.result?.text ?? '';
+      this._unit = res.result?.unit ?? this.unit;
+      this.cdr.detectChanges();
+      this.setClass();
+    });
+  }
+
   private setClass(): void {
     const { el, renderer } = this;
     updateHostClass(el.nativeElement, renderer, {
@@ -132,20 +174,8 @@ export class CellComponent implements OnChanges, OnDestroy {
     el.nativeElement.dataset.type = this.safeOpt.type;
   }
 
-  ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
-    if (changes.value) {
-      this.destroy$?.unsubscribe();
-      this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
-        this.res = res;
-        this.showDefault = this.value == this.defaultCondition;
-        this._text = res.result.text ?? '';
-        this._unit = res.result.unit;
-        this.cdr.detectChanges();
-        this.setClass();
-      });
-    } else {
-      this.setClass();
-    }
+  ngOnChanges(): void {
+    this.updateValue();
   }
 
   _link(e: Event): void {

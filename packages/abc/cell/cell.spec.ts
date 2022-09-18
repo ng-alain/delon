@@ -218,6 +218,33 @@ describe('abc: cell', () => {
         fixture.detectChanges();
         page.count('.cell__has-default', 0);
       });
+
+      it('#unit', () => {
+        context.unit = '*';
+        context.value = 1;
+        fixture.detectChanges();
+        page.check('*', '.unit');
+      });
+    });
+
+    describe('[shortcut]', () => {
+      it('#currency', () => {
+        TestBed.overrideTemplate(TestComponent, `<cell [currency]="currency"></cell>`);
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        page = new PageObject();
+        context.currency = 1000;
+        fixture.detectChanges();
+        page.checkType('currency');
+      });
+
+      it('#date', () => {
+        TestBed.overrideTemplate(TestComponent, `<cell [date]="date"></cell>`);
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        page = new PageObject();
+        context.date = DATE;
+        fixture.detectChanges();
+        page.checkType('date');
+      });
     });
   });
 
@@ -226,6 +253,12 @@ describe('abc: cell', () => {
       context.value = value;
       if (options != null) context.options = options;
       fixture.detectChanges();
+      return this;
+    }
+    checkType(type: string): this {
+      const el = this.getEl('.cell');
+      expect(el != null).toBe(true);
+      expect(el.dataset.type).toBe(type);
       return this;
     }
     check(text: string, cls?: string, contain = false): this {
@@ -273,10 +306,10 @@ class TestWidget {
 
 @Component({
   template: `
-    <span
+    <cell
       #comp
-      cell
       [value]="value"
+      [unit]="unit"
       [default]="default"
       [defaultCondition]="defaultCondition"
       [options]="options"
@@ -284,7 +317,7 @@ class TestWidget {
       [loading]="loading"
       [type]="type"
       [size]="size"
-    ></span>
+    ></cell>
   `
 })
 class TestComponent {
@@ -292,6 +325,7 @@ class TestComponent {
   comp!: CellComponent;
 
   value?: unknown;
+  unit?: string;
   default = '-';
   defaultCondition?: unknown = null;
   options?: CellOptions;
@@ -299,4 +333,7 @@ class TestComponent {
   loading = false;
   type?: 'primary' | 'success' | 'danger' | 'warning';
   size?: 'large' | 'small';
+
+  currency?: number;
+  date?: number | string | Date;
 }

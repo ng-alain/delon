@@ -3,7 +3,7 @@ type: CURD
 title: cell
 subtitle: Cell Data
 cols: 1
-order: 2
+order: 4
 module: import { CellModule } from '@delon/abc/cell';
 ---
 
@@ -11,19 +11,21 @@ Cell formatting is supported for multiple data types.
 
 ## API
 
-### [cell]
+### cell
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[value]` | Value of the cell | `unknown` | - |
 | `[options]` | Option of the cell | `CellOptions` | - |
+| `[unit]` | Unit, can also be specified by `value: {text: 100, unit: 'RMB'}` | `string` | `-` |
 | `[default]` | Default value of the cell | `string` | `-` |
 | `[defaultCondition]` | Default value condition | `unknown` | `null` |
 | `[truncate]` | Whether truncate text | `boolean` | `false` |
 | `[loading]` | Whether loading | `boolean` | `false` |
 | `[type]` | Type of the cell | `primary,success,danger,warning` | - |
 | `[size]` | Size of the cell | `large,small` | - |
-
+| `[currency]` | Currency shortcut | `number` | - |
+| `[date]` | Date shortcut | `number, string, Date` | - |
 
 ### CellOptions
 

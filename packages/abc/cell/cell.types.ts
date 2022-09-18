@@ -11,7 +11,7 @@ import type {
 import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
 export interface CellTextUnit {
-  text?: string | SafeHtml | string[];
+  text?: string | SafeHtml | string[] | number;
   color?: string;
   unit?: string;
 }

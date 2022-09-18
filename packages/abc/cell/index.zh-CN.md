@@ -3,7 +3,7 @@ type: CURD
 title: cell
 subtitle: 单元格数据
 cols: 1
-order: 2
+order: 4
 module: import { CellModule } from '@delon/abc/cell';
 ---
 
@@ -11,18 +11,21 @@ module: import { CellModule } from '@delon/abc/cell';
 
 ## API
 
-### [cell]
+### cell
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[value]` | 值 | `unknown` | - |
 | `[options]` | 选项 | `CellOptions` | - |
+| `[unit]` | 单位，也可通过 `value: {text: 100, unit: '元'}` 来指定 | `string` | `-` |
 | `[default]` | 默认值 | `string` | `-` |
 | `[defaultCondition]` | 默认值条件 | `unknown` | `null` |
 | `[truncate]` | 是否截短 | `boolean` | `false` |
 | `[loading]` | 是否加载中 | `boolean` | `false` |
 | `[type]` | 类型 | `primary,success,danger,warning` | - |
 | `[size]` | 大小 | `large,small` | - |
+| `[currency]` | 货币快捷项 | `number` | - |
+| `[date]` | 日期快捷项 | `number, string, Date` | - |
 
 ### CellOptions
 
