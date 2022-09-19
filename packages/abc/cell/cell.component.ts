@@ -108,21 +108,6 @@ export class CellComponent implements OnChanges, OnDestroy {
     this.updateValue();
   }
 
-  /**
-   * 日期快捷项
-   *
-   * @example
-   * <cell [date]="1000"></cell>
-   * 等同于
-   * <cell [value]="1000" [options]="{type: 'date'}"></cell>
-   */
-  @Input()
-  set date(value: number | string | Date) {
-    this.value = value;
-    this.options = { type: 'date' };
-    this.updateValue();
-  }
-
   get safeOpt(): CellOptions {
     return this.res?.options!;
   }

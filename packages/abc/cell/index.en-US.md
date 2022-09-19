@@ -25,7 +25,6 @@ Cell formatting is supported for multiple data types.
 | `[type]` | Type of the cell | `primary,success,danger,warning` | - |
 | `[size]` | Size of the cell | `large,small` | - |
 | `[currency]` | Currency shortcut | `number` | - |
-| `[date]` | Date shortcut | `number, string, Date` | - |
 
 ### CellOptions
 

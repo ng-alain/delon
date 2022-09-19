@@ -25,7 +25,6 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[type]` | 类型 | `primary,success,danger,warning` | - |
 | `[size]` | 大小 | `large,small` | - |
 | `[currency]` | 货币快捷项 | `number` | - |
-| `[date]` | 日期快捷项 | `number, string, Date` | - |
 
 ### CellOptions
 

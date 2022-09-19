@@ -236,15 +236,6 @@ describe('abc: cell', () => {
         fixture.detectChanges();
         page.checkType('currency');
       });
-
-      it('#date', () => {
-        TestBed.overrideTemplate(TestComponent, `<cell [date]="date"></cell>`);
-        ({ fixture, dl, context } = createTestContext(TestComponent));
-        page = new PageObject();
-        context.date = DATE;
-        fixture.detectChanges();
-        page.checkType('date');
-      });
     });
   });
 
@@ -335,5 +326,4 @@ class TestComponent {
   size?: 'large' | 'small';
 
   currency?: number;
-  date?: number | string | Date;
 }

@@ -7,11 +7,11 @@ order: 1
 
 ## zh-CN
 
-支持 `currency`、`date` 快捷属性。
+支持 `currency` 快捷属性。
 
 ## en-US
 
-Support `currency`, `date` shortcutes.
+Support `currency` shortcutes.
 
 ```ts
 import { Component } from '@angular/core';
@@ -20,7 +20,6 @@ import { Component } from '@angular/core';
   template: `
     <div nz-row nzGutter="16" class="mt-md">
       <div nz-col nzSpan="8"> currency => <cell [currency]="1000" unit="$"></cell> </div>
-      <div nz-col nzSpan="8"> date => <cell [date]="now"></cell> </div>
     </div>
   `
 })
