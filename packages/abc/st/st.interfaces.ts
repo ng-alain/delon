@@ -546,12 +546,12 @@ export interface STColumnFilter<T extends STData = any> {
    * - `keyword` 文本框形式
    * - `number` 数字框形式
    * - `date` 日期形式
-   * - `custom` 自定义模式
+   * - `custom` 自定义模式，需设置 [custom] 参数
    */
   type?: 'default' | 'keyword' | 'number' | 'date' | 'custom';
   /**
    * 表头的筛选菜单项，至少一项才会生效
-   * - 当 `type='keyword'` 时可为空
+   * - 当 `type` 为 `keyword` `custom` 时可为空
    */
   menus?: STColumnFilterMenu[];
   /**
@@ -594,9 +594,9 @@ export interface STColumnFilter<T extends STData = any> {
   reName?: (list: STColumnFilterMenu[], col: STColumn) => Record<string, unknown>;
 
   /**
-   * 自定义过滤器
+   * 自定义过滤器，请参考 [Custom Data](https://ng-alain.com/components/st/en?#components-st-custom-data) 示例。
    */
-  custom?: TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>;
+  custom?: TemplateRef<{ $implicit: STColumnFilter; col: STColumn; handle: STColumnFilterHandle }>;
 
   /**
    * Whether to display the operation area, default: `true`
@@ -625,6 +625,29 @@ export interface STColumnFilter<T extends STData = any> {
     disabledDate?: (d: Date) => boolean;
     disabledTime?: DisabledTimeFn;
   };
+}
+
+export interface STColumnFilterHandle {
+  /**
+   * Close pannel, if `result` is set, it will trigger confirm or reset action
+   *
+   * 关闭面板，当指定 `result` 时会触发确认或重置动作
+   */
+  close: (result?: boolean) => void;
+
+  /**
+   * Trigger confirm (You can call `close` to close the panel)
+   *
+   * 触发确认（可以调用 `close` 来关闭面板）
+   */
+  confirm: () => STColumnFilterHandle;
+
+  /**
+   * Trigger reset (You can call `close` to close the panel)
+   *
+   * 触发重置（可以调用 `close` 来关闭面板）
+   */
+  reset: () => STColumnFilterHandle;
 }
 
 export interface STColumnFilterMenu {

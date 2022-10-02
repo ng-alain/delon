@@ -320,7 +320,7 @@ class TestComponent {
 | `[clearText]` | filter 清除按钮文本 | `string` | - |
 | `[key]` | 远程数据的过滤时后端相对应的KEY，默认使用 `index` 属性 | `string` | - |
 | `[reName]` | 远程数据的过滤时后端相对应的VALUE | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
-| `[custom]` | 自定义模版 | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
+| `[custom]` | 自定义模版 | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn; handle: STColumnFilterHandle }>` | - |
 | `[showOPArea]` | 是否显示操作区域 | `boolean` | `true` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `boolean` | `true` |
 | `[number]` | 类型为 `number` 的配置项 | `Object` | - |
