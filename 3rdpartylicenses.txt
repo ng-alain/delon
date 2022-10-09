@@ -714,9 +714,6 @@ MIT
 ngx-tinymce
 MIT
 
-ngx-ueditor
-MIT
-
 rxjs
 Apache-2.0
                                Apache License
