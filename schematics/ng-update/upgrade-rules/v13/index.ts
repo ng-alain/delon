@@ -76,8 +76,8 @@ function upgradeKarmaCoverage(): Rule {
 
 function upgradeThirdVersion(): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    addPackage(tree, [`ngx-ueditor@DEP-0.0.0-PLACEHOLDER`, `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`], 'dependencies');
-    logStart(context, `Upgrade third libs (ngx-ueditor, ngx-tinymce) version number`);
+    addPackage(tree, [`ngx-tinymce@DEP-0.0.0-PLACEHOLDER`], 'dependencies');
+    logStart(context, `Upgrade third libs ( ngx-tinymce) version number`);
   };
 }
 

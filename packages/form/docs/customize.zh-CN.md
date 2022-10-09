@@ -28,7 +28,6 @@ type: Documents
 | --- | ---- | ---- | ---- |
 | `markdown` | Markdown 编辑器 | [文档](/form/markdown) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown) |
 | `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
-| `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/ueditor) |
 
 **自己创建小部件**
 
