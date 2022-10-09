@@ -1,3 +1,22 @@
+## [14.1.0](https://github.com/ng-alain/delon/compare/14.0.0...14.0.1) (2022-10-09)
+
+
+### Bug Fixes
+
+* **abc:reuse-tab:** fix can't refresh current tab ([#1529](https://github.com/ng-alain/delon/issues/1529)) ([2fb2d2b](https://github.com/ng-alain/delon/commit/2fb2d2b3af7c10255c0f0b4c82a823cee6c2c1d9))
+* **abc:st:** fix built-in style into to `className` ([#1525](https://github.com/ng-alain/delon/issues/1525)) ([b9e433d](https://github.com/ng-alain/delon/commit/b9e433da4a5d9fc0e88e5707753be4a8a3821a61))
+* **abc:st:** fix can't close panel when `showOPArea` is `true` ([#1527](https://github.com/ng-alain/delon/issues/1527)) ([7d8fbf5](https://github.com/ng-alain/delon/commit/7d8fbf56e369cb58ef189f5df41f8020369ca8b9))
+* **abc:st:** fix click trigger on blank area of sub-menus ([#1534](https://github.com/ng-alain/delon/issues/1534)) ([a807429](https://github.com/ng-alain/delon/commit/a80742910dfd1e4ce1e9c184469e49422ffb1a63))
+* **cli:** fix correctly returns undefined ([#1533](https://github.com/ng-alain/delon/issues/1533)) ([8b0be4c](https://github.com/ng-alain/delon/commit/8b0be4ca90b28a311262e000a27d5180015ce533))
+* **cli:** fix merge `allowedCommonJsDependencies` ([#1526](https://github.com/ng-alain/delon/issues/1526)) ([c43afb8](https://github.com/ng-alain/delon/commit/c43afb837e2619d1d92067c3fce78234ad5c814e))
+
+
+### Features
+
+* **cli:** add dynamic start page ([#1524](https://github.com/ng-alain/delon/issues/1524)) ([1e1c165](https://github.com/ng-alain/delon/commit/1e1c165c97a3ebef427a8558f474366bac75651f))
+
+
+
 # [14.0.0](https://github.com/ng-alain/delon/compare/13.5.2...14.0.0) (2022-08-27)
 
 
