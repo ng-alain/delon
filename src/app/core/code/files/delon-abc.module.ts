@@ -13,6 +13,7 @@ import { FullContentModule } from '@delon/abc/full-content';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { ImageModule } from '@delon/abc/image';
 import { LoadingModule } from '@delon/abc/loading';
+import { HotkeyModule } from '@delon/abc/hotkey';
 import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { PageHeaderModule } from '@delon/abc/page-header';
@@ -60,6 +61,7 @@ const MODULES = [
   SGModule,
   DatePickerModule,
   LoadingModule,
+  HotkeyModule,
   MediaModule,
   OnboardingModule,
   LetModule,
