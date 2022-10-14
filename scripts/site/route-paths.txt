@@ -255,8 +255,6 @@
 /form/transfer/zh
 /form/tree-select/en
 /form/tree-select/zh
-/form/ueditor/en
-/form/ueditor/zh
 /form/upload/en
 /form/upload/zh
 /mock/getting-started/en

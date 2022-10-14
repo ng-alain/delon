@@ -16,6 +16,7 @@ import { LoadingModule } from '@delon/abc/loading';
 import { HotkeyModule } from '@delon/abc/hotkey';
 import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
+import { ObserversModule } from '@delon/abc/observers';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
@@ -44,6 +45,7 @@ const MODULES = [
   GlobalFooterModule,
   ExceptionModule,
   NoticeIconModule,
+  ObserversModule,
   PageHeaderModule,
   ResultModule,
   TagSelectModule,

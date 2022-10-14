@@ -135,7 +135,7 @@ export class StartupService {
     // Can be set page suffix title, https://ng-alain.com/theme/title
     this.titleService.suffix = app.name;
 
-    return of();
+    return of(void 0);
   }
 
   load(): Observable<void> {

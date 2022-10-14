@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "14.0.0",
+  "version": "14.1.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -85,7 +85,6 @@
     "ngx-countdown": "^14.0.0",
     "ngx-highlight-js": "^14.0.0",
     "ngx-tinymce": "^14.0.0",
-    "ngx-ueditor": "^14.0.0",
     "qrious": "^4.0.2",
     "@webcomponents/custom-elements": "^1.5.0",
     "aos": "^3.0.0-beta.6",
