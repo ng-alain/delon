@@ -110,5 +110,8 @@ export interface ErrorSchema {
    */
   feedback?: NzFormControlStatusType;
 
+  /**
+   * @deprecated Will be removed of NG-ZORRO don't support
+   */
   feedbackIcon?: string | null;
 }

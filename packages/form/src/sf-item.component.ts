@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { NzFormStatusService } from 'ng-zorro-antd/core/form';
+
 import { FormProperty } from './model/form.property';
 import { SFUISchemaItem } from './schema/ui';
 import { TerminatorService } from './terminator.service';
@@ -29,7 +31,8 @@ let nextUniqueId = 0;
     <ng-container *ngTemplateOutlet="footer"></ng-container>
   `,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [NzFormStatusService]
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref!: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;

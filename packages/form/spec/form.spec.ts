@@ -527,12 +527,8 @@ describe('form: component', () => {
         const namePath = '/name';
         context.comp.updateFeedback(namePath, 'error');
         page.dc().checkCount('.ant-form-item-has-error', 1).checkCount('.ant-form-item-has-feedback', 1);
-        context.comp.updateFeedback(namePath, 'success', 'left');
-        page
-          .dc()
-          .checkCount('.ant-form-item-has-success', 1)
-          .checkCount('.ant-form-item-has-feedback', 1)
-          .checkCount('.anticon-left', 1);
+        context.comp.updateFeedback(namePath, 'success');
+        page.dc().checkCount('.ant-form-item-has-success', 1).checkCount('.ant-form-item-has-feedback', 1);
         context.comp.updateFeedback(namePath);
 
         page.dc().checkCount('.ant-form-item-has-feedback', 0);
