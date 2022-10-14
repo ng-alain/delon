@@ -20,6 +20,8 @@ export class HotkeyDirective implements OnDestroy {
   constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone, private platform: Platform) {}
 
   ngOnDestroy(): void {
+    if (!this.platform.isBrowser) return;
+
     this.ngZone.runOutsideAngular(() => uninstall(this.el.nativeElement));
   }
 }
