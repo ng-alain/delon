@@ -14,6 +14,14 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [14.1.1](https://github.com/ng-alain/delon/compare/14.1.0...14.1.1) (2022-10-14)
+
+### Bug Fixes
+
+* **form:** 修复可显会引发多次绑定 ([#1531](https://github.com/ng-alain/delon/issues/1531)) ([a4e62ef](https://github.com/ng-alain/delon/commit/a4e62ef49b31f42beb850eb02aa53de536165df8))
+* **form:** 修复丢失错误样式 ([#1537](https://github.com/ng-alain/delon/issues/1537)) ([14a7388](https://github.com/ng-alain/delon/commit/14a7388443805ed1f06e2ed81008ab51547e4c75))
+
+
 ## [14.1.0](https://github.com/ng-alain/delon/compare/14.0.0...14.0.1) (2022-10-09)
 
 ### Bug Fixes
