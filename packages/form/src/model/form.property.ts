@@ -415,9 +415,6 @@ export abstract class PropertyGroup extends FormProperty {
   forEachChildRecursive(fn: (formProperty: FormProperty) => void): void {
     this.forEachChild(child => {
       fn(child);
-      if (child instanceof PropertyGroup) {
-        (child as PropertyGroup).forEachChildRecursive(fn);
-      }
     });
   }
 
