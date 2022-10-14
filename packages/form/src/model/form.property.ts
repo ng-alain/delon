@@ -1,6 +1,7 @@
 import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map } from 'rxjs';
 
 import { AlainSFConfig } from '@delon/util/config';
+import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 
@@ -384,6 +385,7 @@ export abstract class FormProperty {
         success: 'check-circle-fill',
         warning: 'exclamation-circle-fill'
       }[status];
+    this.widget.injector.get(NzFormStatusService).formStatusChanges.next({ status, hasFeedback: !!status });
     this.widget.detectChanges();
   }
 }

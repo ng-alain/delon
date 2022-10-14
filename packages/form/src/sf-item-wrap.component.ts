@@ -10,7 +10,6 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   selector: 'sf-item-wrap',
   templateUrl: './sf-item-wrap.component.html',
   animations: [helpMotion],
-  providers: [NzFormStatusService],
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
@@ -38,6 +37,7 @@ export class SFItemWrapComponent implements OnChanges {
   constructor(private statusSrv: NzFormStatusService) {}
 
   ngOnChanges(): void {
-    this.statusSrv.formStatusChanges.next({ status: this.error ? 'error' : '', hasFeedback: !!this.ui.feedback });
+    const hasError = !!this.error;
+    this.statusSrv.formStatusChanges.next({ status: hasError ? 'error' : '', hasFeedback: hasError });
   }
 }
