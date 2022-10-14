@@ -1,87 +1,51 @@
-// import { Component } from '@angular/core';
-// import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Platform } from '@angular/cdk/platform';
+import { Component, ViewChild } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-// import { cleanCdkOverlayHtml } from '@delon/testing';
+import { createTestContext } from '../../testing';
+import { HotkeyDirective } from './hotkey.directive';
+import { HotkeyModule } from './hotkey.module';
 
-// import { LoadingModule } from './hotkey.module';
-// import { LoadingService } from './loading.service';
+describe('abc: hotkey', () => {
+  let context: TestComponent;
 
-// describe('abc: hotkey', () => {
-//   let srv: LoadingService;
-//   let fixture: ComponentFixture<TestComponent>;
+  function genModule(isBrowser: boolean): void {
+    TestBed.configureTestingModule({
+      imports: [HotkeyModule],
+      providers: [{ provide: Platform, useValue: { isBrowser } }],
+      declarations: [TestComponent]
+    });
+    ({ context } = createTestContext(TestComponent));
+    spyOn(context, 'focus');
+  }
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [LoadingModule],
-//       declarations: [TestComponent]
-//     });
-//     srv = TestBed.inject(LoadingService);
-//     fixture = TestBed.createComponent(TestComponent);
-//   });
+  afterEach(() => {
+    context.comp.ngOnDestroy();
+  });
 
-//   afterEach(() => {
-//     srv.ngOnDestroy();
-//     cleanCdkOverlayHtml();
-//   });
+  it('should be working', done => {
+    genModule(true);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
+    setTimeout(() => {
+      expect(context.focus).toHaveBeenCalled();
+      done();
+    }, 60);
+  });
 
-//   function check(cls: string, count: number): void {
-//     tick();
-//     fixture.detectChanges();
-//     expect(srv.instance != null).toBe(true);
-//     const els = document.querySelectorAll(cls);
-//     expect(els.length).toBe(count);
-//     tick(1000);
-//   }
+  it('when in ssr', done => {
+    genModule(false);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
+    setTimeout(() => {
+      expect(context.focus).not.toHaveBeenCalled();
+      done();
+    }, 60);
+  });
+});
 
-//   it('should be working', fakeAsync(() => {
-//     srv.close();
-//     srv.open();
-//     tick(1);
-//     expect(srv.instance != null).toBe(true);
-//     fixture.detectChanges();
-//     srv.close();
-//     tick(1);
-//     expect(srv.instance == null).toBe(true);
-//     tick(1000);
-//   }));
+@Component({ template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />` })
+class TestComponent {
+  @ViewChild(HotkeyDirective, { static: true }) readonly comp!: HotkeyDirective;
+  hotkey = 'q';
 
-//   describe('#delay', () => {
-//     it(`should be can appear when close without delay`, fakeAsync(() => {
-//       srv.open({ delay: 1000 });
-//       tick(500);
-//       expect(srv.instance == null).toBe(true);
-//       tick(1001);
-//       expect(srv.instance != null).toBe(true);
-//     }));
-//     it(`should be won't appear when close within delay`, fakeAsync(() => {
-//       srv.open({ delay: 1000 });
-//       tick(500);
-//       expect(srv.instance == null).toBe(true);
-//       srv.close();
-//       tick(1001);
-//       expect(srv.instance == null).toBe(true);
-//     }));
-//   });
-
-//   describe('#type', () => {
-//     it('with text', fakeAsync(() => {
-//       srv.open({ type: 'text' });
-//       check('.loading-default__icon', 0);
-//     }));
-//     it('with icon', fakeAsync(() => {
-//       srv.open({ type: 'icon', icon: { type: 'loading' } });
-//       check('.anticon-loading', 1);
-//     }));
-//     it('with spin', fakeAsync(() => {
-//       srv.open({ type: 'spin' });
-//       check('.ant-spin', 1);
-//     }));
-//     it('with custom', fakeAsync(() => {
-//       srv.open({ type: 'custom', custom: { html: '<div class="custom-cls"></div>' } });
-//       check('.custom-cls', 1);
-//     }));
-//   });
-// });
-
-// @Component({ template: `` })
-// class TestComponent {}
+  focus(): void {}
+}

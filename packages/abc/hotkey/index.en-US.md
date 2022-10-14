@@ -7,23 +7,14 @@ cols: 2
 module: import { HotkeyModule } from '@delon/abc/hotkey';
 ---
 
-Global load indicator is generally used when an operation needs to interrupt the user operation.
+Based on the [@github/hotke](https://github.com/github/hotkey) hotkey library.
+
+> If you don't know the hotkey value, you can get it through [Hotkey Code](https://github.github.io/hotkey/examples/hotkey_mapper.html).
 
 ## API
 
-### LoadingService
-
-| Name | Description |
-|------|-------------|
-| `open(options?: LoadingShowOptions)` | Open a new loading indicator |
-| `close()` | Turn off a loading indicator |
-
 ### LoadingShowOptions
 
-| Property | Description | Type | Default | Global Config |
-|----------|-------------|------|---------|---------------|
-| `type` | Show type of loading | `LoadingType` | `spin` | ✅ |
-| `text` | Text of loading | `string` | `加载中...` | ✅ |
-| `icon` | Configuration item of type `icon` | `LoadingIcon` | - | ✅ |
-| `custom` | Configuration item of type `custom` | `LoadingCustom` | - | ✅ |
-| `delay` | Specifies a delay in milliseconds for loading state (prevent flush), unit: milliseconds | `number` | - | ✅ |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `hotkey` | Specify [hotkey format](https://github.com/github/hotkey#hotkey-string-format) | `string` | - |
