@@ -36,6 +36,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
+  @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
   private destroy$ = new Subject<void>();
@@ -99,7 +100,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
         `;
         this.doc.body.appendChild(lessConfigNode);
       })
-      .then(() => this.lazy.loadScript('https://gw.alipayobjects.com/os/lib/less.js/3.8.1/less.min.js'))
+      .then(() => this.lazy.loadScript(this.lessJs))
       .then(() => {
         this.loadedLess = true;
       });
