@@ -26,6 +26,17 @@ schema: SFSchema = {
         },
       }
     },
+    list: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          key: {
+            type: 'string',
+          },
+        }
+      }
+    }
   }
 };
 ```
@@ -34,6 +45,7 @@ Following `path` are all valid:
 
 - `/app`
 - `/user/name`
+- `/list/0/key` 0 means array index
 
 Starting with `/` indicates to search from root path, otherwise, search from current path.
 

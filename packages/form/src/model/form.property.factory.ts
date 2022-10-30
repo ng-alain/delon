@@ -146,8 +146,6 @@ export class FormPropertyFactory {
 
   private initializeRoot(rootProperty: PropertyGroup): void {
     // rootProperty.init();
-    if (rootProperty.isRoot()) {
-      rootProperty._bindVisibility();
-    }
+    rootProperty._bindVisibility();
   }
 }
