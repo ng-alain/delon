@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-类型为 `widget` 自定义小部件，例如点击头像处理。
+类型为 `widget` 自定义小部件，例如点击头像处理，查看[源代码](https://github.com/ng-alain/delon/blob/master/src/app/shared/st-widget/img.widget.ts)。
 
 ## en-US
 
-The type is `widget` custom widget, eg: Click on Avatar effect.
+The type is `widget` custom widget, eg: Click on Avatar effect, View [source code](https://github.com/ng-alain/delon/blob/master/src/app/shared/st-widget/img.widget.ts).
 
 ```ts
 import { Component, ViewChild } from '@angular/core';

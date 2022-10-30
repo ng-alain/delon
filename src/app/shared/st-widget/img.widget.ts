@@ -4,7 +4,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'st-widget-img',
-  template: ` <img nz-tooltip nzTooltipTitle="Client it" [src]="img" class="img" style="cursor: pointer" /> `,
+  template: `
+    <img
+      nz-tooltip
+      nzTooltipTitle="Click it"
+      nz-image
+      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+      (click)="show()"
+      class="img"
+      style="cursor: pointer"
+    />
+  `,
   host: {
     '(click)': 'show()'
   },
