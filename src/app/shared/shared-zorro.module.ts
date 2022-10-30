@@ -18,6 +18,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -63,6 +64,7 @@ export const SHARED_ZORRO_MODULES = [
   NzBreadCrumbModule,
   NzStepsModule,
   NzListModule,
+  NzImageModule,
   NzSwitchModule,
   NzRadioModule,
   NzFormModule,
