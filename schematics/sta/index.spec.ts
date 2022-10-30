@@ -46,8 +46,7 @@ describe('Schematic: sta', () => {
 
   beforeEach(async () => ({ runner, tree } = await createAlainAndModuleApp()));
 
-  // TODO: https://github.com/acacode/swagger-typescript-api/issues/370
-  xit('should be working', async () => {
+  it('should be working', async () => {
     await run();
     [`_base.service.ts`, `models.ts`, `index.ts`].forEach(name => {
       expect(tree.exists(`/projects/foo/src/app/_sta/${name}`)).toBe(true);
