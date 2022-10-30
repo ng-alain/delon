@@ -26,6 +26,17 @@ schema: SFSchema = {
         },
       }
     },
+    list: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          key: {
+            type: 'string',
+          },
+        }
+      }
+    }
   }
 };
 ```
@@ -34,6 +45,7 @@ schema: SFSchema = {
 
 - `/app`
 - `/user/name`
+- `/list/0/key` 0 表示数组索引
 
 使用 `/` 开头时表示从根路径查找，反之从当前路径向下查找。
 
