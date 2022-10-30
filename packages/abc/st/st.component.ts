@@ -111,7 +111,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private destroy$ = new Subject<void>();
   private data$?: Subscription;
   private totalTpl = ``;
-  private cog!: AlainSTConfig;
+  cog!: AlainSTConfig;
   private _req!: STReq;
   private _res!: STRes;
   private _page!: STPage;
@@ -388,16 +388,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     try {
       const result = await this.loadData();
       this.setLoading(false);
-      if (typeof result.pi !== 'undefined') {
+      const undefinedString = 'undefined';
+      if (typeof result.pi !== undefinedString) {
         this.pi = result.pi;
       }
-      if (typeof result.ps !== 'undefined') {
+      if (typeof result.ps !== undefinedString) {
         this.ps = result.ps;
       }
-      if (typeof result.total !== 'undefined') {
+      if (typeof result.total !== undefinedString) {
         this.total = result.total;
       }
-      if (typeof result.pageShow !== 'undefined') {
+      if (typeof result.pageShow !== undefinedString) {
         this._isPagination = result.pageShow;
       }
       this._data = result.list;
@@ -883,7 +884,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return null;
     }
     const copyItem = deepCopy(itemOrIndex);
-    delete copyItem._values;
+    ['_values', '_rowClassName'].forEach(key => delete copyItem[key]);
     return copyItem;
   }
 
@@ -967,30 +968,35 @@ export class STTdComponent {
   }
 
   _btn(btn: STColumnButton, ev?: Event): void {
-    if (ev) {
-      ev.stopPropagation();
-    }
-    const record = this.i;
+    ev?.stopPropagation();
+    const cog = this.stComp.cog;
+    let record = this.i;
     if (btn.type === 'modal' || btn.type === 'static') {
-      const { modal } = btn;
-      const obj = { [modal!.paramsName!]: record };
+      if (cog.modal!.pureRecoard === true) {
+        record = this.stComp.pureItem(record)!;
+      }
+      const modal = btn.modal!;
+      const obj = { [modal.paramsName!]: record };
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
-        modal!.component,
-        { ...obj, ...(modal!.params && modal!.params!(record)) },
-        deepMergeKey({}, true, this.stComp['cog'].modal, modal)
+        modal.component,
+        { ...obj, ...(modal.params && modal.params(record)) },
+        deepMergeKey({}, true, cog.modal, modal)
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
       return;
     } else if (btn.type === 'drawer') {
-      const { drawer } = btn;
-      const obj = { [drawer!.paramsName!]: record };
+      if (cog.drawer!.pureRecoard === true) {
+        record = this.stComp.pureItem(record)!;
+      }
+      const drawer = btn.drawer!;
+      const obj = { [drawer.paramsName!]: record };
       this.drawerHelper
         .create(
-          drawer!.title!,
-          drawer!.component,
-          { ...obj, ...(drawer!.params && drawer!.params!(record)) },
-          deepMergeKey({}, true, this.stComp['cog'].drawer, drawer)
+          drawer.title!,
+          drawer.component,
+          { ...obj, ...(drawer.params && drawer.params(record)) },
+          deepMergeKey({}, true, cog.drawer, drawer)
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
