@@ -17,22 +17,16 @@
     &-bar {
       margin-bottom: 4px;
     }
+  }
 
-    &-nav {
-      .@{ant-prefix}-tabs-tab {
-        margin-right: 32px;
-        padding: 12px 16px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-
-      &-scroll {
-        text-align: center;
+  &__tab-left {
+    .@{ant-prefix}-tabs-nav-list {
+      .@{ant-prefix}-tabs-tab:first-child {
+        margin-left: @tabs-horizontal-gutter;
       }
     }
   }
+
   .@{ant-prefix}-list {
     max-height: 400px;
     overflow: auto;

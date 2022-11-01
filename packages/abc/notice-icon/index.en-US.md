@@ -17,6 +17,7 @@ Used on the navigation toolbar as a unified notification center for the entire p
 | `[data]` | Data | `NoticeItem[]` | - |
 | `[count]` | Total number of messages on the icon | `number` | - |
 | `[loading]` | Pop up card loading status | `boolean` | `false` |
+| `[centered]` | Whether the tab is centered | `boolean` | `false` |
 | `(select)` | Click the callback of the list item | `EventEmitter<NoticeIconSelect>` | - |
 | `(clear)` | Callback for clicking the clear button | `EventEmitter<string>` | - |
 | `[popoverVisible]` | Manual control of Popover display | `boolean` | `false` |
