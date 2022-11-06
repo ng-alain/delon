@@ -51,6 +51,14 @@ describe('utils: lazy', () => {
     doc = TestBed.inject(DOCUMENT);
   });
 
+  it('should be load via LazyLoadItem', () => {
+    const res: NzSafeAny = {};
+    const content = 'var a = 1;';
+    spyOn(doc, 'createElement').and.callFake(() => res);
+    srv.load([{ path: '1.js', options: { innerContent: content } }]);
+    expect(res.innerHTML).toBe(content);
+  });
+
   describe('Scripts', () => {
     it('should be load a js resource', done => {
       srv.change
@@ -66,7 +74,7 @@ describe('utils: lazy', () => {
       const res: NzSafeAny = {};
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);
-      srv.loadScript('/1.js', content);
+      srv.loadScript('/1.js', { innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
   });
@@ -80,7 +88,7 @@ describe('utils: lazy', () => {
       srv.load('/1.css');
     });
     it('should be load a less resource', done => {
-      srv.loadStyle('/1.less', 'stylesheet/less').then(res => {
+      srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then(res => {
         expect(res.status).toBe('ok');
         done();
       });
@@ -91,7 +99,7 @@ describe('utils: lazy', () => {
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);
-      srv.loadStyle('/1.js', 'stylesheet/less', content);
+      srv.loadStyle('/1.js', { rel: 'stylesheet/less', innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
   });
@@ -127,5 +135,18 @@ describe('utils: lazy', () => {
       done();
     });
     srv.load('/3.js');
+  });
+
+  describe('#attributes', () => {
+    it('should be working', () => {
+      const res: NzSafeAny = {
+        setAttribute(key: string, value: string): void {
+          res[key] = value;
+        }
+      };
+      spyOn(doc, 'createElement').and.callFake(() => res);
+      srv.loadScript('/1.js', { innerContent: '', attributes: { a: 'b' } });
+      expect(res.a).toBe('b');
+    });
   });
 });
