@@ -54,4 +54,11 @@ describe('Schematic: sta', () => {
     const tsConfig = tree.readContent(`tsconfig.json`);
     expect(tsConfig).toContain(`@sta`);
   });
+
+  it('#tagsMapping', async () => {
+    tree = await runner.runSchematicAsync('sta', { spec: SPEC, tagsMapping: { user: 'AA' } }, tree).toPromise();
+    const newModulePath = '/projects/foo/src/app/_sta/AA/service.ts';
+    expect(tree.exists(newModulePath)).toBe(true);
+    expect(tree.readContent(newModulePath)).toContain(`export class AaService`);
+  });
 });

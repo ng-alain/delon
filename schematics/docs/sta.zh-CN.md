@@ -29,6 +29,27 @@ ng g ng-alain:sta --name=<Swagger name> --url=<远程URL地址> --filePath=<本�
 | `modelTypePrefix` | - | 数据契约名称前缀 |
 | `httpClientType` | `delon` | HttpClient 请求方式，1. `delon` 使用 `@delon/theme` 的 `_HttpClient`，2. `angular` 使用 `HttpClient` |
 | `generateApiOptions` | - | swagger-typescript-api [options](https://github.com/acacode/swagger-typescript-api#-usage) |
+| `tagsMapping` | - | Swagger标签映射字典，当标签为中文时，可以指定用于转换成更加符合规范 Service 名 |
+
+## 使用配置文件
+
+在项目根目录增加 `sta.json`：
+
+```json
+{
+  "$schema": "./node_modules/ng-alain/sta/schema.json",
+  "filePath": "swagger.json",
+  "tagsMapping": {
+    "部门": "Dept"
+  }
+}
+```
+
+执行：
+
+```bash
+ng g ng-alain:sta
+```
 
 ## 常见问题
 
