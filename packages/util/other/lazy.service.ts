@@ -80,7 +80,7 @@ export class LazyService {
   }
 
   /**
-   * @deprecated Please use `loadScript(path, options)` instead
+   * @deprecated Will be removed in 15.0.0, Please use `loadScript(path, options)` instead
    */
   loadScript(path: string, innerContent: string, attributes?: { [qualifiedName: string]: string }): Promise<LazyResult>;
   /**
@@ -135,7 +135,7 @@ export class LazyService {
   }
 
   /**
-   * @deprecated Please use `loadStyle(path, options)` instead
+   * @deprecated Will be removed in 15.0.0, Please use `loadStyle(path, options)` instead
    */
   loadStyle(
     path: string,
