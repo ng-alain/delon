@@ -20,7 +20,11 @@ stages:
   jobs:
     - job: build
       steps:
-        - script: yarn install
+        - script: |
+            node --version
+            yarn --version
+            yarn config list
+            yarn install
           displayName: 'Install'
         - task: Bash@3
           env:
@@ -36,8 +40,6 @@ stages:
             ACCESS_REPO: $(ACCESS_REPO)
             ACCESS_TOKEN: $(ACCESS_TOKEN)
         - script: |
-            node --version
-            yarn --version
             yarn run site:build
           displayName: 'Build site'
         - script: |
