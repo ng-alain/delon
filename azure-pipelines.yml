@@ -37,6 +37,8 @@ stages:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: |
+              node --version
+              yarn --version
               yarn run site:build
             displayName: 'Build site'
           - script: |
