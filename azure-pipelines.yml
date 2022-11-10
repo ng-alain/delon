@@ -20,6 +20,10 @@ stages:
     jobs:
       - job: build
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '14.17.0'
+            displayName: 'Install Node.js'
           - script: |
               node --version
               yarn --version
