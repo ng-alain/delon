@@ -24,7 +24,6 @@ stages:
               node --version
               yarn --version
               yarn config list
-              yarn ng-version
             displayName: 'Install'
           - task: Bash@3
             env:
