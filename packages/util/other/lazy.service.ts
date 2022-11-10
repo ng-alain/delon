@@ -57,7 +57,7 @@ export class LazyService {
   /**
    * Load script or style files
    */
-  load(paths: string | Array<string | LazyLoadItem>): Promise<LazyResult[]> {
+  load(paths: string | LazyLoadItem | Array<string | LazyLoadItem>): Promise<LazyResult[]> {
     if (!Array.isArray(paths)) {
       paths = [paths];
     }
