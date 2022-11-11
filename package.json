@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "14.1.1",
+  "version": "14.2.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://ng-alain.com",
   "engines": {
-    "node": "^14.15.5 || ^16.10.0",
+    "node": "^14.15.5 || ^16.10.0 || ^18.10.0",
     "yarn": ">=1.21.1 <2",
     "npm": "Please use yarn instead of NPM to install dependencies"
   },

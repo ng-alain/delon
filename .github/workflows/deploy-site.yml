@@ -7,6 +7,10 @@ jobs:
     if: "startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14.17.0
+
       - name: checkout
         uses: actions/checkout@master
 
