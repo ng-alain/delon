@@ -80,9 +80,24 @@
     }
   }
   // Title
-  .@{ant-prefix}-table-column-title {
-    display: flex;
-    align-items: center;
+  &__has-filter.@{ant-prefix}-table-column-has-sorters {
+    @st-th-icon-width: 12px;
+    @st-filter-and-sort-gutter: 4px;
+    @st-filter-icon-size: @st-th-icon-width + @st-filter-and-sort-gutter;
+    @st-sort-size: @st-th-icon-width + @st-filter-and-sort-gutter;
+
+    .@{ant-prefix}-table-column-sorters {
+      padding-right: @st-filter-icon-size;
+    }
+    @{st-prefix}__filter {
+      position: absolute;
+      top: 0;
+      right: -(@st-sort-size + @st-filter-icon-size);
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+    }
   }
 
   &__head {

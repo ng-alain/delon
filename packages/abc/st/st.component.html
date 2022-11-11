@@ -72,7 +72,8 @@
           [nzShowSort]="_c._sort.enabled"
           [nzSortOrder]="$any(_c)._sort.default"
           (nzSortOrderChange)="sort(_c, index, $event)"
-          [nzCustomFilter]="$any(_c).filter"
+          [nzCustomFilter]="!!_c.filter"
+          [class.st__has-filter]="_c.filter"
           nz-resizable
           [nzDisabled]="last || $any(_c).resizable.disabled"
           [nzMaxWidth]="$any(_c).resizable.maxWidth"
