@@ -558,6 +558,31 @@ describe('abc: st', () => {
               mock$.unsubscribe();
               page.asyncEnd();
             }));
+            it('recoard is pure', fakeAsync(() => {
+              const columns: STColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    {
+                      text: 'a',
+                      type: 'static',
+                      click: jasmine.createSpy(),
+                      modal: {
+                        component: {}
+                      }
+                    }
+                  ]
+                }
+              ];
+              context.comp.cog.modal!.pureRecoard = true;
+              const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
+              const mock$ = new Subject();
+              const spy = spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
+              page.updateColumn(columns);
+              page.clickCell('a');
+              expect(spy.calls.first().args[1].record._values).not.toBeDefined();
+              page.asyncEnd();
+            }));
           });
           describe('#drawer', () => {
             it('is normal mode', fakeAsync(() => {
@@ -588,6 +613,31 @@ describe('abc: st', () => {
               mock$.next({});
               expect(columns[0].buttons![0].click).toHaveBeenCalled();
               mock$.unsubscribe();
+              page.asyncEnd();
+            }));
+            it('recoard is pure', fakeAsync(() => {
+              const columns: STColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    {
+                      text: 'a',
+                      type: 'drawer',
+                      click: jasmine.createSpy(),
+                      drawer: {
+                        component: {}
+                      }
+                    }
+                  ]
+                }
+              ];
+              context.comp.cog.drawer!.pureRecoard = true;
+              const drawerHelp = TestBed.inject<DrawerHelper>(DrawerHelper);
+              const mock$ = new Subject();
+              const spy = spyOn(drawerHelp, 'create').and.callFake(() => mock$);
+              page.updateColumn(columns);
+              page.clickCell('a');
+              expect(spy.calls.first().args[2].record._values).not.toBeDefined();
               page.asyncEnd();
             }));
           });
