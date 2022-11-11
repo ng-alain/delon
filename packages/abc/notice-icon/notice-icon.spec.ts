@@ -98,6 +98,15 @@ describe('abc: notice-icon', () => {
         done();
       }, CLICKTIME);
     });
+    it('#centered', done => {
+      context.centered = true;
+      context.popoverVisible = true;
+      fixture.detectChanges();
+      setTimeout(() => {
+        expect(document.querySelectorAll('.notice-icon__tab-left').length).toBe(0);
+        done();
+      }, CLICKTIME);
+    });
   });
 
   it('#i18n', done => {
@@ -123,6 +132,7 @@ describe('abc: notice-icon', () => {
       [data]="data"
       [count]="count"
       [loading]="loading"
+      [centered]="centered"
       (select)="select($event)"
       (clear)="clear($event)"
       [(popoverVisible)]="popoverVisible"
@@ -178,6 +188,7 @@ class TestComponent {
   ];
   count = 10;
   loading = false;
+  centered = false;
   popoverVisible?: boolean;
   select(): void {}
   clear(): void {}

@@ -15,7 +15,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { I18NService, StartupService } from '@core';
 import { NgxTinymceModule } from 'ngx-tinymce';
-import { UEditorModule } from 'ngx-ueditor';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
@@ -73,16 +72,6 @@ function registerElements(injector: Injector, platformId: {}): void {
     ExampleModule,
     NgxTinymceModule.forRoot({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
-    }),
-    UEditorModule.forRoot({
-      // **注：** 建议使用本地路径；以下为了减少 ng-alain 脚手架的包体大小引用了CDN，可能会有部分功能受影响
-      js: [
-        `//apps.bdimg.com/libs/ueditor/1.4.3.1/ueditor.config.js`,
-        `//apps.bdimg.com/libs/ueditor/1.4.3.1/ueditor.all.min.js`
-      ],
-      options: {
-        UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`
-      }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

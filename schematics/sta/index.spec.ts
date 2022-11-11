@@ -46,13 +46,19 @@ describe('Schematic: sta', () => {
 
   beforeEach(async () => ({ runner, tree } = await createAlainAndModuleApp()));
 
-  // TODO: https://github.com/acacode/swagger-typescript-api/issues/370
-  xit('should be working', async () => {
+  it('should be working', async () => {
     await run();
     [`_base.service.ts`, `models.ts`, `index.ts`].forEach(name => {
       expect(tree.exists(`/projects/foo/src/app/_sta/${name}`)).toBe(true);
     });
     const tsConfig = tree.readContent(`tsconfig.json`);
     expect(tsConfig).toContain(`@sta`);
+  });
+
+  it('#tagsMapping', async () => {
+    tree = await runner.runSchematicAsync('sta', { spec: SPEC, tagsMapping: { user: 'AA' } }, tree).toPromise();
+    const newModulePath = '/projects/foo/src/app/_sta/AA/service.ts';
+    expect(tree.exists(newModulePath)).toBe(true);
+    expect(tree.readContent(newModulePath)).toContain(`export class AaService`);
   });
 });

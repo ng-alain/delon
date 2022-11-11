@@ -14,6 +14,7 @@
     "xlsx",
     "plyr",
     "pdfjs-dist",
+    "@github/hotkey",
     "ngx-countdown",
     "@delon/theme",
     "@delon/util",

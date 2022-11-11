@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 
 import { LocaleData } from '@delon/theme';
 
@@ -17,7 +25,7 @@ import { _STColumn } from './st.types';
       [nzClickHide]="false"
       [(nzVisible)]="visible"
       nzOverlayClassName="st__filter-wrap"
-      (click)="show($event)"
+      (click)="stopPropagation($event)"
     >
       <i nz-icon [nzType]="icon.type" [nzTheme]="icon.theme!"></i>
     </span>
@@ -74,7 +82,7 @@ import { _STColumn } from './st.types';
           <div *ngSwitchCase="'custom'" class="st__filter-custom">
             <ng-template
               [ngTemplateOutlet]="f.custom!"
-              [ngTemplateOutletContext]="{ $implicit: f, col: col }"
+              [ngTemplateOutletContext]="{ $implicit: f, col: col, handle: this }"
             ></ng-template>
           </div>
           <ul *ngSwitchDefault nz-menu>
@@ -95,11 +103,11 @@ import { _STColumn } from './st.types';
           </ul>
         </ng-container>
         <div *ngIf="f.showOPArea" class="ant-table-filter-dropdown-btns">
-          <a class="ant-table-filter-dropdown-link confirm" (click)="visible = false">
-            <span (click)="confirm()">{{ f.confirmText || locale.filterConfirm }}</span>
+          <a class="ant-table-filter-dropdown-link confirm" (click)="confirm()">
+            <span>{{ f.confirmText || locale.filterConfirm }}</span>
           </a>
-          <a class="ant-table-filter-dropdown-link clear" (click)="visible = false">
-            <span (click)="reset()">{{ f.clearText || locale.filterReset }}</span>
+          <a class="ant-table-filter-dropdown-link clear" (click)="reset()">
+            <span>{{ f.clearText || locale.filterReset }}</span>
           </a>
         </div>
       </div>
@@ -125,7 +133,9 @@ export class STFilterComponent {
     return this.f.icon as STIcon;
   }
 
-  show($event: MouseEvent): void {
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  stopPropagation($event: MouseEvent): void {
     $event.stopPropagation();
   }
 
@@ -139,11 +149,20 @@ export class STFilterComponent {
     this.n.emit(item);
   }
 
-  confirm(): void {
-    this.handle.emit(true);
+  close(result?: boolean): void {
+    if (result != null) this.handle.emit(result);
+
+    this.visible = false;
+    this.cdr.detectChanges();
   }
 
-  reset(): void {
+  confirm(): this {
+    this.handle.emit(true);
+    return this;
+  }
+
+  reset(): this {
     this.handle.emit(false);
+    return this;
   }
 }

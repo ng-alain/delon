@@ -28,7 +28,6 @@ DEPENDENCIES=$(node -p "
     '@antv/g2',
     'echarts',
     'ng-zorro-antd',
-    'ngx-ueditor',
     'ngx-tinymce',
     'ngx-countdown',
     'ng-alain-sts',
@@ -53,7 +52,8 @@ DEPENDENCIES=$(node -p "
     'husky',
     'lint-staged',
     'rxjs',
-    'swagger-typescript-api'
+    'swagger-typescript-api',
+    '@github/hotkey'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")

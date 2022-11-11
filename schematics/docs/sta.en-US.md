@@ -29,6 +29,27 @@ ng g ng-alain:sta --name=<Swagger name> --url=<Remote URL> --filePath=<Local Swa
 | `modelTypePrefix` | - | Model name prefix |
 | `httpClientType` | `delon` | HttpClient request method, 1. `delon` use `_HttpClient` of `@delon/theme`, 2. `angular` use `HttpClient` |
 | `generateApiOptions` | - | swagger-typescript-api [options](https://github.com/acacode/swagger-typescript-api#-usage) |
+| `tagsMapping` | - | Swagger tag mapping dictionary |
+
+## Use config file
+
+Add `sta.json` to the project root directory:
+
+````json
+{
+  "$schema": "./node_modules/ng-alain/sta/schema.json",
+  "filePath": "swagger.json",
+  "tagsMapping": {
+    "部门": "Dept"
+  }
+}
+````
+
+Run:
+
+```bash
+ng g ng-alain:sta
+````
 
 ## FAQ
 

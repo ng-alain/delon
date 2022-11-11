@@ -17,6 +17,7 @@ module: import { NoticeIconModule } from '@delon/abc/notice-icon';
 | `[data]` | 数据 | `NoticeItem[]` | - |
 | `[count]` | 图标上的消息总数 | `number` | - |
 | `[loading]` | 弹出卡片加载状态 | `boolean` | `false` |
+| `[centered]` | 标签页是否居中 | `boolean` | `false` |
 | `(select)` | 点击列表项的回调 | `EventEmitter<NoticeIconSelect>` | - |
 | `(clear)` | 点击清空按钮的回调 | `EventEmitter<string>` | - |
 | `[popoverVisible]` | 手动控制Popover显示 | `boolean` | `false` |

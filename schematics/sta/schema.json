@@ -47,6 +47,13 @@
         { "type": "string", "default": "{}" },
         { "type": "object" }
       ]
+    },
+    "tagsMapping": {
+      "type": "object",
+      "description": "Swagger tag mapping dictionary",
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   }
 }

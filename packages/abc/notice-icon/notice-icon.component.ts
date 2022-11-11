@@ -31,6 +31,7 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_count: NumberInput;
   static ngAcceptInputType_loading: BooleanInput;
   static ngAcceptInputType_popoverVisible: BooleanInput;
+  static ngAcceptInputType_centered: BooleanInput;
 
   private i18n$!: Subscription;
   locale: LocaleData = {};
@@ -41,9 +42,14 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() popoverVisible = false;
   @Input() btnClass?: NgClassType;
   @Input() btnIconClass?: NgClassType;
+  @Input() @InputBoolean() centered = false;
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
+
+  get overlayCls(): string {
+    return `header-dropdown notice-icon${!this.centered ? ' notice-icon__tab-left' : ''}`;
+  }
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 

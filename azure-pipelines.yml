@@ -17,11 +17,18 @@ stages:
             displayName: 'Install Node.js'
 
   - stage: build
-    dependsOn: env
     jobs:
       - job: build
         steps:
-          - script: yarn install
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '14.17.0'
+            displayName: 'Install Node.js'
+          - script: |
+              node --version
+              yarn --version
+              yarn config list
+              yarn install
             displayName: 'Install'
           - task: Bash@3
             env:
@@ -73,9 +80,9 @@ stages:
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
+    dependsOn: env
 
   - stage: test
-    dependsOn: env
     jobs:
       - job: packages
         steps:
@@ -110,12 +117,13 @@ stages:
           - script: yarn install
             displayName: 'Install'
           - script: yarn run test:cli
+    dependsOn: env
 
   - stage: lint
-    dependsOn: env
     jobs:
       - job: packages
         steps:
           - script: yarn install
             displayName: 'Install'
           - script: yarn run lint
+    dependsOn: env

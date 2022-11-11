@@ -320,7 +320,7 @@ class TestComponent {
 | `[clearText]` | Text of the clear button | `string` | - |
 | `[key]` | Unique key of this column, default is `index` property value | `string` | - |
 | `[reName]` | Map name | `(list: STColumnFilterMenu[], col: STColumn) => Object` | - |
-| `[custom]` | Custom template | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn }>` | - |
+| `[custom]` | Custom template | `TemplateRef<{ $implicit: STColumnFilter; col: STColumn; handle: STColumnFilterHandle }>` | - |
 | `[showOPArea]` | Whether to display the operation area | `boolean` | `true` |
 | `[placeholder]` | placeholder | `boolean` | `true` |
 | `[number]` | Option for the type is `number` | `Object` | - |

@@ -511,6 +511,43 @@ describe('form: schema', () => {
       page.typeChar('t2', '.vi-t2 input');
       page.checkCount('.vi-show', 1);
     }));
+    it('in array', () => {
+      page
+        .newSchema({
+          properties: {
+            list: {
+              type: 'array',
+              minItems: 1,
+              items: {
+                type: 'object',
+                properties: {
+                  type: {
+                    type: 'string',
+                    title: 'type',
+                    ui: { class: 'j-type' }
+                  },
+                  value: {
+                    type: 'string',
+                    title: 'value',
+                    ui: {
+                      visibleIf: {
+                        type: (val: string) => val === '1'
+                      },
+                      class: 'j-value'
+                    }
+                  }
+                }
+              },
+              default: [{}]
+            }
+          }
+        })
+        .checkCount('.j-type', 1)
+        .checkCount('.j-value', 0)
+        .setValue('/list/0/type', '1')
+        .checkCount('.j-type', 1)
+        .checkCount('.j-value', 1);
+    });
   });
 
   describe('[order]', () => {

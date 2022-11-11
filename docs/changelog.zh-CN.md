@@ -14,6 +14,30 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [14.1.1](https://github.com/ng-alain/delon/compare/14.1.0...14.1.1) (2022-10-14)
+
+### Bug Fixes
+
+* **form:** 修复可显会引发多次绑定 ([#1531](https://github.com/ng-alain/delon/issues/1531)) ([a4e62ef](https://github.com/ng-alain/delon/commit/a4e62ef49b31f42beb850eb02aa53de536165df8))
+* **form:** 修复丢失错误样式 ([#1537](https://github.com/ng-alain/delon/issues/1537)) ([14a7388](https://github.com/ng-alain/delon/commit/14a7388443805ed1f06e2ed81008ab51547e4c75))
+
+
+## [14.1.0](https://github.com/ng-alain/delon/compare/14.0.0...14.0.1) (2022-10-09)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复无法刷新当前页 ([#1529](https://github.com/ng-alain/delon/issues/1529)) ([2fb2d2b](https://github.com/ng-alain/delon/commit/2fb2d2b3af7c10255c0f0b4c82a823cee6c2c1d9))
+* **abc:st:** 修复当指定 `className` 时导致内置样式失效 ([#1525](https://github.com/ng-alain/delon/issues/1525)) ([b9e433d](https://github.com/ng-alain/delon/commit/b9e433da4a5d9fc0e88e5707753be4a8a3821a61))
+* **abc:st:** 修复 `showOPArea` 为 `true` 时无法关闭面板 ([#1527](https://github.com/ng-alain/delon/issues/1527)) ([7d8fbf5](https://github.com/ng-alain/delon/commit/7d8fbf56e369cb58ef189f5df41f8020369ca8b9))
+* **abc:st:** 修复子菜单下点击空白区域无法触发事件 ([#1534](https://github.com/ng-alain/delon/issues/1534)) ([a807429](https://github.com/ng-alain/delon/commit/a80742910dfd1e4ce1e9c184469e49422ffb1a63))
+* **cli:** 修复初始化NG-ALAIN时 `startup.service.ts` 不正确返回 `undefined` ([#1533](https://github.com/ng-alain/delon/issues/1533)) ([8b0be4c](https://github.com/ng-alain/delon/commit/8b0be4ca90b28a311262e000a27d5180015ce533))
+* **cli:** 修复多余 `allowedCommonJsDependencies` 项 ([#1526](https://github.com/ng-alain/delon/issues/1526)) ([c43afb8](https://github.com/ng-alain/delon/commit/c43afb837e2619d1d92067c3fce78234ad5c814e))
+
+### Features
+
+* **cli:** 新增动态启动页 ([#1524](https://github.com/ng-alain/delon/issues/1524)) ([1e1c165](https://github.com/ng-alain/delon/commit/1e1c165c97a3ebef427a8558f474366bac75651f))
+
+
 # [14.0.0](https://github.com/ng-alain/delon/compare/13.5.2...14.0.0) (2022-08-27)
 
 ### Bug Fixes

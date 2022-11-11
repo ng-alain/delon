@@ -225,6 +225,8 @@ export class STColumnSource {
           ...res.date
         };
         break;
+      case 'custom':
+        break;
       default:
         fixMenus = false;
         break;
@@ -394,7 +396,6 @@ export class STColumnSource {
     const arrayClassNames = rawClassNameIsArray ? Array.from(rawClassName as string[]) : [rawClassName];
     arrayClassNames.splice(0, 0, ...builtInClassNames);
     item._className = [...new Set(arrayClassNames)].filter(w => !!w);
-    console.log(arrayClassNames);
   }
 
   process(
