@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "hotkey",
+    "entryFile": "public_api.ts"
+  }
+}
