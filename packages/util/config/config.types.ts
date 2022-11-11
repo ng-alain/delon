@@ -3,6 +3,7 @@ import { InjectionToken } from '@angular/core';
 import {
   AlainDateRangePickerConfig,
   AlainErrorCollectConfig,
+  AlainExceptionType,
   AlainImageConfig,
   AlainLoadingConfig,
   AlainLodopConfig,
@@ -30,6 +31,7 @@ import { AlainUtilCurrencyConfig } from './util/currency.type';
 
 export interface AlainConfig {
   dataRange?: AlainDateRangePickerConfig;
+  exception?: AlainExceptionType;
   errorCollect?: AlainErrorCollectConfig;
   image?: AlainImageConfig;
   loading?: AlainLoadingConfig;

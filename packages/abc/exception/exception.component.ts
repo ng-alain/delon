@@ -16,6 +16,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
+import { AlainConfigService } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type ExceptionType = 403 | 404 | 500;
@@ -46,24 +47,11 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   _img: SafeUrl = '';
   _title: SafeHtml = '';
   _desc: SafeHtml = '';
+  private typeDict!: { [key: number | string]: { img: string; title: string; desc?: string } };
 
   @Input()
   set type(value: ExceptionType) {
-    const item: { img: string; title: string } = {
-      403: {
-        img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
-        title: '403'
-      },
-      404: {
-        img: 'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
-        title: '404'
-      },
-      500: {
-        img: 'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
-        title: '500'
-      }
-    }[value];
-
+    const item = this.typeDict[value];
     if (!item) return;
 
     this.fixImg(item.img);
@@ -101,9 +89,27 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   constructor(
     private i18n: DelonLocaleService,
     private dom: DomSanitizer,
+    configSrv: AlainConfigService,
     @Optional() private directionality: Directionality,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    configSrv.attach(this, 'exception', {
+      typeDict: {
+        403: {
+          img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
+          title: '403'
+        },
+        404: {
+          img: 'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
+          title: '404'
+        },
+        500: {
+          img: 'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
+          title: '500'
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
