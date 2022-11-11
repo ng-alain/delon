@@ -14,6 +14,28 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [14.2.0](https://github.com/ng-alain/delon/compare/14.1.1...14.2.0) (2022-11-11)
+
+### Scaffold
+
+* 添加按 `F1` 顶部搜索框获得焦点 ([#2314](https://github.com/ng-alain/ng-alain/pull/2314))
+
+### Bug Fixes
+
+* **abc:st:** 修复设置排序时居中失效 ([#1547](https://github.com/ng-alain/delon/issues/1547)) ([86c8ca1](https://github.com/ng-alain/delon/commit/86c8ca188f4398c30b69877b8c8874ad5b71d096))
+* **abc:st:** 修复 modal 参数支持返回纯净数据（过滤 `_values` 等） ([#1541](https://github.com/ng-alain/delon/issues/1541)) ([04e97f1](https://github.com/ng-alain/delon/commit/04e97f1aa1fbc4e883bea8c8abdde462f068df95))
+* **cli:** 更新 `ng-alain-plugin-theme` ([#1545](https://github.com/ng-alain/delon/issues/1545)) ([591b604](https://github.com/ng-alain/delon/commit/591b60493d777e10bfd1b820d02b3f3151ff29fd))
+
+### Features
+
+* **theme:setting-drawer:** 新增 `lessJs` 属性 ([#1544](https://github.com/ng-alain/delon/issues/1544)) ([9c5a1da](https://github.com/ng-alain/delon/commit/9c5a1da6b84e786ee7ba0051bebd6effb10ef083))
+* **abc:exception:** 新增全局配置项 `typeDict` ([#1551](https://github.com/ng-alain/delon/issues/1551)) ([a408cbb](https://github.com/ng-alain/delon/commit/a408cbb0b5724221d9f9540c28226986ba43502d))
+* **abc:hotkey:** 新增 `hotkey` 热键组件 ([#1538](https://github.com/ng-alain/delon/issues/1538)) ([6913f01](https://github.com/ng-alain/delon/commit/6913f01f00f06c778cf454a8662fb48231c04377))
+* **abc:notice-icon:** 新增 `centered` 属性 ([#1546](https://github.com/ng-alain/delon/issues/1546)) ([df01dcc](https://github.com/ng-alain/delon/commit/df01dcc6c51e8bf6a13cfa1bf1a51f691ae87a7d))
+* **cli:sta:** 新增 `tagsMapping` 属性，支持只 Tags 映射转换 ([#1549](https://github.com/ng-alain/delon/issues/1549)) ([4ed1aa4](https://github.com/ng-alain/delon/commit/4ed1aa4c677ebc572c6df1337a75e29c76d869ae))
+* **util:other:lazy:** 新增 `attriburte` 属性，支持自定义 `script` 或 `link` 属性 ([#1548](https://github.com/ng-alain/delon/issues/1548)) ([a197bb1](https://github.com/ng-alain/delon/commit/a197bb1453b72b5645878dedd55f17d3436f93ae))
+
+
 ## [14.1.1](https://github.com/ng-alain/delon/compare/14.1.0...14.1.1) (2022-10-14)
 
 ### Bug Fixes
