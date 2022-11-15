@@ -1,4 +1,5 @@
 <div
+  *ngIf="!hideLabel"
   class="sv__label"
   [class.sv__label-empty]="!label"
   [class.sv__label-width]="labelWidth !== null && labelWidth !== undefined"

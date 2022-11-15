@@ -37,6 +37,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
 | `[optionalHelpColor]` | The background color of label optional help	 | `string` | - |
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
+| `[hideLabel]` | Whether to hide the current label | `boolean` | `false` |
 
 ### sv-title
 

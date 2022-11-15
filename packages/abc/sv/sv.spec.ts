@@ -174,6 +174,11 @@ describe('abc: view', () => {
           fixture.detectChanges();
           page.expect(`${prefixCls}type-danger`);
         });
+        it('#hideLabel', () => {
+          context.hideLabel = true;
+          fixture.detectChanges();
+          page.expect(`${prefixCls}item ${prefixCls}label`, 0);
+        });
       });
     });
   });
@@ -254,6 +259,7 @@ describe('abc: view', () => {
         [unit]="unit"
         [optional]="optional"
         [optionalHelp]="optionalHelp"
+        [hideLabel]="hideLabel"
       >
         {{ content }}
       </sv>
@@ -285,4 +291,5 @@ class TestComponent {
   default?: boolean;
   unit?: string;
   type?: 'primary' | 'success' | 'danger' | 'warning';
+  hideLabel = false;
 }

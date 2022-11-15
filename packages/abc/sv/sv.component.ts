@@ -37,6 +37,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
+  static ngAcceptInputType_hideLabel: BooleanInput;
 
   @ViewChild('conEl', { static: false })
   private conEl!: ElementRef;
@@ -55,6 +56,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   @Input() @InputBoolean(null) default?: boolean | null;
   @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
   @Input() @InputBoolean(null) noColon?: boolean | null;
+  @Input() @InputBoolean() hideLabel = false;
 
   // #endregion
 
