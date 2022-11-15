@@ -15,6 +15,8 @@ Use `labelWidth` to make the layout look cleaner
 
 ```ts
 import { Component } from '@angular/core';
+
+import { STColumn } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -34,10 +36,15 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         </ng-template>
         Custom label
       </sv>
+      <sv hideLabel col="1">
+        <st [columns]="columns" size="small"></st>
+      </sv>
     </sv-container>
-  `,
+  `
 })
 export class DemoComponent {
+  columns: STColumn[] = [{ title: 'id' }];
+
   constructor(public msg: NzMessageService) {}
 }
 ```

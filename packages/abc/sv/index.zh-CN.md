@@ -37,6 +37,7 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | - |
 | `[optionalHelpColor]` | 标签可选帮助背景颜色	 | `string` | - |
 | `[noColon]` | 是否不显示 label 后面的冒号 | `boolean` | `false` | - |
+| `[hideLabel]` | 是否隐藏当前 `label` | `boolean` | `false` |
 
 ### sv-title
 
