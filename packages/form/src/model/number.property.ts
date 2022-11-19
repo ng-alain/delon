@@ -15,6 +15,7 @@ export class NumberProperty extends AtomicProperty {
       }
     }
     this._value = value;
+    this.widget.detectChanges(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 }
