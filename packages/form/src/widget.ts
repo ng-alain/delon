@@ -40,7 +40,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   }
 
   get l(): LocaleData {
-    return this.formProperty.root.widget.sfComp!.locale;
+    return this.formProperty.root.widget!.sfComp!.locale;
   }
 
   get oh(): SFOptionalHelp {
@@ -95,7 +95,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     if (onlySelf) {
       this.cd.markForCheck();
     } else {
-      this.formProperty.root.widget.cd.markForCheck();
+      this.formProperty.root.widget?.cd.markForCheck();
     }
   }
 

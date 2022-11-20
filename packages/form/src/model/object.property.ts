@@ -58,7 +58,7 @@ export class ObjectProperty extends PropertyGroup {
         (properties[propertyId] as FormProperty).setValue(value[propertyId], true);
       }
     }
-    this.widget.detectChanges(onlySelf);
+    this.cd(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
@@ -70,7 +70,7 @@ export class ObjectProperty extends PropertyGroup {
         properties[propertyId].resetValue(value[propertyId], true);
       }
     }
-    this.widget.detectChanges(onlySelf);
+    this.cd(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
