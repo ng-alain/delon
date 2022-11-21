@@ -28,7 +28,7 @@ export abstract class FormProperty {
   ui: SFUISchema | SFUISchemaItemRun;
   formData: Record<string, unknown>;
   _value: SFValue = null;
-  widget?: Widget<FormProperty, SFUISchemaItem>;
+  widget!: Widget<FormProperty, SFUISchemaItem>;
   path: string;
   propertyId?: string;
 
