@@ -30,7 +30,7 @@ describe('Pipe: price', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | price: options }}</p> `
+  template: ` <p id="result">{{ value | price : options }}</p> `
 })
 class TestComponent {
   value?: number;
