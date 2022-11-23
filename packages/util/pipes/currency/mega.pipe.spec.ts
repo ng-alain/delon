@@ -48,7 +48,7 @@ describe('Pipe: mega', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | mega: options }}</p> `
+  template: ` <p id="result">{{ value | mega : options }}</p> `
 })
 class TestComponent {
   value?: number;
