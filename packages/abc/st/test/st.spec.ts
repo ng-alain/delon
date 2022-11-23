@@ -1435,7 +1435,7 @@ describe('abc: st', () => {
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50 }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`td.text-truncate`, context.comp._data.length)
+            .expectElCount(`td.text-truncate`, context.comp._data.length + 1) // include thead
             .asyncEnd();
         }));
         it('should be ingore add text-truncate class when className is non-empty', fakeAsync(() => {
@@ -1444,7 +1444,7 @@ describe('abc: st', () => {
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`.text-truncate`, context.comp._data.length)
+            .expectElCount(`.text-truncate`, context.comp._data.length + 1) // include thead
             .expectElCount(`td.aaaa`, context.comp._data.length)
             .asyncEnd();
         }));
