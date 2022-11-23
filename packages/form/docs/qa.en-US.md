@@ -108,6 +108,12 @@ statusProperty.widget.reset('2');
 // statusProperty.widget.detectChanges();
 ```
 
+If just only update a element value, then:
+
+```ts
+this.sf.getProperty('/name')?.setValue('new name');
+```
+
 ## Why can't verify `required`
 
 Added [strict](https://ajv.js.org/options.html#strict-mode-options) mode from Ajv 7.x, and the default is `true`, when the most basic `required` is not correct When verifying, the high probability is that the Schema contains information that does not conform to the Json Schema format. This can be verified through the `debug` mode:
