@@ -12,7 +12,7 @@ describe('form: widget: custom', () => {
   };
 
   function detectChanges(path: string = '/a'): SFPage {
-    context.comp.rootProperty!.searchProperty(path)!.widget.detectChanges();
+    context.comp.rootProperty!.searchProperty(path)?.cd(true);
     fixture.detectChanges();
     return page;
   }

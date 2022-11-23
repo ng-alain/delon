@@ -108,6 +108,12 @@ statusProperty.widget.reset('2');
 // statusProperty.widget.detectChanges();
 ```
 
+如果单纯更新某个元素数据，则：
+
+```ts
+this.sf.getProperty('/name')?.setValue('new name');
+```
+
 ## 为什么无法校验 `required`
 
 从 Ajv 7.x 新增 [strict](https://ajv.js.org/options.html#strict-mode-options) 模式，并且默认为 `true`，当最基本的 `required` 都无法正确校验时，那大概率就是因为 Schema 包含了不符合 Json Schema 格式的信息，可以通过 `debug` 模式验证这一点：

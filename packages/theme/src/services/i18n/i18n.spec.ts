@@ -151,7 +151,7 @@ describe('theme: i18n', () => {
 @Component({
   template: `
     <div id="simple">{{ key | i18n }}</div>
-    <div id="param">{{ key | i18n: params }}</div>
+    <div id="param">{{ key | i18n : params }}</div>
   `
 })
 class TestComponent {
