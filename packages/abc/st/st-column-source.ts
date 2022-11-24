@@ -402,8 +402,9 @@ export class STColumnSource {
     list: STColumn[],
     options: STColumnSourceProcessOptions
   ): { columns: _STColumn[]; headers: _STHeader[][]; headerWidths: string[] | null } {
-    if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
-
+    if (!list || list.length === 0) {
+      return { columns: [], headers: [], headerWidths: null };
+    }
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;

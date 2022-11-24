@@ -49,15 +49,12 @@ describe('st: column-source', () => {
     page = new PageObject();
   }
 
-  it('should be throw error when is empty columns', () => {
-    expect(() => {
-      genModule({});
-      srv.process(null!, { widthMode: null!, resizable: {}, safeType: 'safeHtml' });
-    }).toThrow();
-    expect(() => {
-      genModule({});
-      srv.process([], options);
-    }).toThrow();
+  it('should be support empty columns', () => {
+    genModule({});
+    const res = srv.process([], options);
+    expect(res.columns.length).toBe(0);
+    expect(res.headers.length).toBe(0);
+    expect(res.headerWidths).toBe(null);
   });
 
   describe('[columns property]', () => {
