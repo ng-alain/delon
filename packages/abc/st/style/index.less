@@ -139,8 +139,10 @@
       }
     }
   }
-  // 修复无法显示阴影问题
-  .@{ant-prefix}-table {
+  // 若 `widthMode` 为 `truncate` 会导致固定列的阴影失效，其他情况不存在此情况
+  // 这里使用 `text-truncate` 来区分
+  // https://github.com/ng-alain/ng-alain/issues/2336
+  .text-truncate.@{ant-prefix}-table {
     &-cell-fix-left-first::after,
     &-cell-fix-left-last::after {
       transform: translateX(80%);
