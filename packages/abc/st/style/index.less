@@ -154,6 +154,16 @@
     }
   }
 
+  &__no-column {
+    .@{ant-prefix}-table {
+      height: @st-no-column-height;
+
+      &-content {
+        display: none;
+      }
+    }
+  }
+
   @media screen and (min-width: @nz-table-rep-min-width) {
     &__width {
       &-strict {
