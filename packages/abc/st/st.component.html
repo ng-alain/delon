@@ -33,7 +33,7 @@
   [nzFrontPagination]="false"
   [nzBordered]="bordered"
   [nzSize]="size"
-  [nzLoading]="_loading"
+  [nzLoading]="noColumns || _loading"
   [nzLoadingDelay]="loadingDelay"
   [nzLoadingIndicator]="loadingIndicator"
   [nzTitle]="header!"
@@ -54,6 +54,7 @@
   [nzShowTotal]="totalTpl"
   [nzWidthConfig]="_widthConfig"
   (contextmenu)="onContextmenu($event)"
+  [class.st__no-column]="noColumns"
 >
   <thead *ngIf="showHeader">
     <tr *ngFor="let row of _headers; let rowFirst = first">
