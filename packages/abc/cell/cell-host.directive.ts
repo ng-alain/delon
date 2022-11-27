@@ -5,7 +5,9 @@ import { warn } from '@delon/util/other';
 import { CellService } from './cell.service';
 import { CellWidgetData } from './cell.types';
 
-@Directive({ selector: '[cell-widget-host]' })
+@Directive({
+  selector: '[cell-widget-host]'
+})
 export class CellHostDirective implements OnInit {
   @Input() data!: CellWidgetData;
 

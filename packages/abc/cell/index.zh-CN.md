@@ -43,6 +43,8 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[html]` | HTML 配置 | `{ safe?: string }` | - |
 | `[badge]` | 徽章配置 | `{ data?: CellBadge }` | - |
 | `[tag]` | 标签配置 | `{ data?: CellTag }` | - |
+| `[checkbox]` | 复选框配置 | `{ label?: string }` | - |
+| `[radio]` | 单选框配置 | `{ label?: string }` | - |
 
 **渲染类型**
 
@@ -58,4 +60,6 @@ module: import { CellModule } from '@delon/abc/cell';
 - `html` HTML
 - `badge` 徽章
 - `tag` 标签
+- `checkbox` 复选框（支持 `disabled`）
+- `radio` 单选框（支持 `disabled`）
 - `widget` 自定义小部件

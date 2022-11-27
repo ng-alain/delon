@@ -112,8 +112,8 @@ export class CellService {
   get(value: unknown, options?: CellOptions): Observable<CellTextResult> {
     const type = this.genType(value, { ...options });
     const opt = this.fixOptions(options);
+    opt.type = type;
     let res: CellTextResult = {
-      type: 'string',
       result: typeof value === 'object' ? (value as CellTextUnit) : { text: value == null ? '' : `${value}` },
       options: opt
     };
@@ -126,7 +126,6 @@ export class CellService {
     return (typeof value === 'function' ? (value as CellFuValue)(value, opt) : of(res.result)).pipe(
       map(text => {
         res.result = text;
-        res.type = type;
         switch (type) {
           case 'badge':
             res.result = { color: 'default', ...(opt.badge?.data ?? {})[value as string] };

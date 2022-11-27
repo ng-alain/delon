@@ -52,4 +52,14 @@
     color: @cell-unit-color;
     font-size: @cell-unit-font-size;
   }
+
+  &__disabled {
+    &[data-type="link"] {
+      pointer-events: none;
+
+      > a {
+        color: @cell-link-disabled-color;
+      }
+    }
+  }
 }

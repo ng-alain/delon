@@ -19,7 +19,6 @@ export interface CellTextUnit {
 export type CellTextType = string | CellTextUnit | undefined | null;
 
 export interface CellTextResult {
-  type: CellType;
   result: CellTextUnit;
   safeHtml?: 'text' | 'html' | 'safeHtml';
   options: CellOptions;
@@ -47,6 +46,8 @@ export type CellType =
   | 'html'
   | 'badge'
   | 'tag'
+  | 'checkbox'
+  | 'radio'
   | 'widget';
 
 export interface CellOptions {
@@ -125,6 +126,8 @@ export interface CellOptions {
   };
 
   /**
+   * Link, if it starts with `/`, it means routing jump
+   *
    * 链接，若指定URL是以 `/` 开头视为路由跳转
    */
   link?: {
@@ -133,6 +136,8 @@ export interface CellOptions {
   };
 
   /**
+   * HTML config
+   *
    * HTML 配置
    */
   html?: {
@@ -140,6 +145,8 @@ export interface CellOptions {
   };
 
   /**
+   * Badge config
+   *
    * 徽章配置
    */
   badge?: {
@@ -147,10 +154,30 @@ export interface CellOptions {
   };
 
   /**
+   * Tag config
+   *
    * 标签配置
    */
   tag?: {
     data?: CellTag;
+  };
+
+  /**
+   * Checkbox config
+   *
+   * 复选框配置
+   */
+  checkbox?: {
+    label?: string;
+  };
+
+  /**
+   * Radio config
+   *
+   * 单选框配置
+   */
+  radio?: {
+    label?: string;
   };
 }
 

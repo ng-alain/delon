@@ -43,6 +43,8 @@ Cell formatting is supported for multiple data types.
 | `[html]` | HTML config | `{ safe?: string }` | - |
 | `[badge]` | Badge config | `{ data?: CellBadge }` | - |
 | `[tag]` | Tag config | `{ data?: CellTag }` | - |
+| `[checkbox]` | Checkbox config | `{ label?: string }` | - |
+| `[radio]` | Radio config | `{ label?: string }` | - |
 
 **Type**
 
@@ -58,4 +60,6 @@ Cell formatting is supported for multiple data types.
 - `html` HTML
 - `badge` Badge
 - `tag` Tag
+- `checkbox` Checkbox (Support `disabled`)
+- `radio` Radio (Support `disabled`)
 - `widget` Custom widget

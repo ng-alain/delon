@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImageService } from 'ng-zorro-antd/image';
 
 import { CellComponent } from './cell.component';
@@ -46,33 +47,39 @@ describe('abc: cell', () => {
       });
 
       describe('#type', () => {
-        it('is string', () => {
+        it('with string', () => {
           page.update('1').check('1');
         });
-        it('is string and mask', () => {
+        it('with string and mask', () => {
           page.update('1234', { mask: '*99*' }).check('*23*');
         });
-        it('is number', () => {
+        it('with number', () => {
           page.update(100).check('100');
           page.update(1000, { type: 'number' }).check('1000');
         });
-        it('is boolean', () => {
+        it('with boolean', () => {
           page.update(false).count('.yn__no', 1).update(true).count('.yn__no', 0).count('.yn__yes', 1);
         });
-        it('is mega', () => {
+        it('with checkbox', () => {
+          page.update(false, { type: 'checkbox' }).count('.ant-checkbox', 1);
+        });
+        it('with radio', () => {
+          page.update(false, { type: 'radio' }).count('.ant-radio', 1);
+        });
+        it('with mega', () => {
           page.update(1000000, { mega: {} }).check('1万');
         });
-        it('is currency', () => {
+        it('with currency', () => {
           page.update(1000000, { currency: {} }).check('1,000,000');
         });
-        it('is cny', () => {
+        it('with cny', () => {
           page.update(1000000, { cny: {} }).check('壹佰万元整');
         });
-        it('is date', () => {
+        it('with date', () => {
           page.update(DATE, { date: {} }).check('2022-01-01 01:02:03');
           page.update(+DATE).check('2022-01-01 01:02:03');
         });
-        describe('is img', () => {
+        describe('with img', () => {
           it('should be working', () => {
             page.update('1.jpg', { img: {} }).count('.img', 1).click('.img').count('.ant-image-preview', 1, true);
           });
@@ -103,14 +110,14 @@ describe('abc: cell', () => {
             expect(el.src).toContain(`new1.jpg`);
           });
         });
-        it('is html', () => {
+        it('with html', () => {
           page
             .update(`<strong>1</strong>`, { html: { safe: 'html' } })
             .check('1')
             .update(`<strong>2</strong>`, { html: { safe: 'text' } })
             .check(`<strong>2</strong>`);
         });
-        describe('is link', () => {
+        describe('with link', () => {
           it('navgation router', () => {
             const router = TestBed.inject(Router);
             spyOn(router, 'navigateByUrl');
@@ -133,7 +140,7 @@ describe('abc: cell', () => {
             expect(win.open).not.toHaveBeenCalled();
           });
         });
-        it('is badge', () => {
+        it('with badge', () => {
           page
             .update('1', { badge: { data: { '1': { text: 'A' } } } })
             .check('A')
@@ -141,7 +148,7 @@ describe('abc: cell', () => {
             .update('2', {})
             .check('2');
         });
-        it('is tag', () => {
+        it('with tag', () => {
           page
             .update('1', { tag: { data: { '1': { text: 'A', color: '#f50' } } } })
             .check('A')
@@ -149,7 +156,7 @@ describe('abc: cell', () => {
             .update('2', {})
             .check('2');
         });
-        describe('is widget', () => {
+        describe('with widget', () => {
           it('shoule be working', () => {
             const srv = TestBed.inject(CellService);
             srv.registerWidget(TestWidget.KEY, TestWidget);
@@ -199,6 +206,15 @@ describe('abc: cell', () => {
         context.loading = false;
         fixture.detectChanges();
         page.count('.anticon-loading', 0);
+      });
+
+      it('#disabled', () => {
+        context.disabled = true;
+        fixture.detectChanges();
+        page.count('.cell__disabled', 1);
+        context.disabled = false;
+        fixture.detectChanges();
+        page.count('.cell__disabled', 0);
       });
 
       it('should be render title when truncate is true', () => {
@@ -300,12 +316,14 @@ class TestWidget {
     <cell
       #comp
       [value]="value"
+      (valueChange)="valueChange($event)"
       [unit]="unit"
       [default]="default"
       [defaultCondition]="defaultCondition"
       [options]="options"
       [truncate]="truncate"
       [loading]="loading"
+      [disabled]="disabled"
       [type]="type"
       [size]="size"
     ></cell>
@@ -316,12 +334,14 @@ class TestComponent {
   comp!: CellComponent;
 
   value?: unknown;
+  valueChange(_?: NzSafeAny): void {}
   unit?: string;
   default = '-';
   defaultCondition?: unknown = null;
   options?: CellOptions;
   truncate = false;
   loading = false;
+  disabled = false;
   type?: 'primary' | 'success' | 'danger' | 'warning';
   size?: 'large' | 'small';
 

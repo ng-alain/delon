@@ -24,11 +24,6 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
 @Component({
   selector: 'app-demo',
   template: `
-    <div>
-      {{ value | json }} =>
-      <span cell [value]="value" [default]="default" [defaultCondition]="defaultCondition" [options]="options"></span>
-      <a (click)="refresh()" class="pl-md">Refresh</a>
-    </div>
     <div nz-row nzGutter="16" class="mt-md">
       <div *ngFor="let i of baseList" nz-col nzSpan="8"> {{ i | json }} => <span cell [value]="i"></span> </div>
       <div nz-col nzSpan="8"> date-fn => <span cell [value]="day3" [options]="{ date: { format: 'fn' } }"></span> </div>
@@ -39,8 +34,16 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       <div nz-col nzSpan="8"> currency => <span cell value="100000" [options]="{ type: 'currency' }"></span> </div>
       <div nz-col nzSpan="8"> cny => <span cell value="100000" [options]="{ type: 'cny' }"></span> </div>
       <div nz-col nzSpan="8">
+        yn => <span cell [value]="yn" [options]="{ type: 'boolean' }"></span>
+        <a (click)="yn = !yn">Change Value</a>
+      </div>
+      <div nz-col nzSpan="8">
         img =>
-        <span cell value="https://randomuser.me/api/portraits/thumb/women/46.jpg" [options]="{ type: 'img' }"></span>
+        <span
+          cell
+          value="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          [options]="{ type: 'img' }"
+        ></span>
       </div>
       <div nz-col nzSpan="8">
         img list =>
@@ -55,7 +58,8 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       </div>
       <div nz-col nzSpan="8">
         link =>
-        <span cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }"></span>
+        <span cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }" [disabled]="disabled"></span>
+        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         html =>
@@ -68,6 +72,24 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       <div nz-col nzSpan="8">
         tag =>
         <span cell value="WAIT" [options]="{ tag: { data: status } }"></span>
+      </div>
+      <div nz-col nzSpan="8">
+        checkbox =>
+        <span
+          cell
+          [(value)]="checkbox"
+          [options]="{ type: 'checkbox', tooltip: 'Tooltip' }"
+          [disabled]="disabled"
+        ></span>
+        {{ checkbox | json }}
+        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+      </div>
+      <div nz-col nzSpan="8">
+        radio =>
+        <span cell [(value)]="radio" [options]="{ type: 'radio', tooltip: 'Tooltip' }" [disabled]="disabled"></span>
+        <a (click)="radio = !radio">Change Value</a>
+        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+        {{ radio | json }}
       </div>
       <div nz-col nzSpan="8">
         default =>
@@ -91,7 +113,7 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       </div>
       <div nz-col nzSpan="8">
         loading =>
-        <span cell value="loading" [loading]="loading"></span>
+        <span cell value="Done" [loading]="loading"></span>
         <a (click)="loading = !loading" class="ml-md">Change</a>
       </div>
       <div nz-col nzSpan="8">
@@ -101,7 +123,7 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       </div>
       <div nz-col nzSpan="8"> Unit => <span cell [value]="{ text: '100', unit: '元' }"></span> </div>
       <div nz-col nzSpan="8">
-        widget =>
+        custom widget =>
         <span
           cell
           value="https://randomuser.me/api/portraits/thumb/women/47.jpg"
@@ -120,6 +142,10 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
 })
 export class DemoComponent implements OnInit {
   value: unknown = 'string';
+  checkbox = false;
+  radio = true;
+  disabled = false;
+  yn = true;
   default: string = '-';
   defaultCondition: unknown = '*';
   options?: CellOptions;

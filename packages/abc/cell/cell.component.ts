@@ -3,10 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Inject,
   Input,
   OnChanges,
   OnDestroy,
+  Output,
   Renderer2,
   ViewEncapsulation
 } from '@angular/core';
@@ -17,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { updateHostClass } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
 import { CellService } from './cell.service';
@@ -26,13 +29,29 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
   selector: 'cell, [cell]',
   template: `
     <ng-template #text>
-      <ng-container [ngSwitch]="res?.type">
+      <ng-container [ngSwitch]="safeOpt.type">
+        <label
+          *ngSwitchCase="'checkbox'"
+          nz-checkbox
+          [nzDisabled]="disabled"
+          [ngModel]="value"
+          (ngModelChange)="change($event)"
+          >{{ safeOpt.checkbox?.label }}</label
+        >
+        <label
+          *ngSwitchCase="'radio'"
+          nz-radio
+          [nzDisabled]="disabled"
+          [ngModel]="value"
+          (ngModelChange)="change($event)"
+          >{{ safeOpt.radio?.label }}</label
+        >
         <a
           *ngSwitchCase="'link'"
           (click)="_link($event)"
           [attr.target]="safeOpt.link?.target"
-          [innerHTML]="_text"
           [attr.title]="truncate ? value : null"
+          [innerHTML]="_text"
         ></a>
         <nz-tag *ngSwitchCase="'tag'" [nzColor]="res?.result?.color">
           <span [innerHTML]="_text"></span>
@@ -75,6 +94,7 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
 export class CellComponent implements OnChanges, OnDestroy {
   static ngAcceptInputType_truncate: BooleanInput;
   static ngAcceptInputType_loading: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
 
   private destroy$?: Subscription;
 
@@ -84,12 +104,14 @@ export class CellComponent implements OnChanges, OnDestroy {
   showDefault = false;
 
   @Input() value?: unknown;
+  @Output() readonly valueChange = new EventEmitter<NzSafeAny>();
   @Input() default = '-';
   @Input() defaultCondition?: unknown = null;
   @Input() options?: CellOptions;
   @Input() unit?: string;
   @Input() @InputBoolean() truncate = false;
   @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() disabled = false;
   @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
   @Input() size?: 'large' | 'small';
 
@@ -111,9 +133,11 @@ export class CellComponent implements OnChanges, OnDestroy {
   get safeOpt(): CellOptions {
     return this.res?.options!;
   }
+
   get isText(): boolean {
     return this.res?.safeHtml === 'text';
   }
+
   get hostData(): CellWidgetData {
     return {
       value: this.value,
@@ -139,6 +163,7 @@ export class CellComponent implements OnChanges, OnDestroy {
     this.destroy$?.unsubscribe();
     this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
       this.res = res;
+      console.log(res);
       this.showDefault = this.value == this.defaultCondition;
       this._text = res.result?.text ?? '';
       this._unit = res.result?.unit ?? this.unit;
@@ -154,18 +179,26 @@ export class CellComponent implements OnChanges, OnDestroy {
       [`cell__${this.type}`]: this.type != null,
       [`cell__${this.size}`]: this.size != null,
       [`cell__has-unit`]: this._unit,
-      [`cell__has-default`]: this.showDefault
+      [`cell__has-default`]: this.showDefault,
+      [`cell__disabled`]: this.disabled
     });
     el.nativeElement.dataset.type = this.safeOpt.type;
+    console.log(this.safeOpt);
   }
 
   ngOnChanges(): void {
     this.updateValue();
   }
 
+  change(value: NzSafeAny): void {
+    this.value = value;
+    this.valueChange.emit(value);
+  }
+
   _link(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
+    if (this.disabled) return;
     const link = this.safeOpt.link;
     const url = link?.url;
     if (url == null) return;
