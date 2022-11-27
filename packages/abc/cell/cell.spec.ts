@@ -61,10 +61,10 @@ describe('abc: cell', () => {
           page.update(false).count('.yn__no', 1).update(true).count('.yn__no', 0).count('.yn__yes', 1);
         });
         it('with checkbox', () => {
-          page.update(false, { type: 'checkbox' }).count('.ant-checkbox', 1);
+          page.update(false, { type: 'checkbox', checkbox: { label: 'A' } }).count('.ant-checkbox', 1);
         });
         it('with radio', () => {
-          page.update(false, { type: 'radio' }).count('.ant-radio', 1);
+          page.update(false, { type: 'radio', radio: { label: 'A' } }).count('.ant-radio', 1);
         });
         it('with mega', () => {
           page.update(1000000, { mega: {} }).check('1万');
@@ -179,6 +179,17 @@ describe('abc: cell', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestComponent));
         page = new PageObject();
+      });
+
+      it('#valueChange', () => {
+        spyOn(context, 'valueChange');
+        context.value = true;
+        context.options = { type: 'checkbox' };
+        fixture.detectChanges();
+        expect(context.valueChange).not.toHaveBeenCalled();
+        page.getEl('.ant-checkbox').click();
+        fixture.detectChanges();
+        expect(context.valueChange).toHaveBeenCalled();
       });
 
       it('#type', () => {
