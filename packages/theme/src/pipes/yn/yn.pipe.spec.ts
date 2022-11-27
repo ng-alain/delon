@@ -85,7 +85,7 @@ describe('Pipe: yn', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | yn: yes:no:mode"></div> `
+  template: ` <div id="result" [innerHTML]="value | yn : yes : no : mode"></div> `
 })
 class TestComponent {
   value = true;

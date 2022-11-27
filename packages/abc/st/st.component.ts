@@ -162,7 +162,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.updateTotalTpl();
   }
   @Input() data!: string | STData[] | Observable<STData[]>;
-  @Input() columns: STColumn[] = [];
+  @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
   @Input() @InputNumber() ps = 10;
   @Input() @InputNumber() pi = 1;
@@ -242,6 +242,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   get list(): STData[] {
     return this._data;
+  }
+
+  get noColumns(): boolean {
+    return this.columns == null;
   }
 
   constructor(

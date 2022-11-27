@@ -80,7 +80,7 @@
     }
   }
   // Title
-  &__has-filter.@{ant-prefix}-table-column-has-sorters {
+  &__has-filter {
     @st-th-icon-width: 12px;
     @st-filter-and-sort-gutter: 4px;
     @st-filter-icon-size: @st-th-icon-width + @st-filter-and-sort-gutter;
@@ -92,11 +92,21 @@
     @{st-prefix}__filter {
       position: absolute;
       top: 0;
-      right: -(@st-sort-size + @st-filter-icon-size);
+      right: 0;
       bottom: 0;
       display: flex;
       align-items: center;
       justify-items: center;
+    }
+
+    .@{ant-prefix}-table-filter-trigger {
+      height: 100%;
+    }
+
+    &.@{ant-prefix}-table-column-has-sorters {
+      @{st-prefix}__filter {
+        right: -(@st-sort-size + @st-filter-icon-size);
+      }
     }
   }
 
@@ -129,8 +139,10 @@
       }
     }
   }
-  // 修复无法显示阴影问题
-  .@{ant-prefix}-table {
+  // 若 `widthMode` 为 `truncate` 会导致固定列的阴影失效，其他情况不存在此情况
+  // 这里使用 `text-truncate` 来区分
+  // https://github.com/ng-alain/ng-alain/issues/2336
+  .text-truncate.@{ant-prefix}-table {
     &-cell-fix-left-first::after,
     &-cell-fix-left-last::after {
       transform: translateX(80%);
@@ -139,6 +151,16 @@
     &-cell-fix-right-first::after,
     &-cell-fix-right-last::after {
       transform: translateX(-80%);
+    }
+  }
+
+  &__no-column {
+    .@{ant-prefix}-table {
+      height: @st-no-column-height;
+
+      &-content {
+        display: none;
+      }
     }
   }
 

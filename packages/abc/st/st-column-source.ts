@@ -372,16 +372,18 @@ export class STColumnSource {
     }
     const rawClassName = item.className;
     if (!rawClassName) {
-      builtInClassNames.push(
-        (
-          {
-            number: 'text-right',
-            currency: 'text-right',
-            date: 'text-center'
-          } as NzSafeAny
-        )[item.type!]
-      );
-      item._className = builtInClassNames.filter(w => !!w);
+      const typeClass = (
+        {
+          number: 'text-right',
+          currency: 'text-right',
+          date: 'text-center'
+        } as NzSafeAny
+      )[item.type!];
+      if (typeClass) {
+        builtInClassNames.push(typeClass);
+      }
+      item._className = builtInClassNames;
+      item._classNameInHeader = builtInClassNames;
       return;
     }
 
@@ -402,8 +404,9 @@ export class STColumnSource {
     list: STColumn[],
     options: STColumnSourceProcessOptions
   ): { columns: _STColumn[]; headers: _STHeader[][]; headerWidths: string[] | null } {
-    if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
-
+    if (!list || list.length === 0) {
+      return { columns: [], headers: [], headerWidths: null };
+    }
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;

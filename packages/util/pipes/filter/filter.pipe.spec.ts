@@ -26,7 +26,7 @@ describe('Pipe: filter', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ list | filter: matcher:other }}</p> `
+  template: ` <p id="result">{{ list | filter : matcher : other }}</p> `
 })
 class TestComponent {
   list = [1, 2, 3];

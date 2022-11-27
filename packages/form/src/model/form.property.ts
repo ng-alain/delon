@@ -121,6 +121,10 @@ export abstract class FormProperty {
    */
   abstract _updateValue(): void;
 
+  cd(onlySelf: boolean = false): void {
+    this.widget?.detectChanges(onlySelf);
+  }
+
   /**
    * 更新值且校验数据
    */
@@ -213,7 +217,7 @@ export abstract class FormProperty {
       if (customErrors instanceof Observable) {
         customErrors.subscribe(res => {
           this.setCustomErrors(errors, res);
-          this.widget.detectChanges();
+          this.cd(false);
         });
         return;
       }
@@ -376,8 +380,8 @@ export abstract class FormProperty {
 
   updateFeedback(status: NzFormControlStatusType = ''): void {
     this.ui.feedback = status;
-    this.widget.injector.get(NzFormStatusService).formStatusChanges.next({ status, hasFeedback: !!status });
-    this.widget.detectChanges();
+    this.widget?.injector.get(NzFormStatusService).formStatusChanges.next({ status, hasFeedback: !!status });
+    this.cd(true);
   }
 }
 

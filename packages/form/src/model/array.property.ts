@@ -41,6 +41,7 @@ export class ArrayProperty extends PropertyGroup {
     this.properties = [];
     this.clearErrors();
     this.resetProperties(value);
+    this.cd(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
