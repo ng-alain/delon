@@ -100,6 +100,8 @@ export class CellService {
     else if (options.html != null) return 'html';
     else if (options.badge != null) return 'badge';
     else if (options.tag != null) return 'tag';
+    else if (options.checkbox != null) return 'checkbox';
+    else if (options.radio != null) return 'radio';
     else if (typeOf === 'number') return 'number';
     else if (typeOf === 'boolean' || options.boolean != null) return 'boolean';
     else return 'string';
