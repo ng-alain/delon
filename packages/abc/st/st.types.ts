@@ -34,6 +34,7 @@ export interface _STColumn extends STColumn {
    * 校验需要未自定义 `className` 时应检查 `_isTruncate` 是否需要截短行为
    */
   _className?: string | string[] | Set<string> | { [klass: string]: any } | null;
+  _classNameInHeader?: string | string[] | Set<string> | { [klass: string]: any } | null | undefined;
   _sort: STSortMap;
   _width?: number;
   _left?: string | boolean;

@@ -372,16 +372,18 @@ export class STColumnSource {
     }
     const rawClassName = item.className;
     if (!rawClassName) {
-      builtInClassNames.push(
-        (
-          {
-            number: 'text-right',
-            currency: 'text-right',
-            date: 'text-center'
-          } as NzSafeAny
-        )[item.type!]
-      );
-      item._className = builtInClassNames.filter(w => !!w);
+      const typeClass = (
+        {
+          number: 'text-right',
+          currency: 'text-right',
+          date: 'text-center'
+        } as NzSafeAny
+      )[item.type!];
+      if (typeClass) {
+        builtInClassNames.push(typeClass);
+      }
+      item._className = builtInClassNames;
+      item._classNameInHeader = builtInClassNames;
       return;
     }
 
