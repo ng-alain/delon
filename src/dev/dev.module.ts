@@ -20,7 +20,7 @@ const routes: Routes = [
     path: '',
     component: DevLayoutComponent,
     children: [
-      { path: '', component: DevHomeComponent },
+      { path: 'home', component: DevHomeComponent },
       { path: 'l1', component: DevPageComponent },
       { path: 'l2', component: DevPageComponent },
       { path: 'l3', component: DevPageComponent },

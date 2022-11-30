@@ -14,6 +14,7 @@ import { App, SettingsService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
+import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden, LayoutDefaultOptions } from './types';
 
 interface LayoutDefaultHeaderItem {
@@ -40,9 +41,9 @@ interface LayoutDefaultHeaderItem {
     </div>
     <div class="alain-default__nav-wrap">
       <ul class="alain-default__nav">
-        <li *ngIf="!options.hideAside">
+        <li *ngIf="!options.hideAside && options.showHeaderCollapse">
           <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
-            <i nz-icon [nzType]="collapsedIcon"></i>
+            <span nz-icon [nzType]="collapsedIcon"></span>
           </div>
         </li>
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }"></ng-template>
@@ -79,14 +80,10 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   get collapsedIcon(): string {
-    let type = this.collapsed ? 'unfold' : 'fold';
-    if (this.settings.layout.direction === 'rtl') {
-      type = this.collapsed ? 'fold' : 'unfold';
-    }
-    return `menu-${type}`;
+    return this.srv.collapsedIcon;
   }
 
-  constructor(private settings: SettingsService, private cdr: ChangeDetectorRef) {}
+  constructor(private srv: LayoutDefaultService, private settings: SettingsService, private cdr: ChangeDetectorRef) {}
 
   private refresh(): void {
     const arr = this.items.toArray();
@@ -102,7 +99,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   toggleCollapsed(): void {
-    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+    this.srv.toggleCollapsed();
   }
 
   ngOnDestroy(): void {

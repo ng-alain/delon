@@ -42,4 +42,25 @@ export interface LayoutDefaultOptions {
    * 隐藏侧边栏，同时不显收缩图标按钮，默认：`false`
    */
   hideAside?: boolean;
+
+  /**
+   * Hide top bar, default: `false`
+   *
+   * 隐藏顶栏，默认：`false`
+   */
+  hideHeader?: boolean;
+
+  /**
+   * Whether to display the menu collapse button on the top bar, default: `true`
+   *
+   * 是否在顶栏显示菜单折叠按钮，默认：`true`
+   */
+  showHeaderCollapse?: boolean;
+
+  /**
+   * Whether to show the menu collapse button at the bottom of the sidebar, default: `false`
+   *
+   * 是否在侧边栏底部显示菜单折叠按钮，默认：`false`
+   */
+  showSiderCollapse?: boolean;
 }
