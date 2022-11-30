@@ -31,17 +31,17 @@ interface LayoutDefaultHeaderItem {
         <ng-container *ngTemplateOutlet="i.host"></ng-container>
       </li>
     </ng-template>
-    <div class="alain-default__header-logo" [style.width.px]="options.logoFixWidth">
-      <ng-container *ngIf="!options.logo; else options.logo!">
-        <a [routerLink]="options.logoLink" class="alain-default__header-logo-link">
-          <img class="alain-default__header-logo-expanded" [attr.src]="options.logoExpanded" [attr.alt]="app.name" />
-          <img class="alain-default__header-logo-collapsed" [attr.src]="options.logoCollapsed" [attr.alt]="app.name" />
+    <div class="alain-default__header-logo" [style.width.px]="opt.logoFixWidth">
+      <ng-container *ngIf="!opt.logo; else opt.logo!">
+        <a [routerLink]="opt.logoLink" class="alain-default__header-logo-link">
+          <img class="alain-default__header-logo-expanded" [attr.src]="opt.logoExpanded" [attr.alt]="app.name" />
+          <img class="alain-default__header-logo-collapsed" [attr.src]="opt.logoCollapsed" [attr.alt]="app.name" />
         </a>
       </ng-container>
     </div>
     <div class="alain-default__nav-wrap">
       <ul class="alain-default__nav">
-        <li *ngIf="!options.hideAside && options.showHeaderCollapse">
+        <li *ngIf="!opt.hideAside && opt.showHeaderCollapse">
           <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
             <span nz-icon [nzType]="collapsedIcon"></span>
           </div>
@@ -65,11 +65,14 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
-  @Input() options!: LayoutDefaultOptions;
 
   left: LayoutDefaultHeaderItem[] = [];
   middle: LayoutDefaultHeaderItem[] = [];
   right: LayoutDefaultHeaderItem[] = [];
+
+  get opt(): LayoutDefaultOptions {
+    return this.srv.options;
+  }
 
   get app(): App {
     return this.settings.app;
@@ -95,6 +98,7 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.items.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
+    this.srv.options$.pipe(takeUntil(this.destroy$)).subscribe(() => this.cdr.detectChanges());
     this.refresh();
   }
 

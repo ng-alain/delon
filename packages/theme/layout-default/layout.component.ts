@@ -19,7 +19,7 @@ import {
   Router,
   Event
 } from '@angular/router';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
@@ -35,15 +35,15 @@ import { LayoutDefaultOptions } from './types';
   exportAs: 'layoutDefault',
   template: `
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
-    <layout-default-header *ngIf="!_opt.hideHeader" [options]="_opt" [items]="headerItems"></layout-default-header>
-    <div *ngIf="!_opt.hideAside" class="alain-default__aside">
+    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems"></layout-default-header>
+    <div *ngIf="!opt.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-wrap">
         <div class="alain-default__aside-inner">
           <ng-container *ngTemplateOutlet="asideUser"></ng-container>
           <ng-container *ngTemplateOutlet="nav"></ng-container>
           <layout-default-nav *ngIf="!nav"></layout-default-nav>
         </div>
-        <div *ngIf="_opt.showSiderCollapse" class="alain-default__aside-link">
+        <div *ngIf="opt.showSiderCollapse" class="alain-default__aside-link">
           <ng-container *ngIf="asideBottom === null; else asideBottom">
             <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
               <span nz-icon [nzType]="collapsedIcon"></span>
@@ -62,7 +62,9 @@ export class LayoutDefaultComponent implements OnDestroy {
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
-  _opt!: LayoutDefaultOptions;
+  get opt(): LayoutDefaultOptions {
+    return this.srv.options;
+  }
 
   @Input()
   set options(value: LayoutDefaultOptions | null | undefined) {
@@ -99,14 +101,9 @@ export class LayoutDefaultComponent implements OnDestroy {
     private srv: LayoutDefaultService
   ) {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(ev => this.processEv(ev));
-
     const { destroy$ } = this;
-    combineLatest([this.srv.options$, settings.notify])
-      .pipe(takeUntil(destroy$))
-      .subscribe(([options]) => {
-        this._opt = options;
-        this.setClass();
-      });
+    this.srv.options$.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
+    this.settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
   }
 
   processEv(ev: Event): void {
@@ -138,8 +135,8 @@ export class LayoutDefaultComponent implements OnDestroy {
       ['alain-default']: true,
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
-      [`alain-default__hide-aside`]: this._opt!.hideAside,
-      [`alain-default__hide-header`]: this._opt!.hideHeader
+      [`alain-default__hide-aside`]: this.opt.hideAside,
+      [`alain-default__hide-header`]: this.opt.hideHeader
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');

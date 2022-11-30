@@ -1,18 +1,31 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 
 import { LayoutDefaultOptions } from './types';
 
+const DEFAULT: LayoutDefaultOptions = {
+  logoExpanded: `./assets/logo-full.svg`,
+  logoCollapsed: `./assets/logo.svg`,
+  logoLink: `/`,
+  showHeaderCollapse: true,
+  showSiderCollapse: false,
+  hideAside: false,
+  hideHeader: false
+};
+
 @Injectable({ providedIn: 'root' })
 export class LayoutDefaultService {
-  private _options$ = new BehaviorSubject<LayoutDefaultOptions>({});
-  options$ = this._options$.pipe(distinctUntilChanged());
-  private _options: LayoutDefaultOptions = {};
+  private _options$ = new BehaviorSubject<LayoutDefaultOptions>(DEFAULT);
+  private _options: LayoutDefaultOptions = DEFAULT;
 
   get options(): LayoutDefaultOptions {
     return this._options;
+  }
+
+  get options$(): Observable<LayoutDefaultOptions> {
+    return this._options$.asObservable();
   }
 
   get collapsedIcon(): string {
@@ -26,6 +39,10 @@ export class LayoutDefaultService {
 
   constructor(private settings: SettingsService) {}
 
+  private notify(): void {
+    this._options$.next(this._options);
+  }
+
   /**
    * Set layout configuration
    *
@@ -33,14 +50,10 @@ export class LayoutDefaultService {
    */
   setOptions(options?: LayoutDefaultOptions | null): void {
     this._options = {
-      logoExpanded: `./assets/logo-full.svg`,
-      logoCollapsed: `./assets/logo.svg`,
-      logoLink: `/`,
-      showHeaderCollapse: true,
-      hideAside: false,
+      ...DEFAULT,
       ...options
     };
-    this._options$.next(this._options);
+    this.notify();
   }
 
   /**
@@ -49,6 +62,7 @@ export class LayoutDefaultService {
    * 切换侧边栏菜单栏折叠状态
    */
   toggleCollapsed(status?: boolean): void {
-    this.settings.setLayout('collapsed', status ?? !this.settings.layout.collapsed);
+    this.settings.setLayout('collapsed', status != null ? status : !this.settings.layout.collapsed);
+    this.notify();
   }
 }

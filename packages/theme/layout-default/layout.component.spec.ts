@@ -12,6 +12,7 @@ import { SettingsService } from '../src/services/settings/settings.service';
 import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
+import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultOptions } from './types';
 
 describe('theme: layout-default', () => {
@@ -50,16 +51,14 @@ describe('theme: layout-default', () => {
   });
 
   it('should be toggle collapsed', () => {
-    const srv = TestBed.inject(SettingsService);
-    let collapsed = false;
-    spyOnProperty(srv, 'layout').and.returnValue({ collapsed });
+    const srv = TestBed.inject(LayoutDefaultService);
+    srv.toggleCollapsed(true);
     fixture.detectChanges();
     const el = page.getEl('.alain-default__nav-item--collapse');
-    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
-    collapsed = true;
-    el.click();
-    fixture.detectChanges();
     expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+    srv.toggleCollapsed(false);
+    fixture.detectChanges();
+    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
   });
 
   it('#colorWeak', () => {
