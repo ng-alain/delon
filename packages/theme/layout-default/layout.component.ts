@@ -44,10 +44,11 @@ import { LayoutDefaultOptions } from './types';
           <layout-default-nav *ngIf="!nav"></layout-default-nav>
         </div>
         <div *ngIf="_opt.showSiderCollapse" class="alain-default__aside-link">
-          <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
-            <span nz-icon [nzType]="collapsedIcon"></span>
-          </div>
-          <ng-container *ngTemplateOutlet="asideLink"></ng-container>
+          <ng-container *ngIf="asideBottom === null; else asideBottom">
+            <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
+              <span nz-icon [nzType]="collapsedIcon"></span>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -68,7 +69,7 @@ export class LayoutDefaultComponent implements OnDestroy {
     this.srv.setOptions(value);
   }
   @Input() asideUser: TemplateRef<void> | null = null;
-  @Input() asideLink: TemplateRef<void> | null = null;
+  @Input() asideBottom: TemplateRef<NzSafeAny> | null = null;
   @Input() nav: TemplateRef<void> | null = null;
   @Input() content: TemplateRef<void> | null = null;
   @Input() customError?: string | null;

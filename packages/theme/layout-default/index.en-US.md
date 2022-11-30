@@ -98,6 +98,7 @@ The layout can be dynamically managed at runtime through the `LayoutDefaultServi
 |----------|-------------|------|---------|
 | `[options]` | Options of the layout | `LayoutDefaultOptions` | `-` |
 | `[asideUser]` | Side user of the layout | `TemplateRef<void>` | `-` |
+| `[asideBottom]` | Bottom information of the layout | `TemplateRef<void>` | `-` |
 | `[nav]` | Nav | `TemplateRef<void>` | `-` |
 | `[content]` | Content | `TemplateRef<void>` | `-` |
 | `[customError]` | Custom exception routing error message, can't show when is `null` | `string, null` | `Could not load ${evt.url} route` |
