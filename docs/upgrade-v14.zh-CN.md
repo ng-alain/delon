@@ -20,7 +20,7 @@ hot: true
 
 ### 1. 升级相关依赖
 
-- 将项目升级到 Angular 13 运行 `ng update @angular/core@14 @angular/cli@14 @angular-eslint/schematics@14`。
+- 将项目升级到 Angular 14 运行 `ng update @angular/core@14 @angular/cli@14 @angular-eslint/schematics@14`。
 - 如果你有单独使用 `@angular/cdk` 请执行 `ng update @angular/cdk@14`
 
 ### 2.升级 NG-ZORRO
