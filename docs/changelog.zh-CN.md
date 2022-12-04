@@ -14,6 +14,23 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+
+# [14.3.0](https://github.com/ng-alain/delon/compare/14.2.0...14.3.0) (2022-12-04)
+
+### Bug Fixes
+
+* **abc:st:** 修复排序与过滤共享时不对齐 ([#1556](https://github.com/ng-alain/delon/issues/1556)) ([5a77920](https://github.com/ng-alain/delon/commit/5a77920cae0e5db1d3400d68b13d712514de7a77))
+* **abc:st:** 修复内置样式无法适应到标题 ([#1560](https://github.com/ng-alain/delon/issues/1560)) ([41fbae0](https://github.com/ng-alain/delon/commit/41fbae0483ec076f5265053736c0286d5f49c0cd))
+* **abc:st:** 修复宽带模式为截取时阴影间距问题 ([#1558](https://github.com/ng-alain/delon/issues/1558)) ([4b00b21](https://github.com/ng-alain/delon/commit/4b00b213fbf69da060f71618e2e9df8749f71363))
+* **from:** 修复调用 `setValue` 无法触发变更检测 ([#1554](https://github.com/ng-alain/delon/issues/1554)) ([bc609b3](https://github.com/ng-alain/delon/commit/bc609b3172ebcf04511e0cc6437f8d8b2bc1d7b2))
+
+### Features
+
+* **abc:st:** `columns` 允许 `null`, `undefined` 值 ([#1559](https://github.com/ng-alain/delon/issues/1559)) ([c74c992](https://github.com/ng-alain/delon/commit/c74c992c18167bef7b5f3bc2c3fa4da00414bf53))
+* **abc:sv:** 新增 `hideLabel` 隐藏标签属性 ([#1553](https://github.com/ng-alain/delon/issues/1553)) ([f71351b](https://github.com/ng-alain/delon/commit/f71351bbd6a5841cae4ef077cae62b72255bdc81))
+* **theme:default:** 新增 `LayoutDefaultService` 服务用于控件整体布局，新增隐藏顶部、侧边折叠菜单按钮配置 ([#1561](https://github.com/ng-alain/delon/issues/1561)) ([bf90034](https://github.com/ng-alain/delon/commit/bf9003488508f4221f38174ce25ead2a1da39c7a))
+
+
 # [14.2.0](https://github.com/ng-alain/delon/compare/14.1.1...14.2.0) (2022-11-11)
 
 ### Scaffold
