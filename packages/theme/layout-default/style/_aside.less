@@ -20,8 +20,14 @@
     content: '';
   }
 
-  &-inner {
+  &-wrap {
+    display: flex;
+    flex-direction: column;
     height: 100%;
+  }
+
+  &-inner {
+    flex: 1 1 0%;
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -41,6 +47,17 @@
 
     &::-webkit-scrollbar-thumb {
       background-color: @alain-default-aside-scrollbar-thumb-color;
+    }
+  }
+
+  &-link {
+    border-top: 1px solid @alain-default-content-heading-border;
+
+    &-collapsed {
+      padding: 8px 0;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
     }
   }
 }

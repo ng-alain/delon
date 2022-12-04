@@ -88,7 +88,7 @@ export class LayoutBasicComponent {
 }
 ```
 
-除此之外，在布局的操作都可以通过 `SettingsService.notify` 来订阅布局的变化（例如：侧边栏的展开与收缩等），注意所有布局相关的变化都会通过这个接口，所以需要做好 `filter` 操作。
+通过 `LayoutDefaultService` 服务可以在运行时动态管理布局。除此之外，在布局的操作都可以通过 `SettingsService.notify` 来订阅布局的变化（例如：侧边栏的展开与收缩等），注意所有布局相关的变化都会通过这个接口，所以需要做好 `filter` 操作。
 
 ## API
 
@@ -98,6 +98,7 @@ export class LayoutBasicComponent {
 |----|----|----|-----|
 | `[options]` | 选项 | `LayoutDefaultOptions` | `-` |
 | `[asideUser]` | 侧边用户信息 | `TemplateRef<void>` | `-` |
+| `[asideBottom]` | 侧边底部信息 | `TemplateRef<void>` | `-` |
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
 | `[customError]` | 自定义异常路由错误消息，当 `null` 时表示不显示错误消息 | `string, null` | `Could not load ${evt.url} route` |
@@ -112,6 +113,9 @@ export class LayoutBasicComponent {
 | `[logoFixWidth]` | 指定固定 Logo 宽度 | `number` | - |
 | `[logoLink]` | 指定 Logo 路由地址 | `string` | `/` |
 | `[hideAside]` | 隐藏侧边栏，同时不显收缩图标按钮 | `boolean` | `false` |
+| `[hideHeader]` | 隐藏顶栏 | `boolean` | `false` |
+| `[showHeaderCollapse]` | 是否在顶栏显示菜单折叠按钮 | `boolean` | `true` |
+| `[showSiderCollapse]` | 是否在侧边栏底部显示菜单折叠按钮 | `boolean` | `false` |
 
 ### layout-default-nav
 
@@ -239,8 +243,4 @@ export class LayoutBasicComponent {
 
 **如何控制菜单展开**
 
-利用 `SettingsService.setLayout` 对 `collapsed` 进行操作，例如：
-
-```ts
-SettingsService.setLayout('collapsed', status);
-```
+利用 `LayoutDefaultService.toggleCollapsed()` 来运行时手动控制。

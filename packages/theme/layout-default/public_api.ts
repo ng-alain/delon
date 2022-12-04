@@ -5,3 +5,4 @@ export * from './layout-header-item.component';
 export * from './layout-header-item-trigger.directive';
 export * from './layout-nav.component';
 export * from './types';
+export * from './layout.service';
