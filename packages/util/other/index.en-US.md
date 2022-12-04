@@ -33,7 +33,7 @@ deepGet(obj, 'user.age'); // 18
 
 ## deepCopy
 
-Base on [extend](https://github.com/justmoon/node-extend) deep copy.
+Base on [rfdc](https://github.com/davidmarkclements/rfdc) deep copy.
 
 ```ts
 const source = { a: 1, user: { name: 'cipchk' } };

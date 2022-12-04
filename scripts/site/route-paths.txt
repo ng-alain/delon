@@ -95,8 +95,6 @@
 /components/global-footer/zh
 /components/highlight/en
 /components/highlight/zh
-/components/image/en
-/components/image/zh
 /components/let/en
 /components/let/zh
 /components/loading/en

@@ -1,4 +1,4 @@
-import extend from 'extend';
+import rfdc from 'rfdc';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -21,13 +21,22 @@ export function deepGet(obj: NzSafeAny, path: string | string[] | null | undefin
 }
 
 /**
- * Base on [extend](https://github.com/justmoon/node-extend) deep copy.
+ * Base on [rfdc](https://github.com/davidmarkclements/rfdc) deep copy.
  *
- * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
+ * 基于 [rfdc](https://github.com/davidmarkclements/rfdc) 的深度拷贝
  */
-export function deepCopy<T extends { [key: string]: NzSafeAny } = NzSafeAny>(obj: T | null | undefined): T {
-  const result = extend(true, {}, { _: obj });
-  return result._ as T;
+export function deepCopy<T>(obj: T | null | undefined): T;
+/**
+ * Base on [rfdc](https://github.com/davidmarkclements/rfdc) deep copy.
+ *
+ * 基于 [rfdc](https://github.com/davidmarkclements/rfdc) 的深度拷贝
+ *
+ * - [options](https://github.com/davidmarkclements/rfdc#requirerfdcopts---proto-false-circles-false---cloneobj--obj2) 参数文档
+ */
+export function deepCopy<T>(obj: T | null | undefined, options?: rfdc.Options): T;
+export function deepCopy<T>(obj: T | null | undefined, options?: rfdc.Options): T {
+  if (obj == null) return obj as T;
+  return rfdc(options)<T>(obj);
 }
 
 /**

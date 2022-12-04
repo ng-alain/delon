@@ -33,7 +33,7 @@ deepGet(obj, 'user.age'); // 18
 
 ## deepCopy
 
-基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝。
+基于 [rfdc](https://github.com/davidmarkclements/rfdc) 的深度拷贝。
 
 ```ts
 const source = { a: 1, user: { name: 'cipchk' } };
