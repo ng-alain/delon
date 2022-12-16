@@ -94,7 +94,11 @@ const ICONS = [
 export class DevLayoutComponent implements OnInit {
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`
+    logoCollapsed: `./assets/logo.svg`,
+    hideHeader: false,
+    showHeaderCollapse: false,
+    showSiderCollapse: true
+    // hideAside: true
   };
 
   lang: LangType = 'zh-CN';
@@ -110,18 +114,17 @@ export class DevLayoutComponent implements OnInit {
       children: [
         {
           text: 'Dashboard-DISABLED',
-          link: '/dev',
+          link: '/dev/home',
           icon: 'anticon anticon-dashboard',
           i18n: 'app.header.menu.home',
-          badge: 5,
-          disabled: true
+          badge: 5
         },
-        { text: '测试view1-id', link: '/dev/view/1' },
-        { text: '测试view2-id', link: '/dev/view/2' },
-        { text: 'lazy测试1', link: '/dev/lazy/p1' },
-        { text: 'lazy测试2', link: '/dev/lazy/p2' },
-        { text: 'lazy测试view1-id', link: '/dev/lazy/1/view' },
-        { text: 'lazy测试view2-id', link: '/dev/lazy/2/view' },
+        { text: '测试view1-id', link: '/dev/view/1', icon: 'anticon anticon-appstore' },
+        { text: '测试view2-id', link: '/dev/view/2', icon: 'anticon anticon-appstore' },
+        { text: 'lazy测试1', link: '/dev/lazy/p1', icon: 'anticon anticon-appstore' },
+        { text: 'lazy测试2', link: '/dev/lazy/p2', icon: 'anticon anticon-appstore' },
+        { text: 'lazy测试view1-id', link: '/dev/lazy/1/view', icon: 'anticon anticon-appstore' },
+        { text: 'lazy测试view2-id', link: '/dev/lazy/2/view', icon: 'anticon anticon-appstore' },
         {
           text: 'Level1',
           link: '#',
