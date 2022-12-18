@@ -195,7 +195,7 @@ export class LayoutBasicComponent {
 | `@alain-default-aside-nav-icon-width` | `14px` | 侧边栏菜单 ICON 宽度 |
 | `@alain-default-aside-nav-img-wh` | `14px` | 侧边栏菜单图像宽高 |
 | `@alain-default-aside-nav-padding-top-bottom` | `@layout-gutter` | 侧边栏菜单项上下内边距 |
-| `@alain-default-aside-nav-item-height` | `38px` | 侧边栏菜单项高度 |
+| `@alain-default-aside-nav-padding-left-right` | `@layout-gutter * 2` | 侧边栏菜单项左右内边距 |
 | `@alain-default-aside-nav-text-color` | `rgba(0, 0, 0, 0.65)` | 侧边栏菜单文本颜色 |
 | `@alain-default-aside-nav-text-hover-color` | `#108ee9` | 侧边栏菜单文本悬停颜色 |
 | `@alain-default-aside-nav-group-text-color` | `rgba(0, 0, 0, 0.43)` | 侧边栏菜单分组文本颜色 |

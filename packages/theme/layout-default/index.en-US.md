@@ -195,7 +195,7 @@ The content area is the business page area, the specification details：
 | `@alain-default-aside-nav-icon-width` | `14px` | Width of nav icon |
 | `@alain-default-aside-nav-img-wh` | `14px` | Width & height of nav image |
 | `@alain-default-aside-nav-padding-top-bottom` | `@layout-gutter` | Vertical padding of nav |
-| `@alain-default-aside-nav-item-height` | `38px` | Item height of nav |
+| `@alain-default-aside-nav-padding-left-right` | `@layout-gutter * 2` | Horizontal padding of nav |
 | `@alain-default-aside-nav-text-color` | `rgba(0, 0, 0, 0.65)` | Nav text color |
 | `@alain-default-aside-nav-text-hover-color` | `#108ee9` | Nav text hover color |
 | `@alain-default-aside-nav-group-text-color` | `rgba(0, 0, 0, 0.43)` | Group text color |
