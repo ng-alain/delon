@@ -95,8 +95,8 @@
 /components/global-footer/zh
 /components/highlight/en
 /components/highlight/zh
-/components/image/en
-/components/image/zh
+/components/hotkey/en
+/components/hotkey/zh
 /components/let/en
 /components/let/zh
 /components/loading/en
@@ -185,8 +185,8 @@
 /docs/style-guide/zh
 /docs/theme/en
 /docs/theme/zh
-/docs/upgrade-v13/en
-/docs/upgrade-v13/zh
+/docs/upgrade-v14/en
+/docs/upgrade-v14/zh
 /docs/upgrade/en
 /docs/upgrade/zh
 /form/acl/en

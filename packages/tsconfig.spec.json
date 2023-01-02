@@ -11,6 +11,6 @@
     "esModuleInterop": true,
     "noImplicitThis": false
   },
-  "files": ["test.ts", "polyfills.ts"],
+  "files": ["test.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
