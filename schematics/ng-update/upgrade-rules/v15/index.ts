@@ -73,7 +73,7 @@ function finished(): Rule {
   };
 }
 
-export function v14Rule(): Rule {
+export function v15Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);

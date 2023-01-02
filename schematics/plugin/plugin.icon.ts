@@ -1,7 +1,9 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, Tree } from '@angular-devkit/schematics';
 import { findNodes, getDecoratorMetadata } from '@schematics/angular/utility/ast-utils';
-import { Attribute, Element, parseFragment } from 'parse5';
+import { parseFragment } from 'parse5';
+import type { Attribute } from 'parse5/dist/common/token';
+import type { Element } from 'parse5/dist/tree-adapters/default';
 import * as ts from 'typescript';
 
 import { getSourceFile } from '../utils';
@@ -25,6 +27,7 @@ const WHITE_ICONS = [
   'CloseCircleOutline',
   'CloseOutline',
   'CopyOutline',
+  'DeleteOutline',
   'DoubleLeftOutline',
   'DoubleRightOutline',
   'DownOutline',

@@ -4,7 +4,7 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 import { findFile } from '../../../utils/file';
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
-describe('Schematic: ng-update: v14Rule', () => {
+describe('Schematic: ng-update: v15Rule', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
   const logs: string[] = [];
