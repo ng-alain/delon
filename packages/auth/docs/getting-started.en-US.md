@@ -77,7 +77,6 @@ The default `DelonAuthModule` does not register any HTTP interceptor, because of
 | `[token_send_place]` | `header,body,url` | `header` | Send token parameter position | ✅ |
 | `[login_url]` | `string` | `/login` | Login page routing address | ✅ |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses | ✅ |
-| (deprecated) `[allow_anonymous_key]` | `string` | `_allow_anonymous` | Will be removed in 15.0.0, Pls used [ALLOW_ANONYMOUS](https://github.com/ng-alain/delon/blob/master/packages/auth/src/token.ts) `HttpContext` instead. Anonymous login KEY identification, if the request parameter with the KEY is to ignore token check and add action, the key value will be removed when the request is truth | ✅ |
 | `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing | ✅ |
 | `[refreshTime]` | `number` | `3000` | Refresh time (unit: ms) | ✅ |
 | `[refreshOffset]` | `number` | `6000` | Offset value (unit: ms), it is recommended to set according to the multiple of `refreshTime` | ✅ |
