@@ -183,14 +183,21 @@
           "options": {
             "main": "packages/test.ts",
             "karmaConfig": "packages/karma.conf.js",
-            "polyfills": "packages/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "packages/tsconfig.spec.json",
             "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
-            "codeCoverageExclude": ["schematics/**", "packages/testing/**"]
+            "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
+            "include": [
+              "./test.ts",
+              // "**/select.widget.spec.ts"
+              "**/*.spec.ts"
+            ]
           }
         }
       }
     }
-  },
-  "defaultProject": "site"
+  }
 }

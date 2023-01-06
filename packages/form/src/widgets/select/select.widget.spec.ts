@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
+import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 import { SFSelectWidgetSchema } from './schema';
 import { SelectWidget } from './select.widget';
 
@@ -40,16 +40,17 @@ describe('form: widget: select', () => {
   }));
 
   it('should be disabled when readOnly is true', fakeAsync(() => {
+    const enums: SFSchemaEnumType[] = [
+      { label: '待支付', value: 'WAIT_BUYER_PAY' },
+      { label: '已支付', value: 'TRADE_SUCCESS' },
+      { label: '交易完成', value: 'TRADE_FINISHED' }
+    ];
     const s: SFSchema = {
       properties: {
         a: {
           type: 'string',
           title: '状态',
-          enum: [
-            { label: '待支付', value: 'WAIT_BUYER_PAY' },
-            { label: '已支付', value: 'TRADE_SUCCESS' },
-            { label: '交易完成', value: 'TRADE_FINISHED' }
-          ],
+          enum: enums,
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget
@@ -58,7 +59,11 @@ describe('form: widget: select', () => {
         }
       }
     };
-    page.newSchema(s).typeEvent('click', 'nz-select').checkCount('.ant-select-disabled', 1).asyncEnd();
+    page
+      .newSchema(s)
+      .typeEvent('click', 'nz-select')
+      .checkCount('.ant-select-item-option-disabled', enums.length, true)
+      .asyncEnd();
   }));
 
   describe('#events', () => {
