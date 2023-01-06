@@ -383,7 +383,6 @@ export class STColumnSource {
         builtInClassNames.push(typeClass);
       }
       item._className = builtInClassNames;
-      item._classNameInHeader = builtInClassNames;
       return;
     }
 
