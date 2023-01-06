@@ -7,31 +7,37 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+
   > * {
     transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86),
       box-shaow 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   }
+
   &-mask,
   &-content-wrapper {
     position: absolute;
     height: 100%;
   }
+
   &-mask {
     top: 0;
     width: 100%;
     background: #000;
     opacity: 0;
   }
+
   &-content-wrapper {
     left: -@drawer-width;
     width: @drawer-width;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
   }
+
   &-content {
     height: 100%;
     overflow: auto;
   }
+
   &-button {
     position: absolute;
     top: 72px;
@@ -51,10 +57,12 @@
     cursor: pointer;
     pointer-events: auto;
   }
+
   &-open {
     transform: translateX(@drawer-width);
     transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86) 0s;
     pointer-events: auto;
+
     .drawer-mask {
       opacity: 0.3;
     }
