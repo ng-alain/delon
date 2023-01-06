@@ -135,51 +135,6 @@ describe('auth: base.interceptor', () => {
       expect(ret.request.headers.get('Authorization')).toBeNull();
       ret.flush('ok!');
     });
-
-    describe('#with allow_anonymous_key', () => {
-      describe('in params', () => {
-        it(`should working`, done => {
-          genModule({}, genModel(SimpleTokenModel, null));
-          http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(() => done());
-          const ret = httpBed.expectOne(() => true);
-          expect(ret.request.params.has('_allow_anonymous')).toBe(false);
-          expect(ret.request.headers.get('Authorization')).toBeNull();
-          ret.flush('ok!');
-        });
-        it(`(full url)`, done => {
-          genModule({}, genModel(SimpleTokenModel, null));
-          http
-            .get('https://ng-alain.com/api/user', {
-              responseType: 'text',
-              params: { _allow_anonymous: '' }
-            })
-            .subscribe(() => done());
-          const ret = httpBed.expectOne(() => true);
-          expect(ret.request.headers.get('Authorization')).toBeNull();
-          ret.flush('ok!');
-        });
-      });
-      describe('in url', () => {
-        it(`should working`, done => {
-          genModule({}, genModel(SimpleTokenModel, null));
-          http.get('/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(() => done());
-          const ret = httpBed.expectOne(() => true);
-          expect(ret.request.url).toBe(`/user`);
-          expect(ret.request.headers.get('Authorization')).toBeNull();
-          ret.flush('ok!');
-        });
-        it(`(full url)`, done => {
-          genModule({}, genModel(SimpleTokenModel, null));
-          http
-            .get('https://ng-alain.com/api/user?a=1&_allow_anonymous=1&other=a&cn=中文', { responseType: 'text' })
-            .subscribe(() => done());
-          const ret = httpBed.expectOne(() => true);
-          expect(ret.request.url).toBe(`https://ng-alain.com/api/user?a=1&other=a&cn=%E4%B8%AD%E6%96%87`);
-          expect(ret.request.headers.get('Authorization')).toBeNull();
-          ret.flush('ok!');
-        });
-      });
-    });
   });
 
   describe('[invalid token]', () => {

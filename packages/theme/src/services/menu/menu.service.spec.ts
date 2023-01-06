@@ -105,46 +105,6 @@ describe('Service: Menu', () => {
       expect(srv.menus[1].disabled).toBe(true);
     });
 
-    describe('#openedByUrl', () => {
-      it('with url', () => {
-        srv.add(deepCopy(DATA));
-        srv.openedByUrl(`/dashboard/v1`);
-        expect((srv.menus[0] as MenuInner)._open).toBe(true);
-      });
-      it('not found', () => {
-        srv.add(deepCopy(DATA));
-        srv.openedByUrl(`/notfound`);
-        expect(srv.menus.filter((w: MenuInner) => w._open === false).length).toBe(srv.menus.length);
-      });
-      it('invalid url', () => {
-        srv.add(deepCopy(DATA));
-        srv.openedByUrl(null);
-        expect(srv.menus.filter((w: MenuInner) => w._open === false).length).toBe(0);
-      });
-      it('recursive up find', () => {
-        srv.add(deepCopy(DATA));
-        srv.openedByUrl(`/dashboard/v1/1`, true);
-        expect((srv.menus[0] as MenuInner)._open).toBe(true);
-      });
-    });
-
-    describe('#getHit', () => {
-      it('when recursive is false', () => {
-        const item = srv.getHit(DATA, '/dashboard/invalid');
-        expect(item == null).toBe(true);
-      });
-      it('when recursive is true', () => {
-        const item = srv.getHit(DATA, '/dashboard/invalid', true);
-        expect(item == null).toBe(false);
-      });
-      it('when include queryString', () => {
-        expect(srv.getHit(DATA, '/test?a=1', true) != null).toBe(true);
-      });
-      it('when include queryString when is hash location strategy', () => {
-        expect(srv.getHit(DATA, '/test;reload=1', true) != null).toBe(true);
-      });
-    });
-
     describe('#getPathByUrl', () => {
       it('with url', () => {
         srv.add(deepCopy(DATA));

@@ -88,7 +88,7 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
       return Promise.resolve();
     }
     return this.lazy
-      .loadStyle('./assets/color.less', 'stylesheet/less')
+      .loadStyle('./assets/color.less', { rel: 'stylesheet/less' })
       .then(() => {
         const lessConfigNode = this.doc.createElement('script');
         lessConfigNode.innerHTML = `

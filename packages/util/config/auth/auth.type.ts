@@ -36,12 +36,6 @@ export interface AlainAuthConfig {
    */
   ignores?: RegExp[];
   /**
-   * 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN，默认：`_allow_anonymous`
-   *
-   * @deprecated Will be removed in 15.x, Pls used [ALLOW_ANONYMOUS](https://github.com/ng-alain/delon/blob/master/packages/auth/src/token.ts) `HttpContext` instead
-   */
-  allow_anonymous_key?: string;
-  /**
    * 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法，默认：`true`
    */
   executeOtherInterceptors?: boolean;

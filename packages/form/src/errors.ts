@@ -109,9 +109,4 @@ export interface ErrorSchema {
    * 表单状态值，只支持 `this.sf.getProperty('/department')?.updateFeedback('validating')` 调用方式
    */
   feedback?: NzFormControlStatusType;
-
-  /**
-   * @deprecated Will be removed of NG-ZORRO don't support
-   */
-  feedbackIcon?: string | null;
 }
