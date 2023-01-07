@@ -43,6 +43,10 @@
     margin: 0;
     padding: 0;
 
+    &:first-child {
+      margin-right: 16px;
+    }
+
     &-middle {
       flex: 1;
     }
@@ -76,7 +80,7 @@
 
       &:hover {
         color: #fff;
-        background-color: rgba(255, 255, 255, 0.2) !important;
+        background-color: @alain-default-header-nav-bg-hover;
       }
 
       > i,
@@ -85,6 +89,24 @@
         // fix ant-dropdown-trigger
         transform: none !important;
       }
+    }
+  }
+
+  &__top-menu-item {
+    display: flex;
+    align-items: center;
+    height: @alain-default-header-hg;
+    padding: @alain-default-header-top-menu-item-padding;
+    border-radius: 0;
+
+    &-selected {
+      color: #fff;
+      background-color: @alain-default-header-nav-bg-hover;
+    }
+
+    &-disabled {
+      opacity: .5;
+      pointer-events: none;
     }
   }
 }

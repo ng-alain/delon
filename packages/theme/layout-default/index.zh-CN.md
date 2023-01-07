@@ -141,6 +141,10 @@ export class LayoutBasicComponent {
 
 头部项的触发样式。
 
+### layout-default-top-menu-item
+
+头部业务菜单项。
+
 ## 布局说明
 
 按上-左-右布局方式，运用于**业务页**的开发。其规范细节：
