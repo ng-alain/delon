@@ -141,6 +141,10 @@ The layout can be dynamically managed at runtime through the `LayoutDefaultServi
 
 The trigger style of the head item.
 
+### layout-default-top-menu-item
+
+Header business menu item.
+
 ## Layout description
 
 In the upper-left-right layout mode, it is applied to the development of the **business page**. Its specification details:
