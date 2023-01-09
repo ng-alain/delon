@@ -40,6 +40,7 @@ import {
   writePackage,
   ZORROVERSION
 } from '../utils';
+import { addImportNotation } from '../utils/less';
 import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
 
@@ -364,6 +365,7 @@ export default function (options: ApplicationOptions): Rule {
       addCodeStylesToPackageJson(),
       addSchematics(options),
       addESLintRule(context, false),
+      addImportNotation(),
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),

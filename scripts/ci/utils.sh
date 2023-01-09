@@ -53,7 +53,9 @@ DEPENDENCIES=$(node -p "
     'lint-staged',
     'rxjs',
     'swagger-typescript-api',
-    '@github/hotkey'
+    '@github/hotkey',
+    'ng-alain-sts',
+    'ng-alain-plugin-theme'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")

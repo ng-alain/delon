@@ -54,6 +54,6 @@
     ],
     "no-invalid-double-slash-comments": null,
     "indentation": [ 2 ],
-    "import-notation": null
+    "import-notation": "string"
   }
 }
