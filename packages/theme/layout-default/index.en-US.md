@@ -143,7 +143,7 @@ The trigger style of the head item.
 
 ### layout-default-top-menu-item
 
-Header business menu item.
+Header business menu item, please refer to [layout.component.ts](https://github.com/ng-alain/delon/blob/master/src/dev/layout.component.ts#L65-L72)([Preview](https://ng-alain.com/dev/home)).
 
 ## Layout description
 

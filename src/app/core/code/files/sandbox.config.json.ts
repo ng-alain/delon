@@ -4,7 +4,7 @@ export default {
   view: 'browser',
   template: 'node',
   container: {
-    node: '14',
+    node: '16',
     port: 4200
   }
 };

@@ -143,7 +143,7 @@ export class LayoutBasicComponent {
 
 ### layout-default-top-menu-item
 
-头部业务菜单项。
+头部业务菜单项，使用方式请参考 [layout.component.ts](https://github.com/ng-alain/delon/blob/master/src/dev/layout.component.ts#L65-L72)([预览](https://ng-alain.com/dev/home))。
 
 ## 布局说明
 
