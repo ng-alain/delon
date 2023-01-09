@@ -95,10 +95,15 @@ For missing language imports, refer to [app.module.ts](https://github.com/ng-ala
 
 ### How to deploy ng-alain.com documentation site in local
 
-We provided an online snapshot:
+Online documents will only retain the data of the last three major version numbers. If the version is low, you can view it through local deployment:
 
-```barsh
-git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git docs
+```bash
+git clone --depth 1 -b full https://github.com/ng-alain/archive-docs.git ng-alain-doc
+cd ng-alain-doc
+yarn
+yarn start
 ```
 
-You can simply create a Docker container to quickly deploy the same documentation site as ng-alain.com.
+### Fix the abnormal display of the lower part of the 360 browser
+
+The built-in Chrome core of some 360 browsers is too low, resulting in some CSS3 not supported, you can manually increase `.browserslistrc` For more details, refer to [#2310](https://github.com/ng-alain/ng-alain/issues/2310#issuecomment-1299460266).
