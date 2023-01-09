@@ -52,7 +52,6 @@ function removeOrginalFiles(): Rule {
     [
       `${project.root}/README.md`,
       `${project.sourceRoot}/main.ts`,
-      `${project.sourceRoot}/test.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
       `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
