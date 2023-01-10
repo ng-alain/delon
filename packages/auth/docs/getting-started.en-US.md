@@ -76,7 +76,7 @@ The default `DelonAuthModule` does not register any HTTP interceptor, because of
 | `[token_send_template]` | `string` | `${token}` | Send a token template with a `${property name}` placeholder | ✅ |
 | `[token_send_place]` | `header,body,url` | `header` | Send token parameter position | ✅ |
 | `[login_url]` | `string` | `/login` | Login page routing address | ✅ |
-| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses | ✅ |
+| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses. In addition, you can also control whether to ignore through [ALLOW_ANONYMOUS](/auth/qa/en). | ✅ |
 | `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing | ✅ |
 | `[refreshTime]` | `number` | `3000` | Refresh time (unit: ms) | ✅ |
 | `[refreshOffset]` | `number` | `6000` | Offset value (unit: ms), it is recommended to set according to the multiple of `refreshTime` | ✅ |
