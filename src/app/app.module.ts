@@ -2,7 +2,7 @@
 import { BidiModule } from '@angular/cdk/bidi';
 import { LayoutModule } from '@angular/cdk/layout';
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
 import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +31,7 @@ import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
+import { CacheInterceptor } from '@delon/cache';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
@@ -74,6 +75,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
     // {
     //   provide: RouteReuseStrategy,
     //   useClass: ReuseTabStrategy,
