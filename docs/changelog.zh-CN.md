@@ -14,6 +14,14 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [15.0.1](https://github.com/ng-alain/delon/compare/15.0.0...15.0.1) (2023-01-29)
+
+### Bug Fixes
+
+* **abc:pdf:** 修复支持 `2.x` 版本 ([#1574](https://github.com/ng-alain/delon/issues/1574)) ([0cf8b3a](https://github.com/ng-alain/delon/commit/0cf8b3a98c1c2029ff7d90af6cea6d2941199d4b))
+* **cli:** 修复 `can not add index to parent of type array` 错误 ([#1577](https://github.com/ng-alain/delon/issues/1577)) ([3ac463f](https://github.com/ng-alain/delon/commit/3ac463f22d7020afd4930c1372c6b87d865fdddd))
+
+
 # [15.0.0](https://github.com/ng-alain/delon/compare/14.3.0...15.0.0) (2023-01-09)
 
 ### Bug Fixes
