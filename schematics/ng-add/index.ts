@@ -3,7 +3,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as colors from 'ansi-colors';
 
 import { Schema as ApplicationOptions } from '../application/schema';
-import { readJSON, readPackage } from '../utils';
+import { DEFAULT_WORKSPACE_PATH, readJSON, readPackage } from '../utils';
 import { getNodeMajorVersion } from '../utils/node';
 import { Schema as NgAddOptions } from './schema';
 
@@ -55,7 +55,7 @@ function genRules(options: NgAddOptions): Rule {
 }
 
 function isYarn(tree: Tree): boolean {
-  return readJSON(tree, '/angular.json')?.cli?.packageManager === 'yarn';
+  return readJSON(tree, DEFAULT_WORKSPACE_PATH)?.cli?.packageManager === 'yarn';
 }
 
 function finished(): Rule {
