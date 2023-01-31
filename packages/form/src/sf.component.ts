@@ -329,14 +329,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ...uiSchema[uiKey]
         });
         const ui = deepCopy({
+          ...this._defUi,
+          ...parentUiSchema,
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
           ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
             ? { widget: 'select' }
             : null),
-          ...this._defUi,
-          ...parentUiSchema,
           ...curSetUi
         }) as SFUISchemaItemRun;
         // 继承父节点布局属性
