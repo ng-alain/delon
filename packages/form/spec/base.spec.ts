@@ -306,6 +306,14 @@ export class SFPage {
     return this.dc();
   }
 
+  typeCharByDebugElement(value: NzSafeAny, cls: string = 'input'): this {
+    const node = this.getDl(cls);
+    const input = node.nativeElement as HTMLInputElement;
+    input.focus();
+    node.triggerEventHandler('input', { target: { value } });
+    return this.dc();
+  }
+
   typeEvent(eventName: string | Event, cls: string = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {

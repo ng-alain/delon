@@ -15,6 +15,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
   step!: number;
   formatter: (value: number) => string | number = value => value;
   parser: (value: string) => string = value => value;
+  width = '';
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
@@ -42,6 +43,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     }
     if (ui.formatter) this.formatter = ui.formatter;
     if (ui.parser) this.parser = ui.parser;
+    this.width = typeof ui.widgetWidth === 'number' ? `${ui.widgetWidth}px` : ui.widgetWidth ?? '90px';
   }
 
   _setValue(val: number): void {
