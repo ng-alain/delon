@@ -26,8 +26,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
-      number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2, ui: { widgetWidth: 200 } },
-      integer: { type: 'integer', default: 10 },
+      number: {
+        type: 'number',
+        minimum: 18,
+        maximum: 100,
+        multipleOf: 2,
+        ui: { widgetWidth: 200 } as SFNumberWidgetSchema
+      },
+      integer: { type: 'integer', default: 10, ui: { widgetWidth: '100%' } as SFNumberWidgetSchema },
       unit: { type: 'number', default: 10, ui: { unit: '%' } as SFNumberWidgetSchema },
       prefix: { type: 'number', default: 10, ui: { prefix: '$' } as SFNumberWidgetSchema },
       hideStep: { type: 'number', default: 10, ui: { hideStep: true } as SFNumberWidgetSchema }
