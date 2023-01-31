@@ -4,6 +4,18 @@ title: 常见问题
 type: Documents
 ---
 
+## 如何忽略某个请求
+
+在调用请求时，加上 `ALLOW_ANONYMOUS`。
+
+```ts
+this.http.post(`login`, {
+ name: 'cipchk', pwd: '123456'
+}, {
+ context: new HttpContext().set(ALLOW_ANONYMOUS, true)
+});
+```
+
 ## 如何捕获无Token时被拦截信息？
 
 ```ts

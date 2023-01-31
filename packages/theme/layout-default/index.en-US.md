@@ -141,6 +141,10 @@ The layout can be dynamically managed at runtime through the `LayoutDefaultServi
 
 The trigger style of the head item.
 
+### layout-default-top-menu-item
+
+Header business menu item, please refer to [layout.component.ts](https://github.com/ng-alain/delon/blob/master/src/dev/layout.component.ts#L65-L72)([Preview](https://ng-alain.com/dev/home)).
+
 ## Layout description
 
 In the upper-left-right layout mode, it is applied to the development of the **business page**. Its specification details:

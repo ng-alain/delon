@@ -53,6 +53,7 @@
       }
     ],
     "no-invalid-double-slash-comments": null,
-    "indentation": [ 2 ]
+    "indentation": [ 2 ],
+    "import-notation": "string"
   }
 }

@@ -141,6 +141,10 @@ export class LayoutBasicComponent {
 
 头部项的触发样式。
 
+### layout-default-top-menu-item
+
+头部业务菜单项，使用方式请参考 [layout.component.ts](https://github.com/ng-alain/delon/blob/master/src/dev/layout.component.ts#L65-L72)([预览](https://ng-alain.com/dev/home))。
+
 ## 布局说明
 
 按上-左-右布局方式，运用于**业务页**的开发。其规范细节：

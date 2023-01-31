@@ -11,7 +11,6 @@ import { ExceptionModule } from '@delon/abc/exception';
 import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 import { FullContentModule } from '@delon/abc/full-content';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
-import { ImageModule } from '@delon/abc/image';
 import { LoadingModule } from '@delon/abc/loading';
 import { HotkeyModule } from '@delon/abc/hotkey';
 import { LodopModule } from '@delon/abc/lodop';
@@ -39,7 +38,6 @@ const MODULES = [
   ErrorCollectModule,
   FooterToolbarModule,
   DownFileModule,
-  ImageModule,
   AvatarListModule,
   EllipsisModule,
   GlobalFooterModule,

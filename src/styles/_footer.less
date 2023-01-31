@@ -9,21 +9,26 @@
   font-size: 14px;
   background-color: #000;
   box-shadow: 0 1000px 0 1000px #fff;
+
   .ant-row {
     text-align: center;
   }
+
   &__center {
     display: inline-block;
     text-align: left;
+
     > h2 {
       position: relative;
       margin: 0 auto 24px;
       font-weight: 500;
       font-size: 16px;
+
       > .title-icon {
         width: 27px;
         margin-right: 16px;
       }
+
       > .anticon {
         position: absolute;
         top: 3px;
@@ -32,28 +37,34 @@
         font-size: 16px;
       }
     }
+
     > div {
       margin: 12px 0;
     }
   }
+
   &__wrap {
     position: relative;
     padding: 86px @footer-full-padding-space 16px @footer-full-padding-space;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
+
   a {
     color: rgba(255, 255, 255, 0.9);
   }
+
   h2 {
     color: rgba(255, 255, 255, 1);
+
     & > span {
       color: rgba(255, 255, 255, 1);
     }
   }
+
   &__small {
     @{footer-prefix} {
       &__wrap {
-        padding: 86px 24px 93px 24px;
+        padding: 86px 24px 93px;
       }
     }
   }
@@ -67,11 +78,13 @@
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px;
   cursor: pointer;
+
   &-value {
     width: 80px;
     height: 16px;
     border-radius: 2px;
   }
+
   &-content .ant-popover-inner-content {
     width: 200px;
     padding: 0;
@@ -81,24 +94,30 @@
 @media (max-width: @site-mobile) {
   @{footer-prefix} {
     text-align: center;
+
     .footer__wrap {
       padding: 40px;
+
       .ant-row {
         padding: 0;
+
         > div {
           &:nth-child(2),
           &:nth-child(4) {
             display: none;
           }
+
           a {
             font-weight: 300;
           }
         }
       }
     }
+
     .footer__center {
       text-align: center;
     }
+
     h2 {
       margin-top: 16px;
     }

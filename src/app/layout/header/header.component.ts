@@ -14,6 +14,7 @@ import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
 
 const pkg = require('../../../../package.json');
+const minimumVersion = 12;
 
 @Component({
   selector: 'app-header',
@@ -27,7 +28,7 @@ const pkg = require('../../../../package.json');
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
   isMobile!: boolean;
-  oldVersionList = [`13.x`, `12.x`, `11.x`, `10.x`, `9.x`, `8.x`, `1.x`];
+  oldVersionList = [14, 13, 12, 11, 10, 9, 8, 1];
   currentVersion = pkg.version;
   delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
@@ -89,10 +90,13 @@ export class HeaderComponent implements AfterViewInit {
     this.genDelonType();
   }
 
-  toVersion(version: string): void {
-    if (version !== this.currentVersion) {
-      this.win.location.href = `https://ng-alain.com/version/${version}/`;
+  toVersion(version: number): void {
+    if (version == this.currentVersion) return;
+    if (version >= minimumVersion) {
+      this.win.location.href = `https://ng-alain.com/version/${version}.x/`;
+      return;
     }
+    this.win.open(`https://github.com/ng-alain/archive-docs/blob/master/README.md`);
   }
 
   langChange(language: 'en' | 'zh'): void {

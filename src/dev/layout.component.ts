@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-// import { Router } from '@angular/router';
 import {
   AppstoreOutline,
   BellOutline,
@@ -25,6 +25,7 @@ import {
 import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { deepCopy } from '@delon/util/other';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -59,6 +60,16 @@ const ICONS = [
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
         </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="middle">
+        <layout-default-top-menu-item
+          *ngFor="let m of topMenus"
+          (click)="changeMenu(m.key)"
+          [selected]="m.selected"
+          [disabled]="m.disabled"
+        >
+          <i nz-icon nzType="github"></i> {{ m.label }}
+        </layout-default-top-menu-item>
       </layout-default-header-item>
       <layout-default-header-item direction="right">
         <a class="alain-default__nav-item" (click)="rtl.toggle()">{{ rtl.nextDir | uppercase }}</a>
@@ -106,6 +117,11 @@ export class DevLayoutComponent implements OnInit {
   get user(): User {
     return this.settings.user;
   }
+  topMenus: Array<{ key: string; label: string; selected?: boolean; disabled?: boolean }> = [
+    { key: '', label: 'Default', selected: true },
+    { key: 'bus', label: 'Bus', selected: false },
+    { key: 'disabled', label: 'Disabbled', disabled: true }
+  ];
 
   menus: Menu[] = [
     {
@@ -190,12 +206,30 @@ export class DevLayoutComponent implements OnInit {
     private menuSrv: MenuService,
     public settings: SettingsService,
     public msgSrv: NzMessageService,
-    // private router: Router,
+    private router: Router,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     public rtl: RTLService
   ) {
     iconSrv.addIcon(...ICONS);
     // this.testReuse();
+  }
+
+  changeMenu(key: string): void {
+    this.menuSrv.add(
+      key === ''
+        ? deepCopy(this.menus)
+        : [
+            {
+              text: 'test',
+              group: true,
+              children: [{ text: `TYPE - ${key}`, link: '/dev/view/1', icon: 'anticon anticon-appstore' }]
+            }
+          ]
+    );
+    for (let tm of this.topMenus) {
+      tm.selected = tm.key === key;
+    }
+    this.loadFirstValidMenu();
   }
 
   // private testReuse(): void {
@@ -222,6 +256,17 @@ export class DevLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuSrv.add(this.menus);
+    this.menuSrv.add(deepCopy(this.menus));
+  }
+
+  private loadFirstValidMenu(): void {
+    let res: Menu | undefined;
+    this.menuSrv.visit(this.menuSrv.menus, item => {
+      if (res == null && item.hide !== true && item.link != null && item.link.length > 0) {
+        res = item;
+      }
+    });
+    if (res == null) return;
+    this.router.navigateByUrl(res.link!!);
   }
 }

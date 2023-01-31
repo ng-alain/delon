@@ -287,7 +287,7 @@ Is visible with conditions, for example:
 | `[ingoreKeywords]` | Ignore validation for some data types | `string[]` |  |
 | `[errors]` | Customized error text | `{ [ key: string ]: string | ((obj: ErrorData) => string) }` | - |
 | `[showRequired]` | Whether to display the required logo * | `boolean` | - |
-| `[validator]` | Customized validator | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | - |
+| `[validator]` | Custom verification, the final result will be merged with Ajv verification results | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | - |
 
 ### Array Type
 

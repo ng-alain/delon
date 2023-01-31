@@ -13,6 +13,7 @@ import { LayoutDefaultHeaderItemTriggerDirective } from './layout-header-item-tr
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultHeaderComponent } from './layout-header.component';
 import { LayoutDefaultNavComponent } from './layout-nav.component';
+import { LayoutDefaultTopMenuItemComponent } from './layout-top-menu-item';
 import { LayoutDefaultComponent } from './layout.component';
 
 const COMPONENTS = [
@@ -20,7 +21,8 @@ const COMPONENTS = [
   LayoutDefaultNavComponent,
   LayoutDefaultHeaderComponent,
   LayoutDefaultHeaderItemComponent,
-  LayoutDefaultHeaderItemTriggerDirective
+  LayoutDefaultHeaderItemTriggerDirective,
+  LayoutDefaultTopMenuItemComponent
 ];
 
 @NgModule({

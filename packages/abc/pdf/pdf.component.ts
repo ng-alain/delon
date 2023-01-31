@@ -20,7 +20,7 @@ import {
 import { fromEvent, Subject, timer, debounceTime, filter, takeUntil } from 'rxjs';
 
 import type { PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
-import type { EventBus } from 'pdfjs-dist/types/web/interfaces';
+import type { EventBus } from 'pdfjs-dist/types/web/event_utils';
 import type { PDFFindController } from 'pdfjs-dist/types/web/pdf_find_controller';
 import type { PDFLinkService } from 'pdfjs-dist/types/web/pdf_link_service';
 import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';

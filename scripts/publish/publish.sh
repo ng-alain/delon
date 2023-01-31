@@ -30,15 +30,15 @@ clone() {
 }
 
 publishToMaster() {
-  (cd ${ROOT}/@delon; for p in `ls .`; do npm publish --access public $p; done)
+  (cd ${ROOT}/@delon; for p in `ls .`; do cd $p; npm publish; cd ..; done)
   cd ${ROOT}/ng-alain
-  npm publish --access public
+  npm publish
 }
 
 publishToNext() {
-  (cd ${ROOT}/@delon; for p in `ls .`; do npm publish $p --access public --tag next; done)
+  (cd ${ROOT}/@delon; for p in `ls .`; do cd $p; npm publish --tag next; cd ..; done)
   cd ${ROOT}/ng-alain
-  npm publish --access public --tag next
+  npm publish --tag next
 }
 
 syncTaobao() {

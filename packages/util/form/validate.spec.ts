@@ -10,10 +10,10 @@ describe('utils: form-validate', () => {
     for (const item of data) {
       const ctr = new FormControl(item.k);
       const fn = _Validators[methodName] as (control: AbstractControl) => ValidationErrors | null;
+      const res = fn(ctr);
       if (item.v) {
-        expect(fn(ctr)).toBeNull();
+        expect(res).toBeNull();
       } else {
-        const res = fn(ctr);
         expect(res).not.toBeNull();
         expect((res as NzSafeAny)[methodName]).toEqual(true);
       }

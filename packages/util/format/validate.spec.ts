@@ -10,7 +10,12 @@ export const TEST_DATA = {
     { k: '-12', v: true },
     { k: 123, v: true },
     { k: '123.1.2', v: false },
-    { k: '123a', v: false }
+    { k: '123a', v: false },
+    { k: '1.123e-10', v: true },
+    { k: '+1.123e-10', v: true },
+    { k: '+.1e-1', v: true },
+    { k: '1.0e+1', v: true },
+    { k: '1.0e+', v: false }
   ],
   int: [
     { k: '123', v: true },

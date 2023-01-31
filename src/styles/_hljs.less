@@ -20,10 +20,7 @@ pre[class*='hljs'] {
   background: none;
 }
 
-pre[class*='hljs']::-moz-selection,
-pre[class*='hljs'] ::-moz-selection,
-code[class*='hljs']::-moz-selection,
-code[class*='hljs'] ::-moz-selection {
+pre[class*='hljs']::selection {
   text-shadow: none;
   background: #b3d4fc;
 }
@@ -124,6 +121,7 @@ pre[class*='hljs'] {
 .token.bold {
   font-weight: bold;
 }
+
 .token.italic {
   font-style: italic;
 }
