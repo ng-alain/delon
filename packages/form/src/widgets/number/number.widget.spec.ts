@@ -166,5 +166,24 @@ describe('form: widget: number', () => {
       page.typeChar(1, 'input');
       expect(ui.change).toHaveBeenCalled();
     }));
+
+    describe('#widgetWidth', () => {
+      it('width number', fakeAsync(() => {
+        const s: SFSchema = {
+          properties: { a: { type: 'number', ui: { widgetWidth: 10 } as SFNumberWidgetSchema } }
+        };
+        page.newSchema(s);
+        const ipt = page.getEl('.ant-input-number') as HTMLDialogElement;
+        expect(ipt.style.width).toBe('10px');
+      }));
+      it('width string', fakeAsync(() => {
+        const s: SFSchema = {
+          properties: { a: { type: 'number', ui: { widgetWidth: '10%' } as SFNumberWidgetSchema } }
+        };
+        page.newSchema(s);
+        const ipt = page.getEl('.ant-input-number') as HTMLDialogElement;
+        expect(ipt.style.width).toBe('10%');
+      }));
+    });
   });
 });
