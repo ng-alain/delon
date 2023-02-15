@@ -52,5 +52,7 @@ To select or input a date.
 | `[showToday]` | whether to show "Today" button | `boolean` | `true` |
 | `[inputReadOnly]` | Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices) | `boolean` | `false` |
 | `[inline]` | Inline mode of the date picker | `boolean` | `false` |
+| `[separator]` | separator | `string, TemplateRef` | `'~'` |
+| `[showWeekNumber]` | whether to show the week number on each row (Only supported by date picker. Week picker always shows week numbers) | `boolean` | `false` |
 | `[onOk]` | callback when click ok button | `(data: Date | Date[]) => void` | - |
 | `[change]` | Date change callback | `(data: Date | Date[]) => void` | - |
