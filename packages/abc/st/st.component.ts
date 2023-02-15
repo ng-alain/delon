@@ -260,8 +260,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     configSrv: AlainConfigService,
     private cms: NzContextMenuService
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
-
     this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -276,6 +274,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         filter(() => this._columns.length > 0)
       )
       .subscribe(() => this.refreshColumns());
+
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
   }
 
   private setCog(cog: AlainSTConfig): void {
