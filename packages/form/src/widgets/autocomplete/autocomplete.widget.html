@@ -17,6 +17,9 @@
     [nzBackfill]="i.backfill"
     [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
     [nzWidth]="i.width"
+    [nzOverlayStyle]="ui.overlayStyle || {}"
+    [nzOverlayClassName]="ui.overlayClassName || ''"
+    [compareWith]="i.compareWith"
     (selectionChange)="updateValue($event)"
   >
     <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>

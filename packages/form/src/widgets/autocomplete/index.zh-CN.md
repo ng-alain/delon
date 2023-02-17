@@ -41,3 +41,6 @@ type: Widgets
 | `[backfill]` | 使用键盘选择选项的时候把选中项回填到输入框中 | `boolean` | `false` |
 | `[nzWidth]` | 自定义宽度单位 px | `number` | 触发元素宽度 |
 | `[change]` | 变更回调 | `(item: NzAutocompleteOptionComponent, orgData: SFSchemaEnum) => void` | - |
+| `[overlayClassName]` | 下拉根元素的类名称 | `string` | - |
+| `[overlayStyle]` | 下拉根元素的样式 | `object` | - |
+| `[compareWith]` | 与 [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) 相同 | `(o1: any, o2: any) => boolean` | `(o1: any, o2: any) => o1===o2` |

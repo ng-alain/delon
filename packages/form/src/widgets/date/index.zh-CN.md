@@ -53,5 +53,7 @@ type: Widgets
 | `[showToday]` | 是否展示“今天”按钮 | `boolean` | `true` |
 | `[inputReadOnly]` | 为 input 标签设置只读属性（避免在移动设备上触发小键盘） | `boolean` | `false` |
 | `[inline]` | 内联模式 | `boolean` | `false` |
+| `[separator]` | 分隔符 | `string, TemplateRef` | `'~'` |
+| `[showWeekNumber]` | 是否在每一行显示周数（仅日期选择器支持。周选择器始终显示周数） | `boolean` | `false` |
 | `[onOk]` | 点击确定按钮的回调 | `(data: Date | Date[]) => void` | - |
 | `[change]` | 时间发生变化的回调 | `(data: Date | Date[]) => void` | - |
