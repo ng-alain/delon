@@ -49,7 +49,7 @@ describe('NgAlainSchematic: plugin: icon', () => {
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
     Object.keys(testCases).forEach(name => tree.create(`/projects/foo/src/${name}`, testCases[name]));
-    tree = await runner.runSchematicAsync('plugin', { name: 'icon', type: 'add' }, tree).toPromise();
+    tree = await runner.runSchematic('plugin', { name: 'icon', type: 'add' }, tree);
   });
 
   it(`should working`, () => {

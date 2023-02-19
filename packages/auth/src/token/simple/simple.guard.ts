@@ -3,10 +3,9 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
-  CanLoad,
+  CanMatch,
   Route,
-  RouterStateSnapshot,
-  UrlSegment
+  RouterStateSnapshot
 } from '@angular/router';
 
 import { AlainAuthConfig } from '@delon/util/config';
@@ -33,7 +32,7 @@ import { SimpleTokenModel } from './simple.model';
  * ```
  */
 @Injectable({ providedIn: 'root' })
-export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
+export class SimpleGuard implements CanActivate, CanActivateChild, CanMatch {
   private url?: string;
 
   private get cog(): AlainAuthConfig {
@@ -51,7 +50,7 @@ export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   // lazy loading
-  canLoad(route: Route, _segments: UrlSegment[]): boolean {
+  canMatch(route: Route): boolean {
     this.url = route.path;
     return this.process();
   }

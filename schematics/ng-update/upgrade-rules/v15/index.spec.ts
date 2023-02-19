@@ -15,6 +15,6 @@ describe('Schematic: ng-update: v15Rule', () => {
     logs.length = 0;
     runner = new SchematicTestRunner('schematics', migrationCollection);
     runner.logger.subscribe(e => logs.push(e.message));
-    await runner.runSchematicAsync('migration-v15', {}, tree).toPromise();
+    await runner.runSchematic('migration-v15', {}, tree);
   }
 });
