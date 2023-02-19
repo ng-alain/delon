@@ -14,6 +14,20 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [15.1.0](https://github.com/ng-alain/delon/compare/15.0.1...15.1.0) (2023-02-19)
+
+### Bug Fixes
+
+* **abc:st:** fix invalid `total` of global config ([#1583](https://github.com/ng-alain/delon/issues/1583)) ([fa8087f](https://github.com/ng-alain/delon/commit/fa8087f4fb0050fa47b8c9d57460cdf55d6fa9d3))
+* **form:string:** fix pre tab cause out of focus ([#1581](https://github.com/ng-alain/delon/issues/1581)) ([bc03f4b](https://github.com/ng-alain/delon/commit/bc03f4bdae7a861d82db2edae9e0873ae80e8020))
+* **form:** fix ui value should inherit parent ui ([#1582](https://github.com/ng-alain/delon/issues/1582)) ([03e2dc5](https://github.com/ng-alain/delon/commit/03e2dc5dd60e00c81fe0284fe163700b24ea39c3))
+
+### Features
+
+* **form:number:** support string type of `widgetWidth` ([#1580](https://github.com/ng-alain/delon/issues/1580)) ([f3e37e9](https://github.com/ng-alain/delon/commit/f3e37e97a490eb7437f7582a3e3716288358b5e5))
+* **form:** async ng-zorro-antd ([#1584](https://github.com/ng-alain/delon/issues/1584)) ([5774c55](https://github.com/ng-alain/delon/commit/5774c55f2226655eb0a6d9df57a029427fe6ec3f))
+
+
 ## [15.0.1](https://github.com/ng-alain/delon/compare/15.0.0...15.0.1) (2023-01-29)
 
 ### Bug Fixes
