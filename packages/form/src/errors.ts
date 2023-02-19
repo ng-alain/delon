@@ -113,6 +113,8 @@ export interface ErrorSchema {
    * Form status value, only supports `this.sf.getProperty('/department')?.updateFeedback('validating')` calling method
    *
    * 表单状态值，只支持 `this.sf.getProperty('/department')?.updateFeedback('validating')` 调用方式
+   *
+   * > 注：若遇到出现校验时失焦，可尝试取消
    */
   feedback?: NzFormControlStatusType;
 }

@@ -38,6 +38,6 @@ export class SFItemWrapComponent implements OnChanges {
 
   ngOnChanges(): void {
     const hasError = !!this.error;
-    this.statusSrv.formStatusChanges.next({ status: hasError ? 'error' : '', hasFeedback: hasError });
+    this.statusSrv.formStatusChanges.next({ status: hasError ? 'error' : '', hasFeedback: !!this.ui.feedback });
   }
 }

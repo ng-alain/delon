@@ -19,4 +19,9 @@ export interface SFBooleanWidgetSchema extends SFUISchemaItem {
    * Content to be shown when the state is unchecked
    */
   unCheckedChildren?: string | TemplateRef<void>;
+
+  /**
+   * Loading state of switch
+   */
+  loading?: boolean;
 }
