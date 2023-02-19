@@ -25,6 +25,6 @@ if [[ ${TS} == true ]]; then
 fi
 
 if [[ ${LESS} == true ]]; then
-  $(npm bin)/stylelint 'packages/**/*.less'
+  npm run lint:style
 fi
 
