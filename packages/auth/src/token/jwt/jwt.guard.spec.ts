@@ -28,7 +28,7 @@ describe('auth: JWTGuard', () => {
           },
           {
             path: 'lazy',
-            canLoad: [JWTGuard],
+            canMatch: [JWTGuard],
             loadChildren: () => AModule
           },
           {

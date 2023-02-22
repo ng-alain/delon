@@ -28,7 +28,7 @@ describe('auth: SimpleGuard', () => {
           },
           {
             path: 'lazy',
-            canLoad: [SimpleGuard],
+            canMatch: [SimpleGuard],
             loadChildren: () => AModule
           },
           {

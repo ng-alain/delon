@@ -132,7 +132,7 @@ describe('acl: guard', () => {
       });
   });
 
-  describe(`#canLoad`, () => {
+  describe(`#canMatch`, () => {
     it(`should be can load when has [user] role`, (done: () => void) => {
       srv
         .canMatch({
