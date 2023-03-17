@@ -196,15 +196,26 @@ export class MenuService implements OnDestroy {
     key?: string | null;
     url?: string | null;
     recursive?: boolean | null;
-    cb?: ((i: Menu) => void) | null;
+    /**
+     * When the callback returns a Boolean type, it means the custom validation result
+     *
+     * 当回调返回一个布尔类型时，表示自定义校验结果
+     */
+    cb?: ((i: Menu) => boolean | null) | null;
     /**
      * Use the current menu data by default
      *
      * 默认使用当前菜单数据
      */
     data?: Menu[] | null;
+    /**
+     * Whether to ignore hide items, default: `false`
+     *
+     * 是否忽略隐藏的项，默认：`false`
+     */
+    ignoreHide?: boolean;
   }): Menu | null {
-    const opt = { recursive: false, ...options };
+    const opt = { recursive: false, ignoreHide: false, ...options };
     if (opt.key != null) {
       return this.getItem(opt.key);
     }
@@ -215,8 +226,14 @@ export class MenuService implements OnDestroy {
 
     while (!item && url) {
       this.visit(opt.data ?? this.data, i => {
+        if (opt.ignoreHide && i.hide) {
+          return;
+        }
         if (opt.cb) {
-          opt.cb(i);
+          const res = opt.cb(i);
+          if (!item && typeof res === 'boolean' && res) {
+            item = i;
+          }
         }
         if (i.link != null && i.link === url) {
           item = i;
