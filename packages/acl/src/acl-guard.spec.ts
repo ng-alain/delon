@@ -132,10 +132,10 @@ describe('acl: guard', () => {
       });
   });
 
-  describe(`#canLoad`, () => {
+  describe(`#canMatch`, () => {
     it(`should be can load when has [user] role`, (done: () => void) => {
       srv
-        .canLoad({
+        .canMatch({
           data: {
             guard: of('user')
           }
@@ -147,7 +147,7 @@ describe('acl: guard', () => {
     });
     it(`should be can load when is null`, (done: () => void) => {
       srv
-        .canLoad({
+        .canMatch({
           data: {
             guard: null
           }

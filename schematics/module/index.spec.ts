@@ -17,7 +17,7 @@ describe('NgAlainSchematic: module', () => {
   });
 
   it('should create a module', async () => {
-    tree = await runner.runSchematicAsync('module', { ...defaultOptions }, tree).toPromise();
+    tree = await runner.runSchematic('module', { ...defaultOptions }, tree);
     expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade.module.ts')).toBe(true);
     expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade-routing.module.ts')).toBe(true);
     const routesRoutingModuleContent = tree.readContent(`/projects/foo/src/app/routes/routes-routing.module.ts`);
@@ -27,15 +27,17 @@ describe('NgAlainSchematic: module', () => {
   });
 
   it('should import into another module', async () => {
-    tree = await runner
-      .runSchematicAsync('module', { ...defaultOptions, module: 'app.module.ts', path: '/projects/foo/src/app' }, tree)
-      .toPromise();
+    tree = await runner.runSchematic(
+      'module',
+      { ...defaultOptions, module: 'app.module.ts', path: '/projects/foo/src/app' },
+      tree
+    );
     const content = tree.readContent('/projects/foo/src/app/app.module.ts');
     expect(content).toContain(`import { TradeModule } from './trade/trade.module';`);
   });
 
   it('shuold be include service', async () => {
-    tree = await runner.runSchematicAsync('module', { ...defaultOptions, service: 'none' }, tree).toPromise();
+    tree = await runner.runSchematic('module', { ...defaultOptions, service: 'none' }, tree);
     const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
     const contentModule = tree.readContent('/projects/foo/src/app/routes/trade/trade.module.ts');
     expect(content).toContain(`@Injectable()`);
@@ -44,7 +46,7 @@ describe('NgAlainSchematic: module', () => {
   });
 
   it('shuold be include root service', async () => {
-    tree = await runner.runSchematicAsync('module', { ...defaultOptions, service: 'root' }, tree).toPromise();
+    tree = await runner.runSchematic('module', { ...defaultOptions, service: 'root' }, tree);
     const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
     expect(content).toContain(`@Injectable({ providedIn: 'root' })`);
     expect(content).toContain(`TradeService`);
