@@ -62,7 +62,7 @@ const routes: Routes = [
     canActivateChild: [ ACLGuard ],
     data: { guard: <ACLType>{ role: [ 'user1' ], ability: [ 10, 'USER-EDIT' ], mode: 'allOf' } }
   },
-  { path: 'pro', loadChildren: './pro/pro.module#ProModule', canLoad: [ ACLGuard ], data: { guard: 1 } },
-  { path: 'pro', loadChildren: './pro/pro.module#ProModule', canLoad: [ ACLGuard ], data: { guard: of(false).pipe(map(v => 'admin')) } }
+  { path: 'pro', loadChildren: './pro/pro.module#ProModule', canMatch: [ ACLGuard ], data: { guard: 1 } },
+  { path: 'pro', loadChildren: './pro/pro.module#ProModule', canMatch: [ ACLGuard ], data: { guard: of(false).pipe(map(v => 'admin')) } }
 ];
 ```

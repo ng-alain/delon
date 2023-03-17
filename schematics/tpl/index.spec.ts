@@ -10,7 +10,7 @@ describe('Schematic: tpl', () => {
   let tree: UnitTestTree;
 
   async function run(): Promise<void> {
-    tree = await runner.runSchematicAsync('tpl', { name: 'edit', module: 'trade', modal: true }, tree).toPromise();
+    tree = await runner.runSchematic('tpl', { name: 'edit', module: 'trade', modal: true }, tree);
   }
 
   beforeEach(async () => ({ runner, tree } = await createAlainAndModuleApp()));

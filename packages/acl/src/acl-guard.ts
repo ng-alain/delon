@@ -3,7 +3,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
-  CanLoad,
+  CanMatch,
   Data,
   Route,
   Router,
@@ -26,7 +26,7 @@ import { ACLCanType, ACLGuardType } from './acl.type';
  * ```
  */
 @Injectable({ providedIn: 'root' })
-export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
+export class ACLGuard implements CanActivate, CanActivateChild, CanMatch {
   constructor(private srv: ACLService, private router: Router, private injector: Injector) {}
 
   private process(data: Data): Observable<boolean> {
@@ -47,7 +47,7 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   // lazy loading
-  canLoad(route: Route): Observable<boolean> {
+  canMatch(route: Route): Observable<boolean> {
     return this.process(route.data!);
   }
   // all children route

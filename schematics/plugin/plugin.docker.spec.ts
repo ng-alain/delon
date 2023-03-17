@@ -8,7 +8,7 @@ describe('NgAlainSchematic: plugin: docker', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
-    tree = await runner.runSchematicAsync('plugin', { name: 'docker', type: 'add' }, tree).toPromise();
+    tree = await runner.runSchematic('plugin', { name: 'docker', type: 'add' }, tree);
   });
 
   describe('when add', () => {
@@ -21,10 +21,7 @@ describe('NgAlainSchematic: plugin: docker', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(
-      async () =>
-        (tree = await runner.runSchematicAsync('plugin', { name: 'docker', type: 'remove' }, tree).toPromise())
-    );
+    beforeEach(async () => (tree = await runner.runSchematic('plugin', { name: 'docker', type: 'remove' }, tree)));
     it(`should add fiels`, () => {
       expect(tree.exists(`/projects/${APPNAME}/.dockerignore`)).toBe(false);
       expect(tree.exists(`/projects/${APPNAME}/docker-compose.yml`)).toBe(false);

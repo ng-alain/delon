@@ -1,7 +1,7 @@
 import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
+import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 
@@ -69,6 +69,7 @@ describe('abc: reuse-tab', () => {
         )
       ],
       providers: [
+        { provide: RouteReuseStrategy, useClass: ReuseTabStrategy, deps: [ReuseTabService] },
         MenuService,
         {
           provide: RouteReuseStrategy,
@@ -103,9 +104,6 @@ describe('abc: reuse-tab', () => {
     fixture.detectChanges();
 
     srv = TestBed.inject<ReuseTabService>(ReuseTabService);
-    const router = TestBed.inject<Router>(Router) as Router;
-    router.routeReuseStrategy = new ReuseTabStrategy(srv);
-
     page = new PageObject();
     layoutComp = dl.query(By.directive(LayoutComponent)).injector.get<LayoutComponent>(LayoutComponent);
     rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get<ReuseTabComponent>(ReuseTabComponent);
