@@ -86,6 +86,7 @@ import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from
     '[class.st__p-left]': `page.placement === 'left'`,
     '[class.st__p-center]': `page.placement === 'center'`,
     '[class.st__width-strict]': `widthMode.type === 'strict'`,
+    '[class.st__row-class]': `rowClassName`,
     '[class.ant-table-rep]': `responsive`,
     '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`
   },
