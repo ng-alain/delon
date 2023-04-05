@@ -18,7 +18,7 @@ pdf.js libary is lazy loading by default，you can change the default root CDN p
 ```json
 // angular.json
 {
-  "glob": "**/(build|web)/**",
+  "glob": "{build,web}/**",
   "input": "./node_modules/pdfjs-dist/",
   "ignore": ["*.js.map", "*.d.ts"],
   "output": "assets/pdfjs/"

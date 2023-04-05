@@ -332,16 +332,14 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
           rotation
         }).width * CSS_UNITS;
       let scale = _zoom;
-      let stickToPage = true;
 
       // Scale the document when it shouldn't be in original size or doesn't fit into the viewport
       if (!this.originalSize || (this.fitToPage && viewportWidth > this.el.clientWidth)) {
         const viewPort = page.getViewport({ scale: 1, rotation });
         scale = this.getScale(viewPort.width, viewPort.height);
-        stickToPage = !this.stickToPage;
       }
 
-      currentViewer._setScale(scale, stickToPage);
+      currentViewer.currentScale = scale;
     });
   }
 

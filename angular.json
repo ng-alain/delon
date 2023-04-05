@@ -48,7 +48,7 @@
                 "output": "assets/qrious/"
               },
               {
-                "glob": "**/(build|web)/**",
+                "glob": "{build,web}/**",
                 "input": "./node_modules/pdfjs-dist/",
                 "ignore": ["*.js.map", "*.d.ts"],
                 "output": "assets/pdfjs/"
