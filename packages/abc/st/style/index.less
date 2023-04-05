@@ -164,6 +164,14 @@
     }
   }
 
+  // 修复rowClassName在固定列下无作用
+  // https://github.com/ng-alain/ng-alain/issues/2383
+  &__row-class {
+    .@{ant-prefix}-table-cell-fix-left, .@{ant-prefix}-table-cell-fix-right {
+      background: inherit;
+    }
+  }
+
   @media screen and (min-width: @nz-table-rep-min-width) {
     &__width {
       &-strict {
