@@ -127,12 +127,24 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() liveValidate = true;
   /** 指定表单 `autocomplete` 值 */
   @Input() autocomplete: 'on' | 'off';
-  /** 立即显示错误视觉 */
+  /**
+   * Whether to display error visuals immediately
+   *
+   * 是否立即显示错误视觉
+   */
   @Input() @InputBoolean() firstVisual = true;
-  /** 是否只展示错误视觉不显示错误文本 */
+  /**
+   * Whether to only display error visuals but not error text
+   *
+   * 是否只展示错误视觉不显示错误文本
+   */
   @Input() @InputBoolean() onlyVisual = false;
   @Input() @InputBoolean() compact = false;
-  /** 表单模式 */
+  /**
+   * Form default mode, will force override `layout`, `firstVisual`, `liveValidate` parameters
+   *
+   * 表单预设模式，会强制覆盖 `layout`，`firstVisual`，`liveValidate` 参数
+   */
   @Input()
   set mode(value: SFMode) {
     switch (value) {
@@ -312,21 +324,28 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
+        const curUi = deepCopy({
+          ...(property.ui as SFUISchemaItem),
+          ...uiSchema[uiKey]
+        });
         const ui = deepCopy({
+          ...this._defUi,
+          ...parentUiSchema,
+          // 忽略部分会引起呈现的属性
+          visibleIf: undefined,
+          hidden: undefined,
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
           ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
             ? { widget: 'select' }
             : null),
-          ...this._defUi,
-          ...(property.ui as SFUISchemaItem),
-          ...uiSchema[uiKey]
-        }) as SFUISchemaItemRun;
+          ...curUi
+        } as SFUISchemaItemRun) as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
-            if (!ui.spanLabelFixed) {
+            if (!curUi.spanLabelFixed) {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
             }
           } else {

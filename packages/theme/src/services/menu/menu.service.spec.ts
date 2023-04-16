@@ -44,7 +44,8 @@ describe('Service: Menu', () => {
     },
     { text: 'text', externalLink: '//ng-alain.com' },
     { text: 'text', link: '/demo2', i18n: 'text' },
-    { text: 'sub', children: [] }
+    { text: 'sub', children: [] },
+    { text: 'hide', link: '/hide', hide: true }
   ];
 
   afterEach(() => srv.ngOnDestroy());
@@ -332,6 +333,14 @@ describe('Service: Menu', () => {
       });
       it('recursive up find include querystring', () => {
         expect(srv.find({ url: `/dashboard/v1/1?a=1`, recursive: true }) != null).toBe(true);
+      });
+      it('ignore hidden', () => {
+        expect(srv.find({ url: `/hide`, ignoreHide: true })).toBe(null);
+        expect(srv.find({ url: `/hide`, ignoreHide: false })).not.toBe(null);
+      });
+      it('custom result via cb', () => {
+        const res = srv.find({ url: `/always-first-item`, cb: _ => true });
+        expect(res).toBe(srv.menus[0]);
       });
     });
 

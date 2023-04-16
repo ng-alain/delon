@@ -128,12 +128,21 @@ describe('auth: base.interceptor', () => {
       });
     });
 
-    it('#ALLOW_ANONYMOUS', () => {
-      genModule({}, genModel(SimpleTokenModel, null));
-      http.get('/user', { context: new HttpContext().set(ALLOW_ANONYMOUS, true) }).subscribe();
-      const ret = httpBed.expectOne(() => true);
-      expect(ret.request.headers.get('Authorization')).toBeNull();
-      ret.flush('ok!');
+    describe('#ALLOW_ANONYMOUS', () => {
+      it('in get', () => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('/user', { context: new HttpContext().set(ALLOW_ANONYMOUS, true) }).subscribe();
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it('in post', () => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.post('/user', {}, { context: new HttpContext().set(ALLOW_ANONYMOUS, true) }).subscribe();
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
     });
   });
 

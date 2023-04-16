@@ -321,7 +321,7 @@ export abstract class FormProperty {
     const visibleIf = (this.ui as SFUISchemaItem).visibleIf;
     if (typeof visibleIf === 'object' && Object.keys(visibleIf).length === 0) {
       this.setVisible(false);
-    } else if (visibleIf !== undefined) {
+    } else if (visibleIf != null) {
       const propertiesBinding: Array<Observable<boolean>> = [];
       for (const dependencyPath in visibleIf) {
         if (visibleIf.hasOwnProperty(dependencyPath)) {

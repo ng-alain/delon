@@ -10,9 +10,7 @@ describe('NgAlainSchematic: plugin', () => {
 
   it('should be throw error when not find plugin name', async () => {
     try {
-      await runner
-        .runSchematicAsync('plugin', { name: 'invalid-name', type: 'remove', packageManager: 'npm' }, tree)
-        .toPromise();
+      await runner.runSchematic('plugin', { name: 'invalid-name', type: 'remove', packageManager: 'npm' }, tree);
       expect(true).toBe(false);
     } catch {
       expect(true).toBe(true);

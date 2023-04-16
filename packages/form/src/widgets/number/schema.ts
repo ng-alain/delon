@@ -33,7 +33,7 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
   /**
    * 指定 `nz-number` 宽度
    */
-  widgetWidth?: number;
+  widgetWidth?: number | string;
 
   /**
    * Hide step icon

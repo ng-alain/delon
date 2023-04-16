@@ -15,55 +15,57 @@ A simple start & end date range, **Note: ** `end` still needs define in schema, 
 
 ```ts
 import { Component } from '@angular/core';
-import { SFDateWidgetSchema, SFSchema } from '@delon/form';
+
 import { subWeeks } from 'date-fns';
+
+import { SFDateWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
 })
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
       start: {
         type: 'string',
-        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
-        default: new Date(),
+        ui: { widget: 'date', end: 'end', separator: '到' } as SFDateWidgetSchema,
+        default: new Date()
       },
       end: {
         type: 'string',
-        default: subWeeks(new Date(), 6),
+        default: subWeeks(new Date(), 6)
       },
       startWeek: {
         type: 'string',
         ui: { widget: 'date', rangeMode: 'week', end: 'endWeek' } as SFDateWidgetSchema,
-        default: new Date(),
+        default: new Date()
       },
       endWeek: {
         type: 'string',
-        default: subWeeks(new Date(), 6),
+        default: subWeeks(new Date(), 6)
       },
       startMonth: {
         type: 'string',
         ui: { widget: 'date', rangeMode: 'month', end: 'endMonth' } as SFDateWidgetSchema,
-        default: new Date(),
+        default: new Date()
       },
       endMonth: {
         type: 'string',
-        default: subWeeks(new Date(), 6),
+        default: subWeeks(new Date(), 6)
       },
       startYear: {
         type: 'string',
         ui: { widget: 'date', rangeMode: 'year', end: 'endYear' } as SFDateWidgetSchema,
-        default: new Date(),
+        default: new Date()
       },
       endYear: {
         type: 'string',
-        default: subWeeks(new Date(), 6),
-      },
+        default: subWeeks(new Date(), 6)
+      }
     },
-    required: ['start'],
+    required: ['start']
   };
 
   constructor(private msg: NzMessageService) {}

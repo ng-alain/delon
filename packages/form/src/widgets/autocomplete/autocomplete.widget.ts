@@ -44,11 +44,12 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   }
 
   afterViewInit(): void {
-    const { backfill, defaultActiveFirstOption, nzWidth, filterOption, asyncData } = this.ui;
+    const { backfill, defaultActiveFirstOption, nzWidth, filterOption, asyncData, compareWith } = this.ui;
     this.i = {
       backfill: toBool(backfill, false),
       defaultActiveFirstOption: toBool(defaultActiveFirstOption, true),
-      width: nzWidth || undefined
+      width: nzWidth || undefined,
+      compareWith: compareWith || ((o1, o2) => o1 === o2)
     };
 
     let filterOptionValue = filterOption == null ? true : filterOption;

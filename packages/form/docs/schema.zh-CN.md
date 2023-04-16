@@ -287,7 +287,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 | `[ingoreKeywords]` | 忽略某些数据类型校验 | `string[]` |  |
 | `[errors]` | 自定义错误信息文本 | `{ [ key: string ]: string | ((obj: ErrorData) => string) }` | - |
 | `[showRequired]` | 是否展示必填项标识 `*` | `boolean` | - |
-| `[validator]` | 自定义校验 | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | - |
+| `[validator]` | 自定义校验，最后结果会与 Ajv 校验结果进行合并显示 | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | - |
 
 ### 数组类
 

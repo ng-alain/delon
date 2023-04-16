@@ -51,28 +51,24 @@ describe('NgAlainSchematic: application', () => {
           key2: 'KEY2'
         });
         const baseRunner = createNgRunner();
-        const workspaceTree = await baseRunner
-          .runSchematicAsync('workspace', {
-            name: 'workspace',
-            newProjectRoot: 'projects',
-            version: '6.0.0'
-          })
-          .toPromise();
-        const appTree = await baseRunner
-          .runSchematicAsync(
-            'application',
-            {
-              name: APPNAME,
-              inlineStyle: false,
-              inlineTemplate: false,
-              routing: false,
-              style: 'css',
-              skipTests: false,
-              skipPackageJson: false
-            },
-            workspaceTree
-          )
-          .toPromise();
+        const workspaceTree = await baseRunner.runSchematic('workspace', {
+          name: 'workspace',
+          newProjectRoot: 'projects',
+          version: '6.0.0'
+        });
+        const appTree = await baseRunner.runSchematic(
+          'application',
+          {
+            name: APPNAME,
+            inlineStyle: false,
+            inlineTemplate: false,
+            routing: false,
+            style: 'css',
+            skipTests: false,
+            skipPackageJson: false
+          },
+          workspaceTree
+        );
         appTree.create(
           '/demo.html',
           `
@@ -86,16 +82,14 @@ describe('NgAlainSchematic: application', () => {
         );
 
         const alainRunner = createAlainRunner();
-        const tree = await alainRunner
-          .runSchematicAsync(
-            'ng-add',
-            {
-              skipPackageJson: false,
-              defaultLanguage: 'zh'
-            },
-            appTree
-          )
-          .toPromise();
+        const tree = await alainRunner.runSchematic(
+          'ng-add',
+          {
+            skipPackageJson: false,
+            defaultLanguage: 'zh'
+          },
+          appTree
+        );
 
         const res = tree.readContent('/demo.html');
         expect(res).toBe(`

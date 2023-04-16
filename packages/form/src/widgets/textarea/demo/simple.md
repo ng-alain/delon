@@ -15,12 +15,13 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { SFSchema, SFTextareaWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -33,10 +34,18 @@ export class DemoComponent {
           autosize: { minRows: 2, maxRows: 6 },
           change: val => console.log('change', val),
           focus: ev => console.log('focus', ev),
-          blur: ev => console.log('blur', ev),
-        } as SFTextareaWidgetSchema,
+          blur: ev => console.log('blur', ev)
+        } as SFTextareaWidgetSchema
       },
-    },
+      max: {
+        type: 'string',
+        title: 'Max',
+        ui: {
+          widget: 'textarea',
+          maxCharacterCount: 100
+        } as SFTextareaWidgetSchema
+      }
+    }
   };
 
   constructor(private msg: NzMessageService) {}

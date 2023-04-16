@@ -41,3 +41,6 @@ Every filter after data got is filtered by `filterOption`, data source is from `
 | `[backfill]` | Fill selected value into input when keyboard selection options is used | `boolean` | `false` |
 | `[nzWidth]` | Customize width, unit is px | `number` | Trigger width of element |
 | `[change]` | Change callback | `(item: NzAutocompleteOptionComponent, orgData: SFSchemaEnum) => void` | - |
+| `[overlayClassName]` | Class name of the dropdown root element | `string` | - |
+| `[overlayStyle]` | Style of the dropdown root element | `object` | - |
+| `[compareWith]` | Same as [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) | `(o1: any, o2: any) => boolean` | `(o1: any, o2: any) => o1===o2` |

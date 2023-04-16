@@ -27,39 +27,33 @@ export function createAlainRunner(): SchematicTestRunner {
 
 export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppResult> {
   const baseRunner = createNgRunner();
-  const workspaceTree = await baseRunner
-    .runSchematicAsync('workspace', {
-      name: 'workspace',
-      newProjectRoot: 'projects',
-      version: '8.0.0'
-    })
-    .toPromise();
-  const appTree = await baseRunner
-    .runSchematicAsync(
-      'application',
-      {
-        name: APPNAME,
-        inlineStyle: false,
-        inlineTemplate: false,
-        routing: false,
-        style: 'css',
-        skipTests: false,
-        skipPackageJson: false
-      },
-      workspaceTree
-    )
-    .toPromise();
+  const workspaceTree = await baseRunner.runSchematic('workspace', {
+    name: 'workspace',
+    newProjectRoot: 'projects',
+    version: '8.0.0'
+  });
+  const appTree = await baseRunner.runSchematic(
+    'application',
+    {
+      name: APPNAME,
+      inlineStyle: false,
+      inlineTemplate: false,
+      routing: false,
+      style: 'css',
+      skipTests: false,
+      skipPackageJson: false
+    },
+    workspaceTree
+  );
   const alainRunner = createAlainRunner();
-  const tree = await alainRunner
-    .runSchematicAsync(
-      'ng-add',
-      {
-        skipPackageJson: false,
-        ...ngAddOptions
-      },
-      appTree
-    )
-    .toPromise();
+  const tree = await alainRunner.runSchematic(
+    'ng-add',
+    {
+      skipPackageJson: false,
+      ...ngAddOptions
+    },
+    appTree
+  );
   return { runner: alainRunner, tree };
 }
 
@@ -72,35 +66,29 @@ export async function createAlainAndModuleApp(
   if (alainData != null) {
     res.tree.create('ng-alain.json', JSON.stringify(alainData));
   }
-  res.tree = await res.runner
-    .runSchematicAsync('module', { name, project: APPNAME, routing: true }, res.tree)
-    .toPromise();
+  res.tree = await res.runner.runSchematic('module', { name, project: APPNAME, routing: true }, res.tree);
   return res;
 }
 
 export async function createTestApp(): Promise<{ runner: SchematicTestRunner; tree: UnitTestTree }> {
   const runner = await createNgRunner();
-  const workspaceTree = await runner
-    .runSchematicAsync('workspace', {
-      name: 'workspace',
-      newProjectRoot: 'projects',
-      version: '8.0.0'
-    })
-    .toPromise();
-  const appTree = await runner
-    .runSchematicAsync(
-      'application',
-      {
-        name: APPNAME,
-        inlineStyle: false,
-        inlineTemplate: false,
-        routing: false,
-        style: 'css',
-        skipTests: false,
-        skipPackageJson: false
-      },
-      workspaceTree
-    )
-    .toPromise();
+  const workspaceTree = await runner.runSchematic('workspace', {
+    name: 'workspace',
+    newProjectRoot: 'projects',
+    version: '8.0.0'
+  });
+  const appTree = await runner.runSchematic(
+    'application',
+    {
+      name: APPNAME,
+      inlineStyle: false,
+      inlineTemplate: false,
+      routing: false,
+      style: 'css',
+      skipTests: false,
+      skipPackageJson: false
+    },
+    workspaceTree
+  );
   return { runner, tree: appTree };
 }

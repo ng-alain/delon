@@ -21,3 +21,4 @@ type: Widgets
 | `[size]`              | 大小，等同 `nzSize` | `default,small` | `default` |
 | `[checkedChildren]`   | 选中时的内容        | `string`        | -         |
 | `[unCheckedChildren]` | 非选中时的内容      | `string`        | -         |
+| `[loading]` | 加载中的开关 | `boolean` | `false` |

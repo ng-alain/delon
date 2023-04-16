@@ -10,6 +10,7 @@ export const BUILD_TARGET_TEST = 'test';
 export const BUILD_TARGET_SERVE = 'serve';
 export const BUILD_TARGET_LINT = 'lint';
 export const NG_ALAIN_JSON = `ng-alain.json`;
+export const DEFAULT_WORKSPACE_PATH = `/angular.json`;
 
 export interface NgAlainDefinition {
   projects?: { [key: string]: NgAlainProjectDefinition };
@@ -19,7 +20,7 @@ export interface NgAlainProjectDefinition {
   routesRoot?: string;
 }
 
-function getProjectName(workspace: WorkspaceDefinition, name?: string): string | null {
+export function getProjectName(workspace: WorkspaceDefinition, name?: string): string | null {
   if (name && workspace.projects.has(name)) {
     return name;
   }

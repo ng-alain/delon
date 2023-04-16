@@ -1,3 +1,5 @@
+import { TemplateRef } from '@angular/core';
+
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledDateFn, DisabledTimeFn, NzDatePickerSizeType, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
 import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
@@ -104,6 +106,16 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
    * Set the readonly attribute of the input tag (avoids virtual keyboard on touch devices), default: `false`
    */
   inputReadOnly?: boolean;
+
+  /**
+   * separator
+   */
+  separator?: string | TemplateRef<NzSafeAny>;
+
+  /**
+   * Whether to show the week number on each row (Only supported by date picker. Week picker always shows week numbers)
+   */
+  showWeekNumber?: boolean;
 
   /**
    * Callback when click ok button

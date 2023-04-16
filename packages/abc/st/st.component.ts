@@ -86,6 +86,7 @@ import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from
     '[class.st__p-left]': `page.placement === 'left'`,
     '[class.st__p-center]': `page.placement === 'center'`,
     '[class.st__width-strict]': `widthMode.type === 'strict'`,
+    '[class.st__row-class]': `rowClassName`,
     '[class.ant-table-rep]': `responsive`,
     '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`
   },
@@ -260,8 +261,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     configSrv: AlainConfigService,
     private cms: NzContextMenuService
   ) {
-    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
-
     this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -276,6 +275,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         filter(() => this._columns.length > 0)
       )
       .subscribe(() => this.refreshColumns());
+
+    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
   }
 
   private setCog(cog: AlainSTConfig): void {

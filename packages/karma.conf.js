@@ -49,7 +49,7 @@ module.exports = function (config) {
       }
     },
     singleRun: false,
-    restartOnFileChange: true,
+    // restartOnFileChange: true,
     browserDisconnectTimeout: 1000 * 60 * 10, // (Default: 2000)
     browserNoActivityTimeout: 1000 * 60 // (Default: 10000)
   });

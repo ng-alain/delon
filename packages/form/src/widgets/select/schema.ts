@@ -49,7 +49,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉菜单的 className 属性
    */
-  dropdownClassName?: string;
+  dropdownClassName?: string | string[];
 
   /**
    * 下拉菜单和选择器同宽，默认：`true`
