@@ -14,6 +14,22 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [15.2.0](https://github.com/ng-alain/delon/compare/15.1.0...15.2.0) (2023-04-16)
+
+### Bug Fixes
+
+* 重构：修复使用 `canMatch` 替代 `canLoad` ([#1586](https://github.com/ng-alain/delon/issues/1586)) ([ec86352](https://github.com/ng-alain/delon/commit/ec863527f1eba67cbbb6cfca40f516729344fc3b))
+* **abc:pdf:** 修复使用 `currentScale` 替代 `_setScale` ([#1590](https://github.com/ng-alain/delon/issues/1590)) ([3b58880](https://github.com/ng-alain/delon/commit/3b5888022426d060310ea7a8d0fd2d2db99b28a3))
+* **abc:st:** 修复 `rowClassName` 对固定列无效 ([#1591](https://github.com/ng-alain/delon/issues/1591)) ([0fa954f](https://github.com/ng-alain/delon/commit/0fa954fa65a67b34185c7c3113407b21e7693074))
+* **form:** 修复继承父UI部分参数会导致无法呈现 ([#1592](https://github.com/ng-alain/delon/issues/1592)) ([d14c866](https://github.com/ng-alain/delon/commit/d14c8669c32427a5e5019f66c43bbff3d412b8b1))
+* **form:** 修复超大 Schema 引发内存溢出 ([#1593](https://github.com/ng-alain/delon/issues/1593)) ([483819c](https://github.com/ng-alain/delon/commit/483819c5d4bc17c9b619ada4a5dd1a744a79fa5b))
+* **form:** 修复 transfer 小部件在 dark 主题下背景问题 ([#1588](https://github.com/ng-alain/delon/issues/1588)) ([113c686](https://github.com/ng-alain/delon/commit/113c686c2a98d35896dec069354f4130b0373d22))
+
+### Features
+
+* **theme:** 新增 `MenuService.find` 新增 `ignoreHide` 参数 ([#1587](https://github.com/ng-alain/delon/issues/1587)) ([890f6d6](https://github.com/ng-alain/delon/commit/890f6d6b0a1bd41a1cafded9290b4ebfa7ed212d))
+
+
 # [15.1.0](https://github.com/ng-alain/delon/compare/15.0.1...15.1.0) (2023-02-19)
 
 ### Bug Fixes
