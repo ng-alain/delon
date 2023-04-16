@@ -324,11 +324,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
-        const curSetUi = deepCopy({
+        const curSetUi = {
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey]
-        });
-        const ui = deepCopy({
+        };
+        const ui = {
           ...this._defUi,
           ...parentUiSchema,
           widget: property.type,
@@ -338,7 +338,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             ? { widget: 'select' }
             : null),
           ...curSetUi
-        }) as SFUISchemaItemRun;
+        } as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
