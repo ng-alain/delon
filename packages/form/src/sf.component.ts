@@ -324,25 +324,28 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
-        const curSetUi = {
+        const curUi = {
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey]
         };
         const ui = {
           ...this._defUi,
           ...parentUiSchema,
+          // 忽略部分会引起呈现的属性
+          visibleIf: undefined,
+          hidden: undefined,
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
           ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
             ? { widget: 'select' }
             : null),
-          ...curSetUi
+          ...curUi
         } as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
-            if (!curSetUi.spanLabelFixed) {
+            if (!curUi.spanLabelFixed) {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
             }
           } else {
