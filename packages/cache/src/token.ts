@@ -2,6 +2,8 @@ import { HttpContextToken } from '@angular/common/http';
 
 export interface CacheOptions {
   /**
+   * Whether to enable it, if `Cache-control: max-age=xxx` is found when the request returns, it will be automatically cached, and the next request will be forced to obtain data from the cache unless `enabled: false` is specified; default `true`
+   *
    * 是否启用，当启用后若请求返回时发现 `Cache-control: max-age=xxx` 时自动缓存，下一次请求时除非指定 `enabled: false` 否则强制从缓存中获取数据；默认 `true`
    */
   enabled?: boolean;
@@ -32,9 +34,9 @@ export interface CacheOptions {
 }
 
 /**
- * Cache options
+ * Cache options (Don't forget to register `CacheInterceptor`)
  *
- * 缓存配置项
+ * 缓存配置项（不要忘记注册 `CacheInterceptor`）
  *
  * @example
  * this.http.get(`my`, {

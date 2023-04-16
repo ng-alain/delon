@@ -8,6 +8,16 @@ import { AlainCacheInterceptor, AlainConfigService } from '@delon/util/config';
 import { CacheService } from './cache.service';
 import { CacheOptions, CACHE } from './token';
 
+/**
+ * Cache interceptor
+ *
+ * 缓存拦截器
+ *
+ * @example
+ * providers: [
+ *  { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+ * ]
+ */
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
   private cog?: AlainCacheInterceptor;
