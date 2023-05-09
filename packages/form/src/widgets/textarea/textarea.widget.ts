@@ -15,8 +15,8 @@ export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> impl
   autosize: string | boolean | AutoSizeType = true;
 
   ngOnInit(): void {
-    if (this.autosize != null) {
-      this.autosize = this.autosize;
+    if (this.ui.autosize != null) {
+      this.autosize = this.ui.autosize;
     }
     if (this.ui.computeCharacterCount == null) {
       this.ui.computeCharacterCount = v => v.length;
