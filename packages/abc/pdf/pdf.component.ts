@@ -104,7 +104,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputBoolean() set renderText(val: boolean) {
     this._renderText = val;
     if (this.pageViewer) {
-      this.pageViewer.textLayerMode = this._textLayerMode;
       this.resetDoc();
     }
   }
