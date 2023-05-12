@@ -153,7 +153,7 @@
     "xlsx": "^0.18.5",
     "jszip": "^3.10.1",
     "plyr": "^3.7.3",
-    "pdfjs-dist": "^3.2.146",
+    "pdfjs-dist": "^3.6.172",
     "screenfull": "^6.0.2",
     "less-bundle-promise": "^1.0.11",
     "ng-alain-codelyzer": "^0.0.1",
