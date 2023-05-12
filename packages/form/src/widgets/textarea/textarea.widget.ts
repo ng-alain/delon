@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { AutoSizeType } from 'ng-zorro-antd/input';
+import type { AutoSizeType } from 'ng-zorro-antd/input';
 
 import { ControlUIWidget } from '../../widget';
 import { SFTextareaWidgetSchema } from './schema';
@@ -12,11 +12,11 @@ import { SFTextareaWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None
 })
 export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> implements OnInit {
-  autosize: boolean | AutoSizeType = true;
+  autosize: string | boolean | AutoSizeType = true;
 
   ngOnInit(): void {
-    if (this.autosize != null) {
-      this.autosize = this.autosize;
+    if (this.ui.autosize != null) {
+      this.autosize = this.ui.autosize;
     }
     if (this.ui.computeCharacterCount == null) {
       this.ui.computeCharacterCount = v => v.length;
