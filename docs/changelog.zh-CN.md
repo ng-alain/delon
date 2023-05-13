@@ -14,6 +14,14 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [15.2.1](https://github.com/ng-alain/delon/compare/15.2.0...15.2.1) (2023-05-13)
+
+### Bug Fixes
+
+* **abc:pdf:** 修复支持最新版本pdf ([#1596](https://github.com/ng-alain/delon/issues/1596)) ([a42b4f0](https://github.com/ng-alain/delon/commit/a42b4f0413036f7236b74103395d772ffe13768f))
+* **form:textarea:** 修复无效参数 `autosize` ([#1595](https://github.com/ng-alain/delon/issues/1595)) ([98b7ca6](https://github.com/ng-alain/delon/commit/98b7ca6c44ba367c3be73396b28342518b6bbf2f))
+
+
 # [15.2.0](https://github.com/ng-alain/delon/compare/15.1.0...15.2.0) (2023-04-16)
 
 ### Bug Fixes
