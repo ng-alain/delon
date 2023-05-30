@@ -171,7 +171,8 @@ module.exports = {
         '@angular-eslint/no-input-rename': 'off',
         'prefer-const': 'off',
         'max-len': 'off',
-        'deprecation/deprecation': 'warn'
+        'deprecation/deprecation': 'warn',
+        'jsdoc/newline-after-description': 'off'
       }
     },
     {

@@ -16,7 +16,6 @@ const COMPONENTS = [OnboardingComponent];
   imports: [CommonModule, DelonLocaleModule, NzPopoverModule, NzOutletModule, NzButtonModule, NzNoAnimationModule],
   declarations: COMPONENTS,
   providers: [OnboardingService],
-  entryComponents: COMPONENTS,
   exports: COMPONENTS
 })
 export class OnboardingModule {}

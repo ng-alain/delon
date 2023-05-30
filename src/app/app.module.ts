@@ -30,7 +30,7 @@ import { RoutesModule } from './routes/routes.module';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
-import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
@@ -90,7 +90,6 @@ function registerElements(injector: Injector, platformId: {}): void {
     { provide: ErrorHandler, useClass: CustomErrorHandler }
   ],
   declarations: [AppComponent, LayoutComponent, HeaderComponent, HeaderSearchComponent],
-  entryComponents: STWIDGET_COMPONENTS,
   bootstrap: [AppComponent]
 })
 export class AppModule {

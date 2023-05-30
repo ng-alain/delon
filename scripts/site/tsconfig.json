@@ -2,7 +2,6 @@
 // use TS-Node to compile the gulp tasks at runtime.
 {
   "compilerOptions": {
-    "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true,
     "lib": ["es2015", "dom", "es2016.array.include"],
     "module": "commonjs",
