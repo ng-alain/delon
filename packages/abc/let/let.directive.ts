@@ -16,7 +16,7 @@ export class LetContext<T> {
 
 @Directive({ selector: '[let]' })
 export class LetDirective<T> {
-  @Input() let!: T;
+  @Input({ required: true }) let!: T;
 
   constructor(@Inject(ViewContainerRef) vc: ViewContainerRef, @Inject(TemplateRef) ref: TemplateRef<LetContext<T>>) {
     vc.createEmbeddedView(ref, new LetContext<T>(this));
