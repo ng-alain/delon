@@ -24,6 +24,8 @@ export function deepGet(obj: NzSafeAny, path: string | string[] | null | undefin
  * Base on [extend](https://github.com/justmoon/node-extend) deep copy.
  *
  * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
+ *
+ * NOTE: Don't a lot of recursion, maybe performance issues
  */
 export function deepCopy<T extends { [key: string]: NzSafeAny } = NzSafeAny>(obj: T | null | undefined): T {
   const result = extend(true, {}, { _: obj });

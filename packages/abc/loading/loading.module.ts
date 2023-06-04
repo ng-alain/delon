@@ -13,7 +13,6 @@ const COMPONENTS = [LoadingDefaultComponent];
 @NgModule({
   imports: [CommonModule, OverlayModule, PortalModule, NzIconModule, NzSpinModule],
   declarations: COMPONENTS,
-  entryComponents: COMPONENTS,
   exports: COMPONENTS
 })
 export class LoadingModule {}

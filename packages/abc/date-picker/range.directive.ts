@@ -57,7 +57,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   get shortcut(): AlainDateRangePickerShortcut | null {
     return this._shortcut;
   }
-  @Input() ngModelEnd: NzSafeAny;
+  @Input({ required: true }) ngModelEnd: NzSafeAny;
   @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
