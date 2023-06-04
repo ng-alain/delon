@@ -79,6 +79,18 @@ describe('abc: cell', () => {
           page.update(DATE, { date: {} }).check('2022-01-01 01:02:03');
           page.update(+DATE).check('2022-01-01 01:02:03');
         });
+        it('with checkbox', () => {
+          page
+            .update(true, { checkbox: { label: 'a' } })
+            .count('.ant-checkbox', 1)
+            .check('a');
+        });
+        it('with radio', () => {
+          page
+            .update(true, { radio: { label: 'a' } })
+            .count('.ant-radio', 1)
+            .check('a');
+        });
         describe('with img', () => {
           it('should be working', () => {
             page.update('1.jpg', { img: {} }).count('.img', 1).click('.img').count('.ant-image-preview', 1, true);
@@ -139,14 +151,25 @@ describe('abc: cell', () => {
             expect(router.navigateByUrl).not.toHaveBeenCalled();
             expect(win.open).not.toHaveBeenCalled();
           });
+          it('should be abort when url is null', () => {
+            const router = TestBed.inject(Router);
+            spyOn(router, 'navigateByUrl');
+            page.update('to', { link: { url: undefined } }).click('a');
+            expect(router.navigateByUrl).not.toHaveBeenCalled();
+          });
         });
-        it('with badge', () => {
-          page
-            .update('1', { badge: { data: { '1': { text: 'A' } } } })
-            .check('A')
-            .count('.ant-badge-status-default', 1)
-            .update('2', {})
-            .check('2');
+        describe('with badge', () => {
+          it('should be working', () => {
+            page
+              .update('1', { badge: { data: { '1': { text: 'A' } } } })
+              .check('A')
+              .count('.ant-badge-status-default', 1)
+              .update('2', {})
+              .check('2');
+          });
+          it('should be empty text when is invalid key', () => {
+            page.update('2', { type: 'badge' }).check('');
+          });
         });
         it('with tag', () => {
           page

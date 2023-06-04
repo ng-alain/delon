@@ -23,7 +23,5 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class DemoComponent {
-  now = new Date();
-}
+export class DemoComponent { }
 ```

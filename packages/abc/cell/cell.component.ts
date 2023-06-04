@@ -131,7 +131,7 @@ export class CellComponent implements OnChanges, OnDestroy {
   }
 
   get safeOpt(): CellOptions {
-    return this.res?.options!;
+    return this.res?.options ?? {};
   }
 
   get isText(): boolean {
@@ -163,7 +163,6 @@ export class CellComponent implements OnChanges, OnDestroy {
     this.destroy$?.unsubscribe();
     this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
       this.res = res;
-      console.log(res);
       this.showDefault = this.value == this.defaultCondition;
       this._text = res.result?.text ?? '';
       this._unit = res.result?.unit ?? this.unit;
@@ -183,7 +182,6 @@ export class CellComponent implements OnChanges, OnDestroy {
       [`cell__disabled`]: this.disabled
     });
     el.nativeElement.dataset.type = this.safeOpt.type;
-    console.log(this.safeOpt);
   }
 
   ngOnChanges(): void {
@@ -198,15 +196,17 @@ export class CellComponent implements OnChanges, OnDestroy {
   _link(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
+
     if (this.disabled) return;
+
     const link = this.safeOpt.link;
     const url = link?.url;
     if (url == null) return;
 
-    if (url.startsWith('/')) {
-      this.router.navigateByUrl(url);
-    } else {
+    if (/https?:\/\//g.test(url)) {
       (this.win as Window).open(url, link?.target);
+    } else {
+      this.router.navigateByUrl(url);
     }
   }
 
