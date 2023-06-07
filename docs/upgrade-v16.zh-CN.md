@@ -23,3 +23,5 @@ hot: true
 - 将项目升级到 Angular 15 运行 `ng update @angular/core@16 @angular/cli@16 @angular-eslint/schematics@16 ng-zorro-antd@16 ng-alain@16`。
 - _如果你有单独使用 `@angular/cdk` 请执行 `ng update @angular/cdk@16`_
 - **如果控制台出现警告消息请按提示修改对应代码**
+
+> NG-ALAIN脚手架升级全部变更文件，请参考：[#2394](https://github.com/ng-alain/ng-alain/pull/2394/files)。

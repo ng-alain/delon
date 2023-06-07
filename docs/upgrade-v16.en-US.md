@@ -21,3 +21,5 @@ hot: true
 - Upgrade Angular to 15.x version, Run `ng update @angular/core@16 @angular/cli@16 @angular-eslint/schematics@16 ng-zorro-antd@16 ng-alain@16`.
 - _Run `ng update @angular/cdk@16`, if you have used `@angular/cdk`._
 - **If any warning messages appear in the console, follow the prompts to modify the corresponding code.**
+
+> NG-ALAIN scaffolding upgrade all change files, please refer to: [#2394](https://github.com/ng-alain/ng-alain/pull/2394/files).
