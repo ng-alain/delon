@@ -322,7 +322,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       if (!Array.isArray(schema.required)) schema.required = [];
 
       Object.keys(schema.properties!).forEach(key => {
-        const uiKey = `$${key}`;
+        const uiKeyPrefix = '$';
+        const uiKey = uiKeyPrefix + key;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
         const curUi = {
           ...(property.ui as SFUISchemaItem),
@@ -342,6 +343,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             : null),
           ...curUi
         } as SFUISchemaItemRun;
+        Object.keys(ui)
+          .filter(key => key.startsWith(uiKeyPrefix))
+          .forEach(key => delete ui[key]);
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
