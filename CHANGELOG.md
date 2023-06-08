@@ -1,3 +1,7 @@
+## [16.0.1](https://github.com/ng-alain/delon/compare/16.0.0...16.0.1) (2023-06-08)
+
+* fix `ng-zorro-antd` dependency
+
 # [16.0.0](https://github.com/ng-alain/delon/compare/15.2.1...16.0.0) (2023-06-07)
 
 ### Bug Fixes
