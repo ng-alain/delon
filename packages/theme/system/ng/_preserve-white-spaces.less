@@ -4,13 +4,13 @@
   }
 
   // button + button
-  .@{ant-prefix}-btn + .@{ant-prefix}-btn,
-  .@{ant-prefix}-btn + nz-popconfirm,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + .@{ant-prefix}-btn,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-popconfirm,
   nz-popconfirm + .@{ant-prefix}-btn,
   nz-popconfirm + nz-popconfirm,
-  .@{ant-prefix}-btn + nz-button-group,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-button-group,
   nz-button-group + .@{ant-prefix}-btn,
-  .@{ant-prefix}-btn + nz-dropdown,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-dropdown,
   nz-dropdown + .@{ant-prefix}-btn,
   nz-popconfirm + nz-button-group,
   nz-button-group + nz-popconfirm {
