@@ -52,7 +52,6 @@
       }
     ],
     "no-invalid-double-slash-comments": null,
-    "indentation": [ 2 ],
     "import-notation": "string",
     "media-feature-range-notation": "prefix"
   }
