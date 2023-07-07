@@ -144,7 +144,6 @@
     "readline-sync": "^1.4.10",
     "stream": "0.0.2",
     "stylelint": "^15.6.2",
-    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^33.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.7.0",
