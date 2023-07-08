@@ -70,6 +70,31 @@ describe('theme: ModalHelper', () => {
         fixture.detectChanges();
       }));
     });
+    describe('#drag', () => {
+      it('should be working', fakeAsync(() => {
+        modal
+          .create(TestModalComponent, { ret: 'true' }, { drag: true, modalOptions: { nzTitle: 'test' } })
+          .subscribe();
+        fixture.detectChanges();
+        tick(1000);
+        fixture.detectChanges();
+        expect(document.querySelectorAll('.MODAL-DRAG-DROP').length).toBe(1);
+      }));
+      it('#handleCls', fakeAsync(() => {
+        modal
+          .create(
+            TestModalComponent,
+            { ret: 'true' },
+            { drag: { handleCls: '.handle' }, modalOptions: { nzTitle: 'test' } }
+          )
+          .subscribe();
+        fixture.detectChanges();
+        tick(1000);
+        fixture.detectChanges();
+        const handle = document.querySelector<HTMLDivElement>('.MODAL-DRAG-DROP-HANDLE');
+        expect(handle?.classList).toContain('handle');
+      }));
+    });
   });
 
   describe('#createStatic', () => {
@@ -113,7 +138,7 @@ describe('theme: ModalHelper', () => {
 });
 
 @Component({
-  template: ` <div id="modal{{ id }}">modal{{ id }}</div> `
+  template: ` <div id="modal{{ id }}" class="handle">modal{{ id }}</div> `
 })
 class TestModalComponent {
   id = '';
