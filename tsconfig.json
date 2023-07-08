@@ -17,9 +17,6 @@
       "ES2022",
       "dom"
     ],
-    "typeRoots": [
-      "node_modules/@types/!(node)"
-    ],
     "paths": {
       "@delon/*": [
         "./packages/*"
