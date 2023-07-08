@@ -78,7 +78,7 @@ describe('theme: ModalHelper', () => {
         fixture.detectChanges();
         tick(1000);
         fixture.detectChanges();
-        expect(document.querySelectorAll('.MODAL-DRAG-DROP').length).toBe(1);
+        expect(document.querySelectorAll('.MODAL-DRAG').length).toBe(1);
       }));
       it('#handleCls', fakeAsync(() => {
         modal
@@ -91,7 +91,7 @@ describe('theme: ModalHelper', () => {
         fixture.detectChanges();
         tick(1000);
         fixture.detectChanges();
-        const handle = document.querySelector<HTMLDivElement>('.MODAL-DRAG-DROP-HANDLE');
+        const handle = document.querySelector<HTMLDivElement>('.MODAL-DRAG-HANDLE');
         expect(handle?.classList).toContain('handle');
       }));
     });
