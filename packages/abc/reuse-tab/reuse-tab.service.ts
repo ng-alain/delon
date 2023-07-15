@@ -368,7 +368,7 @@ export class ReuseTabService implements OnDestroy {
   constructor(
     private injector: Injector,
     private menuService: MenuService,
-    @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
+    @Optional() @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
     @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
     @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
   ) {}
