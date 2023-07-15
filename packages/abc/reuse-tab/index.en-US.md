@@ -305,3 +305,7 @@ Limiting the maximum number of reuse can reduce memory growth. There are several
 ### Not supported QueryString parameters
 
 Route reuse preserves uses URLs to distinguish whether the same page, and QueryString query parameters will be repeatedly misused, so not supported, and the QueryString part is forced to be ignored.
+
+### Multi-application cache processing
+
+Allows overriding `REUSE_TAB_CACHED_MANAGER` to change the cache storage, for example when using a multi-application micro-frontend (similar to [ngx-planet](https://github.com/worktile/ngx-planet)) can rewrite cached data to `window` guaranteed Multi-application data sharing.

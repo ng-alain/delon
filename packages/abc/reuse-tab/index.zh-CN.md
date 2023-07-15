@@ -308,3 +308,7 @@ export class DemoComponent implements OnReuseInit, OnReuseDestroy {
 ### 不支持 QueryString 查询参数
 
 复用采用URL来区分是否同一个页面，而 QueryString 查询参数很容易产生重复性误用，因此不支持查询参数，且在复用过程中会强制忽略掉 QueryString 部分。
+
+### 多应用缓存处理
+
+允许覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储，例如在使用多应用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下保证多应用数据共享。
