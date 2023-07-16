@@ -11,6 +11,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
+import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManagerFactory } from './reuse-tab.cache';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabLocalStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
@@ -28,6 +29,10 @@ const NOEXPORTS = [ReuseTabContextMenuComponent, ReuseTabContextComponent, Reuse
     {
       provide: REUSE_TAB_STORAGE_STATE,
       useFactory: () => new ReuseTabLocalStorageState()
+    },
+    {
+      provide: REUSE_TAB_CACHED_MANAGER,
+      useFactory: () => new ReuseTabCachedManagerFactory()
     }
   ],
   exports: COMPONENTS
