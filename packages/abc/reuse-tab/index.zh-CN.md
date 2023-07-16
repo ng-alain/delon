@@ -311,4 +311,4 @@ export class DemoComponent implements OnReuseInit, OnReuseDestroy {
 
 ### 多应用缓存处理
 
-允许覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储，例如在使用多应用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下保证多应用数据共享。
+允许覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储，例如在使用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下来实现数据共享。
