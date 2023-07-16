@@ -99,8 +99,6 @@ export class ReuseTabService implements OnDestroy {
   }
   /** 自定义当前标题 */
   set title(value: string | ReuseTitle) {
-    if (this.cached == null) return;
-
     const url = this.curUrl;
     if (typeof value === 'string') value = { text: value };
     this.cached.title[url] = value;
@@ -373,7 +371,11 @@ export class ReuseTabService implements OnDestroy {
     @Optional() @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
     @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
     @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
-  ) {}
+  ) {
+    if (this.cached == null) {
+      this.cached = { list: [], title: {}, closable: {} };
+    }
+  }
 
   init(): void {
     this.initScroll();
