@@ -14,7 +14,7 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
-# [16.1.0](https://github.com/ng-alain/delon/compare/16.0.1...16.1.0) (2023-07-16)
+# [16.1.1](https://github.com/ng-alain/delon/compare/16.0.1...16.1.0) (2023-07-16)
 
 ### Bug Fixes
 
