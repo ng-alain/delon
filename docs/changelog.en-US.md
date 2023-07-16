@@ -14,6 +14,19 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [16.1.0](https://github.com/ng-alain/delon/compare/16.0.1...16.1.0) (2023-07-16)
+
+### Bug Fixes
+
+* **cli:** remove `stylelint-config-prettier` ([#1606](https://github.com/ng-alain/delon/issues/1606)) ([2ecc28b](https://github.com/ng-alain/delon/commit/2ecc28b53773d9b5215ebd720be4ead55d78c705))
+* **theme:** fix ant-btn preserve white spaces when is link type ([#1605](https://github.com/ng-alain/delon/issues/1605)) ([0fdd15d](https://github.com/ng-alain/delon/commit/0fdd15dd0922bf6570d38fabd1afc1ca755b87a2))
+
+### Features
+
+* **abc:reuse-tab:** support custom cache data ([#1609](https://github.com/ng-alain/delon/issues/1609)) ([11599d9](https://github.com/ng-alain/delon/commit/11599d9566712c707146e4ac299ec6efc2d82b01))
+* **theme:modal:** support drag ([#1607](https://github.com/ng-alain/delon/issues/1607)) ([3cd73f7](https://github.com/ng-alain/delon/commit/3cd73f7f86a76a7ea450f839e9ad359f6afd0da4))
+
+
 ## [16.0.1](https://github.com/ng-alain/delon/compare/16.0.0...16.0.1) (2023-06-08)
 
 * fix `ng-zorro-antd` dependency
