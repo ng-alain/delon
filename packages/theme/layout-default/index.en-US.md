@@ -102,6 +102,8 @@ The layout can be dynamically managed at runtime through the `LayoutDefaultServi
 | `[nav]` | Nav | `TemplateRef<void>` | `-` |
 | `[content]` | Content | `TemplateRef<void>` | `-` |
 | `[customError]` | Custom exception routing error message, can't show when is `null` | `string, null` | `Could not load ${evt.url} route` |
+| `[fetchingStrictly]` | Precise check top loading animation state | `boolean` | `false` |
+| `[fetching]` | Top loading animation state | `boolean` | `false` |
 
 ### LayoutDefaultOptions
 

@@ -19,10 +19,11 @@ import {
   Router,
   Event
 } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
+import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -34,7 +35,7 @@ import { LayoutDefaultOptions } from './types';
   selector: 'layout-default',
   exportAs: 'layoutDefault',
   template: `
-    <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
+    <div class="alain-default__progress-bar" *ngIf="showFetching"></div>
     <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems"></layout-default-header>
     <div *ngIf="!opt.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-wrap">
@@ -59,6 +60,8 @@ import { LayoutDefaultOptions } from './types';
   `
 })
 export class LayoutDefaultComponent implements OnDestroy {
+  static ngAcceptInputType_fetchingStrictly: BooleanInput;
+
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -75,9 +78,16 @@ export class LayoutDefaultComponent implements OnDestroy {
   @Input() nav: TemplateRef<void> | null = null;
   @Input() content: TemplateRef<void> | null = null;
   @Input() customError?: string | null;
+  @Input() @InputBoolean() fetchingStrictly = false;
+  @Input() @InputBoolean() fetching = false;
 
   private destroy$ = new Subject<void>();
-  isFetching = false;
+  private isFetching = false;
+
+  get showFetching(): boolean {
+    if (this.fetchingStrictly) return this.fetching;
+    return this.isFetching;
+  }
 
   get collapsed(): boolean {
     return this.settings.layout.collapsed;
@@ -100,8 +110,13 @@ export class LayoutDefaultComponent implements OnDestroy {
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private srv: LayoutDefaultService
   ) {
-    router.events.pipe(takeUntil(this.destroy$)).subscribe(ev => this.processEv(ev));
     const { destroy$ } = this;
+    router.events
+      .pipe(
+        takeUntil(destroy$),
+        filter(() => !this.fetchingStrictly)
+      )
+      .subscribe(ev => this.processEv(ev));
     this.srv.options$.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
     this.settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
   }
