@@ -20,6 +20,10 @@ export interface ModalHelperOptions {
    * 是否支持拖动，默认是通过标题来触发
    */
   drag?: ModalHelperDragOptions | boolean;
+  /**
+   * 是否强制使用 `nzData` 传递参数，若为 `false` 表示参数会直接映射到组件实例中，其他值只能通过 `NZ_MODAL_DATA` 的方式来获取参数，默认：`false`
+   */
+  useNzData?: boolean;
 }
 
 export interface ModalHelperDragOptions {
@@ -86,7 +90,7 @@ export class ModalHelper {
       options
     );
     return new Observable((observer: Observer<NzSafeAny>) => {
-      const { size, includeTabs, modalOptions, drag } = options as ModalHelperOptions;
+      const { size, includeTabs, modalOptions, drag, useNzData } = options as ModalHelperOptions;
       let cls = '';
       let width = '';
       if (size) {
@@ -118,9 +122,13 @@ export class ModalHelper {
         nzContent: comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
-        nzComponentParams: params
+        nzData: params
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
+      // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取
+      if (useNzData !== true) {
+        Object.assign(subject.componentInstance, params);
+      }
       subject.afterOpen
         .pipe(
           take(1),
