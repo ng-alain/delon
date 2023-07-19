@@ -15,8 +15,7 @@ ng-alain 提供诸多生成模块、页模板，但实际上继承了原生 Angu
 {
   "schematics": {
     "ng-alain:module": {
-      "routing": true,
-      "spec": false
+      "routing": true
     },
     "ng-alain:list": {
       "spec": false
@@ -33,8 +32,7 @@ ng-alain 提供诸多生成模块、页模板，但实际上继承了原生 Angu
       "spec": false
     },
     "@schematics/angular:module": {
-      "routing": true,
-      "spec": false
+      "routing": true
     },
     "@schematics/angular:component": {
       "spec": false,

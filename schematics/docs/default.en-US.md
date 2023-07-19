@@ -13,8 +13,7 @@ However, parameters can be preset via `angular.json`.
 {
   "schematics": {
     "ng-alain:module": {
-      "routing": true,
-      "spec": false
+      "routing": true
     },
     "ng-alain:list": {
       "spec": false
@@ -31,8 +30,7 @@ However, parameters can be preset via `angular.json`.
       "spec": false
     },
     "@schematics/angular:module": {
-      "routing": true,
-      "spec": false
+      "routing": true
     },
     "@schematics/angular:component": {
       "spec": false,
