@@ -61,6 +61,7 @@ import { LayoutDefaultOptions } from './types';
 })
 export class LayoutDefaultComponent implements OnDestroy {
   static ngAcceptInputType_fetchingStrictly: BooleanInput;
+  static ngAcceptInputType_fetching: BooleanInput;
 
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
