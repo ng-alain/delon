@@ -265,7 +265,8 @@ class TestComponent {
 | `[fixed]` | 固定前后列，当指定时务必指定 `width` 否则视为无效 | `left,right` | - |
 | `[format]` | 格式化列值 | `(item: STData, col: STColumn, index: number) => string` | - |
 | `[className]` | 列 `class` 属性值，例如：`text-center` 居中； `text-right` 居右； `text-error` 异常色，更多参考[样式工具类](/theme/tools) | `string` | - |
-| `[colSpan]` | 合并列 | `number` | - |
+| deprecated `[colSpan]` | 合并列 | `number` | - |
+| `[onCell]` | 设置单元格属性 | `(item: T, index: number) => STOnCellResult;` | - |
 | `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序，且若数据源为本地数据时会自动生成 `compare: (a, b) => a[index] - b[index]` 方法<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | - |
 | `[filter]` | 过滤配置项 | `STColumnFilter` | - |
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |

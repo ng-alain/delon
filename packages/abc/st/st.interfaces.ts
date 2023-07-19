@@ -358,8 +358,16 @@ export interface STColumn<T extends STData = any> {
   className?: NgClassType;
   /**
    * 合并列
+   *
+   * @deprecated Will be removed by 17.0.0, Pls use `onCell` instead.
    */
   colSpan?: number;
+  /**
+   * Table cell supports `colSpan` and `rowSpan`. When each of them is set to 0, the cell will not be rendered.
+   *
+   * 表格支持行/列合并，若返回的 `colSpan` 或者 `rowSpan` 设值为 0 时表示不会渲染
+   */
+  onCell?: (item: T, index: number) => STOnCellResult;
   /**
    * 数字格式，`type=number` 有效
    */
@@ -1279,4 +1287,9 @@ export interface STCustomRequestOptions {
   method: string;
   url: string;
   options: STRequestOptions;
+}
+
+export interface STOnCellResult {
+  rowSpan?: number | null;
+  colSpan?: number | null;
 }

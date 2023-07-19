@@ -19,6 +19,7 @@ import {
   STData,
   STMultiSort,
   STMultiSortResultType,
+  STOnCellResult,
   STPage,
   STReq,
   STReqReNameType,
@@ -204,15 +205,26 @@ export class STDataSource {
   }
 
   private get(item: STData, col: _STColumn, idx: number): _STDataValue {
+    const safeHtml = col.safeType === 'safeHtml';
+    let onCellResult = typeof col.onCell === 'function' ? col.onCell(item, idx) : null;
+    if (onCellResult == null && col.colSpan != null) {
+      onCellResult = { colSpan: col.colSpan };
+    }
+    const mergedColSpan = onCellResult?.colSpan ?? 1;
+    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
+    const props: STOnCellResult = {
+      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
+      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
+    };
     try {
-      const safeHtml = col.safeType === 'safeHtml';
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
         return {
           text: formatRes,
           _text: safeHtml ? this.dom.bypassSecurityTrustHtml(formatRes) : formatRes,
           org: formatRes,
-          safeType: col.safeType!
+          safeType: col.safeType!,
+          props
         };
       }
 
@@ -261,12 +273,13 @@ export class STDataSource {
         org: value,
         color,
         safeType: col.safeType!,
-        buttons: []
+        buttons: [],
+        props
       };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: text, org: text, buttons: [], safeType: 'text' };
+      return { text, _text: text, org: text, buttons: [], safeType: 'text', props };
     }
   }
 
