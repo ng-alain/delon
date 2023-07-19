@@ -54,4 +54,5 @@ Your body content
 | `exact` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true` |
 | `includeTabs` | 是否包裹标签页 | `boolean` | `false` |
 | `drag` | 支持拖动 | `boolean, ModalHelperDragOptions` | - |
+| `useNzData` | 是否强制使用 `nzData` 传递参数，若为 `false` 表示参数会直接映射到组件实例中，其他值只能通过 `NZ_MODAL_DATA` 的方式来获取参数 | `boolean` | `false` |
 | `modalOptions` | 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 | `ModalOptions` | - |
