@@ -19,6 +19,7 @@ import {
   STData,
   STMultiSort,
   STMultiSortResultType,
+  STOnCellResult,
   STPage,
   STReq,
   STReqReNameType,
@@ -324,15 +325,27 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
+  getCell(c: STColumn, item: STData, idx: number): STOnCellResult {
+    const onCellResult = typeof c.onCell === 'function' ? c.onCell(item, idx) : null;
+    const mergedColSpan = onCellResult?.colSpan ?? 1;
+    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
+    return {
+      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
+      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
+    } as STOnCellResult;
+  }
+
   optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
+        const props = this.getCell(c, result[i], i);
+
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '' };
+          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
         }
 
-        return this.get(result[i], c, i);
+        return { ...this.get(result[i], c, i), props };
       });
       result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
         .filter(w => !!w)
