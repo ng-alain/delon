@@ -59,7 +59,8 @@ export class SGComponent implements OnChanges, AfterViewInit {
     const { el, ren, clsMap, col, parent } = this;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    clsMap.push(...this.rep.genCls(col != null ? col : parent.colInCon || parent.col), `${prefixCls}__item`);
+    const parentCol = parent.colInCon || parent.col;
+    clsMap.push(...this.rep.genCls(col != null ? col : parentCol, parentCol), `${prefixCls}__item`);
     clsMap.forEach(cls => ren.addClass(el, cls));
     return this;
   }

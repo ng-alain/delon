@@ -11,9 +11,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-
 @Component({
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
@@ -44,6 +44,7 @@ export class SVContainerComponent {
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
 
+  @Input('sv-container') @InputNumber(null) colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
   @Input() size!: 'small' | 'large';
   /** 列表项间距，单位为 `px` */
