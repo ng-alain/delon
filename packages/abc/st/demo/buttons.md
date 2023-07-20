@@ -20,18 +20,19 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 > The modal is handled by [ModalHelper](/theme/modal) and the drawer is handled by [DrawerHelper](/theme/drawer).
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { DemoDrawerComponent, DemoModalComponent } from '@shared';
 
-import { STChange, STColumn, STData } from '@delon/abc/st';
+import { STChange, STColumn, STComponent, STData } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st [data]="users" [columns]="columns" (change)="change($event)"></st> `
+  template: ` <st #st [data]="users" [columns]="columns" (change)="change($event)"></st> `
 })
 export class DemoComponent {
+  @ViewChild('st') readonly st!: STComponent;
   constructor(private message: NzMessageService) {}
 
   users: STData[] = Array(10)
@@ -50,13 +51,18 @@ export class DemoComponent {
       title: '操作区',
       buttons: [
         {
-          text: 'Edit',
-          icon: 'edit',
+          text: i => (i.ok ? 'Click' : 'Edit'),
+          icon: i => ({ type: i.ok ? 'edit' : 'delete' }),
+          className: i => (i.ok ? 'text-error' : null),
           type: 'modal',
           modal: {
             component: DemoModalComponent
           },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          click: (i, modal) => {
+            this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`);
+            // 触发更新按钮的文本、颜色、Icon
+            this.st.setRow(i, { ok: !i.ok });
+          }
         },
         {
           text: 'Drawer',

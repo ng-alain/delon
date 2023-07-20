@@ -688,6 +688,53 @@ describe('abc: st', () => {
             }));
           });
         });
+        it('should be className is function', fakeAsync(() => {
+          const columns: STColumn[] = [
+            {
+              title: '',
+              buttons: [
+                {
+                  className: a => `${a.id === 1 ? 'Y' : 'N'}`
+                }
+              ]
+            }
+          ];
+          page
+            .updateColumn(columns)
+            .expectElCount('.Y', 1)
+            .updateData([{ id: 2 }])
+            .expectElCount('.Y', 0)
+            .asyncEnd();
+        }));
+        it('should be icon is function', fakeAsync(() => {
+          page
+            .updateColumn([
+              {
+                title: '',
+                buttons: [
+                  {
+                    icon: a => ({ type: `${a.id === 1 ? 'Y' : 'N'}` })
+                  }
+                ]
+              }
+            ])
+            .updateData([{ id: 1 }, { id: 2 }, { id: 3 }])
+            .expectElCount('.anticon-Y', 1)
+            .expectElCount('.anticon-N', 2)
+            .updateColumn([
+              {
+                title: '',
+                buttons: [
+                  {
+                    icon: a => ({ type: `${a.id !== 1 ? 'Y' : 'N'}` })
+                  }
+                ]
+              }
+            ])
+            .expectElCount('.anticon-Y', 2)
+            .expectElCount('.anticon-N', 1)
+            .asyncEnd();
+        }));
       });
       // TODO: 当前版本自动设置，无须参与计算
       xdescribe('[fixed]', () => {
