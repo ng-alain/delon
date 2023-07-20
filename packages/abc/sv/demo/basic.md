@@ -32,8 +32,9 @@ import { Component } from '@angular/core';
       </sv>
       <nz-divider></nz-divider>
       <sv label="Default"></sv>
-      <sv label="Unit" unit="个">10</sv>
+      <sv label="Unit" unit="个" col="2">10</sv>
       <sv label="Unit" unit="个"></sv>
+      <sv label="Col2" col="2">占两栏</sv>
       <sv label="Value">
         <sv-value prefix="约" unit="亿" tooltip="5,011,000,000">50.11</sv-value>
       </sv>

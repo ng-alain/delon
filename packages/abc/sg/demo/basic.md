@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: ` <div sg-container="4">
-    <sg *ngFor="let i of ls; let idx = index">
+    <sg *ngFor="let i of ls; let idx = index" [col]="idx === 5 ? 2 : null">
       <div class="item">{{ idx + 1 }}</div>
     </sg>
   </div>`,
@@ -40,10 +40,10 @@ import { Component } from '@angular/core';
         line-height: 120px;
         font-size: 13px;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class DemoComponent {
-  ls = Array(4).fill(0);
+  ls = Array(10).fill(0);
 }
 ```

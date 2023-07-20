@@ -79,5 +79,10 @@ describe('theme: responsive', () => {
       expect(res.length).toBe(1);
       expect(res[0]).toBe(`ant-col-xs-24`);
     });
+    it('should be auto padding span', () => {
+      const res = srv.genCls(2, 3);
+      expect(res[0]).toBe(`ant-col-xs-24`);
+      expect(res[1]).toBe(`ant-col-sm-16`);
+    });
   });
 });
