@@ -265,7 +265,7 @@ class TestComponent {
 | `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | - |
 | `[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | - |
 | `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
-| deprecated `[colSpan]` | Span of this column's title | `number` | - |
+| `[colSpan]` | Span of this column's title | `number` | - |
 | `[onCell]` | Set props on per cell | `(item: T, index: number) => STOnCellResult;` | - |
 | `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |

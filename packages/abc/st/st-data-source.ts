@@ -205,26 +205,15 @@ export class STDataSource {
   }
 
   private get(item: STData, col: _STColumn, idx: number): _STDataValue {
-    const safeHtml = col.safeType === 'safeHtml';
-    let onCellResult = typeof col.onCell === 'function' ? col.onCell(item, idx) : null;
-    if (onCellResult == null && col.colSpan != null) {
-      onCellResult = { colSpan: col.colSpan };
-    }
-    const mergedColSpan = onCellResult?.colSpan ?? 1;
-    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
-    const props: STOnCellResult = {
-      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
-      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
-    };
     try {
+      const safeHtml = col.safeType === 'safeHtml';
       if (col.format) {
         const formatRes = col.format(item, col, idx) || '';
         return {
           text: formatRes,
           _text: safeHtml ? this.dom.bypassSecurityTrustHtml(formatRes) : formatRes,
           org: formatRes,
-          safeType: col.safeType!,
-          props
+          safeType: col.safeType!
         };
       }
 
@@ -273,13 +262,12 @@ export class STDataSource {
         org: value,
         color,
         safeType: col.safeType!,
-        buttons: [],
-        props
+        buttons: []
       };
     } catch (ex) {
       const text = `INVALID DATA`;
       console.error(`Failed to get data`, item, col, ex);
-      return { text, _text: text, org: text, buttons: [], safeType: 'text', props };
+      return { text, _text: text, org: text, buttons: [], safeType: 'text' };
     }
   }
 
@@ -337,15 +325,27 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
+  getCell(c: STColumn, item: STData, idx: number): STOnCellResult {
+    const onCellResult = typeof c.onCell === 'function' ? c.onCell(item, idx) : null;
+    const mergedColSpan = onCellResult?.colSpan ?? 1;
+    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
+    return {
+      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
+      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
+    } as STOnCellResult;
+  }
+
   optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
+        const props = this.getCell(c, result[i], i);
+
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '' };
+          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
         }
 
-        return this.get(result[i], c, i);
+        return { ...this.get(result[i], c, i), props };
       });
       result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
         .filter(w => !!w)

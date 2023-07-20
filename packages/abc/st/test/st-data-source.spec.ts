@@ -943,16 +943,6 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
-      it('@deprecated colSpan', done => {
-        options.data = genData();
-        options.columns = [{ index: 'a', colSpan: 2 }] as _STColumn[];
-        srv.process(options).subscribe(res => {
-          const values = res.list[0]._values as _STDataValue[];
-          expect(values[0].props?.colSpan).toBe(2);
-          expect(values[0].props?.rowSpan).toBe(1);
-          done();
-        });
-      });
     });
   });
 
