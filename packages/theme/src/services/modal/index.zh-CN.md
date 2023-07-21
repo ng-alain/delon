@@ -50,7 +50,7 @@ Your body content
 
 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- |
-| `size` | 指定对话框大小 | `sm,md,lg,xl,number` | `lg` |
+| `size` | 指定对话框大小 | `sm,md,lg,xl,number,string` | `lg` |
 | `exact` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true` |
 | `includeTabs` | 是否包裹标签页 | `boolean` | `false` |
 | `drag` | 支持拖动 | `boolean, ModalHelperDragOptions` | - |
