@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { STWidgetRegistry } from '@delon/abc/st';
 
-import { SharedModule } from '../shared.module';
 import { STImgWidget } from './img.widget';
+import { SharedModule } from '../shared.module';
 
 export const STWIDGET_COMPONENTS = [STImgWidget];
 

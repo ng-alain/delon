@@ -6,8 +6,8 @@ import type { Attribute } from 'parse5/dist/common/token';
 import type { Element } from 'parse5/dist/tree-adapters/default';
 import * as ts from 'typescript';
 
-import { getSourceFile } from '../utils';
 import { PluginOptions } from './interface';
+import { getSourceFile } from '../utils';
 
 // includes ng-zorro-antd & @delon/*
 const WHITE_ICONS = [

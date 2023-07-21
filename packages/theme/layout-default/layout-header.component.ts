@@ -86,7 +86,11 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     return this.srv.collapsedIcon;
   }
 
-  constructor(private srv: LayoutDefaultService, private settings: SettingsService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private srv: LayoutDefaultService,
+    private settings: SettingsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   private refresh(): void {
     const arr = this.items.toArray();

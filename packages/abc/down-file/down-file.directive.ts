@@ -39,7 +39,10 @@ export class DownFileDirective {
     return arr.reduce((_o, item) => item, {});
   }
 
-  constructor(private el: ElementRef<HTMLButtonElement>, private _http: _HttpClient) {
+  constructor(
+    private el: ElementRef<HTMLButtonElement>,
+    private _http: _HttpClient
+  ) {
     let isFileSaverSupported = false;
     try {
       isFileSaverSupported = !!new Blob();

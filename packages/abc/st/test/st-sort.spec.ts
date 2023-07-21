@@ -3,10 +3,10 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { PageObject, TestComponent, genModule } from './base.spec';
 import { STComponent } from '../st.component';
 import { STMultiSort } from '../st.interfaces';
 import { _STColumn } from '../st.types';
-import { PageObject, TestComponent, genModule } from './base.spec';
 
 describe('abc: st-sort', () => {
   let page: PageObject<TestComponent>;

@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
 
+import { FormValidatorComponent } from './validator/validator.component';
 import { ContentComponent } from '../../shared/components/content/content.component';
 import { SharedModule } from '../../shared/shared.module';
-import { FormValidatorComponent } from './validator/validator.component';
 
 const COMPONENTS = [FormValidatorComponent];
 

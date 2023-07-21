@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { SFTagWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFTagWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-tag',

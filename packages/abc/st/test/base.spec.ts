@@ -16,6 +16,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
+import { STWidgetRegistry } from './../st-widget';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STComponent } from '../st.component';
 import {
@@ -34,7 +35,6 @@ import {
 } from '../st.interfaces';
 import { STModule } from '../st.module';
 import { _STColumn } from '../st.types';
-import { STWidgetRegistry } from './../st-widget';
 
 export const MOCKDATE = new Date();
 export const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -263,7 +263,9 @@ export class PageObject<T extends TestComponent> {
   expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
     const ret = deepGet(this.comp._data[row - 1], path);
     if (options?.message != null) {
-      expect(ret).withContext(options?.message).toBe(valule);
+      expect(ret)
+        .withContext(options?.message)
+        .toBe(valule);
     } else {
       expect(ret).toBe(valule);
     }

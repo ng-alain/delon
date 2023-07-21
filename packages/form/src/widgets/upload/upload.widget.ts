@@ -6,10 +6,10 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
+import { SFUploadWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFUploadWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-upload',

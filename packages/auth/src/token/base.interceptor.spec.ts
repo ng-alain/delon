@@ -19,11 +19,11 @@ import { Observable, throwError, catchError } from 'rxjs';
 
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 
-import { DelonAuthModule } from '../auth.module';
-import { ALLOW_ANONYMOUS } from '../token';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
+import { DelonAuthModule } from '../auth.module';
+import { ALLOW_ANONYMOUS } from '../token';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
   const model: any = new modelType();

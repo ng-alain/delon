@@ -19,8 +19,8 @@ import { findModuleFromOptions, buildRelativePath } from '@schematics/angular/ut
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
 
-import { addProviderToModule, getProject, refreshPathRoot } from '../utils';
 import { Schema as ModuleSchema } from './schema';
+import { addProviderToModule, getProject, refreshPathRoot } from '../utils';
 
 function addDeclarationToNgModule(options: ModuleSchema): Rule {
   return (tree: Tree) => {

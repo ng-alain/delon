@@ -16,7 +16,11 @@ export class AutoFocusDirective implements AfterViewInit, OnDestroy {
   @Input() @InputBoolean() enabled = true;
   @Input() @InputNumber() delay = 300;
 
-  constructor(private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private platform: Platform) {}
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private cdr: ChangeDetectorRef,
+    private platform: Platform
+  ) {}
 
   ngAfterViewInit(): void {
     const el = this.el.nativeElement;

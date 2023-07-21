@@ -2,8 +2,8 @@ import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
 
-import { addImportToModule, addValueToVariable, getProject, overwriteIfExists, readContent } from '../utils';
 import { PluginOptions } from './interface';
+import { addImportToModule, addValueToVariable, getProject, overwriteIfExists, readContent } from '../utils';
 
 let project: ProjectDefinition;
 

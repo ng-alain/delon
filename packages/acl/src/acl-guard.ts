@@ -27,7 +27,11 @@ import { ACLCanType, ACLGuardType } from './acl.type';
  */
 @Injectable({ providedIn: 'root' })
 export class ACLGuard implements CanActivate, CanActivateChild, CanMatch {
-  constructor(private srv: ACLService, private router: Router, private injector: Injector) {}
+  constructor(
+    private srv: ACLService,
+    private router: Router,
+    private injector: Injector
+  ) {}
 
   private process(data: Data): Observable<boolean> {
     data = {

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fse from 'fs-extra';
 
+import { generateMd } from './generate-md';
 import { SiteConfig } from '../interfaces';
 import { toc } from '../plugins/toc';
-import { generateMd } from './generate-md';
 
 const MT = require('mark-twain');
 

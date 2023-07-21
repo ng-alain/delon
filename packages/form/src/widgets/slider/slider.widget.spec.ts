@@ -5,9 +5,9 @@ import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSliderComponent } from 'ng-zorro-antd/slider';
 
+import { SliderWidget } from './slider.widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { SliderWidget } from './slider.widget';
 
 describe('form: widget: slider', () => {
   let fixture: ComponentFixture<TestFormComponent>;

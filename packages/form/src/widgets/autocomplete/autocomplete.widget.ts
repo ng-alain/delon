@@ -5,11 +5,11 @@ import { Observable, of, debounceTime, map, mergeMap, startWith, takeUntil } fro
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFAutoCompleteWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFAutoCompleteWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-autocomplete',

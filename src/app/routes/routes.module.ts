@@ -3,10 +3,10 @@ import { Route, RouterModule } from '@angular/router';
 
 import { AlainI18NGuard } from '@delon/theme';
 
-import { LayoutComponent } from '../layout/layout.component';
-import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
 import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from '../layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [HomeComponent, NotFoundComponent];
 

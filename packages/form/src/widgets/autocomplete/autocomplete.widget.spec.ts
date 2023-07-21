@@ -6,11 +6,11 @@ import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { AutoCompleteWidget } from './autocomplete.widget';
+import { SFAutoCompleteWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
 import { mergeConfig } from '../../config';
-import { AutoCompleteWidget } from './autocomplete.widget';
-import { SFAutoCompleteWidgetSchema } from './schema';
 
 describe('form: widget: autocomplete', () => {
   let fixture: ComponentFixture<TestFormComponent>;

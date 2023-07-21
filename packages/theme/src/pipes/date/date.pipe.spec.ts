@@ -59,7 +59,7 @@ describe('Pipe: _date', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | _date : format }}</p> `
+  template: ` <p id="result">{{ value | _date: format }}</p> `
 })
 class TestComponent {
   value?: Date | string | number;

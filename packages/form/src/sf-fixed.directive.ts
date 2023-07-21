@@ -24,7 +24,10 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
     }
   }
 
-  constructor(er: ElementRef, private render: Renderer2) {
+  constructor(
+    er: ElementRef,
+    private render: Renderer2
+  ) {
     this.el = er.nativeElement as HTMLDivElement;
   }
 

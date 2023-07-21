@@ -4,9 +4,9 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { G2Service } from '../core';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
+import { G2Service } from '../core';
 
 describe('chart: custom', () => {
   let fixture: ComponentFixture<TestComponent>;

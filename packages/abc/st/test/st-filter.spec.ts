@@ -4,11 +4,11 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { PageObject, TestComponent, genModule } from './base.spec';
 import { STFilterComponent } from '../st-filter.component';
 import { STComponent } from '../st.component';
 import { STColumnFilter } from '../st.interfaces';
 import { _STColumn } from '../st.types';
-import { PageObject, TestComponent, genModule } from './base.spec';
 
 registerLocaleData(zh);
 

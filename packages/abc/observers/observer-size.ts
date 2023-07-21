@@ -86,7 +86,11 @@ export class ObserverSize implements AfterViewInit, OnDestroy {
   private _sub$: Subscription | null = null;
   @Output('observeSize') readonly event = new EventEmitter<MutationRecord[]>();
 
-  constructor(private _obs: SizeObserver, private el: ElementRef<HTMLElement>, private ngZone: NgZone) {}
+  constructor(
+    private _obs: SizeObserver,
+    private el: ElementRef<HTMLElement>,
+    private ngZone: NgZone
+  ) {}
 
   ngAfterViewInit(): void {
     if (!this._sub$) {

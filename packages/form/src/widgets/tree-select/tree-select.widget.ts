@@ -2,11 +2,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/core/tree';
 
+import { SFTreeSelectWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFTreeSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-tree-select',

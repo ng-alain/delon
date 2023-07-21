@@ -3,9 +3,9 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
+import { SFNumberWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { SFNumberWidgetSchema } from './schema';
 
 describe('form: widget: number', () => {
   let fixture: ComponentFixture<TestFormComponent>;

@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 
 import { AlainAuthConfig } from '@delon/util/config';
 
+import { SimpleTokenModel } from './simple.model';
 import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
-import { SimpleTokenModel } from './simple.model';
 
 /**
  * Simple 拦截器

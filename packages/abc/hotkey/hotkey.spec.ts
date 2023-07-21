@@ -2,9 +2,9 @@ import { Platform } from '@angular/cdk/platform';
 import { Component, ViewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { createTestContext } from '../../testing';
 import { HotkeyDirective } from './hotkey.directive';
 import { HotkeyModule } from './hotkey.module';
+import { createTestContext } from '../../testing';
 
 describe('abc: hotkey', () => {
   let context: TestComponent;

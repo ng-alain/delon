@@ -80,7 +80,11 @@ export class SVContainerComponent {
 })
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;
-  constructor(el: ElementRef, @Host() @Optional() private parent: SVContainerComponent, private ren: Renderer2) {
+  constructor(
+    el: ElementRef,
+    @Host() @Optional() private parent: SVContainerComponent,
+    private ren: Renderer2
+  ) {
     if (parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }

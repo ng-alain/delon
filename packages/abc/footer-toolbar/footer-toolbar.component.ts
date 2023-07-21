@@ -31,7 +31,11 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() errorCollect = false;
   @Input() extra?: string | TemplateRef<void>;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: NzSafeAny) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private doc: NzSafeAny
+  ) {}
 
   private get bodyCls(): DOMTokenList {
     return (this.doc.querySelector('body') as HTMLElement).classList;

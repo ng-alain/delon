@@ -7,8 +7,8 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { UploadWidget } from './upload.widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: upload', () => {
   let fixture: ComponentFixture<TestFormComponent>;

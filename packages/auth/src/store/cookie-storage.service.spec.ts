@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITokenModel } from '../token/interface';
 import { CookieStorageStore } from './cookie-storage.service';
+import { ITokenModel } from '../token/interface';
 
 describe('auth: cookie-storage', () => {
   let data: { [key: string]: any } = {};
