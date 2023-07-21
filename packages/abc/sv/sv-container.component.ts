@@ -41,6 +41,7 @@ export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
 
