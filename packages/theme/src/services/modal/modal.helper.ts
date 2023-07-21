@@ -123,14 +123,14 @@ export class ModalHelper {
         };
         cls += ` ${this.dragClsPrefix} ${dragWrapCls}`;
       }
-      const defaultOptions: ModalOptions = {
+      const subject = this.srv.create({
         nzWrapClassName: cls,
         nzContent: comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
-        nzData: params
-      };
-      const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
+        nzData: params,
+        ...modalOptions
+      });
       // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取
       if (useNzData !== true) {
         Object.assign(subject.componentInstance, params);
