@@ -93,6 +93,20 @@ describe('abc: view', () => {
             page.expect('sv__label-width', 0);
           });
         });
+        describe('#bordered', () => {
+          it('should working', () => {
+            context.bordered = true;
+            context.noColon = false;
+            fixture.detectChanges();
+            page
+              .expect(`${prefixCls}bordered`)
+              // noColon 始终为 true
+              .expect(`${prefixCls}no-colon`, 0, 'noColon应始终为true');
+            // gutter 始终为 空
+            const marginLeft = page.getEl(`.ant-row`).style.marginLeft;
+            expect(marginLeft).toBe('');
+          });
+        });
       });
       describe('#item', () => {
         describe('#col', () => {
@@ -230,8 +244,10 @@ describe('abc: view', () => {
     getEls(cls: string): DebugElement[] {
       return dl.queryAll(By.css(cls));
     }
-    expect(cls: string, count: number = 1): this {
-      expect(this.getEls(cls).length).toBe(count);
+    expect(cls: string, count: number = 1, message?: string): this {
+      let e = expect(this.getEls(cls).length);
+      if (message) e = e.withContext(message);
+      e.toBe(count);
       return this;
     }
   }
@@ -248,6 +264,8 @@ describe('abc: view', () => {
       [gutter]="parent_gutter"
       [col]="parent_col"
       [default]="parent_default"
+      [bordered]="bordered"
+      [noColon]="noColon"
     >
       <sv-title>title</sv-title>
       <sv
@@ -282,6 +300,8 @@ class TestComponent {
   parent_col: number = 3;
   parent_default: boolean = true;
   parent_title = 'title';
+  bordered = false;
+  noColon = false;
 
   label?: string;
   optional?: string;

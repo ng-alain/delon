@@ -24,6 +24,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[default]` | whether default text | `boolean` | `true` | ✅ |
 | `[title]` | Display title | `string,TemplateRef<void>` | - | - |
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
+| `[bordered]` | Whether to display the border | `boolean` | `false` | - |
 
 ### sv
 

@@ -229,4 +229,40 @@
   &__no-colon::after {
     content: ' ' !important;
   }
+
+  &__bordered {
+    overflow: hidden;
+    border-top: 1px solid @border-color-split;
+    border-bottom: 1px solid @border-color-split;
+    border-left: 1px solid @border-color-split;
+
+    @{sv-prefix}__item {
+      border-right: 1px solid @border-color-split;
+      border-bottom: 1px solid @border-color-split;
+    }
+
+    @{sv-prefix}__label {
+      background-color: @descriptions-bg;
+      border-right: 1px solid @border-color-split;
+    }
+
+    @{sv-prefix}__label,
+    @{sv-prefix}__detail {
+      padding: @descriptions-middle-padding;
+    }
+
+    &@{sv-prefix}__large {
+      @{sv-prefix}__label,
+      @{sv-prefix}__detail {
+        padding: @descriptions-default-padding;
+      }
+    }
+
+    &@{sv-prefix}__small {
+      @{sv-prefix}__label,
+      @{sv-prefix}__detail {
+        padding: @descriptions-small-padding;
+      }
+    }
+  }
 }

@@ -18,7 +18,7 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
   template: `
-    <div class="ant-row" [ngStyle]="{ 'margin-left.px': -(gutter / 2), 'margin-right.px': -(gutter / 2) }">
+    <div class="ant-row" [ngStyle]="margin">
       <sv-title *ngIf="title">
         <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
       </sv-title>
@@ -31,6 +31,7 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
     '[class.sv__vertical]': `layout === 'vertical'`,
     '[class.sv__small]': `size === 'small'`,
     '[class.sv__large]': `size === 'large'`,
+    '[class.sv__bordered]': `bordered`,
     '[class.clearfix]': `true`
   },
   preserveWhitespaces: false,
@@ -44,10 +45,11 @@ export class SVContainerComponent {
   static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
+  static ngAcceptInputType_bordered: BooleanInput;
 
   @Input('sv-container') @InputNumber(null) colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
-  @Input() size!: 'small' | 'large';
+  @Input() size?: 'small' | 'large' | 'default';
   /** 列表项间距，单位为 `px` */
   @Input() @InputNumber() gutter!: number;
   @Input() layout!: 'horizontal' | 'vertical';
@@ -56,6 +58,11 @@ export class SVContainerComponent {
   @Input() @InputNumber() col!: number;
   @Input() @InputBoolean() default!: boolean;
   @Input() @InputBoolean() noColon = false;
+  @Input() @InputBoolean() bordered = false;
+
+  get margin(): { [k: string]: number } {
+    return this.bordered ? {} : { 'margin-left.px': -(this.gutter / 2), 'margin-right.px': -(this.gutter / 2) };
+  }
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sv', {
