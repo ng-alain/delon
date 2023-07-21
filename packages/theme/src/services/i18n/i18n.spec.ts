@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
-import { AlainI18NGuard } from './i18n-url.guard';
+import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
 import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: i18n', () => {
@@ -93,8 +93,8 @@ describe('theme: i18n', () => {
             {
               path: ':i18n',
               component: TestComponent,
-              canActivate: [AlainI18NGuard],
-              canActivateChild: [AlainI18NGuard]
+              canActivate: [alainI18nCanActivate],
+              canActivateChild: [alainI18nCanActivateChild]
             }
           ])
         ],
@@ -114,7 +114,7 @@ describe('theme: i18n', () => {
         imports: [
           AlainThemeModule.forRoot(),
           RouterTestingModule.withRoutes([
-            { path: ':invalid', component: TestComponent, canActivate: [AlainI18NGuard] }
+            { path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }
           ])
         ],
         declarations: [TestComponent]
@@ -132,7 +132,9 @@ describe('theme: i18n', () => {
       TestBed.configureTestingModule({
         imports: [
           AlainThemeModule.forRoot(),
-          RouterTestingModule.withRoutes([{ path: ':lang', component: TestComponent, canActivate: [AlainI18NGuard] }])
+          RouterTestingModule.withRoutes([
+            { path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }
+          ])
         ],
         declarations: [TestComponent],
         providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { paramNameOfUrlGuard: 'lang' } } as AlainConfig }]
