@@ -159,13 +159,13 @@ const routes: Routes = [
 
 #### 用户授权
 
-接者用户访问的页面还需要取决于授权程度，例如系统配置页普通用户肯定无法进入。在初始化项目数据小节里会根据当前用户的 Token 来获得授权的数据，并将数据交给 `@delon/acl`，同时它也提供一组路由守卫的具体实现 `ACLGuard` 类，例如希望整个系统配置模块都必须是 `admin` 角色才能访问，则：
+接者用户访问的页面还需要取决于授权程度，例如系统配置页普通用户肯定无法进入。在初始化项目数据小节里会根据当前用户的 Token 来获得授权的数据，并将数据交给 `@delon/acl`，同时它也提供一组路由守卫的具体实现 `aclCanActivate` 方法，例如希望整个系统配置模块都必须是 `admin` 角色才能访问，则：
 
 ```ts
 const routes: Routes = [
   {
     path: 'sys',
-    canActivate: [ACLGuard],
+    canActivate: [aclCanActivate],
     data: { guard: 'admin' },
     children: [
       { path: 'config', component: ConfigComponent },
