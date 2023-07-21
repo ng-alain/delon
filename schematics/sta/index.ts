@@ -4,7 +4,7 @@ import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
 import * as colors from 'ansi-colors';
-import { rmdirSync, mkdirSync, existsSync, readFileSync } from 'fs';
+import { rmSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { parse } from 'jsonc-parser';
 import { resolve, join } from 'path';
 import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-typescript-api';
@@ -42,7 +42,7 @@ function addPathInTsConfig(name: string): Rule {
 
 function cleanOutput(p: string): void {
   try {
-    rmdirSync(p, { recursive: true });
+    rmSync(p, { recursive: true });
     mkdirSync(p);
   } catch (e) {}
 }
@@ -61,7 +61,13 @@ function tagsMapping(res: GenerateApiOutput, config: STAConfig): void {
   });
 }
 
-function fix(output: string, res: GenerateApiOutput, tree: Tree, context: SchematicContext, config: STAConfig): void {
+async function fix(
+  output: string,
+  res: GenerateApiOutput,
+  tree: Tree,
+  context: SchematicContext,
+  config: STAConfig
+): Promise<void> {
   tagsMapping(res, config);
   const indexList = [`models`, `_base.service`];
   const basePath = normalize(join(project.root, output.replace(process.cwd(), '')));
@@ -69,20 +75,20 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
     // definitions
     const dataTpl = res.getTemplate({ name: 'dataContracts', fileName: 'data-contracts.eta' });
     const dataContent = res.renderTemplate(dataTpl, { ...res.configuration });
-    tree.create(`${basePath}/models.ts`, filePrefix + res.formatTSContent(dataContent));
+    tree.create(`${basePath}/models.ts`, filePrefix + (await res.formatTSContent(dataContent)));
 
     // Base Service
     const baseServiceTpl = res.getTemplate({ name: 'baseService', fileName: 'base.service.eta' });
     const baseServiceContent = res.renderTemplate(baseServiceTpl, { ...res.configuration });
-    tree.create(`${basePath}/_base.service.ts`, filePrefix + res.formatTSContent(baseServiceContent));
+    tree.create(`${basePath}/_base.service.ts`, filePrefix + (await res.formatTSContent(baseServiceContent)));
 
     // Tag Service
     const dtoTypeTpl = res.getTemplate({ name: 'dto-type', fileName: 'dto-type.eta' });
     const serviceTpl = res.getTemplate({ name: 'service', fileName: 'service.eta' });
-    res.configuration.routes.combined.forEach(route => {
+    res.configuration.routes.combined.forEach(async route => {
       const routeIndex: string[] = [];
       // dto
-      const dtoContent = res.formatTSContent(
+      const dtoContent = await res.formatTSContent(
         res.renderTemplate(dtoTypeTpl, {
           ...res.configuration,
           route
@@ -98,7 +104,10 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
         ...res.configuration,
         route
       });
-      tree.create(`${basePath}/${route.moduleName}/service.ts`, filePrefix + res.formatTSContent(serviceContent));
+      tree.create(
+        `${basePath}/${route.moduleName}/service.ts`,
+        filePrefix + (await res.formatTSContent(serviceContent))
+      );
       routeIndex.push(`service`);
 
       // index.ts
@@ -200,8 +209,7 @@ function genProxy(config: STAConfig): Rule {
       generateApi(options)
         .then((res: GenerateApiOutput) => {
           cleanOutput(output);
-          fix(output, res, tree, context, config);
-          resolve();
+          return fix(output, res, tree, context, config);
         })
         .catch(ex => {
           throw new SchematicsException(`Generate error: ${ex}`);
