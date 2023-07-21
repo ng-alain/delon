@@ -44,6 +44,6 @@ import { Component } from '@angular/core';
   ]
 })
 export class DemoComponent {
-  ls = Array(10).fill(0);
+  ls = Array(11).fill(0);
 }
 ```

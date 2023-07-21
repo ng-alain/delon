@@ -10,13 +10,14 @@ import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import {
+import type {
   STColumn,
   STColumnFilter,
   STColumnFilterMenu,
   STColumnMaxMultipleButton,
   STCustomRequestOptions,
   STData,
+  STIcon,
   STMultiSort,
   STMultiSortResultType,
   STOnCellResult,
@@ -377,6 +378,8 @@ export class STDataSource {
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
         btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        btn._className = typeof btn.className === 'function' ? btn.className(item, btn) : btn.className;
+        btn._icon = typeof btn.icon === 'function' ? btn.icon(item, btn) : (btn.icon as STIcon);
         if (btn.children?.length) {
           btn.children = fnText(btn.children!);
         }

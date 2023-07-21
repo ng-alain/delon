@@ -340,8 +340,8 @@ class TestComponent {
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[text]` | 文本与图标共存 | `string | (record: STData, btn: STColumnButton) => string` | - |
-| `[icon]` | 图标与文本共存 | `string | STIcon` | - |
+| `[text]` | 文本与图标共存 | `string | (record: T, btn: STColumnButton) => string` | - |
+| `[icon]` | 图标与文本共存 | `string | STIcon | ((record: T, btn: STColumnButton<T>) => STIcon | null | undefined)` | - |
 | `[i18n]` | 文本i18n | `string` | - |
 | `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | - |
 | `[click]` | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | - |
@@ -353,7 +353,7 @@ class TestComponent {
 | `[iif]` | 自定义条件表达式 | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true` |
 | `[iifBehavior]` | 表达式 `false` 值时渲染方式 | `hide,disabled` | `hide` |
 | `[tooltip]` | 按钮文字提示 | `string` | - |
-| `[className]` | 按钮 `class` 属性值，例如：`text-error` 异常色，更多参考[样式工具类](/theme/tools) | `string` | - |
+| `[className]` | 按钮 `class` 属性值，例如：`text-error` 异常色，更多参考[样式工具类](/theme/tools) | `string | ((record: T, btn: STColumnButton<T>) => NgClassType | null | undefined)` | - |
 
 ### STIcon
 

@@ -745,7 +745,7 @@ export interface STColumnButton<T extends STData = any> {
   /**
    * 图标
    */
-  icon?: string | STIcon;
+  icon?: string | STIcon | ((record: T, btn: STColumnButton<T>) => STIcon | null | undefined);
   /**
    * 按钮类型
    * - `none` 无任何互动
@@ -806,7 +806,7 @@ export interface STColumnButton<T extends STData = any> {
    * - `text-success` 成功色
    * - `text-error` 错误色
    */
-  className?: NgClassType;
+  className?: NgClassType | ((record: T, btn: STColumnButton<T>) => NgClassType | null | undefined);
 
   [key: string]: any;
 }
