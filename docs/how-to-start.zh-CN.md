@@ -144,7 +144,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [SimpleGuard],
+    canActivate: [authSimpleCanActivate],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
@@ -153,7 +153,7 @@ const routes: Routes = [
 ];
 ```
 
-> 这里的 `SimpleGuard` 是因为采用基于 Simple Web Token 认证风格，其他认证方式请参考[用户认证](/auth)章节。
+> 这里的 `authSimpleCanActivate` 是因为采用基于 Simple Web Token 认证风格，其他认证方式请参考[用户认证](/auth)章节。
 
 当用户未登录时会直接跳转至 `/passport/login` 页面，如果采用的是 JWT 认证方式，还会对 Token 是否有效进行检验。
 
