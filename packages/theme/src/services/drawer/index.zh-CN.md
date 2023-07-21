@@ -21,6 +21,9 @@ this.NzDrawerRef.close(true);
 // 关闭
 this.NzDrawerRef.close();
 this.NzDrawerRef.close(false);
+
+// 关闭所有已打开的抽屉
+this.DrawerHelper.closeAll();
 ```
 
 包括 `create` & `static` 分别用于打开普通或静态抽屉。
@@ -51,3 +54,7 @@ this.NzDrawerRef.close(false);
 | `footerHeight` | 工具条高度 | `number` | `55` |
 | `exact` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true` |
 | `drawerOptions` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `NzDrawerOptions` | - |
+
+### Method
+
+- `closeAll` 关闭所有已打开的抽屉
