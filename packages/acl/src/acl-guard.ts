@@ -1,18 +1,35 @@
-import { Injectable, Injector } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  CanMatch,
-  Data,
-  Route,
-  Router,
-  RouterStateSnapshot
-} from '@angular/router';
+import { Injectable, Injector, inject } from '@angular/core';
+import { CanActivateChildFn, CanActivateFn, CanMatchFn, Router } from '@angular/router';
 import { Observable, of, map, tap } from 'rxjs';
 
 import { ACLService } from './acl.service';
-import { ACLCanType, ACLGuardType } from './acl.type';
+import type { ACLCanType, ACLGuardData } from './acl.type';
+
+@Injectable()
+export class ACLGuardService {
+  constructor(
+    private srv: ACLService,
+    private router: Router,
+    private injector: Injector
+  ) {}
+
+  process(data?: ACLGuardData): Observable<boolean> {
+    data = {
+      guard: null,
+      guard_url: this.srv.guard_url,
+      ...data
+    };
+    let guard = data.guard;
+    if (typeof guard === 'function') guard = guard(this.srv, this.injector);
+    return (guard && guard instanceof Observable ? guard : of(guard != null ? (guard as ACLCanType) : null)).pipe(
+      map(v => this.srv.can(v)),
+      tap(v => {
+        if (v) return;
+        this.router.navigateByUrl(data!!.guard_url!!);
+      })
+    );
+  }
+}
 
 /**
  * Routing guard prevent unauthorized users visit the page, [ACL Document](https://ng-alain.com/acl).
@@ -20,46 +37,35 @@ import { ACLCanType, ACLGuardType } from './acl.type';
  * ```ts
  * data: {
  *  path: 'home',
- *  canActivate: [ ACLGuard ],
+ *  canActivate: [ aclCanActivate ],
  *  data: { guard: 'user1' }
  * }
  * ```
  */
-@Injectable({ providedIn: 'root' })
-export class ACLGuard implements CanActivate, CanActivateChild, CanMatch {
-  constructor(
-    private srv: ACLService,
-    private router: Router,
-    private injector: Injector
-  ) {}
+export const aclCanActivate: CanActivateFn = route => inject(ACLGuardService).process(route.data);
 
-  private process(data: Data): Observable<boolean> {
-    data = {
-      guard: null,
-      guard_url: this.srv.guard_url,
-      ...data
-    };
-    let guard: ACLGuardType = data.guard;
-    if (typeof guard === 'function') guard = guard(this.srv, this.injector);
-    return (guard && guard instanceof Observable ? guard : of(guard != null ? (guard as ACLCanType) : null)).pipe(
-      map(v => this.srv.can(v)),
-      tap(v => {
-        if (v) return;
-        this.router.navigateByUrl(data.guard_url);
-      })
-    );
-  }
+/**
+ * Routing guard prevent unauthorized users visit the page, [ACL Document](https://ng-alain.com/acl).
+ *
+ * ```ts
+ * data: {
+ *  path: 'home',
+ *  canActivateChild: [ aclCanActivateChild ],
+ *  data: { guard: 'user1' }
+ * }
+ * ```
+ */
+export const aclCanActivateChild: CanActivateChildFn = route => inject(ACLGuardService).process(route.data);
 
-  // lazy loading
-  canMatch(route: Route): Observable<boolean> {
-    return this.process(route.data!);
-  }
-  // all children route
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.canActivate(childRoute, state);
-  }
-  // route
-  canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot | null): Observable<boolean> {
-    return this.process(route.data);
-  }
-}
+/**
+ * Routing guard prevent unauthorized users visit the page, [ACL Document](https://ng-alain.com/acl).
+ *
+ * ```ts
+ * data: {
+ *  path: 'home',
+ *  canMatch: [ aclCanMatch ],
+ *  data: { guard: 'user1' }
+ * }
+ * ```
+ */
+export const aclCanMatch: CanMatchFn = route => inject(ACLGuardService).process(route.data);
