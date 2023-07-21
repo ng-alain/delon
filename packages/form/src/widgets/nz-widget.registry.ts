@@ -1,4 +1,3 @@
-import { WidgetRegistry } from '../widget.factory';
 import { ArrayWidget } from './array/array.widget';
 import { AutoCompleteWidget } from './autocomplete/autocomplete.widget';
 import { BooleanWidget } from './boolean/boolean.widget';
@@ -21,6 +20,7 @@ import { TimeWidget } from './time/time.widget';
 import { TransferWidget } from './transfer/transfer.widget';
 import { TreeSelectWidget } from './tree-select/tree-select.widget';
 import { UploadWidget } from './upload/upload.widget';
+import { WidgetRegistry } from '../widget.factory';
 
 export class NzWidgetRegistry extends WidgetRegistry {
   constructor() {

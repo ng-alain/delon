@@ -21,7 +21,7 @@ describe('Pipe: mask', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | mask : maskStr }}</p> `
+  template: ` <p id="result">{{ value | mask: maskStr }}</p> `
 })
 class TestComponent {
   value = '123';

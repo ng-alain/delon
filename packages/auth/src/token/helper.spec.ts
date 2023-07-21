@@ -1,5 +1,5 @@
-import { JWTTokenModel } from '../..';
 import { CheckJwt } from './helper';
+import { JWTTokenModel } from '../..';
 
 describe('helper: CheckJwt', () => {
   it('invalid jwt token should return false', () => {

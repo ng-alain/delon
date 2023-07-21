@@ -16,6 +16,7 @@ import {
 } from '@angular-devkit/schematics';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 
+import { Schema as ApplicationOptions } from './schema';
 import { getLangData } from '../core/lang.config';
 import {
   addAllowedCommonJsDependencies,
@@ -43,7 +44,6 @@ import {
 } from '../utils';
 import { addImportNotation } from '../utils/less';
 import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
-import { Schema as ApplicationOptions } from './schema';
 
 let project: ProjectDefinition;
 

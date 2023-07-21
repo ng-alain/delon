@@ -150,7 +150,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           index,
           active: false,
           last: false
-        } as ReuseItem)
+        }) as ReuseItem
     );
     // debugger;
 

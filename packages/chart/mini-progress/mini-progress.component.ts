@@ -29,7 +29,10 @@ export class G2MiniProgressComponent implements OnChanges {
   @Input() @InputNumber() percent?: number | null;
   @Input() @InputNumber() strokeWidth?: number | null;
 
-  constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    public i18n: DelonLocaleService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   private fixNum(value: number | undefined | null): number {
     return Math.min(Math.max(toNumber(value), 0), 100);

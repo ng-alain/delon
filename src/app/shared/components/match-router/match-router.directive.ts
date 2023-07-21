@@ -19,7 +19,11 @@ export class MatchRouterDirective implements AfterViewInit, OnDestroy {
     this._options = { cls: 'ant-menu-item-selected', ...val };
   }
 
-  constructor(private router: Router, private element: ElementRef<HTMLElement>, private renderer: Renderer2) {}
+  constructor(
+    private router: Router,
+    private element: ElementRef<HTMLElement>,
+    private renderer: Renderer2
+  ) {}
 
   private setCls(): void {
     if (!this.router.navigated) {

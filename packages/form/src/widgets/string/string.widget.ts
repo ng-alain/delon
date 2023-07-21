@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, debounceTime, switchMap, takeUntil } from 'rxjs';
 
+import { SFStringWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { ControlUIWidget } from '../../widget';
-import { SFStringWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-string',

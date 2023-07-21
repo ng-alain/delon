@@ -5,9 +5,9 @@ import { format } from 'date-fns';
 
 import { createTestContext } from '@delon/testing';
 
+import { TimeWidget } from './time.widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { TimeWidget } from './time.widget';
 
 const FORMAT = 'yyyy-MM-dd HH:mm:ss';
 

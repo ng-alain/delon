@@ -7,10 +7,10 @@ import { of, catchError } from 'rxjs';
 
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 
-import { DelonAuthModule } from '../../auth.module';
-import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTInterceptor } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
+import { DelonAuthModule } from '../../auth.module';
+import { DA_SERVICE_TOKEN } from '../interface';
 
 function genModel(
   token:

@@ -12,13 +12,16 @@ import { Observable, Observer } from 'rxjs';
 
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 
-import { mergeConfig } from '../auth.config';
-import { ALLOW_ANONYMOUS } from '../token';
 import { ToLogin } from './helper';
 import { ITokenModel } from './interface';
+import { mergeConfig } from '../auth.config';
+import { ALLOW_ANONYMOUS } from '../token';
 
 class HttpAuthInterceptorHandler implements HttpHandler {
-  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
+  constructor(
+    private next: HttpHandler,
+    private interceptor: HttpInterceptor
+  ) {}
 
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
     return this.interceptor.intercept(req, this.next);

@@ -3,9 +3,9 @@ import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 
-import { ModuleConfig, SiteConfig } from '../interfaces';
 import { toHtml } from './generate-md';
 import { getCode, genUpperName, genUrl, generateDoc } from './utils';
+import { ModuleConfig, SiteConfig } from '../interfaces';
 
 const JsonML = require('jsonml.js/lib/utils');
 const MT = require('mark-twain');

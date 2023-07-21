@@ -4,10 +4,10 @@ import { format } from 'date-fns';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFTimeWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFTimeWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-time',

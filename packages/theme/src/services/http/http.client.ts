@@ -18,7 +18,10 @@ export type HttpObserve = 'body' | 'events' | 'response';
 @Injectable({ providedIn: 'root' })
 export class _HttpClient {
   private cog: AlainThemeHttpClientConfig;
-  constructor(private http: HttpClient, cogSrv: AlainConfigService) {
+  constructor(
+    private http: HttpClient,
+    cogSrv: AlainConfigService
+  ) {
     this.cog = cogSrv.merge('themeHttp', {
       nullValueHandling: 'include',
       dateValueHandling: 'timestamp'

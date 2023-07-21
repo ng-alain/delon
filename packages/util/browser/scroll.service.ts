@@ -15,7 +15,10 @@ export class ScrollService {
     return doc.defaultView || window;
   }
 
-  constructor(@Inject(DOCUMENT) private _doc: NzSafeAny, private platform: Platform) {}
+  constructor(
+    @Inject(DOCUMENT) private _doc: NzSafeAny,
+    private platform: Platform
+  ) {}
 
   /**
    * 获取滚动条位置

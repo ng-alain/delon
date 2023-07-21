@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AlainThemeModule } from '../../theme.module';
 import { YNMode } from './yn.pipe';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('Pipe: yn', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -85,7 +85,7 @@ describe('Pipe: yn', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | yn : yes : no : mode"></div> `
+  template: ` <div id="result" [innerHTML]="value | yn: yes : no : mode"></div> `
 })
 class TestComponent {
   value = true;

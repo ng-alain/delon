@@ -2,10 +2,10 @@ import { chain, Rule, schematic, Tree, SchematicContext, SchematicsException } f
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as colors from 'ansi-colors';
 
+import { Schema as NgAddOptions } from './schema';
 import { Schema as ApplicationOptions } from '../application/schema';
 import { DEFAULT_WORKSPACE_PATH, readJSON, readPackage } from '../utils';
 import { getNodeMajorVersion } from '../utils/node';
-import { Schema as NgAddOptions } from './schema';
 
 const V = 16;
 

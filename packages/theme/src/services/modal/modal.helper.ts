@@ -41,7 +41,11 @@ export class ModalHelper {
   private document: Document;
   private dragClsPrefix = 'MODAL-DRAG';
 
-  constructor(private srv: NzModalService, private drag: DragDrop, @Inject(DOCUMENT) doc: NzSafeAny) {
+  constructor(
+    private srv: NzModalService,
+    private drag: DragDrop,
+    @Inject(DOCUMENT) doc: NzSafeAny
+  ) {
     this.document = doc;
   }
 

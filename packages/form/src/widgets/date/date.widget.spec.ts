@@ -9,10 +9,10 @@ import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
 import { DateWidget } from './date.widget';
 import { SFDateWidgetSchema } from './schema';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFSchema } from '../../../src/schema/index';
 
 registerLocaleData(zh);
 
@@ -80,7 +80,11 @@ describe('form: widget: date', () => {
       const s: SFSchema = {
         properties: { a: { type: 'string', format: 'date-time', ui: { widget } } }
       };
-      page.newSchema(s).checkValue('a', null).setValue('a', new Date(2019, 0, 1)).dc(1);
+      page
+        .newSchema(s)
+        .checkValue('a', null)
+        .setValue('a', new Date(2019, 0, 1))
+        .dc(1);
       flush();
       const ipt = page.getEl('.ant-picker-input input') as HTMLInputElement;
       expect(ipt.value).toContain(`2019-01-01`);

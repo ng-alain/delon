@@ -6,9 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 
-import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 import { AlainI18NGuard } from './i18n-url.guard';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -151,7 +151,7 @@ describe('theme: i18n', () => {
 @Component({
   template: `
     <div id="simple">{{ key | i18n }}</div>
-    <div id="param">{{ key | i18n : params }}</div>
+    <div id="param">{{ key | i18n: params }}</div>
   `
 })
 class TestComponent {

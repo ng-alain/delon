@@ -45,7 +45,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('target', { read: ViewContainerRef, static: true })
   private container!: ViewContainerRef;
 
-  constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
+  constructor(
+    private widgetFactory: WidgetFactory,
+    private terminator: TerminatorService
+  ) {}
 
   onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>): void {
     this.widget = widget;

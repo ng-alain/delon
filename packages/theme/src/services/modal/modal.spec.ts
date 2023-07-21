@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 
-import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: ModalHelper', () => {
   let modal: ModalHelper;
@@ -158,7 +158,10 @@ class TestModalComponent {
   id = '';
   ret = 'true';
 
-  constructor(private modal: NzModalRef, @Inject(NZ_MODAL_DATA) public data: { ret: string }) {
+  constructor(
+    private modal: NzModalRef,
+    @Inject(NZ_MODAL_DATA) public data: { ret: string }
+  ) {
     setTimeout(() => {
       if (this.ret === 'destroy') {
         this.modal.destroy();

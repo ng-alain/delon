@@ -53,6 +53,7 @@
     ],
     "no-invalid-double-slash-comments": null,
     "import-notation": "string",
-    "media-feature-range-notation": "prefix"
+    "media-feature-range-notation": "prefix",
+    "media-query-no-invalid": null
   }
 }

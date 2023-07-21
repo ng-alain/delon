@@ -3,10 +3,10 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 import { SFSelectWidgetSchema } from './schema';
 import { SelectWidget } from './select.widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 
 describe('form: widget: select', () => {
   let fixture: ComponentFixture<TestFormComponent>;

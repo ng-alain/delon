@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { SFRateWidgetSchema } from './schema';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFRateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-rate',

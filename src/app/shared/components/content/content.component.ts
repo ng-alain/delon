@@ -16,7 +16,11 @@ export class ContentComponent implements OnInit, OnDestroy {
   isMobile!: boolean;
   opened = false;
 
-  constructor(public meta: MetaService, private mobileSrv: MobileService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    public meta: MetaService,
+    private mobileSrv: MobileService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.mobileSrv.change.pipe(takeUntil(this.destroy$)).subscribe(res => {

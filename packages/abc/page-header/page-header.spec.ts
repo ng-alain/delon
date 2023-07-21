@@ -18,9 +18,9 @@ import {
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderModule } from './page-header.module';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string): string {

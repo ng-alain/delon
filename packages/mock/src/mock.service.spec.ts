@@ -5,9 +5,9 @@ import * as Mock from 'mockjs';
 
 import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
 
-import { DelonMockModule } from '../index';
 import { MockOptions, MockRequest, MockRule } from './interface';
 import { MockService } from './mock.service';
+import { DelonMockModule } from '../index';
 
 const DATA = {
   USERS: {

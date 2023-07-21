@@ -32,7 +32,11 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   static ngAcceptInputType_width: NumberInput;
   static ngAcceptInputType_expand: BooleanInput;
 
-  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef,
+    private render: Renderer2
+  ) {}
   ctrlStyle: { [key: string]: string | undefined } = {};
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
