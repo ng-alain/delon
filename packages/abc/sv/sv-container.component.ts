@@ -79,21 +79,19 @@ export class SVContainerComponent {
   encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent implements OnInit {
-  private el: HTMLElement;
   constructor(
-    el: ElementRef,
+    private el: ElementRef<HTMLElement>,
     @Host() @Optional() private parent: SVContainerComponent,
     private ren: Renderer2
   ) {
     if (parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): void {
-    const { gutter } = this.parent;
-    const { el } = this;
+    const gutter = this.parent.gutter;
+    const el = this.el.nativeElement;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }
