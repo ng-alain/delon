@@ -111,21 +111,6 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
 
-  /**
-   * 货币快捷项
-   *
-   * @example
-   * <cell [currency]="1000"></cell>
-   * 等同于
-   * <cell [value]="1000" [options]="{type: 'currency'}"></cell>
-   */
-  @Input()
-  set currency(value: number) {
-    this.value = value;
-    this.options = { type: 'currency' };
-    this.updateValue();
-  }
-
   get safeOpt(): CellOptions {
     return this.res?.options ?? {};
   }

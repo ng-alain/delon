@@ -18,7 +18,6 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[value]` | 值 | `unknown` | - |
 | `[options]` | 选项 | `CellOptions` | - |
 | `[loading]` | 是否加载中 | `boolean` | `false` |
-| `[currency]` | 货币快捷项 | `number` | - |
 
 ### CellOptions
 

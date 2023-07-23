@@ -30,7 +30,7 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
       <div nz-col nzSpan="8"> date-fn => <cell [value]="day3" [options]="{ date: { format: 'fn' } }"></cell> </div>
       <div nz-col nzSpan="8"> mega => <cell value="15900000000" size="large" [options]="{ type: 'mega' }"></cell> </div>
       <div nz-col nzSpan="8"> mask => <cell value="15900000000" [options]="{ mask: '999****9999' }"></cell> </div>
-      <div nz-col nzSpan="8"> currency => <cell value="100000" [options]="{ type: 'currency' }"></cell> </div>
+      <div nz-col nzSpan="8"> currency => <cell value="100000" [options]="{ unit: '$' }"></cell> </div>
       <div nz-col nzSpan="8"> cny => <cell value="100000" [options]="{ type: 'cny' }"></cell> </div>
       <div nz-col nzSpan="8">
         yn => <cell [value]="yn" [options]="{ type: 'boolean' }"></cell>

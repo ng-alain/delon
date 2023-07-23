@@ -287,17 +287,6 @@ describe('abc: cell', () => {
         page.check('*', '.unit');
       });
     });
-
-    describe('[shortcut]', () => {
-      it('#currency', () => {
-        TestBed.overrideTemplate(TestComponent, `<cell [currency]="currency"></cell>`);
-        ({ fixture, dl, context } = createTestContext(TestComponent));
-        page = new PageObject();
-        context.currency = 1000;
-        fixture.detectChanges();
-        page.checkType('currency');
-      });
-    });
   });
 
   class PageObject {
@@ -377,6 +366,4 @@ class TestComponent {
   options?: CellOptions;
   loading = false;
   disabled = false;
-
-  currency?: number;
 }

@@ -18,7 +18,6 @@ Cell formatting is supported for multiple data types, and supports widget mode.
 | `[value]` | Value of the cell | `unknown` | - |
 | `[options]` | Option of the cell | `CellOptions` | - |
 | `[loading]` | Whether loading | `boolean` | `false` |
-| `[currency]` | Currency shortcut | `number` | - |
 
 ### CellOptions
 
