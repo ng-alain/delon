@@ -7,7 +7,7 @@ order: 4
 module: import { CellModule } from '@delon/abc/cell';
 ---
 
-支持十几种数据类型的格式化。
+内置支持十几种数据类型的格式化，且支持小部件自定义模式。
 
 ## API
 

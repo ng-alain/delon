@@ -7,7 +7,7 @@ order: 4
 module: import { CellModule } from '@delon/abc/cell';
 ---
 
-Cell formatting is supported for multiple data types.
+Cell formatting is supported for multiple data types, and supports widget mode.
 
 ## API
 
