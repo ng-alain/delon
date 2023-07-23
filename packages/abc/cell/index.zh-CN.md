@@ -61,3 +61,62 @@ module: import { CellModule } from '@delon/abc/cell';
 - `radio` 单选框（支持 `disabled`）
 - `enum` 枚举转换
 - `widget` 自定义小部件
+
+**自定义小部件**
+
+实现 `CellWidgetInstance` 接口即可，例如：
+
+```ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import type { CellWidgetData, CellWidgetInstance } from '@delon/abc/cell';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+@Component({
+  selector: 'cell-widget-test',
+  template: ` <img nz-tooltip nzTooltipTitle="Client it" [src]="data.value" class="img" style="cursor: pointer" /> `,
+  host: {
+    '(click)': 'show()'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CellTestWidget implements CellWidgetInstance {
+  static readonly KEY = 'test';
+
+  readonly data!: CellWidgetData;
+
+  constructor(private msg: NzMessageService) {}
+
+  show(): void {
+    this.msg.info(`click`);
+  }
+}
+```
+
+其中 `data` 为固定参数，包含 `value`、`options` 配置项。
+
+其次，还需要调用 `CellService.registerWidget` 注册小部件；通常会单独构建一个新的模块，例如：
+
+```ts
+import { NgModule } from '@angular/core';
+
+import { CellService } from '@delon/abc/cell';
+
+import { CellTestWidget } from './test';
+import { SharedModule } from '../shared.module';
+
+export const CELL_WIDGET_COMPONENTS = [CellTestWidget];
+
+@NgModule({
+  declarations: CELL_WIDGET_COMPONENTS,
+  imports: [SharedModule],
+  exports: CELL_WIDGET_COMPONENTS
+})
+export class CellWidgetModule {
+  constructor(srv: CellService) {
+    srv.registerWidget(CellTestWidget.KEY, CellTestWidget);
+  }
+}
+```
+
+最后，将 `CellWidgetModule` 注册到根模块下即可。

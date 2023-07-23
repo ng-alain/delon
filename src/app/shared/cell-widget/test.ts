@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { CellWidgetData } from '@delon/abc/cell';
+import type { CellWidgetData, CellWidgetInstance } from '@delon/abc/cell';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -11,14 +11,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CellTestWidget {
+export class CellTestWidget implements CellWidgetInstance {
   static readonly KEY = 'test';
 
-  data!: CellWidgetData;
+  readonly data!: CellWidgetData;
 
   constructor(private msg: NzMessageService) {}
 
   show(): void {
-    this.msg.info(`正在打开大图${this.data.options?.widget?.data}……`);
+    this.msg.info(`click`);
   }
 }

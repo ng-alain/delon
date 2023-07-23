@@ -61,3 +61,62 @@ Cell formatting is supported for multiple data types, and supports widget mode.
 - `radio` Radio (Support `disabled`)
 - `enum` Enum
 - `widget` Custom widget
+
+**Custom widget**
+
+Just implement the `CellWidgetInstance` interface, for example:
+
+```ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import type { CellWidgetData, CellWidgetInstance } from '@delon/abc/cell';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+@Component({
+  selector: 'cell-widget-test',
+  template: ` <img nz-tooltip nzTooltipTitle="Client it" [src]="data.value" class="img" style="cursor: pointer" /> `,
+  host: {
+    '(click)': 'show()'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CellTestWidget implements CellWidgetInstance {
+  static readonly KEY = 'test';
+
+  readonly data!: CellWidgetData;
+
+  constructor(private msg: NzMessageService) {}
+
+  show(): void {
+    this.msg.info(`click`);
+  }
+}
+```
+
+`data` is a fixed parameter, including `value`, `options` configuration items.
+
+Secondly, you also need to call `CellService.registerWidget` to register the widget; usually a new module will be built separately, for example:
+
+```ts
+import { NgModule } from '@angular/core';
+
+import { CellService } from '@delon/abc/cell';
+
+import { CellTestWidget } from './test';
+import { SharedModule } from '../shared.module';
+
+export const CELL_WIDGET_COMPONENTS = [CellTestWidget];
+
+@NgModule({
+  declarations: CELL_WIDGET_COMPONENTS,
+  imports: [SharedModule],
+  exports: CELL_WIDGET_COMPONENTS
+})
+export class CellWidgetModule {
+  constructor(srv: CellService) {
+    srv.registerWidget(CellTestWidget.KEY, CellTestWidget);
+  }
+}
+```
+
+Finally, just register `CellWidgetModule` under the root module.

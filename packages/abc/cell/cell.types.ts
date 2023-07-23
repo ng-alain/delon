@@ -289,3 +289,7 @@ export interface CellWidgetData {
   value?: unknown;
   options?: CellOptions;
 }
+
+export interface CellWidgetInstance {
+  readonly data: CellWidgetData;
+}
