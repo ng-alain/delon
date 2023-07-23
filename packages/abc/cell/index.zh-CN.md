@@ -17,12 +17,7 @@ module: import { CellModule } from '@delon/abc/cell';
 |----|----|----|-----|
 | `[value]` | 值 | `unknown` | - |
 | `[options]` | 选项 | `CellOptions` | - |
-| `[unit]` | 单位，也可通过 `value: {text: 100, unit: '元'}` 来指定 | `string` | `-` |
-| `[default]` | 默认值 | `string` | `-` |
-| `[defaultCondition]` | 默认值条件 | `unknown` | `null` |
 | `[loading]` | 是否加载中 | `boolean` | `false` |
-| `[type]` | 类型 | `primary,success,danger,warning` | - |
-| `[size]` | 大小 | `large,small` | - |
 | `[currency]` | 货币快捷项 | `number` | - |
 
 ### CellOptions
@@ -31,6 +26,10 @@ module: import { CellModule } from '@delon/abc/cell';
 |----|----|----|-----|
 | `[type]` | 渲染类型 | - | - |
 | `[tooltip]` | 文字提示 | `string` | - |
+| `[renderType]` | 渲染类型 | `primary,success,danger,warning` | - |
+| `[size]` | 大小 | `large,small` | - |
+| `[unit]` | 单位，也可通过 `value: {text: 100, unit: '元'}` 来指定 | `string` | `-` |
+| `[default]` | 默认文本 | `string | CellDefaultText` | - |
 | `[mask]` | 格式化掩码, 参考[文档](https://ng-alain.com/util/format/zh#formatMask) | `string, FormatMaskOption` | - |
 | `[widget]` | 小部件配置 | `{key?: string, data?: string}` | - |
 | `[date]` | 日期配置，支持 `几分钟前` 格式化 | `{format?: string}` | - |

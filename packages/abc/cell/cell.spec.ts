@@ -104,7 +104,11 @@ describe('abc: cell', () => {
         });
         describe('with img', () => {
           it('should be working', () => {
-            page.update('1.jpg', { img: {} }).count('.img', 1).click('.img').count('.ant-image-preview', 1, true);
+            page
+              .update('1.jpg', { img: { big: true } })
+              .count('.img', 1)
+              .click('.img')
+              .count('.ant-image-preview', 1, true);
           });
           it('when array string', () => {
             page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2);
@@ -115,16 +119,16 @@ describe('abc: cell', () => {
               switchTo: () => {}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any);
-            page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2).click('.img');
+            page
+              .update(['1.jpg', '2.jpg'], { img: { big: true } })
+              .count('.img', 2)
+              .click('.img');
             expect(imgSrv.preview).toHaveBeenCalled();
           });
           it('should be disabled preview when big is false', () => {
             const imgSrv = TestBed.inject(NzImageService);
             spyOn(imgSrv, 'preview');
-            page
-              .update(['1.jpg', '2.jpg'], { img: { big: false } })
-              .count('.img', 2)
-              .click('.img');
+            page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2).click('.img');
             expect(imgSrv.preview).not.toHaveBeenCalled();
           });
           it('should be reset big image', () => {
@@ -231,19 +235,19 @@ describe('abc: cell', () => {
       });
 
       it('#type', () => {
-        context.type = 'primary';
+        context.options = { renderType: 'primary' };
         fixture.detectChanges();
         page.count('.cell__primary', 1);
-        context.type = 'success';
+        context.options = { renderType: 'success' };
         fixture.detectChanges();
         page.count('.cell__success', 1);
       });
 
       it('#size', () => {
-        context.size = 'large';
+        context.options = { size: 'large' };
         fixture.detectChanges();
         page.count('.cell__large', 1);
-        context.size = 'small';
+        context.options = { size: 'small' };
         fixture.detectChanges();
         page.count('.cell__small', 1);
       });
@@ -267,8 +271,7 @@ describe('abc: cell', () => {
       });
 
       it('#default', () => {
-        context.default = '*';
-        context.defaultCondition = '1';
+        context.options = { default: { text: '*', condition: '1' } };
         context.value = '1';
         fixture.detectChanges();
         page.count('.cell__has-default', 1);
@@ -278,7 +281,7 @@ describe('abc: cell', () => {
       });
 
       it('#unit', () => {
-        context.unit = '*';
+        context.options = { unit: '*' };
         context.value = 1;
         fixture.detectChanges();
         page.check('*', '.unit');
@@ -359,14 +362,9 @@ class TestWidget {
       #comp
       [value]="value"
       (valueChange)="valueChange($event)"
-      [unit]="unit"
-      [default]="default"
-      [defaultCondition]="defaultCondition"
       [options]="options"
       [loading]="loading"
       [disabled]="disabled"
-      [type]="type"
-      [size]="size"
     ></cell>
   `
 })
@@ -376,14 +374,9 @@ class TestComponent {
 
   value?: unknown;
   valueChange(_?: NzSafeAny): void {}
-  unit?: string;
-  default = '-';
-  defaultCondition?: unknown = null;
   options?: CellOptions;
   loading = false;
   disabled = false;
-  type?: 'primary' | 'success' | 'danger' | 'warning';
-  size?: 'large' | 'small';
 
   currency?: number;
 }

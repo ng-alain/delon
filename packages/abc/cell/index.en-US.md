@@ -17,12 +17,7 @@ Cell formatting is supported for multiple data types.
 |----------|-------------|------|---------|
 | `[value]` | Value of the cell | `unknown` | - |
 | `[options]` | Option of the cell | `CellOptions` | - |
-| `[unit]` | Unit, can also be specified by `value: {text: 100, unit: 'RMB'}` | `string` | `-` |
-| `[default]` | Default value of the cell | `string` | `-` |
-| `[defaultCondition]` | Default value condition | `unknown` | `null` |
 | `[loading]` | Whether loading | `boolean` | `false` |
-| `[type]` | Type of the cell | `primary,success,danger,warning` | - |
-| `[size]` | Size of the cell | `large,small` | - |
 | `[currency]` | Currency shortcut | `number` | - |
 
 ### CellOptions
@@ -31,6 +26,10 @@ Cell formatting is supported for multiple data types.
 |----------|-------------|------|---------|
 | `[type]` | Render type of the cell | - | - |
 | `[tooltip]` | Text popup tip  | `string` | - |
+| `[renderType]` | Render type of the cell | `primary,success,danger,warning` | - |
+| `[size]` | Size of the cell | `large,small` | - |
+| `[unit]` | Unit, can also be specified by `value: {text: 100, unit: 'RMB'}` | `string` | `-` |
+| `[default]` | Default text | `string | CellDefaultText` | - |
 | `[mask]` | Format mask, [Document](https://ng-alain.com/util/format/en#formatMask) | `string, FormatMaskOption` | - |
 | `[widget]` | Widget config | `{key?: string, data?: string}` | - |
 | `[date]` | Date config, supports `minutes ago` formatting | `{format?: string}` | - |

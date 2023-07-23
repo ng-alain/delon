@@ -15,7 +15,7 @@ import type {
   CellOptions,
   CellTextResult,
   CellTextUnit,
-  CellValueType,
+  CellType,
   CellWidget,
   CellWidgetFn
 } from './cell.types';
@@ -71,7 +71,8 @@ export class CellService {
   ) {
     this.globalOptions = configSrv.merge('cell', {
       date: { format: 'yyyy-MM-dd HH:mm:ss' },
-      img: { size: 32 }
+      img: { size: 32 },
+      default: { text: '-' }
     })!;
   }
 
@@ -83,7 +84,7 @@ export class CellService {
     return this.widgets[key];
   }
 
-  private genType(value: unknown, options: CellOptions): CellValueType {
+  private genType(value: unknown, options: CellOptions): CellType {
     if (options.type != null) return options.type;
 
     const typeOf = typeof value;

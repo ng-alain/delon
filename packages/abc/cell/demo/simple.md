@@ -20,7 +20,7 @@ import { delay, finalize, of, take } from 'rxjs';
 
 import { subDays } from 'date-fns';
 
-import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
+import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/cell';
 
 @Component({
   selector: 'app-demo',
@@ -111,7 +111,7 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
       </div>
       <div *ngFor="let i of typeList" nz-col nzSpan="8">
         {{ i }} =>
-        <span cell [value]="i" [type]="$any(i)"></span>
+        <span cell [value]="i" [options]="{ renderType: i }"></span>
       </div>
       <div nz-col nzSpan="8">
         size =>
@@ -132,7 +132,8 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         <span cell [value]="async" [loading]="asyncLoading"></span>
         <a *ngIf="!asyncLoading" (click)="again()" class="ml-md">Again</a>
       </div>
-      <div nz-col nzSpan="8"> Unit => <span cell [value]="{ text: '100', unit: '元' }"></span> </div>
+      <div nz-col nzSpan="8"> Unit => <span cell value="3" [options]="{ unit: '人' }"></span> </div>
+      <div nz-col nzSpan="8"> Text Unit => <span cell [value]="{ text: '100', unit: '元' }"></span> </div>
       <div nz-col nzSpan="8">
         custom widget =>
         <span
@@ -162,7 +163,7 @@ export class DemoComponent implements OnInit {
   defaultCondition: unknown = '*';
   options?: CellOptions;
   baseList = ['string', true, false, 100, 1000000, new Date()];
-  typeList = ['primary', 'success', 'danger', 'warning'];
+  typeList: CellRenderType[] = ['primary', 'success', 'danger', 'warning'];
   now = new Date();
   day3 = subDays(new Date(), 3);
   HTML = `<strong>Strong</string>`;

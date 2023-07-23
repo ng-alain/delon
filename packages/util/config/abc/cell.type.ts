@@ -2,6 +2,21 @@ import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
 export interface AlainCellConfig {
   /**
+   * Size
+   *
+   * 大小
+   */
+  size?: 'large' | 'small';
+  /**
+   * Default Text
+   *
+   * 默认文本
+   */
+  default?: {
+    text?: string;
+    condition?: unknown;
+  };
+  /**
    * 日期
    */
   date?: {

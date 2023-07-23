@@ -24,7 +24,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
 import { CellService } from './cell.service';
-import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWidgetData } from './cell.types';
+import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidgetData } from './cell.types';
 
 @Component({
   selector: 'cell, [cell]',
@@ -80,7 +80,7 @@ import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWi
       </ng-container>
     </ng-template>
     <ng-template #textWrap>
-      <ng-container *ngIf="showDefault">{{ default }}</ng-container>
+      <ng-container *ngIf="showDefault">{{ safeOpt.default?.text }}</ng-container>
       <ng-container *ngIf="!showDefault">
         <span *ngIf="safeOpt?.tooltip; else text" nz-tooltip [nzTooltipTitle]="safeOpt.tooltip">
           <ng-template [ngTemplateOutlet]="text"></ng-template>
@@ -108,11 +108,6 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() value?: CellValue;
   @Output() readonly valueChange = new EventEmitter<NzSafeAny>();
   @Input() options?: CellOptions;
-  @Input() default = '-';
-  @Input() defaultCondition?: unknown = null;
-  @Input() type?: CellType | null;
-  @Input() size?: CellSize | null;
-  @Input() unit?: string;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
 
@@ -142,8 +137,6 @@ export class CellComponent implements OnChanges, OnDestroy {
   get hostData(): CellWidgetData {
     return {
       value: this.value,
-      default: this.default,
-      defaultCondition: this.defaultCondition,
       options: this.srv.fixOptions(this.options)
     };
   }
@@ -163,9 +156,9 @@ export class CellComponent implements OnChanges, OnDestroy {
     this.destroy$?.unsubscribe();
     this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
       this.res = res;
-      this.showDefault = this.value == this.defaultCondition;
+      this.showDefault = this.value == (this.safeOpt.default as CellDefaultText).condition;
       this._text = res.result?.text ?? '';
-      this._unit = res.result?.unit ?? this.unit;
+      this._unit = res.result?.unit ?? this.safeOpt?.unit;
       this.cdr.detectChanges();
       this.setClass();
     });
@@ -173,10 +166,11 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   private setClass(): void {
     const { el, renderer } = this;
+    const { renderType, size } = this.safeOpt;
     updateHostClass(el.nativeElement, renderer, {
       [`cell`]: true,
-      [`cell__${this.type}`]: this.type != null,
-      [`cell__${this.size}`]: this.size != null,
+      [`cell__${renderType}`]: renderType != null,
+      [`cell__${size}`]: size != null,
       [`cell__has-unit`]: this._unit,
       [`cell__has-default`]: this.showDefault,
       [`cell__disabled`]: this.disabled
@@ -185,8 +179,8 @@ export class CellComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
-    // Do not call updateValue when only updating loading, disabled, size
-    if (Object.keys(changes).every(k => ['loading', 'disabled', 'size'].includes(k))) {
+    // Do not call updateValue when only updating loading, disabled
+    if (Object.keys(changes).every(k => ['loading', 'disabled'].includes(k))) {
       this.setClass();
     } else {
       this.updateValue();
@@ -217,7 +211,7 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   _showImg(img: string): void {
     const config = this.safeOpt.img;
-    if (config == null || config.big !== true) return;
+    if (config == null || config.big == null) return;
 
     let idx = -1;
     const list = (this._text as string[]).map((p, index) => {
