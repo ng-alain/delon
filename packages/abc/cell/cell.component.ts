@@ -53,7 +53,7 @@ import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWi
           *ngSwitchCase="'link'"
           (click)="_link($event)"
           [attr.target]="safeOpt.link?.target"
-          [attr.title]="truncate ? value : null"
+          [attr.title]="value"
           [innerHTML]="_text"
         ></a>
         <nz-tag *ngSwitchCase="'tag'" [nzColor]="res?.result?.color">
@@ -73,8 +73,8 @@ import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWi
           />
         </ng-container>
         <ng-container *ngSwitchDefault>
-          <span *ngIf="!isText" [innerHTML]="_text" [attr.title]="truncate ? value : null"></span>
-          <span *ngIf="isText" [innerText]="_text" [attr.title]="truncate ? value : null"></span>
+          <span *ngIf="!isText" [innerHTML]="_text" [attr.title]="value"></span>
+          <span *ngIf="isText" [innerText]="_text" [attr.title]="value"></span>
           <span *ngIf="_unit" class="unit">{{ _unit }}</span>
         </ng-container>
       </ng-container>
@@ -95,7 +95,6 @@ import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWi
   encapsulation: ViewEncapsulation.None
 })
 export class CellComponent implements OnChanges, OnDestroy {
-  static ngAcceptInputType_truncate: BooleanInput;
   static ngAcceptInputType_loading: BooleanInput;
   static ngAcceptInputType_disabled: BooleanInput;
 
@@ -114,7 +113,6 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() type?: CellType | null;
   @Input() size?: CellSize | null;
   @Input() unit?: string;
-  @Input() @InputBoolean() truncate = false;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
 
@@ -146,8 +144,7 @@ export class CellComponent implements OnChanges, OnDestroy {
       value: this.value,
       default: this.default,
       defaultCondition: this.defaultCondition,
-      options: this.srv.fixOptions(this.options),
-      truncate: this.truncate
+      options: this.srv.fixOptions(this.options)
     };
   }
 

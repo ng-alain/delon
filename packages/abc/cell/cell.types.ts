@@ -247,5 +247,4 @@ export interface CellWidgetData {
   default?: unknown;
   defaultCondition?: unknown;
   options?: CellOptions;
-  truncate?: boolean;
 }

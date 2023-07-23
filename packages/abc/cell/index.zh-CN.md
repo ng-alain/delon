@@ -20,7 +20,6 @@ module: import { CellModule } from '@delon/abc/cell';
 | `[unit]` | 单位，也可通过 `value: {text: 100, unit: '元'}` 来指定 | `string` | `-` |
 | `[default]` | 默认值 | `string` | `-` |
 | `[defaultCondition]` | 默认值条件 | `unknown` | `null` |
-| `[truncate]` | 是否截短 | `boolean` | `false` |
 | `[loading]` | 是否加载中 | `boolean` | `false` |
 | `[type]` | 类型 | `primary,success,danger,warning` | - |
 | `[size]` | 大小 | `large,small` | - |

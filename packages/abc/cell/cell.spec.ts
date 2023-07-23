@@ -266,13 +266,6 @@ describe('abc: cell', () => {
         page.count('.cell__disabled', 0);
       });
 
-      it('should be render title when truncate is true', () => {
-        context.value = '111';
-        context.truncate = true;
-        fixture.detectChanges();
-        expect(page.getEl('.cell span').getAttribute('title')).toBe(context.value as string);
-      });
-
       it('#default', () => {
         context.default = '*';
         context.defaultCondition = '1';
@@ -370,7 +363,6 @@ class TestWidget {
       [default]="default"
       [defaultCondition]="defaultCondition"
       [options]="options"
-      [truncate]="truncate"
       [loading]="loading"
       [disabled]="disabled"
       [type]="type"
@@ -388,7 +380,6 @@ class TestComponent {
   default = '-';
   defaultCondition?: unknown = null;
   options?: CellOptions;
-  truncate = false;
   loading = false;
   disabled = false;
   type?: 'primary' | 'success' | 'danger' | 'warning';

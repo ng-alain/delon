@@ -20,7 +20,6 @@ Cell formatting is supported for multiple data types.
 | `[unit]` | Unit, can also be specified by `value: {text: 100, unit: 'RMB'}` | `string` | `-` |
 | `[default]` | Default value of the cell | `string` | `-` |
 | `[defaultCondition]` | Default value condition | `unknown` | `null` |
-| `[truncate]` | Whether truncate text | `boolean` | `false` |
 | `[loading]` | Whether loading | `boolean` | `false` |
 | `[type]` | Type of the cell | `primary,success,danger,warning` | - |
 | `[size]` | Size of the cell | `large,small` | - |
