@@ -84,16 +84,26 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         <span
           cell
           [(value)]="checkbox"
-          [options]="{ type: 'checkbox', tooltip: 'Tooltip' }"
+          [options]="{ type: 'checkbox', tooltip: 'Tooltip', checkbox: { label: 'Label' } }"
           [disabled]="disabled"
         ></span>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         radio =>
-        <span cell [(value)]="radio" [options]="{ type: 'radio', tooltip: 'Tooltip' }" [disabled]="disabled"></span>
+        <span
+          cell
+          [(value)]="radio"
+          [options]="{ type: 'radio', tooltip: 'Tooltip', radio: { label: 'Radio' } }"
+          [disabled]="disabled"
+        ></span>
         <a (click)="radio = !radio">Change Value</a>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+      </div>
+      <div nz-col nzSpan="8">
+        enum =>
+        <span cell [(value)]="enumValue" [options]="{ enum }"></span>
+        <a (click)="enumValue = enumValue === 1 ? 2 : 1">Change Value</a>(enum value: {{ enumValue }})
       </div>
       <div nz-col nzSpan="8">
         default =>
@@ -164,6 +174,8 @@ export class DemoComponent implements OnInit {
   asyncLoading = true;
   async?: CellFuValue;
   safeHtml = this.ds.bypassSecurityTrustHtml(`<strong>Strong Html</strong>`);
+  enum = { 1: 'Success', 2: 'Error' };
+  enumValue = 1;
 
   constructor(
     private ds: DomSanitizer,

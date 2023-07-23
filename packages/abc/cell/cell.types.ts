@@ -10,6 +10,10 @@ import type {
 } from '@delon/util/format';
 import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
+export type CellType = 'primary' | 'success' | 'danger' | 'warning';
+
+export type CellSize = 'large' | 'small';
+
 export type CellBaseValue = string | number | boolean | Date | null | undefined | SafeValue;
 
 export interface CellTextUnit {
@@ -35,7 +39,7 @@ export interface CellWidget {
   ref: Type<unknown> | CellWidgetFn;
 }
 
-export type CellType =
+export type CellValueType =
   | 'string'
   | 'number'
   | 'mega'
@@ -57,7 +61,7 @@ export interface CellOptions {
   /**
    * 指定渲染类型，若不指定则根据 `value` 类型自动转换
    */
-  type?: CellType;
+  type?: CellValueType;
 
   tooltip?: string;
 

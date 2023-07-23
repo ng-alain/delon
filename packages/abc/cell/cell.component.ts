@@ -24,7 +24,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
 import { CellService } from './cell.service';
-import type { CellOptions, CellTextResult, CellValue, CellWidgetData } from './cell.types';
+import type { CellOptions, CellSize, CellTextResult, CellType, CellValue, CellWidgetData } from './cell.types';
 
 @Component({
   selector: 'cell, [cell]',
@@ -108,15 +108,15 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   @Input() value?: CellValue;
   @Output() readonly valueChange = new EventEmitter<NzSafeAny>();
+  @Input() options?: CellOptions;
   @Input() default = '-';
   @Input() defaultCondition?: unknown = null;
-  @Input() options?: CellOptions;
+  @Input() type?: CellType | null;
+  @Input() size?: CellSize | null;
   @Input() unit?: string;
   @Input() @InputBoolean() truncate = false;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
-  @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
-  @Input() size?: 'large' | 'small' | null;
 
   /**
    * 货币快捷项
@@ -220,7 +220,7 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   _showImg(img: string): void {
     const config = this.safeOpt.img;
-    if (config == null || config.big === false) return;
+    if (config == null || config.big !== true) return;
 
     let idx = -1;
     const list = (this._text as string[]).map((p, index) => {
