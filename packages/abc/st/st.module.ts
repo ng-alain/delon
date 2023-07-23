@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { CellModule } from '@delon/abc/cell';
 import { LetModule } from '@delon/abc/let';
 import { DelonACLModule } from '@delon/acl';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -33,6 +34,7 @@ const COMPONENTS = [STComponent, STRowDirective, STWidgetHostDirective];
     FormsModule,
     DelonACLModule,
     LetModule,
+    CellModule,
     NzPopconfirmModule,
     NzTableModule,
     NzIconModule,

@@ -459,6 +459,10 @@ export class STColumnSource {
           item.width = '50px';
         }
       }
+      // cell
+      if (item.cell != null) {
+        item.type = 'cell';
+      }
       // types
       if (item.type === 'yn') {
         item.yn = { truth: true, ...this.cog.yn, ...item.yn };

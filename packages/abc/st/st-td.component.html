@@ -74,8 +74,9 @@
       </nz-tag>
       <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text"></nz-badge>
     </ng-container>
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template
-    ><ng-container *ngSwitchDefault>
+    <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell"></cell>
+    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
+    <ng-container *ngSwitchDefault>
       <span
         *ngIf="c.safeType !== 'text'"
         [innerHTML]="i._values[cIdx]._text"

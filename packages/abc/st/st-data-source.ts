@@ -4,6 +4,7 @@ import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of, map } from 'rxjs';
 
+import type { CellOptions } from '@delon/abc/cell';
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import type { AlainSTConfig } from '@delon/util/config';
 import { CurrencyService } from '@delon/util/format';
@@ -346,7 +347,11 @@ export class STDataSource {
           return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
         }
 
-        return { ...this.get(result[i], c, i), props };
+        let cell: CellOptions | undefined;
+        if (typeof c.cell === 'function') {
+          cell = c.cell(result[i], c);
+        }
+        return { ...this.get(result[i], c, i), props, cell };
       });
       result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
         .filter(w => !!w)
