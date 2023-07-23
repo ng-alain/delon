@@ -28,7 +28,6 @@ export class CellHostDirective implements OnInit {
 
     this.viewContainerRef.clear();
     const componentRef = this.viewContainerRef.createComponent(componentType);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (componentRef.instance as any).data = this.data;
+    (componentRef.instance as { data: CellWidgetData }).data = this.data;
   }
 }
