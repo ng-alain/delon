@@ -254,7 +254,8 @@ class TestComponent {
 |----------|-------------|------|---------|
 | `[title]` | Name of this column | `string, STColumnTitle` | - |
 | `[i18n]` | I18n key of this column | `string` | - |
-| `[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn)<br>`widget` Custom widgets to render columns | `string` | - |
+| `[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn)<br>`cell` Rendered using the `cell` component, see [cell](/components/cell)<br>`widget` Custom widgets to render columns | `string` | - |
+| `[cell]` | Rendered using the `cell` component, see [cell](/components/cell). | `CellOptions | ((record: T, column: STColumn) => CellOptions)` | - |
 | `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | - |
 | `[render]` | Custom render template ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STData; index: number }>` | - |
 | `[renderTitle]` | Title custom render template ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STColumn; index: number }>` | - |

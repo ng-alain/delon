@@ -254,7 +254,8 @@ class TestComponent {
 |----|----|----|-----|
 | `[title]` | 列名 | `string, STColumnTitle` | - |
 | `[i18n]` | 列名i18n | `string` | - |
-| `[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn)<br>`widget` 自定义小部件来渲染列 | `string` | - |
+| `[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn)<br>使用 `cell` 组件渲染，见[cell](/components/cell)<br>`widget` 自定义小部件来渲染列 | `string` | - |
+| `[cell]` | 使用 `cell` 组件渲染，见[cell](/components/cell)。 | `CellOptions | ((record: T, column: STColumn) => CellOptions)` | - |
 | `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | - |
 | `[render]` | 自定义渲染ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STData; index: number }>` | - |
 | `[renderTitle]` | 标题自定义渲染ID | `string, TemplateRef<void>, TemplateRef<{ $implicit: STColumn; index: number }>` | - |
