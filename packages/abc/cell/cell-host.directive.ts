@@ -11,7 +11,10 @@ import { CellWidgetData } from './cell.types';
 export class CellHostDirective implements OnInit {
   @Input() data!: CellWidgetData;
 
-  constructor(private srv: CellService, private viewContainerRef: ViewContainerRef) {}
+  constructor(
+    private srv: CellService,
+    private viewContainerRef: ViewContainerRef
+  ) {}
 
   ngOnInit(): void {
     const widget = this.data.options!.widget!;
