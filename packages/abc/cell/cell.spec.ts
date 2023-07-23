@@ -1,6 +1,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -26,7 +26,7 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      imports: [CellModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+      imports: [CellModule, NoopAnimationsModule, BrowserModule, RouterTestingModule.withRoutes([])],
       declarations: [TestComponent, TestWidget]
     });
   };
@@ -128,6 +128,10 @@ describe('abc: cell', () => {
             .check('1')
             .update(`<strong>2</strong>`, { html: { safe: 'text' } })
             .check(`<strong>2</strong>`);
+        });
+        it('with SafeHtml', () => {
+          const safeHtml = TestBed.inject(DomSanitizer).bypassSecurityTrustHtml('<a>a</a>');
+          page.update(safeHtml).check('a');
         });
         describe('with link', () => {
           it('navgation router', () => {

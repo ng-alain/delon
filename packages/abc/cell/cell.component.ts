@@ -10,9 +10,10 @@ import {
   OnDestroy,
   Output,
   Renderer2,
+  SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
-import { SafeHtml } from '@angular/platform-browser';
+import type { SafeValue } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -23,7 +24,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 
 import { CellService } from './cell.service';
-import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
+import type { CellOptions, CellTextResult, CellValue, CellWidgetData } from './cell.types';
 
 @Component({
   selector: 'cell, [cell]',
@@ -36,16 +37,18 @@ import type { CellOptions, CellTextResult, CellWidgetData } from './cell.types';
           [nzDisabled]="disabled"
           [ngModel]="value"
           (ngModelChange)="change($event)"
-          >{{ safeOpt.checkbox?.label }}</label
         >
+          {{ safeOpt.checkbox?.label }}
+        </label>
         <label
           *ngSwitchCase="'radio'"
           nz-radio
           [nzDisabled]="disabled"
           [ngModel]="value"
           (ngModelChange)="change($event)"
-          >{{ safeOpt.radio?.label }}</label
         >
+          {{ safeOpt.radio?.label }}
+        </label>
         <a
           *ngSwitchCase="'link'"
           (click)="_link($event)"
@@ -98,12 +101,12 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   private destroy$?: Subscription;
 
-  _text!: string | SafeHtml;
+  _text!: string | SafeValue | string[] | number;
   _unit?: string;
   res?: CellTextResult;
   showDefault = false;
 
-  @Input() value?: unknown;
+  @Input() value?: CellValue;
   @Output() readonly valueChange = new EventEmitter<NzSafeAny>();
   @Input() default = '-';
   @Input() defaultCondition?: unknown = null;
@@ -113,7 +116,7 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
   @Input() type?: 'primary' | 'success' | 'danger' | 'warning';
-  @Input() size?: 'large' | 'small';
+  @Input() size?: 'large' | 'small' | null;
 
   /**
    * 货币快捷项
@@ -184,8 +187,13 @@ export class CellComponent implements OnChanges, OnDestroy {
     el.nativeElement.dataset.type = this.safeOpt.type;
   }
 
-  ngOnChanges(): void {
-    this.updateValue();
+  ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
+    // Do not call updateValue when only updating loading, disabled, size
+    if (Object.keys(changes).every(k => ['loading', 'disabled', 'size'].includes(k))) {
+      this.setClass();
+    } else {
+      this.updateValue();
+    }
   }
 
   change(value: NzSafeAny): void {
@@ -221,7 +229,7 @@ export class CellComponent implements OnChanges, OnDestroy {
     });
     this.imgSrv
       .preview(
-        list.map(p => ({ src: p } as NzImage)),
+        list.map(p => ({ src: p }) as NzImage),
         config.previewOptions
       )
       .switchTo(idx);

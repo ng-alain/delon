@@ -1,5 +1,5 @@
 import type { Type } from '@angular/core';
-import type { SafeHtml } from '@angular/platform-browser';
+import type { SafeValue } from '@angular/platform-browser';
 import type { Observable } from 'rxjs';
 
 import type {
@@ -10,19 +10,21 @@ import type {
 } from '@delon/util/format';
 import type { NzImagePreviewOptions } from 'ng-zorro-antd/image';
 
+export type CellBaseValue = string | number | boolean | Date | null | undefined | SafeValue;
+
 export interface CellTextUnit {
-  text?: string | SafeHtml | string[] | number;
+  text?: string | SafeValue | string[] | number;
   color?: string;
   unit?: string;
 }
-
-export type CellTextType = string | CellTextUnit | undefined | null;
 
 export interface CellTextResult {
   result: CellTextUnit;
   safeHtml?: 'text' | 'html' | 'safeHtml';
   options: CellOptions;
 }
+
+export type CellValue = CellBaseValue | CellBaseValue[] | CellTextUnit | CellFuValue;
 
 export type CellFuValue = (value: unknown, options: CellOptions) => Observable<CellTextUnit>;
 

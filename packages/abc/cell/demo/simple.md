@@ -14,8 +14,9 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { delay, finalize, of } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { delay, finalize, of, take } from 'rxjs';
 
 import { subDays } from 'date-fns';
 
@@ -66,6 +67,11 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         <span cell [value]="HTML" [options]="{ type: 'html' }"></span>
       </div>
       <div nz-col nzSpan="8">
+        SafeHtml =>
+        <span cell [value]="safeHtml"></span>
+        <a (click)="updateSafeHtml()" class="ml-sm">updateSafeHtml</a>
+      </div>
+      <div nz-col nzSpan="8">
         badge =>
         <span cell value="FINISHED" [options]="{ badge: { data: status } }"></span>
       </div>
@@ -81,7 +87,6 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
           [options]="{ type: 'checkbox', tooltip: 'Tooltip' }"
           [disabled]="disabled"
         ></span>
-        {{ checkbox | json }}
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
@@ -89,7 +94,6 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         <span cell [(value)]="radio" [options]="{ type: 'radio', tooltip: 'Tooltip' }" [disabled]="disabled"></span>
         <a (click)="radio = !radio">Change Value</a>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
-        {{ radio | json }}
       </div>
       <div nz-col nzSpan="8">
         default =>
@@ -100,12 +104,9 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         <span cell [value]="i" [type]="$any(i)"></span>
       </div>
       <div nz-col nzSpan="8">
-        large =>
+        size =>
+        <span cell value="small" size="small"></span>, <span cell value="default"></span>,
         <span cell value="large" size="large"></span>
-      </div>
-      <div nz-col nzSpan="8">
-        small =>
-        <span cell value="small" size="small"></span>
       </div>
       <div nz-col nzSpan="8">
         tooltip =>
@@ -138,7 +139,8 @@ import { CellBadge, CellFuValue, CellOptions } from '@delon/abc/cell';
         margin-bottom: 8px;
       }
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoComponent implements OnInit {
   value: unknown = 'string';
@@ -161,6 +163,12 @@ export class DemoComponent implements OnInit {
   loading = true;
   asyncLoading = true;
   async?: CellFuValue;
+  safeHtml = this.ds.bypassSecurityTrustHtml(`<strong>Strong Html</strong>`);
+
+  constructor(
+    private ds: DomSanitizer,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.again();
@@ -168,17 +176,26 @@ export class DemoComponent implements OnInit {
 
   refresh(): void {
     this.value = new Date();
+    this.cdr.detectChanges();
   }
 
   again(): void {
     this.asyncLoading = true;
     this.async = (() =>
       of({ text: `${+new Date()}` }).pipe(
-        delay(1000 * 2),
+        take(1),
+        delay(1000 * 1),
         finalize(() => {
           this.asyncLoading = false;
+          this.cdr.detectChanges();
         })
       )) as CellFuValue;
+    this.cdr.detectChanges();
+  }
+
+  updateSafeHtml(): void {
+    this.safeHtml = this.ds.bypassSecurityTrustHtml(`alert('a');<script>alert('a')</script>`);
+    this.cdr.detectChanges();
   }
 }
 ```

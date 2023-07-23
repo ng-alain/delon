@@ -7,6 +7,7 @@ import { AlainCellConfig, AlainConfigService } from '@delon/util/config';
 import { formatDate } from '@delon/util/date-time';
 import { CurrencyService, formatMask } from '@delon/util/format';
 import { deepMerge } from '@delon/util/other';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import type {
@@ -115,8 +116,15 @@ export class CellService {
     const type = this.genType(value, { ...options });
     const opt = this.fixOptions(options);
     opt.type = type;
+    const isSafeHtml =
+      typeof value === 'object' &&
+      typeof (value as NzSafeAny)?.getTypeName === 'function' &&
+      (value as NzSafeAny)?.getTypeName() != null;
     let res: CellTextResult = {
-      result: typeof value === 'object' ? (value as CellTextUnit) : { text: value == null ? '' : `${value}` },
+      result:
+        typeof value === 'object' && !isSafeHtml
+          ? (value as CellTextUnit)
+          : { text: value == null ? '' : isSafeHtml ? value : `${value}` },
       options: opt
     };
 
@@ -137,6 +145,9 @@ export class CellService {
             break;
           case 'html':
             res.safeHtml = opt.html?.safe;
+            break;
+          case 'string':
+            if (isSafeHtml) res.safeHtml = 'safeHtml';
             break;
         }
         if (opt.mask != null) {
