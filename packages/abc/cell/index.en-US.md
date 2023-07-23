@@ -62,4 +62,5 @@ Cell formatting is supported for multiple data types.
 - `tag` Tag
 - `checkbox` Checkbox (Support `disabled`)
 - `radio` Radio (Support `disabled`)
+- `enum` Enum
 - `widget` Custom widget

@@ -91,6 +91,17 @@ describe('abc: cell', () => {
             .count('.ant-radio', 1)
             .check('a');
         });
+        it('with enum', () => {
+          page
+            .update(1, { enum: { 1: 'Success', 2: 'Error' } })
+            .check('Success')
+            .update(2)
+            .check('Error')
+            .update(3)
+            .check('')
+            .update(3, { enum: undefined })
+            .check('3');
+        });
         describe('with img', () => {
           it('should be working', () => {
             page.update('1.jpg', { img: {} }).count('.img', 1).click('.img').count('.ant-image-preview', 1, true);

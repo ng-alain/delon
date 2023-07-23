@@ -50,6 +50,7 @@ export type CellType =
   | 'tag'
   | 'checkbox'
   | 'radio'
+  | 'enum'
   | 'widget';
 
 export interface CellOptions {
@@ -181,6 +182,8 @@ export interface CellOptions {
   radio?: {
     label?: string;
   };
+
+  enum?: { [key: string]: string; [key: number]: string };
 }
 
 /**

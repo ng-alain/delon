@@ -62,4 +62,5 @@ module: import { CellModule } from '@delon/abc/cell';
 - `tag` 标签
 - `checkbox` 复选框（支持 `disabled`）
 - `radio` 单选框（支持 `disabled`）
+- `enum` 枚举转换
 - `widget` 自定义小部件

@@ -103,6 +103,7 @@ export class CellService {
     else if (options.tag != null) return 'tag';
     else if (options.checkbox != null) return 'checkbox';
     else if (options.radio != null) return 'radio';
+    else if (options.enum != null) return 'enum';
     else if (typeOf === 'number') return 'number';
     else if (typeOf === 'boolean' || options.boolean != null) return 'boolean';
     else return 'string';
@@ -120,6 +121,7 @@ export class CellService {
       typeof value === 'object' &&
       typeof (value as NzSafeAny)?.getTypeName === 'function' &&
       (value as NzSafeAny)?.getTypeName() != null;
+
     let res: CellTextResult = {
       result:
         typeof value === 'object' && !isSafeHtml
@@ -142,6 +144,9 @@ export class CellService {
             break;
           case 'tag':
             res.result = (opt.tag?.data ?? {})[value as string];
+            break;
+          case 'enum':
+            res.result = { text: (opt.enum ?? {})[value as string] };
             break;
           case 'html':
             res.safeHtml = opt.html?.safe;
