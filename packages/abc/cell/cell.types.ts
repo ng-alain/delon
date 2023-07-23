@@ -156,7 +156,7 @@ export interface CellOptions {
     /**
      * 点击查看大图，若 `true` 表示直接使用当前作为大图
      */
-    big?: true | ((value: unknown) => string);
+    big?: true | string | ((value: unknown) => string);
     previewOptions?: NzImagePreviewOptions;
   };
 

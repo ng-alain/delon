@@ -26,121 +26,121 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
   selector: 'app-demo',
   template: `
     <div nz-row nzGutter="16" class="mt-md">
-      <div *ngFor="let i of baseList" nz-col nzSpan="8"> {{ i | json }} => <span cell [value]="i"></span> </div>
-      <div nz-col nzSpan="8"> date-fn => <span cell [value]="day3" [options]="{ date: { format: 'fn' } }"></span> </div>
+      <div *ngFor="let i of baseList" nz-col nzSpan="8"> {{ i | json }} => <cell [value]="i"></cell> </div>
+      <div nz-col nzSpan="8"> date-fn => <cell [value]="day3" [options]="{ date: { format: 'fn' } }"></cell> </div>
+      <div nz-col nzSpan="8"> mega => <cell value="15900000000" size="large" [options]="{ type: 'mega' }"></cell> </div>
+      <div nz-col nzSpan="8"> mask => <cell value="15900000000" [options]="{ mask: '999****9999' }"></cell> </div>
+      <div nz-col nzSpan="8"> currency => <cell value="100000" [options]="{ type: 'currency' }"></cell> </div>
+      <div nz-col nzSpan="8"> cny => <cell value="100000" [options]="{ type: 'cny' }"></cell> </div>
       <div nz-col nzSpan="8">
-        mega => <span cell value="15900000000" size="large" [options]="{ type: 'mega' }"></span>
-      </div>
-      <div nz-col nzSpan="8"> mask => <span cell value="15900000000" [options]="{ mask: '999****9999' }"></span> </div>
-      <div nz-col nzSpan="8"> currency => <span cell value="100000" [options]="{ type: 'currency' }"></span> </div>
-      <div nz-col nzSpan="8"> cny => <span cell value="100000" [options]="{ type: 'cny' }"></span> </div>
-      <div nz-col nzSpan="8">
-        yn => <span cell [value]="yn" [options]="{ type: 'boolean' }"></span>
+        yn => <cell [value]="yn" [options]="{ type: 'boolean' }"></cell>
         <a (click)="yn = !yn">Change Value</a>
       </div>
       <div nz-col nzSpan="8">
         img =>
-        <span
-          cell
+        <cell
           value="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
           [options]="{ type: 'img' }"
-        ></span>
+        ></cell>
+      </div>
+      <div nz-col nzSpan="8">
+        img preview =>
+        <cell
+          value="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          [options]="bigImg"
+        ></cell>
       </div>
       <div nz-col nzSpan="8">
         img list =>
-        <span
-          cell
+        <cell
           [value]="[
             'https://randomuser.me/api/portraits/thumb/women/46.jpg',
             'https://randomuser.me/api/portraits/thumb/women/47.jpg'
           ]"
           [options]="{ type: 'img' }"
-        ></span>
+        ></cell>
       </div>
       <div nz-col nzSpan="8">
         link =>
-        <span cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }" [disabled]="disabled"></span>
+        <cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }" [disabled]="disabled"></cell>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         html =>
-        <span cell [value]="HTML" [options]="{ type: 'html' }"></span>
+        <cell [value]="HTML" [options]="{ type: 'html' }"></cell>
       </div>
       <div nz-col nzSpan="8">
         SafeHtml =>
-        <span cell [value]="safeHtml"></span>
+        <cell [value]="safeHtml"></cell>
         <a (click)="updateSafeHtml()" class="ml-sm">updateSafeHtml</a>
       </div>
       <div nz-col nzSpan="8">
         badge =>
-        <span cell value="FINISHED" [options]="{ badge: { data: status } }"></span>
+        <cell value="FINISHED" [options]="{ badge: { data: status } }"></cell>
       </div>
       <div nz-col nzSpan="8">
         tag =>
-        <span cell value="WAIT" [options]="{ tag: { data: status } }"></span>
+        <cell value="WAIT" [options]="{ tag: { data: status } }"></cell>
       </div>
       <div nz-col nzSpan="8">
         checkbox =>
-        <span
-          cell
+        <cell
           [(value)]="checkbox"
           [options]="{ type: 'checkbox', tooltip: 'Tooltip', checkbox: { label: 'Label' } }"
           [disabled]="disabled"
-        ></span>
+        ></cell>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         radio =>
-        <span
-          cell
+        <cell
           [(value)]="radio"
           [options]="{ type: 'radio', tooltip: 'Tooltip', radio: { label: 'Radio' } }"
           [disabled]="disabled"
-        ></span>
+        ></cell>
         <a (click)="radio = !radio">Change Value</a>
         <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         enum =>
-        <span cell [(value)]="enumValue" [options]="{ enum }"></span>
+        <cell [(value)]="enumValue" [options]="{ enum }"></cell>
         <a (click)="enumValue = enumValue === 1 ? 2 : 1">Change Value</a>(enum value: {{ enumValue }})
       </div>
       <div nz-col nzSpan="8">
         default =>
-        <span cell [value]="null"></span>
+        <cell [value]="null"></cell>
       </div>
       <div *ngFor="let i of typeList" nz-col nzSpan="8">
         {{ i }} =>
-        <span cell [value]="i" [options]="{ renderType: i }"></span>
+        <cell [value]="i" [options]="{ renderType: i }"></cell>
       </div>
       <div nz-col nzSpan="8">
         size =>
-        <span cell value="small" size="small"></span>, <span cell value="default"></span>,
-        <span cell value="large" size="large"></span>
+        <cell value="small" size="small"></cell>, <cell value="default"></cell>,
+        <cell value="large" size="large"></cell>
       </div>
       <div nz-col nzSpan="8">
         tooltip =>
-        <span cell value="tooltip" [options]="{ tooltip: 'Tooltip' }"></span>
+        <cell value="tooltip" [options]="{ tooltip: 'Tooltip' }"></cell>
       </div>
       <div nz-col nzSpan="8">
         loading =>
-        <span cell value="Done" [loading]="loading"></span>
+        <cell value="Done" [loading]="loading"></cell>
         <a (click)="loading = !loading" class="ml-md">Change</a>
       </div>
       <div nz-col nzSpan="8">
         Async =>
-        <span cell [value]="async" [loading]="asyncLoading"></span>
+        <cell [value]="async" [loading]="asyncLoading"></cell>
         <a *ngIf="!asyncLoading" (click)="again()" class="ml-md">Again</a>
       </div>
-      <div nz-col nzSpan="8"> Unit => <span cell value="3" [options]="{ unit: '人' }"></span> </div>
-      <div nz-col nzSpan="8"> Text Unit => <span cell [value]="{ text: '100', unit: '元' }"></span> </div>
+      <div nz-col nzSpan="8"> Unit => <cell value="3" [options]="{ unit: '人' }"></cell> </div>
+      <div nz-col nzSpan="8"> Text Unit => <cell [value]="{ text: '100', unit: '元' }"></cell> </div>
       <div nz-col nzSpan="8">
         custom widget =>
-        <span
-          cell
+        <cell
           value="https://randomuser.me/api/portraits/thumb/women/47.jpg"
           [options]="{ widget: { key: 'test', data: 'new url' } }"
-        ></span>
+        ></cell>
       </div>
     </div>
   `,
@@ -177,6 +177,12 @@ export class DemoComponent implements OnInit {
   safeHtml = this.ds.bypassSecurityTrustHtml(`<strong>Strong Html</strong>`);
   enum = { 1: 'Success', 2: 'Error' };
   enumValue = 1;
+  bigImg: CellOptions = {
+    img: {
+      size: 32,
+      big: true // 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    }
+  };
 
   constructor(
     private ds: DomSanitizer,
