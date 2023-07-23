@@ -25,7 +25,10 @@ export class ChartEChartsService implements OnDestroy {
     )!;
   }
 
-  constructor(private cogSrv: AlainConfigService, private lazySrv: LazyService) {
+  constructor(
+    private cogSrv: AlainConfigService,
+    private lazySrv: LazyService
+  ) {
     this.cog = { theme: '' };
   }
 

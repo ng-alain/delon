@@ -3,11 +3,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFCascaderWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFCascaderWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-cascader',

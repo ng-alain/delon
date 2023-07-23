@@ -559,14 +559,21 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private _refColAndData(): this {
-    this._columns
-      .filter(w => w.type === 'no')
-      .forEach(c =>
-        this._data.forEach((i, idx) => {
+    this._columns.forEach(c => {
+      this._data.forEach((i, idx) => {
+        const values = i._values as _STDataValue[];
+        if (c.type === 'no') {
           const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
-          i._values![c.__point!] = { text, _text: text, org: idx, safeType: 'text' } as _STDataValue;
-        })
-      );
+          values[c.__point!] = {
+            text,
+            _text: text,
+            org: idx,
+            safeType: 'text'
+          } as _STDataValue;
+        }
+        values[c.__point!].props = this.dataSource.getCell(c, i, idx);
+      });
+    });
 
     return this.refreshData();
   }

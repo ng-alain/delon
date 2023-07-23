@@ -24,7 +24,10 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
   private _user: U | null = null;
   private _layout: L | null = null;
 
-  constructor(private platform: Platform, @Inject(ALAIN_SETTING_KEYS) private KEYS: SettingsKeys) {}
+  constructor(
+    private platform: Platform,
+    @Inject(ALAIN_SETTING_KEYS) private KEYS: SettingsKeys
+  ) {}
 
   getData(key: string): NzSafeAny {
     if (!this.platform.isBrowser) {

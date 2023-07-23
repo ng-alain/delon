@@ -16,6 +16,7 @@ import {
 } from '@angular-devkit/schematics';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 
+import { Schema as ApplicationOptions } from './schema';
 import { getLangData } from '../core/lang.config';
 import {
   addAllowedCommonJsDependencies,
@@ -43,7 +44,6 @@ import {
 } from '../utils';
 import { addImportNotation } from '../utils/less';
 import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
-import { Schema as ApplicationOptions } from './schema';
 
 let project: ProjectDefinition;
 
@@ -187,7 +187,6 @@ function addCodeStylesToPackageJson(): Rule {
         `lint-staged@DEP-0.0.0-PLACEHOLDER`,
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
-        `stylelint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-rational-order@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
@@ -204,8 +203,7 @@ function addSchematics(options: ApplicationOptions): Rule {
     const p = getProjectFromWorkspace(workspace, options.project);
     const schematics = p.extensions.schematics;
     schematics['ng-alain:module'] = {
-      routing: true,
-      skipTests: false
+      routing: true
     };
     schematics['ng-alain:list'] = {
       skipTests: false
@@ -222,8 +220,7 @@ function addSchematics(options: ApplicationOptions): Rule {
       skipTests: false
     };
     schematics['@schematics/angular:module'] = {
-      routing: true,
-      skipTests: false
+      routing: true
     };
     schematics['@schematics/angular:component'] = {
       skipTests: false,

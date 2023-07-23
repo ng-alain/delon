@@ -4,11 +4,11 @@ import { Subject, catchError, debounceTime, distinctUntilChanged, switchMap, tak
 import { ArrayService } from '@delon/util/array';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFSelectWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-select',

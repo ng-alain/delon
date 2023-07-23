@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutDefaultModule } from '@delon/theme/layout-default';
 
-import { SharedModule } from '../app/shared/shared.module';
 import { DemoComponent } from './demo.component';
 import { DevHomeComponent } from './home/home.component';
 import { DevLayoutComponent } from './layout.component';
 import { DevPageComponent } from './pages/page.component';
+import { SharedModule } from '../app/shared/shared.module';
 
 const COMPONENTS = [DevLayoutComponent, DevHomeComponent, DevPageComponent, DemoComponent];
 

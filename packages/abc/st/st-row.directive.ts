@@ -24,7 +24,10 @@ export class STRowDirective implements OnInit {
 
   @Input() type?: 'title';
 
-  constructor(private ref: TemplateRef<void>, @Host() private source: STRowSource) {}
+  constructor(
+    private ref: TemplateRef<void>,
+    @Host() private source: STRowSource
+  ) {}
 
   ngOnInit(): void {
     this.source.add(this.type, this.id, this.ref);

@@ -4,11 +4,11 @@ import { map, tap } from 'rxjs';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
 
+import { SFMentionWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, getEnum } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFMentionWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-mention',

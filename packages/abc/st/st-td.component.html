@@ -18,28 +18,28 @@
     [nzOkType]="i.pop.okType"
     (nzOnConfirm)="_btn(i)"
     class="st__btn-text"
-    [ngClass]="i.className"
+    [ngClass]="i._className"
     (click)="_stopPropagation($event)"
   >
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
   </a>
-  <a *ngIf="!i.pop" (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i.className">
+  <a *ngIf="!i.pop" (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i._className">
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
   </a>
 </ng-template>
 <ng-template #btnTextTpl let-i>
-  <ng-container *ngIf="i.icon">
+  <ng-container *ngIf="i._icon">
     <i
-      *ngIf="!i.icon.iconfont"
+      *ngIf="!i._icon.iconfont"
       nz-icon
-      [nzType]="i.icon.type"
-      [nzTheme]="i.icon.theme"
-      [nzSpin]="i.icon.spin"
-      [nzTwotoneColor]="i.icon.twoToneColor"
+      [nzType]="i._icon.type"
+      [nzTheme]="i._icon.theme"
+      [nzSpin]="i._icon.spin"
+      [nzTwotoneColor]="i._icon.twoToneColor"
     ></i>
-    <i *ngIf="i.icon.iconfont" nz-icon [nzIconfont]="i.icon.iconfont"></i>
+    <i *ngIf="i._icon.iconfont" nz-icon [nzIconfont]="i._icon.iconfont"></i>
   </ng-container>
-  <span [innerHTML]="i._text" [ngClass]="{ 'pl-xs': i.icon }"></span>
+  <span [innerHTML]="i._text" [ngClass]="{ 'pl-xs': i._icon }"></span>
 </ng-template>
 <ng-template
   #render

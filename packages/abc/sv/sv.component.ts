@@ -86,7 +86,8 @@ export class SVComponent implements AfterViewInit, OnChanges {
     this._noColon = noColon != null ? noColon : parent.noColon;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    clsMap.push(...rep.genCls(col != null ? col : this.parent.col));
+    const parentCol = parent.colInCon || parent.col;
+    clsMap.push(...rep.genCls(col != null ? col : parentCol, parentCol));
     clsMap.push(`${prefixCls}__item`);
     if (this.parent.labelWidth) clsMap.push(`${prefixCls}__item-fixed`);
     if (type) clsMap.push(`${prefixCls}__type-${type}`);

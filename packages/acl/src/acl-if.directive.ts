@@ -19,7 +19,11 @@ export class ACLIfDirective implements OnDestroy {
   private _elseViewRef: EmbeddedViewRef<void> | null = null;
   private _except = false;
 
-  constructor(templateRef: TemplateRef<void>, private srv: ACLService, private _viewContainer: ViewContainerRef) {
+  constructor(
+    templateRef: TemplateRef<void>,
+    private srv: ACLService,
+    private _viewContainer: ViewContainerRef
+  ) {
     this._change$ = this.srv.change.pipe(filter(r => r != null)).subscribe(() => this._updateView());
     this._thenTemplateRef = templateRef;
   }

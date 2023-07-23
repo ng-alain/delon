@@ -3,7 +3,7 @@ import { createMigrationSchematicRule, NullableDevkitMigration, TargetVersion } 
 import { chain, Rule, SchematicContext } from '@angular-devkit/schematics';
 
 import { ruleUpgradeData } from './upgrade-data';
-import { v16Rule } from './upgrade-rules/v15';
+import { v16Rule } from './upgrade-rules/v16';
 
 const migrations: NullableDevkitMigration[] = [];
 

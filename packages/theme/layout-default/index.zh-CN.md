@@ -102,6 +102,8 @@ export class LayoutBasicComponent {
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
 | `[customError]` | 自定义异常路由错误消息，当 `null` 时表示不显示错误消息 | `string, null` | `Could not load ${evt.url} route` |
+| `[fetchingStrictly]` | 是否完全受控顶部加载动画状态 | `boolean` | `false` |
+| `[fetching]` | 顶部加载动画状态 | `boolean` | `false` |
 
 ### LayoutDefaultOptions
 

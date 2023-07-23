@@ -2,14 +2,13 @@ import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
   ComponentRef,
   EmbeddedViewRef,
   Inject,
   Injectable,
-  Injector,
   OnDestroy,
-  Optional
+  Optional,
+  createComponent
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, pipe, Subscription, delay, switchMap } from 'rxjs';
@@ -47,17 +46,17 @@ export class OnboardingService implements OnDestroy {
   constructor(
     private i18n: DelonLocaleService,
     private appRef: ApplicationRef,
-    // TODO: Tracking https://github.com/angular/angular/issues/45263
-    private resolver: ComponentFactoryResolver,
     private router: Router,
-    private injector: Injector,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private configSrv: AlainConfigService,
     @Optional() private directionality: Directionality
   ) {}
 
   private attach(): void {
-    const compRef = (this.compRef = this.resolver.resolveComponentFactory(OnboardingComponent).create(this.injector));
+    const compRef = createComponent(OnboardingComponent, {
+      environmentInjector: this.appRef.injector
+    });
+    this.compRef = compRef;
     this.appRef.attachView(compRef.hostView);
     const compNode = (compRef.hostView as EmbeddedViewRef<NzSafeAny>).rootNodes[0];
     const doc = this._getDoc();

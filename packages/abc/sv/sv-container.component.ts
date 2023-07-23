@@ -11,9 +11,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-
 @Component({
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
@@ -41,9 +41,11 @@ export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
 
+  @Input('sv-container') @InputNumber(null) colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
   @Input() size!: 'small' | 'large';
   /** 列表项间距，单位为 `px` */
@@ -78,17 +80,19 @@ export class SVContainerComponent {
   encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent implements OnInit {
-  private el: HTMLElement;
-  constructor(el: ElementRef, @Host() @Optional() private parent: SVContainerComponent, private ren: Renderer2) {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    @Host() @Optional() private parent: SVContainerComponent,
+    private ren: Renderer2
+  ) {
     if (parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): void {
-    const { gutter } = this.parent;
-    const { el } = this;
+    const gutter = this.parent.gutter;
+    const el = this.el.nativeElement;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }

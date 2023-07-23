@@ -21,16 +21,16 @@ import { STColumn } from '@delon/abc/st';
 @Component({
   selector: 'app-demo',
   template: `
-    <form nz-form #f="ngForm" se-container size="compact" gutter="24">
+    <form nz-form #f="ngForm" se-container="3" size="compact" gutter="24">
       <se-title>Title 1</se-title>
       <se label="ID" col="1" [optionalHelp]="optionalHelpTpl">
         1000
         <ng-template #optionalHelpTpl> Via by ng-template </ng-template>
       </se>
-      <se label="Name" required col="3" optionalHelp="The background color is #f50" optionalHelpColor="#f50">
-        <input type="text" nz-input [(ngModel)]="i.user_name" name="user_name" required />
+      <se label="Name" required col="2" optionalHelp="The background color is #f50" optionalHelpColor="#f50">
+        <input type="text" nz-input [(ngModel)]="i.user_name" name="user_name" required placeholder="占两栏" />
       </se>
-      <se label="Age" required col="3">
+      <se label="Age" required>
         <nz-select [(ngModel)]="i.user_age" name="user_age" nzAllowClear nzPlaceHolder="Choose">
           <nz-option [nzValue]="1" nzLabel="1"></nz-option>
           <nz-option [nzValue]="2" nzLabel="2"></nz-option>
@@ -39,7 +39,7 @@ import { STColumn } from '@delon/abc/st';
           <nz-option [nzValue]="5" nzLabel="5"></nz-option>
         </nz-select>
       </se>
-      <se label="Brithday" required col="3">
+      <se label="Brithday" required>
         <nz-date-picker [(ngModel)]="i.user_birthday" name="user_birthday" nzShowTime></nz-date-picker>
       </se>
       <se label="App Key" required>

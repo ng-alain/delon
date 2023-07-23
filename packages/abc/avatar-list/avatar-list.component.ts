@@ -62,7 +62,10 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
   @Input() @InputNumber() maxLength = 0;
   @Input() excessItemsStyle: NgStyleInterface | null = null;
 
-  constructor(private cdr: ChangeDetectorRef, @Optional() private directionality: Directionality) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    @Optional() private directionality: Directionality
+  ) {}
 
   private gen(): void {
     const { _items } = this;

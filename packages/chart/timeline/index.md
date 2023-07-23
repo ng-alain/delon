@@ -18,7 +18,7 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[maxAxis]` | 最大指标数量 | `number` | `2` |
-| `[data]` | 数据 | `G2TimelineData[]` | - |
+| `[data]` | 数据，注：根据 `maxAxis` 值传递指标数据 | `G2TimelineData[]` | - |
 | `[titleMap]` | 指标别名 | `G2TimelineMap` | - |
 | `[colorMap]` | 颜色 | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
 | `[height]` | 高度值 | `number` | `400` |

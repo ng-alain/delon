@@ -39,3 +39,8 @@ export type ACLCanType = number | number[] | string | string[] | ACLType;
 
 export type ACLGuardFunctionType = (srv: ACLService, injector: Injector) => Observable<ACLCanType>;
 export type ACLGuardType = ACLCanType | Observable<ACLCanType> | ACLGuardFunctionType;
+
+export interface ACLGuardData {
+  guard?: ACLGuardType | null;
+  guard_url?: string | null;
+}

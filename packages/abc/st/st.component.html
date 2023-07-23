@@ -167,19 +167,25 @@
           (click)="_stopPropagation($event)"
           nzWidth="50px"
         ></td>
-        <td
-          *ngFor="let c of _columns; let cIdx = index"
-          [nzLeft]="!!c._left"
-          [nzRight]="!!c._right"
-          [attr.data-col-index]="cIdx"
-          [ngClass]="c._className"
-          [attr.colspan]="c.colSpan"
-        >
-          <span *ngIf="responsive" class="ant-table-rep__title">
-            <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: c.title }"></ng-template>
-          </span>
-          <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="cIdx" (n)="_handleTd($event)"></st-td>
-        </td>
+        <ng-container *ngFor="let c of _columns; let cIdx = index">
+          <td
+            *ngIf="i._values[cIdx].props?.colSpan > 0 && i._values[cIdx].props?.rowSpan > 0"
+            [nzLeft]="!!c._left"
+            [nzRight]="!!c._right"
+            [attr.data-col-index]="cIdx"
+            [ngClass]="c._className"
+            [attr.colspan]="i._values[cIdx].props?.colSpan === 1 ? null : i._values[cIdx].props?.colSpan"
+            [attr.rowspan]="i._values[cIdx].props?.rowSpan === 1 ? null : i._values[cIdx].props?.rowSpan"
+          >
+            <span *ngIf="responsive" class="ant-table-rep__title">
+              <ng-template
+                [ngTemplateOutlet]="titleTpl"
+                [ngTemplateOutletContext]="{ $implicit: c.title }"
+              ></ng-template>
+            </span>
+            <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="cIdx" (n)="_handleTd($event)"></st-td>
+          </td>
+        </ng-container>
       </tr>
       <tr [nzExpand]="i.expand">
         <ng-template

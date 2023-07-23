@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { MenuService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManagerFactory } from './reuse-tab.cache';
 import { ReuseItem, ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabLocalStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
@@ -49,6 +50,10 @@ describe('abc: reuse-tab(service)', () => {
         {
           provide: REUSE_TAB_STORAGE_STATE,
           useFactory: () => new ReuseTabLocalStorageState()
+        },
+        {
+          provide: REUSE_TAB_CACHED_MANAGER,
+          useFactory: () => new ReuseTabCachedManagerFactory()
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
         { provide: Router, useFactory: () => new MockRouter() }

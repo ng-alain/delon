@@ -44,7 +44,7 @@ stages:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: |
-              yarn run site:build
+              yarn run site:build:ssr
             displayName: 'Build site'
           - script: |
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh

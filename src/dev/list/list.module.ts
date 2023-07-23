@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SharedModule } from '../../app/shared/shared.module';
 import { DevLayoutListComponent } from './layout.component';
 import { DevListItemComponent } from './list-item.component';
 import { DevListComponent } from './list.component';
+import { SharedModule } from '../../app/shared/shared.module';
 
 const COMPONENTS = [DevLayoutListComponent, DevListComponent, DevListItemComponent];
 

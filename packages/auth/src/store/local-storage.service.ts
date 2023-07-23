@@ -1,5 +1,5 @@
-import { ITokenModel } from '../token/interface';
 import { IStore } from './interface';
+import { ITokenModel } from '../token/interface';
 
 export function DA_STORE_TOKEN_LOCAL_FACTORY(): IStore {
   return new LocalStorageStore();

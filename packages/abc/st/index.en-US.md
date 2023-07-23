@@ -266,6 +266,7 @@ class TestComponent {
 | `[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | - |
 | `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
 | `[colSpan]` | Span of this column's title | `number` | - |
+| `[onCell]` | Set props on per cell | `(item: T, index: number) => STOnCellResult;` | - |
 | `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
@@ -349,8 +350,8 @@ class TestComponent {
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `[text]` | Text of button, coexist with icon | `string | (record: STData, btn: STColumnButton) => string` | - |
-| `[icon]` | Icon of button, coexist with text | `string | STIcon` | - |
+| `[text]` | Text of button, coexist with icon | `string | (record: T, btn: STColumnButton) => string` | - |
+| `[icon]` | Icon of button, coexist with text | `string | STIcon | ((record: T, btn: STColumnButton<T>) => STIcon | null | undefined)` | - |
 | `[i18n]` | I18n key of button | `string` | - |
 | `[type]` | Type of button | `none,del,modal,static,drawer,link` | - |
 | `[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | - |
@@ -362,7 +363,7 @@ class TestComponent {
 | `[iif]` | Custom conditional expression | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true` |
 | `[iifBehavior]` | Render button mode when the conditional expression `false` value | `hide,disabled` | `hide` |
 | `[tooltip]` | Button popup tip | `string` | - |
-| `[className]` | Class name of this button, e.g: `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
+| `[className]` | Class name of this button, e.g: `text-error`, pls refer to [Style Tools](/theme/tools) | `string | ((record: T, btn: STColumnButton<T>) => NgClassType | null | undefined)` | - |
 
 ### STColumnButtonModal
 

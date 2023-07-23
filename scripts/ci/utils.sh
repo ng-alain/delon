@@ -18,7 +18,6 @@ DEPENDENCIES=$(node -p "
     'ajv',
     'ajv-formats',
     'screenfull',
-    'stylelint-config-prettier',
     'stylelint-config-rational-order',
     'stylelint-config-standard',
     'stylelint-declaration-block-no-ignored-properties',

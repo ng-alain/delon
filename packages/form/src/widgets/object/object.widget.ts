@@ -2,12 +2,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import type { SFObjectWidgetRenderType } from './schema';
 import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
 import type { SFGridSchema } from '../../schema/ui';
 import { toBool } from '../../utils';
 import { ObjectLayoutWidget } from '../../widget';
-import type { SFObjectWidgetRenderType } from './schema';
 
 @Component({
   selector: 'sf-object',

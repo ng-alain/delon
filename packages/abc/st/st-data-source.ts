@@ -10,15 +10,17 @@ import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import {
+import type {
   STColumn,
   STColumnFilter,
   STColumnFilterMenu,
   STColumnMaxMultipleButton,
   STCustomRequestOptions,
   STData,
+  STIcon,
   STMultiSort,
   STMultiSortResultType,
+  STOnCellResult,
   STPage,
   STReq,
   STReqReNameType,
@@ -324,15 +326,27 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
+  getCell(c: STColumn, item: STData, idx: number): STOnCellResult {
+    const onCellResult = typeof c.onCell === 'function' ? c.onCell(item, idx) : null;
+    const mergedColSpan = onCellResult?.colSpan ?? 1;
+    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
+    return {
+      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
+      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
+    } as STOnCellResult;
+  }
+
   optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
+        const props = this.getCell(c, result[i], i);
+
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '' };
+          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
         }
 
-        return this.get(result[i], c, i);
+        return { ...this.get(result[i], c, i), props };
       });
       result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
         .filter(w => !!w)
@@ -364,6 +378,8 @@ export class STDataSource {
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
         btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        btn._className = typeof btn.className === 'function' ? btn.className(item, btn) : btn.className;
+        btn._icon = typeof btn.icon === 'function' ? btn.icon(item, btn) : (btn.icon as STIcon);
         if (btn.children?.length) {
           btn.children = fnText(btn.children!);
         }

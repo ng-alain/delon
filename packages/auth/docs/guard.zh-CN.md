@@ -13,11 +13,11 @@ type: Documents
   {
     path: 'home',
     component: MockComponent,
-    canActivate: [JWTGuard],
+    canActivate: [authJWTCanActivate],
   },
   {
     path: 'my',
-    canActivateChild: [JWTGuard],
+    canActivateChild: [authJWTCanActivateChild],
     children: [
       { path: 'profile', component: MockComponent }
     ],
@@ -33,5 +33,5 @@ type: Documents
 
 同样，针对不同认证风格分别为：
 
-- `SimpleGuard` 基于 Simple Web Token 认证风格
-- `JWTGuard` 基于 Json Web Token 认证风格
+- `authSimpleCanActivate`, `authSimpleCanActivateChild`, `authSimpleCanMatch` 基于 Simple Web Token 认证风格
+- `authJWTCanActivate`, `authJWTCanActivateChild`, `authJWTCanMatch` 基于 Json Web Token 认证风格

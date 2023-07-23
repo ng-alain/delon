@@ -24,7 +24,10 @@ export class MediaService {
     )!;
   }
 
-  constructor(private cogSrv: AlainConfigService, private lazySrv: LazyService) {}
+  constructor(
+    private cogSrv: AlainConfigService,
+    private lazySrv: LazyService
+  ) {}
 
   load(): this {
     if (this.loading) {

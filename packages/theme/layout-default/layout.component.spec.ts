@@ -8,12 +8,12 @@ import { createTestContext } from '@delon/testing';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { SettingsService } from '../src/services/settings/settings.service';
-import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultOptions } from './types';
+import { SettingsService } from '../src/services/settings/settings.service';
+import { AlainThemeModule } from '../src/theme.module';
 
 describe('theme: layout-default', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -136,7 +136,7 @@ describe('theme: layout-default', () => {
     }));
 
     it('should toggle fetching status when load lzay config', fakeAsync(() => {
-      expect(context.comp.isFetching).toBe(true);
+      expect(context.comp.showFetching).toBe(true);
       lazyEnd();
     }));
 
@@ -144,7 +144,7 @@ describe('theme: layout-default', () => {
       it('should be invalid module', fakeAsync(() => {
         const spy = spyOn(msgSrv, 'error');
         lazyError();
-        expect(context.comp.isFetching).toBe(false);
+        expect(context.comp.showFetching).toBe(false);
         expect(spy).toHaveBeenCalled();
         expect(spy.calls.first().args[0]).toContain('Could not load ');
         lazyEnd();
@@ -154,7 +154,7 @@ describe('theme: layout-default', () => {
         context.customError = 'test';
         fixture.detectChanges();
         lazyError();
-        expect(context.comp.isFetching).toBe(false);
+        expect(context.comp.showFetching).toBe(false);
         expect(spy).toHaveBeenCalled();
         expect(spy.calls.first().args[0]).toBe('test');
         lazyEnd();
@@ -164,15 +164,26 @@ describe('theme: layout-default', () => {
         context.customError = null;
         fixture.detectChanges();
         lazyError();
-        expect(context.comp.isFetching).toBe(false);
+        expect(context.comp.showFetching).toBe(false);
         expect(spy).not.toHaveBeenCalled();
         lazyEnd();
       }));
       it('should be cancel load config', fakeAsync(() => {
         lazyCancel();
-        expect(context.comp.isFetching).toBe(false);
+        expect(context.comp.showFetching).toBe(false);
         lazyEnd();
       }));
+    });
+
+    it('#fetchingStrictly', () => {
+      const cls = '.alain-default__progress-bar';
+      context.fetchingStrictly = true;
+      context.fetching = true;
+      fixture.detectChanges();
+      page.expectEl(cls, true);
+      context.fetching = false;
+      fixture.detectChanges();
+      page.expectEl(cls, false);
     });
   });
 
@@ -197,6 +208,8 @@ describe('theme: layout-default', () => {
       [nav]="nav"
       [content]="content"
       [customError]="customError"
+      [fetchingStrictly]="fetchingStrictly"
+      [fetching]="fetching"
     >
       <layout-default-header-item direction="left">
         <span class="header-left">left</span>
@@ -227,4 +240,6 @@ class TestComponent {
   nav?: TemplateRef<void> | null;
   content?: TemplateRef<void> | null;
   customError?: string | null;
+  fetchingStrictly = false;
+  fetching = false;
 }

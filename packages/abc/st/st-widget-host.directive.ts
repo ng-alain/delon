@@ -10,7 +10,10 @@ export class STWidgetHostDirective implements OnInit {
   @Input() record!: STData;
   @Input() column!: STColumn;
 
-  constructor(private stWidgetRegistry: STWidgetRegistry, private viewContainerRef: ViewContainerRef) {}
+  constructor(
+    private stWidgetRegistry: STWidgetRegistry,
+    private viewContainerRef: ViewContainerRef
+  ) {}
 
   ngOnInit(): void {
     const widget = this.column.widget!;

@@ -15,11 +15,11 @@ When a route does not initiate a request, it means that the Token validity canno
   {
     path: 'home',
     component: MockComponent,
-    canActivate: [JWTGuard],
+    canActivate: [authJWTCanActivate],
   },
   {
     path: 'my',
-    canActivateChild: [JWTGuard],
+    canActivateChild: [authJWTCanActivateChild],
     children: [
       { path: 'profile', component: MockComponent }
     ],
@@ -35,5 +35,5 @@ When a route does not initiate a request, it means that the Token validity canno
 
 Similarly, the different authentication styles are:
 
-- `SimpleGuard` based on Simple Web Token authentication style
-- `JWTGuard` based on Json Web Token authentication style
+- `authSimpleCanActivate`, `authSimpleCanActivateChild`, `authSimpleCanMatch` based on Simple Web Token authentication style
+- `authJWTCanActivate`, `authJWTCanActivateChild`, `authJWTCanMatch` based on Json Web Token authentication style

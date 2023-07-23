@@ -2,8 +2,8 @@ import { Rule, SchematicsException } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { buildAlain } from '../utils';
 import { Schema } from './schema';
+import { buildAlain } from '../utils';
 
 const REFER = `, please refer to: https://ng-alain.com/cli/generate#Customtemplatepage`;
 
