@@ -289,7 +289,9 @@ export interface STColumn<T extends STData = any> {
     | 'widget';
 
   /**
-   * 使用 `cell` 组件渲染单元格
+   * `cell` component options
+   *
+   * `cell` 组件配置项
    */
   cell?: CellOptions | ((record: T, column: STColumn) => CellOptions);
   /**
