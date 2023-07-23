@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { CellService } from '@delon/abc/cell';
 
-import { SharedModule } from '../shared.module';
 import { CellTestWidget } from './test';
+import { SharedModule } from '../shared.module';
 
 export const CELL_WIDGET_COMPONENTS = [CellTestWidget];
 
