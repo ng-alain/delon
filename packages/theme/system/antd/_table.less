@@ -11,9 +11,12 @@
     .img {
       max-width: @nz-table-img-max-width;
       max-height: @nz-table-img-max-height;
-      margin-right: @nz-table-img-margin-right;
       vertical-align: middle;
       border-radius: @nz-table-img-radius;
+
+      &:not(:last-child) {
+        margin-right: @nz-table-img-margin-right;
+      }
     }
   }
 
