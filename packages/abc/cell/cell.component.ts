@@ -63,7 +63,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
         <ng-template *ngSwitchCase="'widget'" cell-widget-host [data]="hostData"></ng-template>
         <ng-container *ngSwitchCase="'img'">
           <img
-            *ngFor="let i of _text"
+            *ngFor="let i of $any(_text)"
             [attr.src]="i"
             [attr.height]="safeOpt.img?.size"
             [attr.width]="safeOpt.img?.size"
