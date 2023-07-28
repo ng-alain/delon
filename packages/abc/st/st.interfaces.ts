@@ -248,7 +248,7 @@ export interface STColumn<T extends STData = any> {
   title?: string | STColumnTitle;
   /**
    * 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法，例如：
-   * - `id`
+   * - `id` (需要指定类型才能智能提示)
    * - `price.market`
    * - `[ 'price', 'market' ]`
    */
