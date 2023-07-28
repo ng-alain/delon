@@ -4,8 +4,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
-  inject,
   Inject,
   Input,
   isDevMode,
@@ -40,7 +38,7 @@ export class SettingDrawerComponent implements OnInit {
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   dir: Direction = 'ltr';
   isDev = isDevMode();
   collapse = false;
@@ -74,7 +72,7 @@ export class SettingDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

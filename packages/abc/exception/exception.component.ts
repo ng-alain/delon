@@ -116,10 +116,12 @@ export class ExceptionComponent implements OnInit {
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
-    this.i18n.change
-      .pipe(takeUntilDestroyed(this.destroy$))
-      .subscribe(() => (this.locale = this.i18n.getData('exception')));
+    this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => {
+      this.locale = this.i18n.getData('exception');
+      this.cdr.detectChanges();
+    });
     this.checkContent();
   }
 }

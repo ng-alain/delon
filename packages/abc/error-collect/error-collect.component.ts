@@ -87,6 +87,7 @@ export class ErrorCollectComponent implements OnInit {
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     interval(this.freq)
       .pipe(takeUntilDestroyed(this.destroy$))

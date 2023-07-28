@@ -3,13 +3,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   Input,
   OnInit,
   Optional,
   TemplateRef,
-  ViewEncapsulation,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -26,7 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   encapsulation: ViewEncapsulation.None
 })
 export class ResultComponent implements OnInit {
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   _type = '';
   _icon = '';
   @Input()
@@ -57,7 +55,7 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

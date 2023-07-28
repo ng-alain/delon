@@ -271,6 +271,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     this.openByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloating());

@@ -4,14 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  DestroyRef,
   Inject,
   Input,
   OnInit,
   Optional,
   QueryList,
-  ViewEncapsulation,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -36,7 +34,7 @@ import { GlobalFooterLink } from './global-footer.types';
   encapsulation: ViewEncapsulation.None
 })
 export class GlobalFooterComponent implements OnInit {
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   private _links: GlobalFooterLink[] = [];
 
   dir: Direction = 'ltr';
@@ -77,7 +75,7 @@ export class GlobalFooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

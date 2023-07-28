@@ -5,13 +5,11 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  DestroyRef,
   Input,
   OnChanges,
   Optional,
   QueryList,
-  ViewEncapsulation,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -38,7 +36,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
   private _items!: QueryList<AvatarListItemComponent>;
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
 
   items: AvatarListItemComponent[] = [];
   exceedCount = 0;
@@ -80,8 +78,9 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     this.gen();
     this.inited = true;

@@ -5,9 +5,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   EventEmitter,
-  inject,
   Inject,
   InjectionToken,
   Input,
@@ -50,7 +48,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
   @Output() readonly themeChange = new EventEmitter<string>();
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   dir: Direction = 'ltr';
 
   constructor(
@@ -65,7 +63,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

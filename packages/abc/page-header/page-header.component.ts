@@ -5,7 +5,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   Inject,
   Input,
@@ -15,8 +14,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
@@ -53,7 +51,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   static ngAcceptInputType_fixedOffsetTop: NumberInput;
   static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
 
-  private destroy$ = inject(DestroyRef);
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
@@ -201,7 +199,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
