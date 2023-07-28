@@ -3,8 +3,11 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Inject,
   InjectionToken,
   Input,
@@ -15,7 +18,7 @@ import {
   Output,
   Renderer2
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -47,7 +50,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
   @Output() readonly themeChange = new EventEmitter<string>();
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   dir: Direction = 'ltr';
 
   constructor(
@@ -56,13 +59,15 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private platform: Platform,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     @Optional() private directionality: Directionality,
-    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string
+    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     this.initTheme();
   }
@@ -110,7 +115,5 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (el != null) {
       this.doc.body.removeChild(el);
     }
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

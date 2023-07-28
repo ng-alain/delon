@@ -16,8 +16,9 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { merge, Observable, Subject, filter, takeUntil } from 'rxjs';
+import { merge, Observable, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
@@ -84,7 +85,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_cleanValue: BooleanInput;
   static ngAcceptInputType_delay: BooleanInput;
 
-  private destroy$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
   private _valid = true;
@@ -277,7 +277,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
     this.delay = this.options.delay as boolean;
-    this.localeSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.localeSrv.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
         this.validator({ emitError: false, onlyRoot: false });
@@ -293,7 +293,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       merge(...(refSchemas as Array<Observable<NzSafeAny>>))
         .pipe(
           filter(() => this._inited),
-          takeUntil(this.destroy$)
+          takeUntilDestroyed()
         )
         .subscribe(() => this.refreshSchema());
     }
@@ -691,8 +691,5 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.cleanRootSub();
     this.terminator.destroy();
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

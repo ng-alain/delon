@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -12,9 +13,11 @@ import {
   Output,
   Renderer2,
   SimpleChange,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { Subject, timer, takeUntil, take } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timer, take } from 'rxjs';
 
 import type Plyr from 'plyr';
 
@@ -41,7 +44,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private _p?: Plyr | null;
   private videoEl?: HTMLElement;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
 
   @Input() type: MediaType = 'video';
   @Input() source?: string | Plyr.SourceInfo;
@@ -64,7 +67,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ZoneOutside()
   private initDelay(): void {
     timer(this.delay)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroy$))
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.init()));
   }
 
@@ -119,7 +122,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     this.srv
       .notify()
-      .pipe(takeUntil(this.destroy$), take(1))
+      .pipe(takeUntilDestroyed(this.destroy$), take(1))
       .subscribe(() => this.initDelay());
 
     this.srv.load();
@@ -135,9 +138,5 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy();
     this._p = null;
-
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

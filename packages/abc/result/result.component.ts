@@ -1,15 +1,17 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'result',
@@ -23,8 +25,8 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ResultComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class ResultComponent implements OnInit {
+  private destroy$ = inject(DestroyRef);
   _type = '';
   _icon = '';
   @Input()
@@ -48,17 +50,16 @@ export class ResultComponent implements OnInit, OnDestroy {
   @Input() extra?: string | TemplateRef<void>;
   dir: Direction = 'ltr';
 
-  constructor(@Optional() private directionality: Directionality) {}
+  constructor(
+    @Optional() private directionality: Directionality,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

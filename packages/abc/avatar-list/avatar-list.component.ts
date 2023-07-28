@@ -5,14 +5,15 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   Input,
   OnChanges,
-  OnDestroy,
   Optional,
   QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
@@ -31,13 +32,13 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class AvatarListComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_maxLength: NumberInput;
 
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
   private _items!: QueryList<AvatarListItemComponent>;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
 
   items: AvatarListItemComponent[] = [];
   exceedCount = 0;
@@ -79,7 +80,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   ngAfterViewInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
     this.gen();
@@ -90,10 +91,5 @@ export class AvatarListComponent implements AfterViewInit, OnChanges, OnDestroy 
     if (this.inited) {
       this.gen();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

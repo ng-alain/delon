@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { MetaService, MobileService } from '@core';
 
@@ -11,8 +11,8 @@ import { MetaService, MobileService } from '@core';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContentComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class ContentComponent implements OnInit {
+  private destroy$ = inject(DestroyRef);
   isMobile!: boolean;
   opened = false;
 
@@ -23,7 +23,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.mobileSrv.change.pipe(takeUntil(this.destroy$)).subscribe(res => {
+    this.mobileSrv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(res => {
       this.isMobile = res;
       this.cdr.detectChanges();
     });
@@ -31,11 +31,5 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   to(): void {
     this.opened = false;
-  }
-
-  ngOnDestroy(): void {
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

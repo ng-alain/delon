@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Inject,
   Input,
@@ -13,11 +14,13 @@ import {
   Optional,
   Output,
   Renderer2,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { Menu, MenuIcon, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
@@ -52,7 +55,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_maxLevelIcon: NumberInput;
 
   private bodyEl!: HTMLBodyElement;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   private floatingEl!: HTMLDivElement;
   dir: Direction = 'ltr';
   list: Nav[] = [];
@@ -228,9 +231,9 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const { doc, router, destroy$, menuSrv, settings, cdr } = this;
+    const { doc, router, menuSrv, settings, cdr } = this;
     this.bodyEl = doc.querySelector('body');
-    menuSrv.change.pipe(takeUntil(destroy$)).subscribe(data => {
+    menuSrv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav, _p, depth) => {
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
         i._needIcon = depth! <= this.maxLevelIcon && !!i.icon;
@@ -250,7 +253,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       this.list = data.filter((w: Nav) => w._hidden !== true);
       cdr.detectChanges();
     });
-    router.events.pipe(takeUntil(destroy$)).subscribe(e => {
+    router.events.pipe(takeUntilDestroyed(this.destroy$)).subscribe(e => {
       if (e instanceof NavigationEnd) {
         this.openByUrl(e.urlAfterRedirects);
         this.underPad();
@@ -259,14 +262,14 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     });
     settings.notify
       .pipe(
-        takeUntil(destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter(t => t.type === 'layout' && t.name === 'collapsed')
       )
       .subscribe(() => this.clearFloating());
     this.underPad();
 
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
     this.openByUrl(router.url);
@@ -289,8 +292,6 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
     this.clearFloating();
   }
 

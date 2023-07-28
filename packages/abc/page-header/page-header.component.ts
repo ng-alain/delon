@@ -5,20 +5,22 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   Inject,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { merge, Subject, filter, takeUntil } from 'rxjs';
+import { merge, filter } from 'rxjs';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
@@ -41,7 +43,7 @@ interface PageHeaderPath {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   static ngAcceptInputType_loading: BooleanInput;
   static ngAcceptInputType_wide: BooleanInput;
   static ngAcceptInputType_autoBreadcrumb: BooleanInput;
@@ -51,7 +53,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   static ngAcceptInputType_fixedOffsetTop: NumberInput;
   static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
 
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
@@ -127,15 +129,15 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     });
     settings.notify
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed')
       )
       .subscribe(() => this.affix.updatePosition({} as NzSafeAny));
 
     merge(menuSrv.change, router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
       .pipe(
-        filter(() => this.inited),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(),
+        filter(() => this.inited)
       )
       .subscribe(() => this.refresh());
   }
@@ -199,7 +201,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
@@ -215,10 +217,5 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.inited) {
       this.refresh();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -11,9 +12,11 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { fromEvent, Subject, debounceTime, filter, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent, debounceTime, filter } from 'rxjs';
 
 import { NumberInput, ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -48,7 +51,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_height: NumberInput;
 
   @ViewChild('container', { static: true }) private node!: ElementRef;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   private _chart: ChartECharts | null = null;
   private _theme?: string | Record<string, unknown> | null;
   private _initOpt?: {
@@ -106,7 +109,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   ) {
     this.srv.notify
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
         filter(() => !this.loaded)
       )
       .subscribe(() => this.load());
@@ -176,7 +179,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
 
     fromEvent(window, 'resize')
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter(() => !!this._chart),
         debounceTime(200)
       )
@@ -185,8 +188,6 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.on.forEach(item => this._chart?.off(item.eventName));
-    this.destroy$.next();
-    this.destroy$.complete();
     this.destroy();
   }
 }

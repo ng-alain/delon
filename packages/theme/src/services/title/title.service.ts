@@ -1,8 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
+import { DestroyRef, Inject, Injectable, Injector, OnDestroy, Optional, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, map, delay, isObservable, switchMap, Subject, takeUntil, Subscription } from 'rxjs';
+import { Observable, of, map, delay, isObservable, switchMap, Subscription } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -16,11 +17,11 @@ export interface RouteTitle {
 
 @Injectable({ providedIn: 'root' })
 export class TitleService implements OnDestroy {
+  private destroy$ = inject(DestroyRef);
   private _prefix: string = '';
   private _suffix: string = '';
   private _separator: string = ' - ';
   private _reverse: boolean = false;
-  private destroy$ = new Subject<void>();
   private tit$?: Subscription;
 
   readonly DELAY_TIME = 25;
@@ -34,7 +35,7 @@ export class TitleService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
-    this.i18nSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => this.setTitle());
+    i18nSrv.change.pipe(takeUntilDestroyed()).subscribe(() => this.setTitle());
   }
 
   /**
@@ -138,7 +139,7 @@ export class TitleService implements OnDestroy {
         switchMap(tit => (tit ? of(tit) : this.getByElement())),
         map(tit => tit || this.default),
         map(title => (!Array.isArray(title) ? [title] : title)),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroy$)
       )
       .subscribe(titles => {
         let newTitles: string[] = [];
@@ -165,7 +166,5 @@ export class TitleService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.tit$?.unsubscribe();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
