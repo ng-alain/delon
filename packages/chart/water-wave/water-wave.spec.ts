@@ -52,7 +52,7 @@ describe('chart: water-wave', () => {
       [percent]="percent"
       [delay]="delay"
       [animate]="animate"
-    ></g2-water-wave>
+    />
   `
 })
 class TestComponent {

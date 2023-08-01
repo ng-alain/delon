@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 @Component({
   selector: 'dev-page',
   template: `
-    <page-header></page-header>
+    <page-header />
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
     <p>id: {{ id | json }}</p>
     page: {{ route.url | json }}

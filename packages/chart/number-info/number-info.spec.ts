@@ -105,7 +105,7 @@ describe('abc: number-info', () => {
       [status]="status"
       [theme]="theme"
       [gap]="gap"
-    ></number-info>
+    />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>

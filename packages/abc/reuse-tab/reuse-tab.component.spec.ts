@@ -839,7 +839,7 @@ describe('abc: reuse-tab', () => {
     <a id="d" [routerLink]="['/d']">d</a>
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
-    <router-outlet></router-outlet>
+    <router-outlet />
   `
 })
 class AppComponent {}
@@ -866,9 +866,8 @@ class AppComponent {}
       [canClose]="canClose"
       (change)="change($event)"
       (close)="close($event)"
-    >
-    </reuse-tab>
-    <div id="children"><router-outlet></router-outlet></div>
+    />
+    <div id="children"><router-outlet /></div>
     <ng-template #titleRender let-i>{{ i.url }}</ng-template>
   `
 })

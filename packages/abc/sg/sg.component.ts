@@ -21,7 +21,7 @@ const prefixCls = `sg`;
 @Component({
   selector: 'sg',
   exportAs: 'sg',
-  template: ` <ng-content></ng-content> `,
+  template: ` <ng-content /> `,
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue'

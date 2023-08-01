@@ -103,9 +103,7 @@ describe('abc: media', () => {
 });
 
 @Component({
-  template: `
-    <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()"></media>
-  `
+  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()" /> `
 })
 class TestComponent {
   @ViewChild('comp') comp!: MediaComponent;
@@ -116,7 +114,6 @@ class TestComponent {
   ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media>
-    <media [source]="source"></media>`
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media> <media [source]="source" />`
 })
 class TestCustomVideoComponent extends TestComponent {}

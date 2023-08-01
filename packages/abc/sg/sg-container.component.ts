@@ -7,7 +7,7 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
 @Component({
   selector: 'sg-container, [sg-container]',
   exportAs: 'sgContainer',
-  template: ` <ng-content></ng-content> `,
+  template: ` <ng-content /> `,
   host: {
     '[style.margin-left.px]': 'marginValue',
     '[style.margin-right.px]': 'marginValue',

@@ -5,7 +5,7 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 @Component({
   selector: 'global-footer-item',
   exportAs: 'globalFooterItem',
-  template: ` <ng-template #host><ng-content></ng-content></ng-template> `,
+  template: ` <ng-template #host><ng-content /></ng-template> `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None

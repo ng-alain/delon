@@ -13,11 +13,11 @@ import { AppService, SiteTheme } from '../core/app.service';
   selector: 'app-layout',
   template: `
     <ng-container *ngIf="render">
-      <app-header></app-header>
-      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning></nz-spin>
-      <router-outlet></router-outlet>
-      <nz-back-top></nz-back-top>
-      <theme-btn (themeChange)="themeChange($event)"></theme-btn>
+      <app-header />
+      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning />
+      <router-outlet />
+      <nz-back-top />
+      <theme-btn (themeChange)="themeChange($event)" />
     </ng-container>
   `,
   host: {

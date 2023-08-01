@@ -56,7 +56,7 @@ describe('chart: mini-bar', () => {
       [tooltipType]="tooltipType"
       [data]="data"
       [delay]="delay"
-    ></g2-mini-bar>
+    />
   `
 })
 class TestComponent {

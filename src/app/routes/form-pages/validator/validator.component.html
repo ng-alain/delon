@@ -1,7 +1,7 @@
 <div nz-row class="border-bottom-1 pb-sm mb-md">
   <div nz-col [nzSpan]="18">
     <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
-      <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title"></nz-option>
+      <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title" />
     </nz-select>
     <nz-radio-group [(ngModel)]="layout" class="ml-sm">
       <label nz-radio-button nzValue="horizontal">水平</label>
@@ -39,7 +39,7 @@
           (ngModelChange)="run()"
           [options]="editorOptions"
           height="500px"
-        ></nu-monaco-editor>
+        />
       </nz-tab>
       <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
         <nu-monaco-editor
@@ -48,7 +48,7 @@
           (ngModelChange)="run()"
           [options]="editorOptions"
           height="500px"
-        ></nu-monaco-editor>
+        />
       </nz-tab>
       <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
         <nu-monaco-editor
@@ -57,7 +57,7 @@
           (ngModelChange)="run()"
           [options]="editorOptions"
           height="500px"
-        ></nu-monaco-editor>
+        />
       </nz-tab>
     </nz-tabset>
   </div>
@@ -71,6 +71,6 @@
       (formChange)="change($event)"
       (formValueChange)="valueChange($event)"
       (formError)="error($event)"
-    ></sf>
+    />
   </div>
 </div>

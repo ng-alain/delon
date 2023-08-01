@@ -42,7 +42,7 @@
             class="sf__array-item"
           >
             <nz-card>
-              <sf-item [formProperty]="i"></sf-item>
+              <sf-item [formProperty]="i" />
               <span *ngIf="showRemove" class="sf__array-remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
                 <i nz-icon nzType="delete"></i>
               </span>

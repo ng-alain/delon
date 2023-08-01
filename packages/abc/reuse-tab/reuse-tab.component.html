@@ -20,7 +20,7 @@
             *ngIf="titleRender; else defaultTitle"
             [ngTemplateOutlet]="titleRender"
             [ngTemplateOutletContext]="{ $implicit: i }"
-          ></ng-container>
+          />
           <ng-template #defaultTitle>{{ i.title }}</ng-template>
         </span>
       </div>
@@ -28,4 +28,4 @@
     </ng-template>
   </nz-tab>
 </nz-tabset>
-<reuse-tab-context [i18n]="i18n" (change)="contextMenuChange($event)"></reuse-tab-context>
+<reuse-tab-context [i18n]="i18n" (change)="contextMenuChange($event)" />

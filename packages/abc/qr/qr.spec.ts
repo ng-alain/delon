@@ -104,7 +104,7 @@ describe('abc: qr', () => {
       [padding]="padding"
       [size]="size"
       (change)="change($event)"
-    ></qr>
+    />
   `
 })
 class TestComponent {

@@ -93,7 +93,7 @@ describe('chart: mini-area', () => {
       [tooltipType]="tooltipType"
       [xAxis]="xAxis"
       [yAxis]="yAxis"
-    ></g2-mini-area>
+    />
   `
 })
 class TestComponent {

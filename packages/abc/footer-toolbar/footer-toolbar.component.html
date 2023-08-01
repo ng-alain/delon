@@ -2,6 +2,6 @@
   <ng-container *nzStringTemplateOutlet="extra">{{ extra }}</ng-container>
 </div>
 <div class="footer-toolbar__right">
-  <error-collect *ngIf="errorCollect"></error-collect>
-  <ng-content></ng-content>
+  <error-collect *ngIf="errorCollect" />
+  <ng-content />
 </div>

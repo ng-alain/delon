@@ -23,12 +23,12 @@
       [nzMax]="i.max"
       [nzStep]="i.step || 2"
       [nzFormatter]="format"
-    ></nz-input-number>
+    />
   </ng-container>
   <ng-container *ngSwitchCase="'switch'">
-    <nz-switch nzSize="small" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }"></nz-switch>
+    <nz-switch nzSize="small" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
   </ng-container>
   <ng-container *ngSwitchDefault>
-    <ng-template nzDrawerContent></ng-template>
+    <ng-template nzDrawerContent />
   </ng-container>
 </div>
