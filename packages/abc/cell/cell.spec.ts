@@ -10,6 +10,7 @@ import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzImageService } from 'ng-zorro-antd/image';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { CellComponent } from './cell.component';
 import { CellModule } from './cell.module';
@@ -180,11 +181,12 @@ describe('abc: cell', () => {
         describe('with badge', () => {
           it('should be working', () => {
             page
-              .update('1', { badge: { data: { '1': { text: 'A' } } } })
+              .update('1', { badge: { data: { '1': { text: 'A', tooltip: 'tips' } } } })
               .check('A')
-              .count('.ant-badge-status-default', 1)
-              .update('2', {})
-              .check('2');
+              .count('.ant-badge-status-default', 1);
+            const tooltips = dl.queryAll(By.directive(NzTooltipDirective));
+            expect(tooltips.length).toBe(1);
+            page.update('2', {}).check('2');
           });
           it('should be empty text when is invalid key', () => {
             page.update('2', { type: 'badge' }).check('');
@@ -192,11 +194,12 @@ describe('abc: cell', () => {
         });
         it('with tag', () => {
           page
-            .update('1', { tag: { data: { '1': { text: 'A', color: '#f50' } } } })
+            .update('1', { tag: { data: { '1': { text: 'A', color: '#f50', tooltip: 'tips' } } } })
             .check('A')
-            .count('.ant-tag-has-color', 1)
-            .update('2', {})
-            .check('2');
+            .count('.ant-tag-has-color', 1);
+          const tooltips = dl.queryAll(By.directive(NzTooltipDirective));
+          expect(tooltips.length).toBe(1);
+          page.update('2', {}).check('2');
         });
         describe('with widget', () => {
           it('shoule be working', () => {

@@ -139,12 +139,15 @@ export class CellService {
     return (typeof value === 'function' ? (value as CellFuValue)(value, opt) : of(res.result)).pipe(
       map(text => {
         res.result = text;
+        let dictData: { tooltip?: string } | undefined;
         switch (type) {
           case 'badge':
-            res.result = { color: 'default', ...(opt.badge?.data ?? {})[value as string] };
+            dictData = (opt.badge?.data ?? {})[value as string];
+            res.result = { color: 'default', ...dictData };
             break;
           case 'tag':
-            res.result = (opt.tag?.data ?? {})[value as string];
+            dictData = (opt.tag?.data ?? {})[value as string];
+            res.result = dictData as CellTextUnit;
             break;
           case 'enum':
             res.result = { text: (opt.enum ?? {})[value as string] };
@@ -155,6 +158,9 @@ export class CellService {
           case 'string':
             if (isSafeHtml) res.safeHtml = 'safeHtml';
             break;
+        }
+        if ((type === 'badge' || type === 'tag') && dictData?.tooltip != null) {
+          res.options.tooltip = dictData.tooltip;
         }
         if (opt.mask != null) {
           res.result.text = formatMask(res.result.text as string, opt.mask);

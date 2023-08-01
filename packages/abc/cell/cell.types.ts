@@ -245,6 +245,12 @@ export interface CellBadgeValue {
    * 徽标颜色值
    */
   color?: 'success' | 'processing' | 'default' | 'error' | 'warning';
+  /**
+   * Text popup tip
+   *
+   * 文字提示
+   */
+  tooltip?: string;
 }
 
 /**
@@ -278,6 +284,12 @@ export interface CellTagValue {
     | 'green'
     | 'cyan'
     | string;
+  /**
+   * Text popup tip
+   *
+   * 文字提示
+   */
+  tooltip?: string;
 }
 
 export interface CellDefaultText {

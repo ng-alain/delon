@@ -59,8 +59,8 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
         <nz-tag *ngSwitchCase="'tag'" [nzColor]="res?.result?.color">
           <span [innerHTML]="_text"></span>
         </nz-tag>
-        <nz-badge *ngSwitchCase="'badge'" [nzStatus]="res?.result?.color" nzText="{{ _text }}"></nz-badge>
-        <ng-template *ngSwitchCase="'widget'" cell-widget-host [data]="hostData"></ng-template>
+        <nz-badge *ngSwitchCase="'badge'" [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
+        <ng-template *ngSwitchCase="'widget'" cell-widget-host [data]="hostData" />
         <ng-container *ngSwitchCase="'img'">
           <img
             *ngFor="let i of $any(_text)"
@@ -82,8 +82,8 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
     <ng-template #textWrap>
       <ng-container *ngIf="showDefault">{{ safeOpt.default?.text }}</ng-container>
       <ng-container *ngIf="!showDefault">
-        <span *ngIf="safeOpt?.tooltip; else text" nz-tooltip [nzTooltipTitle]="safeOpt.tooltip">
-          <ng-template [ngTemplateOutlet]="text"></ng-template>
+        <span *ngIf="safeOpt.tooltip; else text" [nz-tooltip]="safeOpt.tooltip">
+          <ng-template [ngTemplateOutlet]="text" />
         </span>
       </ng-container>
     </ng-template>
