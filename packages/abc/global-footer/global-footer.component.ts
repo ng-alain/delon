@@ -1,19 +1,19 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   Inject,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   QueryList,
   ViewEncapsulation
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { takeUntil, Subject } from 'rxjs';
 
 import { WINDOW } from '@delon/util/token';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -33,8 +33,8 @@ import { GlobalFooterLink } from './global-footer.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class GlobalFooterComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class GlobalFooterComponent implements OnInit {
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   private _links: GlobalFooterLink[] = [];
 
   dir: Direction = 'ltr';
@@ -54,7 +54,8 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
     private router: Router,
     @Inject(WINDOW) private win: NzSafeAny,
     private dom: DomSanitizer,
-    @Optional() private directionality: Directionality
+    @Optional() private directionality: Directionality,
+    private cdr: ChangeDetectorRef
   ) {}
 
   to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
@@ -74,13 +75,9 @@ export class GlobalFooterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

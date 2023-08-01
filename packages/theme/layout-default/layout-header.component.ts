@@ -3,12 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
-  OnDestroy,
   QueryList,
-  TemplateRef
+  TemplateRef,
+  inject
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { App, SettingsService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -61,8 +62,8 @@ interface LayoutDefaultHeaderItem {
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class LayoutDefaultHeaderComponent implements AfterViewInit {
+  private destroy$ = inject(DestroyRef);
 
   @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -101,17 +102,12 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.items.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
-    this.srv.options$.pipe(takeUntil(this.destroy$)).subscribe(() => this.cdr.detectChanges());
+    this.items.changes.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.refresh());
+    this.srv.options$.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.cdr.detectChanges());
     this.refresh();
   }
 
   toggleCollapsed(): void {
     this.srv.toggleCollapsed();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

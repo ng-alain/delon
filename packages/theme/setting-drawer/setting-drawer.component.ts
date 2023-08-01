@@ -8,11 +8,10 @@ import {
   Input,
   isDevMode,
   NgZone,
-  OnDestroy,
   OnInit,
   Optional
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
@@ -32,14 +31,14 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingDrawerComponent implements OnInit, OnDestroy {
+export class SettingDrawerComponent implements OnInit {
   @Input() @InputBoolean() autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
-  private destroy$ = new Subject<void>();
+  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   dir: Direction = 'ltr';
   isDev = isDevMode();
   collapse = false;
@@ -73,8 +72,9 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir$.subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     if (this.autoApplyColor && this.color !== this.DEFAULT_PRIMARY) {
       this.changeColor(this.color);
@@ -182,10 +182,5 @@ export class SettingDrawerComponent implements OnInit, OnDestroy {
       .join('\n');
     copy(copyContent);
     this.msg.success('Copy success');
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

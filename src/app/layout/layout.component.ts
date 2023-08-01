@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
-import { Subject, delay, filter, takeUntil } from 'rxjs';
+import { delay, filter } from 'rxjs';
 
 import { RTL, RTLService, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -23,8 +24,7 @@ import { AppService, SiteTheme } from '../core/app.service';
     '[attr.id]': `'ng-content'`
   }
 })
-export class LayoutComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
+export class LayoutComponent {
   isFetching = false;
   render = true;
 
@@ -37,7 +37,7 @@ export class LayoutComponent implements OnDestroy {
     private appSrv: AppService
   ) {
     rtl.change.subscribe(() => this.fixDirection());
-    router.events.pipe(takeUntil(this.destroy$)).subscribe(evt => {
+    router.events.pipe(takeUntilDestroyed()).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -53,7 +53,7 @@ export class LayoutComponent implements OnDestroy {
     });
     router.events
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
         filter(ev => ev instanceof NavigationEnd),
         delay(100)
       )
@@ -78,11 +78,5 @@ export class LayoutComponent implements OnDestroy {
 
   themeChange(theme: string): void {
     this.appSrv.setTheme(theme as SiteTheme);
-  }
-
-  ngOnDestroy(): void {
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

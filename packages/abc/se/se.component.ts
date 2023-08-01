@@ -5,19 +5,21 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
+  DestroyRef,
   ElementRef,
   Host,
   Input,
   OnChanges,
-  OnDestroy,
   Optional,
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular/forms';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
@@ -49,7 +51,7 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
+export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   static ngAcceptInputType_col: NumberInput;
   static ngAcceptInputType_required: BooleanInput;
   static ngAcceptInputType_line: BooleanInput;
@@ -58,7 +60,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   static ngAcceptInputType_hideLabel: BooleanInput;
 
   private el: HTMLElement;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName?: FormControlName;
@@ -133,7 +135,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.el = el.nativeElement;
     parent.errorNotify
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
       )
       .subscribe(item => {
@@ -163,7 +165,9 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (!this.ngControl || this.isBindModel) return;
 
     this.isBindModel = true;
-    this.ngControl.statusChanges!.pipe(takeUntil(this.destroy$)).subscribe(res => this.updateStatus(res === 'INVALID'));
+    this.ngControl
+      .statusChanges!.pipe(takeUntilDestroyed(this.destroy$))
+      .subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
@@ -231,11 +235,5 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
         this.onceFlag = false;
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }
