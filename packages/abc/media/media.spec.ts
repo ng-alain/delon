@@ -102,8 +102,11 @@ describe('abc: media', () => {
   }
 });
 
+// NOTE: <span></span> 当前不管是否有禁用eslint标签都会导致强制自关闭
 @Component({
-  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()" /> `
+  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()">
+    <span></span>
+  </media>`
 })
 class TestComponent {
   @ViewChild('comp') comp!: MediaComponent;
@@ -114,6 +117,6 @@ class TestComponent {
   ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media> <media [source]="source" />`
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`
 })
 class TestCustomVideoComponent extends TestComponent {}
