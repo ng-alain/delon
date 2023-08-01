@@ -165,8 +165,8 @@ export class DemoComponent implements OnInit {
   day3 = subDays(new Date(), 3);
   HTML = `<strong>Strong</string>`;
   status: CellBadge = {
-    WAIT: { text: '等待' },
-    FINISHED: { text: '完成', color: 'success' }
+    WAIT: { text: 'Wait', tooltip: 'Refers to waiting for the user to ship' },
+    FINISHED: { text: 'Done', color: 'success' }
   };
   loading = true;
   asyncLoading = true;
