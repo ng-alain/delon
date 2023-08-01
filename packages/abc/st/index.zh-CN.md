@@ -420,6 +420,7 @@ class TestComponent {
 |----|----|----|-----|
 | `[text]` | 文本 | `string` | - |
 | `[color]` | 徽标颜色值 | `success,processing,default,error,warning` | - |
+| `[tooltip]` | 文字提示 | `string` | - |
 
 ### STColumnTag
 
@@ -427,6 +428,7 @@ class TestComponent {
 |----|----|----|-----|
 | `[text]` | 文本 | `string` | - |
 | `[color]` | Tag颜色值 | `string` | - |
+| `[tooltip]` | 文字提示 | `string` | - |
 
 ### STWidgetColumn
 
