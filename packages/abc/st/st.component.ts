@@ -5,9 +5,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Host,
+  inject,
   Inject,
   Input,
   OnChanges,
@@ -21,8 +23,9 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { from, isObservable, Observable, of, Subject, Subscription, filter, takeUntil } from 'rxjs';
+import { from, isObservable, Observable, of, Subscription, filter } from 'rxjs';
 
 import {
   AlainI18NService,
@@ -109,7 +112,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
+  private isDestroy = false;
   private data$?: Subscription;
   private totalTpl = ``;
   cog!: AlainSTConfig;
@@ -261,7 +265,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     configSrv: AlainConfigService,
     private cms: NzContextMenuService
   ) {
-    this.delonI18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.delonI18n.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.updateTotalTpl();
@@ -271,7 +275,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     i18nSrv.change
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
         filter(() => this._columns.length > 0)
       )
       .subscribe(() => this.refreshColumns());
@@ -375,7 +379,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           customRequest: this.customRequest || this.cog.customRequest,
           ...options
         })
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroy$))
         .subscribe({
           next: result => resolvePromise(result),
           error: error => {
@@ -417,7 +421,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      if (!this.destroy$.closed) {
+      if (!this.isDestroy) {
         this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
       }
@@ -813,7 +817,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     });
     (isObservable(obs$) ? obs$ : of(obs$))
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter(res => res.length > 0)
       )
       .subscribe(res => {
@@ -918,8 +922,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.isDestroy = true;
   }
 }
 

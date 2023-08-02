@@ -5,11 +5,11 @@ import {
   ElementRef,
   Inject,
   Input,
-  OnDestroy,
   QueryList,
   Renderer2,
   TemplateRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   NavigationCancel,
   NavigationEnd,
@@ -19,7 +19,7 @@ import {
   Router,
   Event
 } from '@angular/router';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
@@ -36,13 +36,13 @@ import { LayoutDefaultOptions } from './types';
   exportAs: 'layoutDefault',
   template: `
     <div class="alain-default__progress-bar" *ngIf="showFetching"></div>
-    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems"></layout-default-header>
+    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems" />
     <div *ngIf="!opt.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-wrap">
         <div class="alain-default__aside-inner">
-          <ng-container *ngTemplateOutlet="asideUser"></ng-container>
-          <ng-container *ngTemplateOutlet="nav"></ng-container>
-          <layout-default-nav *ngIf="!nav"></layout-default-nav>
+          <ng-container *ngTemplateOutlet="asideUser" />
+          <ng-container *ngTemplateOutlet="nav" />
+          <layout-default-nav *ngIf="!nav" />
         </div>
         <div *ngIf="opt.showSiderCollapse" class="alain-default__aside-link">
           <ng-container *ngIf="asideBottom === null; else asideBottom">
@@ -54,12 +54,12 @@ import { LayoutDefaultOptions } from './types';
       </div>
     </div>
     <section class="alain-default__content">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="content" />
+      <ng-content />
     </section>
   `
 })
-export class LayoutDefaultComponent implements OnDestroy {
+export class LayoutDefaultComponent {
   static ngAcceptInputType_fetchingStrictly: BooleanInput;
   static ngAcceptInputType_fetching: BooleanInput;
 
@@ -82,7 +82,6 @@ export class LayoutDefaultComponent implements OnDestroy {
   @Input() @InputBoolean() fetchingStrictly = false;
   @Input() @InputBoolean() fetching = false;
 
-  private destroy$ = new Subject<void>();
   private isFetching = false;
 
   get showFetching(): boolean {
@@ -111,15 +110,14 @@ export class LayoutDefaultComponent implements OnDestroy {
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private srv: LayoutDefaultService
   ) {
-    const { destroy$ } = this;
     router.events
       .pipe(
-        takeUntil(destroy$),
+        takeUntilDestroyed(),
         filter(() => !this.fetchingStrictly)
       )
       .subscribe(ev => this.processEv(ev));
-    this.srv.options$.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
-    this.settings.notify.pipe(takeUntil(destroy$)).subscribe(() => this.setClass());
+    this.srv.options$.pipe(takeUntilDestroyed()).subscribe(() => this.setClass());
+    this.settings.notify.pipe(takeUntilDestroyed()).subscribe(() => this.setClass());
   }
 
   processEv(ev: Event): void {
@@ -156,10 +154,5 @@ export class LayoutDefaultComponent implements OnDestroy {
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -21,10 +21,10 @@
     [ngClass]="i._className"
     (click)="_stopPropagation($event)"
   >
-    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
+    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
   </a>
   <a *ngIf="!i.pop" (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i._className">
-    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
+    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
   </a>
 </ng-template>
 <ng-template #btnTextTpl let-i>
@@ -79,8 +79,8 @@
         [nz-tooltip]="i._values[cIdx].tooltip"
       />
     </ng-container>
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template
-    ><ng-container *ngSwitchDefault>
+    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
+    <ng-container *ngSwitchDefault>
       <span
         *ngIf="c.safeType !== 'text'"
         [innerHTML]="i._values[cIdx]._text"
@@ -102,17 +102,15 @@
       <ul nz-menu>
         <ng-container *ngFor="let subBtn of btn.children!">
           <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
-            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }">
-            </ng-template>
+            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }" />
           </li>
           <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
         </ng-container>
       </ul>
     </nz-dropdown-menu>
     <span *ngIf="btn.children!.length === 0" [class.st__btn-disabled]="btn._disabled">
-      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }">
-      </ng-template>
+      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
     </span>
-    <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
+    <nz-divider *ngIf="!last" nzType="vertical" />
   </ng-container>
 </ng-container>

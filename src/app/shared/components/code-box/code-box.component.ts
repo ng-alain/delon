@@ -1,7 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Inject,
+  Input,
+  OnInit,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy } from '@delon/util/browser';
@@ -19,10 +29,10 @@ import { AppService, CodeService, I18NService } from '@core';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CodeBoxComponent implements OnInit, OnDestroy {
+export class CodeBoxComponent implements OnInit {
   private _item: any;
   private _orgItem: any;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   copied = false;
   theme = 'default';
 
@@ -58,14 +68,14 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.appService.theme$.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
       this.theme = data;
       this.check();
     });
     this.i18n.change
       .pipe(
         filter(() => !!this._orgItem),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroy$)
       )
       .subscribe(() => {
         this.item.title = this.i18n.get(this._orgItem.meta.title);
@@ -102,10 +112,5 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
         this.check();
       }, 1000);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

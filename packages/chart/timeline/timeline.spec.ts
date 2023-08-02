@@ -63,8 +63,7 @@ describe('chart: timeline', () => {
       [data]="data"
       [slider]="slider"
       [delay]="delay"
-    >
-    </g2-timeline>
+    />
   `
 })
 class TestComponent {

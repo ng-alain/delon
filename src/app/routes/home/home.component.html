@@ -18,13 +18,7 @@
           国内镜像：<a href="https://ng-alain.gitee.io" target="_blank">ng-alain.gitee.io</a>
         </ng-template>
       </a>
-      <github-button
-        *ngIf="isBrowser"
-        type="stargazers"
-        size="large"
-        namespace="ng-alain"
-        repo="ng-alain"
-      ></github-button>
+      <github-button *ngIf="isBrowser" type="stargazers" size="large" namespace="ng-alain" repo="ng-alain" />
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay>
@@ -136,4 +130,4 @@
     </div>
   </div>
 </div>
-<app-footer></app-footer>
+<app-footer />

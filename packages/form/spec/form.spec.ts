@@ -877,7 +877,7 @@ describe('form: component', () => {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf>
+    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading" />
   `
 })
 class TestModeComponent extends TestFormComponent {}

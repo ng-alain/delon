@@ -23,7 +23,7 @@
 </div>
 <div class="sv__detail">
   <span (cdkObserveContent)="checkContent()" #conEl>
-    <ng-content></ng-content>
+    <ng-content />
   </span>
   <ng-container *ngIf="!!unit">
     <span class="sv__unit" *nzStringTemplateOutlet="unit">{{ unit }}</span>

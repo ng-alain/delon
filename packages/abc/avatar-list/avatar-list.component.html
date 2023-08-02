@@ -8,15 +8,10 @@
       [nzText]="i.text"
       [nzIcon]="i.icon"
       [nzSize]="avatarSize"
-    ></nz-avatar>
-    <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize"></nz-avatar>
+    />
+    <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize" />
   </li>
   <li *ngIf="exceedCount > 0" [ngClass]="cls">
-    <nz-avatar
-      [nzSize]="avatarSize"
-      style="cursor: auto"
-      [ngStyle]="excessItemsStyle"
-      [nzText]="'+' + exceedCount"
-    ></nz-avatar>
+    <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [ngStyle]="excessItemsStyle" [nzText]="'+' + exceedCount" />
   </li>
 </ul>

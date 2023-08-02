@@ -9,7 +9,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 @Component({
   selector: 'g2-gauge',
   exportAs: 'g2Gauge',
-  template: `<nz-skeleton *ngIf="!loaded"></nz-skeleton>`,
+  template: `<nz-skeleton *ngIf="!loaded" />`,
   host: {
     '[class.g2-gauge]': 'true'
   },

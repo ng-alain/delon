@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Inject,
@@ -12,10 +13,12 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
-import { fromEvent, Subject, debounceTime, filter, takeUntil } from 'rxjs';
+import { fromEvent, debounceTime, filter } from 'rxjs';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -29,7 +32,7 @@ const hideTitleCls = `full-content__hidden-title`;
 @Component({
   selector: 'full-content',
   exportAs: 'fullContent',
-  template: ` <ng-content></ng-content> `,
+  template: ` <ng-content /> `,
   host: {
     '[class.full-content]': 'true',
     '[style.height.px]': '_height'
@@ -46,7 +49,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   private bodyEl!: HTMLElement;
   private inited = false;
   private id = `_full-content-${Math.random().toString(36).substring(2)}`;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
 
   _height = 0;
 
@@ -104,13 +107,13 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
     // when window resize
     fromEvent(window, 'resize')
-      .pipe(takeUntil(this.destroy$), debounceTime(200))
+      .pipe(takeUntilDestroyed(this.destroy$), debounceTime(200))
       .subscribe(() => this.updateHeight());
 
     // when servier changed
     this.srv.change
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter(res => res !== null)
       )
       .subscribe(() => this.toggle());
@@ -118,7 +121,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     // when router changed
     this.router.events
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
         debounceTime(200)
       )
@@ -148,8 +151,5 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   ngOnDestroy(): void {
     this.removeInBody();
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

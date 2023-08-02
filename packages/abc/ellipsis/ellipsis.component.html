@@ -1,4 +1,4 @@
-<div (cdkObserveContent)="refresh()" #orgEl style="display: none"><ng-content></ng-content></div>
+<div (cdkObserveContent)="refresh()" #orgEl style="display: none"><ng-content /></div>
 <ng-template #tooltipTpl let-con>
   <span
     *ngIf="tooltip; else con"
@@ -6,7 +6,7 @@
     [nzTooltipTitle]="titleTpl"
     [nzTooltipOverlayStyle]="{ 'overflow-wrap': 'break-word', 'word-wrap': 'break-word' }"
   >
-    <ng-container *ngTemplateOutlet="con"></ng-container>
+    <ng-container *ngTemplateOutlet="con" />
     <ng-template #titleTpl><div [innerHTML]="orgHtml"></div></ng-template>
   </span>
 </ng-template>

@@ -6,12 +6,12 @@ import { format } from 'date-fns';
 @Component({
   selector: 'dev-list-layout',
   template: `
-    <page-header></page-header>
+    <page-header />
     <h1>Layout</h1>
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
     <hr />
     <div class="px-lg">
-      <router-outlet></router-outlet>
+      <router-outlet />
     </div>
   `
 })

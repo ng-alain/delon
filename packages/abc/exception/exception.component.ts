@@ -3,16 +3,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
-import { Subject, takeUntil } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
@@ -33,10 +34,10 @@ export type ExceptionType = 403 | 404 | 500;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ExceptionComponent implements OnInit, OnDestroy {
+export class ExceptionComponent implements OnInit {
   static ngAcceptInputType_type: ExceptionType | string;
 
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   @ViewChild('conTpl', { static: true }) private conTpl!: ElementRef;
 
   _type!: ExceptionType;
@@ -113,15 +114,14 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
-    this.i18n.change.pipe(takeUntil(this.destroy$)).subscribe(() => (this.locale = this.i18n.getData('exception')));
+    this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => {
+      this.locale = this.i18n.getData('exception');
+      this.cdr.detectChanges();
+    });
     this.checkContent();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

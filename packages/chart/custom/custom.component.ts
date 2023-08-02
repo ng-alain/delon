@@ -16,7 +16,7 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   selector: 'g2,g2-custom',
   exportAs: 'g2Custom',
   template: `
-    <nz-skeleton *ngIf="!loaded"></nz-skeleton>
+    <nz-skeleton *ngIf="!loaded" />
     <ng-content></ng-content>
   `,
   host: {

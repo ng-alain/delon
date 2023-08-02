@@ -5,7 +5,7 @@ import { LayoutDefaultService } from '@delon/theme/layout-default';
 @Component({
   selector: 'dev-home',
   template: `
-    <page-header [autoBreadcrumb]="false"></page-header>
+    <page-header [autoBreadcrumb]="false" />
     home
     <div class="mb-md"> options: {{ srv.options | json }} </div>
     <div class="mb-md">

@@ -15,7 +15,7 @@
             [nzXl]="i.grid.xl"
             [nzXXl]="i.grid.xxl"
           >
-            <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed"></sf-item>
+            <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed" />
           </div>
         </ng-container>
       </ng-container>
@@ -24,7 +24,7 @@
   <ng-template #noGrid>
     <ng-container *ngFor="let i of list">
       <ng-container *ngIf="i.property.visible && i.show">
-        <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed"></sf-item>
+        <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed" />
       </ng-container>
     </ng-container>
   </ng-template>
@@ -47,5 +47,5 @@
       {{ title }}
     </div>
   </ng-template>
-  <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }"></ng-template>
+  <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }" />
 </nz-card>
