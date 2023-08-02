@@ -40,8 +40,7 @@ describe('chart: card', () => {
       [total]="126560"
       footer="日访问量 12,423"
       [contentHeight]="contentHeight"
-    >
-    </g2-card>
+    />
   `
 })
 class TestComponent {

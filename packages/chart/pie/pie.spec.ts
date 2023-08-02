@@ -98,7 +98,7 @@ describe('chart: pie', () => {
       [lineWidth]="lineWidth"
       [select]="select"
       [colors]="colors"
-    ></g2-pie>
+    />
   `
 })
 class TestMiniComponent {
@@ -136,7 +136,7 @@ class TestMiniComponent {
       [select]="select"
       [colors]="colors"
       [delay]="delay"
-    ></g2-pie>
+    />
   `
 })
 class TestFullComponent {

@@ -31,7 +31,7 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
 @Component({
   selector: 'media',
   exportAs: 'mediaComponent',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     '[style.display]': `'block'`
   },

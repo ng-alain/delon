@@ -369,7 +369,7 @@ export class SFPage {
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
       (formError)="formError($event)"
-    ></sf>
+    />
   `
 })
 export class TestFormComponent {

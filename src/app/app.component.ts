@@ -9,7 +9,7 @@ import { I18NService, MetaService, MobileService } from '@core';
 
 @Component({
   selector: 'app-root',
-  template: ` <router-outlet></router-outlet>`
+  template: ` <router-outlet />`
 })
 export class AppComponent {
   @HostBinding('class.mobile')

@@ -36,13 +36,13 @@ import { LayoutDefaultOptions } from './types';
   exportAs: 'layoutDefault',
   template: `
     <div class="alain-default__progress-bar" *ngIf="showFetching"></div>
-    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems"></layout-default-header>
+    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems" />
     <div *ngIf="!opt.hideAside" class="alain-default__aside">
       <div class="alain-default__aside-wrap">
         <div class="alain-default__aside-inner">
-          <ng-container *ngTemplateOutlet="asideUser"></ng-container>
-          <ng-container *ngTemplateOutlet="nav"></ng-container>
-          <layout-default-nav *ngIf="!nav"></layout-default-nav>
+          <ng-container *ngTemplateOutlet="asideUser" />
+          <ng-container *ngTemplateOutlet="nav" />
+          <layout-default-nav *ngIf="!nav" />
         </div>
         <div *ngIf="opt.showSiderCollapse" class="alain-default__aside-link">
           <ng-container *ngIf="asideBottom === null; else asideBottom">
@@ -54,8 +54,8 @@ import { LayoutDefaultOptions } from './types';
       </div>
     </div>
     <section class="alain-default__content">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="content" />
+      <ng-content />
     </section>
   `
 })

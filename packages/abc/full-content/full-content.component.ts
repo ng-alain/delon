@@ -32,7 +32,7 @@ const hideTitleCls = `full-content__hidden-title`;
 @Component({
   selector: 'full-content',
   exportAs: 'fullContent',
-  template: ` <ng-content></ng-content> `,
+  template: ` <ng-content /> `,
   host: {
     '[class.full-content]': 'true',
     '[style.height.px]': '_height'

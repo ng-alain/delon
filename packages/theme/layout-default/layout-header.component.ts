@@ -29,7 +29,7 @@ interface LayoutDefaultHeaderItem {
   template: `
     <ng-template #render let-ls>
       <li *ngFor="let i of ls" [class.hidden-mobile]="i.hidden === 'mobile'" [class.hidden-pc]="i.hidden === 'pc'">
-        <ng-container *ngTemplateOutlet="i.host"></ng-container>
+        <ng-container *ngTemplateOutlet="i.host" />
       </li>
     </ng-template>
     <div class="alain-default__header-logo" [style.width.px]="opt.logoFixWidth">
@@ -47,13 +47,13 @@ interface LayoutDefaultHeaderItem {
             <span nz-icon [nzType]="collapsedIcon"></span>
           </div>
         </li>
-        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }"></ng-template>
+        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }" />
       </ul>
       <div *ngIf="middle.length > 0" class="alain-default__nav alain-default__nav-middle">
-        <ng-container *ngTemplateOutlet="middle[0].host"></ng-container>
+        <ng-container *ngTemplateOutlet="middle[0].host" />
       </div>
       <ul class="alain-default__nav">
-        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }"></ng-template>
+        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }" />
       </ul>
     </div>
   `,

@@ -420,8 +420,7 @@ export class PageObject<T extends TestComponent> {
       [customRequest]="customRequest"
       (change)="change($event)"
       (error)="error()"
-    >
-    </st>
+    />
     <ng-template #tpl let-handle="handle">
       <span>In tpl</span>
       <a class="close_in_tpl" (click)="handle.close()">close</a>

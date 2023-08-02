@@ -1,4 +1,4 @@
-<nz-skeleton *ngIf="!loaded"></nz-skeleton>
+<nz-skeleton *ngIf="!loaded" />
 <div class="g2-pie__chart">
   <div #container></div>
   <div *ngIf="subTitle || total" class="g2-pie__total">
@@ -18,7 +18,7 @@
   <li *ngFor="let item of legendData; let index = index" (click)="_click(index)" class="g2-pie__legend-item">
     <span class="g2-pie__legend-dot" [ngStyle]="{ 'background-color': !item.checked ? '#aaa' : item.color }"></span>
     <span class="g2-pie__legend-title">{{ item.x }}</span>
-    <nz-divider nzType="vertical"></nz-divider>
+    <nz-divider nzType="vertical" />
     <span class="g2-pie__legend-percent">{{ item.percent }}%</span>
     <span class="g2-pie__legend-value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
   </li>

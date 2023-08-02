@@ -1,7 +1,7 @@
 <section class="code-box-demo" [ngStyle]="{ background: item.bg }">
   <div [ngClass]="{ 'browser-mockup': item.browser }" [ngStyle]="{ 'height.px': item.browser }">
     <div [ngClass]="{ 'browser-scroll': item.browser }">
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   </div>
 </section>
@@ -9,7 +9,7 @@
   <ng-container *ngIf="type === 'default'">
     <div class="code-box-title">
       {{ item.title }}
-      <edit-button [item]="item"></edit-button>
+      <edit-button [item]="item" />
     </div>
     <div class="code-box-description" [innerHTML]="item.summary"></div>
   </ng-container>

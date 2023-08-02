@@ -6,7 +6,7 @@ import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from 
   selector: 'layout-default-header-item',
   template: `
     <ng-template #host>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `
 })

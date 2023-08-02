@@ -104,7 +104,7 @@ describe('abc: result', () => {
 
 @Component({
   template: `
-    <result #comp [type]="type" [title]="title" [description]="description" [extra]="extra"></result>
+    <result #comp [type]="type" [title]="title" [description]="description" [extra]="extra" />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #descriptionTpl><p id="descriptionTpl">descriptionTpl</p></ng-template>
     <ng-template #extraTpl><p id="extraTpl">extraTpl</p></ng-template>

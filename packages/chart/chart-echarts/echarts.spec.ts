@@ -97,7 +97,7 @@ describe('chart: chart-echarts', () => {
       [initOpt]="initOpt"
       [on]="on"
       (events)="handleEvents($event)"
-    ></chart-echarts>
+    />
   `
 })
 class TestComponent {
