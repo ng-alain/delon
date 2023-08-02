@@ -357,7 +357,7 @@ class TestWidget {
       [options]="options"
       [loading]="loading"
       [disabled]="disabled"
-    ></cell>
+    />
   `
 })
 class TestComponent {
