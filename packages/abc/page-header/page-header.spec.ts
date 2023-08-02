@@ -463,13 +463,7 @@ class TestComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-    <page-header
-      #comp
-      [title]="title"
-      [home]="home"
-      [homeI18n]="homeI18n"
-      [autoBreadcrumb]="autoBreadcrumb"
-    ></page-header>
+    <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb" />
   `
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}
@@ -483,7 +477,7 @@ class TestAutoBreadcrumbComponent extends TestBaseComponent {}
       [homeI18n]="homeI18n"
       [homeLink]="homeLink"
       [autoBreadcrumb]="autoBreadcrumb"
-    ></page-header>
+    />
   `
 })
 class TestI18nComponent extends TestBaseComponent {}

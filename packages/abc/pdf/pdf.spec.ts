@@ -44,7 +44,7 @@ describe('abc: pdf', () => {
 });
 
 @Component({
-  template: ` <pdf #comp [src]="src" [options]="options" [delay]="delay" (change)="change()"></pdf> `
+  template: ` <pdf #comp [src]="src" [options]="options" [delay]="delay" (change)="change()" /> `
 })
 class TestComponent {
   @ViewChild('comp') comp!: PdfComponent;

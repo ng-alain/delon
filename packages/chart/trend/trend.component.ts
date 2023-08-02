@@ -6,7 +6,7 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   selector: 'trend',
   exportAs: 'trend',
   template: `
-    <ng-content></ng-content>
+    <ng-content />
     <span *ngIf="flag" class="trend__{{ flag }}"><i nz-icon nzType="caret-{{ flag }}"></i></span>
   `,
   host: {

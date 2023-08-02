@@ -4,7 +4,7 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 
 @Component({
   selector: 'layout-default-top-menu-item',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     '[class.alain-default__nav-item]': `true`,
     '[class.alain-default__top-menu-item]': `true`,

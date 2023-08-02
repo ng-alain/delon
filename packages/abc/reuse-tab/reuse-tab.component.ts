@@ -5,11 +5,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Inject,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Output,
@@ -17,10 +17,12 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, debounceTime, filter, takeUntil, of } from 'rxjs';
+import { debounceTime, filter, of } from 'rxjs';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -59,7 +61,7 @@ import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } 
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+export class ReuseTabComponent implements OnInit, OnChanges {
   static ngAcceptInputType_debug: BooleanInput;
   static ngAcceptInputType_max: NumberInput;
   static ngAcceptInputType_tabMaxWidth: NumberInput;
@@ -69,7 +71,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_storageState: BooleanInput;
 
   @ViewChild('tabset') private tabset!: NzTabSetComponent;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   private _keepingScrollContainer?: Element;
   list: ReuseItem[] = [];
   item?: ReuseItem;
@@ -297,7 +299,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
@@ -306,7 +308,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    this.srv.change.pipe(takeUntil(this.destroy$)).subscribe(res => {
+    this.srv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(res => {
       switch (res?.active) {
         case 'title':
           this.updateTitle(res);
@@ -324,7 +326,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.i18nSrv.change
       .pipe(
         filter(() => this.srv.inited),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroy$),
         debounceTime(100)
       )
       .subscribe(() => this.genList({ active: 'title' }));
@@ -350,11 +352,5 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.srv.debug = this.debug;
 
     this.cdr.detectChanges();
-  }
-
-  ngOnDestroy(): void {
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

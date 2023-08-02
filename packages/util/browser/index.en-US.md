@@ -17,7 +17,7 @@ A set of simple Cookie manipulation classes.
 
 ## isEmpty
 
-Used to verify `<ng-content></ng-content>` is empty, useful for custom components.
+Used to verify `<ng-content />` is empty, useful for custom components.
 
 ## updateHostClass
 

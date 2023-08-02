@@ -14,30 +14,31 @@ title:
 Virtual scrolling combine with [cdk scrolling](https://material.angular.io/cdk/scrolling/overview) used to display large data, you can get `cdkVirtualScrollViewport` in `STComponent` and find more API [here](https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport).
 
 ```ts
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { STColumn, STComponent, STPage } from '@delon/abc/st';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="scrollToIndex(200)">Scroll To Index 200</button>
     <st #st [data]="data" [columns]="columns" [page]="page" virtualScroll [scroll]="{ x: '1300px', y: '240px' }"></st>
-  `,
+  `
 })
-export class DemoComponent implements AfterViewInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class DemoComponent implements AfterViewInit {
+  private destroy$ = inject(DestroyRef);
   @ViewChild('st', { static: false }) st!: STComponent;
 
   page: STPage = {
     front: false,
-    show: false,
+    show: false
   };
   data: Array<{ id: number; price: number }> = Array(2000)
     .fill({})
     .map((_, idx) => ({
       id: idx + 1,
-      price: ~~(Math.random() * 100),
+      price: ~~(Math.random() * 100)
     }));
   columns: STColumn[] = [
     { title: '编号', index: 'id', width: 100 },
@@ -50,7 +51,7 @@ export class DemoComponent implements AfterViewInit, OnDestroy {
     { title: '价格7', index: 'price', width: 100 },
     { title: '价格8', index: 'price', width: 100 },
     { title: '价格9', index: 'price', width: 100 },
-    { title: '价格10', index: 'price', width: 100 },
+    { title: '价格10', index: 'price', width: 100 }
   ];
 
   scrollToIndex(index: number): void {
@@ -58,14 +59,9 @@ export class DemoComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.st.cdkVirtualScrollViewport.scrolledIndexChange.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.st.cdkVirtualScrollViewport.scrolledIndexChange.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
       console.log('scroll index to', data);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
 ```

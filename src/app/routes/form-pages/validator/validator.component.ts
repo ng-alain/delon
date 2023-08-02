@@ -1,13 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 
@@ -59,12 +51,11 @@ export class DemoComponent {
   templateUrl: './validator.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormValidatorComponent implements OnInit, OnDestroy {
+export class FormValidatorComponent implements OnInit {
   @ViewChild('schemaEditor') private schemaEditor!: NuMonacoEditorComponent;
   @ViewChild('formCodeEditor') private formCodeEditor!: NuMonacoEditorComponent;
   @ViewChild('uiEditor') private uiEditor!: NuMonacoEditorComponent;
 
-  private destroy$ = new Subject<void>();
   files: Array<{ name: string; title: string; cache?: string }> = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },
@@ -95,7 +86,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
-    this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.appService.theme$.pipe(takeUntilDestroyed()).subscribe(data => {
       this.editorOptions = { language: 'json', theme: data === 'dark' ? 'vs-dark' : 'vs' };
     });
   }
@@ -166,10 +157,5 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
 
   error(value: NzSafeAny): void {
     console.log('formError', value);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

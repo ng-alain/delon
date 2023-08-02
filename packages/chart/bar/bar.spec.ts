@@ -82,7 +82,7 @@ describe('chart: bar', () => {
       [data]="data"
       [autoLabel]="autoLabel"
       (clickItem)="clickItem($event)"
-    ></g2-bar>
+    />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
   `
 })

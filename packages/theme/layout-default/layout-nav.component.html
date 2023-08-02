@@ -36,10 +36,10 @@
       >
         <ng-container *ngIf="i._needIcon">
           <ng-container *ngIf="!collapsed">
-            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
           </ng-container>
           <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i.text">
-            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
           </span>
         </ng-container>
         <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
@@ -51,14 +51,14 @@
         (mouseenter)="showSubMenu($event, i)"
         class="sidebar-nav__item-link"
       >
-        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
         <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
         <i class="sidebar-nav__sub-arrow"></i>
       </a>
       <!-- badge -->
-      <nz-badge *ngIf="i.badge" [nzCount]="i.badge" [nzDot]="i.badgeDot" nzStandalone [nzOverflowCount]="9"></nz-badge>
+      <nz-badge *ngIf="i.badge" [nzCount]="i.badge" [nzDot]="i.badgeDot" nzStandalone [nzOverflowCount]="9" />
       <ul *ngIf="i.children.length > 0" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ i._depth }}">
-        <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: i.children }"></ng-template>
+        <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: i.children }" />
       </ul>
     </li>
   </ng-container>
@@ -68,6 +68,6 @@
     <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group">
       <span [innerHTML]="group._text"></span>
     </li>
-    <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }"></ng-template>
+    <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }" />
   </ng-container>
 </ul>

@@ -36,7 +36,7 @@ export interface G2BarClickItem {
     <ng-container *nzStringTemplateOutlet="title">
       <h4 style="margin-bottom: 20px;">{{ title }}</h4>
     </ng-container>
-    <nz-skeleton *ngIf="!loaded"></nz-skeleton>
+    <nz-skeleton *ngIf="!loaded" />
     <div #container></div>
   `,
   host: {

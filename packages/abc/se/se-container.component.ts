@@ -26,7 +26,7 @@ import { SEErrorRefresh, SELayout } from './se.types';
     <div se-title *ngIf="title">
       <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
     </div>
-    <ng-content></ng-content>
+    <ng-content />
   `,
   host: {
     '[class.ant-row]': `true`,
@@ -119,7 +119,7 @@ export class SEContainerComponent {
 @Component({
   selector: 'se-title, [se-title]',
   exportAs: 'seTitle',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content />',
   host: {
     '[class.se__title]': 'true'
   },

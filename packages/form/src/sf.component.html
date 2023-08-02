@@ -1,5 +1,5 @@
 <ng-template #con>
-  <ng-content></ng-content>
+  <ng-content />
 </ng-template>
 <ng-template #btnTpl>
   <ng-container *ngIf="button !== 'none'; else con">
@@ -71,5 +71,5 @@
   </ng-container>
 </ng-template>
 <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty" [footer]="btnTpl"></sf-item>
+  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty" [footer]="btnTpl" />
 </form>

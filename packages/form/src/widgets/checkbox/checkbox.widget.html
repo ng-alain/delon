@@ -6,8 +6,9 @@
     [(ngModel)]="allChecked"
     (ngModelChange)="onAllChecked()"
     [nzIndeterminate]="indeterminate"
-    >{{ ui.checkAllText || l.checkAllText }}</label
   >
+    {{ ui.checkAllText || l.checkAllText }}
+  </label>
 </ng-template>
 <sf-item-wrap
   [id]="id"
@@ -41,14 +42,14 @@
   </ng-container>
   <ng-container *ngIf="inited && data.length > 0">
     <ng-container *ngIf="grid_span === 0">
-      <ng-template [ngTemplateOutlet]="all"></ng-template>
-      <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()"></nz-checkbox-group>
+      <ng-template [ngTemplateOutlet]="all" />
+      <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()" />
     </ng-container>
     <ng-container *ngIf="grid_span !== 0">
       <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
         <div nz-row>
           <div nz-col [nzSpan]="grid_span" *ngIf="ui.checkAll">
-            <ng-template [ngTemplateOutlet]="all"></ng-template>
+            <ng-template [ngTemplateOutlet]="all" />
           </div>
           <div nz-col [nzSpan]="grid_span" *ngFor="let i of data">
             <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">{{ i.label }}</label>

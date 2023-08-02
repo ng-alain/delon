@@ -52,7 +52,7 @@ import { _STColumn } from './st.types';
               [nzPrecision]="f.number!.precision"
               [nzPlaceHolder]="f.placeholder!"
               class="width-100"
-            ></nz-input-number>
+            />
           </div>
           <div *ngSwitchCase="'date'" class="p-sm st__filter-date">
             <nz-date-picker
@@ -65,7 +65,7 @@ import { _STColumn } from './st.types';
               [nzShowToday]="f.date!.showToday"
               [nzDisabledDate]="f.date!.disabledDate"
               [nzDisabledTime]="f.date!.disabledTime"
-            ></nz-date-picker>
+            />
             <nz-range-picker
               *ngIf="f.date!.range"
               nzInline
@@ -76,14 +76,14 @@ import { _STColumn } from './st.types';
               [nzShowToday]="f.date!.showToday"
               [nzDisabledDate]="f.date!.disabledDate"
               [nzDisabledTime]="f.date!.disabledTime"
-            ></nz-range-picker>
+            />
           </div>
           <div *ngSwitchCase="'time'" class="p-sm st__filter-time"> </div>
           <div *ngSwitchCase="'custom'" class="st__filter-custom">
             <ng-template
               [ngTemplateOutlet]="f.custom!"
               [ngTemplateOutletContext]="{ $implicit: f, col: col, handle: this }"
-            ></ng-template>
+            />
           </div>
           <ul *ngSwitchDefault nz-menu>
             <ng-container *ngIf="f.multiple">

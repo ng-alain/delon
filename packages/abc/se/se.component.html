@@ -24,7 +24,7 @@
 <div class="ant-form-item-control se__control">
   <div class="ant-form-item-control-input {{ controlClass }}">
     <div class="ant-form-item-control-input-content" (cdkObserveContent)="checkContent()" #contentElement>
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   </div>
   <div @helpMotion class="ant-form-item-explain ant-form-item-explain-connected" *ngIf="showErr">

@@ -22,7 +22,7 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
       <sv-title *ngIf="title">
         <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
       </sv-title>
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   `,
   host: {
@@ -71,7 +71,7 @@ export class SVContainerComponent {
 @Component({
   selector: 'sv-title, [sv-title]',
   exportAs: 'svTitle',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content />',
   host: {
     '[class.sv__title]': 'true'
   },

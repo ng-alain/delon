@@ -641,7 +641,7 @@ describe('theme: layout-default-nav', () => {
       [recursivePath]="recursivePath"
       [openStrictly]="openStrictly"
       (select)="select()"
-    ></layout-default-nav>
+    />
   `
 })
 class TestComponent {

@@ -58,7 +58,7 @@ describe('abc: footer-toolbar', () => {
 });
 
 @Component({
-  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form> `
+  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra" /></form> `
 })
 class TestComponent {
   errorCollect = true;
