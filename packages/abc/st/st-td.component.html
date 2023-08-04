@@ -45,7 +45,7 @@
   #render
   [ngTemplateOutlet]="c.__render!"
   [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }"
-></ng-template>
+/>
 <ng-container *ngIf="!c.__render; else render">
   <ng-container [ngSwitch]="c.type">
     <label
