@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { from, isObservable, Observable, of, filter, catchError, map, finalize, throwError } from 'rxjs';
+import { isObservable, Observable, of, filter, catchError, map, finalize, throwError, lastValueFrom } from 'rxjs';
 
 import {
   AlainI18NService,
@@ -131,7 +131,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   _headers: _STHeader[][] = [];
   _columns: _STColumn[] = [];
   contextmenuList: STContextmenuItem[] = [];
-  @ViewChild('table') readonly orgTable?: NzTableComponent<STData>;
+  @ViewChild('table') readonly orgTable!: NzTableComponent<STData>;
   @ViewChild('contextmenuTpl') readonly contextmenuTpl!: NzDropdownMenuComponent;
 
   @Input()
@@ -754,7 +754,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     const data = Array.isArray(newData)
       ? this.dataSource.optimizeData({ columns: this._columns, result: newData })
       : this._data;
-    (newData === true ? from(this.filteredData) : of(data)).subscribe((res: STData[]) =>
+    (newData === true ? this.filteredData : of(data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
         columens: this._columns,
         ...opt,
@@ -818,7 +818,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     return this.orgTable?.cdkVirtualScrollViewport;
   }
 
-  resetColumns(options?: STResetColumnsOption): Observable<this> {
+  private _resetColumns(options?: STResetColumnsOption): Observable<this> {
     options = { emitReload: true, preClearData: false, ...options };
     if (typeof options.columns !== 'undefined') {
       this.columns = options.columns;
@@ -843,6 +843,10 @@ export class STComponent implements AfterViewInit, OnChanges {
       this.cd();
       return of(this);
     }
+  }
+
+  resetColumns(options?: STResetColumnsOption): Promise<this> {
+    return lastValueFrom(this._resetColumns(options));
   }
 
   private refreshColumns(): this {

@@ -1378,9 +1378,7 @@ describe('abc: st', () => {
           const cls = '.st__body tr[data-index="0"] td';
           page.updateColumn([{ title: '', index: 'name' }]).expectElCount(cls, 1);
           comp.resetColumns({ preClearData: true, columns: [{ title: '', index: 'invalid-name' }] });
-          page.cd();
-          expect(page.comp._data.length).toBe(0);
-          expect(page.get('nz-embed-empty') != null).toBe(true);
+          page.cd().expectElContent(cls, '').asyncEnd();
         }));
       });
       it('#filteredData', fakeAsync(() => {
@@ -1617,7 +1615,6 @@ describe('abc: st', () => {
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
       })!;
-      page.cd();
       page.updateColumn([{ title: '', render: 'id' }]).cd();
       const jIdEl = page.getCell().querySelector('.j-id');
       expect(jIdEl != null)
