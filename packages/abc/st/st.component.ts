@@ -113,6 +113,7 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   private destroy$ = inject(DestroyRef);
   private totalTpl = ``;
+  private inied = false;
   cog!: AlainSTConfig;
   private _req!: STReq;
   private _res!: STRes;
@@ -398,13 +399,13 @@ export class STComponent implements AfterViewInit, OnChanges {
         }
         this._data = result.list ?? [];
         this._statistical = result.statistical as STStatisticalResults;
-        this.changeEmit('loaded', result.list);
         // Should be re-render in next tike when using virtual scroll
         // https://github.com/ng-alain/ng-alain/issues/1836
         if (this.cdkVirtualScrollViewport != null) {
           Promise.resolve().then(() => this.cdkVirtualScrollViewport?.checkViewportSize());
         }
         this._refCheck();
+        this.changeEmit('loaded', result.list);
         return this;
       })
     );
@@ -890,19 +891,22 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    this.columnSource.restoreAllRender(this._columns);
+    this.refreshColumns();
+    if (!this.req.lazyLoad) this.loadPageData().subscribe();
+    this.inied = true;
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (changes.loading) {
+      this._loading = changes.loading.currentValue;
+    }
+    if (!this.inied) return;
+
     if (changes.columns) {
       this.refreshColumns().optimizeData();
     }
-    const changeData = changes.data;
-    if (changeData && changeData.currentValue && !(this.req.lazyLoad && changeData.firstChange)) {
+    if (changes.data) {
       this.loadPageData().subscribe();
-    }
-    if (changes.loading) {
-      this._loading = changes.loading.currentValue;
     }
   }
 }
