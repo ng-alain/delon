@@ -146,7 +146,7 @@ export class TitleService implements OnDestroy {
         if (this._prefix) {
           newTitles.push(this._prefix);
         }
-        newTitles.push(...(titles as string[]));
+        newTitles.push(...titles.filter(title => !!title));
         if (this._suffix) {
           newTitles.push(this._suffix);
         }
