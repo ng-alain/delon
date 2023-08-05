@@ -75,6 +75,14 @@ describe('Service: Title', () => {
       expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
     }));
 
+    it('should be ignore when empty title & default title', fakeAsync(() => {
+      srv.default = '';
+      srv.suffix = alain;
+      srv.setTitle();
+      tick(srv.DELAY_TIME + 1);
+      expect(title.setTitle).toHaveBeenCalledWith(`${alain}`);
+    }));
+
     it('should set new title', fakeAsync(() => {
       srv.suffix = alain;
       srv.setTitle('newTitle');
