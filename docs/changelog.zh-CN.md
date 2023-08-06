@@ -14,6 +14,16 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [16.2.1](https://github.com/ng-alain/delon/compare/16.2.0...16.2.1) (2023-08-06)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复缺少导出缓存相关 ([#1633](https://github.com/ng-alain/delon/issues/1633)) ([2c7def7](https://github.com/ng-alain/delon/commit/2c7def75a5b219a58319ab129407f4058010fc44))
+* **auth:cookie:** 修复过期值应与 expires 同步 ([#1636](https://github.com/ng-alain/delon/issues/1636)) ([eca7bcb](https://github.com/ng-alain/delon/commit/eca7bcb2e7ba43b3a4b3bb4ab3cd17a7d762a967))
+* **theme:table:** 修复单图像的间距问题 ([#1629](https://github.com/ng-alain/delon/issues/1629)) ([994e2be](https://github.com/ng-alain/delon/commit/994e2be90354a55a538ed1b55c413b8ce8cde872))
+* **theme:title:** 修复应忽略空标题 ([#1638](https://github.com/ng-alain/delon/issues/1638)) ([c7bf339](https://github.com/ng-alain/delon/commit/c7bf339ee417a3b238cdb7dc18cccd1fe99a6c88))
+
+
 # [16.2.0](https://github.com/ng-alain/delon/compare/16.1.1...16.2.0) (2023-07-21)
 
 ### SCAFFOLDING
