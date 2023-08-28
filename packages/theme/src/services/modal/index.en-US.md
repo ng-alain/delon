@@ -50,7 +50,7 @@ Your body content
 
 | Property | Description  | Type  | Default   |
 | --- | --- | --- | --- |
-| `size` | Specify modal size | `sm,md,lg,xl,number` | `lg` |
+| `size` | Specify modal size | `sm,md,lg,xl,number,string` | `lg` |
 | `exact` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
 | `includeTabs` | Whether to wrap the tab page | `boolean` | `false` |
 | `drag` | Drag | `boolean, ModalHelperDragOptions` | - |

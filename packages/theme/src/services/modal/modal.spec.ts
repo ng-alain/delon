@@ -145,6 +145,14 @@ describe('theme: ModalHelper', () => {
       tick(1000);
       fixture.detectChanges();
     }));
+    it('should be 80% size', fakeAsync(() => {
+      modal.create(TestModalComponent, { ret: 'true' }, { size: '10%' }).subscribe();
+      fixture.detectChanges();
+      tick(1000);
+      fixture.detectChanges();
+      const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
+      expect(width).toBe('10%');
+    }));
   });
 });
 
