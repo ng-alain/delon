@@ -24,6 +24,7 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[default]` | 默认是否显示默认文本 | `boolean` | `true` | ✅ |
 | `[title]` | 标题 | `string,TemplateRef<void>` | - | - |
 | `[noColon]` | 默认是否不显示 label 后面的冒号 | `boolean` | `false` | - |
+| `[bordered]` | 是否展示边框 | `boolean` | `false` | - |
 
 ### sv
 
