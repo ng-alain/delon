@@ -222,6 +222,7 @@ export class STDataSource {
 
       let text = value;
       let color: string | undefined;
+      let tooltip: string | undefined;
       switch (col.type) {
         case 'no':
           text = this.getNoIndex(item, col, idx);
@@ -251,6 +252,7 @@ export class STDataSource {
             const dataItem = data[text];
             text = dataItem.text;
             color = dataItem.color;
+            tooltip = dataItem.tooltip;
           } else {
             text = '';
           }
@@ -262,6 +264,7 @@ export class STDataSource {
         _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text,
         org: value,
         color,
+        tooltip,
         safeType: col.safeType!,
         buttons: []
       };

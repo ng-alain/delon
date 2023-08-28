@@ -16,6 +16,7 @@ import {
 } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { STWidgetRegistry } from './../st-widget';
 import {
@@ -345,7 +346,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'error' },
           3: { text: '进行中', color: 'processing' },
           4: { text: '默认', color: 'default' },
-          5: { text: '警告', color: 'warning' }
+          5: { text: '警告', color: 'warning', tooltip: 'TIPS' }
         };
         it(`should be render badge`, fakeAsync(() => {
           page
@@ -359,6 +360,12 @@ describe('abc: st', () => {
             .expectElCount('.ant-badge', 0)
             .asyncEnd();
         }));
+        it(`#tooltip`, fakeAsync(() => {
+          page.updateColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }]).updateData([{ status: 5 }]);
+          const tooltips = page.dl.queryAll(By.directive(NzTooltipDirective));
+          expect(tooltips.length).toBe(1);
+          page.asyncEnd();
+        }));
       });
       describe('with tag', () => {
         const TAG: STColumnTag = {
@@ -366,7 +373,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'red' },
           3: { text: '进行中', color: 'blue' },
           4: { text: '默认', color: '' },
-          5: { text: '警告', color: 'orange' }
+          5: { text: '警告', color: 'orange', tooltip: 'TIPS' }
         };
         it(`should be render tag`, fakeAsync(() => {
           page
@@ -379,6 +386,12 @@ describe('abc: st', () => {
             .updateColumn([{ title: '', index: 'status', type: 'tag', tag: null }])
             .expectElCount('.ant-tag', 0)
             .asyncEnd();
+        }));
+        it(`#tooltip`, fakeAsync(() => {
+          page.updateColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }]).updateData([{ tag: 5 }]);
+          const tooltips = page.dl.queryAll(By.directive(NzTooltipDirective));
+          expect(tooltips.length).toBe(1);
+          page.asyncEnd();
         }));
       });
       describe('[other]', () => {

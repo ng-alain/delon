@@ -420,6 +420,7 @@ class TestComponent {
 |----------|-------------|------|---------|
 | `[text]` | Badge text | `string` | - |
 | `[color]` | Badge color value | `success,processing,default,error,warning` | - |
+| `[tooltip]` | Text popup tip | `string` | - |
 
 ### STColumnTag
 
@@ -427,6 +428,7 @@ class TestComponent {
 |----------|-------------|------|---------|
 | `[text]` | Tag text | `string` | - |
 | `[color]` | Tag color value | `string` | - |
+| `[tooltip]` | Text popup tip | `string` | - |
 
 ### STWidgetColumn
 

@@ -69,10 +69,15 @@
       [attr.title]="i._values[cIdx].text"
     ></a>
     <ng-container *ngIf="i._values[cIdx].text">
-      <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
+      <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
         <span [innerHTML]="i._values[cIdx]._text"></span>
       </nz-tag>
-      <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text" />
+      <nz-badge
+        *ngSwitchCase="'badge'"
+        [nzStatus]="i._values[cIdx].color"
+        [nzText]="i._values[cIdx].text"
+        [nz-tooltip]="i._values[cIdx].tooltip"
+      />
     </ng-container>
     <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
     <ng-container *ngSwitchDefault>
