@@ -1,6 +1,8 @@
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+// import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+type PDFDocumentProxy = NzSafeAny;
 
 export type PdfChangeEventType =
   | 'loaded'

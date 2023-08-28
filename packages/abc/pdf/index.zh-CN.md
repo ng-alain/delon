@@ -15,6 +15,10 @@ module: import { PdfModule } from '@delon/abc/pdf';
 
 **使用本地路径**
 
+```bash
+yarn add pdfjs-dist
+```
+
 ```json
 // angular.json
 {

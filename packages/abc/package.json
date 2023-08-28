@@ -26,7 +26,6 @@
     "jszip": "@LIB-PLACEHOLDER",
     "xlsx": "@LIB-PLACEHOLDER",
     "plyr": "@LIB-PLACEHOLDER",
-    "pdfjs-dist": "@LIB-PLACEHOLDER",
     "@github/hotkey": "@LIB-PLACEHOLDER",
     "ngx-countdown": "@LIB-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",

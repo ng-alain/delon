@@ -33,9 +33,9 @@ const alainConfig: AlainConfig = {
   qr: {
     lib: '/assets/qrious/qrious.min.js'
   },
-  pdf: {
-    lib: '/assets/pdfjs/'
-  },
+  // pdf: {
+  //   lib: '/assets/pdfjs/'
+  // },
   media: {
     urls: ['assets/plyr/plyr.min.js', 'assets/plyr/plyr.css'],
     options: {
