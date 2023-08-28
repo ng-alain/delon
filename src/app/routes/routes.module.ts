@@ -49,7 +49,10 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [
+    SharedModule,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', bindToComponentInputs: true })
+  ],
   declarations: COMPONENTS
 })
 export class RoutesModule {}
