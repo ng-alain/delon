@@ -839,24 +839,12 @@ describe('abc: st', () => {
         });
       });
       describe('Http Request', () => {
-        it('when error request', done => {
+        it('when error request', () => {
           spyOn(_http, 'request').and.returnValue(throwError(() => 'cancel'));
           context.data = '/mock';
           fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('should be ingore catch error when component is destroyed', done => {
-          expect(context.error).not.toHaveBeenCalled();
-          context.data = '/mock';
-          fixture.detectChanges();
-          comp.ngOnDestroy();
-          fixture.whenStable().then(() => {
-            expect(context.error).not.toHaveBeenCalled();
-            done();
-          });
+          expect(page.spyErrorData?.error).toBe('cancel');
+          TestBed.resetTestingModule();
         });
         it('should be ingored incomplete request when has new request', fakeAsync(() => {
           let mockData = [{}];
@@ -873,7 +861,7 @@ describe('abc: st', () => {
           expect(comp._data.length).toBe(mockData.length);
         }));
         it('#customRequest', fakeAsync(() => {
-          context.customRequest = jasmine.createSpy('customRequest');
+          context.customRequest = jasmine.createSpy('customRequest').and.callFake(() => of([]));
           context.data = '/invalid-url';
           fixture.detectChanges();
           tick(1000);
@@ -935,7 +923,7 @@ describe('abc: st', () => {
         let load = 0;
         spyOn(context.comp as any, 'loadData').and.callFake(() => {
           ++load;
-          return Promise.resolve({});
+          return of({});
         });
         const pc = dl
           .query(By.directive(NzPaginationComponent))
@@ -1067,9 +1055,9 @@ describe('abc: st', () => {
         context.scroll = { x: '100px', y: '100px' };
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-        spyOn(context.comp.cdkVirtualScrollViewport, 'checkViewportSize');
+        spyOn(context.comp.cdkVirtualScrollViewport!!, 'checkViewportSize');
         page.cd().go(2);
-        expect(context.comp.cdkVirtualScrollViewport.checkViewportSize).toHaveBeenCalled();
+        expect(context.comp.cdkVirtualScrollViewport!!.checkViewportSize).toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be working in only x is set', fakeAsync(() => {
@@ -1410,7 +1398,7 @@ describe('abc: st', () => {
         page.cd();
         expect((comp.data as any[]).length).toBe(DEFAULTCOUNT);
         expect(comp._data.length).toBe(PS);
-        comp.filteredData.then(list => {
+        comp.filteredData.subscribe(list => {
           expect(list.length).toBe(DEFAULTCOUNT);
         });
         page.asyncEnd();
@@ -1464,7 +1452,7 @@ describe('abc: st', () => {
         it('when data is true', fakeAsync(() => {
           context.data = genData(1);
           page.cd();
-          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(Promise.resolve([]));
+          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(of([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export(true);
           page.cd();
@@ -1524,8 +1512,7 @@ describe('abc: st', () => {
         context.loading = true;
         page.cd().expectElCount(`.ant-spin-spinning`, 1);
         context.loading = false;
-        page.cd();
-        page.expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
+        page.cd().expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
       }));
     });
     describe('#button', () => {
@@ -1641,8 +1628,12 @@ describe('abc: st', () => {
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
       })!;
-      page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
-      expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
+      page.updateColumn([{ title: '', render: 'id' }]).cd();
+      const jIdEl = page.getCell().querySelector('.j-id');
+      expect(jIdEl != null)
+        .withContext('expect found j-id')
+        .toBe(true);
+      expect(jIdEl?.textContent).toBe('id1');
       page.asyncEnd();
     }));
     it('allow invalid id', fakeAsync(() => {

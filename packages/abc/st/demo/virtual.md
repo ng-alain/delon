@@ -55,11 +55,11 @@ export class DemoComponent implements AfterViewInit {
   ];
 
   scrollToIndex(index: number): void {
-    this.st.cdkVirtualScrollViewport.scrollToIndex(index);
+    this.st.cdkVirtualScrollViewport?.scrollToIndex(index);
   }
 
   ngAfterViewInit(): void {
-    this.st.cdkVirtualScrollViewport.scrolledIndexChange.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
+    this.st.cdkVirtualScrollViewport?.scrolledIndexChange.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
       console.log('scroll index to', data);
     });
   }

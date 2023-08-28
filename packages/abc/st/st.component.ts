@@ -13,7 +13,6 @@ import {
   Inject,
   Input,
   OnChanges,
-  OnDestroy,
   Optional,
   Output,
   SimpleChange,
@@ -25,7 +24,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { from, isObservable, Observable, of, Subscription, filter } from 'rxjs';
+import { isObservable, Observable, of, filter, catchError, map, finalize, throwError, lastValueFrom } from 'rxjs';
 
 import {
   AlainI18NService,
@@ -97,7 +96,7 @@ import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class STComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_ps: NumberInput;
   static ngAcceptInputType_pi: NumberInput;
   static ngAcceptInputType_total: NumberInput;
@@ -113,9 +112,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   static ngAcceptInputType_virtualMinBufferPx: NumberInput;
 
   private destroy$ = inject(DestroyRef);
-  private isDestroy = false;
-  private data$?: Subscription;
   private totalTpl = ``;
+  private inied = false;
   cog!: AlainSTConfig;
   private _req!: STReq;
   private _res!: STRes;
@@ -166,7 +164,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._page = { ...this.cog.page, ...value };
     this.updateTotalTpl();
   }
-  @Input() data!: string | STData[] | Observable<STData[]>;
+  @Input() data?: string | STData[] | Observable<STData[]>;
   @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
   @Input() @InputNumber() ps = 10;
@@ -333,8 +331,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * - 本地数据：包含排序、过滤后不分页数据
    * - 远程数据：不传递 `pi`、`ps` 两个参数
    */
-  get filteredData(): Promise<STData[]> {
-    return this.loadData({ paginator: false } as NzSafeAny).then(res => res.list);
+  get filteredData(): Observable<STData[]> {
+    return this.loadData({ paginator: false } as unknown as STDataSourceOptions).pipe(map(res => res.list));
   }
 
   private updateTotalTpl(): void {
@@ -355,78 +353,62 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  private loadData(options?: STDataSourceOptions): Promise<STDataSourceResult> {
+  private loadData(options?: STDataSourceOptions): Observable<STDataSourceResult> {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
-    return new Promise((resolvePromise, rejectPromise) => {
-      if (this.data$) {
-        this.data$.unsubscribe();
-      }
-
-      this.data$ = this.dataSource
-        .process({
-          pi,
-          ps,
-          total,
-          data,
-          req,
-          res,
-          page,
-          columns: this._columns,
-          singleSort,
-          multiSort,
-          rowClassName,
-          paginator: true,
-          customRequest: this.customRequest || this.cog.customRequest,
-          ...options
-        })
-        .pipe(takeUntilDestroyed(this.destroy$))
-        .subscribe({
-          next: result => resolvePromise(result),
-          error: error => {
-            if (typeof ngDevMode === 'undefined' || ngDevMode) {
-              console.warn('st.loadDate', error);
-            }
-            rejectPromise(error);
-          }
-        });
-    });
+    return this.dataSource
+      .process({
+        pi,
+        ps,
+        total,
+        data,
+        req,
+        res,
+        page,
+        columns: this._columns,
+        singleSort,
+        multiSort,
+        rowClassName,
+        paginator: true,
+        customRequest: this.customRequest || this.cog.customRequest,
+        ...options
+      })
+      .pipe(takeUntilDestroyed(this.destroy$));
   }
 
-  private async loadPageData(): Promise<this> {
+  private loadPageData(): Observable<this> {
     this.setLoading(true);
-    try {
-      const result = await this.loadData();
-      this.setLoading(false);
-      const undefinedString = 'undefined';
-      if (typeof result.pi !== undefinedString) {
-        this.pi = result.pi;
-      }
-      if (typeof result.ps !== undefinedString) {
-        this.ps = result.ps;
-      }
-      if (typeof result.total !== undefinedString) {
-        this.total = result.total;
-      }
-      if (typeof result.pageShow !== undefinedString) {
-        this._isPagination = result.pageShow;
-      }
-      this._data = result.list;
-      this._statistical = result.statistical as STStatisticalResults;
-      this.changeEmit('loaded', result.list);
-      // Should be re-render in next tike when using virtual scroll
-      // https://github.com/ng-alain/ng-alain/issues/1836
-      if (this.cdkVirtualScrollViewport) {
-        Promise.resolve().then(() => this.cdkVirtualScrollViewport.checkViewportSize());
-      }
-      return this._refCheck();
-    } catch (error) {
-      this.setLoading(false);
-      if (!this.isDestroy) {
-        this.cdr.detectChanges();
+    return this.loadData().pipe(
+      finalize(() => this.setLoading(false)),
+      catchError(error => {
         this.error.emit({ type: 'req', error });
-      }
-      return this;
-    }
+        return throwError(() => error);
+      }),
+      map(result => {
+        const undefinedString = 'undefined';
+        if (typeof result.pi !== undefinedString) {
+          this.pi = result.pi;
+        }
+        if (typeof result.ps !== undefinedString) {
+          this.ps = result.ps;
+        }
+        if (typeof result.total !== undefinedString) {
+          this.total = result.total;
+        }
+        if (typeof result.pageShow !== undefinedString) {
+          this._isPagination = result.pageShow;
+        }
+        this._data = result.list ?? [];
+        this._statistical = result.statistical as STStatisticalResults;
+        // Should be re-render in next tike when using virtual scroll
+        // https://github.com/ng-alain/ng-alain/issues/1836
+        if (this.cdkVirtualScrollViewport != null) {
+          Promise.resolve().then(() => this.cdkVirtualScrollViewport?.checkViewportSize());
+        }
+        this._refCheck();
+        this.changeEmit('loaded', result.list);
+        return this;
+      })
+    );
   }
 
   /** 清空所有数据 */
@@ -502,7 +484,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   _change(type: 'pi' | 'ps', options?: STLoadOptions): void {
     if (type === 'pi' || (type === 'ps' && this.pi <= Math.ceil(this.total / this.ps))) {
-      this.loadPageData().then(() => this._toTop(options?.toTop));
+      this.loadPageData().subscribe(() => this._toTop(options?.toTop));
     }
 
     this.changeEmit(type);
@@ -663,13 +645,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this.cdr.detectChanges();
-    this.loadPageData();
-    const res = {
-      value,
-      map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
-      column: col
-    };
-    this.changeEmit('sort', res);
+    this.loadPageData().subscribe(() => {
+      const res = {
+        value,
+        map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
+        column: col
+      };
+      this.changeEmit('sort', res);
+    });
   }
 
   clearSort(): this {
@@ -688,8 +671,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
-    this.loadPageData();
-    this.changeEmit('filter', col);
+    this.loadPageData().subscribe(() => this.changeEmit('filter', col));
   }
 
   handleFilterNotify(value?: unknown): void {
@@ -773,7 +755,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const data = Array.isArray(newData)
       ? this.dataSource.optimizeData({ columns: this._columns, result: newData })
       : this._data;
-    (newData === true ? from(this.filteredData) : of(data)).subscribe((res: STData[]) =>
+    (newData === true ? this.filteredData : of(data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
         columens: this._columns,
         ...opt,
@@ -833,11 +815,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   // #endregion
 
-  get cdkVirtualScrollViewport(): CdkVirtualScrollViewport {
-    return this.orgTable.cdkVirtualScrollViewport!;
+  get cdkVirtualScrollViewport(): CdkVirtualScrollViewport | undefined {
+    return this.orgTable?.cdkVirtualScrollViewport;
   }
 
-  resetColumns(options?: STResetColumnsOption): Promise<this> {
+  private _resetColumns(options?: STResetColumnsOption): Observable<this> {
     options = { emitReload: true, preClearData: false, ...options };
     if (typeof options.columns !== 'undefined') {
       this.columns = options.columns;
@@ -860,8 +842,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this.loadPageData();
     } else {
       this.cd();
-      return Promise.resolve(this);
+      return of(this);
     }
+  }
+
+  resetColumns(options?: STResetColumnsOption): Promise<this> {
+    return lastValueFrom(this._resetColumns(options));
   }
 
   private refreshColumns(): this {
@@ -905,24 +891,23 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.columnSource.restoreAllRender(this._columns);
+    this.refreshColumns();
+    if (!this.req.lazyLoad) this.loadPageData().subscribe();
+    this.inied = true;
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    if (changes.columns) {
-      this.refreshColumns().optimizeData();
-    }
-    const changeData = changes.data;
-    if (changeData && changeData.currentValue && !(this.req.lazyLoad && changeData.firstChange)) {
-      this.loadPageData();
-    }
     if (changes.loading) {
       this._loading = changes.loading.currentValue;
     }
-  }
+    if (!this.inied) return;
 
-  ngOnDestroy(): void {
-    this.isDestroy = true;
+    if (changes.columns) {
+      this.refreshColumns().optimizeData();
+    }
+    if (changes.data) {
+      this.loadPageData().subscribe();
+    }
   }
 }
 

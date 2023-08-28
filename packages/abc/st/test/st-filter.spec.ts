@@ -114,10 +114,9 @@ describe('abc: st-filter', () => {
       filter = firstCol.filter!;
     });
     it('should be filter', () => {
-      expect(context.change).not.toHaveBeenCalled();
       const filterComp = dl.query(By.directive(STFilterComponent)).context as STFilterComponent;
       filterComp.confirm();
-      expect(context.change).toHaveBeenCalled();
+      expect(page._changeData?.type).toBe('filter');
     });
     it('should be clean', () => {
       const m = filter.menus![0];

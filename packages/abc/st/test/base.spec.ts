@@ -27,6 +27,7 @@ import {
   STColumnTitle,
   STContextmenuFn,
   STCustomRequestOptions,
+  STError,
   STMultiSort,
   STPage,
   STReq,
@@ -138,6 +139,7 @@ export class PageObject<T extends TestComponent> {
   readonly comp: STComponent;
   readonly i18nSrv: AlainI18NService;
   readonly registerWidget: STWidgetRegistry;
+  spyErrorData?: STError;
 
   constructor(minColumn: boolean = false, type: Type<T>) {
     this.registerWidget = TestBed.inject(STWidgetRegistry);
@@ -153,7 +155,7 @@ export class PageObject<T extends TestComponent> {
       this.context.columns = [{ title: '', index: 'id' }];
     }
 
-    spyOn(this.context as NzSafeAny, 'error');
+    spyOn(this.context as NzSafeAny, 'error').and.callFake((res: STError) => (this.spyErrorData = res));
     this.changeSpy = spyOn(this.context as NzSafeAny, 'change').and.callFake(
       ((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny
     );
@@ -419,7 +421,7 @@ export class PageObject<T extends TestComponent> {
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
       (change)="change($event)"
-      (error)="error()"
+      (error)="error($event)"
     />
     <ng-template #tpl let-handle="handle">
       <span>In tpl</span>
