@@ -394,6 +394,25 @@ describe('abc: st', () => {
           page.asyncEnd();
         }));
       });
+      describe('with cell', () => {
+        it('should be working', fakeAsync(() => {
+          page
+            .updateColumn([{ index: 'id', cell: { type: 'checkbox' } }])
+            .expectElCount('.cell', PS)
+            .expectElCount('.ant-checkbox', PS);
+        }));
+        it('should be support function', fakeAsync(() => {
+          page
+            .updateColumn([
+              {
+                index: 'id',
+                cell: i => (i.id === 1 ? { type: 'checkbox' } : {})
+              }
+            ])
+            .expectElCount('.cell', PS)
+            .expectElCount('.ant-checkbox', 1);
+        }));
+      });
       describe('[other]', () => {
         it('should custom render via format', fakeAsync(() => {
           page

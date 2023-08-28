@@ -14,4 +14,5 @@ export * from './zip.type';
 export * from './media.type';
 export * from './pdf.type';
 export * from './onboarding.type';
+export * from './cell.type';
 export * from './exception.type';

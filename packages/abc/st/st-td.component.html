@@ -79,7 +79,8 @@
         [nz-tooltip]="i._values[cIdx].tooltip"
       />
     </ng-container>
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
+    <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
+    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
     <ng-container *ngSwitchDefault>
       <span
         *ngIf="c.safeType !== 'text'"

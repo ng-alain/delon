@@ -1,5 +1,6 @@
 import { AutoFocusModule } from '@delon/abc/auto-focus';
 import { AvatarListModule } from '@delon/abc/avatar-list';
+import { CellModule } from '@delon/abc/cell';
 import { CountDownModule } from '@delon/abc/count-down';
 import { DatePickerModule } from '@delon/abc/date-picker';
 import { DownFileModule } from '@delon/abc/down-file';
@@ -58,6 +59,7 @@ export const SHARED_DELON_MODULES = [
   SGModule,
   LoadingModule,
   QRModule,
+  CellModule,
   OnboardingModule,
   ErrorCollectModule,
   ExceptionModule,

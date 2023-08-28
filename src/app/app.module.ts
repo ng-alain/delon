@@ -31,6 +31,7 @@ import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import { CellWidgetModule } from './shared/cell-widget/module';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
@@ -66,6 +67,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     SharedModule,
     JsonSchemaModule,
     STWidgetModule,
+    CellWidgetModule,
     RoutesModule,
     ExampleModule,
     NgxTinymceModule.forRoot({
