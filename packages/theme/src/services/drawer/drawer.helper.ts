@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef, Type } from '@angular/core';
+import { Injectable, Optional, SkipSelf, TemplateRef, Type } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
@@ -50,7 +50,15 @@ export interface DrawerHelperOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class DrawerHelper {
-  constructor(private srv: NzDrawerService) {}
+  private openDrawersAtThisLevel: NzDrawerRef[] = [];
+  get openDrawers(): NzDrawerRef[] {
+    return this.parentDrawer ? this.parentDrawer.openDrawers : this.openDrawersAtThisLevel;
+  }
+
+  constructor(
+    private srv: NzDrawerService,
+    @Optional() @SkipSelf() private parentDrawer: DrawerHelper
+  ) {}
 
   /**
    * 构建一个抽屉
@@ -103,8 +111,9 @@ export class DrawerHelper {
         };
       }
 
-      const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });
-      const afterClose$ = subject.afterClose.subscribe((res: NzSafeAny) => {
+      const ref = this.srv.create({ ...defaultOptions, ...drawerOptions });
+      this.openDrawers.push(ref);
+      const afterClose$ = ref.afterClose.subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
@@ -114,8 +123,22 @@ export class DrawerHelper {
         }
         observer.complete();
         afterClose$.unsubscribe();
+        this.close(ref);
       });
     });
+  }
+
+  private close(ref: NzDrawerRef): void {
+    const idx = this.openDrawers.indexOf(ref);
+    if (idx === -1) return;
+    this.openDrawers.splice(idx, 1);
+  }
+
+  closeAll(): void {
+    let i = this.openDrawers.length;
+    while (i--) {
+      this.openDrawers[i].close();
+    }
   }
 
   /**

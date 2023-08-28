@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DrawerHelper, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 
 import { I18NService, MetaService, MobileService } from '@core';
@@ -26,7 +26,8 @@ export class AppComponent {
     title: TitleService,
     router: Router,
     mobileSrv: MobileService,
-    breakpointObserver: BreakpointObserver
+    breakpointObserver: BreakpointObserver,
+    dh: DrawerHelper
   ) {
     renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
     renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
@@ -38,6 +39,8 @@ export class AppComponent {
 
     router.events.subscribe(evt => {
       if (!(evt instanceof NavigationEnd)) return;
+
+      dh.closeAll();
 
       const url = evt.url.split('#')[0].split('?')[0];
       if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
