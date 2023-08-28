@@ -75,6 +75,8 @@
 /components/auto-focus/zh
 /components/avatar-list/en
 /components/avatar-list/zh
+/components/cell/en
+/components/cell/zh
 /components/count-down/en
 /components/count-down/zh
 /components/date-picker/en
