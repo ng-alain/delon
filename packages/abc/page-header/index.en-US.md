@@ -15,6 +15,7 @@ The page header is used to declare the subject of the page and contains the most
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
 | `[title]` | Title of the page | `string,TemplateRef<void>` | - | ✅ |
+| `[titleSub]` | Sub title of the page | `string,TemplateRef<void>` | - | ✅ |
 | `[autoTitle]` | Whether to automatically generate the title and locate it from the main menu with the current route | `boolean` | `true` | ✅ |
 | `[syncTitle]` | Whether to automatically synchronize the title to `TitleService`, `ReuseService`, only valid when `title` is of type `string` | `boolean` | `true` | ✅ |
 | `[home]` | Home page text of the breadcrumb, if empty is specified, it will not be displayed | `string` | `首页` | ✅ |

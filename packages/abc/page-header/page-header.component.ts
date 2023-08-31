@@ -80,6 +80,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
       this._titleVal = this._title;
     }
   }
+  @Input() titleSub?: string | TemplateRef<void> | null;
 
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() wide = false;

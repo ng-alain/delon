@@ -16,6 +16,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   template: `
     <page-header
       [title]="'title'"
+      [titleSub]="'titleSub'"
       [breadcrumb]="breadcrumb"
       [logo]="logo"
       [action]="action"
