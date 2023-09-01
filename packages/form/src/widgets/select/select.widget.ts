@@ -19,7 +19,7 @@ import { ControlUIWidget } from '../../widget';
 export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
   private search$ = new Subject<string>();
   i!: SFSelectWidgetSchema;
-  data!: SFSchemaEnum[];
+  data: SFSchemaEnum[] = [];
   _value: NzSafeAny;
   hasGroup = false;
   loading = false;
