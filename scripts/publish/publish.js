@@ -1,12 +1,16 @@
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const path = require('path');
-const read = require('readline-sync');
+import { writeFileSync, readFileSync } from 'fs';
+import { readJSONSync } from 'fs-extra/esm';
+import { resolve, join, dirname } from 'path';
+import { question } from 'readline-sync';
+import chalk from 'chalk';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 
-const root = path.resolve(__dirname, `../..`);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const root = resolve(__dirname, `../..`);
 
 /* Shortcut methods */
-const execSync = require('child_process').execSync;
 const print = console.log;
 const log = {
   info: msg => {
@@ -26,7 +30,7 @@ const log = {
 /* The whole process */
 log.info('Starting publishing process...');
 
-const nextVersion = fs.readJSONSync(path.join(root, 'package.json')).version;
+const nextVersion = readJSONSync(join(root, 'package.json')).version;
 
 fetchOlderVersions();
 generatingPublishNote();
@@ -49,7 +53,7 @@ function generatingPublishNote() {
   let completeEditing = false;
 
   while (!completeEditing) {
-    const result = read.question(
+    const result = question(
       chalk.bgYellow.black(
         'Please manually update docs/changelog. Press [Y] if you are done:',
       ) + '  ',
@@ -64,16 +68,16 @@ function generatingPublishNote() {
 
 function fixDependenciePath() {
   log.info('Fix dependencie paths...');
-  const packageData = fs.readJSONSync(path.join(root, 'package.json'));
+  const packageData = readJSONSync(join(root, 'package.json'));
   const versionData = {
     ...packageData.dependencies,
     ...packageData.devDependencies
   };
   log.info('>> fix ajv version path in code service');
-  const codeServicePath = path.join(root, 'src/app/core/code.service.ts');
-  fs.writeFileSync(codeServicePath,
-    fs.readFileSync(codeServicePath, 'utf-8')
-    .replace(/\/ajv\/[^\/]+\//g, `/ajv/${versionData['ajv'].replace(/\^/g, '').replace(/\~/g, '')}/`)
+  const codeServicePath = join(root, 'src/app/core/code.service.ts');
+  writeFileSync(codeServicePath,
+    readFileSync(codeServicePath, 'utf-8')
+      .replace(/\/ajv\/[^\/]+\//g, `/ajv/${versionData['ajv'].replace(/\^/g, '').replace(/\~/g, '')}/`)
   );
 }
 
