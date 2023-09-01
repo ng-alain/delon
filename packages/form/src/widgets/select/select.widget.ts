@@ -84,7 +84,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
-      this.data = list;
+      if (this.ui.onSearch == null) this.data = list;
       this.checkGroup(list);
       this.detectChanges();
     });
