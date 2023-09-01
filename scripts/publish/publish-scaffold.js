@@ -1,4 +1,4 @@
-import { bgBlue, blue, bgYellow, yellow, bgRed, red, bgGreen, green } from 'chalk';
+import chalk from 'chalk';
 import { readJSONSync } from 'fs-extra/esm';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -18,16 +18,16 @@ const execSyncOptions = {
 const print = console.log;
 const log = {
   info: msg => {
-    print(bgBlue.black('INFO'), blue(msg));
+    print(chalk.bgBlue.black('INFO'), chalk.blue(msg));
   },
   warn: msg => {
-    print(bgYellow.black('WARN'), yellow(msg));
+    print(chalk.bgYellow.black('WARN'), chalk.yellow(msg));
   },
   error: msg => {
-    print(bgRed.black('ERROR'), red(msg));
+    print(chalk.bgRed.black('ERROR'), chalk.red(msg));
   },
   success: msg => {
-    print(bgGreen.black('SUCCESS'), green(msg));
+    print(chalk.bgGreen.black('SUCCESS'), chalk.green(msg));
   },
 };
 
