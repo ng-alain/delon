@@ -1,29 +1,33 @@
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const path = require('path');
+import { bgBlue, blue, bgYellow, yellow, bgRed, red, bgGreen, green } from 'chalk';
+import { readJSONSync } from 'fs-extra/esm';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const nextVersion = fs.readJSONSync(path.join(__dirname, '../../package.json'))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const nextVersion = readJSONSync(join(__dirname, '../../package.json'))
   .version;
-const root = path.resolve(__dirname, `../../../ng-alain`);
+const root = resolve(__dirname, `../../../ng-alain`);
 
 /* Shortcut methods */
-const execSync = require('child_process').execSync;
+import { execSync } from 'child_process';
 const execSyncOptions = {
   cwd: root,
 };
 const print = console.log;
 const log = {
   info: msg => {
-    print(chalk.bgBlue.black('INFO'), chalk.blue(msg));
+    print(bgBlue.black('INFO'), blue(msg));
   },
   warn: msg => {
-    print(chalk.bgYellow.black('WARN'), chalk.yellow(msg));
+    print(bgYellow.black('WARN'), yellow(msg));
   },
   error: msg => {
-    print(chalk.bgRed.black('ERROR'), chalk.red(msg));
+    print(bgRed.black('ERROR'), red(msg));
   },
   success: msg => {
-    print(chalk.bgGreen.black('SUCCESS'), chalk.green(msg));
+    print(bgGreen.black('SUCCESS'), green(msg));
   },
 };
 
