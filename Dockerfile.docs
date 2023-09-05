@@ -8,13 +8,12 @@
 # EXPOSE 80
 # CMD [ "node", "server/main.js" ]
 
-
 FROM node:lts as dist
 MAINTAINER authors="cipchk <cipchk@qq.com>"
 WORKDIR /dist
-RUN git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git . \
-    && sed -i 's/\/delon\//\//g' /dist/index.html \
-    && sed -i 's/\/delon\//\//g' /dist/404.html
+RUN git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git .
+    # && sed -i'.bak' -e 's/\/delon\//\//g' index.html \
+    # && sed -i'.bak' -e 's/\/delon\//\//g' 404.html
 COPY _nginx _nginx
 
 FROM nginx:stable-alpine
