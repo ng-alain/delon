@@ -29,8 +29,8 @@ jobs:
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v3
         env:
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./src/dist/browser
         with:
