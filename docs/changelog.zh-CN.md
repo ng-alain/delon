@@ -14,6 +14,29 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [16.3.0](https://github.com/ng-alain/delon/compare/16.2.1...16.3.0) (2023-09-01)
+
+### SCAFFOLDING
+
+* 启用 `bindToComponentInputs` [#2409](https://github.com/ng-alain/ng-alain/pull/2409/files).
+
+### Bug Fixes
+
+* **abc:pdf:** 忽略依赖 `pdfjs-dist`（若使用[本地](https://ng-alain.com/components/pdf)加载模式，需要自行安装该依赖，`pdfjs-dist` 依赖了 `canvas` 可能会因为环境因素安装依赖很慢） ([#1641](https://github.com/ng-alain/delon/issues/1641)) ([b987bab](https://github.com/ng-alain/delon/commit/b987baba6035eb60872c4ee48198568df140869c))
+* **form:select:** 当设置 `onSearch` 时重置数据时会忽略更新预选数据 ([#1644](https://github.com/ng-alain/delon/issues/1644)) ([1f8def7](https://github.com/ng-alain/delon/commit/1f8def70856c091ed677cbd47aed7ca230a2aa79))
+* **theme:http:** 纠正 `HttpOptions` 缺少 `content` ([#1640](https://github.com/ng-alain/delon/issues/1640)) ([28eeceb](https://github.com/ng-alain/delon/commit/28eecebd7ab71a1b9a8345c0af1ebe22fd3bc1a6))
+
+### Features
+
+* **abc:cell:** 新增 `cell` 单元格数据组件 ([#1530](https://github.com/ng-alain/delon/issues/1530)) ([26023ca](https://github.com/ng-alain/delon/commit/26023cac7a91cae5383cfffd26d44fba6a95fb9f))
+* **abc:page-header:** 新增 `titleSub` 子标题属性 ([#1643](https://github.com/ng-alain/delon/issues/1643)) ([79e229f](https://github.com/ng-alain/delon/commit/79e229f5c1b509dd463c48e4a82b361e5d923920))
+* **abc:st:** 标签或徽标支持 `tooltip` ([#1634](https://github.com/ng-alain/delon/issues/1634)) ([0e9006e](https://github.com/ng-alain/delon/commit/0e9006e5b9fd30092b5a808f9b3d8012fd3a060c))
+* **abc:sv:** 新增 `bordered` 是否显示边框 ([#1628](https://github.com/ng-alain/delon/issues/1628)) ([ccfa5e1](https://github.com/ng-alain/delon/commit/ccfa5e1d6f5cf1d3f9bc5360bc2e373604ae22a2))
+* **cli:** `ng add` 开启 `bindToComponentInputs` ([#1630](https://github.com/ng-alain/delon/issues/1630)) ([9717d9d](https://github.com/ng-alain/delon/commit/9717d9dd4ee1d5ab1526616a99da7b70e8664bd2))
+* **theme:drawer:** 新增 `closeAll`, `openDrawers` 方法 ([#1627](https://github.com/ng-alain/delon/issues/1627)) ([bab3d0c](https://github.com/ng-alain/delon/commit/bab3d0c3c648d933784c4623b2714ac227219c5c))
+* **theme:modal:** 支持百分比大小 ([#1626](https://github.com/ng-alain/delon/issues/1626)) ([8b52a08](https://github.com/ng-alain/delon/commit/8b52a08d82378a42e06c316757e19e5434e109dc))
+
+
 ## [16.2.1](https://github.com/ng-alain/delon/compare/16.2.0...16.2.1) (2023-08-06)
 
 ### Bug Fixes

@@ -189,6 +189,10 @@ module.exports = {
       rules: {
         'prettier/prettier': ['error', { parser: 'angular' }]
       }
+    },
+    {
+      files: ['*.js'],
+      parserOptions: { sourceType: 'module' }
     }
   ]
 };
