@@ -12,9 +12,6 @@ FROM node:lts as dist
 MAINTAINER authors="cipchk <cipchk@qq.com>"
 WORKDIR /dist
 RUN git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git .
-# RUN git clone --depth 1 --branch gh-pages https://gitee.com/ng-alain/delon.git .
-    # && sed -i'.bak' -e 's/\/delon\//\//g' index.html \
-    # && sed -i'.bak' -e 's/\/delon\//\//g' 404.html
 COPY _nginx _nginx
 
 FROM nginx:stable-alpine
