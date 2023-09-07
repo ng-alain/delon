@@ -28,11 +28,15 @@ jobs:
 
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./src/dist/browser
+        # env:
+        #   # PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        #   # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   PUBLISH_BRANCH: gh-pages
+        #   PUBLISH_DIR: ./src/dist/browser
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./src/dist/browser
           emptyCommits: false
 
       - name: deploy-to-surge
