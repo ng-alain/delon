@@ -25,12 +25,12 @@ jobs:
       - name: Login Docker
         uses: docker/login-action@v2
         with:
-          registry: registry.gitlab.com
-          username: ${{ secrets.GITLAB_USERNAME }}
-          password: ${{ secrets.GITLAB_PASSWORD }}
+          # registry: registry.gitlab.com
+          # username: ${{ secrets.GITLAB_USERNAME }}
+          # password: ${{ secrets.GITLAB_PASSWORD }}
           # Docker Hub
-          # username: ${{ secrets.DOCKERHUB_USERNAME }}
-          # password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -38,4 +38,6 @@ jobs:
           context: .
           file: ./Dockerfile.docs
           push: true
-          tags: registry.gitlab.com/ng-alain/images:docs
+          tags:
+            cipchk/ng-alain-docs:latest
+            # registry.gitlab.com/ng-alain/images:docs
