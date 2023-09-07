@@ -1,6 +1,10 @@
-name: BuildDocSite
+name: docker-build-doc-site
 
 on: push
+# on:
+#   push:
+#     branches:
+#       - master
 
 jobs:
   website:
@@ -34,4 +38,4 @@ jobs:
           context: .
           file: ./Dockerfile.docs
           push: true
-          tags: ng-alain/images:docs
+          tags: registry.gitlab.com/ng-alain/images:docs
