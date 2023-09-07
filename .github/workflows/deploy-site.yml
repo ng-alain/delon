@@ -19,7 +19,6 @@ jobs:
           cmd: install
 
       - name: build
-        # Copy dockerfile.docs & _nginx just only for ng-alain.com
         run: |
           yarn run site:build
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
@@ -53,7 +52,6 @@ jobs:
       - name: Login Docker
         uses: docker/login-action@v2
         with:
-          # Docker gitlab
           registry: registry.gitlab.com
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
