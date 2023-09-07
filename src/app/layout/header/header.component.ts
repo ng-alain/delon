@@ -8,7 +8,7 @@ import { copy } from '@delon/util/browser';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { I18NService, MobileService } from '@core';
+import { I18NService, LangType, MobileService } from '@core';
 
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
@@ -100,6 +100,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   langChange(language: 'en' | 'zh'): void {
+    this.i18n.use(language as LangType, {}, false);
     this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => {
       this.layout.render = false;
       setTimeout(() => {

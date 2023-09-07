@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
-import { alainI18nCanActivate } from '@delon/theme';
-
 import { NotFoundComponent } from './404/404.component';
 import { HomeComponent } from './home/home.component';
 import { LayoutComponent } from '../layout/layout.component';
@@ -14,7 +12,6 @@ const routes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
-    canActivateChild: [alainI18nCanActivate],
     children: [
       { path: '', redirectTo: 'en', pathMatch: 'full' },
       { path: ':lang', component: HomeComponent, data: { titleI18n: 'slogan' } },
