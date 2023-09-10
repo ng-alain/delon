@@ -1,4 +1,4 @@
-name: GiteeMirror
+name: mirror gitee
 
 on: push
 
@@ -10,5 +10,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
+          fetch-depth: 0
           target_repo_url: git@gitee.com:ng-alain/delon.git
           ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
