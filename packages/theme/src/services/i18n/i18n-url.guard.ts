@@ -25,7 +25,9 @@ export class AlainI18NGuardService {
 }
 
 /**
- * Simple 路由守卫, [ACL Document](https://ng-alain.com/auth/guard).
+ * Internationalization guard, automatically recognizes the language in Url and triggers the `ALAIN_I18N_TOKEN.use` method
+ *
+ * 国际化守卫，自动识别Url中的语言，并触发 `ALAIN_I18N_TOKEN.use` 方法
  *
  * ```ts
  * data: {
@@ -37,7 +39,9 @@ export class AlainI18NGuardService {
 export const alainI18nCanActivate: CanActivateFn = childRoute => inject(AlainI18NGuardService).process(childRoute);
 
 /**
- * Simple 路由守卫, [ACL Document](https://ng-alain.com/auth/guard).
+ * Internationalization guard, automatically recognizes the language in Url and triggers the `ALAIN_I18N_TOKEN.use` method
+ *
+ * 国际化守卫，自动识别Url中的语言，并触发 `ALAIN_I18N_TOKEN.use` 方法
  *
  * ```ts
  * data: {

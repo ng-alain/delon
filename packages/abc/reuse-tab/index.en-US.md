@@ -144,8 +144,10 @@ Triggered when the current route allows reusing and leave route.
 A simple example:
 
 ```ts
+import { OnReuseDestroy, OnReuseInit, ReuseHookOnReuseInitType } from '@delon/abc/reuse-tab';
+
 @Component()
-export class DemoComponent {
+export class DemoComponent implements OnReuseInit, OnReuseDestroy {
   _onReuseInit(type: ReuseHookOnReuseInitType) {
     console.log('_onReuseInit', type);
   }
