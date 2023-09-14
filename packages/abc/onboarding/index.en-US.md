@@ -25,6 +25,8 @@ The components only support the use of `OnboardingService` service to build.
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[key]` | Storage identification Key | `string` | - |
+| `[keyVersion]` | Current version | `unknown` | - |
 | `[items]` | Onboarding items | `OnboardingItem[]` | `[]` |
 | `[mask]` | Whether to show mask or not | `boolean` | `true` |
 | `[maskClosable]` | Clicking on the mask (area outside the onboarding) to close the onboarding or not | `boolean` | `true` |
