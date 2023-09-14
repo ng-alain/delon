@@ -7,7 +7,7 @@ jobs:
     if: "!startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v1
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url: git@gitee.com:ng-alain/delon.git
