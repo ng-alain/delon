@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Inject,
+  Injector,
   Input,
   OnChanges,
   OnDestroy,
@@ -41,10 +42,11 @@ import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
 export function useFactory(
+  injector: Injector,
   schemaValidatorFactory: SchemaValidatorFactory,
   cogSrv: AlainConfigService
 ): FormPropertyFactory {
-  return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
+  return new FormPropertyFactory(injector, schemaValidatorFactory, cogSrv);
 }
 
 @Component({
@@ -56,7 +58,7 @@ export function useFactory(
     {
       provide: FormPropertyFactory,
       useFactory,
-      deps: [SchemaValidatorFactory, AlainConfigService]
+      deps: [Injector, SchemaValidatorFactory, AlainConfigService]
     },
     TerminatorService
   ],
