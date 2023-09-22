@@ -34,11 +34,11 @@ alainProvides.push(AlainConfigService as any);
 // Please refer to: https://ng.ant.design/docs/global-config/en#how-to-use
 // #region NG-ZORRO Config
 
-import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
+import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 
 const ngZorroConfig: NzConfig = {};
 
-const zorroProvides = [{ provide: NZ_CONFIG, useValue: ngZorroConfig }];
+const zorroProvides = [provideNzConfig(ngZorroConfig)];
 
 // #endregion
 
