@@ -14,6 +14,7 @@ describe('NgAlainSchematic: plugin: default-language', () => {
     const content = tree.readContent(PATH);
     expect(content).toContain(`@angular/common/locales/en`);
     expect(content).toContain(`NZ_I18N, en_US`);
+    expect(content).toContain(`provideNzI18n, en_US`);
     expect(content).toContain(`DELON_LOCALE, en_US`);
   });
 
@@ -22,6 +23,7 @@ describe('NgAlainSchematic: plugin: default-language', () => {
     const content = tree.readContent(PATH);
     expect(content).toContain(`@angular/common/locales/zh`);
     expect(content).toContain(`NZ_I18N, zh_CN`);
+    expect(content).toContain(`provideNzI18n, zh_CN`);
     expect(content).toContain(`DELON_LOCALE, zh_CN`);
   });
 });

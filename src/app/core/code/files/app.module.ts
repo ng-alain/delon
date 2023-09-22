@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 
 import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 
@@ -62,7 +62,8 @@ providers: [
     deps: [StartupService],
     multi: true
   },
-  { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }
+  provideNzI18n(en_US),
+  { provide: NZ_ICONS, useValue: icons }
 ],
 declarations: [ ${componentName} ],
 bootstrap:    [ ${componentName} ]
