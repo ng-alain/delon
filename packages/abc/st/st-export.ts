@@ -51,20 +51,17 @@ export class STExport {
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
     const dataLen = opt.data!.length;
     let validColCount = 0;
-    let loseCount = 0;
-    const columns = opt.columens! as _STColumn[];
+    const columns = (opt.columens! as _STColumn[]).filter(
+      col => !(col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0))
+    );
     if (columns.findIndex(w => w._width != null) !== -1) {
       // wpx: width in screen pixels https://github.com/SheetJS/sheetjs#column-properties
       sheet['!cols'] = columns.map(col => ({ wpx: col._width }));
     }
     for (let colIdx = 0; colIdx < columns.length; colIdx++) {
       const col = columns[colIdx];
-      if (col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0)) {
-        ++loseCount;
-        continue;
-      }
       ++validColCount;
-      const columnName = this.xlsxSrv.numberToSchema(colIdx + 1 - loseCount);
+      const columnName = this.xlsxSrv.numberToSchema(colIdx + 1);
       sheet[`${columnName}1`] = {
         t: 's',
         v: typeof col.title === 'object' ? col.title.text : col.title
