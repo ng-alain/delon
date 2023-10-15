@@ -7,6 +7,10 @@
     "$schema": {
       "type": "string"
     },
+    "defaultProject": {
+      "type": "string",
+      "description": "Default project name, generally used for https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode plug-in"
+    },
     "theme": {
       "$ref": "#/definitions/theme"
     },
