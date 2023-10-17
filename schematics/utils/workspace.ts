@@ -179,3 +179,18 @@ export function addSchematicCollections(workspace: WorkspaceDefinition): void {
   if (!schematicCollections.includes(`ng-alain`)) schematicCollections.push(`ng-alain`);
   workspace.extensions.cli['schematicCollections'] = schematicCollections;
 }
+
+export function addFileReplacements(workspace: WorkspaceDefinition): void {
+  workspace.projects.forEach(project => {
+    const build = project.targets.get(BUILD_TARGET_BUILD);
+    if (build == null || build.options == null) return;
+    if (build.configurations == null) build.configurations = {};
+    if (build.configurations.production == null) build.configurations.production = {};
+    if (!Array.isArray(build.configurations.production.fileReplacements))
+      build.configurations.production.fileReplacements = [];
+    build.configurations.production.fileReplacements.push({
+      replace: 'src/environments/environment.ts',
+      with: 'src/environments/environment.prod.ts'
+    });
+  });
+}
