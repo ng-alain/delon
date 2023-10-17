@@ -130,7 +130,7 @@ describe('form: widget: autocomplete', () => {
             }
           }
         })
-        .time(100)
+        .dc(100)
         .typeChar(typeValue)
         .checkCount('nz-auto-option', config.uiEmailSuffixes!.length)
         .click('nz-auto-option')

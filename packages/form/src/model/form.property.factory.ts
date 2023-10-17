@@ -1,3 +1,5 @@
+import { Injector } from '@angular/core';
+
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 
 import { ArrayProperty } from './array.property';
@@ -16,6 +18,7 @@ import { SchemaValidatorFactory } from '../validator.factory';
 export class FormPropertyFactory {
   private options: AlainSFConfig;
   constructor(
+    private injector: Injector,
     private schemaValidatorFactory: SchemaValidatorFactory,
     cogSrv: AlainConfigService
   ) {
@@ -78,6 +81,7 @@ export class FormPropertyFactory {
         case 'integer':
         case 'number':
           newProperty = new NumberProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -89,6 +93,7 @@ export class FormPropertyFactory {
           break;
         case 'string':
           newProperty = new StringProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -100,6 +105,7 @@ export class FormPropertyFactory {
           break;
         case 'boolean':
           newProperty = new BooleanProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -111,6 +117,7 @@ export class FormPropertyFactory {
           break;
         case 'object':
           newProperty = new ObjectProperty(
+            this.injector,
             this,
             this.schemaValidatorFactory,
             schema,
@@ -123,6 +130,7 @@ export class FormPropertyFactory {
           break;
         case 'array':
           newProperty = new ArrayProperty(
+            this.injector,
             this,
             this.schemaValidatorFactory,
             schema,

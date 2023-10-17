@@ -37,7 +37,7 @@ describe('form: widget: checkbox', () => {
     expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item2');
   }));
 
-  it('#visibleIf', () => {
+  it('#visibleIf', fakeAsync(() => {
     page
       .newSchema({
         properties: {
@@ -47,8 +47,9 @@ describe('form: widget: checkbox', () => {
       })
       .checkCount(chekcWrapCls, 1)
       .click(chekcWrapCls)
+      .dc(100)
       .checkCount(chekcWrapCls, 2);
-  });
+  }));
 
   it('should be ingore title when not array data', () => {
     const title = 'test';

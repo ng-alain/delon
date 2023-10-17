@@ -1,3 +1,5 @@
+import { Injector } from '@angular/core';
+
 import { AlainSFConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -13,6 +15,7 @@ import { SchemaValidatorFactory } from '../validator.factory';
 
 export class ArrayProperty extends PropertyGroup {
   constructor(
+    injector: Injector,
     private formPropertyFactory: FormPropertyFactory,
     schemaValidatorFactory: SchemaValidatorFactory,
     schema: SFSchema,
@@ -22,7 +25,7 @@ export class ArrayProperty extends PropertyGroup {
     path: string,
     options: AlainSFConfig
   ) {
-    super(schemaValidatorFactory, schema, ui, formData, parent, path, options);
+    super(injector, schemaValidatorFactory, schema, ui, formData, parent, path, options);
     this.properties = [];
   }
 
