@@ -25,6 +25,8 @@ module: import { OnboardingModule } from '@delon/abc/onboarding';
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[key]` | 存储标识Key；默认 `localStorage` 本地存储，允许使用 `ONBOARDING_STORE_TOKEN` 变更存储方式 | `string` | - |
+| `[keyVersion]` | 当前版本 | `unknown` | - |
 | `[items]` | 引导项列表 | `OnboardingItem[]` | `[]` |
 | `[mask]` | 是否展示遮罩 | `boolean` | `true` |
 | `[maskClosable]` | 点击蒙层是否允许关闭 | `boolean` | `true` |

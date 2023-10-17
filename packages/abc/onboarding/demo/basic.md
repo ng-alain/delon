@@ -15,7 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { OnboardingService } from '@delon/abc/onboarding';
+
+import { OnboardingConfig, OnboardingService } from '@delon/abc/onboarding';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -28,27 +29,49 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button class="test1-3" nz-button nzType="dashed">Third Button</button>
     </div>
     <button nz-button (click)="start()">Start</button>
+    <button nz-button (click)="startOnce()">Start Once (Set 'key')</button>
     <button nz-button (click)="viaHttp()">Start Via Http</button>
-    <a href="https://github.com/ng-alain/delon/blob/master/src/assets/schema/onboarding.json" target="_blank" class="ml-md">
+    <a
+      href="https://github.com/ng-alain/delon/blob/master/src/assets/schema/onboarding.json"
+      target="_blank"
+      class="ml-md"
+    >
       onboarding.json
     </a>
-  `,
+  `
 })
 export class DemoComponent {
-  constructor(private srv: OnboardingService, private msg: NzMessageService, private http: _HttpClient) {}
+  private def: OnboardingConfig = {
+    items: [
+      {
+        selectors: '.test1-1',
+        content: 'The user guidance is to help users better understand and use the product',
+        width: 300
+      },
+      {
+        selectors: '.test1-2',
+        title: 'Test2',
+        content: 'The user guidance is to help users better understand and use the product'
+      },
+      {
+        selectors: '.test1-3',
+        title: 'Test3',
+        content: 'The user guidance is to help users better understand and use the product'
+      }
+    ]
+  };
+  constructor(
+    private srv: OnboardingService,
+    private msg: NzMessageService,
+    private http: _HttpClient
+  ) {}
 
   handleClick(): void {
     this.msg.info(`click`);
   }
 
   start(): void {
-    this.srv.start({
-      items: [
-        { selectors: '.test1-1', content: 'The user guidance is to help users better understand and use the product', width: 300 },
-        { selectors: '.test1-2', title: 'Test2', content: 'The user guidance is to help users better understand and use the product' },
-        { selectors: '.test1-3', title: 'Test3', content: 'The user guidance is to help users better understand and use the product' },
-      ],
-    });
+    this.srv.start({ ...this.def });
   }
 
   viaHttp(): void {
@@ -56,6 +79,10 @@ export class DemoComponent {
       console.log(res);
       this.srv.start(res);
     });
+  }
+
+  startOnce(): void {
+    this.srv.start({ ...this.def, key: 'obs-once' });
   }
 }
 ```

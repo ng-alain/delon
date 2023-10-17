@@ -18,13 +18,14 @@ import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { OnboardingComponent } from './onboarding.component';
+import { ONBOARDING_STORE_TOKEN, OnBoardingKeyStore } from './onboarding.storage';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 @Injectable()
 export class OnboardingService implements OnDestroy {
   private compRef!: ComponentRef<OnboardingComponent>;
   private op$!: Subscription;
-  private config!: OnboardingConfig;
+  private config?: OnboardingConfig;
   private active = 0;
   private running$: Subscription | null = null;
   private _running = false;
@@ -49,6 +50,7 @@ export class OnboardingService implements OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     private configSrv: AlainConfigService,
+    @Inject(ONBOARDING_STORE_TOKEN) private keyStoreSrv: OnBoardingKeyStore,
     @Optional() private directionality: Directionality
   ) {}
 
@@ -96,6 +98,10 @@ export class OnboardingService implements OnDestroy {
   }
 
   private destroy(): void {
+    const storeKey = this.config?.key;
+    if (storeKey != null) {
+      this.keyStoreSrv.set(storeKey, this.config?.keyVersion);
+    }
     this.cancelRunning();
     if (this.compRef) {
       this.appRef.detachView(this.compRef.hostView);
@@ -105,7 +111,7 @@ export class OnboardingService implements OnDestroy {
   }
 
   private showItem(isStart: boolean = false): void {
-    const items = this.config.items!;
+    const items = this.config?.items!;
     const item = {
       position: 'bottomLeft',
       before: of(true),
@@ -142,17 +148,23 @@ export class OnboardingService implements OnDestroy {
    * 开启新的用户引导流程
    */
   start(config: OnboardingConfig): void {
-    if (this.running) {
-      return;
-    }
-    this.destroy();
-    this.config = {
+    const cog: OnboardingConfig = {
+      keyVersion: '',
       items: [],
       mask: true,
       maskClosable: true,
       showTotal: false,
       ...config
     };
+    const storeKey = cog?.key;
+    if (storeKey != null && this.keyStoreSrv.get(storeKey) === cog.keyVersion) {
+      return;
+    }
+    if (this.running) {
+      return;
+    }
+    this.destroy();
+    this.config = cog;
     this.active = 0;
     this.type = null;
     this.attach();
@@ -165,7 +177,7 @@ export class OnboardingService implements OnDestroy {
    * 下一步
    */
   next(): void {
-    if (this._running || this.active + 1 >= this.config.items!.length) {
+    if (this._running || this.active + 1 >= this.config!.items!.length) {
       this.done();
       return;
     }

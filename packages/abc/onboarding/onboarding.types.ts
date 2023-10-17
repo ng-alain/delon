@@ -8,6 +8,14 @@ export type OnboardingOpType = 'next' | 'prev' | 'skip' | 'done';
 
 export interface OnboardingConfig {
   /**
+   * Storage identification Key, The default is `localStorage` local storage, allowing the use of `ONBOARDING_STORE_TOKEN` to change the storage method
+   */
+  key?: string;
+  /**
+   * Current version
+   */
+  keyVersion?: unknown;
+  /**
    * Onboarding items
    */
   items?: OnboardingItem[];

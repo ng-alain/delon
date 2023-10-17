@@ -10,6 +10,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';
+import { ONBOARDING_STORE_TOKEN } from './onboarding.storage';
 import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
 
 describe('abc: onboarding', () => {
@@ -40,6 +41,20 @@ describe('abc: onboarding', () => {
 
   it('should working', fakeAsync(() => {
     page.start().checkActive().click('next').checkDone(false).click('done').checkDone();
+  }));
+
+  it('#key', fakeAsync(() => {
+    const storeSrv = TestBed.inject(ONBOARDING_STORE_TOKEN);
+    let storeKeyVersion: unknown = '';
+    spyOn(storeSrv, 'get').and.callFake(() => {
+      return storeKeyVersion;
+    });
+    spyOn(storeSrv, 'set').and.callFake((_, value) => {
+      storeKeyVersion = value;
+    });
+    page.start({ key: 'a', keyVersion: '1' }).checkActive().click('next').checkDone(false).click('done').checkDone();
+    page.start({ key: 'a', keyVersion: '1' });
+    expect(page.el == null);
   }));
 
   it('#skip', fakeAsync(() => {
