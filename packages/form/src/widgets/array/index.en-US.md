@@ -61,6 +61,6 @@ const ui = {
 | `[removable]` | Whether includes remove button | `boolean` | `true` |
 | `[removeTitle]` | Remove button title | `string` | `remove` |
 | `[required]` | Add required style to current item	 | `boolean` | - |
-| `[$items]` | UI description of array element | `SFUISchema` | `remove` |
+| `[$items]` | UI description of array element | `SFUISchema` | - |
 | `(add)` | Add callback，`property` indicates form property after add | `(property: FormProperty) => void` | - |
 | `(remove)` | Remove callback | `(index: number) => void` | - |

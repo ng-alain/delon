@@ -441,13 +441,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (property.items) {
-          const uiSchemaInArr = (uiSchema[uiKey] || {}).$items || {};
           ui.$items = {
             ...(property.items.ui as SFUISchemaItem),
-            ...uiSchemaInArr[uiKey],
+            ...uiSchema[uiKey],
             ...ui.$items
           };
-          inFn(property.items, property.items, uiSchemaInArr, ui.$items, ui.$items);
+          inFn(property.items, property.items, uiSchema[uiKey]?.$items ?? {}, ui.$items, ui.$items);
         }
 
         if (property.properties && Object.keys(property.properties).length) {
