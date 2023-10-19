@@ -82,12 +82,14 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   reset(value: SFValue): void {
+    const onSearch = this.ui.onSearch!;
     getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
-      if (this.ui.onSearch == null) this.data = list;
+      if (onSearch == null) this.data = list;
       this.checkGroup(list);
       this.detectChanges();
     });
+    if (value && onSearch != null) this.search$.next(value);
   }
 
   change(values: SFValue): void {
