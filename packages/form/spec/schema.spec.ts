@@ -54,44 +54,6 @@ describe('form: schema', () => {
         })
         .checkUI('/name', 'widget', 'textarea');
     });
-    it('should be inherit all properties with * for ui schema', () => {
-      const schema: SFSchema = {
-        properties: {
-          name1: { type: 'string' },
-          name2: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                a: {
-                  type: 'string',
-                  ui: {
-                    grid: { span: 12 }
-                  }
-                },
-                b: { type: 'string' }
-              },
-              ui: { spanLabelFixed: 10 }
-            }
-          }
-        }
-      };
-      const label = 10;
-      const ui: SFUISchema = {
-        '*': { spanLabel: label },
-        $name2: {
-          $items: {
-            $a: { spanLabel: 9 }
-          }
-        }
-      };
-      page
-        .newSchema(schema, ui)
-        .checkUI('/name1', 'spanLabel', label)
-        .add()
-        .checkUI('/name2/0/a', 'spanLabel', null) // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
-        .checkUI('/name2/0/b', 'spanLabelFixed', 10);
-    });
     it('should be fixed label width', () => {
       const schema: SFSchema = {
         properties: {
@@ -226,6 +188,62 @@ describe('form: schema', () => {
         expect((prop!.ui!.optionalHelp as NzSafeAny).placement!).toBe(`bottomRight`);
         discardPeriodicTasks();
       }));
+    });
+    describe('#inherit', () => {
+      it('should be inherit all properties with * for ui schema', () => {
+        const schema: SFSchema = {
+          properties: {
+            name1: { type: 'string' },
+            name2: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  a: {
+                    type: 'string',
+                    ui: {
+                      grid: { span: 12 }
+                    }
+                  },
+                  b: { type: 'string' }
+                },
+                ui: { spanLabelFixed: 10 }
+              }
+            }
+          }
+        };
+        const label = 10;
+        const ui: SFUISchema = {
+          '*': { spanLabel: label },
+          $name2: {
+            $items: {
+              $a: { spanLabel: 9 }
+            }
+          }
+        };
+        page
+          .newSchema(schema, ui)
+          .checkUI('/name1', 'spanLabel', label)
+          .add()
+          .checkUI('/name2/0/a', 'spanLabel', null) // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
+          .checkUI('/name2/0/b', 'spanLabelFixed', 10);
+      });
+      it('should be ignore inherit render ui', () => {
+        const schema: SFSchema = {
+          properties: {
+            a: { type: 'string' },
+            adr: {
+              type: 'object',
+              title: 'adr',
+              properties: {
+                a: { type: 'string', ui: { optional: 'Help a' } }
+              },
+              ui: { optional: 'Help Adr' }
+            }
+          }
+        };
+        page.newSchema(schema).checkUI('/adr', 'optional', 'Help Adr').checkUI('/adr/a', 'optional', 'Help a');
+      });
     });
   });
 
