@@ -337,6 +337,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           // 忽略部分会引起呈现的属性
           visibleIf: undefined,
           hidden: undefined,
+          optional: undefined,
+          optionalHelp: undefined,
           widget: property.type,
           ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),

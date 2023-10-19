@@ -45,6 +45,23 @@
     <div [class.point]="showExpand" (click)="changeExpand()">
       <i *ngIf="showExpand" nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs"></i>
       {{ title }}
+      <span *ngIf="ui.optional || oh" class="sf__optional">
+        {{ ui.optional }}
+        <i
+          *ngIf="oh"
+          nz-tooltip
+          [nzTooltipTitle]="oh.text"
+          [nzTooltipPlacement]="oh.placement"
+          [nzTooltipTrigger]="oh.trigger"
+          [nzTooltipColor]="oh.bgColor"
+          [nzTooltipOverlayClassName]="oh.overlayClassName"
+          [nzTooltipOverlayStyle]="oh.overlayStyle"
+          [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
+          [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
+          nz-icon
+          [nzType]="oh.icon!"
+        ></i>
+      </span>
     </div>
   </ng-template>
   <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }" />
