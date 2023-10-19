@@ -40,6 +40,7 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
       .replace(/abbr: '([^']+)/, `abbr: '${options.defaultLanguage}`);
     // zorro
     content = content.replace(/NZ_I18N, ([^ ]+)/, `NZ_I18N, ${targetLang.zorro}`);
+    content = content.replace(/provideNzI18n, ([^ ]+)/, `provideNzI18n, ${targetLang.zorro}`);
     // delon
     content = content.replace(/DELON_LOCALE, ([^ ]+)/, `DELON_LOCALE, ${targetLang.zorro}`);
     tree.overwrite(modulePath, content);
