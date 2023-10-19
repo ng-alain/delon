@@ -33,9 +33,9 @@ const alainConfig: AlainConfig = {
   qr: {
     lib: '/assets/qrious/qrious.min.js'
   },
-  pdf: {
-    lib: '/assets/pdfjs/'
-  },
+  // pdf: {
+  //   lib: '/assets/pdfjs/'
+  // },
   media: {
     urls: ['assets/plyr/plyr.min.js', 'assets/plyr/plyr.css'],
     options: {
@@ -52,11 +52,11 @@ const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
 // Please refer to: https://ng.ant.design/docs/global-config/en#how-to-use
 // #region NG-ZORRO Config
 
-import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
+import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 
 const ngZorroConfig: NzConfig = {};
 
-const zorroProvides = [{ provide: NZ_CONFIG, useValue: ngZorroConfig }];
+const zorroProvides = [provideNzConfig(ngZorroConfig)];
 
 // #endregion
 

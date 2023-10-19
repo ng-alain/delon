@@ -3,12 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
-  OnDestroy,
   QueryList,
-  TemplateRef
+  TemplateRef,
+  inject
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { App, SettingsService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -28,7 +29,7 @@ interface LayoutDefaultHeaderItem {
   template: `
     <ng-template #render let-ls>
       <li *ngFor="let i of ls" [class.hidden-mobile]="i.hidden === 'mobile'" [class.hidden-pc]="i.hidden === 'pc'">
-        <ng-container *ngTemplateOutlet="i.host"></ng-container>
+        <ng-container *ngTemplateOutlet="i.host" />
       </li>
     </ng-template>
     <div class="alain-default__header-logo" [style.width.px]="opt.logoFixWidth">
@@ -46,13 +47,13 @@ interface LayoutDefaultHeaderItem {
             <span nz-icon [nzType]="collapsedIcon"></span>
           </div>
         </li>
-        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }"></ng-template>
+        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }" />
       </ul>
       <div *ngIf="middle.length > 0" class="alain-default__nav alain-default__nav-middle">
-        <ng-container *ngTemplateOutlet="middle[0].host"></ng-container>
+        <ng-container *ngTemplateOutlet="middle[0].host" />
       </div>
       <ul class="alain-default__nav">
-        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }"></ng-template>
+        <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }" />
       </ul>
     </div>
   `,
@@ -61,8 +62,8 @@ interface LayoutDefaultHeaderItem {
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class LayoutDefaultHeaderComponent implements AfterViewInit {
+  private destroy$ = inject(DestroyRef);
 
   @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -86,7 +87,11 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
     return this.srv.collapsedIcon;
   }
 
-  constructor(private srv: LayoutDefaultService, private settings: SettingsService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private srv: LayoutDefaultService,
+    private settings: SettingsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   private refresh(): void {
     const arr = this.items.toArray();
@@ -97,17 +102,12 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.items.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this.refresh());
-    this.srv.options$.pipe(takeUntil(this.destroy$)).subscribe(() => this.cdr.detectChanges());
+    this.items.changes.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.refresh());
+    this.srv.options$.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.cdr.detectChanges());
     this.refresh();
   }
 
   toggleCollapsed(): void {
     this.srv.toggleCollapsed();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

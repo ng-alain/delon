@@ -1,0 +1,63 @@
+@import '../../../theme/theme-default.less';
+@cell-prefix: ~'.cell';
+
+@{cell-prefix} {
+  &__has-unit {
+    align-items: baseline;
+  }
+
+  &__has-default {
+    color: @cell-default-color;
+  }
+
+  &__primary {
+    color: @primary-color;
+  }
+
+  &__success {
+    color: @success-color;
+  }
+
+  &__danger {
+    color: @error-color;
+  }
+
+  &__warning {
+    color: @warning-color;
+  }
+
+  &__large {
+    font-size: @cell-large;
+  }
+
+  &__small {
+    font-size: @cell-small;
+  }
+
+  &[data-type="img"] {
+    .img:not(:last-child) {
+      margin-right: @cell-img-space;
+    }
+  }
+
+  .img {
+    vertical-align: middle;
+    border-radius: 4px;
+  }
+
+  .unit {
+    margin-left: 2px;
+    color: @cell-unit-color;
+    font-size: @cell-unit-font-size;
+  }
+
+  &__disabled {
+    &[data-type="link"] {
+      pointer-events: none;
+
+      > a {
+        color: @cell-link-disabled-color;
+      }
+    }
+  }
+}

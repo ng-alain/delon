@@ -2,6 +2,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US } from '@delon/theme';
@@ -16,7 +17,7 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ExceptionModule, DelonLocaleModule],
+      imports: [ExceptionModule, DelonLocaleModule, RouterTestingModule],
       declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));

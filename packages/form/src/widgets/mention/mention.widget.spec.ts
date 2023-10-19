@@ -5,9 +5,9 @@ import { of } from 'rxjs';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { MentionWidget } from './mention.widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { MentionWidget } from './mention.widget';
 
 const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 

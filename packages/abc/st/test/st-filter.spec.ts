@@ -4,11 +4,11 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { PageObject, TestComponent, genModule } from './base.spec';
 import { STFilterComponent } from '../st-filter.component';
 import { STComponent } from '../st.component';
 import { STColumnFilter } from '../st.interfaces';
 import { _STColumn } from '../st.types';
-import { PageObject, TestComponent, genModule } from './base.spec';
 
 registerLocaleData(zh);
 
@@ -114,10 +114,9 @@ describe('abc: st-filter', () => {
       filter = firstCol.filter!;
     });
     it('should be filter', () => {
-      expect(context.change).not.toHaveBeenCalled();
       const filterComp = dl.query(By.directive(STFilterComponent)).context as STFilterComponent;
       filterComp.confirm();
-      expect(context.change).toHaveBeenCalled();
+      expect(page._changeData?.type).toBe('filter');
     });
     it('should be clean', () => {
       const m = filter.menus![0];

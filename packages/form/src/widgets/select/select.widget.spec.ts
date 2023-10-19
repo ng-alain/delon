@@ -1,12 +1,12 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 import { SFSelectWidgetSchema } from './schema';
 import { SelectWidget } from './select.widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 
 describe('form: widget: select', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -154,4 +154,47 @@ describe('form: widget: select', () => {
       .checkValue('/a', undefined)
       .asyncEnd();
   }));
+
+  describe('#onSearch', () => {
+    it('should be first load when have value', fakeAsync(() => {
+      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            enum: [{ label: '待支付', value: 'WAIT_BUYER_PAY' }],
+            default: 'WAIT_BUYER_PAY',
+            ui: {
+              widget,
+              onSearch: onSearch
+            }
+          }
+        }
+      };
+      page.newSchema(s);
+      tick(1000);
+      expect(onSearch).toHaveBeenCalled();
+      page.asyncEnd();
+    }));
+
+    it('should be first load when value is empty', fakeAsync(() => {
+      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            enum: [{ label: '待支付', value: 'WAIT_BUYER_PAY' }],
+            ui: {
+              widget,
+              onSearch: onSearch
+            }
+          }
+        }
+      };
+      page.newSchema(s);
+      tick(1000);
+      expect(onSearch).not.toHaveBeenCalled();
+      page.asyncEnd();
+    }));
+  });
 });

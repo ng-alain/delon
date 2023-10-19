@@ -9,7 +9,6 @@ import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuSer
 import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import {
   ReuseCanClose,
@@ -22,6 +21,7 @@ import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
+import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
 let i18nResult = 'zh';
 @Injectable()
@@ -839,7 +839,7 @@ describe('abc: reuse-tab', () => {
     <a id="d" [routerLink]="['/d']">d</a>
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
-    <router-outlet></router-outlet>
+    <router-outlet />
   `
 })
 class AppComponent {}
@@ -866,9 +866,8 @@ class AppComponent {}
       [canClose]="canClose"
       (change)="change($event)"
       (close)="close($event)"
-    >
-    </reuse-tab>
-    <div id="children"><router-outlet></router-outlet></div>
+    />
+    <div id="children"><router-outlet /></div>
     <ng-template #titleRender let-i>{{ i.url }}</ng-template>
   `
 })

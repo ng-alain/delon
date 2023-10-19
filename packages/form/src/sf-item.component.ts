@@ -27,8 +27,8 @@ let nextUniqueId = 0;
   exportAs: 'sfItem',
   host: { '[class.sf__item]': 'true' },
   template: `
-    <ng-template #target></ng-template>
-    <ng-container *ngTemplateOutlet="footer"></ng-container>
+    <ng-template #target />
+    <ng-container *ngTemplateOutlet="footer" />
   `,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
@@ -45,7 +45,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('target', { read: ViewContainerRef, static: true })
   private container!: ViewContainerRef;
 
-  constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
+  constructor(
+    private widgetFactory: WidgetFactory,
+    private terminator: TerminatorService
+  ) {}
 
   onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>): void {
     this.widget = widget;

@@ -51,7 +51,10 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
     return `header-dropdown notice-icon${!this.centered ? ' notice-icon__tab-left' : ''}`;
   }
 
-  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private i18n: DelonLocaleService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   onVisibleChange(result: boolean): void {
     this.popoverVisibleChange.emit(result);

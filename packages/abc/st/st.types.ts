@@ -2,7 +2,18 @@
 import { TemplateRef } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
-import { STColumn, STColumnButton, STColumnSafeType, STData, STSortMap } from './st.interfaces';
+import type { CellOptions } from '@delon/abc/cell';
+import type { NgClassType } from 'ng-zorro-antd/core/types';
+
+import type {
+  STColumn,
+  STColumnButton,
+  STColumnSafeType,
+  STData,
+  STIcon,
+  STOnCellResult,
+  STSortMap
+} from './st.interfaces';
 
 /**
  * @inner
@@ -61,6 +72,11 @@ export interface _STHeader {
  */
 export interface _STColumnButton<T extends STData = any> extends STColumnButton<T> {
   _text?: string;
+  _className?: NgClassType | null;
+  /**
+   * 图标
+   */
+  _icon?: STIcon | null;
   children?: Array<_STColumnButton<T>>;
 }
 
@@ -72,6 +88,9 @@ export interface _STDataValue {
   _text: SafeHtml;
   org?: any;
   color?: string;
+  tooltip?: string;
   safeType: STColumnSafeType;
   buttons?: _STColumnButton[];
+  props?: STOnCellResult | null;
+  cell?: CellOptions;
 }

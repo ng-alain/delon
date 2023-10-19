@@ -13,7 +13,7 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: '16.15.0'
+              versionSpec: '18.10.0'
             displayName: 'Install Node.js'
 
   - stage: build
@@ -22,7 +22,7 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: '16.15.0'
+              versionSpec: '18.10.0'
             displayName: 'Install Node.js'
           - script: |
               node --version
@@ -44,7 +44,7 @@ stages:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: |
-              yarn run site:build
+              yarn run site:build:ssr
             displayName: 'Build site'
           - script: |
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh

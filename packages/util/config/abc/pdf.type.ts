@@ -1,6 +1,6 @@
 export interface AlainPdfConfig {
   /**
-   * [pdf.js](https://github.com/mozilla/pdf.js) library root url, Default: `https://cdn.jsdelivr.net/npm/pdfjs-dist@2.x/`
+   * [pdf.js](https://github.com/mozilla/pdf.js) library root url, Default: `https://cdn.jsdelivr.net/npm/pdfjs-dist@3.6.x/`
    *
    * **Note** That only the root path, muse be ending with `/`
    */

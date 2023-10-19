@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
 
-import { DelonAuthModule } from '../../auth.module';
-import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 import { SimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
+import { DelonAuthModule } from '../../auth.module';
+import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 
 function genModel(token: string = `123`): SimpleTokenModel {
   const model = new SimpleTokenModel();

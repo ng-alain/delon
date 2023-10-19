@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpContext } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
@@ -27,6 +27,7 @@ export interface HttpOptions {
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
   reportProgress?: boolean;
   withCredentials?: boolean;
+  context?: HttpContext;
 }
 
 interface ParamType {

@@ -109,11 +109,11 @@ export class STColumnSource {
       // pop
       this.fixPop(item, pop!);
 
-      if (item.icon) {
+      if (typeof item.icon !== 'function') {
         item.icon = {
           ...btnIcon,
           ...(typeof item.icon === 'string' ? { type: item.icon } : item.icon)
-        };
+        } as STIcon;
       }
 
       item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
@@ -458,6 +458,10 @@ export class STColumnSource {
         if (!item.width) {
           item.width = '50px';
         }
+      }
+      // cell
+      if (item.cell != null) {
+        item.type = 'cell';
       }
       // types
       if (item.type === 'yn') {

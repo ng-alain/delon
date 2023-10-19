@@ -17,7 +17,10 @@ export class LodopService implements OnDestroy {
   private _events = new Subject<LodopPrintResult>();
   private printBuffer: NzSafeAny[] = [];
 
-  constructor(private scriptSrv: LazyService, configSrv: AlainConfigService) {
+  constructor(
+    private scriptSrv: LazyService,
+    configSrv: AlainConfigService
+  ) {
     this.defaultConfig = configSrv.merge('lodop', {
       url: '//localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',

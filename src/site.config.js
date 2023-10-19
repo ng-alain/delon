@@ -79,7 +79,7 @@ module.exports = {
         {
           name: 'form',
           route: '/form/getting-started',
-          order: 4,
+          order: 10,
           i18n: true,
           lib: true,
           meta: {

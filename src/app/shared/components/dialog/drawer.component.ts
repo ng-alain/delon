@@ -6,7 +6,7 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 @Component({
   selector: `app-demo-dialog-drawer`,
   template: `
-    <p style="height: 1000px">参数：{{ record | json }}</p>
+    <p style="height: 1000px">参数：{{ record | json }},<a routerLink="/">Change Router</a></p>
     The end!
     <div class="drawer-footer">
       <button nz-button [nzType]="'default'" (click)="cancel()"> Cancel </button>

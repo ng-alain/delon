@@ -76,7 +76,7 @@
             <div class="theme-color-value" [ngStyle]="{ background: color }"></div>
           </div>
           <ng-template #colorTpl>
-            <color-sketch [color]="color" (onChangeComplete)="changeColor($event)"></color-sketch>
+            <color-sketch [color]="color" (onChangeComplete)="changeColor($event)" />
           </ng-template>
         </div>
       </div>

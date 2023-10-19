@@ -192,7 +192,7 @@
             "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
             "include": [
               "./test.ts",
-              // "**/select.widget.spec.ts"
+              // "**/st.spec.ts"
               "**/*.spec.ts"
             ]
           }

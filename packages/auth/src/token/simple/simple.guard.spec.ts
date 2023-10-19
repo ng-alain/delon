@@ -3,9 +3,9 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { authSimpleCanActivate, authSimpleCanActivateChild, authSimpleCanMatch } from './simple.guard';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
-import { SimpleGuard } from './simple.guard';
 
 describe('auth: SimpleGuard', () => {
   let srv: ITokenService;
@@ -19,16 +19,16 @@ describe('auth: SimpleGuard', () => {
           {
             path: 'home',
             component: MockComponent,
-            canActivate: [SimpleGuard]
+            canActivate: [authSimpleCanActivate]
           },
           {
             path: 'my',
-            canActivateChild: [SimpleGuard],
+            canActivateChild: [authSimpleCanActivateChild],
             children: [{ path: 'profile', component: MockComponent }]
           },
           {
             path: 'lazy',
-            canMatch: [SimpleGuard],
+            canMatch: [authSimpleCanMatch],
             loadChildren: () => AModule
           },
           {

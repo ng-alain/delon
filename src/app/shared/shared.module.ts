@@ -59,7 +59,6 @@ const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSk
     ...THIRDS
   ],
   declarations: COMPONENTS,
-  entryComponents: DIALOG_COMPONENTS,
   exports: [
     CommonModule,
     FormsModule,

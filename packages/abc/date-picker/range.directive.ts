@@ -12,7 +12,6 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
 
 import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
@@ -32,7 +31,6 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
   private _shortcut: AlainDateRangePickerShortcut | null = null;
-  private destroy$ = new Subject<void>();
   private shortcutFactory: ComponentRef<RangePickerShortcutTplComponent> | null = null;
   start: Date | null = null;
   end: Date | null = null;
@@ -57,7 +55,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   get shortcut(): AlainDateRangePickerShortcut | null {
     return this._shortcut;
   }
-  @Input() ngModelEnd: NzSafeAny;
+  @Input({ required: true }) ngModelEnd: NzSafeAny;
   @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
@@ -191,7 +189,5 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.destoryShortcut();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -6,9 +6,9 @@ import { of } from 'rxjs';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { AlainConfigService, LazyService } from '../../util';
 import { QRComponent } from './qr.component';
 import { QRModule } from './qr.module';
+import { AlainConfigService, LazyService } from '../../util';
 
 describe('abc: qr', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -104,7 +104,7 @@ describe('abc: qr', () => {
       [padding]="padding"
       [size]="size"
       (change)="change($event)"
-    ></qr>
+    />
   `
 })
 class TestComponent {

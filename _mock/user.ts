@@ -15,6 +15,7 @@ export const USERS = {
     for (let i = 0; i < +req.queryString.ps; i++) {
       res.list.push({
         id: i + 1,
+        type: r(1, 3),
         picture: {
           thumbnail: `https://randomuser.me/api/portraits/thumb/${r(0, 1) === 0 ? 'men' : 'women'}/${r(1, 50)}.jpg`
         },
@@ -27,6 +28,9 @@ export const USERS = {
         email: `aaa${r(1, 10)}@qq.com`,
         phone: `phone-${r(1000, 100000)}`,
         price: r(10, 10000000),
+        total: r(10, 10000000),
+        website: `https://${r(10, 10000000)}.com/`,
+        disabled: r(1, 100) > 50,
         registered: new Date()
       });
     }

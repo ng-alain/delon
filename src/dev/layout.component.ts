@@ -79,7 +79,7 @@ const ICONS = [
       </layout-default-header-item>
       <ng-template #asideUserTpl>
         <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
-          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
+          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar" />
           <div class="alain-default__aside-user-info">
             <strong>{{ user.name }}</strong>
             <p class="mb0">{{ user.email }}</p>
@@ -92,10 +92,10 @@ const ICONS = [
           </ul>
         </nz-dropdown-menu>
       </ng-template>
-      <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab></reuse-tab>
-      <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
+      <reuse-tab [mode]="2" [customContextMenu]="customContextMenu" #reuseTab />
+      <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" />
     </layout-default>
-    <setting-drawer></setting-drawer>
+    <setting-drawer />
   `,
   host: {
     '[class.alain-default]': 'true'

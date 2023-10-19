@@ -19,7 +19,7 @@ export class DownFileDirective {
   @Input('http-data') httpData: NzSafeAny;
   @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
-  @Input('http-url') httpUrl!: string;
+  @Input({ alias: 'http-url', required: true }) httpUrl!: string;
   @Input('file-name') fileName?: string | ((rep: HttpResponse<Blob>) => string);
   @Input() pre?: (ev: MouseEvent) => Promise<boolean>;
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
@@ -39,7 +39,10 @@ export class DownFileDirective {
     return arr.reduce((_o, item) => item, {});
   }
 
-  constructor(private el: ElementRef<HTMLButtonElement>, private _http: _HttpClient) {
+  constructor(
+    private el: ElementRef<HTMLButtonElement>,
+    private _http: _HttpClient
+  ) {
     let isFileSaverSupported = false;
     try {
       isFileSaverSupported = !!new Blob();

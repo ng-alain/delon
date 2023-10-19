@@ -48,7 +48,7 @@ describe('chart: single-bar', () => {
       [padding]="padding"
       [textStyle]="textStyle"
       [delay]="delay"
-    ></g2-single-bar>
+    />
   `
 })
 class TestComponent {

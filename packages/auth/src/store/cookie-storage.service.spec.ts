@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITokenModel } from '../token/interface';
+import { CookieOptions, CookieService } from '@delon/util/browser';
+
 import { CookieStorageStore } from './cookie-storage.service';
+import { ITokenModel } from '../token/interface';
 
 describe('auth: cookie-storage', () => {
   let data: { [key: string]: any } = {};
-  const store = new CookieStorageStore({
-    put: jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value)),
-    get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
-    remove: jasmine.createSpy('remove').and.callFake((key: string) => {
-      delete data[key];
-    })
-  } as any);
+  let putSpy: jasmine.Spy;
+  let store: CookieStorageStore;
   const KEY = 'token';
   const VALUE: ITokenModel = {
     token: 'token data'
@@ -18,6 +15,14 @@ describe('auth: cookie-storage', () => {
 
   beforeEach(() => {
     data = {};
+    putSpy = jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value));
+    store = new CookieStorageStore({
+      put: putSpy,
+      get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
+      remove: jasmine.createSpy('remove').and.callFake((key: string) => {
+        delete data[key];
+      })
+    } as unknown as CookieService);
   });
 
   it('should be never return null', () => {
@@ -43,17 +48,26 @@ describe('auth: cookie-storage', () => {
     expect(invalidRet.token).toBeUndefined();
   });
 
-  it('#set', () => {
-    store.set(KEY, VALUE);
-    let ret = store.get(KEY);
-    expect(ret).not.toBeNull();
-    expect(ret.token).toBe(VALUE.token);
+  describe('#set', () => {
+    it('should be working', () => {
+      store.set(KEY, VALUE);
+      let ret = store.get(KEY);
+      expect(ret).not.toBeNull();
+      expect(ret.token).toBe(VALUE.token);
 
-    // when is null or undefined
-    store.set(KEY, undefined);
-    ret = store.get(KEY);
-    expect(ret).not.toBeNull();
-    expect(Object.keys(ret).length).toBe(0);
+      // when is null or undefined
+      store.set(KEY, undefined);
+      ret = store.get(KEY);
+      expect(ret).not.toBeNull();
+      expect(Object.keys(ret).length).toBe(0);
+    });
+    it('should be set expired', () => {
+      store.set(KEY, { ...VALUE, expired: 1000 * 3 });
+      const args = putSpy.calls.first().args;
+      expect(args.length).toBe(3);
+      const options = args[2] as CookieOptions;
+      expect(typeof options.expires === 'number' && options.expires > 0).toBe(true);
+    });
   });
 
   it('#remove', () => {

@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Inject,
+  Injector,
   Input,
   OnChanges,
   OnDestroy,
@@ -16,8 +17,9 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { merge, Observable, Subject, filter, takeUntil } from 'rxjs';
+import { merge, Observable, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
@@ -40,10 +42,11 @@ import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
 export function useFactory(
+  injector: Injector,
   schemaValidatorFactory: SchemaValidatorFactory,
   cogSrv: AlainConfigService
 ): FormPropertyFactory {
-  return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
+  return new FormPropertyFactory(injector, schemaValidatorFactory, cogSrv);
 }
 
 @Component({
@@ -55,7 +58,7 @@ export function useFactory(
     {
       provide: FormPropertyFactory,
       useFactory,
-      deps: [SchemaValidatorFactory, AlainConfigService]
+      deps: [Injector, SchemaValidatorFactory, AlainConfigService]
     },
     TerminatorService
   ],
@@ -84,7 +87,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_cleanValue: BooleanInput;
   static ngAcceptInputType_delay: BooleanInput;
 
-  private destroy$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
   private _valid = true;
@@ -277,7 +279,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
     this.delay = this.options.delay as boolean;
-    this.localeSrv.change.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.localeSrv.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
         this.validator({ emitError: false, onlyRoot: false });
@@ -293,7 +295,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       merge(...(refSchemas as Array<Observable<NzSafeAny>>))
         .pipe(
           filter(() => this._inited),
-          takeUntil(this.destroy$)
+          takeUntilDestroyed()
         )
         .subscribe(() => this.refreshSchema());
     }
@@ -322,7 +324,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       if (!Array.isArray(schema.required)) schema.required = [];
 
       Object.keys(schema.properties!).forEach(key => {
-        const uiKey = `$${key}`;
+        const uiKeyPrefix = '$';
+        const uiKey = uiKeyPrefix + key;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
         const curUi = {
           ...(property.ui as SFUISchemaItem),
@@ -342,6 +345,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             : null),
           ...curUi
         } as SFUISchemaItemRun;
+        Object.keys(ui)
+          .filter(key => key.startsWith(uiKeyPrefix))
+          .forEach(key => delete ui[key]);
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
@@ -435,13 +441,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (property.items) {
-          const uiSchemaInArr = (uiSchema[uiKey] || {}).$items || {};
           ui.$items = {
             ...(property.items.ui as SFUISchemaItem),
-            ...uiSchemaInArr[uiKey],
+            ...uiSchema[uiKey],
             ...ui.$items
           };
-          inFn(property.items, property.items, uiSchemaInArr, ui.$items, ui.$items);
+          inFn(property.items, property.items, uiSchema[uiKey]?.$items ?? {}, ui.$items, ui.$items);
         }
 
         if (property.properties && Object.keys(property.properties).length) {
@@ -687,8 +692,5 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.cleanRootSub();
     this.terminator.destroy();
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
   }
 }

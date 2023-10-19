@@ -7,11 +7,11 @@ import { of } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { RouteTitle, TitleService } from './title.service';
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu } from '../menu/interface';
 import { MenuService } from '../menu/menu.service';
-import { RouteTitle, TitleService } from './title.service';
 
 describe('Service: Title', () => {
   let getPathByUrlData: NzSafeAny;
@@ -73,6 +73,14 @@ describe('Service: Title', () => {
       srv.setTitle();
       tick(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
+    }));
+
+    it('should be ignore when empty title & default title', fakeAsync(() => {
+      srv.default = '';
+      srv.suffix = alain;
+      srv.setTitle();
+      tick(srv.DELAY_TIME + 1);
+      expect(title.setTitle).toHaveBeenCalledWith(`${alain}`);
     }));
 
     it('should set new title', fakeAsync(() => {

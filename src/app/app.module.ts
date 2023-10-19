@@ -17,6 +17,7 @@ import { I18NService, StartupService } from '@core';
 import { NgxTinymceModule } from 'ngx-tinymce';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { CacheInterceptor } from '@delon/cache';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -30,8 +31,8 @@ import { RoutesModule } from './routes/routes.module';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
-import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
-import { CacheInterceptor } from '@delon/cache';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import { CellWidgetModule } from './shared/cell-widget/module';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
@@ -67,6 +68,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     SharedModule,
     JsonSchemaModule,
     STWidgetModule,
+    CellWidgetModule,
     RoutesModule,
     ExampleModule,
     NgxTinymceModule.forRoot({
@@ -92,7 +94,6 @@ function registerElements(injector: Injector, platformId: {}): void {
     { provide: ErrorHandler, useClass: CustomErrorHandler }
   ],
   declarations: [AppComponent, LayoutComponent, HeaderComponent, HeaderSearchComponent],
-  entryComponents: STWIDGET_COMPONENTS,
   bootstrap: [AppComponent]
 })
 export class AppModule {

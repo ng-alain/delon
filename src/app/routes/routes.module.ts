@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
-import { AlainI18NGuard } from '@delon/theme';
-
-import { LayoutComponent } from '../layout/layout.component';
-import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
 import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from '../layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [HomeComponent, NotFoundComponent];
 
@@ -14,7 +12,6 @@ const routes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
-    canActivateChild: [AlainI18NGuard],
     children: [
       { path: '', redirectTo: 'en', pathMatch: 'full' },
       { path: ':lang', component: HomeComponent, data: { titleI18n: 'slogan' } },
@@ -49,7 +46,10 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [
+    SharedModule,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', bindToComponentInputs: true })
+  ],
   declarations: COMPONENTS
 })
 export class RoutesModule {}

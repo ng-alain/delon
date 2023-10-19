@@ -38,6 +38,11 @@ export interface CurrencyFormatOptions extends CurrencyStartingUnitOptions {
   };
 }
 
+/**
+ * Large number format filter, [Document](https://ng-alain.com/util/format/en#mega)
+ *
+ * 大数据格式化，[文档](https://ng-alain.com/util/format/en#mega)
+ */
 export interface CurrencyMegaOptions extends CurrencyStartingUnitOptions {
   /**
    * 精度，默认：`2`

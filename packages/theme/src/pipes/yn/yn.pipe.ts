@@ -8,27 +8,39 @@ const ICON_NO = `<svg viewBox="64 64 896 896" fill="currentColor" width="1em" he
 const CLS_YES = `class="yn__yes"`;
 const CLS_NO = `class="yn__no"`;
 
+export interface YNOptions {
+  yes?: string;
+  no?: string;
+  mode?: YNMode;
+}
+
+export function yn(value: boolean, opt?: YNOptions): string {
+  let html = '';
+  let { yes, no, mode } = { ...opt };
+  yes = yes || '是';
+  no = no || '否';
+  switch (mode) {
+    case 'full':
+      html = value
+        ? `<i ${CLS_YES}>${ICON_YES}<span>${yes}</span></i>`
+        : `<i ${CLS_NO}>${ICON_NO}<span>${no}</span></i>`;
+      break;
+    case 'text':
+      html = value ? `<i ${CLS_YES}>${yes}</i>` : `<i ${CLS_NO}>${no}</i>`;
+      break;
+    default:
+      html = value ? `<i ${CLS_YES} title="${yes}">${ICON_YES}</i>` : `<i ${CLS_NO} title="${no}">${ICON_NO}</i>`;
+      break;
+  }
+  return html;
+}
+
 @Pipe({ name: 'yn' })
 export class YNPipe implements PipeTransform {
   constructor(private dom: DomSanitizer) {}
 
   transform(value: boolean, yes?: string, no?: string, mode?: YNMode, isSafeHtml: boolean = true): SafeHtml {
-    let html = '';
-    yes = yes || '是';
-    no = no || '否';
-    switch (mode) {
-      case 'full':
-        html = value
-          ? `<i ${CLS_YES}>${ICON_YES}<span>${yes}</span></i>`
-          : `<i ${CLS_NO}>${ICON_NO}<span>${no}</span></i>`;
-        break;
-      case 'text':
-        html = value ? `<i ${CLS_YES}>${yes}</i>` : `<i ${CLS_NO}>${no}</i>`;
-        break;
-      default:
-        html = value ? `<i ${CLS_YES} title="${yes}">${ICON_YES}</i>` : `<i ${CLS_NO} title="${no}">${ICON_NO}</i>`;
-        break;
-    }
+    const html = yn(value, { yes, no, mode });
     return isSafeHtml ? this.dom.bypassSecurityTrustHtml(html) : html;
   }
 }

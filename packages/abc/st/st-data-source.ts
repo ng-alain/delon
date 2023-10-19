@@ -4,21 +4,24 @@ import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of, map } from 'rxjs';
 
+import type { CellOptions } from '@delon/abc/cell';
 import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import type { AlainSTConfig } from '@delon/util/config';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import {
+import type {
   STColumn,
   STColumnFilter,
   STColumnFilterMenu,
   STColumnMaxMultipleButton,
   STCustomRequestOptions,
   STData,
+  STIcon,
   STMultiSort,
   STMultiSortResultType,
+  STOnCellResult,
   STPage,
   STReq,
   STReqReNameType,
@@ -38,7 +41,7 @@ export interface STDataSourceOptions {
   pi: number;
   ps: number;
   paginator: boolean;
-  data: string | STData[] | Observable<STData[]>;
+  data?: string | STData[] | Observable<STData[]>;
   total: number;
   req: STReq;
   res: STRes;
@@ -125,8 +128,8 @@ export class STDataSource {
           return deepCopy(ret);
         })
       );
-    } else if (Array.isArray(data)) {
-      data$ = of(data);
+    } else if (data == null || Array.isArray(data)) {
+      data$ = of(data ?? []);
     } else {
       // a cold observable
       data$ = data;
@@ -220,6 +223,7 @@ export class STDataSource {
 
       let text = value;
       let color: string | undefined;
+      let tooltip: string | undefined;
       switch (col.type) {
         case 'no':
           text = this.getNoIndex(item, col, idx);
@@ -249,6 +253,7 @@ export class STDataSource {
             const dataItem = data[text];
             text = dataItem.text;
             color = dataItem.color;
+            tooltip = dataItem.tooltip;
           } else {
             text = '';
           }
@@ -260,6 +265,7 @@ export class STDataSource {
         _text: safeHtml ? this.dom.bypassSecurityTrustHtml(text) : text,
         org: value,
         color,
+        tooltip,
         safeType: col.safeType!,
         buttons: []
       };
@@ -324,15 +330,31 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
+  getCell(c: STColumn, item: STData, idx: number): STOnCellResult {
+    const onCellResult = typeof c.onCell === 'function' ? c.onCell(item, idx) : null;
+    const mergedColSpan = onCellResult?.colSpan ?? 1;
+    const mergedRowSpan = onCellResult?.rowSpan ?? 1;
+    return {
+      colSpan: mergedColSpan <= 0 ? null : mergedColSpan,
+      rowSpan: mergedRowSpan <= 0 ? null : mergedRowSpan
+    } as STOnCellResult;
+  }
+
   optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
     const { result, columns, rowClassName } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
+        const props = this.getCell(c, result[i], i);
+
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '' };
+          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
         }
 
-        return this.get(result[i], c, i);
+        let cell: CellOptions | undefined;
+        if (typeof c.cell === 'function') {
+          cell = c.cell(result[i], c);
+        }
+        return { ...this.get(result[i], c, i), props, cell };
       });
       result[i]._rowClassName = [rowClassName ? rowClassName(result[i], i) : null, result[i].className]
         .filter(w => !!w)
@@ -364,6 +386,8 @@ export class STDataSource {
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
         btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        btn._className = typeof btn.className === 'function' ? btn.className(item, btn) : btn.className;
+        btn._icon = typeof btn.icon === 'function' ? btn.icon(item, btn) : (btn.icon as STIcon);
         if (btn.children?.length) {
           btn.children = fnText(btn.children!);
         }

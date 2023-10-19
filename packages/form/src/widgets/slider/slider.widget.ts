@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { NzMarks, NzSliderValue } from 'ng-zorro-antd/slider';
 
-import { ControlUIWidget } from '../../widget';
 import { SFSliderWidgetSchema } from './schema';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-slider',

@@ -4,14 +4,14 @@ import { InputNumber } from '@delon/util/decorator';
 
 @Directive({ selector: '[fixed-label]' })
 export class SFFixedDirective implements AfterViewInit, OnChanges {
-  private el: HTMLDivElement;
   private _inited = false;
 
   @Input('fixed-label') @InputNumber() num?: number | null;
 
   private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;
-    const widgetEl = this.el.querySelector('.ant-row') || this.el;
+    const el = this.el.nativeElement;
+    const widgetEl = el.querySelector<HTMLElement>('.ant-row') || el;
     this.render.addClass(widgetEl, 'sf__fixed');
     const labelEl = widgetEl.querySelector('.ant-form-item-label');
     const controlEl = widgetEl.querySelector('.ant-form-item-control-wrapper,.ant-form-item-control');
@@ -24,9 +24,10 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
     }
   }
 
-  constructor(er: ElementRef, private render: Renderer2) {
-    this.el = er.nativeElement as HTMLDivElement;
-  }
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private render: Renderer2
+  ) {}
 
   ngAfterViewInit(): void {
     this._inited = true;

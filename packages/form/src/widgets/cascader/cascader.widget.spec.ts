@@ -3,8 +3,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { CascaderWidget } from './cascader.widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: cascader', () => {
   let fixture: ComponentFixture<TestFormComponent>;

@@ -38,7 +38,10 @@ export class CookieService {
     return this.platform.isBrowser ? this.doc.cookie : '';
   }
 
-  constructor(@Inject(DOCUMENT) private _doc: NzSafeAny, private platform: Platform) {}
+  constructor(
+    @Inject(DOCUMENT) private _doc: NzSafeAny,
+    private platform: Platform
+  ) {}
 
   /**
    * Get all cookie key-value pairs

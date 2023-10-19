@@ -15,14 +15,16 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
+| `[sv-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | `3` | ✅ |
+| `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | `3` | ✅ |
 | `[size]` | size of view | `'small','large'` | `'large'` | ✅ |
 | `[layout]` | type of layout | `'horizontal','vertical'` | `'horizontal'` | ✅ |
 | `[gutter]` | specify the distance between two items, unit is `px` | `number` | `32` | ✅ |
-| `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | `3` | ✅ |
 | `[labelWidth]` | label text of width | `number` | - | ✅ |
 | `[default]` | whether default text | `boolean` | `true` | ✅ |
 | `[title]` | Display title | `string,TemplateRef<void>` | - | - |
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
+| `[bordered]` | Whether to display the border | `boolean` | `false` | - |
 
 ### sv
 

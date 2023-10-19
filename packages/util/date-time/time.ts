@@ -12,10 +12,13 @@ import {
   startOfYear,
   subMonths,
   subWeeks,
-  subYears
+  subYears,
+  format,
+  formatDistanceToNow
 } from 'date-fns';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { DateLocale } from 'ng-zorro-antd/i18n';
 
 /**
  * Get the time range, return `[ Date, Date]` for the start and end dates
@@ -112,4 +115,12 @@ export function toDate(value?: Date | string | number | null, options?: ToDateOp
   }
 
   return isNaN(tryDate as NzSafeAny) ? defaultValue : tryDate;
+}
+
+export function formatDate(value: Date | string | number, formatString: string, dateLocale?: DateLocale): string {
+  value = toDate(value);
+  if (isNaN(value as NzSafeAny)) return '';
+
+  const langOpt = { locale: dateLocale };
+  return formatString === 'fn' ? formatDistanceToNow(value, langOpt) : format(value, formatString, langOpt);
 }

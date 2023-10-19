@@ -16,19 +16,8 @@ import {
 } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import { STDataSource } from '../st-data-source';
-import { STExport } from '../st-export';
-import { STComponent } from '../st.component';
-import {
-  STClickRowClassNameType,
-  STColumn,
-  STColumnBadge,
-  STColumnTag,
-  STContextmenuItem,
-  STResReNameType
-} from '../st.interfaces';
-import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 import {
   PS,
@@ -42,6 +31,18 @@ import {
   TestComponent,
   genModule
 } from './base.spec';
+import { STDataSource } from '../st-data-source';
+import { STExport } from '../st-export';
+import { STComponent } from '../st.component';
+import {
+  STClickRowClassNameType,
+  STColumn,
+  STColumnBadge,
+  STColumnTag,
+  STContextmenuItem,
+  STResReNameType
+} from '../st.interfaces';
+import { _STColumn } from '../st.types';
 
 describe('abc: st', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -345,7 +346,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'error' },
           3: { text: '进行中', color: 'processing' },
           4: { text: '默认', color: 'default' },
-          5: { text: '警告', color: 'warning' }
+          5: { text: '警告', color: 'warning', tooltip: 'TIPS' }
         };
         it(`should be render badge`, fakeAsync(() => {
           page
@@ -359,6 +360,12 @@ describe('abc: st', () => {
             .expectElCount('.ant-badge', 0)
             .asyncEnd();
         }));
+        it(`#tooltip`, fakeAsync(() => {
+          page.updateColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }]).updateData([{ status: 5 }]);
+          const tooltips = page.dl.queryAll(By.directive(NzTooltipDirective));
+          expect(tooltips.length).toBe(1);
+          page.asyncEnd();
+        }));
       });
       describe('with tag', () => {
         const TAG: STColumnTag = {
@@ -366,7 +373,7 @@ describe('abc: st', () => {
           2: { text: '错误', color: 'red' },
           3: { text: '进行中', color: 'blue' },
           4: { text: '默认', color: '' },
-          5: { text: '警告', color: 'orange' }
+          5: { text: '警告', color: 'orange', tooltip: 'TIPS' }
         };
         it(`should be render tag`, fakeAsync(() => {
           page
@@ -379,6 +386,31 @@ describe('abc: st', () => {
             .updateColumn([{ title: '', index: 'status', type: 'tag', tag: null }])
             .expectElCount('.ant-tag', 0)
             .asyncEnd();
+        }));
+        it(`#tooltip`, fakeAsync(() => {
+          page.updateColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }]).updateData([{ tag: 5 }]);
+          const tooltips = page.dl.queryAll(By.directive(NzTooltipDirective));
+          expect(tooltips.length).toBe(1);
+          page.asyncEnd();
+        }));
+      });
+      describe('with cell', () => {
+        it('should be working', fakeAsync(() => {
+          page
+            .updateColumn([{ index: 'id', cell: { type: 'checkbox' } }])
+            .expectElCount('.cell', PS)
+            .expectElCount('.ant-checkbox', PS);
+        }));
+        it('should be support function', fakeAsync(() => {
+          page
+            .updateColumn([
+              {
+                index: 'id',
+                cell: i => (i.id === 1 ? { type: 'checkbox' } : {})
+              }
+            ])
+            .expectElCount('.cell', PS)
+            .expectElCount('.ant-checkbox', 1);
         }));
       });
       describe('[other]', () => {
@@ -688,6 +720,53 @@ describe('abc: st', () => {
             }));
           });
         });
+        it('should be className is function', fakeAsync(() => {
+          const columns: STColumn[] = [
+            {
+              title: '',
+              buttons: [
+                {
+                  className: a => `${a.id === 1 ? 'Y' : 'N'}`
+                }
+              ]
+            }
+          ];
+          page
+            .updateColumn(columns)
+            .expectElCount('.Y', 1)
+            .updateData([{ id: 2 }])
+            .expectElCount('.Y', 0)
+            .asyncEnd();
+        }));
+        it('should be icon is function', fakeAsync(() => {
+          page
+            .updateColumn([
+              {
+                title: '',
+                buttons: [
+                  {
+                    icon: a => ({ type: `${a.id === 1 ? 'Y' : 'N'}` })
+                  }
+                ]
+              }
+            ])
+            .updateData([{ id: 1 }, { id: 2 }, { id: 3 }])
+            .expectElCount('.anticon-Y', 1)
+            .expectElCount('.anticon-N', 2)
+            .updateColumn([
+              {
+                title: '',
+                buttons: [
+                  {
+                    icon: a => ({ type: `${a.id !== 1 ? 'Y' : 'N'}` })
+                  }
+                ]
+              }
+            ])
+            .expectElCount('.anticon-Y', 2)
+            .expectElCount('.anticon-N', 1)
+            .asyncEnd();
+        }));
       });
       // TODO: 当前版本自动设置，无须参与计算
       xdescribe('[fixed]', () => {
@@ -779,24 +858,12 @@ describe('abc: st', () => {
         });
       });
       describe('Http Request', () => {
-        it('when error request', done => {
+        it('when error request', () => {
           spyOn(_http, 'request').and.returnValue(throwError(() => 'cancel'));
           context.data = '/mock';
           fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('should be ingore catch error when component is destroyed', done => {
-          expect(context.error).not.toHaveBeenCalled();
-          context.data = '/mock';
-          fixture.detectChanges();
-          comp.ngOnDestroy();
-          fixture.whenStable().then(() => {
-            expect(context.error).not.toHaveBeenCalled();
-            done();
-          });
+          expect(page.spyErrorData?.error).toBe('cancel');
+          TestBed.resetTestingModule();
         });
         it('should be ingored incomplete request when has new request', fakeAsync(() => {
           let mockData = [{}];
@@ -813,7 +880,7 @@ describe('abc: st', () => {
           expect(comp._data.length).toBe(mockData.length);
         }));
         it('#customRequest', fakeAsync(() => {
-          context.customRequest = jasmine.createSpy('customRequest');
+          context.customRequest = jasmine.createSpy('customRequest').and.callFake(() => of([]));
           context.data = '/invalid-url';
           fixture.detectChanges();
           tick(1000);
@@ -875,7 +942,7 @@ describe('abc: st', () => {
         let load = 0;
         spyOn(context.comp as any, 'loadData').and.callFake(() => {
           ++load;
-          return Promise.resolve({});
+          return of({});
         });
         const pc = dl
           .query(By.directive(NzPaginationComponent))
@@ -1007,9 +1074,9 @@ describe('abc: st', () => {
         context.scroll = { x: '100px', y: '100px' };
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-        spyOn(context.comp.cdkVirtualScrollViewport, 'checkViewportSize');
+        spyOn(context.comp.cdkVirtualScrollViewport!!, 'checkViewportSize');
         page.cd().go(2);
-        expect(context.comp.cdkVirtualScrollViewport.checkViewportSize).toHaveBeenCalled();
+        expect(context.comp.cdkVirtualScrollViewport!!.checkViewportSize).toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be working in only x is set', fakeAsync(() => {
@@ -1350,7 +1417,7 @@ describe('abc: st', () => {
         page.cd();
         expect((comp.data as any[]).length).toBe(DEFAULTCOUNT);
         expect(comp._data.length).toBe(PS);
-        comp.filteredData.then(list => {
+        comp.filteredData.subscribe(list => {
           expect(list.length).toBe(DEFAULTCOUNT);
         });
         page.asyncEnd();
@@ -1404,7 +1471,7 @@ describe('abc: st', () => {
         it('when data is true', fakeAsync(() => {
           context.data = genData(1);
           page.cd();
-          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(Promise.resolve([]));
+          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(of([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export(true);
           page.cd();
@@ -1464,8 +1531,7 @@ describe('abc: st', () => {
         context.loading = true;
         page.cd().expectElCount(`.ant-spin-spinning`, 1);
         context.loading = false;
-        page.cd();
-        page.expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
+        page.cd().expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
       }));
     });
     describe('#button', () => {
@@ -1581,8 +1647,12 @@ describe('abc: st', () => {
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
       })!;
-      page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
-      expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
+      page.updateColumn([{ title: '', render: 'id' }]).cd();
+      const jIdEl = page.getCell().querySelector('.j-id');
+      expect(jIdEl != null)
+        .withContext('expect found j-id')
+        .toBe(true);
+      expect(jIdEl?.textContent).toBe('id1');
       page.asyncEnd();
     }));
     it('allow invalid id', fakeAsync(() => {

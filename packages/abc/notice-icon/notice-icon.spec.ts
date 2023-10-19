@@ -137,7 +137,7 @@ describe('abc: notice-icon', () => {
       (clear)="clear($event)"
       [(popoverVisible)]="popoverVisible"
       (popoverVisibleChange)="popupVisibleChange($event)"
-    ></notice-icon>
+    />
   `
 })
 class TestComponent {

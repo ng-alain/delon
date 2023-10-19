@@ -50,7 +50,9 @@ Your body content
 
 | Property | Description  | Type  | Default   |
 | --- | --- | --- | --- |
-| `size` | Specify modal size | `sm,md,lg,xl,number` | `lg` |
+| `size` | Specify modal size | `sm,md,lg,xl,number,string` | `lg` |
 | `exact` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
 | `includeTabs` | Whether to wrap the tab page | `boolean` | `false` |
+| `drag` | Drag | `boolean, ModalHelperDragOptions` | - |
+| `useNzData` | Whether it is mandatory to use `nzData` to pass parameters. If it is `false`, it means that the parameters will be directly mapped to the component instance, and other values ​​can only be obtained through `NZ_MODAL_DATA`. | `boolean` | `false` |
 | `modalOptions` | nz-modal raw parameters [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) | `ModalOptions` | - |

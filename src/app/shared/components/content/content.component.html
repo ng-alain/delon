@@ -6,7 +6,7 @@
   </div>
   <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="19" nzXXl="20">
     <div class="main-container" [class.pages-container]="meta.isPages">
-      <router-outlet></router-outlet>
+      <router-outlet />
     </div>
     <div *ngIf="meta.next || meta.prev" class="prev-next-nav">
       <a class="prev-page" *ngIf="meta.prev" routerLink="{{ meta.prev.url }}">
@@ -20,7 +20,7 @@
         <i nz-icon nzType="right" class="footer-nav-icon-after"></i>
       </a>
     </div>
-    <app-footer small></app-footer>
+    <app-footer small />
   </div>
 </div>
 <div *ngIf="isMobile" class="drawer-wrapper">
@@ -28,7 +28,7 @@
     <div class="drawer-mask" (click)="opened = !opened"></div>
     <div class="drawer-content-wrapper">
       <div class="drawer-content">
-        <main-menu (to)="to()"></main-menu>
+        <main-menu (to)="to()" />
       </div>
       <div class="drawer-button" (click)="opened = !opened"><i nz-icon nzType="menu-unfold"></i></div>
     </div>

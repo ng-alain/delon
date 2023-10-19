@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { ExampleModules, SiteConfig } from '../interfaces';
 import { generateDoc } from './utils';
+import { ExampleModules, SiteConfig } from '../interfaces';
 
 export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, options: ExampleModules): void {
   const targetDir = path.join(rootDir, `./src/app/routes/gen/examples`);

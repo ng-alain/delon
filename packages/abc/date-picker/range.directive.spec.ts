@@ -117,7 +117,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       extend
       [(ngModelEnd)]="i.end"
       [shortcut]="shortcut"
-    ></nz-range-picker>
+    />
   `
 })
 class TestComponent {

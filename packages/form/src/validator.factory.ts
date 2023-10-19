@@ -25,7 +25,10 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   protected ajv!: Ajv;
   protected options!: AlainSFConfig;
 
-  constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService, private ngZone: NgZone) {
+  constructor(
+    @Inject(AlainConfigService) cogSrv: AlainConfigService,
+    private ngZone: NgZone
+  ) {
     super();
     if (!(typeof document === 'object' && !!document)) {
       return;

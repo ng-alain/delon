@@ -171,13 +171,16 @@ module.exports = {
         '@angular-eslint/no-input-rename': 'off',
         'prefer-const': 'off',
         'max-len': 'off',
-        'deprecation/deprecation': 'warn'
+        'deprecation/deprecation': 'warn',
+        'jsdoc/newline-after-description': 'off'
       }
     },
     {
       files: ['*.html'],
       extends: ['plugin:@angular-eslint/template/recommended'],
-      rules: {}
+      rules: {
+        "@angular-eslint/template/prefer-self-closing-tags": "error"
+      }
     },
     {
       files: ['*.html'],
@@ -186,6 +189,10 @@ module.exports = {
       rules: {
         'prettier/prettier': ['error', { parser: 'angular' }]
       }
+    },
+    {
+      files: ['*.js'],
+      parserOptions: { sourceType: 'module' }
     }
   ]
 };

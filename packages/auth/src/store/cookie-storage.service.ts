@@ -1,7 +1,7 @@
 import { CookieService } from '@delon/util/browser';
 
-import { ITokenModel } from '../token/interface';
 import { IStore } from './interface';
+import { ITokenModel } from '../token/interface';
 
 /**
  * `cookie` storage
@@ -26,7 +26,8 @@ export class CookieStorageStore implements IStore {
   }
 
   set(key: string, value: ITokenModel | null | undefined): boolean {
-    this.srv.put(key, value != null ? JSON.stringify(value) : '{}');
+    const expires = (value?.expired ?? 0) / 1e3;
+    this.srv.put(key, JSON.stringify(value ?? {}), { expires });
     return true;
   }
 

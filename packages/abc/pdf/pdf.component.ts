@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Inject,
@@ -15,15 +16,17 @@ import {
   Optional,
   Output,
   SimpleChange,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { fromEvent, Subject, timer, debounceTime, filter, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent, timer, debounceTime, filter } from 'rxjs';
 
-import type { PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
-import type { EventBus } from 'pdfjs-dist/types/web/event_utils';
-import type { PDFFindController } from 'pdfjs-dist/types/web/pdf_find_controller';
-import type { PDFLinkService } from 'pdfjs-dist/types/web/pdf_link_service';
-import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
+// import type { PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
+// import type { EventBus } from 'pdfjs-dist/types/web/event_utils';
+// import type { PDFFindController } from 'pdfjs-dist/types/web/pdf_find_controller';
+// import type { PDFLinkService } from 'pdfjs-dist/types/web/pdf_link_service';
+// import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
 
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
@@ -33,6 +36,16 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { PDF_DEFULAT_CONFIG } from './pdf.config';
 import { PdfChangeEvent, PdfChangeEventType, PdfExternalLinkTarget, PdfTextLayerMode, PdfZoomScale } from './pdf.types';
 
+// TODO: Although pdfjs-dist is an optional dependency on canvas
+// will be installed automatically when the dependency is installed by default;
+// This requires a higher environment and often fails to install
+type PDFDocumentLoadingTask = NzSafeAny;
+type PDFDocumentProxy = NzSafeAny;
+type EventBus = NzSafeAny;
+type PDFFindController = NzSafeAny;
+type PDFLinkService = NzSafeAny;
+type PDFViewer = NzSafeAny;
+
 const CSS_UNITS: number = 96.0 / 72.0;
 const BORDER_WIDTH = 9;
 
@@ -40,7 +53,7 @@ const BORDER_WIDTH = 9;
   selector: 'pdf',
   exportAs: 'pdf',
   template: `
-    <nz-skeleton *ngIf="!inited || loading"></nz-skeleton>
+    <nz-skeleton *ngIf="!inited || loading" />
     <div class="pdf-container">
       <div class="pdfViewer"></div>
     </div>
@@ -63,7 +76,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_removePageBorders: BooleanInput;
 
   inited = false;
-  private destroy$ = new Subject<void>();
+  private destroy$ = inject(DestroyRef);
   private lib: string = '';
   private _pdf?: PDFDocumentProxy | null;
   private loadingTask?: PDFDocumentLoadingTask;
@@ -104,7 +117,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputBoolean() set renderText(val: boolean) {
     this._renderText = val;
     if (this.pageViewer) {
-      this.pageViewer.textLayerMode = this._textLayerMode;
       this.resetDoc();
     }
   }
@@ -213,7 +225,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.win.pdfjsLib.GlobalWorkerOptions.workerSrc = `${this.lib}build/pdf.worker.min.js`;
 
     timer(this.delay ?? 0)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroy$))
       .subscribe(() => this.load());
   }
 
@@ -313,7 +325,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private timeExec(fn: () => void): void {
     this.ngZone.runOutsideAngular(() => {
       timer(0)
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroy$))
         .subscribe(() => this.ngZone.runOutsideAngular(() => fn()));
     });
   }
@@ -323,7 +335,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     const currentViewer = this.pageViewer;
     if (!currentViewer) return;
 
-    this._pdf!.getPage(currentViewer.currentPageNumber).then(page => {
+    this._pdf!.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
       const { _rotation, _zoom } = this;
       const rotation = _rotation || page.rotate;
       const viewportWidth =
@@ -481,7 +493,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       .pipe(
         debounceTime(100),
         filter(() => this.autoReSize && this._pdf != null),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroy$)
       )
       .subscribe(() => this.updateSize());
   }
@@ -493,10 +505,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { destroy$ } = this;
-    destroy$.next();
-    destroy$.complete();
-
     this.destroy();
   }
 }

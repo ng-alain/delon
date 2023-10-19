@@ -124,8 +124,7 @@ const WIDGETS = [
 @NgModule({
   imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
-  exports: COMPONENTS,
-  entryComponents: WIDGETS
+  exports: COMPONENTS
 })
 export class DelonFormModule {
   static forRoot(): ModuleWithProviders<DelonFormModule> {

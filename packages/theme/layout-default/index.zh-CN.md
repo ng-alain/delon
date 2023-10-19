@@ -41,14 +41,14 @@ import { environment } from '@env/environment';
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
-        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
+        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus" />
       </layout-default-header-item>
       <layout-default-header-item direction="right" hidden="mobile">
-        <header-task></header-task>
+        <header-task />
       </layout-default-header-item>
       <ng-template #asideUserTpl>
         <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
-          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
+          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar" />
           <div class="alain-default__aside-user-info">
             <strong>{{ user.name }}</strong>
             <p class="mb0">{{ user.email }}</p>
@@ -62,15 +62,15 @@ import { environment } from '@env/environment';
         </nz-dropdown-menu>
       </ng-template>
       <ng-template #navTpl>
-        <layout-default-nav class="d-block py-lg"></layout-default-nav>
+        <layout-default-nav class="d-block py-lg" />
       </ng-template>
       <ng-template #contentTpl>
-        <router-outlet></router-outlet>
+        <router-outlet />
       </ng-template>
     </layout-default>
 
-    <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
-    <theme-btn></theme-btn>
+    <setting-drawer *ngIf="showSettingDrawer" />
+    <theme-btn />
   `,
 })
 export class LayoutBasicComponent {
@@ -102,6 +102,8 @@ export class LayoutBasicComponent {
 | `[nav]` | 导航信息 | `TemplateRef<void>` | `-` |
 | `[content]` | 内容信息 | `TemplateRef<void>` | `-` |
 | `[customError]` | 自定义异常路由错误消息，当 `null` 时表示不显示错误消息 | `string, null` | `Could not load ${evt.url} route` |
+| `[fetchingStrictly]` | 是否完全受控顶部加载动画状态 | `boolean` | `false` |
+| `[fetching]` | 顶部加载动画状态 | `boolean` | `false` |
 
 ### LayoutDefaultOptions
 

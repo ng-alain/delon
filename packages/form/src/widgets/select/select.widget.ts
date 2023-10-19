@@ -4,11 +4,11 @@ import { Subject, catchError, debounceTime, distinctUntilChanged, switchMap, tak
 import { ArrayService } from '@delon/util/array';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFSelectWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-select',
@@ -19,7 +19,7 @@ import { SFSelectWidgetSchema } from './schema';
 export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
   private search$ = new Subject<string>();
   i!: SFSelectWidgetSchema;
-  data!: SFSchemaEnum[];
+  data: SFSchemaEnum[] = [];
   _value: NzSafeAny;
   hasGroup = false;
   loading = false;
@@ -82,12 +82,14 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   }
 
   reset(value: SFValue): void {
+    const onSearch = this.ui.onSearch!;
     getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
-      this.data = list;
+      if (onSearch == null) this.data = list;
       this.checkGroup(list);
       this.detectChanges();
     });
+    if (value && onSearch != null) this.search$.next(value);
   }
 
   change(values: SFValue): void {

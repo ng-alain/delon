@@ -10,11 +10,11 @@ import {
   TransferSelectChange
 } from 'ng-zorro-antd/transfer';
 
+import { SFTransferWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFTransferWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-transfer',

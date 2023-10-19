@@ -1,6 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
 import {
+  AlainCellConfig,
   AlainDateRangePickerConfig,
   AlainErrorCollectConfig,
   AlainExceptionType,
@@ -44,6 +45,7 @@ export interface AlainConfig {
   sv?: AlainSVConfig;
   st?: AlainSTConfig;
   sf?: AlainSFConfig;
+  cell?: AlainCellConfig;
   xlsx?: AlainXlsxConfig;
   zip?: AlainZipConfig;
   pdf?: AlainPdfConfig;

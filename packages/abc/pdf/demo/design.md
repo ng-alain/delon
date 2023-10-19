@@ -193,7 +193,7 @@ export class DemoComponent implements OnInit {
   };
 
   loadOutline(): void {
-    this.comp.pdf?.getOutline().then(outline => {
+    this.comp.pdf?.getOutline().then((outline: NzSafeAny) => {
       this.outlineList = outline;
     });
   }

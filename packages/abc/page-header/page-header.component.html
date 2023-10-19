@@ -1,5 +1,5 @@
 <nz-affix #affix *ngIf="isBrowser && fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
-  <ng-template [ngTemplateOutlet]="phTpl"></ng-template>
+  <ng-template [ngTemplateOutlet]="phTpl" />
 </nz-affix>
 <ng-template #phTpl>
   <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
@@ -24,29 +24,34 @@
         </ng-container>
         <div class="page-header__detail">
           <div *ngIf="logo" class="page-header__logo">
-            <ng-template [ngTemplateOutlet]="logo"></ng-template>
+            <ng-template [ngTemplateOutlet]="logo" />
           </div>
           <div class="page-header__main">
             <div class="page-header__row">
               <h1 *ngIf="_titleVal || _titleTpl" class="page-header__title">
-                <ng-container *ngIf="_titleVal; else _titleTpl">{{ _titleVal }}</ng-container>
+                <ng-container *ngIf="_titleVal; else _titleTpl">
+                  {{ _titleVal }}
+                  <small *ngIf="titleSub">
+                    <ng-container *nzStringTemplateOutlet="titleSub">{{ titleSub }}</ng-container>
+                  </small>
+                </ng-container>
               </h1>
               <div *ngIf="action" class="page-header__action">
-                <ng-template [ngTemplateOutlet]="action"></ng-template>
+                <ng-template [ngTemplateOutlet]="action" />
               </div>
             </div>
             <div class="page-header__row">
               <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
-                <ng-content></ng-content>
-                <ng-template [ngTemplateOutlet]="content!"></ng-template>
+                <ng-content />
+                <ng-template [ngTemplateOutlet]="content!" />
               </div>
               <div *ngIf="extra" class="page-header__extra">
-                <ng-template [ngTemplateOutlet]="extra"></ng-template>
+                <ng-template [ngTemplateOutlet]="extra" />
               </div>
             </div>
           </div>
         </div>
-        <ng-template [ngTemplateOutlet]="tab!"></ng-template>
+        <ng-template [ngTemplateOutlet]="tab!" />
       </nz-skeleton>
     </div>
   </div>

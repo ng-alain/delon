@@ -1,21 +1,27 @@
+import { Injector } from '@angular/core';
+
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 
-import { mergeConfig } from '../config';
-import { SF_SEQ } from '../const';
-import { SFSchema } from '../schema/index';
-import { SFUISchema, SFUISchemaItem } from '../schema/ui';
-import { retrieveSchema } from '../utils';
-import { SchemaValidatorFactory } from '../validator.factory';
 import { ArrayProperty } from './array.property';
 import { BooleanProperty } from './boolean.property';
 import { FormProperty, PropertyGroup } from './form.property';
 import { NumberProperty } from './number.property';
 import { ObjectProperty } from './object.property';
 import { StringProperty } from './string.property';
+import { mergeConfig } from '../config';
+import { SF_SEQ } from '../const';
+import { SFSchema } from '../schema/index';
+import { SFUISchema, SFUISchemaItem } from '../schema/ui';
+import { retrieveSchema } from '../utils';
+import { SchemaValidatorFactory } from '../validator.factory';
 
 export class FormPropertyFactory {
   private options: AlainSFConfig;
-  constructor(private schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService) {
+  constructor(
+    private injector: Injector,
+    private schemaValidatorFactory: SchemaValidatorFactory,
+    cogSrv: AlainConfigService
+  ) {
     this.options = mergeConfig(cogSrv);
   }
 
@@ -75,6 +81,7 @@ export class FormPropertyFactory {
         case 'integer':
         case 'number':
           newProperty = new NumberProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -86,6 +93,7 @@ export class FormPropertyFactory {
           break;
         case 'string':
           newProperty = new StringProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -97,6 +105,7 @@ export class FormPropertyFactory {
           break;
         case 'boolean':
           newProperty = new BooleanProperty(
+            this.injector,
             this.schemaValidatorFactory,
             schema,
             ui,
@@ -108,6 +117,7 @@ export class FormPropertyFactory {
           break;
         case 'object':
           newProperty = new ObjectProperty(
+            this.injector,
             this,
             this.schemaValidatorFactory,
             schema,
@@ -120,6 +130,7 @@ export class FormPropertyFactory {
           break;
         case 'array':
           newProperty = new ArrayProperty(
+            this.injector,
             this,
             this.schemaValidatorFactory,
             schema,

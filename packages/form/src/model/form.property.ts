@@ -1,4 +1,5 @@
-import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map } from 'rxjs';
+import { Injector, NgZone } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map, take } from 'rxjs';
 
 import { AlainSFConfig } from '@delon/util/config';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
@@ -33,6 +34,7 @@ export abstract class FormProperty {
   propertyId?: string;
 
   constructor(
+    private injector: Injector,
     schemaValidatorFactory: SchemaValidatorFactory,
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
@@ -312,7 +314,12 @@ export abstract class FormProperty {
     this._visibilityChanges.next(visible);
     // 渲染时需要重新触发 reset
     if (visible) {
-      this.resetValue(this.value, true);
+      this.injector
+        .get(NgZone)
+        .onStable.pipe(take(1))
+        .subscribe(() => {
+          this.resetValue(this.value, true);
+        });
     }
     return this;
   }

@@ -11,18 +11,18 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-
 @Component({
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
   template: `
-    <div class="ant-row" [ngStyle]="{ 'margin-left.px': -(gutter / 2), 'margin-right.px': -(gutter / 2) }">
+    <div class="ant-row" [ngStyle]="margin">
       <sv-title *ngIf="title">
         <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
       </sv-title>
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   `,
   host: {
@@ -31,6 +31,7 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
     '[class.sv__vertical]': `layout === 'vertical'`,
     '[class.sv__small]': `size === 'small'`,
     '[class.sv__large]': `size === 'large'`,
+    '[class.sv__bordered]': `bordered`,
     '[class.clearfix]': `true`
   },
   preserveWhitespaces: false,
@@ -41,11 +42,14 @@ export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
   static ngAcceptInputType_labelWidth: NumberInput;
   static ngAcceptInputType_col: NumberInput;
+  static ngAcceptInputType_colInCon: NumberInput;
   static ngAcceptInputType_default: BooleanInput;
   static ngAcceptInputType_noColon: BooleanInput;
+  static ngAcceptInputType_bordered: BooleanInput;
 
+  @Input('sv-container') @InputNumber(null) colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
-  @Input() size!: 'small' | 'large';
+  @Input() size?: 'small' | 'large' | 'default';
   /** 列表项间距，单位为 `px` */
   @Input() @InputNumber() gutter!: number;
   @Input() layout!: 'horizontal' | 'vertical';
@@ -54,6 +58,11 @@ export class SVContainerComponent {
   @Input() @InputNumber() col!: number;
   @Input() @InputBoolean() default!: boolean;
   @Input() @InputBoolean() noColon = false;
+  @Input() @InputBoolean() bordered = false;
+
+  get margin(): { [k: string]: number } {
+    return this.bordered ? {} : { 'margin-left.px': -(this.gutter / 2), 'margin-right.px': -(this.gutter / 2) };
+  }
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'sv', {
@@ -69,7 +78,7 @@ export class SVContainerComponent {
 @Component({
   selector: 'sv-title, [sv-title]',
   exportAs: 'svTitle',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content />',
   host: {
     '[class.sv__title]': 'true'
   },
@@ -78,17 +87,19 @@ export class SVContainerComponent {
   encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent implements OnInit {
-  private el: HTMLElement;
-  constructor(el: ElementRef, @Host() @Optional() private parent: SVContainerComponent, private ren: Renderer2) {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    @Host() @Optional() private parent: SVContainerComponent,
+    private ren: Renderer2
+  ) {
     if (parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): void {
-    const { gutter } = this.parent;
-    const { el } = this;
+    const gutter = this.parent.gutter;
+    const el = this.el.nativeElement;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }

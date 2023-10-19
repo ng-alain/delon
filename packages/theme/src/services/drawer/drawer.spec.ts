@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
 
-import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: DrawerHelper', () => {
   let drawer: DrawerHelper;
@@ -29,7 +29,7 @@ describe('theme: DrawerHelper', () => {
     if (a) a.remove();
   });
 
-  it('should be subscribing return value', (done: () => void) => {
+  it('should be subscribing return value', done => {
     drawer
       .create('', TestDrawerComponent, {
         ret: 'true'
@@ -41,7 +41,7 @@ describe('theme: DrawerHelper', () => {
     fixture.detectChanges();
   });
 
-  it('should be only close', (done: () => void) => {
+  it('should be only close', done => {
     drawer
       .create('', TestDrawerComponent, {
         ret: 'destroy'
@@ -60,7 +60,18 @@ describe('theme: DrawerHelper', () => {
     fixture.detectChanges();
   });
 
-  it('#static', (done: () => void) => {
+  it('should be closeAll', fakeAsync(() => {
+    expect(drawer.openDrawers.length).toBe(0);
+    drawer.create('', TestComponent).subscribe();
+    drawer.create('', TestComponent).subscribe();
+    expect(drawer.openDrawers.length).toBe(2);
+    drawer.closeAll();
+    tick(1000);
+    fixture.detectChanges();
+    expect(drawer.openDrawers.length).toBe(0);
+  }));
+
+  it('#static', done => {
     drawer
       .static('', TestDrawerComponent, {
         ret: 'true'
@@ -286,7 +297,7 @@ class TestDrawerComponent {
       } else {
         this.modal.close(this.ret);
       }
-    }, 20);
+    });
   }
 }
 

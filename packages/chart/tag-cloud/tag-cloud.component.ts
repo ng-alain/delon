@@ -21,7 +21,7 @@ export interface G2TagCloudClickItem {
 @Component({
   selector: 'g2-tag-cloud',
   exportAs: 'g2TagCloud',
-  template: `<nz-skeleton *ngIf="!loaded"></nz-skeleton>`,
+  template: `<nz-skeleton *ngIf="!loaded" />`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None

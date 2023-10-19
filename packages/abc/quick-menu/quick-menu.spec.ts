@@ -81,7 +81,7 @@ describe('abc: quick-menu', () => {
       [borderColor]="borderColor"
       [expand]="expand"
       (expandChange)="expandChange()"
-    ></quick-menu>
+    />
   `
 })
 class TestComponent {

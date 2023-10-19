@@ -1,13 +1,17 @@
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const path = require('path');
+import chalk from 'chalk';
+import { readJSONSync } from 'fs-extra/esm';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const nextVersion = fs.readJSONSync(path.join(__dirname, '../../package.json'))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const nextVersion = readJSONSync(join(__dirname, '../../package.json'))
   .version;
-const root = path.resolve(__dirname, `../../../ng-alain`);
+const root = resolve(__dirname, `../../../ng-alain`);
 
 /* Shortcut methods */
-const execSync = require('child_process').execSync;
+import { execSync } from 'child_process';
 const execSyncOptions = {
   cwd: root,
 };

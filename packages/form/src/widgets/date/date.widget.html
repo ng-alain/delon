@@ -19,7 +19,7 @@
       [nzRenderExtraFooter]="ui.renderExtraFooter"
       [nzInputReadOnly]="ui.inputReadOnly"
       [nzInline]="ui.inline!"
-    ></nz-year-picker>
+    />
 
     <nz-month-picker
       *ngSwitchCase="'month'"
@@ -40,7 +40,7 @@
       [nzRenderExtraFooter]="ui.renderExtraFooter"
       [nzInputReadOnly]="ui.inputReadOnly"
       [nzInline]="ui.inline!"
-    ></nz-month-picker>
+    />
 
     <nz-week-picker
       *ngSwitchCase="'week'"
@@ -60,7 +60,7 @@
       [nzInputReadOnly]="ui.inputReadOnly"
       [nzInline]="ui.inline!"
       (nzOnOpenChange)="_openChange($event)"
-    ></nz-week-picker>
+    />
 
     <nz-range-picker
       *ngSwitchCase="'range'"
@@ -88,7 +88,7 @@
       [nzInputReadOnly]="ui.inputReadOnly"
       [nzInline]="ui.inline!"
       (nzOnOk)="_ok($event)"
-    ></nz-range-picker>
+    />
 
     <nz-date-picker
       *ngSwitchDefault
@@ -114,6 +114,6 @@
       [nzInputReadOnly]="ui.inputReadOnly"
       [nzInline]="ui.inline!"
       (nzOnOk)="_ok($event)"
-    ></nz-date-picker>
+    />
   </ng-container>
 </sf-item-wrap>

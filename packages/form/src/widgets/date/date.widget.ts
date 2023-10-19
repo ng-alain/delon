@@ -5,11 +5,11 @@ import { format } from 'date-fns';
 import { toDate } from '@delon/util/date-time';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFDateWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFDateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-date',

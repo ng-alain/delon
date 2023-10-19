@@ -16,6 +16,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
+import { STWidgetRegistry } from './../st-widget';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STComponent } from '../st.component';
 import {
@@ -26,6 +27,7 @@ import {
   STColumnTitle,
   STContextmenuFn,
   STCustomRequestOptions,
+  STError,
   STMultiSort,
   STPage,
   STReq,
@@ -34,7 +36,6 @@ import {
 } from '../st.interfaces';
 import { STModule } from '../st.module';
 import { _STColumn } from '../st.types';
-import { STWidgetRegistry } from './../st-widget';
 
 export const MOCKDATE = new Date();
 export const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -138,6 +139,7 @@ export class PageObject<T extends TestComponent> {
   readonly comp: STComponent;
   readonly i18nSrv: AlainI18NService;
   readonly registerWidget: STWidgetRegistry;
+  spyErrorData?: STError;
 
   constructor(minColumn: boolean = false, type: Type<T>) {
     this.registerWidget = TestBed.inject(STWidgetRegistry);
@@ -153,7 +155,7 @@ export class PageObject<T extends TestComponent> {
       this.context.columns = [{ title: '', index: 'id' }];
     }
 
-    spyOn(this.context as NzSafeAny, 'error');
+    spyOn(this.context as NzSafeAny, 'error').and.callFake((res: STError) => (this.spyErrorData = res));
     this.changeSpy = spyOn(this.context as NzSafeAny, 'change').and.callFake(
       ((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny
     );
@@ -263,7 +265,9 @@ export class PageObject<T extends TestComponent> {
   expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
     const ret = deepGet(this.comp._data[row - 1], path);
     if (options?.message != null) {
-      expect(ret).withContext(options?.message).toBe(valule);
+      expect(ret)
+        .withContext(options?.message)
+        .toBe(valule);
     } else {
       expect(ret).toBe(valule);
     }
@@ -417,9 +421,8 @@ export class PageObject<T extends TestComponent> {
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
       (change)="change($event)"
-      (error)="error()"
-    >
-    </st>
+      (error)="error($event)"
+    />
     <ng-template #tpl let-handle="handle">
       <span>In tpl</span>
       <a class="close_in_tpl" (click)="handle.close()">close</a>

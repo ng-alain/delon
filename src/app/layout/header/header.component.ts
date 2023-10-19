@@ -8,13 +8,13 @@ import { copy } from '@delon/util/browser';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { I18NService, MobileService } from '@core';
+import { I18NService, LangType, MobileService } from '@core';
 
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
 
 const pkg = require('../../../../package.json');
-const minimumVersion = 12;
+const minimumVersion = 13;
 
 @Component({
   selector: 'app-header',
@@ -28,7 +28,7 @@ const minimumVersion = 12;
 export class HeaderComponent implements AfterViewInit {
   private inited = false;
   isMobile!: boolean;
-  oldVersionList = [14, 13, 12, 11, 10, 9, 8, 1];
+  oldVersionList = [15, 14, 13, 12, 11, 10, 9, 8, 1];
   currentVersion = pkg.version;
   delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
@@ -96,10 +96,11 @@ export class HeaderComponent implements AfterViewInit {
       this.win.location.href = `https://ng-alain.com/version/${version}.x/`;
       return;
     }
-    this.win.open(`https://github.com/ng-alain/archive-docs/blob/master/README.md`);
+    this.win.open(`https://github.com/ng-alain/archive-docs/blob/full/README.md`);
   }
 
   langChange(language: 'en' | 'zh'): void {
+    this.i18n.use(language as LangType, {}, false);
     this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`).then(() => {
       this.layout.render = false;
       setTimeout(() => {

@@ -18,9 +18,9 @@ import {
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderModule } from './page-header.module';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string): string {
@@ -101,6 +101,11 @@ describe('abc: page-header', () => {
           fixture.detectChanges();
           isExists('.page-header__title', false);
         });
+      });
+      it('#titleSub', () => {
+        context.titleSub = 'sub';
+        fixture.detectChanges();
+        isExists('.page-header__title small');
       });
 
       ['breadcrumb', 'logo', 'action', 'content', 'extra', 'tab'].forEach(type => {
@@ -418,6 +423,7 @@ class TestBaseComponent {
   @ViewChild('comp', { static: true })
   comp!: PageHeaderComponent;
   title: string | null = '所属类目';
+  titleSub?: string | null;
   autoBreadcrumb?: boolean;
   autoTitle?: boolean;
   syncTitle?: boolean;
@@ -434,6 +440,7 @@ class TestBaseComponent {
     <page-header
       #comp
       [title]="title"
+      [titleSub]="titleSub"
       [autoTitle]="autoTitle"
       [syncTitle]="syncTitle"
       [autoBreadcrumb]="autoBreadcrumb"
@@ -463,13 +470,7 @@ class TestComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-    <page-header
-      #comp
-      [title]="title"
-      [home]="home"
-      [homeI18n]="homeI18n"
-      [autoBreadcrumb]="autoBreadcrumb"
-    ></page-header>
+    <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb" />
   `
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}
@@ -483,7 +484,7 @@ class TestAutoBreadcrumbComponent extends TestBaseComponent {}
       [homeI18n]="homeI18n"
       [homeLink]="homeLink"
       [autoBreadcrumb]="autoBreadcrumb"
-    ></page-header>
+    />
   `
 })
 class TestI18nComponent extends TestBaseComponent {}

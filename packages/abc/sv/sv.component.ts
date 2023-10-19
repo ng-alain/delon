@@ -40,8 +40,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_hideLabel: BooleanInput;
 
   @ViewChild('conEl', { static: false })
-  private conEl!: ElementRef;
-  private el: HTMLElement;
+  private conEl!: ElementRef<HTMLElement>;
   private clsMap: string[] = [];
   _noColon = false;
 
@@ -60,8 +59,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   // #endregion
 
-  get paddingValue(): number {
-    return this.parent && this.parent.gutter / 2;
+  get paddingValue(): number | null {
+    if (this.parent.bordered) return null;
+    return this.parent.gutter / 2;
   }
 
   get labelWidth(): number | null | undefined {
@@ -70,7 +70,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   }
 
   constructor(
-    el: ElementRef,
+    private el: ElementRef<HTMLElement>,
     @Host() @Optional() public parent: SVContainerComponent,
     private rep: ResponsiveService,
     private ren: Renderer2
@@ -78,15 +78,16 @@ export class SVComponent implements AfterViewInit, OnChanges {
     if (parent == null) {
       throw new Error(`[sv] must include 'sv-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): void {
-    const { el, ren, col, clsMap, type, rep, noColon, parent } = this;
-    this._noColon = noColon != null ? noColon : parent.noColon;
+    const { ren, col, clsMap, type, rep, noColon, parent } = this;
+    const el = this.el.nativeElement;
+    this._noColon = parent.bordered ? true : noColon != null ? noColon : parent.noColon;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    clsMap.push(...rep.genCls(col != null ? col : this.parent.col));
+    const parentCol = parent.colInCon || parent.col;
+    clsMap.push(...rep.genCls(col != null ? col : parentCol, parentCol));
     clsMap.push(`${prefixCls}__item`);
     if (this.parent.labelWidth) clsMap.push(`${prefixCls}__item-fixed`);
     if (type) clsMap.push(`${prefixCls}__type-${type}`);
