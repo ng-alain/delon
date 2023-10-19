@@ -14,6 +14,26 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [16.4.0](https://github.com/ng-alain/delon/compare/16.3.0...16.4.0) (2023-10-19)
+
+### Bug Fixes
+
+* **abc:onboarding:** 纠正暗黑风格 ([#1650](https://github.com/ng-alain/delon/issues/1650)) ([7a21933](https://github.com/ng-alain/delon/commit/7a219338660bfbbe18f5ee35ccd1caaabf6e40a4))
+* **abc:st:** 纠正导出 Excel 中的宽度未对齐问题 ([#1655](https://github.com/ng-alain/delon/issues/1655)) ([76db16c](https://github.com/ng-alain/delon/commit/76db16c526057138e470244ccef1cd67e853ccc9))
+* **cli:** 修复 Angular 16 下 `ng new ng-alain` 缺失 `fileReplacements` ([#1658](https://github.com/ng-alain/delon/issues/1658)) ([c5b46ee](https://github.com/ng-alain/delon/commit/c5b46ee50a3741dba0f0731f2f2326e9fd47b6cd))
+* **form:array:** 修复 `ui` 属性无法合并 ui ([#1657](https://github.com/ng-alain/delon/issues/1657)) ([6b3c711](https://github.com/ng-alain/delon/commit/6b3c711f2f56cbf93f2078b6d83a751b9bdd8bde))
+* **form:select:** 纠正有默认值时初始化时无法触发 `onSearch` ([#1660](https://github.com/ng-alain/delon/issues/1660)) ([fa234cd](https://github.com/ng-alain/delon/commit/fa234cd2e7a127e4df79a82b6965a03220497143))
+* **form:** 修复设置 `visibleIf` 触发时也会触发 `reset` 方法 ([#1653](https://github.com/ng-alain/delon/issues/1653)) ([d80f8fb](https://github.com/ng-alain/delon/commit/d80f8fba87659be8099962817cbd17422a5ae249))
+* **form:** 修复渲染UI不应被继承([#1661](https://github.com/ng-alain/delon/issues/1661)) ([ee96aaa](https://github.com/ng-alain/delon/commit/ee96aaac047dfa990aa0ffc2d94808939c3311c5))
+* **fix(form:widget:object):** 修复 `card` 样式缺失 `optional` ([#1661](https://github.com/ng-alain/delon/issues/1661)) ([ee96aaa](https://github.com/ng-alain/delon/commit/ee96aaac047dfa990aa0ffc2d94808939c3311c5))
+
+### Features
+
+* **abc:onboarding:** 新增 `key` 用于自动判断是否发生版本变化 ([#1652](https://github.com/ng-alain/delon/issues/1652)) ([5edaa97](https://github.com/ng-alain/delon/commit/5edaa970f508c402d94843bb8260a5d72bdb5870))
+* **abc:theme:** 纠正 `ng-tag` 列表换行间距问题 ([#1647](https://github.com/ng-alain/delon/issues/1647)) ([5da4ecb](https://github.com/ng-alain/delon/commit/5da4ecb766c9195609899dbaa543b5eefad82f01))
+* **cli:** add provide function ([#1654](https://github.com/ng-alain/delon/issues/1654)) ([c8779f4](https://github.com/ng-alain/delon/commit/c8779f41234364bf8690dcf9c9aa5d90c48eadcd))
+
+
 # [16.3.0](https://github.com/ng-alain/delon/compare/16.2.1...16.3.0) (2023-09-01)
 
 ### SCAFFOLDING
