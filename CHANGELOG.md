@@ -1,3 +1,25 @@
+# [16.4.0](https://github.com/ng-alain/delon/compare/16.3.0...16.4.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* **abc:onboarding:** correct dark style ([#1650](https://github.com/ng-alain/delon/issues/1650)) ([7a21933](https://github.com/ng-alain/delon/commit/7a219338660bfbbe18f5ee35ccd1caaabf6e40a4))
+* **abc:st:** correct width misalignment in export excel ([#1655](https://github.com/ng-alain/delon/issues/1655)) ([76db16c](https://github.com/ng-alain/delon/commit/76db16c526057138e470244ccef1cd67e853ccc9))
+* **cli:** missing `fileReplacements` in Angular16 ([#1658](https://github.com/ng-alain/delon/issues/1658)) ([c5b46ee](https://github.com/ng-alain/delon/commit/c5b46ee50a3741dba0f0731f2f2326e9fd47b6cd))
+* **form:array:** fix invalid ui in `ui` schema ([#1657](https://github.com/ng-alain/delon/issues/1657)) ([6b3c711](https://github.com/ng-alain/delon/commit/6b3c711f2f56cbf93f2078b6d83a751b9bdd8bde))
+* **form:select:** correct trigger onSearch in reset when set value ([#1660](https://github.com/ng-alain/delon/issues/1660)) ([fa234cd](https://github.com/ng-alain/delon/commit/fa234cd2e7a127e4df79a82b6965a03220497143))
+* **form:** fix `visibleIf` to correctly trigger `reset` ([#1653](https://github.com/ng-alain/delon/issues/1653)) ([d80f8fb](https://github.com/ng-alain/delon/commit/d80f8fba87659be8099962817cbd17422a5ae249))
+* **form:** fix render UI can't be inherit ([#1661](https://github.com/ng-alain/delon/issues/1661)) ([ee96aaa](https://github.com/ng-alain/delon/commit/ee96aaac047dfa990aa0ffc2d94808939c3311c5))
+
+
+### Features
+
+* **abc:onboarding:** add `key` ([#1652](https://github.com/ng-alain/delon/issues/1652)) ([5edaa97](https://github.com/ng-alain/delon/commit/5edaa970f508c402d94843bb8260a5d72bdb5870))
+* **abc:theme:** add `.tag-wrap-list-spacing` class ([#1647](https://github.com/ng-alain/delon/issues/1647)) ([5da4ecb](https://github.com/ng-alain/delon/commit/5da4ecb766c9195609899dbaa543b5eefad82f01))
+* add provide function ([#1654](https://github.com/ng-alain/delon/issues/1654)) ([c8779f4](https://github.com/ng-alain/delon/commit/c8779f41234364bf8690dcf9c9aa5d90c48eadcd))
+
+
+
 # [16.3.0](https://github.com/ng-alain/delon/compare/16.2.1...16.3.0) (2023-09-01)
 
 

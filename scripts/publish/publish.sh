@@ -41,9 +41,9 @@ publishToNext() {
   npm publish --tag next
 }
 
-syncTaobao() {
-  (cd ${ROOT}/@delon; for p in `ls .`; do curl -X PUT https://npmmirror.com/sync/@delon/$p?sync_upstream=true; done)
-  curl -X PUT https://npmmirror.com/sync/ng-alain?sync_upstream=true
+syncNpmMirror() {
+  (cd ${ROOT}/@delon; for p in `ls .`; do curl -X PUT https://registry-direct.npmmirror.com/-/package/@delon/$p/syncs; done)
+  curl -X PUT https://registry-direct.npmmirror.com/-/package/ng-alain/syncs
 }
 
 clone
@@ -52,4 +52,4 @@ if [[ ${NEXT} == true ]]; then
 else
   publishToMaster
 fi
-syncTaobao
+syncNpmMirror
