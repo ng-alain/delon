@@ -21,7 +21,10 @@ import { CacheOptions, CACHE } from './token';
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
   private cog?: AlainCacheInterceptor;
-  constructor(cogSrv: AlainConfigService, private srv: CacheService) {
+  constructor(
+    cogSrv: AlainConfigService,
+    private srv: CacheService
+  ) {
     this.cog = cogSrv.merge('cache', {})!.interceptor;
   }
 
