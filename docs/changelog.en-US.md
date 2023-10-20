@@ -14,6 +14,13 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [16.4.1](https://github.com/ng-alain/delon/compare/16.4.0...16.4.1) (2023-10-20)
+
+### Bug Fixes
+
+* temp downgrade `ng-zorro-antd` to `16.2.0` ([#1663](https://github.com/ng-alain/delon/issues/1663)) ([d3da2b7](https://github.com/ng-alain/delon/commit/d3da2b753c1ebed589ba51e9f184270508eb0ff9))
+
+
 # [16.4.0](https://github.com/ng-alain/delon/compare/16.3.0...16.4.0) (2023-10-19)
 
 ### Bug Fixes
