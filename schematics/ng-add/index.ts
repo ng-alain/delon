@@ -103,11 +103,6 @@ export default function (options: NgAddOptions): Rule {
       if (pkg.devDependencies['ng-alain']) {
         throw new SchematicsException(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
       }
-      if (!tree.exists('src/index.html')) {
-        throw new SchematicsException(
-          `NG-ALAIN must be attached to a new Angular project, so you need to use 'ng new projectName' to build a new Angular project, or specify the project name to be attached`
-        );
-      }
     }
 
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;

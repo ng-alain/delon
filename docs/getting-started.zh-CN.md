@@ -46,6 +46,11 @@ NG-ALAIN 必须先创建一个全新的 Angular 项目，可以通过终端窗�
 
 ```bash
 ng new my-project --style less --routing --package-manager yarn
+cd my-project
+# 或多重项目
+ng new my-workspace --no-create-application --package-manager yarn
+cd my-workspace
+ng g application mgr --style less --routing
 ```
 
 > 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
@@ -53,9 +58,10 @@ ng new my-project --style less --routing --package-manager yarn
 接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
 
 ```bash
-cd my-project
 ng add ng-alain
 ```
+
+> 若多重项目时，需要提供具体的项目名称。
 
 NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一路回车，这些插件都是可插拔，后期可以自行添加与移除。
 
