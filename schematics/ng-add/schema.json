@@ -1,9 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "SchematicsNgAlainAdd",
-  "title": "NgAlain Add Options Schema",
+  "title": "NG-ALAIN Add Options Schema",
   "type": "object",
   "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project name.",
+      "x-prompt": "In which project do you want to create NG-ALAIN? (If you enter project name, it means using in multiple-projects)"
+    },
     "defaultLanguage": {
       "type": "string",
       "description": "Specify default language [https://ng-alain.com/docs/i18n].",

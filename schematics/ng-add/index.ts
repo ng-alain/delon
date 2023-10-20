@@ -58,6 +58,10 @@ function isYarn(tree: Tree): boolean {
   return readJSON(tree, DEFAULT_WORKSPACE_PATH)?.cli?.packageManager === 'yarn';
 }
 
+function isValidProjectName(tree: Tree, name: string): boolean {
+  return Object.keys(readJSON(tree, DEFAULT_WORKSPACE_PATH)?.projects ?? {}).indexOf(name) !== -1;
+}
+
 function finished(): Rule {
   return (_: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
@@ -75,7 +79,9 @@ NG-ALAIN documentation site: https://ng-alain.com
 export default function (options: NgAddOptions): Rule {
   return (tree: Tree, context: SchematicContext) => {
     if (!isYarn(tree)) {
-      context.logger.warn(`TIPS:: Please use yarn instead of NPM to install dependencies`);
+      context.logger.warn(
+        `TIPS:: Please use yarn instead of NPM to install dependencies, Pls refer to https://ng-alain.com/docs/getting-started/en#Installation`
+      );
     }
 
     const nodeVersion = getNodeMajorVersion();
@@ -89,8 +95,19 @@ export default function (options: NgAddOptions): Rule {
 
     const pkg = readPackage(tree);
 
-    if (pkg.devDependencies['ng-alain']) {
-      throw new SchematicsException(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
+    if (options.project) {
+      if (!isValidProjectName(tree, options.project)) {
+        throw new SchematicsException(`Not found under the projects node of angular.json: ${options.project}`);
+      }
+    } else {
+      if (pkg.devDependencies['ng-alain']) {
+        throw new SchematicsException(`Already an NG-ALAIN project and can't be executed again: ng add ng-alain`);
+      }
+      if (!tree.exists('src/index.html')) {
+        throw new SchematicsException(
+          `NG-ALAIN must be attached to a new Angular project, so you need to use 'ng new projectName' to build a new Angular project, or specify the project name to be attached`
+        );
+      }
     }
 
     let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
