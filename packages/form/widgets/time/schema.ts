@@ -1,4 +1,4 @@
-import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
+import type { SFDLSSize, SFUISchemaItem } from '@delon/form';
 
 export interface SFTimeWidgetSchema extends SFUISchemaItem {
   size?: SFDLSSize;

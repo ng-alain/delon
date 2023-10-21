@@ -1,10 +1,14 @@
 ---
 title: time
 subtitle: 时间
-type: Widgets
+type: Non-built-in widgets
 ---
 
 输入或选择时间的控件。
+
+## 导入模块
+
+非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `TimeWidgetModule`。
 
 ## 注意事项
 

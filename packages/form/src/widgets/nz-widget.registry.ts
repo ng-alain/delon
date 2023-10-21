@@ -11,8 +11,6 @@ import { SelectWidget } from './select/select.widget';
 import { StringWidget } from './string/string.widget';
 import { TextWidget } from './text/text.widget';
 import { TextareaWidget } from './textarea/textarea.widget';
-import { TimeWidget } from './time/time.widget';
-import { UploadWidget } from './upload/upload.widget';
 import { WidgetRegistry } from '../widget.factory';
 
 export class NzWidgetRegistry extends WidgetRegistry {
@@ -27,13 +25,11 @@ export class NzWidgetRegistry extends WidgetRegistry {
     this.register('number', NumberWidget);
     this.register('integer', NumberWidget);
     this.register('date', DateWidget);
-    this.register('time', TimeWidget);
     this.register('radio', RadioWidget);
     this.register('checkbox', CheckboxWidget);
     this.register('boolean', BooleanWidget);
     this.register('textarea', TextareaWidget);
     this.register('select', SelectWidget);
-    this.register('upload', UploadWidget);
     this.register('autocomplete', AutoCompleteWidget);
     this.register('custom', CustomWidget);
 

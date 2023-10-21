@@ -1,23 +1,75 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { of } from 'rxjs';
 
+import { ControlUIWidget, SFValue, getData, toBool } from '@delon/form';
 import { deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
-import { SFUploadWidgetSchema } from './schema';
-import { SFValue } from '../../interface';
-import { getData, toBool } from '../../utils';
-import { ControlUIWidget } from '../../widget';
+import type { SFUploadWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-upload',
-  templateUrl: './upload.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <nz-upload
+      [nzType]="i.type"
+      [(nzFileList)]="fileList"
+      [nzDisabled]="disabled"
+      [nzAction]="i.action"
+      [nzDirectory]="i.directory"
+      [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
+      [nzAccept]="i.accept"
+      [nzLimit]="i.limit"
+      [nzFilter]="i.filter"
+      [nzSize]="i.size"
+      [nzFileType]="i.fileType"
+      [nzHeaders]="ui.headers"
+      [nzData]="ui.data"
+      [nzListType]="i.listType"
+      [nzMultiple]="i.multiple"
+      [nzName]="i.name"
+      [nzShowUploadList]="i.showUploadList"
+      [nzWithCredentials]="i.withCredentials"
+      [nzBeforeUpload]="i.beforeUpload"
+      [nzCustomRequest]="i.customRequest"
+      [nzRemove]="ui.remove || handleRemove"
+      [nzPreview]="handlePreview"
+      [nzPreviewFile]="ui.previewFile"
+      [nzDownload]="ui.download"
+      [nzTransformFile]="ui.transformFile"
+      (nzChange)="change($event)"
+      [nzShowButton]="fileList.length < i.limitFileCount"
+    >
+      <ng-container [ngSwitch]="btnType">
+        <ng-container *ngSwitchCase="'plus'">
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text" [innerHTML]="i.text"></div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'drag'">
+          <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
+          <p class="ant-upload-text" [innerHTML]="i.text"></p>
+          <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
+        </ng-container>
+      </ng-container>
+    </nz-upload>
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
+  static readonly KEY = 'upload';
+
   i: NzSafeAny;
   fileList: NzUploadFile[] = [];
   btnType = '';

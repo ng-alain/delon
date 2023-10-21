@@ -17,9 +17,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -39,9 +37,7 @@ const ZORROS = [
   NzRadioModule,
   NzSelectModule,
   NzSwitchModule,
-  NzTimePickerModule,
-  NzToolTipModule,
-  NzUploadModule
+  NzToolTipModule
 ];
 
 import { SFFixedDirective } from './sf-fixed.directive';
@@ -70,8 +66,6 @@ import { SelectWidget } from './widgets/select/select.widget';
 import { StringWidget } from './widgets/string/string.widget';
 import { TextWidget } from './widgets/text/text.widget';
 import { TextareaWidget } from './widgets/textarea/textarea.widget';
-import { TimeWidget } from './widgets/time/time.widget';
-import { UploadWidget } from './widgets/upload/upload.widget';
 
 const WIDGETS = [
   ObjectWidget,
@@ -79,13 +73,11 @@ const WIDGETS = [
   StringWidget,
   NumberWidget,
   DateWidget,
-  TimeWidget,
   RadioWidget,
   CheckboxWidget,
   BooleanWidget,
   TextareaWidget,
   SelectWidget,
-  UploadWidget,
   AutoCompleteWidget,
   CustomWidget,
   TextWidget

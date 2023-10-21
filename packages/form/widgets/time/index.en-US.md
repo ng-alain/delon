@@ -1,10 +1,14 @@
 ---
 title: time
 subtitle: Time
-type: Widgets
+type: Non-built-in widgets
 ---
 
 To select/input a time.
+
+## Import module
+
+Non-built-in modules, Should be import `TimeWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
 
 ## Notice
 

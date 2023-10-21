@@ -3,11 +3,12 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { format } from 'date-fns';
 
+import type { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { TimeWidget } from './time.widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
+import { TimeWidgetModule } from './index';
+import { TimeWidget } from './widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 const FORMAT = 'yyyy-MM-dd HH:mm:ss';
 
@@ -18,7 +19,7 @@ describe('form: widget: time', () => {
   let dl: DebugElement;
   const widget = 'time';
 
-  configureSFTestSuite();
+  configureSFTestSuite({ imports: [TimeWidgetModule] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

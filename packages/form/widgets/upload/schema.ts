@@ -1,6 +1,7 @@
 import { Observable, Subscription } from 'rxjs';
 
-import {
+import type { SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
+import type {
   NzShowUploadList,
   NzUploadChangeParam,
   NzUploadFile,
@@ -8,9 +9,6 @@ import {
   NzUploadXHRArgs,
   UploadFilter
 } from 'ng-zorro-antd/upload';
-
-import { SFSchemaEnumType } from '../../schema';
-import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**

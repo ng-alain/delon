@@ -6,6 +6,7 @@ import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { TransferWidgetModule } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: transfer', () => {
@@ -21,7 +22,7 @@ describe('form: widget: transfer', () => {
     rightBtn: '.ant-transfer-operation .ant-btn:last-child'
   };
 
-  configureSFTestSuite();
+  configureSFTestSuite({ imports: [TransferWidgetModule] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

@@ -15,12 +15,13 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema, SFTimeWidgetSchema } from '@delon/form';
+import { SFSchema } from '@delon/form';
+import type { SFTimeWidgetSchema } from '@delon/form/widgets/time';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"/>`,
 })
 export class DemoComponent {
   schema: SFSchema = {

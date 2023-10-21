@@ -1,10 +1,14 @@
 ---
 title: upload
 subtitle: Upload
-type: Widgets
+type: Non-built-in widgets
 ---
 
 Upload file widget by select or drag.
+
+## Import module
+
+Non-built-in modules, Should be import `UploadWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
 
 ## Note
 

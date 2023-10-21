@@ -15,7 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema, SFUploadWidgetSchema } from '@delon/form';
+import { SFSchema } from '@delon/form';
+import type { SFUploadWidgetSchema } from '@delon/form/widgets/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({

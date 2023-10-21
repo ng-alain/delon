@@ -2,20 +2,52 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { format } from 'date-fns';
 
+import { ControlUIWidget, SFValue, toBool } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { SFTimeWidgetSchema } from './schema';
-import { SFValue } from '../../interface';
-import { toBool } from '../../utils';
-import { ControlUIWidget } from '../../widget';
+import type { SFTimeWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-time',
-  templateUrl: './time.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <nz-time-picker
+      [nzId]="id"
+      [(ngModel)]="displayValue"
+      (ngModelChange)="_change($event)"
+      [nzDisabled]="disabled"
+      [nzSize]="$any(ui.size)"
+      [nzFormat]="i.displayFormat"
+      [nzAllowEmpty]="i.allowEmpty"
+      [nzClearText]="i.clearText"
+      [nzDefaultOpenValue]="i.defaultOpenValue"
+      [nzDisabledHours]="ui.disabledHours"
+      [nzDisabledMinutes]="ui.disabledMinutes"
+      [nzDisabledSeconds]="ui.disabledSeconds"
+      [nzHideDisabledOptions]="i.hideDisabledOptions"
+      [nzUse12Hours]="i.use12Hours"
+      [nzHourStep]="i.hourStep"
+      [nzMinuteStep]="i.minuteStep"
+      [nzSecondStep]="i.secondStep"
+      [nzPopupClassName]="ui.popupClassName!"
+      [nzPlaceHolder]="ui.placeholder!"
+      [nzNowText]="ui.nowText!"
+      [nzOkText]="ui.okText!"
+      (nzOpenChange)="_openChange($event)"
+    />
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {
+  static readonly KEY = 'time';
+
   private valueFormat: string | undefined;
   displayValue: Date | null = null;
   i: NzSafeAny;
