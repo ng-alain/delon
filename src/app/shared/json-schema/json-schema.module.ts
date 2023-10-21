@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { DelonFormModule } from '@delon/form';
 import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
 import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
+import { ColorWidgetModule } from '@delon/form/widgets/color';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
 import { RateWidgetModule } from '@delon/form/widgets/rate';
 import { SliderWidgetModule } from '@delon/form/widgets/slider';
@@ -30,6 +31,7 @@ import { SharedModule } from '../shared.module';
     TagWidgetModule,
     TimeWidgetModule,
     UploadWidgetModule,
+    ColorWidgetModule,
     MonacoEditorWidgetModule,
     TinymceWidgetModule
   ]

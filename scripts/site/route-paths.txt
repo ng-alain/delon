@@ -203,6 +203,8 @@
 /form/cascader/zh
 /form/checkbox/en
 /form/checkbox/zh
+/form/color/en
+/form/color/zh
 /form/conditional/en
 /form/conditional/zh
 /form/custom/en
