@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-qr-code",
+    "entryFile": "index.ts"
+  }
+}

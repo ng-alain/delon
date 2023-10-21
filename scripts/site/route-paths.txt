@@ -233,6 +233,8 @@
 /form/object/zh
 /form/qa/en
 /form/qa/zh
+/form/qr-code/en
+/form/qr-code/zh
 /form/radio/en
 /form/radio/zh
 /form/rate/en

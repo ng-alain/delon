@@ -5,6 +5,7 @@ import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
 import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
 import { ColorWidgetModule } from '@delon/form/widgets/color';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
+import { QrCodeWidgetModule } from '@delon/form/widgets/qr-code';
 import { RateWidgetModule } from '@delon/form/widgets/rate';
 import { SliderWidgetModule } from '@delon/form/widgets/slider';
 import { TagWidgetModule } from '@delon/form/widgets/tag';
@@ -32,6 +33,7 @@ import { SharedModule } from '../shared.module';
     TimeWidgetModule,
     UploadWidgetModule,
     ColorWidgetModule,
+    QrCodeWidgetModule,
     MonacoEditorWidgetModule,
     TinymceWidgetModule
   ]
