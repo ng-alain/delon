@@ -7,6 +7,7 @@ import { ColorWidgetModule } from '@delon/form/widgets/color';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
 import { QrCodeWidgetModule } from '@delon/form/widgets/qr-code';
 import { RateWidgetModule } from '@delon/form/widgets/rate';
+import { SegmentedWidgetModule } from '@delon/form/widgets/segmented';
 import { SliderWidgetModule } from '@delon/form/widgets/slider';
 import { TagWidgetModule } from '@delon/form/widgets/tag';
 import { TimeWidgetModule } from '@delon/form/widgets/time';
@@ -34,6 +35,7 @@ import { SharedModule } from '../shared.module';
     UploadWidgetModule,
     ColorWidgetModule,
     QrCodeWidgetModule,
+    SegmentedWidgetModule,
     MonacoEditorWidgetModule,
     TinymceWidgetModule
   ]
