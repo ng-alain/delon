@@ -9,53 +9,52 @@ title:
 
 ```ts
 import { Component } from '@angular/core';
+
 import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <button nz-button (click)="refreshData()" nzType="primary">Refresh Data</button>
-    <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300"></g2-timeline>
-  `,
+    <button *ngFor="let i of axisList" nz-button (click)="refresh(i)" nzType="primary">{{ i }} axis</button>
+    <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300" />
+  `
 })
 export class DemoComponent {
   chartData: G2TimelineData[] = [];
   titleMap: G2TimelineMap = { y1: '指标1', y2: '指标2' };
-  maxAxis = 5;
+  maxAxis = 2;
+  axisList = new Array(5).fill(0).map((_, idx) => idx + 1);
 
   constructor() {
     this.refresh();
   }
 
-  private genData(hideY5: boolean): G2TimelineData[] {
-    const res: G2TimelineData[] = [];
+  private genData(max: number): { titleMap: G2TimelineMap; data: G2TimelineData[] } {
+    const titleMap: G2TimelineMap = { y1: '' };
+    for (let i = 1; i <= max; i++) {
+      titleMap[`y${i}`] = `指标${i}`;
+    }
+
+    const data: G2TimelineData[] = [];
     for (let i = 0; i < 20; i += 1) {
       const item: G2TimelineData = {
         time: new Date().getTime() + 1000 * 60 * 30 * i,
-        y1: Math.floor(Math.random() * 100) + 500,
-        y2: Math.floor(Math.random() * 100) + 1000,
-        y3: Math.floor(Math.random() * 100) + 1500,
-        y4: Math.floor(Math.random() * 100) + 2000,
-        y5: Math.floor(Math.random() * 100) + 2500,
+        y1: 0
       };
-      if (hideY5) delete item.y5;
-      res.push(item);
+      for (let i = 1; i <= max; i++) {
+        item[`y${i}`] = Math.floor(Math.random() * 100) + 500 * i;
+      }
+      data.push(item);
     }
-    return res;
+    return { titleMap, data };
   }
 
-  refresh(): void {
-    const titleMap: G2TimelineMap = { y1: '指标1', y2: '指标2', y3: '指标3', y4: '指标4', y5: '指标5' };
-    const hideY5 = Math.random() > 0.5;
-    if (hideY5) delete titleMap.y5;
-    this.chartData = this.genData(hideY5);
+  refresh(max?: number): void {
+    this.maxAxis = max ?? this.maxAxis;
+    const { titleMap, data } = this.genData(this.maxAxis);
+    this.chartData = data;
     this.titleMap = titleMap;
-    this.maxAxis = hideY5 ? 4 : 5;
-  }
-
-  refreshData(): void {
-    this.chartData = this.genData(this.maxAxis === 4);
   }
 }
 ```
