@@ -26,6 +26,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -77,5 +78,6 @@ export const SHARED_ZORRO_MODULES = [
   NzUploadModule,
   NzPaginationModule,
   NzEmptyModule,
-  NzHighlightModule
+  NzHighlightModule,
+  NzQRCodeModule
 ];

@@ -2,6 +2,7 @@
 title: object
 subtitle: 对象
 type: Widgets
+order: 1
 ---
 
 创建对象，只对 `schema.type="object"` 时有效。

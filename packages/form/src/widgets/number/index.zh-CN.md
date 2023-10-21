@@ -2,6 +2,7 @@
 title: number
 subtitle: 数字
 type: Widgets
+order: 5
 ---
 
 通过鼠标或键盘，输入范围内的数值
