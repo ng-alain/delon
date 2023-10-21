@@ -1,10 +1,14 @@
 ---
 title: autocomplete
 subtitle: Autocomplete
-type: Widgets
+type: Non-built-in widgets
 ---
 
 Input complete automatically.
+
+## Import module
+
+Non-built-in modules, Should be import `AutoCompleteWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
 
 ## Data Source
 

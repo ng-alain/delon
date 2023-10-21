@@ -1,10 +1,14 @@
 ---
 title: autocomplete
 subtitle: 自动完成
-type: Widgets
+type: Non-built-in widgets
 ---
 
 输入框自动完成功能。
+
+## 导入模块
+
+非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `AutoCompleteWidgetModule`。
 
 ## 数据源说明
 

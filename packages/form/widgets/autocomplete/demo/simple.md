@@ -15,7 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFAutoCompleteWidgetSchema, SFSchema } from '@delon/form';
+import { SFSchema } from '@delon/form';
+import type { SFAutoCompleteWidgetSchema } from '@delon/form/widgets/autocomplete';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 

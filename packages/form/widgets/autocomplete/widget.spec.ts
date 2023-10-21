@@ -2,15 +2,15 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { mergeConfig, SFSchema, SFSchemaEnum } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { AutoCompleteWidget } from './autocomplete.widget';
+import { AutoCompleteWidgetModule } from './index';
 import { SFAutoCompleteWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { mergeConfig } from '../../config';
+import { AutoCompleteWidget } from './widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: autocomplete', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -19,7 +19,7 @@ describe('form: widget: autocomplete', () => {
   let page: SFPage;
   const widget = 'autocomplete';
 
-  configureSFTestSuite();
+  configureSFTestSuite({ imports: [AutoCompleteWidgetModule] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

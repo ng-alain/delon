@@ -2,22 +2,54 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Observable, of, debounceTime, map, mergeMap, startWith, takeUntil } from 'rxjs';
 
+import { ControlUIWidget, SFSchemaEnum, SFValue, getCopyEnum, getEnum, toBool } from '@delon/form';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { SFAutoCompleteWidgetSchema } from './schema';
-import { SFValue } from '../../interface';
-import { SFSchemaEnum } from '../../schema';
-import { getCopyEnum, getEnum, toBool } from '../../utils';
-import { ControlUIWidget } from '../../widget';
+import type { SFAutoCompleteWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-autocomplete',
-  templateUrl: './autocomplete.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <input
+      nz-input
+      [nzAutocomplete]="auto"
+      [attr.id]="id"
+      [disabled]="disabled"
+      [attr.disabled]="disabled"
+      [nzSize]="ui.size!"
+      [(ngModel)]="typing"
+      (ngModelChange)="_setValue($event)"
+      [attr.maxLength]="schema.maxLength || null"
+      [attr.placeholder]="ui.placeholder"
+      autocomplete="off"
+    />
+    <nz-autocomplete
+      #auto
+      [nzBackfill]="i.backfill"
+      [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
+      [nzWidth]="i.width"
+      [nzOverlayStyle]="ui.overlayStyle || {}"
+      [nzOverlayClassName]="ui.overlayClassName || ''"
+      [compareWith]="i.compareWith"
+      (selectionChange)="updateValue($event)"
+    >
+      <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>
+    </nz-autocomplete>
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
+  static readonly KEY = 'autocomplete';
+
   i: NzSafeAny = {};
   list!: Observable<SFSchemaEnum[]>;
   typing: string = '';

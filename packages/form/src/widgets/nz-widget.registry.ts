@@ -1,5 +1,4 @@
 import { ArrayWidget } from './array/array.widget';
-import { AutoCompleteWidget } from './autocomplete/autocomplete.widget';
 import { BooleanWidget } from './boolean/boolean.widget';
 import { CheckboxWidget } from './checkbox/checkbox.widget';
 import { CustomWidget } from './custom/custom.widget';
@@ -30,7 +29,6 @@ export class NzWidgetRegistry extends WidgetRegistry {
     this.register('boolean', BooleanWidget);
     this.register('textarea', TextareaWidget);
     this.register('select', SelectWidget);
-    this.register('autocomplete', AutoCompleteWidget);
     this.register('custom', CustomWidget);
 
     this.setDefault(StringWidget);

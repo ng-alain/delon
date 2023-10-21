@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { DelonFormModule, WidgetRegistry } from '@delon/form';
+import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
 import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
 import { RateWidgetModule } from '@delon/form/widgets/rate';
@@ -21,6 +22,7 @@ export const SCHEMA_THIRDS_COMPONENTS = [TinymceWidget];
   imports: [
     SharedModule,
     DelonFormModule.forRoot(),
+    AutoCompleteWidgetModule,
     CascaderWidgetModule,
     TransferWidgetModule,
     MentionWidgetModule,

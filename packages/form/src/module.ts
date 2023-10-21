@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -23,7 +22,6 @@ import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 
 const ZORROS = [
-  NzAutocompleteModule,
   NzButtonModule,
   NzCardModule,
   NzCheckboxModule,
@@ -53,7 +51,6 @@ const COMPONENTS = [SFComponent, SFItemComponent, SFItemWrapComponent, SFTemplat
 
 import { WidgetRegistry } from './widget.factory';
 import { ArrayWidget } from './widgets/array/array.widget';
-import { AutoCompleteWidget } from './widgets/autocomplete/autocomplete.widget';
 import { BooleanWidget } from './widgets/boolean/boolean.widget';
 import { CheckboxWidget } from './widgets/checkbox/checkbox.widget';
 import { CustomWidget } from './widgets/custom/custom.widget';
@@ -78,7 +75,6 @@ const WIDGETS = [
   BooleanWidget,
   TextareaWidget,
   SelectWidget,
-  AutoCompleteWidget,
   CustomWidget,
   TextWidget
 ];

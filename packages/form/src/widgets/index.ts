@@ -17,8 +17,6 @@ export * from './textarea/textarea.widget';
 export * from './textarea/schema';
 export * from './select/select.widget';
 export * from './select/schema';
-export * from './autocomplete/autocomplete.widget';
-export * from './autocomplete/schema';
 export * from './text/text.widget';
 export * from './text/schema';
 export * from './custom/custom.widget';
