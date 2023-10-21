@@ -5,7 +5,7 @@ title: qr
 subtitle: QR
 cols: 1
 module: import { QRModule } from '@delon/abc/qr';
-deprecated: true
+deprecated: 18.0.0
 ---
 
 # Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.
