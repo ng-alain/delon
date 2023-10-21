@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { DelonFormModule, WidgetRegistry } from '@delon/form';
+import { DelonFormModule } from '@delon/form';
 import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
 import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
@@ -11,14 +11,12 @@ import { TimeWidgetModule } from '@delon/form/widgets/time';
 import { TransferWidgetModule } from '@delon/form/widgets/transfer';
 import { TreeSelectWidgetModule } from '@delon/form/widgets/tree-select';
 import { UploadWidgetModule } from '@delon/form/widgets/upload';
-import { TinymceWidget } from '@delon/form/widgets-third/tinymce/tinymce.widget';
+import { MonacoEditorWidgetModule } from '@delon/form/widgets-third/monaco-editor';
+import { TinymceWidgetModule } from '@delon/form/widgets-third/tinymce';
 
 import { SharedModule } from '../shared.module';
 
-export const SCHEMA_THIRDS_COMPONENTS = [TinymceWidget];
-
 @NgModule({
-  declarations: SCHEMA_THIRDS_COMPONENTS,
   imports: [
     SharedModule,
     DelonFormModule.forRoot(),
@@ -31,12 +29,9 @@ export const SCHEMA_THIRDS_COMPONENTS = [TinymceWidget];
     TreeSelectWidgetModule,
     TagWidgetModule,
     TimeWidgetModule,
-    UploadWidgetModule
-  ],
-  exports: [...SCHEMA_THIRDS_COMPONENTS]
+    UploadWidgetModule,
+    MonacoEditorWidgetModule,
+    TinymceWidgetModule
+  ]
 })
-export class JsonSchemaModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(TinymceWidget.KEY, TinymceWidget);
-  }
-}
+export class JsonSchemaModule {}

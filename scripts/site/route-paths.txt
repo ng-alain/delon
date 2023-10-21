@@ -219,12 +219,12 @@
 /form/i18n/zh
 /form/layout/en
 /form/layout/zh
-/form/markdown/en
-/form/markdown/zh
 /form/mention/en
 /form/mention/zh
 /form/modal/en
 /form/modal/zh
+/form/monaco-editor/en
+/form/monaco-editor/zh
 /form/number/en
 /form/number/zh
 /form/object/en
