@@ -6,6 +6,11 @@
       "description": "Updates NG-ALAIN to v16 [https://github.com/ng-alain/ng-alain/issues/2390]",
       "factory": "./ng-update/index#updateToV16"
     },
+    "migration-v17": {
+      "version": "17",
+      "description": "Updates NG-ALAIN to v17 [https://github.com/ng-alain/ng-alain/issues/2390]",
+      "factory": "./ng-update/index#updateToV17"
+    },
     "ng-post-update": {
       "description": "Performs cleanup after ng-update.",
       "factory": "./ng-update/index#postUpdate",
