@@ -22,8 +22,7 @@ import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QROptions } from './qr.types';
 
 /**
- * Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.
- * @deprecated
+ * @deprecated Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.
  */
 @Component({
   selector: 'qr',
