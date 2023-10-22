@@ -68,10 +68,9 @@ describe('util: time', () => {
     expect(toDate(null).toString()).toBe(`Invalid Date`);
     expect(f(toDate(NOW))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(+NOW))).toBe(`2000-01-01 00:00:00`);
+    expect(f(toDate(Math.trunc(+NOW / 1000), { timestampSecond: true }))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(`${+NOW}`))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(f(NOW)))).toBe(`2000-01-01 00:00:00`);
-    expect(f(toDate(1697950947))).toBe(`2023-10-22 13:02:27`);
-    expect(f(toDate(1697950947123), 'yyyy-MM-dd HH:mm:ss.SSS')).toBe(`2023-10-22 13:02:27.123`);
     expect(isNaN(toDate(new String('') as NzSafeAny) as NzSafeAny)).toBe(true);
   });
 

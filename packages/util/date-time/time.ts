@@ -89,17 +89,19 @@ export interface ToDateOptions {
   formatString?: string;
   /** If parsing fails returned default value, default: `new Date(NaN)` */
   defaultValue?: NzSafeAny;
+  timestampSecond?: boolean;
 }
 
 /**
  * Convert to `Date` format
  *
- * @param value When is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+ * @param value When is a number, it's treated as a timestamp; If it's seconds, you need to provide the `options.timestampSecond` parameter.
  */
 export function toDate(value?: Date | string | number | null, options?: string | ToDateOptions): Date {
-  const { formatString, defaultValue } = {
+  const { formatString, defaultValue, timestampSecond } = {
     formatString: 'yyyy-MM-dd HH:mm:ss',
     defaultValue: new Date(NaN),
+    timestampSecond: false,
     ...(typeof options === 'string' ? { formatString: options } : options)
   };
   if (value == null) {
@@ -108,9 +110,9 @@ export function toDate(value?: Date | string | number | null, options?: string |
   if (value instanceof Date) {
     return value;
   }
-  if (typeof value === 'number' || (typeof value === 'string' && /[0-9]{10,13}/.test(value))) {
+  if (typeof value === 'number' || (typeof value === 'string' && /^[0-9]+$/.test(value))) {
     const valueNumber = +value;
-    return new Date(`${value}`.length === 10 ? valueNumber * 1000 : valueNumber);
+    return new Date(timestampSecond ? valueNumber * 1000 : valueNumber);
   }
   let tryDate = parseISO(value);
   if (isNaN(tryDate as NzSafeAny)) {

@@ -6,14 +6,15 @@ type: Tools
 
 ## toDate
 
-Convert to `Date` format, support `Date, number, string` types, If the argument is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+Convert to `Date` format, support `Date, number, string` types, If the argument is a number, it is treated as a timestamp.
 
 * `formatString` If parsing fails try to parse the date by pressing `formatString`
 * `defaultValue` If parsing fails returned default value, default: `new Date(NaN)`
+* `timestampSecond` Whether the incoming value is in seconds
 
 ## formatDate
 
-Format date, supports `Date, number, string` types, If the argument is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+Format date, supports `Date, number, string` types, If the argument is a number, it is treated as a timestamp.
 
 * Please refer to [date-fnd format](https://date-fns.org/v2.30.0/docs/format) for string format
 * `dateLocale` Recommended to be consistent with NG-ZORRO by using `inject(NZ_DATE_LOCALE)`
