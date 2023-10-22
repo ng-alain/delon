@@ -688,6 +688,14 @@ describe('theme: http.client', () => {
       const ret = backend.expectOne(() => true) as TestRequest;
       expect(ret.request.urlWithParams.length).toBeGreaterThan(URL.length + 15);
     }));
+    it('should be working second-level timestamps', fakeAsync(() => {
+      createModule({ dateValueHandling: 'timestampSecond' });
+      const now = new Date();
+      http.get(URL, { a: now }).subscribe();
+      tick();
+      const ret = backend.expectOne(() => true) as TestRequest;
+      expect(ret.request.urlWithParams).toContain(`${Math.trunc(+now / 1000)}`);
+    }));
     it('should be ingore null values', fakeAsync(() => {
       createModule({ nullValueHandling: 'ignore' });
       http.get(URL, { a: 1, b: null, c: undefined }).subscribe();

@@ -4,6 +4,20 @@ subtitle: Date Time Conversion
 type: Tools
 ---
 
+## toDate
+
+Convert to `Date` format, support `Date, number, string` types, If the argument is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+
+* `formatString` If parsing fails try to parse the date by pressing `formatString`
+* `defaultValue` If parsing fails returned default value, default: `new Date(NaN)`
+
+## formatDate
+
+Format date, supports `Date, number, string` types, If the argument is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+
+* Please refer to [date-fnd format](https://date-fns.org/v2.30.0/docs/format) for string format
+* `dateLocale` uses `NZ_DATE_LOCALE` by default to be consistent with NG-ZORRO
+
 ## dateTimePickerUtil
 
 一组针对 [DatePicker](https://ng.ant.design/components/date-picker/en) 的工具类。
@@ -39,10 +53,3 @@ getTimeDistance('week')
   - `month`, `-month` This month or last month
   - `year`, `-year` This year or last year
 - `time` Specify start time, default is `now`
-
-## toDate
-
-Return the date parsed from string using the given format string, If the argument is a number, it is treated as a timestamp.
-
-* `formatString` If parsing fails try to parse the date by pressing `formatString`
-* `defaultValue` If parsing fails returned default value, default: `new Date(NaN)`
