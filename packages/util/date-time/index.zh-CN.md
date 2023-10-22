@@ -16,7 +16,7 @@ type: Tools
 格式化日期，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp (支持秒与毫秒)。
 
 * 字符串格式请参考 [date-fnd format](https://date-fns.org/v2.30.0/docs/format)
-* `dateLocale` 默认使用 `NZ_DATE_LOCALE` 与 NG-ZORRO 保持一致
+* `dateLocale` 建议通过使用 `inject(NZ_DATE_LOCALE)` 与 NG-ZORRO 保持一致
 
 ## dateTimePickerUtil
 

@@ -16,7 +16,7 @@ Convert to `Date` format, support `Date, number, string` types, If the argument 
 Format date, supports `Date, number, string` types, If the argument is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
 
 * Please refer to [date-fnd format](https://date-fns.org/v2.30.0/docs/format) for string format
-* `dateLocale` uses `NZ_DATE_LOCALE` by default to be consistent with NG-ZORRO
+* `dateLocale` Recommended to be consistent with NG-ZORRO by using `inject(NZ_DATE_LOCALE)`
 
 ## dateTimePickerUtil
 
