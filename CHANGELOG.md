@@ -1,3 +1,17 @@
+## [16.4.2](https://github.com/ng-alain/delon/compare/16.4.1...16.4.2) (2023-10-26)
+
+
+### Features
+
+* **abc:qr:** will be removed in 18.0.0 ([#1667](https://github.com/ng-alain/delon/issues/1667)) ([5a7bdd4](https://github.com/ng-alain/delon/commit/5a7bdd42226960c8140397b1a1a377fb87ca725e))
+
+
+### Performance Improvements
+
+* **theme:modal:** perf code ([#1671](https://github.com/ng-alain/delon/issues/1671)) ([341ff56](https://github.com/ng-alain/delon/commit/341ff56dc67d65d5a545f124a51938366c7722dc))
+
+
+
 ## [16.4.1](https://github.com/ng-alain/delon/compare/16.4.0...16.4.1) (2023-10-20)
 
 
