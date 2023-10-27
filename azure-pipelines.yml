@@ -15,6 +15,11 @@ stages:
             displayName: 'Install Node.js'
             inputs:
               versionSpec: '18.10.0'
+          - script: |
+              node --version
+              yarn --version
+              yarn config list
+              yarn install
           - task: Cache@2
             displayName: Cache Yarn packages
             inputs:
@@ -33,11 +38,7 @@ stages:
             inputs:
               versionSpec: '18.10.0'
             displayName: 'Install Node.js'
-          - script: |
-              node --version
-              yarn --version
-              yarn config list
-              yarn --frozen-lockfile
+          - script: yarn --frozen-lockfile
             displayName: 'Install'
           - task: Bash@3
             env:
