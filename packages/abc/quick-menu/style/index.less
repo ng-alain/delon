@@ -3,9 +3,9 @@
 
 @{quick-menu-prefix} {
   position: fixed;
+  z-index: @zindex + 2;
   right: -@quick-menu-border-width;
   left: auto;
-  z-index: @zindex + 2;
   display: block;
   backface-visibility: hidden;
   transition: margin 0.3s cubic-bezier(1, 0, 0, 1);
@@ -23,6 +23,7 @@
   }
 
   &__ctrl {
+    cursor: pointer;
     position: absolute;
     top: -1px;
     left: -@quick-menu-ctrl-hw;
@@ -31,7 +32,6 @@
     text-align: center;
     border-right: 0;
     border-radius: 3px 0 0 3px;
-    cursor: pointer;
 
     &-icon {
       font-size: 20px;

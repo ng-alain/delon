@@ -1,3 +1,4 @@
+/* stylelint-disable order/order */
 .make-palette(@color, @index: 1) when (@index <= 10) {
   .palette-@{color}-@{index} {
     @background: '@{color}-@{index}';
@@ -74,16 +75,16 @@
       position: relative;
       top: -3px;
       margin-left: 16px;
-      font-size: 14px;
       font-family: Consolas, sans-serif;
+      font-size: 14px;
     }
 
     &-validation {
       position: relative;
       top: -3px;
       margin-left: 16px;
-      color: @error-color;
       font-size: 13px;
+      color: @error-color;
 
       &-dark {
         margin-left: 0;
@@ -93,19 +94,7 @@
 }
 
 .main-color {
-  .make-palette(blue);
-  .make-palette(purple);
-  .make-palette(cyan);
-  .make-palette(green);
-  .make-palette(magenta);
-  .make-palette(red);
-  .make-palette(volcano);
-  .make-palette(orange);
-  .make-palette(gold);
-  .make-palette(yellow);
-  .make-palette(lime);
-  .make-palette(geekblue);
-  .make-palette(gray);
+  text-align: left;
 
   .palette-gray-11 {
     background: @gray-11;
@@ -119,17 +108,15 @@
     background: @gray-13;
   }
 
-  text-align: left;
-
   &-item {
+    cursor: pointer;
     position: relative;
     height: 44px;
     margin-right: 4px;
     padding: 0 12px;
-    font-size: 14px;
     font-family: Consolas, sans-serif;
+    font-size: 14px;
     line-height: 44px;
-    cursor: pointer;
     transition: all 0.2s;
 
     &:first-child {
@@ -154,28 +141,41 @@
   &-item &-value {
     position: relative;
     left: 3px;
-    float: right;
-    transform: scale(0.85);
     transform-origin: 100% 50%;
+    transform: scale(0.85);
+    float: right;
     opacity: 0;
     transition: all 0.3s;
   }
+  .make-palette(blue);
+  .make-palette(purple);
+  .make-palette(cyan);
+  .make-palette(green);
+  .make-palette(magenta);
+  .make-palette(red);
+  .make-palette(volcano);
+  .make-palette(orange);
+  .make-palette(gold);
+  .make-palette(yellow);
+  .make-palette(lime);
+  .make-palette(geekblue);
+  .make-palette(gray);
 }
 
 .color-title {
   margin: 0 0 24px;
-  color: #5c6b77;
-  font-weight: 500;
   font-size: 22px;
+  font-weight: 500;
+  color: #5c6b77;
   text-align: center;
   text-transform: capitalize;
 }
 
 .color-description {
   display: block;
-  color: #777;
-  font-weight: lighter;
   font-size: 14px;
+  font-weight: lighter;
+  color: #777;
 }
 
 .main-color:hover {
@@ -235,9 +235,9 @@
       position: absolute;
       bottom: 0;
       left: 0;
+      transform-origin: unset;
       width: 100%;
       text-align: center;
-      transform-origin: unset;
     }
 
     &:hover {

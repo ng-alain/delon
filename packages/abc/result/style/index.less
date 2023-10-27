@@ -7,10 +7,6 @@
   margin: 0 auto;
   text-align: center;
 
-  @media screen and (max-width: @screen-xs) {
-    width: 100%;
-  }
-
   &__icon {
     margin-bottom: 24px;
     font-size: 72px;
@@ -27,17 +23,17 @@
 
   &__title {
     margin-bottom: 16px;
-    color: @heading-color;
-    font-weight: 500;
     font-size: 24px;
+    font-weight: 500;
     line-height: 32px;
+    color: @heading-color;
   }
 
   &__desc {
     margin-bottom: 24px;
-    color: @text-color-secondary;
     font-size: 14px;
     line-height: 22px;
+    color: @text-color-secondary;
   }
 
   &__extra {
@@ -61,6 +57,10 @@
   .@{ant-prefix}-steps .@{ant-prefix}-steps-head,
   .@{ant-prefix}-steps .@{ant-prefix}-steps-title {
     background: @result-extra-bg;
+  }
+
+  @media screen and (max-width: @screen-xs) {
+    width: 100%;
   }
 }
 

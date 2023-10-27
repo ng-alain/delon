@@ -4,3 +4,6 @@ src/assets/**/*
 packages/theme/system/utils/_border.less
 packages/theme/system/utils/_color.less
 packages/theme/system/utils/_spacing.less
+
+dist/**/*
+ng-alain/**/*

@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "16.4.1",
+  "version": "16.4.2",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -81,7 +81,7 @@
     "extend": "^3.0.2",
     "file-saver": "^2.0.5",
     "ng-github-button": "^16.0.0",
-    "ng-zorro-antd": "16.2.0",
+    "ng-zorro-antd": "^16.2.2",
     "ngx-color": "~9.0.0",
     "ngx-countdown": "^16.0.0",
     "ngx-highlight-js": "^16.1.0",
@@ -145,10 +145,9 @@
     "readline-sync": "^1.4.10",
     "stream": "0.0.2",
     "stylelint": "^15.10.3",
-    "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.7.0",
-    "stylelint-order": "^6.0.3",
+    "stylelint-config-clean-order": "^5.2.0",
     "source-map-explorer": "^2.5.3",
     "xlsx": "^0.18.5",
     "jszip": "^3.10.1",

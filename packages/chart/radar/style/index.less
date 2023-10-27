@@ -8,20 +8,20 @@
     margin-top: 16px;
 
     &-item {
-      position: relative;
-      color: @text-color-secondary;
-      line-height: 22px;
-      text-align: center;
       cursor: pointer;
+      position: relative;
+      line-height: 22px;
+      color: @text-color-secondary;
+      text-align: center;
 
       &::after {
+        content: '';
         position: absolute;
         top: 8px;
         right: 0;
         width: 1px;
         height: 40px;
         background-color: @border-color-split;
-        content: '';
       }
 
       &:last-child::after {
@@ -33,9 +33,9 @@
       margin-top: 4px;
       margin-bottom: 0;
       padding-left: 16px;
-      color: @heading-color;
       font-size: 24px;
       line-height: 32px;
+      color: @heading-color;
     }
 
     &-dot {

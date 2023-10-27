@@ -4,7 +4,7 @@
 **/test.ts
 src/index.html
 
-.stylelintrc
+.stylelintrc.js
 .prettierrc
 
 _nginx/
