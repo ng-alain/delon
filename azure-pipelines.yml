@@ -9,28 +9,14 @@ pool:
 stages:
   - stage: env
     jobs:
-      - job: Init
+      - job: Nodes
         steps:
           - task: NodeTool@0
-            displayName: 'Install Node.js'
             inputs:
               versionSpec: '18.10.0'
-          - script: |
-              node --version
-              yarn --version
-              yarn config list
-              yarn install
-          - task: Cache@2
-            displayName: Cache Yarn packages
-            inputs:
-              key: '"yarn" | "$(Agent.OS)" | yarn.lock'
-              restoreKeys: |
-                "yarn" | "$(Agent.OS)"
-                "yarn"
-              path: $(YARN_CACHE_FOLDER)
+            displayName: 'Install Node.js'
 
   - stage: build
-    dependsOn: env
     jobs:
       - job: build
         steps:
@@ -38,7 +24,11 @@ stages:
             inputs:
               versionSpec: '18.10.0'
             displayName: 'Install Node.js'
-          - script: yarn --frozen-lockfile
+          - script: |
+              node --version
+              yarn --version
+              yarn config list
+              yarn install
             displayName: 'Install'
           - task: Bash@3
             env:
@@ -82,7 +72,7 @@ stages:
             displayName: 'Checkout'
             clean: true
             fetchDepth: 1
-          - script: yarn --frozen-lockfile
+          - script: yarn install
             displayName: 'Install modules'
           - script: |
               node ./scripts/azure/github-comment.js "[Preview Failed](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
@@ -90,13 +80,13 @@ stages:
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
+    dependsOn: env
 
   - stage: test
-    dependsOn: env
     jobs:
       - job: packages
         steps:
-          - script: yarn --frozen-lockfile
+          - script: yarn install
             displayName: 'Install'
           - script: |
               yarn run test
@@ -124,15 +114,16 @@ stages:
               testResultsFiles: '**/TESTS*.xml'
       - job: cli
         steps:
-          - script: yarn --frozen-lockfile
+          - script: yarn install
             displayName: 'Install'
           - script: yarn run test:cli
+    dependsOn: env
 
   - stage: lint
-    dependsOn: env
     jobs:
       - job: packages
         steps:
-          - script: yarn --frozen-lockfile
+          - script: yarn install
             displayName: 'Install'
           - script: yarn run lint
+    dependsOn: env
