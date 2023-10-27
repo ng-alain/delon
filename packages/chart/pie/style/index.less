@@ -13,17 +13,17 @@
     position: absolute;
     top: 50%;
     right: 0;
+    transform: translateY(-50%);
     min-width: 250px;
     margin: 0 20px;
     padding: 0;
     list-style: none;
-    transform: translateY(-50%);
 
     &-item {
+      cursor: pointer;
       height: 22px;
       margin-bottom: 16px;
       line-height: 22px;
-      cursor: pointer;
 
       &:last-child {
         margin-bottom: 0;
@@ -66,8 +66,8 @@
       }
       @{g2-pie-prefix}__legend {
         position: relative;
-        min-width: auto;
         transform: none;
+        min-width: auto;
       }
     }
   }
@@ -76,25 +76,25 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     height: 62px;
     text-align: center;
-    transform: translate(-50%, -50%);
 
     &-title {
       height: 22px;
       margin-bottom: 8px;
-      color: @text-color-secondary;
-      font-weight: normal;
       font-size: 14px;
+      font-weight: normal;
       line-height: 22px;
+      color: @text-color-secondary;
     }
 
     &-stat {
       display: block;
       height: 32px;
-      color: @heading-color;
       font-size: 1.2em;
       line-height: 32px;
+      color: @heading-color;
       white-space: nowrap;
     }
   }

@@ -15,16 +15,16 @@
     transition: border-left-color 0.4s ease;
 
     &-link {
+      user-select: none;
       position: relative;
+      overflow: hidden;
       display: block;
       padding: @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right * 2
         @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right;
-      overflow: hidden;
       color: @alain-default-aside-nav-text-color;
-      white-space: nowrap;
       text-decoration: none !important;
       text-overflow: ellipsis;
-      user-select: none;
+      white-space: nowrap;
 
       &:hover {
         color: @alain-default-aside-nav-text-hover-color;
@@ -97,8 +97,8 @@
   }
 
   &__sub {
-    display: none;
     overflow: hidden;
+    display: none;
 
     @{sidebar-nav-prefix}__item {
       border-left: 0 !important;
@@ -113,6 +113,7 @@
 
       &::before,
       &::after {
+        content: '';
         position: absolute;
         width: 6px;
         height: 1.5px;
@@ -120,7 +121,6 @@
         background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
         border-radius: 2px;
         transition: background-color 0.3s @ease-in-out, transform 0.3s @ease-in-out, top 0.3s @ease-in-out;
-        content: '';
       }
 
       &::before {

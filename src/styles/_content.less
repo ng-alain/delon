@@ -20,9 +20,9 @@
   z-index: 1;
 
   &-inner {
+    overflow: hidden;
     height: 100%;
     max-height: 100vh;
-    overflow: hidden;
   }
 
   &:hover &-inner {
@@ -55,13 +55,13 @@
       font-size: 13px;
 
       &::after {
+        content: '';
         position: relative;
         top: 12px;
         display: block;
         width: calc(100% - 20px);
         height: 1px;
         background: @border-color-split;
-        content: '';
       }
     }
 
@@ -117,8 +117,8 @@
       position: absolute;
       top: 16px;
       right: -10px;
-      color: @primary-color;
       font-size: 12px;
+      color: @primary-color;
       opacity: 0;
       transition: all 0.3s;
     }
@@ -130,8 +130,8 @@
 
   .chinese {
     margin-left: 6px;
-    font-weight: 400;
     font-size: 12px;
+    font-weight: 400;
     opacity: 0.67;
   }
 }
