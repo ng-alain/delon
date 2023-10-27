@@ -97,8 +97,12 @@ module.exports = {
 
 ## 常见问题
 
-**Q：** 请求可能被拒绝或直接返回 `401` ?
+**请求可能被拒绝或直接返回 `401` ?**
 
 脚手架默认情况下使用了 `@delon/auth` 的 `SimpleInterceptor` 拦截器，导致在请求过程中若发现无法获取 Token 时会直接返回错误。
 
 [用户认证](/auth)这个过程是中台必备的。
+
+**关于无法显示请求日志**
+
+从 Angular13 开始远程请求的调试日志将不再终端中显示，若有显示日期需求，可自行参考 [How to fix logging for proxy in angular](https://medium.com/@gagandeep.sidhu88/how-to-fix-logging-for-proxy-in-angular-834cf46d437d) 解决。

@@ -24,10 +24,11 @@
 
     .half-float-bottom {
       position: absolute;
-      left: 50%;
       z-index: 2;
+      left: 50%;
     }
 
+    /* stylelint-disable-next-line order/order */
     .for-each(@hafl-float-size, {
       &.half-float-@{adKey} {
         margin-bottom: ((@adValue / 2) + 10);

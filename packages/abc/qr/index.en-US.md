@@ -5,7 +5,10 @@ title: qr
 subtitle: QR
 cols: 1
 module: import { QRModule } from '@delon/abc/qr';
+deprecated: 18.0.0
 ---
+
+# Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.
 
 Generate a QR code based on [qrious](https://github.com/neocotic/qrious).
 

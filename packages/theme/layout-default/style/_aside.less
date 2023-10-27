@@ -1,23 +1,23 @@
 @{alain-default-prefix}__aside {
   position: absolute;
+  z-index: @zindex + 5;
   top: 0;
   bottom: 0;
-  z-index: @zindex + 5;
+  overflow: hidden;
   width: @alain-default-aside-wd;
   margin-top: @alain-default-header-hg;
-  overflow: hidden;
-  background-color: @alain-default-aside-bg;
   backface-visibility: hidden;
+  background-color: @alain-default-aside-bg;
   transition: width 0.2s @alain-default-ease, translate 0.2s @alain-default-ease;
   -webkit-overflow-scrolling: touch;
 
   &::after {
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     border-right: 1px solid @alain-default-content-heading-border;
-    content: '';
   }
 
   &-wrap {
@@ -27,13 +27,13 @@
   }
 
   &-inner {
-    flex: 1 1 0%;
-    overflow-x: hidden scroll;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: proximity;
-    scroll-snap-points-x: snaplist(100%, 200%, 300%, 400%, 500%);
     // Firefox
     scrollbar-width: none;
+    scroll-snap-type: proximity;
+    overflow-x: hidden scroll;
+    flex: 1 1 0%;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-points-x: snaplist(100%, 200%, 300%, 400%, 500%);
     // Chrome
     &::-webkit-scrollbar {
       width: @alain-default-aside-scrollbar-height;
@@ -53,10 +53,10 @@
     border-top: 1px solid @alain-default-content-heading-border;
 
     &-collapsed {
+      cursor: pointer;
       padding: 8px 0;
       font-size: 16px;
       text-align: center;
-      cursor: pointer;
     }
   }
 }

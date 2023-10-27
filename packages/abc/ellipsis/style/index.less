@@ -6,9 +6,9 @@ ellipsis {
 }
 
 @{ellipsis-prefix} {
+  overflow: hidden;
   display: inline-block;
   width: 100%;
-  overflow: hidden;
   word-break: break-all;
 
   &__lines {
@@ -17,9 +17,9 @@ ellipsis {
 
   &__line-clamp {
     position: relative;
+    overflow: hidden;
     /* stylelint-disable-next-line value-no-vendor-prefix */
     display: -webkit-box;
-    overflow: hidden;
     text-overflow: ellipsis;
   }
 
