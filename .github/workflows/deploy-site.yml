@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: ^18.10.0
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
 
       - name: build
         run: |
