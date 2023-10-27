@@ -9,12 +9,12 @@ pool:
 stages:
   - stage: env
     jobs:
-      - job: Nodes & Yarn
+      - job: Nodes
         steps:
           - task: NodeTool@0
+            displayName: 'Install Node.js'
             inputs:
               versionSpec: '18.10.0'
-            displayName: 'Install Node.js'
           - task: Cache@2
             displayName: Cache Yarn packages
             inputs:
