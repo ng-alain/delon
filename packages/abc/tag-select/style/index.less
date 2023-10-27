@@ -3,15 +3,15 @@
 @tag-select-height: @tag-line-height + 2px; // 2px is top & bottom border width
 
 @{tag-select-prefix} {
+  user-select: none;
   position: relative;
+  overflow: hidden;
   display: block;
   max-height: @tag-select-height + @tag-select-margin;
   margin-top: -@tag-select-margin;
   margin-left: -8px;
-  overflow: hidden;
   line-height: @line-height-base;
   transition: all 0.3s;
-  user-select: none;
 
   &__expanded {
     max-height: 200px;

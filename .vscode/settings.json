@@ -33,8 +33,7 @@
   },
   "files.associations": {
     "*.json": "jsonc",
-    ".prettierrc": "json",
-    ".stylelintrc": "json"
+    ".prettierrc": "json"
   },
   "angular.enable-strict-mode-prompt": false
 }

@@ -6,17 +6,17 @@
 
 code[class*='hljs'],
 pre[class*='hljs'] {
-  color: black;
-  line-height: 1.5;
   direction: ltr;
-  white-space: pre;
+  line-height: 1.5;
+  hyphens: none;
+  color: black;
   text-align: left;
   text-shadow: 0 1px white;
-  word-wrap: normal;
   word-break: normal;
   word-spacing: normal;
+  word-wrap: normal;
   tab-size: 4;
-  hyphens: none;
+  white-space: pre;
   background: none;
 }
 
@@ -42,9 +42,9 @@ code[class*='hljs'] ::selection {
 
 /* Code blocks */
 pre[class*='hljs'] {
+  overflow: auto;
   margin: 1.2em 0;
   padding: 1em;
-  overflow: auto;
 }
 
 :not(pre) > code[class*='hljs'],
@@ -188,9 +188,9 @@ pre[class*='hljs'] {
 }
 
 .hljs {
+  overflow-x: auto;
   display: block;
   padding: 0.5em;
-  overflow-x: auto;
   color: #4d4d4c;
   background: white;
 }
@@ -215,6 +215,6 @@ pre[class*='hljs'] {
 }
 
 .code-box-code-copy.anticon-check {
-  color: #00a854 !important;
   font-weight: 700;
+  color: #00a854 !important;
 }

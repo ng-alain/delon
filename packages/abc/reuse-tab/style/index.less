@@ -2,18 +2,18 @@
 @reuse-tab-prefix: ~'.reuse-tab';
 
 @{reuse-tab-prefix} {
+  user-select: none;
   display: block;
   background-color: @reuse-tab-bg;
   outline: none;
-  user-select: none;
   .@{ant-prefix}-tabs {
     &-nav .@{ant-prefix}-tabs-tab {
       @{reuse-tab-prefix}__op {
         position: absolute;
         display: none;
         margin: 0;
-        color: @text-color;
         font-size: 10px;
+        color: @text-color;
       }
 
       &:hover {
@@ -23,8 +23,8 @@
       }
       @{reuse-tab-prefix}__name {
         &-width {
-          display: inline-block;
           overflow: hidden;
+          display: inline-block;
           text-overflow: ellipsis;
         }
       }
@@ -71,8 +71,8 @@
   }
 
   &__disabled {
-    opacity: 0.8;
     pointer-events: none;
+    opacity: 0.8;
   }
 }
 

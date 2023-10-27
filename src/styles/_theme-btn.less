@@ -1,11 +1,11 @@
 .theme-btn {
+  cursor: pointer;
   position: fixed;
+  z-index: 2147483640;
   right: 32px;
   bottom: 102px;
-  z-index: 2147483640;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
 
   &-tooltip {
     .ant-tooltip-inner {
@@ -20,9 +20,9 @@
   &-active {
     width: 44px;
     height: 44px;
-    color: @primary-color;
     font-size: 22px;
     line-height: 44px;
+    color: @primary-color;
   }
 
   & &-avatar {

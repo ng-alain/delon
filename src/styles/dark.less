@@ -10,9 +10,9 @@
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
     border: 1px solid @border-color-base;
-    -webkit-text-fill-color: @text-color;
     box-shadow: none;
     transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: @text-color;
   }
 
   #header {
@@ -27,12 +27,6 @@
 
   .drawer-button {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.65);
-  }
-
-  @media (max-width: @mobile-max) {
-    .header-menu .menu-site {
-      background: transparent;
-    }
   }
 
   .toc-affix {
@@ -67,11 +61,11 @@
     }
 
     &-expand-trigger {
+      cursor: pointer;
       position: relative;
       margin-left: 12px;
-      color: #fff;
       font-size: 20px;
-      cursor: pointer;
+      color: #fff;
       opacity: 0.45;
       transition: all 0.3s;
 
@@ -232,8 +226,8 @@
       margin-top: 0;
       margin-bottom: 0;
       padding: 30px 0;
-      color: @black;
       font-size: 18px;
+      color: @black;
       text-align: center;
       border: none;
     }
@@ -374,9 +368,9 @@
   }
 
   .hljs {
+    overflow-x: auto;
     display: block;
     padding: 0.5em;
-    overflow-x: auto;
     color: #c0c5ce;
     background: #1c1d21;
   }
@@ -399,6 +393,12 @@
 
     .page-banner__slogan {
       color: @text-color;
+    }
+  }
+
+  @media (max-width: @mobile-max) {
+    .header-menu .menu-site {
+      background: transparent;
     }
   }
 }

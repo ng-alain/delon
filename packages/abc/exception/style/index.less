@@ -7,15 +7,15 @@
   height: 100%;
 
   &__img-block {
+    zoom: 1;
     flex: 0 0 62.5%;
     width: 62.5%;
     padding-right: 152px;
-    zoom: 1;
 
     &::before,
     &::after {
-      display: table;
       content: ' ';
+      display: table;
     }
 
     &::after {
@@ -41,17 +41,17 @@
 
     &-title {
       margin-bottom: 24px;
-      color: #434e59;
-      font-weight: 600;
       font-size: 72px;
+      font-weight: 600;
       line-height: 72px;
+      color: #434e59;
     }
 
     &-desc {
       margin-bottom: 16px;
-      color: @text-color-secondary;
       font-size: 20px;
       line-height: 28px;
+      color: @text-color-secondary;
     }
 
     &-actions {
@@ -85,8 +85,8 @@
 @media screen and (max-width: @screen-xs) {
   @{exception-prefix} {
     &__img-block {
-      margin-bottom: -24px;
       overflow: hidden;
+      margin-bottom: -24px;
     }
   }
 }
