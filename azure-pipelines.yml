@@ -9,7 +9,7 @@ pool:
 stages:
   - stage: env
     jobs:
-      - job: Nodes
+      - job: Init
         steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'
@@ -18,7 +18,7 @@ stages:
           - task: Cache@2
             displayName: Cache Yarn packages
             inputs:
-              key: '"yarn" | "$(Agent.OS)" | yarn.lock'
+              key: '"yarn" | "$(Agent.OS)"'
               restoreKeys: |
                 "yarn" | "$(Agent.OS)"
                 "yarn"
