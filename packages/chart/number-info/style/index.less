@@ -6,55 +6,55 @@
 
   &__title {
     margin-bottom: 16px;
-    color: @text-color;
     font-size: @font-size-lg;
+    color: @text-color;
     transition: all 0.3s;
 
     &-sub {
-      height: 22px;
       overflow: hidden;
-      color: @text-color-secondary;
+      height: 22px;
       font-size: @font-size-base;
       line-height: 22px;
-      white-space: nowrap;
+      color: @text-color-secondary;
       text-overflow: ellipsis;
       word-break: break-all;
+      white-space: nowrap;
     }
   }
 
   &__value {
-    margin-top: 4px;
     overflow: hidden;
+    margin-top: 4px;
     font-size: 0;
-    white-space: nowrap;
     text-overflow: ellipsis;
     word-break: break-all;
+    white-space: nowrap;
 
     &-suffix {
       margin-left: 4px;
-      color: @text-color;
       font-size: 16px;
       font-style: normal;
+      color: @text-color;
     }
 
     &-text {
       display: inline-block;
       height: 32px;
-      color: @heading-color;
       font-size: 24px;
       line-height: 32px;
+      color: @heading-color;
     }
 
     &-sub {
       margin-left: 32px;
-      color: @text-color-secondary;
       font-size: @font-size-lg;
+      color: @text-color-secondary;
       vertical-align: top;
 
       .anticon {
+        transform: scale(0.82);
         margin-left: 4px;
         font-size: 12px;
-        transform: scale(0.82);
       }
 
       .anticon-caret-up {
@@ -79,6 +79,7 @@
     padding-left: 32px;
 
     &::after {
+      content: '';
       position: absolute;
       top: 0;
       bottom: 0;
@@ -86,7 +87,6 @@
       width: 1px;
       margin: 8px 0;
       background-color: @border-color-split;
-      content: '';
     }
   }
 }

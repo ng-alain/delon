@@ -1,7 +1,7 @@
 html {
-  height: 100%; // http://updates.html5rocks.com/2013/12/300ms-tap-delay-gone-away
-  direction: ltr;
   touch-action: manipulation;
+  direction: ltr;
+  height: 100%; // http://updates.html5rocks.com/2013/12/300ms-tap-delay-gone-away
 }
 
 html,
@@ -18,11 +18,11 @@ body {
 
 @{alain-default-prefix} {
   position: relative;
+  overflow-x: hidden;
   display: block;
   width: 100%;
   height: auto;
   min-height: 100%;
-  overflow-x: hidden;
 
   &__unwrap {
     margin-right: -@alain-default-content-padding;
@@ -36,6 +36,7 @@ body {
 
   &__content {
     margin: 0 @alain-default-content-padding @alain-default-content-padding @alain-default-content-padding;
+    .router-ant();
 
     &-title {
       display: flex;
@@ -53,13 +54,13 @@ body {
 
       > h1 {
         margin-bottom: 0;
-        font-weight: normal;
         font-size: 18px;
+        font-weight: normal;
 
         > small {
           display: block;
-          color: @muted-color;
           font-size: 12px;
+          color: @muted-color;
         }
       }
     }
@@ -67,13 +68,12 @@ body {
     nz-input-group {
       width: auto;
     }
-    .router-ant();
   }
 
   &__hide-aside {
     @{alain-default-prefix}__content {
-      margin-left: @alain-default-content-padding !important;
       transform: none !important;
+      margin-left: @alain-default-content-padding !important;
     }
   }
 

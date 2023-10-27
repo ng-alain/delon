@@ -28,33 +28,35 @@
 
     &__title {
       margin-bottom: 12px;
-      color: @heading-color;
       font-size: 14px;
       line-height: 22px;
+      color: @heading-color;
     }
 
     &__theme {
-      margin-top: 24px;
       overflow: hidden;
+      margin-top: 24px;
 
       &-tag {
+        cursor: pointer;
         float: left;
         width: 20px;
         height: 20px;
         margin-right: 8px;
-        color: #fff;
         font-weight: bold;
+        color: #fff;
         text-align: center;
         border-radius: 2px;
-        cursor: pointer;
       }
     }
 
     &__handle {
+      pointer-events: auto;
+      cursor: pointer;
       position: fixed;
+      z-index: @zindex-modal-mask - 1;
       top: 240px;
       right: 0;
-      z-index: @zindex-modal-mask - 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -64,18 +66,16 @@
       text-align: center;
       background: @primary-color;
       border-radius: 4px 0 0 4px;
-      cursor: pointer;
       transition: right @animation-duration-slow @ease-base-in;
-      pointer-events: auto;
 
       &-icon {
-        color: #fff;
         font-size: 20px;
+        color: #fff;
       }
 
       &-opened {
-        right: @setting-drawer-width;
         z-index: @zindex-modal-mask + 1;
+        right: @setting-drawer-width;
       }
     }
   }

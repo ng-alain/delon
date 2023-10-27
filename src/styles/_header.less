@@ -58,15 +58,15 @@
 }
 
 #logo {
+  overflow: hidden;
   height: @header-height;
   padding-left: 40px;
-  overflow: hidden;
-  color: @site-heading-color;
-  font-size: 18px;
   font-family: Avenir, @font-family, sans-serif;
+  font-size: 18px;
   line-height: @header-height;
-  white-space: nowrap;
+  color: @site-heading-color;
   text-decoration: none;
+  white-space: nowrap;
 
   .ant-row-rtl & {
     float: right;
@@ -113,13 +113,13 @@
   }
 
   .anticon {
+    pointer-events: none;
     position: absolute;
-    top: 50%;
     z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
     flex: none;
     color: @search-icon-color;
-    transform: translateY(-50%);
-    pointer-events: none;
   }
 
   input {
@@ -131,13 +131,13 @@
     border: 0;
     box-shadow: none;
 
+    &::placeholder {
+      color: #a3b1bf;
+    }
+
     .ant-row-rtl & {
       padding-right: 20px;
       padding-left: 11px;
-    }
-
-    &::placeholder {
-      color: #a3b1bf;
     }
   }
 
@@ -163,10 +163,10 @@
     }
 
     input {
+      cursor: pointer;
       max-width: none;
       padding-right: 20px;
       padding-left: 11px;
-      cursor: pointer;
 
       .ant-row-rtl & {
         padding-right: 11px;
@@ -193,6 +193,10 @@
     border: none;
     box-shadow: @box-shadow-base;
 
+    &::before {
+      display: none;
+    }
+
     [class^='ds-dataset-'] {
       background: @component-background;
       border: none;
@@ -200,10 +204,6 @@
       .algolia-docsearch-suggestion {
         background: @component-background;
       }
-    }
-
-    &::before {
-      display: none;
     }
   }
 
@@ -217,19 +217,19 @@
 }
 
 .nav-phone-icon {
+  cursor: pointer;
   position: absolute;
+  z-index: 1;
   top: 25px;
   right: 30px;
-  z-index: 1;
   width: 16px;
   height: 22px;
-  cursor: pointer;
 }
 
 #nav {
   height: 100%;
-  font-size: 14px;
   font-family: Avenir, @font-family, sans-serif;
+  font-size: 14px;
   border: 0;
 
   &.ant-menu-horizontal {
@@ -242,13 +242,13 @@
       line-height: @header-height - @menu-item-border - 2px;
       border-top: @menu-item-border solid transparent;
 
+      &::after {
+        content: none;
+      }
+
       &:hover {
         border-top: @menu-item-border solid @primary-color;
         border-bottom: none;
-      }
-
-      &::after {
-        content: none;
       }
     }
 
