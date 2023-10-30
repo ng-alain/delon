@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+// import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -58,106 +58,99 @@ export class G2RadarComponent extends G2BaseComponent {
 
   // #endregion
 
-  private getHeight(): number {
-    return this.height - (this.hasLegend ? 80 : 22);
-  }
+  // private getHeight(): number {
+  //   return this.height - (this.hasLegend ? 80 : 22);
+  // }
 
   install(): void {
-    const { node, padding, theme, tickCount } = this;
-
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node.nativeElement,
-      autoFit: true,
-      height: this.getHeight(),
-      padding,
-      theme
-    }));
-
-    chart.coordinate('polar');
-    chart.legend(false);
-    chart.axis('label', {
-      line: null,
-      label: {
-        offset: 8
-      },
-      grid: {
-        line: {
-          style: {
-            stroke: '#e9e9e9',
-            lineWidth: 1,
-            lineDash: [0, 0]
-          }
-        }
-      }
-    });
-    chart.axis('value', {
-      grid: {
-        line: {
-          type: 'polygon',
-          style: {
-            stroke: '#e9e9e9',
-            lineWidth: 1,
-            lineDash: [0, 0]
-          }
-        }
-      }
-    });
-    chart.scale({
-      value: {
-        min: 0,
-        tickCount
-      }
-    });
-    chart.filter('name', (name: string) => {
-      const legendItem = this.legendData.find(w => w.name === name);
-      return legendItem ? legendItem.checked !== false : true;
-    });
-
-    chart.line().position('label*value').color('name', this.colors);
-    chart.point().position('label*value').shape('circle').size(3);
-
-    chart.on(`point:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
-    });
-
-    this.ready.next(chart);
-
-    this.changeData();
-
-    chart.render();
+    //   const { node, padding, theme, tickCount } = this;
+    //   const chart: Chart = (this._chart = new this.winG2.Chart({
+    //     container: node.nativeElement,
+    //     autoFit: true,
+    //     height: this.getHeight(),
+    //     padding,
+    //     theme
+    //   }));
+    //   chart.coordinate('polar');
+    //   chart.legend(false);
+    //   chart.axis('label', {
+    //     line: null,
+    //     label: {
+    //       offset: 8
+    //     },
+    //     grid: {
+    //       line: {
+    //         style: {
+    //           stroke: '#e9e9e9',
+    //           lineWidth: 1,
+    //           lineDash: [0, 0]
+    //         }
+    //       }
+    //     }
+    //   });
+    //   chart.axis('value', {
+    //     grid: {
+    //       line: {
+    //         type: 'polygon',
+    //         style: {
+    //           stroke: '#e9e9e9',
+    //           lineWidth: 1,
+    //           lineDash: [0, 0]
+    //         }
+    //       }
+    //     }
+    //   });
+    //   chart.scale({
+    //     value: {
+    //       min: 0,
+    //       tickCount
+    //     }
+    //   });
+    //   chart.filter('name', (name: string) => {
+    //     const legendItem = this.legendData.find(w => w.name === name);
+    //     return legendItem ? legendItem.checked !== false : true;
+    //   });
+    //   chart.line().position('label*value').color('name', this.colors);
+    //   chart.point().position('label*value').shape('circle').size(3);
+    //   chart.on(`point:click`, (ev: Event) => {
+    //     this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    //   });
+    //   this.ready.next(chart);
+    //   this.changeData();
+    //   chart.render();
   }
 
-  changeData(): void {
-    const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
-    _chart.changeData(data);
+  // changeData(): void {
+  //   const { _chart, data } = this;
+  //   if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+  //   _chart.changeData(data);
 
-    this.ngZone.run(() => this.genLegend());
-  }
+  //   this.ngZone.run(() => this.genLegend());
+  // }
 
-  private genLegend(): void {
-    const { hasLegend, cdr, _chart } = this;
-    if (!hasLegend) return;
+  // private genLegend(): void {
+  //   const { hasLegend, cdr, _chart } = this;
+  //   if (!hasLegend) return;
 
-    this.legendData = _chart.geometries[0].dataArray.map(item => {
-      const origin = item[0]._origin;
-      const result = {
-        name: origin.name,
-        color: item[0].color,
-        checked: true,
-        value: item.reduce((p, n) => p + n._origin.value, 0)
-      };
+  //   this.legendData = _chart.geometries[0].dataArray.map(item => {
+  //     const origin = item[0]._origin;
+  //     const result = {
+  //       name: origin.name,
+  //       color: item[0].color,
+  //       checked: true,
+  //       value: item.reduce((p, n) => p + n._origin.value, 0)
+  //     };
 
-      return result;
-    });
+  //     return result;
+  //   });
 
-    cdr.detectChanges();
-  }
+  //   cdr.detectChanges();
+  // }
 
   _click(i: number): void {
-    const { legendData, _chart } = this;
+    const { legendData } = this;
     legendData[i].checked = !legendData[i].checked;
-    _chart.render(true);
+    // _chart.render(true);
   }
 
   onChanges(): void {

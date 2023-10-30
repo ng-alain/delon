@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+// import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -60,7 +60,7 @@ export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_blockMaxWidth: NumberInput;
   static ngAcceptInputType_select: BooleanInput;
 
-  private percentColor!: (value: string) => string;
+  // private percentColor!: (value: string) => string;
   legendData: NzSafeAny[] = [];
   isPercent = false;
 
@@ -95,141 +95,132 @@ export class G2PieComponent extends G2BaseComponent {
 
   block: boolean = false;
 
-  private fixData(): void {
-    const { percent, color } = this;
-    this.isPercent = percent != null;
-    if (!this.isPercent) {
-      return;
-    }
+  // private fixData(): void {
+  //   const { percent, color } = this;
+  //   this.isPercent = percent != null;
+  //   if (!this.isPercent) {
+  //     return;
+  //   }
 
-    this.select = false;
-    this.tooltip = false;
-    const { text, inverse, color: textColor, inverseColor } = this.ratio;
-    this.percentColor = (value: string) => (value === text ? textColor || color : inverseColor);
-    this.data = [
-      {
-        x: text,
-        y: percent!
-      },
-      {
-        x: inverse,
-        y: 100 - percent!
-      }
-    ];
-  }
+  //   this.select = false;
+  //   this.tooltip = false;
+  //   const { text, inverse, color: textColor, inverseColor } = this.ratio;
+  //   this.percentColor = (value: string) => (value === text ? textColor || color : inverseColor);
+  //   this.data = [
+  //     {
+  //       x: text,
+  //       y: percent!
+  //     },
+  //     {
+  //       x: inverse,
+  //       y: 100 - percent!
+  //     }
+  //   ];
+  // }
 
-  private updateBlock(): void {
-    this.block = this._chart && this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
-    this.cdr.detectChanges();
-  }
+  // private updateBlock(): void {
+  //   this.block = this._chart && this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
+  //   this.cdr.detectChanges();
+  // }
 
   install(): void {
-    const {
-      node,
-      height,
-      padding,
-      tooltip,
-      inner,
-      hasLegend,
-      interaction,
-      theme,
-      animate,
-      lineWidth,
-      isPercent,
-      percentColor,
-      colors
-    } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node.nativeElement,
-      autoFit: true,
-      height,
-      padding,
-      theme
-    }));
-    chart.animate(animate);
-
-    if (!tooltip) {
-      chart.tooltip(false);
-    } else {
-      chart.tooltip({
-        showTitle: false,
-        showMarkers: false
-      });
-    }
-    if (interaction !== 'none') {
-      chart.interaction(interaction);
-    }
-    chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner });
-    chart.filter('x', (_val: NzSafeAny, item: NzSafeAny) => item.checked !== false);
-    chart
-      .interval()
-      .adjust('stack')
-      .position('y')
-      .style({ lineWidth, stroke: '#fff' })
-      .color('x', isPercent ? percentColor : colors)
-      .tooltip('x*percent', (name: string, p: number) => ({
-        name,
-        value: `${hasLegend ? p : (p * 100).toFixed(2)} %`
-      }))
-      .state({});
-    chart.scale({
-      x: {
-        type: 'cat',
-        range: [0, 1]
-      }
-    });
-
-    chart
-      .on(`interval:click`, (ev: Event) => {
-        this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
-      })
-      .on('afterrender', () => {
-        this.ngZone.run(() => this.updateBlock());
-      });
-
-    this.ready.next(chart);
-
-    this.changeData();
-
-    chart.render();
+    // const {
+    //   node,
+    //   height,
+    //   padding,
+    //   tooltip,
+    //   inner,
+    //   hasLegend,
+    //   interaction,
+    //   theme,
+    //   animate,
+    //   lineWidth,
+    //   isPercent,
+    //   percentColor,
+    //   colors
+    // } = this;
+    // const chart: Chart = (this._chart = new this.winG2.Chart({
+    //   container: node.nativeElement,
+    //   autoFit: true,
+    //   height,
+    //   padding,
+    //   theme
+    // }));
+    // chart.animate(animate);
+    // if (!tooltip) {
+    //   chart.tooltip(false);
+    // } else {
+    //   chart.tooltip({
+    //     showTitle: false,
+    //     showMarkers: false
+    //   });
+    // }
+    // if (interaction !== 'none') {
+    //   chart.interaction(interaction);
+    // }
+    // chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner });
+    // chart.filter('x', (_val: NzSafeAny, item: NzSafeAny) => item.checked !== false);
+    // chart
+    //   .interval()
+    //   .adjust('stack')
+    //   .position('y')
+    //   .style({ lineWidth, stroke: '#fff' })
+    //   .color('x', isPercent ? percentColor : colors)
+    //   .tooltip('x*percent', (name: string, p: number) => ({
+    //     name,
+    //     value: `${hasLegend ? p : (p * 100).toFixed(2)} %`
+    //   }))
+    //   .state({});
+    // chart.scale({
+    //   x: {
+    //     type: 'cat',
+    //     range: [0, 1]
+    //   }
+    // });
+    // chart
+    //   .on(`interval:click`, (ev: Event) => {
+    //     this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    //   })
+    //   .on('afterrender', () => {
+    //     this.ngZone.run(() => this.updateBlock());
+    //   });
+    // this.ready.next(chart);
+    // this.changeData();
+    // chart.render();
   }
 
   changeData(): void {
-    const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
-
-    // 转化 percent
-    const totalSum = data.reduce((cur, item) => cur + item.y, 0);
-    for (const item of data) {
-      item.percent = totalSum === 0 ? 0 : item.y / totalSum;
-    }
-    _chart.changeData(data);
-
-    this.ngZone.run(() => this.genLegend());
+    // const { _chart, data } = this;
+    // if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+    // // 转化 percent
+    // const totalSum = data.reduce((cur, item) => cur + item.y, 0);
+    // for (const item of data) {
+    //   item.percent = totalSum === 0 ? 0 : item.y / totalSum;
+    // }
+    // _chart.changeData(data);
+    // this.ngZone.run(() => this.genLegend());
   }
 
-  private genLegend(): void {
-    const { hasLegend, isPercent, cdr, _chart } = this;
-    if (!hasLegend || isPercent) return;
-
-    this.legendData = _chart.geometries[0].dataArray.map((item: NzSafeAny) => {
-      const origin = item[0]._origin;
-      origin.color = item[0].color;
-      origin.checked = true;
-      origin.percent = (origin.percent * 100).toFixed(2);
-      return origin;
-    });
-
-    cdr.detectChanges();
-  }
+  // private genLegend(): void {
+  //   // const { hasLegend, isPercent, cdr, _chart } = this;
+  //   // if (!hasLegend || isPercent) return;
+  //   // this.legendData = _chart.geometries[0].dataArray.map((item: NzSafeAny) => {
+  //   //   const origin = item[0]._origin;
+  //   //   origin.color = item[0].color;
+  //   //   origin.checked = true;
+  //   //   origin.percent = (origin.percent * 100).toFixed(2);
+  //   //   return origin;
+  //   // });
+  //   // cdr.detectChanges();
+  // }
 
   _click(i: number): void {
-    const { legendData, _chart } = this;
+    const { legendData } = this;
     legendData[i].checked = !legendData[i].checked;
-    _chart.render(true);
+    // _chart.render(true);
   }
 
   onChanges(): void {
-    this.fixData();
+    // this.fixData();
   }
 }

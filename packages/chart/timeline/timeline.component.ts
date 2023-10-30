@@ -9,11 +9,11 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import type { Chart, Event, Types } from '@antv/g2';
-import { format } from 'date-fns';
+// import type { Chart, Event, Types } from '@antv/g2';
+// import { format } from 'date-fns';
 
 import { G2BaseComponent, G2Time } from '@delon/chart/core';
-import { toDate } from '@delon/util/date-time';
+// import { toDate } from '@delon/util/date-time';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -104,127 +104,113 @@ export class G2TimelineComponent extends G2BaseComponent {
   };
 
   install(): void {
-    const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node.nativeElement,
-      autoFit: true,
-      height,
-      padding,
-      theme
-    }));
-    chart.axis('time', { title: null });
-    chart.axis('y1', { title: null });
-    for (let i = 2; i <= maxAxis; i++) {
-      chart.axis(`y${i}`, false);
-    }
-
-    chart.line().position('time*y1');
-    for (let i = 2; i <= maxAxis; i++) {
-      chart.line().position(`time*y${i}`);
-    }
-
-    chart.tooltip({
-      showCrosshairs: true,
-      shared: true
-    });
-
-    const sliderPadding = { ...[], ...padding };
-    sliderPadding[0] = 0;
-    if (slider) {
-      chart.option('slider', {
-        height: 26,
-        start: 0,
-        end: 1,
-        trendCfg: {
-          isArea: false
-        },
-        minLimit: 2,
-        formatter: (val: Date) => format(val, maskSlider)
-      });
-    }
-
-    chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
-      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
-    });
-
-    chart.on(`legend-item:click`, (ev: Event) => {
-      const item = ev?.target?.get('delegateObject').item;
-      const id = item?.id;
-      const line = chart.geometries.find(w => w.getAttribute('position').getFields()[1] === id);
-      if (line) {
-        line.changeVisible(!item.unchecked);
-      }
-    });
-
-    this.ready.next(chart);
-
-    this.changeData();
-
-    chart.render();
+    // const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
+    // const chart: Chart = (this._chart = new this.winG2.Chart({
+    //   container: node.nativeElement,
+    //   autoFit: true,
+    //   height,
+    //   padding,
+    //   theme
+    // }));
+    // chart.axis('time', { title: null });
+    // chart.axis('y1', { title: null });
+    // for (let i = 2; i <= maxAxis; i++) {
+    //   chart.axis(`y${i}`, false);
+    // }
+    // chart.line().position('time*y1');
+    // for (let i = 2; i <= maxAxis; i++) {
+    //   chart.line().position(`time*y${i}`);
+    // }
+    // chart.tooltip({
+    //   showCrosshairs: true,
+    //   shared: true
+    // });
+    // const sliderPadding = { ...[], ...padding };
+    // sliderPadding[0] = 0;
+    // if (slider) {
+    //   chart.option('slider', {
+    //     height: 26,
+    //     start: 0,
+    //     end: 1,
+    //     trendCfg: {
+    //       isArea: false
+    //     },
+    //     minLimit: 2,
+    //     formatter: (val: Date) => format(val, maskSlider)
+    //   });
+    // }
+    // chart.on(`plot:click`, (ev: Event) => {
+    //   const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
+    //   this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+    // });
+    // chart.on(`legend-item:click`, (ev: Event) => {
+    //   const item = ev?.target?.get('delegateObject').item;
+    //   const id = item?.id;
+    //   const line = chart.geometries.find(w => w.getAttribute('position').getFields()[1] === id);
+    //   if (line) {
+    //     line.changeVisible(!item.unchecked);
+    //   }
+    // });
+    // this.ready.next(chart);
+    // this.changeData();
+    // chart.render();
   }
 
   changeData(): void {
-    const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
-    let data = [...this.data];
-    if (!_chart || data.length <= 0) return;
-
-    const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
-
-    _chart.legend({
-      position,
-      custom: true,
-      items: arrAxis.map(id => {
-        const key = `y${id}`;
-        return {
-          id: key,
-          name: titleMap![key],
-          value: key,
-          marker: { style: { fill: colorMap[key] } }
-        } as Types.LegendItem;
-      })
-    });
-
-    // border
-    _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
-    });
-    _chart.height = height;
-    _chart.padding = padding;
-
-    // 转换成日期类型
-    data = data
-      .map(item => {
-        item.time = toDate(item.time!);
-        item._time = +item.time;
-        return item;
-      })
-      .sort((a, b) => a._time - b._time);
-
-    const max = Math.max(...arrAxis.map(id => [...data].sort((a, b) => b[`y${id}`] - a[`y${id}`])[0][`y${id}`]));
-    const scaleOptions: Record<string, Types.ScaleOption> = {};
-    arrAxis.forEach(id => {
-      const key = `y${id}`;
-      scaleOptions[key] = {
-        alias: titleMap![key],
-        max,
-        min: 0
-      };
-    });
-    _chart.scale({
-      time: {
-        type: 'time',
-        mask,
-        range: [0, 1]
-      },
-      ...scaleOptions
-    });
-
-    const initialRange = {
-      start: data[0]._time,
-      end: data[data.length - 1]._time
-    };
-    const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
-    _chart.changeData(filterData);
+    // const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
+    // let data = [...this.data];
+    // if (!_chart || data.length <= 0) return;
+    // const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
+    // _chart.legend({
+    //   position,
+    //   custom: true,
+    //   items: arrAxis.map(id => {
+    //     const key = `y${id}`;
+    //     return {
+    //       id: key,
+    //       name: titleMap![key],
+    //       value: key,
+    //       marker: { style: { fill: colorMap[key] } }
+    //     } as Types.LegendItem;
+    //   })
+    // });
+    // // border
+    // _chart.geometries.forEach((v, idx: number) => {
+    //   v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
+    // });
+    // _chart.height = height;
+    // _chart.padding = padding;
+    // // 转换成日期类型
+    // data = data
+    //   .map(item => {
+    //     item.time = toDate(item.time!);
+    //     item._time = +item.time;
+    //     return item;
+    //   })
+    //   .sort((a, b) => a._time - b._time);
+    // const max = Math.max(...arrAxis.map(id => [...data].sort((a, b) => b[`y${id}`] - a[`y${id}`])[0][`y${id}`]));
+    // const scaleOptions: Record<string, Types.ScaleOption> = {};
+    // arrAxis.forEach(id => {
+    //   const key = `y${id}`;
+    //   scaleOptions[key] = {
+    //     alias: titleMap![key],
+    //     max,
+    //     min: 0
+    //   };
+    // });
+    // _chart.scale({
+    //   time: {
+    //     type: 'time',
+    //     mask,
+    //     range: [0, 1]
+    //   },
+    //   ...scaleOptions
+    // });
+    // const initialRange = {
+    //   start: data[0]._time,
+    //   end: data[data.length - 1]._time
+    // };
+    // const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
+    // _chart.changeData(filterData);
   }
 }
