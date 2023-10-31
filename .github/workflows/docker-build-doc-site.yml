@@ -1,9 +1,10 @@
 name: docker-build-doc-site
 
-on:
-  push:
-    branches:
-      - master
+on: push
+# on:
+#   push:
+#     branches:
+#       - master
 
 jobs:
   website:
