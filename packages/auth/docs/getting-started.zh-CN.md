@@ -41,7 +41,7 @@ type: Documents
 安装 `@delon/auth` 依赖包：
 
 ```bash
-yarn add @delon/auth
+npm i -S @delon/auth
 ```
 
 导入 `DelonAuthModule` 模块：

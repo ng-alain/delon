@@ -61,6 +61,8 @@ export class StartupService {
     }
   <% } else { %>
     private viaHttp(): Observable<void> {
+      // If http request allows anonymous access, you need to add `ALLOW_ANONYMOUS`:
+      // this.httpClient.get('assets/tmp/app-data.json', { context: new HttpContext().set(ALLOW_ANONYMOUS, true) })
       return this.httpClient.get('assets/tmp/app-data.json').pipe(
         catchError((res: NzSafeAny) => {
           console.warn(`StartupService.load: Network request failed`, res);
@@ -103,8 +105,8 @@ export class StartupService {
     // }
     // mock
     const app: any = {
-      name: `ng-alain`,
-      description: `Ng-zorro admin panel front-end framework`
+      name: `NG-ALAIN`,
+      description: `NG-ZORRO admin panel front-end framework`
     };
     const user: any = {
       name: 'Admin',

@@ -12,6 +12,7 @@ NG-ALAIN 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 在 NG-ALAIN 中，一个完整的前端 UI 交互到服务端处理流程是这样的：
 
 1. 首次启动 Angular 执行 `APP_INITIALIZER`；
+  - 通常会在启动前先加载一些APP通用数据，例如：当前已授权用户数据、菜单数据、字典数据、配置项等
 2. UI 组件交互操作；
 3. 使用封装的 [_HttpClient](/theme/http) 发送请求；
 4. 触发用户认证拦截器 [@delon/auth](/auth/getting-started)，统一加入 `token` 参数；

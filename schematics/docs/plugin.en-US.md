@@ -85,21 +85,6 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | Spanish | es | es | es_ES | es_ES |
 | Italian | it | it | it_IT | it_IT |
 
-### networkEnv
-
-Allow chinese users to add a taobao mirror configuration file `.npmrc` or `.yarnrc` to solve network problems.
-
-```bash
-# add npm
-ng g ng-alain:plugin networkEnv --packageManager=npm
-# add yarn
-ng g ng-alain:plugin networkEnv --packageManager=yarn
-# remove npm
-ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
-# remove yarn
-ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
-```
-
 ### sts
 
 [ng-alain-sts](https://github.com/ng-alain/sts) Plugins, Build Swagger APIs to list, edit pages, You can finish some interesting things.

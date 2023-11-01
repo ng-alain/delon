@@ -11,7 +11,7 @@ module: import { CountDownModule } from '@delon/abc/count-down';
 ## 依赖
 
 ```
-yarn add ngx-countdown
+npm i -S ngx-countdown
 ```
 
 ## API

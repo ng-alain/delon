@@ -10,7 +10,7 @@ Tinymce富文本。
 
 **安装依赖**  
 
-`yarn add ngx-tinymce`
+`npm i -S ngx-tinymce`
 
 **导入模块**
 
