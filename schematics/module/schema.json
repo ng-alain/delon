@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "SchematicsNgAlainModule",
-  "title": "Ng Alain Module Options Schema",
+  "title": "NG-ALAIN Module Options Schema",
   "type": "object",
   "properties": {
     "name": {

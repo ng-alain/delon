@@ -27,7 +27,7 @@ export class StartupService {
       if (slowEl) {
         slowEl.remove();
       }
-      this.injector.get(TitleService).suffix = 'Ng Alain';
+      this.injector.get(TitleService).suffix = 'NG-ALAIN';
       if (this.platform.isBrowser) {
         setTimeout(() => this.lazyLoad(), 100);
       }

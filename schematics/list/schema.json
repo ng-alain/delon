@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "SchematicsNgAlainListComponent",
-  "title": "Ng Alain List Component Options Schema",
+  "title": "NG-ALAIN List Component Options Schema",
   "type": "object",
   "additionalProperties": true,
   "properties": {

@@ -4,7 +4,7 @@ Angular CLI Schematics of ng-alain.
 
 # ng-alain
 
-[Ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd) admin panel front-end framework.
+[NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd) admin panel front-end framework.
 
 ## Links
 
