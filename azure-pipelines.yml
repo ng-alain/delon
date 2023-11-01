@@ -27,6 +27,7 @@ stages:
           - script: |
               node --version
               yarn --version
+              yarn config set enableImmutableInstalls false
               yarn install
             displayName: 'Install'
           - task: Bash@3
