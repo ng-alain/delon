@@ -7,9 +7,9 @@ This template was generated with [Angular CLI](https://github.com/angular/angula
 On the terminal on your bottom right there is a + you can click to open a new tab in it you can write any commands you want with:
 
 \`\`\`
-yarn ng <your command>
-yarn ng g ng-alain:module news
-yarn ng g ng-alain:list list -m=news
+npm ng <your command>
+npm ng g ng-alain:module news
+npm ng g ng-alain:list list -m=news
 \`\`\`
 
 ## QA

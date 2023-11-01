@@ -14,7 +14,7 @@ Markdown Editor
 
 Since the Markdown editor relies on a third-party plug-in [ngx-simplemde](https://github.com/cipchk/ngx-simplemde), the dependency should be installed first when using it
 
-`yarn add ngx-simplemde`
+`npm i -S ngx-simplemde`
 
 
 **Import module**    

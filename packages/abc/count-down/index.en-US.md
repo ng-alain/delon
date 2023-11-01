@@ -11,7 +11,7 @@ The countdown component depends on [ngx-countdown](https://github.com/cipchk/ngx
 ## Dependencies
 
 ```
-yarn add ngx-countdown
+npm i -S ngx-countdown
 ```
 
 ## API

@@ -5,7 +5,8 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
     "**/dist/*/**": true,
-    "**/coverage/*/**": true
+    "**/coverage/*/**": true,
+    "**/.yarn/**": true
   },
   "editor.codeActionsOnSave": {
     // For ESLint

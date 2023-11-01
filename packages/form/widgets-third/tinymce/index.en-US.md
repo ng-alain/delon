@@ -12,7 +12,7 @@ Tinymce rich text
 
 Since the Tinymce editor relies on a third-party plug-in [ngx-tinymce](https://github.com/cipchk/ngx-tinymce), the dependency should be installed first when using it
 
-`yarn add ngx-tinymce`
+`npm i -S ngx-tinymce`
 
 
 **Import module**    

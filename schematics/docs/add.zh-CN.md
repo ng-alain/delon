@@ -22,8 +22,6 @@ ng add ng-alain --defaultLanguage=en
 | `--defaultLanguage` | `zh`    | 默认语言，[支持语言列表](/cli/plugin/zh#支持语言列表) |
 | `--codeStyle`       | `false` | 是否需要代码风格                                      |
 | `--i18n`            | `false` | 是否需要国际化支持                                    |
-| `--npm`             | `false` | 是否需要 npm 淘宝镜像配置文件                         |
-| `--yarn`            | `false` | 是否需要 yarn 淘宝镜像配置文件                        |
 
 例如生成一个带有国际化项目：
 

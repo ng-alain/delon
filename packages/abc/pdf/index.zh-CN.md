@@ -16,7 +16,7 @@ module: import { PdfModule } from '@delon/abc/pdf';
 **使用本地路径**
 
 ```bash
-yarn add pdfjs-dist
+npm i -S pdfjs-dist
 ```
 
 ```json

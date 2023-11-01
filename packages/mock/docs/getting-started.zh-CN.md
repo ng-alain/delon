@@ -20,7 +20,7 @@ Mock 是指通过生成模拟数据让前端开发人员独立于后端进行开
 安装 `@delon/mock` 依赖包：
 
 ```bash
-yarn add @delon/mock -D
+npm i --save-dev @delon/mock
 ```
 
 参考 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L26-L30) 导入[Mock 规则数据](/mock/rule)。
