@@ -63,6 +63,7 @@ copyFiles() {
     "${1}.prettierignore|${2}application/files/root/.prettierignore"
     "${1}.prettierrc.js|${2}application/files/root/.prettierrc.js"
     "${1}.stylelintrc.js|${2}application/files/root/.stylelintrc.js"
+    "${1}.npmrc|${2}application/files/root"
     "${1}.nvmrc|${2}application/files/root"
     "${1}proxy.conf.js|${2}application/files/root"
     "${1}.husky|${2}application/files/root/.husky"
