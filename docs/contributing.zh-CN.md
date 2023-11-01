@@ -38,7 +38,7 @@ type: Other
 
 ## Pull Request
 
-Ng Alain 会关注所有的 pull request，我们会 review 以及合并你的代码，也有可能要求你做一些修改或者告诉你我们为什么不能接受这样的修改。
+NG-ALAIN 会关注所有的 pull request，我们会 review 以及合并你的代码，也有可能要求你做一些修改或者告诉你我们为什么不能接受这样的修改。
 
 **在你发送 Pull Request 之前**，请确认你是按照下面的步骤来做的：
 

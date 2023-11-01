@@ -11,10 +11,11 @@ Work in the form of the Restful API with the server application of any technolog
 In NG-ALAIN, a complete front-end UI interaction to the server-side processing flow looks like this:
 
 1. Start Angular for the first time to execute `APP_INITIALIZER`;
+  - Usually some APP general data is loaded before startup, such as currently authorized user data, menu data, dictionary data, configuration data, etc.
 2. UI component interaction;
 3. Send the request using the encapsulated [_HttpClient](/theme/http);
 4. Trigger the user authentication interceptor [@delon/auth](/auth/getting-started) and add the `token` parameter uniformly;
-    - If there is no `token` or an expired interrupt subsequent request, jump directly to the login page;
+  - If there is no `token` or an expired interrupt subsequent request, jump directly to the login page;
 5. Trigger the default interceptor to process the prefix and other information;
 6. Get the server back;
 7. Trigger the default interceptor to handle request exceptions, business exceptions, etc.

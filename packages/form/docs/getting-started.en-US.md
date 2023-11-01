@@ -30,7 +30,7 @@ This document uses the following conventions:
 Install `@delon/form` from `yarn`.
 
 ```bash
-yarn add @delon/form
+npm i -S @delon/form
 ```
 
 Import `DelonFormModule` in to your root `AppModule`.

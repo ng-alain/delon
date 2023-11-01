@@ -14,7 +14,7 @@ Markdown编辑器。
 
 由于Markdown编辑器依赖第三方插件[ngx-simplemde](https://github.com/cipchk/ngx-simplemde)，所以使用时应首先安装依赖  
 
-`yarn add ngx-simplemde`
+`npm i -S ngx-simplemde`
 
 **导入模块**
 

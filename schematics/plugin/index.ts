@@ -7,7 +7,6 @@ import { pluginCodeStyle } from './plugin.code-style';
 import { pluginDefaultLanguage } from './plugin.default-language';
 import { pluginDocker } from './plugin.docker';
 import { pluginIcon } from './plugin.icon';
-import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginRTL } from './plugin.rtl';
 import { pluginSTS } from './plugin.sts';
 import { Schema as PluginSchema } from './schema';
@@ -36,9 +35,6 @@ export default function (options: PluginSchema): Rule {
     switch (options.name) {
       case 'codeStyle':
         rules.push(pluginCodeStyle(pluginOptions), installPackages());
-        break;
-      case 'networkEnv':
-        rules.push(pluginNetworkEnv({ ...pluginOptions, packageManager: options.packageManager }));
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));

@@ -13,21 +13,17 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: '18.10.0'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
             displayName: 'Install Node.js'
 
   - stage: build
     jobs:
       - job: build
         steps:
-          - task: NodeTool@0
-            inputs:
-              versionSpec: '18.10.0'
-            displayName: 'Install Node.js'
           - script: |
               node --version
               yarn --version
-              yarn config list
               yarn install
             displayName: 'Install'
           - task: Bash@3

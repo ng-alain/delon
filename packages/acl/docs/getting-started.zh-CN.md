@@ -15,7 +15,7 @@ ACL 全称叫访问控制列表（Access Control List），是一种非常简单
 安装 `@delon/acl` 依赖包：
 
 ```bash
-yarn add @delon/acl
+npm i -S @delon/acl
 ```
 
 导入 `DelonACLModule` 模块：
