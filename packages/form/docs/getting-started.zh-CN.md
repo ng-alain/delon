@@ -30,7 +30,7 @@ type: Documents
 安装 `@delon/form` 依赖包：
 
 ```bash
-yarn add @delon/form
+npm i -S @delon/form
 ```
 
 导入 `DelonFormModule` 模块：

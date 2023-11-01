@@ -31,12 +31,12 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 Please make sure global Angular Cli is latest version via `ng version` command, please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
 
 ```bash
-yarn global add @angular/cli
-ng new my-project --style less --routing --package-manager yarn
+npm install -g @angular/cli
+ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
-yarn start
-# Or use HMR mode by: yarn run hmr
+npm start
+# Or use HMR mode by: npm run hmr
 ```
 
 > Please refer to [Schematics](/cli) for more details.
@@ -46,9 +46,9 @@ yarn start
 ```bash
 git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
-yarn
-yarn start
-# Or use HMR mode by: yarn run hmr
+npm install
+npm start
+# Or use HMR mode by: npm run hmr
 ```
 
 > Note: Installing with the CLI is a clean scaffolding; using clone the git repository include all example pages.
@@ -89,7 +89,7 @@ NG-ALAIN is a standard Angular CLI project that includes common routes for admin
 ## Development
 
 ```bash
-yarn start
+npm start
 ```
 
 This will automatically open [http://localhost:4200](http://localhost:4200). If you see the following page then you have succeeded.

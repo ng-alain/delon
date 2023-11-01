@@ -15,7 +15,7 @@ The `ACLService` service class contains a set of methods based on role permissio
 Install `@delon/acl`:
 
 ```bash
-yarn add @delon/acl
+npm i -S @delon/acl
 ```
 
 Import `DelonACLModule` module:

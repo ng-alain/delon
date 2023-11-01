@@ -11,7 +11,7 @@ type: Dev
 ### 安装依赖包
 
 ```bash
-yarn add ngx-tinymce
+npm i -S ngx-tinymce
 ```
 
 ### 注册
@@ -55,7 +55,7 @@ export class AppModule { }
 ### 安装依赖包
 
 ```bash
-yarn add qrious
+npm i -S qrious
 ```
 
 ### 导入脚本

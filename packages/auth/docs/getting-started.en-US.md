@@ -41,7 +41,7 @@ There are currently two styles: Simple Web Token (using `SimpleTokenModel`) and 
 Install `@delon/auth`:
 
 ```bash
-yarn add @delon/auth
+npm i -S @delon/auth
 ```
 
 Import `DelonAuthModule` to your AppModule.

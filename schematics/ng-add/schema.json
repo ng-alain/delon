@@ -74,16 +74,6 @@
       "description": "Generate i18n plugin",
       "default": false,
       "x-prompt": "Would you like to add i18n plugin? (default: N)"
-    },
-    "npm": {
-      "type": "boolean",
-      "description": "Generates .npmrc proxy to taobao.",
-      "default": false
-    },
-    "yarn": {
-      "type": "boolean",
-      "description": "Generates .yarnrc proxy to taobao.",
-      "default": false
     }
   }
 }

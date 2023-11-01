@@ -15,7 +15,7 @@ Tinymce富文本。
 
 由于Tinymce编辑器依赖第三方插件[ngx-tinymce](https://github.com/cipchk/ngx-tinymce)，所以使用时应首先安装依赖
 
-`yarn add ngx-tinymce`
+`npm i -S ngx-tinymce`
 
 **导入模块**
 

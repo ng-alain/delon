@@ -20,7 +20,7 @@ type: Documents
 Install `@delon/mock` from `yarn`.
 
 ```bash
-yarn add @delon/mock -D
+npm i --save-dev @delon/mock
 ```
 
 Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L26-L30) import the [Mock Rule data](/mock/rule).

@@ -4,6 +4,4 @@ export interface Schema {
   defaultLanguage?: string;
   i18n?: boolean;
   codeStyle?: boolean;
-  npm?: boolean;
-  yarn?: boolean;
 }
