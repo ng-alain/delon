@@ -27,7 +27,6 @@ stages:
           - script: |
               node --version
               yarn --version
-              yarn config list
               yarn install
             displayName: 'Install'
           - task: Bash@3
