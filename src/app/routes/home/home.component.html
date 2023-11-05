@@ -22,9 +22,9 @@
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay>
-    <div nz-carousel-content *ngFor="let i of list">
+    <div nz-carousel-content *ngFor="let i of allThemes">
       <a href="{{ i.url }}" target="_blank">
-        <img src="./assets/screenshot/{{ i.type }}.png" />
+        <img src="./assets/screenshot/{{ i.screenshot }}" />
       </a>
     </div>
   </nz-carousel>
@@ -114,7 +114,7 @@
   <div class="page">
     <h2>{{ 'app.home.theme' | i18n }}</h2>
     <div class="ant-row">
-      <div *ngFor="let t of themes" class="ant-col-xs-24 ant-col-md-12">
+      <div *ngFor="let t of bussionThemes" class="ant-col-xs-24 ant-col-md-12">
         <a
           class="page-theme__item"
           [attr.href]="'https://e.ng-alain.com/theme/' + t"
@@ -122,9 +122,9 @@
           data-aos-delay="0"
           [attr.data-theme]="t"
         >
-          <img src="./assets/screenshot/{{ t }}.png" />
-          <h3>{{ 'app.home.theme.' + t | i18n }}</h3>
-          <p>{{ 'app.home.theme.' + t + '.desc' | i18n }}</p>
+          <img src="./assets/screenshot/{{ t.screenshot }}" />
+          <h3>{{ 'app.home.theme.' + t.type | i18n }}</h3>
+          <p>{{ 'app.home.theme.' + t.type + '.desc' | i18n }}</p>
         </a>
       </div>
     </div>

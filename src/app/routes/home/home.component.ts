@@ -9,6 +9,13 @@ import { ZoneOutside } from '@delon/util/decorator';
 
 import { I18NService } from '@core';
 
+interface ThemeItem {
+  type: string;
+  url: string;
+  screenshot: string;
+  buession: boolean;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,13 +24,16 @@ import { I18NService } from '@core';
   }
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
-  list = [
-    { type: 'basic', url: 'https://ng-alain.github.io/ng-alain' },
-    { type: 'pro', url: 'https://e.ng-alain.com/theme/pro' },
-    { type: 'ms', url: 'https://e.ng-alain.com/theme/ms' },
-    { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' }
+  allThemes: ThemeItem[] = [
+    { type: 'data', url: 'https://e.ng-alain.com/theme/data', screenshot: 'data.webp', buession: true },
+    { type: 'basic', url: 'https://ng-alain.github.io/ng-alain', screenshot: 'basic.png', buession: false },
+    { type: 'pro', url: 'https://e.ng-alain.com/theme/pro', screenshot: 'pro.png', buession: true },
+    { type: 'ms', url: 'https://e.ng-alain.com/theme/ms', screenshot: 'ms.png', buession: true },
+    { type: 'yun', url: 'https://e.ng-alain.com/theme/yun', screenshot: 'yun.png', buession: true }
   ];
-  themes = ['pro', 'ms', 'yun'];
+  get bussionThemes(): ThemeItem[] {
+    return this.allThemes.filter(w => w.buession);
+  }
   get isBrowser(): boolean {
     return this.platform.isBrowser;
   }

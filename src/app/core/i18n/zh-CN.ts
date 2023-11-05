@@ -25,6 +25,8 @@ export const ZHCN = {
   'app.home.theme.ms.desc': '面向微服务开发风格的主题',
   'app.home.theme.yun': '云',
   'app.home.theme.yun.desc': '将功能细节化让用户更聚焦业务',
+  'app.home.theme.data': '数据',
+  'app.home.theme.data.desc': '以仪表盘、大屏展示为主',
   'app.header.menu.home': '首页',
   'app.header.menu.docs': '文档',
   'app.header.menu.components': '组件',
