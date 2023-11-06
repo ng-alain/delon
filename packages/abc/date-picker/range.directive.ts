@@ -72,10 +72,12 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     @Host() @Optional() private nativeComp: NzRangePickerComponent,
     private vcr: ViewContainerRef
   ) {
-    assert(
-      !!nativeComp,
-      `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`
-    );
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      assert(
+        !!nativeComp,
+        `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`
+      );
+    }
     const cog = configSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
       nzAllowClear: true,
