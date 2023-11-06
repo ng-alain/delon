@@ -11,7 +11,7 @@ In addition to the NG-ALAIN base component and the @delon business component, so
 ### Installing dependencies
 
 ```bash
-yarn add ngx-tinymce
+npm i -S ngx-tinymce
 ```
 
 ### Import module
@@ -55,7 +55,7 @@ Referencing a non-Angular component is actually loading a JavaScript class libra
 ### Installing dependencies
 
 ```bash
-yarn add qrious
+npm i -S qrious
 ```
 
 ### Import Scripts

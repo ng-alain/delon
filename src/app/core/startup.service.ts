@@ -27,7 +27,7 @@ export class StartupService {
       if (slowEl) {
         slowEl.remove();
       }
-      this.injector.get(TitleService).suffix = 'Ng Alain';
+      this.injector.get(TitleService).suffix = 'NG-ALAIN';
       if (this.platform.isBrowser) {
         setTimeout(() => this.lazyLoad(), 100);
       }
@@ -48,8 +48,8 @@ export class StartupService {
     };
     Promise.all([
       this.lazy.loadScript(`./assets/highlight.pack.js`),
-      this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`),
-      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
+      this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`)
+      // this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
     ]).then(() => {
       const dataLayer: NzSafeAny[] = win.dataLayer || [];
       dataLayer.push(['js', new Date()]);

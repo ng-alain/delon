@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "SchematicsNgAlainEditComponent",
-  "title": "Ng Alain Edit Component Options Schema",
+  "title": "NG-ALAIN Edit Component Options Schema",
   "type": "object",
   "additionalProperties": true,
   "properties": {

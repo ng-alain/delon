@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "SchematicsNgAlainSTAComponent",
-  "title": "Ng Alain Swagger To API Options Schema",
+  "title": "NG-ALAIN Swagger To API Options Schema",
   "type": "object",
   "additionalProperties": true,
   "properties": {

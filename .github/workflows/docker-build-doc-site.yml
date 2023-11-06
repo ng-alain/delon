@@ -1,5 +1,6 @@
 name: docker-build-doc-site
 
+# on: push
 on:
   push:
     branches:

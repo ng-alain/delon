@@ -21,9 +21,7 @@
   },
   "homepage": "https://ng-alain.com",
   "engines": {
-    "node": "^16.13.0 || ^18.10.0",
-    "yarn": ">=1.21.1 <2",
-    "npm": "Please use yarn instead of NPM to install dependencies"
+    "node": "^18.10.0"
   },
   "scripts": {
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
