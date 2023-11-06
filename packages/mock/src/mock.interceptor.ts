@@ -11,7 +11,7 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { Observable, of, throwError, delay } from 'rxjs';
+import { Observable, of, throwError, delay, isObservable, from, map, switchMap } from 'rxjs';
 
 import { deepCopy } from '@delon/util/other';
 
@@ -42,7 +42,7 @@ export class MockInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    let res: any;
+    let res$: Observable<any>;
     switch (typeof rule!.callback) {
       case 'function':
         const mockRequest: MockRequest = {
@@ -73,40 +73,48 @@ export class MockInterceptor implements HttpInterceptor {
         req.headers.keys().forEach(key => (mockRequest.headers[key] = req.headers.get(key)));
 
         try {
-          res = rule!.callback.call(this, mockRequest);
+          const fnRes = rule!.callback.call(this, mockRequest);
+          res$ = isObservable(fnRes) ? fnRes : from(Promise.resolve(fnRes));
         } catch (e: any) {
-          res = new HttpErrorResponse({
-            url: req.url,
-            headers: req.headers,
-            status: e instanceof MockStatusError ? e.status : 400,
-            statusText: e.statusText || 'Unknown Error',
-            error: e.error
-          });
+          res$ = of(
+            new HttpErrorResponse({
+              url: req.url,
+              headers: req.headers,
+              status: e instanceof MockStatusError ? e.status : 400,
+              statusText: e.statusText || 'Unknown Error',
+              error: e.error
+            })
+          );
         }
         break;
       default:
-        res = rule!.callback;
+        res$ = of(rule!.callback);
         break;
     }
 
-    if (!(res instanceof HttpResponseBase)) {
-      res = new HttpResponse({
-        status: 200,
-        url: req.url,
-        body: res
-      });
-    }
-
-    if (res.body) {
-      res.body = deepCopy(res.body);
-    }
-
-    if (config.log) {
-      console.log(`%c👽${req.method}->${req.urlWithParams}->request`, 'background:#000;color:#bada55', req);
-      console.log(`%c👽${req.method}->${req.urlWithParams}->response`, 'background:#000;color:#bada55', res);
-    }
-
-    const res$ = res instanceof HttpErrorResponse ? throwError(() => res) : of(res);
+    res$ = res$.pipe(
+      map(res =>
+        res instanceof HttpResponseBase
+          ? res
+          : new HttpResponse({
+              status: 200,
+              url: req.url,
+              body: deepCopy(res)
+            })
+      ),
+      map((res: HttpResponseBase) => {
+        const anyRes: any = res;
+        if (anyRes.body) {
+          anyRes.body = deepCopy(anyRes.body);
+        }
+        if (config.log) {
+          console.log(`%c👽${req.method}->${req.urlWithParams}->request`, 'background:#000;color:#bada55', req);
+          console.log(`%c👽${req.method}->${req.urlWithParams}->response`, 'background:#000;color:#bada55', res);
+        }
+        return res;
+      }),
+      switchMap((res: HttpResponseBase) => (res instanceof HttpErrorResponse ? throwError(() => res) : of(res)))
+    );
 
     if (config.executeOtherInterceptors) {
       const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);

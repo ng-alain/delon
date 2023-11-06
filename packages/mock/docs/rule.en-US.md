@@ -36,7 +36,7 @@ export const USERS = {
 
 ## Value
 
-Supports three types: `Object`, `Array`, `(req: MockRequest) => any`.
+Supports three types: `Object`, `Array`, `(req: MockRequest) => any | Observable<any> | Promise<any>`.
 
 ```ts
 import { MockStatusError } from '@delon/mock';
@@ -51,7 +51,14 @@ export const USERS = {
   // Support HttpResponse
   '/http': (req: MockRequest) => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ 'token': '1' }) }),
   // Send Status Error
-  '/404': () => { throw new MockStatusError(404); }
+  '/404': () => { throw new MockStatusError(404); },
+  // Support Observable
+  '/obs': () => of(1),
+  // Support Promise
+  '/promise': async () => {
+    await delay(10);
+    return 1;
+  }
 };
 ```
 
@@ -88,7 +95,14 @@ export const USERS = {
   // Send Status Error
   '/404': () => { throw new MockStatusError(404); },
   // Regular expressions need to be wrapped with `()`
-  '/data/(.*)': (req: MockRequest) => req
+  '/data/(.*)': (req: MockRequest) => req,
+  // Support Observable
+  '/obs': () => of(1),
+  // Support Promise
+  '/promise': async () => {
+    await delay(10);
+    return 1;
+  }
 };
 ```
 
