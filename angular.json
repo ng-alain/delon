@@ -140,7 +140,10 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
             "browserTarget": "site:build",
-            "serverTarget": "site:server"
+            "serverTarget": "site:server",
+            "polyfills": [
+              "zone.js"
+            ]
           },
           "configurations": {
             "production": {
