@@ -10,7 +10,7 @@ Delon
 
 <div align="center">
 
-  Delon is a set of essential modules for [ng-alain](https://ng-alain.com).
+  Delon is a set of essential modules for [NG-ALAIN](https://ng-alain.com).
 
   [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master)
   [![Codecov](https://img.shields.io/codecov/c/github/ng-alain/delon.svg?style=flat-square)](https://codecov.io/gh/ng-alain/delon)
