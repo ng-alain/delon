@@ -7,6 +7,7 @@ import localeZh from '@angular/common/locales/zh';
 import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { createCustomElement } from '@angular/elements';
 
 // angular i18n
 registerLocaleData(localeZh);
@@ -42,7 +43,6 @@ function registerElements(injector: Injector, platformId: {}): void {
   if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
     return;
   }
-  const { createCustomElement } = require('@angular/elements');
   Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
     const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
       injector

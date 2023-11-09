@@ -97,7 +97,7 @@ export class FormValidatorComponent implements OnInit {
 
   refreshLayout(type: 'schemaEditor' | 'formCodeEditor' | 'uiEditor'): void {
     setTimeout(() => {
-      this[type].editor.layout();
+      this[type].editor?.layout();
     }, 100);
   }
 

@@ -21,13 +21,17 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "src/dist/browser",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "@webcomponents/custom-elements",
+              "@webcomponents/custom-elements/src/native-shim",
+              "zone.js"
+            ],
             "assets": [
               "src/assets",
               "src/manifest.json",
@@ -89,16 +93,12 @@
                 }
               ],
               "outputHashing": "all",
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -107,10 +107,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "site:build:production"
+              "buildTarget": "site:build:production"
             },
             "development": {
-              "browserTarget": "site:build:development"
+              "buildTarget": "site:build:development"
             }
           },
           "defaultConfiguration": "development"

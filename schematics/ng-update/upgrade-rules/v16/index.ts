@@ -38,7 +38,7 @@ function finished(): Rule {
 
     context.logger.info(
       colors.green(
-        `  ✓ Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2390`
+        `  ✓ Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2440`
       )
     );
   };

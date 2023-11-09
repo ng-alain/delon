@@ -9,12 +9,12 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ value }} | mega </span>}} = {{ value | mega }}
+      &#123;&#123;<span> {{ value }} | mega </span>&#125;&#125; = {{ value | mega }}
     </p>
     <p class="mb-md">
-      {{<span>
+      &#123;&#123;<span>
         {{ value }} | mega: 大括号 precision: <span>{{ precision }}</span> 大括号 </span
-      >}} =
+      >&#125;&#125; =
       {{ value | mega: { precision: precision } }}
     </p>
     <nz-input-group nzAddOnBefore="Value" class="mb-md">

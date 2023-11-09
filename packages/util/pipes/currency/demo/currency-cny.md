@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ value }} | cny </span>}} = {{ value | cny }}
+      &#123;&#123;<span> {{ value }} | cny </span>&#125;&#125; = {{ value | cny }}
     </p>
     <nz-input-group nzAddOnBefore="Value">
       <input type="text" nz-input [(ngModel)]="value" />

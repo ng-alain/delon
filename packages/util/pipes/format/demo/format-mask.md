@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ value }} | mask: {{ maskStr | json }} </span>}} = {{ value | mask: maskStr }}
+      &#123;&#123;<span> {{ value }} | mask: {{ maskStr | json }} </span>&#125;&#125; = {{ value | mask: maskStr }}
     </p>
     <nz-input-group nzAddOnBefore="Value" class="mb-md">
       <input type="text" nz-input [(ngModel)]="value" />

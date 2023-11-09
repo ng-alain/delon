@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <p class="mb-md">
-      {{<span> {{ list | json }} | filter: matcher </span>}} = {{ list | filter: matcher:number | json }}
+      &#123;&#123;<span> {{ list | json }} | filter: matcher </span>&#125;&#125; = {{ list | filter: matcher:number | json }}
     </p>
     <p class="mb-md">matcher = (item: PriceObject, number: number) => item.price > number;</p>
     <nz-input-group nzAddOnBefore="number">

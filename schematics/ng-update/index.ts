@@ -7,8 +7,8 @@ import { v16Rule } from './upgrade-rules/v16';
 
 const migrations: NullableDevkitMigration[] = [];
 
-export function updateToV16(): Rule {
-  return chain([v16Rule(), createMigrationSchematicRule(TargetVersion.V16, migrations, ruleUpgradeData, postUpdate)]);
+export function updateToV17(): Rule {
+  return chain([v16Rule(), createMigrationSchematicRule(TargetVersion.V17, migrations, ruleUpgradeData, postUpdate)]);
 }
 
 /** Post-update schematic to be called when update is finished. */
