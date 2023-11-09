@@ -1,10 +1,9 @@
-import { Tree, Rule, SchematicContext } from '@angular-devkit/schematics';
+import { Tree, Rule } from '@angular-devkit/schematics';
 import { updateWorkspace } from '@schematics/angular/utility/workspace';
 
 import { VERSION } from './lib-versions';
-import { logInfo } from './log';
 import { addPackage } from './package';
-import { BUILD_TARGET_LINT } from './workspace';
+import { BUILD_TARGET_LINT, getProjectFromWorkspace } from './workspace';
 
 /**
  * 修复主要依赖的版本号
@@ -46,21 +45,19 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
   addPackage(tree, [`rxjs@DEP-0.0.0-PLACEHOLDER`, `ng-zorro-antd@DEP-0.0.0-PLACEHOLDER`]);
 }
 
-export function addESLintRule(context: SchematicContext, showLog: Boolean = true): Rule {
+export function addESLintRule(projectName: string): Rule {
   return updateWorkspace(async workspace => {
-    workspace.projects.forEach(project => {
-      if (project.targets.has(BUILD_TARGET_LINT)) {
-        project.targets.delete(BUILD_TARGET_LINT);
-      }
-      project.targets.set(BUILD_TARGET_LINT, {
-        builder: '@angular-eslint/builder:lint',
-        options: {
-          lintFilePatterns: ['src/**/*.ts', 'src/**/*.html']
-        }
-      });
-    });
-    if (showLog) {
-      logInfo(context, `Update 'lint' node in angular.json`);
+    const project = getProjectFromWorkspace(workspace, projectName);
+    if (project == null) return;
+
+    if (project.targets.has(BUILD_TARGET_LINT)) {
+      project.targets.delete(BUILD_TARGET_LINT);
     }
+    project.targets.set(BUILD_TARGET_LINT, {
+      builder: '@angular-eslint/builder:lint',
+      options: {
+        lintFilePatterns: ['src/**/*.ts', 'src/**/*.html']
+      }
+    });
   });
 }

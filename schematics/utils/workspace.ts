@@ -34,6 +34,15 @@ export function getNgAlainJson(tree: Tree): NgAlainDefinition | undefined {
   return readJSON(tree, NG_ALAIN_JSON);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function writeNgAlainJson(tree: Tree, json: any): any {
+  return writeJSON(tree, NG_ALAIN_JSON, json);
+}
+
+export function isMulitProject(tree: Tree): boolean {
+  return !tree.exists('src/main.ts');
+}
+
 export async function getProject(
   tree: Tree,
   projectName?: string
@@ -67,7 +76,9 @@ export function addAssetsToTarget(
           list.length = 0;
         }
         if (behavior === 'add') {
-          list.push(item.value);
+          if (!list.includes(item.value)) {
+            list.push(item.value);
+          }
         } else {
           const idx = list.indexOf(item.value);
           if (idx !== -1) {
@@ -154,19 +165,20 @@ export function getProjectTarget(
   return options;
 }
 
-export function addStylePreprocessorOptionsToAllProject(workspace: WorkspaceDefinition): void {
-  workspace.projects.forEach(project => {
-    const build = project.targets.get(BUILD_TARGET_BUILD);
-    if (build == null || build.options == null) return;
-    if (build.options.stylePreprocessorOptions == null) {
-      build.options.stylePreprocessorOptions = {};
-    }
-    let includePaths: string[] = build.options.stylePreprocessorOptions['includePaths'] ?? [];
-    if (!Array.isArray(includePaths)) includePaths = [];
-    if (includePaths.includes(`node_modules/`)) return;
-    includePaths.push(`node_modules/`);
-    build.options.stylePreprocessorOptions['includePaths'] = includePaths;
-  });
+export function addStylePreprocessorOptions(workspace: WorkspaceDefinition, projectName: string): void {
+  const project = getProjectFromWorkspace(workspace, projectName);
+  if (project == null) return;
+
+  const build = project.targets.get(BUILD_TARGET_BUILD);
+  if (build == null || build.options == null) return;
+  if (build.options.stylePreprocessorOptions == null) {
+    build.options.stylePreprocessorOptions = {};
+  }
+  let includePaths: string[] = build.options.stylePreprocessorOptions['includePaths'] ?? [];
+  if (!Array.isArray(includePaths)) includePaths = [];
+  if (includePaths.includes(`node_modules/`)) return;
+  includePaths.push(`node_modules/`);
+  build.options.stylePreprocessorOptions['includePaths'] = includePaths;
 }
 
 export function addSchematicCollections(workspace: WorkspaceDefinition): void {
@@ -180,17 +192,17 @@ export function addSchematicCollections(workspace: WorkspaceDefinition): void {
   workspace.extensions.cli['schematicCollections'] = schematicCollections;
 }
 
-export function addFileReplacements(workspace: WorkspaceDefinition): void {
-  workspace.projects.forEach(project => {
-    const build = project.targets.get(BUILD_TARGET_BUILD);
-    if (build == null || build.options == null) return;
-    if (build.configurations == null) build.configurations = {};
-    if (build.configurations.production == null) build.configurations.production = {};
-    if (!Array.isArray(build.configurations.production.fileReplacements))
-      build.configurations.production.fileReplacements = [];
-    build.configurations.production.fileReplacements.push({
-      replace: 'src/environments/environment.ts',
-      with: 'src/environments/environment.prod.ts'
-    });
+export function addFileReplacements(workspace: WorkspaceDefinition, projectName: string): void {
+  const project = getProjectFromWorkspace(workspace, projectName);
+  if (project == null) return;
+  const build = project.targets.get(BUILD_TARGET_BUILD);
+  if (build == null || build.options == null) return;
+  if (build.configurations == null) build.configurations = {};
+  if (build.configurations.production == null) build.configurations.production = {};
+  if (!Array.isArray(build.configurations.production.fileReplacements))
+    build.configurations.production.fileReplacements = [];
+  build.configurations.production.fileReplacements.push({
+    replace: 'src/environments/environment.ts',
+    with: 'src/environments/environment.prod.ts'
   });
 }
