@@ -6,7 +6,7 @@ type: Documents
 
 ## 写在前面
 
-`@delon/form` 尽可能满足不同需求，除现有内置的十几种基础组件小部件外，可以通过以下两种方式进一步扩展需求：
+`@delon/form` 尽可能满足不同需求，除现有内置的十几种基础小部件(部分需要手动注册)外，可以通过以下两种方式进一步扩展需求：
 
 ## 自定义小部件
 
@@ -17,17 +17,6 @@ type: Documents
 制作一套项目需求的小部件，可以更快速的开发工作。
 
 ### 编写小部件
-
-**常见小部件库**
-
-默认情况下 @delon/form 实现了一些常见需求，但需要额外类库支持的，称它为第三方组件小部件，这一部分小部件存在于[widgets-third](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third)目录里；你可以直接复制使用。
-
-这些组件包括：
-
-| 名称 | 描述 | 文档 | 源代码 |
-| --- | ---- | ---- | ---- |
-| `markdown` | Markdown 编辑器 | [文档](/form/markdown) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown) |
-| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
 
 **自己创建小部件**
 

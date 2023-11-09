@@ -409,6 +409,10 @@ module.exports = {
           'en-US': 'Widgets',
         },
         {
+          'zh-CN': '非内置小部件',
+          'en-US': 'Non-built-in widgets',
+        },
+        {
           'zh-CN': '第三方小部件',
           'en-US': 'Third Widgets',
         },
@@ -445,6 +449,13 @@ module.exports = {
         },
         {
           src: ['./packages/form/src/widgets'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: true,
+        },
+        {
+          src: ['./packages/form/widgets'],
           template: {
             content: './src/templates/content.ts',
           },

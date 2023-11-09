@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-tree-select",
+    "entryFile": "index.ts"
+  }
+}

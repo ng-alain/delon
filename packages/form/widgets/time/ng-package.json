@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-time",
+    "entryFile": "index.ts"
+  }
+}

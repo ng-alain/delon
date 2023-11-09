@@ -2,6 +2,7 @@
 title: string
 subtitle: Input
 type: Widgets
+order: 3
 ---
 
 Default widget, A basic widget for getting the user input is a text field.

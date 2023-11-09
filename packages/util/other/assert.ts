@@ -5,7 +5,7 @@ declare const ngDevMode: boolean;
 function throwError(msg: string | null | undefined): void;
 function throwError(msg: string | null | undefined, actual: unknown, expected: unknown, comparison: string): void;
 function throwError(msg: string | null | undefined, actual?: unknown, expected?: unknown, comparison?: string): void {
-  if (ngDevMode) {
+  if (typeof ngDevMode === 'undefined' || ngDevMode) {
     throw new Error(
       `ASSERTION ERROR: ${msg}${comparison == null ? '' : ` [Expected=> ${expected} ${comparison} ${actual} <=Actual]`}`
     );

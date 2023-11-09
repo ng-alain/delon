@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-color",
+    "entryFile": "index.ts"
+  }
+}

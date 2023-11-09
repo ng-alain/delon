@@ -2,6 +2,7 @@
 title: boolean
 subtitle: Switch
 type: Widgets
+order: 4
 ---
 
 Switching Selector.

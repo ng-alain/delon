@@ -54,15 +54,19 @@ export class _HttpClient {
       return params;
     }
 
+    const { nullValueHandling, dateValueHandling } = this.cog;
     Object.keys(params).forEach(key => {
-      let _data = params[key];
+      let paramValue = params[key];
       // 忽略空值
-      if (this.cog.nullValueHandling === 'ignore' && _data == null) return;
+      if (nullValueHandling === 'ignore' && paramValue == null) return;
       // 将时间转化为：时间戳 (秒)
-      if (this.cog.dateValueHandling === 'timestamp' && _data instanceof Date) {
-        _data = _data.valueOf();
+      if (
+        paramValue instanceof Date &&
+        (dateValueHandling === 'timestamp' || dateValueHandling === 'timestampSecond')
+      ) {
+        paramValue = dateValueHandling === 'timestamp' ? paramValue.valueOf() : Math.trunc(paramValue.valueOf() / 1000);
       }
-      newParams[key] = _data;
+      newParams[key] = paramValue;
     });
     return new HttpParams({ fromObject: newParams });
   }

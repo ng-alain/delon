@@ -19,7 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'demo',
   template: \`
-  <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
+ <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
       (formSubmit)="submit($event)"
       (formChange)="change($event)"
       (formError)="error($event)"></sf>

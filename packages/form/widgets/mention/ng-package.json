@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-mention",
+    "entryFile": "index.ts"
+  }
+}

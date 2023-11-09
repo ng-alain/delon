@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-third-tinymce",
+    "entryFile": "index.ts"
+  }
+}
