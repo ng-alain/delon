@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line import/no-unassigned-import
-import 'zone.js/dist/zone-node';
+import 'zone.js/bundles/zone-node.umd';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
