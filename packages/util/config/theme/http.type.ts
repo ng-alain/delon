@@ -7,8 +7,9 @@ export interface AlainThemeHttpClientConfig {
   nullValueHandling?: 'include' | 'ignore';
   /**
    * 时间值处理，默认：`timestamp`
-   * - timestamp：时间戳
+   * - timestamp：时间戳毫秒级
+   * - timestampSecond：时间戳秒级
    * - ignore：忽略处理，保持原始状态
    */
-  dateValueHandling?: 'timestamp' | 'ignore';
+  dateValueHandling?: 'timestamp' | 'timestampSecond' | 'ignore';
 }

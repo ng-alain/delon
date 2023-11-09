@@ -7,6 +7,8 @@ import localeZh from '@angular/common/locales/zh';
 import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
+import { zhCN as dateLang } from 'date-fns/locale';
 
 // angular i18n
 registerLocaleData(localeZh);
@@ -82,6 +84,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     //   deps: [ReuseTabService],
     // },
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
+    { provide: NZ_DATE_LOCALE, useValue: dateLang },
     StartupService,
     {
       provide: APP_INITIALIZER,
