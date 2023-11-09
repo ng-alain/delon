@@ -2,6 +2,7 @@
 title: select
 subtitle: 选择器
 type: Widgets
+order: 6
 ---
 
 下拉选择器。

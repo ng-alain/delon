@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-slider",
+    "entryFile": "index.ts"
+  }
+}

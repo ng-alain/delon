@@ -42,7 +42,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         </div>
       </ng-template>
       <ng-template sf-template="qr" let-i let-ui="ui" let-schema="schema">
-        <qr [value]="i.value"></qr>
+        <nz-qrcode [nzValue]="i.value" />
       </ng-template>
     </sf>
   `

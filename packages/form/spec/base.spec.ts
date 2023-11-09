@@ -75,10 +75,16 @@ export function builder(options?: {
   };
 }
 
-export function configureSFTestSuite(): void {
+export function configureSFTestSuite(options?: { imports?: NzSafeAny[] }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        NoopAnimationsModule,
+        AlainThemeModule.forRoot(),
+        DelonFormModule.forRoot(),
+        HttpClientTestingModule,
+        ...(options?.imports ?? [])
+      ],
       declarations: [TestFormComponent]
     });
   });
