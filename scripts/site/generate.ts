@@ -153,7 +153,7 @@ function generateModule(config: ModuleConfig): void {
       const meta: Meta = {
         name: handleExploreStr(item.key, '-'),
         i18n,
-        order: content[defaultLang].meta.order || -1,
+        order: content[defaultLang].meta.order || 100,
         cols: content[defaultLang].meta.cols || 1,
         meta: contentMetas
       };
@@ -214,7 +214,7 @@ function generateModule(config: ModuleConfig): void {
   // #region generate meta file
 
   const metaObj = { types: [], ...includeAttributes(config, {}) };
-  metaObj.list = metas;
+  metaObj.list = metas.sort((a, b) => a.order - b.order);
 
   generateDoc(
     { data: JSON.stringify(metaObj) } as MetaTemplateData,

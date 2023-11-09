@@ -4,6 +4,21 @@ subtitle: 日期时间转换
 type: Tools
 ---
 
+## toDate
+
+转换成 `Date` 格式，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp。
+
+* `formatString` 如果转换失败尝试根据 `formatString` 格式来转换
+* `defaultValue` 无效日期应返回的默认值，默认：`new Date(NaN)`
+* `timestampSecond` 传入值是否秒级
+
+## formatDate
+
+格式化日期，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp)。
+
+* 字符串格式请参考 [date-fnd format](https://date-fns.org/v2.30.0/docs/format)
+* `dateLocale` 建议通过使用 `inject(NZ_DATE_LOCALE)` 与 NG-ZORRO 保持一致
+
 ## dateTimePickerUtil
 
 一组针对 [DatePicker](https://ng.ant.design/components/date-picker/en) 的工具类。
@@ -39,10 +54,3 @@ getTimeDistance('week')
   - `month`、`-month` 本月或上月
   - `year`、`-year` 今年或去年
 - `time` 指定开始时间，默认为：`now`
-
-## toDate
-
-转换成 `Date` 格式，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp。
-
-* `formatString` 如果转换失败尝试根据 `formatString` 格式来转换
-* `defaultValue` 无效日期应返回的默认值，默认：`new Date(NaN)`

@@ -4,6 +4,7 @@ import * as colors from 'ansi-colors';
 
 import { logStart, readJSON, readPackage, writeJSON, writePackage } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
+import { updateMockPath } from '../base';
 
 function removeStylelintConfigPrettier(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -47,6 +48,6 @@ export function v16Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     logStart(context, `Upgrade @delon/* version number`);
     UpgradeMainVersions(tree);
-    return chain([removeStylelintConfigPrettier(), finished()]);
+    return chain([removeStylelintConfigPrettier(), updateMockPath(), finished()]);
   };
 }

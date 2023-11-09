@@ -7,6 +7,8 @@ import localeZh from '@angular/common/locales/zh';
 import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
+import { zhCN as dateLang } from 'date-fns/locale';
 
 // angular i18n
 registerLocaleData(localeZh);
@@ -32,6 +34,7 @@ import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
 import { CellWidgetModule } from './shared/cell-widget/module';
+import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
 
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
@@ -70,6 +73,9 @@ function registerElements(injector: Injector, platformId: {}): void {
     CellWidgetModule,
     RoutesModule,
     ExampleModule,
+    NuMonacoEditorModule.forRoot({
+      defaultOptions: { scrollBeyondLastLine: false }
+    }),
     NgxTinymceModule.forRoot({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
     }),
@@ -82,6 +88,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     //   deps: [ReuseTabService],
     // },
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
+    { provide: NZ_DATE_LOCALE, useValue: dateLang },
     StartupService,
     {
       provide: APP_INITIALIZER,

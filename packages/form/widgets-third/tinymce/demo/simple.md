@@ -15,12 +15,14 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { SFSchema } from '@delon/form';
+import type { TinymceWidgetSchema } from '@delon/form/widgets-third/tinymce';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)" />`
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -29,10 +31,10 @@ export class DemoComponent {
         type: 'string',
         title: '描述',
         ui: {
-          widget: 'tinymce',
-        },
-      },
-    },
+          widget: 'tinymce'
+        } as TinymceWidgetSchema
+      }
+    }
   };
 
   constructor(private msg: NzMessageService) {}

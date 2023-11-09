@@ -2,6 +2,7 @@
 title: boolean
 subtitle: 开关
 type: Widgets
+order: 4
 ---
 
 开关选择器
