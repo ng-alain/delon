@@ -14,7 +14,7 @@ import { Component, NgModule, Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, map } from 'rxjs';
+import { Observable, lastValueFrom, map, of } from 'rxjs';
 
 import * as Mock from 'mockjs';
 
@@ -23,6 +23,7 @@ import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { MockRequest } from './interface';
 import { DelonMockModule } from './mock.module';
 import { MockStatusError } from './status.error';
+import { delay, r } from './utils';
 
 const USER_LIST = { users: [1, 2], a: 0 };
 const DATA = {
@@ -41,6 +42,11 @@ const DATA = {
     },
     '/500': () => {
       throw new Error('500');
+    },
+    '/obs': () => of(r(1, 1)),
+    '/promise': async () => {
+      await delay(10);
+      return 'a';
     }
   }
 };
@@ -197,6 +203,15 @@ describe('mock: interceptor', () => {
         expect(+res.b[1]).toBe(2);
         done();
       });
+    });
+    it('should be return a observable', () => {
+      http.get('/obs').subscribe(res => {
+        expect(res).toBe(1);
+      });
+    });
+    it('should be return a promise', async () => {
+      const res = await lastValueFrom(http.get('/promise'));
+      expect(res).toBe('a');
     });
   });
 
