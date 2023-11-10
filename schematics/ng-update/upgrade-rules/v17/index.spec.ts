@@ -64,4 +64,12 @@ describe('Schematic: ng-update: v17Rule', () => {
     expect(content).not.toContain(`AlainThemeModule.forRoot()`);
     expect(content).not.toContain(`DelonACLModule.forRoot()`);
   });
+
+  it('#replaceProvideAlainConfig', async () => {
+    const globalConfigPath = '/projects/foo/src/app/global-config.module.ts';
+    tree.create(globalConfigPath, `const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];`);
+    await runMigration();
+    const content = tree.readContent(globalConfigPath);
+    expect(content).toContain(`provideAlainConfig(alainConfig)`);
+  });
 });

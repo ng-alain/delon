@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { provideAlainConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
 import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
 
@@ -230,16 +230,7 @@ describe('utils: array', () => {
   describe('[config]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [
-          {
-            provide: ALAIN_CONFIG,
-            useValue: {
-              utilArray: {
-                idMapName: 'ID'
-              }
-            } as AlainConfig
-          }
-        ]
+        providers: [provideAlainConfig({ utilArray: { idMapName: 'ID' } })]
       });
       srv = TestBed.inject<ArrayService>(ArrayService);
     });

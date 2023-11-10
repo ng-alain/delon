@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, catchError } from 'rxjs';
 
-import { AlainThemeHttpClientConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainThemeHttpClientConfig, provideAlainConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -24,7 +24,7 @@ describe('theme: http.client', () => {
   function createModule(config?: AlainThemeHttpClientConfig): void {
     const providers: any[] = [_HttpClient];
     if (config) {
-      providers.push({ provide: ALAIN_CONFIG, useValue: { themeHttp: config } });
+      providers.push(provideAlainConfig({ themeHttp: config }));
     }
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

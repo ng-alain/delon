@@ -10,11 +10,11 @@ We add support of **global configuration** to many components. You can define th
 
 ## How to Use?
 
-If you want to provide default configurations to some components, you should provide an object that implements the interface **AlainConfig** with the injection token **ALAIN_CONFIG**, in the root module (in another word, to the root injector). Like this:
+If you want to provide default configurations to some components, please use `provideAlainConfig` function. object providing implements interface `AlainConfig` For example:
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainConfig } from '@delon/util/config';
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
@@ -22,7 +22,7 @@ const alainConfig: AlainConfig = {
 
 @NgModule({
   providers: [
-    { provide: ALAIN_CONFIG, useValue: alainConfig },
+    provideAlainConfig(alainConfig)
   ],
 })
 export class GlobalConfigModule {}

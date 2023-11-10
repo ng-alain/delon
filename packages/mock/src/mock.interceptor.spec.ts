@@ -18,7 +18,7 @@ import { Observable, lastValueFrom, map, of } from 'rxjs';
 
 import * as Mock from 'mockjs';
 
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockRequest } from './interface';
 import { DelonMockModule } from './mock.module';
@@ -81,7 +81,7 @@ describe('mock: interceptor', () => {
         ]),
         DelonMockModule.forRoot({ data })
       ].concat(imports),
-      providers: ([{ provide: ALAIN_CONFIG, useValue: { mock: options } }] as any[]).concat(providers || [])
+      providers: ([provideAlainConfig({ mock: options })] as any[]).concat(providers || [])
     });
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
