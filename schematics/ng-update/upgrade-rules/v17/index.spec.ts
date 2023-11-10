@@ -49,4 +49,18 @@ describe('Schematic: ng-update: v17Rule', () => {
     expect(content).toContain(`import { UploadWidgetModule } from '@delon/form/widgets/upload';`);
     expect(content).toContain(`, UploadWidgetModule`);
   });
+
+  it('#removeAlainThemeModuleForRoot', async () => {
+    const globalConfigPath = '/projects/foo/src/app/global-config.module.ts';
+    tree.create(
+      globalConfigPath,
+      `
+    import { AlainThemeModule } from '@delon/theme';
+    const alainModules: any[] = [AlainThemeModule.forRoot(), DelonACLModule.forRoot()];
+    `
+    );
+    await runMigration();
+    const content = tree.readContent(globalConfigPath);
+    expect(content).not.toContain(`AlainThemeModule.forRoot()`);
+  });
 });

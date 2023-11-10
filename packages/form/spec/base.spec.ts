@@ -47,9 +47,7 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
-      options.imports || []
-    ),
+    imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports || []),
     declarations: [TestFormComponent]
   });
   if (options.template) {
@@ -80,7 +78,7 @@ export function configureSFTestSuite(options?: { imports?: NzSafeAny[] }): void 
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        AlainThemeModule.forRoot(),
+        AlainThemeModule,
         DelonFormModule.forRoot(),
         HttpClientTestingModule,
         ...(options?.imports ?? [])

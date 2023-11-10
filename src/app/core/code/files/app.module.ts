@@ -45,7 +45,7 @@ imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
     DemoNgZorroAntdModule,
-    AlainThemeModule.forRoot(),
+    AlainThemeModule,
     DemoDelonABCModule,
     DemoDelonChartModule,
     DelonACLModule.forRoot(),

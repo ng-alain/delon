@@ -20,7 +20,7 @@ describe('Pipe: _date', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent],
       providers: [{ provide: NZ_DATE_LOCALE, useValue: dateFnsLang }]
     });

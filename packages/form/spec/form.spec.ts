@@ -27,10 +27,7 @@ describe('form: component', () => {
 
   function genModule(options: { acl?: boolean; i18n?: boolean } = {}): void {
     options = { acl: false, i18n: false, ...options };
-    const imports = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule.forRoot()];
-    if (options.i18n) {
-      imports.push(AlainThemeModule.forRoot());
-    }
+    const imports = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule];
     if (options.acl) {
       imports.push(DelonACLModule.forRoot());
     }
