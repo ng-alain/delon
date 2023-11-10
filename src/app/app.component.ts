@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { ALAIN_I18N_TOKEN, DrawerHelper, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DrawerHelper, TitleService, VERSION as VERSION_ALAIN, stepPreloader } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 
 import { I18NService, MetaService, MobileService } from '@core';
@@ -37,8 +37,12 @@ export class AppComponent {
       mobileSrv.next(this.isMobile);
     });
 
+    const done = stepPreloader();
+
     router.events.subscribe(evt => {
       if (!(evt instanceof NavigationEnd)) return;
+
+      done();
 
       dh.closeAll();
 

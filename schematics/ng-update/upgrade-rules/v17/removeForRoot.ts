@@ -26,11 +26,11 @@ function removeAlainThemeForRoot(tree: Tree, name: string, sourceRoot: string, c
   logInfo(context, `Remove ${forRoot} in ${name} project`);
 }
 
-function removeAlainThemeForChild(tree: Tree, name: string, _: string, context: SchematicContext): void {
+function removeAlainThemeForChild(tree: Tree, name: string, sourceRoot: string, context: SchematicContext): void {
   const forChild = 'AlainThemeModule.forChild()';
 
   tree.visit((path, entry) => {
-    if (!entry || !path.endsWith('.ts')) return;
+    if (!entry || !path.endsWith('.ts') || !path.startsWith(sourceRoot)) return;
 
     const content = tree.readText(path);
     if (!content.includes(forChild)) return;
