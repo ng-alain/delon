@@ -5,12 +5,11 @@ import { AlainConfig, ALAIN_CONFIG, AlainConfigService } from '@delon/util/confi
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config
 
-import { DelonACLModule } from '@delon/acl';
 import * as MOCKDATA from '../../_mock';
 
 const alainConfig: AlainConfig = { };
 
-const alainModules = [DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })];
+const alainModules = [DelonMockModule.forRoot({ data: MOCKDATA })];
 const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
 
 // #region reuse-tab

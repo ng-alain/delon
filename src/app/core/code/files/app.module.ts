@@ -48,7 +48,7 @@ imports: [
     AlainThemeModule,
     DemoDelonABCModule,
     DemoDelonChartModule,
-    DelonACLModule.forRoot(),
+    DelonACLModule,
     DelonCacheModule,
     DelonAuthModule,
     DelonFormModule.forRoot(),
