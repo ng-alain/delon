@@ -3,7 +3,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 import { autoRegisterFormWidgets } from './autoRegisterFormWidgets';
 import { removeAlainThemeModuleForRoot } from './removeAlainThemeModuleForRoot';
-import { replaceProvideAlainConfig } from './replaceProvideAlainConfig';
+import { replaceProvideConfig } from './replaceProvideConfig';
 import { logFinished, logInfo, logWarn } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 
@@ -34,7 +34,7 @@ export function v17Rule(): Rule {
     return chain([
       removeAlainThemeModuleForRoot(),
       autoRegisterFormWidgets(),
-      replaceProvideAlainConfig(),
+      replaceProvideConfig(),
       qr(),
       finished()
     ]);
