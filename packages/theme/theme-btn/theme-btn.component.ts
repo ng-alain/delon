@@ -20,6 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 export interface ThemeBtnType {
   key: string;
@@ -35,7 +37,9 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
     '[class.theme-btn]': `true`,
     '[class.theme-btn-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzDropDownModule, NzToolTipModule]
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
   private theme = 'default';
@@ -50,6 +54,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Output() readonly themeChange = new EventEmitter<string>();
   private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   dir: Direction = 'ltr';
+  private key = '';
 
   constructor(
     private renderer: Renderer2,
@@ -57,9 +62,11 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     private platform: Platform,
     @Inject(DOCUMENT) private doc: NzSafeAny,
     @Optional() private directionality: Directionality,
-    @Inject(ALAIN_THEME_BTN_KEYS) private KEYS: string,
+    @Optional() @Inject(ALAIN_THEME_BTN_KEYS) KEYS: string,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.key = KEYS ?? 'site-theme';
+  }
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
@@ -74,7 +81,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.theme = localStorage.getItem(this.KEYS) || 'default';
+    this.theme = localStorage.getItem(this.key) || 'default';
     this.updateChartTheme();
     this.onThemeChange(this.theme);
   }
@@ -90,26 +97,26 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     this.theme = theme;
     this.themeChange.emit(theme);
     this.renderer.setAttribute(this.doc.body, 'data-theme', theme);
-    const dom = this.doc.getElementById(this.KEYS);
+    const dom = this.doc.getElementById(this.key);
     if (dom) {
       dom.remove();
     }
-    localStorage.removeItem(this.KEYS);
+    localStorage.removeItem(this.key);
     if (theme !== 'default') {
       const el = this.doc.createElement('link');
       el.type = 'text/css';
       el.rel = 'stylesheet';
-      el.id = this.KEYS;
+      el.id = this.key;
       el.href = `${this.deployUrl}assets/style.${theme}.css`;
 
-      localStorage.setItem(this.KEYS, theme);
+      localStorage.setItem(this.key, theme);
       this.doc.body.append(el);
     }
     this.updateChartTheme();
   }
 
   ngOnDestroy(): void {
-    const el = this.doc.getElementById(this.KEYS);
+    const el = this.doc.getElementById(this.key);
     if (el != null) {
       this.doc.body.removeChild(el);
     }

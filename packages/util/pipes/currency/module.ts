@@ -7,7 +7,7 @@ import { CurrencyPricePipe } from './price.pipe';
 const PIPES = [CurrencyMegaPipe, CurrencyPricePipe, CurrencyCNYPipe];
 
 @NgModule({
-  declarations: PIPES,
+  imports: PIPES,
   exports: PIPES
 })
 export class CurrencyPipeModule {}
