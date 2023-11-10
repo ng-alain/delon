@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
     );
     await runMigration();
     const content = tree.readContent(appCompPath);
-    expect(content).toContain(`const done = stepPreloader();`);
-    expect(content).toContain(`done();`);
+    expect(content).toContain(`private donePreloader = stepPreloader();`);
+    expect(content).toContain(`this.donePreloader();`);
   });
 });
