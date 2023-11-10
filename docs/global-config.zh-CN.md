@@ -10,11 +10,11 @@ type: Dev
 
 ## 如何使用
 
-想要为某些组件提供默认配置项，请在根注入器中根据注入令牌 `ALAIN_CONFIG` 提供一个符合 `AlainConfig` 接口的对象，例如：
+想要为某些组件提供默认配置项，可以使用 `provideAlainConfig` 函数，转入一个符合 `AlainConfig` 接口的对象，例如：
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainConfig } from '@delon/util/config';
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
@@ -22,7 +22,7 @@ const alainConfig: AlainConfig = {
 
 @NgModule({
   providers: [
-    { provide: ALAIN_CONFIG, useValue: alainConfig },
+    provideAlainConfig(alainConfig)
   ],
 })
 export class GlobalConfigModule {}

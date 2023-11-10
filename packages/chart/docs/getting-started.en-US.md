@@ -29,7 +29,7 @@ export class DelonModule {
     return {
       ngModule: DelonModule,
       providers: [
-        { provide: ALAIN_CONFIG, useValue: alainConfig }
+        provideAlainConfig(alainConfig)
       ]
     };
   }
@@ -105,7 +105,7 @@ export class DelonModule {
     return {
       ngModule: DelonModule,
       providers: [
-        { provide: ALAIN_CONFIG, useValue: alainConfig }
+        provideAlainConfig(alainConfig)
       ]
     };
   }

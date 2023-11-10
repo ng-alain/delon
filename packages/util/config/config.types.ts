@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 
 import {
   AlainCellConfig,
@@ -71,4 +71,8 @@ export const ALAIN_CONFIG = new InjectionToken<AlainConfig>('alain-config', {
 
 export function ALAIN_CONFIG_FACTORY(): AlainConfig {
   return {};
+}
+
+export function provideAlainConfig(config: AlainConfig): EnvironmentProviders {
+  return makeEnvironmentProviders([{ provide: ALAIN_CONFIG, useValue: config }]);
 }
