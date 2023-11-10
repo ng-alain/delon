@@ -3,7 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { DelonACLModule } from '@delon/acl';
 import { DelonMockModule } from '@delon/mock';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainConfig, provideAlainConfig } from '@delon/util/config';
 
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config
@@ -44,7 +44,7 @@ const alainConfig: AlainConfig = {
   }
 };
 
-const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
+const alainProvides = [provideAlainConfig(alainConfig)];
 
 // #endregion
 

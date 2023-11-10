@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { provideAlainConfig } from '@delon/util/config';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
@@ -70,7 +70,7 @@ describe('theme: i18n', () => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule],
       declarations: [TestComponent],
-      providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { interpolation: ['#', '#'] } } as AlainConfig }]
+      providers: [provideAlainConfig({ themeI18n: { interpolation: ['#', '#'] } })]
     });
     fixture = TestBed.createComponent(TestComponent);
     srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
@@ -137,7 +137,7 @@ describe('theme: i18n', () => {
           ])
         ],
         declarations: [TestComponent],
-        providers: [{ provide: ALAIN_CONFIG, useValue: { themeI18n: { paramNameOfUrlGuard: 'lang' } } as AlainConfig }]
+        providers: [provideAlainConfig({ themeI18n: { paramNameOfUrlGuard: 'lang' } })]
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);

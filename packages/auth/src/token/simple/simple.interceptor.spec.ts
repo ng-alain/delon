@@ -7,7 +7,7 @@ import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { SimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
@@ -58,7 +58,7 @@ describe('auth: simple.interceptor', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
-        { provide: ALAIN_CONFIG, useValue: { auth: options } },
+        provideAlainConfig({ auth: options }),
         { provide: Router, useValue: mockRouter },
         {
           provide: HTTP_INTERCEPTORS,

@@ -54,7 +54,7 @@ Support add the configuration of `ALAIN_SETTING_KEYS` via the `global-config.mod
 
 ```diff
  const alainProvides = [
-  { provide: ALAIN_CONFIG, useValue: alainConfig },
+  provideAlainConfig(alainConfig),
 + {
 +   provide: ALAIN_SETTING_KEYS,
 +   useValue: {
