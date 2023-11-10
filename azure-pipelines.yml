@@ -1,8 +1,5 @@
 name: ng-alain-delon
 
-trigger:
-  - master
-
 pool:
   vmImage: 'ubuntu-latest'
 
