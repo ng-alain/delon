@@ -11,7 +11,7 @@ describe('Pipe: keys', () => {
 
   function genModule(template?: string): void {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent]
     });
     if (template) TestBed.overrideTemplate(TestComponent, template);

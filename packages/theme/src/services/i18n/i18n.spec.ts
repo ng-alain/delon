@@ -23,7 +23,7 @@ describe('theme: i18n', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [AlainThemeModule.forRoot()],
+        imports: [AlainThemeModule],
         declarations: [TestComponent]
       });
       fixture = TestBed.createComponent(TestComponent);
@@ -68,7 +68,7 @@ describe('theme: i18n', () => {
 
   it('#interpolation', () => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent],
       providers: [provideAlainConfig({ themeI18n: { interpolation: ['#', '#'] } })]
     });
@@ -88,7 +88,7 @@ describe('theme: i18n', () => {
     it('should be working', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule.forRoot(),
+          AlainThemeModule,
           RouterTestingModule.withRoutes([
             {
               path: ':i18n',
@@ -112,7 +112,7 @@ describe('theme: i18n', () => {
     it('should be can not work', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule.forRoot(),
+          AlainThemeModule,
           RouterTestingModule.withRoutes([
             { path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }
           ])
@@ -131,7 +131,7 @@ describe('theme: i18n', () => {
     it('should be working', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule.forRoot(),
+          AlainThemeModule,
           RouterTestingModule.withRoutes([
             { path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }
           ])

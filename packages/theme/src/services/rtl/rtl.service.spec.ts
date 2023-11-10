@@ -14,7 +14,7 @@ describe('Service: RTL', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, AlainThemeModule.forChild()]
+      imports: [CommonModule, AlainThemeModule]
     })
     class TestModule {}
     const injector = TestBed.configureTestingModule({ imports: [TestModule] });

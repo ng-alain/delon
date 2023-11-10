@@ -50,7 +50,7 @@ const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSk
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    AlainThemeModule.forChild(),
+    AlainThemeModule,
     DelonACLModule,
     DelonFormModule,
     DelonCacheModule,

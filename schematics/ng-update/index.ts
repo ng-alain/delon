@@ -14,7 +14,7 @@ export function updateToV17(): Rule {
 /** Post-update schematic to be called when update is finished. */
 export function postUpdate(context: SchematicContext, targetVersion: TargetVersion, hasFailures: boolean): void {
   context.logger.info('');
-  context.logger.info(`  ✓  Updated NG-ALAIN to ${targetVersion}`);
+  context.logger.info(`✓  Updated NG-ALAIN to ${targetVersion}`);
   context.logger.info('');
 
   if (hasFailures) {
