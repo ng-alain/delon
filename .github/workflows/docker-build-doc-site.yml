@@ -1,5 +1,7 @@
 name: docker-build-doc-site
 
+on: push
+
 jobs:
   website:
     if: "startsWith(github.event.commits[0].message, 'release')"
