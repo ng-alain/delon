@@ -4,9 +4,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
-import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, Inject, Injector, NgModule, PLATFORM_ID, APP_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { createCustomElement } from '@angular/elements';
 import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 import { zhCN as dateLang } from 'date-fns/locale';
 
@@ -45,7 +46,6 @@ function registerElements(injector: Injector, platformId: {}): void {
   if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
     return;
   }
-  const { createCustomElement } = require('@angular/elements');
   Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
     const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
       injector
@@ -61,7 +61,7 @@ function registerElements(injector: Injector, platformId: {}): void {
 
 @NgModule({
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     BidiModule,
@@ -82,6 +82,7 @@ function registerElements(injector: Injector, platformId: {}): void {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    { provide: APP_ID, useValue: 'serverApp' },
     // {
     //   provide: RouteReuseStrategy,
     //   useClass: ReuseTabStrategy,

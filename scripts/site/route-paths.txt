@@ -241,6 +241,8 @@
 /form/rate/zh
 /form/schema/en
 /form/schema/zh
+/form/segmented/en
+/form/segmented/zh
 /form/select/en
 /form/select/zh
 /form/slider/en

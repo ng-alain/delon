@@ -13,7 +13,7 @@
           nz-menu-item
           routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
         >
-          @delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
+          &#64;delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
         </li>
       </ul>
     </li>
@@ -29,7 +29,7 @@
             nz-menu-item
             routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
           >
-            @delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
+            &#64;delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
           </li>
         </ul>
       </nz-dropdown-menu>
@@ -78,7 +78,7 @@
   <div nz-col nz-col nzXs="0" nzSm="0" nzMd="0" nzLg="0" nzXl="19" nzXXl="20" class="menu-row">
     <header-search />
     <ng-container *ngIf="!isMobile">
-      <ng-template [ngTemplateOutlet]="menu"></ng-template>
+      <ng-template [ngTemplateOutlet]="menu" />
       <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
         <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version + '.x'" [nzValue]="version" />
         <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion" />
