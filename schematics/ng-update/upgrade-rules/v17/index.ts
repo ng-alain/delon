@@ -3,6 +3,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 import { autoRegisterFormWidgets } from './autoRegisterFormWidgets';
 import { removeAlainThemeModuleForRoot } from './removeAlainThemeModuleForRoot';
+import { replaceProvideAlainConfig } from './replaceProvideAlainConfig';
 import { logFinished, logInfo, logWarn } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 
@@ -30,6 +31,12 @@ export function v17Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logInfo(context, `Upgrade dependency version number`);
-    return chain([removeAlainThemeModuleForRoot(), autoRegisterFormWidgets(), qr(), finished()]);
+    return chain([
+      removeAlainThemeModuleForRoot(),
+      autoRegisterFormWidgets(),
+      replaceProvideAlainConfig(),
+      qr(),
+      finished()
+    ]);
   };
 }
