@@ -1,6 +1,9 @@
+import { DOCUMENT } from '@angular/common';
+import { EnvironmentInjector, Injector, runInInjectionContext } from '@angular/core';
+
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { preloaderFinished } from './preloader';
+import { stepPreloader } from './preloader';
 
 describe('theme: preloader', () => {
   let cached: NzSafeAny = {};
@@ -9,7 +12,7 @@ describe('theme: preloader', () => {
     cached = {};
   });
 
-  it('should be remove preloader', (done: () => void) => {
+  it('should be remove preloader', () => {
     spyOn(document, 'querySelector').and.callFake((type: string) => {
       if (cached[type]) return cached[type];
       cached[type] = {
@@ -25,18 +28,25 @@ describe('theme: preloader', () => {
     });
     const body = document.querySelector('body')!;
     const preloader = document.querySelector('.preloader')!;
-    preloaderFinished();
+    const injector = Injector.create({
+      providers: [
+        {
+          provide: DOCUMENT,
+          useFactory: () => {
+            return document;
+          }
+        }
+      ]
+    }) as EnvironmentInjector;
+    let preloaderDone!: () => void;
+    runInInjectionContext(injector, () => (preloaderDone = stepPreloader()));
     expect(body.style.overflow).toBe('hidden');
-
-    (window as NzSafeAny).appBootstrap();
-    setTimeout(() => {
-      expect(body.style.overflow).toBe('');
-      expect(preloader.className).toContain('preloader-hidden');
-      done();
-    }, 200);
+    preloaderDone();
+    expect(body.style.overflow).toBe('');
+    expect(preloader.className).toContain('preloader-hidden');
   });
 
-  it('preloader value null when running --hmr', (done: () => void) => {
+  it('preloader value null when running --hmr', () => {
     spyOn(document, 'querySelector').and.callFake((type: string) => {
       if (type === '.preloader') return null;
       if (cached[type]) return cached[type];
@@ -52,11 +62,19 @@ describe('theme: preloader', () => {
       return cached[type];
     });
 
-    preloaderFinished();
-    (window as NzSafeAny).appBootstrap();
-    setTimeout(() => {
-      expect(document.querySelector('.preloader')).toBeNull();
-      done();
-    }, 200);
+    const injector = Injector.create({
+      providers: [
+        {
+          provide: DOCUMENT,
+          useFactory: () => {
+            return document;
+          }
+        }
+      ]
+    }) as EnvironmentInjector;
+    let preloaderDone!: () => void;
+    runInInjectionContext(injector, () => (preloaderDone = stepPreloader()));
+    preloaderDone();
+    expect(document.querySelector('.preloader')).toBeNull();
   });
 });
