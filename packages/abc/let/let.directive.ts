@@ -14,7 +14,7 @@ export class LetContext<T> {
   }
 }
 
-@Directive({ selector: '[let]' })
+@Directive({ selector: '[let]', standalone: true })
 export class LetDirective<T> {
   @Input({ required: true }) let!: T;
 

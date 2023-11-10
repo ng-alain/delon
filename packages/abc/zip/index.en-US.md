@@ -4,7 +4,6 @@ title: zip
 order: 7
 subtitle: Zip
 cols: 1
-module: import { ZipModule } from '@delon/abc/zip';
 ---
 
 A Zip file operation based on [jszip](http://stuk.github.io/jszip/).

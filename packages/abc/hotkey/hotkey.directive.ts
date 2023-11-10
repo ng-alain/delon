@@ -3,7 +3,7 @@ import { Directive, ElementRef, Input, NgZone, OnDestroy } from '@angular/core';
 
 import { install, uninstall } from '@github/hotkey';
 
-@Directive({ selector: '[hotkey]' })
+@Directive({ selector: '[hotkey]', standalone: true })
 export class HotkeyDirective implements OnDestroy {
   /**
    * Specify [hotkey format](https://github.com/github/hotkey#hotkey-string-format)
