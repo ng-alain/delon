@@ -50,7 +50,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     expect(content).toContain(`, UploadWidgetModule`);
   });
 
-  it('#removeAlainThemeModuleForRoot', async () => {
+  it('#removeForRoot', async () => {
     const globalConfigPath = '/projects/foo/src/app/global-config.module.ts';
     tree.create(
       globalConfigPath,
@@ -62,6 +62,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     await runMigration();
     const content = tree.readContent(globalConfigPath);
     expect(content).not.toContain(`AlainThemeModule.forRoot()`);
+    expect(content).not.toContain(`DelonACLModule.forRoot()`);
   });
 
   it('#replaceProvideAlainConfig', async () => {

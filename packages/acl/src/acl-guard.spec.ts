@@ -40,7 +40,7 @@ describe('acl: guard', () => {
             data: { guard: { role: ['admin'] } } as ACLGuardData
           }
         ]),
-        DelonACLModule.forRoot()
+        DelonACLModule
       ]
     });
     srv = TestBed.inject<ACLGuardService>(ACLGuardService);

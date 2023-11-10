@@ -6,7 +6,8 @@ import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[acl]',
-  exportAs: 'acl'
+  exportAs: 'acl',
+  standalone: true
 })
 export class ACLDirective implements OnDestroy {
   private _value!: ACLCanType;

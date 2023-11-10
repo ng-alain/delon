@@ -2,7 +2,7 @@ import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics'
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 import { autoRegisterFormWidgets } from './autoRegisterFormWidgets';
-import { removeAlainThemeModuleForRoot } from './removeAlainThemeModuleForRoot';
+import { removeForRoot } from './removeForRoot';
 import { replaceProvideConfig } from './replaceProvideConfig';
 import { logFinished, logInfo, logWarn } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
@@ -31,12 +31,6 @@ export function v17Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logInfo(context, `Upgrade dependency version number`);
-    return chain([
-      removeAlainThemeModuleForRoot(),
-      autoRegisterFormWidgets(),
-      replaceProvideConfig(),
-      qr(),
-      finished()
-    ]);
+    return chain([removeForRoot(), autoRegisterFormWidgets(), replaceProvideConfig(), qr(), finished()]);
   };
 }

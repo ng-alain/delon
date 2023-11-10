@@ -29,7 +29,7 @@ describe('form: component', () => {
     options = { acl: false, i18n: false, ...options };
     const imports = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule];
     if (options.acl) {
-      imports.push(DelonACLModule.forRoot());
+      imports.push(DelonACLModule);
     }
     TestBed.configureTestingModule({
       imports,

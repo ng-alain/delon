@@ -1,7 +1,6 @@
 /* eslint-disable import/order */
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { DelonACLModule } from '@delon/acl';
 import { DelonMockModule } from '@delon/mock';
 import { AlainConfig, provideAlainConfig } from '@delon/util/config';
 
@@ -72,7 +71,7 @@ const zorroProvides = [provideNzConfig(ngZorroConfig)];
 // #endregion
 
 @NgModule({
-  imports: [DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })]
+  imports: [DelonMockModule.forRoot({ data: MOCKDATA })]
 })
 export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders<GlobalConfigModule> {
