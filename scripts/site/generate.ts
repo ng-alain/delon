@@ -123,8 +123,9 @@ function generateModule(config: ModuleConfig): void {
     exampleModules.list.push(...newList);
   }
 
+  const defaultContentTpl = config.standalone ? './src/templates/standalone.content.ts' : './src/templates/content.ts';
   config.dir.forEach(dirConfig => {
-    const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template.content)).toString('utf8');
+    const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template?.content ?? defaultContentTpl)).toString('utf8');
 
     const files = groupFiles(
       dirConfig.src.map(p => path.join(rootDir, p)),
@@ -173,9 +174,9 @@ function generateModule(config: ModuleConfig): void {
       // #endregion
 
       // #region generate document file
-      const demoList = demos.data.filter(w => w.type !== 'example');
+      const demoList = demos.data.filter((w: { type: string }) => w.type !== 'example');
       const isDemo = demoList.length > 0;
-      const isExample = demos.data.filter(w => w.type === 'example').length > 0;
+      const isExample = demos.data.filter((w: { type: string }) => w.type === 'example').length > 0;
       const fileObject: ContentTemplateData = {
         componentName: genComponentName(config.name, meta.name),
         selector: genSelector(config.name, meta.name),
@@ -211,16 +212,17 @@ function generateModule(config: ModuleConfig): void {
     });
   });
 
+  const metaTpl = fs
+    .readFileSync(path.join(rootDir, config.template?.meta ?? './src/templates/meta.ts'))
+    .toString('utf8');
+  const defaultModuleTpl = config.standalone ? './src/templates/standalone.routes.ts' : './src/templates/module.ts';
+  const moduleTpl = fs.readFileSync(path.join(rootDir, config.template?.module ?? defaultModuleTpl)).toString('utf8');
   // #region generate meta file
 
   const metaObj = { types: [], ...includeAttributes(config, {}) };
   metaObj.list = metas.sort((a, b) => a.order - b.order);
 
-  generateDoc(
-    { data: JSON.stringify(metaObj) } as MetaTemplateData,
-    fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
-    path.join(distPath, `meta.ts`)
-  );
+  generateDoc({ data: JSON.stringify(metaObj) } as MetaTemplateData, metaTpl, path.join(distPath, `meta.ts`));
   // #endregion
 
   // #region generate module file
@@ -231,11 +233,7 @@ function generateModule(config: ModuleConfig): void {
     components: modules.components.join(',\r\n'),
     routes: modules.routes.join(',\r\n')
   };
-  generateDoc(
-    moduleObj,
-    fs.readFileSync(path.join(rootDir, config.template.module)).toString('utf8'),
-    path.join(distPath, `${config.name}.module.ts`)
-  );
+  generateDoc(moduleObj, moduleTpl, path.join(distPath, config.standalone ? `routes.ts` : `${config.name}.module.ts`));
   // #endregion
 }
 

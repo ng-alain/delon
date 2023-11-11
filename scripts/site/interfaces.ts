@@ -17,11 +17,11 @@ export interface SiteConfig {
 
 export interface TemplateConfig {
   /** 元数据模板 */
-  meta: string;
+  meta?: string;
   /** 内容模板 */
-  content: string;
+  content?: string;
   /** 模板模板 */
-  module: string;
+  module?: string;
 }
 
 export interface ModuleConfig {
@@ -41,7 +41,9 @@ export interface ModuleConfig {
   /** 元数据包含属性 */
   metaIncludeAttributes: string[];
   /** 模板路径 */
-  template: TemplateConfig;
+  template?: TemplateConfig;
+  /** 是否按 standalone 生成 */
+  standalone?: boolean;
   dir: ModuleDirConfig[];
 }
 

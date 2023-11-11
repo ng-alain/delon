@@ -24,11 +24,9 @@
     ></i>
     <ng-template #codeSandboxTpl>
       {{ 'app.demo.code-sandbox' | i18n }}
-      <ng-container *ngIf="false">
-        (
-        <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
-        )
-      </ng-container>
+      @if (false) { (
+      <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
+      ) }
     </ng-template>
     <i
       nz-tooltip
