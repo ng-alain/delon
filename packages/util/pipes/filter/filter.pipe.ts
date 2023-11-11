@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-@Pipe({ name: 'filter' })
+@Pipe({ name: 'filter', standalone: true })
 export class FilterPipe implements PipeTransform {
   /**
    * Filter array

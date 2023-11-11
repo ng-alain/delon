@@ -5,7 +5,7 @@ import { FilterPipe } from './filter.pipe';
 const PIPES = [FilterPipe];
 
 @NgModule({
-  declarations: PIPES,
+  imports: PIPES,
   exports: PIPES
 })
 export class FilterPipeModule {}
