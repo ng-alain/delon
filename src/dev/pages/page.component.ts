@@ -25,7 +25,6 @@ export class DevPageComponent implements OnInit {
   constructor(public route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log('ngoninit');
     this.route.params.subscribe(params => (this.id = +params.id));
   }
 
