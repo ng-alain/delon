@@ -4,6 +4,7 @@ import * as path from 'path';
 
 import {
   ContentTemplateData,
+  DemoData,
   ExampleModules,
   Meta,
   MetaOriginal,
@@ -83,7 +84,7 @@ function generateModule(config: ModuleConfig): void {
     });
   }
 
-  function fixDemo(fileObject: any, demos: any): void {
+  function fixDemo(fileObject: any, demos: DemoData): void {
     const demoHTML: string[] = [];
     demoHTML.push(`<div nz-row [nzGutter]="16">`);
     if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
@@ -174,9 +175,9 @@ function generateModule(config: ModuleConfig): void {
       // #endregion
 
       // #region generate document file
-      const demoList = demos.data.filter((w: { type: string }) => w.type !== 'example');
+      const demoList = demos.data.filter(w => w.type !== 'example');
       const isDemo = demoList.length > 0;
-      const isExample = demos.data.filter((w: { type: string }) => w.type === 'example').length > 0;
+      const isExample = demos.data.filter(w => w.type === 'example').length > 0;
       const fileObject: ContentTemplateData = {
         componentName: genComponentName(config.name, meta.name),
         selector: genSelector(config.name, meta.name),
@@ -188,8 +189,21 @@ function generateModule(config: ModuleConfig): void {
           // i18n: meta.i18n,
         } as any,
         demos: '',
-        demo: isDemo
+        demo: isDemo,
+        imports: '',
+        standaloneImports: ''
       };
+      const standaloneDemo = config.standalone && demoList.length > 0;
+      if (standaloneDemo) {
+        fileObject.imports = demoList
+          .map(v => `import { ${v.componentName} } from './${v.name}';`)
+          .concat(`import { NzGridModule } from 'ng-zorro-antd/grid';`)
+          .join('\n');
+        fileObject.standaloneImports = `,${demoList
+          .map(v => v.componentName)
+          .concat('NzGridModule')
+          .join(', ')}`;
+      }
       if (fileObject.demo) {
         fixDemo(fileObject, demos);
       } else if (isExample) {
@@ -205,9 +219,11 @@ function generateModule(config: ModuleConfig): void {
       // #region register module
       appendToModule(fileObject.componentName, meta.name, 'index');
       // demo
-      demoList.forEach((demo: { componentName: string; name: string }) => {
-        appendToModule(demo.componentName, meta.name, demo.name, false);
-      });
+      if (!standaloneDemo) {
+        demoList.forEach((demo: { componentName: string; name: string }) => {
+          appendToModule(demo.componentName, meta.name, demo.name, false);
+        });
+      }
       // #endregion
     });
   });

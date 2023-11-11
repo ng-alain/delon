@@ -260,7 +260,6 @@ module.exports = {
       defaultRoute: 'getting-started',
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
-
       dir: [
         {
           src: ['./packages/acl/docs'],
@@ -288,7 +287,8 @@ module.exports = {
           src: ['./packages/cache/docs'],
           hasSubDir: false
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'mock',
@@ -344,7 +344,8 @@ module.exports = {
           ignores: ['docs'],
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'form',

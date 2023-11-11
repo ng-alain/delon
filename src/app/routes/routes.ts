@@ -19,9 +19,9 @@ export const routes: Routes = [
       { path: 'theme', loadChildren: () => import('./gen/theme/theme.module').then(m => m.ThemeModule) },
       { path: 'auth', loadChildren: () => import('./gen/auth/routes').then(m => m.routes) },
       { path: 'acl', loadChildren: () => import('./gen/acl/routes').then(m => m.routes) },
-      { path: 'cache', loadChildren: () => import('./gen/cache/cache.module').then(m => m.CacheModule) },
+      { path: 'cache', loadChildren: () => import('./gen/cache/routes').then(m => m.routes) },
       { path: 'mock', loadChildren: () => import('./gen/mock/routes').then(m => m.routes) },
-      { path: 'util', loadChildren: () => import('./gen/util/util.module').then(m => m.UtilModule) },
+      { path: 'util', loadChildren: () => import('./gen/util/routes').then(m => m.routes) },
       { path: 'chart', loadChildren: () => import('./gen/chart/chart.module').then(m => m.ChartModule) },
       { path: 'form', loadChildren: () => import('./gen/form/form.module').then(m => m.FormModule) },
       {

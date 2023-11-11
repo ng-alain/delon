@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import { toHtml } from './generate-md';
 import { getCode, genUpperName, genUrl, generateDoc } from './utils';
-import { ModuleConfig, SiteConfig } from '../interfaces';
+import { DemoData, DemoDataItem, MTData, ModuleConfig, SiteConfig } from '../interfaces';
 
 const JsonML = require('jsonml.js/lib/utils');
 const MT = require('mark-twain');
@@ -33,11 +33,11 @@ export function generateDemo(
   cols: number,
   config: ModuleConfig,
   siteConfig: SiteConfig
-): any {
+): DemoData {
   if (!exampleIndexTpl) {
     exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
   }
-  const ret: { tpl: { left: string[]; right: string[] }; data: any[] } = {
+  const ret: DemoData = {
     tpl: {
       left: [],
       right: []
@@ -47,7 +47,7 @@ export function generateDemo(
 
   if (!fse.pathExistsSync(dir)) return ret;
 
-  const demos: any[] = fse.readdirSync(dir).map(name => {
+  const demos: MTData[] = fse.readdirSync(dir).map(name => {
     const filePath = path.join(dir, name);
     let mt: any = null;
     try {
@@ -67,11 +67,14 @@ export function generateDemo(
   demos
     .sort((a: any, b: any) => a.meta.order - b.meta.order)
     .forEach((markdownData: any, index: number) => {
-      const item: any = {
+      const item: DemoDataItem = {
         id: `${config.name}-${key}-${markdownData.name}`,
         meta: markdownData.meta,
         summary: ``,
         code: ``,
+        lang: '',
+        componentName: '',
+        point: 0,
         name: markdownData.name,
         urls: genUrl(rootDir, markdownData.filePath),
         type: markdownData.meta.type || 'demo'
@@ -143,7 +146,7 @@ export function generateDemo(
       const pos = isTwo ? (index % 2 === 0 ? 'left' : 'right') : 'left';
       ret.tpl[pos].push(`
         <code-box [item]="codes[${point}]" [attr.id]="codes[${point}].id">
-          <${item.id}></${item.id}>
+          <${item.id} />
         </code-box>
       `);
       item.point = point;

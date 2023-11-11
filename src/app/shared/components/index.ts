@@ -7,3 +7,4 @@ export * from './route-transfer/route-transfer.directive';
 export * from './code-box/code-box.component';
 export * from './edit-button/edit-button.component';
 export * from './docs/docs.component';
+export * from './content/content.component';

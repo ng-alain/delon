@@ -14,10 +14,13 @@ order: 0
 Simplest of usage.
 
 ```ts
+import { JsonPipe } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
-import { CacheService } from '@delon/cache';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
+
+import { CacheService } from '@delon/cache';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
@@ -40,6 +43,8 @@ import { Subscription } from 'rxjs';
       <button nz-button (click)="unRegisterNotify()">UnRegister</button>
     </div>
   `,
+  standalone: true,
+  imports: [JsonPipe, NzButtonModule]
 })
 export class DemoComponent implements OnDestroy {
   value: any;
@@ -50,7 +55,10 @@ export class DemoComponent implements OnDestroy {
     return +new Date();
   }
 
-  constructor(public srv: CacheService, private msg: NzMessageService) {}
+  constructor(
+    public srv: CacheService,
+    private msg: NzMessageService
+  ) {}
 
   getByHttp(): void {
     this.srv.get(`https://randomuser.me/api/?results=1`).subscribe(res => {

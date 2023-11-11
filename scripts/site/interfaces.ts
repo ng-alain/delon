@@ -104,6 +104,9 @@ export interface ContentTemplateData {
   demos?: string;
   /**  */
   codes?: string;
+  imports?: string;
+  /** standalone 的导入列表 */
+  standaloneImports?: string;
 }
 
 export interface ModuleTemplateData {
@@ -122,4 +125,28 @@ export interface ModuleTemplateData {
 export interface ExampleModules {
   list: any[];
   [key: string]: any;
+}
+
+export interface DemoData {
+  tpl: { left: string[]; right: string[] };
+  data: DemoDataItem[];
+}
+
+export interface MTData {
+  name: string;
+  filePath: string;
+  [key: string]: any;
+}
+
+export interface DemoDataItem {
+  id: string;
+  meta: any;
+  summary: string | any;
+  code: string;
+  lang: string;
+  componentName: string;
+  name: string;
+  urls: string;
+  type: 'demo' | 'example';
+  point: number;
 }
