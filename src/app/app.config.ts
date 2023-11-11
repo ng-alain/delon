@@ -1,7 +1,18 @@
-import { registerLocaleData } from '@angular/common';
+import { isPlatformBrowser, registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
-import { APP_ID, APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
+import {
+  APP_ID,
+  APP_INITIALIZER,
+  ApplicationConfig,
+  ENVIRONMENT_INITIALIZER,
+  ErrorHandler,
+  Injector,
+  PLATFORM_ID,
+  importProvidersFrom,
+  inject
+} from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -10,7 +21,6 @@ import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
 import { zhCN as dateLang } from 'date-fns/locale';
 import { provideTinymce } from 'ngx-tinymce';
 
-import { DelonFormModule } from '@delon/form';
 import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -20,7 +30,12 @@ import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 import { I18NService, StartupService } from '@core';
 
 import { CustomErrorHandler } from './core/error-handler';
+import { EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { routes } from './routes/routes';
+import { CellWidgetModule } from './shared/cell-widget/module';
+import { IconComponent } from './shared/components/icon/icon.component';
+import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
 
@@ -64,6 +79,21 @@ export function StartupServiceFactory(startupService: StartupService): () => Pro
   return () => startupService.load();
 }
 
+function registerElements(injector: Injector, platformId: {}): void {
+  // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
+  if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
+    return;
+  }
+  Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
+    const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
+      injector
+    });
+    customElements.define(key, element);
+  });
+  // icon
+  customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'serverApp' },
@@ -78,7 +108,9 @@ export const appConfig: ApplicationConfig = {
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
     }),
     importProvidersFrom(
-      DelonFormModule.forRoot(),
+      CellWidgetModule,
+      JsonSchemaModule,
+      STWidgetModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ),
     StartupService,
@@ -90,6 +122,13 @@ export const appConfig: ApplicationConfig = {
     },
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     { provide: NZ_DATE_LOCALE, useValue: dateLang },
-    { provide: ErrorHandler, useClass: CustomErrorHandler }
+    { provide: ErrorHandler, useClass: CustomErrorHandler },
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => {
+        registerElements(inject(Injector), inject(PLATFORM_ID));
+      }
+    }
   ]
 };

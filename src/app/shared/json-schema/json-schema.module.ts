@@ -17,11 +17,8 @@ import { UploadWidgetModule } from '@delon/form/widgets/upload';
 import { MonacoEditorWidgetModule } from '@delon/form/widgets-third/monaco-editor';
 import { TinymceWidgetModule } from '@delon/form/widgets-third/tinymce';
 
-import { SharedModule } from '../shared.module';
-
 @NgModule({
   imports: [
-    SharedModule,
     DelonFormModule.forRoot(),
     AutoCompleteWidgetModule,
     CascaderWidgetModule,
