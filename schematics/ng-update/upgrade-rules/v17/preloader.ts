@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import { DEFAULT_WORKSPACE_PATH, logInfo, logWarn, readJSON } from '../../../utils';
+import { DEFAULT_WORKSPACE_PATH, logInfo, readJSON } from '../../../utils';
 
 export function updatePreloader(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -43,7 +43,7 @@ function run(tree: Tree, name: string, sourceRoot: string, context: SchematicCon
   if (!tree.exists(mainPath)) return;
 
   let mainContent = tree.readText(mainPath);
-  ['preloaderFinished();'].forEach(item => {
+  [`import { preloaderFinished } from '@delon/theme';`, 'preloaderFinished();'].forEach(item => {
     if (mainContent.includes(item)) mainContent = mainContent.replace(item, '');
   });
   tree.overwrite(mainPath, mainContent);
