@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { HttpRequest } from '@angular/common/http';
+import { type HttpRequest } from '@angular/common/http';
 import type { Observable } from 'rxjs';
 
 export type MockCallback = any | Observable<any> | Promise<any>;
 
-export class MockOptions {
+export interface MockOptions {
   data?: any;
 }
 

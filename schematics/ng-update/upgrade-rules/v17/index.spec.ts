@@ -75,6 +75,31 @@ describe('Schematic: ng-update: v17Rule', () => {
     expect(content).toContain(`provideAlainConfig(alainConfig)`);
   });
 
+  it('should be use provideDelonMockConfig instead of DelonMockModule', async () => {
+    const globalConfigPath = '/projects/foo/src/environments/environment.ts';
+    tryAddFile(
+      tree,
+      globalConfigPath,
+      `import * as MOCKDATA from '@_mock';
+    import { DelonMockModule } from '@delon/mock';
+    import { Environment } from '@delon/theme';
+
+    export const environment = {
+      production: false,
+      useHash: true,
+      api: {
+        baseUrl: './',
+        refreshTokenEnabled: true,
+        refreshTokenType: 'auth-refresh'
+      },
+      modules: [DelonMockModule.forRoot({ data: MOCKDATA })]
+    } as Environment;`
+    );
+    await runMigration();
+    const content = tree.readContent(globalConfigPath);
+    expect(content).toContain(`provideDelonMockConfig`);
+  });
+
   it('#preloader', async () => {
     const appCompPath = '/projects/foo/src/app/app.component.ts';
     tryAddFile(
