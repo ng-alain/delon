@@ -1,11 +1,29 @@
-import { ApplicationConfig } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
+import localeZh from '@angular/common/locales/zh';
+import { APP_ID, APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
+import { zhCN as dateLang } from 'date-fns/locale';
+import { provideTinymce } from 'ngx-tinymce';
+
+import { provideDelonMockConfig } from '@delon/mock';
+import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig, provideAlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
+import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 
+import { I18NService, StartupService } from '@core';
+
+import { CustomErrorHandler } from './core/error-handler';
 import { routes } from './routes/routes';
+import * as MOCKDATA from '../../_mock';
+import { environment } from '../environments/environment';
 
+registerLocaleData(localeZh);
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
   lodop: {
@@ -41,6 +59,34 @@ const alainConfig: AlainConfig = {
 };
 const ngZorroConfig: NzConfig = {};
 
+export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
+  return () => startupService.load();
+}
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAlainConfig(alainConfig), provideNzConfig(ngZorroConfig)]
+  providers: [
+    { provide: APP_ID, useValue: 'serverApp' },
+    provideHttpClient(),
+    provideAnimations(),
+    provideRouter(routes),
+    provideAlain(),
+    provideAlainConfig(alainConfig),
+    provideNzConfig(ngZorroConfig),
+    provideDelonMockConfig({ data: MOCKDATA }),
+    provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
+    provideTinymce({
+      baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
+    }),
+    importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
+    StartupService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [StartupService],
+      multi: true
+    },
+    { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
+    { provide: NZ_DATE_LOCALE, useValue: dateLang },
+    { provide: ErrorHandler, useClass: CustomErrorHandler }
+  ]
 };

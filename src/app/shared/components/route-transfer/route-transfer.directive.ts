@@ -8,7 +8,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { I18NService } from '@core';
 
 @Directive({
-  selector: '[routeTransfer]'
+  selector: '[routeTransfer]',
+  standalone: true
 })
 export class RouteTransferDirective {
   constructor(

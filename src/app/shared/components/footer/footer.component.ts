@@ -1,12 +1,16 @@
 import { Platform } from '@angular/cdk/platform';
+import { NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { LoadingService } from '@delon/abc/loading';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
+import { NzColor, NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -20,7 +24,9 @@ import { I18NService } from '@core';
     '[class.footer__dark]': 'true',
     '[class.footer__small]': 'small'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzGridModule, NzColorPickerModule, NgStyle, I18nPipe, RouterLink]
 })
 export class FooterComponent implements OnInit {
   static ngAcceptInputType_small: BooleanInput;
@@ -61,17 +67,18 @@ export class FooterComponent implements OnInit {
     document.getElementsByTagName('head')[0].appendChild(node);
   }
 
-  changeColor(res: NzSafeAny): void {
+  changeColor(res: { color: NzColor; format: string }): void {
     const changeColor = (): void => {
       this.ngZone.runOutsideAngular(() => {
+        const hex = res.color.toHexString();
         (window as NzSafeAny).less
           .modifyVars({
-            '@primary-color': res.color.hex
+            '@primary-color': hex
           })
           .then(() => {
             window.scrollTo(0, 0);
             this.ngZone.run(() => {
-              this.color = res.color.hex;
+              this.color = hex;
               this.iconSrv.twoToneColor.primaryColor = this.color;
               this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
               this.cdr.detectChanges();
@@ -87,12 +94,9 @@ export class FooterComponent implements OnInit {
     if (this.lessLoaded) {
       changeColor();
     } else {
-      (window as NzSafeAny).less = {
-        async: true,
-        javascriptEnabled: true
-      };
       this.lazy.loadScript(lessUrl).then(() => {
         this.lessLoaded = true;
+        (window as NzSafeAny).less.options.javascriptEnabled = true;
         changeColor();
       });
     }

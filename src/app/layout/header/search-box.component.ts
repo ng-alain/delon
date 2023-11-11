@@ -2,9 +2,11 @@ import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 import { I18NService } from '@core';
 
@@ -12,11 +14,14 @@ declare const docsearch: NzSafeAny;
 
 @Component({
   selector: 'header-search',
-  templateUrl: './search-box.component.html',
+  template: `<i nz-icon nzType="search"></i>
+    <input nz-input #searchInput [placeholder]="'app.header.search' | i18n" /> `,
   host: {
     '[attr.id]': '"search-box"'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzIconModule, NzInputModule, I18nPipe]
 })
 export class HeaderSearchComponent implements AfterViewInit {
   @ViewChild('searchInput', { static: false })
