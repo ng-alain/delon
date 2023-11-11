@@ -3,6 +3,7 @@ title: currency
 subtitle: Currency Pipes
 type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
+standalone: true
 ---
 
 > You can override to set the `startingUnit`, `megaUnit`, `precision`, `ingoreZeroPrecision` through [Global Configuration](/docs/global-config).

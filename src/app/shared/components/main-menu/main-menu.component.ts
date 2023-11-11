@@ -10,16 +10,23 @@ import {
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { I18NService, MetaService } from '@core';
 
 @Component({
   selector: 'main-menu, [main-menu]',
   templateUrl: './main-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [RouterLink, RouterLinkActive, NzToolTipModule, NzBadgeModule, NzTagModule, NzMenuModule]
 })
 export class MainMenuComponent implements OnInit {
   private destroy$ = inject(DestroyRef);

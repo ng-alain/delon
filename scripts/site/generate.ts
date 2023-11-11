@@ -4,6 +4,7 @@ import * as path from 'path';
 
 import {
   ContentTemplateData,
+  DemoData,
   ExampleModules,
   Meta,
   MetaOriginal,
@@ -83,7 +84,7 @@ function generateModule(config: ModuleConfig): void {
     });
   }
 
-  function fixDemo(fileObject: any, demos: any): void {
+  function fixDemo(fileObject: any, demos: DemoData): void {
     const demoHTML: string[] = [];
     demoHTML.push(`<div nz-row [nzGutter]="16">`);
     if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
@@ -123,8 +124,9 @@ function generateModule(config: ModuleConfig): void {
     exampleModules.list.push(...newList);
   }
 
+  const defaultContentTpl = config.standalone ? './src/templates/standalone.content.ts' : './src/templates/content.ts';
   config.dir.forEach(dirConfig => {
-    const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template.content)).toString('utf8');
+    const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template?.content ?? defaultContentTpl)).toString('utf8');
 
     const files = groupFiles(
       dirConfig.src.map(p => path.join(rootDir, p)),
@@ -187,8 +189,21 @@ function generateModule(config: ModuleConfig): void {
           // i18n: meta.i18n,
         } as any,
         demos: '',
-        demo: isDemo
+        demo: isDemo,
+        imports: '',
+        standaloneImports: ''
       };
+      const standaloneDemo = config.standalone && demoList.length > 0;
+      if (standaloneDemo) {
+        fileObject.imports = demoList
+          .map(v => `import { ${v.componentName} } from './${v.name}';`)
+          .concat(`import { NzGridModule } from 'ng-zorro-antd/grid';`)
+          .join('\n');
+        fileObject.standaloneImports = `,${demoList
+          .map(v => v.componentName)
+          .concat('NzGridModule')
+          .join(', ')}`;
+      }
       if (fileObject.demo) {
         fixDemo(fileObject, demos);
       } else if (isExample) {
@@ -204,23 +219,26 @@ function generateModule(config: ModuleConfig): void {
       // #region register module
       appendToModule(fileObject.componentName, meta.name, 'index');
       // demo
-      demoList.forEach((demo: { componentName: string; name: string }) => {
-        appendToModule(demo.componentName, meta.name, demo.name, false);
-      });
+      if (!standaloneDemo) {
+        demoList.forEach((demo: { componentName: string; name: string }) => {
+          appendToModule(demo.componentName, meta.name, demo.name, false);
+        });
+      }
       // #endregion
     });
   });
 
+  const metaTpl = fs
+    .readFileSync(path.join(rootDir, config.template?.meta ?? './src/templates/meta.ts'))
+    .toString('utf8');
+  const defaultModuleTpl = config.standalone ? './src/templates/standalone.routes.ts' : './src/templates/module.ts';
+  const moduleTpl = fs.readFileSync(path.join(rootDir, config.template?.module ?? defaultModuleTpl)).toString('utf8');
   // #region generate meta file
 
   const metaObj = { types: [], ...includeAttributes(config, {}) };
   metaObj.list = metas.sort((a, b) => a.order - b.order);
 
-  generateDoc(
-    { data: JSON.stringify(metaObj) } as MetaTemplateData,
-    fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
-    path.join(distPath, `meta.ts`)
-  );
+  generateDoc({ data: JSON.stringify(metaObj) } as MetaTemplateData, metaTpl, path.join(distPath, `meta.ts`));
   // #endregion
 
   // #region generate module file
@@ -231,11 +249,7 @@ function generateModule(config: ModuleConfig): void {
     components: modules.components.join(',\r\n'),
     routes: modules.routes.join(',\r\n')
   };
-  generateDoc(
-    moduleObj,
-    fs.readFileSync(path.join(rootDir, config.template.module)).toString('utf8'),
-    path.join(distPath, `${config.name}.module.ts`)
-  );
+  generateDoc(moduleObj, moduleTpl, path.join(distPath, config.standalone ? `routes.ts` : `${config.name}.module.ts`));
   // #endregion
 }
 

@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN, DrawerHelper, TitleService, VERSION as VERSION_ALAIN, stepPreloader } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
@@ -9,7 +9,9 @@ import { I18NService, MetaService, MobileService } from '@core';
 
 @Component({
   selector: 'app-root',
-  template: ` <router-outlet />`
+  template: ` <router-outlet />`,
+  standalone: true,
+  imports: [RouterOutlet]
 })
 export class AppComponent {
   @HostBinding('class.mobile')

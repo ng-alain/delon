@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import { toHtml } from './generate-md';
 import { getCode, genUpperName, genUrl, generateDoc } from './utils';
-import { ModuleConfig, SiteConfig } from '../interfaces';
+import { ContentTemplateData, DemoData, DemoDataItem, MTData, ModuleConfig, SiteConfig } from '../interfaces';
 
 const JsonML = require('jsonml.js/lib/utils');
 const MT = require('mark-twain');
@@ -14,7 +14,7 @@ let exampleIndexTpl: string | null = null;
 
 function fixExample(item: any, filePath: string, config: ModuleConfig): void {
   item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
-  const obj = {
+  const obj: ContentTemplateData = {
     selector: `${item.id}-index`,
     demos: `
     <code-box [item]="item" type="simple">
@@ -22,7 +22,10 @@ function fixExample(item: any, filePath: string, config: ModuleConfig): void {
     </code-box>`,
     componentName: item.componentIndexName,
     item: JSON.stringify(item)
-  };
+  } as unknown as ContentTemplateData;
+  const exampleComponentName = `${genUpperName(`${config.name}-${item.name}`)}Component`;
+  obj.imports = `import { NzGridModule } from 'ng-zorro-antd/grid';\nimport { ${exampleComponentName} } from './${item.name}';`;
+  obj.standaloneImports = `,NzGridModule,${exampleComponentName}`;
   generateDoc(obj, exampleIndexTpl!!, filePath);
 }
 
@@ -33,11 +36,11 @@ export function generateDemo(
   cols: number,
   config: ModuleConfig,
   siteConfig: SiteConfig
-): any {
+): DemoData {
   if (!exampleIndexTpl) {
     exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
   }
-  const ret: { tpl: { left: string[]; right: string[] }; data: any[] } = {
+  const ret: DemoData = {
     tpl: {
       left: [],
       right: []
@@ -47,7 +50,7 @@ export function generateDemo(
 
   if (!fse.pathExistsSync(dir)) return ret;
 
-  const demos: any[] = fse.readdirSync(dir).map(name => {
+  const demos: MTData[] = fse.readdirSync(dir).map(name => {
     const filePath = path.join(dir, name);
     let mt: any = null;
     try {
@@ -67,11 +70,14 @@ export function generateDemo(
   demos
     .sort((a: any, b: any) => a.meta.order - b.meta.order)
     .forEach((markdownData: any, index: number) => {
-      const item: any = {
+      const item: DemoDataItem = {
         id: `${config.name}-${key}-${markdownData.name}`,
         meta: markdownData.meta,
         summary: ``,
         code: ``,
+        lang: '',
+        componentName: '',
+        point: 0,
         name: markdownData.name,
         urls: genUrl(rootDir, markdownData.filePath),
         type: markdownData.meta.type || 'demo'
@@ -143,7 +149,7 @@ export function generateDemo(
       const pos = isTwo ? (index % 2 === 0 ? 'left' : 'right') : 'left';
       ret.tpl[pos].push(`
         <code-box [item]="codes[${point}]" [attr.id]="codes[${point}].id">
-          <${item.id}></${item.id}>
+          <${item.id} />
         </code-box>
       `);
       item.point = point;

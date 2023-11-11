@@ -17,11 +17,11 @@ export interface SiteConfig {
 
 export interface TemplateConfig {
   /** 元数据模板 */
-  meta: string;
+  meta?: string;
   /** 内容模板 */
-  content: string;
+  content?: string;
   /** 模板模板 */
-  module: string;
+  module?: string;
 }
 
 export interface ModuleConfig {
@@ -41,7 +41,9 @@ export interface ModuleConfig {
   /** 元数据包含属性 */
   metaIncludeAttributes: string[];
   /** 模板路径 */
-  template: TemplateConfig;
+  template?: TemplateConfig;
+  /** 是否按 standalone 生成 */
+  standalone?: boolean;
   dir: ModuleDirConfig[];
 }
 
@@ -102,6 +104,9 @@ export interface ContentTemplateData {
   demos?: string;
   /**  */
   codes?: string;
+  imports?: string;
+  /** standalone 的导入列表 */
+  standaloneImports?: string;
 }
 
 export interface ModuleTemplateData {
@@ -120,4 +125,28 @@ export interface ModuleTemplateData {
 export interface ExampleModules {
   list: any[];
   [key: string]: any;
+}
+
+export interface DemoData {
+  tpl: { left: string[]; right: string[] };
+  data: DemoDataItem[];
+}
+
+export interface MTData {
+  name: string;
+  filePath: string;
+  [key: string]: any;
+}
+
+export interface DemoDataItem {
+  id: string;
+  meta: any;
+  summary: string | any;
+  code: string;
+  lang: string;
+  componentName: string;
+  name: string;
+  urls: string;
+  type: 'demo' | 'example';
+  point: number;
 }
