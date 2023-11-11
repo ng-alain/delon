@@ -64,6 +64,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     await runMigration();
     const content = tree.readContent(globalConfigPath);
     expect(content).not.toContain(`AlainThemeModule.forRoot()`);
+    expect(content).toContain(`provideAlain()`);
     expect(content).not.toContain(`DelonACLModule.forRoot()`);
   });
 

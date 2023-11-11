@@ -1,10 +1,12 @@
 /* eslint-disable import/order */
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // #region import
+
+const HELPERS = [ModalHelper, DrawerHelper];
 
 // pipes
 import { BellOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
@@ -27,27 +29,34 @@ const PIPES = [DatePipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, URLPipe];
 
 // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/icons.ts
 
-import { ALAIN_SETTING_KEYS } from './services/settings/settings.service';
+import { DrawerHelper } from './services/drawer/drawer.helper';
+import { ModalHelper } from './services/modal/modal.helper';
+import { ALAIN_SETTING_DEFAULT } from './services/settings/settings.service';
 const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 
 // #endregion
 
 @NgModule({
   imports: [CommonModule, RouterModule, OverlayModule, NzI18nModule, ...PIPES],
-  providers: [
-    {
-      provide: ALAIN_SETTING_KEYS,
-      useValue: {
-        layout: 'layout',
-        user: 'user',
-        app: 'app'
-      }
-    }
-  ],
+  providers: [ALAIN_SETTING_DEFAULT],
   exports: [...PIPES, DelonLocaleModule]
 })
 export class AlainThemeModule {
   constructor(iconSrv: NzIconService) {
     iconSrv.addIcon(...ICONS);
+  }
+
+  static forRoot(): ModuleWithProviders<AlainThemeModule> {
+    return {
+      ngModule: AlainThemeModule,
+      providers: HELPERS
+    };
+  }
+
+  static forChild(): ModuleWithProviders<AlainThemeModule> {
+    return {
+      ngModule: AlainThemeModule,
+      providers: HELPERS
+    };
   }
 }
