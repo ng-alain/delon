@@ -44,9 +44,10 @@ Mock 并非是真实数据，大部分场景是针对开发本地或测试环境
 当然，也可以将 `environment.ts` 的 `provideDelonMockConfig` 放到 `environment.prod.ts` 下，使得生产环境也使用这种规则，就像 https://ng-alain.github.io/ng-alain/ 一样，需要一些模拟请求来保证环境的运行。
 
 ```ts
-import { provideDelonMockConfig } from '@delon/mock';
+import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 export const environment = {
-  providers: [provideDelonMockConfig({ data: MOCKDATA })]
+  providers: [provideDelonMockConfig({ data: MOCKDATA })],
+  interceptorFns: [mockInterceptor],
 } as Environment;
 ```

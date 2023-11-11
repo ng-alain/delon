@@ -44,9 +44,10 @@ Mock is not real data, and most scenarios are for development local or test envi
 Of course, you can also put the `provideDelonMockConfig` of `environment.ts` under `environment.prod.ts` so that the production environment also uses this rule, just like https://ng-alain.github.io/ng- Like alain/, some mock requests are needed to ensure the environment runs.
 
 ```ts
-import { provideDelonMockConfig } from '@delon/mock';
+import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 export const environment = {
-  providers: [provideDelonMockConfig({ data: MOCKDATA })]
+  providers: [provideDelonMockConfig({ data: MOCKDATA })],
+  interceptorFns: [mockInterceptor],
 } as Environment;
 ```
