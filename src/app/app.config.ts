@@ -13,6 +13,7 @@ import {
   inject
 } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
+import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -100,6 +101,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([mockInterceptor])),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
+    provideClientHydration(),
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideDelonMockConfig({ data: MOCKDATA }),

@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { GithubButtonModule } from 'ng-github-button';
-import { ColorSketchModule } from 'ngx-color/sketch';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { NgxTinymceModule } from 'ngx-tinymce';
 
@@ -42,7 +41,7 @@ const COMPONENTS = [
   ...DIALOG_COMPONENTS
 ];
 
-const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSketchModule];
+const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule];
 
 @NgModule({
   imports: [
