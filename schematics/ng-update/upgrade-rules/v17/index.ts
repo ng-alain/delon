@@ -5,17 +5,8 @@ import { autoRegisterFormWidgets } from './autoRegisterFormWidgets';
 import { updatePreloader } from './preloader';
 import { removeForRoot } from './removeForRoot';
 import { replaceProvideConfig } from './replaceProvideConfig';
-import { logFinished, logInfo, logWarn } from '../../../utils';
+import { logFinished, logInfo } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
-
-function qr(): Rule {
-  return (_: Tree, context: SchematicContext) => {
-    logWarn(
-      context,
-      `[qr] Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.`
-    );
-  };
-}
 
 function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {
@@ -32,13 +23,6 @@ export function v17Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logInfo(context, `Upgrade dependency version number`);
-    return chain([
-      removeForRoot(),
-      autoRegisterFormWidgets(),
-      replaceProvideConfig(),
-      updatePreloader(),
-      qr(),
-      finished()
-    ]);
+    return chain([removeForRoot(), autoRegisterFormWidgets(), replaceProvideConfig(), updatePreloader(), finished()]);
   };
 }

@@ -2,7 +2,7 @@ import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { insertImport, addSymbolToNgModuleMetadata } from '@schematics/angular/utility/ast-utils';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 
-import { DEFAULT_WORKSPACE_PATH, getSourceFile, readJSON, applyChanges, logWarn } from '../../../utils';
+import { DEFAULT_WORKSPACE_PATH, getSourceFile, readJSON, applyChanges, logWarn, logEx } from '../../../utils';
 
 export function autoRegisterFormWidgets(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -30,16 +30,23 @@ function autoRegisterFormWidgetsRun(tree: Tree, name: string, sourceRoot: string
     { symbolName: 'TreeSelectWidgetModule', fileName: '@delon/form/widgets/tree-select' },
     { symbolName: 'UploadWidgetModule', fileName: '@delon/form/widgets/upload' }
   ];
-  const source = getSourceFile(tree, modulePath);
-  const changes: Change[] = [];
-  for (const item of list) {
-    changes.push(insertImport(source, modulePath, item.symbolName, item.fileName) as InsertChange);
-    changes.push(...addSymbolToNgModuleMetadata(source, modulePath, 'imports', item.symbolName));
-  }
-  applyChanges(tree, modulePath, changes);
+  try {
+    const source = getSourceFile(tree, modulePath);
+    const changes: Change[] = [];
+    for (const item of list) {
+      changes.push(insertImport(source, modulePath, item.symbolName, item.fileName) as InsertChange);
+      changes.push(...addSymbolToNgModuleMetadata(source, modulePath, 'imports', item.symbolName));
+    }
+    applyChanges(tree, modulePath, changes);
 
-  logWarn(
-    context,
-    `[@delon/form] Register all widgets in ${name} project, you can reduce package size by removing unnecessary parts`
-  );
+    logWarn(
+      context,
+      `[@delon/form] Register all widgets in ${name} project, you can reduce package size by removing unnecessary parts in ${modulePath}`
+    );
+  } catch (ex) {
+    logEx(
+      context,
+      `Import all @delon/form/widgets/* errors, need to manually import the required modules. ERROR: ${ex.message}`
+    );
+  }
 }
