@@ -10,7 +10,11 @@ export function logInfo(context: SchematicContext, message: string): void {
 }
 
 export function logWarn(context: SchematicContext, message: string): void {
-  context.logger.info(`  ${colors.yellow('⚠')} ${message}`);
+  context.logger.info(`  ${colors.yellow(`⚠ ${message}`)}`);
+}
+
+export function logEx(context: SchematicContext, message: string): void {
+  context.logger.error(`  ${colors.yellow(`x ${message}`)}`);
 }
 
 export function logFinished(context: SchematicContext, message: string): void {
