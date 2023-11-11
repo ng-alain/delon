@@ -25,7 +25,10 @@ export const routes: Routes = [
       { path: 'l8', component: DevPageComponent },
       { path: 'login', component: DevPageComponent },
       { path: 'view/:id', component: DevPageComponent },
-      { path: 'lazy', loadChildren: () => import('./lazy/router').then(m => m.routes) },
+      {
+        path: 'lazy',
+        loadChildren: () => import('./lazy/router').then(m => m.routes)
+      },
       { path: 'list', loadChildren: () => import('./list/router').then(m => m.routes) }
     ]
   }

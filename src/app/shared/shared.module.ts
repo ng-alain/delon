@@ -71,8 +71,8 @@ const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSk
     DelonCacheModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
-    ...THIRDS
-    // ...COMPONENTS
+    ...THIRDS,
+    ...COMPONENTS
   ]
 })
 export class SharedModule {}

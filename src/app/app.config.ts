@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
 import { APP_ID, APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -10,7 +10,8 @@ import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
 import { zhCN as dateLang } from 'date-fns/locale';
 import { provideTinymce } from 'ngx-tinymce';
 
-import { provideDelonMockConfig } from '@delon/mock';
+import { DelonFormModule } from '@delon/form';
+import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
@@ -66,7 +67,7 @@ export function StartupServiceFactory(startupService: StartupService): () => Pro
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'serverApp' },
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([mockInterceptor])),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     provideAlain(alainConfig),
@@ -76,7 +77,10 @@ export const appConfig: ApplicationConfig = {
     provideTinymce({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
     }),
-    importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
+    importProvidersFrom(
+      DelonFormModule.forRoot(),
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ),
     StartupService,
     {
       provide: APP_INITIALIZER,

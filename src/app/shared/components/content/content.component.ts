@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { MetaService, MobileService } from '@core';
@@ -18,7 +19,7 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterOutlet, RouterLink, FooterComponent, NzAffixModule, NzIconModule, MainMenuComponent]
+  imports: [RouterOutlet, RouterLink, FooterComponent, NzAffixModule, NzIconModule, MainMenuComponent, NzGridModule]
 })
 export class ContentComponent implements OnInit {
   private destroy$ = inject(DestroyRef);
