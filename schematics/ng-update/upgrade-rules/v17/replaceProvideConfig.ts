@@ -52,5 +52,13 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
 
   tree.overwrite(filePath, content);
 
+  const globalFile = `${sourceRoot}/app/global-config.module.ts`;
+  if (tree.exists(globalFile)) {
+    const content = tree
+      .readText(globalFile)
+      .replace(', ...zorroProvides', ', ...zorroProvides, ...(environment.providers || [])');
+    tree.overwrite(globalFile, content);
+  }
+
   logInfo(context, `  Use provideDelonMockConfig instead of DelonMockModule in ${name} project`);
 }
