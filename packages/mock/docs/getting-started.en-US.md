@@ -38,4 +38,16 @@ Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/b
 | `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after mock rule hit | ✅ |
 | `[copy]` | `boolean` | `true` | Whether to return copy data | ✅ |
 
-> **Lazy modules** need to import `forChild`, You can import `forChild` in the `SharedModule`.
+### Why is it only valid for development environment?
+
+Mock is not real data, and most scenarios are for development local or test environments; therefore, Mock modules and rule data should not be included in the production environment.
+
+Of course, you can also put the `provideDelonMockConfig` of `environment.ts` under `environment.prod.ts` so that the production environment also uses this rule, just like https://ng-alain.github.io/ng- Like alain/, some mock requests are needed to ensure the environment runs.
+
+```ts
+import { provideDelonMockConfig } from '@delon/mock';
+import * as MOCKDATA from '../../_mock';
+export const environment = {
+  providers: [provideDelonMockConfig({ data: MOCKDATA })]
+} as Environment;
+```

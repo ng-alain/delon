@@ -21,7 +21,7 @@ import * as Mock from 'mockjs';
 import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockRequest } from './interface';
-import { DelonMockModule } from './mock.module';
+import { provideDelonMockConfig } from './provide';
 import { MockStatusError } from './status.error';
 import { delay, r } from './utils';
 
@@ -78,10 +78,11 @@ describe('mock: interceptor', () => {
             path: 'lazy',
             loadChildren: jasmine.createSpy('expected')
           }
-        ]),
-        DelonMockModule.forRoot({ data })
+        ])
       ].concat(imports),
-      providers: ([provideAlainConfig({ mock: options })] as any[]).concat(providers || [])
+      providers: ([provideAlainConfig({ mock: options }), provideDelonMockConfig({ data })] as any[]).concat(
+        providers || []
+      )
     });
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
@@ -262,7 +263,8 @@ describe('mock: interceptor', () => {
 
       @NgModule({
         declarations: [LayoutComponent, ChildComponent],
-        imports: [DelonMockModule.forChild(), RouterModule.forChild([{ path: 'child', component: ChildComponent }])]
+        imports: [RouterModule.forChild([{ path: 'child', component: ChildComponent }])],
+        providers: [provideDelonMockConfig()]
       })
       class LazyModule {}
 
