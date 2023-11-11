@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
 
 import { MockCachedRule, MockOptions, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';
+import { DELON_MOCK_CONFIG } from './provide';
 
 @Injectable({ providedIn: 'root' })
 export class MockService implements OnDestroy {
   private cached: MockCachedRule[] = [];
   readonly config: AlainMockConfig;
 
-  constructor(cogSrv: AlainConfigService, options: MockOptions) {
+  constructor(cogSrv: AlainConfigService, @Optional() @Inject(DELON_MOCK_CONFIG) options?: MockOptions) {
     this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
     this.setData(options?.data);
   }
