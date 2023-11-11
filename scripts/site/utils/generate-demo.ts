@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import { toHtml } from './generate-md';
 import { getCode, genUpperName, genUrl, generateDoc } from './utils';
-import { DemoData, DemoDataItem, MTData, ModuleConfig, SiteConfig } from '../interfaces';
+import { ContentTemplateData, DemoData, DemoDataItem, MTData, ModuleConfig, SiteConfig } from '../interfaces';
 
 const JsonML = require('jsonml.js/lib/utils');
 const MT = require('mark-twain');
@@ -14,7 +14,7 @@ let exampleIndexTpl: string | null = null;
 
 function fixExample(item: any, filePath: string, config: ModuleConfig): void {
   item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
-  const obj = {
+  const obj: ContentTemplateData = {
     selector: `${item.id}-index`,
     demos: `
     <code-box [item]="item" type="simple">
@@ -22,7 +22,10 @@ function fixExample(item: any, filePath: string, config: ModuleConfig): void {
     </code-box>`,
     componentName: item.componentIndexName,
     item: JSON.stringify(item)
-  };
+  } as unknown as ContentTemplateData;
+  const exampleComponentName = `${genUpperName(`${config.name}-${item.name}`)}Component`;
+  obj.imports = `import { NzGridModule } from 'ng-zorro-antd/grid';\nimport { ${exampleComponentName} } from './${item.name}';`;
+  obj.standaloneImports = `,NzGridModule,${exampleComponentName}`;
   generateDoc(obj, exampleIndexTpl!!, filePath);
 }
 

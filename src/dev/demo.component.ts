@@ -1,71 +1,42 @@
-import { JsonPipe } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
-import { CacheService } from '@delon/cache';
+import { CookieOptions, CookieService } from '@delon/util/browser';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <p>value: {{ value | json }}</p>
-    <div class="pt-sm">
-      Basic:
-      <button nz-button (click)="srv.set(key, newValue)">Set</button>
-      <button nz-button (click)="value = srv.getNone(key)">Get</button>
-      <button nz-button (click)="srv.remove(key)">Remove</button>
-      <button nz-button (click)="srv.clear()">Clear</button>
-    </div>
-    <div class="pt-sm">
-      Key is valid request:
-      <button nz-button (click)="getByHttp()">Get</button>
-    </div>
-    <div class="pt-sm">
-      Notify:
-      <button nz-button (click)="registerNotify()">Register</button>
-      <button nz-button (click)="unRegisterNotify()">UnRegister</button>
-    </div>
+    <p classs="mb-md">Result: {{ value || 'NULL' }}</p>
+    <button nz-button (click)="get()">Get</button>
+    <button nz-button (click)="set()">Set</button>
+    <button nz-button (click)="set({ expires: 10 })">Set 10s expired</button>
+    <button nz-button (click)="remove()">Remove</button>
   `,
   standalone: true,
-  imports: [JsonPipe, NzButtonModule]
+  imports: [NzButtonModule]
 })
-export class DemoComponent implements OnDestroy {
-  value: any;
-  key = 'demo';
-  private notify$?: Subscription;
-
-  get newValue(): number {
-    return +new Date();
-  }
+export class DemoComponent {
+  key = 'test-key';
+  value?: string;
 
   constructor(
-    public srv: CacheService,
+    private cookieSrv: CookieService,
     private msg: NzMessageService
-  ) {}
-
-  getByHttp(): void {
-    this.srv.get(`https://randomuser.me/api/?results=1`).subscribe(res => {
-      this.value = res;
-    });
+  ) {
+    this.get();
   }
 
-  registerNotify(): void {
-    if (this.notify$) this.notify$.unsubscribe();
-    this.notify$ = this.srv.notify(this.key).subscribe(res => {
-      if (res == null) {
-        this.msg.success('register success');
-        return;
-      }
-      this.msg.warning(`"${this.key}" new status: ${res.type}`);
-    });
+  get(): void {
+    this.value = this.cookieSrv.get(this.key)!;
   }
 
-  unRegisterNotify(): void {
-    this.srv.cancelNotify(this.key);
+  set(options?: CookieOptions): void {
+    this.cookieSrv.put(this.key, (+new Date()).toString(), options);
+    this.msg.success(`Success`);
   }
 
-  ngOnDestroy(): void {
-    if (this.notify$) this.notify$.unsubscribe();
+  remove(): void {
+    this.cookieSrv.remove(this.key);
   }
 }

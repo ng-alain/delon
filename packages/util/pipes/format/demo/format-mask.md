@@ -3,7 +3,12 @@ type: example
 ---
 
 ```ts
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { FormatMaskPipe } from '@delon/util';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-demo',
@@ -18,6 +23,8 @@ import { Component } from '@angular/core';
       <input type="text" nz-input [(ngModel)]="maskStr" />
     </nz-input-group>
   `,
+  standalone: true,
+  imports: [JsonPipe, FormatMaskPipe, NzInputModule, FormsModule]
 })
 export class DemoComponent {
   value = '123';

@@ -530,7 +530,8 @@ module.exports = {
           src: ['./packages/theme/src/services'],
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     }
   ]
 };

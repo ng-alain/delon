@@ -4,7 +4,9 @@ type: example
 
 ```ts
 import { Component } from '@angular/core';
+
 import { CookieOptions, CookieService } from '@delon/util/browser';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -16,12 +18,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="set({ expires: 10 })">Set 10s expired</button>
     <button nz-button (click)="remove()">Remove</button>
   `,
+  standalone: true,
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
   key = 'test-key';
   value?: string;
 
-  constructor(private cookieSrv: CookieService, private msg: NzMessageService) {
+  constructor(
+    private cookieSrv: CookieService,
+    private msg: NzMessageService
+  ) {
     this.get();
   }
 

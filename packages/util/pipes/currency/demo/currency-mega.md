@@ -4,6 +4,11 @@ type: example
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { CurrencyMegaPipe } from '@delon/util';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-demo',
@@ -21,9 +26,11 @@ import { Component } from '@angular/core';
       <input type="text" nz-input [(ngModel)]="value" />
     </nz-input-group>
     <nz-input-group nzAddOnBefore="Precision">
-      <nz-input-number [(ngModel)]="precision" [nzMin]="0" [nzMax]="292"></nz-input-number>
+      <nz-input-number [(ngModel)]="precision" [nzMin]="0" [nzMax]="292" />
     </nz-input-group>
   `,
+  standalone: true,
+  imports: [NzInputModule, NzInputNumberModule, FormsModule, CurrencyMegaPipe]
 })
 export class DemoComponent {
   value = 123456;

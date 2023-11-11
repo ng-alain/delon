@@ -4,6 +4,10 @@ type: example
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { CurrencyCNYPipe } from '@delon/util';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-demo',
@@ -15,6 +19,8 @@ import { Component } from '@angular/core';
       <input type="text" nz-input [(ngModel)]="value" />
     </nz-input-group>
   `,
+  standalone: true,
+  imports: [NzInputModule, FormsModule, CurrencyCNYPipe]
 })
 export class DemoComponent {
   value = 100;
