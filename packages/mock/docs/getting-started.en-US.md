@@ -35,7 +35,6 @@ Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/b
 | `[delay]` | `number` | `300` | Request delay, unit is milliseconds | ✅ |
 | `[force]` | `boolean` | `false` | Whether to force all requests to Mock, `true` means to return a 404 error directly when the requested URL does not exist, `false` means to send a real HTTP request when the request is missed | ✅ |
 | `[log]` | `boolean` | `true` | Whether to print Mock request information, make up for the browser without Network information; it will output [👽Mock] when hit | ✅ |
-| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after mock rule hit | ✅ |
 | `[copy]` | `boolean` | `true` | Whether to return copy data | ✅ |
 
 ### Why is it only valid for development environment?
