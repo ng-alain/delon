@@ -10,8 +10,16 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'en', pathMatch: 'full' },
-      { path: ':lang', component: HomeComponent, data: { titleI18n: 'slogan' } }
+      { path: ':lang', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      {
+        path: 'form-pages',
+        loadChildren: () => import('./form-pages/form-pages.module').then(m => m.FormPagesModule)
+      }
     ]
+  },
+  {
+    path: 'dev',
+    loadChildren: () => import('../../dev/router').then(m => m.routes)
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }

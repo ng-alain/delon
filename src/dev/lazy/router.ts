@@ -1,13 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { DevLazyLayoutComponent } from './layout.component';
 import { DevLazyPageComponent } from './test.component';
-import { SharedModule } from '../../app/shared/shared.module';
 
-const COMPONENTS = [DevLazyLayoutComponent, DevLazyPageComponent];
-
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: DevLazyLayoutComponent,
@@ -22,9 +18,3 @@ const routes: Routes = [
     ]
   }
 ];
-
-@NgModule({
-  imports: [SharedModule, RouterModule.forChild(routes)],
-  declarations: COMPONENTS
-})
-export class DevLazyModule {}

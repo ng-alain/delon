@@ -1,17 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { LayoutDefaultModule } from '@delon/theme/layout-default';
+import { Routes } from '@angular/router';
 
 import { DemoComponent } from './demo.component';
 import { DevHomeComponent } from './home/home.component';
 import { DevLayoutComponent } from './layout.component';
 import { DevPageComponent } from './pages/page.component';
-import { SharedModule } from '../app/shared/shared.module';
 
-const COMPONENTS = [DevLayoutComponent, DevHomeComponent, DevPageComponent, DemoComponent];
-
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'demo',
     component: DemoComponent
@@ -31,14 +25,8 @@ const routes: Routes = [
       { path: 'l8', component: DevPageComponent },
       { path: 'login', component: DevPageComponent },
       { path: 'view/:id', component: DevPageComponent },
-      { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.DevLazyModule) },
-      { path: 'list', loadChildren: () => import('./list/list.module').then(m => m.DevListModule) }
+      { path: 'lazy', loadChildren: () => import('./lazy/router').then(m => m.routes) },
+      { path: 'list', loadChildren: () => import('./list/router').then(m => m.routes) }
     ]
   }
 ];
-
-@NgModule({
-  imports: [SharedModule, RouterModule.forChild(routes), LayoutDefaultModule],
-  declarations: COMPONENTS
-})
-export class DevTestModule {}

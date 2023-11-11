@@ -41,7 +41,6 @@ const COMPONENTS = [
   MatchRouterDirective,
   ...DIALOG_COMPONENTS
 ];
-console.log(COMPONENTS);
 
 const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSketchModule];
 
@@ -57,7 +56,8 @@ const THIRDS = [HighlightJsModule, GithubButtonModule, NgxTinymceModule, ColorSk
     DelonCacheModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
-    ...THIRDS
+    ...THIRDS,
+    ...COMPONENTS
   ],
   // declarations: COMPONENTS,
   exports: [

@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
 import { APP_ID, APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
@@ -12,7 +12,7 @@ import { provideTinymce } from 'ngx-tinymce';
 
 import { provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
-import { AlainConfig, provideAlainConfig } from '@delon/util/config';
+import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 
@@ -68,9 +68,8 @@ export const appConfig: ApplicationConfig = {
     { provide: APP_ID, useValue: 'serverApp' },
     provideHttpClient(),
     provideAnimations(),
-    provideRouter(routes),
-    provideAlain(),
-    provideAlainConfig(alainConfig),
+    provideRouter(routes, withComponentInputBinding()),
+    provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideDelonMockConfig({ data: MOCKDATA }),
     provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
