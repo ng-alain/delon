@@ -1,5 +1,5 @@
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
 import {
   APP_ID,
@@ -13,7 +13,6 @@ import {
   inject
 } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
-import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -98,10 +97,10 @@ function registerElements(injector: Injector, platformId: {}): void {
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'serverApp' },
-    provideHttpClient(withInterceptors([mockInterceptor])),
+    provideHttpClient(withInterceptors([mockInterceptor]), withFetch()),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideDelonMockConfig({ data: MOCKDATA }),
