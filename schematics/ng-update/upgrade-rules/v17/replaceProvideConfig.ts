@@ -20,10 +20,10 @@ function runAlain(tree: Tree, name: string, sourceRoot: string, context: Schemat
   if (!tree.exists(filePath)) return;
 
   const text = '{ provide: ALAIN_CONFIG, useValue: alainConfig }';
-  const content = tree.readText(filePath).replace(text, 'provideAlainConfig(alainConfig)');
+  const content = tree.readText(filePath).replace(text, 'provideAlain(alainConfig)');
   tree.overwrite(filePath, content);
 
-  logInfo(context, `  Use provideAlainConfig instead of ALAIN_CONFIG in ${name} project`);
+  logInfo(context, `  Use provideAlain instead of ALAIN_CONFIG in ${name} project`);
 }
 
 function runZorro(tree: Tree, name: string, sourceRoot: string, context: SchematicContext): void {

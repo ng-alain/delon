@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import { DEFAULT_WORKSPACE_PATH, logWarn, readJSON } from '../../../utils';
+import { DEFAULT_WORKSPACE_PATH, logInfo, logWarn, readJSON } from '../../../utils';
 
 export function updatePreloader(): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -69,5 +69,5 @@ function run(tree: Tree, name: string, sourceRoot: string, context: SchematicCon
 
   tree.overwrite(appPath, appContentLines.join('\n'));
 
-  logWarn(context, `Upgrade preloader in ${name} project`);
+  logInfo(context, `Upgrade preloader in ${name} project`);
 }

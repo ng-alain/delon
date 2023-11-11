@@ -19,14 +19,10 @@ function removeAlainThemeForRoot(tree: Tree, name: string, sourceRoot: string, c
   const modulePath = `${sourceRoot}/app/global-config.module.ts`;
   if (!tree.exists(modulePath)) return;
 
-  const forRoot = 'AlainThemeModule.forRoot()';
-  const content = tree
-    .readText(modulePath)
-    .replace(/AlainThemeModule\.forRoot\(\),?/g, '')
-    .replace('alainProvides = [', 'alainProvides = [ provideAlain(), ');
+  const content = tree.readText(modulePath).replace(/AlainThemeModule\.forRoot\(\),?/g, '');
   tree.overwrite(modulePath, content);
 
-  logInfo(context, `Remove ${forRoot} in ${name} project`);
+  logInfo(context, `Remove AlainThemeModule.forRoot in ${name} project`);
 }
 
 function removeAlainThemeForChild(tree: Tree, name: string, sourceRoot: string, context: SchematicContext): void {
