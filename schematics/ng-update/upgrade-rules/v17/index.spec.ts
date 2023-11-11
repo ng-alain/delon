@@ -59,6 +59,7 @@ describe('Schematic: ng-update: v17Rule', () => {
       `
     import { AlainThemeModule } from '@delon/theme';
     const alainModules: any[] = [AlainThemeModule.forRoot(), DelonACLModule.forRoot()];
+    const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
     `
     );
     await runMigration();
