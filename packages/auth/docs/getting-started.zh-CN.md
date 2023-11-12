@@ -48,6 +48,7 @@ npm i -S @delon/auth
 
 ```typescript
 providers: [
+  // 表示使用JWT风格并用 `localStorage` 存储 Token
   provideAuth(withJWT(), withLocalStorage()),
 ]
 ```

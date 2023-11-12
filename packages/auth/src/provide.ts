@@ -3,7 +3,7 @@ import { EnvironmentProviders, Provider, makeEnvironmentProviders } from '@angul
 
 import { CookieService } from '@delon/util/browser';
 
-import { CookieStorageStore, DA_STORE_TOKEN, LocalStorageStore, SessionStorageStore } from './store';
+import { CookieStorageStore, DA_STORE_TOKEN, LocalStorageStore, MemoryStore, SessionStorageStore } from './store';
 import { JWTInterceptor, SimpleInterceptor } from './token/index';
 
 export enum AuthFeatureKind {
@@ -75,4 +75,9 @@ export function withLocalStorage(): AuthFeature<AuthFeatureKind.Store> {
 /** `sessionStorage` storage, **lost after closing the browser**. */
 export function withSessionStorage(): AuthFeature<AuthFeatureKind.Store> {
   return makeAuthFeature(AuthFeatureKind.Store, [{ provide: DA_STORE_TOKEN, useClass: SessionStorageStore }]);
+}
+
+/** Memory storage, **lost after closing the browser tab**. */
+export function withMemoryStorage(): AuthFeature<AuthFeatureKind.Store> {
+  return makeAuthFeature(AuthFeatureKind.Store, [{ provide: DA_STORE_TOKEN, useClass: MemoryStore }]);
 }

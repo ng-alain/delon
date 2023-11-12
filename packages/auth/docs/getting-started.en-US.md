@@ -48,6 +48,7 @@ Configure the `provideAuth` environment in `app.config.ts`:
 
 ```typescript
 providers: [
+  // Indicates using JWT style and using `localStorage` to store Token
   provideAuth(withJWT(), withLocalStorage()),
 ]
 ```

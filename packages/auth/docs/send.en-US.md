@@ -10,7 +10,7 @@ type: Documents
 
 It is better to add the corresponding authentication information to each request through the HTTP interceptor. `@delonn/auth` implements two separate HTTP interceptors based on two different authentication styles.
 
-### withAuthSimple
+### withSimple
 
 The parameter name and its sending location can be specified via `DelonAuthConfig`, for example:
 
@@ -22,15 +22,15 @@ token_send_place = 'header';
 
 Indicates the `{ token: 'Bearer token_string' }` data in the `header` of each request.
 
-### withAuthJWT
+### withJWT
 
 It is a standard JWT sending rule that automatically adds `{ Authorization: 'Bearer token_string' }` to `header`.
 
 ### How to choose?
 
-`withAuthSimple` is a very liberal style, you can put `token` in the request body, request header, etc.
+`withSimple` is a very liberal style, you can put `token` in the request body, request header, etc.
 
-`withAuthJWT` is a JWT standard, which needs to ensure that the backend also uses such standards.
+`withJWT` is a JWT standard, which needs to ensure that the backend also uses such standards.
 
 ## How to load
 
@@ -38,8 +38,9 @@ In `app.config.ts` file:
 
 ```ts
 providers: [
-  withAuthSimple(),
-  // or withAuthSimple()
+  provideAuth(withSimple()),
+  // Or JWT
+  provideAuth(withJWT()),
 ]
 ```
 
