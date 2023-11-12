@@ -22,6 +22,7 @@ import { zhCN as dateLang } from 'date-fns/locale';
 import { provideTinymce } from 'ngx-tinymce';
 
 import { provideCellWidgets } from '@delon/abc/cell';
+import { provideSTWidgets } from '@delon/abc/st';
 import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -36,7 +37,7 @@ import { routes } from './routes/routes';
 import { CELL_WIDGETS } from './shared/cell-widget';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
-import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import { ST_WIDGETS } from './shared/st-widget';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
 
@@ -110,9 +111,9 @@ export const appConfig: ApplicationConfig = {
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
     }),
     provideCellWidgets(...CELL_WIDGETS),
+    provideSTWidgets(...ST_WIDGETS),
     importProvidersFrom(
       JsonSchemaModule,
-      STWidgetModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ),
     StartupService,

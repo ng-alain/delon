@@ -2,19 +2,19 @@ import { ENVIRONMENT_INITIALIZER, EnvironmentProviders, inject, makeEnvironmentP
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { CellService } from './cell.service';
+import { STWidgetRegistry } from './st-widget';
 
 /**
  * Just only using Standalone widgets
  */
-export function provideCellWidgets(...widgets: Array<{ KEY: string; type: NzSafeAny }>): EnvironmentProviders {
+export function provideSTWidgets(...widgets: Array<{ KEY: string; type: NzSafeAny }>): EnvironmentProviders {
   return makeEnvironmentProviders([
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
       useValue: () => {
-        const srv = inject(CellService);
-        widgets.forEach(widget => srv.registerWidget(widget.KEY, widget.type));
+        const srv = inject(STWidgetRegistry);
+        widgets.forEach(widget => srv.register(widget.KEY, widget.type));
       }
     }
   ]);
