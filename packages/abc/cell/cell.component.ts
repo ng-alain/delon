@@ -23,6 +23,7 @@ import { updateHostClass } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
@@ -39,8 +40,8 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   template: `
     <ng-template #text>
       @switch(safeOpt.type) { @case('checkbox') {
-      <label nz-radio [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
-        {{ safeOpt.radio?.label }}
+      <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
+        {{ safeOpt.checkbox?.label }}
       </label>
       } @case('radio') {
       <label nz-radio [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
@@ -98,6 +99,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   imports: [
     FormsModule,
     NgTemplateOutlet,
+    NzCheckboxModule,
     NzRadioModule,
     NzIconModule,
     NzTagModule,
