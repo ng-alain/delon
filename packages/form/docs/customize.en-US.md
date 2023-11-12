@@ -31,21 +31,44 @@ export function withTestWidget(): SFWidgetProvideConfig {
 }
 
 @Component({
-  selector: 'test',
+  selector: 'sf-tinymce',
   template: `
-    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-      test widget, {{ data }}
-    </sf-item-wrap>
-  `,
+  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+    <!-- Start area -->
+    <tinymce
+      [ngModel]="value"
+      (ngModelChange)="change($event)"
+      [config]="config"
+      [loading]="loading">
+    </tinymce>
+    <!-- End area -->
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [DelonFormModule]
 })
 class TestWidget extends ControlWidget implements OnInit {
-  data?: string;
+  /* KEY value for registering widgets */
+  static readonly KEY = 'test';
+
+  // It is recommended to use `ngOnInit` to obtain the parameters required by the component.
+  config: any;
+  loadingTip: string;
+
   ngOnInit(): void {
-    console.warn('init test widget');
+    this.loadingTip = this.ui.loadingTip || 'Loading……';
+    this.config = this.ui.config || {};
+  }
+
+  // reset can better solve the problem of new data required during the form reset process
+  reset(value: string) {
+
+  }
+
+  change(value: string) {
+    if (this.ui.change) this.ui.change(value);
+    this.setValue(value);
   }
 }
 ```
