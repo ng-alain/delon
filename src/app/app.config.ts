@@ -1,6 +1,5 @@
-import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import localeZh from '@angular/common/locales/zh';
+import ngLang from '@angular/common/locales/zh';
 import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -29,10 +28,10 @@ import { withUploadWidget } from '@delon/form/widgets/upload';
 import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
 import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
 import { provideMockConfig } from '@delon/mock';
-import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
+import { zh_CN as delonLang, AlainProvideLang, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
-import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
+import { zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 
 import { I18NService, provideStartup } from '@core';
 
@@ -44,7 +43,13 @@ import { ST_WIDGETS } from './shared/st-widget';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
 
-registerLocaleData(localeZh);
+const defaultLang: AlainProvideLang = {
+  abbr: 'zh-CN',
+  ng: ngLang,
+  zorro: zorroLang,
+  date: dateLang,
+  delon: delonLang
+};
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
@@ -89,7 +94,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
-    provideAlain(alainConfig),
+    provideAlain({ config: alainConfig, defaultLang, i18nClass: I18NService }),
     provideNzConfig(ngZorroConfig),
     provideMockConfig({ data: MOCKDATA }),
     provideCellWidgets(...CELL_WIDGETS),
@@ -122,9 +127,6 @@ export const appConfig: ApplicationConfig = {
     }),
     // Startup
     provideStartup(),
-    // Langs & Date
-    { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
-    { provide: NZ_DATE_LOCALE, useValue: dateLang },
     // Error
     { provide: ErrorHandler, useClass: CustomErrorHandler },
     // Elements

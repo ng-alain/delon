@@ -22,7 +22,7 @@ function runAlain(tree: Tree, name: string, sourceRoot: string, context: Schemat
   const text = '{ provide: ALAIN_CONFIG, useValue: alainConfig }';
   const content = tree
     .readText(filePath)
-    .replace(text, 'provideAlain(alainConfig)')
+    .replace(text, 'provideAlain({ config: alainConfig })')
     .replace('AlainThemeModule', 'provideAlain');
   tree.overwrite(filePath, content);
 

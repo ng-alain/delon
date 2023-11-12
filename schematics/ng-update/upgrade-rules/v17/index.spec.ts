@@ -52,7 +52,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     tryAddFile(tree, globalConfigPath, `const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];`);
     await runMigration();
     const content = tree.readContent(globalConfigPath);
-    expect(content).toContain(`provideAlain(alainConfig)`);
+    expect(content).toContain(`provideAlain({ config: alainConfig })`);
   });
 
   it('should be use provideMockConfig instead of DelonMockModule', async () => {
