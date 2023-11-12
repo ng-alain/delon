@@ -1,22 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { DelonFormModule, WidgetRegistry } from '@delon/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
+import type { SFWidgetProvideConfig } from '@delon/form';
 
 import { MentionWidget } from './widget';
 
 export * from './widget';
 export * from './schema';
 
-@NgModule({
-  imports: [FormsModule, DelonFormModule, NzMentionModule, NzInputModule, CommonModule],
-  declarations: [MentionWidget]
-})
-export class MentionWidgetModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(MentionWidget.KEY, MentionWidget);
-  }
+export function withMentionWidget(): SFWidgetProvideConfig {
+  return { KEY: MentionWidget.KEY, type: MentionWidget };
 }

@@ -5,6 +5,6 @@ import { AutoCompleteWidget } from './widget';
 export * from './widget';
 export * from './schema';
 
-export function withAutoComplete(): SFWidgetProvideConfig {
+export function withAutoCompleteWidget(): SFWidgetProvideConfig {
   return { KEY: AutoCompleteWidget.KEY, type: AutoCompleteWidget };
 }

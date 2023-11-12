@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { ColorWidgetModule, SFColorWidgetSchema } from './index';
+import { SFColorWidgetSchema, withColorWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: color', () => {
@@ -13,7 +13,7 @@ describe('form: widget: color', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureSFTestSuite({ imports: [ColorWidgetModule] });
+  configureSFTestSuite({ widgets: [withColorWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

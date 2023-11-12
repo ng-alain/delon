@@ -5,6 +5,6 @@ import { CascaderWidget } from './widget';
 export * from './widget';
 export * from './schema';
 
-export function withCascader(): SFWidgetProvideConfig {
+export function withCascaderWidget(): SFWidgetProvideConfig {
   return { KEY: CascaderWidget.KEY, type: CascaderWidget };
 }

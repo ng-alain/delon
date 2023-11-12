@@ -6,7 +6,7 @@ import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSliderComponent } from 'ng-zorro-antd/slider';
 
-import { SliderWidgetModule } from './index';
+import { withSliderWidget } from './index';
 import { SliderWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -17,7 +17,7 @@ describe('form: widget: slider', () => {
   let page: SFPage;
   const widget = 'slider';
 
-  configureSFTestSuite({ imports: [SliderWidgetModule] });
+  configureSFTestSuite({ widgets: [withSliderWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

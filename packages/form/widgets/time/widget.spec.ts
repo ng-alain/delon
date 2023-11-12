@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import type { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { TimeWidgetModule } from './index';
+import { withTimeWidget } from './index';
 import { TimeWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -19,7 +19,7 @@ describe('form: widget: time', () => {
   let dl: DebugElement;
   const widget = 'time';
 
-  configureSFTestSuite({ imports: [TimeWidgetModule] });
+  configureSFTestSuite({ widgets: [withTimeWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

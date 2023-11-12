@@ -24,8 +24,21 @@ import { provideTinymce } from 'ngx-tinymce';
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
 import { provideSFConfig } from '@delon/form';
-import { withAutoComplete } from '@delon/form/widgets/autocomplete';
-import { withCascader } from '@delon/form/widgets/cascader';
+import { withAutoCompleteWidget } from '@delon/form/widgets/autocomplete';
+import { withCascaderWidget } from '@delon/form/widgets/cascader';
+import { withColorWidget } from '@delon/form/widgets/color';
+import { withMentionWidget } from '@delon/form/widgets/mention';
+import { withQrCodeWidget } from '@delon/form/widgets/qr-code';
+import { withRateWidget } from '@delon/form/widgets/rate';
+import { withSegmentedWidget } from '@delon/form/widgets/segmented';
+import { withSliderWidget } from '@delon/form/widgets/slider';
+import { withTagWidget } from '@delon/form/widgets/tag';
+import { withTimeWidget } from '@delon/form/widgets/time';
+import { withTransferWidget } from '@delon/form/widgets/transfer';
+import { withTreeSelectWidget } from '@delon/form/widgets/tree-select';
+import { withUploadWidget } from '@delon/form/widgets/upload';
+import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
+import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
 import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -39,7 +52,6 @@ import { EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { routes } from './routes/routes';
 import { CELL_WIDGETS } from './shared/cell-widget';
 import { IconComponent } from './shared/components/icon/icon.component';
-import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { ST_WIDGETS } from './shared/st-widget';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
@@ -116,12 +128,26 @@ export const appConfig: ApplicationConfig = {
     provideCellWidgets(...CELL_WIDGETS),
     provideSTWidgets(...ST_WIDGETS),
     provideSFConfig({
-      widgets: [withAutoComplete(), withCascader()]
+      widgets: [
+        withAutoCompleteWidget(),
+        withCascaderWidget(),
+        withColorWidget(),
+        withMentionWidget(),
+        withQrCodeWidget(),
+        withRateWidget(),
+        withSegmentedWidget(),
+        withSliderWidget(),
+        withTagWidget(),
+        withTimeWidget(),
+        withTransferWidget(),
+        withTreeSelectWidget(),
+        withUploadWidget(),
+        // third
+        withMonacoEditorWidget(),
+        withTinymceWidget()
+      ]
     }),
-    importProvidersFrom(
-      JsonSchemaModule,
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-    ),
+    importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
     StartupService,
     {
       provide: APP_INITIALIZER,

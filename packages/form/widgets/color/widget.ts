@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget } from '@delon/form';
-import type { NzColor, NzColorPickerFormatType } from 'ng-zorro-antd/color-picker';
+import { ControlUIWidget, DelonFormModule } from '@delon/form';
+import { NzColorPickerModule, type NzColor, type NzColorPickerFormatType } from 'ng-zorro-antd/color-picker';
 
 import type { SFColorWidgetSchema } from './schema';
 
@@ -15,9 +16,10 @@ import type { SFColorWidgetSchema } from './schema';
     [error]="error"
     [showTitle]="schema.title"
   >
-    <nz-color-block *ngIf="ui.block" [nzColor]="value" [nzSize]="$any(ui.size)" />
+    @if (ui.block) {
+    <nz-color-block [nzColor]="value" [nzSize]="$any(ui.size)" />
+    } @else {
     <nz-color-picker
-      *ngIf="!ui.block"
       [ngModel]="value"
       (ngModelChange)="setValue($event)"
       [nzDisabled]="disabled"
@@ -32,9 +34,12 @@ import type { SFColorWidgetSchema } from './schema';
       (nzOnChange)="_change($event)"
       (nzOnFormatChange)="_formatChange($event)"
     />
+    }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzColorPickerModule]
 })
 export class ColorWidget extends ControlUIWidget<SFColorWidgetSchema> {
   static readonly KEY = 'color';

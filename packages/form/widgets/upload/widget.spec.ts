@@ -7,7 +7,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
-import { UploadWidgetModule } from './index';
+import { withUploadWidget } from './index';
 import { UploadWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -18,7 +18,7 @@ describe('form: widget: upload', () => {
   let dl: DebugElement;
   const widget = 'upload';
 
-  configureSFTestSuite({ imports: [UploadWidgetModule] });
+  configureSFTestSuite({ widgets: [withUploadWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

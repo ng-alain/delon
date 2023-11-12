@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import type { NuMonacoEditorEvent } from '@ng-util/monaco-editor';
+import { NuMonacoEditorComponent, type NuMonacoEditorEvent } from '@ng-util/monaco-editor';
 
-import { ControlUIWidget } from '@delon/form';
+import { ControlUIWidget, DelonFormModule } from '@delon/form';
 
 import type { MonacoEditorWidgetSchema } from './schema';
 
@@ -29,7 +30,11 @@ import type { MonacoEditorWidgetSchema } from './schema';
         (event)="_event($event)"
       />
     </sf-item-wrap>
-  `
+  `,
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NuMonacoEditorComponent]
 })
 export class MonacoEditorWidget extends ControlUIWidget<MonacoEditorWidgetSchema> {
   static readonly KEY = 'monaco-editor';
