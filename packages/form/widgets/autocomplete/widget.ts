@@ -147,7 +147,10 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   }
 
   private addEmailSuffix(value: string): Observable<string[]> {
-    const res = !value || value?.indexOf('@') === -1 ? [] : this.fixData.map(domain => `${value}@${domain.label}`);
+    const res =
+      !value || typeof value !== 'string' || value?.indexOf('@') !== -1
+        ? []
+        : this.fixData.map(domain => `${value}@${domain.label}`);
     return of(res);
   }
 }

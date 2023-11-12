@@ -119,9 +119,7 @@ describe('form: widget: autocomplete', () => {
     }));
     it('with email of format', fakeAsync(() => {
       const config = mergeConfig(TestBed.inject(AlainConfigService));
-      const typeValue = 'a@a.com';
-      context.liveValidate = false;
-      context.onlyVisual = true;
+      const typeValue = 'a';
       page
         .newSchema({
           properties: {
@@ -140,7 +138,7 @@ describe('form: widget: autocomplete', () => {
     }));
     it('with email and custom suffix of format', fakeAsync(() => {
       const suffixes = ['a.com', 'b.com'];
-      const typeValue = 'a@a.com';
+      const typeValue = 'a';
       page
         .newSchema({
           properties: {
