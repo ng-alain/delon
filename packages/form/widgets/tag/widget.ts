@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -48,7 +49,7 @@ import type { SFTagWidgetSchema } from './schema';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [FormsModule, DelonFormModule, NzTagModule, NzIconModule]
+  imports: [FormsModule, NgTemplateOutlet, DelonFormModule, NzTagModule, NzIconModule]
 })
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   static readonly KEY = 'tag';
