@@ -21,6 +21,7 @@ import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
 import { zhCN as dateLang } from 'date-fns/locale';
 import { provideTinymce } from 'ngx-tinymce';
 
+import { provideCellWidgets } from '@delon/abc/cell';
 import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -32,7 +33,7 @@ import { I18NService, StartupService } from '@core';
 import { CustomErrorHandler } from './core/error-handler';
 import { EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { routes } from './routes/routes';
-import { CellWidgetModule } from './shared/cell-widget/module';
+import { CELL_WIDGETS } from './shared/cell-widget';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
@@ -100,7 +101,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([mockInterceptor]), withFetch()),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
-    // provideClientHydration(),
+    // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideDelonMockConfig({ data: MOCKDATA }),
@@ -108,8 +109,8 @@ export const appConfig: ApplicationConfig = {
     provideTinymce({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
     }),
+    provideCellWidgets(...CELL_WIDGETS),
     importProvidersFrom(
-      CellWidgetModule,
       JsonSchemaModule,
       STWidgetModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

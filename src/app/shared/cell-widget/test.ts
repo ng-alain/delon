@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import type { CellWidgetData, CellWidgetInstance } from '@delon/abc/cell';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'cell-widget-test',
@@ -9,7 +10,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   host: {
     '(click)': 'show()'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ NzToolTipModule ]
 })
 export class CellTestWidget implements CellWidgetInstance {
   static readonly KEY = 'test';

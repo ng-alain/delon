@@ -21,3 +21,6 @@ packages/theme/system/mixins/_functions.less
 theme-default.less
 theme-dark.less
 theme-compact.less
+
+# TODO: https://github.com/prettier/prettier/pull/15606
+# packages/**/*

@@ -25,9 +25,10 @@ const COMPS = [CellComponent];
     NzTagModule,
     NzToolTipModule,
     NzIconModule,
-    NzImageModule
+    NzImageModule,
+    ...COMPS,
+    CellHostDirective
   ],
-  declarations: [...COMPS, CellHostDirective],
   exports: COMPS
 })
 export class CellModule {}
