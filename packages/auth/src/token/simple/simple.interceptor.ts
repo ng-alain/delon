@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
+import { Injectable, Provider } from '@angular/core';
 
 import { AlainAuthConfig } from '@delon/util/config';
 
@@ -9,12 +9,16 @@ import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 
+export function withAuthSimple(): Provider[] {
+  return [{ provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }];
+}
+
 /**
  * Simple 拦截器
  *
  * ```
- * // app.module.ts
- * { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
+ * // app.config.ts
+ * withAuthSimple(),
  * ```
  */
 @Injectable()
