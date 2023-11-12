@@ -117,16 +117,17 @@ describe('form: widget: autocomplete', () => {
       expect(selectWidget.typing).toBe(`label1`);
       page.asyncEnd();
     }));
-    xit('with email of format', fakeAsync(() => {
+    it('with email of format', fakeAsync(() => {
       const config = mergeConfig(TestBed.inject(AlainConfigService));
-      const typeValue = 'a';
+      const typeValue = 'a@a.com';
+      context.liveValidate = false;
+      context.onlyVisual = true;
       page
         .newSchema({
           properties: {
             a: {
               type: 'string',
-              format: 'email',
-              default: typeValue
+              format: 'email'
             }
           }
         })
@@ -139,7 +140,7 @@ describe('form: widget: autocomplete', () => {
     }));
     it('with email and custom suffix of format', fakeAsync(() => {
       const suffixes = ['a.com', 'b.com'];
-      const typeValue = 'a';
+      const typeValue = 'a@a.com';
       page
         .newSchema({
           properties: {

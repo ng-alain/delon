@@ -23,41 +23,29 @@ Making a set of widgets for project can lead to faster development work.
 A widget is a component. You only need to inherit `ControlWidget` to create a widget. For example:
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '@delon/form';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ControlWidget, DelonFormModule, SFWidgetProvideConfig } from '@delon/form';
+
+export function withTestWidget(): SFWidgetProvideConfig {
+  return { KEY: 'test', type: TestWidget };
+}
 
 @Component({
-  selector: 'sf-tinymce',
+  selector: 'test',
   template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-    <!-- Start area -->
-    <tinymce
-      [ngModel]="value"
-      (ngModelChange)="change($event)"
-      [config]="config"
-      [loading]="loading">
-    </tinymce>
-    <!-- End area -->
-  </sf-item-wrap>`
+    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+      test widget, {{ data }}
+    </sf-item-wrap>
+  `,
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DelonFormModule]
 })
-export class TinymceWidget extends ControlWidget implements OnInit {
-  static readonly KEY = 'tinymce';
-
-  config: any;
-  loadingTip: string;
-
+class TestWidget extends ControlWidget implements OnInit {
+  data?: string;
   ngOnInit(): void {
-    this.loadingTip = this.ui.loadingTip || 'Loading……';
-    this.config = this.ui.config || {};
-  }
-
-  reset(value: string) {
-
-  }
-
-  change(value: string) {
-    if (this.ui.change) this.ui.change(value);
-    this.setValue(value);
+    console.warn('init test widget');
   }
 }
 ```
@@ -72,34 +60,32 @@ The widget is manually trigger changed detection during the rendering process. I
 
 ### Register
 
-Define the widget component in the root module (includes: `declarations`), import `WidgetRegistry` in the module and register the custom widget.
+Recommended to define a widget called `withXWidth` and return `SFWidgetProvideConfig` type, for example:
 
 ```ts
-@NgModule({
-  declarations: [ TinymceWidget ],
-  imports: [
-    DelonFormModule.forRoot()
-  ]
-})
-export class AppModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(TinymceWidget.KEY, TinymceWidget);
-  }
+export function withTestWidget(): SFWidgetProvideConfig {
+  return { KEY: 'test', type: TestWidget };
 }
 ```
 
-Of course, for more friendly maintenance, recommended to define a Json schema module in the Shared directory. Please refer to [ng-alain implementation](https://github.com/ng-alain/ng-alain/blob/master/ Src/app/shared/json-schema/json-schema.module.ts).
+Finally, register via `provideSFConfig`:
+
+```ts
+provideSFConfig({ widgets: [ withTestWidget() ] })
+```
+
+For more friendly maintenance, recommended to define a project-specific collection in the `shared` directory. If you are interested, please refer to [NG-ALAIN implementation](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/) or refer to [@delon/form/widgets/autocomplete](https://github.com/ng-alain/delon/tree/master/packages/form/widgets/autocomplete).
 
 ### Usage
 
 Just like other widgets, just specify the `widget` value, for example:
 
 ```json
-"intro": {
+"test": {
   "type": "string",
   "ui": {
-    "widget": "tinymce",
-    "loadingTip": "loading..."
+    "widget": "test",
+    "data": "widget parameters"
   }
 }
 ```

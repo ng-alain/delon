@@ -27,7 +27,7 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       [disabled]="disabled"
       [attr.disabled]="disabled"
       [nzSize]="ui.size!"
-      [(ngModel)]="typing"
+      [ngModel]="typing"
       (ngModelChange)="_setValue($event)"
       [attr.maxLength]="schema.maxLength || null"
       [attr.placeholder]="ui.placeholder"
@@ -147,6 +147,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   }
 
   private addEmailSuffix(value: string): Observable<string[]> {
-    return of(value?.indexOf('@') !== -1 ? this.fixData.map(domain => `${value}@${domain.label}`) : []);
+    const res = !value || value?.indexOf('@') === -1 ? [] : this.fixData.map(domain => `${value}@${domain.label}`);
+    return of(res);
   }
 }
