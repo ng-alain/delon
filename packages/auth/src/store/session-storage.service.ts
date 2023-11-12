@@ -5,8 +5,7 @@ import { ITokenModel } from '../token/interface';
  * `sessionStorage` storage, **lost after closing the browser**.
  *
  * ```ts
- * // global-config.module.ts
- * { provide: DA_STORE_TOKEN, useClass: SessionStorageStore }
+ * provideAuth(withJWT(), withSessionStorage())
  * ```
  */
 export class SessionStorageStore implements IStore {

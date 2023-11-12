@@ -9,14 +9,6 @@ import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 
-/**
- * Simple 拦截器
- *
- * ```
- * // app.module.ts
- * { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
- * ```
- */
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {
   isAuth(_options: AlainAuthConfig): boolean {

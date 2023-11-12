@@ -44,26 +44,14 @@ type: Documents
 npm i -S @delon/auth
 ```
 
-导入 `DelonAuthModule` 模块：
+在 `app.config.ts` 中配置 `provideAuth` 环境：
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    // 指定认证风格对应的HTTP拦截器
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
-  ]
-})
-export class AppModule { }
+providers: [
+  // 表示使用JWT风格并用 `localStorage` 存储 Token
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
-
-**为什么需要手动注册HTTP_INTERCEPTORS**
-
-默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 @delon/auth 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
 ## AlainAuthConfig
 

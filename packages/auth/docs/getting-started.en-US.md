@@ -44,26 +44,14 @@ Install `@delon/auth`:
 npm i -S @delon/auth
 ```
 
-Import `DelonAuthModule` to your AppModule.
+Configure the `provideAuth` environment in `app.config.ts`:
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    // Specify the HTTP interceptor corresponding to the authentication style
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
-  ]
-})
-export class AppModule { }
+providers: [
+  // Indicates using JWT style and using `localStorage` to store Token
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
-
-**Why do I need to manually register HTTP_INTERCEPTORS**
-
-The default `DelonAuthModule` does not register any HTTP interceptor, because of `@delon/auth` provides multiple different [authentication styles](/auth/getting-started#AuthenticationStyle).
 
 ## AlainAuthConfig
 

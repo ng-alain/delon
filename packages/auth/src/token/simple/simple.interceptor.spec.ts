@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -9,9 +9,8 @@ import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
-import { SimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
-import { DelonAuthModule } from '../../auth.module';
+import { provideAuth, withSimple } from '../../provide';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 
 function genModel(token: string = `123`): SimpleTokenModel {
@@ -56,15 +55,11 @@ describe('auth: simple.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         provideAlainConfig({ auth: options }),
         { provide: Router, useValue: mockRouter },
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: SimpleInterceptor,
-          multi: true
-        },
+        provideAuth(withSimple()),
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
       ]
     });

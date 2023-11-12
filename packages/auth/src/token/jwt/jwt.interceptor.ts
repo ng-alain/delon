@@ -8,14 +8,6 @@ import { BaseInterceptor } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 
-/**
- * JWT 拦截器
- *
- * ```
- * // app.module.ts
- * { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
- * ```
- */
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {
   isAuth(options: AlainAuthConfig): boolean {

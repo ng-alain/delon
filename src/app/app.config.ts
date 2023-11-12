@@ -1,18 +1,7 @@
-import { isPlatformBrowser, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
-import {
-  APP_ID,
-  APP_INITIALIZER,
-  ApplicationConfig,
-  ENVIRONMENT_INITIALIZER,
-  ErrorHandler,
-  Injector,
-  PLATFORM_ID,
-  importProvidersFrom,
-  inject
-} from '@angular/core';
-import { createCustomElement } from '@angular/elements';
+import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -45,18 +34,18 @@ import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 
-import { I18NService, StartupService } from '@core';
+import { I18NService, provideStartup } from '@core';
 
+import { provideElements } from './core/elements';
 import { CustomErrorHandler } from './core/error-handler';
-import { EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { routes } from './routes/routes';
 import { CELL_WIDGETS } from './shared/cell-widget';
-import { IconComponent } from './shared/components/icon/icon.component';
 import { ST_WIDGETS } from './shared/st-widget';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
 
 registerLocaleData(localeZh);
+
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
   lodop: {
@@ -90,30 +79,12 @@ const alainConfig: AlainConfig = {
     }
   }
 };
+
 const ngZorroConfig: NzConfig = {};
-
-export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
-  return () => startupService.load();
-}
-
-function registerElements(injector: Injector, platformId: {}): void {
-  // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
-  if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
-    return;
-  }
-  Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
-    const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
-      injector
-    });
-    customElements.define(key, element);
-  });
-  // icon
-  customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
-}
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: APP_ID, useValue: 'serverApp' },
+    { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
@@ -121,10 +92,6 @@ export const appConfig: ApplicationConfig = {
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideMockConfig({ data: MOCKDATA }),
-    provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
-    provideTinymce({
-      baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
-    }),
     provideCellWidgets(...CELL_WIDGETS),
     provideSTWidgets(...ST_WIDGETS),
     provideSFConfig({
@@ -147,23 +114,21 @@ export const appConfig: ApplicationConfig = {
         withTinymceWidget()
       ]
     }),
-    importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
-    StartupService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: StartupServiceFactory,
-      deps: [StartupService],
-      multi: true
-    },
+    // provideAuth(withJWT(), withLocalStorage()),
+    // Thirds
+    provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
+    provideTinymce({
+      baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
+    }),
+    // Startup
+    provideStartup(),
+    // Langs & Date
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     { provide: NZ_DATE_LOCALE, useValue: dateLang },
+    // Error
     { provide: ErrorHandler, useClass: CustomErrorHandler },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
-        registerElements(inject(Injector), inject(PLATFORM_ID));
-      }
-    }
+    // Elements
+    importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
+    provideElements()
   ]
 };
