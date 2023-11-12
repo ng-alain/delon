@@ -41,13 +41,12 @@ Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/b
 
 Mock is not real data, and most scenarios are for development local or test environments; therefore, Mock modules and rule data should not be included in the production environment.
 
-Of course, you can also put the `provideDelonMockConfig` of `environment.ts` under `environment.prod.ts` so that the production environment also uses this rule, just like https://ng-alain.github.io/ng- Like alain/, some mock requests are needed to ensure the environment runs.
+Of course, you can also put the `provideMockConfig` of `environment.ts` under `environment.prod.ts` so that the production environment also uses this rule, just like https://ng-alain.github.io/ng- Like alain/, some mock requests are needed to ensure the environment runs.
 
 ```ts
-import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
+import { provideMockConfig } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 export const environment = {
-  providers: [provideDelonMockConfig({ data: MOCKDATA })],
-  interceptorFns: [mockInterceptor],
+  providers: [provideMockConfig({ data: MOCKDATA })],
 } as Environment;
 ```

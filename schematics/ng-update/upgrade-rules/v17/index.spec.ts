@@ -55,7 +55,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     expect(content).toContain(`provideAlain(alainConfig)`);
   });
 
-  it('should be use provideDelonMockConfig instead of DelonMockModule', async () => {
+  it('should be use provideMockConfig instead of DelonMockModule', async () => {
     const globalConfigPath = '/projects/foo/src/environments/environment.ts';
     tryAddFile(
       tree,
@@ -77,7 +77,7 @@ describe('Schematic: ng-update: v17Rule', () => {
     );
     await runMigration();
     const content = tree.readContent(globalConfigPath);
-    expect(content).toContain(`provideDelonMockConfig`);
+    expect(content).toContain(`provideMockConfig`);
   });
 
   it('#preloader', async () => {

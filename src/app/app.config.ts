@@ -1,5 +1,5 @@
 import { isPlatformBrowser, registerLocaleData } from '@angular/common';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeZh from '@angular/common/locales/zh';
 import {
   APP_ID,
@@ -39,7 +39,7 @@ import { withTreeSelectWidget } from '@delon/form/widgets/tree-select';
 import { withUploadWidget } from '@delon/form/widgets/upload';
 import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
 import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
-import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
+import { provideMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
@@ -114,13 +114,13 @@ function registerElements(injector: Injector, platformId: {}): void {
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'serverApp' },
-    provideHttpClient(withInterceptors([mockInterceptor]), withFetch()),
+    provideHttpClient(withFetch()),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
-    provideDelonMockConfig({ data: MOCKDATA }),
+    provideMockConfig({ data: MOCKDATA }),
     provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
     provideTinymce({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'

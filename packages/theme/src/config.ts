@@ -1,4 +1,3 @@
-import { HttpInterceptorFn } from '@angular/common/http';
 import type { EnvironmentProviders, ModuleWithProviders, Provider, Type } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -36,12 +35,6 @@ export interface Environment {
    * 定义在 `app-config.ts` 导入的 providers 列表
    */
   providers?: Array<Provider | EnvironmentProviders>;
-  /**
-   * Defined withInterceptors in `app-config.ts`
-   *
-   * 定义在 `app-config.ts` 导入的 withInterceptors 列表
-   */
-  interceptorFns?: HttpInterceptorFn[];
 }
 
 export interface ApiConfig {
