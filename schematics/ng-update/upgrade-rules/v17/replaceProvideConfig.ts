@@ -46,15 +46,11 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
 
   const text = 'DelonMockModule.forRoot({ data: MOCKDATA })';
   let content = tree.readText(filePath);
-  if (content.includes('text')) content = content.replace(text, '');
+  if (content.includes(text)) content = content.replace(text, '');
 
   content = content
-    .replace('DelonMockModule.forRoot({ data: MOCKDATA })', '')
-    .replace(
-      'modules: [',
-      'providers: [provideDelonMockConfig({ data: MOCKDATA })],\ninterceptorFns: [mockInterceptor],\nmodules: ['
-    )
-    .replace('DelonMockModule', 'mockInterceptor, provideDelonMockConfig');
+    .replace('modules: [', 'providers: [provideMockConfig({ data: MOCKDATA })],\nmodules: [')
+    .replace('DelonMockModule', 'provideMockConfig');
 
   tree.overwrite(filePath, content);
 
@@ -76,12 +72,9 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
       globalFile,
       tree
         .readText(globalFile)
-        .replace(
-          ', ...zorroProvides',
-          ', ...zorroProvides, ...(environment.providers || []), provideHttpClient(withInterceptors(environment.interceptorFns || []))'
-        )
+        .replace(', ...zorroProvides', ', ...zorroProvides, ...(environment.providers || []), provideHttpClient()')
     );
   }
 
-  logInfo(context, `  Use provideDelonMockConfig instead of DelonMockModule in ${name} project`);
+  logInfo(context, `  Use provideMockConfig instead of DelonMockModule in ${name} project`);
 }

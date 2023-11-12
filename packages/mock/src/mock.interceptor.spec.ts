@@ -12,7 +12,7 @@ import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockRequest } from './interface';
 import { mockInterceptor } from './mock.interceptor';
-import { provideDelonMockConfig } from './provide';
+import { provideMockConfig } from './provide';
 import { MockStatusError } from './status.error';
 import { delay, r } from './utils';
 
@@ -59,7 +59,7 @@ describe('mock: interceptor', () => {
           }
         ]),
         provideAlainConfig({ mock: options }),
-        provideDelonMockConfig({ data })
+        provideMockConfig({ data })
       ]
     });
     http = TestBed.inject<HttpClient>(HttpClient);
