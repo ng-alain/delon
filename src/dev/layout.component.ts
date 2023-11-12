@@ -23,7 +23,7 @@ import {
 
 // #region icons
 
-import { ReuseCustomContextMenu, ReuseTabModule } from '@delon/abc/reuse-tab';
+import { ReuseCustomContextMenu, ReuseTabComponent } from '@delon/abc/reuse-tab';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, RTLService, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultModule, LayoutDefaultOptions } from '@delon/theme/layout-default';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
@@ -110,7 +110,7 @@ const ICONS = [
     NzDropDownModule,
     NzAvatarModule,
     NzMenuModule,
-    ReuseTabModule,
+    ReuseTabComponent,
     RouterOutlet,
     SettingDrawerModule
   ]

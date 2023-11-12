@@ -7,7 +7,8 @@
   [nzTabBarGutter]="tabBarGutter"
   [nzTabBarStyle]="tabBarStyle"
 >
-  <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate" (nzClick)="_to(index)">
+  @for (i of list; track $index) {
+  <nz-tab [nzTitle]="titleTemplate" (nzClick)="_to($index)">
     <ng-template #titleTemplate>
       <div
         [reuse-tab-context-menu]="i"
@@ -16,16 +17,18 @@
         [attr.title]="i.title"
       >
         <span [class.reuse-tab__name-width]="tabMaxWidth" [style.max-width.px]="tabMaxWidth">
-          <ng-container
-            *ngIf="titleRender; else defaultTitle"
-            [ngTemplateOutlet]="titleRender"
-            [ngTemplateOutletContext]="{ $implicit: i }"
-          />
-          <ng-template #defaultTitle>{{ i.title }}</ng-template>
+          @if (titleRender) {
+          <ng-template [ngTemplateOutlet]="titleRender" [ngTemplateOutletContext]="{ $implicit: i }" />
+          } @else {
+          {{ i.title }}
+          }
         </span>
       </div>
-      <i *ngIf="i.closable" nz-icon nzType="close" class="reuse-tab__op" (click)="_close($event, index, false)"></i>
+      @if (i.closable) {
+      <i nz-icon nzType="close" class="reuse-tab__op" (click)="_close($event, $index, false)"></i>
+      }
     </ng-template>
   </nz-tab>
+  }
 </nz-tabset>
 <reuse-tab-context [i18n]="i18n" (change)="contextMenuChange($event)" />

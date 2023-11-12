@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { DelonLocaleService } from '@delon/theme';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 import {
   CloseType,
@@ -27,7 +28,9 @@ import {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzMenuModule]
 })
 export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n!: ReuseContextI18n;
