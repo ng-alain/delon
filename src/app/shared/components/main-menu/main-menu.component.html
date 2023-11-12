@@ -1,9 +1,10 @@
 <ul nz-menu nzMode="inline" class="aside-container">
-  <li nz-menu-group nzOpen *ngFor="let group of menus" [nzTitle]="group.title">
+  @for (group of menus; track $index) {
+  <li nz-menu-group nzOpen [nzTitle]="group.title">
     <ul>
+      @for (item of group.list; track $index) {
       <li
         nz-menu-item
-        *ngFor="let item of group.list"
         (click)="to.emit(item.url)"
         [routerLink]="item.url"
         [routerLinkActive]="['ant-menu-item-selected']"
@@ -15,9 +16,13 @@
         <nz-badge [nzDot]="item.hot">
           <span class="name">{{ item.title }}</span>
           <span class="chinese">{{ item.subtitle }}</span>
-          <nz-tag *ngIf="item.lib" [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
+          @if (item.lib) {
+          <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
+          }
         </nz-badge>
       </li>
+      }
     </ul>
   </li>
+  }
 </ul>

@@ -6,7 +6,7 @@ type: Documents
 
 ## Foreword
 
-`@delon/form` try our best to meet the needs of different environments, in addition to the built-in basic component widgets, you can further expand the requirements in two ways:
+`@delon/form` try our best to meet the needs of different environments, in addition to the built-in basic widgets (Some require manual registration), you can further expand the requirements in two ways:
 
 ## Custom widget in sf
 
@@ -17,15 +17,6 @@ Please refer to [Custom Widget](/form/custom).
 Making a set of widgets for project can lead to faster development work.
 
 ### How to making widget
-
-**Third-party library**
-
-By default `@delon/form` implements some common third-party library widgets, which are called third-party component widgets. This widget exists in [widgets-third](https://github.com/ng-alain /delon/tree/master/packages/form/widgets-third) directory; you can use directly.
-
-| Name | Description | Document | Source |
-| ---- | ----------- | -------- | ------ |
-| `markdown` | Markdown Editor | [Document](/form/markdown) | [Source](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown) |
-| `tinymce` | Tinymce Editor | [Document](/form/tinymce) | [Source](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
 
 **Create widgets**
 

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { CurrencyCNYOptions, CurrencyService } from '@delon/util/format';
 
-@Pipe({ name: 'cny' })
+@Pipe({ name: 'cny', standalone: true })
 export class CurrencyCNYPipe implements PipeTransform {
   constructor(private srv: CurrencyService) {}
 

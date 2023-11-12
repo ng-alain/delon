@@ -1,19 +1,40 @@
 import { NgModule } from '@angular/core';
 
-import { DelonFormModule, WidgetRegistry } from '@delon/form';
-
-import { TinymceWidget } from '../../../../packages/form/widgets-third/tinymce/tinymce.widget';
-import { SharedModule } from '../shared.module';
-
-export const SCHEMA_THIRDS_COMPONENTS = [TinymceWidget];
+import { DelonFormModule } from '@delon/form';
+import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
+import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
+import { ColorWidgetModule } from '@delon/form/widgets/color';
+import { MentionWidgetModule } from '@delon/form/widgets/mention';
+import { QrCodeWidgetModule } from '@delon/form/widgets/qr-code';
+import { RateWidgetModule } from '@delon/form/widgets/rate';
+import { SegmentedWidgetModule } from '@delon/form/widgets/segmented';
+import { SliderWidgetModule } from '@delon/form/widgets/slider';
+import { TagWidgetModule } from '@delon/form/widgets/tag';
+import { TimeWidgetModule } from '@delon/form/widgets/time';
+import { TransferWidgetModule } from '@delon/form/widgets/transfer';
+import { TreeSelectWidgetModule } from '@delon/form/widgets/tree-select';
+import { UploadWidgetModule } from '@delon/form/widgets/upload';
+import { MonacoEditorWidgetModule } from '@delon/form/widgets-third/monaco-editor';
+import { TinymceWidgetModule } from '@delon/form/widgets-third/tinymce';
 
 @NgModule({
-  declarations: SCHEMA_THIRDS_COMPONENTS,
-  imports: [SharedModule, DelonFormModule.forRoot()],
-  exports: [...SCHEMA_THIRDS_COMPONENTS]
+  imports: [
+    DelonFormModule.forRoot(),
+    AutoCompleteWidgetModule,
+    CascaderWidgetModule,
+    TransferWidgetModule,
+    MentionWidgetModule,
+    RateWidgetModule,
+    SliderWidgetModule,
+    TreeSelectWidgetModule,
+    TagWidgetModule,
+    TimeWidgetModule,
+    UploadWidgetModule,
+    ColorWidgetModule,
+    QrCodeWidgetModule,
+    SegmentedWidgetModule,
+    MonacoEditorWidgetModule,
+    TinymceWidgetModule
+  ]
 })
-export class JsonSchemaModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(TinymceWidget.KEY, TinymceWidget);
-  }
-}
+export class JsonSchemaModule {}

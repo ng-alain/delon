@@ -120,7 +120,7 @@ function fixAngular(html: string): string {
     return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
   });
   if (res.startsWith('<article>') && res.endsWith('</article>')) {
-    res = res.substring(9, res.length - 19);
+    res = res.substring(9, res.length - 10);
   }
   return res;
 }

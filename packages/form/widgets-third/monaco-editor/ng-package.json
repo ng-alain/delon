@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-third-monaco-editor",
+    "entryFile": "index.ts"
+  }
+}

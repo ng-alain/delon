@@ -68,12 +68,13 @@ describe('util: time', () => {
     expect(toDate(null).toString()).toBe(`Invalid Date`);
     expect(f(toDate(NOW))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(+NOW))).toBe(`2000-01-01 00:00:00`);
+    expect(f(toDate(Math.trunc(+NOW / 1000), { timestampSecond: true }))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(`${+NOW}`))).toBe(`2000-01-01 00:00:00`);
     expect(f(toDate(f(NOW)))).toBe(`2000-01-01 00:00:00`);
     expect(isNaN(toDate(new String('') as NzSafeAny) as NzSafeAny)).toBe(true);
   });
 
-  function f(d: Date): string {
-    return format(d, `yyyy-MM-dd HH:mm:ss`, { locale: zhCN });
+  function f(d: Date, formatString = `yyyy-MM-dd HH:mm:ss`): string {
+    return format(d, formatString, { locale: zhCN });
   }
 });

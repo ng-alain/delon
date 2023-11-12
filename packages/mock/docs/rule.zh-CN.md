@@ -36,7 +36,7 @@ export const USERS = {
 
 ## Value 响应内容
 
-响应内容支持三种类型：`Object`、`Array`、`(req: MockRequest) => any`。
+响应内容支持三种类型：`Object`、`Array`、`(req: MockRequest) => any | Observable<any> | Promise<any>`。
 
 ```ts
 import { MockStatusError } from '@delon/mock';
@@ -51,7 +51,14 @@ export const USERS = {
   // 支持返回完整的 HttpResponse
   '/http': (req: MockRequest) => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ 'token': '1' }) }),
   // 发送 Status 错误
-  '/404': () => { throw new MockStatusError(404); }
+  '/404': () => { throw new MockStatusError(404); },
+  // 支持 Observable
+  '/obs': () => of(1),
+  // 支持 Promise
+  '/promise': async () => {
+    await delay(10);
+    return 1;
+  }
 };
 ```
 
@@ -88,7 +95,14 @@ export const USERS = {
   // 发送 Status 错误
   '/404': () => { throw new MockStatusError(404); },
   // 使用 () 表示：正则表达式
-  '/data/(.*)': (req: MockRequest) => req
+  '/data/(.*)': (req: MockRequest) => req,
+  // 支持 Observable
+  '/obs': () => of(1),
+  // 支持 Promise
+  '/promise': async () => {
+    await delay(10);
+    return 1;
+  }
 };
 ```
 

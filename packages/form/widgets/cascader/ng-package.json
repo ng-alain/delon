@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-cascader",
+    "entryFile": "index.ts"
+  }
+}

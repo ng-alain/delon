@@ -17,7 +17,7 @@ import { ControlUIWidget } from '../../widget';
       <ng-template
         [ngTemplateOutlet]="$any(ui)._render"
         [ngTemplateOutletContext]="{ $implicit: this, schema: schema, ui: ui }"
-      ></ng-template>
+      />
     </sf-item-wrap>
   `,
   preserveWhitespaces: false,

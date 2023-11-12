@@ -39,6 +39,18 @@ npm start
 # Or use HMR mode by: npm run hmr
 ```
 
+**Multiple projects**
+
+```bash
+yarn global add @angular/cli
+ng new my-workspace --no-create-application --package-manager yarn
+cd my-workspace
+ng g application mgr --style less --routing
+ng add ng-alain
+yarn mgr:start
+# Or use HMR mode by: yarn run mgr:hmr
+```
+
 > Please refer to [Schematics](/cli) for more details.
 
 ### Clone the Git Repository

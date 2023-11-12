@@ -6,49 +6,48 @@
     <li nz-menu-item routerLink="/components/sv/{{ i18n.zone }}" [matchRouter]="regexs.components">
       {{ 'app.header.menu.components' | i18n }}
     </li>
-    <li *ngIf="isMobile" nz-menu-group [nzTitle]="'app.header.menu.delon' | i18n">
+    @if (isMobile) {
+    <li nz-menu-group [nzTitle]="'app.header.menu.delon' | i18n">
       <ul>
-        <li
-          *ngFor="let i of delonLibs"
-          nz-menu-item
-          routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
-        >
-          @delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
+        @for (i of delonLibs; track $index) {
+        <li nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+          &#64;delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
         </li>
+        }
       </ul>
     </li>
-    <li *ngIf="!isMobile" nz-menu-item [matchRouter]="regexs.delon">
+    } @else {
+    <li nz-menu-item [matchRouter]="regexs.delon">
       <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">
         {{ (delonType ? 'app.header.menu.' + delonType : 'app.header.menu.delon') | i18n }}
         <i nz-icon nzType="down"></i>
       </div>
       <nz-dropdown-menu #delonMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li
-            *ngFor="let i of delonLibs"
-            nz-menu-item
-            routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}"
-          >
-            @delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
+          @for (i of delonLibs; track $index) {
+          <li nz-menu-item routerLink="/{{ i.name }}/{{ i.default || 'getting-started' }}/{{ i18n.zone }}">
+            &#64;delon/{{ i.name }}-{{ 'app.header.menu.' + i.name | i18n }}
           </li>
+          }
         </ul>
       </nz-dropdown-menu>
     </li>
+    }
     <li nz-menu-item>
       <a href="https://e.ng-alain.com/" target="_blank">
         {{ 'app.header.menu.themes' | i18n }}
       </a>
     </li>
-    <ng-container *ngIf="isMobile">
-      <a nz-menu-item href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a>
-      <li nz-menu-item (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')">
-        {{ 'app.header.lang' | i18n }}
-      </li>
-    </ng-container>
+    @if (isMobile) {
+    <a nz-menu-item href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a>
+    <li nz-menu-item (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')">
+      {{ 'app.header.lang' | i18n }}
+    </li>
+    }
   </ul>
 </ng-template>
+@if (isMobile) {
 <i
-  *ngIf="isMobile"
   nz-icon
   nzType="menu"
   nz-popover
@@ -60,6 +59,7 @@
   [nzPopoverTitle]="undefined"
   class="nav-phone-icon"
 ></i>
+}
 <div nz-row style="flex-flow: nowrap; height: 64px">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="5" nzXXl="4">
     <h1>
@@ -77,25 +77,27 @@
   </div>
   <div nz-col nz-col nzXs="0" nzSm="0" nzMd="0" nzLg="0" nzXl="19" nzXXl="20" class="menu-row">
     <header-search />
-    <ng-container *ngIf="!isMobile">
-      <ng-template [ngTemplateOutlet]="menu"></ng-template>
-      <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
-        <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version + '.x'" [nzValue]="version" />
-        <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion" />
-      </nz-select>
-      <button
-        nz-button
-        nzGhost
-        nzSize="small"
-        (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')"
-        class="header-button header-lang-button"
-      >
-        {{ 'app.header.lang' | i18n }}
-      </button>
-      <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">
-        {{ rtl.nextDir | uppercase }}
-      </button>
-      <github-button type="stargazers" size="default" namespace="ng-alain" repo="ng-alain" />
-    </ng-container>
+    @if (!isMobile) {
+    <ng-template [ngTemplateOutlet]="menu" />
+    <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
+      @for (version of oldVersionList; track $index) {
+      <nz-option [nzLabel]="version + '.x'" [nzValue]="version" />
+      }
+      <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion" />
+    </nz-select>
+    <button
+      nz-button
+      nzGhost
+      nzSize="small"
+      (click)="langChange(i18n.zone === 'zh' ? 'en' : 'zh')"
+      class="header-button header-lang-button"
+    >
+      {{ 'app.header.lang' | i18n }}
+    </button>
+    <button nz-button nzGhost nzSize="small" class="header-button header-direction-button" (click)="rtl.toggle()">
+      {{ rtl.nextDir | uppercase }}
+    </button>
+    <github-button type="stargazers" size="default" namespace="ng-alain" repo="ng-alain" />
+    }
   </div>
 </div>

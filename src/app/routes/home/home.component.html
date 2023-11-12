@@ -18,15 +18,19 @@
           国内镜像：<a href="https://ng-alain.gitee.io" target="_blank">ng-alain.gitee.io</a>
         </ng-template>
       </a>
-      <github-button *ngIf="isBrowser" type="stargazers" size="large" namespace="ng-alain" repo="ng-alain" />
+      @if (isBrowser) {
+      <github-button type="stargazers" size="large" namespace="ng-alain" repo="ng-alain" />
+      }
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay>
-    <div nz-carousel-content *ngFor="let i of allThemes">
+    @for (i of allThemes; track $index) {
+    <div nz-carousel-content>
       <a href="{{ i.url }}" target="_blank">
         <img src="./assets/screenshot/{{ i.screenshot }}" />
       </a>
     </div>
+    }
   </nz-carousel>
 </div>
 <div class="page-wrapper page-feature">
@@ -114,7 +118,8 @@
   <div class="page">
     <h2>{{ 'app.home.theme' | i18n }}</h2>
     <div class="ant-row">
-      <div *ngFor="let t of bussionThemes" class="ant-col-xs-24 ant-col-md-12">
+      @for (t of bussionThemes; track $index) {
+      <div class="ant-col-xs-24 ant-col-md-12">
         <a
           class="page-theme__item"
           [attr.href]="'https://e.ng-alain.com/theme/' + t"
@@ -127,6 +132,7 @@
           <p>{{ 'app.home.theme.' + t.type + '.desc' | i18n }}</p>
         </a>
       </div>
+      }
     </div>
   </div>
 </div>

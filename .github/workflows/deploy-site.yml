@@ -16,7 +16,7 @@ jobs:
 
       - name: build
         run: |
-          yarn run site:build:ssr
+          yarn run site:build
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           cp ./Dockerfile.docs ./src/dist/browser/Dockerfile.docs
           cp -r ./_nginx/ ./src/dist/browser/_nginx

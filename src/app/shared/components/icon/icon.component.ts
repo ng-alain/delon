@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { InputBoolean } from '@delon/util/decorator';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'nz-icon',
@@ -13,7 +14,9 @@ import { InputBoolean } from '@delon/util/decorator';
       [nzTwotoneColor]="twoToneColor"
       [nzIconfont]="iconfont"
     ></i>
-  `
+  `,
+  standalone: true,
+  imports: [NzIconModule]
 })
 export class IconComponent {
   @Input()

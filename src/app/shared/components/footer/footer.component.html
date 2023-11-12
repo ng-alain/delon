@@ -4,7 +4,7 @@
       <div class="footer__center">
         <h2>ng-alain</h2>
         <div><a href="https://github.com/ng-alain/ng-alain" target="_blank">Github</a></div>
-        <div><a href="https://github.com/ng-alain/delon" target="_blank">@delon</a></div>
+        <div><a href="https://github.com/ng-alain/delon" target="_blank">&#64;delon</a></div>
         <div><a href="https://github.com/ng-alain/ng-zorro-vscode" target="_blank">ng-zorro-vscode</a></div>
         <div><a href="https://github.com/ng-alain/ng-alain-vscode" target="_blank">ng-alain-vscode</a></div>
       </div>
@@ -66,18 +66,7 @@
           <a href="https://beian.miit.gov.cn/" target="_blank" class="text-grey">闽ICP备18008195号</a>
         </p>
         <div class="mt-lg">
-          <div
-            class="theme-color"
-            nz-popover
-            [nzPopoverContent]="colorTpl"
-            nzPopoverTrigger="click"
-            nzPopoverOverlayClassName="theme-color-content"
-          >
-            <div class="theme-color-value" [ngStyle]="{ background: color }"></div>
-          </div>
-          <ng-template #colorTpl>
-            <color-sketch [color]="color" (onChangeComplete)="changeColor($event)" />
-          </ng-template>
+          <nz-color-picker class="theme-color" [nzValue]="color" (nzOnChange)="changeColor($event)" />
         </div>
       </div>
     </div>

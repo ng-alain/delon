@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-transfer",
+    "entryFile": "index.ts"
+  }
+}

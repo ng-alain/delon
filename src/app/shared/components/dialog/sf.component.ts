@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { SFSchema } from '@delon/form';
+import { DelonFormModule, SFSchema } from '@delon/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
@@ -13,12 +14,14 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     <sf #sf mode="edit" [schema]="schema" [formData]="i" button="none">
       <div class="modal-footer">
         <button nz-button type="button" (click)="close()">关闭</button>
-        <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid"
-          >保存</button
-        >
+        <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid">
+          保存
+        </button>
       </div>
     </sf>
-  `
+  `,
+  standalone: true,
+  imports: [NzButtonModule, DelonFormModule]
 })
 export class DemoSfComponent {
   i: NzSafeAny;

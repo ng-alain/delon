@@ -2,6 +2,7 @@
 title: array
 subtitle: 数组
 type: Widgets
+order: 2
 ---
 
 创建对象数组，只对 `schema.type="array"` 时有效。

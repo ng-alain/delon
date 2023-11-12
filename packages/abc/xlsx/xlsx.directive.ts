@@ -8,7 +8,8 @@ import { XlsxExportOptions } from './xlsx.types';
   exportAs: 'xlsx',
   host: {
     '(click)': '_click()'
-  }
+  },
+  standalone: true
 })
 export class XlsxDirective {
   @Input('xlsx') data!: XlsxExportOptions;

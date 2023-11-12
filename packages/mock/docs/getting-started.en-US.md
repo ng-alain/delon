@@ -35,7 +35,19 @@ Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/b
 | `[delay]` | `number` | `300` | Request delay, unit is milliseconds | ✅ |
 | `[force]` | `boolean` | `false` | Whether to force all requests to Mock, `true` means to return a 404 error directly when the requested URL does not exist, `false` means to send a real HTTP request when the request is missed | ✅ |
 | `[log]` | `boolean` | `true` | Whether to print Mock request information, make up for the browser without Network information; it will output [👽Mock] when hit | ✅ |
-| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after mock rule hit | ✅ |
 | `[copy]` | `boolean` | `true` | Whether to return copy data | ✅ |
 
-> **Lazy modules** need to import `forChild`, You can import `forChild` in the `SharedModule`.
+### Why is it only valid for development environment?
+
+Mock is not real data, and most scenarios are for development local or test environments; therefore, Mock modules and rule data should not be included in the production environment.
+
+Of course, you can also put the `provideDelonMockConfig` of `environment.ts` under `environment.prod.ts` so that the production environment also uses this rule, just like https://ng-alain.github.io/ng- Like alain/, some mock requests are needed to ensure the environment runs.
+
+```ts
+import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
+import * as MOCKDATA from '../../_mock';
+export const environment = {
+  providers: [provideDelonMockConfig({ data: MOCKDATA })],
+  interceptorFns: [mockInterceptor],
+} as Environment;
+```

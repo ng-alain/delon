@@ -2,6 +2,7 @@
 title: array
 subtitle: Array
 type: Widgets
+order: 2
 ---
 
 Create array object, it's only valid when `schema.type="array"`.

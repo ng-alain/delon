@@ -1,9 +1,9 @@
 <ng-template #btnTpl let-i let-child="child">
   <ng-container *ngIf="!i.tooltip">
-    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
+    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
   </ng-container>
   <span *ngIf="i.tooltip" nz-tooltip [nzTooltipTitle]="i.tooltip" [class.d-block]="child" [class.width-100]="child">
-    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
+    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
   </span>
 </ng-template>
 <ng-template #btnItemTpl let-i>
@@ -80,7 +80,7 @@
       />
     </ng-container>
     <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
+    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
     <ng-container *ngSwitchDefault>
       <span
         *ngIf="c.safeType !== 'text'"

@@ -18,7 +18,7 @@ import {
 } from 'date-fns';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import type { DateLocale } from 'ng-zorro-antd/i18n';
+import { DateLocale } from 'ng-zorro-antd/i18n';
 
 /**
  * Get the time range, return `[ Date, Date]` for the start and end dates
@@ -84,21 +84,25 @@ export function fixEndTimeOfRange(dates: [Date, Date]): [Date, Date] {
   return [startOfDay(dates[0]), endOfDay(dates[1])];
 }
 
-export type ToDateOptions = string | { formatString?: string; defaultValue?: NzSafeAny };
+export interface ToDateOptions {
+  /** If parsing fails try to parse the date by pressing `formatString` */
+  formatString?: string;
+  /** If parsing fails returned default value, default: `new Date(NaN)` */
+  defaultValue?: NzSafeAny;
+  timestampSecond?: boolean;
+}
 
 /**
- * Return the date parsed from string using the given format string
- * - If the argument is a number, it is treated as a timestamp.
+ * Convert to `Date` format
  *
- * @param formatString If parsing fails try to parse the date by pressing `formatString`
- * @param defaultValue If parsing fails returned default value, default: `new Date(NaN)`
+ * @param value When is a number, it's treated as a timestamp; If it's seconds, you need to provide the `options.timestampSecond` parameter.
  */
-export function toDate(value?: Date | string | number | null, options?: ToDateOptions): Date {
-  if (typeof options === 'string') options = { formatString: options };
-  const { formatString, defaultValue } = {
+export function toDate(value?: Date | string | number | null, options?: string | ToDateOptions): Date {
+  const { formatString, defaultValue, timestampSecond } = {
     formatString: 'yyyy-MM-dd HH:mm:ss',
     defaultValue: new Date(NaN),
-    ...options
+    timestampSecond: false,
+    ...(typeof options === 'string' ? { formatString: options } : options)
   };
   if (value == null) {
     return defaultValue;
@@ -106,8 +110,9 @@ export function toDate(value?: Date | string | number | null, options?: ToDateOp
   if (value instanceof Date) {
     return value;
   }
-  if (typeof value === 'number' || (typeof value === 'string' && /[0-9]{10,13}/.test(value))) {
-    return new Date(+value);
+  if (typeof value === 'number' || (typeof value === 'string' && /^[0-9]+$/.test(value))) {
+    const valueNumber = +value;
+    return new Date(timestampSecond ? valueNumber * 1000 : valueNumber);
   }
   let tryDate = parseISO(value);
   if (isNaN(tryDate as NzSafeAny)) {
@@ -117,6 +122,13 @@ export function toDate(value?: Date | string | number | null, options?: ToDateOp
   return isNaN(tryDate as NzSafeAny) ? defaultValue : tryDate;
 }
 
+/**
+ * Format date, supports `Date, number, string` types
+ *
+ * @param value When is a number, it is treated as a timestamp (Support seconds and milliseconds timestamp).
+ * @param formatString Please refer to [date-fnd format](https://date-fns.org/v2.30.0/docs/format) for string format
+ * @param dateLocale Recommended to be consistent with NG-ZORRO by using `inject(NZ_DATE_LOCALE)`
+ */
 export function formatDate(value: Date | string | number, formatString: string, dateLocale?: DateLocale): string {
   value = toDate(value);
   if (isNaN(value as NzSafeAny)) return '';

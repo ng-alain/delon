@@ -35,23 +35,19 @@ npm i --save-dev @delon/mock
 | `[delay]` | `number` | `300` | 请求延迟，单位：毫秒 | ✅ |
 | `[force]` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 | ✅ |
 | `[log]` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息；当请求经过 Mock 会接收【👽Mock】 | ✅ |
-| `[executeOtherInterceptors]` | `boolean` | `true` | 是否拦截命中后继续调用后续拦截器的 `intercept` 方法 | ✅ |
 | `[copy]` | `boolean` | `true` | 是否返回副本数据 | ✅ |
-
-> 若**懒模块**还需要导入 `forChild` 确保HTTP拦截器有效，一般可以直接在 SharedModule 直接使用 `forChild`。
 
 ### 为什么只对开发环境有效？
 
-Mock 并非是真实数据，大部分场景是针对开发本地或测试环境；所以在生产环境中不应该包括 Mock 模块以及规则数据。因此上述才会根据 `!environment.production` 依据环境来决定是否加载 `DelonMockModule`。
+Mock 并非是真实数据，大部分场景是针对开发本地或测试环境；所以在生产环境中不应该包括 Mock 模块以及规则数据。
 
-当然，你依然可以在生产环境也使用这种规则，就像 //ng-alain.github.io/ng-alain/ 一样，需要一些模拟请求来保证环境的运行。
+当然，也可以将 `environment.ts` 的 `provideDelonMockConfig` 放到 `environment.prod.ts` 下，使得生产环境也使用这种规则，就像 https://ng-alain.github.io/ng-alain/ 一样，需要一些模拟请求来保证环境的运行。
 
 ```ts
-import { DelonMockModule } from '@delon/mock';
+import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
-@NgModule({
-  imports: [
-    DelonMockModule.forRoot({ data: MOCKDATA })
-  ]
-})
+export const environment = {
+  providers: [provideDelonMockConfig({ data: MOCKDATA })],
+  interceptorFns: [mockInterceptor],
+} as Environment;
 ```

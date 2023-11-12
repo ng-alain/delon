@@ -36,7 +36,6 @@ NG-ZORRO、@delon/abc、@delon/chart 等从版本11开始由一次性导入改�
 
 + Angular 模块：`BrowserModule`、`BrowserAnimationsModule`、`HttpClientModule`
 + `AlainThemeModule` 主题系统
-+ `DelonMockModule` Mock数据
 + `AlainAuthModule` 用户认证模块
 + `AlainACLModule` 权限模块
 + 国际化模块

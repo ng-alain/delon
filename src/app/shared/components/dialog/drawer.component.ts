@@ -1,5 +1,7 @@
+import { JsonPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 
@@ -12,7 +14,9 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
       <button nz-button [nzType]="'default'" (click)="cancel()"> Cancel </button>
       <button nz-button [nzType]="'primary'" (click)="ok()"> OK </button>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [NzButtonModule, JsonPipe]
 })
 export class DemoDrawerComponent {
   @Input() record: NzSafeAny;

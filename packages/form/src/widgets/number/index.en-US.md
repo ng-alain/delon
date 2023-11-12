@@ -2,6 +2,7 @@
 title: number
 subtitle: Input Number
 type: Widgets
+order: 5
 ---
 
 Enter a number within certain range with the mouse or keyboard.

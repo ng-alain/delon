@@ -6,7 +6,8 @@ import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[aclIf]',
-  exportAs: 'aclIf'
+  exportAs: 'aclIf',
+  standalone: true
 })
 export class ACLIfDirective implements OnDestroy {
   static ngAcceptInputType_except: boolean | string | undefined | null;
