@@ -131,6 +131,7 @@ describe('form: widget: autocomplete', () => {
         })
         .dc(100)
         .typeChar(typeValue)
+        .dc(1000)
         .checkCount('nz-auto-option', config.uiEmailSuffixes!.length)
         .click('nz-auto-option')
         .checkValue('a', `${typeValue}@${config.uiEmailSuffixes![0]}`)
