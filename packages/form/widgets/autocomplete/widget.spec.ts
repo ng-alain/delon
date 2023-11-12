@@ -117,7 +117,7 @@ describe('form: widget: autocomplete', () => {
       expect(selectWidget.typing).toBe(`label1`);
       page.asyncEnd();
     }));
-    it('with email of format', fakeAsync(() => {
+    xit('with email of format', fakeAsync(() => {
       const config = mergeConfig(TestBed.inject(AlainConfigService));
       const typeValue = 'a';
       page

@@ -77,7 +77,13 @@ export function builder(options?: {
 export function configureSFTestSuite(options?: { imports?: NzSafeAny[]; widgets?: SFWidgetProvideConfig[] }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule, HttpClientTestingModule, ...(options?.imports ?? [])],
+      imports: [
+        NoopAnimationsModule,
+        AlainThemeModule,
+        DelonFormModule,
+        HttpClientTestingModule,
+        ...(options?.imports ?? [])
+      ],
       declarations: [TestFormComponent],
       providers: [provideSFConfig({ widgets: options?.widgets })]
     });

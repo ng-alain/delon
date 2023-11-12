@@ -7,7 +7,7 @@ import { deepGet } from '@delon/util/other';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadChangeParam, NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 
 import type { SFUploadWidgetSchema } from './schema';
@@ -183,9 +183,6 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     if (!_url) {
       return;
     }
-    this.injector.get<NzModalService>(NzModalService).create({
-      nzContent: `<img src="${_url}" class="img-fluid" />`,
-      nzFooter: null
-    });
+    this.injector.get(NzImageService, null)?.preview([{ src: _url }]);
   };
 }
