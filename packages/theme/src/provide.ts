@@ -1,17 +1,23 @@
 import { registerLocaleData } from '@angular/common';
 import {
+  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   LOCALE_ID,
   Provider,
   Type,
   importProvidersFrom,
+  inject,
   makeEnvironmentProviders
 } from '@angular/core';
+
+import type { IconDefinition } from '@ant-design/icons-angular';
+import { BellOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 
 import { ALAIN_CONFIG, AlainConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NZ_DATE_LOCALE, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { DELON_LOCALE, DELON_LOCALE_SERVICE_PROVIDER } from './locale';
@@ -28,6 +34,7 @@ export interface AlainProvideOptions {
    */
   defaultLang?: AlainProvideLang;
   i18nClass?: Type<NzSafeAny>;
+  icons?: IconDefinition[];
 }
 
 export interface AlainProvideLang {
@@ -59,5 +66,14 @@ export function provideAlain(options: AlainProvideOptions): EnvironmentProviders
   if (i18nCls) {
     provides.push({ provide: ALAIN_I18N_TOKEN, useClass: i18nCls, multi: false });
   }
+
+  const icons: IconDefinition[] = [BellOutline, DeleteOutline, PlusOutline, InboxOutline, ...(options.icons ?? [])];
+  provides.push({
+    provide: ENVIRONMENT_INITIALIZER,
+    multi: true,
+    useValue: () => {
+      inject(NzIconService, { optional: true })?.addIcon(...icons);
+    }
+  });
   return makeEnvironmentProviders(provides);
 }
