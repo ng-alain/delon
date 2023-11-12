@@ -1,7 +1,14 @@
-import { EnvironmentProviders, Provider, makeEnvironmentProviders } from '@angular/core';
+import {
+  ENVIRONMENT_INITIALIZER,
+  EnvironmentProviders,
+  Provider,
+  inject,
+  makeEnvironmentProviders
+} from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManagerFactory } from './reuse-tab.cache';
+import { ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE, ReuseTabLocalStorageState } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -30,6 +37,11 @@ function makeFeature<KindT extends ReuseTabFeatureKind>(kind: KindT, providers: 
  * @see {@link withCacheManager}
  */
 export function provideReuseTabConfig(options?: {
+  debug?: boolean;
+  mode?: ReuseTabMatchMode;
+  routeParamMatchMode?: ReuseTabRouteParamMatchMode;
+  max?: number;
+  excludes?: RegExp[];
   storeKey?: string;
   cacheManager?: ReuseTabFeature<ReuseTabFeatureKind.CacheManager>;
   store?: ReuseTabFeature<ReuseTabFeatureKind.Store>;
@@ -45,6 +57,18 @@ export function provideReuseTabConfig(options?: {
       provide: RouteReuseStrategy,
       useClass: ReuseTabStrategy,
       deps: [ReuseTabService]
+    },
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => {
+        const srv = inject(ReuseTabService);
+        if (options?.debug) srv.debug = options.debug;
+        if (options?.mode) srv.mode = options.mode;
+        if (options?.routeParamMatchMode) srv.routeParamMatchMode = options.routeParamMatchMode;
+        if (options?.max) srv.max = options.max;
+        if (options?.excludes) srv.excludes = options.excludes;
+      }
     }
   ];
 

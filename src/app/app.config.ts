@@ -132,6 +132,6 @@ export const appConfig: ApplicationConfig = {
     // Elements
     importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
     provideElements()
-    // provideReuseTabConfig()
+    // provideReuseTabConfig({ max: 2 })
   ]
 };
