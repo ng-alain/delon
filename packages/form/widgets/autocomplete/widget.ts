@@ -1,10 +1,12 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { Observable, of, debounceTime, map, mergeMap, startWith, takeUntil } from 'rxjs';
 
-import { ControlUIWidget, SFSchemaEnum, SFValue, getCopyEnum, getEnum, toBool } from '@delon/form';
-import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getCopyEnum, getEnum, toBool } from '@delon/form';
+import { NzAutocompleteModule, NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 import type { SFAutoCompleteWidgetSchema } from './schema';
 
@@ -41,11 +43,15 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       [compareWith]="i.compareWith"
       (selectionChange)="updateValue($event)"
     >
-      <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>
+      @for (i of list | async; track i) {
+      <nz-auto-option [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>
+      }
     </nz-autocomplete>
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [AsyncPipe, FormsModule, DelonFormModule, NzInputModule, NzAutocompleteModule]
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
   static readonly KEY = 'autocomplete';

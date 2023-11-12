@@ -9,6 +9,7 @@ import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFWidgetProvideConfig, provideSFConfig } from '../src';
 import { SF_SEQ } from '../src/const';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
@@ -73,17 +74,12 @@ export function builder(options?: {
   };
 }
 
-export function configureSFTestSuite(options?: { imports?: NzSafeAny[] }): void {
+export function configureSFTestSuite(options?: { imports?: NzSafeAny[]; widgets?: SFWidgetProvideConfig[] }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        AlainThemeModule,
-        DelonFormModule.forRoot(),
-        HttpClientTestingModule,
-        ...(options?.imports ?? [])
-      ],
-      declarations: [TestFormComponent]
+      imports: [NoopAnimationsModule, AlainThemeModule, HttpClientTestingModule, ...(options?.imports ?? [])],
+      declarations: [TestFormComponent],
+      providers: [provideSFConfig({ widgets: options?.widgets })]
     });
   });
 }

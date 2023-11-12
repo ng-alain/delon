@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { CascaderWidgetModule } from './index';
+import { withCascader } from './index';
 import { CascaderWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -14,7 +14,7 @@ describe('form: widget: cascader', () => {
   let page: SFPage;
   const widget = 'cascader';
 
-  configureSFTestSuite({ imports: [CascaderWidgetModule] });
+  configureSFTestSuite({ widgets: [withCascader()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

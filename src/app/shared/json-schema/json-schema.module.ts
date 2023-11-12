@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { DelonFormModule } from '@delon/form';
-import { AutoCompleteWidgetModule } from '@delon/form/widgets/autocomplete';
-import { CascaderWidgetModule } from '@delon/form/widgets/cascader';
 import { ColorWidgetModule } from '@delon/form/widgets/color';
 import { MentionWidgetModule } from '@delon/form/widgets/mention';
 import { QrCodeWidgetModule } from '@delon/form/widgets/qr-code';
@@ -20,8 +18,6 @@ import { TinymceWidgetModule } from '@delon/form/widgets-third/tinymce';
 @NgModule({
   imports: [
     DelonFormModule.forRoot(),
-    AutoCompleteWidgetModule,
-    CascaderWidgetModule,
     TransferWidgetModule,
     MentionWidgetModule,
     RateWidgetModule,

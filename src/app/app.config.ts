@@ -23,6 +23,9 @@ import { provideTinymce } from 'ngx-tinymce';
 
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
+import { provideSFConfig } from '@delon/form';
+import { withAutoComplete } from '@delon/form/widgets/autocomplete';
+import { withCascader } from '@delon/form/widgets/cascader';
 import { mockInterceptor, provideDelonMockConfig } from '@delon/mock';
 import { ALAIN_I18N_TOKEN, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -112,6 +115,9 @@ export const appConfig: ApplicationConfig = {
     }),
     provideCellWidgets(...CELL_WIDGETS),
     provideSTWidgets(...ST_WIDGETS),
+    provideSFConfig({
+      widgets: [withAutoComplete(), withCascader()]
+    }),
     importProvidersFrom(
       JsonSchemaModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
