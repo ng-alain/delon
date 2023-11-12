@@ -20,9 +20,8 @@ import { Observable, throwError, catchError } from 'rxjs';
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
-import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
-import { DelonAuthModule } from '../auth.module';
+import { provideAuth, withSimple } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
@@ -78,15 +77,11 @@ describe('auth: base.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
         provideAlainConfig({ auth: options }),
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: SimpleInterceptor,
-          multi: true
-        },
+        provideAuth(withSimple()),
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
       ].concat(provider)
     });

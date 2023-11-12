@@ -1,5 +1,5 @@
-import { HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
-import { Injectable, Provider } from '@angular/core';
+import { HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { AlainAuthConfig } from '@delon/util/config';
 
@@ -8,20 +8,6 @@ import { BaseInterceptor } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 
-export function withAuthJWT(): Provider[] {
-  return [{ provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }];
-}
-
-/**
- * JWT 拦截器
- *
- * ```
- * // app.config.ts
- * providers: [
- *  withAuthJWT(),
- * ]
- * ```
- */
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {
   isAuth(options: AlainAuthConfig): boolean {

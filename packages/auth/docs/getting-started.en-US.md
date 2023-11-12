@@ -44,21 +44,12 @@ Install `@delon/auth`:
 npm i -S @delon/auth
 ```
 
-Import `DelonAuthModule` to your AppModule.
+Configure the `provideAuth` environment in `app.config.ts`:
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    withAuthSimple(),
-    // or withAuthSimple()
-  ]
-})
-export class AppModule { }
+providers: [
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
 
 ## AlainAuthConfig

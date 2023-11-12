@@ -44,22 +44,12 @@ type: Documents
 npm i -S @delon/auth
 ```
 
-导入 `DelonAuthModule` 模块：
+在 `app.config.ts` 中配置 `provideAuth` 环境：
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    // 指定认证风格对应的HTTP拦截器
-    withAuthSimple(),
-    // or withAuthSimple()
-  ]
-})
-export class AppModule { }
+providers: [
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
 
 ## AlainAuthConfig

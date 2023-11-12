@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { authSimpleCanActivate, authSimpleCanActivateChild, authSimpleCanMatch } from './simple.guard';
-import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 
 describe('auth: SimpleGuard', () => {
@@ -35,8 +34,7 @@ describe('auth: SimpleGuard', () => {
             path: 'login',
             component: MockComponent
           }
-        ]),
-        DelonAuthModule
+        ])
       ]
     });
     srv = TestBed.inject(DA_SERVICE_TOKEN);

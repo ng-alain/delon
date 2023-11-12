@@ -7,9 +7,8 @@ import { of, catchError } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
-import { withAuthJWT } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
-import { DelonAuthModule } from '../../auth.module';
+import { provideAuth, withJWT } from '../../provide';
 import { DA_SERVICE_TOKEN } from '../interface';
 
 function genModel(
@@ -37,10 +36,9 @@ describe('auth: jwt.interceptor', () => {
             path: 'login',
             component: MockComponent
           }
-        ]),
-        DelonAuthModule
+        ])
       ],
-      providers: [provideAlainConfig({ auth: options }), withAuthJWT()]
+      providers: [provideAlainConfig({ auth: options }), provideAuth(withJWT())]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
     http = TestBed.inject<HttpClient>(HttpClient);

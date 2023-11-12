@@ -23,6 +23,7 @@ import { provideTinymce } from 'ngx-tinymce';
 
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
+import { provideAuth, withJWT, withLocalStorage } from '@delon/auth';
 import { provideSFConfig } from '@delon/form';
 import { withAutoCompleteWidget } from '@delon/form/widgets/autocomplete';
 import { withCascaderWidget } from '@delon/form/widgets/cascader';
@@ -121,6 +122,7 @@ export const appConfig: ApplicationConfig = {
     provideAlain(alainConfig),
     provideNzConfig(ngZorroConfig),
     provideMockConfig({ data: MOCKDATA }),
+    provideAuth(withJWT(), withLocalStorage()),
     provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
     provideTinymce({
       baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/'
