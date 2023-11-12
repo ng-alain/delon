@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,6 +14,7 @@ import {
   SimpleChange,
   ViewEncapsulation
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import type { SafeValue } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,9 +22,16 @@ import { Subscription } from 'rxjs';
 import { updateHostClass } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
+import { CellHostDirective } from './cell-host.directive';
 import { CellService } from './cell.service';
 import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidgetData } from './cell.types';
 
@@ -30,69 +39,74 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   selector: 'cell, [cell]',
   template: `
     <ng-template #text>
-      <ng-container [ngSwitch]="safeOpt.type">
-        <label
-          *ngSwitchCase="'checkbox'"
-          nz-checkbox
-          [nzDisabled]="disabled"
-          [ngModel]="value"
-          (ngModelChange)="change($event)"
-        >
-          {{ safeOpt.checkbox?.label }}
-        </label>
-        <label
-          *ngSwitchCase="'radio'"
-          nz-radio
-          [nzDisabled]="disabled"
-          [ngModel]="value"
-          (ngModelChange)="change($event)"
-        >
-          {{ safeOpt.radio?.label }}
-        </label>
-        <a
-          *ngSwitchCase="'link'"
-          (click)="_link($event)"
-          [attr.target]="safeOpt.link?.target"
-          [attr.title]="value"
-          [innerHTML]="_text"
-        ></a>
-        <nz-tag *ngSwitchCase="'tag'" [nzColor]="res?.result?.color">
-          <span [innerHTML]="_text"></span>
-        </nz-tag>
-        <nz-badge *ngSwitchCase="'badge'" [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
-        <ng-template *ngSwitchCase="'widget'" cell-widget-host [data]="hostData" />
-        <ng-container *ngSwitchCase="'img'">
-          <img
-            *ngFor="let i of $any(_text)"
-            [attr.src]="i"
-            [attr.height]="safeOpt.img?.size"
-            [attr.width]="safeOpt.img?.size"
-            (click)="_showImg(i)"
-            class="img"
-            [class.point]="safeOpt.img?.big"
-          />
-        </ng-container>
-        <ng-container *ngSwitchDefault>
-          <span *ngIf="!isText" [innerHTML]="_text" [attr.title]="value"></span>
-          <span *ngIf="isText" [innerText]="_text" [attr.title]="value"></span>
-          <span *ngIf="_unit" class="unit">{{ _unit }}</span>
-        </ng-container>
-      </ng-container>
+      @switch(safeOpt.type) { @case('checkbox') {
+      <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
+        {{ safeOpt.checkbox?.label }}
+      </label>
+      } @case('radio') {
+      <label nz-radio [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
+        {{ safeOpt.radio?.label }}
+      </label>
+      } @case('link') {
+      <a (click)="_link($event)" [attr.target]="safeOpt.link?.target" [attr.title]="value" [innerHTML]="_text"></a>
+      } @case('tag') {
+      <nz-tag [nzColor]="res?.result?.color">
+        <span [innerHTML]="_text"></span>
+      </nz-tag>
+      } @case('badge') {
+      <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
+      } @case('widget') {
+      <ng-template cell-widget-host [data]="hostData" />
+      } @case('img') { @for (i of $any(_text); track $index) {
+      <img
+        [attr.src]="i"
+        [attr.height]="safeOpt.img?.size"
+        [attr.width]="safeOpt.img?.size"
+        (click)="_showImg(i)"
+        class="img"
+        [class.point]="safeOpt.img?.big"
+      />
+      } } @default { @if(isText) {
+      <span [innerText]="_text" [attr.title]="value"></span>
+      } @else {
+      <span [innerHTML]="_text" [attr.title]="value"></span>
+      } @if(_unit) {
+      <span class="unit">{{ _unit }}</span>
+      } } }
     </ng-template>
     <ng-template #textWrap>
-      <ng-container *ngIf="showDefault">{{ safeOpt.default?.text }}</ng-container>
-      <ng-container *ngIf="!showDefault">
-        <span *ngIf="safeOpt.tooltip; else text" [nz-tooltip]="safeOpt.tooltip">
-          <ng-template [ngTemplateOutlet]="text" />
-        </span>
-      </ng-container>
+      @if (showDefault) {
+      {{ safeOpt.default?.text }}
+      } @else { @if (safeOpt.tooltip) {
+      <span [nz-tooltip]="safeOpt.tooltip">
+        <ng-template [ngTemplateOutlet]="text" />
+      </span>
+      } @else {
+      <ng-template [ngTemplateOutlet]="text" />
+      } }
     </ng-template>
-    <span *ngIf="loading; else textWrap" nz-icon nzType="loading"></span>
+    @if (loading) {
+    <span nz-icon nzType="loading"></span>
+    } @else {
+    <ng-template [ngTemplateOutlet]="textWrap" />
+    }
   `,
   exportAs: 'cell',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    FormsModule,
+    NgTemplateOutlet,
+    NzCheckboxModule,
+    NzRadioModule,
+    NzIconModule,
+    NzTagModule,
+    NzBadgeModule,
+    NzToolTipModule,
+    CellHostDirective
+  ]
 })
 export class CellComponent implements OnChanges, OnDestroy {
   static ngAcceptInputType_loading: BooleanInput;
@@ -151,7 +165,7 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   private setClass(): void {
     const { el, renderer } = this;
-    const { renderType, size } = this.safeOpt;
+    const { renderType, size, type } = this.safeOpt;
     updateHostClass(el.nativeElement, renderer, {
       [`cell`]: true,
       [`cell__${renderType}`]: renderType != null,
@@ -160,7 +174,7 @@ export class CellComponent implements OnChanges, OnDestroy {
       [`cell__has-default`]: this.showDefault,
       [`cell__disabled`]: this.disabled
     });
-    el.nativeElement.dataset.type = this.safeOpt.type;
+    el.nativeElement.setAttribute('data-type', `${type}`);
   }
 
   ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
