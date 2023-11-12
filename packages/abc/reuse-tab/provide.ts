@@ -7,7 +7,7 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE, ReuseTabLocalStorageSta
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 export enum ReuseTabFeatureKind {
-  Cache,
+  CacheManager,
   Store
 }
 
@@ -27,24 +27,37 @@ function makeFeature<KindT extends ReuseTabFeatureKind>(kind: KindT, providers: 
  * Configures reuse-tab to be available for injection.
  *
  * @see {@link withLocalStorage}
- * @see {@link withCache}
+ * @see {@link withCacheManager}
  */
 export function provideReuseTabConfig(options?: {
   storeKey?: string;
-  cache?: ReuseTabFeature<ReuseTabFeatureKind.Cache>;
+  cacheManager?: ReuseTabFeature<ReuseTabFeatureKind.CacheManager>;
   store?: ReuseTabFeature<ReuseTabFeatureKind.Store>;
 }): EnvironmentProviders {
-  return makeEnvironmentProviders([
+  const providers: Provider[] = [
     {
       provide: REUSE_TAB_STORAGE_KEY,
       useValue: options?.storeKey ?? '_reuse-tab-state'
     },
-    (options?.cache ?? withCache()).ɵproviders,
-    (options?.store ?? withLocalStorage()).ɵproviders,
+    (options?.cacheManager ?? withCacheManager()).ɵproviders,
     {
       provide: RouteReuseStrategy,
       useClass: ReuseTabStrategy,
       deps: [ReuseTabService]
+    }
+  ];
+  if (options?.store) {
+    providers.push(options.store.ɵproviders);
+  }
+
+  return makeEnvironmentProviders(providers);
+}
+
+export function withCacheManager(): ReuseTabFeature<ReuseTabFeatureKind.CacheManager> {
+  return makeFeature(ReuseTabFeatureKind.CacheManager, [
+    {
+      provide: REUSE_TAB_CACHED_MANAGER,
+      useFactory: () => new ReuseTabCachedManagerFactory()
     }
   ]);
 }
@@ -54,15 +67,6 @@ export function withLocalStorage(): ReuseTabFeature<ReuseTabFeatureKind.Store> {
     {
       provide: REUSE_TAB_STORAGE_STATE,
       useFactory: () => new ReuseTabLocalStorageState()
-    }
-  ]);
-}
-
-export function withCache(): ReuseTabFeature<ReuseTabFeatureKind.Cache> {
-  return makeFeature(ReuseTabFeatureKind.Cache, [
-    {
-      provide: REUSE_TAB_CACHED_MANAGER,
-      useFactory: () => new ReuseTabCachedManagerFactory()
     }
   ]);
 }

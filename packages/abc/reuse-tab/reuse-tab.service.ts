@@ -368,9 +368,9 @@ export class ReuseTabService implements OnDestroy {
   constructor(
     private injector: Injector,
     private menuService: MenuService,
-    @Optional() @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
+    @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
     @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
-    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
+    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv?: ReuseTabStorageState
   ) {
     if (this.cached == null) {
       this.cached = { list: [], title: {}, closable: {} };
@@ -386,11 +386,12 @@ export class ReuseTabService implements OnDestroy {
   private loadState(): void {
     if (!this.storageState) return;
 
-    this.cached.list = this.stateSrv.get(this.stateKey).map(v => ({
-      title: { text: v.title },
-      url: v.url,
-      position: v.position
-    }));
+    this.cached.list =
+      this.stateSrv?.get(this.stateKey).map(v => ({
+        title: { text: v.title },
+        url: v.url,
+        position: v.position
+      })) ?? [];
     this._cachedChange.next({ active: 'loadState' });
   }
 
