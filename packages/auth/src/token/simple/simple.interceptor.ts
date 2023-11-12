@@ -18,7 +18,9 @@ export function withAuthSimple(): Provider[] {
  *
  * ```
  * // app.config.ts
- * withAuthSimple(),
+ * providers: [
+ *  withAuthSimple(),
+ * ]
  * ```
  */
 @Injectable()

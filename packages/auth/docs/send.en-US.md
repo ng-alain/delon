@@ -10,7 +10,7 @@ type: Documents
 
 It is better to add the corresponding authentication information to each request through the HTTP interceptor. `@delonn/auth` implements two separate HTTP interceptors based on two different authentication styles.
 
-### SimpleInterceptor
+### withAuthSimple
 
 The parameter name and its sending location can be specified via `DelonAuthConfig`, for example:
 
@@ -22,22 +22,25 @@ token_send_place = 'header';
 
 Indicates the `{ token: 'Bearer token_string' }` data in the `header` of each request.
 
-### JWTInterceptor
+### withAuthJWT
 
 It is a standard JWT sending rule that automatically adds `{ Authorization: 'Bearer token_string' }` to `header`.
 
 ### How to choose?
 
-`SimpleInterceptor` is a very liberal style, you can put `token` in the request body, request header, etc.
+`withAuthSimple` is a very liberal style, you can put `token` in the request body, request header, etc.
 
-`JWTInterceptor` is a JWT standard, which needs to ensure that the backend also uses such standards.
+`withAuthJWT` is a JWT standard, which needs to ensure that the backend also uses such standards.
 
 ## How to load
 
-By default `DelonAuthModule` does not load any HTTP interceptors, which requires you to manually add in your corresponding module:
+In `app.config.ts` file:
 
 ```ts
-{ provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }
+providers: [
+  withAuthSimple(),
+  // or withAuthSimple()
+]
 ```
 
 ## Example

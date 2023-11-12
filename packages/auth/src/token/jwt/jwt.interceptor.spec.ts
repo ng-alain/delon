@@ -1,4 +1,4 @@
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -7,7 +7,7 @@ import { of, catchError } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
-import { JWTInterceptor } from './jwt.interceptor';
+import { withAuthJWT } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN } from '../interface';
@@ -40,10 +40,7 @@ describe('auth: jwt.interceptor', () => {
         ]),
         DelonAuthModule
       ],
-      providers: [
-        provideAlainConfig({ auth: options }),
-        { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
-      ]
+      providers: [provideAlainConfig({ auth: options }), withAuthJWT()]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
     http = TestBed.inject<HttpClient>(HttpClient);

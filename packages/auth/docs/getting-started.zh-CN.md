@@ -55,15 +55,12 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
   ],
   providers: [
     // 指定认证风格对应的HTTP拦截器
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
+    withAuthSimple(),
+    // or withAuthSimple()
   ]
 })
 export class AppModule { }
 ```
-
-**为什么需要手动注册HTTP_INTERCEPTORS**
-
-默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 @delon/auth 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
 ## AlainAuthConfig
 

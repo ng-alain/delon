@@ -17,7 +17,9 @@ export function withAuthJWT(): Provider[] {
  *
  * ```
  * // app.config.ts
- * withAuthSimple(),
+ * providers: [
+ *  withAuthJWT(),
+ * ]
  * ```
  */
 @Injectable()

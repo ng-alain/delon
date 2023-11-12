@@ -54,16 +54,12 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
     DelonAuthModule
   ],
   providers: [
-    // Specify the HTTP interceptor corresponding to the authentication style
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
+    withAuthSimple(),
+    // or withAuthSimple()
   ]
 })
 export class AppModule { }
 ```
-
-**Why do I need to manually register HTTP_INTERCEPTORS**
-
-The default `DelonAuthModule` does not register any HTTP interceptor, because of `@delon/auth` provides multiple different [authentication styles](/auth/getting-started#AuthenticationStyle).
 
 ## AlainAuthConfig
 
