@@ -18,7 +18,6 @@ import {
   ReuseTabMatchMode,
   ReuseTabRouteParamMatchMode
 } from './reuse-tab.interfaces';
-import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -45,7 +44,7 @@ describe('abc: reuse-tab', () => {
       declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
         DelonLocaleModule,
-        ReuseTabModule,
+        ReuseTabComponent,
         RouterTestingModule.withRoutes(
           [
             {

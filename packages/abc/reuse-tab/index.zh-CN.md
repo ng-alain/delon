@@ -278,10 +278,6 @@ export class DemoComponent implements OnReuseInit, OnReuseDestroy {
 
 复用采用URL来区分是否同一个页面，而 QueryString 查询参数很容易产生重复性误用，因此不支持查询参数，且在复用过程中会强制忽略掉 QueryString 部分。
 
-### 如何标签持久化存储
-
-使用 `provideReuseTabConfig(store: withLocalStorage())` 将标签持久化至 `localStorage` 当中，若需要其他存储方式，可覆盖 `REUSE_TAB_STORAGE_STATE`。
-
 ### 多应用缓存处理
 
 使用 `provideReuseTabConfig(storeKey: 'newKey')` 或通过覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储 ，例如在使用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下来实现数据共享。

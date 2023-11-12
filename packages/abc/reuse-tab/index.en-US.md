@@ -278,10 +278,6 @@ Limiting the maximum number of reuse can reduce memory growth. There are several
 
 Route reuse preserves uses URLs to distinguish whether the same page, and QueryString query parameters will be repeatedly misused, so not supported, and the QueryString part is forced to be ignored.
 
-### How to persistent storage of tab
-
-Use `provideReuseTabConfig(store: withLocalStorage())` to persist the tab to `localStorage`. If you need custom storage methods, you can override `REUSE_TAB_STORAGE_STATE`.
-
 ### Multi-application cache processing
 
 Use `provideReuseTabConfig(storeKey: 'newKey')` Or overriding `REUSE_TAB_CACHED_MANAGER` to change the cache storage, for example when using a micro-frontend (similar to [ngx-planet](https://github.com/worktile/ngx-planet)) can rewrite cached data to `window` guaranteed data sharing.

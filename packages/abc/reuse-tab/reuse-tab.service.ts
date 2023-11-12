@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
+import { Inject, Injectable, Injector, OnDestroy } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -369,8 +369,8 @@ export class ReuseTabService implements OnDestroy {
     private injector: Injector,
     private menuService: MenuService,
     @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
-    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
-    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv?: ReuseTabStorageState
+    @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
+    @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
   ) {
     if (this.cached == null) {
       this.cached = { list: [], title: {}, closable: {} };
@@ -386,12 +386,11 @@ export class ReuseTabService implements OnDestroy {
   private loadState(): void {
     if (!this.storageState) return;
 
-    this.cached.list =
-      this.stateSrv?.get(this.stateKey).map(v => ({
-        title: { text: v.title },
-        url: v.url,
-        position: v.position
-      })) ?? [];
+    this.cached.list = this.stateSrv.get(this.stateKey).map(v => ({
+      title: { text: v.title },
+      url: v.url,
+      position: v.position
+    }));
     this._cachedChange.next({ active: 'loadState' });
   }
 

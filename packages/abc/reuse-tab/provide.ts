@@ -40,15 +40,13 @@ export function provideReuseTabConfig(options?: {
       useValue: options?.storeKey ?? '_reuse-tab-state'
     },
     (options?.cacheManager ?? withCacheManager()).ɵproviders,
+    (options?.store ?? withLocalStorage()).ɵproviders,
     {
       provide: RouteReuseStrategy,
       useClass: ReuseTabStrategy,
       deps: [ReuseTabService]
     }
   ];
-  if (options?.store) {
-    providers.push(options.store.ɵproviders);
-  }
 
   return makeEnvironmentProviders(providers);
 }
