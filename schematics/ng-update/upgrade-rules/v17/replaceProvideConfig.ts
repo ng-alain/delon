@@ -46,10 +46,9 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
 
   const text = 'DelonMockModule.forRoot({ data: MOCKDATA })';
   let content = tree.readText(filePath);
-  if (content.includes('text')) content = content.replace(text, '');
+  if (content.includes(text)) content = content.replace(text, '');
 
   content = content
-    .replace('DelonMockModule.forRoot({ data: MOCKDATA })', '')
     .replace('modules: [', 'providers: [provideMockConfig({ data: MOCKDATA })],\nmodules: [')
     .replace('DelonMockModule', 'provideMockConfig');
 
