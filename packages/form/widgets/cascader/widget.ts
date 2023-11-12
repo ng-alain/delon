@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
-import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
+import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { SFCascaderWidgetSchema } from './schema';
@@ -44,7 +45,9 @@ import type { SFCascaderWidgetSchema } from './schema';
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzCascaderModule]
 })
 export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   static readonly KEY = 'cascader';

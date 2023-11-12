@@ -16,6 +16,7 @@ export * from './model/index';
 export * from './widget';
 export * from './widgets/index';
 export * from './widget.factory';
+export * from './provide';
 
 // other
 export * from './validator.factory';

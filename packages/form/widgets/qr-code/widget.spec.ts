@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { QrCodeWidgetModule, SFQrCodeWidgetSchema } from './index';
+import { SFQrCodeWidgetSchema, withQrCodeWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: qr-code', () => {
@@ -13,7 +13,7 @@ describe('form: widget: qr-code', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureSFTestSuite({ imports: [QrCodeWidgetModule] });
+  configureSFTestSuite({ widgets: [withQrCodeWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

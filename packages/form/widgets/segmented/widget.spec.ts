@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { SegmentedWidgetModule, SFSegmentedWidgetSchema } from './index';
+import { withSegmentedWidget, SFSegmentedWidgetSchema } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: segmented', () => {
@@ -13,7 +13,7 @@ describe('form: widget: segmented', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureSFTestSuite({ imports: [SegmentedWidgetModule] });
+  configureSFTestSuite({ widgets: [withSegmentedWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget, toBool } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, toBool } from '@delon/form';
+import { NzRateModule } from 'ng-zorro-antd/rate';
 
 import type { SFRateWidgetSchema } from './schema';
 
@@ -24,10 +26,14 @@ import type { SFRateWidgetSchema } from './schema';
       [nzAutoFocus]="autoFocus"
       [nzCount]="$any(count)"
     />
-    <span *ngIf="hasText && formProperty.value" class="ant-rate-text">{{ text }}</span>
+    @if (hasText && formProperty.value) {
+    <span class="ant-rate-text">{{ text }}</span>
+    }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzRateModule]
 })
 export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements OnInit {
   static readonly KEY = 'rate';

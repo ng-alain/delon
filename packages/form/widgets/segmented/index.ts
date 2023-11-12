@@ -1,20 +1,11 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { DelonFormModule, WidgetRegistry } from '@delon/form';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import type { SFWidgetProvideConfig } from '@delon/form';
 
 import { SegmentedWidget } from './widget';
 
 export * from './widget';
 export * from './schema';
+export * from './module';
 
-@NgModule({
-  imports: [FormsModule, DelonFormModule, NzSegmentedModule],
-  declarations: [SegmentedWidget]
-})
-export class SegmentedWidgetModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(SegmentedWidget.KEY, SegmentedWidget);
-  }
+export function withSegmentedWidget(): SFWidgetProvideConfig {
+  return { KEY: SegmentedWidget.KEY, type: SegmentedWidget };
 }

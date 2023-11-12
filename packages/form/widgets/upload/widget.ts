@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { ControlUIWidget, SFValue, getData, toBool } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFValue, getData, toBool } from '@delon/form';
 import { deepGet } from '@delon/util/other';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzImageService } from 'ng-zorro-antd/image';
+import { NzUploadChangeParam, NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 
 import type { SFUploadWidgetSchema } from './schema';
 
@@ -48,24 +51,22 @@ import type { SFUploadWidgetSchema } from './schema';
       (nzChange)="change($event)"
       [nzShowButton]="fileList.length < i.limitFileCount"
     >
-      <ng-container [ngSwitch]="btnType">
-        <ng-container *ngSwitchCase="'plus'">
-          <i nz-icon nzType="plus"></i>
-          <div class="ant-upload-text" [innerHTML]="i.text"></div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'drag'">
-          <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
-          <p class="ant-upload-text" [innerHTML]="i.text"></p>
-          <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
-        </ng-container>
-        <ng-container *ngSwitchDefault>
-          <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
-        </ng-container>
-      </ng-container>
+      @switch (btnType) { @case ('plus') {
+      <i nz-icon nzType="plus"></i>
+      <div class="ant-upload-text" [innerHTML]="i.text"></div>
+      } @case ('drag') {
+      <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
+      <p class="ant-upload-text" [innerHTML]="i.text"></p>
+      <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
+      } @default {
+      <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
+      } }
     </nz-upload>
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzUploadModule, NzIconModule, NzButtonModule]
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
   static readonly KEY = 'upload';
@@ -182,9 +183,6 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     if (!_url) {
       return;
     }
-    this.injector.get<NzModalService>(NzModalService).create({
-      nzContent: `<img src="${_url}" class="img-fluid" />`,
-      nzFooter: null
-    });
+    this.injector.get(NzImageService, null)?.preview([{ src: _url }]);
   };
 }

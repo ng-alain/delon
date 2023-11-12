@@ -6,7 +6,7 @@ import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { TreeSelectWidgetModule } from './index';
+import { withTreeSelectWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: tree-select', () => {
@@ -16,7 +16,7 @@ describe('form: widget: tree-select', () => {
   let dl: DebugElement;
   const widget = 'tree-select';
 
-  configureSFTestSuite({ imports: [TreeSelectWidgetModule] });
+  configureSFTestSuite({ widgets: [withTreeSelectWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
