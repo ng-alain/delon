@@ -68,9 +68,9 @@ const ICONS = [
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
         @for (m of topMenus; track $index) {
-        <layout-default-top-menu-item (click)="changeMenu(m.key)" [selected]="m.selected" [disabled]="m.disabled">
-          <i nz-icon nzType="github"></i> {{ m.label }}
-        </layout-default-top-menu-item>
+          <layout-default-top-menu-item (click)="changeMenu(m.key)" [selected]="m.selected" [disabled]="m.disabled">
+            <i nz-icon nzType="github"></i> {{ m.label }}
+          </layout-default-top-menu-item>
         }
       </layout-default-header-item>
       <layout-default-header-item direction="right">

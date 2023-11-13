@@ -590,8 +590,8 @@ describe('theme: layout-default-nav', () => {
       const el = body
         ? document.querySelector(cls)
         : dl.query(By.css(cls))
-        ? dl.query(By.css(cls)).nativeElement
-        : null;
+          ? dl.query(By.css(cls)).nativeElement
+          : null;
       return el ? (el as T) : null;
     }
     checkText(cls: string, value: NzSafeAny): void {

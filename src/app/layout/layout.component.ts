@@ -17,13 +17,13 @@ import { AppService, SiteTheme } from '../core/app.service';
   selector: 'app-layout',
   template: `
     @if (render) {
-    <app-header />
-    @if (isFetching) {
-    <nz-spin class="fetching" nzSpinning />
-    }
-    <router-outlet />
-    <nz-back-top />
-    <theme-btn (themeChange)="themeChange($event)" />
+      <app-header />
+      @if (isFetching) {
+        <nz-spin class="fetching" nzSpinning />
+      }
+      <router-outlet />
+      <nz-back-top />
+      <theme-btn (themeChange)="themeChange($event)" />
     }
   `,
   host: {

@@ -30,20 +30,20 @@ import type { SFTagWidgetSchema } from './schema';
       ></i>
     </ng-template>
     @for (i of data; track $index) {
-    <nz-tag
-      [nzMode]="ui.mode || 'checkable'"
-      [nzChecked]="i.checked"
-      (nzOnClose)="_close($event)"
-      (nzCheckedChange)="onChange(i)"
-    >
-      @if (i.prefixIcon) {
-      <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.prefixIcon }" />
-      }
-      <span>{{ i.label }}</span>
-      @if (i.suffixIcon) {
-      <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.suffixIcon }" />
-      }
-    </nz-tag>
+      <nz-tag
+        [nzMode]="ui.mode || 'checkable'"
+        [nzChecked]="i.checked"
+        (nzOnClose)="_close($event)"
+        (nzCheckedChange)="onChange(i)"
+      >
+        @if (i.prefixIcon) {
+          <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.prefixIcon }" />
+        }
+        <span>{{ i.label }}</span>
+        @if (i.suffixIcon) {
+          <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.suffixIcon }" />
+        }
+      </nz-tag>
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
