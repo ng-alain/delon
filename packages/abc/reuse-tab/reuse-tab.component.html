@@ -8,27 +8,27 @@
   [nzTabBarStyle]="tabBarStyle"
 >
   @for (i of list; track $index) {
-  <nz-tab [nzTitle]="titleTemplate" (nzClick)="_to($index)">
-    <ng-template #titleTemplate>
-      <div
-        [reuse-tab-context-menu]="i"
-        [customContextMenu]="customContextMenu"
-        class="reuse-tab__name"
-        [attr.title]="i.title"
-      >
-        <span [class.reuse-tab__name-width]="tabMaxWidth" [style.max-width.px]="tabMaxWidth">
-          @if (titleRender) {
-          <ng-template [ngTemplateOutlet]="titleRender" [ngTemplateOutletContext]="{ $implicit: i }" />
-          } @else {
-          {{ i.title }}
-          }
-        </span>
-      </div>
-      @if (i.closable) {
-      <i nz-icon nzType="close" class="reuse-tab__op" (click)="_close($event, $index, false)"></i>
-      }
-    </ng-template>
-  </nz-tab>
+    <nz-tab [nzTitle]="titleTemplate" (nzClick)="_to($index)">
+      <ng-template #titleTemplate>
+        <div
+          [reuse-tab-context-menu]="i"
+          [customContextMenu]="customContextMenu"
+          class="reuse-tab__name"
+          [attr.title]="i.title"
+        >
+          <span [class.reuse-tab__name-width]="tabMaxWidth" [style.max-width.px]="tabMaxWidth">
+            @if (titleRender) {
+              <ng-template [ngTemplateOutlet]="titleRender" [ngTemplateOutletContext]="{ $implicit: i }" />
+            } @else {
+              {{ i.title }}
+            }
+          </span>
+        </div>
+        @if (i.closable) {
+          <i nz-icon nzType="close" class="reuse-tab__op" (click)="_close($event, $index, false)"></i>
+        }
+      </ng-template>
+    </nz-tab>
   }
 </nz-tabset>
 <reuse-tab-context [i18n]="i18n" (change)="contextMenuChange($event)" />

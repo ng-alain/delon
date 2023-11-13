@@ -39,56 +39,72 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   selector: 'cell, [cell]',
   template: `
     <ng-template #text>
-      @switch(safeOpt.type) { @case('checkbox') {
-      <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
-        {{ safeOpt.checkbox?.label }}
-      </label>
-      } @case('radio') {
-      <label nz-radio [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
-        {{ safeOpt.radio?.label }}
-      </label>
-      } @case('link') {
-      <a (click)="_link($event)" [attr.target]="safeOpt.link?.target" [attr.title]="value" [innerHTML]="_text"></a>
-      } @case('tag') {
-      <nz-tag [nzColor]="res?.result?.color">
-        <span [innerHTML]="_text"></span>
-      </nz-tag>
-      } @case('badge') {
-      <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
-      } @case('widget') {
-      <ng-template cell-widget-host [data]="hostData" />
-      } @case('img') { @for (i of $any(_text); track $index) {
-      <img
-        [attr.src]="i"
-        [attr.height]="safeOpt.img?.size"
-        [attr.width]="safeOpt.img?.size"
-        (click)="_showImg(i)"
-        class="img"
-        [class.point]="safeOpt.img?.big"
-      />
-      } } @default { @if(isText) {
-      <span [innerText]="_text" [attr.title]="value"></span>
-      } @else {
-      <span [innerHTML]="_text" [attr.title]="value"></span>
-      } @if(_unit) {
-      <span class="unit">{{ _unit }}</span>
-      } } }
+      @switch (safeOpt.type) {
+        @case ('checkbox') {
+          <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
+            {{ safeOpt.checkbox?.label }}
+          </label>
+        }
+        @case ('radio') {
+          <label nz-radio [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="change($event)">
+            {{ safeOpt.radio?.label }}
+          </label>
+        }
+        @case ('link') {
+          <a (click)="_link($event)" [attr.target]="safeOpt.link?.target" [attr.title]="value" [innerHTML]="_text"></a>
+        }
+        @case ('tag') {
+          <nz-tag [nzColor]="res?.result?.color">
+            <span [innerHTML]="_text"></span>
+          </nz-tag>
+        }
+        @case ('badge') {
+          <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
+        }
+        @case ('widget') {
+          <ng-template cell-widget-host [data]="hostData" />
+        }
+        @case ('img') {
+          @for (i of $any(_text); track $index) {
+            <img
+              [attr.src]="i"
+              [attr.height]="safeOpt.img?.size"
+              [attr.width]="safeOpt.img?.size"
+              (click)="_showImg(i)"
+              class="img"
+              [class.point]="safeOpt.img?.big"
+            />
+          }
+        }
+        @default {
+          @if (isText) {
+            <span [innerText]="_text" [attr.title]="value"></span>
+          } @else {
+            <span [innerHTML]="_text" [attr.title]="value"></span>
+          }
+          @if (_unit) {
+            <span class="unit">{{ _unit }}</span>
+          }
+        }
+      }
     </ng-template>
     <ng-template #textWrap>
       @if (showDefault) {
-      {{ safeOpt.default?.text }}
-      } @else { @if (safeOpt.tooltip) {
-      <span [nz-tooltip]="safeOpt.tooltip">
-        <ng-template [ngTemplateOutlet]="text" />
-      </span>
+        {{ safeOpt.default?.text }}
       } @else {
-      <ng-template [ngTemplateOutlet]="text" />
-      } }
+        @if (safeOpt.tooltip) {
+          <span [nz-tooltip]="safeOpt.tooltip">
+            <ng-template [ngTemplateOutlet]="text" />
+          </span>
+        } @else {
+          <ng-template [ngTemplateOutlet]="text" />
+        }
+      }
     </ng-template>
     @if (loading) {
-    <span nz-icon nzType="loading"></span>
+      <span nz-icon nzType="loading"></span>
     } @else {
-    <ng-template [ngTemplateOutlet]="textWrap" />
+      <ng-template [ngTemplateOutlet]="textWrap" />
     }
   `,
   exportAs: 'cell',

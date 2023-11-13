@@ -19,17 +19,17 @@
         </ng-template>
       </a>
       @if (isBrowser) {
-      <github-button type="stargazers" size="large" namespace="ng-alain" repo="ng-alain" />
+        <github-button type="stargazers" size="large" namespace="ng-alain" repo="ng-alain" />
       }
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay>
     @for (i of list; track $index) {
-    <div nz-carousel-content>
-      <a href="{{ i.url }}" target="_blank">
-        <img src="./assets/screenshot/{{ i.type }}.png" />
-      </a>
-    </div>
+      <div nz-carousel-content>
+        <a href="{{ i.url }}" target="_blank">
+          <img src="./assets/screenshot/{{ i.type }}.png" />
+        </a>
+      </div>
     }
   </nz-carousel>
 </div>
@@ -119,19 +119,19 @@
     <h2>{{ 'app.home.theme' | i18n }}</h2>
     <div class="ant-row">
       @for (t of themes; track $index) {
-      <div class="ant-col-xs-24 ant-col-md-12">
-        <a
-          class="page-theme__item"
-          [attr.href]="'https://e.ng-alain.com/theme/' + t"
-          data-aos="zoom-in"
-          data-aos-delay="0"
-          [attr.data-theme]="t"
-        >
-          <img src="./assets/screenshot/{{ t }}.png" />
-          <h3>{{ 'app.home.theme.' + t | i18n }}</h3>
-          <p>{{ 'app.home.theme.' + t + '.desc' | i18n }}</p>
-        </a>
-      </div>
+        <div class="ant-col-xs-24 ant-col-md-12">
+          <a
+            class="page-theme__item"
+            [attr.href]="'https://e.ng-alain.com/theme/' + t"
+            data-aos="zoom-in"
+            data-aos-delay="0"
+            [attr.data-theme]="t"
+          >
+            <img src="./assets/screenshot/{{ t }}.png" />
+            <h3>{{ 'app.home.theme.' + t | i18n }}</h3>
+            <p>{{ 'app.home.theme.' + t + '.desc' | i18n }}</p>
+          </a>
+        </div>
       }
     </div>
   </div>

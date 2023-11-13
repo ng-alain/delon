@@ -31,34 +31,34 @@ import type { SFMentionWidgetSchema } from './schema';
       (nzOnSearchChange)="_search($event)"
     >
       @if (ui.inputStyle === 'textarea') {
-      <textarea
-        nzMentionTrigger
-        nz-input
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size!"
-        [ngModel]="value"
-        (ngModelChange)="setValue($event)"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        [nzAutosize]="i.autosize"
-      >
-      </textarea>
+        <textarea
+          nzMentionTrigger
+          nz-input
+          [attr.id]="id"
+          [disabled]="disabled"
+          [attr.disabled]="disabled"
+          [nzSize]="ui.size!"
+          [ngModel]="value"
+          (ngModelChange)="setValue($event)"
+          [attr.maxLength]="schema.maxLength || null"
+          [attr.placeholder]="ui.placeholder"
+          [nzAutosize]="i.autosize"
+        >
+        </textarea>
       } @else {
-      <input
-        nzMentionTrigger
-        nz-input
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size!"
-        [ngModel]="value"
-        (ngModelChange)="setValue($event)"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        autocomplete="off"
-      />
+        <input
+          nzMentionTrigger
+          nz-input
+          [attr.id]="id"
+          [disabled]="disabled"
+          [attr.disabled]="disabled"
+          [nzSize]="ui.size!"
+          [ngModel]="value"
+          (ngModelChange)="setValue($event)"
+          [attr.maxLength]="schema.maxLength || null"
+          [attr.placeholder]="ui.placeholder"
+          autocomplete="off"
+        />
       }
     </nz-mention>
   </sf-item-wrap>`,

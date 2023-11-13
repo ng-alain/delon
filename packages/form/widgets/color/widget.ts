@@ -17,23 +17,23 @@ import type { SFColorWidgetSchema } from './schema';
     [showTitle]="schema.title"
   >
     @if (ui.block) {
-    <nz-color-block [nzColor]="value" [nzSize]="$any(ui.size)" />
+      <nz-color-block [nzColor]="value" [nzSize]="$any(ui.size)" />
     } @else {
-    <nz-color-picker
-      [ngModel]="value"
-      (ngModelChange)="setValue($event)"
-      [nzDisabled]="disabled"
-      [nzSize]="$any(ui.size)"
-      [nzDefaultValue]="ui.defaultValue ?? ''"
-      [nzFormat]="ui.format ?? null"
-      [nzTrigger]="ui.trigger ?? 'click'"
-      [nzTitle]="ui.title ?? ''"
-      [nzFlipFlop]="$any(ui.flipFlop)"
-      [nzShowText]="ui.showText"
-      [nzAllowClear]="ui.allowClear"
-      (nzOnChange)="_change($event)"
-      (nzOnFormatChange)="_formatChange($event)"
-    />
+      <nz-color-picker
+        [ngModel]="value"
+        (ngModelChange)="setValue($event)"
+        [nzDisabled]="disabled"
+        [nzSize]="$any(ui.size)"
+        [nzDefaultValue]="ui.defaultValue ?? ''"
+        [nzFormat]="ui.format ?? null"
+        [nzTrigger]="ui.trigger ?? 'click'"
+        [nzTitle]="ui.title ?? ''"
+        [nzFlipFlop]="$any(ui.flipFlop)"
+        [nzShowText]="ui.showText"
+        [nzAllowClear]="ui.allowClear"
+        (nzOnChange)="_change($event)"
+        (nzOnFormatChange)="_formatChange($event)"
+      />
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,

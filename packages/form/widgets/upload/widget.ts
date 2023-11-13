@@ -51,16 +51,20 @@ import type { SFUploadWidgetSchema } from './schema';
       (nzChange)="change($event)"
       [nzShowButton]="fileList.length < i.limitFileCount"
     >
-      @switch (btnType) { @case ('plus') {
-      <i nz-icon nzType="plus"></i>
-      <div class="ant-upload-text" [innerHTML]="i.text"></div>
-      } @case ('drag') {
-      <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
-      <p class="ant-upload-text" [innerHTML]="i.text"></p>
-      <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
-      } @default {
-      <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
-      } }
+      @switch (btnType) {
+        @case ('plus') {
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text" [innerHTML]="i.text"></div>
+        }
+        @case ('drag') {
+          <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
+          <p class="ant-upload-text" [innerHTML]="i.text"></p>
+          <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
+        }
+        @default {
+          <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
+        }
+      }
     </nz-upload>
   </sf-item-wrap>`,
   preserveWhitespaces: false,

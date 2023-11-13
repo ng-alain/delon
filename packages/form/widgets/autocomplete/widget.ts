@@ -44,7 +44,7 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       (selectionChange)="updateValue($event)"
     >
       @for (i of list | async; track i) {
-      <nz-auto-option [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>
+        <nz-auto-option [nzValue]="i" [nzLabel]="i.label"> {{ i.label }} </nz-auto-option>
       }
     </nz-autocomplete>
   </sf-item-wrap>`,

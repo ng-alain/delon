@@ -27,7 +27,7 @@ import type { SFRateWidgetSchema } from './schema';
       [nzCount]="$any(count)"
     />
     @if (hasText && formProperty.value) {
-    <span class="ant-rate-text">{{ text }}</span>
+      <span class="ant-rate-text">{{ text }}</span>
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
