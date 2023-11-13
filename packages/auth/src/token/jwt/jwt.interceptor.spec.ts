@@ -1,5 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  TestRequest,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,8 +12,9 @@ import { of, catchError } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
+import { authJWTInterceptor } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
-import { provideAuth, withJWT } from '../../provide';
+import { provideAuth } from '../../provide';
 import { DA_SERVICE_TOKEN } from '../interface';
 
 function genModel(
@@ -38,7 +44,12 @@ describe('auth: jwt.interceptor', () => {
           }
         ])
       ],
-      providers: [provideAlainConfig({ auth: options }), provideAuth(withJWT())]
+      providers: [
+        provideHttpClient(withInterceptors([authJWTInterceptor])),
+        provideHttpClientTesting(),
+        provideAlainConfig({ auth: options }),
+        provideAuth()
+      ]
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
     http = TestBed.inject<HttpClient>(HttpClient);

@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  TestRequest,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
@@ -10,8 +15,9 @@ import { Observable } from 'rxjs';
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { SimpleTokenModel } from './simple.model';
-import { provideAuth, withSimple } from '../../provide';
+import { provideAuth } from '../../provide';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
+import { authJWTInterceptor } from '../jwt';
 
 function genModel(token: string = `123`): SimpleTokenModel {
   const model = new SimpleTokenModel();
@@ -57,9 +63,11 @@ describe('auth: simple.interceptor', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
+        provideHttpClient(withInterceptors([authJWTInterceptor])),
+        provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),
         { provide: Router, useValue: mockRouter },
-        provideAuth(withSimple()),
+        provideAuth(),
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
       ]
     });

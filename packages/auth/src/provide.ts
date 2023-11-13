@@ -1,13 +1,10 @@
-import { ɵHTTP_ROOT_INTERCEPTOR_FNS } from '@angular/common/http';
 import { EnvironmentProviders, Provider, makeEnvironmentProviders } from '@angular/core';
 
 import { CookieService } from '@delon/util/browser';
 
 import { CookieStorageStore, DA_STORE_TOKEN, LocalStorageStore, MemoryStore, SessionStorageStore } from './store';
-import { JWTInterceptor, SimpleInterceptor } from './token/index';
 
 export enum AuthFeatureKind {
-  Token,
   Store
 }
 
@@ -26,38 +23,12 @@ function makeAuthFeature<KindT extends AuthFeatureKind>(kind: KindT, providers: 
 /**
  * Configures authentication process service to be available for injection.
  *
- * @see {@link withSimple}
- * @see {@link withJWT}
  * @see {@link withCookie}
  * @see {@link withLocalStorage}
  * @see {@link withSessionStorage}
  */
-export function provideAuth(
-  type: AuthFeature<AuthFeatureKind.Token>,
-  store?: AuthFeature<AuthFeatureKind.Store>
-): EnvironmentProviders {
-  return makeEnvironmentProviders([type.ɵproviders, (store ?? withLocalStorage()).ɵproviders]);
-}
-
-/** Use simple auth type,  */
-export function withSimple(): AuthFeature<AuthFeatureKind.Token> {
-  return makeAuthFeature(AuthFeatureKind.Token, [
-    {
-      provide: ɵHTTP_ROOT_INTERCEPTOR_FNS,
-      useClass: SimpleInterceptor,
-      multi: true
-    }
-  ]);
-}
-
-export function withJWT(): AuthFeature<AuthFeatureKind.Token> {
-  return makeAuthFeature(AuthFeatureKind.Token, [
-    {
-      provide: ɵHTTP_ROOT_INTERCEPTOR_FNS,
-      useClass: JWTInterceptor,
-      multi: true
-    }
-  ]);
+export function provideAuth(store?: AuthFeature<AuthFeatureKind.Store>): EnvironmentProviders {
+  return makeEnvironmentProviders([(store ?? withLocalStorage()).ɵproviders]);
 }
 
 /** `cookie` storage */

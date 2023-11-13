@@ -1,26 +1,30 @@
-import { HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
 
-import { AlainAuthConfig } from '@delon/util/config';
+import { AlainConfigService } from '@delon/util/config';
 
 import { JWTTokenModel } from './jwt.model';
-import { BaseInterceptor } from '../base.interceptor';
+import { mergeConfig } from '../../auth.config';
+import { isAnonymous, throwErr } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 
-@Injectable()
-export class JWTInterceptor extends BaseInterceptor {
-  isAuth(options: AlainAuthConfig): boolean {
-    this.model = this.injector.get(DA_SERVICE_TOKEN).get<JWTTokenModel>(JWTTokenModel);
-    return CheckJwt(this.model as JWTTokenModel, options.token_exp_offset!);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setReq(req: HttpRequest<any>, _options: AlainAuthConfig): HttpRequest<any> {
-    return req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.model.token}`
-      }
-    });
-  }
+function newReq(req: HttpRequest<unknown>, model: JWTTokenModel): HttpRequest<unknown> {
+  return req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${model.token}`
+    }
+  });
 }
+
+export const authJWTInterceptor: HttpInterceptorFn = (req, next) => {
+  const options = mergeConfig(inject(AlainConfigService));
+
+  if (isAnonymous(req, options)) return next(req);
+
+  const model = inject(DA_SERVICE_TOKEN).get<JWTTokenModel>();
+  if (CheckJwt(model, options.token_exp_offset!)) next(newReq(req, model));
+
+  return throwErr(req, options);
+};
