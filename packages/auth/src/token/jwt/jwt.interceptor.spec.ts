@@ -1,10 +1,5 @@
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-  provideHttpClientTesting
-} from '@angular/common/http/testing';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -36,7 +31,6 @@ describe('auth: jwt.interceptor', () => {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
       imports: [
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([
           {
             path: 'login',

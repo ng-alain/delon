@@ -9,7 +9,8 @@ import {
   HttpRequest,
   HttpResponse,
   HTTP_INTERCEPTORS,
-  provideHttpClient
+  provideHttpClient,
+  withInterceptors
 } from '@angular/common/http';
 import {
   HttpClientTestingModule,
@@ -26,6 +27,7 @@ import { Observable, throwError, catchError } from 'rxjs';
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { authSimpleInterceptor } from './simple';
 import { SimpleTokenModel } from './simple/simple.model';
 import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
@@ -86,7 +88,7 @@ describe('auth: base.interceptor', () => {
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
-        provideHttpClient(),
+        provideHttpClient(withInterceptors([authSimpleInterceptor])),
         provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),
         provideAuth(),
