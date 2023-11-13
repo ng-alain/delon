@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ɵHTTP_ROOT_INTERCEPTOR_FNS } from '@angular/common/http';
 import { EnvironmentProviders, Provider, makeEnvironmentProviders } from '@angular/core';
 
 import { CookieService } from '@delon/util/browser';
@@ -43,7 +43,7 @@ export function provideAuth(
 export function withSimple(): AuthFeature<AuthFeatureKind.Token> {
   return makeAuthFeature(AuthFeatureKind.Token, [
     {
-      provide: HTTP_INTERCEPTORS,
+      provide: ɵHTTP_ROOT_INTERCEPTOR_FNS,
       useClass: SimpleInterceptor,
       multi: true
     }
@@ -53,7 +53,7 @@ export function withSimple(): AuthFeature<AuthFeatureKind.Token> {
 export function withJWT(): AuthFeature<AuthFeatureKind.Token> {
   return makeAuthFeature(AuthFeatureKind.Token, [
     {
-      provide: HTTP_INTERCEPTORS,
+      provide: ɵHTTP_ROOT_INTERCEPTOR_FNS,
       useClass: JWTInterceptor,
       multi: true
     }
