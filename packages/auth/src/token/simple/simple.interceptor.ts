@@ -43,7 +43,7 @@ export const authSimpleInterceptor: HttpInterceptorFn = (req, next) => {
   if (isAnonymous(req, options)) return next(req);
 
   const model = inject(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
-  if (CheckSimple(model)) next(newReq(req, model, options));
+  if (CheckSimple(model)) return next(newReq(req, model, options));
 
   return throwErr(req, options);
 };
