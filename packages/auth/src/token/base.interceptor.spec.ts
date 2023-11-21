@@ -8,9 +8,16 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptors
 } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  TestRequest,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -20,8 +27,9 @@ import { Observable, throwError, catchError } from 'rxjs';
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { authSimpleInterceptor } from './simple';
 import { SimpleTokenModel } from './simple/simple.model';
-import { provideAuth, withSimple } from '../provide';
+import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
@@ -80,8 +88,10 @@ describe('auth: base.interceptor', () => {
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
+        provideHttpClient(withInterceptors([authSimpleInterceptor])),
+        provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),
-        provideAuth(withSimple()),
+        provideAuth(),
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
       ].concat(provider)
     });

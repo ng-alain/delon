@@ -1,4 +1,4 @@
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import ngLang from '@angular/common/locales/zh';
 import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -90,7 +90,7 @@ const ngZorroConfig: NzConfig = {};
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'ngAlainDoc' },
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([])),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
@@ -119,7 +119,7 @@ export const appConfig: ApplicationConfig = {
         withTinymceWidget()
       ]
     }),
-    // provideAuth(withJWT(), withLocalStorage()),
+    // provideAuth(withLocalStorage()),
     // Thirds
     provideNuMonacoEditorConfig({ defaultOptions: { scrollBeyondLastLine: false } }),
     provideTinymce({
