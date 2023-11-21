@@ -60,11 +60,6 @@ describe('abc: table: data-souce', () => {
       return val;
     }
   }
-  class MockNzI18nService {
-    getDateLocale(): null {
-      return null;
-    }
-  }
 
   function genModule(): void {
     options = {
@@ -79,7 +74,7 @@ describe('abc: table: data-souce', () => {
       paginator: true
     };
     mockDomSanitizer = new MockDomSanitizer() as any;
-    datePipe = new DatePipe(new MockNzI18nService() as any);
+    datePipe = new DatePipe();
     ynPipe = new YNPipe(mockDomSanitizer as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
