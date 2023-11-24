@@ -57,16 +57,14 @@ function removeOrginalFiles(): Rule {
     [
       `${project.root}/README.md`,
       `${project.sourceRoot}/main.ts`,
-      `${project.sourceRoot}/environments/environment.prod.ts`,
-      `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
       `${project.sourceRoot}/favicon.ico`,
-      `${project.sourceRoot}/app/app.module.ts`,
       `${project.sourceRoot}/app/app.component.spec.ts`,
       `${project.sourceRoot}/app/app.component.ts`,
       `${project.sourceRoot}/app/app.component.html`,
       `${project.sourceRoot}/app/app.component.less`,
-      `${project.sourceRoot}/app/app-routing.module.ts`
+      `${project.sourceRoot}/app/app.config.ts`,
+      `${project.sourceRoot}/app/app.routes.ts`
     ]
       .filter(p => tree.exists(p))
       .forEach(p => tree.delete(p));
