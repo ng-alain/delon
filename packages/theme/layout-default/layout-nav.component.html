@@ -1,21 +1,32 @@
 <ng-template #icon let-i>
-  <ng-container *ngIf="i" [ngSwitch]="i.type">
-    <i
-      *ngSwitchCase="'icon'"
-      class="sidebar-nav__item-icon"
-      nz-icon
-      [nzType]="i.value"
-      [nzTheme]="i.theme"
-      [nzSpin]="i.spin"
-      [nzTwotoneColor]="i.twoToneColor"
-      [nzIconfont]="i.iconfont"
-      [nzRotate]="i.rotate"
-    ></i>
-    <i *ngSwitchCase="'iconfont'" class="sidebar-nav__item-icon" nz-icon [nzIconfont]="i.iconfont"></i>
-    <img *ngSwitchCase="'img'" [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
-    <span *ngSwitchCase="'svg'" class="sidebar-nav__item-icon sidebar-nav__item-svg" [innerHTML]="i.value"></span>
-    <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
-  </ng-container>
+  @if (i) {
+    @switch (i.type) {
+      @case ('icon') {
+        <i
+          class="sidebar-nav__item-icon"
+          nz-icon
+          [nzType]="i.value"
+          [nzTheme]="i.theme"
+          [nzSpin]="i.spin"
+          [nzTwotoneColor]="i.twoToneColor"
+          [nzIconfont]="i.iconfont"
+          [nzRotate]="i.rotate"
+        ></i>
+      }
+      @case ('iconfont') {
+        <i class="sidebar-nav__item-icon" nz-icon [nzIconfont]="i.iconfont"></i>
+      }
+      @case ('img') {
+        <img [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
+      }
+      @case ('svg') {
+        <span class="sidebar-nav__item-icon sidebar-nav__item-svg" [innerHTML]="i.value"></span>
+      }
+      @default {
+        <i class="sidebar-nav__item-icon {{ i.value }}"></i>
+      }
+    }
+  }
 </ng-template>
 <ng-template #tree let-ls>
   <ng-container *ngFor="let i of ls">

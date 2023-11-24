@@ -128,7 +128,9 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
       <div nz-col nzSpan="8">
         Async =>
         <cell [value]="async" [loading]="asyncLoading" />
-        <a *ngIf="!asyncLoading" (click)="again()" class="ml-md">Again</a>
+        @if (!asyncLoading) {
+          <a (click)="again()" class="ml-md">Again</a>
+        }
       </div>
       <div nz-col nzSpan="8"> Unit => <cell value="3" [options]="{ unit: '人' }" /> </div>
       <div nz-col nzSpan="8"> Text Unit => <cell [value]="{ text: '100', unit: '元' }" /> </div>

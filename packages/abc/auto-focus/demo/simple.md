@@ -20,9 +20,11 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="showInput = !showInput">Toggle Input</button>
-    <div *ngIf="showInput" class="mt-md">
-      <input nz-input auto-focus />
-    </div>
+    @if (showInput) {
+      <div  class="mt-md">
+        <input nz-input auto-focus />
+      </div>
+    }
   `,
 })
 export class DemoComponent {

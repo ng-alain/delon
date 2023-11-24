@@ -1,17 +1,23 @@
 <ul class="avatar-list__wrap">
-  <li *ngFor="let i of items" [ngClass]="cls">
-    <nz-avatar
-      *ngIf="i.tips"
-      nz-tooltip
-      [nzTooltipTitle]="i.tips"
-      [nzSrc]="i.src"
-      [nzText]="i.text"
-      [nzIcon]="i.icon"
-      [nzSize]="avatarSize"
-    />
-    <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize" />
-  </li>
-  <li *ngIf="exceedCount > 0" [ngClass]="cls">
-    <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [ngStyle]="excessItemsStyle" [nzText]="'+' + exceedCount" />
-  </li>
+  @for (i of items; track $index) {
+    <li [ngClass]="cls">
+      @if (i.tips) {
+        <nz-avatar
+          nz-tooltip
+          [nzTooltipTitle]="i.tips"
+          [nzSrc]="i.src"
+          [nzText]="i.text"
+          [nzIcon]="i.icon"
+          [nzSize]="avatarSize"
+        />
+      } @else {
+        <nz-avatar [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize" />
+      }
+    </li>
+  }
+  @if (exceedCount > 0) {
+    <li [ngClass]="cls">
+      <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [ngStyle]="excessItemsStyle" [nzText]="'+' + exceedCount" />
+    </li>
+  }
 </ul>
