@@ -89,7 +89,7 @@
                   <i></i>
                 </nz-resize-handle>
               }
-              @if (renderTitle) {
+              @if (_c.__renderTitle) {
                 <ng-template
                   [ngTemplateOutlet]="_c.__renderTitle!"
                   [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"
