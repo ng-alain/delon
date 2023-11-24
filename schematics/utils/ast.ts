@@ -1,10 +1,16 @@
-import { tags } from '@angular-devkit/core';
+import { tags, normalize } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { getSourceNodes, getMetadataField } from '@schematics/angular/utility/ast-utils';
+import {
+  getSourceNodes,
+  getMetadataField,
+  addProviderToModule as _addProviderToModule
+} from '@schematics/angular/utility/ast-utils';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import * as ts from 'typescript';
 
 import { addImportToModule } from './alain';
+
+export const ROUTINS_FILENAME = 'routes.ts';
 
 /** Reads file given path and returns TypeScript source file. */
 export function getSourceFile(tree: Tree, path: string): ts.SourceFile {
@@ -126,6 +132,18 @@ function addSymbolToComponentMetadata(source: ts.SourceFile, filePath: string, s
   return [new InsertChange(filePath, position, toInsert)];
 }
 
+export function findRoutesPath(tree: Tree, path: string): string {
+  let dir = tree.getDir(path);
+  while (dir) {
+    const found = dir.subfiles.filter(p => p.endsWith(ROUTINS_FILENAME));
+    if (found.length > 0) {
+      return normalize(`${dir.path}/${ROUTINS_FILENAME}`);
+    }
+    dir = dir.parent;
+  }
+  return '';
+}
+
 export function importInStandalone(tree: Tree, filePath: string, componentName: string, componentPath: string): void {
   // imports
   addImportToModule(tree, filePath, componentName, componentPath);
@@ -133,4 +151,20 @@ export function importInStandalone(tree: Tree, filePath: string, componentName: 
   const source = getSourceFile(tree, filePath);
   const changes = addSymbolToComponentMetadata(source, filePath, componentName);
   applyChanges(tree, filePath, changes);
+}
+
+export function addServiceToModuleOrStandalone(
+  tree: Tree,
+  standalone: boolean,
+  filePath: string,
+  serviceName: string,
+  importPath: string
+): void {
+  const source = getSourceFile(tree, filePath);
+  if (standalone) {
+    importInStandalone(tree, filePath, serviceName, importPath);
+  } else {
+    const changes = _addProviderToModule(source, filePath, serviceName, importPath);
+    applyChanges(tree, filePath, changes);
+  }
 }

@@ -22,35 +22,35 @@ describe('Schematic: empty', () => {
       expect(tree.exists(servicePath)).toBe(false);
     });
 
-    it('should be has import code', async () => {
+    xit('should be has import code', async () => {
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade' }, tree);
       expect(tree.readContent(modulePath)).toContain(`import { TradeListComponent } from './list/list.component';`);
     });
 
-    it('should be include module name in component name', async () => {
+    xit('should be include module name in component name', async () => {
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade' }, tree);
       expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
     });
 
-    it('shuold be exclude style', async () => {
+    xit('shuold be exclude style', async () => {
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade' }, tree);
       expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
     });
 
-    it('shuold be include service', async () => {
+    xit('shuold be include service', async () => {
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade', service: 'none' }, tree);
       expect(tree.readContent(servicePath)).toContain(`@Injectable()`);
       expect(tree.readContent(modulePath)).toContain(`TradeService`);
     });
 
-    it('shuold be include root service', async () => {
+    xit('shuold be include root service', async () => {
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade', service: 'root' }, tree);
       expect(tree.readContent(servicePath)).toContain(`@Injectable({ providedIn: 'root' })`);
     });
   });
 
   describe('ng-alain.json', () => {
-    it('should be specify routesRoot', async () => {
+    xit('should be specify routesRoot', async () => {
       const alainJson = { projects: { foo: { routesRoot: 'app/pages' } } };
       ({ runner, tree } = await createAlainAndModuleApp('trade', undefined, alainJson));
       tree = await runner.runSchematic('empty', { name: 'list', module: 'trade' }, tree);

@@ -28,7 +28,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import { getSourceFile } from './ast';
+import { addServiceToModuleOrStandalone, findRoutesPath, getSourceFile, ROUTINS_FILENAME } from './ast';
+import { isStandalone } from './standalone';
 import { getProject, NgAlainProjectDefinition } from './workspace';
 
 const TEMPLATE_FILENAME_RE = /\.template$/;
@@ -121,7 +122,10 @@ function resolveSchema(
   if (fs.existsSync(fullPath) && fs.readdirSync(fullPath).length > 0) {
     throw new SchematicsException(`The directory (${fullPath}) already exists`);
   }
-  schema.importModulePath = findModuleFromOptions(tree, schema as unknown as ModuleOptions);
+
+  if (!schema.standalone) {
+    schema.importModulePath = findModuleFromOptions(tree, schema as unknown as ModuleOptions);
+  }
 
   if (!schema._filesPath) {
     // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
@@ -140,7 +144,14 @@ function resolveSchema(
     schema.path += strings.dasherize(`/${schema.target}`);
   }
 
-  schema.routerModulePath = schema.importModulePath!.replace('.module.ts', '-routing.module.ts');
+  if (schema.standalone) {
+    schema.routerModulePath = findRoutesPath(tree, schema.path);
+    if (schema.routerModulePath.length <= 0) {
+      throw new SchematicsException(`Could not find a non Routing file: ${ROUTINS_FILENAME}`);
+    }
+  } else {
+    schema.routerModulePath = schema.importModulePath!.replace('.module.ts', '-routing.module.ts');
+  }
 
   // html selector
   schema.selector = schema.selector || buildSelector(schema, project.prefix);
@@ -154,19 +165,6 @@ export function addImportToModule(tree: Tree, filePath: string, symbolName: stri
   if (change.path == null) return;
   const declarationRecorder = tree.beginUpdate(filePath);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
-  tree.commitUpdate(declarationRecorder);
-}
-
-export function addProviderToModule(tree: Tree, filePath: string, serviceName: string, importPath: string): void {
-  const source = getSourceFile(tree, filePath);
-  const changes = _addProviderToModule(source, filePath, serviceName, importPath);
-  const declarationRecorder = tree.beginUpdate(filePath);
-  changes.forEach(change => {
-    if (change.path == null) return;
-    if (change instanceof InsertChange) {
-      declarationRecorder.insertLeft(change.pos, change.toAdd);
-    }
-  });
   tree.commitUpdate(declarationRecorder);
 }
 
@@ -210,13 +208,15 @@ function addDeclaration(schema: CommonSchema): Rule {
     }
 
     // imports
-    addImportToModule(
-      tree,
-      schema.importModulePath!,
-      schema.componentName!,
-      getRelativePath(schema.importModulePath!, schema, 'component')
-    );
-    addValueToVariable(tree, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
+    if (!schema.standalone) {
+      addImportToModule(
+        tree,
+        schema.importModulePath!,
+        schema.componentName!,
+        getRelativePath(schema.importModulePath!, schema, 'component')
+      );
+      addValueToVariable(tree, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
+    }
 
     // component
     if (schema.modal !== true) {
@@ -237,8 +237,9 @@ function addDeclaration(schema: CommonSchema): Rule {
 
     // service
     if (schema.service === 'none') {
-      addProviderToModule(
+      addServiceToModuleOrStandalone(
         tree,
+        schema.standalone,
         schema.importModulePath!,
         schema.serviceName!,
         getRelativePath(schema.importModulePath!, schema, 'service')
@@ -256,6 +257,10 @@ export function buildAlain(schema: CommonSchema): Rule {
       throw new SchematicsException(`The specified project does not match '${schema.project}', current: ${res.name}`);
     }
     const project = res.project;
+
+    // standalone
+    schema.standalone = await isStandalone(tree, schema.standalone, res.name);
+
     resolveSchema(tree, project, schema, res.alainProject);
 
     schema.componentName = buildName(schema, 'Component');
@@ -263,7 +268,6 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     // Don't support inline
     schema.inlineTemplate = false;
-    schema.standalone = false;
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),

@@ -20,6 +20,7 @@ describe('Schematic: edit', () => {
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(`import { TradeEditComponent } from './edit/edit.component';`);
+    const cont = tree.readContent(modulePath);
+    expect(cont).toContain(`import { TradeEditComponent } from './edit/edit.component';`);
   });
 });
