@@ -89,14 +89,14 @@
                   <i></i>
                 </nz-resize-handle>
               }
-              <ng-template
-                #renderTitle
-                [ngTemplateOutlet]="_c.__renderTitle!"
-                [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"
-              />
-              <ng-container *ngIf="!_c.__renderTitle; else renderTitle">
-                <ng-container [ngSwitch]="_c.type">
-                  <ng-container *ngSwitchCase="'checkbox'">
+              @if (renderTitle) {
+                <ng-template
+                  [ngTemplateOutlet]="_c.__renderTitle!"
+                  [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"
+                />
+              } @else {
+                @switch (_c.type) {
+                  @case ('checkbox') {
                     @if (_c.selections!.length === 0) {
                       <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: false }" />
                     } @else {
@@ -123,12 +123,12 @@
                         </nz-dropdown-menu>
                       </div>
                     }
-                  </ng-container>
-                  <ng-container *ngSwitchDefault>
+                  }
+                  @default {
                     <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: _c.title }" />
-                  </ng-container>
-                </ng-container>
-              </ng-container>
+                  }
+                }
+              }
               @if (_c.filter) {
                 <st-filter
                   nz-th-extra

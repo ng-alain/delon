@@ -46,54 +46,45 @@
   }
   <span [innerHTML]="i._text" [ngClass]="{ 'pl-xs': i._icon }"></span>
 </ng-template>
-<ng-template
-  #render
-  [ngTemplateOutlet]="c.__render!"
-  [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }"
-/>
-<ng-container *ngIf="!c.__render; else render">
-  <ng-container [ngSwitch]="c.type">
-    <label
-      *ngSwitchCase="'checkbox'"
-      nz-checkbox
-      [nzDisabled]="i.disabled"
-      [ngModel]="i.checked"
-      (ngModelChange)="_checkbox($event)"
-    ></label>
-    <label
-      *ngSwitchCase="'radio'"
-      nz-radio
-      [nzDisabled]="i.disabled"
-      [ngModel]="i.checked"
-      (ngModelChange)="_radio()"
-    ></label>
-    <a
-      *ngSwitchCase="'link'"
-      (click)="_link($event)"
-      [innerHTML]="i._values[cIdx]._text"
-      [attr.title]="i._values[cIdx].text"
-    ></a>
-    <ng-container *ngIf="i._values[cIdx].text">
-      <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
+@if (c.__render) {
+  <ng-template [ngTemplateOutlet]="c.__render!" [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }" />
+} @else {
+  @switch (c.type) {
+    @case ('checkbox') {
+      <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkbox($event)"></label>
+    }
+    @case ('radio') {
+      <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_radio()"></label>
+    }
+    @case ('link') {
+      <a (click)="_link($event)" [innerHTML]="i._values[cIdx]._text" [attr.title]="i._values[cIdx].text"></a>
+    }
+    @case ('tag') {
+      <nz-tag [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
         <span [innerHTML]="i._values[cIdx]._text"></span>
       </nz-tag>
+    }
+    @case ('badge') {
       <nz-badge
-        *ngSwitchCase="'badge'"
         [nzStatus]="i._values[cIdx].color"
         [nzText]="i._values[cIdx].text"
         [nz-tooltip]="i._values[cIdx].tooltip"
       />
-    </ng-container>
-    <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
-    <ng-container *ngSwitchDefault>
+    }
+    @case ('cell') {
+      <cell [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
+    }
+    @case ('widget') {
+      <ng-template st-widget-host [record]="i" [column]="c" />
+    }
+    @default {
       @if (c.safeType === 'text') {
         <span [innerText]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
       } @else {
         <span [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
       }
-    </ng-container>
-  </ng-container>
+    }
+  }
   @for (btn of i._values[cIdx].buttons; track $index) {
     @if (btn.children!.length > 0) {
       <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
@@ -125,4 +116,4 @@
       <nz-divider nzType="vertical" />
     }
   }
-</ng-container>
+}

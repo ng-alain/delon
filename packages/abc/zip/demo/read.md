@@ -24,7 +24,9 @@ import { ZipService } from '@delon/abc/zip';
     <button nz-button (click)="url()">Via Url</button>
     <input type="file" (change)="change($event)" multiple="false" class="ml-sm" />
     <ol>
-      <li *ngFor="let i of data">{{ i | json }}</li>
+      @for (i of data; track $index) {
+        <li>{{ i | json }}</li>
+      }
     </ol>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -20,7 +20,10 @@ import { LoadingCustom, LoadingService } from '@delon/abc/loading';
 
 @Component({
   selector: 'app-demo',
-  template: ` <button *ngFor="let i of customs" nz-button (click)="show(i)">{{ i.name }}</button> `,
+  template: `
+  @for (i of customs; track $index) {
+    <button nz-button (click)="show(i)">{{ i.name }}</button>
+  }`,
 })
 export class DemoComponent {
   customs: LoadingCustom[] = [

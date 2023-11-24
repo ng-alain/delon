@@ -33,10 +33,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let i of data; let index = index">
-            <td><input nz-input [(ngModel)]="i.path" name="path{{ index }}" /></td>
-            <td><input nz-input [(ngModel)]="i.url" name="url{{ index }}" /></td>
-          </tr>
+          @for (i of data; track $index) {
+            <tr>
+              <td><input nz-input [(ngModel)]="i.path" name="path{{ $index }}" /></td>
+              <td><input nz-input [(ngModel)]="i.url" name="url{{ $index }}" /></td>
+            </tr>
+          }
         </tbody>
       </nz-table>
     }

@@ -23,16 +23,25 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: `
     <st #st [data]="users" [columns]="columns">
       <ng-template st-row="nameTpl" let-item let-index="index">
-        <input *ngIf="item.edit" nz-input [ngModel]="item.name" (ngModelChange)="st.setRow(index, { name: $event })" />
-        <ng-container *ngIf="!item.edit">{{ item.name }}</ng-container>
+        @if (item.edit) {
+          <input nz-input [ngModel]="item.name" (ngModelChange)="st.setRow(index, { name: $event })" />
+        } @else {
+          {{ item.name }}
+        }
       </ng-template>
       <ng-template st-row="ageTpl" let-item let-index="index">
-        <nz-input-number *ngIf="item.edit" [ngModel]="item.age" (ngModelChange)="st.setRow(index, { age: $event })"></nz-input-number>
-        <ng-container *ngIf="!item.edit">{{ item.age }}</ng-container>
+        @if (item.edit) {
+          <nz-input-number [ngModel]="item.age" (ngModelChange)="st.setRow(index, { age: $event })" />
+        } @else {
+          {{ item.age }}
+        }
       </ng-template>
       <ng-template st-row="enabledTpl" let-item let-index="index">
-        <nz-switch *ngIf="item.edit" [ngModel]="item.enabled" (ngModelChange)="st.setRow(index, { enabled: $event })"></nz-switch>
-        <ng-container *ngIf="!item.edit">{{ item.enabled ? 'Y' : 'N' }}</ng-container>
+        @if (item.edit) {
+          <nz-switch [ngModel]="item.enabled" (ngModelChange)="st.setRow(index, { enabled: $event })" />
+        } @else {
+          {{ item.enabled ? 'Y' : 'N' }}
+        }
       </ng-template>
     </st>
   `,

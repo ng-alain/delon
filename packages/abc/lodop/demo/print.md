@@ -54,7 +54,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
               name="printer"
               (ngModelChange)="changePinter($event)"
             >
-              <nz-option *ngFor="let name of pinters" [nzLabel]="name" [nzValue]="name"> </nz-option>
+              @for (name of pinters; track $index) {
+                <nz-option [nzLabel]="name" [nzValue]="name" />
+              }
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -62,7 +64,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
           <nz-form-label nz-col [nzSm]="6">纸张类型</nz-form-label>
           <nz-form-control nz-col [nzSm]="18">
             <nz-select style="width:90%;" nzPlaceHolder="请选择纸张类型" nzShowSearch nzAllowClear [(ngModel)]="cog.paper" name="paper">
-              <nz-option *ngFor="let name of papers" [nzLabel]="name" [nzValue]="name"> </nz-option>
+              @for (name of papers; track $index) {
+                <nz-option [nzLabel]="name" [nzValue]="name" />
+              }
             </nz-select>
           </nz-form-control>
         </nz-form-item>

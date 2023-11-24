@@ -26,7 +26,9 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
   selector: 'app-demo',
   template: `
     <div nz-row nzGutter="16" class="mt-md">
-      <div *ngFor="let i of baseList" nz-col nzSpan="8"> {{ i | json }} => <cell [value]="i" /> </div>
+      @for (i of baseList; track $index) {
+        <div nz-col nzSpan="8"> {{ i | json }} => <cell [value]="i" /> </div>
+      }
       <div nz-col nzSpan="8"> date-fn => <cell [value]="day3" [options]="{ date: { format: 'fn' } }" /> </div>
       <div nz-col nzSpan="8"> mega => <cell value="15900000000" size="large" [options]="{ type: 'mega' }" /> </div>
       <div nz-col nzSpan="8"> mask => <cell value="15900000000" [options]="{ mask: '999****9999' }" /> </div>
@@ -107,10 +109,12 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
         default =>
         <cell [value]="null" />
       </div>
-      <div *ngFor="let i of typeList" nz-col nzSpan="8">
-        {{ i }} =>
-        <cell [value]="i" [options]="{ renderType: i }" />
-      </div>
+      @for (i of typeList; track $index) {
+        <div nz-col nzSpan="8">
+          {{ i }} =>
+          <cell [value]="i" [options]="{ renderType: i }" />
+        </div>
+      }
       <div nz-col nzSpan="8">
         size =>
         <cell value="small" size="small" />, <cell value="default" />,
