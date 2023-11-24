@@ -263,6 +263,7 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     // Don't support inline
     schema.inlineTemplate = false;
+    schema.standalone = false;
 
     const templateSource = apply(url(schema._filesPath!), [
       filter(filePath => !filePath.endsWith('.DS_Store')),

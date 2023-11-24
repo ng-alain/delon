@@ -29,15 +29,15 @@ describe('NgAlainSchematic: application', () => {
     describe('with true', () => {
       beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
-        const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
-        expect(specTs).toContain(`import { I18NService } from '@core'`);
+        const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
+        expect(specTs).toContain(`I18NService`);
       });
     });
     describe('with false', () => {
       beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: false })));
       it(`can't add i18n related`, () => {
-        const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
-        expect(specTs).not.toContain(`@core/i18n/`);
+        const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
+        expect(specTs).not.toContain(`I18NService`);
       });
     });
     describe('default language', () => {
@@ -156,8 +156,8 @@ describe('NgAlainSchematic: application', () => {
         },
         tree
       );
-      const content = tree.readContent(`/projects/${projectName}/src/app/shared/index.ts`);
-      expect(content).toContain(`json-schema`);
+      const content = tree.readContent(`/projects/${projectName}/src/app/app.config.ts`);
+      expect(content).toContain(`provideAlain`);
       expect(tree.exists(`/projects/h5/src/app/shared/index.ts`)).toBe(false);
     });
     it(`should be throw error when not found project name`, async () => {
