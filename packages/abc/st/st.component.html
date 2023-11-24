@@ -55,92 +55,94 @@
 >
   @if (showHeader) {
     <thead>
-      <tr *ngFor="let row of _headers; let rowFirst = first">
-        @if (rowFirst && expand) {
-          <th nzWidth="50px" [rowSpan]="_headers.length"></th>
-        }
-        <ng-container *ngFor="let h of row; let index = index; let last = last">
-          <th
-            *let="h.column as _c"
-            [colSpan]="h.colSpan"
-            [rowSpan]="h.rowSpan"
-            [nzWidth]="$any(_c).width"
-            [nzLeft]="_c._left!"
-            [nzRight]="_c._right!"
-            [ngClass]="_c._className"
-            [attr.data-col]="_c.indexKey"
-            [attr.data-col-index]="index"
-            [nzShowSort]="_c._sort.enabled"
-            [nzSortOrder]="$any(_c)._sort.default"
-            (nzSortOrderChange)="sort(_c, index, $event)"
-            [nzCustomFilter]="!!_c.filter"
-            [class.st__has-filter]="_c.filter"
-            nz-resizable
-            [nzDisabled]="last || $any(_c).resizable.disabled"
-            [nzMaxWidth]="$any(_c).resizable.maxWidth"
-            [nzMinWidth]="$any(_c).resizable.minWidth"
-            [nzBounds]="$any(_c).resizable.bounds"
-            [nzPreview]="$any(_c).resizable.preview"
-            (nzResizeEnd)="colResize($event, _c)"
-          >
-            @if ($any(!last && !$any(_c).resizable.disabled)) {
-              <nz-resize-handle nzDirection="right">
-                <i></i>
-              </nz-resize-handle>
-            }
-            <ng-template
-              #renderTitle
-              [ngTemplateOutlet]="_c.__renderTitle!"
-              [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"
-            />
-            <ng-container *ngIf="!_c.__renderTitle; else renderTitle">
-              <ng-container [ngSwitch]="_c.type">
-                <ng-container *ngSwitchCase="'checkbox'">
-                  @if (_c.selections!.length === 0) {
-                    <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: false }" />
-                  } @else {
-                    <div class="ant-table-selection">
-                      <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: true }" />
-                      @if (_c.selections!.length) {
-                        <div class="ant-table-selection-extra">
-                          <div
-                            nz-dropdown
-                            nzPlacement="bottomLeft"
-                            [nzDropdownMenu]="selectionMenu"
-                            class="ant-table-selection-down st__checkall-selection"
-                          >
-                            <i nz-icon nzType="down"></i>
+      @for (row of _headers; track $index) {
+        <tr>
+          @if ($first && expand) {
+            <th nzWidth="50px" [rowSpan]="_headers.length"></th>
+          }
+          <ng-container *ngFor="let h of row; let index = index; let last = last">
+            <th
+              *let="h.column as _c"
+              [colSpan]="h.colSpan"
+              [rowSpan]="h.rowSpan"
+              [nzWidth]="$any(_c).width"
+              [nzLeft]="_c._left!"
+              [nzRight]="_c._right!"
+              [ngClass]="_c._className"
+              [attr.data-col]="_c.indexKey"
+              [attr.data-col-index]="index"
+              [nzShowSort]="_c._sort.enabled"
+              [nzSortOrder]="$any(_c)._sort.default"
+              (nzSortOrderChange)="sort(_c, index, $event)"
+              [nzCustomFilter]="!!_c.filter"
+              [class.st__has-filter]="_c.filter"
+              nz-resizable
+              [nzDisabled]="last || $any(_c).resizable.disabled"
+              [nzMaxWidth]="$any(_c).resizable.maxWidth"
+              [nzMinWidth]="$any(_c).resizable.minWidth"
+              [nzBounds]="$any(_c).resizable.bounds"
+              [nzPreview]="$any(_c).resizable.preview"
+              (nzResizeEnd)="colResize($event, _c)"
+            >
+              @if ($any(!last && !$any(_c).resizable.disabled)) {
+                <nz-resize-handle nzDirection="right">
+                  <i></i>
+                </nz-resize-handle>
+              }
+              <ng-template
+                #renderTitle
+                [ngTemplateOutlet]="_c.__renderTitle!"
+                [ngTemplateOutletContext]="{ $implicit: h.column, index: index }"
+              />
+              <ng-container *ngIf="!_c.__renderTitle; else renderTitle">
+                <ng-container [ngSwitch]="_c.type">
+                  <ng-container *ngSwitchCase="'checkbox'">
+                    @if (_c.selections!.length === 0) {
+                      <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: false }" />
+                    } @else {
+                      <div class="ant-table-selection">
+                        <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{ $implicit: true }" />
+                        @if (_c.selections!.length) {
+                          <div class="ant-table-selection-extra">
+                            <div
+                              nz-dropdown
+                              nzPlacement="bottomLeft"
+                              [nzDropdownMenu]="selectionMenu"
+                              class="ant-table-selection-down st__checkall-selection"
+                            >
+                              <i nz-icon nzType="down"></i>
+                            </div>
                           </div>
-                        </div>
-                      }
-                      <nz-dropdown-menu #selectionMenu="nzDropdownMenu">
-                        <ul nz-menu class="ant-table-selection-menu">
-                          @for (rw of _c.selections; track $index) {
-                            <li nz-menu-item (click)="_rowSelection(rw)" [innerHTML]="rw.text"></li>
-                          }
-                        </ul>
-                      </nz-dropdown-menu>
-                    </div>
-                  }
-                </ng-container>
-                <ng-container *ngSwitchDefault>
-                  <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: _c.title }" />
+                        }
+                        <nz-dropdown-menu #selectionMenu="nzDropdownMenu">
+                          <ul nz-menu class="ant-table-selection-menu">
+                            @for (rw of _c.selections; track $index) {
+                              <li nz-menu-item (click)="_rowSelection(rw)" [innerHTML]="rw.text"></li>
+                            }
+                          </ul>
+                        </nz-dropdown-menu>
+                      </div>
+                    }
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: _c.title }" />
+                  </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-            @if (_c.filter) {
-              <st-filter
-                nz-th-extra
-                [col]="h.column"
-                [f]="_c.filter"
-                [locale]="locale"
-                (n)="handleFilterNotify($event)"
-                (handle)="_handleFilter(_c, $event)"
-              />
-            }
-          </th>
-        </ng-container>
-      </tr>
+              @if (_c.filter) {
+                <st-filter
+                  nz-th-extra
+                  [col]="h.column"
+                  [f]="_c.filter"
+                  [locale]="locale"
+                  (n)="handleFilterNotify($event)"
+                  (handle)="_handleFilter(_c, $event)"
+                />
+              }
+            </th>
+          </ng-container>
+        </tr>
+      }
     </thead>
   }
   <tbody class="st__body">

@@ -94,7 +94,7 @@
       }
     </ng-container>
   </ng-container>
-  <ng-container *ngFor="let btn of i._values[cIdx].buttons; let last = last">
+  @for (btn of i._values[cIdx].buttons; track $index) {
     @if (btn.children!.length > 0) {
       <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
         <span [innerHTML]="btn._text"></span>
@@ -102,7 +102,7 @@
       </a>
       <nz-dropdown-menu #btnMenu="nzDropdownMenu">
         <ul nz-menu>
-          <ng-container *ngFor="let subBtn of btn.children!">
+          @for (subBtn of btn.children; track $index) {
             @if (subBtn.type === 'divider') {
               <li nz-menu-divider></li>
             } @else {
@@ -113,7 +113,7 @@
                 />
               </li>
             }
-          </ng-container>
+          }
         </ul>
       </nz-dropdown-menu>
     } @else {
@@ -121,8 +121,8 @@
         <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
       </span>
     }
-    @if (!last) {
+    @if (!$last) {
       <nz-divider nzType="vertical" />
     }
-  </ng-container>
+  }
 </ng-container>

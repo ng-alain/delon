@@ -69,7 +69,9 @@ import { environment } from '@env/environment';
       </ng-template>
     </layout-default>
 
-    <setting-drawer *ngIf="showSettingDrawer" />
+    @if (showSettingDrawer) {
+      <setting-drawer />
+    }
     <theme-btn />
   `,
 })

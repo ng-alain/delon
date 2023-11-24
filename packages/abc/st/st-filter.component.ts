@@ -95,17 +95,17 @@ import { _STColumn } from './st.types';
           }
           @default {
             <ul nz-menu>
-              @if (f.multiple) {
-                <li nz-menu-item *ngFor="let filter of f.menus">
-                  <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="checkboxChange()">
-                    {{ filter.text }}
-                  </label>
-                </li>
-              } @else {
-                <li nz-menu-item *ngFor="let filter of f.menus">
-                  <label nz-radio [ngModel]="filter.checked" (ngModelChange)="radioChange(filter)">
-                    {{ filter.text }}
-                  </label>
+              @for (filter of f.menus; track $index) {
+                <li nz-menu-item>
+                  @if (f.multiple) {
+                    <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="checkboxChange()">
+                      {{ filter.text }}
+                    </label>
+                  } @else {
+                    <label nz-radio [ngModel]="filter.checked" (ngModelChange)="radioChange(filter)">
+                      {{ filter.text }}
+                    </label>
+                  }
                 </li>
               }
             </ul>
