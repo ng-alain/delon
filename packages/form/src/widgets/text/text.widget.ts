@@ -7,7 +7,21 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-text',
-  templateUrl: './text.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+    [class.sf__text-html]="ui.html"
+  >
+    @if (ui.html) {
+      <span [innerHTML]="text"></span>
+    } @else {
+      <span [innerText]="text"></span>
+    }
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

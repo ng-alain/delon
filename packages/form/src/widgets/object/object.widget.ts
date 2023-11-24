@@ -11,7 +11,84 @@ import { ObjectLayoutWidget } from '../../widget';
 
 @Component({
   selector: 'sf-object',
-  templateUrl: './object.widget.html',
+  template: `<ng-template #default let-noTitle>
+      @if (!noTitle && title) {
+        <div class="sf__title">{{ title }}</div>
+      }
+      @if (grid) {
+        <div nz-row [nzGutter]="grid.gutter">
+          @for (i of list; track $index) {
+            @if (i.property.visible && i.show) {
+              <div
+                nz-col
+                [nzSpan]="i.grid.span"
+                [nzOffset]="i.grid.offset"
+                [nzXs]="i.grid.xs"
+                [nzSm]="i.grid.sm"
+                [nzMd]="i.grid.md"
+                [nzLg]="i.grid.lg"
+                [nzXl]="i.grid.xl"
+                [nzXXl]="i.grid.xxl"
+              >
+                <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed" />
+              </div>
+            }
+          }
+        </div>
+      } @else {
+        @for (i of list; track $index) {
+          @if (i.property.visible && i.show) {
+            <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed" />
+          }
+        }
+      }
+    </ng-template>
+    @if (type === 'card') {
+      <nz-card
+        [nzTitle]="cardTitleTpl"
+        [nzExtra]="ui.cardExtra"
+        [nzSize]="ui.cardSize || 'small'"
+        [nzActions]="ui.cardActions || []"
+        [nzBodyStyle]="ui.cardBodyStyle!"
+        [nzBordered]="ui.cardBordered || true"
+        [nzBorderless]="ui.cardBorderless || false"
+        class="sf__object-card"
+        [class.sf__object-card-fold]="!expand"
+      >
+        <ng-template #cardTitleTpl>
+          <div [class.point]="showExpand" (click)="changeExpand()">
+            @if (showExpand) {
+              <i nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs"></i>
+            }
+            {{ title }}
+            @if (ui.optional || oh) {
+              <span class="sf__optional">
+                {{ ui.optional }}
+                @if (oh) {
+                  <i
+                    s
+                    nz-tooltip
+                    [nzTooltipTitle]="oh.text"
+                    [nzTooltipPlacement]="oh.placement"
+                    [nzTooltipTrigger]="oh.trigger"
+                    [nzTooltipColor]="oh.bgColor"
+                    [nzTooltipOverlayClassName]="oh.overlayClassName"
+                    [nzTooltipOverlayStyle]="oh.overlayStyle"
+                    [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
+                    [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
+                    nz-icon
+                    [nzType]="oh.icon!"
+                  ></i>
+                }
+              </span>
+            }
+          </div>
+        </ng-template>
+        <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }" />
+      </nz-card>
+    } @else {
+      <ng-template [ngTemplateOutlet]="default" />
+    }`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

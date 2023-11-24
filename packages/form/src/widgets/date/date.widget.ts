@@ -13,7 +13,133 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-date',
-  templateUrl: './date.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    @switch (mode) {
+      @case ('year') {
+        <nz-year-picker
+          [nzId]="id"
+          [nzDisabled]="disabled"
+          [nzSize]="ui.size!"
+          [nzFormat]="displayFormat"
+          [(ngModel)]="displayValue"
+          (ngModelChange)="_change($event)"
+          [nzAllowClear]="i.allowClear"
+          [ngClass]="ui.className!"
+          [nzDisabledDate]="ui.disabledDate"
+          [nzLocale]="ui.locale!"
+          [nzPlaceHolder]="ui.placeholder!"
+          [nzPopupStyle]="ui.popupStyle!"
+          [nzDropdownClassName]="ui.dropdownClassName"
+          (nzOnOpenChange)="_openChange($event)"
+          [nzRenderExtraFooter]="ui.renderExtraFooter"
+          [nzInputReadOnly]="ui.inputReadOnly"
+          [nzInline]="ui.inline!"
+        />
+      }
+      @case ('month') {
+        <nz-month-picker
+          [nzId]="id"
+          [nzDisabled]="disabled"
+          [nzSize]="ui.size!"
+          [nzFormat]="displayFormat"
+          [(ngModel)]="displayValue"
+          (ngModelChange)="_change($event)"
+          [nzAllowClear]="i.allowClear"
+          [ngClass]="ui.className!"
+          [nzDisabledDate]="ui.disabledDate"
+          [nzLocale]="ui.locale!"
+          [nzPlaceHolder]="ui.placeholder!"
+          [nzPopupStyle]="ui.popupStyle!"
+          [nzDropdownClassName]="ui.dropdownClassName"
+          (nzOnOpenChange)="_openChange($event)"
+          [nzRenderExtraFooter]="ui.renderExtraFooter"
+          [nzInputReadOnly]="ui.inputReadOnly"
+          [nzInline]="ui.inline!"
+        />
+      }
+      @case ('week') {
+        <nz-week-picker
+          [nzId]="id"
+          [nzDisabled]="disabled"
+          [nzSize]="ui.size!"
+          [nzFormat]="displayFormat"
+          [(ngModel)]="displayValue"
+          (ngModelChange)="_change($event)"
+          [nzAllowClear]="i.allowClear"
+          [ngClass]="ui.className!"
+          [nzDisabledDate]="ui.disabledDate"
+          [nzLocale]="ui.locale!"
+          [nzPlaceHolder]="ui.placeholder!"
+          [nzPopupStyle]="ui.popupStyle!"
+          [nzDropdownClassName]="ui.dropdownClassName"
+          [nzInputReadOnly]="ui.inputReadOnly"
+          [nzInline]="ui.inline!"
+          (nzOnOpenChange)="_openChange($event)"
+        />
+      }
+      @case ('range') {
+        <nz-range-picker
+          [nzId]="id"
+          [nzDisabled]="disabled"
+          [nzSize]="ui.size!"
+          [nzFormat]="displayFormat"
+          [(ngModel)]="displayValue"
+          (ngModelChange)="_change($event)"
+          [nzAllowClear]="i.allowClear"
+          [ngClass]="ui.className!"
+          [nzDisabledDate]="ui.disabledDate"
+          [nzLocale]="ui.locale!"
+          [nzPlaceHolder]="ui.placeholder!"
+          [nzPopupStyle]="ui.popupStyle!"
+          [nzDropdownClassName]="ui.dropdownClassName"
+          (nzOnOpenChange)="_openChange($event)"
+          [nzDisabledTime]="ui.disabledTime"
+          [nzRenderExtraFooter]="ui.renderExtraFooter"
+          [nzRanges]="ui.ranges"
+          [nzShowTime]="ui.showTime"
+          [nzSeparator]="ui.separator"
+          [nzShowWeekNumber]="ui.showWeekNumber || false"
+          [nzMode]="ui.rangeMode"
+          [nzInputReadOnly]="ui.inputReadOnly"
+          [nzInline]="ui.inline!"
+          (nzOnOk)="_ok($event)"
+        />
+      }
+      @default {
+        <nz-date-picker
+          [nzId]="id"
+          [nzDisabled]="disabled"
+          [nzSize]="ui.size!"
+          [nzFormat]="displayFormat"
+          [(ngModel)]="displayValue"
+          (ngModelChange)="_change($event)"
+          [nzAllowClear]="i.allowClear"
+          [ngClass]="ui.className!"
+          [nzDisabledDate]="ui.disabledDate"
+          [nzLocale]="ui.locale!"
+          [nzPlaceHolder]="ui.placeholder!"
+          [nzPopupStyle]="ui.popupStyle!"
+          [nzDropdownClassName]="ui.dropdownClassName"
+          (nzOnOpenChange)="_openChange($event)"
+          [nzDisabledTime]="ui.disabledTime"
+          [nzRenderExtraFooter]="ui.renderExtraFooter"
+          [nzShowTime]="ui.showTime"
+          [nzShowToday]="i.showToday"
+          [nzShowWeekNumber]="ui.showWeekNumber || false"
+          [nzInputReadOnly]="ui.inputReadOnly"
+          [nzInline]="ui.inline!"
+          (nzOnOk)="_ok($event)"
+        />
+      }
+    }
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
