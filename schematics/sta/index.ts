@@ -11,10 +11,11 @@ import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-types
 
 import { Schema } from './schema';
 import { STAConfig } from './types';
-import { readJSON, writeJSON } from '../utils/json';
-import { getProject } from '../utils/workspace';
+import { ModifyJSONParam, modifyJSON, readJSON, writeJSON } from '../utils/json';
+import { getProject, isMulitProject } from '../utils/workspace';
 
 let project: ProjectDefinition;
+let projectName: string;
 
 const filePrefix = `/* eslint-disable */
 /*
@@ -28,14 +29,18 @@ const filePrefix = `/* eslint-disable */
 
 function addPathInTsConfig(name: string): Rule {
   return (tree: Tree) => {
-    const json = readJSON(tree, 'tsconfig.json', 'compilerOptions');
-    if (json == null) return tree;
-    if (!json.compilerOptions) json.compilerOptions = {};
-    if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
-    const paths = json.compilerOptions.paths;
-    paths[`@${name}`] = [`src/app/_${name}/index`];
-    paths[`@${name}/*`] = [`src/app/_${name}/*`];
-    writeJSON(tree, 'tsconfig.json', json);
+    const mulitProject = isMulitProject(tree);
+    const commandPrefix = mulitProject ? `projects/${projectName}/` : '';
+    const tsConfigPath = 'tsconfig.json';
+    const basePath = ['compilerOptions', 'paths'];
+    modifyJSON(tree, tsConfigPath, {
+      path: [...basePath, `@${name}`],
+      value: [`${commandPrefix}src/app/_${name}/index`]
+    });
+    modifyJSON(tree, tsConfigPath, {
+      path: [...basePath, `@${name}/*`],
+      value: [`${commandPrefix}src/app/_${name}/*`]
+    });
     return tree;
   };
 }
@@ -232,7 +237,9 @@ function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfi
 
 export default function (options: Schema): Rule {
   return async (tree: Tree, context: SchematicContext) => {
-    project = (await getProject(tree, options.project)).project;
+    const res = await getProject(tree, options.project);
+    project = res.project;
+    projectName = res.name;
     const config: STAConfig = {
       name: 'sta',
       ...options,

@@ -26,14 +26,6 @@ function fixImport(): Rule {
       addValueToVariable(tree, layoutModulePath, 'HEADERCOMPONENTS', rtlComponentName);
     }
 
-    // src/app/app.module.ts
-    const appModulePath = normalize(`${project.sourceRoot}/app/app.module.ts`);
-    if (tree.exists(appModulePath)) {
-      const bidiModuleName = 'BidiModule';
-      addImportToModule(tree, appModulePath, bidiModuleName, '@angular/cdk/bidi');
-      addValueToVariable(tree, appModulePath, 'GLOBAL_THIRD_MODULES', bidiModuleName);
-    }
-
     return tree;
   };
 }

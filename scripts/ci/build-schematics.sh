@@ -104,13 +104,14 @@ copyFiles() {
     "${1}src/app/shared/json-schema/*|${2}application/files/src/app/shared/json-schema/"
     "${1}src/app/shared/cell-widget/*|${2}application/files/src/app/shared/cell-widget/"
     "${1}src/app/shared/st-widget/*|${2}application/files/src/app/shared/st-widget/"
+    "${1}src/app/shared/shared-imports.ts|${2}application/files/src/app/shared/"
+    "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
-    "${1}src/app/app.config.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
+    "${1}src/app/layout/index.ts|${2}application/files/src/app/layout/"
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
-    "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
     "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"
@@ -142,9 +143,6 @@ copyFiles() {
       cp -fr $from $to
     fi
   done
-
-  # remove passport routing
-  rm ${2}application/files/src/app/routes/passport/routes.ts
 }
 
 cloneScaffold() {
