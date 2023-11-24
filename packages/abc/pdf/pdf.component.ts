@@ -53,7 +53,9 @@ const BORDER_WIDTH = 9;
   selector: 'pdf',
   exportAs: 'pdf',
   template: `
-    <nz-skeleton *ngIf="!inited || loading" />
+    @if (!inited || loading) {
+      <nz-skeleton />
+    }
     <div class="pdf-container">
       <div class="pdfViewer"></div>
     </div>
