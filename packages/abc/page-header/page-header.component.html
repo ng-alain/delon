@@ -1,6 +1,10 @@
-<nz-affix #affix *ngIf="isBrowser && fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
+@if (isBrowser && fixed) {
+  <nz-affix #affix [nzOffsetTop]="fixedOffsetTop">
+    <ng-template [ngTemplateOutlet]="phTpl" />
+  </nz-affix>
+} @else {
   <ng-template [ngTemplateOutlet]="phTpl" />
-</nz-affix>
+}
 <ng-template #phTpl>
   <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
     <div [ngClass]="{ 'page-header__wide': wide }">
@@ -12,19 +16,23 @@
         [nzAvatar]="{ size: 'large', shape: 'circle' }"
         class="d-block"
       >
-        <ng-container *ngIf="!breadcrumb; else breadcrumb!">
-          <nz-breadcrumb *ngIf="paths && paths.length > 0">
-            @for (i of paths; track $index) {
-              <nz-breadcrumb-item>
-                @if (i.link) {
-                  <a [routerLink]="i.link">{{ i.title }}</a>
-                } @else {
-                  {{ i.title }}
-                }
-              </nz-breadcrumb-item>
-            }
-          </nz-breadcrumb>
-        </ng-container>
+        @if (breadcrumb) {
+          <ng-template [ngTemplateOutlet]="breadcrumb" />
+        } @else {
+          @if (paths && paths.length > 0) {
+            <nz-breadcrumb>
+              @for (i of paths; track $index) {
+                <nz-breadcrumb-item>
+                  @if (i.link) {
+                    <a [routerLink]="i.link">{{ i.title }}</a>
+                  } @else {
+                    {{ i.title }}
+                  }
+                </nz-breadcrumb-item>
+              }
+            </nz-breadcrumb>
+          }
+        }
         <div class="page-header__detail">
           @if (logo) {
             <div class="page-header__logo">
@@ -35,14 +43,16 @@
             <div class="page-header__row">
               @if (_titleVal || _titleTpl) {
                 <h1 class="page-header__title">
-                  <ng-container *ngIf="_titleVal; else _titleTpl">
+                  @if (_titleTpl) {
+                    <ng-template [ngTemplateOutlet]="_titleTpl" />
+                  } @else {
                     {{ _titleVal }}
                     @if (titleSub) {
                       <small>
                         <ng-container *nzStringTemplateOutlet="titleSub">{{ titleSub }}</ng-container>
                       </small>
                     }
-                  </ng-container>
+                  }
                 </h1>
               }
               @if (action) {
