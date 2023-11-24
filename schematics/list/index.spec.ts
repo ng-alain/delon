@@ -21,17 +21,8 @@ describe('Schematic: list', () => {
 
     it('should be generate list page', () => {
       [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
-    });
-
-    it('should be has import code', () => {
       expect(tree.readContent(modulePath)).toContain(`import { TradeListComponent } from './list/list.component';`);
-    });
-
-    it('should be include module name in component name', () => {
       expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
-    });
-
-    it('shuold be exclude style', () => {
       expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
     });
 
@@ -65,6 +56,57 @@ describe('Schematic: list', () => {
       const servicePath = '/projects/foo/src/app/routes/trade/list/list.service.ts';
       expect(tree.readContent(servicePath)).toContain(`@Injectable()`);
       expect(tree.readContent(modulePath)).toContain(`TradeService`);
+    });
+  });
+
+  describe('[with standalone]', () => {
+    const routesPath = '/projects/foo/src/app/routes/trade/routes.ts';
+    const tsPath = '/projects/foo/src/app/routes/trade/list/list.component.ts';
+    const htmlPath = '/projects/foo/src/app/routes/trade/list/list.component.html';
+
+    beforeEach(async () => {
+      ({ runner, tree } = await createAlainAndModuleApp({ moduleSchema: { standalone: true } }));
+
+      tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: true }, tree);
+    });
+
+    it('should be working', () => {
+      [routesPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
+      expect(tree.readContent(routesPath)).toContain(`import { TradeListComponent } from './list/list.component';`);
+      expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
+      expect(tree.readContent(tsPath)).toContain(`standalone: true,`);
+      expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
+    });
+
+    it('should be support targets (like: list/edit)', async () => {
+      tree = await runner.runSchematic(
+        'list',
+        { name: 'list2', module: 'trade', target: 'list/edit', standalone: true },
+        tree
+      );
+      expect(tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(true);
+    });
+
+    it('should be throw error when directory already exists', async () => {
+      spyOn(fs, 'existsSync').and.returnValue(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
+      try {
+        tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: true }, tree);
+        expect(true).toBe(false);
+      } catch (e) {
+        expect(e.message).toContain(`already exists`);
+      }
+    });
+
+    it('shuold be include service', async () => {
+      tree = await runner.runSchematic(
+        'list',
+        { name: 'list', module: 'trade', service: 'none', standalone: true },
+        tree
+      );
+      const servicePath = '/projects/foo/src/app/routes/trade/list/list.service.ts';
+      expect(tree.readContent(servicePath)).toContain(`@Injectable()`);
     });
   });
 });

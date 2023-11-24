@@ -16,7 +16,7 @@ describe('NgAlainSchematic: module', () => {
     ({ runner, tree } = await createAlainApp());
   });
 
-  describe('[when is module]', () => {
+  describe('[with module]', () => {
     it('should create a module', async () => {
       tree = await runner.runSchematic('module', { ...defaultOptions, standalone: false }, tree);
       expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade.module.ts')).toBe(true);
@@ -57,7 +57,7 @@ describe('NgAlainSchematic: module', () => {
     });
   });
 
-  describe('when is standalone', () => {
+  describe('[with standalone]', () => {
     it('should be working', async () => {
       tree = await runner.runSchematic('module', { ...defaultOptions, standalone: true }, tree);
       const path = '/projects/foo/src/app/routes/trade/routes.ts';
@@ -69,6 +69,39 @@ describe('NgAlainSchematic: module', () => {
       expect(tree.files.includes(rootPath)).toBe(true);
       const rootContent = tree.readContent(rootPath);
       expect(rootContent).toContain(`import('./trade/routes').then((m) => m.routes)`);
+    });
+
+    it('should import into another module', async () => {
+      tree = await runner.runSchematic('module', { ...defaultOptions, name: 'trade', standalone: true }, tree);
+      tree = await runner.runSchematic(
+        'module',
+        {
+          ...defaultOptions,
+          name: 'sys',
+          module: 'trade.module.ts',
+          path: '/projects/foo/src/app/routes/trade',
+          standalone: true
+        },
+        tree
+      );
+      const content = tree.readContent('/projects/foo/src/app/routes/trade/routes.ts');
+      expect(content).toContain(`loadChildren: () => import('./sys/routes').then((m) => m.routes)`);
+    });
+
+    it('shuold be include service', async () => {
+      tree = await runner.runSchematic('module', { ...defaultOptions, service: 'none', standalone: true }, tree);
+      const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
+      const contentModule = tree.readContent('/projects/foo/src/app/routes/trade/routes.ts');
+      expect(content).toContain(`@Injectable()`);
+      expect(content).toContain(`TradeService`);
+      expect(contentModule).toContain(`import { TradeService } from './trade.service';`);
+    });
+
+    it('shuold be include root service', async () => {
+      tree = await runner.runSchematic('module', { ...defaultOptions, service: 'root', standalone: true }, tree);
+      const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.service.ts');
+      expect(content).toContain(`@Injectable({ providedIn: 'root' })`);
+      expect(content).toContain(`TradeService`);
     });
   });
 });

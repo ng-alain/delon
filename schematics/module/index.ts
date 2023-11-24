@@ -85,7 +85,10 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
     ) {
       return tree;
     }
-    const childrenNode = findNode(parentNode.initializer, ts.SyntaxKind.Identifier, 'children');
+    let childrenNode = findNode(parentNode.initializer, ts.SyntaxKind.Identifier, 'children');
+    if (options.standalone && childrenNode == null) {
+      childrenNode = parentNode;
+    }
     if (childrenNode == null || childrenNode.parent == null) {
       return tree;
     }
@@ -113,12 +116,14 @@ function addServiceToNgModule(options: ModuleSchema): Rule {
   return (tree: Tree) => {
     if (options.service !== 'none') return tree;
 
-    const basePath = `/${options.path}/${options.flat ? '' : `${strings.dasherize(options.name)}/`}${strings.dasherize(
-      options.name
-    )}`;
-    const servicePath = normalize(`${basePath}.service`);
+    const basePath = `/${options.path}/${options.flat ? '' : `${strings.dasherize(options.name)}/`}`;
+    const servicePath = normalize(`${basePath}${strings.dasherize(options.name)}.service`);
     const serviceName = strings.classify(`${options.name}Service`);
-    const importModulePath = normalize(`${basePath}.module`);
+    const importModulePath = normalize(
+      options.standalone
+        ? `${basePath}${ROUTINS_FILENAME.split('.')[0]}`
+        : `${basePath}${strings.dasherize(options.name)}.module`
+    );
     const importServicePath = buildRelativePath(importModulePath, servicePath);
     addServiceToModuleOrStandalone(tree, options.standalone, `${importModulePath}.ts`, serviceName, importServicePath);
     return tree;
