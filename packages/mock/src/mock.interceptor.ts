@@ -91,20 +91,5 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
     switchMap((res: HttpResponseBase) => (res instanceof HttpErrorResponse ? throwError(() => res) : of(res)))
   );
 
-  // TODO: HTTP_INTERCEPTOR_FNS 不再公开，需要找到替代方案暂时标记为过期
-  // if (config.executeOtherInterceptors) {
-  //   const interceptors = inject(HTTP_INTERCEPTORS) ?? [];
-  //   const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
-  //   if (lastInterceptors.length > 0) {
-  //     const chain = lastInterceptors.reduceRight(
-  //       (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor),
-  //       {
-  //         handle: () => res$
-  //       } as HttpBackend
-  //     );
-  //     return chain.handle(req).pipe(delay(config.delay!));
-  //   }
-  // }
-
   return res$.pipe(delay(config.delay!));
 };

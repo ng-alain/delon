@@ -71,7 +71,7 @@ describe('mock: interceptor', () => {
   }
 
   describe('[default]', () => {
-    beforeEach(() => genModule(DATA, { executeOtherInterceptors: false, delay: 1 }));
+    beforeEach(() => genModule(DATA, { delay: 1 }));
     it('should be init', done => {
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();

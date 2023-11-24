@@ -3,6 +3,5 @@ import type { AlainMockConfig } from '@delon/util/config';
 export const MOCK_DEFULAT_CONFIG: AlainMockConfig = {
   delay: 300,
   force: false,
-  log: true,
-  executeOtherInterceptors: false
+  log: true
 };
