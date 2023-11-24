@@ -11,7 +11,14 @@ import {
 } from '@angular/core';
 
 import type { IconDefinition } from '@ant-design/icons-angular';
-import { BellOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import {
+  BellOutline,
+  DeleteOutline,
+  InboxOutline,
+  PlusOutline,
+  MenuFoldOutline,
+  MenuUnfoldOutline
+} from '@ant-design/icons-angular/icons';
 
 import { ALAIN_CONFIG, AlainConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -67,7 +74,15 @@ export function provideAlain(options: AlainProvideOptions): EnvironmentProviders
     provides.push({ provide: ALAIN_I18N_TOKEN, useClass: i18nCls, multi: false });
   }
 
-  const icons: IconDefinition[] = [BellOutline, DeleteOutline, PlusOutline, InboxOutline, ...(options.icons ?? [])];
+  const icons: IconDefinition[] = [
+    BellOutline,
+    DeleteOutline,
+    PlusOutline,
+    InboxOutline,
+    MenuFoldOutline,
+    MenuUnfoldOutline,
+    ...(options.icons ?? [])
+  ];
   provides.push({
     provide: ENVIRONMENT_INITIALIZER,
     multi: true,

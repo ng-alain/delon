@@ -7,19 +7,13 @@ describe('Schematic: curd', () => {
   let tree: UnitTestTree;
 
   beforeEach(async () => {
-    ({ runner, tree } = await createAlainAndModuleApp());
-    tree = await runner.runSchematic('curd', { name: 'list', module: 'trade' }, tree);
+    ({ runner, tree } = await createAlainAndModuleApp({ moduleSchema: { standalone: false } }));
+    tree = await runner.runSchematic('curd', { name: 'list', module: 'trade', standalone: false }, tree);
   });
 
   it('should be generate list page', () => {
     expect(tree.exists('/projects/foo/src/app/routes/trade/list/list.component.ts')).toBe(true);
-  });
-
-  it('should be generate view page', () => {
     expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
-  });
-
-  it('should be generate edit page', () => {
     expect(tree.exists('/projects/foo/src/app/routes/trade/list/edit/edit.component.ts')).toBe(true);
   });
 });
