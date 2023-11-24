@@ -1,4 +1,4 @@
-import { strings } from '@angular-devkit/core';
+import { strings, normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import {
   apply,
@@ -123,7 +123,9 @@ function resolveSchema(
     throw new SchematicsException(`The directory (${fullPath}) already exists`);
   }
 
-  if (!schema.standalone) {
+  if (schema.standalone) {
+    schema.importModulePath = normalize(`${schema.path}/${schema.name}/${schema.name}.component.ts`);
+  } else {
     schema.importModulePath = findModuleFromOptions(tree, schema as unknown as ModuleOptions);
   }
 
@@ -195,9 +197,11 @@ export function addValueToVariable(
 }
 
 function getRelativePath(filePath: string, schema: CommonSchema, prefix: 'component' | 'service'): string {
-  const importPath = `/${schema.path}/${schema.flat ? '' : `${strings.dasherize(schema.name!)}/`}${strings.dasherize(
-    schema.name!
-  )}.${prefix}`;
+  const importPath = normalize(
+    `/${schema.path}/${schema.flat ? '' : `${strings.dasherize(schema.name!)}/`}${strings.dasherize(
+      schema.name!
+    )}.${prefix}`
+  );
   return buildRelativePath(filePath, importPath);
 }
 
@@ -286,6 +290,6 @@ export function buildAlain(schema: CommonSchema): Rule {
       move(null!, `${schema.path}/`)
     ]);
 
-    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))]);
+    return chain([branchAndMerge(chain([mergeWith(templateSource), addDeclaration(schema)]))]);
   };
 }

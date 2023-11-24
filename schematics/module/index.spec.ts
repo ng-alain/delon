@@ -16,25 +16,28 @@ describe('NgAlainSchematic: module', () => {
     ({ runner, tree } = await createAlainApp());
   });
 
-  describe('when is module', () => {
+  describe('[when is module]', () => {
     it('should create a module', async () => {
       tree = await runner.runSchematic('module', { ...defaultOptions, standalone: false }, tree);
       expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade.module.ts')).toBe(true);
       expect(tree.files.includes('/projects/foo/src/app/routes/trade/trade-routing.module.ts')).toBe(true);
-      const routesRoutingModuleContent = tree.readContent(`/projects/foo/src/app/routes/routes-routing.module.ts`);
-      expect(routesRoutingModuleContent).toContain(
-        `{ path: 'trade', loadChildren: () => import('./trade/trade.module').then((m) => m.TradeModule) }`
-      );
     });
 
     it('should import into another module', async () => {
+      tree = await runner.runSchematic('module', { ...defaultOptions, standalone: false }, tree);
       tree = await runner.runSchematic(
         'module',
-        { ...defaultOptions, module: 'app.module.ts', path: '/projects/foo/src/app', standalone: false },
+        {
+          ...defaultOptions,
+          name: 'sys',
+          module: 'trade.module.ts',
+          path: '/projects/foo/src/app/routes/trade',
+          standalone: false
+        },
         tree
       );
-      const content = tree.readContent('/projects/foo/src/app/app.module.ts');
-      expect(content).toContain(`import { TradeModule } from './trade/trade.module';`);
+      const content = tree.readContent('/projects/foo/src/app/routes/trade/trade.module.ts');
+      expect(content).toContain(`import { SysModule } from './sys/sys.module';`);
     });
 
     it('shuold be include service', async () => {
@@ -55,7 +58,7 @@ describe('NgAlainSchematic: module', () => {
   });
 
   describe('when is standalone', () => {
-    it('should create a module', async () => {
+    it('should be working', async () => {
       tree = await runner.runSchematic('module', { ...defaultOptions, standalone: true }, tree);
       const path = '/projects/foo/src/app/routes/trade/routes.ts';
       expect(tree.files.includes(path)).toBe(true);

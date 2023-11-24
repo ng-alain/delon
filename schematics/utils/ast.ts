@@ -55,7 +55,12 @@ function getComponentMetadata(source: ts.SourceFile): ts.Node[] {
     .map(expr => expr.arguments[0] as ts.ObjectLiteralExpression);
 }
 
-function addSymbolToComponentMetadata(source: ts.SourceFile, filePath: string, symbolName: string): Change[] {
+function addSymbolToComponentMetadata(
+  source: ts.SourceFile,
+  filePath: string,
+  symbolName: string,
+  metadataField = 'imports'
+): Change[] {
   const nodes = getComponentMetadata(source);
   if (nodes.length <= 0) return [];
 
@@ -65,7 +70,6 @@ function addSymbolToComponentMetadata(source: ts.SourceFile, filePath: string, s
   }
 
   // Get all the children property assignment of object literals.
-  const metadataField = 'imports';
   const matchingProperties = getMetadataField(node, metadataField);
   if (matchingProperties.length == 0) {
     // We haven't found the field in the metadata declaration. Insert a new field.
@@ -144,12 +148,18 @@ export function findRoutesPath(tree: Tree, path: string): string {
   return '';
 }
 
-export function importInStandalone(tree: Tree, filePath: string, componentName: string, componentPath: string): void {
+export function importInStandalone(
+  tree: Tree,
+  filePath: string,
+  componentName: string,
+  componentPath: string,
+  metadataField = 'imports'
+): void {
   // imports
   addImportToModule(tree, filePath, componentName, componentPath);
   // import in component
   const source = getSourceFile(tree, filePath);
-  const changes = addSymbolToComponentMetadata(source, filePath, componentName);
+  const changes = addSymbolToComponentMetadata(source, filePath, componentName, metadataField);
   applyChanges(tree, filePath, changes);
 }
 
@@ -162,9 +172,15 @@ export function addServiceToModuleOrStandalone(
 ): void {
   const source = getSourceFile(tree, filePath);
   if (standalone) {
-    importInStandalone(tree, filePath, serviceName, importPath);
+    importInStandalone(tree, filePath, serviceName, importPath, 'provides');
   } else {
     const changes = _addProviderToModule(source, filePath, serviceName, importPath);
     applyChanges(tree, filePath, changes);
   }
+}
+
+export function consoleTree(tree: Tree): void {
+  tree.visit(filePath => {
+    console.log(filePath);
+  });
 }

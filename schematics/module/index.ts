@@ -15,12 +15,12 @@ import {
 } from '@angular-devkit/schematics';
 import { addImportToModule, findNode } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
-import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
+import { findModuleFromOptions, buildRelativePath } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
 
 import { Schema as ModuleSchema } from './schema';
-import { ROUTINS_FILENAME, getProject, isStandalone, refreshPathRoot } from '../utils';
+import { ROUTINS_FILENAME, addServiceToModuleOrStandalone, getProject, isStandalone, refreshPathRoot } from '../utils';
 
 function addDeclarationToNgModule(options: ModuleSchema): Rule {
   return (tree: Tree) => {
@@ -109,6 +109,22 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
   };
 }
 
+function addServiceToNgModule(options: ModuleSchema): Rule {
+  return (tree: Tree) => {
+    if (options.service !== 'none') return tree;
+
+    const basePath = `/${options.path}/${options.flat ? '' : `${strings.dasherize(options.name)}/`}${strings.dasherize(
+      options.name
+    )}`;
+    const servicePath = normalize(`${basePath}.service`);
+    const serviceName = strings.classify(`${options.name}Service`);
+    const importModulePath = normalize(`${basePath}.module`);
+    const importServicePath = buildRelativePath(importModulePath, servicePath);
+    addServiceToModuleOrStandalone(tree, options.standalone, `${importModulePath}.ts`, serviceName, importServicePath);
+    return tree;
+  };
+}
+
 export default function (schema: ModuleSchema): Rule {
   return async (tree: Tree) => {
     const proj = await getProject(tree, schema.project);
@@ -132,7 +148,7 @@ export default function (schema: ModuleSchema): Rule {
     const templateSource = apply(url('./files'), [
       schema.service === 'ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),
       schema.routing ? noop() : filter(path => !path.endsWith('-routing.module.ts')),
-      schema.standalone ? filter(path => !path.includes('.module.ts')) : filter(path => path.includes('.module.ts')),
+      schema.standalone ? filter(path => !path.includes('.module.ts')) : noop(),
       applyTemplates({
         ...strings,
         'if-flat': (s: string) => (schema.flat ? '' : s),
@@ -143,7 +159,12 @@ export default function (schema: ModuleSchema): Rule {
 
     return chain([
       branchAndMerge(
-        chain([addDeclarationToNgModule(schema), addRoutingModuleToTop(schema), mergeWith(templateSource)])
+        chain([
+          mergeWith(templateSource),
+          addDeclarationToNgModule(schema),
+          addRoutingModuleToTop(schema),
+          addServiceToNgModule(schema)
+        ])
       )
     ]);
   };
