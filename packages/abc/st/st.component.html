@@ -60,7 +60,7 @@
           @if ($first && expand) {
             <th nzWidth="50px" [rowSpan]="_headers.length"></th>
           }
-          <ng-container *ngFor="let h of row; let index = index; let last = last">
+          @for (h of row; track index; let index = $index; let last = $last) {
             <th
               *let="h.column as _c"
               [colSpan]="h.colSpan"
@@ -140,7 +140,7 @@
                 />
               }
             </th>
-          </ng-container>
+          }
         </tr>
       }
     </thead>
@@ -165,7 +165,7 @@
             nzWidth="50px"
           ></td>
         }
-        <ng-container *ngFor="let c of _columns; let cIdx = index">
+        @for (c of _columns; track cIdx; let cIdx = $index) {
           @if (i._values[cIdx].props?.colSpan > 0 && i._values[cIdx].props?.rowSpan > 0) {
             <td
               [nzLeft]="!!c._left"
@@ -183,7 +183,7 @@
               <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="cIdx" (n)="_handleTd($event)" />
             </td>
           }
-        </ng-container>
+        }
       </tr>
       <tr [nzExpand]="i.expand">
         <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{ $implicit: i, index: index }" />
@@ -194,9 +194,9 @@
         <ng-template [ngTemplateOutlet]="bodyTpl" [ngTemplateOutletContext]="{ $implicit: i, index: index }" />
       </ng-template>
     } @else {
-      <ng-container *ngFor="let i of _data; let index = index">
-        <ng-template [ngTemplateOutlet]="bodyTpl" [ngTemplateOutletContext]="{ $implicit: i, index: index }" />
-      </ng-container>
+      @for (i of _data; track $index) {
+        <ng-template [ngTemplateOutlet]="bodyTpl" [ngTemplateOutletContext]="{ $implicit: i, index: $index }" />
+      }
     }
     @if (!_loading) {
       <ng-template [ngTemplateOutlet]="body!" [ngTemplateOutletContext]="{ $implicit: _statistical }" />
