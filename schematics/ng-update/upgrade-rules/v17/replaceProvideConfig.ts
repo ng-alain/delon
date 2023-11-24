@@ -49,30 +49,63 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
   if (content.includes(text)) content = content.replace(text, '');
 
   content = content
-    .replace('modules: [', 'providers: [provideMockConfig({ data: MOCKDATA })],\nmodules: [')
-    .replace('DelonMockModule', 'provideMockConfig');
+    .replace(
+      'modules: [',
+      'providers: [provideMockConfig({ data: MOCKDATA })], \ninterceptorFns: [mockInterceptor],\nmodules: ['
+    )
+    .replace('DelonMockModule', 'provideMockConfig, mockInterceptor');
 
   tree.overwrite(filePath, content);
 
   // remove HttpClientModule
+  let useAuthType = '';
   const appModuleFile = `${sourceRoot}/app/app.module.ts`;
   if (tree.exists(appModuleFile)) {
-    tree.overwrite(
-      appModuleFile,
-      tree
-        .readText(appModuleFile)
-        .replace(`import { HttpClientModule } from '@angular/common/http';`, '')
-        .replace(/HttpClientModule,?/g, '')
-    );
+    let appModuleContent = tree.readText(appModuleFile);
+    if (appModuleContent.includes('JWTInterceptor')) {
+      useAuthType = 'jwt';
+      appModuleContent = appModuleContent
+        .replace(
+          `{ provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }`,
+          `// { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }`
+        )
+        .replace(`import { JWTInterceptor } from '@delon/auth';`, `// import { JWTInterceptor } from '@delon/auth';`);
+    } else if (appModuleContent.includes('SimpleInterceptor')) {
+      useAuthType = 'simple';
+      appModuleContent = appModuleContent
+        .replace(
+          `{ provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }`,
+          `// { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }`
+        )
+        .replace(
+          `import { SimpleInterceptor } from '@delon/auth';`,
+          `// import { SimpleInterceptor } from '@delon/auth';`
+        );
+    }
+    appModuleContent = appModuleContent
+      .replace(`import { HttpClientModule } from '@angular/common/http';`, '')
+      .replace(/HttpClientModule,?/g, '');
+
+    tree.overwrite(appModuleFile, appModuleContent);
   }
 
   const globalFile = `${sourceRoot}/app/global-config.module.ts`;
   if (tree.exists(globalFile)) {
+    // SimpleInterceptor -> authSimpleInterceptor
+    // JWTInterceptor -> authJWTInterceptor
+    let globalContent = tree.readText(globalFile);
+    let authInterceptor = '';
+    if (useAuthType === 'jwt') {
+      authInterceptor = ', authJWTInterceptor';
+    } else if (useAuthType === 'simple') {
+      authInterceptor = ', authSimpleInterceptor';
+    }
     tree.overwrite(
       globalFile,
-      tree
-        .readText(globalFile)
-        .replace(', ...zorroProvides', ', ...zorroProvides, ...(environment.providers || []), provideHttpClient()')
+      globalContent.replace(
+        ', ...zorroProvides',
+        `, ...zorroProvides, ...(environment.providers || []), \nprovideHttpClient(withInterceptors([...(environment.interceptorFns || [])${authInterceptor}]), withInterceptorsFromDi())`
+      )
     );
   }
 
