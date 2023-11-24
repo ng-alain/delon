@@ -22,7 +22,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <div *ngIf="instance">
+    @if (instance) {
       <button nz-button (click)="add()" [nzType]="'primary'">new</button>
       <button nz-button (click)="download()" class="ml-sm">download</button>
       <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false" class="mt-sm">
@@ -39,7 +39,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
           </tr>
         </tbody>
       </nz-table>
-    </div>
+    }
   `
 })
 export class DemoComponent {

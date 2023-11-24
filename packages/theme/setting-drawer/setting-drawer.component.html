@@ -15,7 +15,9 @@
         [nzTooltipTitle]="c.key"
         class="setting-drawer__theme-tag"
       >
-        <i *ngIf="color === c.color" nz-icon nzType="check"></i>
+        @if (color === c.color) {
+          <i nz-icon nzType="check"></i>
+        }
       </span>
     </div>
     <nz-divider />

@@ -87,36 +87,42 @@
     <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
     <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c" />
     <ng-container *ngSwitchDefault>
-      <span
-        *ngIf="c.safeType !== 'text'"
-        [innerHTML]="i._values[cIdx]._text"
-        [attr.title]="c._isTruncate ? i._values[cIdx].text : null"
-      ></span>
-      <span
-        *ngIf="c.safeType === 'text'"
-        [innerText]="i._values[cIdx]._text"
-        [attr.title]="c._isTruncate ? i._values[cIdx].text : null"
-      ></span>
+      @if (c.safeType === 'text') {
+        <span [innerText]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+      } @else {
+        <span [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+      }
     </ng-container>
   </ng-container>
   <ng-container *ngFor="let btn of i._values[cIdx].buttons; let last = last">
-    <a *ngIf="btn.children!.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
-      <span [innerHTML]="btn._text"></span>
-      <i nz-icon nzType="down"></i>
-    </a>
-    <nz-dropdown-menu #btnMenu="nzDropdownMenu">
-      <ul nz-menu>
-        <ng-container *ngFor="let subBtn of btn.children!">
-          <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
-            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }" />
-          </li>
-          <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
-        </ng-container>
-      </ul>
-    </nz-dropdown-menu>
-    <span *ngIf="btn.children!.length === 0" [class.st__btn-disabled]="btn._disabled">
-      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
-    </span>
-    <nz-divider *ngIf="!last" nzType="vertical" />
+    @if (btn.children!.length > 0) {
+      <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
+        <span [innerHTML]="btn._text"></span>
+        <i nz-icon nzType="down"></i>
+      </a>
+      <nz-dropdown-menu #btnMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <ng-container *ngFor="let subBtn of btn.children!">
+            @if (subBtn.type === 'divider') {
+              <li nz-menu-divider></li>
+            } @else {
+              <li nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
+                <ng-template
+                  [ngTemplateOutlet]="btnTpl"
+                  [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }"
+                />
+              </li>
+            }
+          </ng-container>
+        </ul>
+      </nz-dropdown-menu>
+    } @else {
+      <span [class.st__btn-disabled]="btn._disabled">
+        <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
+      </span>
+    }
+    @if (!last) {
+      <nz-divider nzType="vertical" />
+    }
   </ng-container>
 </ng-container>
