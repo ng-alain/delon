@@ -84,8 +84,8 @@ copyFiles() {
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
-    "${1}src/style-icons-auto.ts|${2}application/files/src/"
-    "${1}src/style-icons.ts|${2}application/files/src/"
+    # "${1}src/style-icons-auto.ts|${2}application/files/src/"
+    # "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
     "${1}src/assets/color.less|${2}application/files/src/assets/"
     "${1}src/assets/style.compact.css|${2}application/files/src/assets/"
@@ -148,7 +148,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 https://github.com/ng-alain/ng-alain.git -b feat-config
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
