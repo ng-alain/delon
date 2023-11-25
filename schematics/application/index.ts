@@ -125,7 +125,7 @@ function addRunScriptToPackageJson(): Rule {
     const commandPrefix = mulitProject ? `${projectName}:` : '';
     const commandFragment = mulitProject ? ` ${projectName}` : '';
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
-    json.scripts[commandFragment ? commandFragment : 'start'] = `ng s${commandFragment} -o`;
+    json.scripts[commandFragment ? commandFragment.trim() : 'start'] = `ng s${commandFragment} -o`;
     json.scripts[`${commandPrefix}hmr`] = `ng s${commandFragment} -o --hmr`;
     json.scripts[`${commandPrefix}build`] = `npm run ng-high-memory build${commandFragment}`;
     json.scripts[`${commandPrefix}analyze`] = `npm run ng-high-memory build${commandFragment} -- --source-map`;
