@@ -22,7 +22,9 @@ import { Component, OnInit } from '@angular/core';
     <h3>{{ type }}</h3>
     <qr [value]="value"></qr>
     <div>
-      <button *ngFor="let t of types" nz-button (click)="change(t)">{{ t }}</button>
+      @for (t of types; track $index) {
+        <button nz-button (click)="change(t)">{{ t }}</button>
+      }
     </div>
   `,
 })

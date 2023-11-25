@@ -23,15 +23,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of list; let idx = index">
-          <td>{{ idx + 1 }}</td>
-          <td>
-            <g2-single-bar height="24" [value]="i.value"></g2-single-bar>
-          </td>
-          <td>
-            <g2-single-bar height="60" [value]="i.other" min="-100" line></g2-single-bar>
-          </td>
-        </tr>
+        @for (i of list; track $index) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>
+              <g2-single-bar height="24" [value]="i.value" />
+            </td>
+            <td>
+              <g2-single-bar height="60" [value]="i.other" min="-100" line />
+            </td>
+          </tr>
+        }
       </tbody>
     </nz-table>
   `,

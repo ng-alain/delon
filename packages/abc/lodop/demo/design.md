@@ -21,37 +21,41 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <nz-alert *ngIf="error" [nzType]="'warning'" [nzMessage]="message">
-      <ng-template #message> 请先下载<a href="http://c-lodop.com/download.html" target="_blank">Lodop插件</a>。 </ng-template>
-    </nz-alert>
-    <form *ngIf="lodop && !error" nz-form>
-      <nz-form-item nz-row>
-        <nz-form-label nz-col [nzSm]="6">标题</nz-form-label>
-        <nz-form-control nz-col [nzSm]="18">
-          <input nz-input [(ngModel)]="context['标题']" name="标题" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row>
-        <nz-form-label nz-col [nzSm]="6">费用</nz-form-label>
-        <nz-form-control nz-col [nzSm]="18">
-          <input nz-input [(ngModel)]="context['费用']" name="费用" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row>
-        <nz-form-label nz-col [nzSm]="6">打印内容</nz-form-label>
-        <nz-form-control nz-col [nzSm]="18">
-          <textarea [(ngModel)]="code" name="code" nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row>
-        <nz-form-control nz-col [nzSm]="18" [nzOffset]="6">
-          <button nz-button (click)="design()" [nzLoading]="doing">打印设计</button>
-          <button nz-button (click)="setup()">打印维护</button>
-          <button nz-button (click)="print()">打印预览</button>
-          <button nz-button (click)="printBatch()" [nzLoading]="doing">批量打印3张</button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+    @if (error) {
+      <nz-alert [nzType]="'warning'" [nzMessage]="message">
+        <ng-template #message> 请先下载<a href="http://c-lodop.com/download.html" target="_blank">Lodop插件</a>。 </ng-template>
+      </nz-alert>
+    }
+    @if (lodop && !error) {
+      <form nz-form>
+        <nz-form-item nz-row>
+          <nz-form-label nz-col [nzSm]="6">标题</nz-form-label>
+          <nz-form-control nz-col [nzSm]="18">
+            <input nz-input [(ngModel)]="context['标题']" name="标题" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+          <nz-form-label nz-col [nzSm]="6">费用</nz-form-label>
+          <nz-form-control nz-col [nzSm]="18">
+            <input nz-input [(ngModel)]="context['费用']" name="费用" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+          <nz-form-label nz-col [nzSm]="6">打印内容</nz-form-label>
+          <nz-form-control nz-col [nzSm]="18">
+            <textarea [(ngModel)]="code" name="code" nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+          <nz-form-control nz-col [nzSm]="18" [nzOffset]="6">
+            <button nz-button (click)="design()" [nzLoading]="doing">打印设计</button>
+            <button nz-button (click)="setup()">打印维护</button>
+            <button nz-button (click)="print()">打印预览</button>
+            <button nz-button (click)="printBatch()" [nzLoading]="doing">批量打印3张</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    }
   `,
 })
 export class DemoComponent {

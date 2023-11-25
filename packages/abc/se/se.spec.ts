@@ -342,7 +342,9 @@ describe('abc: edit', () => {
       genModule(`
       <form nz-form se-container>
         <se #viewComp id="1">
-          <input id="ipt" type="text" *ngIf="showModel" [(ngModel)]="val" name="val" required>
+        @if (showModel) {
+          <input id="ipt" type="text" [(ngModel)]="val" name="val" required>
+        }
         </se>
       </form>`);
       page.expect('#ipt');

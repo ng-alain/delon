@@ -204,21 +204,22 @@ describe('abc: down-file', () => {
 
 @Component({
   template: `
-    <button
-      *ngFor="let i of fileTypes"
-      id="down-{{ i }}"
-      down-file
-      [http-data]="data"
-      [http-body]="body"
-      [http-method]="method"
-      http-url="/demo.{{ i }}"
-      [file-name]="fileName"
-      [pre]="pre"
-      (success)="success()"
-      (error)="error()"
-    >
-      {{ i }}
-    </button>
+    @for (i of fileTypes; track $index) {
+      <button
+        id="down-{{ i }}"
+        down-file
+        [http-data]="data"
+        [http-body]="body"
+        [http-method]="method"
+        http-url="/demo.{{ i }}"
+        [file-name]="fileName"
+        [pre]="pre"
+        (success)="success()"
+        (error)="error()"
+      >
+        {{ i }}
+      </button>
+    }
   `
 })
 class TestComponent {

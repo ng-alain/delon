@@ -7,16 +7,19 @@
   <div *nzDrawerContent class="setting-drawer__content">
     <div class="setting-drawer__body setting-drawer__theme">
       <h3 class="setting-drawer__title">主题色</h3>
-      <span
-        *ngFor="let c of colors"
-        [style]="{ 'background-color': c.color }"
-        (click)="changeColor(c.color)"
-        nz-tooltip
-        [nzTooltipTitle]="c.key"
-        class="setting-drawer__theme-tag"
-      >
-        <i *ngIf="color === c.color" nz-icon nzType="check"></i>
-      </span>
+      @for (c of colors; track $index) {
+        <span
+          [style]="{ 'background-color': c.color }"
+          (click)="changeColor(c.color)"
+          nz-tooltip
+          [nzTooltipTitle]="c.key"
+          class="setting-drawer__theme-tag"
+        >
+          @if (color === c.color) {
+            <i nz-icon nzType="check"></i>
+          }
+        </span>
+      }
     </div>
     <nz-divider />
     <div class="setting-drawer__body">

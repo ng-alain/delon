@@ -23,9 +23,11 @@ import { SEErrorRefresh, SELayout } from './se.types';
   selector: 'se-container, [se-container]',
   exportAs: 'seContainer',
   template: `
-    <div se-title *ngIf="title">
-      <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
-    </div>
+    @if (title) {
+      <div se-title>
+        <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+      </div>
+    }
     <ng-content />
   `,
   host: {

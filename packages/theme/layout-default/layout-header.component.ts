@@ -28,30 +28,38 @@ interface LayoutDefaultHeaderItem {
   selector: 'layout-default-header',
   template: `
     <ng-template #render let-ls>
-      <li *ngFor="let i of ls" [class.hidden-mobile]="i.hidden === 'mobile'" [class.hidden-pc]="i.hidden === 'pc'">
-        <ng-container *ngTemplateOutlet="i.host" />
-      </li>
+      @for (i of ls; track $index) {
+        <li [class.hidden-mobile]="i.hidden === 'mobile'" [class.hidden-pc]="i.hidden === 'pc'">
+          <ng-container *ngTemplateOutlet="i.host" />
+        </li>
+      }
     </ng-template>
     <div class="alain-default__header-logo" [style.width.px]="opt.logoFixWidth">
-      <ng-container *ngIf="!opt.logo; else opt.logo!">
+      @if (opt.logo) {
+        <ng-container *ngTemplateOutlet="opt.logo" />
+      } @else {
         <a [routerLink]="opt.logoLink" class="alain-default__header-logo-link">
           <img class="alain-default__header-logo-expanded" [attr.src]="opt.logoExpanded" [attr.alt]="app.name" />
           <img class="alain-default__header-logo-collapsed" [attr.src]="opt.logoCollapsed" [attr.alt]="app.name" />
         </a>
-      </ng-container>
+      }
     </div>
     <div class="alain-default__nav-wrap">
       <ul class="alain-default__nav">
-        <li *ngIf="!opt.hideAside && opt.showHeaderCollapse">
-          <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
-            <span nz-icon [nzType]="collapsedIcon"></span>
-          </div>
-        </li>
+        @if (!opt.hideAside && opt.showHeaderCollapse) {
+          <li>
+            <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
+              <span nz-icon [nzType]="collapsedIcon"></span>
+            </div>
+          </li>
+        }
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: left }" />
       </ul>
-      <div *ngIf="middle.length > 0" class="alain-default__nav alain-default__nav-middle">
-        <ng-container *ngTemplateOutlet="middle[0].host" />
-      </div>
+      @if (middle.length > 0) {
+        <div class="alain-default__nav alain-default__nav-middle">
+          <ng-container *ngTemplateOutlet="middle[0].host" />
+        </div>
+      }
       <ul class="alain-default__nav">
         <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: right }" />
       </ul>

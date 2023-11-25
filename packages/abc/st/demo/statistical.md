@@ -23,7 +23,7 @@ import { STColumn, STData } from '@delon/abc/st';
     <button nz-button (click)="data = []">Clean Data</button>
     <st #st [data]="data" [columns]="columns" [body]="bodyTpl">
       <ng-template #bodyTpl let-s>
-        <ng-container *ngIf="st.count > 0">
+        @if (st.count > 0) {
           <tr>
             <td>合计</td>
             <td>{{ s.len.text }} 个</td>
@@ -39,7 +39,7 @@ import { STColumn, STData } from '@delon/abc/st';
             <td class="text-right">{{ s.sum.value / s.len.value | price }}</td>
             <td colspan="4"></td>
           </tr>
-        </ng-container>
+        }
       </ng-template>
     </st>
   `,

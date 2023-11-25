@@ -7,7 +7,59 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-textarea',
-  templateUrl: './textarea.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <ng-template #ipt>
+      <textarea
+        nz-input
+        [attr.id]="id"
+        [disabled]="disabled"
+        [attr.disabled]="disabled"
+        [nzSize]="ui.size!"
+        [ngModel]="value"
+        (ngModelChange)="change($event)"
+        [attr.maxLength]="schema.maxLength || null"
+        [attr.placeholder]="ui.placeholder"
+        [nzAutosize]="autosize"
+        [nzBorderless]="ui.borderless"
+        (focus)="focus($event)"
+        (blur)="blur($event)"
+      >
+      </textarea>
+    </ng-template>
+
+    @if (ui.maxCharacterCount) {
+      <nz-textarea-count
+        [nzMaxCharacterCount]="ui.maxCharacterCount"
+        [nzComputeCharacterCount]="ui.computeCharacterCount!"
+      >
+        <textarea
+          nz-input
+          [attr.id]="id"
+          [disabled]="disabled"
+          [attr.disabled]="disabled"
+          [nzSize]="ui.size!"
+          [ngModel]="value"
+          (ngModelChange)="change($event)"
+          [attr.maxLength]="schema.maxLength || null"
+          [attr.placeholder]="ui.placeholder"
+          [nzAutosize]="autosize"
+          [nzBorderless]="ui.borderless"
+          (focus)="focus($event)"
+          (blur)="blur($event)"
+        >
+        </textarea>
+      </nz-textarea-count>
+    } @else {
+      <ng-template [ngTemplateOutlet]="ipt" />
+    }
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

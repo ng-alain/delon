@@ -23,13 +23,13 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 @Component({
   selector: 'app-demo',
   template: `
-    <ng-container *ngIf="timer$ !== null">
+    @if (timer$ !== null) {
       <ng-container *let="timer$ | async as time">
         <p>Timer value: {{ time }}</p>
         <p>Timer value: {{ time }}</p>
         <p>Timer value: {{ time }}</p>
       </ng-container>
-    </ng-container>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
