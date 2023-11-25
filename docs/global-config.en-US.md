@@ -10,22 +10,31 @@ We add support of **global configuration** to many components. You can define th
 
 ## How to Use?
 
-If you want to provide default configurations to some components, please use `provideAlainConfig` function. object providing implements interface `AlainConfig` For example:
+If you want to provide default configurations to some components, please use `provideAlain` function. object providing implements interface `AlainProvideOptions` For example:
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig } from '@delon/util/config';
+import { AlainConfig, AlainProvideLang } from '@delon/util/config';
+import { ICONS } from '../style-icons';
+import { ICONS_AUTO } from '../style-icons-auto';
+
+const defaultLang: AlainProvideLang = {
+  abbr: 'zh-CN',
+  ng: ngLang,
+  zorro: zorroLang,
+  date: dateLang,
+  delon: delonLang
+};
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
 };
 
-@NgModule({
+export const appConfig: ApplicationConfig = {
   providers: [
-    provideAlainConfig(alainConfig)
-  ],
-})
-export class GlobalConfigModule {}
+    provideAlain({ config: alainConfig, defaultLang, icons: [...ICONS_AUTO, ...ICONS] })
+  ]
+};
 ```
 
 These global configuration would be injected into a service named `AlainConfigService` and gets stored.

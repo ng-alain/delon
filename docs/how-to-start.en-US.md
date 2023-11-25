@@ -31,13 +31,14 @@ When running an app via `ng serve`, a complete Angular startup process would loo
 
 ### 1) APP_INITIALIZER
 
-From a mid and back-office perspective, NG-ALAIN always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
+Angular provides a DI (dependency injection) token `APP_INITIALIZER` that allows the application to perform some data that will affect the rendering results when it starts, such as: language data, menu data, user information data, dictionary data, etc., and must return an `Observable` Asynchronous, asynchronous means that you can do a lot of interesting things, such as data coming from a remote location. `APP_INITIALIZER` will only be executed once, you only need to register it in the `ApplicationConfig` module.
 
-> Network requests may encounter a 403 error because the scaffolding uses the user authentication module by default and always assumes that all requests must be a valid user authorization. For more documentation see:
-> - [Interact with server](/docs/server)
-> - [Auth User Authentication](/auth)
+The NG-ALAIN scaffolding provides a sample code on how to load basic data before starting rendering after starting Angular [startup.service.ts](https://github.com/ng-alain/ng-alain/blob/ master/src/app/core/startup/startup.service.ts).
 
-After obtaining the application information, you need to assign some values ​​to the built-in services of the scaffolding, including:
+1. Provide unified registration `provideStartup` function, which only needs to be registered in `app.config.ts`
+2. Provide the `load()` function and ensure that **regardless of whether the request is successful or not** must return an `Observable<void>` for Angular to render normally, otherwise Angular will not be able to start.
+
+> Note: NG-ALAIN provides authorization services. If the requested data interface cannot be authorized, you can add `ALLOW_ANONYMOUS` to mark it.
 
 **Application Information**
 
@@ -99,18 +100,21 @@ It is recommended to load the internationalization package first before starting
 
 ### 2) Business routing
 
-Scaffolding top-level routing begins with [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) Its structure is as follows:
+Scaffolding top-level routing begins with [routes.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes.ts) Its structure is as follows:
 
 ```ts
 const routes: Routes = [
   {
     path: '',
-    component: LayoutDefaultComponent,
+    component: LayoutBasicComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/routes').then(m => m.routes)
+      },
       // business submodule
-      // { path: 'trade', loadChildren: './trade/trade.module#TradeModule' }
+      // { path: 'trade', loadChildren: () => import('./trade/routes').then(m => m.routes) },
     ]
   },
   // Blank layout
@@ -120,36 +124,28 @@ const routes: Routes = [
     children: [
     ]
   },
-  // passport
-  {
-    path: 'passport',
-    component: LayoutPassportComponent,
-    children: [
-      { path: 'login', component: UserLoginComponent },
-      { path: 'register', component: UserRegisterComponent },
-      { path: 'register-result', component: UserRegisterResultComponent }
-    ]
-  },
-  // Single page does not wrap Layout
-  { path: 'callback/:type', component: CallbackComponent },
-  { path: '403', component: Exception403Component },
-  { path: '404', component: Exception404Component },
-  { path: '500', component: Exception500Component },
+  { path: '', loadChildren: () => import('./passport/routes').then(m => m.routes) },
+  { path: 'exception', loadChildren: () => import('./exception/routes').then(m => m.routes) },
+  // All missed routes will jump to the `exception/404` page
   { path: '**', redirectTo: 'dashboard' }
 ];
 ```
 
-Above we used the `LayoutDefaultComponent` base layout in the business module. User authorization uses `LayoutPassportComponent` user authorization layout and the full screen layout.
+> The above mentioned `LayoutBasicComponent` basic layout is used in the business module, user authorization uses `LayoutPassportComponent` user authorization layout and `LayoutBlankComponent` blank layout. The above three layouts can be used in [layout](https://github.com/ ng-alain/ng-alain/tree/master/src/app/layout) directory.
 
-It is recommended that all submodules be loaded using a lazy module, such as the `TradeModule` order module, which organizes the code structure more efficiently.
+> NG-ALAIN also provides some [commercial themes](https://e.ng-alain.com/) to chooses.
 
-### Under what circumstances do you not use lazy loading?
-
-Angular startup from the top-level component. When a lazy module is encountered, it will initiate a script request. At this time, the dashboard or login page will be blank due to network requests, which is not good for the experience.
+For example, when a user accesses the `/dashboard` route, they will first go through `LayoutBasicComponent` -> `DashboardComponent`, and eventually form a huge component tree to represent a specific page. NG-ALAIN scaffolding helps you complete most of the work, and a newbie only needs to care about how to implement the `DashboardComponent` business component.
 
 ### Routing permission control
 
 The routing URL may be affected by the browser's own historical memory, so that users may access the unprivileged route. If you want a better experience, you need to configure the `canActivate` option on the route. When the user has no permission, it will utomatically jump to the relevant page. see the [ACL Routing Guard](/acl/guard) section for details.
+
+### Intercept network requests
+
+Network requests are a very frequent task. If you want to use network request actions elegantly within business components, it is essential to centrally handle server-side URL prefixes, exception handling, token refresh and other operations. NG-ALAIN scaffolding Provide a [net](https://github.com/ng-alain/ng-alain/tree/master/src/app/core/net) file. It uses the token `HttpInterceptorFn` to act as an interceptor.
+
+For details of the above centralized processing actions, please refer to [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor. ts) file.
 
 ## IDE
 
