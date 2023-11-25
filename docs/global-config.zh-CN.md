@@ -10,22 +10,31 @@ type: Dev
 
 ## 如何使用
 
-想要为某些组件提供默认配置项，可以使用 `provideAlainConfig` 函数，转入一个符合 `AlainConfig` 接口的对象，例如：
+想要为某些组件提供默认配置项，可以使用 `provideAlain` 函数，转入一个符合 `AlainProvideOptions` 接口的对象，例如：
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig } from '@delon/util/config';
+import { AlainConfig, AlainProvideLang } from '@delon/util/config';
+import { ICONS } from '../style-icons';
+import { ICONS_AUTO } from '../style-icons-auto';
+
+const defaultLang: AlainProvideLang = {
+  abbr: 'zh-CN',
+  ng: ngLang,
+  zorro: zorroLang,
+  date: dateLang,
+  delon: delonLang
+};
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
 };
 
-@NgModule({
+export const appConfig: ApplicationConfig = {
   providers: [
-    provideAlainConfig(alainConfig)
-  ],
-})
-export class GlobalConfigModule {}
+    provideAlain({ config: alainConfig, defaultLang, icons: [...ICONS_AUTO, ...ICONS] })
+  ]
+};
 ```
 
 这些全局配置项将会被注入 `AlainConfigService` 当中并保存。
