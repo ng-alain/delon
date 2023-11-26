@@ -142,7 +142,7 @@ const routes: Routes = [
 
 网络请求是一项非常频繁的工作，如果想优雅的在业务组件内使用网络请求动作的话，那么将服务端URL前缀、异常处理、Token 刷新等操作集中处理是必不可少的，NG-ALAIN 脚手架提供一个 [net](https://github.com/ng-alain/ng-alain/tree/master/src/app/core/net) 文件。它会利用令牌 `HttpInterceptorFn` 起到一种拦截器的效果。
 
-有关以上集中处理的动作细节，请参考 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。
+有关更多细节，请参考 [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 文件。
 
 ## IDE
 
