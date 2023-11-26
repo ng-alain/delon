@@ -63,7 +63,7 @@ export default function (options: NgAddOptions): Rule {
     // }
 
     const nodeVersion = getNodeMajorVersion();
-    const allowNodeVersions = [16, 18];
+    const allowNodeVersions = [18, 20];
     if (!allowNodeVersions.some(v => nodeVersion === v)) {
       const versions = allowNodeVersions.join(', ');
       throw new SchematicsException(
