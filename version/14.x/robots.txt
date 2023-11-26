@@ -1,3 +1,0 @@
-user-agent: *
-disallow: /version/
-sitemap: https://ng-alain.com/sitemap.xml
