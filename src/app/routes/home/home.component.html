@@ -24,10 +24,10 @@
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay>
-    @for (i of list; track $index) {
+    @for (i of allThemes; track $index) {
       <div nz-carousel-content>
-        <a href="{{ i.url }}" target="_blank">
-          <img src="./assets/screenshot/{{ i.type }}.png" />
+        <a [attr.href]="i.url" target="_blank">
+          <img src="./assets/screenshot/{{ i.screenshot }}" />
         </a>
       </div>
     }
@@ -118,7 +118,7 @@
   <div class="page">
     <h2>{{ 'app.home.theme' | i18n }}</h2>
     <div class="ant-row">
-      @for (t of themes; track $index) {
+      @for (t of bussionThemes; track $index) {
         <div class="ant-col-xs-24 ant-col-md-12">
           <a
             class="page-theme__item"
@@ -127,9 +127,9 @@
             data-aos-delay="0"
             [attr.data-theme]="t"
           >
-            <img src="./assets/screenshot/{{ t }}.png" />
-            <h3>{{ 'app.home.theme.' + t | i18n }}</h3>
-            <p>{{ 'app.home.theme.' + t + '.desc' | i18n }}</p>
+            <img src="./assets/screenshot/{{ t.screenshot }}" />
+            <h3>{{ 'app.home.theme.' + t.type | i18n }}</h3>
+            <p>{{ 'app.home.theme.' + t.type + '.desc' | i18n }}</p>
           </a>
         </div>
       }
