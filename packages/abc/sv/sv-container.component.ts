@@ -19,9 +19,11 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   exportAs: 'svContainer',
   template: `
     <div class="ant-row" [ngStyle]="margin">
-      <sv-title *ngIf="title">
-        <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
-      </sv-title>
+      @if (title) {
+        <sv-title>
+          <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+        </sv-title>
+      }
       <ng-content />
     </div>
   `,

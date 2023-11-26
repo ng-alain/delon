@@ -1,6 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Injector } from '@angular/core';
+import { APP_INITIALIZER, Inject, Injectable, Injector, Provider } from '@angular/core';
 
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
@@ -8,6 +8,18 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { ICONS } from '../../style-icons';
+
+export function provideStartup(): Provider[] {
+  return [
+    StartupService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (startupService: StartupService) => () => startupService.load(),
+      deps: [StartupService],
+      multi: true
+    }
+  ];
+}
 
 @Injectable()
 export class StartupService {

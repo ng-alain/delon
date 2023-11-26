@@ -1,9 +1,13 @@
-import { DOCUMENT } from '@angular/common';
-import { inject } from '@angular/core';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { PLATFORM_ID, inject } from '@angular/core';
 
 export function stepPreloader(): () => void {
   const doc: Document = inject(DOCUMENT);
-  const body = doc.querySelector('body')!;
+  const ssr = isPlatformServer(inject(PLATFORM_ID));
+  if (ssr) {
+    return () => {};
+  }
+  const body = doc.querySelector<HTMLBodyElement>('body')!;
   body.style.overflow = 'hidden';
   let done = false;
 
@@ -19,7 +23,6 @@ export function stepPreloader(): () => void {
       preloader.className = CLS;
     });
     preloader.className += ` ${CLS}-add ${CLS}-add-active`;
-    const body = doc.querySelector<HTMLBodyElement>('body')!;
     body.style.overflow = '';
   };
 }

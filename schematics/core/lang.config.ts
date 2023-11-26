@@ -4,6 +4,7 @@ import * as path from 'path';
 export interface LangConfig {
   langs: string[];
   zorro: string;
+  date: string;
   delon: string;
   fileName?: string;
 }
@@ -12,26 +13,28 @@ export const LANGS_CONFIG: LangConfig[] = [
   {
     langs: ['zh-Hans', 'zh-cn', 'zh-Hans-CN', 'zh'],
     zorro: 'zh_CN',
+    date: 'zhCN',
     delon: 'zh_CN',
     fileName: 'zh-CN.json'
   },
   {
     langs: ['zh-Hant', 'zh-tw', 'zh-Hant-TW'],
     zorro: 'zh_TW',
+    date: 'zhTW',
     delon: 'zh_TW',
     fileName: 'zh-TW.json'
   },
-  { langs: ['en'], zorro: 'en_US', delon: 'en_US', fileName: 'en-US.json' },
-  { langs: ['tr'], zorro: 'tr_TR', delon: 'tr_TR', fileName: 'tr-TR.json' },
-  { langs: ['pl'], zorro: 'pl_PL', delon: 'pl_PL', fileName: 'pl-PL.json' },
-  { langs: ['el'], zorro: 'el_GR', delon: 'el_GR', fileName: 'el-GR.json' },
-  { langs: ['ko'], zorro: 'ko_KR', delon: 'ko_KR', fileName: 'ko-KR.json' },
-  { langs: ['hr'], zorro: 'hr_HR', delon: 'hr_HR', fileName: 'hr-HR.json' },
-  { langs: ['ja'], zorro: 'ja_JP', delon: 'ja_JP' },
-  { langs: ['sl'], zorro: 'sl_SI', delon: 'sl_SI', fileName: 'sl-SI.json' },
-  { langs: ['fr'], zorro: 'fr_FR', delon: 'fr_FR', fileName: 'fr-FR.json' },
-  { langs: ['es'], zorro: 'es_ES', delon: 'es_ES', fileName: 'es-ES.json' },
-  { langs: ['it'], zorro: 'it_IT', delon: 'it_IT', fileName: 'it-IT.json' }
+  { langs: ['en'], zorro: 'en_US', date: 'enUS', delon: 'en_US', fileName: 'en-US.json' },
+  { langs: ['tr'], zorro: 'tr_TR', date: 'tr', delon: 'tr_TR', fileName: 'tr-TR.json' },
+  { langs: ['pl'], zorro: 'pl_PL', date: 'pl', delon: 'pl_PL', fileName: 'pl-PL.json' },
+  { langs: ['el'], zorro: 'el_GR', date: 'el', delon: 'el_GR', fileName: 'el-GR.json' },
+  { langs: ['ko'], zorro: 'ko_KR', date: 'ko', delon: 'ko_KR', fileName: 'ko-KR.json' },
+  { langs: ['hr'], zorro: 'hr_HR', date: 'hr', delon: 'hr_HR', fileName: 'hr-HR.json' },
+  { langs: ['ja'], zorro: 'ja_JP', date: 'ja', delon: 'ja_JP' },
+  { langs: ['sl'], zorro: 'sl_SI', date: 'sl', delon: 'sl_SI', fileName: 'sl-SI.json' },
+  { langs: ['fr'], zorro: 'fr_FR', date: 'fr', delon: 'fr_FR', fileName: 'fr-FR.json' },
+  { langs: ['es'], zorro: 'es_ES', date: 'es', delon: 'es_ES', fileName: 'es-ES.json' },
+  { langs: ['it'], zorro: 'it_IT', date: 'it', delon: 'it_IT', fileName: 'it-IT.json' }
 ];
 
 export function getLangConfig(lang: string): LangConfig {

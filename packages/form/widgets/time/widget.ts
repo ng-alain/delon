@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { format } from 'date-fns';
 
-import { ControlUIWidget, SFValue, toBool } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFValue, toBool } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 import type { SFTimeWidgetSchema } from './schema';
 
@@ -43,7 +45,9 @@ import type { SFTimeWidgetSchema } from './schema';
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzTimePickerModule]
 })
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {
   static readonly KEY = 'time';

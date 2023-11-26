@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget } from '@delon/form';
-import { NzMarks, NzSliderValue } from 'ng-zorro-antd/slider';
+import { ControlUIWidget, DelonFormModule } from '@delon/form';
+import { NzMarks, NzSliderModule, NzSliderValue } from 'ng-zorro-antd/slider';
 
 import type { SFSliderWidgetSchema } from './schema';
 
@@ -32,7 +33,9 @@ import type { SFSliderWidgetSchema } from './schema';
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzSliderModule]
 })
 export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implements OnInit {
   static readonly KEY = 'slider';

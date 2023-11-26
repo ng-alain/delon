@@ -6,7 +6,6 @@ import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SocialService } from './social.service';
-import { DelonAuthModule } from '../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
 
@@ -52,7 +51,7 @@ describe('auth: social.service', () => {
 
   function genModule(tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         SocialService,
         { provide: DOCUMENT, useClass: MockDocument },

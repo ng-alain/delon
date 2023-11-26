@@ -60,7 +60,9 @@ describe('abc: tag-select', () => {
 @Component({
   template: `
     <tag-select #comp [expandable]="expandable" (change)="change()">
-      <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{ i.text }}</li>
+      @for (i of categories; track $index) {
+        <li style="width: 30%">{{ i.text }}</li>
+      }
     </tag-select>
   `
 })

@@ -2,7 +2,7 @@
   <div nz-col [nzSpan]="18">
     <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
       @for (i of files; track $index) {
-      <nz-option [nzValue]="i.name" [nzLabel]="i.title" />
+        <nz-option [nzValue]="i.name" [nzLabel]="i.title" />
       }
     </nz-select>
     <nz-radio-group [(ngModel)]="layout" class="ml-sm">
@@ -64,17 +64,17 @@
     </nz-tabset>
   </div>
   @if (schemaData) {
-  <div nz-col [nzSpan]="expand ? 12 : 24">
-    <sf
-      [schema]="schemaData"
-      [formData]="formData"
-      [ui]="uiSchema"
-      [layout]="layout"
-      (formSubmit)="submit($event)"
-      (formChange)="change($event)"
-      (formValueChange)="valueChange($event)"
-      (formError)="error($event)"
-    />
-  </div>
+    <div nz-col [nzSpan]="expand ? 12 : 24">
+      <sf
+        [schema]="schemaData"
+        [formData]="formData"
+        [ui]="uiSchema"
+        [layout]="layout"
+        (formSubmit)="submit($event)"
+        (formChange)="change($event)"
+        (formValueChange)="valueChange($event)"
+        (formError)="error($event)"
+      />
+    </div>
   }
 </div>

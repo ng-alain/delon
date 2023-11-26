@@ -1,6 +1,6 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -27,8 +27,12 @@ import { debounceTime, filter, of } from 'rxjs';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTabSetComponent, NzTabsModule } from 'ng-zorro-antd/tabs';
 
+import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
+import { ReuseTabContextComponent } from './reuse-tab-context.component';
+import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
   ReuseCanClose,
@@ -59,7 +63,16 @@ import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } 
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    NgTemplateOutlet,
+    NzTabsModule,
+    ReuseTabContextMenuComponent,
+    ReuseTabContextDirective,
+    ReuseTabContextComponent,
+    NzIconModule
+  ]
 })
 export class ReuseTabComponent implements OnInit, OnChanges {
   static ngAcceptInputType_debug: BooleanInput;

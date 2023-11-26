@@ -1,6 +1,10 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget, SFSchemaEnum, SFValue, getData } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData } from '@delon/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 import type { SFTagWidgetSchema } from './schema';
 
@@ -25,24 +29,27 @@ import type { SFTagWidgetSchema } from './schema';
         [nzSpin]="i.spin"
       ></i>
     </ng-template>
-    <nz-tag
-      *ngFor="let i of data"
-      [nzMode]="ui.mode || 'checkable'"
-      [nzChecked]="i.checked"
-      (nzOnClose)="_close($event)"
-      (nzCheckedChange)="onChange(i)"
-    >
-      <ng-container *ngIf="i.prefixIcon">
-        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.prefixIcon }" />
-      </ng-container>
-      <span>{{ i.label }}</span>
-      <ng-container *ngIf="i.suffixIcon">
-        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.suffixIcon }" />
-      </ng-container>
-    </nz-tag>
+    @for (i of data; track $index) {
+      <nz-tag
+        [nzMode]="ui.mode || 'checkable'"
+        [nzChecked]="i.checked"
+        (nzOnClose)="_close($event)"
+        (nzCheckedChange)="onChange(i)"
+      >
+        @if (i.prefixIcon) {
+          <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.prefixIcon }" />
+        }
+        <span>{{ i.label }}</span>
+        @if (i.suffixIcon) {
+          <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.suffixIcon }" />
+        }
+      </nz-tag>
+    }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, NgTemplateOutlet, DelonFormModule, NzTagModule, NzIconModule]
 })
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   static readonly KEY = 'tag';

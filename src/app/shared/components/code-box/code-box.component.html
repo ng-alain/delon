@@ -7,11 +7,11 @@
 </section>
 <section class="code-box-meta markdown">
   @if (type === 'default') {
-  <div class="code-box-title">
-    {{ item.title }}
-    <edit-button [item]="item" />
-  </div>
-  <div class="code-box-description" [innerHTML]="item.summary"></div>
+    <div class="code-box-title">
+      {{ item.title }}
+      <edit-button [item]="item" />
+    </div>
+    <div class="code-box-description" [innerHTML]="item.summary"></div>
   }
   <div class="code-box-actions">
     <i
@@ -24,9 +24,11 @@
     ></i>
     <ng-template #codeSandboxTpl>
       {{ 'app.demo.code-sandbox' | i18n }}
-      @if (false) { (
-      <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
-      ) }
+      @if (false) {
+        (
+        <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
+        )
+      }
     </ng-template>
     <i
       nz-tooltip

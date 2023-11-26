@@ -16,6 +16,7 @@ import { CellComponent } from './cell.component';
 import { CellModule } from './cell.module';
 import { CellService } from './cell.service';
 import { CellFuValue, CellOptions, CellWidgetData } from './cell.types';
+import { provideCellWidgets } from './provide';
 
 const DATE = new Date(2022, 0, 1, 1, 2, 3);
 
@@ -289,6 +290,19 @@ describe('abc: cell', () => {
         fixture.detectChanges();
         page.check('*', '.unit');
       });
+    });
+  });
+
+  describe('[widget]', () => {
+    it('via provideCellWidgets', () => {
+      TestBed.configureTestingModule({
+        imports: [CellModule, NoopAnimationsModule],
+        declarations: [TestComponent, TestWidget],
+        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget })]
+      });
+      ({ fixture, dl, context } = createTestContext(TestComponent));
+      page = new PageObject();
+      page.update('1', { widget: { key: TestWidget.KEY, data: 'new data' } }).check('1-new data');
     });
   });
 

@@ -1,20 +1,11 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { DelonFormModule, WidgetRegistry } from '@delon/form';
-import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+import type { SFWidgetProvideConfig } from '@delon/form';
 
 import { CascaderWidget } from './widget';
 
 export * from './widget';
 export * from './schema';
+export * from './module';
 
-@NgModule({
-  imports: [FormsModule, DelonFormModule, NzCascaderModule],
-  declarations: [CascaderWidget]
-})
-export class CascaderWidgetModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(CascaderWidget.KEY, CascaderWidget);
-  }
+export function withCascaderWidget(): SFWidgetProvideConfig {
+  return { KEY: CascaderWidget.KEY, type: CascaderWidget };
 }

@@ -1,28 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
-  HttpClient,
-  HttpContext,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+  HttpClientTestingModule,
+  HttpTestingController,
+  TestRequest,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, throwError, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
-import { SimpleInterceptor } from './simple/simple.interceptor';
+import { authSimpleInterceptor } from './simple';
 import { SimpleTokenModel } from './simple/simple.model';
-import { DelonAuthModule } from '../auth.module';
+import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
@@ -56,13 +52,6 @@ class MockTokenService implements ITokenService {
   }
 }
 
-let otherRes = new HttpResponse();
-class OtherInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req.clone()).pipe(catchError(() => throwError(() => otherRes)));
-  }
-}
-
 describe('auth: base.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
@@ -78,15 +67,13 @@ describe('auth: base.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
+        provideHttpClient(withInterceptors([authSimpleInterceptor])),
+        provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: SimpleInterceptor,
-          multi: true
-        },
+        provideAuth(),
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
       ].concat(provider)
     });
@@ -200,7 +187,7 @@ describe('auth: base.interceptor', () => {
 
   describe('[referrer]', () => {
     it('should be always router url', done => {
-      genModule({ executeOtherInterceptors: false }, genModel(SimpleTokenModel, null));
+      genModule({}, genModel(SimpleTokenModel, null));
       http.get('/to-test', { responseType: 'text' }).subscribe({
         next: () => {
           expect(false).toBe(true);
@@ -210,29 +197,6 @@ describe('auth: base.interceptor', () => {
           const tokenSrv = TestBed.inject(DA_SERVICE_TOKEN) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe('/');
-          done();
-        }
-      });
-    });
-  });
-
-  describe('[executeOtherInterceptors]', () => {
-    beforeEach(() => {
-      genModule({ executeOtherInterceptors: true }, genModel(SimpleTokenModel, null), [
-        { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true }
-      ]);
-    });
-
-    it('shoul working', done => {
-      otherRes = new HttpResponse({ body: { a: 1 } });
-      const url = '/to-test?a=1';
-      http.get(url, { responseType: 'text' }).subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: err => {
-          expect(err.body.a).toBe(1);
           done();
         }
       });

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of, throwError } from 'rxjs';
 
 import { DatePipe, YNPipe } from '@delon/theme';
+import { CurrencyService } from '@delon/util/format';
 import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -39,7 +41,7 @@ describe('abc: table: data-souce', () => {
   let datePipe: DatePipe;
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
-  let currencySrv: MockCurrencyService;
+  let currencySrv: CurrencyService;
   let httpResponse: any;
   let mockDomSanitizer: MockDomSanitizer;
 
@@ -49,20 +51,9 @@ describe('abc: table: data-souce', () => {
     }
   }
 
-  class MockCurrencyService {
-    format(): string {
-      return '';
-    }
-  }
-
   class MockDomSanitizer {
     bypassSecurityTrustHtml(val: any): any {
       return val;
-    }
-  }
-  class MockNzI18nService {
-    getDateLocale(): null {
-      return null;
     }
   }
 
@@ -78,13 +69,16 @@ describe('abc: table: data-souce', () => {
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       paginator: true
     };
+    TestBed.configureTestingModule({
+      providers: [DatePipe, YNPipe, DecimalPipe, CurrencyService]
+    });
     mockDomSanitizer = new MockDomSanitizer() as any;
-    datePipe = new DatePipe(new MockNzI18nService() as any);
-    ynPipe = new YNPipe(mockDomSanitizer as any);
-    decimalPipe = new DecimalPipe('zh-CN');
+    datePipe = TestBed.inject(DatePipe);
+    ynPipe = TestBed.inject(YNPipe);
+    decimalPipe = TestBed.inject(DecimalPipe);
     http = new MockHttpClient();
-    currencySrv = new MockCurrencyService();
-    srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv as any, mockDomSanitizer as any);
+    currencySrv = TestBed.inject(CurrencyService);
+    srv = new STDataSource(http as any, datePipe, ynPipe, decimalPipe, currencySrv, mockDomSanitizer as any);
     srv.setCog(ST_DEFAULT_CONFIG);
   }
 

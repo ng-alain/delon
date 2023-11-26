@@ -62,7 +62,7 @@ module: import { CellModule } from '@delon/abc/cell';
 - `enum` 枚举转换
 - `widget` 自定义小部件
 
-**自定义小部件**
+## 自定义小部件
 
 实现 `CellWidgetInstance` 接口即可，例如：
 
@@ -95,28 +95,14 @@ export class CellTestWidget implements CellWidgetInstance {
 
 其中 `data` 为固定参数，包含 `value`、`options` 配置项。
 
-其次，还需要调用 `CellService.registerWidget` 注册小部件；通常会单独构建一个新的模块，例如：
+最后在 `app.config.ts` 下通过 `provideCellWidgets` 注册小部件，例如：
 
 ```ts
-import { NgModule } from '@angular/core';
-
-import { CellService } from '@delon/abc/cell';
-
-import { CellTestWidget } from './test';
-import { SharedModule } from '../shared.module';
-
-export const CELL_WIDGET_COMPONENTS = [CellTestWidget];
-
-@NgModule({
-  declarations: CELL_WIDGET_COMPONENTS,
-  imports: [SharedModule],
-  exports: CELL_WIDGET_COMPONENTS
-})
-export class CellWidgetModule {
-  constructor(srv: CellService) {
-    srv.registerWidget(CellTestWidget.KEY, CellTestWidget);
-  }
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideCellWidgets(
+      { KEY: CellTestWidget.KEY, type: CellTestWidget }
+    ),
+  ]
 }
 ```
-
-最后，将 `CellWidgetModule` 注册到根模块下即可。

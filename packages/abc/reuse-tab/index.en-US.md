@@ -5,6 +5,7 @@ title: reuse-tab
 subtitle: Reuse Route Tab
 cols: 1
 module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
+standalone: true
 ---
 
 Reuse route tab are extremely common for admin interfaces, and the problem of component data is not lost when switching routes.
@@ -13,51 +14,20 @@ The newly opened is always the current page, and the route reuse means that when
 
 ## Usage
 
-The default `ReuseTabModule` does not register `RouteReuseStrategy`. If you need route reuse, the first step is to register it:
+1. Provide `provideReuseTabConfig()` configuration in `app.config.ts` file
+2. Add `<reuse-tab>` in the `src/app/layout/basic/basic.component.ts` file, like this:
 
-**Register**
-
-> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32).
-
-```ts
-// global-config.module.ts
-import { RouteReuseStrategy } from '@angular/router';
-import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
-alainProvides.push({
-  provide: RouteReuseStrategy,
-  useClass: ReuseTabStrategy,
-  deps: [ReuseTabService],
-} as any);
-```
-
-**Add Component**
-
-> In `src/app/layout/basic/basic.component.ts`
-
-```html
-<reuse-tab #reuseTab></reuse-tab>
-<router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
+```diff
+- <router-outlet />
++ <reuse-tab #reuseTab />
++ <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" />
 ```
 
 > **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**
 
-> In `src/app/layout/layout.module.ts`
-
-```ts
-import { ReuseTabModule } from '@delon/abc/reuse-tab'; // add
-@NgModule({
-  imports: [
-  // ...
-  ReuseTabModule, // add
-  ],
-  // ...
-})
-export class LayoutModule {}
-```
-
 ## Matching Mode
 
-Inject the `ReuseTabService` class anywhere in the project (recommended: `startup.service.ts`) and set the `mode` property, or pass `<reuse-tab [mode]="0"></reuse-tab> ` Reset values.
+Inject the `ReuseTabService` class anywhere in the project and set the `mode` property, or pass `<reuse-tab [mode]="0" />` Reset values.
 
 **0. Menu (Default)**
 
@@ -310,4 +280,4 @@ Route reuse preserves uses URLs to distinguish whether the same page, and QueryS
 
 ### Multi-application cache processing
 
-Allows overriding `REUSE_TAB_CACHED_MANAGER` to change the cache storage, for example when using a micro-frontend (similar to [ngx-planet](https://github.com/worktile/ngx-planet)) can rewrite cached data to `window` guaranteed data sharing.
+Use `provideReuseTabConfig(storeKey: 'newKey')` Or overriding `REUSE_TAB_CACHED_MANAGER` to change the cache storage, for example when using a micro-frontend (similar to [ngx-planet](https://github.com/worktile/ngx-planet)) can rewrite cached data to `window` guaranteed data sharing.

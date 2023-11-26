@@ -5,6 +5,7 @@ title: reuse-tab
 subtitle: 路由复用标签
 cols: 1
 module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
+standalone: true
 ---
 
 复用标签在中台系统非常常见，本质是解决不同路由页切换时组件数据不丢失问题。
@@ -13,52 +14,20 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 
 ## 如何使用
 
-默认 `ReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用（不管是否模板是否包括 `<reuse-tab>`）。因此：
+1. 在 `app.config.ts` 下提供 `provideReuseTabConfig()` 配置
+2. 在需要展示标签的地方调用 `<reuse-tab>`，一般在 `src/app/layout/basic/basic.component.ts`，例如：
 
-**注册RouteReuseStrategy**
-
-> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32)。
-
-```ts
-// global-config.module.ts
-import { RouteReuseStrategy } from '@angular/router';
-import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
-alainProvides.push({
-  provide: RouteReuseStrategy,
-  useClass: ReuseTabStrategy,
-  deps: [ReuseTabService],
-} as any);
-```
-
-**添加组件**
-
-> 位置 `src/app/layout/basic/basic.component.ts`
-
-```html
-<reuse-tab #reuseTab></reuse-tab>
-<router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
+```diff
+- <router-outlet />
++ <reuse-tab #reuseTab />
++ <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" />
 ```
 
 > **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
 
-> 位置 `src/app/layout/layout.module.ts`
-
-```ts
-import { ReuseTabModule } from '@delon/abc/reuse-tab'; // 新增 import
-
-@NgModule({
-  imports: [
-  // ...
-  ReuseTabModule, // 导入模块
-  ],
-  // ...
-})
-export class LayoutModule {}
-```
-
 ## 匹配模式
 
-在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
+在项目的任何位置注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0" />` 重新设置值，包括：
 
 **0、Menu（推荐，默认值）**
 
@@ -311,4 +280,4 @@ export class DemoComponent implements OnReuseInit, OnReuseDestroy {
 
 ### 多应用缓存处理
 
-允许覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储，例如在使用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下来实现数据共享。
+使用 `provideReuseTabConfig(storeKey: 'newKey')` 或通过覆盖 `REUSE_TAB_CACHED_MANAGER` 改变缓存存储 ，例如在使用微前端（类似[ngx-planet](https://github.com/worktile/ngx-planet)）可以重写缓存数据到 `window` 下来实现数据共享。

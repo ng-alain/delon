@@ -6,7 +6,7 @@ import type { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { MentionWidgetModule } from './index';
+import { withMentionWidget } from './index';
 import { MentionWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -19,7 +19,7 @@ describe('form: widget: mention', () => {
   let page: SFPage;
   const widget = 'mention';
 
-  configureSFTestSuite({ imports: [MentionWidgetModule] });
+  configureSFTestSuite({ widgets: [withMentionWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget } from '@delon/form';
+import { ControlUIWidget, DelonFormModule } from '@delon/form';
+import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 import type { SFQrCodeWidgetSchema } from './schema';
 
@@ -29,7 +31,9 @@ import type { SFQrCodeWidgetSchema } from './schema';
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzQRCodeModule]
 })
 export class QrCodeWidget extends ControlUIWidget<SFQrCodeWidgetSchema> {
   static readonly KEY = 'qr-code';

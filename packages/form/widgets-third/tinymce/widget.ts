@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ControlUIWidget } from '@delon/form';
+import { TinymceComponent } from 'ngx-tinymce';
+
+import { ControlUIWidget, DelonFormModule } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { TinymceWidgetSchema } from './schema';
@@ -26,7 +29,11 @@ import type { TinymceWidgetSchema } from './schema';
         (ready)="_ready($event)"
       />
     </sf-item-wrap>
-  `
+  `,
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, TinymceComponent]
 })
 export class TinymceWidget extends ControlUIWidget<TinymceWidgetSchema> {
   static readonly KEY = 'tinymce';

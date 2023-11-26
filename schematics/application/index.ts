@@ -35,6 +35,7 @@ import {
   getProject,
   getProjectFromWorkspace,
   isMulitProject,
+  modifyJSON,
   readContent,
   readJSON,
   readPackage,
@@ -57,16 +58,14 @@ function removeOrginalFiles(): Rule {
     [
       `${project.root}/README.md`,
       `${project.sourceRoot}/main.ts`,
-      `${project.sourceRoot}/environments/environment.prod.ts`,
-      `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
       `${project.sourceRoot}/favicon.ico`,
-      `${project.sourceRoot}/app/app.module.ts`,
       `${project.sourceRoot}/app/app.component.spec.ts`,
       `${project.sourceRoot}/app/app.component.ts`,
       `${project.sourceRoot}/app/app.component.html`,
       `${project.sourceRoot}/app/app.component.less`,
-      `${project.sourceRoot}/app/app-routing.module.ts`
+      `${project.sourceRoot}/app/app.config.ts`,
+      `${project.sourceRoot}/app/app.routes.ts`
     ]
       .filter(p => tree.exists(p))
       .forEach(p => tree.delete(p));
@@ -126,7 +125,7 @@ function addRunScriptToPackageJson(): Rule {
     const commandPrefix = mulitProject ? `${projectName}:` : '';
     const commandFragment = mulitProject ? ` ${projectName}` : '';
     json.scripts['ng-high-memory'] = `node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng`;
-    json.scripts[`${commandPrefix}start`] = `ng s${commandFragment} -o`;
+    json.scripts[commandFragment ? commandFragment.trim() : 'start'] = `ng s${commandFragment} -o`;
     json.scripts[`${commandPrefix}hmr`] = `ng s${commandFragment} -o --hmr`;
     json.scripts[`${commandPrefix}build`] = `npm run ng-high-memory build${commandFragment}`;
     json.scripts[`${commandPrefix}analyze`] = `npm run ng-high-memory build${commandFragment} -- --source-map`;
@@ -146,22 +145,25 @@ function addRunScriptToPackageJson(): Rule {
   };
 }
 
-function addPathsToTsConfig(project: ProjectDefinition): Rule {
+function addPathsToTsConfig(): Rule {
   return (tree: Tree) => {
-    if (project == null) return;
     const tsconfigPath = project.targets?.get(BUILD_TARGET_BUILD)?.options?.tsConfig as string;
-    if (tsconfigPath == null) return;
-    const json = readJSON(tree, tsconfigPath);
-    if (json == null) return tree;
-    if (!json.compilerOptions) json.compilerOptions = {};
-    if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
-    const paths = json.compilerOptions.paths;
+    if (tsconfigPath == null) {
+      console.warn(`Cannot find tsconfig file in project ${projectName}`);
+      return tree;
+    }
+
     const commandPrefix = mulitProject ? `projects/${projectName}/` : '';
-    paths['@shared'] = [`${commandPrefix}src/app/shared/index`];
-    paths['@core'] = [`${commandPrefix}src/app/core/index`];
-    paths['@env/*'] = [`${commandPrefix}src/environments/*`];
-    paths['@_mock'] = ['_mock/index'];
-    writeJSON(tree, tsconfigPath, json);
+    const tsConfigPath = 'tsconfig.json';
+    modifyJSON(tree, tsConfigPath, { path: ['compilerOptions', 'baseUrl'], value: './' });
+
+    const basePath = ['compilerOptions', 'paths'];
+    modifyJSON(tree, tsConfigPath, { path: basePath, value: {} });
+    modifyJSON(tree, tsConfigPath, { path: [...basePath, `@shared`], value: [`${commandPrefix}src/app/shared/index`] });
+    modifyJSON(tree, tsConfigPath, { path: [...basePath, `@core`], value: [`${commandPrefix}src/app/core/index`] });
+    modifyJSON(tree, tsConfigPath, { path: [...basePath, `@env/*`], value: [`${commandPrefix}src/environments/*`] });
+    modifyJSON(tree, tsConfigPath, { path: [...basePath, `@_mock`], value: [`_mock/index`] });
+
     return tree;
   };
 }
@@ -284,7 +286,8 @@ function addFilesToRoot(options: ApplicationOptions): Rule {
           ZORROVERSION
         }),
         move(project.sourceRoot)
-      ])
+      ]),
+      MergeStrategy.Overwrite
     ),
     mergeWith(
       apply(url('./files/root'), [
@@ -329,6 +332,11 @@ function fixLangInHtml(tree: Tree, p: string, langs: {}): void {
     ++matchCount;
     return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
   });
+  // {{ 'app.register-result.msg' | i18n: { email } }}
+  html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| i18n: \{ [^ ]+ \} \}\}/g, (_word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
   // {{ 'app.register-result.msg' | i18n: params }}
   html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| i18n: [^ ]+ \}\}/g, (_word, key) => {
     ++matchCount;
@@ -351,26 +359,13 @@ function fixLangInHtml(tree: Tree, p: string, langs: {}): void {
     return langs[key] || key;
   });
   // removed `header-i18n`
-  if (~html.indexOf(`<header-i18n [showLang]="false" class="langs"></header-i18n>`)) {
+  if (~html.indexOf(`<header-i18n showLangText="false" class="langs" />`)) {
     ++matchCount;
-    html = html.replace(`<header-i18n [showLang]="false" class="langs"></header-i18n>`, ``);
+    html = html.replace(`<header-i18n showLangText="false" class="langs" />`, ``);
   }
   if (matchCount > 0) {
     tree.overwrite(p, html);
   }
-}
-
-function fixVsCode(): Rule {
-  return (tree: Tree) => {
-    const filePath = '.vscode/extensions.json';
-    let json = readJSON(tree, filePath);
-    if (json == null) {
-      tree.create(filePath, '');
-      json = {};
-    }
-    json.recommendations = ['cipchk.ng-alain-extension-pack'];
-    writeJSON(tree, filePath, json);
-  };
 }
 
 function fixNgAlainJson(): Rule {
@@ -401,7 +396,7 @@ export default function (options: ApplicationOptions): Rule {
       addAllowSyntheticDefaultImports(),
       // ci
       addRunScriptToPackageJson(),
-      addPathsToTsConfig(project),
+      addPathsToTsConfig(),
       // code style
       addCodeStylesToPackageJson(),
       addSchematics(options),
@@ -412,7 +407,6 @@ export default function (options: ApplicationOptions): Rule {
       forceLess(),
       addStyle(),
       fixLang(options),
-      fixVsCode(),
       fixAngularJson(),
       fixBrowserBuilderBudgets(),
       fixNgAlainJson()

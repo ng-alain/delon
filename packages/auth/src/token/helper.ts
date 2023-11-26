@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injector } from '@angular/core';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlainAuthConfig } from '@delon/util/config';
@@ -23,13 +23,15 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   }
 }
 
-export function ToLogin(options: AlainAuthConfig, injector: Injector, url?: string): void {
-  const router = injector.get<Router>(Router);
-  (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url || router.url;
+export function ToLogin(options: AlainAuthConfig, url?: string): void {
+  const router = inject(Router);
+  const token = inject(DA_SERVICE_TOKEN) as ITokenService;
+  const doc = inject(DOCUMENT);
+  token.referrer!.url = url || router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
       if (/^https?:\/\//g.test(options.login_url!)) {
-        injector.get(DOCUMENT).location.href = options.login_url as string;
+        doc.location.href = options.login_url as string;
       } else {
         router.navigate([options.login_url]);
       }

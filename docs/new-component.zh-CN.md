@@ -47,7 +47,9 @@ import { Component, Input } from '@angular/core';
   template: `
     <div [ngStyle]="style">
       <img class="img" [src]="src" [alt]="desc" />
-      <div *ngIf="desc" class="desc">{{ desc }}</div>
+      @if (desc) {
+        <div class="desc">{{ desc }}</div>
+      }
     </div>
   `,
   styleUrls: [ './index.less' ]

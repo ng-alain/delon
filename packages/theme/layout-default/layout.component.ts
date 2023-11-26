@@ -35,24 +35,36 @@ import { LayoutDefaultOptions } from './types';
   selector: 'layout-default',
   exportAs: 'layoutDefault',
   template: `
-    <div class="alain-default__progress-bar" *ngIf="showFetching"></div>
-    <layout-default-header *ngIf="!opt.hideHeader" [items]="headerItems" />
-    <div *ngIf="!opt.hideAside" class="alain-default__aside">
-      <div class="alain-default__aside-wrap">
-        <div class="alain-default__aside-inner">
-          <ng-container *ngTemplateOutlet="asideUser" />
-          <ng-container *ngTemplateOutlet="nav" />
-          <layout-default-nav *ngIf="!nav" />
-        </div>
-        <div *ngIf="opt.showSiderCollapse" class="alain-default__aside-link">
-          <ng-container *ngIf="asideBottom === null; else asideBottom">
-            <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
-              <span nz-icon [nzType]="collapsedIcon"></span>
+    @if (showFetching) {
+      <div class="alain-default__progress-bar"></div>
+    }
+    @if (!opt.hideHeader) {
+      <layout-default-header [items]="headerItems" />
+    }
+    @if (!opt.hideAside) {
+      <div class="alain-default__aside">
+        <div class="alain-default__aside-wrap">
+          <div class="alain-default__aside-inner">
+            <ng-container *ngTemplateOutlet="asideUser" />
+            <ng-container *ngTemplateOutlet="nav" />
+            @if (!nav) {
+              <layout-default-nav />
+            }
+          </div>
+          @if (opt.showSiderCollapse) {
+            <div class="alain-default__aside-link">
+              @if (asideBottom) {
+                <ng-container *ngTemplateOutlet="asideBottom" />
+              } @else {
+                <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
+                  <span nz-icon [nzType]="collapsedIcon"></span>
+                </div>
+              }
             </div>
-          </ng-container>
+          }
         </div>
       </div>
-    </div>
+    }
     <section class="alain-default__content">
       <ng-container *ngTemplateOutlet="content" />
       <ng-content />

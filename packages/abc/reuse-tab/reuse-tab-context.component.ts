@@ -6,7 +6,8 @@ import { ReuseContextCloseEvent, ReuseContextI18n } from './reuse-tab.interfaces
 
 @Component({
   selector: 'reuse-tab-context',
-  template: ``
+  template: ``,
+  standalone: true
 })
 export class ReuseTabContextComponent implements OnDestroy {
   private sub$: Subscription = new Subscription();

@@ -10,10 +10,6 @@ type: Other
 
 ## 基础
 
-### Can't Bind to since it isn't a known property of
-
-当你有多个懒模块时，希望每个子模块都需要使用组件库时（例如：`NgZorroAntdModule`、`NgxTinymceModule`）应在 `ShareModule` 中 export，请参考[模块注册指导原则](/docs/module)。
-
 ### Expression Changed After It Has Been Checked Error 错误
 
 Angular 下常见错误，[这篇文章](https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) 会帮助你理解原因。

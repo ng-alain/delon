@@ -7,7 +7,7 @@ import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockOptions, MockRequest, MockRule } from './interface';
 import { MockService } from './mock.service';
-import { provideDelonMockConfig } from './provide';
+import { provideMockConfig } from './provide';
 
 const DATA = {
   USERS: {
@@ -31,7 +31,7 @@ describe('mock: service', () => {
 
   function genModule(options: AlainMockConfig, mockOptions?: MockOptions): void {
     TestBed.configureTestingModule({
-      providers: [provideAlainConfig({ mock: options }), provideDelonMockConfig(mockOptions)]
+      providers: [provideAlainConfig({ mock: options }), provideMockConfig(mockOptions)]
     });
     srv = TestBed.inject<MockService>(MockService);
     spyOn(console, 'log');

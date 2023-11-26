@@ -23,7 +23,9 @@ import { NzTreeNode } from 'ng-zorro-antd/tree';
 @Component({
   selector: 'app-demo',
   template: `
-    <sf *ngIf="schema" [schema]="schema"></sf>
+    @if (schema) {
+      <sf [schema]="schema" />
+    }
     <ng-template #customTpl let-node>
       <span class="ant-tree-node-content-wrapper" [class.ant-tree-node-selected]="node.isSelected">
         <span> <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'"></i> {{ node.title }} </span>

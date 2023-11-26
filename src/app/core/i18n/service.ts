@@ -64,6 +64,7 @@ export class I18NService extends AlainI18nBaseService {
     this._data = isEn ? ENUS : ZHCN;
     this.zorroI18n.setLocale(isEn ? en_US : zh_CN);
     this.delonI18n.setLocale(isEn ? delonEnUS : delonZhCn);
+
     if (emit !== false) this._change$.next(lang);
   }
 

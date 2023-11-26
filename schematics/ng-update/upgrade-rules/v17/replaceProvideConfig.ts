@@ -22,7 +22,7 @@ function runAlain(tree: Tree, name: string, sourceRoot: string, context: Schemat
   const text = '{ provide: ALAIN_CONFIG, useValue: alainConfig }';
   const content = tree
     .readText(filePath)
-    .replace(text, 'provideAlain(alainConfig)')
+    .replace(text, 'provideAlain({ config: alainConfig })')
     .replace('AlainThemeModule', 'provideAlain');
   tree.overwrite(filePath, content);
 
@@ -46,42 +46,68 @@ function delonMock(tree: Tree, name: string, sourceRoot: string, context: Schema
 
   const text = 'DelonMockModule.forRoot({ data: MOCKDATA })';
   let content = tree.readText(filePath);
-  if (content.includes('text')) content = content.replace(text, '');
+  if (content.includes(text)) content = content.replace(text, '');
 
   content = content
-    .replace('DelonMockModule.forRoot({ data: MOCKDATA })', '')
     .replace(
       'modules: [',
-      'providers: [provideDelonMockConfig({ data: MOCKDATA })],\ninterceptorFns: [mockInterceptor],\nmodules: ['
+      'providers: [provideMockConfig({ data: MOCKDATA })], \ninterceptorFns: [mockInterceptor],\nmodules: ['
     )
-    .replace('DelonMockModule', 'mockInterceptor, provideDelonMockConfig');
+    .replace('DelonMockModule', 'provideMockConfig, mockInterceptor');
 
   tree.overwrite(filePath, content);
 
   // remove HttpClientModule
+  let useAuthType = '';
   const appModuleFile = `${sourceRoot}/app/app.module.ts`;
   if (tree.exists(appModuleFile)) {
-    tree.overwrite(
-      appModuleFile,
-      tree
-        .readText(appModuleFile)
-        .replace(`import { HttpClientModule } from '@angular/common/http';`, '')
-        .replace(/HttpClientModule,?/g, '')
-    );
+    let appModuleContent = tree.readText(appModuleFile);
+    if (appModuleContent.includes('JWTInterceptor')) {
+      useAuthType = 'jwt';
+      appModuleContent = appModuleContent
+        .replace(
+          `{ provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }`,
+          `// { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }`
+        )
+        .replace(`import { JWTInterceptor } from '@delon/auth';`, `// import { JWTInterceptor } from '@delon/auth';`);
+    } else if (appModuleContent.includes('SimpleInterceptor')) {
+      useAuthType = 'simple';
+      appModuleContent = appModuleContent
+        .replace(
+          `{ provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }`,
+          `// { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }`
+        )
+        .replace(
+          `import { SimpleInterceptor } from '@delon/auth';`,
+          `// import { SimpleInterceptor } from '@delon/auth';`
+        );
+    }
+    appModuleContent = appModuleContent
+      .replace(`import { HttpClientModule } from '@angular/common/http';`, '')
+      .replace(/HttpClientModule,?/g, '');
+
+    tree.overwrite(appModuleFile, appModuleContent);
   }
 
   const globalFile = `${sourceRoot}/app/global-config.module.ts`;
   if (tree.exists(globalFile)) {
+    // SimpleInterceptor -> authSimpleInterceptor
+    // JWTInterceptor -> authJWTInterceptor
+    let globalContent = tree.readText(globalFile);
+    let authInterceptor = '';
+    if (useAuthType === 'jwt') {
+      authInterceptor = ', authJWTInterceptor';
+    } else if (useAuthType === 'simple') {
+      authInterceptor = ', authSimpleInterceptor';
+    }
     tree.overwrite(
       globalFile,
-      tree
-        .readText(globalFile)
-        .replace(
-          ', ...zorroProvides',
-          ', ...zorroProvides, ...(environment.providers || []), provideHttpClient(withInterceptors(environment.interceptorFns || []))'
-        )
+      globalContent.replace(
+        ', ...zorroProvides',
+        `, ...zorroProvides, ...(environment.providers || []), \nprovideHttpClient(withInterceptors([...(environment.interceptorFns || [])${authInterceptor}]), withInterceptorsFromDi())`
+      )
     );
   }
 
-  logInfo(context, `  Use provideDelonMockConfig instead of DelonMockModule in ${name} project`);
+  logInfo(context, `  Use provideMockConfig instead of DelonMockModule in ${name} project`);
 }

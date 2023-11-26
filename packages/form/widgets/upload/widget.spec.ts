@@ -1,13 +1,13 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
-import { UploadWidgetModule } from './index';
+import { withUploadWidget } from './index';
 import { UploadWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
@@ -18,7 +18,7 @@ describe('form: widget: upload', () => {
   let dl: DebugElement;
   const widget = 'upload';
 
-  configureSFTestSuite({ imports: [UploadWidgetModule] });
+  configureSFTestSuite({ widgets: [withUploadWidget()], imports: [NzImageModule] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
@@ -164,7 +164,7 @@ describe('form: widget: upload', () => {
         comp.handlePreview(null!);
         page.checkCalled('a', 'preview');
       });
-      it('should be preview image', inject([NzModalService], (msg: NzModalService) => {
+      it('should be preview image', () => {
         page.newSchema({
           properties: {
             a: {
@@ -174,27 +174,26 @@ describe('form: widget: upload', () => {
           }
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
-        spyOn(msg, 'create');
+        const imgSrv = TestBed.inject(NzImageService);
+        spyOn(imgSrv, 'preview');
         comp.handlePreview({ url: 'a' } as NzSafeAny);
-        expect(msg.create).toHaveBeenCalled();
-      }));
-      it(`should be won't preview image when not found url property`, inject(
-        [NzModalService],
-        (msg: NzModalService) => {
-          page.newSchema({
-            properties: {
-              a: {
-                type: 'string',
-                ui: { widget }
-              }
+        expect(imgSrv.preview).toHaveBeenCalled();
+      });
+      it(`should be won't preview image when not found url property`, () => {
+        page.newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              ui: { widget }
             }
-          });
-          const comp = page.getWidget<UploadWidget>('sf-upload');
-          spyOn(msg, 'create');
-          comp.handlePreview({} as NzSafeAny);
-          expect(msg.create).not.toHaveBeenCalled();
-        }
-      ));
+          }
+        });
+        const comp = page.getWidget<UploadWidget>('sf-upload');
+        const imgSrv = TestBed.inject(NzImageService);
+        spyOn(imgSrv, 'preview');
+        comp.handlePreview({} as NzSafeAny);
+        expect(imgSrv.preview).not.toHaveBeenCalled();
+      });
     });
   });
 

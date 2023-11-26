@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { map, tap } from 'rxjs';
 
-import { ControlUIWidget, SFSchemaEnum, SFValue, getData, getEnum } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, getEnum } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { MentionOnSearchTypes, NzMentionComponent, NzMentionModule } from 'ng-zorro-antd/mention';
 
 import type { SFMentionWidgetSchema } from './schema';
 
@@ -28,39 +30,42 @@ import type { SFMentionWidgetSchema } from './schema';
       (nzOnSelect)="_select($event)"
       (nzOnSearchChange)="_search($event)"
     >
-      <input
-        *ngIf="ui.inputStyle !== 'textarea'"
-        nzMentionTrigger
-        nz-input
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size!"
-        [ngModel]="value"
-        (ngModelChange)="setValue($event)"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        autocomplete="off"
-      />
-      <textarea
-        *ngIf="ui.inputStyle === 'textarea'"
-        nzMentionTrigger
-        nz-input
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size!"
-        [ngModel]="value"
-        (ngModelChange)="setValue($event)"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        [nzAutosize]="i.autosize"
-      >
-      </textarea>
+      @if (ui.inputStyle === 'textarea') {
+        <textarea
+          nzMentionTrigger
+          nz-input
+          [attr.id]="id"
+          [disabled]="disabled"
+          [attr.disabled]="disabled"
+          [nzSize]="ui.size!"
+          [ngModel]="value"
+          (ngModelChange)="setValue($event)"
+          [attr.maxLength]="schema.maxLength || null"
+          [attr.placeholder]="ui.placeholder"
+          [nzAutosize]="i.autosize"
+        >
+        </textarea>
+      } @else {
+        <input
+          nzMentionTrigger
+          nz-input
+          [attr.id]="id"
+          [disabled]="disabled"
+          [attr.disabled]="disabled"
+          [nzSize]="ui.size!"
+          [ngModel]="value"
+          (ngModelChange)="setValue($event)"
+          [attr.maxLength]="schema.maxLength || null"
+          [attr.placeholder]="ui.placeholder"
+          autocomplete="off"
+        />
+      }
     </nz-mention>
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzInputModule, NzMentionModule]
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   static readonly KEY = 'mention';

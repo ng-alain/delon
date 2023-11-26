@@ -76,7 +76,10 @@ RxJS 和 `async` 管道二者的配合可以帮助我们非常友好的使用缓
 
 ```ts
 @Component({
-  template: `<li *ngFor="let unit of units | async">{{unit}}</li>`
+  template: `
+    @for (unit of units | async; track $index) {
+      <li>{{unit}}</li>
+    }`
 })
 export class Component {
   units: this.srv.get('/data/unit')

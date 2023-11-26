@@ -6,7 +6,7 @@ import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
-import { TagWidgetModule } from './index';
+import { withTagWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: tag', () => {
@@ -15,7 +15,7 @@ describe('form: widget: tag', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureSFTestSuite({ imports: [TagWidgetModule] });
+  configureSFTestSuite({ widgets: [withTagWidget()] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

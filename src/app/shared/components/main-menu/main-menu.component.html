@@ -1,28 +1,28 @@
 <ul nz-menu nzMode="inline" class="aside-container">
   @for (group of menus; track $index) {
-  <li nz-menu-group nzOpen [nzTitle]="group.title">
-    <ul>
-      @for (item of group.list; track $index) {
-      <li
-        nz-menu-item
-        (click)="to.emit(item.url)"
-        [routerLink]="item.url"
-        [routerLinkActive]="['ant-menu-item-selected']"
-        style="padding-left: 54px"
-        [class.menu-deprecated]="item.deprecated"
-        nz-tooltip
-        [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
-      >
-        <nz-badge [nzDot]="item.hot">
-          <span class="name">{{ item.title }}</span>
-          <span class="chinese">{{ item.subtitle }}</span>
-          @if (item.lib) {
-          <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
-          }
-        </nz-badge>
-      </li>
-      }
-    </ul>
-  </li>
+    <li nz-menu-group nzOpen [nzTitle]="group.title">
+      <ul>
+        @for (item of group.list; track $index) {
+          <li
+            nz-menu-item
+            (click)="to.emit(item.url)"
+            [routerLink]="item.url"
+            [routerLinkActive]="['ant-menu-item-selected']"
+            style="padding-left: 54px"
+            [class.menu-deprecated]="item.deprecated"
+            nz-tooltip
+            [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
+          >
+            <nz-badge [nzDot]="item.hot">
+              <span class="name">{{ item.title }}</span>
+              <span class="chinese">{{ item.subtitle }}</span>
+              @if (item.lib) {
+                <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
+              }
+            </nz-badge>
+          </li>
+        }
+      </ul>
+    </li>
   }
 </ul>

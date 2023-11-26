@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
-import { ControlUIWidget, SFSchemaEnum, SFValue, getData } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import {
+  NzTransferModule,
   TransferCanMove,
   TransferChange,
   TransferItem,
@@ -41,7 +43,9 @@ import type { SFTransferWidgetSchema } from './schema';
     />
   </sf-item-wrap> `,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, DelonFormModule, NzTransferModule]
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   static readonly KEY = 'transfer';
