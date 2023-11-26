@@ -145,7 +145,7 @@ The routing URL may be affected by the browser's own historical memory, so that 
 
 Network requests are a very frequent task. If you want to use network request actions elegantly within business components, it is essential to centrally handle server-side URL prefixes, exception handling, token refresh and other operations. NG-ALAIN scaffolding Provide a [net](https://github.com/ng-alain/ng-alain/tree/master/src/app/core/net) file. It uses the token `HttpInterceptorFn` to act as an interceptor.
 
-For details of the above centralized processing actions, please refer to [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor. ts) file.
+For details, please refer to [default.interceptor.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor. ts) file.
 
 ## IDE
 
