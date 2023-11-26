@@ -1,3 +1,9 @@
+## <small>17.0.1 (2023-11-26)</small>
+
+* fix(cli): fix node version (#1719) ([df40bb3](https://github.com/ng-alain/delon/commit/df40bb3)), closes [#1719](https://github.com/ng-alain/delon/issues/1719)
+
+
+
 ## 17.0.0 (2023-11-26)
 
 * chore: add `typescript.referencesCodeLens.enabled` (#1679) ([4d2d25c](https://github.com/ng-alain/delon/commit/4d2d25c)), closes [#1679](https://github.com/ng-alain/delon/issues/1679)
