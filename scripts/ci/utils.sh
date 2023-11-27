@@ -26,6 +26,7 @@ DEPENDENCIES=$(node -p "
     '@antv/g2',
     'echarts',
     'ng-zorro-antd',
+    '@angular/cdk',
     'ngx-tinymce',
     'ngx-countdown',
     'ng-alain-sts',
