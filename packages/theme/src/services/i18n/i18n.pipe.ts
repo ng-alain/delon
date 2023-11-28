@@ -1,12 +1,12 @@
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 
-import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
+import { ALAIN_I18N_TOKEN } from './i18n';
 
 @Pipe({ name: 'i18n', standalone: true })
 export class I18nPipe implements PipeTransform {
-  constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: AlainI18NService) {}
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
 
-  transform(key: string, params?: Record<string, unknown>): string {
+  transform(key: string, params?: unknown): string {
     return this.i18n.fanyi(key, params);
   }
 }
