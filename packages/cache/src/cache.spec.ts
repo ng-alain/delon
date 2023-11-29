@@ -7,7 +7,6 @@ import { firstValueFrom, Observable, of, filter } from 'rxjs';
 
 import { AlainCacheConfig, provideAlainConfig } from '@delon/util/config';
 
-import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
 import { ICache } from './interface';
 
@@ -42,7 +41,7 @@ describe('cache: service', () => {
       providers.push(provideAlainConfig({ cache: options }));
     }
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, DelonCacheModule],
+      imports: [HttpClientTestingModule],
       providers
     });
 
