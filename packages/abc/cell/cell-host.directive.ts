@@ -6,7 +6,8 @@ import { CellService } from './cell.service';
 import { CellWidgetData } from './cell.types';
 
 @Directive({
-  selector: '[cell-widget-host]'
+  selector: '[cell-widget-host]',
+  standalone: true
 })
 export class CellHostDirective implements OnInit {
   @Input() data!: CellWidgetData;

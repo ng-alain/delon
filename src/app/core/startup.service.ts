@@ -1,6 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Injector } from '@angular/core';
+import { APP_INITIALIZER, Inject, Injectable, Injector, Provider } from '@angular/core';
 
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
@@ -8,6 +8,18 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { ICONS } from '../../style-icons';
+
+export function provideStartup(): Provider[] {
+  return [
+    StartupService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (startupService: StartupService) => () => startupService.load(),
+      deps: [StartupService],
+      multi: true
+    }
+  ];
+}
 
 @Injectable()
 export class StartupService {
@@ -48,8 +60,8 @@ export class StartupService {
     };
     Promise.all([
       this.lazy.loadScript(`./assets/highlight.pack.js`),
-      this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`),
-      this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
+      this.lazy.loadScript(`https://www.googletagmanager.com/gtag/js?id=UA-120202005-1`)
+      // this.lazy.loadScript(`https://static.hotjar.com/c/hotjar-${win._hjSettings.hjid}.js?sv=${win._hjSettings.hjsv}`)
     ]).then(() => {
       const dataLayer: NzSafeAny[] = win.dataLayer || [];
       dataLayer.push(['js', new Date()]);

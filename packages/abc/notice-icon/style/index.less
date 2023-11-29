@@ -5,8 +5,8 @@
   width: 336px;
 
   &__btn {
-    display: inline-block;
     cursor: pointer;
+    display: inline-block;
     transition: all 0.3s;
   }
 
@@ -28,14 +28,14 @@
   }
 
   .@{ant-prefix}-list {
-    max-height: 400px;
     overflow: auto;
+    max-height: 400px;
 
     &-item {
+      cursor: pointer;
+      overflow: hidden;
       padding-right: 24px;
       padding-left: 24px;
-      overflow: hidden;
-      cursor: pointer;
       transition: all 0.3s;
 
       &:last-child {
@@ -74,13 +74,13 @@
   }
 
   &__clear {
+    cursor: pointer;
     height: 46px;
-    color: @text-color;
     line-height: 46px;
+    color: @text-color;
     text-align: center;
     border-top: 1px solid @border-color-split;
     border-radius: 0 0 @border-radius-base @border-radius-base;
-    cursor: pointer;
     transition: all 0.3s;
 
     &:hover {
@@ -112,8 +112,8 @@
       float: right;
       margin-top: -1.5px;
       margin-right: 0;
-      color: @text-color-secondary;
       font-weight: normal;
+      color: @text-color-secondary;
     }
   }
 }

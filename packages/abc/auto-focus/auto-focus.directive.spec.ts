@@ -42,9 +42,11 @@ describe('abc: auto-focus', () => {
 
 @Component({
   template: `
-    <div *ngIf="showInput" class="mt-md">
-      <input auto-focus (focus)="focus()" delay="1" [enabled]="enabled" />
-    </div>
+    @if (showInput) {
+      <div class="mt-md">
+        <input auto-focus (focus)="focus()" delay="1" [enabled]="enabled" />
+      </div>
+    }
   `
 })
 class TestComponent {

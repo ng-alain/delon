@@ -14,9 +14,12 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { ModalHelper } from '@delon/theme';
+import { Component, inject } from '@angular/core';
+
 import { DemoModalComponent } from '@shared';
+
+import { ModalHelper } from '@delon/theme';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -25,9 +28,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="open()">Open</button>
     <button nz-button (click)="static()">Static</button>
   `,
+  standalone: true,
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
-  constructor(private modalHelper: ModalHelper, private msg: NzMessageService) {}
+  private modalHelper = inject(ModalHelper);
+  private msg = inject(NzMessageService);
 
   open(): void {
     this.modalHelper.create(DemoModalComponent, { record: { a: 1, b: '2', c: new Date() } }).subscribe(res => {

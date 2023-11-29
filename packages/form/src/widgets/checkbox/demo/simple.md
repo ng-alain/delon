@@ -15,7 +15,8 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFCascaderWidgetSchema, SFCheckboxWidgetSchema, SFSchema } from '@delon/form';
+import { SFCheckboxWidgetSchema, SFSchema } from '@delon/form';
+import type { SFCascaderWidgetSchema } from '@delon/form/widgets/cascader';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of, delay } from 'rxjs';
 

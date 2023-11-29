@@ -13,21 +13,17 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: '18.10.0'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
             displayName: 'Install Node.js'
 
   - stage: build
     jobs:
       - job: build
         steps:
-          - task: NodeTool@0
-            inputs:
-              versionSpec: '18.10.0'
-            displayName: 'Install Node.js'
           - script: |
               node --version
               yarn --version
-              yarn config list
               yarn install
             displayName: 'Install'
           - task: Bash@3
@@ -44,7 +40,7 @@ stages:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: |
-              yarn run site:build:ssr
+              yarn run site:build
             displayName: 'Build site'
           - script: |
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh

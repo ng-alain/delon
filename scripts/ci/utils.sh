@@ -18,15 +18,15 @@ DEPENDENCIES=$(node -p "
     'ajv',
     'ajv-formats',
     'screenfull',
-    'stylelint-config-rational-order',
     'stylelint-config-standard',
     'stylelint-declaration-block-no-ignored-properties',
-    'stylelint-order',
+    'stylelint-config-clean-order',
     'stylelint',
     '@antv/data-set',
     '@antv/g2',
     'echarts',
     'ng-zorro-antd',
+    '@angular/cdk',
     'ngx-tinymce',
     'ngx-countdown',
     'ng-alain-sts',
@@ -54,7 +54,8 @@ DEPENDENCIES=$(node -p "
     'swagger-typescript-api',
     '@github/hotkey',
     'ng-alain-sts',
-    'ng-alain-plugin-theme'
+    'ng-alain-plugin-theme',
+    '@ng-util/monaco-editor'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")

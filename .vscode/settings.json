@@ -5,7 +5,8 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
     "**/dist/*/**": true,
-    "**/coverage/*/**": true
+    "**/coverage/*/**": true,
+    "**/.yarn/**": true
   },
   "editor.codeActionsOnSave": {
     // For ESLint
@@ -33,8 +34,8 @@
   },
   "files.associations": {
     "*.json": "jsonc",
-    ".prettierrc": "json",
-    ".stylelintrc": "json"
+    ".prettierrc": "json"
   },
-  "angular.enable-strict-mode-prompt": false
+  "angular.enable-strict-mode-prompt": false,
+  "typescript.referencesCodeLens.enabled": true
 }

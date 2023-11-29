@@ -14,7 +14,7 @@ describe('theme: DrawerHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzDrawerModule],
+      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule, NzDrawerModule],
       declarations: [TestDrawerComponent, TestComponent]
     })
     class TestModule {}

@@ -1,25 +1,28 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { PLATFORM_ID, inject } from '@angular/core';
 
-export function preloaderFinished(): void {
-  const body = document.querySelector('body')!;
-  const preloader = document.querySelector('.preloader')!;
-
-  body.style.overflow = 'hidden';
-
-  function remove(): void {
-    // preloader value null when running --hmr
-    if (!preloader) return;
-    preloader.addEventListener('transitionend', () => {
-      preloader.className = 'preloader-hidden';
-    });
-
-    preloader.className += ' preloader-hidden-add preloader-hidden-add-active';
+export function stepPreloader(): () => void {
+  const doc: Document = inject(DOCUMENT);
+  const ssr = isPlatformServer(inject(PLATFORM_ID));
+  if (ssr) {
+    return () => {};
   }
+  const body = doc.querySelector<HTMLBodyElement>('body')!;
+  body.style.overflow = 'hidden';
+  let done = false;
 
-  (window as NzSafeAny).appBootstrap = () => {
-    setTimeout(() => {
-      remove();
-      body.style.overflow = '';
-    }, 100);
+  return () => {
+    if (done) return;
+
+    done = true;
+    const preloader = doc.querySelector<HTMLElement>('.preloader');
+    if (preloader == null) return;
+
+    const CLS = 'preloader-hidden';
+    preloader.addEventListener('transitionend', () => {
+      preloader.className = CLS;
+    });
+    preloader.className += ` ${CLS}-add ${CLS}-add-active`;
+    body.style.overflow = '';
   };
 }

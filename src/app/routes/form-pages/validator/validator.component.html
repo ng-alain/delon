@@ -1,7 +1,9 @@
 <div nz-row class="border-bottom-1 pb-sm mb-md">
   <div nz-col [nzSpan]="18">
     <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
-      <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title" />
+      @for (i of files; track $index) {
+        <nz-option [nzValue]="i.name" [nzLabel]="i.title" />
+      }
     </nz-select>
     <nz-radio-group [(ngModel)]="layout" class="ml-sm">
       <label nz-radio-button nzValue="horizontal">水平</label>
@@ -61,16 +63,18 @@
       </nz-tab>
     </nz-tabset>
   </div>
-  <div nz-col [nzSpan]="expand ? 12 : 24" *ngIf="schemaData">
-    <sf
-      [schema]="schemaData"
-      [formData]="formData"
-      [ui]="uiSchema"
-      [layout]="layout"
-      (formSubmit)="submit($event)"
-      (formChange)="change($event)"
-      (formValueChange)="valueChange($event)"
-      (formError)="error($event)"
-    />
-  </div>
+  @if (schemaData) {
+    <div nz-col [nzSpan]="expand ? 12 : 24">
+      <sf
+        [schema]="schemaData"
+        [formData]="formData"
+        [ui]="uiSchema"
+        [layout]="layout"
+        (formSubmit)="submit($event)"
+        (formChange)="change($event)"
+        (formValueChange)="valueChange($event)"
+        (formError)="error($event)"
+      />
+    </div>
+  }
 </div>

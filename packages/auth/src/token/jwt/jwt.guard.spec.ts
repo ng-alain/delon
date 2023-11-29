@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { authJWTCanActivate, authJWTCanActivateChild, authJWTCanMatch } from './jwt.guard';
-import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 
 describe('auth: JWTGuard', () => {
@@ -35,8 +34,7 @@ describe('auth: JWTGuard', () => {
             path: 'login',
             component: MockComponent
           }
-        ]),
-        DelonAuthModule
+        ])
       ]
     });
     srv = TestBed.inject(DA_SERVICE_TOKEN);

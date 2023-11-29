@@ -24,7 +24,9 @@
   </svg>
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu nzSelectable>
-      <li nz-menu-item *ngFor="let i of types" (click)="onThemeChange(i.key)">{{ i.text }}</li>
+      @for (i of types; track $index) {
+        <li nz-menu-item (click)="onThemeChange(i.key)">{{ i.text }}</li>
+      }
     </ul>
   </nz-dropdown-menu>
 </div>

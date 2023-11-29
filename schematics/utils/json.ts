@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tree } from '@angular-devkit/schematics';
-import { parse } from 'jsonc-parser';
+import { parse, modify, applyEdits, JSONPath, ModificationOptions } from 'jsonc-parser';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function readJSON<T = any>(tree: Tree, jsonFile: string, type?: string): T {
   if (!tree.exists(jsonFile)) return null;
 
@@ -20,7 +20,41 @@ export function readJSON<T = any>(tree: Tree, jsonFile: string, type?: string): 
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function writeJSON(tree: Tree, jsonFile: string, json: any): void {
   tree.overwrite(jsonFile, JSON.stringify(json, null, 2));
+}
+
+export interface ModifyJSONParam {
+  path: JSONPath;
+  value: any;
+}
+
+export function modifyJSON(
+  tree: Tree,
+  jsonPath: string,
+  modifies: ModifyJSONParam | ModifyJSONParam[],
+  options?: ModificationOptions
+): void {
+  if (!tree.exists(jsonPath)) return null;
+  let sourceText = tree.read(jsonPath)!.toString('utf-8');
+  (Array.isArray(modifies) ? modifies : [modifies])
+    .map(item =>
+      modify(
+        sourceText,
+        item.path,
+        item.value,
+        options ?? {
+          formattingOptions: {
+            insertSpaces: true,
+            tabSize: 2,
+            eol: '\n',
+            keepLines: false
+          }
+        }
+      )
+    )
+    .forEach(edit => {
+      sourceText = applyEdits(sourceText, edit);
+    });
+  tree.overwrite(jsonPath, sourceText);
 }

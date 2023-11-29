@@ -1,28 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  HttpClient,
-  HttpEvent,
-  HttpHandler,
-  HttpHeaders,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Component, NgModule, Type } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Router, RouterModule } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { Component, Type } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { lastValueFrom, of } from 'rxjs';
 
 import * as Mock from 'mockjs';
 
-import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockRequest } from './interface';
-import { DelonMockModule } from './mock.module';
+import { mockInterceptor } from './mock.interceptor';
+import { provideMockConfig } from './provide';
 import { MockStatusError } from './status.error';
+import { delay, r } from './utils';
 
 const USER_LIST = { users: [1, 2], a: 0 };
 const DATA = {
@@ -41,41 +33,34 @@ const DATA = {
     },
     '/500': () => {
       throw new Error('500');
+    },
+    '/obs': () => of(r(1, 1)),
+    '/promise': async () => {
+      await delay(10);
+      return 'a';
     }
   }
 };
-
-let otherRes = new HttpResponse();
-class OtherInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req.clone()).pipe(map(() => otherRes));
-  }
-}
 
 describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(
-    data: any,
-    options: AlainMockConfig,
-    imports: any[] = [],
-    spyConsole: boolean = true,
-    providers?: any[]
-  ): void {
+  function genModule(data: any, options: AlainMockConfig, spyConsole: boolean = true): void {
     TestBed.configureTestingModule({
       declarations: [RootComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([
+      providers: [
+        provideHttpClient(withInterceptors([mockInterceptor])),
+        provideHttpClientTesting(),
+        provideRouter([
           {
             path: 'lazy',
             loadChildren: jasmine.createSpy('expected')
           }
         ]),
-        DelonMockModule.forRoot({ data })
-      ].concat(imports),
-      providers: ([{ provide: ALAIN_CONFIG, useValue: { mock: options } }] as any[]).concat(providers || [])
+        provideAlainConfig({ mock: options }),
+        provideMockConfig({ data })
+      ]
     });
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
@@ -86,8 +71,8 @@ describe('mock: interceptor', () => {
   }
 
   describe('[default]', () => {
-    beforeEach(() => genModule(DATA, { executeOtherInterceptors: false, delay: 1 }));
-    it('should be init', (done: () => void) => {
+    beforeEach(() => genModule(DATA, { delay: 1 }));
+    it('should be init', done => {
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();
         expect(res.users).not.toBeNull();
@@ -198,6 +183,15 @@ describe('mock: interceptor', () => {
         done();
       });
     });
+    it('should be return a observable', () => {
+      http.get('/obs').subscribe(res => {
+        expect(res).toBe(1);
+      });
+    });
+    it('should be return a promise', async () => {
+      const res = await lastValueFrom(http.get('/promise'));
+      expect(res).toBe('a');
+    });
   });
 
   describe('[disabled log]', () => {
@@ -220,62 +214,6 @@ describe('mock: interceptor', () => {
           expect(true).toBe(true);
           done();
         }
-      });
-    });
-  });
-
-  describe('[lazy module]', () => {
-    beforeEach(() => genModule(DATA, { delay: 1 }));
-
-    it('should work', fakeAsync(() => {
-      @Component({
-        selector: 'lazy',
-        template: '<router-outlet></router-outlet>'
-      })
-      class LayoutComponent {}
-
-      @Component({
-        selector: 'child',
-        template: 'length-{{res.users.length}}'
-      })
-      class ChildComponent {
-        res: any = {};
-        constructor(HTTP: HttpClient) {
-          HTTP.get('/users').subscribe(res => (this.res = res));
-        }
-      }
-
-      @NgModule({
-        declarations: [LayoutComponent, ChildComponent],
-        imports: [DelonMockModule.forChild(), RouterModule.forChild([{ path: 'child', component: ChildComponent }])]
-      })
-      class LazyModule {}
-
-      const fixture = TestBed.createComponent(RootComponent);
-      fixture.detectChanges();
-
-      const router = TestBed.inject<Router>(Router);
-      router.resetConfig([{ path: 'lazy', loadChildren: () => LazyModule }]);
-      router.navigateByUrl(`/lazy/child`);
-      tick(500);
-      fixture.detectChanges();
-      const text = (fixture.nativeElement as HTMLElement).textContent;
-      expect(text).toContain('length-2');
-    }));
-  });
-  describe('[executeOtherInterceptors]', () => {
-    beforeEach(() => {
-      genModule(DATA, { delay: 1, executeOtherInterceptors: true }, [], true, [
-        { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true }
-      ]);
-    });
-
-    it('should working', done => {
-      otherRes = new HttpResponse({ body: { a: 1 } });
-      http.get('/users').subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.a).toBe(1);
-        done();
       });
     });
   });

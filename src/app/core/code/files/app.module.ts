@@ -21,7 +21,6 @@ import { AlainThemeModule } from '@delon/theme';
 import { DemoDelonABCModule } from './delon-abc.module';
 import { DemoDelonChartModule } from './delon-chart.module';
 import { DelonFormModule } from '@delon/form';
-import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { StartupService, StartupServiceFactory } from './startup.service';
@@ -45,12 +44,11 @@ imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
     DemoNgZorroAntdModule,
-    AlainThemeModule.forRoot(),
+    AlainThemeModule,
     DemoDelonABCModule,
     DemoDelonChartModule,
-    DelonACLModule.forRoot(),
+    DelonACLModule,
     DelonCacheModule,
-    DelonAuthModule,
     DelonFormModule.forRoot(),
     GlobalConfigModule.forRoot(),
 ],

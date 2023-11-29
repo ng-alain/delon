@@ -24,7 +24,8 @@
   "dependencies": {
     "swagger-typescript-api": "@LIB-PLACEHOLDER",
     "ng-alain-sts": "@LIB-PLACEHOLDER",
-    "ng-alain-plugin-theme": "@LIB-PLACEHOLDER"
+    "ng-alain-plugin-theme": "@LIB-PLACEHOLDER",
+    "@angular/cdk": "@LIB-PLACEHOLDER"
   },
   "ng-update": {
     "migrations": "./migration.json",

@@ -1,17 +1,18 @@
-import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
+import { Component, OnInit, inject<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
+import { _HttpClient } from '@delon/theme';<% if(standalone) {%>
+import { SHARED_IMPORTS } from '@shared';<%}%>
 
 @Component({
-  selector: '<%= selector %>',
+  selector: '<%= selector %>',<% if(standalone) {%>
+  standalone: true,
+  imports: [...SHARED_IMPORTS],<%}%>
   templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
   styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
 })
 export class <%= componentName %> implements OnInit {
-
-  constructor(private http: _HttpClient) { }
+  private readonly http = inject(_HttpClient);
 
   ngOnInit(): void { }
-
 }

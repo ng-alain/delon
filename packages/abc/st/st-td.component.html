@@ -1,117 +1,119 @@
 <ng-template #btnTpl let-i let-child="child">
-  <ng-container *ngIf="!i.tooltip">
-    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
-  </ng-container>
-  <span *ngIf="i.tooltip" nz-tooltip [nzTooltipTitle]="i.tooltip" [class.d-block]="child" [class.width-100]="child">
-    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }"></ng-template>
-  </span>
+  @if (i.tooltip) {
+    <span nz-tooltip [nzTooltipTitle]="i.tooltip" [class.d-block]="child" [class.width-100]="child">
+      <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
+    </span>
+  } @else {
+    <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
+  }
 </ng-template>
 <ng-template #btnItemTpl let-i>
-  <a
-    *ngIf="i.pop"
-    nz-popconfirm
-    [nzPopconfirmTitle]="i.pop.title"
-    [nzIcon]="i.pop.icon"
-    [nzCondition]="i.pop.condition(i)"
-    [nzCancelText]="i.pop.cancelText"
-    [nzOkText]="i.pop.okText"
-    [nzOkType]="i.pop.okType"
-    (nzOnConfirm)="_btn(i)"
-    class="st__btn-text"
-    [ngClass]="i._className"
-    (click)="_stopPropagation($event)"
-  >
-    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
-  </a>
-  <a *ngIf="!i.pop" (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i._className">
-    <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
-  </a>
+  @if (i.pop) {
+    <a
+      nz-popconfirm
+      [nzPopconfirmTitle]="i.pop.title"
+      [nzIcon]="i.pop.icon"
+      [nzCondition]="i.pop.condition(i)"
+      [nzCancelText]="i.pop.cancelText"
+      [nzOkText]="i.pop.okText"
+      [nzOkType]="i.pop.okType"
+      (nzOnConfirm)="_btn(i)"
+      class="st__btn-text"
+      [ngClass]="i._className"
+      (click)="_stopPropagation($event)"
+    >
+      <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
+    </a>
+  } @else {
+    <a (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i._className">
+      <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
+    </a>
+  }
 </ng-template>
 <ng-template #btnTextTpl let-i>
-  <ng-container *ngIf="i._icon">
-    <i
-      *ngIf="!i._icon.iconfont"
-      nz-icon
-      [nzType]="i._icon.type"
-      [nzTheme]="i._icon.theme"
-      [nzSpin]="i._icon.spin"
-      [nzTwotoneColor]="i._icon.twoToneColor"
-    ></i>
-    <i *ngIf="i._icon.iconfont" nz-icon [nzIconfont]="i._icon.iconfont"></i>
-  </ng-container>
+  @if (i._icon) {
+    @if (i._icon.iconfont) {
+      <i nz-icon [nzIconfont]="i._icon.iconfont"></i>
+    } @else {
+      <i
+        nz-icon
+        [nzType]="i._icon.type"
+        [nzTheme]="i._icon.theme"
+        [nzSpin]="i._icon.spin"
+        [nzTwotoneColor]="i._icon.twoToneColor"
+      ></i>
+    }
+  }
   <span [innerHTML]="i._text" [ngClass]="{ 'pl-xs': i._icon }"></span>
 </ng-template>
-<ng-template
-  #render
-  [ngTemplateOutlet]="c.__render!"
-  [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }"
-/>
-<ng-container *ngIf="!c.__render; else render">
-  <ng-container [ngSwitch]="c.type">
-    <label
-      *ngSwitchCase="'checkbox'"
-      nz-checkbox
-      [nzDisabled]="i.disabled"
-      [ngModel]="i.checked"
-      (ngModelChange)="_checkbox($event)"
-    ></label>
-    <label
-      *ngSwitchCase="'radio'"
-      nz-radio
-      [nzDisabled]="i.disabled"
-      [ngModel]="i.checked"
-      (ngModelChange)="_radio()"
-    ></label>
-    <a
-      *ngSwitchCase="'link'"
-      (click)="_link($event)"
-      [innerHTML]="i._values[cIdx]._text"
-      [attr.title]="i._values[cIdx].text"
-    ></a>
-    <ng-container *ngIf="i._values[cIdx].text">
-      <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
+@if (c.__render) {
+  <ng-template [ngTemplateOutlet]="c.__render!" [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }" />
+} @else {
+  @switch (c.type) {
+    @case ('checkbox') {
+      <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkbox($event)"></label>
+    }
+    @case ('radio') {
+      <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_radio()"></label>
+    }
+    @case ('link') {
+      <a (click)="_link($event)" [innerHTML]="i._values[cIdx]._text" [attr.title]="i._values[cIdx].text"></a>
+    }
+    @case ('tag') {
+      <nz-tag [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
         <span [innerHTML]="i._values[cIdx]._text"></span>
       </nz-tag>
+    }
+    @case ('badge') {
       <nz-badge
-        *ngSwitchCase="'badge'"
         [nzStatus]="i._values[cIdx].color"
         [nzText]="i._values[cIdx].text"
         [nz-tooltip]="i._values[cIdx].tooltip"
       />
-    </ng-container>
-    <cell *ngSwitchCase="'cell'" [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
-    <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
-    <ng-container *ngSwitchDefault>
-      <span
-        *ngIf="c.safeType !== 'text'"
-        [innerHTML]="i._values[cIdx]._text"
-        [attr.title]="c._isTruncate ? i._values[cIdx].text : null"
-      ></span>
-      <span
-        *ngIf="c.safeType === 'text'"
-        [innerText]="i._values[cIdx]._text"
-        [attr.title]="c._isTruncate ? i._values[cIdx].text : null"
-      ></span>
-    </ng-container>
-  </ng-container>
-  <ng-container *ngFor="let btn of i._values[cIdx].buttons; let last = last">
-    <a *ngIf="btn.children!.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
-      <span [innerHTML]="btn._text"></span>
-      <i nz-icon nzType="down"></i>
-    </a>
-    <nz-dropdown-menu #btnMenu="nzDropdownMenu">
-      <ul nz-menu>
-        <ng-container *ngFor="let subBtn of btn.children!">
-          <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
-            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }" />
-          </li>
-          <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
-        </ng-container>
-      </ul>
-    </nz-dropdown-menu>
-    <span *ngIf="btn.children!.length === 0" [class.st__btn-disabled]="btn._disabled">
-      <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
-    </span>
-    <nz-divider *ngIf="!last" nzType="vertical" />
-  </ng-container>
-</ng-container>
+    }
+    @case ('cell') {
+      <cell [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
+    }
+    @case ('widget') {
+      <ng-template st-widget-host [record]="i" [column]="c" />
+    }
+    @default {
+      @if (c.safeType === 'text') {
+        <span [innerText]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+      } @else {
+        <span [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+      }
+    }
+  }
+  @for (btn of i._values[cIdx].buttons; track $index) {
+    @if (btn.children!.length > 0) {
+      <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
+        <span [innerHTML]="btn._text"></span>
+        <i nz-icon nzType="down"></i>
+      </a>
+      <nz-dropdown-menu #btnMenu="nzDropdownMenu">
+        <ul nz-menu>
+          @for (subBtn of btn.children; track $index) {
+            @if (subBtn.type === 'divider') {
+              <li nz-menu-divider></li>
+            } @else {
+              <li nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
+                <ng-template
+                  [ngTemplateOutlet]="btnTpl"
+                  [ngTemplateOutletContext]="{ $implicit: subBtn, child: true }"
+                />
+              </li>
+            }
+          }
+        </ul>
+      </nz-dropdown-menu>
+    } @else {
+      <span [class.st__btn-disabled]="btn._disabled">
+        <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: btn, child: false }" />
+      </span>
+    }
+    @if (!$last) {
+      <nz-divider nzType="vertical" />
+    }
+  }
+}

@@ -6,12 +6,9 @@ import { AlainDateRangePickerShortcutItem } from '@delon/util/config';
   selector: '',
   template: `
     <ng-template #tpl>
-      <a
-        *ngFor="let i of list; let first = first"
-        (click)="click(i)"
-        [innerHTML]="i._text"
-        [ngClass]="{ 'ml-sm': !first }"
-      ></a>
+      @for (i of list; track $index) {
+        <a (click)="click(i)" [innerHTML]="i._text" [ngClass]="{ 'ml-sm': !$first }"></a>
+      }
     </ng-template>
   `
 })

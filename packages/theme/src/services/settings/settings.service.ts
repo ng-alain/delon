@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Provider } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -16,6 +16,14 @@ export interface SettingsKeys {
 }
 
 export const ALAIN_SETTING_KEYS = new InjectionToken<SettingsKeys>('ALAIN_SETTING_KEYS');
+export const ALAIN_SETTING_DEFAULT: Provider = {
+  provide: ALAIN_SETTING_KEYS,
+  useValue: {
+    layout: 'layout',
+    user: 'user',
+    app: 'app'
+  }
+};
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService<L extends Layout = Layout, U extends User = User, A extends App = App> {

@@ -8,10 +8,8 @@ import { ACLCanType, ACLType } from './acl.type';
 
 /**
  * ACL 控制服务，[在线文档](https://ng-alain.com/acl)
- *
- * 务必在根目录注册 `DelonACLModule.forRoot()` 才能使用服务
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ACLService {
   private options: AlainACLConfig;
   private roles: string[] = [];

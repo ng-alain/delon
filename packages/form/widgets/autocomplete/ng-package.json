@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-auto-complete",
+    "entryFile": "index.ts"
+  }
+}

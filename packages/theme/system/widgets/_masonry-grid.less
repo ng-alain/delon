@@ -15,10 +15,10 @@
    */
   .row-masonry {
     position: relative;
+    column-gap: @masonry-column-gap;
     width: 100%;
     margin: 0;
     padding: 0;
-    column-gap: @masonry-column-gap;
 
     > .col-masonry {
       display: inline-block;
@@ -32,6 +32,7 @@
     }
   }
 
+  /* stylelint-disable-next-line order/order */
   .for-each(@grid-breakpoints, {
     @media only screen and (min-width: @adValue) {
       .loopColumn(@pos: 1) when (@pos < 10) {

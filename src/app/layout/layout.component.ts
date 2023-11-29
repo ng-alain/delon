@@ -1,28 +1,36 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { delay, filter } from 'rxjs';
 
 import { RTL, RTLService, SettingsService } from '@delon/theme';
+import { ThemeBtnComponent } from '@delon/theme/theme-btn';
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
+import { HeaderComponent } from './header/header.component';
 import { AppService, SiteTheme } from '../core/app.service';
 
 @Component({
   selector: 'app-layout',
   template: `
-    <ng-container *ngIf="render">
+    @if (render) {
       <app-header />
-      <nz-spin *ngIf="isFetching" class="fetching" nzSpinning />
+      @if (isFetching) {
+        <nz-spin class="fetching" nzSpinning />
+      }
       <router-outlet />
       <nz-back-top />
       <theme-btn (themeChange)="themeChange($event)" />
-    </ng-container>
+    }
   `,
   host: {
     '[attr.id]': `'ng-content'`
-  }
+  },
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, NzSpinModule, NzBackTopModule, ThemeBtnComponent]
 })
 export class LayoutComponent {
   isFetching = false;

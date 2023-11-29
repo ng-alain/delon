@@ -3,20 +3,17 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Ng Alain - 一个基于 Antd 中后台前端解决方案</title>
+  <title>NG-ALAIN - 一个基于 Antd 中后台前端解决方案</title>
   <base href="/">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
   <link rel="preconnect" href="https://gw.alipayobjects.com" crossorigin="anonymous">
   <link rel="preconnect" href="https://img.alicdn.com" crossorigin="anonymous">
   <link rel="preconnect" href="https://dummyimage.com" crossorigin="anonymous">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous">
-  <link rel="preconnect" href="https://vars.hotjar.com">
-  <link rel="preconnect" href="https://script.hotjar.com">
   <link rel="preconnect" href="https://www.google-analytics.com">
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://api.github.com">
-  <link rel="preload" href="https://script.hotjar.com/font-hotjar_5.65042d.woff2" as="font" type="font/woff2" crossorigin>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
@@ -43,20 +40,22 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="2048">
   <meta property="og:image:height" content="1536">
-
   <link rel="shortcut icon" href="./assets/img/logo-color.png">
   <link rel="icon" type="image/x-icon" href="./assets/img/logo-color.png">
   <link rel="apple-touch-icon" sizes="144x144" href="./assets/img/logo-color.png">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/img/logo-color.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1976d2" />
+  <style>
+    .preloader {position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:Helvetica;transition: opacity 0.65s;}
+    .preloader-hidden-add{display:block;opacity:1}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}
+  </style>
 </head>
 
 <body ontouchstart>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  <app-root>
-    <div style="position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:Helvetica;">loading...</div>
-  </app-root>
+  <app-root></app-root>
+  <div class="preloader">Loading...</div>
   <div id="_ie" style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:9999;display:none;padding-top:32px;font-size:22px;text-align:center;background:#fff;">
     Your browser is not supported for NG-ALAIN document site
   </div>
@@ -70,7 +69,6 @@
     if (!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) {
       document.querySelector('#_ie').style.display = 'block';
     }
-
   </script>
   <script>
     if (location.host !== 'ng-alain-doc.surge.sh') {

@@ -8,16 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
-
-      - name: checkout
-        uses: actions/checkout@v4
-
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: install
+          node-version-file: '.nvmrc'
+      - run: yarn install
 
       - name: build
         run: |

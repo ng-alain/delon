@@ -8,7 +8,75 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-checkbox',
-  templateUrl: './checkbox.widget.html',
+  template: `<ng-template #all>
+      @if (ui.checkAll) {
+        <label
+          nz-checkbox
+          class="sf__checkbox-all mr-sm"
+          [(ngModel)]="allChecked"
+          (ngModelChange)="onAllChecked()"
+          [nzIndeterminate]="indeterminate"
+        >
+          {{ ui.checkAllText || l.checkAllText }}
+        </label>
+      }
+    </ng-template>
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="true"
+      [title]="labelTitle"
+    >
+      @if (inited) {
+        @if (data.length === 0) {
+          <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="_setValue($event)">
+            {{ schema.title }}
+            <span class="sf__optional">
+              {{ ui.optional }}
+              @if (oh) {
+                <i
+                  nz-tooltip
+                  [nzTooltipTitle]="oh.text"
+                  [nzTooltipPlacement]="oh.placement"
+                  [nzTooltipTrigger]="oh.trigger"
+                  [nzTooltipOverlayClassName]="oh.overlayClassName"
+                  [nzTooltipOverlayStyle]="oh.overlayStyle"
+                  [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
+                  [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
+                  nz-icon
+                  [nzType]="oh.icon!"
+                ></i>
+              }
+            </span>
+          </label>
+        } @else {
+          @if (grid_span === 0) {
+            <ng-template [ngTemplateOutlet]="all" />
+            <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()" />
+          } @else {
+            <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
+              <div nz-row>
+                @if (ui.checkAll) {
+                  <div nz-col [nzSpan]="grid_span">
+                    <ng-template [ngTemplateOutlet]="all" />
+                  </div>
+                }
+                @for (i of data; track $index) {
+                  <div nz-col [nzSpan]="grid_span">
+                    <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">
+                      {{ i.label }}
+                    </label>
+                  </div>
+                }
+              </div>
+            </nz-checkbox-wrapper>
+          }
+        }
+      }
+    </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

@@ -54,7 +54,7 @@ type: Service
 
 ```diff
  const alainProvides = [
-  { provide: ALAIN_CONFIG, useValue: alainConfig },
+  provideAlainConfig(alainConfig),
 + {
 +   provide: ALAIN_SETTING_KEYS,
 +   useValue: {

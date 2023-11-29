@@ -41,29 +41,17 @@ There are currently two styles: Simple Web Token (using `SimpleTokenModel`) and 
 Install `@delon/auth`:
 
 ```bash
-yarn add @delon/auth
+npm i -S @delon/auth
 ```
 
-Import `DelonAuthModule` to your AppModule.
+Configure the `provideAuth` environment in `app.config.ts`:
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    // Specify the HTTP interceptor corresponding to the authentication style
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
-  ]
-})
-export class AppModule { }
+providers: [
+  // Indicates using JWT style and using `localStorage` to store Token
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
-
-**Why do I need to manually register HTTP_INTERCEPTORS**
-
-The default `DelonAuthModule` does not register any HTTP interceptor, because of `@delon/auth` provides multiple different [authentication styles](/auth/getting-started#AuthenticationStyle).
 
 ## AlainAuthConfig
 
@@ -77,7 +65,6 @@ The default `DelonAuthModule` does not register any HTTP interceptor, because of
 | `[token_send_place]` | `header,body,url` | `header` | Send token parameter position | ✅ |
 | `[login_url]` | `string` | `/login` | Login page routing address | ✅ |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses. In addition, you can also control whether to ignore through [ALLOW_ANONYMOUS](/auth/qa/en). | ✅ |
-| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing | ✅ |
 | `[refreshTime]` | `number` | `3000` | Refresh time (unit: ms) | ✅ |
 | `[refreshOffset]` | `number` | `6000` | Offset value (unit: ms), it is recommended to set according to the multiple of `refreshTime` | ✅ |
 

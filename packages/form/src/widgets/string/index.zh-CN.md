@@ -2,6 +2,7 @@
 title: string
 subtitle: 文本框
 type: Widgets
+order: 3
 ---
 
 默认小部件，一般用于字符串元素。

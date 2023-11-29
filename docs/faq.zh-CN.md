@@ -10,10 +10,6 @@ type: Other
 
 ## 基础
 
-### Can't Bind to since it isn't a known property of
-
-当你有多个懒模块时，希望每个子模块都需要使用组件库时（例如：`NgZorroAntdModule`、`NgxTinymceModule`）应在 `ShareModule` 中 export，请参考[模块注册指导原则](/docs/module)。
-
 ### Expression Changed After It Has Been Checked Error 错误
 
 Angular 下常见错误，[这篇文章](https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) 会帮助你理解原因。
@@ -61,18 +57,15 @@ bash delon.sh
 - 使用 `cnpm` 安装依赖包，会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `yarn` 安装依赖包，如果是网络因素，请参考下方的如何正确使用淘宝源。
 - `ng-zorro-antd` 版本过旧导致部分组件无法加载到相应样式
 
-### 如何正确使用淘宝源？
+### 如何使用其他镜像源？
 
-最简单是使用 [networkEnv](/cli/plugin#networkEnv) 插件。
-
-或手动修复：
+安装 [nnrm](https://github.com/YunYouJun/nnrm/blob/main/README.zh-CN.md) 插件。
 
 ```bash
-yarn config set registry https://registry.npmmirror.com
-yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
-# 恢复
-yarn config delete registry
-yarn config delete sass_binary_site
+# 安装 nnrm
+npm install -g nnrm
+# 将Npm切换至淘宝源（不同 npm 源管理器命令有点不一样，更多细节请参考 nnrm 文档）
+nnrm use taobao
 ```
 
 ## 配置
@@ -100,8 +93,8 @@ yarn config delete sass_binary_site
 ```bash
 git clone --depth 1 -b full https://github.com/ng-alain/archive-docs.git ng-alain-doc
 cd ng-alain-doc
-yarn
-yarn start
+npm install
+npm start
 ```
 
 ### 修复360浏览器下部分显示异常

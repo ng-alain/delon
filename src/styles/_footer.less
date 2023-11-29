@@ -3,10 +3,10 @@
 
 @{footer-prefix} {
   position: relative;
-  display: block;
   clear: both;
-  color: rgba(255, 255, 255, 0.65);
+  display: block;
   font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
   background-color: #000;
   box-shadow: 0 1000px 0 1000px #fff;
 
@@ -21,8 +21,8 @@
     > h2 {
       position: relative;
       margin: 0 auto 24px;
-      font-weight: 500;
       font-size: 16px;
+      font-weight: 500;
 
       > .title-icon {
         width: 27px;
@@ -33,8 +33,8 @@
         position: absolute;
         top: 3px;
         left: -22px;
-        color: #aaa;
         font-size: 16px;
+        color: #aaa;
       }
     }
 
@@ -71,24 +71,26 @@
 }
 
 .theme-color {
-  display: inline-block;
-  padding: 4px;
-  vertical-align: middle;
   background: #fff;
-  border-radius: 2px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px;
-  cursor: pointer;
+  border-radius: 4px;
+  // cursor: pointer;
+  // display: inline-block;
+  // padding: 4px;
+  // vertical-align: middle;
+  // background: #fff;
+  // border-radius: 2px;
+  // box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px;
 
-  &-value {
-    width: 80px;
-    height: 16px;
-    border-radius: 2px;
-  }
+  // &-value {
+  //   width: 80px;
+  //   height: 16px;
+  //   border-radius: 2px;
+  // }
 
-  &-content .ant-popover-inner-content {
-    width: 200px;
-    padding: 0;
-  }
+  // &-content .ant-popover-inner-content {
+  //   width: 200px;
+  //   padding: 0;
+  // }
 }
 
 @media (max-width: @site-mobile) {

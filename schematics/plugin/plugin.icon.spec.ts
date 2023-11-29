@@ -2,7 +2,7 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 
 import { createAlainApp } from '../utils/testing';
 
-const testCases = {
+const testCases: Record<string, string> = {
   'style-icons.ts': `
   import { NzFilterOutline, StepBackwardFill } from '@ant-design/icons-angular/icons';
   export const ICONS = [ NzFilterOutline, StepBackwardFill ];
@@ -48,7 +48,14 @@ describe('NgAlainSchematic: plugin: icon', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
-    Object.keys(testCases).forEach(name => tree.create(`/projects/foo/src/${name}`, testCases[name]));
+    Object.keys(testCases).forEach(name => {
+      const filePath = `/projects/foo/src/${name}`;
+      if (tree.exists(filePath)) {
+        tree.overwrite(filePath, testCases[name]);
+      } else {
+        tree.create(filePath, testCases[name]);
+      }
+    });
     tree = await runner.runSchematic('plugin', { name: 'icon', type: 'add' }, tree);
   });
 

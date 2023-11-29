@@ -9,6 +9,7 @@ import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuSer
 import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { provideReuseTabConfig } from './provide';
 import { ReuseTabComponent } from './reuse-tab.component';
 import {
   ReuseCanClose,
@@ -17,7 +18,6 @@ import {
   ReuseTabMatchMode,
   ReuseTabRouteParamMatchMode
 } from './reuse-tab.interfaces';
-import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -44,7 +44,7 @@ describe('abc: reuse-tab', () => {
       declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
         DelonLocaleModule,
-        ReuseTabModule,
+        ReuseTabComponent,
         RouterTestingModule.withRoutes(
           [
             {
@@ -71,11 +71,7 @@ describe('abc: reuse-tab', () => {
       providers: [
         { provide: RouteReuseStrategy, useClass: ReuseTabStrategy, deps: [ReuseTabService] },
         MenuService,
-        {
-          provide: RouteReuseStrategy,
-          useClass: ReuseTabStrategy,
-          deps: [ReuseTabService]
-        },
+        provideReuseTabConfig(),
         {
           provide: 'CanDeactivate',
           useValue: () => {

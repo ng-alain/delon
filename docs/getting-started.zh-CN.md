@@ -11,24 +11,21 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ## 环境搭建
 
-Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装，但**推荐使用** [Yarn](https://yarnpkg.com/) 但你需要单独额外安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
+Angular 开发环境至少需要安装 [Node.js](https://nodejs.org/en/download/)(Node.js 内置了 [npm](https://www.npmjs.com/get-npm) 无须单独安装）、[VSCode编辑器](https://code.visualstudio.com/)，其中 Node.js 建议安装 **LTS** 版本，安装完成后可以通过终端窗口中运行：
 
 ```bash
 node -v # 查看 Node.js 当前版本
-yarn -v # 查看 Yarn 当前版本
+npm -v # 查看 Npm 当前版本
 ```
 
-Yarn 默认从国外源来下载包信息，鉴于国内环境因素，在开始下一步前先设定淘宝提供镜像：
+Npm 默认从国外源来下载包信息，鉴于国内环境因素，在开始下一步前先安装 [nnrm](https://github.com/YunYouJun/nnrm/blob/main/README.zh-CN.md) 并切换至淘宝镜像：
 
 ```bash
-yarn config set registry https://registry.npmmirror.com
-yarn config set sass_binary_site https://npmmirror.com/mirrors/node-sass
-# restore
-yarn config delete registry
-yarn config delete sass_binary_site
+# 安装 nnrm
+npm install -g nnrm
+# 将Npm切换至淘宝源（不同 npm 源管理器命令有点不一样，更多细节请参考 nnrm 文档）
+nnrm use taobao
 ```
-
-> 也可以使用 [nrm](https://www.npmjs.com/package/nrm) 包，可以快速切换不同国内镜像源。
 
 ## 安装
 
@@ -37,7 +34,7 @@ yarn config delete sass_binary_site
 安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
 
 ```bash
-yarn global add @angular/cli
+npm install -g @angular/cli
 ```
 
 ### 创建NG-ALAIN项目
@@ -45,7 +42,12 @@ yarn global add @angular/cli
 NG-ALAIN 必须先创建一个全新的 Angular 项目，可以通过终端窗口中运行：
 
 ```bash
-ng new my-project --style less --routing --package-manager yarn
+ng new my-project --style less --routing
+cd my-project
+# 或多重项目
+ng new my-workspace --no-create-application
+cd my-workspace
+ng g application mgr --style less --routing
 ```
 
 > 如果你想了解 `--style`、`--routing` 参数，请参考 [ng new](https://angular.io/cli/new#options) 文档。
@@ -53,9 +55,10 @@ ng new my-project --style less --routing --package-manager yarn
 接下来只需要将 NG-ALAIN 添加到 `my-project` 项目中即可，在 `my-project` 目录下通过终端窗口中运行：
 
 ```bash
-cd my-project
 ng add ng-alain
 ```
+
+> 若多重项目时，需要提供具体的项目名称。
 
 NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一路回车，这些插件都是可插拔，后期可以自行添加与移除。
 
@@ -63,13 +66,13 @@ NG-ALAIN 会询问是否需要一些额外的插件，一开始完全可以一�
 > ```bash
 > git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 > cd my-project
-> yarn install
+> npm install
 > ```
 
 ### 运行
 
 ```bash
-yarn start
+npm start
 ```
 
 启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。
@@ -85,9 +88,9 @@ yarn start
 - 支持服务端渲染
 - [Electron](https://electron.atom.io/)
 
-| [<img src="https://img.alicdn.com/tfs/TB1G5ewZuL2gK0jSZPhXXahvXXa-48-48.png" alt="IE / Edge" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges//)<br>IE / Edge | [<img src="https://img.alicdn.com/tfs/TB1Dx73o79l0K4jSZFKXXXFjpXa-48-48.png" alt="Firefox" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://img.alicdn.com/tfs/TB1mY9FZrr1gK0jSZFDXXb9yVXa-48-48.png" alt="Chrome" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://img.alicdn.com/tfs/TB1Vas5o79l0K4jSZFKXXXFjpXa-48-48.png" alt="Safari" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Safari | [<img src="https://img.alicdn.com/tfs/TB12EmNZET1gK0jSZFrXXcNCXXa-48-48.png" alt="Opera" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Opera | [<img src="https://img.alicdn.com/tfs/TB1TMW8paNj0u4jSZFyXXXgMVXa-48-48.png" alt="Electron" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Electron |
-| --- | --- | --- | --- | --- | --- |
-| Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Electron |
+| --------- | --------- | --------- | --------- | --------- | --------- |
+| last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions
 
 ## 如何贡献
 

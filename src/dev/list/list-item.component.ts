@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +11,9 @@ import { format } from 'date-fns';
     <p>first: {{ first | json }}，now: {{ now | json }}</p>
     <p>id: {{ id | json }}</p>
     page: {{ route.url | json }}
-  `
+  `,
+  standalone: true,
+  imports: [JsonPipe]
 })
 export class DevListItemComponent implements OnInit, OnDestroy {
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');

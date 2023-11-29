@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-rate",
+    "entryFile": "index.ts"
+  }
+}

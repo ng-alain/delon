@@ -19,17 +19,18 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-    <button
-      *ngFor="let i of fileTypes"
-      nz-button
-      down-file
-      [http-data]="data"
-      http-url="./assets/demo{{ i }}"
-      file-name="demo中文"
-      class="mr-sm"
-    >
-      {{ i }}
-    </button>
+    @for (i of fileTypes; track $index) {
+      <button
+        nz-button
+        down-file
+        [http-data]="data"
+        http-url="./assets/demo{{ i }}"
+        file-name="demo中文"
+        class="mr-sm"
+      >
+        {{ i }}
+      </button>
+    }
   `,
 })
 export class DemoComponent {

@@ -3,8 +3,8 @@
 
 @{g2-water-wave-prefix} {
   position: relative;
-  display: inline-block;
   transform-origin: left;
+  display: inline-block;
 
   &__desc {
     position: absolute;
@@ -14,20 +14,20 @@
     text-align: center;
 
     &-title {
-      color: @text-color-secondary;
       font-size: 14px;
       line-height: 22px;
+      color: @text-color-secondary;
     }
 
     &-percent {
-      color: @heading-color;
       font-size: 24px;
       line-height: 32px;
+      color: @heading-color;
     }
   }
 
   &__canvas {
-    transform: scale(0.5);
     transform-origin: 0 0;
+    transform: scale(0.5);
   }
 }

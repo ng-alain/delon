@@ -1,15 +1,14 @@
 /**
  * 未被直接引用，为了尽可快渲染预加载状态，生成的CSS代码已直接在 `index.html` 中引用
  */
-
 .preloader {
   position: fixed;
+  z-index: 9999;
   top: 0;
   left: 0;
-  z-index: 9999;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background: #49a9ee;
   transition: opacity 0.65s;
 }
@@ -38,10 +37,10 @@
 .cs-loader-inner {
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
   width: 100%;
   color: #fff;
   text-align: center;
-  transform: translateY(-50%);
 
   label {
     display: inline-block;

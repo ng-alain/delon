@@ -31,12 +31,24 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 Please make sure global Angular Cli is latest version via `ng version` command, please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
 
 ```bash
-yarn global add @angular/cli
-ng new my-project --style less --routing --package-manager yarn
+npm install -g @angular/cli
+ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
-yarn start
-# Or use HMR mode by: yarn run hmr
+npm start
+# Or use HMR mode by: npm run hmr
+```
+
+**Multiple projects**
+
+```bash
+yarn global add @angular/cli
+ng new my-workspace --no-create-application --package-manager yarn
+cd my-workspace
+ng g application mgr --style less --routing
+ng add ng-alain
+yarn mgr:start
+# Or use HMR mode by: yarn run mgr:hmr
 ```
 
 > Please refer to [Schematics](/cli) for more details.
@@ -46,9 +58,9 @@ yarn start
 ```bash
 git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
-yarn
-yarn start
-# Or use HMR mode by: yarn run hmr
+npm install
+npm start
+# Or use HMR mode by: npm run hmr
 ```
 
 > Note: Installing with the CLI is a clean scaffolding; using clone the git repository include all example pages.
@@ -89,7 +101,7 @@ NG-ALAIN is a standard Angular CLI project that includes common routes for admin
 ## Development
 
 ```bash
-yarn start
+npm start
 ```
 
 This will automatically open [http://localhost:4200](http://localhost:4200). If you see the following page then you have succeeded.
@@ -103,9 +115,9 @@ This will automatically open [http://localhost:4200](http://localhost:4200). If 
 - Server-side Rendering
 - [Electron](https://electron.atom.io/)
 
-| [<img src="https://img.alicdn.com/tfs/TB1G5ewZuL2gK0jSZPhXXahvXXa-48-48.png" alt="IE / Edge" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges//)<br>IE / Edge | [<img src="https://img.alicdn.com/tfs/TB1Dx73o79l0K4jSZFKXXXFjpXa-48-48.png" alt="Firefox" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://img.alicdn.com/tfs/TB1mY9FZrr1gK0jSZFDXXb9yVXa-48-48.png" alt="Chrome" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://img.alicdn.com/tfs/TB1Vas5o79l0K4jSZFKXXXFjpXa-48-48.png" alt="Safari" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Safari | [<img src="https://img.alicdn.com/tfs/TB12EmNZET1gK0jSZFrXXcNCXXa-48-48.png" alt="Opera" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Opera | [<img src="https://img.alicdn.com/tfs/TB1TMW8paNj0u4jSZFyXXXgMVXa-48-48.png" alt="Electron" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)<br>Electron |
-| --- | --- | --- | --- | --- | --- |
-| Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Electron |
+| --------- | --------- | --------- | --------- | --------- | --------- |
+| last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions
 
 ## Contributing
 

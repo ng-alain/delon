@@ -7,3 +7,4 @@ export * from './lib-versions';
 export * from './log';
 export * from './ast';
 export * from './alain';
+export * from './standalone';

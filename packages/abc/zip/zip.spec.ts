@@ -8,7 +8,6 @@ import * as fs from 'file-saver';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { ZipModule } from './zip.module';
 import { ZipService } from './zip.service';
 
 let isErrorRequest = false;
@@ -45,7 +44,6 @@ describe('abc: zip', () => {
   let srv: ZipService;
   function genModule(): void {
     TestBed.configureTestingModule({
-      imports: [ZipModule],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
         { provide: LazyService, useClass: MockLazyService }

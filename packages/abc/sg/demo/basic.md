@@ -19,9 +19,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: ` <div sg-container="4">
-    <sg *ngFor="let i of ls; let idx = index" [col]="idx === 5 ? 2 : null">
-      <div class="item">{{ idx + 1 }}</div>
-    </sg>
+    @for (i of ls; track $index) {
+      <sg [col]="$index === 5 ? 2 : null">
+        <div class="item">{{ $index + 1 }}</div>
+      </sg>
+    }
   </div>`,
   styles: [
     `

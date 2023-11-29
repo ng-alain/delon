@@ -15,17 +15,17 @@ The `ACLService` service class contains a set of methods based on role permissio
 Install `@delon/acl`:
 
 ```bash
-yarn add @delon/acl
+npm i -S @delon/acl
 ```
 
-Import `DelonACLModule` module:
+If you use Standalone, there is no need to import the `DelonACLModule` module, otherwise:
 
 ```typescript
 import { DelonACLModule } from '@delon/acl';
 
 @NgModule({
   imports: [
-    DelonACLModule.forRoot()
+    DelonACLModule
   ]
 })
 export class AppModule { }

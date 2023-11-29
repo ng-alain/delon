@@ -87,21 +87,6 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | 西班牙语 | es | es | es_ES | es_ES |
 | 意大利语 | it | it | it_IT | it_IT |
 
-### networkEnv
-
-在国内使用 npm 或 yarn 始终是一个“痛”，因此你可以增加一个使用淘宝镜像配置文件 `.npmrc` 或 `.yarnrc`，来解决网络问题。
-
-```bash
-# add npm
-ng g ng-alain:plugin networkEnv --packageManager=npm
-# add yarn
-ng g ng-alain:plugin networkEnv --packageManager=yarn
-# remove npm
-ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
-# remove yarn
-ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
-```
-
 ### sts
 
 [ng-alain-sts](https://github.com/ng-alain/sts) 插件，构建 Swagger API 转换为列表、编辑页，更多有趣的玩法请自行想象。

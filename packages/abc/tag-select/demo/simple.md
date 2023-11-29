@@ -18,14 +18,15 @@ interface TagSelectDemoItem {
   selector: 'app-demo',
   template: `
     <tag-select>
-      <nz-tag
-        *ngFor="let i of categories; let idx = index"
-        nzMode="checkable"
-        [(nzChecked)]="i.value"
-        (nzCheckedChange)="change(i)"
-      >
-        {{ i.text }}
-      </nz-tag>
+      @for (i of categories; track $index) {
+        <nz-tag
+          nzMode="checkable"
+          [(nzChecked)]="i.value"
+          (nzCheckedChange)="change(i)"
+        >
+          {{ i.text }}
+        </nz-tag>
+      }
     </tag-select>
   `
 })

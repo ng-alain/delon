@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "widgets-tag",
+    "entryFile": "index.ts"
+  }
+}

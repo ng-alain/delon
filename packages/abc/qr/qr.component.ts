@@ -21,10 +21,15 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QROptions } from './qr.types';
 
+/**
+ * @deprecated Will be removed in 18.0.0, please use [nz-qrcode](https://ng.ant.design/components/qr-code) instead.
+ */
 @Component({
   selector: 'qr',
   exportAs: 'qr',
-  template: ` <img *ngIf="dataURL" style="max-width: 100%; max-height: 100%;" [src]="dataURL" /> `,
+  template: `@if (dataURL) {
+    <img style="max-width: 100%; max-height: 100%;" [src]="dataURL" />
+  }`,
   host: {
     '[style.display]': `'inline-block'`,
     '[style.height.px]': 'size',

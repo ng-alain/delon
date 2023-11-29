@@ -1,5 +1,6 @@
 name: docker-build-doc-site
 
+# on: push
 on:
   push:
     branches:
@@ -11,12 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.15.0
-
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

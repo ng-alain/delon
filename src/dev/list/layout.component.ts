@@ -1,7 +1,10 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 
 import { format } from 'date-fns';
+
+import { PageHeaderModule } from '@delon/abc/page-header';
 
 @Component({
   selector: 'dev-list-layout',
@@ -13,7 +16,9 @@ import { format } from 'date-fns';
     <div class="px-lg">
       <router-outlet />
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [PageHeaderModule, JsonPipe, RouterOutlet]
 })
 export class DevLayoutListComponent implements OnInit, OnDestroy {
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');

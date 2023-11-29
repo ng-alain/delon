@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, Observable, of, filter } from 'rxjs';
 
-import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util/config';
+import { AlainCacheConfig, provideAlainConfig } from '@delon/util/config';
 
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
@@ -39,7 +39,7 @@ describe('cache: service', () => {
   function genModule(options?: AlainCacheConfig): void {
     const providers: any[] = [];
     if (options) {
-      providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
+      providers.push(provideAlainConfig({ cache: options }));
     }
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, DelonCacheModule],

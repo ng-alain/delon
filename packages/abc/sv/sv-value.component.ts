@@ -6,9 +6,13 @@ import type { NzTSType } from 'ng-zorro-antd/core/types';
   selector: 'sv-value, [sv-value]',
   exportAs: 'svValue',
   template: `
-    <em *ngIf="prefix" class="sv__value-prefix" [innerHTML]="prefix"></em>
+    @if (prefix) {
+      <em class="sv__value-prefix" [innerHTML]="prefix"></em>
+    }
     <span nz-tooltip [nzTooltipTitle]="tooltip" class="sv__value-text"><ng-content /></span>
-    <em *ngIf="unit" class="sv__value-unit" [innerHTML]="unit"></em>
+    @if (unit) {
+      <em class="sv__value-unit" [innerHTML]="unit"></em>
+    }
   `,
   host: {
     '[class.sv__value]': 'true',

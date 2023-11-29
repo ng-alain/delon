@@ -21,13 +21,17 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "src/dist/browser",
+            "outputPath": "src/dist",
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.json",
-            "polyfills": "src/polyfills.ts",
+            "browser": "src/main.ts",
+            "tsConfig": "src/tsconfig.site.json",
+            "polyfills": [
+              "@webcomponents/custom-elements",
+              "@webcomponents/custom-elements/src/native-shim",
+              "zone.js"
+            ],
             "assets": [
               "src/assets",
               "src/manifest.json",
@@ -78,7 +82,14 @@
               "date-fns",
               "extend",
               "aos"
-            ]
+            ],
+            "server": "src/main.server.ts",
+            "prerender": {
+              "routesFile": "scripts/site/route-paths.txt"
+            },
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -89,16 +100,12 @@
                 }
               ],
               "outputHashing": "all",
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -107,58 +114,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "site:build:production"
+              "buildTarget": "site:build:production"
             },
             "development": {
-              "browserTarget": "site:build:development"
+              "buildTarget": "site:build:development"
             }
           },
           "defaultConfiguration": "development"
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "src/dist/server",
-            "main": "./src/server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "sourceMap": false,
-              "optimization": true
-            }
-          }
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "options": {
-            "browserTarget": "site:build",
-            "serverTarget": "site:server"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "site:build:production",
-              "serverTarget": "site:server:production"
-            }
-          }
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "browserTarget": "site:build:production",
-            "serverTarget": "site:server:production",
-            "routesFile": "scripts/site/route-paths.txt"
-          },
-          "configurations": {
-            "production": {}
-          }
         }
       }
     },

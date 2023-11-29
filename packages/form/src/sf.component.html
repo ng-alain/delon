@@ -2,74 +2,80 @@
   <ng-content />
 </ng-template>
 <ng-template #btnTpl>
-  <ng-container *ngIf="button !== 'none'; else con">
-    <nz-form-item
-      *ngIf="_btn && _btn.render"
-      [ngClass]="_btn.render!.class!"
-      class="sf-btns"
-      [fixed-label]="_btn.render!.spanLabelFixed!"
-    >
-      <div
-        nz-col
-        class="ant-form-item-control"
-        [nzSpan]="btnGrid.span"
-        [nzOffset]="btnGrid.offset"
-        [nzXs]="btnGrid.xs"
-        [nzSm]="btnGrid.sm"
-        [nzMd]="btnGrid.md"
-        [nzLg]="btnGrid.lg"
-        [nzXl]="btnGrid.xl"
-        [nzXXl]="btnGrid.xxl"
-      >
-        <div class="ant-form-item-control-input">
-          <div class="ant-form-item-control-input-content">
-            <ng-container *ngIf="button; else con">
-              <button
-                type="submit"
-                nz-button
-                data-type="submit"
-                [nzType]="_btn.submit_type!"
-                [nzSize]="_btn.render!.size!"
-                [nzLoading]="loading"
-                [disabled]="liveValidate && !valid"
-              >
-                <i
-                  *ngIf="_btn.submit_icon"
-                  nz-icon
-                  [nzType]="_btn.submit_icon.type!"
-                  [nzTheme]="_btn.submit_icon.theme!"
-                  [nzTwotoneColor]="_btn.submit_icon.twoToneColor!"
-                  [nzIconfont]="_btn.submit_icon.iconfont!"
-                ></i>
-                {{ _btn.submit }}
-              </button>
-              <button
-                *ngIf="_btn.reset"
-                type="button"
-                nz-button
-                data-type="reset"
-                [nzType]="_btn.reset_type!"
-                [nzSize]="_btn.render!.size!"
-                [disabled]="loading"
-                (click)="reset(true)"
-              >
-                <i
-                  *ngIf="_btn.reset_icon"
-                  nz-icon
-                  [nzType]="_btn.reset_icon.type!"
-                  [nzTheme]="_btn.reset_icon.theme!"
-                  [nzTwotoneColor]="_btn.reset_icon.twoToneColor!"
-                  [nzIconfont]="_btn.reset_icon.iconfont!"
-                ></i>
-                {{ _btn.reset }}
-              </button>
-            </ng-container>
+  @if (button !== 'none') {
+    @if (_btn && _btn.render) {
+      <nz-form-item [ngClass]="_btn.render!.class!" class="sf-btns" [fixed-label]="_btn.render!.spanLabelFixed!">
+        <div
+          nz-col
+          class="ant-form-item-control"
+          [nzSpan]="btnGrid.span"
+          [nzOffset]="btnGrid.offset"
+          [nzXs]="btnGrid.xs"
+          [nzSm]="btnGrid.sm"
+          [nzMd]="btnGrid.md"
+          [nzLg]="btnGrid.lg"
+          [nzXl]="btnGrid.xl"
+          [nzXXl]="btnGrid.xxl"
+        >
+          <div class="ant-form-item-control-input">
+            <div class="ant-form-item-control-input-content">
+              @if (button) {
+                <button
+                  type="submit"
+                  nz-button
+                  data-type="submit"
+                  [nzType]="_btn.submit_type!"
+                  [nzSize]="_btn.render!.size!"
+                  [nzLoading]="loading"
+                  [disabled]="liveValidate && !valid"
+                >
+                  @if (_btn.submit_icon) {
+                    <i
+                      nz-icon
+                      [nzType]="_btn.submit_icon.type!"
+                      [nzTheme]="_btn.submit_icon.theme!"
+                      [nzTwotoneColor]="_btn.submit_icon.twoToneColor!"
+                      [nzIconfont]="_btn.submit_icon.iconfont!"
+                    ></i>
+                  }
+                  {{ _btn.submit }}
+                </button>
+                @if (_btn.reset) {
+                  <button
+                    type="button"
+                    nz-button
+                    data-type="reset"
+                    [nzType]="_btn.reset_type!"
+                    [nzSize]="_btn.render!.size!"
+                    [disabled]="loading"
+                    (click)="reset(true)"
+                  >
+                    @if (_btn.reset_icon) {
+                      <i
+                        nz-icon
+                        [nzType]="_btn.reset_icon.type!"
+                        [nzTheme]="_btn.reset_icon.theme!"
+                        [nzTwotoneColor]="_btn.reset_icon.twoToneColor!"
+                        [nzIconfont]="_btn.reset_icon.iconfont!"
+                      ></i>
+                    }
+                    {{ _btn.reset }}
+                  </button>
+                }
+              } @else {
+                <ng-template [ngTemplateOutlet]="con" />
+              }
+            </div>
           </div>
         </div>
-      </div>
-    </nz-form-item>
-  </ng-container>
+      </nz-form-item>
+    }
+  } @else {
+    <ng-template [ngTemplateOutlet]="con" />
+  }
 </ng-template>
 <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-  <sf-item *ngIf="rootProperty" [formProperty]="rootProperty" [footer]="btnTpl" />
+  @if (rootProperty) {
+    <sf-item [formProperty]="rootProperty" [footer]="btnTpl" />
+  }
 </form>

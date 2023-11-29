@@ -1,50 +1,57 @@
-<nz-affix class="toc-affix" *ngIf="isBrowser && data.con.toc?.length" nzOffsetTop="16">
-  <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
-    <nz-link *ngFor="let t of data.con.toc" [nzHref]="'#' + t.id" [nzTitle]="t.title">
-      <ng-container *ngIf="t.children && t.children.length > 0">
-        <nz-link *ngFor="let t2 of t.children" [nzHref]="'#' + t2.id" [nzTitle]="t2.title" />
-      </ng-container>
-    </nz-link>
-  </nz-anchor>
-</nz-affix>
-<ng-container *ngIf="meta.item">
-  <nz-alert
-    *ngIf="!meta.item.i18n || data.con.meta.i18n === 'need-update'"
-    [nzType]="'warning'"
-    [nzCloseable]="'true'"
-    nzBanner
-    [nzMessage]="message"
-    class="my-md"
-  >
-    <ng-template #message>
-      {{
-        data.con.meta.i18n === 'need-update'
-          ? 'This article need re-translated, hope that your can PR to translated it.'
-          : 'This article has not been translated, hope that your can PR to translated it.'
-      }}
-      <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
-    </ng-template>
-  </nz-alert>
+@if (isBrowser && data.con.toc?.length) {
+  <nz-affix class="toc-affix" nzOffsetTop="16">
+    <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
+      @for (t of data.con.toc; track $index) {
+        <nz-link [nzHref]="'#' + t.id" [nzTitle]="t.title">
+          @if (t.children && t.children.length > 0) {
+            @for (t2 of t.children; track $index) {
+              <nz-link [nzHref]="'#' + t2.id" [nzTitle]="t2.title" />
+            }
+          }
+        </nz-link>
+      }
+    </nz-anchor>
+  </nz-affix>
+}
+@if (meta.item) {
+  @if (!meta.item.i18n || data.con.meta.i18n === 'need-update') {
+    <nz-alert [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
+      <ng-template #message>
+        {{
+          data.con.meta.i18n === 'need-update'
+            ? 'This article need re-translated, hope that your can PR to translated it.'
+            : 'This article has not been translated, hope that your can PR to translated it.'
+        }}
+        <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
+      </ng-template>
+    </nz-alert>
+  }
   <div class="markdown">
     <h1 class="flex-center">
       <strong>{{ meta.item.subtitle || meta.item.title }}</strong>
-      <div *ngIf="data.con.module" class="ml-sm">
-        <span
-          class="copy-import-module"
-          (click)="copyModule()"
-          nz-tooltip
-          [nzTooltipTitle]="('app.content.copy-import-module' | i18n) + data.con.module"
-        >
-          IMPORT MODULE
-        </span>
-      </div>
+      @if (data.con.module) {
+        <div class="ml-sm">
+          <span
+            class="copy-import-module"
+            (click)="copyModule()"
+            nz-tooltip
+            [nzTooltipTitle]="('app.content.copy-import-module' | i18n) + data.con.module"
+          >
+            IMPORT MODULE
+          </span>
+        </div>
+      }
       <edit-button [item]="item" />
     </h1>
   </div>
-  <div *ngIf="data.con.content" class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
-  <ng-container *ngIf="data.demo">
+  @if (data.con.content) {
+    <div class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
+  }
+  @if (data.demo) {
     <h2 id="{{ demoStr }}" style="margin: 32px 0 24px 0" [innerHTML]="demoContent" routeTransfer></h2>
     <ng-content />
-  </ng-container>
-  <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
-</ng-container>
+  }
+  @if (data.con.api) {
+    <div class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
+  }
+}
