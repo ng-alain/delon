@@ -6,7 +6,7 @@ import { ALAIN_I18N_TOKEN } from './i18n';
 export class I18nPipe implements PipeTransform {
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
 
-  transform(key: string, params?: unknown): string {
+  transform(key: string, params?: unknown | unknown[]): string {
     return this.i18n.fanyi(key, params);
   }
 }
