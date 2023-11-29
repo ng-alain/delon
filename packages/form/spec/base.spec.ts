@@ -9,6 +9,7 @@ import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFWidgetProvideConfig, provideSFConfig } from '../src';
 import { SF_SEQ } from '../src/const';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
@@ -47,9 +48,7 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
-      options.imports || []
-    ),
+    imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports || []),
     declarations: [TestFormComponent]
   });
   if (options.template) {
@@ -75,11 +74,18 @@ export function builder(options?: {
   };
 }
 
-export function configureSFTestSuite(): void {
+export function configureSFTestSuite(options?: { imports?: NzSafeAny[]; widgets?: SFWidgetProvideConfig[] }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
-      declarations: [TestFormComponent]
+      imports: [
+        NoopAnimationsModule,
+        AlainThemeModule,
+        DelonFormModule,
+        HttpClientTestingModule,
+        ...(options?.imports ?? [])
+      ],
+      declarations: [TestFormComponent],
+      providers: [provideSFConfig({ widgets: options?.widgets })]
     });
   });
 }

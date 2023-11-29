@@ -50,12 +50,16 @@ describe('abc: count-down', () => {
 
 @Component({
   template: `
-    <div *ngIf="config">
-      <count-down [config]="config" (event)="handleEvent()" style="font-size: 20px" />
-    </div>
-    <div *ngIf="target">
-      <count-down [target]="target" (event)="handleEvent()" style="font-size: 20px" />
-    </div>
+    @if (config) {
+      <div>
+        <count-down [config]="config" (event)="handleEvent()" style="font-size: 20px" />
+      </div>
+    }
+    @if (target) {
+      <div>
+        <count-down [target]="target" (event)="handleEvent()" style="font-size: 20px" />
+      </div>
+    }
   `
 })
 class TestComponent {

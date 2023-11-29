@@ -6,7 +6,7 @@ type: Documents
 
 ## 写在前面
 
-`@delon/form` 尽可能满足不同需求，除现有内置的十几种基础组件小部件外，可以通过以下两种方式进一步扩展需求：
+`@delon/form` 尽可能满足不同需求，除现有内置的十几种基础小部件(部分需要手动注册)外，可以通过以下两种方式进一步扩展需求：
 
 ## 自定义小部件
 
@@ -18,24 +18,17 @@ type: Documents
 
 ### 编写小部件
 
-**常见小部件库**
-
-默认情况下 @delon/form 实现了一些常见需求，但需要额外类库支持的，称它为第三方组件小部件，这一部分小部件存在于[widgets-third](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third)目录里；你可以直接复制使用。
-
-这些组件包括：
-
-| 名称 | 描述 | 文档 | 源代码 |
-| --- | ---- | ---- | ---- |
-| `markdown` | Markdown 编辑器 | [文档](/form/markdown) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown) |
-| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
-
 **自己创建小部件**
 
-小部件就是一个组件，你只需要继承 `ControlWidget` 就相当于构建一个小部件，其结构如下：
+小部件就是一个组件，你只需要继承 `ControlWidget` 就相当于构建一个小部件，例如：
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '@delon/form';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ControlWidget, DelonFormModule, SFWidgetProvideConfig } from '@delon/form';
+
+export function withTestWidget(): SFWidgetProvideConfig {
+  return { KEY: 'test', type: TestWidget };
+}
 
 @Component({
   selector: 'sf-tinymce',
@@ -49,11 +42,15 @@ import { ControlWidget } from '@delon/form';
       [loading]="loading">
     </tinymce>
     <!-- 结束自定义控件区域 -->
-  </sf-item-wrap>`
+  </sf-item-wrap>`,
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DelonFormModule]
 })
-export class TinymceWidget extends ControlWidget implements OnInit {
+class TestWidget extends ControlWidget implements OnInit {
   /* 用于注册小部件 KEY 值 */
-  static readonly KEY = 'tinymce';
+  static readonly KEY = 'test';
 
   // 组件所需要的参数，建议使用 `ngOnInit` 获取
   config: any;
@@ -86,34 +83,32 @@ export class TinymceWidget extends ControlWidget implements OnInit {
 
 ### 注册小部件
 
-在根模块中定义（`declarations`）注册小部件组件，同时在模块中导入 `WidgetRegistry` 并注册自定义小部件。
+建议在小部件内定义一个名为 `withXWidth` 并返回 `SFWidgetProvideConfig`，例如：
 
 ```ts
-@NgModule({
-  declarations: [ TinymceWidget ],
-  imports: [
-    DelonFormModule.forRoot()
-  ]
-})
-export class AppModule {
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(TinymceWidget.KEY, TinymceWidget);
-  }
+export function withTestWidget(): SFWidgetProvideConfig {
+  return { KEY: 'test', type: TestWidget };
 }
 ```
 
-当然为了更友好的维护，建议在Shared目录下定义一个专属 Json schema 模块，有兴趣可参考 [ng-alain实现](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts)。
+最后，通过 `provideSFConfig` 来注册：
+
+```ts
+provideSFConfig({ widgets: [ withTestWidget() ] })
+```
+
+当然为了更友好的维护，建议在Shared目录下定义项目专属的集合，有兴趣可参考 [ng-alain实现](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/)或参考[@delon/form/widgets/autocomplete](https://github.com/ng-alain/delon/tree/master/packages/form/widgets/autocomplete)。
 
 ### 使用自定义小部件
 
 同其他小部件一样，只需要指定 `widget` 值，例如：
 
 ```json
-"intro": {
+"test": {
   "type": "string",
   "ui": {
-    "widget": "tinymce",
-    "loadingTip": "loading..."
+    "widget": "test",
+    "data": "widget parameters"
   }
 }
 ```

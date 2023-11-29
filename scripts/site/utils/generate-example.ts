@@ -10,12 +10,7 @@ export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, o
   const tpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples)).toString('utf8');
 
   // imports
-  options.imports = options.list
-    .map(
-      i => `import { ${i.componentName} } from './${i.name}';
-    import { ${i.componentIndexName} } from './${i.name}_index';`
-    )
-    .join(`\n`);
+  options.imports = options.list.map(i => `import { ${i.componentIndexName} } from './${i.name}_index';`).join(`\n`);
 
   options.components = [...options.list.map(i => i.componentName), ...options.list.map(i => i.componentIndexName)].join(
     ','

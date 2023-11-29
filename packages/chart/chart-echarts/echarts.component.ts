@@ -34,7 +34,9 @@ import {
   selector: 'chart-echarts, [chart-echarts]',
   exportAs: 'chartECharts',
   template: `
-    <nz-skeleton *ngIf="!loaded" />
+    @if (!loaded) {
+      <nz-skeleton />
+    }
     <div #container [style.width]="_width" [style.height]="_height"></div>
   `,
   host: {

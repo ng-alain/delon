@@ -21,7 +21,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <sf #sf *ngIf="schema" [schema]="schema" (formSubmit)="submit($event)"></sf>
+    @if (schema) {
+      <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    }
     <ng-template #dropdownRender>
       <nz-divider></nz-divider>
       <div class="container">

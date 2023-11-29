@@ -5,7 +5,31 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-number',
-  templateUrl: './number.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <nz-input-number
+      [nzId]="id"
+      [ngModel]="value"
+      (ngModelChange)="_setValue($event)"
+      [nzDisabled]="disabled"
+      [nzSize]="ui.size!"
+      [nzMin]="min"
+      [nzMax]="max"
+      [nzStep]="step"
+      [nzFormatter]="formatter"
+      [nzParser]="parser"
+      [nzPrecision]="ui.precision"
+      [nzPlaceHolder]="ui.placeholder || ''"
+      [style.width]="width"
+      [ngClass]="{ 'ant-input-number__hide-step': ui.hideStep }"
+    />
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

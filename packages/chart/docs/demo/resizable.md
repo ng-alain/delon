@@ -14,10 +14,11 @@ type: example
 Use [nz-resizable](https://ng.ant.design/experimental/resizable/en) to build a resizable container.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
-import { G2BarClickItem, G2BarComponent, G2BarData } from '@delon/chart/bar';
+import { Component, ViewChild, inject } from '@angular/core';
+
+import { G2BarClickItem, G2BarComponent, G2BarData, G2BarModule } from '@delon/chart/bar';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
   selector: 'app-demo',
@@ -30,21 +31,23 @@ import { NzResizeEvent } from 'ng-zorro-antd/resizable';
     (nzResize)="onResize($event)"
     style="background: #eee;border: 1px solid #ddd; padding: 16px;"
   >
-    <nz-resize-handles></nz-resize-handles>
-    <g2-bar #bar [height]="height" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)"></g2-bar>
+    <nz-resize-handles />
+    <g2-bar #bar [height]="height" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)" />
   </div>`,
+  standalone: true,
+  imports: [NzResizableModule, G2BarModule]
 })
 export class DemoComponent {
+  private msg = inject(NzMessageService);
   @ViewChild('bar') private readonly barComp!: G2BarComponent;
   width = 400;
   height = 200;
   private id = -1;
-  constructor(private msg: NzMessageService) {}
 
   salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
     x: `${idx + 1}月`,
     y: Math.floor(Math.random() * 1000) + 200,
-    color: idx > 5 ? '#f50' : undefined,
+    color: idx > 5 ? '#f50' : undefined
   }));
 
   handleClick(data: G2BarClickItem): void {

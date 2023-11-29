@@ -25,6 +25,8 @@ export const ENUS = {
   'app.home.theme.ms.desc': 'For microservice development style',
   'app.home.theme.yun': 'Yun',
   'app.home.theme.yun.desc': 'Let users focus more on business',
+  'app.home.theme.data': 'Data',
+  'app.home.theme.data.desc': 'Mainly dashboard and large screen data view',
   'app.header.menu.home': 'Home',
   'app.header.menu.docs': 'Docs',
   'app.header.menu.components': 'Components',

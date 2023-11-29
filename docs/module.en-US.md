@@ -36,7 +36,6 @@ NG-ZORRO, @delon/abc, @delon/chart, etc. have changed from all import to on-dema
 
 + Angular Module: `BrowserModule`, `BrowserAnimationsModule`, `HttpClientModule`
 + `AlainThemeModule` Theme system
-+ `DelonMockModule` Mock data
 + `AlainAuthModule` User authentication module
 + `AlainACLModule` Privilege module
 + Internationalization module

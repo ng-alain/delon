@@ -28,35 +28,28 @@ constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
 
 ## Storage type
 
-The default is to use `LocalStorageStore` persistent storage, you can change other storage methods in `global-config.module.ts` or root module.
+The default is to use `withLocalStorage` persistent storage. You can change other storage methods in `app.config.ts`.
 
 ```ts
-export class GlobalConfigModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: GlobalConfigModule,
-      providers: [
-        { provide: DA_STORE_TOKEN, useClass: MemoryStore }
-      ]
-    };
-  }
-}
+providers: [
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
 
 Contains three storage types:
 
-### LocalStorageStore
+### withLocalStorage
 
 `localStorage` storage, **not lost after closing the browser**.
 
-### SessionStorageStore
+### withSessionStorage
 
 `sessionStorage` storage, **lost after closing the browser**.
 
-### MemoryStore
+### withMemoryStorage
 
 Memory storage, **lost after closing the browser tab**.
 
-### CookieStorageStore
+### withCookie
 
 `cookie` storage.

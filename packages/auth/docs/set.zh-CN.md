@@ -26,35 +26,28 @@ constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
 
 ## 存储类型
 
-默认是采用 `LocalStorageStore` 持久化存储，你可以在 `global-config.module.ts` 或根模块里变更其他存储方式。
+默认是采用 `withLocalStorage` 持久化存储，你可以在 `app.config.ts` 变更其他存储方式。
 
 ```ts
-export class GlobalConfigModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: GlobalConfigModule,
-      providers: [
-        { provide: DA_STORE_TOKEN, useClass: MemoryStore }
-      ]
-    };
-  }
-}
+providers: [
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
 
 包含三种存储类型：
 
-### LocalStorageStore
+### withLocalStorage
 
 `localStorage` 存储，关掉浏览器后**不丢失**。
 
-### SessionStorageStore
+### withSessionStorage
 
 `sessionStorage` 存储，关掉浏览器后**丢失**。
 
-### MemoryStore
+### withMemoryStorage
 
 内存存储，关掉浏览器标签后**丢失**。
 
-### CookieStorageStore
+### withCookie
 
 Cookie 存储。

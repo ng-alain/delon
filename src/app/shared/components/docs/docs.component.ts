@@ -6,18 +6,26 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { deepCopy } from '@delon/util/other';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { I18NService, MetaService } from '@core';
+
+import { EditButtonComponent } from '../edit-button/edit-button.component';
 
 declare var hljs: any;
 
 @Component({
   selector: 'app-docs',
-  templateUrl: './docs.component.html'
+  templateUrl: './docs.component.html',
+  standalone: true,
+  imports: [I18nPipe, NzAffixModule, NzAnchorModule, NzAlertModule, NzToolTipModule, EditButtonComponent]
 })
 export class DocsComponent implements OnInit, OnDestroy {
   private i18NChange$: Subscription;

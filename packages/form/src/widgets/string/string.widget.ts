@@ -7,7 +7,52 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-string',
-  templateUrl: './string.widget.html',
+  template: `<sf-item-wrap
+    [id]="id"
+    [schema]="schema"
+    [ui]="ui"
+    [showError]="showError"
+    [error]="error"
+    [showTitle]="schema.title"
+  >
+    <ng-template #ipt>
+      <input
+        nz-input
+        [attr.id]="id"
+        [disabled]="disabled"
+        [attr.disabled]="disabled"
+        [nzSize]="ui.size!"
+        [nzBorderless]="ui.borderless"
+        [ngModel]="value"
+        (ngModelChange)="change($event)"
+        [attr.maxLength]="schema.maxLength || null"
+        [attr.type]="ui.type || 'text'"
+        [attr.placeholder]="ui.placeholder"
+        [attr.autocomplete]="ui.autocomplete"
+        [attr.autoFocus]="ui.autofocus"
+        (keyup.enter)="enter($event)"
+        (focus)="focus($event)"
+        (blur)="blur($event)"
+      />
+    </ng-template>
+
+    @if (type === 'addon') {
+      <nz-input-group
+        [nzAddOnBefore]="ui.addOnBefore"
+        [nzAddOnAfter]="ui.addOnAfter"
+        [nzAddOnBeforeIcon]="ui.addOnBeforeIcon"
+        [nzAddOnAfterIcon]="ui.addOnAfterIcon"
+        [nzPrefix]="ui.prefix"
+        [nzPrefixIcon]="ui.prefixIcon"
+        [nzSuffix]="ui.suffix"
+        [nzSuffixIcon]="ui.suffixIcon"
+      >
+        <ng-template [ngTemplateOutlet]="ipt" />
+      </nz-input-group>
+    } @else {
+      <ng-template [ngTemplateOutlet]="ipt" />
+    }
+  </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

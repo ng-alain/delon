@@ -1,25 +1,29 @@
 <div class="ant-form-item-label" [class.se__nolabel]="hideLabel || !label" [style.width.px]="_labelWidth">
-  <label
-    *ngIf="label"
-    [attr.for]="_id"
-    class="se__label"
-    [ngClass]="{ 'ant-form-item-required': required, 'se__no-colon': _noColon }"
-  >
-    <span class="se__label-text">
-      <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
-    </span>
-    <span *ngIf="optional || optionalHelp" class="se__label-optional" [class.se__label-optional-no-text]="!optional">
-      <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
-      <i
-        *ngIf="optionalHelp"
-        nz-tooltip
-        [nzTooltipTitle]="optionalHelp"
-        [nzTooltipColor]="optionalHelpColor"
-        nz-icon
-        nzType="question-circle"
-      ></i>
-    </span>
-  </label>
+  @if (label) {
+    <label
+      [attr.for]="_id"
+      class="se__label"
+      [ngClass]="{ 'ant-form-item-required': required, 'se__no-colon': _noColon }"
+    >
+      <span class="se__label-text">
+        <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
+      </span>
+      @if (optional || optionalHelp) {
+        <span class="se__label-optional" [class.se__label-optional-no-text]="!optional">
+          <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
+          @if (optionalHelp) {
+            <i
+              nz-tooltip
+              [nzTooltipTitle]="optionalHelp"
+              [nzTooltipColor]="optionalHelpColor"
+              nz-icon
+              nzType="question-circle"
+            ></i>
+          }
+        </span>
+      }
+    </label>
+  }
 </div>
 <div class="ant-form-item-control se__control">
   <div class="ant-form-item-control-input {{ controlClass }}">
@@ -27,12 +31,16 @@
       <ng-content />
     </div>
   </div>
-  <div @helpMotion class="ant-form-item-explain ant-form-item-explain-connected" *ngIf="showErr">
-    <div role="alert" class="ant-form-item-explain-error">
-      <ng-container *nzStringTemplateOutlet="_error">{{ _error }}</ng-container>
+  @if (showErr) {
+    <div @helpMotion class="ant-form-item-explain ant-form-item-explain-connected">
+      <div role="alert" class="ant-form-item-explain-error">
+        <ng-container *nzStringTemplateOutlet="_error">{{ _error }}</ng-container>
+      </div>
     </div>
-  </div>
-  <div *ngIf="extra && !compact" class="ant-form-item-extra">
-    <ng-container *nzStringTemplateOutlet="extra">{{ extra }}</ng-container>
-  </div>
+  }
+  @if (extra && !compact) {
+    <div class="ant-form-item-extra">
+      <ng-container *nzStringTemplateOutlet="extra">{{ extra }}</ng-container>
+    </div>
+  }
 </div>

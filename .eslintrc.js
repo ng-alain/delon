@@ -20,7 +20,6 @@ module.exports = {
       ],
       rules: {
         'prettier/prettier': ['error', prettierConfig],
-        'jsdoc/newline-after-description': 1,
         '@angular-eslint/component-selector': [
           'off',
           {
@@ -171,8 +170,7 @@ module.exports = {
         '@angular-eslint/no-input-rename': 'off',
         'prefer-const': 'off',
         'max-len': 'off',
-        'deprecation/deprecation': 'warn',
-        'jsdoc/newline-after-description': 'off'
+        'deprecation/deprecation': 'warn'
       }
     },
     {

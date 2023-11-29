@@ -2,6 +2,7 @@
 title: select
 subtitle: Select
 type: Widgets
+order: 6
 ---
 
 Select.

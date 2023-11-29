@@ -9,3 +9,4 @@ export { STComponent } from './st.component';
 export { STRowDirective } from './st-row.directive';
 export * from './st.config';
 export { STModule } from './st.module';
+export * from './provide';

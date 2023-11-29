@@ -6,14 +6,20 @@
       </div>
       <div class="g2-card__meta-wrap">
         <div class="g2-card__meta">
-          <span class="g2-card__meta-title" *ngIf="title">
-            <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
-          </span>
-          <span class="g2-card__meta-action" *ngIf="action">
-            <ng-container *nzStringTemplateOutlet="action">{{ action }}</ng-container>
-          </span>
+          @if (title) {
+            <span class="g2-card__meta-title">
+              <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+            </span>
+          }
+          @if (action) {
+            <span class="g2-card__meta-action">
+              <ng-container *nzStringTemplateOutlet="action">{{ action }}</ng-container>
+            </span>
+          }
         </div>
-        <p *ngIf="total" class="g2-card__total" [innerHTML]="total"></p>
+        @if (total) {
+          <p class="g2-card__total" [innerHTML]="total"></p>
+        }
       </div>
     </div>
     <div class="g2-card__desc" [ngStyle]="{ height: _height }">
@@ -21,8 +27,10 @@
         <ng-content />
       </div>
     </div>
-    <div class="g2-card__footer" *ngIf="footer">
-      <ng-container *nzStringTemplateOutlet="footer">{{ footer }}</ng-container>
-    </div>
+    @if (footer) {
+      <div class="g2-card__footer">
+        <ng-container *nzStringTemplateOutlet="footer">{{ footer }}</ng-container>
+      </div>
+    }
   </nz-spin>
 </nz-card>

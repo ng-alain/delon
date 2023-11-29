@@ -44,26 +44,14 @@ type: Documents
 npm i -S @delon/auth
 ```
 
-导入 `DelonAuthModule` 模块：
+在 `app.config.ts` 中配置 `provideAuth` 环境：
 
 ```typescript
-import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
-
-@NgModule({
-  imports: [
-    DelonAuthModule
-  ],
-  providers: [
-    // 指定认证风格对应的HTTP拦截器
-    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
-  ]
-})
-export class AppModule { }
+providers: [
+  // 表示使用JWT风格并用 `localStorage` 存储 Token
+  provideAuth(withJWT(), withLocalStorage()),
+]
 ```
-
-**为什么需要手动注册HTTP_INTERCEPTORS**
-
-默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 @delon/auth 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
 ## AlainAuthConfig
 
@@ -77,7 +65,6 @@ export class AppModule { }
 | `[token_send_place]` | `header,body,url` | `header` | 发送token参数位置 | ✅ |
 | `[login_url]` | `string` | `/login` | 登录页路由地址 | ✅ |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略 URL 地址清单，除此之外还可以通过 [ALLOW_ANONYMOUS](/auth/qa/zh) 进行控制是否忽略。 | ✅ |
-| `[executeOtherInterceptors]` | `boolean` | `true` | 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法 | ✅ |
 | `[refreshTime]` | `number` | `3000` | 刷新时长（单位：ms） | ✅ |
 | `[refreshOffset]` | `number` | `6000` | 偏移值（单位：ms），建议根据 `refreshTime` 倍数来设置 | ✅ |
 

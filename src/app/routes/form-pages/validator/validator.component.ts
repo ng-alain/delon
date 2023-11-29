@@ -1,13 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 
-import { SFLayout, SFSchema } from '@delon/form';
-import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
+import { DelonFormModule, SFLayout, SFSchema } from '@delon/form';
+import { ALAIN_I18N_TOKEN, I18nPipe, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util/browser';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { AppService, CodeService, I18NService } from '@core';
 
@@ -19,7 +27,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'demo',
   template: \`
-  <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
+ <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
       (formSubmit)="submit($event)"
       (formChange)="change($event)"
       (formError)="error($event)"></sf>
@@ -49,7 +57,21 @@ export class DemoComponent {
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    FormsModule,
+    NzGridModule,
+    NzSelectModule,
+    NzRadioModule,
+    NzButtonModule,
+    NzToolTipModule,
+    NzIconModule,
+    NzTabsModule,
+    NuMonacoEditorComponent,
+    DelonFormModule,
+    I18nPipe
+  ]
 })
 export class FormValidatorComponent implements OnInit {
   @ViewChild('schemaEditor') private schemaEditor!: NuMonacoEditorComponent;
@@ -97,7 +119,7 @@ export class FormValidatorComponent implements OnInit {
 
   refreshLayout(type: 'schemaEditor' | 'formCodeEditor' | 'uiEditor'): void {
     setTimeout(() => {
-      this[type].editor.layout();
+      this[type].editor?.layout();
     }, 100);
   }
 

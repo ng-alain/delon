@@ -8,7 +8,8 @@ export interface MatchRouterOptions {
 }
 
 @Directive({
-  selector: '[matchRouter]'
+  selector: '[matchRouter]',
+  standalone: true
 })
 export class MatchRouterDirective implements AfterViewInit, OnDestroy {
   private _options!: MatchRouterOptions;

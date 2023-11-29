@@ -46,13 +46,16 @@
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/img/logo-color.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1976d2" />
+  <style>
+    .preloader {position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:Helvetica;transition: opacity 0.65s;}
+    .preloader-hidden-add{display:block;opacity:1}.preloader-hidden-add-active{opacity:0}.preloader-hidden{display:none}
+  </style>
 </head>
 
 <body ontouchstart>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  <app-root>
-    <div style="position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:Helvetica;">loading...</div>
-  </app-root>
+  <app-root></app-root>
+  <div class="preloader">Loading...</div>
   <div id="_ie" style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:9999;display:none;padding-top:32px;font-size:22px;text-align:center;background:#fff;">
     Your browser is not supported for NG-ALAIN document site
   </div>
@@ -66,7 +69,6 @@
     if (!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) {
       document.querySelector('#_ie').style.display = 'block';
     }
-
   </script>
   <script>
     if (location.host !== 'ng-alain-doc.surge.sh') {

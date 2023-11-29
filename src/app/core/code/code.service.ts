@@ -15,6 +15,7 @@ import environmentTS from './files/environment';
 import globalConfigTS from './files/global-config.module';
 import mainTS from './files/main';
 import mainCliTS from './files/main-cli';
+import mockUser from './files/mock-user';
 import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import packageJSON from './files/package.json';
 import polyfillTS from './files/polyfill';
@@ -151,7 +152,7 @@ export class CodeService {
 
   private get genMock(): { [key: string]: string } {
     return {
-      '_mock/user.ts': require('!!raw-loader!../../../../_mock/user.ts').default,
+      '_mock/user.ts': mockUser,
       '_mock/index.ts': `export * from './user';`
     };
   }

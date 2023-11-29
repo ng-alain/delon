@@ -8,7 +8,8 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
   exportAs: 'reuseTabContextMenu',
   host: {
     '(contextmenu)': '_onContextMenu($event)'
-  }
+  },
+  standalone: true
 })
 export class ReuseTabContextDirective {
   @Input('reuse-tab-context-menu') item!: ReuseItem;

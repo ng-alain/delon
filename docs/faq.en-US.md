@@ -10,10 +10,6 @@ Please check the FAQ below before asking questions.
 
 ## Basic
 
-### Can't Bind to since it isn't a known property of
-
-When you have multiple lazy modules, you want each submodule to use the component library (for example: `NgZorroAntdModule`, `NgxTinymceModule`) should be exported in `ShareModule`, please refer to [module registration guidelines](/docs/Module).
-
 ### Expression Changed After It Has Been Checked Error
 
 Common mistakes under Angular, [this article](https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) will help you understand why.

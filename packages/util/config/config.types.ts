@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 
 import {
   AlainCellConfig,
@@ -27,6 +27,7 @@ import { AlainChartConfig } from './chart/chart.type';
 import { AlainMockConfig } from './mock/mock.type';
 import { AlainSFConfig } from './sf/sf.type';
 import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig, AlainThemeI18nConfig } from './theme/index';
+import { AlainThemePipeConfig } from './theme/pipe.type';
 import { AlainUtilArrayConfig } from './util/array.type';
 import { AlainUtilCurrencyConfig } from './util/currency.type';
 
@@ -60,6 +61,7 @@ export interface AlainConfig {
   themeHttp?: AlainThemeHttpClientConfig;
   themeResponsive?: AlainThemeResponsiveConfig;
   themeI18n?: AlainThemeI18nConfig;
+  themePipe?: AlainThemePipeConfig;
 }
 
 export type AlainConfigKey = keyof AlainConfig;
@@ -71,4 +73,8 @@ export const ALAIN_CONFIG = new InjectionToken<AlainConfig>('alain-config', {
 
 export function ALAIN_CONFIG_FACTORY(): AlainConfig {
   return {};
+}
+
+export function provideAlainConfig(config: AlainConfig): EnvironmentProviders {
+  return makeEnvironmentProviders([{ provide: ALAIN_CONFIG, useValue: config }]);
 }

@@ -1,6 +1,10 @@
-<nz-affix #affix *ngIf="isBrowser && fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
+@if (isBrowser && fixed) {
+  <nz-affix #affix [nzOffsetTop]="fixedOffsetTop">
+    <ng-template [ngTemplateOutlet]="phTpl" />
+  </nz-affix>
+} @else {
   <ng-template [ngTemplateOutlet]="phTpl" />
-</nz-affix>
+}
 <ng-template #phTpl>
   <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
     <div [ngClass]="{ 'page-header__wide': wide }">
@@ -12,42 +16,61 @@
         [nzAvatar]="{ size: 'large', shape: 'circle' }"
         class="d-block"
       >
-        <ng-container *ngIf="!breadcrumb; else breadcrumb!">
-          <nz-breadcrumb *ngIf="paths && paths.length > 0">
-            <nz-breadcrumb-item *ngFor="let i of paths">
-              <ng-container *ngIf="i.link">
-                <a [routerLink]="i.link">{{ i.title }}</a>
-              </ng-container>
-              <ng-container *ngIf="!i.link">{{ i.title }}</ng-container>
-            </nz-breadcrumb-item>
-          </nz-breadcrumb>
-        </ng-container>
+        @if (breadcrumb) {
+          <ng-template [ngTemplateOutlet]="breadcrumb" />
+        } @else {
+          @if (paths && paths.length > 0) {
+            <nz-breadcrumb>
+              @for (i of paths; track $index) {
+                <nz-breadcrumb-item>
+                  @if (i.link) {
+                    <a [routerLink]="i.link">{{ i.title }}</a>
+                  } @else {
+                    {{ i.title }}
+                  }
+                </nz-breadcrumb-item>
+              }
+            </nz-breadcrumb>
+          }
+        }
         <div class="page-header__detail">
-          <div *ngIf="logo" class="page-header__logo">
-            <ng-template [ngTemplateOutlet]="logo" />
-          </div>
+          @if (logo) {
+            <div class="page-header__logo">
+              <ng-template [ngTemplateOutlet]="logo" />
+            </div>
+          }
           <div class="page-header__main">
             <div class="page-header__row">
-              <h1 *ngIf="_titleVal || _titleTpl" class="page-header__title">
-                <ng-container *ngIf="_titleVal; else _titleTpl">
-                  {{ _titleVal }}
-                  <small *ngIf="titleSub">
-                    <ng-container *nzStringTemplateOutlet="titleSub">{{ titleSub }}</ng-container>
-                  </small>
-                </ng-container>
-              </h1>
-              <div *ngIf="action" class="page-header__action">
-                <ng-template [ngTemplateOutlet]="action" />
-              </div>
+              @if (_titleVal || _titleTpl) {
+                <h1 class="page-header__title">
+                  @if (_titleTpl) {
+                    <ng-template [ngTemplateOutlet]="_titleTpl" />
+                  } @else {
+                    {{ _titleVal }}
+                    @if (titleSub) {
+                      <small>
+                        <ng-container *nzStringTemplateOutlet="titleSub">{{ titleSub }}</ng-container>
+                      </small>
+                    }
+                  }
+                </h1>
+              }
+              @if (action) {
+                <div class="page-header__action">
+                  <ng-template [ngTemplateOutlet]="action" />
+                </div>
+              }
             </div>
             <div class="page-header__row">
               <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
                 <ng-content />
                 <ng-template [ngTemplateOutlet]="content!" />
               </div>
-              <div *ngIf="extra" class="page-header__extra">
-                <ng-template [ngTemplateOutlet]="extra" />
-              </div>
+              @if (extra) {
+                <div class="page-header__extra">
+                  <ng-template [ngTemplateOutlet]="extra" />
+                </div>
+              }
             </div>
           </div>
         </div>

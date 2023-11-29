@@ -5,7 +5,7 @@ import { LetDirective } from './let.directive';
 const DIRECTIVES = [LetDirective];
 
 @NgModule({
-  declarations: DIRECTIVES,
+  imports: DIRECTIVES,
   exports: DIRECTIVES
 })
 export class LetModule {}

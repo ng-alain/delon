@@ -84,8 +84,8 @@ copyFiles() {
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
-    "${1}src/style-icons-auto.ts|${2}application/files/src/"
-    "${1}src/style-icons.ts|${2}application/files/src/"
+    # "${1}src/style-icons-auto.ts|${2}application/files/src/"
+    # "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
     "${1}src/assets/color.less|${2}application/files/src/assets/"
     "${1}src/assets/style.compact.css|${2}application/files/src/assets/"
@@ -98,20 +98,20 @@ copyFiles() {
     "${1}src/app/core/i18n|${2}application/files/src/app/core/"
     "${1}src/app/core/net|${2}application/files/src/app/core/"
     "${1}src/app/core/start-page.guard.ts|${2}application/files/src/app/core/"
-    "${1}src/app/core/module-import-guard.ts|${2}application/files/src/app/core/"
     "${1}src/app/core/README.md|${2}application/files/src/app/core/"
     # shared
     "${1}src/app/shared/utils/*|${2}application/files/src/app/shared/utils/"
     "${1}src/app/shared/json-schema/*|${2}application/files/src/app/shared/json-schema/"
+    "${1}src/app/shared/cell-widget/*|${2}application/files/src/app/shared/cell-widget/"
     "${1}src/app/shared/st-widget/*|${2}application/files/src/app/shared/st-widget/"
-    # "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
+    "${1}src/app/shared/shared-imports.ts|${2}application/files/src/app/shared/"
+    "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
-    "${1}src/app/global-config.module.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
+    "${1}src/app/layout/index.ts|${2}application/files/src/app/layout/"
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
-    "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
     "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
     "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"
@@ -143,10 +143,6 @@ copyFiles() {
       cp -fr $from $to
     fi
   done
-
-  # remove passport-routing & passport.module.ts
-  rm ${2}application/files/src/app/routes/passport/passport-routing.module.ts
-  rm ${2}application/files/src/app/routes/passport/passport.module.ts
 }
 
 cloneScaffold() {
@@ -256,7 +252,7 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng17/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}

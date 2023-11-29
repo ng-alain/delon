@@ -16,7 +16,9 @@ import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <button *ngFor="let i of axisList" nz-button (click)="refresh(i)" nzType="primary">{{ i }} axis</button>
+    @for (i of axisList; track $index) {
+      <button nz-button (click)="refresh(i)" nzType="primary">{{ i }} axis</button>
+    }
     <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300" />
   `
 })

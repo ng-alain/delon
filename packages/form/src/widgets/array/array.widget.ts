@@ -8,7 +8,68 @@ import { ArrayLayoutWidget } from '../../widget';
 
 @Component({
   selector: 'sf-array',
-  templateUrl: './array.widget.html',
+  template: `<nz-form-item [class.ant-form-item-with-help]="showError">
+    @if (schema.title) {
+      <div nz-col [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
+        <label [class.ant-form-item-required]="ui.required">
+          {{ schema.title }}
+          <span class="sf__optional">
+            {{ ui.optional }}
+            @if (oh) {
+              <i
+                nz-tooltip
+                [nzTooltipTitle]="oh.text"
+                [nzTooltipPlacement]="oh.placement"
+                [nzTooltipTrigger]="oh.trigger"
+                [nzTooltipOverlayClassName]="oh.overlayClassName"
+                [nzTooltipOverlayStyle]="oh.overlayStyle"
+                [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
+                [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
+                nz-icon
+                [nzType]="oh.icon!"
+              ></i>
+            }
+          </span>
+        </label>
+        <div class="sf__array-add">
+          <button
+            type="button"
+            nz-button
+            [nzType]="addType"
+            [disabled]="addDisabled"
+            (click)="addItem()"
+            [innerHTML]="addTitle"
+          ></button>
+        </div>
+      </div>
+    }
+    <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
+      <div class="ant-form-item-control" [class.has-error]="showError">
+        <div nz-row class="sf__array-container">
+          @for (i of $any(formProperty).properties; track $index) {
+            @if (i.visible && !i.ui.hidden) {
+              <div nz-col [nzSpan]="arraySpan" [attr.data-index]="$index" class="sf__array-item">
+                <nz-card>
+                  <sf-item [formProperty]="i" />
+                  @if (showRemove) {
+                    <span class="sf__array-remove" (click)="removeItem($index)" [attr.title]="removeTitle">
+                      <i nz-icon nzType="delete"></i>
+                    </span>
+                  }
+                </nz-card>
+              </div>
+            }
+          }
+        </div>
+        @if (!ui.onlyVisual && showError) {
+          <div class="ant-form-explain">{{ error }}</div>
+        }
+        @if (schema.description) {
+          <div [innerHTML]="ui._description" class="ant-form-extra"></div>
+        }
+      </div>
+    </div>
+  </nz-form-item>`,
   host: { '[class.sf__array]': 'true' },
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None

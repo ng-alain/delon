@@ -80,7 +80,8 @@ export class SizeObserver implements OnDestroy {
 
 @Directive({
   selector: '[observeSize]',
-  exportAs: 'observeSize'
+  exportAs: 'observeSize',
+  standalone: true
 })
 export class ObserverSize implements AfterViewInit, OnDestroy {
   private _sub$: Subscription | null = null;
@@ -117,6 +118,6 @@ export class ObserverSize implements AfterViewInit, OnDestroy {
 
 @NgModule({
   exports: [ObserverSize],
-  declarations: [ObserverSize]
+  imports: [ObserverSize]
 })
 export class ObserversModule {}

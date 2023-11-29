@@ -77,7 +77,7 @@ export class AuthStorageStore implements IStore {
 
 ```diff
  const alainProvides = [
-   { provide: ALAIN_CONFIG, useValue: alainConfig },
+   provideAlainConfig(alainConfig)
 +  { provide: DA_STORE_TOKEN, useClass: AuthStorageStore },
  ];
 ```

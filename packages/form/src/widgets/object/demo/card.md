@@ -21,7 +21,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <sf *ngIf="schema" [schema]="schema" (formSubmit)="submit($event)"></sf>
+    @if (schema) {
+      <sf [schema]="schema" (formSubmit)="submit($event)" />
+    }
     <ng-template #extra>
       <a (click)="msg.success('Success')">More</a>
     </ng-template>

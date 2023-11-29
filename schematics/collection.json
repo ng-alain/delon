@@ -7,8 +7,8 @@
       "aliases": ["alain-shell"]
     },
     "ng-update": {
-      "factory": "./ng-update/index#updateToV13",
-      "description": "Updates the NG-ALAIN to v13"
+      "factory": "./ng-update/index#updateToV17",
+      "description": "Just TEST"
     },
     "application": {
       "factory": "./application",

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { formatMask, FormatMaskOption } from '@delon/util/format';
 
-@Pipe({ name: 'mask' })
+@Pipe({ name: 'mask', standalone: true })
 export class FormatMaskPipe implements PipeTransform {
   /**
    * Format mask

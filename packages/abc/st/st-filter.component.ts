@@ -31,85 +31,96 @@ import { _STColumn } from './st.types';
     </span>
     <nz-dropdown-menu #filterMenu="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
-        <ng-container [ngSwitch]="f.type">
-          <div *ngSwitchCase="'keyword'" class="st__filter-keyword">
-            <input
-              type="text"
-              nz-input
-              [attr.placeholder]="f.placeholder"
-              [(ngModel)]="f.menus![0]!.value"
-              (ngModelChange)="n.emit($event)"
-              (keyup.enter)="confirm()"
-            />
+        @switch (f.type) {
+          @case ('keyword') {
+            <div class="st__filter-keyword">
+              <input
+                type="text"
+                nz-input
+                [attr.placeholder]="f.placeholder"
+                [(ngModel)]="f.menus![0]!.value"
+                (ngModelChange)="n.emit($event)"
+                (keyup.enter)="confirm()"
+              />
+            </div>
+          }
+          @case ('number') {
+            <div class="p-sm st__filter-number">
+              <nz-input-number
+                [(ngModel)]="f.menus![0]!.value"
+                (ngModelChange)="n.emit($event)"
+                [nzMin]="f.number!.min!"
+                [nzMax]="f.number!.max!"
+                [nzStep]="f.number!.step!"
+                [nzPrecision]="f.number!.precision"
+                [nzPlaceHolder]="f.placeholder!"
+                class="width-100"
+              />
+            </div>
+          }
+          @case ('date') {
+            <div class="p-sm st__filter-date">
+              @if (f.date!.range) {
+                <nz-range-picker
+                  nzInline
+                  [nzMode]="f.date!.mode"
+                  [(ngModel)]="f.menus![0]!.value"
+                  (ngModelChange)="n.emit($event)"
+                  [nzShowNow]="f.date!.showNow"
+                  [nzShowToday]="f.date!.showToday"
+                  [nzDisabledDate]="f.date!.disabledDate"
+                  [nzDisabledTime]="f.date!.disabledTime"
+                />
+              } @else {
+                <nz-date-picker
+                  nzInline
+                  [nzMode]="f.date!.mode"
+                  [(ngModel)]="f.menus![0]!.value"
+                  (ngModelChange)="n.emit($event)"
+                  [nzShowNow]="f.date!.showNow"
+                  [nzShowToday]="f.date!.showToday"
+                  [nzDisabledDate]="f.date!.disabledDate"
+                  [nzDisabledTime]="f.date!.disabledTime"
+                />
+              }
+            </div>
+          }
+          @case ('custom') {
+            <div class="st__filter-custom">
+              <ng-template
+                [ngTemplateOutlet]="f.custom!"
+                [ngTemplateOutletContext]="{ $implicit: f, col: col, handle: this }"
+              />
+            </div>
+          }
+          @default {
+            <ul nz-menu>
+              @for (filter of f.menus; track $index) {
+                <li nz-menu-item>
+                  @if (f.multiple) {
+                    <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="checkboxChange()">
+                      {{ filter.text }}
+                    </label>
+                  } @else {
+                    <label nz-radio [ngModel]="filter.checked" (ngModelChange)="radioChange(filter)">
+                      {{ filter.text }}
+                    </label>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        }
+        @if (f.showOPArea) {
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="confirm()">
+              <span>{{ f.confirmText || locale.filterConfirm }}</span>
+            </a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="reset()">
+              <span>{{ f.clearText || locale.filterReset }}</span>
+            </a>
           </div>
-          <div *ngSwitchCase="'number'" class="p-sm st__filter-number">
-            <nz-input-number
-              [(ngModel)]="f.menus![0]!.value"
-              (ngModelChange)="n.emit($event)"
-              [nzMin]="f.number!.min!"
-              [nzMax]="f.number!.max!"
-              [nzStep]="f.number!.step!"
-              [nzPrecision]="f.number!.precision"
-              [nzPlaceHolder]="f.placeholder!"
-              class="width-100"
-            />
-          </div>
-          <div *ngSwitchCase="'date'" class="p-sm st__filter-date">
-            <nz-date-picker
-              *ngIf="!f.date!.range"
-              nzInline
-              [nzMode]="f.date!.mode"
-              [(ngModel)]="f.menus![0]!.value"
-              (ngModelChange)="n.emit($event)"
-              [nzShowNow]="f.date!.showNow"
-              [nzShowToday]="f.date!.showToday"
-              [nzDisabledDate]="f.date!.disabledDate"
-              [nzDisabledTime]="f.date!.disabledTime"
-            />
-            <nz-range-picker
-              *ngIf="f.date!.range"
-              nzInline
-              [nzMode]="f.date!.mode"
-              [(ngModel)]="f.menus![0]!.value"
-              (ngModelChange)="n.emit($event)"
-              [nzShowNow]="f.date!.showNow"
-              [nzShowToday]="f.date!.showToday"
-              [nzDisabledDate]="f.date!.disabledDate"
-              [nzDisabledTime]="f.date!.disabledTime"
-            />
-          </div>
-          <div *ngSwitchCase="'time'" class="p-sm st__filter-time"> </div>
-          <div *ngSwitchCase="'custom'" class="st__filter-custom">
-            <ng-template
-              [ngTemplateOutlet]="f.custom!"
-              [ngTemplateOutletContext]="{ $implicit: f, col: col, handle: this }"
-            />
-          </div>
-          <ul *ngSwitchDefault nz-menu>
-            <ng-container *ngIf="f.multiple">
-              <li nz-menu-item *ngFor="let filter of f.menus">
-                <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="checkboxChange()">
-                  {{ filter.text }}
-                </label>
-              </li>
-            </ng-container>
-            <ng-container *ngIf="!f.multiple">
-              <li nz-menu-item *ngFor="let filter of f.menus">
-                <label nz-radio [ngModel]="filter.checked" (ngModelChange)="radioChange(filter)">
-                  {{ filter.text }}
-                </label>
-              </li>
-            </ng-container>
-          </ul>
-        </ng-container>
-        <div *ngIf="f.showOPArea" class="ant-table-filter-dropdown-btns">
-          <a class="ant-table-filter-dropdown-link confirm" (click)="confirm()">
-            <span>{{ f.confirmText || locale.filterConfirm }}</span>
-          </a>
-          <a class="ant-table-filter-dropdown-link clear" (click)="reset()">
-            <span>{{ f.clearText || locale.filterReset }}</span>
-          </a>
-        </div>
+        }
       </div>
     </nz-dropdown-menu>
   `,

@@ -11,7 +11,7 @@ describe('Pipe: keys', () => {
 
   function genModule(template?: string): void {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent]
     });
     if (template) TestBed.overrideTemplate(TestComponent, template);
@@ -30,7 +30,9 @@ describe('Pipe: keys', () => {
   it('should be render a dist when key is number type', () => {
     genModule(`
     <ul id="result">
-      <li *ngFor="let item of dist | keys: true">{{ item.key | json }}</li>
+      @for (item of dist | keys: true; track $index) {
+        <li>{{ item.key | json }}</li>
+      }
     </ul>
     `);
     const ul = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLUListElement).querySelectorAll('li');
@@ -43,7 +45,9 @@ describe('Pipe: keys', () => {
 @Component({
   template: `
     <ul id="result">
-      <li *ngFor="let item of data | keys">{{ item.key }}</li>
+      @for (item of data | keys; track $index) {
+        <li>{{ item.key }}</li>
+      }
     </ul>
   `
 })

@@ -67,7 +67,9 @@ export interface G2TimelineClickItem {
     <ng-container *nzStringTemplateOutlet="title">
       <h4>{{ title }}</h4>
     </ng-container>
-    <nz-skeleton *ngIf="!loaded" />
+    @if (!loaded) {
+      <nz-skeleton />
+    }
     <div #container></div>
   `,
   preserveWhitespaces: false,

@@ -2,6 +2,7 @@
 title: object
 subtitle: Object
 type: Widgets
+order: 1
 ---
 
 Create an object widget, valid only for `schema.type="object"`.
