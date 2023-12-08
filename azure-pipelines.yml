@@ -21,6 +21,11 @@ stages:
     jobs:
       - job: build
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: |
               node --version
               yarn --version
@@ -64,6 +69,11 @@ stages:
         dependsOn: Build
         condition: failed()
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - checkout: self
             displayName: 'Checkout'
             clean: true
@@ -82,6 +92,11 @@ stages:
     jobs:
       - job: packages
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: |
@@ -110,6 +125,11 @@ stages:
               testResultsFiles: '**/TESTS*.xml'
       - job: cli
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: yarn run test:cli
@@ -119,6 +139,11 @@ stages:
     jobs:
       - job: packages
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: yarn run lint

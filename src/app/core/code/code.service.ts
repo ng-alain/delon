@@ -8,19 +8,16 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import angularJSON from './files/angular.json';
-import appModuleTS from './files/app.module';
+import appConfigTS from './files/app.config';
 import delonABCModuleTS from './files/delon-abc.module';
 import delonChartModuleTS from './files/delon-chart.module';
 import environmentTS from './files/environment';
-import globalConfigTS from './files/global-config.module';
 import mainTS from './files/main';
-import mainCliTS from './files/main-cli';
 import mockUser from './files/mock-user';
 import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import packageJSON from './files/package.json';
-import polyfillTS from './files/polyfill';
 import readme from './files/readme-cli';
-import sandboxConfigJSON from './files/sandbox.config.json';
+import sandboxConfigJSON from './files/sandbox';
 import startupServiceTS from './files/startup.service';
 import tsconfigJSON from './files/tsconfig.json';
 import pkg from '../../../../package.json';
@@ -96,6 +93,7 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     [
       'ng-zorro-antd',
+      'ng-antd-color-picker',
       'date-fns',
       '@delon/theme',
       '@delon/abc',
@@ -179,12 +177,27 @@ export class CodeService {
     };
   }
 
+  private attachStandalone(code: string): string {
+    // standalone: true,
+    if (code.includes(`standalone: true`)) return code;
+
+    return `import { DemoDelonABCModule } from './delon-abc.module';
+import { DemoDelonChartModule } from './delon-chart.module';
+import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';
+import { DelonFormModule } from '@delon/form';\n${code.replace(
+      `@Component({`,
+      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule, DemoDelonChartModule, DelonFormModule],`
+    )}`;
+  }
+
   openOnStackBlitz(title: string, appComponentCode: string): void {
+    appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli: false });
-    packageJson.name = title;
+    packageJson.name = 'NG-ALAIN';
+    packageJson.description = title;
     sdk.openProject(
       {
         title: 'NG-ALAIN',
@@ -200,11 +213,9 @@ export class CodeService {
           'package.json': `${JSON.stringify(packageJson, null, 2)}`,
           'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
-          'src/main.ts': mainTS,
-          'src/polyfills.ts': polyfillTS,
+          'src/main.ts': mainTS(res.componentName),
           'src/app/app.component.ts': appComponentCode,
-          'src/app/app.module.ts': appModuleTS(res.componentName),
-          'src/app/global-config.module.ts': globalConfigTS,
+          'src/app/app.config.ts': appConfigTS,
           'src/app/ng-zorro-antd.module.ts': nzZorroAntdModuleTS,
           'src/app/delon-abc.module.ts': delonABCModuleTS,
           'src/app/delon-chart.module.ts': delonChartModuleTS,
@@ -221,12 +232,14 @@ export class CodeService {
   }
 
   openOnCodeSandbox(title: string, appComponentCode: string, includeCli: boolean = false): void {
+    appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli });
-    packageJson.name = title;
+    packageJson.name = 'NG-ALAIN';
+    packageJson.description = title;
     const files: {
       [key: string]: {
         content: string;
@@ -254,19 +267,11 @@ export class CodeService {
         isBinary: false
       },
       'src/main.ts': {
-        content: includeCli ? mainCliTS : mainTS,
+        content: mainTS(res.componentName),
         isBinary: false
       },
-      'src/polyfills.ts': {
-        content: polyfillTS,
-        isBinary: false
-      },
-      'src/app/app.module.ts': {
-        content: appModuleTS(res.componentName),
-        isBinary: false
-      },
-      'src/app/global-config.module.ts': {
-        content: globalConfigTS,
+      'src/app/app.config.ts': {
+        content: appConfigTS,
         isBinary: false
       },
       'src/app/app.component.ts': {
@@ -307,11 +312,13 @@ export class CodeService {
         content: readme,
         isBinary: false
       };
-      files['sandbox.config.json'] = {
-        content: `${JSON.stringify(sandboxConfigJSON, null, 2)}`,
+    }
+    Object.keys(sandboxConfigJSON).forEach(key => {
+      files[key] = {
+        content: (sandboxConfigJSON as NzSafeAny)[key],
         isBinary: false
       };
-    }
+    });
     const parameters = getParameters({
       files
     });

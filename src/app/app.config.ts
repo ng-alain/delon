@@ -27,7 +27,7 @@ import { withTreeSelectWidget } from '@delon/form/widgets/tree-select';
 import { withUploadWidget } from '@delon/form/widgets/upload';
 import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
 import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
-import { provideMockConfig } from '@delon/mock';
+import { mockInterceptor, provideMockConfig } from '@delon/mock';
 import { zh_CN as delonLang, AlainProvideLang, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
@@ -90,7 +90,7 @@ const ngZorroConfig: NzConfig = {};
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'ngAlainDoc' },
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
     provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
