@@ -52,9 +52,9 @@ export class StartupService {
     // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
     this.aclService.setFull(true);
     // Menu data, https://ng-alain.com/theme/menu
-    this.menuService.add(res.menu);
+    this.menuService.add(res.menu ?? []);
     // Can be set page suffix title, https://ng-alain.com/theme/title
-    this.titleService.suffix = res.app.name;
+    this.titleService.suffix = res.app?.name;
   }
 
   <% if (i18n) { %>
