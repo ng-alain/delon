@@ -9,7 +9,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import angularJSON from './files/angular.json';
 import appConfigTS from './files/app.config';
-import environmentTS from './files/environment';
 import mainTS from './files/main';
 import mockUser from './files/mock-user';
 import packageJSON from './files/package.json';
@@ -166,7 +165,6 @@ export class CodeService {
           'angular.json': `${JSON.stringify(json, null, 2)}`,
           'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
           'package.json': `${JSON.stringify(packageJson, null, 2)}`,
-          'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
           'src/main.ts': mainTS(res.componentName),
           'src/app/app.component.ts': appComponentCode,
@@ -210,10 +208,6 @@ export class CodeService {
         content: `${JSON.stringify(tsconfigJSON, null, 2)}`,
         isBinary: false
       },
-      'src/environments/environment.ts': {
-        content: environmentTS,
-        isBinary: false
-      },
       'src/index.html': {
         content: res.html,
         isBinary: false
@@ -244,6 +238,10 @@ export class CodeService {
       },
       '_mock/index.ts': {
         content: mockObj['_mock/index.ts'],
+        isBinary: false
+      },
+      'yarn.lock': {
+        content: yarnLock,
         isBinary: false
       }
     };
