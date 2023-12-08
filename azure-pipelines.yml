@@ -7,24 +7,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: env
+  - stage: build
     jobs:
-      - job: Nodes
+      - job: build
         steps:
           - task: NodeTool@0
             inputs:
               versionSource: 'fromFile'
               versionFilePath: '.nvmrc'
             displayName: 'Install Node.js'
-
-  - stage: build
-    jobs:
-      - job: build
-        steps:
-          - task: UseNode@1
-            inputs:
-                versionSource: 'fromFile'
-                versionFilePath: '.nvmrc'
           - script: |
               node --version
               yarn --version
@@ -68,10 +59,11 @@ stages:
         dependsOn: Build
         condition: failed()
         steps:
-          - task: UseNode@1
+          - task: NodeTool@0
             inputs:
-                versionSource: 'fromFile'
-                versionFilePath: '.nvmrc'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - checkout: self
             displayName: 'Checkout'
             clean: true
@@ -84,16 +76,16 @@ stages:
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
-    dependsOn: env
 
   - stage: test
     jobs:
       - job: packages
         steps:
-          - task: UseNode@1
+          - task: NodeTool@0
             inputs:
-                versionSource: 'fromFile'
-                versionFilePath: '.nvmrc'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: |
@@ -122,24 +114,24 @@ stages:
               testResultsFiles: '**/TESTS*.xml'
       - job: cli
         steps:
-          - task: UseNode@1
+          - task: NodeTool@0
             inputs:
-                versionSource: 'fromFile'
-                versionFilePath: '.nvmrc'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: yarn run test:cli
-    dependsOn: env
 
   - stage: lint
     jobs:
       - job: packages
         steps:
-          - task: UseNode@1
+          - task: NodeTool@0
             inputs:
-                versionSource: 'fromFile'
-                versionFilePath: '.nvmrc'
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: yarn install
             displayName: 'Install'
           - script: yarn run lint
-    dependsOn: env
