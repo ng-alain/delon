@@ -1,6 +1,8 @@
 export default {
   $schema: './node_modules/@angular/cli/lib/config/schema.json',
-  version: 1,
+  cli: {
+    analytics: '1e1de97b-a744-405a-8b5a-0397bb3d01ce'
+  },
   newProjectRoot: 'projects',
   projects: {
     demo: {
@@ -10,38 +12,47 @@ export default {
       prefix: 'app',
       architect: {
         build: {
-          builder: '@angular-devkit/build-angular:browser',
-          options: {
-            outputPath: 'dist/demo',
-            index: 'src/index.html',
-            main: 'src/main.ts',
-            polyfills: 'src/polyfills.ts',
-            tsConfig: 'tsconfig.json',
-            assets: ['src/assets'],
-            styles: ['src/styles.css']
-          },
+          builder: '@angular-devkit/build-angular:application',
           configurations: {
+            development: {
+              extractLicenses: false,
+              namedChunks: true,
+              optimization: false,
+              sourceMap: true
+            },
             production: {
-              optimization: true,
-              outputHashing: 'all',
-              sourceMap: false,
-              extractCss: true,
-              namedChunks: false,
               aot: true,
               extractLicenses: true,
-              vendorChunk: false,
-              buildOptimizer: true
+              namedChunks: false,
+              optimization: true,
+              outputHashing: 'all',
+              sourceMap: false
             }
+          },
+          options: {
+            assets: [],
+            index: 'src/index.html',
+            browser: 'src/main.ts',
+            outputPath: 'dist/demo',
+            scripts: [],
+            styles: ['src/styles.css'],
+            tsConfig: 'tsconfig.json'
           }
         },
         serve: {
           builder: '@angular-devkit/build-angular:dev-server',
-          options: {
-            browserTarget: 'demo:build'
-          }
+          configurations: {
+            development: {
+              buildTarget: 'demo:build:development'
+            },
+            production: {
+              buildTarget: 'demo:build:production'
+            }
+          },
+          defaultConfiguration: 'development'
         }
       }
     }
   },
-  defaultProject: 'demo'
+  version: 1
 };

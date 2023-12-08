@@ -15,9 +15,12 @@ Using `errors` you can reset `error` values for all `se` components in batches.
 
 ```ts
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { SEErrorRefresh } from '@delon/abc/se';
+import { SEErrorRefresh, SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -68,7 +71,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
       </se>
     </form>
-  `
+  `,
+  standalone: true,
+  imports: [SEModule, NzFormModule, NzInputModule, ReactiveFormsModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {
   validateForm = new FormGroup({

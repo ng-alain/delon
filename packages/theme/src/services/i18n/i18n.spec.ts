@@ -30,7 +30,8 @@ describe('theme: i18n', () => {
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
       srv.use('en', {
         simple: 'a',
-        param: 'a-{{value}}'
+        param: 'a-{{value}}',
+        paramArr: 'a-{0},{ 1 }'
       });
       fixture.detectChanges();
     });
@@ -38,11 +39,31 @@ describe('theme: i18n', () => {
       check('a');
     });
 
-    it('should be param', () => {
-      fixture.componentInstance.key = 'param';
-      fixture.componentInstance.params = { value: '1' };
-      fixture.detectChanges();
-      check('a-1', 'param');
+    describe('#param', () => {
+      it('with object', () => {
+        fixture.componentInstance.key = 'param';
+        fixture.componentInstance.params = { value: '1' };
+        fixture.detectChanges();
+        check('a-1', 'param');
+      });
+      it('with base type', () => {
+        fixture.componentInstance.key = 'paramArr';
+        fixture.componentInstance.params = 'A';
+        fixture.detectChanges();
+        check('a-A,{ 1 }', 'param');
+      });
+      it('with base type', () => {
+        fixture.componentInstance.key = 'paramArr';
+        fixture.componentInstance.params = 100;
+        fixture.detectChanges();
+        check('a-100,{ 1 }', 'param');
+      });
+      it('with array', () => {
+        fixture.componentInstance.key = 'paramArr';
+        fixture.componentInstance.params = [1, 2];
+        fixture.detectChanges();
+        check('a-1,2', 'param');
+      });
     });
 
     it('should be return path when is invalid', () => {

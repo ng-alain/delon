@@ -15,7 +15,10 @@ Support `count`, `distinctCount`, `sum`, `average`, `max`, `min` or custom funct
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData } from '@delon/abc/st';
+
+import { STColumn, STData, STModule } from '@delon/abc/st';
+import { CurrencyPricePipe } from '@delon/util';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -43,6 +46,8 @@ import { STColumn, STData } from '@delon/abc/st';
       </ng-template>
     </st>
   `,
+  standalone: true,
+  imports: [STModule, NzButtonModule, CurrencyPricePipe]
 })
 export class DemoComponent {
   data: STData[] = Array(100)
@@ -50,7 +55,7 @@ export class DemoComponent {
     .map((_, idx) => ({
       id: idx + 1,
       price: ~~(Math.random() * 100),
-      age: ~~(Math.random() * 100) > 50 ? '女' : '男',
+      age: ~~(Math.random() * 100) > 50 ? '女' : '男'
     }));
   columns: STColumn[] = [
     { title: '行号', type: 'no' },
@@ -65,8 +70,8 @@ export class DemoComponent {
       index: 'price',
       type: 'currency',
       statistical: { type: values => ({ value: values[0], text: `**${values[0]}` }), currency: false },
-      key: 'custom',
-    },
+      key: 'custom'
+    }
   ];
 }
 ```

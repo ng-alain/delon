@@ -14,16 +14,20 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFUploadWidgetSchema } from '@delon/form/widgets/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       file: {
@@ -36,16 +40,16 @@ export class DemoComponent {
             status: 'done',
             url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             response: {
-              resource_id: 1,
-            },
-          },
+              resource_id: 1
+            }
+          }
         ],
         ui: {
           widget: 'upload',
           action: '/upload',
           resReName: 'resource_id',
-          urlReName: 'url',
-        } as SFUploadWidgetSchema,
+          urlReName: 'url'
+        } as SFUploadWidgetSchema
       },
       mulit: {
         type: 'string',
@@ -55,8 +59,8 @@ export class DemoComponent {
           action: '/upload',
           resReName: 'resource_id',
           urlReName: 'url',
-          multiple: true,
-        } as SFUploadWidgetSchema,
+          multiple: true
+        } as SFUploadWidgetSchema
       },
       // 拖动模式
       drag: {
@@ -67,13 +71,11 @@ export class DemoComponent {
           action: '/upload',
           resReName: 'resource_id',
           urlReName: 'url',
-          type: 'drag',
-        } as SFUploadWidgetSchema,
-      },
-    },
+          type: 'drag'
+        } as SFUploadWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

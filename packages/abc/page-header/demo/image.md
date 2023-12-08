@@ -11,6 +11,9 @@ bg: f2f4f5
 ```ts
 import { Component } from '@angular/core';
 
+import { PageHeaderModule } from '@delon/abc/page-header';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -28,7 +31,10 @@ import { Component } from '@angular/core';
         </div>
       </ng-template>
       <ng-template #content>
-        <p>段落示意：蚂蚁金服务设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。</p>
+        <p
+          >段落示意：蚂蚁金服务设计平台
+          ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。</p
+        >
         <div class="d-flex pt-md">
           <a class="d-flex pr-lg">
             <img class="pr-sm" src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" />快速开始
@@ -36,11 +42,15 @@ import { Component } from '@angular/core';
           <a class="d-flex pr-lg">
             <img class="pr-sm" src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" />产品简介
           </a>
-          <a class="d-flex"> <img class="pr-sm" src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" />产品文档 </a>
+          <a class="d-flex">
+            <img class="pr-sm" src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" />产品文档
+          </a>
         </div>
       </ng-template>
     </page-header>
   `,
+  standalone: true,
+  imports: [PageHeaderModule, NzBreadCrumbModule]
 })
 export class DemoComponent {}
 ```

@@ -11,6 +11,9 @@ bg: f2f4f5
 ```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { PageHeaderModule } from '@delon/abc/page-header';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -31,9 +34,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
       <ng-template #extra><div class="extra">extra</div></ng-template>
       <ng-template #tab>
         <nz-tabset [nzSize]="'default'">
-          <nz-tab nzTitle="页签一"></nz-tab>
-          <nz-tab nzTitle="页签二"></nz-tab>
-          <nz-tab nzTitle="页签三"></nz-tab>
+          <nz-tab nzTitle="页签一" />
+          <nz-tab nzTitle="页签二" />
+          <nz-tab nzTitle="页签三" />
         </nz-tabset>
       </ng-template>
     </page-header>
@@ -55,9 +58,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
         background: #7dbcea;
         color: #fff;
       }
-    `,
+    `
   ],
   encapsulation: ViewEncapsulation.Emulated,
+  standalone: true,
+  imports: [PageHeaderModule, NzTabsModule]
 })
 export class DemoComponent {}
 ```

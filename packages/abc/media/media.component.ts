@@ -29,7 +29,7 @@ import { MediaService } from './media.service';
 export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
 
 @Component({
-  selector: 'media',
+  selector: 'media, [media]',
   exportAs: 'mediaComponent',
   template: `<ng-content />`,
   host: {

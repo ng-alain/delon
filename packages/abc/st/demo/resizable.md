@@ -21,19 +21,16 @@ Resize the table header base on [nz-resizable](https://ng.ant.design/experimenta
 
 ```ts
 import { Component } from '@angular/core';
-import { STChange, STColumn } from '@delon/abc/st';
+
+import { STChange, STColumn, STModule } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <st
-      [data]="url"
-      [columns]="columns"
-      [widthMode]="{ type: 'strict' }"
-      resizable
-      (change)="onChange($event)"
-    ></st>
+    <st [data]="url" [columns]="columns" [widthMode]="{ type: 'strict' }" resizable (change)="onChange($event)" />
   `,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;
@@ -43,7 +40,7 @@ export class DemoComponent {
     { title: '邮箱', index: 'email', width: 150, resizable: { minWidth: 150 } },
     { title: '电话', index: 'phone' },
     { title: '佣金', index: 'price', type: 'currency' },
-    { title: '注册时间', type: 'date', index: 'registered' },
+    { title: '注册时间', type: 'date', index: 'registered' }
   ];
 
   onChange({ type, resize }: STChange): void {

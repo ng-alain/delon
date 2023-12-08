@@ -6,7 +6,7 @@ export default {
     forceConsistentCasingInFileNames: true,
     strict: true,
     noImplicitOverride: true,
-    noPropertyAccessFromIndexSignature: true,
+    noPropertyAccessFromIndexSignature: false,
     noImplicitReturns: true,
     noFallthroughCasesInSwitch: true,
     sourceMap: true,
@@ -15,13 +15,16 @@ export default {
     experimentalDecorators: true,
     moduleResolution: 'node',
     importHelpers: true,
-    target: 'es2017',
+    target: 'ES2022',
     module: 'es2020',
     lib: ['es2020', 'dom'],
-    allowSyntheticDefaultImports: true
+    types: [],
+    allowSyntheticDefaultImports: true,
+    useDefineForClassFields: false
   },
+  files: ['src/main.ts'],
+  include: ['src/**/*.d.ts'],
   angularCompilerOptions: {
-    enableIvy: true,
     enableI18nLegacyMessageIdFormat: false,
     strictInjectionParameters: true,
     strictInputAccessModifiers: true,

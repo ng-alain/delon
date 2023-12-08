@@ -214,7 +214,6 @@ module.exports = {
       module: '@delon/abc',
       defaultRoute: 'sv',
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
-
       dir: [
         {
           src: ['./packages/abc'],
@@ -222,7 +221,8 @@ module.exports = {
 
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'auth',
@@ -410,7 +410,8 @@ module.exports = {
 
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'chart',
@@ -444,7 +445,8 @@ module.exports = {
           ignores: ['docs'],
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'cli',

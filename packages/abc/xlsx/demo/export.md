@@ -14,21 +14,24 @@ title:
 Export Excel and automatically pop save dialog.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { STColumn, STData } from '@delon/abc/st';
+import { STColumn, STData, STModule } from '@delon/abc/st';
 import { XlsxService } from '@delon/abc/xlsx';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="download('xlsx')">Export Xlsx</button>
     <button nz-button (click)="download('csv')">Export Csv</button>
-    <st [data]="users" [ps]="3" [columns]="columns" class="mt-sm"></st>
-  `
+    <st [data]="users" [ps]="3" [columns]="columns" class="mt-sm" />
+  `,
+  standalone: true,
+  imports: [NzButtonModule, STModule]
 })
 export class DemoComponent {
-  constructor(private xlsx: XlsxService) {}
+  private readonly xlsx = inject(XlsxService);
 
   users: STData[] = Array(100)
     .fill({})

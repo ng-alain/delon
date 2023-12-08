@@ -1,14 +1,10 @@
-export default `import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+export default (componentName: string): string => `import { bootstrapApplication } from '@angular/platform-browser';
+import 'zone.js';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { ${componentName} } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+bootstrapApplication(${componentName}, appConfig).catch((err) =>
+  console.error(err)
+);
 `;

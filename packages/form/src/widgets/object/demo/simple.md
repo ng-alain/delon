@@ -14,29 +14,31 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)" />`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       name: { type: 'string' },
-      age: { type: 'number' },
+      age: { type: 'number' }
     },
     required: ['name', 'age'],
     ui: {
       // 指定 `label` 和 `control` 在一行中各占栅格数
       spanLabel: 4,
-      spanControl: 5,
-    },
+      spanControl: 5
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

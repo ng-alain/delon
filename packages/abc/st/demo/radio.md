@@ -16,7 +16,8 @@ Use `change` event get selected data.
 ```ts
 import { Component } from '@angular/core';
 
-import { STChange, STColumn, STData } from '@delon/abc/st';
+import { STChange, STColumn, STData, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -31,7 +32,9 @@ import { STChange, STColumn, STData } from '@delon/abc/st';
       [req]="{ params: params }"
       [res]="{ process: dataChange }"
       (change)="change($event)"
-    ></st>`
+    />`,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {
   url = `/users?total=300`;

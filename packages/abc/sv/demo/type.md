@@ -16,6 +16,8 @@ Usually used to view pages, success, danger, warning, and other fields.
 ```ts
 import { Component } from '@angular/core';
 
+import { SVModule } from '@delon/abc/sv';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -26,6 +28,8 @@ import { Component } from '@angular/core';
       <sv label="danger" type="danger">hhhh</sv>
     </sv-container>
   `,
+  standalone: true,
+  imports: [SVModule]
 })
 export class DemoComponent {}
 ```

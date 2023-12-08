@@ -15,6 +15,15 @@ Get QR code (dataURL value) via `change`.
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { QRModule } from '@delon/abc/qr';
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-demo',
@@ -33,7 +42,7 @@ import { Component } from '@angular/core';
           [size]="size"
           (change)="change($event)"
           style="border:1px solid #999"
-        ></qr>
+        />
       </div>
       <div nz-col [nzSpan]="16">
         <se-container col="1">
@@ -50,7 +59,7 @@ import { Component } from '@angular/core';
                     [nzMax]="1"
                     [nzStep]="0.1"
                     [ngModelOptions]="{ standalone: true }"
-                  ></nz-input-number>
+                  />
                 </div>
               </div>
             </nz-input-group>
@@ -68,28 +77,29 @@ import { Component } from '@angular/core';
                     [nzMax]="1"
                     [nzStep]="0.1"
                     [ngModelOptions]="{ standalone: true }"
-                  ></nz-input-number>
+                  />
                 </div>
               </div>
             </nz-input-group>
           </se>
           <se label="误差">
             <nz-select [(ngModel)]="level" [ngModelOptions]="{ standalone: true }">
-              <nz-option nzValue="L" nzLabel="L"></nz-option>
-              <nz-option nzValue="M" nzLabel="M"></nz-option>
-              <nz-option nzValue="Q" nzLabel="Q"></nz-option>
-              <nz-option nzValue="H" nzLabel="H"></nz-option>
+              <nz-option nzValue="L" nzLabel="L" />
+              <nz-option nzValue="M" nzLabel="M" />
+              <nz-option nzValue="Q" nzLabel="Q" />
+              <nz-option nzValue="H" nzLabel="H" />
             </nz-select>
           </se>
           <se label="Mime">
             <nz-select [(ngModel)]="mime" [ngModelOptions]="{ standalone: true }">
-              <nz-option nzValue="image/png" nzLabel="image/png"></nz-option>
-              <nz-option nzValue="image/jpeg" nzLabel="image/jpeg"></nz-option>
-              <nz-option nzValue="image/gif" nzLabel="image/gif"></nz-option>
+              <nz-option nzValue="image/png" nzLabel="image/png" />
+              <nz-option nzValue="image/jpeg" nzLabel="image/jpeg" />
+              <nz-option nzValue="image/gif" nzLabel="image/gif" />
             </nz-select>
           </se>
           <se label="内边距">
-            <nz-input-number [(ngModel)]="padding" [ngModelOptions]="{ standalone: true }" [nzMin]="0" [nzMax]="100"></nz-input-number> px
+            <nz-input-number [(ngModel)]="padding" [ngModelOptions]="{ standalone: true }" [nzMin]="0" [nzMax]="100" />
+            px
           </se>
           <se label="大小">
             <nz-input-number
@@ -98,13 +108,25 @@ import { Component } from '@angular/core';
               [nzMin]="100"
               [nzMax]="1000"
               [nzStep]="padding"
-            ></nz-input-number>
+            />
             px
           </se>
         </se-container>
       </div>
     </div>
   `,
+  standalone: true,
+  imports: [
+    QRModule,
+    NzGridModule,
+    SEModule,
+    NzInputModule,
+    NzInputNumberModule,
+    NzButtonModule,
+    FormsModule,
+    NzGridModule,
+    NzSelectModule
+  ]
 })
 export class DemoComponent {
   value = 'https://ng-alain.com/';

@@ -14,24 +14,30 @@ title:
 Set `type: 'custom'` custom load indicator icon.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { LoadingCustom, LoadingService } from '@delon/abc/loading';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  @for (i of customs; track $index) {
+  template: ` @for (i of customs; track $index) {
     <button nz-button (click)="show(i)">{{ i.name }}</button>
   }`,
+  standalone: true,
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
+  private readonly loadingSrv = inject(LoadingService);
+  private readonly dom = inject(DomSanitizer);
+
   customs: LoadingCustom[] = [
     {
       name: 'Balls',
       style: {
         height: '40px',
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -47,12 +53,12 @@ export class DemoComponent {
         <path transform="translate(24 0)" d="M4 12 A4 4 0 0 0 4 20 A4 4 0 0 0 4 12">
           <animateTransform attributeName="transform" type="translate" values="22 0; 32 0; 32 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.55;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Bars',
       style: {
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -71,13 +77,13 @@ export class DemoComponent {
         <path transform="translate(26)" d="M0 12 V20 H4 V12z">
           <animate attributeName="d" values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z" dur="1.2s" repeatCount="indefinite" begin="0.8" keytimes="0;.2;.5;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline" />
         </path>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Bubbles',
       style: {
         height: '40px',
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -93,13 +99,13 @@ export class DemoComponent {
           <animate attributeName="r" values="0; 4; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.6"
             keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
         </circle>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Cubes',
       style: {
         height: '40px',
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -115,13 +121,13 @@ export class DemoComponent {
         <path transform="translate(24 0)" d="M0 12 V20 H8 V12z">
           <animateTransform attributeName="transform" type="translate" values="22 0; 32 0; 32 0;" dur="0.8s" repeatCount="indefinite" begin="0" keytimes="0;.55;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline"  />
         </path>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Cylon',
       style: {
         height: '40px',
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -134,12 +140,12 @@ export class DemoComponent {
         <path opacity="0.25" transform="translate(0 0)" d="M0 12 V20 H4 V12z">
           <animateTransform attributeName="transform" type="translate" values="0 0; 28 0; 0 0; 0 0" dur="1.5s" begin="0.2s" repeatCount="indefinite" keytimes="0;0.3;0.6;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
         </path>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Spin',
       style: {
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -147,12 +153,12 @@ export class DemoComponent {
         <path d="M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z">
           <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="0.8s" repeatCount="indefinite" />
         </path>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Spinning Bubbles',
       style: {
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -183,12 +189,12 @@ export class DemoComponent {
         <circle transform="rotate(180 16 16)" cx="16" cy="3" r="0">
           <animate attributeName="r" values="0;3;0;0" dur="1s" repeatCount="indefinite" begin="0.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
         </circle>
-      </svg>`),
+      </svg>`)
     },
     {
       name: 'Spokes',
       style: {
-        fill: '#1890ff',
+        fill: '#1890ff'
       },
       html: this.dom.bypassSecurityTrustHtml(`
       <svg id="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -216,17 +222,15 @@ export class DemoComponent {
         <path opacity=".1" d="M14 0 H18 V8 H14 z" transform="rotate(315 16 16)">
           <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin="0.875s"/>
         </path>
-      </svg>`),
-    },
+      </svg>`)
+    }
   ];
-
-  constructor(private loadingSrv: LoadingService, private dom: DomSanitizer) {}
 
   show(custom: LoadingCustom): void {
     this.loadingSrv.open({
       type: 'custom',
       custom,
-      text: 'Loading...(Auto close after 3s)',
+      text: 'Loading...(Auto close after 3s)'
     });
 
     setTimeout(() => this.loadingSrv.close(), 1000 * 3);

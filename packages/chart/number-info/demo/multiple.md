@@ -16,13 +16,17 @@ Should be show a separator when multiple `number-info` components.
 ```ts
 import { Component } from '@angular/core';
 
+import { NumberInfoModule } from '@delon/chart/number-info';
+
 @Component({
   selector: 'app-demo',
   template: `
-    <number-info subTitle="今日访问" total="12,321"></number-info>
-    <number-info subTitle="本周访问" total="12,32100"></number-info>
-    <number-info subTitle="本月访问" total="12,32100000"></number-info>
+    <number-info subTitle="今日访问" total="12,321" />
+    <number-info subTitle="本周访问" total="12,32100" />
+    <number-info subTitle="本月访问" total="12,32100000" />
   `,
+  standalone: true,
+  imports: [NumberInfoModule]
 })
 export class DemoComponent {}
 ```

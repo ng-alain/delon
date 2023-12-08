@@ -1,4 +1,6 @@
-@if (data.list?.length === 0) {
+@if (data.list && data.list.length > 0) {
+  <ng-template [ngTemplateOutlet]="listTpl" />
+} @else {
   <div class="notice-icon__notfound">
     @if (data.emptyImage) {
       <img class="notice-icon__notfound-img" [attr.src]="data.emptyImage" alt="not found" />
@@ -9,8 +11,6 @@
       </ng-container>
     </p>
   </div>
-} @else {
-  <ng-template [ngTemplateOutlet]="listTpl" />
 }
 <ng-template #listTpl>
   <nz-list [nzDataSource]="data.list" [nzRenderItem]="item">

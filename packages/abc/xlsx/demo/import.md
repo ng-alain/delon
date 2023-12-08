@@ -14,8 +14,12 @@ title:
 Import Excel and output JSON, support File, URL.
 
 ```ts
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+
 import { XlsxService } from '@delon/abc/xlsx';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'app-demo',
@@ -25,11 +29,16 @@ import { XlsxService } from '@delon/abc/xlsx';
     <p class="mt-sm">result: {{ data | json }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzButtonModule, JsonPipe]
 })
 export class DemoComponent {
-  data: any;
+  data: NzSafeAny;
 
-  constructor(private xlsx: XlsxService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private xlsx: XlsxService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   url(): void {
     this.xlsx.import(`./assets/demo.xlsx`).then(res => {

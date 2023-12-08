@@ -16,17 +16,21 @@ order: 1
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+import { of, delay } from 'rxjs';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { of, delay } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       status1: {
@@ -35,12 +39,12 @@ export class DemoComponent {
         enum: [
           { title: '待支付', key: 'WAIT_BUYER_PAY' },
           { title: '已支付', key: 'TRADE_SUCCESS' },
-          { title: '交易完成', key: 'TRADE_FINISHED' },
+          { title: '交易完成', key: 'TRADE_FINISHED' }
         ],
         default: 'WAIT_BUYER_PAY',
         ui: {
-          widget: 'tree-select',
-        } as SFTreeSelectWidgetSchema,
+          widget: 'tree-select'
+        } as SFTreeSelectWidgetSchema
       },
       status2: {
         type: 'string',
@@ -48,13 +52,13 @@ export class DemoComponent {
         enum: [
           { title: '待支付', key: 'WAIT_BUYER_PAY' },
           { title: '已支付', key: 'TRADE_SUCCESS' },
-          { title: '交易完成', key: 'TRADE_FINISHED' },
+          { title: '交易完成', key: 'TRADE_FINISHED' }
         ],
         default: ['WAIT_BUYER_PAY', 'TRADE_SUCCESS'],
         ui: {
           widget: 'tree-select',
-          multiple: true,
-        } as SFTreeSelectWidgetSchema,
+          multiple: true
+        } as SFTreeSelectWidgetSchema
       },
       status3: {
         type: 'string',
@@ -67,9 +71,9 @@ export class DemoComponent {
             of([
               { title: '待支付', key: 'WAIT_BUYER_PAY' },
               { title: '已支付', key: 'TRADE_SUCCESS' },
-              { title: '交易完成', key: 'TRADE_FINISHED' },
-            ]).pipe(delay(10)),
-        } as SFTreeSelectWidgetSchema,
+              { title: '交易完成', key: 'TRADE_FINISHED' }
+            ]).pipe(delay(10))
+        } as SFTreeSelectWidgetSchema
       },
       // 异步数据
       async: {
@@ -78,7 +82,7 @@ export class DemoComponent {
         enum: [
           { title: '待支付', key: 'WAIT_BUYER_PAY' },
           { title: '已支付', key: 'TRADE_SUCCESS' },
-          { title: '交易完成', key: 'TRADE_FINISHED' },
+          { title: '交易完成', key: 'TRADE_FINISHED' }
         ],
         ui: {
           widget: 'tree-select',
@@ -86,15 +90,13 @@ export class DemoComponent {
             return of([
               { title: '待支付', key: 'WAIT_BUYER_PAY' },
               { title: '已支付', key: 'TRADE_SUCCESS' },
-              { title: '交易完成', key: 'TRADE_FINISHED' },
+              { title: '交易完成', key: 'TRADE_FINISHED' }
             ]).pipe(delay(10));
-          },
-        } as SFTreeSelectWidgetSchema,
-      },
-    },
+          }
+        } as SFTreeSelectWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

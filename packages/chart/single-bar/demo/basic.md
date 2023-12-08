@@ -10,6 +10,10 @@ title:
 ```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { G2SingleBarModule } from '@delon/chart/single-bar';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTableModule } from 'ng-zorro-antd/table';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -42,21 +46,24 @@ import { Component, ViewEncapsulation } from '@angular/core';
       :host ::ng-deep .ant-table tbody > tr > td {
         padding: 0;
       }
-    `,
+    `
   ],
   encapsulation: ViewEncapsulation.Emulated,
+  standalone: true,
+  imports: [NzButtonModule, NzTableModule, G2SingleBarModule]
 })
 export class DemoComponent {
   list: Array<{ id: number; value: number; other: number }> = new Array(5).fill({}).map(() => ({
     id: Math.floor(Math.random() * 10000),
     value: Math.floor(Math.random() * 100),
-    other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100),
+    other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100)
   }));
 
   refresh(): void {
     this.list.forEach(v => {
       v.value = Math.floor(Math.random() * 100);
-      v.other = Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
+      v.other =
+        Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
     });
   }
 }

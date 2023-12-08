@@ -9,8 +9,17 @@ bg: f2f4f5
 标准页头。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { PageHeaderModule } from '@delon/abc/page-header';
+import { SVModule } from '@delon/abc/sv';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
   selector: 'app-demo',
@@ -73,14 +82,25 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </ng-template>
       <ng-template #tab>
         <nz-tabset [nzSize]="'default'">
-          <nz-tab nzTitle="详情"></nz-tab>
-          <nz-tab nzTitle="规则"></nz-tab>
+          <nz-tab nzTitle="详情" />
+          <nz-tab nzTitle="规则" />
         </nz-tabset>
       </ng-template>
     </page-header>
   `,
+  standalone: true,
+  imports: [
+    PageHeaderModule,
+    NzBreadCrumbModule,
+    NzButtonModule,
+    NzDropDownModule,
+    NzTabsModule,
+    NzGridModule,
+    NzIconModule,
+    SVModule
+  ]
 })
 export class DemoComponent {
-  constructor(public msg: NzMessageService) {}
+  readonly msg = inject(NzMessageService);
 }
 ```

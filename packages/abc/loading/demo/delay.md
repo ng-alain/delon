@@ -14,8 +14,10 @@ title:
 Specifies a delay for loading state. If call `open()` ends during delay, loading status won't appear.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { LoadingService } from '@delon/abc/loading';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -23,9 +25,11 @@ import { LoadingService } from '@delon/abc/loading';
     <button nz-button (click)="show()">Display after 1 seconds</button>
     <button nz-button (click)="close()">Close</button>
   `,
+  standalone: true,
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
-  constructor(private loadingSrv: LoadingService) {}
+  private readonly loadingSrv = inject(LoadingService);
 
   show(): void {
     this.loadingSrv.open({ delay: 1000 });

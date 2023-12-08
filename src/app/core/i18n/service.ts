@@ -90,7 +90,7 @@ export class I18NService extends AlainI18nBaseService {
   }
 
   getFullLang(lang: string): string {
-    const res = this._langs.filter(l => l.code.split('-')[0] === lang);
+    const res = this._langs.filter(l => l.code === lang || l.code.split('-')[0] === lang);
     return res.length > 0 ? res[0].code : this.defaultLang;
   }
 

@@ -14,7 +14,7 @@ export const routes: Routes = [
       { path: 'docs', loadChildren: () => import('./gen/docs/routes').then(m => m.routes) },
       {
         path: 'components',
-        loadChildren: () => import('./gen/components/components.module').then(m => m.ComponentsModule)
+        loadChildren: () => import('./gen/components/routes').then(m => m.routes)
       },
       { path: 'theme', loadChildren: () => import('./gen/theme/routes').then(m => m.routes) },
       { path: 'auth', loadChildren: () => import('./gen/auth/routes').then(m => m.routes) },
@@ -22,8 +22,8 @@ export const routes: Routes = [
       { path: 'cache', loadChildren: () => import('./gen/cache/routes').then(m => m.routes) },
       { path: 'mock', loadChildren: () => import('./gen/mock/routes').then(m => m.routes) },
       { path: 'util', loadChildren: () => import('./gen/util/routes').then(m => m.routes) },
-      { path: 'chart', loadChildren: () => import('./gen/chart/chart.module').then(m => m.ChartModule) },
-      { path: 'form', loadChildren: () => import('./gen/form/form.module').then(m => m.FormModule) },
+      { path: 'chart', loadChildren: () => import('./gen/chart/routes').then(m => m.routes) },
+      { path: 'form', loadChildren: () => import('./gen/form/routes').then(m => m.routes) },
       {
         path: 'form-pages',
         loadChildren: () => import('./form-pages/routes').then(m => m.routes)

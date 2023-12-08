@@ -15,16 +15,21 @@ The `0.1s` accuracy usage.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { CountdownConfig } from 'ngx-countdown';
+
+import { CountDownModule } from '@delon/abc/count-down';
 
 @Component({
   selector: 'app-demo',
-  template: ` <count-down [config]="config"></count-down> `,
+  template: ` <count-down [config]="config" /> `,
+  standalone: true,
+  imports: [CountDownModule]
 })
 export class DemoComponent {
   config: CountdownConfig = {
     format: `s.S`,
-    leftTime: 30,
+    leftTime: 30
   };
 }
 ```

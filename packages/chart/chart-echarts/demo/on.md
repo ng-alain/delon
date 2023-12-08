@@ -14,16 +14,19 @@ title:
 Using the `on` attribute is equivalent to ECharts [on](https://echarts.apache.org/zh/api.html#echartsInstance.on).
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { ChartEChartsOn, ChartEChartsOption } from '@delon/chart/chart-echarts';
+import { ChartEChartsModule, ChartEChartsOn, ChartEChartsOption } from '@delon/chart/chart-echarts';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <chart-echarts [option]="option" [on]="on"></chart-echarts> `
+  template: ` <chart-echarts [option]="option" [on]="on" /> `,
+  standalone: true,
+  imports: [ChartEChartsModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   dark = false;
   two = false;
 
@@ -51,7 +54,5 @@ export class DemoComponent {
       }
     ]
   };
-
-  constructor(private msg: NzMessageService) {}
 }
 ```

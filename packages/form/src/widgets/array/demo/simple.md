@@ -14,15 +14,19 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFArrayWidgetSchema, SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFArrayWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       product: {
@@ -34,22 +38,20 @@ export class DemoComponent {
           properties: {
             name: {
               type: 'string',
-              title: '名称',
+              title: '名称'
             },
             price: {
               type: 'number',
               title: '单价',
-              minimum: 1,
-            },
+              minimum: 1
+            }
           },
-          required: ['name', 'price'],
+          required: ['name', 'price']
         },
-        ui: { grid: { arraySpan: 12 } } as SFArrayWidgetSchema,
-      },
-    },
+        ui: { grid: { arraySpan: 12 } } as SFArrayWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

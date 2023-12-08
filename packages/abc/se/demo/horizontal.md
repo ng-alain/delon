@@ -15,6 +15,12 @@ Horizontal layout form.
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-demo',
@@ -29,6 +35,8 @@ import { Component } from '@angular/core';
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
     </se>
   </form>`,
+  standalone: true,
+  imports: [SEModule, NzFormModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {
   i: { ak?: string; sk?: string } = {};

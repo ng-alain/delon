@@ -14,16 +14,19 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { SFNumberWidgetSchema, SFSchema } from '@delon/form';
+import { DelonFormModule, SFNumberWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       number: {
@@ -39,8 +42,6 @@ export class DemoComponent {
       hideStep: { type: 'number', default: 10, ui: { hideStep: true } as SFNumberWidgetSchema }
     }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

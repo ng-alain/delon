@@ -14,18 +14,19 @@ order: 1
 [if-then-else](https://ajv.js.org/json-schema.html#if-then-else) usage of JSON Schema is supported.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { SFSchema } from '@delon/form';
+import { DelonFormModule, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       login_type: {
@@ -68,8 +69,6 @@ export class DemoComponent {
       required: ['name', 'pwd']
     }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

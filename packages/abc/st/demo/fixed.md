@@ -23,11 +23,14 @@ To fix some columns and scroll inside other columns, and you must set `scroll.x`
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData } from '@delon/abc/st';
+
+import { STColumn, STData, STModule } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st [data]="users" [columns]="columns" [scroll]="{ x: '1300px' }"></st> `,
+  template: ` <st [data]="users" [columns]="columns" [scroll]="{ x: '1300px' }" /> `,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
   users: STData[] = Array(10)
@@ -36,7 +39,7 @@ export class DemoComponent {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
+        age: Math.ceil(Math.random() * 10) + 20
       };
     });
   columns: STColumn[] = [
@@ -54,7 +57,7 @@ export class DemoComponent {
     { title: '编号8', index: 'id' },
     { title: '姓名10', index: 'name', fixed: 'right', width: 100 },
     { title: '姓名11', index: 'name', fixed: 'right', width: 100 },
-    { title: '年龄12', index: 'age', fixed: 'right', width: 100 },
+    { title: '年龄12', index: 'age', fixed: 'right', width: 100 }
   ];
 }
 ```
