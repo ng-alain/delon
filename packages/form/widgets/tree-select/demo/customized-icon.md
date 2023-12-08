@@ -16,8 +16,10 @@ You can customize icons for different nodes.
 
 ```ts
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { SFSchema } from '@delon/form';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 
 @Component({
@@ -32,6 +34,8 @@ import { NzTreeNode } from 'ng-zorro-antd/tree';
       </span>
     </ng-template>
   `,
+  standalone: true,
+  imports: [DelonFormModule, NzIconModule]
 })
 export class DemoComponent implements OnInit {
   @ViewChild('customTpl', { static: true }) private customTpl!: TemplateRef<{ $implicit: NzTreeNode }>;
@@ -52,17 +56,17 @@ export class DemoComponent implements OnInit {
               icon: 'smile',
               children: [
                 { title: 'leaf 1-0-0', key: '10010', icon: 'meh', isLeaf: true },
-                { title: 'leaf 1-0-1', key: '10011', icon: 'frown', isLeaf: true },
-              ],
-            },
+                { title: 'leaf 1-0-1', key: '10011', icon: 'frown', isLeaf: true }
+              ]
+            }
           ],
           default: '10010',
           ui: {
             widget: 'tree-select',
-            treeTemplate: this.customTpl,
-          } as SFTreeSelectWidgetSchema,
-        },
-      },
+            treeTemplate: this.customTpl
+          } as SFTreeSelectWidgetSchema
+        }
+      }
     };
   }
 }

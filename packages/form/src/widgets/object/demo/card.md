@@ -14,8 +14,9 @@ order: 1
 A basic card containing a title, content and an extra corner content.
 
 ```ts
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { SFObjectWidgetSchema, SFSchema } from '@delon/form';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+
+import { DelonFormModule, SFObjectWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -28,12 +29,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <a (click)="msg.success('Success')">More</a>
     </ng-template>
   `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent implements OnInit {
+  readonly msg = inject(NzMessageService);
   @ViewChild('extra', { static: true }) private extra!: TemplateRef<void>;
   schema?: SFSchema;
-
-  constructor(public msg: NzMessageService) {}
 
   ngOnInit(): void {
     this.schema = {
@@ -46,12 +48,12 @@ export class DemoComponent implements OnInit {
           properties: {
             country: { type: 'string' },
             city: { type: 'string' },
-            zone: { type: 'string' },
+            zone: { type: 'string' }
           },
           ui: {
             type: 'card',
-            cardExtra: this.extra,
-          } as SFObjectWidgetSchema,
+            cardExtra: this.extra
+          } as SFObjectWidgetSchema
         },
         address2: {
           title: '地址2',
@@ -59,19 +61,19 @@ export class DemoComponent implements OnInit {
           properties: {
             country: { type: 'string' },
             city: { type: 'string' },
-            zone: { type: 'string' },
+            zone: { type: 'string' }
           },
           ui: {
             type: 'card',
-            showExpand: false,
-          } as SFObjectWidgetSchema,
-        },
+            showExpand: false
+          } as SFObjectWidgetSchema
+        }
       },
       required: ['name', 'age'],
       ui: {
         spanLabelFixed: 150,
-        grid: { span: 12, gutter: 16 },
-      } as SFObjectWidgetSchema,
+        grid: { span: 12, gutter: 16 }
+      } as SFObjectWidgetSchema
     };
   }
 

@@ -14,19 +14,22 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { delay, of } from 'rxjs';
 
-import { SFSchema } from '@delon/form';
+import { DelonFormModule, SFSchema } from '@delon/form';
 import { SFSegmentedWidgetSchema, SegmentedWidget } from '@delon/form/widgets/segmented';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSegmentedOptions } from 'ng-zorro-antd/segmented';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)" />`
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)" />`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       base: {
@@ -55,8 +58,6 @@ export class DemoComponent {
       }
     }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

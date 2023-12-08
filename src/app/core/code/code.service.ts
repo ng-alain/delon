@@ -183,10 +183,9 @@ export class CodeService {
 
     return `import { DemoDelonABCModule } from './delon-abc.module';
 import { DemoDelonChartModule } from './delon-chart.module';
-import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';
-import { DelonFormModule } from '@delon/form';\n${code.replace(
+import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';\n${code.replace(
       `@Component({`,
-      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule, DemoDelonChartModule, DelonFormModule],`
+      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule, DemoDelonChartModule],`
     )}`;
   }
 

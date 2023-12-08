@@ -14,18 +14,21 @@ order: 1
 A simple start & end date range, **Note: ** `end` still needs define in schema, but will forced to be hidden.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { subWeeks } from 'date-fns';
 
-import { SFDateWidgetSchema, SFSchema } from '@delon/form';
+import { DelonFormModule, SFDateWidgetSchema, SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       start: {
@@ -67,8 +70,6 @@ export class DemoComponent {
     },
     required: ['start']
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

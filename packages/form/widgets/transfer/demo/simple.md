@@ -14,17 +14,21 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+import { of, delay } from 'rxjs';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import { SFTransferWidgetSchema } from '@delon/form/widgets/transfer';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { of, delay } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       roles: {
@@ -34,13 +38,13 @@ export class DemoComponent {
           { title: 'DNS管理', value: 10 },
           { title: 'ECS管理', value: 11 },
           { title: 'OSS管理', value: 12 },
-          { title: 'RDS管理', value: 13 },
+          { title: 'RDS管理', value: 13 }
         ],
         ui: {
           widget: 'transfer',
-          titles: ['未拥有', '已拥有'],
+          titles: ['未拥有', '已拥有']
         } as SFTransferWidgetSchema,
-        default: [11, 12],
+        default: [11, 12]
       },
       roles2: {
         type: 'number',
@@ -53,15 +57,13 @@ export class DemoComponent {
               { title: 'DNS管理', value: 10 },
               { title: 'ECS管理', value: 11 },
               { title: 'OSS管理', value: 12 },
-              { title: 'RDS管理', value: 13 },
-            ]).pipe(delay(10)),
+              { title: 'RDS管理', value: 13 }
+            ]).pipe(delay(10))
         } as SFTransferWidgetSchema,
-        default: [11, 12],
-      },
-    },
+        default: [11, 12]
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

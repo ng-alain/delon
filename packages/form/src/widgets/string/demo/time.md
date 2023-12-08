@@ -14,10 +14,10 @@ order: 0
 Use `changeDebounceTime` to enable throttling control, use `changeMap` and `change` to debounce fetch and ajax callback order flow.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { of } from 'rxjs';
 
-import { SFComponent, SFSchema, SFStringWidgetSchema } from '@delon/form';
+import { DelonFormModule, SFComponent, SFSchema, SFStringWidgetSchema } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -28,9 +28,13 @@ interface UserItem {
 
 @Component({
   selector: 'app-demo',
-  template: `<sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `<sf #sf [schema]="schema" (formSubmit)="submit($event)" />`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
+  private readonly http = inject(_HttpClient);
   @ViewChild('sf') private readonly sf!: SFComponent;
 
   schema: SFSchema = {
@@ -40,7 +44,7 @@ export class DemoComponent {
         title: 'Key',
         ui: {
           changeDebounceTime: 500,
-          changeMap: val => (val.length > 0 ? this.http.get(`/users?q=${val}&ps=6`) : of({ list: [] })),
+          changeMap: v => (v?.length > 0 ? this.http.get(`/users?q=${v}&ps=6`) : of({ list: [] })),
           change: (res: { list: UserItem[] }) => {
             if (res.list.length <= 0) return;
             const property = this.sf.getProperty('/items')!;
@@ -55,8 +59,6 @@ export class DemoComponent {
       }
     }
   };
-
-  constructor(private http: _HttpClient, private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

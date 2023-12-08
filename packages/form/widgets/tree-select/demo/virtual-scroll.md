@@ -14,17 +14,21 @@ order: 3
 Set `virtualHeight` to enable virtual scroll.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       status1: {
@@ -33,13 +37,11 @@ export class DemoComponent {
         enum: this.dig(),
         ui: {
           widget: 'tree-select',
-          virtualHeight: '300px',
-        } as SFTreeSelectWidgetSchema,
-      },
-    },
+          virtualHeight: '300px'
+        } as SFTreeSelectWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   private dig(path: string = '0', level: number = 3): NzTreeNodeOptions[] {
     const list: NzTreeNodeOptions[] = [];
@@ -50,7 +52,7 @@ export class DemoComponent {
         key,
         expanded: true,
         children: [],
-        isLeaf: false,
+        isLeaf: false
       };
 
       if (level > 0) {

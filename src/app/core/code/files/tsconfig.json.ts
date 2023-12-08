@@ -5,7 +5,7 @@ export default {
     forceConsistentCasingInFileNames: true,
     strict: true,
     noImplicitOverride: true,
-    noPropertyAccessFromIndexSignature: true,
+    noPropertyAccessFromIndexSignature: false,
     noImplicitReturns: true,
     noFallthroughCasesInSwitch: true,
     esModuleInterop: true,

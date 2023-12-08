@@ -14,25 +14,29 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFSliderWidgetSchema } from '@delon/form/widgets/slider';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       count: {
         type: 'number',
         title: '数量',
         ui: {
-          widget: 'slider',
+          widget: 'slider'
         } as SFSliderWidgetSchema,
-        default: 10,
+        default: 10
       },
       // 双滑块模式
       range: {
@@ -40,14 +44,12 @@ export class DemoComponent {
         title: '范围',
         ui: {
           widget: 'slider',
-          range: true,
+          range: true
         } as SFSliderWidgetSchema,
-        default: [10, 20],
-      },
-    },
+        default: [10, 20]
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

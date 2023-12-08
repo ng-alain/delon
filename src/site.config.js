@@ -410,7 +410,8 @@ module.exports = {
 
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'chart',

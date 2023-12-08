@@ -14,16 +14,21 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFCascaderWidgetSchema } from '@delon/form/widgets/cascader';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       static: {
@@ -44,21 +49,21 @@ export class DemoComponent {
                     value: 110101,
                     label: '东城区',
                     parent: 110100,
-                    isLeaf: true,
+                    isLeaf: true
                   },
                   {
                     value: 110105,
                     label: '朝阳区',
                     parent: 110100,
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
+                    isLeaf: true
+                  }
+                ]
+              }
+            ]
+          }
         ],
         ui: 'cascader',
-        default: [110000, 110100, 110105],
+        default: [110000, 110100, 110105]
       },
       async: {
         type: 'number',
@@ -68,7 +73,7 @@ export class DemoComponent {
           asyncData: (node, index) => {
             return new Promise(resolve => {
               setTimeout(() => {
-                (node as any).children = [
+                (node as NzSafeAny).children = [
                   { value: 110000, label: '北京', parent: 0 },
                   { value: 110100, label: '北京市', parent: 110000 },
                   { value: 110101, label: '东城区', parent: 110100 },
@@ -76,22 +81,20 @@ export class DemoComponent {
                   { value: 310000, label: '上海', parent: 0 },
                   { value: 310100, label: '上海市', parent: 310000 },
                   { value: 310101, label: '黄浦区', parent: 310100 },
-                  { value: 310104, label: '徐汇区', parent: 310100 },
-                ].filter((w: any) => {
+                  { value: 310104, label: '徐汇区', parent: 310100 }
+                ].filter((w: NzSafeAny) => {
                   w.isLeaf = index === 1;
                   return w.parent === (node.value || 0);
                 });
                 resolve();
               }, 300);
             });
-          },
+          }
         } as SFCascaderWidgetSchema,
-        default: [110000, 110100, 110105],
-      },
-    },
+        default: [110000, 110100, 110105]
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

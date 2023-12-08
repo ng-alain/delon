@@ -14,20 +14,24 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+import { of, delay } from 'rxjs';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFMentionWidgetSchema } from '@delon/form/widgets/mention';
 import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { of, delay } from 'rxjs';
 
 const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       remark: {
@@ -38,8 +42,8 @@ export class DemoComponent {
         maximum: 5,
         ui: {
           widget: 'mention',
-          inputStyle: 'textarea',
-        } as SFMentionWidgetSchema,
+          inputStyle: 'textarea'
+        } as SFMentionWidgetSchema
       },
       // 异步静态数据源
       async: {
@@ -47,8 +51,8 @@ export class DemoComponent {
         title: 'Async',
         ui: {
           widget: 'mention',
-          asynxcData: () => of(DATA).pipe(delay(1000)),
-        } as SFMentionWidgetSchema,
+          asynxcData: () => of(DATA).pipe(delay(1000))
+        } as SFMentionWidgetSchema
       },
       // 实时数据
       real_time: {
@@ -56,13 +60,12 @@ export class DemoComponent {
         title: 'RealTime',
         ui: {
           widget: 'mention',
-          loadData: (option: MentionOnSearchTypes) => of(DATA.filter(item => item.indexOf(option.value) !== -1)).pipe(delay(300)),
-        } as SFMentionWidgetSchema,
-      },
-    },
+          loadData: (option: MentionOnSearchTypes) =>
+            of(DATA.filter(item => item.indexOf(option.value) !== -1)).pipe(delay(300))
+        } as SFMentionWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
