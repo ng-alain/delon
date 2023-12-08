@@ -16,7 +16,7 @@ import { zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 import { zhCN as dateLang } from 'date-fns/locale';
 import ngLang from '@angular/common/locales/zh';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
-import { provideMockConfig } from '@delon/mock';
+import { mockInterceptor, provideMockConfig } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 import { withAutoCompleteWidget } from '@delon/form/widgets/autocomplete';
 import { withCascaderWidget } from '@delon/form/widgets/cascader';
@@ -50,7 +50,7 @@ const ngZorroConfig: NzConfig = {};
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
     provideAnimations(),
     provideAlain({ config: alainConfig, defaultLang }),
     provideNzConfig(ngZorroConfig),

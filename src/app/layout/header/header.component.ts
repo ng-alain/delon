@@ -27,7 +27,7 @@ import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
 
 const pkg = require('../../../../package.json');
-const minimumVersion = 13;
+const minimumVersion = +pkg.version.split('.')[0] - 2;
 
 @Component({
   selector: 'app-header',
