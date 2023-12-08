@@ -10,6 +10,10 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
+import { G2CardModule } from '@delon/chart/card';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -20,6 +24,8 @@ import { Component } from '@angular/core';
       </ng-template>
     </g2-card>
   `,
+  standalone: true,
+  imports: [G2CardModule, NzToolTipModule, NzIconModule]
 })
 export class DemoComponent {}
 ```

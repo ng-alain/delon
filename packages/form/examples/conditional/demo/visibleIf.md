@@ -14,10 +14,11 @@ order: 2
 Use `visibleIf` to implement more flexible conditional expressions, which can support both display and required items. Feedback status can be updated with `updateFeedback`.
 
 ```ts
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { Observable, of, Subject, catchError, delay, switchMap } from 'rxjs';
 
-import { SFComponent, SFSchema, SFSelectWidgetSchema, SFStringWidgetSchema } from '@delon/form';
+import { DelonFormModule, SFComponent, SFSchema, SFSelectWidgetSchema, SFStringWidgetSchema } from '@delon/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -25,10 +26,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: `
     <button type="button" nz-button (click)="toggleMobile(false)">Hide mobile</button>
     <button type="button" nz-button (click)="toggleMobile(true)">Show mobile</button>
-    <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `
+    <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
+  `,
+  standalone: true,
+  imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent implements OnInit, OnDestroy {
+  private readonly msg = inject(NzMessageService);
+
   @ViewChild('sf', { static: true }) sf!: SFComponent;
   private searchDepartment$ = new Subject<string>();
 
@@ -131,8 +136,6 @@ export class DemoComponent implements OnInit, OnDestroy {
     required: ['login_type'],
     ui: { debug: true }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   ngOnInit(): void {
     const mockHttp = (q: string): Observable<string[]> =>

@@ -14,9 +14,14 @@ title:
 Table with editable rows.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STData } from '@delon/abc/st';
+import { Component, ViewChild, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { STColumn, STComponent, STData, STModule } from '@delon/abc/st';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-demo',
@@ -45,8 +50,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </ng-template>
     </st>
   `,
+  standalone: true,
+  imports: [STModule, NzInputModule, FormsModule, NzInputNumberModule, NzSwitchModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   @ViewChild('st') private st!: STComponent;
   users: STData[] = Array(10)
     .fill({})
@@ -55,7 +63,7 @@ export class DemoComponent {
         id: idx + 1,
         name: `name ${idx + 1}`,
         age: Math.ceil(Math.random() * 10) + 20,
-        enabled: idx % 2 === 0,
+        enabled: idx % 2 === 0
       };
     });
   columns: STColumn[] = [
@@ -69,25 +77,23 @@ export class DemoComponent {
         {
           text: `Edit`,
           iif: i => !i.edit,
-          click: i => this.updateEdit(i, true),
+          click: i => this.updateEdit(i, true)
         },
         {
           text: `Save`,
           iif: i => i.edit,
           click: i => {
             this.submit(i);
-          },
+          }
         },
         {
           text: `Cancel`,
           iif: i => i.edit,
-          click: i => this.updateEdit(i, false),
-        },
-      ],
-    },
+          click: i => this.updateEdit(i, false)
+        }
+      ]
+    }
   ];
-
-  constructor(private msg: NzMessageService) {}
 
   private submit(i: STData): void {
     this.msg.success(JSON.stringify(this.st.pureItem(i)));

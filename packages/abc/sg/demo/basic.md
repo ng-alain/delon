@@ -16,6 +16,8 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
+import { SGModule } from '@delon/abc/sg';
+
 @Component({
   selector: 'app-demo',
   template: ` <div sg-container="4">
@@ -43,7 +45,9 @@ import { Component } from '@angular/core';
         font-size: 13px;
       }
     `
-  ]
+  ],
+  standalone: true,
+  imports: [SGModule]
 })
 export class DemoComponent {
   ls = Array(11).fill(0);

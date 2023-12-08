@@ -14,18 +14,22 @@ title:
 Customize the dropdown menu via `dropdownRender`.
 
 ```ts
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+
+import { DelonFormModule, SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
     @if (schema) {
-      <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+      <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
     }
     <ng-template #dropdownRender>
-      <nz-divider></nz-divider>
+      <nz-divider />
       <div class="container">
         <input type="text" nz-input #inputElement />
         <a class="add-item" (click)="addItem(inputElement)"><i nz-icon nzType="plus"></i> Add item</a>
@@ -49,17 +53,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         padding: 8px;
         display: block;
       }
-    `,
+    `
   ],
+  standalone: true,
+  imports: [DelonFormModule, NzDividerModule, NzInputModule, NzIconModule]
 })
 export class DemoComponent implements OnInit {
+  private readonly msg = inject(NzMessageService);
   @ViewChild('sf', { static: false }) private sf!: SFComponent;
   @ViewChild('dropdownRender', { static: true }) private dropdownRender!: TemplateRef<void>;
 
   schema?: SFSchema;
   statusList: string[] = ['1', '2', '3'];
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));
@@ -75,10 +80,10 @@ export class DemoComponent implements OnInit {
           default: '1',
           ui: {
             widget: 'select',
-            dropdownRender: this.dropdownRender,
-          } as SFSelectWidgetSchema,
-        },
-      },
+            dropdownRender: this.dropdownRender
+          } as SFSelectWidgetSchema
+        }
+      }
     };
   }
 

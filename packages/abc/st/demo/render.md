@@ -19,7 +19,15 @@ Specifying `type="title"` means to customize the column for the title. Additiona
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData } from '@delon/abc/st';
+import { FormsModule } from '@angular/forms';
+
+import { STColumn, STData, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -29,7 +37,7 @@ import { STColumn, STData } from '@delon/abc/st';
         [(ngModel)]="customColumns"
         name="customColumns"
         (ngModelChange)="st.resetColumns({ emitReload: true })"
-      ></nz-checkbox-group>
+      />
     </div>
     <st #st [data]="users" [columns]="columns">
       <ng-template st-row="customTitle" type="title" let-c>
@@ -39,7 +47,14 @@ import { STColumn, STData } from '@delon/abc/st';
         </span>
         <nz-dropdown-menu #menuTpl="nzDropdownMenu">
           <div class="ant-table-filter-dropdown p-sm">
-            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" name="searchValue" class="width-sm mr-sm" />
+            <input
+              type="text"
+              nz-input
+              placeholder="Search name"
+              [(ngModel)]="searchValue"
+              name="searchValue"
+              class="width-sm mr-sm"
+            />
             <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
           </div>
         </nz-dropdown-menu>
@@ -49,6 +64,17 @@ import { STColumn, STData } from '@delon/abc/st';
       </ng-template>
     </st>
   `,
+  standalone: true,
+  imports: [
+    STModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    FormsModule,
+    NzDropDownModule,
+    NzIconModule,
+    NzInputModule,
+    NzToolTipModule
+  ]
 })
 export class DemoComponent {
   searchValue?: string;
@@ -58,7 +84,7 @@ export class DemoComponent {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
+        age: Math.ceil(Math.random() * 10) + 20
       };
     });
   columns: STColumn[] = [
@@ -69,13 +95,13 @@ export class DemoComponent {
       title: '自定义',
       renderTitle: 'customTitle',
       render: 'custom',
-      iif: () => this.isChoose('custom'),
-    },
+      iif: () => this.isChoose('custom')
+    }
   ];
   customColumns = [
     { label: '姓名', value: 'name', checked: true },
     { label: '年龄', value: 'age', checked: true },
-    { label: '自定义', value: 'custom', checked: true },
+    { label: '自定义', value: 'custom', checked: true }
   ];
 
   isChoose(key: string): boolean {

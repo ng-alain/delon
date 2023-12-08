@@ -14,17 +14,23 @@ order: 3
 A complete multiple select sample with remote search, debounce fetch, ajax callback order flow, and loading state.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema, SFSchemaEnum, SFSelectWidgetSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+import { lastValueFrom, map } from 'rxjs';
+
+import { DelonFormModule, SFSchema, SFSchemaEnum, SFSelectWidgetSchema } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
+  private readonly http = inject(_HttpClient);
   schema: SFSchema = {
     properties: {
       status: {
@@ -36,17 +42,20 @@ export class DemoComponent {
           searchDebounceTime: 300,
           searchLoadingText: '搜索中...',
           onSearch: q => {
-            return this.http
-              .get(`https://api.randomuser.me/?results=5&q=${q}`)
-              .pipe(map(res => (res.results as any[]).map(i => ({ label: i.email, value: i.email } as SFSchemaEnum))))
-              .toPromise();
-          },
-        } as SFSelectWidgetSchema,
-      },
-    },
+            return lastValueFrom(
+              this.http
+                .get(`https://api.randomuser.me/?results=5&q=${q}`)
+                .pipe(
+                  map(res =>
+                    (res.results as NzSafeAny[]).map(i => ({ label: i.email, value: i.email }) as SFSchemaEnum)
+                  )
+                )
+            );
+          }
+        } as SFSelectWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService, private http: _HttpClient) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

@@ -14,45 +14,47 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFTimeWidgetSchema } from '@delon/form/widgets/time';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"/>`,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" />`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       time: {
         type: 'string',
-        ui: { widget: 'time' } as SFTimeWidgetSchema,
+        ui: { widget: 'time' } as SFTimeWidgetSchema
       },
       time_number: {
         type: 'number',
-        ui: { widget: 'time' } as SFTimeWidgetSchema,
+        ui: { widget: 'time' } as SFTimeWidgetSchema
       },
       time_format: {
         type: 'string',
         format: 'time',
         ui: {
-          format: `HH:mm:ss+00:00`,
-        } as SFTimeWidgetSchema,
+          format: `HH:mm:ss+00:00`
+        } as SFTimeWidgetSchema
       },
       '12hours': {
         type: 'string',
         ui: {
           widget: 'time',
           format: 'h:mm:ss a',
-          use12Hours: true,
-        } as SFTimeWidgetSchema,
-      },
-    },
+          use12Hours: true
+        } as SFTimeWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

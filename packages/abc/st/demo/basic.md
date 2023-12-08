@@ -16,7 +16,8 @@ Quickly generate tables; use `res` to adapted backend data format.
 ```ts
 import { Component, ViewChild } from '@angular/core';
 
-import { STColumn, STComponent } from '@delon/abc/st';
+import { STColumn, STComponent, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 interface User {
   id: number;
@@ -39,8 +40,10 @@ interface User {
   selector: 'app-demo',
   template: `
     <button nz-button nzType="primary" (click)="setRow()">setRow Method</button>
-    <st #st [widthMode]="{ type: 'strict' }" [data]="url" [req]="{ params: params }" [columns]="columns"></st>
-  `
+    <st #st [widthMode]="{ type: 'strict' }" [data]="url" [req]="{ params: params }" [columns]="columns" />
+  `,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;

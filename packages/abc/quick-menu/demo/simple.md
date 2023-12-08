@@ -16,6 +16,10 @@ Click the question icon on the right to switch the status menu.
 ```ts
 import { Component } from '@angular/core';
 
+import { QuickMenuModule } from '@delon/abc/quick-menu';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzListModule } from 'ng-zorro-antd/list';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -30,6 +34,8 @@ import { Component } from '@angular/core';
       </nz-list>
     </quick-menu>
   `,
+  standalone: true,
+  imports: [NzButtonModule, QuickMenuModule, NzListModule]
 })
 export class DemoComponent {
   expand = false;

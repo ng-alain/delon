@@ -23,8 +23,12 @@ Support for reactive forms.
 
 ```ts
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -44,7 +48,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
       <button nz-button nzType="link" type="button" (click)="updateValue()">Update value via patchValue</button>
     </se>
-  </form>`
+  </form>`,
+  standalone: true,
+  imports: [SEModule, NzFormModule, NzInputModule, ReactiveFormsModule, NzButtonModule]
 })
 export class DemoComponent {
   validateForm = new FormGroup({

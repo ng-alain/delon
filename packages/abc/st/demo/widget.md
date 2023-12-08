@@ -15,7 +15,9 @@ The type is `widget` custom widget, eg: Click on Avatar effect, View [source cod
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc/st';
+
+import { STColumn, STComponent, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -26,8 +28,10 @@ import { STColumn, STComponent } from '@delon/abc/st';
       <button (click)="st.clearStatus(); st.reload()" nz-button>Clear Status</button>
       <button (click)="changeImg()" nz-button>Change Img Data</button>
     </div>
-    <st #st [data]="url" [columns]="columns"></st>
+    <st #st [data]="url" [columns]="columns" />
   `,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {
   url = `/users?total=100`;
@@ -38,16 +42,16 @@ export class DemoComponent {
       title: '自定义头像',
       type: 'widget',
       widget: { type: 'img', params: ({ record }) => ({ img: record.picture.thumbnail }) },
-      width: 150,
+      width: 150
     },
-    { title: '邮箱', index: 'email' },
+    { title: '邮箱', index: 'email' }
   ];
 
   changeImg(): void {
     this.st.setRow(
       0,
       { picture: { thumbnail: 'https://ng-alain.com/assets/img/logo-color.svg' } },
-      { refreshSchema: true, emitReload: false },
+      { refreshSchema: true, emitReload: false }
     );
   }
 }

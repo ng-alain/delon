@@ -8,19 +8,23 @@ title:
 通过设置 `x`，`y` 属性，可以快速的构建出一个漂亮的柱状图，各种纬度的关系则是通过自定义的数据展现。
 
 ```ts
-import { Component } from '@angular/core';
-import { G2BarClickItem, G2BarData } from '@delon/chart/bar';
+import { Component, inject } from '@angular/core';
+
+import { G2BarClickItem, G2BarData, G2BarModule } from '@delon/chart/bar';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)"></g2-bar>
+    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)" />
   `,
+  standalone: true,
+  imports: [NzButtonModule, G2BarModule]
 })
 export class DemoComponent {
-  constructor(private msg: NzMessageService) {}
+  private readonly msg = inject(NzMessageService);
 
   salesData = this.genData();
 
@@ -28,7 +32,7 @@ export class DemoComponent {
     return new Array(12).fill({}).map((_i, idx) => ({
       x: `${idx + 1}月`,
       y: Math.floor(Math.random() * 1000) + 200,
-      color: idx > 5 ? '#f50' : undefined,
+      color: idx > 5 ? '#f50' : undefined
     }));
   }
 

@@ -8,22 +8,26 @@ title:
 基础用法。
 
 ```ts
-import { Component } from '@angular/core';
-import { G2MiniAreaClickItem, G2MiniAreaData } from '@delon/chart/mini-area';
+import { Component, inject } from '@angular/core';
+
 import { format } from 'date-fns';
+
+import { G2MiniAreaClickItem, G2MiniAreaData, G2MiniAreaModule } from '@delon/chart/mini-area';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-mini-area line color="#cceafe" height="45" [data]="visitData" (clickItem)="handleClick($event)"></g2-mini-area>
+    <g2-mini-area line color="#cceafe" height="45" [data]="visitData" (clickItem)="handleClick($event)" />
   `,
+  standalone: true,
+  imports: [NzButtonModule, G2MiniAreaModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   visitData = this.genData();
-
-  constructor(private msg: NzMessageService) {}
 
   private genData(): G2MiniAreaData[] {
     const beginDay = new Date().getTime();
@@ -31,7 +35,7 @@ export class DemoComponent {
     for (let i = 0; i < 20; i += 1) {
       res.push({
         x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
-        y: Math.floor(Math.random() * 100) + 10,
+        y: Math.floor(Math.random() * 100) + 10
       });
     }
     return res;

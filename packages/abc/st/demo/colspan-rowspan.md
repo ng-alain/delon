@@ -16,7 +16,7 @@ The table supports row/column merging, use `onCell` to set, if return `colSpan` 
 ```ts
 import { Component } from '@angular/core';
 
-import { STColumn, STData, STOnCellResult } from '@delon/abc/st';
+import { STColumn, STData, STModule, STOnCellResult } from '@delon/abc/st';
 
 // In the fifth row, other columns are merged into first column
 // by setting it's colSpan to be 0
@@ -30,8 +30,9 @@ const sharedOnCell = (_: STData, index: number): STOnCellResult => {
 
 @Component({
   selector: 'app-demo',
-  template: ` <st #st [data]="url" [ps]="5" [req]="{ params: params }" [columns]="columns" bordered size="middle">
-  </st>`
+  template: ` <st #st [data]="url" [ps]="5" [req]="{ params: params }" [columns]="columns" bordered size="middle" />`,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;

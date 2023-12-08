@@ -17,7 +17,7 @@ type: Pipe
 等等。
 
 ```html
-{{data.registered | _date: 'YYYY年MM月DD日'}}
+{{data.registered | _date: 'yyyy年MM月dd日'}}
 ```
 
 输出：

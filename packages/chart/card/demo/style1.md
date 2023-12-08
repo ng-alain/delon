@@ -10,10 +10,21 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
+import { G2CardModule } from '@delon/chart/card';
+import { TrendModule } from '@delon/chart/trend';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 @Component({
   selector: 'app-demo',
   template: `
-    <g2-card [title]="'销售额'" [bordered]="true" [total]="'¥ 126,560.00'" footer="日访问量 12,423" contentHeight="46" [action]="action">
+    <g2-card
+      [title]="'销售额'"
+      [bordered]="true"
+      [total]="'¥ 126,560.00'"
+      footer="日访问量 12,423"
+      contentHeight="46"
+      [action]="action"
+    >
       <ng-template #action>
         <i nz-tooltip nzTooltipTitle="指标说明" nz-icon nzType="info-circle"></i>
       </ng-template>
@@ -23,6 +34,8 @@ import { Component } from '@angular/core';
       <trend flag="down" style="margin: 0 0 0 8px; color: rgba(0,0,0,.85)">11%</trend>
     </g2-card>
   `,
+  standalone: true,
+  imports: [G2CardModule, NzToolTipModule, TrendModule]
 })
 export class DemoComponent {}
 ```

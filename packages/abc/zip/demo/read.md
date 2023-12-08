@@ -12,11 +12,13 @@ title: 解压
 Read Zip file information (including content), support File, URL form.
 
 ```ts
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import type jsZipType from 'jszip';
 
 import { ZipService } from '@delon/abc/zip';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -29,12 +31,14 @@ import { ZipService } from '@delon/abc/zip';
       }
     </ol>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzButtonModule, JsonPipe]
 })
 export class DemoComponent {
+  private readonly zip = inject(ZipService);
+  private readonly cdr = inject(ChangeDetectorRef);
   data: Array<{ name: string; dir: boolean; date: Date }> = [];
-
-  constructor(private zip: ZipService, private cdr: ChangeDetectorRef) {}
 
   private format(data: jsZipType): void {
     const files = data.files;

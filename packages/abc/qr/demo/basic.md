@@ -16,17 +16,22 @@ Simplest of usage.
 ```ts
 import { Component, OnInit } from '@angular/core';
 
+import { QRModule } from '@delon/abc/qr';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
 @Component({
   selector: 'app-demo',
   template: `
     <h3>{{ type }}</h3>
-    <qr [value]="value"></qr>
+    <qr [value]="value" />
     <div>
       @for (t of types; track $index) {
         <button nz-button (click)="change(t)">{{ t }}</button>
       }
     </div>
   `,
+  standalone: true,
+  imports: [QRModule, NzButtonModule]
 })
 export class DemoComponent implements OnInit {
   types = ['url', 'email', 'tel', 'cn', 'vcard'];

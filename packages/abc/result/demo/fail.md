@@ -8,6 +8,10 @@ title: Failed
 ```ts
 import { Component } from '@angular/core';
 
+import { ResultModule } from '@delon/abc/result';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -26,6 +30,8 @@ import { Component } from '@angular/core';
       <button nz-button [nzType]="'primary'">返回修改</button>
     </result>
   `,
+  standalone: true,
+  imports: [ResultModule, NzIconModule, NzButtonModule]
 })
 export class DemoComponent {}
 ```

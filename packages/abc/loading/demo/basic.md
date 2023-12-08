@@ -14,8 +14,10 @@ title:
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { LoadingService, LoadingType } from '@delon/abc/loading';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -24,9 +26,11 @@ import { LoadingService, LoadingType } from '@delon/abc/loading';
     <button nz-button (click)="show('spin')">Spin</button>
     <button nz-button (click)="show('text')">Only Text</button>
   `,
+  standalone: true,
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
-  constructor(private loadingSrv: LoadingService) {}
+  private readonly loadingSrv = inject(LoadingService);
 
   show(type: LoadingType): void {
     this.loadingSrv.open({ type });

@@ -6,8 +6,14 @@ title: Classic
 典型结果页面。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { ResultModule } from '@delon/abc/result';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
   selector: 'app-demo',
@@ -37,7 +43,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
           <nz-step [nzTitle]="'创建项目'" [nzDescription]="createDesc">
             <ng-template #createDesc>
               <div style="font-size: 14px; position: relative; left: 38px; text-align: left;">
-                <div style="margin-top: 8px; margin-bottom: 4px;">曲丽丽<i nz-icon nzType="dingding" class="ml-sm"></i></div>
+                <div style="margin-top: 8px; margin-bottom: 4px;"
+                  >曲丽丽<i nz-icon nzType="dingding" class="ml-sm"></i
+                ></div>
                 <div style="margin-top: 8px; margin-bottom: 4px;">2016-12-12 12:32</div>
               </div>
             </ng-template>
@@ -54,8 +62,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
               </div>
             </ng-template>
           </nz-step>
-          <nz-step [nzTitle]="'财务复核'"></nz-step>
-          <nz-step [nzTitle]="'完成'"></nz-step>
+          <nz-step [nzTitle]="'财务复核'" />
+          <nz-step [nzTitle]="'完成'" />
         </nz-steps>
       </ng-template>
       <button nz-button [nzType]="'primary'">返回列表</button>
@@ -63,8 +71,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button>打 印</button>
     </result>
   `,
+  standalone: true,
+  imports: [ResultModule, NzGridModule, NzStepsModule, NzIconModule, NzButtonModule]
 })
 export class DemoComponent {
-  constructor(public msg: NzMessageService) {}
+  readonly msg = inject(NzMessageService);
 }
 ```

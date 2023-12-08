@@ -14,24 +14,28 @@ order: 1
 Coordinating the selection of provinces and cities is a common use case and demonstrates how selection can be coordinated.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
-import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { Component, ViewChild, inject } from '@angular/core';
 import { of, delay, tap } from 'rxjs';
+
+import { DelonFormModule, SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf #sf [schema]="schema" [formData]="data" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf #sf [schema]="schema" [formData]="data" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   @ViewChild('sf', { static: false }) private sf!: SFComponent;
   data = {
     province: 'Zhejiang',
-    city: 'Ningbo',
+    city: 'Ningbo'
   };
   private cityData: { [place: string]: string[] } = {
     Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
-    Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
+    Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang']
   };
   schema: SFSchema = {
     properties: {
@@ -43,22 +47,20 @@ export class DemoComponent {
           asyncData: () =>
             of(['Zhejiang', 'Jiangsu']).pipe(
               delay(100),
-              tap(() => this.updateCity(this.data.province, this.data.city)),
+              tap(() => this.updateCity(this.data.province, this.data.city))
             ),
-          change: i => this.updateCity(i),
-        } as SFSelectWidgetSchema,
+          change: i => this.updateCity(i)
+        } as SFSelectWidgetSchema
       },
       city: {
         type: 'string',
         title: 'City',
         ui: {
-          widget: 'select',
-        } as SFSelectWidgetSchema,
-      },
-    },
+          widget: 'select'
+        } as SFSelectWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

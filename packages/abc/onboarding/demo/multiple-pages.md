@@ -14,9 +14,11 @@ order: 1
 Use `url` to change the routing, it's recommended to use `before` to delay, otherwise the target element may not be obtained.
 
 ```ts
-import { Component } from '@angular/core';
-import { OnboardingService } from '@delon/abc/onboarding';
+import { Component, inject } from '@angular/core';
+
+import { OnboardingModule, OnboardingService } from '@delon/abc/onboarding';
 import { _HttpClient } from '@delon/theme';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'demo',
@@ -27,9 +29,11 @@ import { _HttpClient } from '@delon/theme';
     </div>
     <button nz-button (click)="start()">Start</button>
   `,
+  standalone: true,
+  imports: [NzButtonModule, OnboardingModule]
 })
 export class DemoComponent {
-  constructor(private srv: OnboardingService) {}
+  private readonly srv = inject(OnboardingService);
 
   start(): void {
     this.srv.start({
@@ -39,7 +43,7 @@ export class DemoComponent {
           content: 'The user guidance is to help users better understand and use the product',
           next: `Go to home`,
           width: 300,
-          url: '/components/onboarding',
+          url: '/components/onboarding'
         },
         {
           selectors: '.page-banner__slogan',
@@ -47,15 +51,15 @@ export class DemoComponent {
             'ng-alain is an MIT-licensed open source project. In order to achieve better and sustainable development of the project, we expect to gain more backers. You can support us in any of the following ways, Or purchasing our <a href="https://e.ng-alain.com/" target="_blank">business theme</a>',
           width: 300,
           url: '/',
-          before: 200,
+          before: 200
         },
         {
           selectors: '.test2-3',
           title: 'Test3',
           content: 'The user guidance is to help users better understand and use the product',
-          url: '/components/onboarding',
-        },
-      ],
+          url: '/components/onboarding'
+        }
+      ]
     });
   }
 }

@@ -10,7 +10,8 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
-import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
+import { G2TimelineData, G2TimelineMap, G2TimelineModule } from '@delon/chart/timeline';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -20,7 +21,9 @@ import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
       <button nz-button (click)="refresh(i)" nzType="primary">{{ i }} axis</button>
     }
     <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300" />
-  `
+  `,
+  standalone: true,
+  imports: [G2TimelineModule, NzButtonModule]
 })
 export class DemoComponent {
   chartData: G2TimelineData[] = [];

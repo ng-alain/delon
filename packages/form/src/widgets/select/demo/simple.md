@@ -14,20 +14,24 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { of, delay } from 'rxjs';
 
-import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { DelonFormModule, SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
     <button nz-button (click)="updateStatus()">Update Status</button>
-  `
+  `,
+  standalone: true,
+  imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   @ViewChild('sf', { static: false }) private sf!: SFComponent;
   schema: SFSchema = {
     properties: {
@@ -93,8 +97,6 @@ export class DemoComponent {
       }
     }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

@@ -15,6 +15,12 @@ Build a standard form row.
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-demo',
@@ -29,6 +35,8 @@ import { Component } from '@angular/core';
       </ng-template>
     </se>
   </form>`,
+  standalone: true,
+  imports: [SEModule, NzFormModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {}
 ```

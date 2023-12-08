@@ -14,16 +14,20 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { Component, inject } from '@angular/core';
+
+import { DelonFormModule, SFSchema } from '@delon/form';
 import type { SFRateWidgetSchema } from '@delon/form/widgets/rate';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   schema: SFSchema = {
     properties: {
       rate: {
@@ -31,8 +35,8 @@ export class DemoComponent {
         title: '评级',
         default: 4.5,
         ui: {
-          widget: 'rate',
-        } as SFRateWidgetSchema,
+          widget: 'rate'
+        } as SFRateWidgetSchema
       },
       // 允许半选
       rate2: {
@@ -43,13 +47,11 @@ export class DemoComponent {
         default: 4.5,
         ui: {
           widget: 'rate',
-          text: '{{value}} starts',
-        } as SFRateWidgetSchema,
-      },
-    },
+          text: '{{value}} starts'
+        } as SFRateWidgetSchema
+      }
+    }
   };
-
-  constructor(private msg: NzMessageService) {}
 
   submit(value: {}): void {
     this.msg.success(JSON.stringify(value));

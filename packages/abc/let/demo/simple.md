@@ -16,6 +16,9 @@ Simplest of usage.
 ```ts
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { LetDirective } from '@delon/abc/let';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -29,6 +32,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     <button nz-button (click)="update()">Random Value</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LetDirective, NzButtonModule]
 })
 export class DemoComponent {
   v1Count = 0;

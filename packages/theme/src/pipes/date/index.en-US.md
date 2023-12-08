@@ -15,7 +15,7 @@ date-fns supports different kinds of time formats, such as:
 + 1503571962333
 
 ```html
-{{data.registered | _date: 'YYYY年MM月DD日'}}
+{{data.registered | _date: 'yyyy年MM月dd日'}}
 ```
 
 Output:

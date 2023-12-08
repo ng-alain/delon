@@ -15,6 +15,12 @@ With border and background color.
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { SVModule } from '@delon/abc/sv';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -33,7 +39,7 @@ import { Component } from '@angular/core';
       <sv label="Age">25</sv>
       <sv label="Long Optional Long Optional" optional="(RMB)">Optional</sv>
       <sv label="Optional" optionalHelp="Tips">Optional Help</sv>
-      <sv label="Default" optionalHelp="The background color is #f50" optionalHelpColor="#f50"></sv>
+      <sv label="Default" optionalHelp="The background color is #f50" optionalHelpColor="#f50" />
       <sv [label]="label" col="1">
         <ng-template #label>
           <a nz-tooltip="test">long</a>
@@ -43,7 +49,9 @@ import { Component } from '@angular/core';
         <p>Custom label</p>
       </sv>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [SVModule, NzButtonModule, NzRadioModule, NzToolTipModule, FormsModule]
 })
 export class DemoComponent {
   bordered = true;
