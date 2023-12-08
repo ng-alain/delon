@@ -7,6 +7,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
+  - stage: env
+    jobs:
+      - job: Nodes
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
+
   - stage: build
     jobs:
       - job: build
@@ -76,6 +86,7 @@ stages:
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
+    dependsOn: env
 
   - stage: test
     jobs:
@@ -122,6 +133,7 @@ stages:
           - script: yarn install
             displayName: 'Install'
           - script: yarn run test:cli
+    dependsOn: env
 
   - stage: lint
     jobs:
@@ -135,3 +147,4 @@ stages:
           - script: yarn install
             displayName: 'Install'
           - script: yarn run lint
+    dependsOn: env
