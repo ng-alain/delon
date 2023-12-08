@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { Subject, Subscription, filter, takeUntil } from 'rxjs';
 
-import type { Chart, Types } from '@antv/g2';
+import type { Chart, MarkNode } from '@antv/g2';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -39,7 +39,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     protected platform: Platform,
     protected cdr: ChangeDetectorRef
   ) {
-    this.theme = srv.cog.theme!;
+    // this.theme = srv.cog.theme!;
     this.srv.notify
       .pipe(
         takeUntil(this.destroy$),
@@ -55,10 +55,11 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   protected resize$?: Subscription;
   protected destroy$ = new Subject<void>();
   protected _chart!: Chart;
+  protected mark?: MarkNode;
   loaded = false;
 
   @Input() @InputNumber() delay = 0;
-  @Input() theme: string | Types.LooseObject;
+  @Input() theme?: string;
   @Output() readonly ready = new EventEmitter<Chart>();
 
   /** 检查是否只变更数据 */
@@ -102,7 +103,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     const isOnlyChangeData = this.onlyChangeData
       ? this.onlyChangeData(changes)
       : Object.keys(changes).length === 1 && !!changes.data;
-    if (isOnlyChangeData) {
+    if (this.chart && isOnlyChangeData) {
       this.changeData();
       return;
     }
@@ -114,9 +115,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   @ZoneOutside()
   protected destroyChart(): this {
-    if (this._chart) {
-      this._chart.destroy();
-    }
+    this._chart?.destroy();
     return this;
   }
 

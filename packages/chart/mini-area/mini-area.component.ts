@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+// import type { Chart, Event } from '@antv/g2';
 
-import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
+import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -55,70 +55,61 @@ export class G2MiniAreaComponent extends G2BaseComponent {
   // #endregion
 
   install(): void {
-    const {
-      el,
-      fit,
-      height,
-      padding,
-      xAxis,
-      yAxis,
-      yTooltipSuffix,
-      tooltipType,
-      line,
-      theme,
-      animate,
-      color,
-      borderColor,
-      borderWidth
-    } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: el.nativeElement,
-      autoFit: fit,
-      height,
-      padding,
-      theme
-    }));
-    chart.animate(animate);
-
-    if (!xAxis && !yAxis) {
-      chart.axis(false);
-    }
-
-    if (xAxis) {
-      chart.axis('x', xAxis);
-    } else {
-      chart.axis('x', false);
-    }
-
-    if (yAxis) {
-      chart.axis('y', yAxis);
-    } else {
-      chart.axis('y', false);
-    }
-
-    chart.legend(false);
-    chart.tooltip(genMiniTooltipOptions(tooltipType));
-
-    chart
-      .area()
-      .position('x*y')
-      .color(color)
-      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
-      .shape('smooth');
-
-    if (line) {
-      chart.line().position('x*y').shape('smooth').color(borderColor).size(borderWidth).tooltip(false);
-    }
-
-    chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
-      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
-    });
-
-    this.ready.next(chart);
-
-    this.changeData();
-    chart.render();
+    // const {
+    //   el,
+    //   fit,
+    //   height,
+    //   padding,
+    //   xAxis,
+    //   yAxis,
+    //   yTooltipSuffix,
+    //   tooltipType,
+    //   line,
+    //   theme,
+    //   animate,
+    //   color,
+    //   borderColor,
+    //   borderWidth
+    // } = this;
+    // const chart: Chart = (this._chart = new this.winG2.Chart({
+    //   container: el.nativeElement,
+    //   autoFit: fit,
+    //   height,
+    //   padding,
+    //   theme
+    // }));
+    // chart.animate(animate);
+    // if (!xAxis && !yAxis) {
+    //   chart.axis(false);
+    // }
+    // if (xAxis) {
+    //   chart.axis('x', xAxis);
+    // } else {
+    //   chart.axis('x', false);
+    // }
+    // if (yAxis) {
+    //   chart.axis('y', yAxis);
+    // } else {
+    //   chart.axis('y', false);
+    // }
+    // chart.legend(false);
+    // chart.tooltip(genMiniTooltipOptions(tooltipType));
+    // chart
+    //   .area()
+    //   .position('x*y')
+    //   .color(color)
+    //   .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
+    //   .shape('smooth');
+    // if (line) {
+    //   chart.line().position('x*y').shape('smooth').color(borderColor).size(borderWidth).tooltip(false);
+    // }
+    // chart.on(`plot:click`, (ev: Event) => {
+    //   const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
+    //   this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+    // });
+    // this.ready.next(chart);
+    // this.changeData();
+    // chart.render();
   }
 
   changeData(): void {

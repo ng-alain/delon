@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { fromEvent, debounceTime, filter, takeUntil } from 'rxjs';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, InteractionTypes } from '@antv/g2';
 
-import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
+import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -26,7 +26,7 @@ export interface G2BarData {
 
 export interface G2BarClickItem {
   item: G2BarData;
-  ev: Event;
+  ev: NzSafeAny;
 }
 
 @Component({
@@ -60,7 +60,7 @@ export class G2BarComponent extends G2BaseComponent {
   @Input() padding: number | number[] | 'auto' = 'auto';
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
-  @Input() interaction: G2InteractionType = 'none';
+  @Input() interaction?: InteractionTypes;
   @Output() readonly clickItem = new EventEmitter<G2BarClickItem>();
 
   // #endregion
@@ -70,7 +70,7 @@ export class G2BarComponent extends G2BaseComponent {
   }
 
   install(): void {
-    const { node, padding, interaction, theme } = this;
+    const { node, padding, theme, interaction } = this;
 
     const container = node.nativeElement as HTMLElement;
     const chart: Chart = (this._chart = new this.winG2.Chart({
@@ -80,42 +80,30 @@ export class G2BarComponent extends G2BaseComponent {
       padding,
       theme
     }));
-    this.updatelabel();
-    chart.axis('y', {
-      title: null,
-      line: null,
-      tickLine: null
-    });
-    chart.scale({
-      x: {
-        type: 'cat'
-      },
-      y: {
-        min: 0
-      }
-    });
-    chart.tooltip({
-      showTitle: false
-    });
-    if (interaction !== 'none') {
-      chart.interaction(interaction);
-    }
-    chart.legend(false);
-    chart
-      .interval()
-      .position('x*y')
-      .color('x*y', (x, y) => {
-        const colorItem = this.data.find(w => w.x === x && w.y === y);
-        return colorItem && colorItem.color ? colorItem.color : this.color;
+    this.mark = chart.interval();
+    this.mark
+      .legend(false)
+      .interaction(interaction)
+      .encode('x', 'x')
+      .encode('y', 'y')
+      .encode('color', 'x')
+      .axis('x', { title: null })
+      .axis('y', { title: null, line: null, tickLine: null })
+      .scale('color', {
+        range: this.data.map(({ color }) => color ?? this.color)
       })
-      .tooltip('x*y', (x, y) => ({ name: x, value: y }));
+      .tooltip({
+        title: '',
+        items: [(_, i, ___, column) => ({ name: column.x.value[i!], value: column.y.value[i!] })]
+      });
 
-    chart.on(`interval:click`, (ev: Event) => {
+    chart.on(`interval:click`, (ev: NzSafeAny) => {
       this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
     });
 
     this.ready.next(chart);
 
+    this.updatelabel();
     this.changeData();
     chart.render();
     this.installResizeEvent();
@@ -129,10 +117,10 @@ export class G2BarComponent extends G2BaseComponent {
   }
 
   private updatelabel(): void {
-    const { node, data, _chart } = this;
+    const { node, data } = this;
     const canvasWidth = node.nativeElement.clientWidth;
     const minWidth = data.length * 30;
-    _chart.axis('x', canvasWidth > minWidth).render();
+    this.mark?.axis('x', canvasWidth > minWidth ? { title: null } : false);
   }
 
   private installResizeEvent(): void {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
-import type { Chart } from '@antv/g2';
+// import type { Chart } from '@antv/g2';
 
 import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
@@ -42,47 +42,43 @@ export class G2SingleBarComponent extends G2BaseComponent {
   // #endregion
 
   install(): void {
-    const { el, height, padding, textStyle, line, format, theme, min, max, plusColor, minusColor, barSize } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: el.nativeElement,
-      autoFit: true,
-      height,
-      padding,
-      theme
-    }));
-    chart.legend(false);
-    chart.axis(false);
-    chart.scale({ value: { max, min } });
-    chart.tooltip(false);
-    chart.coordinate().transpose();
-    chart
-      .interval()
-      .position('1*value')
-      .color('value', (val: number) => (val > 0 ? plusColor : minusColor))
-      .size(barSize)
-      .label('value', () => ({
-        formatter: format,
-        style: {
-          ...textStyle
-        }
-      }));
-
-    if (line) {
-      chart.annotation().line({
-        start: ['50%', '0%'],
-        end: ['50%', '100%'],
-        style: {
-          stroke: '#e8e8e8',
-          lineDash: [0, 0]
-        }
-      });
-    }
-
-    this.ready.next(chart);
-
-    this.changeData();
-
-    chart.render();
+    // const { el, height, padding, textStyle, line, format, theme, min, max, plusColor, minusColor, barSize } = this;
+    // const chart: Chart = (this._chart = new this.winG2.Chart({
+    //   container: el.nativeElement,
+    //   autoFit: true,
+    //   height,
+    //   padding,
+    //   theme
+    // }));
+    // chart.legend(false);
+    // chart.axis(false);
+    // chart.scale({ value: { max, min } });
+    // chart.tooltip(false);
+    // chart.coordinate().transpose();
+    // chart
+    //   .interval()
+    //   .position('1*value')
+    //   .color('value', (val: number) => (val > 0 ? plusColor : minusColor))
+    //   .size(barSize)
+    //   .label('value', () => ({
+    //     formatter: format,
+    //     style: {
+    //       ...textStyle
+    //     }
+    //   }));
+    // if (line) {
+    //   chart.annotation().line({
+    //     start: ['50%', '0%'],
+    //     end: ['50%', '100%'],
+    //     style: {
+    //       stroke: '#e8e8e8',
+    //       lineDash: [0, 0]
+    //     }
+    //   });
+    // }
+    // this.ready.next(chart);
+    // this.changeData();
+    // chart.render();
   }
 
   onlyChangeData = (changes: SimpleChanges): boolean => {

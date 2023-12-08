@@ -68,7 +68,7 @@
     "express": "^4.18.2",
     "@angular/elements": "^17.0.0",
     "@antv/data-set": "^0.11.8",
-    "@antv/g2": "^4.2.10",
+    "@antv/g2": "^5.1.6",
     "echarts": "^5.4.3",
     "@stackblitz/sdk": "^1.9.0",
     "codesandbox": "^2.2.3",
