@@ -14,6 +14,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>17.0.3 (2023-12-08)</small>
+
+* fix(theme:i18n): 纠正 `i18n` 管道参数类型不匹配 (#1723) ([bdf0e62](https://github.com/ng-alain/delon/commit/bdf0e62)), closes [#1723](https://github.com/ng-alain/delon/issues/1723)
+* fix(cli): 纠正生成NG-ALAIN存在空值问题 (#1724) ([c88c9f2](https://github.com/ng-alain/delon/commit/c88c9f2)), closes [#1724](https://github.com/ng-alain/delon/issues/1724)
+
+
 ## <small>17.0.2 (2023-11-27)</small>
 
 * fix(cli): fix cannot find module `@angular/cdk/schematics` (#1721) ([49a84a1](https://github.com/ng-alain/delon/commit/49a84a1)), closes [#1721](https://github.com/ng-alain/delon/issues/1721)
