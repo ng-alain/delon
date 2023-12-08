@@ -21,6 +21,11 @@ stages:
     jobs:
       - job: build
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'fromFile'
+              versionFilePath: '.nvmrc'
+            displayName: 'Install Node.js'
           - script: |
               node --version
               yarn --version
@@ -76,7 +81,7 @@ stages:
             env:
               ACCESS_REPO: $(ACCESS_REPO)
               ACCESS_TOKEN: $(ACCESS_TOKEN)
-    dependsOn: env
+    # dependsOn: env
 
   - stage: test
     jobs:
