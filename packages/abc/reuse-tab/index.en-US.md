@@ -17,7 +17,7 @@ The newly opened is always the current page, and the route reuse means that when
 1. Provide `provideReuseTabConfig()` configuration in `app.config.ts` file
 2. Add `<reuse-tab>` in the `src/app/layout/basic/basic.component.ts` file, like this:
 
-```diff
+```html
 - <router-outlet />
 + <reuse-tab #reuseTab />
 + <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" />

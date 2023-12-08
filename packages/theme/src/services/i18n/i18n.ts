@@ -52,7 +52,7 @@ export interface AlainI18NService {
    * @param params 模板所需要的参数对象
    * @param isSafe 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`; Should be removed, If you need SafeHtml support, please use `| html` pipe instead.
    */
-  fanyi(path: string, params?: unknown): string;
+  fanyi(path: string, params?: unknown | unknown[]): string;
 }
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainI18nToken', {
@@ -122,20 +122,27 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
 
   abstract getLangs(): NzSafeAny[];
 
-  fanyi(path: string, params?: Record<string, unknown>): string {
+  fanyi(path: string, params?: unknown | unknown[]): string {
     let content = this._data[path] || '';
     if (!content) return path;
 
-    if (params) {
+    if (!params) return content;
+
+    if (typeof params === 'object') {
       const interpolation = this.cog.interpolation!!;
-      Object.keys(params).forEach(
+      const objParams = params as Record<string, unknown>;
+      Object.keys(objParams).forEach(
         key =>
           (content = content.replace(
-            new RegExp(`${interpolation[0]}\s?${key}\s?${interpolation[1]}`, 'g'),
-            `${params[key]}`
+            new RegExp(`${interpolation[0]}\\s?${key}\\s?${interpolation[1]}`, 'g'),
+            `${objParams[key]}`
           ))
       );
     }
+
+    (Array.isArray(params) ? params : [params]).forEach(
+      (item, index) => (content = content.replace(new RegExp(`\\{\\s?${index}\\s?\\}`, 'g'), `${item}`))
+    );
     return content;
   }
 }

@@ -17,7 +17,7 @@ standalone: true
 1. 在 `app.config.ts` 下提供 `provideReuseTabConfig()` 配置
 2. 在需要展示标签的地方调用 `<reuse-tab>`，一般在 `src/app/layout/basic/basic.component.ts`，例如：
 
-```diff
+```html
 - <router-outlet />
 + <reuse-tab #reuseTab />
 + <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" />
