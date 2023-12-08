@@ -35,7 +35,7 @@ export default {
             browser: 'src/main.ts',
             outputPath: 'dist/demo',
             scripts: [],
-            styles: ['node_modules/@delon/theme/default.css', 'src/styles.css'],
+            styles: ['src/styles.css'],
             tsConfig: 'tsconfig.json'
           }
         },
