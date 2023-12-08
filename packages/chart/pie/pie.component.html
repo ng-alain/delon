@@ -22,7 +22,7 @@
     </div>
   }
 </div>
-@if (hasLegend && legendData?.length) {
+@if (hasLegend && legendData.length > 0) {
   <ul class="g2-pie__legend">
     @for (item of legendData; track $index) {
       <li (click)="_click($index)" class="g2-pie__legend-item">
