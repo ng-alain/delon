@@ -8,11 +8,11 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import angularJSON from './files/angular.json';
+import appConfigTS from './files/app.config';
 import appModuleTS from './files/app.module';
 import delonABCModuleTS from './files/delon-abc.module';
 import delonChartModuleTS from './files/delon-chart.module';
 import environmentTS from './files/environment';
-import globalConfigTS from './files/global-config.module';
 import mainTS from './files/main';
 import mainCliTS from './files/main-cli';
 import mockUser from './files/mock-user';
@@ -96,6 +96,7 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     [
       'ng-zorro-antd',
+      'ng-antd-color-picker',
       'date-fns',
       '@delon/theme',
       '@delon/abc',
@@ -179,7 +180,20 @@ export class CodeService {
     };
   }
 
+  private attachStandalone(code: string): string {
+    // standalone: true,
+    if (code.includes(`standalone: true`)) return code;
+
+    return `import { DemoDelonABCModule } from './delon-abc.module';
+import { DemoDelonChartModule } from './delon-chart.module';
+import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';\n${code.replace(
+      `@Component({`,
+      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule, DemoDelonChartModule],`
+    )}`;
+  }
+
   openOnStackBlitz(title: string, appComponentCode: string): void {
+    appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
@@ -200,11 +214,11 @@ export class CodeService {
           'package.json': `${JSON.stringify(packageJson, null, 2)}`,
           'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
-          'src/main.ts': mainTS,
+          'src/main.ts': mainTS(res.componentName),
           'src/polyfills.ts': polyfillTS,
           'src/app/app.component.ts': appComponentCode,
-          'src/app/app.module.ts': appModuleTS(res.componentName),
-          'src/app/global-config.module.ts': globalConfigTS,
+          'src/app/app.config.ts': appConfigTS,
+          // 'src/app/app.module.ts': appModuleTS(res.componentName),
           'src/app/ng-zorro-antd.module.ts': nzZorroAntdModuleTS,
           'src/app/delon-abc.module.ts': delonABCModuleTS,
           'src/app/delon-chart.module.ts': delonChartModuleTS,
@@ -254,7 +268,7 @@ export class CodeService {
         isBinary: false
       },
       'src/main.ts': {
-        content: includeCli ? mainCliTS : mainTS,
+        content: includeCli ? mainCliTS : mainTS(res.componentName),
         isBinary: false
       },
       'src/polyfills.ts': {
@@ -263,10 +277,6 @@ export class CodeService {
       },
       'src/app/app.module.ts': {
         content: appModuleTS(res.componentName),
-        isBinary: false
-      },
-      'src/app/global-config.module.ts': {
-        content: globalConfigTS,
         isBinary: false
       },
       'src/app/app.component.ts': {
