@@ -182,10 +182,9 @@ export class CodeService {
     if (code.includes(`standalone: true`)) return code;
 
     return `import { DemoDelonABCModule } from './delon-abc.module';
-import { DemoDelonChartModule } from './delon-chart.module';
 import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';\n${code.replace(
       `@Component({`,
-      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule, DemoDelonChartModule],`
+      `@Component({\n  standalone: true,\n  // Just automatically generated code, please import as needed\n  imports: [DemoNgZorroAntdModule, DemoDelonABCModule],`
     )}`;
   }
 

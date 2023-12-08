@@ -7,12 +7,16 @@ title: Mini tooltip
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { G2MiniBarData } from '@delon/chart/mini-bar';
+
 import { format } from 'date-fns';
+
+import { G2MiniBarData, G2MiniBarModule } from '@delon/chart/mini-bar';
 
 @Component({
   selector: 'app-demo',
-  template: ` <g2-mini-bar height="45" [data]="visitData" yTooltipSuffix="%" tooltipType="mini"></g2-mini-bar> `,
+  template: ` <g2-mini-bar height="45" [data]="visitData" yTooltipSuffix="%" tooltipType="mini" /> `,
+  standalone: true,
+  imports: [G2MiniBarModule]
 })
 export class DemoComponent implements OnInit {
   visitData: G2MiniBarData[] = [];
@@ -21,7 +25,7 @@ export class DemoComponent implements OnInit {
     for (let i = 0; i < 20; i += 1) {
       this.visitData.push({
         x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
-        y: Math.floor(Math.random() * 100) + 10,
+        y: Math.floor(Math.random() * 100) + 10
       });
     }
   }

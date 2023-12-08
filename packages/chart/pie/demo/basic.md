@@ -9,7 +9,9 @@ title:
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { G2PieClickItem, G2PieComponent, G2PieData } from '@delon/chart/pie';
+
+import { G2PieClickItem, G2PieComponent, G2PieData, G2PieModule } from '@delon/chart/pie';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -27,8 +29,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       height="294"
       repaint="false"
       (clickItem)="handleClick($event)"
-    ></g2-pie>
+    />
   `,
+  standalone: true,
+  imports: [NzButtonModule, G2PieModule]
 })
 export class DemoComponent {
   @ViewChild('pie', { static: false }) readonly pie!: G2PieComponent;
@@ -40,33 +44,33 @@ export class DemoComponent {
   }
 
   refresh(): void {
-    const rv = (min: number = 0, max: number = 5000) => Math.floor(Math.random() * (max - min + 1) + min);
+    const rv = (min: number = 0, max: number = 5000): number => Math.floor(Math.random() * (max - min + 1) + min);
     this.salesPieData = [
       {
         x: '家用电器',
-        y: rv(),
+        y: rv()
       },
       {
         x: '食用酒水',
-        y: rv(),
+        y: rv()
       },
       {
         x: '个护健康',
-        y: rv(),
+        y: rv()
       },
       {
         x: '服饰箱包',
-        y: rv(),
+        y: rv()
       },
       {
         x: '母婴产品',
-        y: rv(),
-      },
+        y: rv()
+      }
     ];
     if (Math.random() > 0.5) {
       this.salesPieData.push({
         x: '其他',
-        y: rv(),
+        y: rv()
       });
     }
     this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;

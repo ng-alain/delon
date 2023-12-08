@@ -10,13 +10,17 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
+import { G2PieModule } from '@delon/chart/pie';
+
 @Component({
   selector: 'app-demo',
   template: `
     <div style="width: 200px; display: inline-block">
-      <g2-pie percent="28" subTitle="中式快餐" total="28%" height="130"></g2-pie>
+      <g2-pie percent="28" subTitle="中式快餐" total="28%" height="130" />
     </div>
   `,
+  standalone: true,
+  imports: [G2PieModule]
 })
 export class DemoComponent {}
 ```

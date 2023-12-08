@@ -9,15 +9,19 @@ title:
 
 ```ts
 import { Component } from '@angular/core';
-import { G2TagCloudClickItem, G2TagCloudData } from '@delon/chart/tag-cloud';
+
+import { G2TagCloudClickItem, G2TagCloudData, G2TagCloudModule } from '@delon/chart/tag-cloud';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-tag-cloud [data]="tags" height="400" (clickItem)="handleClick($event)"></g2-tag-cloud>
+    <g2-tag-cloud [data]="tags" height="400" (clickItem)="handleClick($event)" />
   `,
+  standalone: true,
+  imports: [NzButtonModule, G2TagCloudModule]
 })
 export class DemoComponent {
   tags: G2TagCloudData[] = [];
@@ -27,7 +31,7 @@ export class DemoComponent {
   }
 
   refresh(): void {
-    const rv = (min: number = 1, max: number = 10) => Math.floor(Math.random() * (max - min + 1) + min);
+    const rv = (min: number = 1, max: number = 10): number => Math.floor(Math.random() * (max - min + 1) + min);
 
     this.tags = [
       { value: rv(), name: 'NG-ALAIN' },
@@ -209,7 +213,7 @@ export class DemoComponent {
       { value: rv(), name: 'Tableau' },
       { value: rv(), name: 'D3' },
       { value: rv(), name: 'Vega' },
-      { value: rv(), name: '统计图表' },
+      { value: rv(), name: '统计图表' }
     ];
   }
 

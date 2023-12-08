@@ -14,15 +14,21 @@ title:
 Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic.html)。
 
 ```ts
-import { Component, ElementRef, NgZone } from '@angular/core';
+import { Component, ElementRef, NgZone, inject } from '@angular/core';
+
 import type { Chart } from '@antv/g2';
+
+import { G2CustomModule } from '@delon/chart/custom';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'chart-custom-basic',
-  template: ` <g2-custom delay="100" (render)="render($event)"></g2-custom> `,
+  template: ` <g2-custom delay="100" (render)="render($event)" /> `,
+  standalone: true,
+  imports: [G2CustomModule]
 })
 export class DemoComponent {
-  constructor(private ngZone: NgZone) {}
+  private readonly ngZone = inject(NgZone);
 
   render(el: ElementRef<HTMLDivElement>): void {
     this.ngZone.runOutsideAngular(() => this.init(el.nativeElement));
@@ -34,17 +40,17 @@ export class DemoComponent {
       { action: '放入购物车', pv: 35000, percent: 0 },
       { action: '生成订单', pv: 25000, percent: 0 },
       { action: '支付订单', pv: 15000, percent: 0 },
-      { action: '完成交易', pv: 8000, percent: 0 },
+      { action: '完成交易', pv: 8000, percent: 0 }
     ].map(row => {
       row.percent = row.pv / 50000;
       return row;
     });
-    const chart: Chart = new (window as any).G2.Chart({
+    const chart: Chart = new (window as NzSafeAny).G2.Chart({
       container: el,
       autoFit: true,
       height: 500,
       width: el.clientWidth,
-      padding: [20, 120, 95],
+      padding: [20, 120, 95]
     });
     chart.data(data);
     chart.axis(false);
@@ -57,7 +63,7 @@ export class DemoComponent {
         '{name}<br/>' +
         '<span style="padding-left: 16px;line-height: 16px;">浏览人数：{pv}</span><br/>' +
         '<span style="padding-left: 16px;line-height: 16px;">占比：{percent}</span><br/>' +
-        '</li>',
+        '</li>'
     });
 
     chart.coordinate('rect').transpose().scale(1, -1);
@@ -71,7 +77,7 @@ export class DemoComponent {
         'action*pv',
         (action, pv) => {
           return {
-            content: `${action} ${pv}`,
+            content: `${action} ${pv}`
           };
         },
         {
@@ -79,25 +85,25 @@ export class DemoComponent {
           labelLine: {
             style: {
               lineWidth: 1,
-              stroke: 'rgba(0, 0, 0, 0.15)',
-            },
-          },
-        },
+              stroke: 'rgba(0, 0, 0, 0.15)'
+            }
+          }
+        }
       )
       .tooltip('action*pv*percent', (action, pv, percent) => {
         return {
           name: action,
-          percent: +percent * 100 + '%',
-          pv,
+          percent: `${+percent * 100}%`,
+          pv
         };
       })
       .animate({
         appear: {
-          animation: 'fade-in',
+          animation: 'fade-in'
         },
         update: {
           // annotation: 'fade-in'
-        },
+        }
       });
 
     chart.interaction('element-active');
@@ -111,14 +117,14 @@ export class DemoComponent {
           top: true,
           position: {
             action: obj.action,
-            percent: 'median',
+            percent: 'median'
           },
-          content: +obj.percent * 100 + '%', // 显示的文本内容
+          content: `${+obj.percent * 100}%`, // 显示的文本内容
           style: {
             stroke: null,
             fill: '#fff',
-            textAlign: 'center',
-          },
+            textAlign: 'center'
+          }
         });
       });
     });

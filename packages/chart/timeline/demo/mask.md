@@ -8,8 +8,9 @@ title:
 利用 `mask` 和 `maskSlider` 来改变时间格式。
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { G2TimelineClickItem, G2TimelineData } from '@delon/chart/timeline';
+import { Component, OnInit, inject } from '@angular/core';
+
+import { G2TimelineClickItem, G2TimelineData, G2TimelineModule } from '@delon/chart/timeline';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -21,19 +22,20 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     mask="MM月DD日"
     maskSlider="MM月dd日"
     (clickItem)="handleClick($event)"
-  ></g2-timeline>`,
+  />`,
+  standalone: true,
+  imports: [G2TimelineModule]
 })
 export class DemoComponent implements OnInit {
+  private readonly msg = inject(NzMessageService);
   chartData: G2TimelineData[] = [];
-
-  constructor(private msg: NzMessageService) {}
 
   ngOnInit(): void {
     for (let i = 0; i < 20; i += 1) {
       this.chartData.push({
         time: new Date().getTime() + 1000 * 60 * 60 * 24 * i,
         y1: Math.floor(Math.random() * 100) + 1000,
-        y2: Math.floor(Math.random() * 100) + 10,
+        y2: Math.floor(Math.random() * 100) + 10
       });
     }
   }

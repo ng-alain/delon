@@ -445,7 +445,8 @@ module.exports = {
           ignores: ['docs'],
           hasSubDir: true
         }
-      ]
+      ],
+      standalone: true
     },
     {
       name: 'cli',

@@ -22,7 +22,7 @@ export const routes: Routes = [
       { path: 'cache', loadChildren: () => import('./gen/cache/routes').then(m => m.routes) },
       { path: 'mock', loadChildren: () => import('./gen/mock/routes').then(m => m.routes) },
       { path: 'util', loadChildren: () => import('./gen/util/routes').then(m => m.routes) },
-      { path: 'chart', loadChildren: () => import('./gen/chart/chart.module').then(m => m.ChartModule) },
+      { path: 'chart', loadChildren: () => import('./gen/chart/routes').then(m => m.routes) },
       { path: 'form', loadChildren: () => import('./gen/form/routes').then(m => m.routes) },
       {
         path: 'form-pages',
