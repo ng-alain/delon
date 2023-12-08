@@ -15,7 +15,8 @@ Table columns are displayed as stacked in responsive mode if the screen size bec
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+
+import { STColumn, STModule } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
@@ -26,8 +27,9 @@ import { STColumn } from '@delon/abc/st';
     header="The header"
     footer="The footer"
     responsiveHideHeaderFooter
-  >
-  </st>`,
+  />`,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
   url = `/users?total=100`;
@@ -37,7 +39,7 @@ export class DemoComponent {
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
-    { title: '注册时间', type: 'date', index: 'registered' },
+    { title: '注册时间', type: 'date', index: 'registered' }
   ];
 }
 ```

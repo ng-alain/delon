@@ -17,7 +17,6 @@ import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { ObserversModule } from '@delon/abc/observers';
 import { PageHeaderModule } from '@delon/abc/page-header';
-import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
 import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
@@ -53,7 +52,6 @@ const MODULES = [
   XlsxModule,
   LodopModule,
   QuickMenuModule,
-  QRModule,
   SVModule,
   SEModule,
   SGModule,

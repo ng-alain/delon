@@ -16,14 +16,17 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 
-import type { PdfChangeEvent } from '@delon/abc/pdf';
+import { PdfModule, type PdfChangeEvent } from '@delon/abc/pdf';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button nzType="primary" (click)="src = src === one ? two : one">Change File</button>
-    <pdf [src]="src" style="height: 300px" (change)="handle($event)"></pdf>
-  `
+    <pdf [src]="src" style="height: 300px" (change)="handle($event)" />
+  `,
+  standalone: true,
+  imports: [NzButtonModule, PdfModule]
 })
 export class DemoComponent {
   one = `https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf`;

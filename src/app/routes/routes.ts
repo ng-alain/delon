@@ -14,7 +14,7 @@ export const routes: Routes = [
       { path: 'docs', loadChildren: () => import('./gen/docs/routes').then(m => m.routes) },
       {
         path: 'components',
-        loadChildren: () => import('./gen/components/components.module').then(m => m.ComponentsModule)
+        loadChildren: () => import('./gen/components/routes').then(m => m.routes)
       },
       { path: 'theme', loadChildren: () => import('./gen/theme/routes').then(m => m.routes) },
       { path: 'auth', loadChildren: () => import('./gen/auth/routes').then(m => m.routes) },

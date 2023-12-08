@@ -14,10 +14,11 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { OnboardingConfig, OnboardingService } from '@delon/abc/onboarding';
+import { OnboardingConfig, OnboardingModule, OnboardingService } from '@delon/abc/onboarding';
 import { _HttpClient } from '@delon/theme';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -38,9 +39,15 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     >
       onboarding.json
     </a>
-  `
+  `,
+  standalone: true,
+  imports: [NzButtonModule, OnboardingModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
+  private readonly srv = inject(OnboardingService);
+  private readonly http = inject(_HttpClient);
+
   private def: OnboardingConfig = {
     items: [
       {
@@ -60,11 +67,6 @@ export class DemoComponent {
       }
     ]
   };
-  constructor(
-    private srv: OnboardingService,
-    private msg: NzMessageService,
-    private http: _HttpClient
-  ) {}
 
   handleClick(): void {
     this.msg.info(`click`);

@@ -20,20 +20,22 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 > The modal is handled by [ModalHelper](/theme/modal) and the drawer is handled by [DrawerHelper](/theme/drawer).
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 
 import { DemoDrawerComponent, DemoModalComponent } from '@shared';
 
-import { STChange, STColumn, STComponent, STData } from '@delon/abc/st';
+import { STChange, STColumn, STComponent, STData, STModule } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st #st [data]="users" [columns]="columns" (change)="change($event)"></st> `
+  template: ` <st #st [data]="users" [columns]="columns" (change)="change($event)" /> `,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
   @ViewChild('st') readonly st!: STComponent;
-  constructor(private message: NzMessageService) {}
 
   users: STData[] = Array(10)
     .fill({})
@@ -59,7 +61,7 @@ export class DemoComponent {
             component: DemoModalComponent
           },
           click: (i, modal) => {
-            this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`);
+            this.msg.success(`重新加载页面，回传值：${JSON.stringify(modal)}`);
             // 触发更新按钮的文本、颜色、Icon
             this.st.setRow(i, { ok: !i.ok });
           }
@@ -71,11 +73,11 @@ export class DemoComponent {
             title: '编辑',
             component: DemoDrawerComponent
           },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          click: (_record, modal) => this.msg.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
         },
         {
           icon: 'check-circle',
-          click: record => this.message.info(`check-${record.name}`),
+          click: record => this.msg.info(`check-${record.name}`),
           iif: record => record.id % 2 === 0,
           iifBehavior: 'disabled',
           tooltip: `Is disabled button`
@@ -89,7 +91,7 @@ export class DemoComponent {
             icon: 'star'
           },
           click: (record, _modal, comp) => {
-            this.message.success(`成功删除【${record.name}】`);
+            this.msg.success(`成功删除【${record.name}】`);
             comp!.removeRow(record);
           },
           iif: record => record.id % 2 === 0
@@ -99,11 +101,11 @@ export class DemoComponent {
           children: [
             {
               text: record => (record.id === 1 ? `过期` : `正常`),
-              click: record => this.message.error(`${record.id === 1 ? `过期` : `正常`}【${record.name}】`)
+              click: record => this.msg.error(`${record.id === 1 ? `过期` : `正常`}【${record.name}】`)
             },
             {
               text: `审核`,
-              click: record => this.message.info(`check-${record.name}`),
+              click: record => this.msg.info(`check-${record.name}`),
               iif: record => record.id % 2 === 0,
               iifBehavior: 'disabled',
               tooltip: 'This is tooltip'
@@ -114,7 +116,7 @@ export class DemoComponent {
             {
               text: `重新开始`,
               icon: 'edit',
-              click: record => this.message.success(`重新开始【${record.name}】`)
+              click: record => this.msg.success(`重新开始【${record.name}】`)
             }
           ]
         }

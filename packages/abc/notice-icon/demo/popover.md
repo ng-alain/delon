@@ -6,9 +6,11 @@ title: 带浮层卡片
 点击展开通知卡片，展现多种类型的通知，通常放在导航工具栏。
 
 ```ts
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
+
 import { add, formatDistanceToNow, parse } from 'date-fns';
+
+import { NoticeIconList, NoticeIconModule, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -25,7 +27,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         (select)="select($event)"
         (clear)="clear($event)"
         (popoverVisibleChange)="loadData()"
-      ></notice-icon>
+      />
       <ng-template #titleTpl let-i> {{ i.id }} Title By NgTemplate </ng-template>
       <ng-template #descTpl let-i>
         <a (click)="showOK()">{{ i.id }}</a>
@@ -33,8 +35,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </ng-template>
     </div>
   `,
+  standalone: true,
+  imports: [NoticeIconModule]
 })
 export class DemoComponent {
+  private readonly msg = inject(NzMessageService);
+  private readonly nzI18n = inject(NzI18nService);
+
   @ViewChild('titleTpl') private titleTpl!: TemplateRef<{ $implicit: NoticeIconList }>;
   @ViewChild('descTpl') private descTpl!: TemplateRef<{ $implicit: NoticeIconList }>;
   data: NoticeItem[] = [
@@ -43,27 +50,25 @@ export class DemoComponent {
       list: [],
       emptyText: '你已查看所有通知',
       emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
-      clearText: '清空通知',
+      clearText: '清空通知'
     },
     {
       title: '消息',
       list: [],
       emptyText: '您已读完所有消息',
       emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg',
-      clearText: '清空消息',
+      clearText: '清空消息'
     },
     {
       title: '待办',
       list: [],
       emptyText: '你已完成所有待办',
       emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg',
-      clearText: '清空待办',
-    },
+      clearText: '清空待办'
+    }
   ];
   count = 5;
   loading = false;
-
-  constructor(private msg: NzMessageService, private nzI18n: NzI18nService) {}
 
   updateNoticeData(notices: NoticeIconList[]): NoticeItem[] {
     const data = this.data.slice();
@@ -78,12 +83,14 @@ export class DemoComponent {
         newItem.datetime = formatDistanceToNow(newItem.datetime as Date, { locale: this.nzI18n.getDateLocale() });
       }
       if (newItem.extra && newItem.status) {
-        newItem.color = ({
-          todo: undefined,
-          processing: 'blue',
-          urgent: 'red',
-          doing: 'gold',
-        } as { [key: string]: string | undefined })[newItem.status];
+        newItem.color = (
+          {
+            todo: undefined,
+            processing: 'blue',
+            urgent: 'red',
+            doing: 'gold'
+          } as { [key: string]: string | undefined }
+        )[newItem.status];
       }
       data.find(w => w.title === newItem.type)!.list.push(newItem);
     });
@@ -102,14 +109,14 @@ export class DemoComponent {
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '你收到了 14 份新周报',
           datetime: add(now, { days: 10 }),
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000002',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
           title: '你推荐的 曲妮妮 已通过第三轮面试',
           datetime: add(now, { days: -3 }),
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000003',
@@ -117,21 +124,21 @@ export class DemoComponent {
           title: '这种模板可以区分多种通知类型',
           datetime: add(now, { months: -3 }),
           read: true,
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000004',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
           title: '左侧图标用于区分不同的类型',
           datetime: add(now, { years: -1 }),
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000005',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '内容不要超过两行字，超出时自动截断',
           datetime: '2017-08-07',
-          type: '通知',
+          type: '通知'
         },
         {
           id: '000000006',
@@ -139,7 +146,7 @@ export class DemoComponent {
           title: '曲丽丽 评论了你',
           description: '描述信息描述信息描述信息',
           datetime: '2017-08-07',
-          type: '消息',
+          type: '消息'
         },
         {
           id: '000000007',
@@ -147,7 +154,7 @@ export class DemoComponent {
           title: '朱偏右 回复了你',
           description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
           datetime: '2017-08-07',
-          type: '消息',
+          type: '消息'
         },
         {
           id: '000000008',
@@ -155,7 +162,7 @@ export class DemoComponent {
           title: this.titleTpl,
           description: this.descTpl,
           datetime: '2017-08-07',
-          type: '消息',
+          type: '消息'
         },
         {
           id: '000000009',
@@ -163,7 +170,7 @@ export class DemoComponent {
           description: '任务需要在 2017-01-12 20:00 前启动',
           extra: '未开始',
           status: 'todo',
-          type: '待办',
+          type: '待办'
         },
         {
           id: '000000010',
@@ -171,7 +178,7 @@ export class DemoComponent {
           description: '冠霖提交于 2017-01-06，需在 2017-01-07 前完成代码变更任务',
           extra: '马上到期',
           status: 'urgent',
-          type: '待办',
+          type: '待办'
         },
         {
           id: '000000011',
@@ -179,7 +186,7 @@ export class DemoComponent {
           description: '指派竹尔于 2017-01-09 前完成更新并发布',
           extra: '已耗时 8 天',
           status: 'doing',
-          type: '待办',
+          type: '待办'
         },
         {
           id: '000000012',
@@ -187,8 +194,8 @@ export class DemoComponent {
           description: '冠霖提交于 2017-01-06，需在 2017-01-07 前完成代码变更任务',
           extra: '进行中',
           status: 'processing',
-          type: '待办',
-        },
+          type: '待办'
+        }
       ]);
 
       this.loading = false;

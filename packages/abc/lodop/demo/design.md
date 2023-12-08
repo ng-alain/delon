@@ -15,7 +15,14 @@ Use print design for font, font size, object layout, etc., and use `attachCode` 
 
 ```ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 import { Lodop, LodopService } from '@delon/abc/lodop';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -23,7 +30,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: `
     @if (error) {
       <nz-alert [nzType]="'warning'" [nzMessage]="message">
-        <ng-template #message> 请先下载<a href="http://c-lodop.com/download.html" target="_blank">Lodop插件</a>。 </ng-template>
+        <ng-template #message>
+          请先下载<a href="http://c-lodop.com/download.html" target="_blank">Lodop插件</a>。
+        </ng-template>
       </nz-alert>
     }
     @if (lodop && !error) {
@@ -57,6 +66,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </form>
     }
   `,
+  standalone: true,
+  imports: [NzFormModule, NzAlertModule, NzGridModule, FormsModule, NzInputModule, NzButtonModule]
 })
 export class DemoComponent {
   doing = false;
@@ -64,7 +75,7 @@ export class DemoComponent {
   lodop: Lodop | null = null;
   context: { 标题: string; 费用: string } = {
     标题: '自定义标题',
-    费用: '100.00 元',
+    费用: '100.00 元'
   };
   code = `LODOP.PRINT_INITA(10,10,762,533,"测试套打");
 LODOP.ADD_PRINT_TEXT(38,78,408,30,"{{标题}}");
@@ -73,7 +84,10 @@ LODOP.SET_PRINT_STYLEA(0,"FontColor","#800000");
 LODOP.SET_PRINT_STYLEA(0,"Alignment",2);
 LODOP.ADD_PRINT_TEXT(259,579,100,23,"{{费用}}");
 LODOP.ADD_PRINT_TEXT(260,520,58,24,"合计：");`;
-  constructor(private lodopSrv: LodopService, private msg: NzMessageService) {
+  constructor(
+    private lodopSrv: LodopService,
+    private msg: NzMessageService
+  ) {
     this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
       if (!ok) {
         this.error = true;
@@ -107,11 +121,10 @@ LODOP.ADD_PRINT_TEXT(260,520,58,24,"合计：");`;
     this.doing = true;
     const data = new Array(3).fill({}).map((_, index) => ({ index: index + 1, ...this.context }));
     this.lodopSrv.print(
-      this.code +
-        `
+      `${this.code}
     LODOP.ADD_PRINT_TEXT(10,10,100,100,"第{{index}}张");
     `,
-      data,
+      data
     );
     const batch$ = this.lodopSrv.events.subscribe(res => {
       console.log('finish', res);

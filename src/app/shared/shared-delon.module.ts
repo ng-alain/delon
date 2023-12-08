@@ -18,7 +18,6 @@ import { ObserversModule } from '@delon/abc/observers';
 import { OnboardingModule } from '@delon/abc/onboarding';
 import { PageHeaderModule } from '@delon/abc/page-header';
 import { PdfModule } from '@delon/abc/pdf';
-import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
 import { ResultModule } from '@delon/abc/result';
 import { ReuseTabModule } from '@delon/abc/reuse-tab';
@@ -58,7 +57,6 @@ export const SHARED_DELON_MODULES = [
   SEModule,
   SGModule,
   LoadingModule,
-  QRModule,
   CellModule,
   OnboardingModule,
   ErrorCollectModule,

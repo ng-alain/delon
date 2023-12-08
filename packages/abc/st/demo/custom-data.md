@@ -14,11 +14,12 @@ title:
 `data` property supports `STData[]`、`Observable<STData[]>` data types.
 
 ```ts
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { of, delay } from 'rxjs';
 
-import { STChange, STColumn, STColumnFilter, STColumnFilterHandle, STData } from '@delon/abc/st';
+import { STChange, STColumn, STColumnFilter, STColumnFilterHandle, STData, STModule } from '@delon/abc/st';
 import { dateTimePickerUtil } from '@delon/util/date-time';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -30,7 +31,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button (click)="st.clearStatus(); st.reload()" nz-button>Clear Status</button>
       <button (click)="st.setRow(0, { className: 'text-success' })" nz-button>Update Row ClassName</button>
     </div>
-    <st #st [data]="users" [columns]="columns" (change)="change($event)"> </st>
+    <st #st [data]="users" [columns]="columns" (change)="change($event)" />
     <ng-template #customFilter let-f let-col="col" let-handle="handle">
       <div class="p-lg">
         <p>Custom body</p>
@@ -38,9 +39,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         <button nz-button (click)="close(f, handle, false)">reset</button>
       </div>
     </ng-template>
-  `
+  `,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent implements OnInit {
+  private readonly msg = inject(NzMessageService);
   users: STData[] = [];
   @ViewChild('customFilter', { static: true }) readonly customFilter!: TemplateRef<{
     $implicit: STColumnFilter;
@@ -48,8 +52,6 @@ export class DemoComponent implements OnInit {
     handle: STColumnFilterHandle;
   }>;
   columns: STColumn[] = [];
-
-  constructor(private msg: NzMessageService) {}
 
   ngOnInit(): void {
     this.columns = [

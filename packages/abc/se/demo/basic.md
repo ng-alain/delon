@@ -14,7 +14,13 @@ title:
 1 rows & 2 columns layout form.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -48,10 +54,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
     </se>
   </form>`,
+  standalone: true,
+  imports: [SEModule, NzFormModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {
+  readonly msg = inject(NzMessageService);
   i: { ak?: string; sk?: string } = {};
-
-  constructor(public msg: NzMessageService) {}
 }
 ```

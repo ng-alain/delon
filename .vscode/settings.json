@@ -12,8 +12,10 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/*.code-search": true,
-    "**/dist": true,
+    "**/dist/*/**": true,
     "**/ng-alain": true,
+    "**/.yarn": true,
+    "**/src/app/routes/gen/": true
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",

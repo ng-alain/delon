@@ -15,11 +15,14 @@ Group table head with `columns[n].children`.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+
+import { STColumn, STModule } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st #st [data]="url" [req]="{ params: params }" [columns]="columns" bordered size="middle"> </st>`,
+  template: ` <st #st [data]="url" [req]="{ params: params }" [columns]="columns" bordered size="middle" />`,
+  standalone: true,
+  imports: [STModule]
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;
@@ -36,11 +39,11 @@ export class DemoComponent {
           sort: true,
           children: [
             { title: 'first', index: 'name.first', sort: true },
-            { title: 'last', index: 'name.last' },
-          ],
-        },
-      ],
-    },
+            { title: 'last', index: 'name.last' }
+          ]
+        }
+      ]
+    }
   ];
 }
 ```

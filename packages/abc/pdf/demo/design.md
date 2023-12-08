@@ -15,11 +15,22 @@ Provide rich interfaces for customization.
 
 ```ts
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import { PdfChangeEvent, PdfComponent, PdfZoomScale } from '@delon/abc/pdf';
+import { PdfChangeEvent, PdfComponent, PdfModule, PdfZoomScale } from '@delon/abc/pdf';
+import { SEModule } from '@delon/abc/se';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'components-pdf-design',
@@ -36,49 +47,49 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
             </nz-upload>
           </se>
           <se label="Render Text">
-            <nz-switch [(ngModel)]="renderText"></nz-switch>
+            <nz-switch [(ngModel)]="renderText" />
           </se>
           <se label="Original size">
-            <nz-switch [(ngModel)]="originalSize"></nz-switch>
+            <nz-switch [(ngModel)]="originalSize" />
           </se>
           @if (originalSize) {
             <se label="Fit to page">
-              <nz-switch [(ngModel)]="fitToPage"></nz-switch>
+              <nz-switch [(ngModel)]="fitToPage" />
             </se>
           }
           <se label="Auto size">
-            <nz-switch [(ngModel)]="autoReSize"></nz-switch>
+            <nz-switch [(ngModel)]="autoReSize" />
           </se>
           <se label="Show All Pages">
-            <nz-switch [(ngModel)]="showAll" (ngModelChange)="changeShowAllPages($event)"></nz-switch>
+            <nz-switch [(ngModel)]="showAll" (ngModelChange)="changeShowAllPages($event)" />
           </se>
           @if (!originalSize) {
             <se label="Zoom Scale">
               <nz-select [(ngModel)]="zoomScale">
-                <nz-option nzValue="page-height" nzLabel="Page Height"></nz-option>
-                <nz-option nzValue="page-fit" nzLabel="Page Fit"></nz-option>
-                <nz-option nzValue="page-width" nzLabel="Page Width"></nz-option>
+                <nz-option nzValue="page-height" nzLabel="Page Height" />
+                <nz-option nzValue="page-fit" nzLabel="Page Fit" />
+                <nz-option nzValue="page-width" nzLabel="Page Width" />
               </nz-select>
             </se>
           }
           <se label="Zoom">
-            <nz-input-number [(ngModel)]="zoom" [nzStep]="0.1"></nz-input-number>
+            <nz-input-number [(ngModel)]="zoom" [nzStep]="0.1" />
           </se>
           @if (showAll) {
             <se label="Stick to page ">
-              <nz-switch [(ngModel)]="stickToPage"></nz-switch>
+              <nz-switch [(ngModel)]="stickToPage" />
             </se>
           }
           @if (stickToPage) {
             <se label="Page">
-              <nz-pagination [(nzPageIndex)]="pi" [nzPageSize]="1" [nzTotal]="total" nzSimple></nz-pagination>
+              <nz-pagination [(nzPageIndex)]="pi" [nzPageSize]="1" [nzTotal]="total" nzSimple />
             </se>
           }
           <se label="Rotation">
-            <nz-input-number [(ngModel)]="rotation" [nzStep]="90"></nz-input-number>
+            <nz-input-number [(ngModel)]="rotation" [nzStep]="90" />
           </se>
           <se label="Outline">
-            <nz-switch [(ngModel)]="outline"></nz-switch>
+            <nz-switch [(ngModel)]="outline" />
           </se>
           @if (outline) {
             <se [label]="null">
@@ -93,7 +104,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
                       <ul>
                         <ng-container
                           *ngTemplateOutlet="outlineTpl; context: { $implicit: i.items, level: level + 1 }"
-                        ></ng-container>
+                        />
                       </ul>
                     }
                   </li>
@@ -101,9 +112,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
               </ng-template>
               @if (outlineList) {
                 <ul>
-                  <ng-container
-                    *ngTemplateOutlet="outlineTpl; context: { $implicit: outlineList, level: 0 }"
-                  ></ng-container>
+                  <ng-container *ngTemplateOutlet="outlineTpl; context: { $implicit: outlineList, level: 0 }" />
                 </ul>
               }
             </se>
@@ -135,10 +144,26 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
           [autoReSize]="autoReSize"
           (change)="change($event)"
           style="height: 600px"
-        ></pdf>
+        />
       </div>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [
+    NzButtonModule,
+    PdfModule,
+    NzGridModule,
+    NzInputModule,
+    FormsModule,
+    NzUploadModule,
+    SEModule,
+    NzIconModule,
+    NzSwitchModule,
+    NzSelectModule,
+    NzInputNumberModule,
+    NzPaginationModule,
+    NzEmptyModule
+  ]
 })
 export class DemoComponent implements OnInit {
   @ViewChild('pdf') private comp!: PdfComponent;

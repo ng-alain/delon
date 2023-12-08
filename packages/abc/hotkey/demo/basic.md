@@ -14,9 +14,13 @@ title:
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
+import { HotkeyDirective } from '@delon/abc/hotkey';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-demo',
@@ -47,7 +51,7 @@ text area 1, press q to focus this textarea and select all text</textarea
     <br />
     <textarea nz-input nzType="primary" id="text-area-2" rows="4" cols="40">text area 2</textarea><br />
     <label><input nz-input hotkey="t" type="text" />Press <kbd>t</kbd> to focus this field</label><br />
-    <label><nz-switch hotkey="r"></nz-switch>Press <kbd>r</kbd> to check/uncheck this checkbox</label><br />
+    <label><nz-switch hotkey="r" />Press <kbd>r</kbd> to check/uncheck this checkbox</label><br />
     <a (click)="show('click link')" nz-button nzType="link" hotkey="o k"> Press <kbd>o k</kbd> click this link </a>
   `,
   styles: [
@@ -57,10 +61,12 @@ text area 1, press q to focus this textarea and select all text</textarea
         padding: 0 8px;
       }
     `
-  ]
+  ],
+  standalone: true,
+  imports: [NzButtonModule, HotkeyDirective, NzInputModule, NzSwitchModule]
 })
 export class DemoComponent {
-  constructor(private msg: NzMessageService) {}
+  private readonly msg = inject(NzMessageService);
 
   show(msg: string): void {
     this.msg.info(msg);

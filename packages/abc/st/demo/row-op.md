@@ -20,7 +20,8 @@ Operations on rows using `addRow`, `removeRow`, `setRow` methods.
 ```ts
 import { Component } from '@angular/core';
 
-import { STChange, STClickRowClassNameType, STColumn } from '@delon/abc/st';
+import { STChange, STClickRowClassNameType, STColumn, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -34,7 +35,9 @@ import { STChange, STClickRowClassNameType, STColumn } from '@delon/abc/st';
       [columns]="columns"
       (change)="_click($event)"
       [clickRowClassName]="clickRowClassName"
-    ></st>`
+    />`,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {
   url = `/users?results=3`;

@@ -18,6 +18,9 @@ import { Component } from '@angular/core';
 
 import type Plyr from 'plyr';
 
+import { MediaModule } from '@delon/abc/media';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -25,8 +28,10 @@ import type Plyr from 'plyr';
       <button nz-button (click)="play('video')">Change Play Video</button>
       <button nz-button (click)="play('audio')">Change Play Audio</button>
     </div>
-    <media #media [source]="source" [options]="options"></media>
-  `
+    <div media #media [source]="source" [options]="options"></div>
+  `,
+  standalone: true,
+  imports: [NzButtonModule, MediaModule]
 })
 export class DemoComponent {
   source: Plyr.SourceInfo = {
@@ -60,9 +65,9 @@ export class DemoComponent {
   play(type: 'audio' | 'video'): void {
     this.source.type = type;
     if (type === 'video') {
-      this.source.sources[0].src = `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`;
+      this.source.sources[0].src = `https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4`;
     } else {
-      this.source.sources[0].src = `http://h5player.bytedance.com/video/music/audio.mp3`;
+      this.source.sources[0].src = `https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3`;
     }
     this.source = { ...this.source };
   }

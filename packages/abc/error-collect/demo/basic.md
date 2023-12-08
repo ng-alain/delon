@@ -7,7 +7,11 @@ title: 基础
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { ErrorCollectModule } from '@delon/abc/error-collect';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-demo',
@@ -18,9 +22,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
           <input nz-input formControlName="email" id="email" />
         </nz-form-control>
       </nz-form-item>
-      <error-collect></error-collect>
+      <error-collect />
     </form>
-  `
+  `,
+  standalone: true,
+  imports: [NzFormModule, ReactiveFormsModule, NzInputModule, ErrorCollectModule]
 })
 export class DemoComponent implements OnInit {
   validateForm = new FormGroup({

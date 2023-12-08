@@ -14,22 +14,28 @@ title:
 The simplest usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { Component, inject } from '@angular/core';
+
 import { CountdownEvent } from 'ngx-countdown';
+
+import { CountDownModule } from '@delon/abc/count-down';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
   template: `
     <div>
-      <count-down #cd [target]="10" (event)="handleEvent($event)" style="font-size: 20px;"></count-down>
+      <count-down #cd [target]="10" (event)="handleEvent($event)" style="font-size: 20px;" />
     </div>
     <button nz-button (click)="cd.instance.pause()">Pause</button>
     <button nz-button (click)="cd.instance.resume()">Resume</button>
   `,
+  standalone: true,
+  imports: [CountDownModule, NzButtonModule]
 })
 export class DemoComponent {
-  constructor(private msg: NzMessageService) {}
+  private readonly msg = inject(NzMessageService);
 
   handleEvent(e: CountdownEvent): void {
     if (e.action === 'done') {

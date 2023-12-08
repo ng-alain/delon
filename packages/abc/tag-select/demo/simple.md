@@ -8,6 +8,9 @@ title: 基础样例
 ```ts
 import { Component } from '@angular/core';
 
+import { TagSelectModule } from '@delon/abc/tag-select';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+
 interface TagSelectDemoItem {
   id: number;
   text: string;
@@ -19,16 +22,14 @@ interface TagSelectDemoItem {
   template: `
     <tag-select>
       @for (i of categories; track $index) {
-        <nz-tag
-          nzMode="checkable"
-          [(nzChecked)]="i.value"
-          (nzCheckedChange)="change(i)"
-        >
+        <nz-tag nzMode="checkable" [(nzChecked)]="i.value" (nzCheckedChange)="change(i)">
           {{ i.text }}
         </nz-tag>
       }
     </tag-select>
-  `
+  `,
+  standalone: true,
+  imports: [TagSelectModule, NzTagModule]
 })
 export class DemoComponent {
   categories: TagSelectDemoItem[] = [

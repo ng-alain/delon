@@ -14,14 +14,21 @@ title:
 Use `shortcuts` to customize the shortcut panel (supports global configuration).
 
 ```ts
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { DatePickerModule } from '@delon/abc/date-picker';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
   selector: 'app-demo',
   template: `
     result: {{ i | json }}<br />
-    <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>
+    <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut />
   `,
+  standalone: true,
+  imports: [JsonPipe, FormsModule, NzDatePickerModule, DatePickerModule]
 })
 export class DemoComponent {
   i: { start?: Date; end?: Date } = {};

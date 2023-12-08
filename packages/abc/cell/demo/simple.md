@@ -14,13 +14,16 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { delay, finalize, of, take } from 'rxjs';
 
 import { subDays } from 'date-fns';
 
-import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/cell';
+import { CellBadge, CellFuValue, CellModule, CellOptions, CellRenderType } from '@delon/abc/cell';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
   selector: 'app-demo',
@@ -154,9 +157,13 @@ import { CellBadge, CellFuValue, CellOptions, CellRenderType } from '@delon/abc/
       }
     `
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CellModule, FormsModule, JsonPipe, NzGridModule]
 })
 export class DemoComponent implements OnInit {
+  private readonly ds = inject(DomSanitizer);
+  private readonly cdr = inject(ChangeDetectorRef);
   value: unknown = 'string';
   checkbox = false;
   radio = true;
@@ -186,11 +193,6 @@ export class DemoComponent implements OnInit {
       big: true // 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     }
   };
-
-  constructor(
-    private ds: DomSanitizer,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.again();

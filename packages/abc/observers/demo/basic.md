@@ -16,7 +16,9 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 
-import { ChartEChartsEvent, ChartEChartsOption } from '@delon/chart/chart-echarts';
+import { ObserverSize } from '@delon/abc/observers';
+import { ChartEChartsEvent, ChartEChartsModule, ChartEChartsOption } from '@delon/chart/chart-echarts';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-demo',
@@ -26,9 +28,11 @@ import { ChartEChartsEvent, ChartEChartsOption } from '@delon/chart/chart-echart
       <button nz-button (click)="reduceWidth()">Reduce width of div element</button>
     </div>
     <div (observeSize)="echart?.chart?.resize()" [style.width.px]="width">
-      <chart-echarts #echart [option]="option" (events)="handleEvents($event)"></chart-echarts>
+      <chart-echarts #echart [option]="option" (events)="handleEvents($event)" />
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [NzButtonModule, ChartEChartsModule, ObserverSize]
 })
 export class DemoComponent {
   width = 200;

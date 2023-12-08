@@ -6,7 +6,8 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
-  exportAs: 'autoFocus'
+  exportAs: 'autoFocus',
+  standalone: true
 })
 export class AutoFocusDirective implements AfterViewInit, OnDestroy {
   static ngAcceptInputType_enabled: BooleanInput;

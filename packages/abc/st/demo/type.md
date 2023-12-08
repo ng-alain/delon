@@ -16,7 +16,8 @@ Support for ten different column types: no, checkbox, radio, badge, tag, image, 
 ```ts
 import { Component } from '@angular/core';
 
-import { STColumn, STColumnBadge, STColumnTag, STData } from '@delon/abc/st';
+import { STColumn, STColumnBadge, STColumnTag, STData, STModule } from '@delon/abc/st';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 const BADGE: STColumnBadge = {
   1: { text: '成功', color: 'success' },
@@ -38,8 +39,10 @@ const r = (min: number, max: number): number => Math.floor(Math.random() * (max 
   selector: 'app-demo',
   template: `
     <button nz-button (click)="reload()">Reload</button>
-    <st #st [data]="users" [columns]="columns" [page]="{ position: 'both' }"></st>
-  `
+    <st #st [data]="users" [columns]="columns" [page]="{ position: 'both' }" />
+  `,
+  standalone: true,
+  imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {
   users: STData[] = [];

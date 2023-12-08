@@ -9,6 +9,9 @@ bg: f2f4f5
 ```ts
 import { Component } from '@angular/core';
 
+import { PageHeaderModule } from '@delon/abc/page-header';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+
 @Component({
   selector: 'app-demo',
   template: `
@@ -22,6 +25,8 @@ import { Component } from '@angular/core';
       </ng-template>
     </page-header>
   `,
+  standalone: true,
+  imports: [PageHeaderModule, NzBreadCrumbModule]
 })
 export class DemoComponent {}
 ```
