@@ -1,5 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
@@ -16,13 +18,14 @@ import readme from './files/readme-cli';
 import sandboxConfigJSON from './files/sandbox';
 import startupServiceTS from './files/startup.service';
 import tsconfigJSON from './files/tsconfig.json';
-import yarnLock from './files/yarn.lock';
 import pkg from '../../../../package.json';
 import { AppService } from '../app.service';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
-  private document: Document;
+  private appSrv = inject(AppService);
+  private http = inject(HttpClient);
+  private document = inject(DOCUMENT);
 
   private get themePath(): string {
     return `node_modules/@delon/theme/${this.appSrv.theme}.css`;
@@ -85,13 +88,6 @@ export class CodeService {
     return res;
   }
 
-  constructor(
-    private appSrv: AppService,
-    @Inject(DOCUMENT) document: NzSafeAny
-  ) {
-    this.document = document;
-  }
-
   private get genStartupService(): string {
     return startupServiceTS({ ajvVersion: pkg.dependencies.ajv.substring(1) });
   }
@@ -132,7 +128,20 @@ export class CodeService {
     return `${code.replace(`@Component({`, `@Component({\n  standalone: true,\n`)}`;
   }
 
-  openOnStackBlitz(title: string, appComponentCode: string): void {
+  private yarnLock?: string;
+  private async getYarnLock(): Promise<string> {
+    if (this.yarnLock != null) return this.yarnLock;
+    try {
+      const res = await lastValueFrom(this.http.get('./assets/yarn.lock.txt', { responseType: 'text' }));
+      this.yarnLock = res;
+      return res;
+    } catch (ex) {
+      console.warn(`Unable to load yarn.lock file: ${ex}`);
+    }
+    return '';
+  }
+
+  async openOnStackBlitz(title: string, appComponentCode: string): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
@@ -161,7 +170,7 @@ export class CodeService {
             null,
             2
           ),
-          'yarn.lock': yarnLock,
+          'yarn.lock': await this.getYarnLock(),
           'angular.json': `${JSON.stringify(json, null, 2)}`,
           'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
           'package.json': `${JSON.stringify(packageJson, null, 2)}`,
@@ -181,7 +190,7 @@ export class CodeService {
     );
   }
 
-  openOnCodeSandbox(title: string, appComponentCode: string, includeCli: boolean = false): void {
+  async openOnCodeSandbox(title: string, appComponentCode: string, includeCli: boolean = false): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
@@ -241,7 +250,7 @@ export class CodeService {
         isBinary: false
       },
       'yarn.lock': {
-        content: yarnLock,
+        content: await this.getYarnLock(),
         isBinary: false
       }
     };
