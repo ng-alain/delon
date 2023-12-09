@@ -1,4 +1,5 @@
 export default {
+  'sandbox.config.json': JSON.stringify({ template: 'node' }, null, 2),
   '.codesandbox/tasks.json': `{
     // These tasks will run in order when initializing your CodeSandbox project.
     "setupTasks": [

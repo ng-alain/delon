@@ -7159,6 +7159,7 @@ __metadata:
     "@angular-eslint/schematics": "npm:^17.0.0"
     "@angular-eslint/template-parser": "npm:^17.0.0"
     "@angular/animations": "npm:^17.0.0"
+    "@angular/cdk": "npm:^17.0.0"
     "@angular/cli": "npm:^17.0.0"
     "@angular/common": "npm:^17.0.0"
     "@angular/compiler": "npm:^17.0.0"
@@ -7242,10 +7243,10 @@ __metadata:
     mustache: "npm:^4.2.0"
     ng-alain-plugin-theme: "npm:^16.0.0"
     ng-alain-sts: "npm:^0.0.2"
-    ng-antd-color-picker: "npm:^0.0.2"
+    ng-antd-color-picker: "npm:^1.1.0"
     ng-github-button: "npm:^17.0.0"
     ng-packagr: "npm:^17.0.0"
-    ng-zorro-antd: "npm:^17.0.0"
+    ng-zorro-antd: "npm:^17.0.1"
     ngx-countdown: "npm:^17.0.0"
     ngx-highlight-js: "npm:^17.0.0"
     ngx-tinymce: "npm:^17.0.0"
@@ -12880,16 +12881,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-antd-color-picker@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "ng-antd-color-picker@npm:0.0.2"
+"ng-antd-color-picker@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "ng-antd-color-picker@npm:1.1.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/common": ^16.0.0
-    "@angular/core": ^16.0.0
+    "@angular/common": ^17.0.0
+    "@angular/core": ^17.0.0
     "@ctrl/tinycolor": ^3.6.0
-  checksum: 92450a5d818403ad88c8a4994d7e042d16f5b448f69d113ba60ba156737ba8ee1acea854b9fefd70f53e6b20730296646c5896e673e29d50fb5727330eb55b8d
+  checksum: b6183341f7e74d335c66037a04e8f531c5e23158c86badbabb1e81a4d159e5724204971e887227aff79875894b6bee07acf675c9be97255f71cce678903d34da
   languageName: node
   linkType: hard
 
@@ -12948,7 +12949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-zorro-antd@npm:^17.0.0":
+"ng-zorro-antd@npm:^17.0.1":
   version: 17.0.1
   resolution: "ng-zorro-antd@npm:17.0.1"
   dependencies:

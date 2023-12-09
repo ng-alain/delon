@@ -41,12 +41,11 @@ export class CodeService {
     includeCli: boolean;
   }): Record<string, string | Record<string, string>> {
     const ngCoreVersion = pkg.dependencies['@angular/core'];
-    const mainVersion = ngCoreVersion.substring(1).split('.').shift();
+    // const mainVersion = ngCoreVersion.substring(1).split('.').shift();
     const res = packageJSON as Record<string, NzSafeAny>;
     [
       'ng-zorro-antd',
       'ng-antd-color-picker',
-      'date-fns',
       '@delon/theme',
       '@delon/abc',
       '@delon/chart',
@@ -56,33 +55,17 @@ export class CodeService {
       '@delon/mock',
       '@delon/form',
       '@delon/util',
-      'ajv',
-      'ajv-formats',
       ...dependencies
     ].forEach(k => (res.dependencies[k] = '*'));
-    if (includeCli) {
-      devDependencies = [
-        ...devDependencies,
-        'ng-alain',
-        'ng-alain-plugin-theme',
-        '@angular/cli',
-        '@angular/compiler-cli',
-        '@angular-devkit/build-angular'
-      ];
-    }
     devDependencies.forEach(k => (res.devDependencies[k] = '*'));
 
     const fullLibs: Record<string, string> = { ...pkg.dependencies, ...pkg.devDependencies };
     ['dependencies', 'devDependencies'].forEach(type => {
       Object.keys(res[type]).forEach(key => {
-        res[type][key] = key.startsWith('@delon') ? `~${pkg.version}` : fullLibs[key] || '*';
+        res[type][key] = key.startsWith('@delon') || key === 'ng-alain' ? `~${pkg.version}` : fullLibs[key] || '*';
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
-    ['@angular/cdk', '@ant-design/icons-angular', 'ngx-countdown'].forEach(type => {
-      res.dependencies[type] = mainVersion;
-    });
-    // res.dependencies['core-js'] = `~3.8.3`;
     if (!includeCli) res;
 
     return res;
@@ -116,7 +99,7 @@ export class CodeService {
       html: [
         `<base href="/">`,
         `<${selector}>loading</${selector}>`,
-        `<div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>`
+        `<div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;font-size: 11px; color: #aaa;"></div>`
       ].join('\n')
     };
   }
@@ -147,7 +130,6 @@ export class CodeService {
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli: false });
-    packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
     sdk.openProject(
       {
@@ -185,7 +167,7 @@ export class CodeService {
         template: 'node'
       },
       {
-        openFile: `src/app/app.component.ts`
+        openFile: `src/app/app.config.ts,src/app/app.component.ts`
       }
     );
   }
@@ -197,7 +179,7 @@ export class CodeService {
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli });
-    packageJson.name = 'NG-ALAIN';
+    // packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
     const files: {
       [key: string]: {
@@ -267,8 +249,9 @@ export class CodeService {
       };
     });
     const parameters = getParameters({
-      files
-    });
+      files,
+      environment: 'server'
+    } as NzSafeAny);
 
     const form = this.document.createElement('form');
     const parametersInput = this.document.createElement('input');
