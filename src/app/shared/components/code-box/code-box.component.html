@@ -14,22 +14,24 @@
     <div class="code-box-description" [innerHTML]="item.summary"></div>
   }
   <div class="code-box-actions">
-    <i
-      nz-tooltip
-      [nzTooltipTitle]="codeSandboxTpl"
-      (click)="openOnlineIDE('CodeSandbox', true)"
-      nz-icon
-      nzType="code-sandbox"
-      class="code-box-code-icon"
-    ></i>
-    <ng-template #codeSandboxTpl>
-      {{ 'app.demo.code-sandbox' | i18n }}
-      @if (false) {
-        (
-        <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
-        )
-      }
-    </ng-template>
+    @if (false) {
+      <i
+        nz-tooltip
+        [nzTooltipTitle]="codeSandboxTpl"
+        (click)="openOnlineIDE('CodeSandbox', true)"
+        nz-icon
+        nzType="code-sandbox"
+        class="code-box-code-icon"
+      ></i>
+      <ng-template #codeSandboxTpl>
+        {{ 'app.demo.code-sandbox' | i18n }}
+        @if (false) {
+          (
+          <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
+          )
+        }
+      </ng-template>
+    }
     <i
       nz-tooltip
       [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
