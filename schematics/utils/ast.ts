@@ -172,7 +172,7 @@ export function addServiceToModuleOrStandalone(
 ): void {
   const source = getSourceFile(tree, filePath);
   if (standalone) {
-    importInStandalone(tree, filePath, serviceName, importPath, 'provides');
+    importInStandalone(tree, filePath, serviceName, importPath, 'providers');
   } else {
     const changes = _addProviderToModule(source, filePath, serviceName, importPath);
     applyChanges(tree, filePath, changes);
