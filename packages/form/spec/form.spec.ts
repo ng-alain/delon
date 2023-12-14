@@ -520,6 +520,27 @@ describe('form: component', () => {
           context.comp.setValue('/invalid-path', 'name');
         }).toThrow();
       });
+      it('#setDisabled', () => {
+        context.comp.setDisabled('/name', true);
+        page.checkSchema('/name', 'readOnly', true);
+        context.comp.setDisabled('/name', false);
+        page.checkSchema('/name', 'readOnly', false);
+      });
+      it('#setDisabled, shoule be throw error when invlaid path', () => {
+        expect(() => {
+          context.comp.setDisabled('/invalid-path', true);
+        }).toThrow();
+      });
+      it('#setRequired', () => {
+        expect(context.comp.getProperty('/name')?.valid).toBe(false);
+        context.comp.setRequired('/name', false);
+        expect(context.comp.getProperty('/name')?.valid).toBe(true);
+      });
+      it('#setRequired, shoule be throw error when invlaid path', () => {
+        expect(() => {
+          context.comp.setRequired('/invalid-path', true);
+        }).toThrow();
+      });
       it('#updateFeedback', () => {
         const namePath = '/name';
         context.comp.updateFeedback(namePath, 'error');
