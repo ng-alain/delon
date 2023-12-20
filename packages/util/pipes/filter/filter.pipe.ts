@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-@Pipe({ name: 'filter', standalone: true })
+// eslint-disable-next-line @angular-eslint/no-pipe-impure
+@Pipe({ name: 'filter', standalone: true, pure: false })
 export class FilterPipe implements PipeTransform {
   /**
    * Filter array
