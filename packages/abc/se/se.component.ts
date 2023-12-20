@@ -18,7 +18,7 @@ import {
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular/forms';
+import { FormControlName, NgModel, RequiredValidator, Validator, Validators } from '@angular/forms';
 import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
@@ -181,8 +181,12 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
     }
     // auto required
     if (this.required !== true) {
-      const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Validator[];
-      this.required = rawValidators.find(w => w instanceof RequiredValidator) != null;
+      let required = this.ngControl?.control?.hasValidator(Validators.required);
+      if (required !== true) {
+        const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Validator[];
+        required = rawValidators.find(w => w instanceof RequiredValidator) != null;
+      }
+      this.required = required;
       this.cdr.detectChanges();
     }
   }
