@@ -14,6 +14,14 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## <small>17.0.4 (2023-12-20)</small>
+
+* fix(abc:se): fix missing required of reactive (#1737) ([a2ca109](https://github.com/ng-alain/delon/commit/a2ca109)), closes [#1737](https://github.com/ng-alain/delon/issues/1737)
+* fix(abc:sv): fix bottom spacing in border mode (#1732) ([b5bea4e](https://github.com/ng-alain/delon/commit/b5bea4e)), closes [#1732](https://github.com/ng-alain/delon/issues/1732)
+* fix(util:pipe:filter): use `pure` (#1735) ([f374209](https://github.com/ng-alain/delon/commit/f374209)), closes [#1735](https://github.com/ng-alain/delon/issues/1735)
+* fix(cli): correct 'providers' spelling errors (#1731) ([5eafa8f](https://github.com/ng-alain/delon/commit/5eafa8f)), closes [#1731](https://github.com/ng-alain/delon/issues/1731)
+s
+
 ## <small>17.0.3 (2023-12-08)</small>
 
 * fix(theme:i18n): correct params type of `i18e` pipe (#1723) ([bdf0e62](https://github.com/ng-alain/delon/commit/bdf0e62)), closes [#1723](https://github.com/ng-alain/delon/issues/1723)
