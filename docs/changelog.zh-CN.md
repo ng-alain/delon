@@ -14,6 +14,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>17.0.5 (2023-12-25)</small>
+
+* fix(abc:st): 修复导出Excel不匹配 (#1740) ([a46f2ee](https://github.com/ng-alain/delon/commit/a46f2ee)), closes [#1740](https://github.com/ng-alain/delon/issues/1740)
+* fix(form:array): 修复无效 `trackBy` (#1741) ([3e55228](https://github.com/ng-alain/delon/commit/3e55228)), closes [#1741](https://github.com/ng-alain/delon/issues/1741)
+
+
 ## <small>17.0.4 (2023-12-20)</small>
 
 * fix(abc:se): 修复响应式表单无法自动识别必填项 (#1737) ([a2ca109](https://github.com/ng-alain/delon/commit/a2ca109)), closes [#1737](https://github.com/ng-alain/delon/issues/1737)
