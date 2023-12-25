@@ -1,3 +1,11 @@
+## <small>17.0.5 (2023-12-25)</small>
+
+* ci: add `ng-less-javascript-enabled-patch` (#1739) ([35acf68](https://github.com/ng-alain/delon/commit/35acf68)), closes [#1739](https://github.com/ng-alain/delon/issues/1739)
+* fix(abc:st): fix export mismatch (#1740) ([a46f2ee](https://github.com/ng-alain/delon/commit/a46f2ee)), closes [#1740](https://github.com/ng-alain/delon/issues/1740)
+* fix(form:array): fix invalid trackBy (#1741) ([3e55228](https://github.com/ng-alain/delon/commit/3e55228)), closes [#1741](https://github.com/ng-alain/delon/issues/1741)
+
+
+
 ## <small>17.0.4 (2023-12-20)</small>
 
 * fix(abc:se): fix missing required of reactive (#1737) ([a2ca109](https://github.com/ng-alain/delon/commit/a2ca109)), closes [#1737](https://github.com/ng-alain/delon/issues/1737)

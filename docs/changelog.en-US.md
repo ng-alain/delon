@@ -14,6 +14,12 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## <small>17.0.5 (2023-12-25)</small>
+
+* fix(abc:st): fix export mismatch (#1740) ([a46f2ee](https://github.com/ng-alain/delon/commit/a46f2ee)), closes [#1740](https://github.com/ng-alain/delon/issues/1740)
+* fix(form:array): fix invalid trackBy (#1741) ([3e55228](https://github.com/ng-alain/delon/commit/3e55228)), closes [#1741](https://github.com/ng-alain/delon/issues/1741)
+
+
 ## <small>17.0.4 (2023-12-20)</small>
 
 * fix(abc:se): fix missing required of reactive (#1737) ([a2ca109](https://github.com/ng-alain/delon/commit/a2ca109)), closes [#1737](https://github.com/ng-alain/delon/issues/1737)
