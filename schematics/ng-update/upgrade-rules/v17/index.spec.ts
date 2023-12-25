@@ -127,4 +127,19 @@ export class AppComponent implements OnInit {
     expect(content).toContain(`private donePreloader = stepPreloader();`);
     expect(content).toContain(`this.donePreloader();`);
   });
+
+  it('add ng-less-javascript-enabled-patch', async () => {
+    const packageJsonPath = '/package.json';
+    tryAddFile(
+      tree,
+      packageJsonPath,
+      `{
+        "scripts": {},
+        "devDependencies": {}
+      }`
+    );
+    await runMigration();
+    const content = tree.readContent(packageJsonPath);
+    expect(content).toContain(`"ng-less-javascript-enabled-patch": "^17.0.0"`);
+  });
 });
