@@ -7245,6 +7245,7 @@ __metadata:
     ng-alain-sts: "npm:^0.0.2"
     ng-antd-color-picker: "npm:^1.1.0"
     ng-github-button: "npm:^17.0.0"
+    ng-less-javascript-enabled-patch: "npm:17.0.0"
     ng-packagr: "npm:^17.0.0"
     ng-zorro-antd: "npm:^17.0.1"
     ngx-countdown: "npm:^17.0.0"
@@ -12900,6 +12901,18 @@ __metadata:
   dependencies:
     tslib: "npm:^2.3.0"
   checksum: 475fb5212555940671baa8b2b91cf0ed7085ddd5ae841e930db03acaf316cc6d83cc946834c3e6bf84398ef6a6450e08802d854f70deb79bcabf1071a0b26bb9
+  languageName: node
+  linkType: hard
+
+"ng-less-javascript-enabled-patch@npm:17.0.0":
+  version: 17.0.0
+  resolution: "ng-less-javascript-enabled-patch@npm:17.0.0"
+  peerDependencies:
+    "@angular-devkit/schematics": ^17.0.0
+    ansi-colors: ^4.0.0
+  bin:
+    ng-less-javascript-enabled-patch: index.js
+  checksum: 6605ee50069968499c7bfff4b3d102d2549eb9ac6d6535e084ebb2e9c6a8f978aac0148d1c06ed6ce25a2dedb213f51f48b37b0b2d78a7ed693b9fe5c3a16616
   languageName: node
   linkType: hard
 
