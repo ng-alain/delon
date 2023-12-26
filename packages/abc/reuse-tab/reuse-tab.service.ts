@@ -8,7 +8,7 @@ import {
   Router,
   ROUTER_CONFIGURATION
 } from '@angular/router';
-import { BehaviorSubject, Observable, timer, Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Observable, take, timer, Unsubscribable } from 'rxjs';
 
 import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
@@ -441,6 +441,35 @@ export class ReuseTabService implements OnDestroy {
     return this.can(route);
   }
 
+  saveCache(snapshot: ActivatedRouteSnapshot, _handle?: NzSafeAny, pos?: number): void {
+    const snapshotTrue = this.getTruthRoute(snapshot);
+    const url = this.getUrl(snapshot);
+    const idx = this.index(url);
+    const item: ReuseTabCached = {
+      title: this.getTitle(url, snapshotTrue),
+      url,
+      closable: this.getClosable(url, snapshot),
+      _snapshot: snapshot,
+      _handle
+    };
+    if (idx < 0) {
+      this.items.splice(pos ?? this.items.length, 0, item);
+      if (this.count > this._max) {
+        // Get the oldest closable location
+        const closeIdx = this.items.findIndex(w => w.url !== url && w.closable!);
+        if (closeIdx !== -1) {
+          const closeItem = this.items[closeIdx];
+          this.remove(closeIdx, false);
+          timer(1)
+            .pipe(take(1))
+            .subscribe(() => this._cachedChange.next({ active: 'close', url: closeItem.url, list: this.cached.list }));
+        }
+      }
+    } else {
+      this.items[idx] = item;
+    }
+  }
+
   /**
    * 存储
    */
@@ -448,6 +477,10 @@ export class ReuseTabService implements OnDestroy {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
     if (idx === -1) return;
+
+    if (_handle != null) {
+      this.saveCache(_snapshot, _handle);
+    }
 
     const list = this.cached.list;
 
@@ -463,7 +496,9 @@ export class ReuseTabService implements OnDestroy {
     // For better reliability, we need to wait for the component to be attached before call _onReuseInit
     const cahcedComponentRef = list[idx]._handle?.componentRef;
     if (_handle == null && cahcedComponentRef != null) {
-      timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
+      timer(100)
+        .pipe(take(1))
+        .subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
     }
     list[idx] = item;
     this.removeUrlBuffer = null;
@@ -487,11 +522,6 @@ export class ReuseTabService implements OnDestroy {
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
     if (!ret) {
-      if (this.count >= this._max) {
-        // Get the oldest closable location
-        const closeIdx = this.items.findIndex(w => w.url !== url && w.closable!);
-        if (closeIdx !== -1) this.remove(closeIdx, false);
-      }
       this._cachedChange.next({ active: 'add', url, list: this.cached.list });
     }
     return ret;
