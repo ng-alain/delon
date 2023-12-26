@@ -219,12 +219,16 @@ export class ReuseTabService implements OnDestroy {
    */
   replace(newUrl: string): void {
     const url = this.curUrl;
-    if (this.exists(url)) {
-      this.close(url, true);
-    } else {
-      this.removeUrlBuffer = url;
-    }
-    this.injector.get<Router>(Router).navigateByUrl(newUrl);
+    this.injector
+      .get(Router)
+      .navigateByUrl(newUrl)
+      .then(() => {
+        if (this.exists(url)) {
+          this.close(url, true);
+        } else {
+          this.removeUrlBuffer = url;
+        }
+      });
   }
   /**
    * 获取标题，顺序如下：
@@ -443,7 +447,9 @@ export class ReuseTabService implements OnDestroy {
   store(_snapshot: ActivatedRouteSnapshot, _handle: NzSafeAny): void {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
-    const isAdd = idx === -1;
+    if (idx === -1) return;
+
+    const list = this.cached.list;
 
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
@@ -453,33 +459,22 @@ export class ReuseTabService implements OnDestroy {
       _snapshot,
       _handle
     };
-    if (isAdd) {
-      if (this.count >= this._max) {
-        // Get the oldest closable location
-        const closeIdx = this.cached.list.findIndex(w => w.closable!);
-        if (closeIdx !== -1) this.remove(closeIdx, false);
-      }
-      this.cached.list.push(item);
-    } else {
-      // Current handler is null when activate routes
-      // For better reliability, we need to wait for the component to be attached before call _onReuseInit
-      const cahcedComponentRef = this.cached.list[idx]._handle?.componentRef;
-      if (_handle == null && cahcedComponentRef != null) {
-        timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
-      }
-      this.cached.list[idx] = item;
+    // Current handler is null when activate routes
+    // For better reliability, we need to wait for the component to be attached before call _onReuseInit
+    const cahcedComponentRef = list[idx]._handle?.componentRef;
+    if (_handle == null && cahcedComponentRef != null) {
+      timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
     }
+    list[idx] = item;
     this.removeUrlBuffer = null;
 
-    this.di('#store', isAdd ? '[new]' : '[override]', url);
+    this.di('#store', '[override]', url);
 
     if (_handle && _handle.componentRef) {
       this.runHook('_onReuseDestroy', _handle.componentRef);
     }
 
-    if (!isAdd) {
-      this._cachedChange.next({ active: 'override', item, list: this.cached.list });
-    }
+    this._cachedChange.next({ active: 'override', item, list });
   }
 
   /**
@@ -492,6 +487,11 @@ export class ReuseTabService implements OnDestroy {
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
     if (!ret) {
+      if (this.count >= this._max) {
+        // Get the oldest closable location
+        const closeIdx = this.items.findIndex(w => w.url !== url && w.closable!);
+        if (closeIdx !== -1) this.remove(closeIdx, false);
+      }
       this._cachedChange.next({ active: 'add', url, list: this.cached.list });
     }
     return ret;

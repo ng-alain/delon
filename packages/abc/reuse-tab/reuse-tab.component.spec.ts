@@ -139,6 +139,26 @@ describe('abc: reuse-tab', () => {
           .expectCount(3)
           .end();
       }));
+      it('should be keep open order', fakeAsync(() => {
+        srv.max = 10;
+        page
+          .to('#b')
+          .expectUrl(0, '/a')
+          .expectUrl(1, '/b/1')
+          .to('#a')
+          .expectUrl(0, '/a')
+          .expectUrl(1, '/b/1')
+          .to('#c')
+          .expectUrl(0, '/a')
+          .expectUrl(1, '/c')
+          .expectUrl(2, '/b/1')
+          .to('#d')
+          .expectUrl(0, '/a')
+          .expectUrl(1, '/c')
+          .expectUrl(2, '/d')
+          .expectUrl(3, '/b/1')
+          .end();
+      }));
     });
 
     describe('#close', () => {
@@ -149,7 +169,6 @@ describe('abc: reuse-tab', () => {
       }));
       it('should show next tab when closed a has next tab', fakeAsync(() => {
         srv.max = 10;
-        // debugger;
         page.to('#b');
         page.to('#c');
         page.go(1);
@@ -210,14 +229,7 @@ describe('abc: reuse-tab', () => {
           fixture.detectChanges();
         });
         it('should working', fakeAsync(() => {
-          page
-            .to('#b')
-            .expectCount(MAX)
-            .to('#c')
-            .expectCount(MAX + 1) // +1 => current page
-            .to('#d')
-            .expectCount(MAX + 1)
-            .end();
+          page.to('#b').expectCount(MAX).to('#c').expectCount(MAX).to('#d').expectCount(MAX).end();
         }));
       });
       describe('#allowClose', () => {
@@ -798,7 +810,7 @@ describe('abc: reuse-tab', () => {
       this.cd();
       return this;
     }
-    openContextMenu(pos: number, eventArgs?: NzSafeAny): this {
+    openContextMenu(pos: number, eventArgs?: MouseEventInit): this {
       const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
         expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
