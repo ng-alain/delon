@@ -128,6 +128,7 @@ export class LayoutBasicComponent {
 | `[disabledAcl]` | `acl` 校验失败时以 `disabled` 状态显示 | `boolean` | `false` |
 | `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true` |
 | `[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true` |
+| `[hideEmptyChildren]` | 当所有子项都为隐藏时，是否也隐藏父级 | `boolean` | `true` |
 | `[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false` |
 | `[maxLevelIcon]` | Icon最多显示到第几层 | `number` | `3` |
 | `(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | - |
