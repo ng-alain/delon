@@ -1,0 +1,40 @@
+name: CI
+
+on: push
+
+jobs:
+  # build:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --immutable --immutable-cache
+      - name: Test
+        run: yarn run test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --immutable --immutable-cache
+      - name: Check code lint
+        run: yarn run lint
