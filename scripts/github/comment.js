@@ -1,7 +1,7 @@
 const REPO = process.env.ACCESS_REPO;
 const TOKEN = process.env.ACCESS_TOKEN;
 const PR = process.env.PR_NUMBER;
-const REPLACE_MARK = '<!-- AZURE_UPDATE_COMMENT -->';
+const REPLACE_MARK = '<!-- GHA_UPDATE_COMMENT -->';
 
 const argv = process.argv;
 
