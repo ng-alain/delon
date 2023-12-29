@@ -23,12 +23,12 @@ jobs:
         run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           PR_NUMBER: ${{ steps.findPr.outputs.pr }}
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       - name: Build site
         run: yarn run site:build
       - name: 'Deploy Site'
@@ -39,7 +39,7 @@ jobs:
           npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
         env:
           ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: 'Update comment on github'
@@ -48,14 +48,14 @@ jobs:
           node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
         env:
           ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           PR_NUMBER: ${{ steps.findPr.outputs.pr }}
       - name: 'When failed'
         if: failure()
         run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           PR_NUMBER: ${{ steps.findPr.outputs.pr }}
 
   test:
