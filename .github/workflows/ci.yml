@@ -17,44 +17,44 @@ jobs:
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
         run: yarn install --frozen-lockfile
+      - name: Comment on github
+        run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
+        env:
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.number }}
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Comment on github
-        run: node ./scripts/azure/github-comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
-        env:
-          ACCESS_REPO: ${{ secrets.ACCESS_REPO }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SYSTEM_PULLREQUEST_PULLREQUESTNUMBER: ${{ github.event.number }}
       - name: Build site
         run: yarn run site:build
       - name: 'Deploy Site'
         run: |
-          export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
+          export DEPLOY_DOMAIN=https://preview-${{ github.repository }}-ng-alain-delon.surge.sh
           echo "Deploy to $DEPLOY_DOMAIN"
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
         env:
-          ACCESS_REPO: $(ACCESS_REPO)
-          ACCESS_TOKEN: $(GITHUB_TOKEN)
-          SURGE_LOGIN: $(SURGE_LOGIN)
-          SURGE_TOKEN: $(SURGE_TOKEN)
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: 'Update comment on github'
         run: |
-          export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
-          node ./scripts/azure/github-comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
+          export DEPLOY_DOMAIN=https://preview-${{ github.repository }}-ng-alain-delon.surge.sh
+          node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
         env:
-          ACCESS_REPO: $(ACCESS_REPO)
-          ACCESS_TOKEN: $(GITHUB_TOKEN)
-          SYSTEM_PULLREQUEST_PULLREQUESTNUMBER: ${{ github.event.number }}
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.number }}
       - name: 'When failed'
         if: failure()
-        run: node ./scripts/azure/github-comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
+        run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
-          ACCESS_REPO: $(ACCESS_REPO)
-          ACCESS_TOKEN: $(GITHUB_TOKEN)
-          SYSTEM_PULLREQUEST_PULLREQUESTNUMBER: ${{ github.event.number }}
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.number }}
 
   test:
     runs-on: ubuntu-latest
