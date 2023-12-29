@@ -18,7 +18,7 @@ jobs:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --immutable --immutable-cache
+        run: yarn install --frozen-lockfile
       - name: Test
         run: yarn run test
 
@@ -35,6 +35,6 @@ jobs:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --immutable --immutable-cache
+        run: yarn install --frozen-lockfile
       - name: Check code lint
         run: yarn run lint
