@@ -21,6 +21,30 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Test
         run: yarn run test
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          files: cobertura-coverage.xml
+          fail_ci_if_error: true
+          verbose: true
+
+  test-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn run test:cli
 
   lint:
     runs-on: ubuntu-latest
