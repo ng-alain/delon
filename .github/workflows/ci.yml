@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -22,7 +24,7 @@ jobs:
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.number }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
@@ -47,14 +49,14 @@ jobs:
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.number }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
       - name: 'When failed'
         if: failure()
         run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.number }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
 
   test:
     runs-on: ubuntu-latest
