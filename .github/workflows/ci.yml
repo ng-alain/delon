@@ -28,7 +28,7 @@ jobs:
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
       - name: Build site
         run: yarn run site:build
       - name: 'Deploy Site'
