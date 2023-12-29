@@ -23,7 +23,7 @@ jobs:
         run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ github.token }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           PR_NUMBER: ${{ steps.findPr.outputs.pr }}
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
