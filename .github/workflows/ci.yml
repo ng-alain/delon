@@ -46,28 +46,12 @@ jobs:
         env:
           ACCESS_REPO: $(ACCESS_REPO)
           ACCESS_TOKEN: $(ACCESS_TOKEN)
-
-  build-failed:
-    runs-on: ubuntu-latest
-    if: ${{ failure() }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-      - uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
-      - name: Install node modules
-        run: yarn install --frozen-lockfile
-      - name: Comment on github
+      - name: 'When failed'
+        if: failure()
         run: node ./scripts/azure/github-comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: $(ACCESS_REPO)
           ACCESS_TOKEN: $(ACCESS_TOKEN)
-
 
   test:
     runs-on: ubuntu-latest

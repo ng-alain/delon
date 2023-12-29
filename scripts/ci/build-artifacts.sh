@@ -23,7 +23,7 @@ echo "Current commit author name: ${commitAuthorName}"
 #   exit 0
 # fi
 
-# echo "ACCESS_TOKEN: ${ACCESS_TOKEN}.."
+echo "ACCESS_TOKEN: ${ACCESS_TOKEN}.."
 
 if [ -z ${ACCESS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
