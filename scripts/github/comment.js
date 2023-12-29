@@ -18,7 +18,7 @@ async function withGithub(url, json, method) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Basic ${Buffer.from(TOKEN).toString('base64')}`,
+      Authorization: `Basic ${TOKEN}`,
     },
     body: json ? JSON.stringify(json) : undefined,
   });
