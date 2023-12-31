@@ -18,6 +18,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { I18NService, MetaService } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
+import { RouteTransferDirective } from '../route-transfer/route-transfer.directive';
 
 declare var hljs: any;
 
@@ -25,7 +26,15 @@ declare var hljs: any;
   selector: 'app-docs',
   templateUrl: './docs.component.html',
   standalone: true,
-  imports: [I18nPipe, NzAffixModule, NzAnchorModule, NzAlertModule, NzToolTipModule, EditButtonComponent]
+  imports: [
+    I18nPipe,
+    RouteTransferDirective,
+    NzAffixModule,
+    NzAnchorModule,
+    NzAlertModule,
+    NzToolTipModule,
+    EditButtonComponent
+  ]
 })
 export class DocsComponent implements OnInit, OnDestroy {
   private i18NChange$: Subscription;

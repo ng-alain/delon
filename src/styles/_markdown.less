@@ -268,8 +268,6 @@
 }
 
 .markdown.api-container {
-  overflow-x: auto;
-
   table {
     table-layout: auto;
     min-width: 720px;
@@ -324,6 +322,10 @@
 
   hr {
     margin: 12px 0;
+  }
+
+  @media (max-width: @site-mobile) {
+    overflow-x: auto;
   }
 }
 
