@@ -160,14 +160,13 @@ export class ReuseTabComponent implements OnInit, OnChanges {
         ({
           url: item.url,
           title: this.genTit(item.title),
-          closable: this.allowClose && item.closable && this.srv.count > 0,
+          closable: this.allowClose && this.srv.count > 0 && this.srv.getClosable(item.url, item._snapshot),
           position: item.position,
           index,
           active: false,
           last: false
         }) as ReuseItem
     );
-    // debugger;
 
     const url = this.curUrl;
     let addCurrent = ls.findIndex(w => w.url === url) === -1;
@@ -186,7 +185,10 @@ export class ReuseTabComponent implements OnInit, OnChanges {
     }
 
     if (addCurrent) {
-      ls.splice(this.pos + 1, 0, this.genCurItem());
+      const addPos = this.pos + 1;
+      ls.splice(addPos, 0, this.genCurItem());
+      // Attach to cache
+      this.srv.saveCache(this.route.snapshot, null, addPos);
     }
 
     ls.forEach((item, index) => (item.index = index));
@@ -256,9 +258,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
       if (!res) return;
       this.item = item;
       this.change.emit(item);
-      if (cb) {
-        cb();
-      }
+      cb?.();
     });
   }
 
