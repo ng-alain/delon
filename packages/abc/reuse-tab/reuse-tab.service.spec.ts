@@ -17,7 +17,7 @@ class MockMenuService {
   }
 }
 class MockRouter {
-  navigateByUrl = jasmine.createSpy();
+  navigateByUrl = jasmine.createSpy().and.returnValue(Promise.resolve(true));
   get events(): NzSafeAny {
     return {
       subscribe: () => {
@@ -69,7 +69,7 @@ describe('abc: reuse-tab(service)', () => {
     Array(count)
       .fill({})
       .forEach((_item: NzSafeAny, index: number) => {
-        srv.store(getSnapshot(index + 1, urlTpl), { a: 1 });
+        srv.saveCache(getSnapshot(index + 1, urlTpl), { a: 1 });
       });
   }
 
@@ -95,21 +95,21 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should be close oldest page', () => {
         srv.max = 2;
-        srv.store(getSnapshot(1), {});
-        srv.store(getSnapshot(2), {});
-        srv.store(getSnapshot(3), {});
+        srv.saveCache(getSnapshot(1), {});
+        srv.saveCache(getSnapshot(2), {});
+        srv.saveCache(getSnapshot(3), {});
         expect(srv.count).toBe(2);
-        srv.store(getSnapshot(4), {});
+        srv.saveCache(getSnapshot(4), {});
         expect(srv.count).toBe(2);
       });
       it('should be ingore close when all is not closable', () => {
         srv.max = 2;
-        srv.store(getSnapshot(1), {});
-        srv.store(getSnapshot(2), {});
+        srv.saveCache(getSnapshot(1), {});
+        srv.saveCache(getSnapshot(2), {});
         srv.items.forEach(i => (i.closable = false));
-        srv.store(getSnapshot(3), {});
+        srv.saveCache(getSnapshot(3), {});
         expect(srv.count).toBe(3);
-        srv.store(getSnapshot(4), {});
+        srv.saveCache(getSnapshot(4), {});
         expect(srv.count).toBe(3);
       });
     });
@@ -313,7 +313,7 @@ describe('abc: reuse-tab(service)', () => {
             destroy: jasmine.createSpy('destroy')
           }
         };
-        srv.store(getSnapshot(3), instance);
+        srv.saveCache(getSnapshot(3), instance);
         srv.close('/a/3');
         expect(instance.componentRef.destroy).toHaveBeenCalled();
       });
@@ -377,17 +377,19 @@ describe('abc: reuse-tab(service)', () => {
       srv.refresh(true);
     });
     describe('#replace', () => {
-      it('should be navigate to new url', () => {
+      it('should be navigate to new url', fakeAsync(() => {
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/a/1');
+        tick();
         expect(router.navigateByUrl).toHaveBeenCalled();
-      });
-      it('should be closed current router after navigate to new url', () => {
+      }));
+      it('should be closed current router after navigate to new url', fakeAsync(() => {
         genCached(1, '');
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/b');
+        tick();
         expect(router.navigateByUrl).toHaveBeenCalled();
-      });
+      }));
     });
     describe('#keepingScroll', () => {
       it('should get keepingScroll from service', () => {
@@ -451,7 +453,7 @@ describe('abc: reuse-tab(service)', () => {
     it(`can't hit when remove current page`, () => {
       const snapshot = getSnapshot(1);
       expect(srv.shouldDetach(snapshot)).toBe(true);
-      srv.store(snapshot, {});
+      srv.saveCache(snapshot, {});
       srv.close(srv.getUrl(snapshot));
       expect(srv.shouldDetach(snapshot)).toBe(false);
     });
@@ -465,18 +467,18 @@ describe('abc: reuse-tab(service)', () => {
     });
     it(`should be store a new route`, () => {
       expect(srv.count).toBe(2);
-      srv.store(getSnapshot(3), {});
+      srv.saveCache(getSnapshot(3));
       expect(srv.count).toBe(3);
     });
     it(`should be store a exists route`, () => {
       expect(srv.count).toBe(2);
-      srv.store(getSnapshot(1), {});
+      srv.saveCache(getSnapshot(1));
       expect(srv.count).toBe(2);
     });
     it(`should be store a route when out of cache count`, () => {
       srv.max = 2;
       expect(srv.count).toBe(2);
-      srv.store(getSnapshot(3), { componentRef: {} });
+      srv.saveCache(getSnapshot(3), { componentRef: {} });
       expect(srv.count).toBe(2);
     });
     it(`should be run _onReuseDestroy event hook`, () => {
@@ -487,7 +489,9 @@ describe('abc: reuse-tab(service)', () => {
           }
         }
       };
-      srv.store(getSnapshot(3), handle);
+      const snapshot = getSnapshot(3);
+      srv.saveCache(snapshot, handle);
+      srv.store(snapshot, handle);
       expect(handle.componentRef.instance._onReuseDestroy).toHaveBeenCalled();
     });
   });
@@ -537,7 +541,7 @@ describe('abc: reuse-tab(service)', () => {
       };
       const snapshot = getSnapshot(3);
       // handle
-      srv.store(snapshot, handle);
+      srv.saveCache(snapshot, handle);
       // mock activate router
       srv.store(snapshot, null);
       tick(101);
