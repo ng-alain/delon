@@ -499,3 +499,42 @@
     margin-top: 40px;
   }
 }
+
+label.api-type-label {
+  display: inline;
+  margin-left: 8px;
+  padding: 1px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #ffffffd9;
+  text-transform: uppercase;
+  vertical-align: middle;
+  border-radius: 2px;
+
+  &.component {
+    color: @primary-color;
+    border: 2px solid @primary-color
+  }
+
+  &.standalone {
+    color: @warning-color;
+    border: 2px solid @warning-color
+  }
+
+  &.directive {
+    color: @magenta-6;
+    border: 2px solid @magenta-6
+  }
+
+  &.service {
+    color: @success-color;
+    border: 2px solid @success-color
+  }
+
+  &.class {
+    color: @volcano-6;
+    border: 2px solid @volcano-6
+  }
+
+}
