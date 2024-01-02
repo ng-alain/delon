@@ -25,25 +25,6 @@ describe('Service: Title', () => {
     }
   }
 
-  class TestDocument {
-    querySelector(): NzSafeAny {
-      return {
-        childNodes: [],
-        firstChild: {
-          textContent: 'a'
-        }
-      };
-    }
-    querySelectorAll(): NzSafeAny {
-      return {
-        childNodes: [],
-        firstChild: {
-          textContent: 'a'
-        }
-      };
-    }
-  }
-
   let title: TestTitleService;
   let srv: TitleService;
   let i18n: AlainI18NService;
@@ -227,10 +208,53 @@ describe('Service: Title', () => {
 
     describe('should be hava title via element', () => {
       it('with element', fakeAsync(() => {
+        class TestDocument {
+          querySelector(): NzSafeAny {
+            return {
+              childNodes: [],
+              firstChild: {
+                textContent: 'a'
+              }
+            };
+          }
+          querySelectorAll(): NzSafeAny {
+            return {
+              childNodes: [],
+              firstChild: {
+                textContent: 'a'
+              }
+            };
+          }
+        }
         genModule([{ provide: DOCUMENT, useClass: TestDocument }]);
         srv.setTitle();
         tick(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith('a');
+      }));
+      it('with element and has children', fakeAsync(() => {
+        class TestDocument {
+          querySelector(): NzSafeAny {
+            return {
+              childNodes: [
+                {
+                  nodeType: 2,
+                  textContent: 'b'
+                },
+                {
+                  nodeType: 3,
+                  textContent: 'b'
+                }
+              ],
+              firstChild: {
+                textContent: 'a'
+              }
+            };
+          }
+        }
+        genModule([{ provide: DOCUMENT, useClass: TestDocument }]);
+        srv.setTitle();
+        tick(srv.DELAY_TIME + 1);
+        expect(title.setTitle).toHaveBeenCalledWith('b');
       }));
       it('without element', fakeAsync(() => {
         genModule([]);
