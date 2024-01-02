@@ -7,8 +7,7 @@ import { SGComponent } from './sg.component';
 const COMPONENTS = [SGContainerComponent, SGComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class SGModule {}

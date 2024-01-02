@@ -24,7 +24,8 @@ import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 
 @Directive({
   selector: 'nz-range-picker[extend]',
-  exportAs: 'extendRangePicker'
+  exportAs: 'extendRangePicker',
+  standalone: true
 })
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
   static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;

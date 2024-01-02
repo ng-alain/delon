@@ -16,7 +16,8 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class SGContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;

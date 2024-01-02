@@ -18,13 +18,13 @@ import { Component } from '@angular/core';
 
 import { CountdownConfig } from 'ngx-countdown';
 
-import { CountDownModule } from '@delon/abc/count-down';
+import { CountDownComponent } from '@delon/abc/count-down';
 
 @Component({
   selector: 'app-demo',
   template: ` <count-down [config]="config" /> `,
   standalone: true,
-  imports: [CountDownModule]
+  imports: [CountDownComponent]
 })
 export class DemoComponent {
   config: CountdownConfig = {

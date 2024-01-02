@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 
 import type Plyr from 'plyr';
 
-import { MediaModule } from '@delon/abc/media';
+import { MediaComponent } from '@delon/abc/media';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -31,7 +31,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <div media #media [source]="source" [options]="options"></div>
   `,
   standalone: true,
-  imports: [NzButtonModule, MediaModule]
+  imports: [NzButtonModule, MediaComponent]
 })
 export class DemoComponent {
   source: Plyr.SourceInfo = {

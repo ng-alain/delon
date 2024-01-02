@@ -18,7 +18,7 @@ import { Component, inject } from '@angular/core';
 
 import { CountdownEvent } from 'ngx-countdown';
 
-import { CountDownModule } from '@delon/abc/count-down';
+import { CountDownComponent } from '@delon/abc/count-down';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -32,7 +32,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="cd.instance.resume()">Resume</button>
   `,
   standalone: true,
-  imports: [CountDownModule, NzButtonModule]
+  imports: [CountDownComponent, NzButtonModule]
 })
 export class DemoComponent {
   private readonly msg = inject(NzMessageService);

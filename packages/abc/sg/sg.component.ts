@@ -28,7 +28,8 @@ const prefixCls = `sg`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   static ngAcceptInputType_col: NumberInput;

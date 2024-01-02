@@ -7,8 +7,7 @@ import { FullContentComponent } from './full-content.component';
 const COMPONENTS = [FullContentComponent, FullContentToggleDirective];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class FullContentModule {}

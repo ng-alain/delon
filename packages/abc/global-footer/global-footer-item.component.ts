@@ -8,7 +8,8 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   template: ` <ng-template #host><ng-content /></ng-template> `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class GlobalFooterItemComponent {
   static ngAcceptInputType_blankTarget: BooleanInput;
