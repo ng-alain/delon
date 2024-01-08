@@ -55,6 +55,7 @@ switchLanguage() {
 | 法文 | fr_FR |
 | 西班牙语 | es_ES |
 | 意大利语 | it_IT |
+| 越南语 | vi_VI |
 
 ## 增加语言包
 
