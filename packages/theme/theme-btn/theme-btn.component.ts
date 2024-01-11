@@ -21,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzMenuDirective, NzMenuItemComponent } from 'ng-zorro-antd/menu';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 export interface ThemeBtnType {
@@ -39,7 +40,7 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NzDropDownDirective, NzDropdownMenuComponent, NzTooltipDirective]
+  imports: [NzDropDownDirective, NzDropdownMenuComponent, NzMenuDirective, NzMenuItemComponent, NzTooltipDirective]
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
   private theme = 'default';
