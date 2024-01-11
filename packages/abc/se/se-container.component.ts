@@ -15,9 +15,49 @@ import { BehaviorSubject, Observable, filter } from 'rxjs';
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SEErrorRefresh, SELayout } from './se.types';
+
+@Component({
+  selector: 'se-title, [se-title]',
+  exportAs: 'seTitle',
+  template: '<ng-content />',
+  host: {
+    '[class.se__title]': 'true'
+  },
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
+})
+export class SETitleComponent implements OnInit {
+  private el: HTMLElement;
+  constructor(
+    @Host()
+    @Optional()
+    private parent: SEContainerComponent,
+    el: ElementRef,
+    private ren: Renderer2
+  ) {
+    if (parent == null) {
+      throw new Error(`[se-title] must include 'se-container' component`);
+    }
+    this.el = el.nativeElement;
+  }
+
+  private setClass(): void {
+    const { el } = this;
+    const gutter = this.parent.gutter as number;
+    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
+    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
+  }
+
+  ngOnInit(): void {
+    this.setClass();
+  }
+}
 
 @Component({
   selector: 'se-container, [se-container]',
@@ -42,7 +82,9 @@ import { SEErrorRefresh, SELayout } from './se.types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [SETitleComponent, NzStringTemplateOutletDirective]
 })
 export class SEContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
@@ -115,43 +157,5 @@ export class SEContainerComponent {
     for (const error of errors) {
       this.errorNotify$.next(error);
     }
-  }
-}
-
-@Component({
-  selector: 'se-title, [se-title]',
-  exportAs: 'seTitle',
-  template: '<ng-content />',
-  host: {
-    '[class.se__title]': 'true'
-  },
-  preserveWhitespaces: false,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
-})
-export class SETitleComponent implements OnInit {
-  private el: HTMLElement;
-  constructor(
-    @Host()
-    @Optional()
-    private parent: SEContainerComponent,
-    el: ElementRef,
-    private ren: Renderer2
-  ) {
-    if (parent == null) {
-      throw new Error(`[se-title] must include 'se-container' component`);
-    }
-    this.el = el.nativeElement;
-  }
-
-  private setClass(): void {
-    const { el } = this;
-    const gutter = this.parent.gutter as number;
-    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
-    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
-  }
-
-  ngOnInit(): void {
-    this.setClass();
   }
 }

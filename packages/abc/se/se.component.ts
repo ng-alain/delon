@@ -1,3 +1,5 @@
+import { ObserversModule } from '@angular/cdk/observers';
+import { NgClass } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -26,7 +28,10 @@ import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { SEContainerComponent } from './se-container.component';
 import { SEError, SEErrorType } from './se.types';
@@ -49,7 +54,9 @@ let nextUniqueId = 0;
   providers: [NzFormStatusService],
   animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgClass, NzStringTemplateOutletDirective, NzToolTipModule, NzIconDirective, ObserversModule]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   static ngAcceptInputType_col: NumberInput;
