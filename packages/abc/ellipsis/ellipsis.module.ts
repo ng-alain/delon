@@ -9,8 +9,7 @@ import { EllipsisComponent } from './ellipsis.component';
 const COMPONENTS = [EllipsisComponent];
 
 @NgModule({
-  imports: [CommonModule, ObserversModule, NzToolTipModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ObserversModule, NzToolTipModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class EllipsisModule {}

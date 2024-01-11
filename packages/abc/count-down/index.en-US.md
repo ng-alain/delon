@@ -16,7 +16,7 @@ npm i -S ngx-countdown
 
 ## API
 
-### count-down
+### count-down:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

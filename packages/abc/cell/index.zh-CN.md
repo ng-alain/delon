@@ -11,7 +11,7 @@ module: import { CellModule } from '@delon/abc/cell';
 
 ## API
 
-### cell
+### cell:standalone
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
