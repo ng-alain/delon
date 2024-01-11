@@ -162,6 +162,8 @@ export class HomeComponent {
 | `getProperty` | Get a form property via path | `FormProperty` |
 | `getValue` | Get value via path | `any` |
 | `setValue` | Set value via path, should be throw error when invalid path | `this` |
+| `setDisabled` | Set `disabled` status via path, should be throw error when invalid path | `this` |
+| `setRequired` | Set `required` status via path, should be throw error when invalid path | `this` |
 | `updateFeedback` | Set feedback status via path | `this` |
 
 > **Note:** All paths are separated by `/`, for example: `/user/name`, `/arr/0/name`.
