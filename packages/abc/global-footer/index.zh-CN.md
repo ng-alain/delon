@@ -10,14 +10,14 @@ module: import { GlobalFooterModule } from '@delon/abc/global-footer';
 
 ## API
 
-### global-footer
+### global-footer:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[links]` | 链接数据 | `GlobalFooterLink` | - |
 | `[copyright]` | 版权信息 | `TemplateRef` | - |
 
-### global-footer-item
+### global-footer-item:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

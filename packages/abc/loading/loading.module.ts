@@ -11,8 +11,7 @@ import { LoadingDefaultComponent } from './loading.component';
 const COMPONENTS = [LoadingDefaultComponent];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, NzIconModule, NzSpinModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, OverlayModule, PortalModule, NzIconModule, NzSpinModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class LoadingModule {}

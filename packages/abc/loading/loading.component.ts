@@ -1,5 +1,9 @@
 import { Direction } from '@angular/cdk/bidi';
+import { NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types';
 
@@ -12,7 +16,9 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSpinComponent, NzIconDirective, NgStyle]
 })
 export class LoadingDefaultComponent {
   options!: LoadingShowOptions;
