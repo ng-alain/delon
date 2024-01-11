@@ -51,6 +51,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_disabledAcl: BooleanInput;
   static ngAcceptInputType_autoCloseUnderPad: BooleanInput;
   static ngAcceptInputType_recursivePath: BooleanInput;
+  static ngAcceptInputType_hideEmptyChildren: BooleanInput;
   static ngAcceptInputType_openStrictly: BooleanInput;
   static ngAcceptInputType_maxLevelIcon: NumberInput;
 
@@ -63,6 +64,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() disabledAcl = false;
   @Input() @InputBoolean() autoCloseUnderPad = true;
   @Input() @InputBoolean() recursivePath = true;
+  @Input() @InputBoolean() hideEmptyChildren = true;
   @Input()
   @InputBoolean()
   set openStrictly(value: boolean) {
@@ -249,7 +251,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
           icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!!);
         }
       });
-      this.fixHide(data);
+      if (this.hideEmptyChildren) this.fixHide(data);
       this.list = data.filter((w: Nav) => w._hidden !== true);
       cdr.detectChanges();
     });

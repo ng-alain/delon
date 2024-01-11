@@ -223,28 +223,55 @@ describe('theme: layout-default-nav', () => {
         page.checkText('.sidebar-nav__item', `i18n 1`);
       });
 
-      it('should be hide when children are hide', () => {
-        createComp();
-        menuSrv.add([
-          {
-            text: 'parent',
-            children: [
-              { text: 'l1', hide: true },
-              { text: 'l2', hide: false }
-            ]
-          }
-        ]);
-        page.checkCount('.sidebar-nav__group-title', 1);
-        menuSrv.add([
-          {
-            text: 'parent',
-            children: [
-              { text: 'l1', hide: true },
-              { text: 'l2', hide: true }
-            ]
-          }
-        ]);
-        page.checkCount('.sidebar-nav__group-title', 0);
+      describe('#hideEmptyChildren', () => {
+        it('with true', () => {
+          createComp();
+          menuSrv.add([
+            {
+              text: 'parent',
+              children: [
+                { text: 'l1', hide: true },
+                { text: 'l2', hide: false }
+              ]
+            }
+          ]);
+          page.checkCount('.sidebar-nav__group-title', 1);
+          menuSrv.add([
+            {
+              text: 'parent',
+              children: [
+                { text: 'l1', hide: true },
+                { text: 'l2', hide: true }
+              ]
+            }
+          ]);
+          page.checkCount('.sidebar-nav__group-title', 0);
+        });
+        it('with false', () => {
+          createComp();
+          context.hideEmptyChildren = false;
+          fixture.detectChanges();
+          menuSrv.add([
+            {
+              text: 'parent',
+              children: [
+                { text: 'l1', hide: true },
+                { text: 'l2', hide: false }
+              ]
+            }
+          ]);
+          page.checkCount('.sidebar-nav__group-title', 1);
+          menuSrv.add([
+            {
+              text: 'parent',
+              children: [
+                { text: 'l1', hide: true },
+                { text: 'l2', hide: true }
+              ]
+            }
+          ]);
+          page.checkCount('.sidebar-nav__group-title', 1);
+        });
       });
     });
 
@@ -639,6 +666,7 @@ describe('theme: layout-default-nav', () => {
       [disabledAcl]="disabledAcl"
       [autoCloseUnderPad]="autoCloseUnderPad"
       [recursivePath]="recursivePath"
+      [hideEmptyChildren]="hideEmptyChildren"
       [openStrictly]="openStrictly"
       (select)="select()"
     />
@@ -650,6 +678,7 @@ class TestComponent {
   disabledAcl = false;
   autoCloseUnderPad = false;
   recursivePath = false;
+  hideEmptyChildren = true;
   openStrictly = false;
   select(): void {}
 }

@@ -128,6 +128,7 @@ The layout can be dynamically managed at runtime through the `LayoutDefaultServi
 | `[disabledAcl]` | Displayed `disabled` state when `acl` check fails. | `boolean` | `false` |
 | `[autoCloseUnderPad]` | When the route width is less than the Pad width, the sidebar is automatically closed. | `boolean` | `true` |
 | `[recursivePath]` | Automatic up recursive lookup, menu data source contains `/ware`, then `/ware/1` is also treated as `/ware` | `boolean` | `true` |
+| `[hideEmptyChildren]` | When all children are hidden, whether to hide the parent as well | `boolean` | `true` |
 | `[openStrictly]` | Precise check open status, does not auto closed other open item | `boolean` | `false` |
 | `[maxLevelIcon]` | Icon displays up to which level | `number` | `3` |
 | `(select)` | Callback when clicking menu (including `disabled`) | `EventEmitter<Menu>` | - |
