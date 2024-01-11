@@ -10,7 +10,7 @@ Quick menu for the implicit auxiliary list on the right.
 
 ## API
 
-### quick-menu
+### quick-menu:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
