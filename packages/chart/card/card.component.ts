@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'g2-card',
@@ -17,7 +20,9 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   host: { '[class.g2-card]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzCardComponent, NzSpinComponent, NzStringTemplateOutletDirective]
 })
 export class G2CardComponent implements OnChanges {
   static ngAcceptInputType_bordered: BooleanInput;
