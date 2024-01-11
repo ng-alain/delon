@@ -1,4 +1,5 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { NgClass, NgStyle } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -14,7 +15,9 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzAvatarComponent } from 'ng-zorro-antd/avatar';
 import type { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
@@ -28,7 +31,9 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgStyle, NgClass, NzAvatarComponent, NzToolTipModule]
 })
 export class AvatarListComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_maxLength: NumberInput;

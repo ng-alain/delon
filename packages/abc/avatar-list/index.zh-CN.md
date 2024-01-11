@@ -10,7 +10,7 @@ module: import { AvatarListModule } from '@delon/abc/avatar-list';
 
 ## API
 
-### avatar-list
+### avatar-list:standalone
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -18,7 +18,7 @@ module: import { AvatarListModule } from '@delon/abc/avatar-list';
 | `[maxLength]` | 要显示的最大项目 | `number` | - |
 | `[excessItemsStyle]` | 多余的项目风格 | `{ [key: string]: string }` | - |
 
-### avatar-list-item
+### avatar-list-item:standalone
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
