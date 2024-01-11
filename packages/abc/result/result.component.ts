@@ -11,6 +11,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+
 @Component({
   selector: 'result',
   exportAs: 'result',
@@ -21,7 +24,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class ResultComponent implements OnInit {
   private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
