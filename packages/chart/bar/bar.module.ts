@@ -9,8 +9,7 @@ import { G2BarComponent } from './bar.component';
 const COMPONENTS = [G2BarComponent];
 
 @NgModule({
-  imports: [CommonModule, NzOutletModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzOutletModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2BarModule {}
