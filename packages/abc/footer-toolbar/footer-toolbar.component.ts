@@ -12,11 +12,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { ErrorCollectComponent } from '@delon/abc/error-collect';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
-import { ErrorCollectComponent } from '../error-collect';
 
 const CLSBODY = 'footer-toolbar__body';
 
