@@ -14,7 +14,7 @@ It is fixed at the bottom of the content area and does not move along with the s
 
 ## API
 
-### footer-toolbar
+### footer-toolbar:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
