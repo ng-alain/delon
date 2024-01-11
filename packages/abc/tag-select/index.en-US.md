@@ -10,7 +10,7 @@ Increase the label expansion and retraction function.
 
 ## API
 
-### tag-select
+### tag-select:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
