@@ -17,10 +17,10 @@ import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import type { NgClassType } from 'ng-zorro-antd/core/types';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
 import { NoticeIconTabComponent } from './notice-icon-tab.component';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
@@ -39,9 +39,11 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
     NgTemplateOutlet,
     NzBadgeComponent,
     NzIconDirective,
-    NzDropDownModule,
+    NzDropDownDirective,
+    NzDropdownMenuComponent,
     NzSpinComponent,
-    NzTabsModule,
+    NzTabSetComponent,
+    NzTabComponent,
     NoticeIconTabComponent
   ]
 })

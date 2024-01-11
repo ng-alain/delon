@@ -22,14 +22,14 @@ import { Subscription } from 'rxjs';
 import { updateHostClass } from '@delon/util/browser';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzImage, NzImageModule, NzImageService } from 'ng-zorro-antd/image';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzImage, NzImageService } from 'ng-zorro-antd/image';
+import { NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { CellHostDirective } from './cell-host.directive';
 import { CellService } from './cell.service';
@@ -115,13 +115,12 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   imports: [
     FormsModule,
     NgTemplateOutlet,
-    NzCheckboxModule,
-    NzRadioModule,
-    NzIconModule,
-    NzTagModule,
-    NzBadgeModule,
-    NzToolTipModule,
-    NzImageModule,
+    NzCheckboxComponent,
+    NzRadioComponent,
+    NzIconDirective,
+    NzTagComponent,
+    NzBadgeComponent,
+    NzTooltipDirective,
     CellHostDirective
   ]
 })

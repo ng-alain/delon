@@ -10,7 +10,7 @@ import {
 
 import { DelonLocaleService } from '@delon/theme';
 import { InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -21,7 +21,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzToolTipModule, NgStyle]
+  imports: [NzTooltipDirective, NgStyle]
 })
 export class G2MiniProgressComponent implements OnChanges {
   static ngAcceptInputType_target: NumberInput;

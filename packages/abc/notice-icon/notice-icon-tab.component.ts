@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 
 import { LocaleData } from '@delon/theme';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { NzListComponent, NzListItemComponent, NzListItemMetaComponent } from 'ng-zorro-antd/list';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
@@ -15,7 +15,14 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgTemplateOutlet, NzStringTemplateOutletDirective, NzListModule, NzTagComponent]
+  imports: [
+    NgTemplateOutlet,
+    NzStringTemplateOutletDirective,
+    NzListComponent,
+    NzListItemComponent,
+    NzListItemMetaComponent,
+    NzTagComponent
+  ]
 })
 export class NoticeIconTabComponent {
   @Input() locale: LocaleData = {};

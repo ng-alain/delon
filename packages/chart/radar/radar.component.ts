@@ -15,7 +15,7 @@ import { G2BaseComponent } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 export interface G2RadarData {
@@ -42,7 +42,7 @@ export interface G2RadarClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzGridModule, NgStyle]
+  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective, NgStyle]
 })
 export class G2RadarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;

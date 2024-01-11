@@ -28,10 +28,10 @@ import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 interface PageHeaderPath {
   title?: string;
@@ -49,8 +49,9 @@ interface PageHeaderPath {
   imports: [
     NzAffixComponent,
     NgTemplateOutlet,
-    NzSkeletonModule,
-    NzBreadCrumbModule,
+    NzSkeletonComponent,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
     RouterLink,
     NzStringTemplateOutletDirective,
     ObserversModule
