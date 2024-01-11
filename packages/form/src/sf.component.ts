@@ -30,6 +30,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 
 import { mergeConfig } from './config';
+import { SF_SEQ } from './const';
 import type { ErrorData } from './errors';
 import type { SFButton, SFLayout, SFMode, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
@@ -235,6 +236,47 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       throw new Error(`Invalid path: ${path}`);
     }
     item.resetValue(value, false);
+    return this;
+  }
+
+  /**
+   * Set form element new `disabled` based on [path](https://ng-alain.com/form/qa#path)
+   *
+   * 根据[路径](https://ng-alain.com/form/qa#path)设置某个表单元素 `disabled` 状态
+   */
+  setDisabled(path: string, status: boolean): this {
+    const property = this.getProperty(path);
+    if (!property) {
+      throw new Error(`Invalid path: ${path}`);
+    }
+    property.schema.readOnly = status;
+    property.widget.detectChanges();
+    return this;
+  }
+
+  /**
+   * Set form element new `required` based on [path](https://ng-alain.com/form/qa#path)
+   *
+   * 根据[路径](https://ng-alain.com/form/qa#path)设置某个表单元素 `required` 状态
+   */
+  setRequired(path: string, status: boolean): this {
+    const property = this.getProperty(path);
+    if (!property) {
+      throw new Error(`Invalid path: ${path}`);
+    }
+
+    const key = path.split(SF_SEQ).pop()!;
+    const parentRequired = property.parent?.schema.required || [];
+    const idx = parentRequired.findIndex(w => w === key);
+    if (status) {
+      if (idx === -1) parentRequired.push(key);
+    } else {
+      if (idx !== -1) parentRequired.splice(idx, 1);
+    }
+    property.parent!.schema.required = parentRequired;
+    property.ui._required = status;
+    property.widget.detectChanges();
+    this.validator({ onlyRoot: false });
     return this;
   }
 

@@ -55,6 +55,7 @@ Note: `en_US` is the package name, follow below.
 | French | fr_FR |
 | Spanish | es_ES |
 | Italian | it_IT |
+| Vietnamese | vi_VI |
 
 ## Add a new language
 

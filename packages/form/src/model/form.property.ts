@@ -342,7 +342,7 @@ export abstract class FormProperty {
                   // 同步更新 required
                   if (typeof viFnRes === 'object') {
                     const fixViFnRes = { show: false, required: false, ...viFnRes } as SFVisibleIfReturn;
-                    const parentRequired = this.parent?.schema.required!;
+                    const parentRequired = this.parent?.schema.required;
                     if (parentRequired && this.propertyId) {
                       const idx = parentRequired.findIndex(w => w === this.propertyId);
                       if (fixViFnRes.required) {
@@ -352,7 +352,7 @@ export abstract class FormProperty {
                       }
                       this.ui._required = fixViFnRes.required;
                     }
-                    return fixViFnRes.show!;
+                    return fixViFnRes.show;
                   }
                   return viFnRes;
                 }

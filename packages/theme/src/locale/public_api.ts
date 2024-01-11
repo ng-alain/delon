@@ -16,3 +16,4 @@ export { default as sl_SI } from './languages/sl-SI';
 export { default as fr_FR } from './languages/fr-FR';
 export { default as es_ES } from './languages/es-ES';
 export { default as it_IT } from './languages/it-IT';
+export { default as vi_VI } from './languages/vi-VI';

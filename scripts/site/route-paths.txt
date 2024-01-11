@@ -223,6 +223,8 @@
 /form/layout/zh
 /form/mention/en
 /form/mention/zh
+/form/method/en
+/form/method/zh
 /form/modal/en
 /form/modal/zh
 /form/monaco-editor/en
