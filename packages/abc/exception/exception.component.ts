@@ -1,4 +1,5 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { ObserversModule } from '@angular/cdk/observers';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,10 +15,12 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type ExceptionType = 403 | 404 | 500;
@@ -32,7 +35,9 @@ export type ExceptionType = 403 | 404 | 500;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [ObserversModule, NzButtonComponent, RouterLink]
 })
 export class ExceptionComponent implements OnInit {
   static ngAcceptInputType_type: ExceptionType | string;
