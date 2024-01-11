@@ -11,7 +11,7 @@ bg: f2f4f5
 ```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { PageHeaderModule } from '@delon/abc/page-header';
+import { PageHeaderComponent } from '@delon/abc/page-header';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
@@ -62,7 +62,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
   ],
   encapsulation: ViewEncapsulation.Emulated,
   standalone: true,
-  imports: [PageHeaderModule, NzTabsModule]
+  imports: [PageHeaderComponent, NzTabsModule]
 })
 export class DemoComponent {}
 ```
