@@ -16,7 +16,7 @@ Use `url` to change the routing, it's recommended to use `before` to delay, othe
 ```ts
 import { Component, inject } from '@angular/core';
 
-import { OnboardingModule, OnboardingService } from '@delon/abc/onboarding';
+import { OnboardingService } from '@delon/abc/onboarding';
 import { _HttpClient } from '@delon/theme';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
@@ -30,7 +30,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button (click)="start()">Start</button>
   `,
   standalone: true,
-  imports: [NzButtonModule, OnboardingModule]
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
   private readonly srv = inject(OnboardingService);
