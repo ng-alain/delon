@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +13,10 @@ import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 export interface G2PieData {
   x: NzSafeAny;
@@ -48,7 +52,9 @@ export interface G2PieRatio {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzDividerComponent, NgStyle]
 })
 export class G2PieComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;

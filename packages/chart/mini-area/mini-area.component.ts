@@ -26,7 +26,8 @@ export interface G2MiniAreaClickItem {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class G2MiniAreaComponent extends G2BaseComponent {
   static ngAcceptInputType_borderWidth: NumberInput;

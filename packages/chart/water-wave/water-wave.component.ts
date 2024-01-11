@@ -1,4 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -17,6 +18,7 @@ import {
 import { fromEvent, Subscription, debounceTime } from 'rxjs';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 @Component({
   selector: 'g2-water-wave',
@@ -25,7 +27,9 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   host: { '[class.g2-water-wave]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgStyle, NzStringTemplateOutletDirective]
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   static ngAcceptInputType_animate: BooleanInput;

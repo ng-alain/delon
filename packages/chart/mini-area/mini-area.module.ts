@@ -6,8 +6,7 @@ import { G2MiniAreaComponent } from './mini-area.component';
 const COMPONENTS = [G2MiniAreaComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2MiniAreaModule {}

@@ -9,8 +9,7 @@ import { G2TimelineComponent } from './timeline.component';
 const COMPONENTS = [G2TimelineComponent];
 
 @NgModule({
-  imports: [CommonModule, NzOutletModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzOutletModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2TimelineModule {}

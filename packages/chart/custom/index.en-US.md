@@ -39,7 +39,7 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ## API
 
-### g2-custom
+### g2-custom:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

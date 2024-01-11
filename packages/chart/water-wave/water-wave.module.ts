@@ -8,8 +8,7 @@ import { G2WaterWaveComponent } from './water-wave.component';
 const COMPONENTS = [G2WaterWaveComponent];
 
 @NgModule({
-  imports: [CommonModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2WaterWaveModule {}

@@ -10,7 +10,7 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 
 ## API
 
-### g2-gauge
+### g2-gauge:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
