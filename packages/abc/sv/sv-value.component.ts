@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
 import type { NzTSType } from 'ng-zorro-antd/core/types';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'sv-value, [sv-value]',
@@ -21,7 +22,9 @@ import type { NzTSType } from 'ng-zorro-antd/core/types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzToolTipModule]
 })
 export class SVValueComponent {
   @Input() prefix?: string;

@@ -1,3 +1,4 @@
+import { ObserversModule } from '@angular/cdk/observers';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -16,6 +17,9 @@ import {
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { SVContainerComponent } from './sv-container.component';
 
@@ -31,7 +35,9 @@ const prefixCls = `sv`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzStringTemplateOutletDirective, NzToolTipModule, NzIconDirective, ObserversModule]
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_col: NumberInput;

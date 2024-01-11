@@ -31,7 +31,7 @@ module: import { SGModule } from '@delon/abc/sg';
 
 ## API
 
-### sg-container
+### sg-container:standalone
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
@@ -39,7 +39,7 @@ module: import { SGModule } from '@delon/abc/sg';
 | `[sg-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `'1','2','3','4','5','6'` | - | - |
 | `[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `'1','2','3','4','5','6'` | `2` | ✅ |
 
-### sg
+### sg:standalone
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

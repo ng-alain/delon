@@ -31,7 +31,7 @@ More friendly:
 
 ## API
 
-### sg-container
+### sg-container:standalone
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
@@ -39,7 +39,7 @@ More friendly:
 | `[sg-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | - | - |
 | `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | `2` | ✅ |
 
-### sg
+### sg:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
