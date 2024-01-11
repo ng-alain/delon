@@ -9,7 +9,7 @@ title: 基础
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { ErrorCollectModule } from '@delon/abc/error-collect';
+import { ErrorCollectComponent } from '@delon/abc/error-collect';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 
@@ -26,7 +26,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     </form>
   `,
   standalone: true,
-  imports: [NzFormModule, ReactiveFormsModule, NzInputModule, ErrorCollectModule]
+  imports: [NzFormModule, ReactiveFormsModule, NzInputModule, ErrorCollectComponent]
 })
 export class DemoComponent implements OnInit {
   validateForm = new FormGroup({

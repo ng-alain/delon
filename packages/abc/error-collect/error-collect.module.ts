@@ -8,8 +8,7 @@ import { ErrorCollectComponent } from './error-collect.component';
 const COMPONENTS = [ErrorCollectComponent];
 
 @NgModule({
-  imports: [CommonModule, NzIconModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzIconModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class ErrorCollectModule {}
