@@ -8,8 +8,7 @@ import { PdfComponent } from './pdf.component';
 const COMPONENTS = [PdfComponent];
 
 @NgModule({
-  imports: [CommonModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class PdfModule {}

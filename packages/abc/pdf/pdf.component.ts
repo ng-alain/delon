@@ -32,6 +32,7 @@ import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 import { PDF_DEFULAT_CONFIG } from './pdf.config';
 import { PdfChangeEvent, PdfChangeEventType, PdfExternalLinkTarget, PdfTextLayerMode, PdfZoomScale } from './pdf.types';
@@ -65,7 +66,9 @@ const BORDER_WIDTH = 9;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent]
 })
 export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_pi: NumberInput;
