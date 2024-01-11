@@ -10,7 +10,7 @@ import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 
 import { add, formatDistanceToNow, parse } from 'date-fns';
 
-import { NoticeIconList, NoticeIconModule, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
+import { NoticeIconList, NoticeIconComponent, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -36,7 +36,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     </div>
   `,
   standalone: true,
-  imports: [NoticeIconModule]
+  imports: [NoticeIconComponent]
 })
 export class DemoComponent {
   private readonly msg = inject(NzMessageService);

@@ -39,7 +39,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzIconDirective]
+  imports: [NzIconDirective, NzIconDirective]
 })
 export class ErrorCollectComponent implements OnInit {
   private formEl: HTMLFormElement | null = null;

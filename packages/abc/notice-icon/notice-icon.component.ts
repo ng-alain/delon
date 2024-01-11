@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,8 +15,14 @@ import { Subscription } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import type { NgClassType } from 'ng-zorro-antd/core/types';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
+import { NoticeIconTabComponent } from './notice-icon-tab.component';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -25,7 +32,17 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    NgClass,
+    NzBadgeComponent,
+    NzIconDirective,
+    NzDropDownModule,
+    NzSpinComponent,
+    NzTabsModule,
+    NoticeIconTabComponent
+  ]
 })
 export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_count: NumberInput;
