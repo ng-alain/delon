@@ -34,13 +34,19 @@
     }
     <i
       nz-tooltip
-      [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
+      [nzTooltipTitle]="stackblitzTpl"
       (click)="openOnlineIDE()"
       nz-icon
       nzType="thunderbolt"
       nzTheme="fill"
       class="code-box-code-icon"
     ></i>
+    <ng-template #stackblitzTpl>
+      {{ 'app.demo.stackblitz' | i18n }}
+      (
+      <a (click)="openOnlineIDE('StackBlitz', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
+      )
+    </ng-template>
     <i
       nz-tooltip
       [nzTooltipTitle]="'app.demo.copy' | i18n"

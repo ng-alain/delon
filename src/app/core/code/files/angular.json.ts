@@ -6,10 +6,6 @@ export default {
   newProjectRoot: 'projects',
   projects: {
     demo: {
-      root: '',
-      sourceRoot: 'src',
-      projectType: 'application',
-      prefix: 'app',
       architect: {
         build: {
           builder: '@angular-devkit/build-angular:application',
@@ -51,7 +47,12 @@ export default {
           },
           defaultConfiguration: 'development'
         }
-      }
+      },
+      prefix: 'app',
+      projectType: 'application',
+      root: '',
+      schematics: {},
+      sourceRoot: 'src'
     }
   },
   version: 1
