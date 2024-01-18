@@ -8,7 +8,8 @@ import {
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
 
@@ -89,12 +90,12 @@ export class SEContainerComponent {
   @Input({ transform: booleanAttribute }) noColon = false;
   @Input() title?: string | TemplateRef<void> | null;
 
-  @Input()
+  @Input({ transform: numberAttribute })
   get gutter(): number {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
   set gutter(value: number) {
-    this._gutter = toNumber(value);
+    this._gutter = value;
   }
   private _gutter!: number;
 
