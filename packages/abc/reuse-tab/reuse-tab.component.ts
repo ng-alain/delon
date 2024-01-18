@@ -75,7 +75,7 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.stat
   ]
 })
 export class ReuseTabComponent implements OnInit, OnChanges {
-  private readonly srv = inject(ReuseTabService);
+  private readonly srv = inject(ReuseTabService, { optional: true })!;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -274,6 +274,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
    * <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)"></router-outlet>
    */
   activate(instance: NzSafeAny): void {
+    if (this.srv == null) return;
     this.srv.componentRef = { instance };
   }
 
@@ -307,7 +308,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
       this.cdr.detectChanges();
     });
 
-    if (!this.platform.isBrowser) {
+    if (!this.platform.isBrowser || this.srv == null) {
       return;
     }
 
@@ -338,7 +339,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    if (!this.platform.isBrowser) {
+    if (!this.platform.isBrowser || this.srv == null) {
       return;
     }
 
