@@ -33,11 +33,9 @@ export class CodeService {
 
   private genPackage({
     dependencies = [],
-    devDependencies = [],
     includeCli = false
   }: {
     dependencies: string[];
-    devDependencies: string[];
     includeCli: boolean;
   }): Record<string, string | Record<string, string>> {
     const ngCoreVersion = pkg.dependencies['@angular/core'];
@@ -56,17 +54,26 @@ export class CodeService {
       '@delon/form',
       '@delon/util',
       ...dependencies
-    ].forEach(k => (res.dependencies[k] = '*'));
-    devDependencies.forEach(k => (res.devDependencies[k] = '*'));
+    ];
+    if (includeCli) {
+      res.devDependencies = {
+        '@angular-devkit/build-angular': '^17.0.0',
+        '@angular/cli': '^17.0.0',
+        '@angular/compiler-cli': '^17.0.0',
+        '@types/node': '^18.18.0',
+        'ts-node': '~10.9.1',
+        typescript: '~5.2.2',
+        'ng-alain': '~17.0.3'
+      };
+    }
 
     const fullLibs: Record<string, string> = { ...pkg.dependencies, ...pkg.devDependencies };
     ['dependencies', 'devDependencies'].forEach(type => {
-      Object.keys(res[type]).forEach(key => {
-        res[type][key] = key.startsWith('@delon') || key === 'ng-alain' ? `~${pkg.version}` : fullLibs[key] || '*';
+      Object.keys(res[type] || {}).forEach(key => {
+        res[type][key] = key.startsWith('@delon') || key === 'ng-alain' ? `${pkg.version}` : fullLibs[key] || '*';
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
-    if (!includeCli) res;
 
     return res;
   }
@@ -124,13 +131,39 @@ export class CodeService {
     return '';
   }
 
-  async openOnStackBlitz(title: string, appComponentCode: string): Promise<void> {
+  async openOnStackBlitz(title: string, appComponentCode: string, includeCli: boolean = false): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli: false });
+    const packageJson = this.genPackage({ dependencies: [], includeCli });
     packageJson.description = title;
+    const files: Record<string, string> = {
+      'angular.json': `${JSON.stringify(json, null, 2)}`,
+      'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
+      'src/index.html': res.html,
+      'src/main.ts': mainTS(res.componentName),
+      'src/app/app.component.ts': appComponentCode,
+      'src/app/app.config.ts': appConfigTS,
+      'src/app/startup.service.ts': this.genStartupService,
+      'src/styles.css': ``,
+      ...this.genMock
+    };
+    if (includeCli) {
+      files['.stackblitzrc'] = JSON.stringify(
+        {
+          installDependencies: true,
+          startCommand: 'yarn start',
+          env: {
+            ENABLE_CJS_IMPORTS: true
+          }
+        },
+        null,
+        2
+      );
+      files['yarn.lock'] = await this.getYarnLock();
+      files['package.json'] = `${JSON.stringify(packageJson, null, 2)}`;
+    }
     sdk.openProject(
       {
         title: 'NG-ALAIN',
@@ -140,31 +173,8 @@ export class CodeService {
           ...(packageJson.dependencies as Record<string, string>),
           ...(packageJson.devDependencies as Record<string, string>)
         },
-        files: {
-          '.stackblitzrc': JSON.stringify(
-            {
-              installDependencies: true,
-              startCommand: 'yarn start',
-              env: {
-                ENABLE_CJS_IMPORTS: true
-              }
-            },
-            null,
-            2
-          ),
-          'yarn.lock': await this.getYarnLock(),
-          'angular.json': `${JSON.stringify(json, null, 2)}`,
-          'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
-          'package.json': `${JSON.stringify(packageJson, null, 2)}`,
-          'src/index.html': res.html,
-          'src/main.ts': mainTS(res.componentName),
-          'src/app/app.component.ts': appComponentCode,
-          'src/app/app.config.ts': appConfigTS,
-          'src/app/startup.service.ts': this.genStartupService,
-          'src/styles.css': ``,
-          ...this.genMock
-        },
-        template: 'node'
+        files: files,
+        template: includeCli ? 'node' : 'angular-cli'
       },
       {
         openFile: `src/app/app.config.ts,src/app/app.component.ts`
@@ -178,7 +188,7 @@ export class CodeService {
     const mockObj = this.genMock;
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ dependencies: [], devDependencies: [], includeCli });
+    const packageJson = this.genPackage({ dependencies: [], includeCli });
     // packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
     const files: {
