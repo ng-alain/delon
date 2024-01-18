@@ -3,13 +3,12 @@ import {
   ComponentRef,
   Directive,
   EventEmitter,
-  Host,
   Input,
   OnDestroy,
-  Optional,
   Output,
   TemplateRef,
-  ViewContainerRef
+  ViewContainerRef,
+  inject
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -29,6 +28,10 @@ import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 })
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
   static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
+
+  private readonly dom = inject(DomSanitizer);
+  private readonly vcr = inject(ViewContainerRef);
+  private readonly nativeComp = inject(NzRangePickerComponent, { host: true, optional: true });
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
   private _shortcut: AlainDateRangePickerShortcut | null = null;
@@ -60,22 +63,17 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
-    return this.nativeComp.datePicker;
+    return this.nativeComp!.datePicker;
   }
 
   private get srv(): DatePickerService {
     return this.dp.datePickerService;
   }
 
-  constructor(
-    private dom: DomSanitizer,
-    configSrv: AlainConfigService,
-    @Host() @Optional() private nativeComp: NzRangePickerComponent,
-    private vcr: ViewContainerRef
-  ) {
+  constructor(configSrv: AlainConfigService) {
     if (typeof ngDevMode === 'undefined' || ngDevMode) {
       assert(
-        !!nativeComp,
+        !!this.nativeComp,
         `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`
       );
     }
@@ -175,7 +173,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       };
       extraFooter = instance.tpl;
     }
-    this.nativeComp.datePicker.extraFooter = extraFooter;
+    this.nativeComp!.datePicker.extraFooter = extraFooter;
     Promise.resolve().then(() => this.cd());
   }
 

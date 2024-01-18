@@ -5,14 +5,15 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
   Output,
   Renderer2,
   SimpleChange,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { SafeValue } from '@angular/platform-browser';
@@ -20,7 +21,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { updateHostClass } from '@delon/util/browser';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
@@ -126,8 +126,13 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   ]
 })
 export class CellComponent implements OnChanges, OnDestroy {
-  static ngAcceptInputType_loading: BooleanInput;
-  static ngAcceptInputType_disabled: BooleanInput;
+  private readonly srv = inject(CellService);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly imgSrv = inject(NzImageService);
+  private readonly win = inject(WINDOW);
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
 
   private destroy$?: Subscription;
 
@@ -139,8 +144,8 @@ export class CellComponent implements OnChanges, OnDestroy {
   @Input() value?: CellValue;
   @Output() readonly valueChange = new EventEmitter<NzSafeAny>();
   @Input() options?: CellOptions;
-  @Input() @InputBoolean() loading = false;
-  @Input() @InputBoolean() disabled = false;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
 
   get safeOpt(): CellOptions {
     return this.res?.options ?? {};
@@ -157,17 +162,6 @@ export class CellComponent implements OnChanges, OnDestroy {
     };
   }
 
-  constructor(
-    private srv: CellService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private imgSrv: NzImageService,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    @Inject(WINDOW) private win: any
-  ) {}
-
   private updateValue(): void {
     this.destroy$?.unsubscribe();
     this.destroy$ = this.srv.get(this.value, this.options).subscribe(res => {
@@ -183,7 +177,7 @@ export class CellComponent implements OnChanges, OnDestroy {
   private setClass(): void {
     const { el, renderer } = this;
     const { renderType, size, type } = this.safeOpt;
-    updateHostClass(el.nativeElement, renderer, {
+    updateHostClass(el, renderer, {
       [`cell`]: true,
       [`cell__${renderType}`]: renderType != null,
       [`cell__${size}`]: size != null,
@@ -191,7 +185,7 @@ export class CellComponent implements OnChanges, OnDestroy {
       [`cell__has-default`]: this.showDefault,
       [`cell__disabled`]: this.disabled
     });
-    el.nativeElement.setAttribute('data-type', `${type}`);
+    el.setAttribute('data-type', `${type}`);
   }
 
   ngOnChanges(changes: { [p in keyof CellComponent]?: SimpleChange }): void {
@@ -219,7 +213,7 @@ export class CellComponent implements OnChanges, OnDestroy {
     if (url == null) return;
 
     if (/https?:\/\//g.test(url)) {
-      (this.win as Window).open(url, link?.target);
+      this.win.open(url, link?.target);
     } else {
       this.router.navigateByUrl(url);
     }

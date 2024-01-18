@@ -18,7 +18,7 @@ import { timer } from 'rxjs';
   standalone: true
 })
 export class AutoFocusDirective implements AfterViewInit {
-  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly platform = inject(Platform);
   private readonly d$ = inject(DestroyRef);
 

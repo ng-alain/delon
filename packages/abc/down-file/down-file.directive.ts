@@ -1,11 +1,16 @@
 import { HttpResponse } from '@angular/common/http';
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { finalize } from 'rxjs';
 
 import { saveAs } from 'file-saver';
 
 import { _HttpClient } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+let isFileSaverSupported = false;
+try {
+  isFileSaverSupported = !!new Blob();
+} catch {}
 
 @Directive({
   selector: '[down-file]',
@@ -16,7 +21,8 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   standalone: true
 })
 export class DownFileDirective {
-  private isFileSaverSupported = true;
+  private readonly el: HTMLButtonElement = inject(ElementRef).nativeElement;
+  private readonly _http = inject(_HttpClient);
   @Input('http-data') httpData: NzSafeAny;
   @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
@@ -40,28 +46,20 @@ export class DownFileDirective {
     return arr.reduce((_o, item) => item, {});
   }
 
-  constructor(
-    private el: ElementRef<HTMLButtonElement>,
-    private _http: _HttpClient
-  ) {
-    let isFileSaverSupported = false;
-    try {
-      isFileSaverSupported = !!new Blob();
-    } catch {}
-    this.isFileSaverSupported = isFileSaverSupported;
+  constructor() {
     if (!isFileSaverSupported) {
-      el.nativeElement.classList.add(`down-file__not-support`);
+      this.el.classList.add(`down-file__not-support`);
     }
   }
 
   private setDisabled(status: boolean): void {
-    const el = this.el.nativeElement;
+    const el = this.el;
     el.disabled = status;
     el.classList[status ? 'add' : 'remove'](`down-file__disabled`);
   }
 
   async _click(ev: MouseEvent): Promise<void> {
-    if (!this.isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
+    if (!isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
       ev.stopPropagation();
       ev.preventDefault();
       return;
