@@ -265,9 +265,7 @@ export class PageObject<T extends TestComponent> {
   expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
     const ret = deepGet(this.comp._data[row - 1], path);
     if (options?.message != null) {
-      expect(ret)
-        .withContext(options?.message)
-        .toBe(valule);
+      expect(ret).withContext(options.message).toBe(valule);
     } else {
       expect(ret).toBe(valule);
     }

@@ -1,4 +1,4 @@
-import { ObserversModule } from '@angular/cdk/observers';
+import { CdkObserveContent } from '@angular/cdk/observers';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -37,7 +37,7 @@ const prefixCls = `sv`;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, ObserversModule]
+  imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_col: NumberInput;

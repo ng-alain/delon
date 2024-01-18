@@ -1,5 +1,5 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import { ObserversModule } from '@angular/cdk/observers';
+import { CdkObserveContent } from '@angular/cdk/observers';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -37,7 +37,7 @@ export type ExceptionType = 403 | 404 | 500;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [ObserversModule, NzButtonComponent, RouterLink]
+  imports: [CdkObserveContent, NzButtonComponent, RouterLink]
 })
 export class ExceptionComponent implements OnInit {
   static ngAcceptInputType_type: ExceptionType | string;

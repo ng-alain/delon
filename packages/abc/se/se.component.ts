@@ -1,4 +1,4 @@
-import { ObserversModule } from '@angular/cdk/observers';
+import { CdkObserveContent } from '@angular/cdk/observers';
 import { NgClass } from '@angular/common';
 import {
   AfterContentInit,
@@ -56,7 +56,7 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, ObserversModule]
+  imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   static ngAcceptInputType_col: NumberInput;
