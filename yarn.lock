@@ -2808,7 +2808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ng-util/monaco-editor@npm:^17.0.0":
+"@ng-util/monaco-editor@npm:^17.0.1":
   version: 17.0.1
   resolution: "@ng-util/monaco-editor@npm:17.0.1"
   dependencies:
@@ -6916,7 +6916,7 @@ __metadata:
     "@commitlint/cli": "npm:^18.4.4"
     "@commitlint/config-angular": "npm:^18.4.4"
     "@github/hotkey": "npm:^2.3.0"
-    "@ng-util/monaco-editor": "npm:^17.0.0"
+    "@ng-util/monaco-editor": "npm:^17.0.1"
     "@stackblitz/sdk": "npm:^1.9.0"
     "@types/aos": "npm:^3.0.7"
     "@types/deep-extend": "npm:^0.6.2"
@@ -6985,7 +6985,7 @@ __metadata:
     ng-less-javascript-enabled-patch: "npm:17.0.1"
     ng-packagr: "npm:^17.1.0"
     ng-zorro-antd: "npm:^17.1.0"
-    ngx-countdown: "npm:^17.0.0"
+    ngx-countdown: "npm:^17.1.1"
     ngx-highlight-js: "npm:^17.0.0"
     ngx-tinymce: "npm:^17.0.0"
     parse5: "npm:^7.1.2"
@@ -7004,7 +7004,7 @@ __metadata:
     stylelint-declaration-block-no-ignored-properties: "npm:^2.8.0"
     swagger-typescript-api: "npm:^12.0.4"
     terser: "npm:^5.27.0"
-    ts-node: "npm:~10.9.1"
+    ts-node: "npm:~10.9.2"
     tsconfig-paths: "npm:^4.2.0"
     tslib: "npm:^2.3.0"
     typescript: "npm:~5.3.2"
@@ -12468,7 +12468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-countdown@npm:^17.0.0":
+"ngx-countdown@npm:^17.1.1":
   version: 17.1.1
   resolution: "ngx-countdown@npm:17.1.1"
   dependencies:
@@ -16739,7 +16739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:~10.9.1":
+"ts-node@npm:~10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:
