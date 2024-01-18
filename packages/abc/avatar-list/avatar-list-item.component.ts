@@ -6,7 +6,8 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
   template: `<ng-content />`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class AvatarListItemComponent {
   @Input() src?: string;

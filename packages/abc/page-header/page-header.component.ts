@@ -1,5 +1,7 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { ObserversModule } from '@angular/cdk/observers';
 import { Platform } from '@angular/cdk/platform';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -17,7 +19,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { merge, filter } from 'rxjs';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
@@ -26,7 +28,10 @@ import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 interface PageHeaderPath {
   title?: string;
@@ -39,7 +44,18 @@ interface PageHeaderPath {
   templateUrl: './page-header.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    NzAffixComponent,
+    NgTemplateOutlet,
+    NzSkeletonComponent,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    RouterLink,
+    NzStringTemplateOutletDirective,
+    ObserversModule
+  ]
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   static ngAcceptInputType_loading: BooleanInput;

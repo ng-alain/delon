@@ -39,7 +39,8 @@ const hideTitleCls = `full-content__hidden-title`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_fullscreen: BooleanInput;

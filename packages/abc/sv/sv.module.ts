@@ -13,8 +13,7 @@ import { SVComponent } from './sv.component';
 const COMPONENTS = [SVContainerComponent, SVComponent, SVTitleComponent, SVValueComponent];
 
 @NgModule({
-  imports: [CommonModule, ObserversModule, NzToolTipModule, NzIconModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ObserversModule, NzToolTipModule, NzIconModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class SVModule {}

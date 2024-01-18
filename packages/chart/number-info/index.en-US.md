@@ -10,7 +10,7 @@ Often used in data cards for highlighting the business data.
 
 ## API
 
-### number-info
+### number-info:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

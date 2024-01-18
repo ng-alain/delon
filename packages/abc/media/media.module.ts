@@ -6,8 +6,7 @@ import { MediaComponent } from './media.component';
 const COMPONENTS = [MediaComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class MediaModule {}

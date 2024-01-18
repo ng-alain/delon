@@ -37,7 +37,8 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   static ngAcceptInputType_delay: NumberInput;

@@ -15,7 +15,8 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class G2SingleBarComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;

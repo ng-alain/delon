@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'tag-select',
@@ -30,7 +31,9 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzIconDirective]
 })
 export class TagSelectComponent implements OnInit {
   static ngAcceptInputType_expandable: BooleanInput;

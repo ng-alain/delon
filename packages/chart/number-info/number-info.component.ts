@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'number-info',
@@ -13,7 +15,9 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzStringTemplateOutletDirective, NzIconDirective]
 })
 export class NumberInfoComponent {
   static ngAcceptInputType_gap: NumberInput;

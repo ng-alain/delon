@@ -10,8 +10,7 @@ import { AvatarListComponent } from './avatar-list.component';
 const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
 
 @NgModule({
-  imports: [CommonModule, NzAvatarModule, NzToolTipModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzAvatarModule, NzToolTipModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class AvatarListModule {}

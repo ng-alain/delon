@@ -6,6 +6,7 @@ import type { Chart, Event } from '@antv/g2';
 import { G2BaseComponent } from '@delon/chart/core';
 import { InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 export interface G2TagCloudData {
   value?: number;
@@ -26,7 +27,9 @@ export interface G2TagCloudClickItem {
   }`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent]
 })
 export class G2TagCloudComponent extends G2BaseComponent {
   static ngAcceptInputType_height: NumberInput;

@@ -22,8 +22,8 @@
         }
       </div>
     </div>
-    <div class="g2-card__desc" [ngStyle]="{ height: _height }">
-      <div [ngClass]="{ 'g2-card__fixed': !!_orgHeight }">
+    <div class="g2-card__desc" [style.height]="_height">
+      <div [class.g2-card__fixed]="!!_orgHeight">
         <ng-content />
       </div>
     </div>

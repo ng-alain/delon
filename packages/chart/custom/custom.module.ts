@@ -8,8 +8,7 @@ import { G2CustomComponent } from './custom.component';
 const COMPONENTS = [G2CustomComponent];
 
 @NgModule({
-  imports: [CommonModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2CustomModule {}

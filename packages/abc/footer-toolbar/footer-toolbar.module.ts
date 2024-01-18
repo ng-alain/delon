@@ -9,8 +9,7 @@ import { FooterToolbarComponent } from './footer-toolbar.component';
 const COMPONENTS = [FooterToolbarComponent];
 
 @NgModule({
-  imports: [CommonModule, ErrorCollectModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ErrorCollectModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class FooterToolbarModule {}

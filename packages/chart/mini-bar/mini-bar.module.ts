@@ -6,8 +6,7 @@ import { G2MiniBarComponent } from './mini-bar.component';
 const COMPONENTS = [G2MiniBarComponent];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2MiniBarModule {}

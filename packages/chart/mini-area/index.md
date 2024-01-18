@@ -10,7 +10,7 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 
 ## API
 
-### g2-mini-area
+### g2-mini-area:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

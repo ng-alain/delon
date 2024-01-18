@@ -19,7 +19,9 @@ import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdo
   }`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [CountdownComponent]
 })
 export class CountDownComponent {
   @ViewChild('cd', { static: false }) readonly instance!: CountdownComponent;

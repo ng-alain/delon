@@ -12,7 +12,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { ErrorCollectComponent } from '@delon/abc/error-collect';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 const CLSBODY = 'footer-toolbar__body';
@@ -23,7 +25,9 @@ const CLSBODY = 'footer-toolbar__body';
   templateUrl: './footer-toolbar.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzStringTemplateOutletDirective, ErrorCollectComponent]
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_errorCollect: BooleanInput;

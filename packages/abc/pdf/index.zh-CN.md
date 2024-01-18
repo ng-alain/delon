@@ -40,7 +40,7 @@ const alainConfig: AlainConfig = {
 
 ## API
 
-### pdf
+### pdf:standalone
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|

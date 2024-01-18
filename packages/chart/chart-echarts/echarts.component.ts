@@ -20,6 +20,7 @@ import { fromEvent, debounceTime, filter } from 'rxjs';
 
 import { NumberInput, ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 import { ChartEChartsService } from './echarts.service';
 import {
@@ -46,7 +47,9 @@ import {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent]
 })
 export class ChartEChartsComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_width: NumberInput;

@@ -10,7 +10,7 @@ Used to feedback the processing results of a series of tasks performed by the us
 
 ## API
 
-### result
+### result:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

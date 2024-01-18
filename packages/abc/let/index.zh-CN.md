@@ -20,7 +20,7 @@ module: import { LetModule } from '@delon/abc/let';
 
 ## API
 
-### [let]
+### [let]:standalone
 
 | 参数 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|

@@ -15,7 +15,7 @@
 <ng-template #listTpl>
   <nz-list [nzDataSource]="data.list" [nzRenderItem]="item">
     <ng-template #item let-item>
-      <nz-list-item (click)="onClick(item)" [ngClass]="{ 'notice-icon__item-read': item.read }">
+      <nz-list-item (click)="onClick(item)" [class.notice-icon__item-read]="item.read">
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" [nzAvatar]="item.avatar">
           <ng-template #nzTitle>
             <ng-container *nzStringTemplateOutlet="item.title; context: { $implicit: item }">

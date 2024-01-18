@@ -16,7 +16,7 @@ title:
 ```ts
 import { Component } from '@angular/core';
 
-import { EllipsisModule } from '@delon/abc/ellipsis';
+import { EllipsisComponent } from '@delon/abc/ellipsis';
 
 @Component({
   selector: 'app-demo',
@@ -26,7 +26,7 @@ import { EllipsisModule } from '@delon/abc/ellipsis';
     <ellipsis length="100" tooltip>{{ article }}</ellipsis>
   `,
   standalone: true,
-  imports: [EllipsisModule]
+  imports: [EllipsisComponent]
 })
 export class DemoComponent {
   article =

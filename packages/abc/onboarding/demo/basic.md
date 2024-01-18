@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component, inject } from '@angular/core';
 
-import { OnboardingConfig, OnboardingModule, OnboardingService } from '@delon/abc/onboarding';
+import { OnboardingConfig, OnboardingService } from '@delon/abc/onboarding';
 import { _HttpClient } from '@delon/theme';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -41,7 +41,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     </a>
   `,
   standalone: true,
-  imports: [NzButtonModule, OnboardingModule]
+  imports: [NzButtonModule]
 })
 export class DemoComponent {
   private readonly msg = inject(NzMessageService);

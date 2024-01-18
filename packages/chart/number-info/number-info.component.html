@@ -8,7 +8,7 @@
     <ng-container *nzStringTemplateOutlet="subTitle">{{ subTitle }}</ng-container>
   </div>
 }
-<div class="number-info__value" [ngStyle]="{ 'margin-top.px': gap }">
+<div class="number-info__value" [style.margin-top.px]="gap">
   <span class="number-info__value-text">
     <ng-container *nzStringTemplateOutlet="total">{{ total }}</ng-container>
     @if (suffix) {

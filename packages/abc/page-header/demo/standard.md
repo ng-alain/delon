@@ -11,7 +11,7 @@ bg: f2f4f5
 ```ts
 import { Component, inject } from '@angular/core';
 
-import { PageHeaderModule } from '@delon/abc/page-header';
+import { PageHeaderComponent } from '@delon/abc/page-header';
 import { SVModule } from '@delon/abc/sv';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -90,7 +90,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
   `,
   standalone: true,
   imports: [
-    PageHeaderModule,
+    PageHeaderComponent,
     NzBreadCrumbModule,
     NzButtonModule,
     NzDropDownModule,

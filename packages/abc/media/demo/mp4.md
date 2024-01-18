@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 
-import { MediaModule } from '@delon/abc/media';
+import { MediaComponent } from '@delon/abc/media';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -30,7 +30,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <div media #media [source]="mp4"></div>
   `,
   standalone: true,
-  imports: [NzButtonModule, MediaModule]
+  imports: [NzButtonModule, MediaComponent]
 })
 export class DemoComponent {
   mp4 = `https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4`;

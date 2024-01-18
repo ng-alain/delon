@@ -8,8 +8,7 @@ import { TrendComponent } from './trend.component';
 const COMPONENTS = [TrendComponent];
 
 @NgModule({
-  imports: [CommonModule, NzIconModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzIconModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class TrendModule {}

@@ -21,7 +21,7 @@ import { OnboardingComponent } from './onboarding.component';
 import { ONBOARDING_STORE_TOKEN, OnBoardingKeyStore } from './onboarding.storage';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OnboardingService implements OnDestroy {
   private compRef!: ComponentRef<OnboardingComponent>;
   private op$!: Subscription;

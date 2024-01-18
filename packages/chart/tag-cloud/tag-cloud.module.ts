@@ -8,8 +8,7 @@ import { G2TagCloudComponent } from './tag-cloud.component';
 const COMPONENTS = [G2TagCloudComponent];
 
 @NgModule({
-  imports: [CommonModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2TagCloudModule {}

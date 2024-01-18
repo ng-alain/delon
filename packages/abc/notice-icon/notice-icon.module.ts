@@ -27,9 +27,10 @@ const COMPONENTS = [NoticeIconComponent];
     NzSpinModule,
     NzTabsModule,
     NzTagModule,
-    NzOutletModule
+    NzOutletModule,
+    ...COMPONENTS,
+    NoticeIconTabComponent
   ],
-  declarations: [...COMPONENTS, NoticeIconTabComponent],
   exports: COMPONENTS
 })
 export class NoticeIconModule {}

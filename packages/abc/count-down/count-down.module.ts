@@ -8,8 +8,7 @@ import { CountDownComponent } from './count-down.component';
 const COMPONENTS = [CountDownComponent];
 
 @NgModule({
-  imports: [CommonModule, CountdownModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, CountdownModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class CountDownModule {}

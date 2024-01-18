@@ -7,14 +7,15 @@ import { AlainDateRangePickerShortcutItem } from '@delon/util/config';
   template: `
     <ng-template #tpl>
       @for (i of list; track $index) {
-        <a (click)="click(i)" [innerHTML]="i._text" [ngClass]="{ 'ml-sm': !$first }"></a>
+        <a (click)="click(i)" [innerHTML]="i._text" [class.ml-sm]="!$first"></a>
       }
     </ng-template>
-  `
+  `,
+  standalone: true
 })
 export class RangePickerShortcutTplComponent {
   @ViewChild('tpl', { static: true })
-  tpl!: TemplateRef<void>;
+  readonly tpl!: TemplateRef<void>;
 
   list: AlainDateRangePickerShortcutItem[] = [];
 

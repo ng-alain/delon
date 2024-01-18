@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'trend',
@@ -19,7 +20,9 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzIconDirective]
 })
 export class TrendComponent {
   static ngAcceptInputType_colorful: BooleanInput;

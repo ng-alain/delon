@@ -8,8 +8,7 @@ import { DownFileDirective } from './down-file.directive';
 const DIRECTIVES = [DownFileDirective];
 
 @NgModule({
-  imports: [CommonModule, AlainThemeModule],
-  declarations: [...DIRECTIVES],
-  exports: [...DIRECTIVES]
+  imports: [CommonModule, AlainThemeModule, ...DIRECTIVES],
+  exports: DIRECTIVES
 })
 export class DownFileModule {}

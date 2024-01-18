@@ -20,6 +20,7 @@ import { interval } from 'rxjs';
 import { AlainConfigService } from '@delon/util/config';
 import { InputNumber } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'error-collect, [error-collect]',
@@ -36,7 +37,9 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzIconDirective]
 })
 export class ErrorCollectComponent implements OnInit {
   private formEl: HTMLFormElement | null = null;

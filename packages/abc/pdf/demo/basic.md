@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 
-import { PdfModule, type PdfChangeEvent } from '@delon/abc/pdf';
+import { PdfComponent, type PdfChangeEvent } from '@delon/abc/pdf';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -26,7 +26,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <pdf [src]="src" style="height: 300px" (change)="handle($event)" />
   `,
   standalone: true,
-  imports: [NzButtonModule, PdfModule]
+  imports: [NzButtonModule, PdfComponent]
 })
 export class DemoComponent {
   one = `https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf`;

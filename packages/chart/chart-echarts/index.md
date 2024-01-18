@@ -10,7 +10,7 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 
 ## API
 
-### chart-echarts
+### chart-echarts:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

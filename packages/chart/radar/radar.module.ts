@@ -10,8 +10,7 @@ import { G2RadarComponent } from './radar.component';
 const COMPONENTS = [G2RadarComponent];
 
 @NgModule({
-  imports: [CommonModule, NzGridModule, NzOutletModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzGridModule, NzOutletModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2RadarModule {}

@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,6 +15,8 @@ import {
 } from '@angular/core';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'quick-menu',
@@ -25,7 +28,9 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgStyle, NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
   static ngAcceptInputType_top: NumberInput;

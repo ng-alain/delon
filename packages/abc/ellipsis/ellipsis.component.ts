@@ -1,4 +1,5 @@
-import { DOCUMENT } from '@angular/common';
+import { ObserversModule } from '@angular/cdk/observers';
+import { DOCUMENT, NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -17,6 +18,7 @@ import { take } from 'rxjs';
 
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'ellipsis',
@@ -24,7 +26,10 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   templateUrl: './ellipsis.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  // TODO: can't use CdkObserveContent
+  imports: [ObserversModule, NzTooltipDirective, NgTemplateOutlet, NgClass, NgStyle]
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   static ngAcceptInputType_tooltip: BooleanInput;

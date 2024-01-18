@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,6 +15,43 @@ import {
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+
+@Component({
+  selector: 'sv-title, [sv-title]',
+  exportAs: 'svTitle',
+  template: '<ng-content />',
+  host: {
+    '[class.sv__title]': 'true'
+  },
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
+})
+export class SVTitleComponent implements OnInit {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    @Host() @Optional() private parent: SVContainerComponent,
+    private ren: Renderer2
+  ) {
+    if (parent == null) {
+      throw new Error(`[sv-title] must include 'sv-container' component`);
+    }
+  }
+
+  private setClass(): void {
+    const gutter = this.parent.gutter;
+    const el = this.el.nativeElement;
+    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
+    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
+  }
+
+  ngOnInit(): void {
+    this.setClass();
+  }
+}
+
 @Component({
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
@@ -38,7 +76,9 @@ import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/uti
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgStyle, SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {
   static ngAcceptInputType_gutter: NumberInput;
@@ -74,39 +114,5 @@ export class SVContainerComponent {
       col: 3,
       default: true
     });
-  }
-}
-
-@Component({
-  selector: 'sv-title, [sv-title]',
-  exportAs: 'svTitle',
-  template: '<ng-content />',
-  host: {
-    '[class.sv__title]': 'true'
-  },
-  preserveWhitespaces: false,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
-})
-export class SVTitleComponent implements OnInit {
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    @Host() @Optional() private parent: SVContainerComponent,
-    private ren: Renderer2
-  ) {
-    if (parent == null) {
-      throw new Error(`[sv-title] must include 'sv-container' component`);
-    }
-  }
-
-  private setClass(): void {
-    const gutter = this.parent.gutter;
-    const el = this.el.nativeElement;
-    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
-    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
-  }
-
-  ngOnInit(): void {
-    this.setClass();
   }
 }

@@ -10,7 +10,7 @@ Exceptions page is used to provide feedback on specific abnormal state. Usually,
 
 ## API
 
-### exception
+### exception:standalone
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

@@ -10,7 +10,7 @@ A simple form exception messages collector that jump to element location via cli
 
 ## API
 
-### error-collect
+### error-collect:standalone
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

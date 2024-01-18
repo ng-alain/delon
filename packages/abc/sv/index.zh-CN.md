@@ -11,7 +11,7 @@ module: import { SVModule } from '@delon/abc/sv';
 
 ## API
 
-### sv-container
+### sv-container:standalone
 
 | 参数 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
@@ -26,7 +26,7 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[noColon]` | 默认是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 | `[bordered]` | 是否展示边框 | `boolean` | `false` | - |
 
-### sv
+### sv:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -41,11 +41,11 @@ module: import { SVModule } from '@delon/abc/sv';
 | `[noColon]` | 是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 | `[hideLabel]` | 是否隐藏当前 `label` | `boolean` | `false` |
 
-### sv-title
+### sv-title:standalone
 
 用于展示标题，单独一行。
 
-### sv-value
+### sv-value:standalone
 
 值展示。
 

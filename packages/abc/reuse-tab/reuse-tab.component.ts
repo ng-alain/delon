@@ -27,8 +27,8 @@ import { debounceTime, filter, of } from 'rxjs';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTabSetComponent, NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
@@ -67,11 +67,12 @@ import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } 
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    NzTabsModule,
+    NzTabSetComponent,
+    NzTabComponent,
     ReuseTabContextMenuComponent,
     ReuseTabContextDirective,
     ReuseTabContextComponent,
-    NzIconModule
+    NzIconDirective
   ]
 })
 export class ReuseTabComponent implements OnInit, OnChanges {

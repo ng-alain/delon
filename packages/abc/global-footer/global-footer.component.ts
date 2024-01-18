@@ -1,4 +1,5 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -31,7 +32,9 @@ import { GlobalFooterLink } from './global-footer.types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class GlobalFooterComponent implements OnInit {
   private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
@@ -48,7 +51,7 @@ export class GlobalFooterComponent implements OnInit {
     return this._links;
   }
 
-  @ContentChildren(GlobalFooterItemComponent) items!: QueryList<GlobalFooterItemComponent>;
+  @ContentChildren(GlobalFooterItemComponent) readonly items!: QueryList<GlobalFooterItemComponent>;
 
   constructor(
     private router: Router,

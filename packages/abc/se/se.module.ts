@@ -11,8 +11,7 @@ import { SEComponent } from './se.component';
 const COMPONENTS = [SEContainerComponent, SEComponent, SETitleComponent];
 
 @NgModule({
-  imports: [CommonModule, NzToolTipModule, NzIconModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzToolTipModule, NzIconModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class SEModule {}

@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,6 +10,7 @@ import {
 
 import { DelonLocaleService } from '@delon/theme';
 import { InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -17,7 +19,9 @@ import { InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
   host: { '[class.g2-mini-progress]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzTooltipDirective, NgStyle]
 })
 export class G2MiniProgressComponent implements OnChanges {
   static ngAcceptInputType_target: NumberInput;
