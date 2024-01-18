@@ -5,9 +5,9 @@ import {
   Component,
   Input,
   OnInit,
-  Optional,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -29,7 +29,9 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class ResultComponent implements OnInit {
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   _type = '';
   _icon = '';
   @Input()
@@ -51,16 +53,11 @@ export class ResultComponent implements OnInit {
   @Input() title?: string | TemplateRef<void>;
   @Input() description?: string | TemplateRef<void>;
   @Input() extra?: string | TemplateRef<void>;
-  dir: Direction = 'ltr';
-
-  constructor(
-    @Optional() private directionality: Directionality,
-    private cdr: ChangeDetectorRef
-  ) {}
+  dir?: Direction = 'ltr';
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.dir$?.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

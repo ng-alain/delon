@@ -5,7 +5,8 @@ import {
   Input,
   OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 
 import { DelonLocaleService } from '@delon/theme';
@@ -33,6 +34,8 @@ import {
   imports: [NzMenuDirective, NzMenuItemComponent]
 })
 export class ReuseTabContextMenuComponent implements OnInit {
+  private readonly i18nSrv = inject(DelonLocaleService);
+
   private _i18n!: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
@@ -52,8 +55,6 @@ export class ReuseTabContextMenuComponent implements OnInit {
   get includeNonCloseable(): boolean {
     return this.event.ctrlKey;
   }
-
-  constructor(private i18nSrv: DelonLocaleService) {}
 
   private notify(type: CloseType): void {
     this.close.next({

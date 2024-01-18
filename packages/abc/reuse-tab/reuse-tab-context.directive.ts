@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, inject } from '@angular/core';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
@@ -12,10 +12,10 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
   standalone: true
 })
 export class ReuseTabContextDirective {
+  private readonly srv = inject(ReuseTabContextService);
+
   @Input('reuse-tab-context-menu') item!: ReuseItem;
   @Input() customContextMenu!: ReuseCustomContextMenu[];
-
-  constructor(private srv: ReuseTabContextService) {}
 
   _onContextMenu(event: MouseEvent): void {
     this.srv.show.next({
