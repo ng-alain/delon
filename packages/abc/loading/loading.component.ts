@@ -22,7 +22,7 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
 })
 export class LoadingDefaultComponent {
   options!: LoadingShowOptions;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   get icon(): LoadingIcon {
     return this.options.icon!;

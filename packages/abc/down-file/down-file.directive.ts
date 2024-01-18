@@ -7,11 +7,6 @@ import { saveAs } from 'file-saver';
 import { _HttpClient } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-let isFileSaverSupported = false;
-try {
-  isFileSaverSupported = !!new Blob();
-} catch {}
-
 @Directive({
   selector: '[down-file]',
   exportAs: 'downFile',
@@ -45,9 +40,13 @@ export class DownFileDirective {
       });
     return arr.reduce((_o, item) => item, {});
   }
+  private isFileSaverSupported = false;
 
   constructor() {
-    if (!isFileSaverSupported) {
+    try {
+      this.isFileSaverSupported = !!new Blob();
+    } catch {}
+    if (!this.isFileSaverSupported) {
       this.el.classList.add(`down-file__not-support`);
     }
   }
@@ -59,7 +58,7 @@ export class DownFileDirective {
   }
 
   async _click(ev: MouseEvent): Promise<void> {
-    if (!isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
+    if (!this.isFileSaverSupported || (typeof this.pre === 'function' && !(await this.pre(ev)))) {
       ev.stopPropagation();
       ev.preventDefault();
       return;

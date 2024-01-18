@@ -154,8 +154,8 @@
             "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
             "include": [
               "./test.ts",
-              // "**/st.spec.ts"
-              "**/*.spec.ts"
+              "**/down-file.spec.ts"
+              // "**/*.spec.ts"
             ]
           }
         }

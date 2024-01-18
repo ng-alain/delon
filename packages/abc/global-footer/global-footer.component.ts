@@ -5,19 +5,18 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  Inject,
+  DestroyRef,
   Input,
   OnInit,
-  Optional,
   QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
@@ -37,10 +36,17 @@ import { GlobalFooterLink } from './global-footer.types';
   imports: [NgTemplateOutlet]
 })
 export class GlobalFooterComponent implements OnInit {
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
+  private readonly router = inject(Router);
+  private readonly win = inject(WINDOW);
+  private readonly dom = inject(DomSanitizer);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
+
+  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   private _links: GlobalFooterLink[] = [];
 
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   @Input()
   set links(val: GlobalFooterLink[]) {
@@ -52,14 +58,6 @@ export class GlobalFooterComponent implements OnInit {
   }
 
   @ContentChildren(GlobalFooterItemComponent) readonly items!: QueryList<GlobalFooterItemComponent>;
-
-  constructor(
-    private router: Router,
-    @Inject(WINDOW) private win: NzSafeAny,
-    private dom: DomSanitizer,
-    @Optional() private directionality: Directionality,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     if (!item.href) {
@@ -77,8 +75,8 @@ export class GlobalFooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.dir$?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
