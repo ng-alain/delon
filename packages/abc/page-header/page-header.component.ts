@@ -1,5 +1,5 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import { ObserversModule } from '@angular/cdk/observers';
+import { CdkObserveContent } from '@angular/cdk/observers';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
@@ -54,7 +54,7 @@ interface PageHeaderPath {
     NzBreadCrumbItemComponent,
     RouterLink,
     NzStringTemplateOutletDirective,
-    ObserversModule
+    CdkObserveContent
   ]
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
