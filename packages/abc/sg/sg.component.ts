@@ -3,16 +3,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Host,
   Input,
   OnChanges,
-  Optional,
   Renderer2,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { toNumber } from '@delon/util/decorator';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SGContainerComponent } from './sg-container.component';
 
@@ -32,28 +32,24 @@ const prefixCls = `sg`;
   standalone: true
 })
 export class SGComponent implements OnChanges, AfterViewInit {
-  static ngAcceptInputType_col: NumberInput;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly ren = inject(Renderer2);
+  private readonly rep = inject(ResponsiveService);
+  private readonly parent = inject(SGContainerComponent, { host: true, optional: true })!;
 
-  private el: HTMLElement;
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input() @InputNumber(null) col: number | null = null;
+  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col: number | null = null;
 
   get paddingValue(): number {
     return this.parent.gutter / 2;
   }
 
-  constructor(
-    el: ElementRef,
-    private ren: Renderer2,
-    @Optional() @Host() private parent: SGContainerComponent,
-    private rep: ResponsiveService
-  ) {
+  constructor() {
     if (parent == null) {
       throw new Error(`[sg] must include 'sg-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): this {

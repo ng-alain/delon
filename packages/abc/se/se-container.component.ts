@@ -2,19 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Host,
   Input,
   OnInit,
-  Optional,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
+import { toNumber } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -33,23 +33,18 @@ import { SEErrorRefresh, SELayout } from './se.types';
   standalone: true
 })
 export class SETitleComponent implements OnInit {
-  private el: HTMLElement;
-  constructor(
-    @Host()
-    @Optional()
-    private parent: SEContainerComponent,
-    el: ElementRef,
-    private ren: Renderer2
-  ) {
+  private readonly parent = inject(SEContainerComponent, { host: true, optional: true });
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly ren = inject(Renderer2);
+  constructor() {
     if (parent == null) {
       throw new Error(`[se-title] must include 'se-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): void {
     const { el } = this;
-    const gutter = this.parent.gutter as number;
+    const gutter = this.parent!.gutter as number;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }
@@ -87,20 +82,11 @@ export class SETitleComponent implements OnInit {
   imports: [SETitleComponent, NzStringTemplateOutletDirective]
 })
 export class SEContainerComponent {
-  static ngAcceptInputType_gutter: NumberInput;
-  static ngAcceptInputType_col: NumberInput;
-  static ngAcceptInputType_colInCon: NumberInput;
-  static ngAcceptInputType_labelWidth: NumberInput;
-  static ngAcceptInputType_firstVisual: BooleanInput;
-  static ngAcceptInputType_ingoreDirty: BooleanInput;
-  static ngAcceptInputType_line: BooleanInput;
-  static ngAcceptInputType_noColon: BooleanInput;
-
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
-  @Input('se-container') @InputNumber(null) colInCon?: REP_TYPE;
-  @Input() @InputNumber(null) col!: REP_TYPE;
-  @Input() @InputNumber(null) labelWidth!: number;
-  @Input() @InputBoolean() noColon = false;
+  @Input({ alias: 'se-container', transform: (v: NzSafeAny) => toNumber(v, null) }) colInCon?: REP_TYPE;
+  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col!: REP_TYPE;
+  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) labelWidth!: number;
+  @Input({ transform: booleanAttribute }) noColon = false;
   @Input() title?: string | TemplateRef<void> | null;
 
   @Input()
@@ -125,9 +111,9 @@ export class SEContainerComponent {
   private _nzLayout!: SELayout;
 
   @Input() size!: 'default' | 'compact';
-  @Input() @InputBoolean() firstVisual!: boolean;
-  @Input() @InputBoolean() ingoreDirty!: boolean;
-  @Input() @InputBoolean() line = false;
+  @Input({ transform: booleanAttribute }) firstVisual!: boolean;
+  @Input({ transform: booleanAttribute }) ingoreDirty!: boolean;
+  @Input({ transform: booleanAttribute }) line = false;
   @Input()
   set errors(val: SEErrorRefresh[]) {
     this.setErrors(val);

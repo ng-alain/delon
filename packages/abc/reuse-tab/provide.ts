@@ -10,7 +10,12 @@ import { RouteReuseStrategy } from '@angular/router';
 import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManagerFactory } from './reuse-tab.cache';
 import { ReuseTabMatchMode, ReuseTabRouteParamMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
-import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE, ReuseTabLocalStorageState } from './reuse-tab.state';
+import {
+  REUSE_TAB_STORAGE_KEY,
+  REUSE_TAB_STORAGE_KEY_DEFAULT,
+  REUSE_TAB_STORAGE_STATE,
+  ReuseTabLocalStorageState
+} from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 export enum ReuseTabFeatureKind {
@@ -47,9 +52,10 @@ export function provideReuseTabConfig(options?: {
   store?: ReuseTabFeature<ReuseTabFeatureKind.Store>;
 }): EnvironmentProviders {
   const providers: Provider[] = [
+    ReuseTabService,
     {
       provide: REUSE_TAB_STORAGE_KEY,
-      useValue: options?.storeKey ?? '_reuse-tab-state'
+      useValue: options?.storeKey ?? REUSE_TAB_STORAGE_KEY_DEFAULT
     },
     (options?.cacheManager ?? withCacheManager()).ɵproviders,
     (options?.store ?? withLocalStorage()).ɵproviders,

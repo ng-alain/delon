@@ -9,14 +9,13 @@ import {
   ContentChild,
   DestroyRef,
   ElementRef,
-  Host,
   Input,
   OnChanges,
-  Optional,
   Renderer2,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
+  booleanAttribute,
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,7 +24,7 @@ import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { toBoolean, toNumber } from '@delon/util/decorator';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -59,15 +58,14 @@ let nextUniqueId = 0;
   imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
-  static ngAcceptInputType_col: NumberInput;
-  static ngAcceptInputType_required: BooleanInput;
-  static ngAcceptInputType_line: BooleanInput;
-  static ngAcceptInputType_labelWidth: NumberInput;
-  static ngAcceptInputType_noColon: BooleanInput;
-  static ngAcceptInputType_hideLabel: BooleanInput;
+  private readonly parent = inject(SEContainerComponent, { host: true, optional: true })!;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly rep = inject(ResponsiveService);
+  private readonly ren = inject(Renderer2);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly statusSrv = inject(NzFormStatusService);
+  private readonly destroy$ = inject(DestroyRef);
 
-  private el: HTMLElement;
-  private destroy$ = inject(DestroyRef);
   @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName?: FormControlName;
@@ -93,13 +91,13 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
   @Input() extra?: string | TemplateRef<void> | null;
   @Input() label?: string | TemplateRef<void> | null;
-  @Input() @InputNumber(null) col?: number | null;
-  @Input() @InputBoolean() required = false;
+  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col?: number | null;
+  @Input({ transform: booleanAttribute }) required = false;
   @Input() controlClass?: string | null = '';
-  @Input() @InputBoolean(null) line?: boolean | null;
-  @Input() @InputNumber(null) labelWidth?: number | null;
-  @Input() @InputBoolean(null) noColon?: boolean | null;
-  @Input() @InputBoolean() hideLabel = false;
+  @Input({ transform: (v: NzSafeAny) => toBoolean(v, null) }) line?: boolean | null;
+  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) labelWidth?: number | null;
+  @Input({ transform: (v: NzSafeAny) => toBoolean(v, null) }) noColon?: boolean | null;
+  @Input({ transform: booleanAttribute }) hideLabel = false;
 
   @Input()
   set id(value: string) {
@@ -128,21 +126,13 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
     return this.ngModel || this.formControlName;
   }
 
-  constructor(
-    el: ElementRef,
-    @Optional() @Host() private parent: SEContainerComponent,
-    private statusSrv: NzFormStatusService,
-    private rep: ResponsiveService,
-    private ren: Renderer2,
-    private cdr: ChangeDetectorRef
-  ) {
-    if (parent == null) {
+  constructor() {
+    if (this.parent == null) {
       throw new Error(`[se] must include 'se-container' component`);
     }
-    this.el = el.nativeElement;
-    parent.errorNotify
+    this.parent.errorNotify
       .pipe(
-        takeUntilDestroyed(this.destroy$),
+        takeUntilDestroyed(),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
       )
       .subscribe(item => {

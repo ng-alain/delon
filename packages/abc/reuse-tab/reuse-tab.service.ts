@@ -27,7 +27,7 @@ import {
 } from './reuse-tab.interfaces';
 import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ReuseTabService implements OnDestroy {
   private readonly injector = inject(Injector);
   private readonly menuService = inject(MenuService);
