@@ -150,7 +150,7 @@
     "less-bundle-promise": "^1.0.11",
     "ng-alain-sts": "^0.0.2",
     "ng-alain-plugin-theme": "^16.0.2",
-    "ng-less-javascript-enabled-patch": "17.0.1",
+    "ng-less-javascript-enabled-patch": "17.0.2",
     "tsconfig-paths": "^4.2.0",
     "@types/express": "^4.17.21",
     "@types/node": "^18.19.8",
