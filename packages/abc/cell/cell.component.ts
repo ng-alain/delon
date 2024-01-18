@@ -26,7 +26,7 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzImage, NzImageModule, NzImageService } from 'ng-zorro-antd/image';
+import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 import { NzRadioComponent } from 'ng-zorro-antd/radio';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
@@ -112,6 +112,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  providers: [NzImageService],
   imports: [
     FormsModule,
     NgTemplateOutlet,
@@ -121,7 +122,6 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
     NzTagComponent,
     NzBadgeComponent,
     NzTooltipDirective,
-    NzImageModule,
     CellHostDirective
   ]
 })
