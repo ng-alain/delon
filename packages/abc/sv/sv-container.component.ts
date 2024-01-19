@@ -3,18 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Host,
   Input,
   OnInit,
-  Optional,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 @Component({
@@ -30,19 +30,19 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   standalone: true
 })
 export class SVTitleComponent implements OnInit {
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    @Host() @Optional() private parent: SVContainerComponent,
-    private ren: Renderer2
-  ) {
-    if (parent == null) {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly parent = inject(SVContainerComponent, { host: true, optional: true });
+  private readonly ren = inject(Renderer2);
+
+  constructor() {
+    if (this.parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }
   }
 
   private setClass(): void {
-    const gutter = this.parent.gutter;
-    const el = this.el.nativeElement;
+    const gutter = this.parent!.gutter;
+    const el = this.el;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }
@@ -81,26 +81,19 @@ export class SVTitleComponent implements OnInit {
   imports: [NgStyle, SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {
-  static ngAcceptInputType_gutter: NumberInput;
-  static ngAcceptInputType_labelWidth: NumberInput;
-  static ngAcceptInputType_col: NumberInput;
-  static ngAcceptInputType_colInCon: NumberInput;
-  static ngAcceptInputType_default: BooleanInput;
-  static ngAcceptInputType_noColon: BooleanInput;
-  static ngAcceptInputType_bordered: BooleanInput;
-
-  @Input('sv-container') @InputNumber(null) colInCon?: REP_TYPE;
+  @Input({ alias: 'sv-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
+  colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
   @Input() size?: 'small' | 'large' | 'default';
   /** 列表项间距，单位为 `px` */
-  @Input() @InputNumber() gutter!: number;
+  @Input({ transform: numberAttribute }) gutter!: number;
   @Input() layout!: 'horizontal' | 'vertical';
-  @Input() @InputNumber() labelWidth?: number;
+  @Input({ transform: numberAttribute }) labelWidth?: number;
   /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
-  @Input() @InputNumber() col!: number;
-  @Input() @InputBoolean() default!: boolean;
-  @Input() @InputBoolean() noColon = false;
-  @Input() @InputBoolean() bordered = false;
+  @Input({ transform: numberAttribute }) col!: number;
+  @Input({ transform: booleanAttribute }) default!: boolean;
+  @Input({ transform: booleanAttribute }) noColon = false;
+  @Input({ transform: booleanAttribute }) bordered = false;
 
   get margin(): { [k: string]: number } {
     return this.bordered ? {} : { 'margin-left.px': -(this.gutter / 2), 'margin-right.px': -(this.gutter / 2) };

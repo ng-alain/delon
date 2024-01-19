@@ -11,6 +11,7 @@ import {
   EventEmitter,
   inject,
   Input,
+  numberAttribute,
   OnChanges,
   Output,
   SimpleChange,
@@ -34,7 +35,6 @@ import {
   YNPipe
 } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
-import { toBoolean, toNumber } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -46,7 +46,7 @@ import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
 import { ST_DEFAULT_CONFIG } from './st.config';
-import {
+import type {
   STChange,
   STChangeType,
   STClickRowClassName,
@@ -73,7 +73,7 @@ import {
   STStatisticalResults,
   STWidthMode
 } from './st.interfaces';
-import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from './st.types';
+import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from './st.types';
 
 @Component({
   selector: 'st',
@@ -104,6 +104,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   private readonly delonI18n = inject(DelonLocaleService);
   private readonly cms = inject(NzContextMenuService);
   private readonly destroy$ = inject(DestroyRef);
+
   private totalTpl = ``;
   private inied = false;
   cog!: AlainSTConfig;
@@ -159,11 +160,11 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input() data?: string | STData[] | Observable<STData[]>;
   @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
-  @Input({ transform: toNumber }) ps = 10;
-  @Input({ transform: toNumber }) pi = 1;
-  @Input({ transform: toNumber }) total = 0;
+  @Input({ transform: numberAttribute }) ps = 10;
+  @Input({ transform: numberAttribute }) pi = 1;
+  @Input({ transform: numberAttribute }) total = 0;
   @Input() loading: boolean | null = null;
-  @Input({ transform: toNumber }) loadingDelay = 0;
+  @Input({ transform: numberAttribute }) loadingDelay = 0;
   @Input() loadingIndicator: TemplateRef<void> | null = null;
   @Input({ transform: booleanAttribute }) bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
@@ -176,7 +177,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
   set multiSort(value: NzSafeAny) {
     if (
-      (typeof value === 'boolean' && !toBoolean(value)) ||
+      (typeof value === 'boolean' && !booleanAttribute(value)) ||
       (typeof value === 'object' && Object.keys(value).length === 0)
     ) {
       this._multiSort = undefined;
@@ -203,7 +204,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   private _resizable?: STResizable;
   @Input()
   set resizable(val: STResizable | boolean | string) {
-    this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
+    this._resizable = typeof val === 'object' ? val : { disabled: !booleanAttribute(val) };
   }
   @Input() header?: string | TemplateRef<void> | null;
   @Input({ transform: booleanAttribute }) showHeader = true;
@@ -219,9 +220,9 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Output() readonly error = new EventEmitter<STError>();
   @Output() readonly change = new EventEmitter<STChange>();
   @Input({ transform: booleanAttribute }) virtualScroll = false;
-  @Input({ transform: toNumber }) virtualItemSize = 54;
-  @Input({ transform: toNumber }) virtualMaxBufferPx = 200;
-  @Input({ transform: toNumber }) virtualMinBufferPx = 100;
+  @Input({ transform: numberAttribute }) virtualItemSize = 54;
+  @Input({ transform: numberAttribute }) virtualMaxBufferPx = 200;
+  @Input({ transform: numberAttribute }) virtualMinBufferPx = 100;
   @Input() customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
   @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
 
@@ -320,7 +321,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     const { total } = this.page;
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
-    } else if (toBoolean(total)) {
+    } else if (booleanAttribute(total)) {
       this.totalTpl = this.locale.total;
     } else {
       this.totalTpl = '';
