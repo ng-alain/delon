@@ -2,18 +2,16 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DecimalPipe, DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Host,
   inject,
-  Inject,
   Input,
   OnChanges,
-  Optional,
   Output,
   SimpleChange,
   SimpleChanges,
@@ -27,7 +25,6 @@ import { Router } from '@angular/router';
 import { isObservable, Observable, of, filter, catchError, map, finalize, throwError, lastValueFrom } from 'rxjs';
 
 import {
-  AlainI18NService,
   ALAIN_I18N_TOKEN,
   DatePipe,
   DelonLocaleService,
@@ -37,7 +34,7 @@ import {
   YNPipe
 } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, toBoolean } from '@delon/util/decorator';
+import { toBoolean, toNumber } from '@delon/util/decorator';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -97,21 +94,16 @@ import { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from
   encapsulation: ViewEncapsulation.None
 })
 export class STComponent implements AfterViewInit, OnChanges {
-  static ngAcceptInputType_ps: NumberInput;
-  static ngAcceptInputType_pi: NumberInput;
-  static ngAcceptInputType_total: NumberInput;
-  static ngAcceptInputType_loadingDelay: NumberInput;
-  static ngAcceptInputType_bordered: BooleanInput;
-  static ngAcceptInputType_expandRowByClick: BooleanInput;
-  static ngAcceptInputType_expandAccordion: BooleanInput;
-  static ngAcceptInputType_responsive: BooleanInput;
-  static ngAcceptInputType_responsiveHideHeaderFooter: BooleanInput;
-  static ngAcceptInputType_virtualScroll: BooleanInput;
-  static ngAcceptInputType_virtualItemSize: NumberInput;
-  static ngAcceptInputType_virtualMaxBufferPx: NumberInput;
-  static ngAcceptInputType_virtualMinBufferPx: NumberInput;
-
-  private destroy$ = inject(DestroyRef);
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly doc = inject(DOCUMENT);
+  private readonly exportSrv = inject(STExport);
+  private readonly columnSource = inject(STColumnSource);
+  private readonly dataSource = inject(STDataSource);
+  private readonly delonI18n = inject(DelonLocaleService);
+  private readonly cms = inject(NzContextMenuService);
+  private readonly destroy$ = inject(DestroyRef);
   private totalTpl = ``;
   private inied = false;
   cog!: AlainSTConfig;
@@ -167,13 +159,13 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input() data?: string | STData[] | Observable<STData[]>;
   @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
-  @Input() @InputNumber() ps = 10;
-  @Input() @InputNumber() pi = 1;
-  @Input() @InputNumber() total = 0;
+  @Input({ transform: toNumber }) ps = 10;
+  @Input({ transform: toNumber }) pi = 1;
+  @Input({ transform: toNumber }) total = 0;
   @Input() loading: boolean | null = null;
-  @Input() @InputNumber() loadingDelay = 0;
+  @Input({ transform: toNumber }) loadingDelay = 0;
   @Input() loadingIndicator: TemplateRef<void> | null = null;
-  @Input() @InputBoolean() bordered = false;
+  @Input({ transform: booleanAttribute }) bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
   @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
   @Input() singleSort?: STSingleSort | null;
@@ -214,22 +206,22 @@ export class STComponent implements AfterViewInit, OnChanges {
     this._resizable = typeof val === 'object' ? val : { disabled: !toBoolean(val) };
   }
   @Input() header?: string | TemplateRef<void> | null;
-  @Input() @InputBoolean() showHeader = true;
+  @Input({ transform: booleanAttribute }) showHeader = true;
   @Input() footer?: string | TemplateRef<void> | null;
   @Input() bodyHeader?: TemplateRef<{ $implicit: STStatisticalResults }> | null;
   @Input() body?: TemplateRef<{ $implicit: STStatisticalResults }> | null;
-  @Input() @InputBoolean() expandRowByClick = false;
-  @Input() @InputBoolean() expandAccordion = false;
+  @Input({ transform: booleanAttribute }) expandRowByClick = false;
+  @Input({ transform: booleanAttribute }) expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: NzSafeAny; index: number }> | null = null;
   @Input() noResult?: string | TemplateRef<void> | null;
-  @Input() @InputBoolean() responsive: boolean = true;
-  @Input() @InputBoolean() responsiveHideHeaderFooter?: boolean;
+  @Input({ transform: booleanAttribute }) responsive: boolean = true;
+  @Input({ transform: booleanAttribute }) responsiveHideHeaderFooter?: boolean;
   @Output() readonly error = new EventEmitter<STError>();
   @Output() readonly change = new EventEmitter<STChange>();
-  @Input() @InputBoolean() virtualScroll = false;
-  @Input() @InputNumber() virtualItemSize = 54;
-  @Input() @InputNumber() virtualMaxBufferPx = 200;
-  @Input() @InputNumber() virtualMinBufferPx = 100;
+  @Input({ transform: booleanAttribute }) virtualScroll = false;
+  @Input({ transform: toNumber }) virtualItemSize = 54;
+  @Input({ transform: toNumber }) virtualMaxBufferPx = 200;
+  @Input({ transform: toNumber }) virtualMinBufferPx = 100;
   @Input() customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
   @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
 
@@ -251,18 +243,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     return this.columns == null;
   }
 
-  constructor(
-    @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
-    private cdr: ChangeDetectorRef,
-    private el: ElementRef,
-    private exportSrv: STExport,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private columnSource: STColumnSource,
-    private dataSource: STDataSource,
-    private delonI18n: DelonLocaleService,
-    configSrv: AlainConfigService,
-    private cms: NzContextMenuService
-  ) {
+  constructor(configSrv: AlainConfigService) {
     this.delonI18n.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -271,7 +252,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       }
     });
 
-    i18nSrv.change
+    this.i18nSrv?.change
       .pipe(
         takeUntilDestroyed(),
         filter(() => this._columns.length > 0)
@@ -466,7 +447,7 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   private _toTop(enforce?: boolean): void {
     if (!(enforce == null ? this.page.toTop : enforce)) return;
-    const el = this.el.nativeElement as HTMLElement;
+    const el = this.el;
     el.scrollIntoView();
     // fix header height
     this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
@@ -919,6 +900,11 @@ export class STComponent implements AfterViewInit, OnChanges {
   encapsulation: ViewEncapsulation.None
 })
 export class STTdComponent {
+  private readonly stComp = inject(STComponent, { host: true });
+  private readonly router = inject(Router);
+  private readonly modalHelper = inject(ModalHelper);
+  private readonly drawerHelper = inject(DrawerHelper);
+
   @Input() c!: _STColumn;
   @Input() cIdx!: number;
   @Input() data!: STData[];
@@ -930,13 +916,6 @@ export class STTdComponent {
     const { pi, ps, total } = this.stComp;
     return { pi, ps, total };
   }
-
-  constructor(
-    @Host() private stComp: STComponent,
-    private router: Router,
-    private modalHelper: ModalHelper,
-    private drawerHelper: DrawerHelper
-  ) {}
 
   private report(type: _STTdNotifyType): void {
     this.n.emit({ type, item: this.i, col: this.c });
