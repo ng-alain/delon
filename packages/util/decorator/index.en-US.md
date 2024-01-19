@@ -6,6 +6,8 @@ type: Tools
 
 ## toBoolean, @InputBoolean
 
+> Recommended to use the built-in `transform` and `static ngAcceptInputType_` can be removed
+
 Convert to `boolean`, `@InputBoolean()` can enhance the experience of binding number attributes, for example:
 
 ```ts
@@ -23,6 +25,8 @@ The following calling methods will all be considered effective:
 ```
 
 ## toNumber, @InputNumber
+
+> Recommended to use the built-in `transform` and `static ngAcceptInputType_` can be removed
 
 Convert to `number`, `@InputNumber()` can enhance the experience of binding number attributes, for example:
 
