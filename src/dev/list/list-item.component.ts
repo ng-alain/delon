@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { format } from 'date-fns';
@@ -16,11 +16,11 @@ import { format } from 'date-fns';
   imports: [JsonPipe]
 })
 export class DevListItemComponent implements OnInit, OnDestroy {
+  readonly route = inject(ActivatedRoute);
+
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   id = 0;
-
-  constructor(public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     console.log('LIST ITEM: ngOnInit');

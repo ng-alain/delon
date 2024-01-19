@@ -29,10 +29,11 @@ describe('auth: cookie-storage', () => {
               delete data[key];
             })
           }
-        }
+        },
+        CookieStorageStore
       ]
     });
-    store = new CookieStorageStore();
+    store = TestBed.inject(CookieStorageStore);
   });
 
   it('should be never return null', () => {

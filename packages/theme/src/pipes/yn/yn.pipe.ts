@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export type YNMode = 'full' | 'icon' | 'text';
@@ -37,7 +37,7 @@ export function yn(value: boolean, opt?: YNOptions): string {
 
 @Pipe({ name: 'yn', standalone: true })
 export class YNPipe implements PipeTransform {
-  constructor(private dom: DomSanitizer) {}
+  private readonly dom = inject(DomSanitizer);
 
   transform(value: boolean, yes?: string, no?: string, mode?: YNMode, isSafeHtml: boolean = true): SafeHtml {
     const html = yn(value, { yes, no, mode });

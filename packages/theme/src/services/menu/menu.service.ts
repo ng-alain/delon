@@ -1,32 +1,29 @@
-import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, share } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { Menu, MenuIcon, MenuInner } from './interface';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
+import { ALAIN_I18N_TOKEN } from '../i18n/i18n';
 
 /**
  * 菜单服务，[在线文档](https://ng-alain.com/theme/menu)
  */
 @Injectable({ providedIn: 'root' })
 export class MenuService implements OnDestroy {
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly aclService = inject(ACLService, { optional: true });
   private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
-  private i18n$: Subscription;
+  private i18n$?: Subscription;
   private data: Menu[] = [];
   /**
    * 是否完全受控菜单打开状态，默认：`false`
    */
   openStrictly = false;
 
-  constructor(
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    private i18nSrv: AlainI18NService,
-    @Optional() private aclService: ACLService
-  ) {
-    this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
+  constructor() {
+    this.i18n$ = this.i18nSrv?.change.subscribe(() => this.resume());
   }
 
   get change(): Observable<Menu[]> {
@@ -348,6 +345,6 @@ export class MenuService implements OnDestroy {
 
   ngOnDestroy(): void {
     this._change$.unsubscribe();
-    this.i18n$.unsubscribe();
+    this.i18n$?.unsubscribe();
   }
 }

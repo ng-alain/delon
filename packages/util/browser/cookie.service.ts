@@ -1,6 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -25,6 +25,9 @@ export interface CookieOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class CookieService {
+  private readonly _doc = inject(DOCUMENT);
+  private readonly platform = inject(Platform);
+
   private get doc(): Document {
     return this._doc || document;
   }
@@ -37,11 +40,6 @@ export class CookieService {
   get cookie(): string {
     return this.platform.isBrowser ? this.doc.cookie : '';
   }
-
-  constructor(
-    @Inject(DOCUMENT) private _doc: NzSafeAny,
-    private platform: Platform
-  ) {}
 
   /**
    * Get all cookie key-value pairs

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, delay, finalize, switchMap, tap } from 'rxjs';
 
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
@@ -17,11 +17,9 @@ export type HttpObserve = 'body' | 'events' | 'response';
  */
 @Injectable({ providedIn: 'root' })
 export class _HttpClient {
+  private readonly http = inject(HttpClient);
   private cog: AlainThemeHttpClientConfig;
-  constructor(
-    private http: HttpClient,
-    cogSrv: AlainConfigService
-  ) {
+  constructor(cogSrv: AlainConfigService) {
     this.cog = cogSrv.merge('themeHttp', {
       nullValueHandling: 'include',
       dateValueHandling: 'timestamp'

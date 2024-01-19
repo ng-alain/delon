@@ -1,4 +1,4 @@
-import { Injectable, Optional, SkipSelf, TemplateRef, Type } from '@angular/core';
+import { Injectable, TemplateRef, Type, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
@@ -50,15 +50,12 @@ export interface DrawerHelperOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class DrawerHelper {
+  private readonly srv = inject(NzDrawerService);
+  private readonly parentDrawer = inject(DrawerHelper, { optional: true, skipSelf: true });
   private openDrawersAtThisLevel: NzDrawerRef[] = [];
   get openDrawers(): NzDrawerRef[] {
     return this.parentDrawer ? this.parentDrawer.openDrawers : this.openDrawersAtThisLevel;
   }
-
-  constructor(
-    private srv: NzDrawerService,
-    @Optional() @SkipSelf() private parentDrawer: DrawerHelper
-  ) {}
 
   /**
    * 构建一个抽屉
