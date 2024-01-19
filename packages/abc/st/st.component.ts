@@ -160,9 +160,9 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input() data?: string | STData[] | Observable<STData[]>;
   @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
-  @Input({ transform: numberAttribute }) ps = 10;
-  @Input({ transform: numberAttribute }) pi = 1;
-  @Input({ transform: numberAttribute }) total = 0;
+  @Input({ transform: (v: unknown) => numberAttribute(v, 10) }) ps = 10;
+  @Input({ transform: (v: unknown) => numberAttribute(v, 1) }) pi = 1;
+  @Input({ transform: (v: unknown) => numberAttribute(v, 0) }) total = 0;
   @Input() loading: boolean | null = null;
   @Input({ transform: numberAttribute }) loadingDelay = 0;
   @Input() loadingIndicator: TemplateRef<void> | null = null;

@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, inject } from '@angular/core';
 
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
@@ -12,9 +12,9 @@ import { XlsxExportOptions } from './xlsx.types';
   standalone: true
 })
 export class XlsxDirective {
-  @Input('xlsx') data!: XlsxExportOptions;
+  private readonly srv = inject(XlsxService);
 
-  constructor(private srv: XlsxService) {}
+  @Input('xlsx') data!: XlsxExportOptions;
 
   _click(): void {
     this.srv.export(this.data);

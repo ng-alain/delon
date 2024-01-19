@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 
 import { saveAs } from 'file-saver';
 import type jsZipType from 'jszip';
@@ -15,14 +15,13 @@ declare var JSZip: jsZipType;
 
 @Injectable({ providedIn: 'root' })
 export class ZipService {
+  private readonly http = inject(HttpClient);
+  private readonly lazy = inject(LazyService);
+  private readonly ngZone = inject(NgZone);
+
   private cog: AlainZipConfig;
 
-  constructor(
-    private http: HttpClient,
-    private lazy: LazyService,
-    configSrv: AlainConfigService,
-    private ngZone: NgZone
-  ) {
+  constructor(configSrv: AlainConfigService) {
     this.cog = configSrv.merge('zip', {
       url: 'https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js',
       utils: []
