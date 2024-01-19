@@ -6,20 +6,18 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
+  inject,
   InjectionToken,
   Input,
   isDevMode,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   Renderer2
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AlainConfigService } from '@delon/util/config';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzMenuDirective, NzMenuItemComponent } from 'ng-zorro-antd/menu';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
@@ -43,6 +41,13 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
   imports: [NzDropDownDirective, NzDropdownMenuComponent, NzMenuDirective, NzMenuItemComponent, NzTooltipDirective]
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {
+  private readonly doc = inject(DOCUMENT);
+  private readonly platform = inject(Platform);
+  private readonly renderer = inject(Renderer2);
+  private readonly configSrv = inject(AlainConfigService);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly cdr = inject(ChangeDetectorRef);
+
   private theme = 'default';
   isDev = isDevMode();
   @Input() types: ThemeBtnType[] = [
@@ -53,25 +58,13 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
   @Output() readonly themeChange = new EventEmitter<string>();
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
-  dir: Direction = 'ltr';
-  private key = '';
-
-  constructor(
-    private renderer: Renderer2,
-    private configSrv: AlainConfigService,
-    private platform: Platform,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    @Optional() private directionality: Directionality,
-    @Optional() @Inject(ALAIN_THEME_BTN_KEYS) KEYS: string,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.key = KEYS ?? 'site-theme';
-  }
+  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
+  dir?: Direction = 'ltr';
+  private key = inject(ALAIN_THEME_BTN_KEYS, { optional: true }) ?? 'site-theme';
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.dir$?.subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

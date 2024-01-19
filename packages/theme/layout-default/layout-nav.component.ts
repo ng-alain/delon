@@ -6,12 +6,10 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
-  Inject,
   Input,
   NgZone,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   Renderer2,
   ViewEncapsulation,
@@ -27,7 +25,6 @@ import { filter } from 'rxjs';
 import { Menu, MenuIcon, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface Nav extends MenuInner {
   _needIcon?: boolean;
@@ -50,10 +47,21 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   encapsulation: ViewEncapsulation.None
 })
 export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
+  private readonly doc = inject(DOCUMENT);
+  private readonly win = inject(WINDOW);
+  private readonly router = inject(Router);
+  private readonly render = inject(Renderer2);
+  private readonly menuSrv = inject(MenuService);
+  private readonly settings = inject(SettingsService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly directionality = inject(Directionality, { optional: true });
+
   private bodyEl!: HTMLBodyElement;
   private destroy$ = inject(DestroyRef);
   private floatingEl!: HTMLDivElement;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
   list: Nav[] = [];
 
   @Input({ transform: booleanAttribute }) disabledAcl = false;
@@ -70,19 +78,6 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   get collapsed(): boolean {
     return this.settings.layout.collapsed;
   }
-
-  constructor(
-    private menuSrv: MenuService,
-    private settings: SettingsService,
-    private router: Router,
-    private render: Renderer2,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
-    private sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    @Inject(WINDOW) private win: NzSafeAny,
-    @Optional() private directionality: Directionality
-  ) {}
 
   private getLinkNode(node: HTMLElement): HTMLElement | null {
     node = node.nodeName === 'A' ? node : (node.parentNode as HTMLElement);
@@ -228,7 +223,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const { doc, router, menuSrv, settings, cdr } = this;
-    this.bodyEl = doc.querySelector('body');
+    this.bodyEl = doc.querySelector<HTMLBodyElement>('body')!;
     menuSrv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav, _p, depth) => {
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
@@ -264,8 +259,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       .subscribe(() => this.clearFloating());
     this.underPad();
 
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

@@ -1,13 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { DestroyRef, Inject, Injectable, Injector, OnDestroy, Optional, inject } from '@angular/core';
+import { DestroyRef, Injectable, Injector, OnDestroy, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, map, delay, isObservable, switchMap, Subscription } from 'rxjs';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
+import { ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
 
 export interface RouteTitle {
@@ -26,16 +24,14 @@ export class TitleService implements OnDestroy {
 
   readonly DELAY_TIME = 25;
 
-  constructor(
-    private injector: Injector,
-    private title: Title,
-    private menuSrv: MenuService,
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    private i18nSrv: AlainI18NService,
-    @Inject(DOCUMENT) private doc: NzSafeAny
-  ) {
-    i18nSrv.change.pipe(takeUntilDestroyed()).subscribe(() => this.setTitle());
+  private readonly doc = inject(DOCUMENT);
+  private readonly injector = inject(Injector);
+  private readonly title = inject(Title);
+  private readonly menuSrv = inject(MenuService);
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+
+  constructor() {
+    this.i18nSrv?.change.pipe(takeUntilDestroyed()).subscribe(() => this.setTitle());
   }
 
   /**
@@ -161,7 +157,7 @@ export class TitleService implements OnDestroy {
    * Set i18n key of the document title
    */
   setTitleByI18n(key: string, params?: unknown): void {
-    this.setTitle(this.i18nSrv.fanyi(key, params));
+    this.setTitle(this.i18nSrv?.fanyi(key, params));
   }
 
   ngOnDestroy(): void {

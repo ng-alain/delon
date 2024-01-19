@@ -1,7 +1,7 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
@@ -19,6 +19,13 @@ export const RTL = 'rtl';
 
 @Injectable({ providedIn: 'root' })
 export class RTLService {
+  private readonly d = inject(Directionality);
+  private readonly nz = inject(NzConfigService);
+  private readonly delon = inject(AlainConfigService);
+  private readonly platform = inject(Platform);
+  private readonly doc = inject(DOCUMENT);
+  private readonly srv = inject(SettingsService);
+
   private _dir: Direction = LTR;
   /**
    * Get or Set the current text direction
@@ -61,15 +68,8 @@ export class RTLService {
     );
   }
 
-  constructor(
-    private d: Directionality,
-    private srv: SettingsService,
-    private nz: NzConfigService,
-    private delon: AlainConfigService,
-    private platform: Platform,
-    @Inject(DOCUMENT) private doc: NzSafeAny
-  ) {
-    this.dir = srv.layout.direction === RTL ? RTL : LTR;
+  constructor() {
+    this.dir = this.srv.layout.direction === RTL ? RTL : LTR;
   }
 
   /**
