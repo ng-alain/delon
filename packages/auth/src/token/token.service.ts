@@ -1,14 +1,14 @@
-import { inject, Inject, Injectable, OnDestroy } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, interval, Observable, Subject, Subscription, filter, map, share } from 'rxjs';
 
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 
 import { AuthReferrer, ITokenModel, ITokenService } from './interface';
 import { mergeConfig } from '../auth.config';
-import { DA_STORE_TOKEN, IStore } from '../store/interface';
+import { DA_STORE_TOKEN } from '../store/interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
-  return new TokenService(inject(AlainConfigService), inject(DA_STORE_TOKEN));
+  return new TokenService(inject(AlainConfigService));
 }
 
 /**
@@ -16,16 +16,14 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
  */
 @Injectable()
 export class TokenService implements ITokenService, OnDestroy {
+  private readonly store = inject(DA_STORE_TOKEN);
   private refresh$ = new Subject<ITokenModel>();
   private change$ = new BehaviorSubject<ITokenModel | null>(null);
   private interval$?: Subscription;
   private _referrer: AuthReferrer = {};
   private _options: AlainAuthConfig;
 
-  constructor(
-    configSrv: AlainConfigService,
-    @Inject(DA_STORE_TOKEN) private store: IStore
-  ) {
+  constructor(configSrv: AlainConfigService) {
     this._options = mergeConfig(configSrv);
   }
 

@@ -1,4 +1,4 @@
-import { ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Injectable, ViewContainerRef, inject } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -37,7 +37,7 @@ export class WidgetRegistry {
 
 @Injectable()
 export class WidgetFactory {
-  constructor(private registry: WidgetRegistry) {}
+  private readonly registry = inject(WidgetRegistry);
 
   createWidget(container: ViewContainerRef, type: string): ComponentRef<Widget<FormProperty, SFUISchemaItem>> {
     if (!this.registry.has(type)) {

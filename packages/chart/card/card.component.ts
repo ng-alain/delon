@@ -6,7 +6,8 @@ import {
   OnChanges,
   TemplateRef,
   ViewEncapsulation,
-  booleanAttribute
+  booleanAttribute,
+  inject
 } from '@angular/core';
 
 import { NzCardComponent } from 'ng-zorro-antd/card';
@@ -25,6 +26,7 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
   imports: [NzCardComponent, NzSpinComponent, NzStringTemplateOutletDirective]
 })
 export class G2CardComponent implements OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
   /** 是否显示边框 */
   @Input({ transform: booleanAttribute }) bordered = false;
   @Input() avatar?: string | TemplateRef<void> | null;
@@ -41,8 +43,6 @@ export class G2CardComponent implements OnChanges {
   @Input() footer?: string | TemplateRef<void> | null;
   /** 是否显示Loading */
   @Input({ transform: booleanAttribute }) loading = false;
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
     this.cdr.detectChanges();

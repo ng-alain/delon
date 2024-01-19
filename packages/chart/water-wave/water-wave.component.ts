@@ -15,6 +15,7 @@ import {
   ViewChild,
   ViewEncapsulation,
   booleanAttribute,
+  inject,
   numberAttribute
 } from '@angular/core';
 import { fromEvent, Subscription, debounceTime } from 'rxjs';
@@ -33,6 +34,12 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   imports: [NgStyle, NzStringTemplateOutletDirective]
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly renderer = inject(Renderer2);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly platform = inject(Platform);
+
   private resize$: Subscription | null = null;
   @ViewChild('container', { static: true }) private node!: ElementRef;
   private timer!: number;
@@ -47,14 +54,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   @Input({ transform: numberAttribute }) percent?: number;
 
   // #endregion
-
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-    private platform: Platform
-  ) {}
 
   private renderChart(isUpdate: boolean): void {
     if (!this.resize$) return;
@@ -203,9 +202,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private updateRadio(): void {
-    const { offsetWidth } = this.el.nativeElement.parentNode;
+    const { offsetWidth } = this.el.parentNode! as HTMLElement;
     const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
-    this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);
+    this.renderer.setStyle(this.el, 'transform', `scale(${radio})`);
   }
 
   render(): void {

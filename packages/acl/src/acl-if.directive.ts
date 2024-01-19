@@ -1,4 +1,5 @@
-import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subscription, filter } from 'rxjs';
 
 import { ACLService } from './acl.service';
@@ -10,23 +11,25 @@ import { ACLCanType } from './acl.type';
   standalone: true
 })
 export class ACLIfDirective implements OnDestroy {
+  private readonly srv = inject(ACLService);
+  private readonly _viewContainer = inject(ViewContainerRef);
   static ngAcceptInputType_except: boolean | string | undefined | null;
 
   private _value!: ACLCanType;
   private _change$: Subscription;
-  private _thenTemplateRef: TemplateRef<void> | null = null;
+  private _thenTemplateRef: TemplateRef<void> | null = inject(TemplateRef<void>);
   private _elseTemplateRef: TemplateRef<void> | null = null;
   private _thenViewRef: EmbeddedViewRef<void> | null = null;
   private _elseViewRef: EmbeddedViewRef<void> | null = null;
   private _except = false;
 
-  constructor(
-    templateRef: TemplateRef<void>,
-    private srv: ACLService,
-    private _viewContainer: ViewContainerRef
-  ) {
-    this._change$ = this.srv.change.pipe(filter(r => r != null)).subscribe(() => this._updateView());
-    this._thenTemplateRef = templateRef;
+  constructor() {
+    this._change$ = this.srv.change
+      .pipe(
+        takeUntilDestroyed(),
+        filter(r => r != null)
+      )
+      .subscribe(() => this._updateView());
   }
 
   @Input()

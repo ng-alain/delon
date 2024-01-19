@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, map, tap } from 'rxjs';
 
 import { addSeconds } from 'date-fns';
@@ -9,11 +9,15 @@ import { addSeconds } from 'date-fns';
 import { AlainCacheConfig, AlainConfigService } from '@delon/util/config';
 import { deepGet } from '@delon/util/other';
 
-import { CacheNotifyResult, CacheNotifyType, ICache, ICacheStore } from './interface';
+import { CacheNotifyResult, CacheNotifyType, ICache } from './interface';
 import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
 @Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
+  private readonly store = inject(DC_STORE_STORAGE_TOKEN);
+  private readonly http = inject(HttpClient);
+  private readonly platform = inject(Platform);
+
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
   private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<
     string,
@@ -24,19 +28,14 @@ export class CacheService implements OnDestroy {
   private freqTime: any;
   private cog: AlainCacheConfig;
 
-  constructor(
-    cogSrv: AlainConfigService,
-    @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore,
-    private http: HttpClient,
-    private platform: Platform
-  ) {
+  constructor(cogSrv: AlainConfigService) {
     this.cog = cogSrv.merge('cache', {
       mode: 'promise',
       reName: '',
       prefix: '',
       meta_key: '__cache_meta'
     })!;
-    if (!platform.isBrowser) return;
+    if (!this.platform.isBrowser) return;
     this.loadMeta();
     this.startExpireNotify();
   }

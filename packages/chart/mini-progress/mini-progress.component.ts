@@ -6,6 +6,7 @@ import {
   Input,
   OnChanges,
   ViewEncapsulation,
+  inject,
   numberAttribute
 } from '@angular/core';
 
@@ -24,15 +25,13 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   imports: [NzTooltipDirective, NgStyle]
 })
 export class G2MiniProgressComponent implements OnChanges {
+  readonly i18n = inject(DelonLocaleService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   @Input() color = '#1890FF';
   @Input({ transform: numberAttribute }) target?: number | null;
   @Input({ transform: numberAttribute }) percent?: number | null;
   @Input({ transform: numberAttribute }) strokeWidth?: number | null;
-
-  constructor(
-    public i18n: DelonLocaleService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   private fixNum(value: number | undefined | null): number {
     return Math.min(Math.max(numberAttribute(value), 0), 100);

@@ -55,6 +55,11 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_width: NumberInput;
   static ngAcceptInputType_height: NumberInput;
 
+  private readonly srv = inject(ChartEChartsService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly platform = inject(Platform);
+
   @ViewChild('container', { static: true }) private node!: ElementRef;
   private destroy$ = inject(DestroyRef);
   private _chart: ChartECharts | null = null;
@@ -106,12 +111,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   }
   loaded = false;
 
-  constructor(
-    private srv: ChartEChartsService,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
-    private platform: Platform
-  ) {
+  constructor() {
     this.srv.notify
       .pipe(
         takeUntilDestroyed(),
@@ -119,7 +119,7 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => this.load());
 
-    this.theme = srv.cog.echartsTheme;
+    this.theme = this.srv.cog.echartsTheme;
   }
 
   private emit(type: ChartEChartsEventType, other?: ChartEChartsEvent): void {

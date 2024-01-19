@@ -5,11 +5,11 @@ import { ICache, ICacheStore } from './interface';
 
 export const DC_STORE_STORAGE_TOKEN = new InjectionToken<ICacheStore>('DC_STORE_STORAGE_TOKEN', {
   providedIn: 'root',
-  factory: () => new LocalStorageCacheService(inject(Platform))
+  factory: () => new LocalStorageCacheService()
 });
 
 export class LocalStorageCacheService implements ICacheStore {
-  constructor(private platform: Platform) {}
+  private readonly platform = inject(Platform);
 
   get(key: string): ICache | null {
     if (!this.platform.isBrowser) {

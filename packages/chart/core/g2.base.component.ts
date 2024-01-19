@@ -13,6 +13,7 @@ import {
   SimpleChanges,
   ViewChild,
   booleanAttribute,
+  inject,
   numberAttribute
 } from '@angular/core';
 import { Subject, Subscription, filter, takeUntil } from 'rxjs';
@@ -26,6 +27,12 @@ import { G2Service } from './g2.servicce';
 
 @Directive()
 export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
+  protected readonly srv = inject(G2Service);
+  protected readonly el: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
+  protected readonly ngZone = inject(NgZone);
+  protected readonly platform = inject(Platform);
+  protected readonly cdr = inject(ChangeDetectorRef);
+
   get chart(): Chart {
     return this._chart;
   }
@@ -34,14 +41,8 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     return (window as NzSafeAny).G2;
   }
 
-  constructor(
-    protected srv: G2Service,
-    protected el: ElementRef<HTMLElement>,
-    protected ngZone: NgZone,
-    protected platform: Platform,
-    protected cdr: ChangeDetectorRef
-  ) {
-    this.theme = srv.cog.theme!;
+  constructor() {
+    this.theme = this.srv.cog.theme!;
     this.srv.notify
       .pipe(
         takeUntil(this.destroy$),
