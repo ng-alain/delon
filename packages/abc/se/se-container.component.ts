@@ -15,7 +15,6 @@ import { BehaviorSubject, Observable, filter } from 'rxjs';
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { toNumber } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -84,9 +83,10 @@ export class SETitleComponent implements OnInit {
 })
 export class SEContainerComponent {
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
-  @Input({ alias: 'se-container', transform: (v: NzSafeAny) => toNumber(v, null) }) colInCon?: REP_TYPE;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col!: REP_TYPE;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) labelWidth!: number;
+  @Input({ alias: 'se-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
+  colInCon?: REP_TYPE;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col!: REP_TYPE;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) labelWidth!: number;
   @Input({ transform: booleanAttribute }) noColon = false;
   @Input() title?: string | TemplateRef<void> | null;
 

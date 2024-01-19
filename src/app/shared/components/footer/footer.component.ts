@@ -1,12 +1,20 @@
 import { Platform } from '@angular/cdk/platform';
 import { NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  NgZone,
+  OnInit,
+  booleanAttribute
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { LoadingService } from '@delon/abc/loading';
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { NzColor, NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -29,12 +37,10 @@ import { I18NService } from '@core';
   imports: [NzGridModule, NzColorPickerModule, NgStyle, I18nPipe, RouterLink]
 })
 export class FooterComponent implements OnInit {
-  static ngAcceptInputType_small: BooleanInput;
-
   color = `#1890ff`;
   lessLoaded = false;
 
-  @Input() @InputBoolean() small = false;
+  @Input({ transform: booleanAttribute }) small = false;
 
   constructor(
     @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,

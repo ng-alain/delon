@@ -11,13 +11,15 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  booleanAttribute,
+  numberAttribute
 } from '@angular/core';
 import { Subject, Subscription, filter, takeUntil } from 'rxjs';
 
 import type { Chart, Types } from '@antv/g2';
 
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2Service } from './g2.servicce';
@@ -47,9 +49,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       )
       .subscribe(() => this.load());
   }
-  static ngAcceptInputType_repaint: BooleanInput;
-  static ngAcceptInputType_delay: NumberInput;
-  @Input() @InputBoolean() repaint = true;
+  @Input({ transform: booleanAttribute }) repaint = true;
 
   @ViewChild('container', { static: true }) protected node!: ElementRef;
   protected resize$?: Subscription;
@@ -57,7 +57,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   protected _chart!: Chart;
   loaded = false;
 
-  @Input() @InputNumber() delay = 0;
+  @Input({ transform: numberAttribute }) delay = 0;
   @Input() theme: string | Types.LooseObject;
   @Output() readonly ready = new EventEmitter<Chart>();
 

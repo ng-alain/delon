@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, Component, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  SimpleChanges,
+  ViewEncapsulation,
+  booleanAttribute,
+  numberAttribute
+} from '@angular/core';
 
 import type { Chart } from '@antv/g2';
 
 import { G2BaseComponent } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
@@ -19,23 +26,16 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   standalone: true
 })
 export class G2SingleBarComponent extends G2BaseComponent {
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_barSize: NumberInput;
-  static ngAcceptInputType_min: NumberInput;
-  static ngAcceptInputType_max: NumberInput;
-  static ngAcceptInputType_value: NumberInput;
-  static ngAcceptInputType_line: BooleanInput;
-
   // #region fields
 
   @Input() plusColor = '#40a9ff';
   @Input() minusColor = '#ff4d4f';
-  @Input() @InputNumber() height = 60;
-  @Input() @InputNumber() barSize = 30;
-  @Input() @InputNumber() min = 0;
-  @Input() @InputNumber() max = 100;
-  @Input() @InputNumber() value = 0;
-  @Input() @InputBoolean() line = false;
+  @Input({ transform: numberAttribute }) height = 60;
+  @Input({ transform: numberAttribute }) barSize = 30;
+  @Input({ transform: numberAttribute }) min = 0;
+  @Input({ transform: numberAttribute }) max = 100;
+  @Input({ transform: numberAttribute }) value = 0;
+  @Input({ transform: booleanAttribute }) line = false;
   @Input() format?: (value: number, item: NzSafeAny, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() textStyle: { [key: string]: NzSafeAny } = { fontSize: 12, color: '#595959' };

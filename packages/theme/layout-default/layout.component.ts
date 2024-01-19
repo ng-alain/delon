@@ -7,7 +7,8 @@ import {
   Input,
   QueryList,
   Renderer2,
-  TemplateRef
+  TemplateRef,
+  booleanAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -23,7 +24,6 @@ import { filter } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util/browser';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -72,9 +72,6 @@ import { LayoutDefaultOptions } from './types';
   `
 })
 export class LayoutDefaultComponent {
-  static ngAcceptInputType_fetchingStrictly: BooleanInput;
-  static ngAcceptInputType_fetching: BooleanInput;
-
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })
   headerItems!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -91,8 +88,8 @@ export class LayoutDefaultComponent {
   @Input() nav: TemplateRef<void> | null = null;
   @Input() content: TemplateRef<void> | null = null;
   @Input() customError?: string | null;
-  @Input() @InputBoolean() fetchingStrictly = false;
-  @Input() @InputBoolean() fetching = false;
+  @Input({ transform: booleanAttribute }) fetchingStrictly = false;
+  @Input({ transform: booleanAttribute }) fetching = false;
 
   private isFetching = false;
 

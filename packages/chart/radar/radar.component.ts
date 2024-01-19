@@ -6,13 +6,14 @@ import {
   Input,
   Output,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  numberAttribute
 } from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
@@ -45,19 +46,15 @@ export interface G2RadarClickItem {
   imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective, NgStyle]
 })
 export class G2RadarComponent extends G2BaseComponent {
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_hasLegend: BooleanInput;
-  static ngAcceptInputType_tickCount: NumberInput;
-
   legendData: NzSafeAny[] = [];
 
   // #region fields
 
   @Input() title?: string | TemplateRef<void> | null;
-  @Input() @InputNumber() height = 0;
+  @Input({ transform: numberAttribute }) height = 0;
   @Input() padding: number | number[] | 'auto' = [44, 30, 16, 30];
-  @Input() @InputBoolean() hasLegend = true;
-  @Input() @InputNumber() tickCount = 4;
+  @Input({ transform: booleanAttribute }) hasLegend = true;
+  @Input({ transform: numberAttribute }) tickCount = 4;
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
   @Output() readonly clickItem = new EventEmitter<G2RadarClickItem>();

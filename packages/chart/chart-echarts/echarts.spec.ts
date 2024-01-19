@@ -3,7 +3,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
-import { NumberInput } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -102,8 +101,8 @@ describe('chart: chart-echarts', () => {
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;
-  width: NumberInput = 600;
-  height: NumberInput = 400;
+  width: string | number = 600;
+  height: string | number = 400;
   theme?: string | Record<string, unknown> | null = null;
   option: ChartEChartsOption = {};
   initOpt: NzSafeAny;

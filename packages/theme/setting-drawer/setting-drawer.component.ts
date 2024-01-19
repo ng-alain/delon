@@ -1,6 +1,7 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -15,7 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
-import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -32,7 +33,7 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingDrawerComponent implements OnInit {
-  @Input() @InputBoolean() autoApplyColor = true;
+  @Input({ transform: booleanAttribute }) autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';

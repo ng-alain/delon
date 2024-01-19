@@ -7,12 +7,11 @@ import {
   OnChanges,
   Renderer2,
   ViewEncapsulation,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
-import { toNumber } from '@delon/util/decorator';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SGContainerComponent } from './sg-container.component';
 
@@ -40,7 +39,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col: number | null = null;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col: number | null = null;
 
   get paddingValue(): number {
     return this.parent.gutter / 2;

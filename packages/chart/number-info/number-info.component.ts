@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  ViewEncapsulation,
+  numberAttribute
+} from '@angular/core';
 
-import { InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
@@ -20,8 +26,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NzStringTemplateOutletDirective, NzIconDirective]
 })
 export class NumberInfoComponent {
-  static ngAcceptInputType_gap: NumberInput;
-
   /** 标题 */
   @Input() title?: string | TemplateRef<void> | null;
   /** 子标题 */
@@ -37,5 +41,5 @@ export class NumberInfoComponent {
   /** 状态样式 */
   @Input() theme: 'light' | 'default' = 'light';
   /** 设置数字和描述直接的间距（像素） */
-  @Input() @InputNumber() gap = 8;
+  @Input({ transform: numberAttribute }) gap = 8;
 }

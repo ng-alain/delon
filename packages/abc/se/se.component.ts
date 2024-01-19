@@ -16,7 +16,8 @@ import {
   ViewChild,
   ViewEncapsulation,
   booleanAttribute,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControlName, NgModel, RequiredValidator, Validator, Validators } from '@angular/forms';
@@ -24,7 +25,6 @@ import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { toBoolean, toNumber } from '@delon/util/decorator';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -91,12 +91,12 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
   @Input() extra?: string | TemplateRef<void> | null;
   @Input() label?: string | TemplateRef<void> | null;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) col?: number | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col?: number | null;
   @Input({ transform: booleanAttribute }) required = false;
   @Input() controlClass?: string | null = '';
-  @Input({ transform: (v: NzSafeAny) => toBoolean(v, null) }) line?: boolean | null;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) labelWidth?: number | null;
-  @Input({ transform: (v: NzSafeAny) => toBoolean(v, null) }) noColon?: boolean | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) line?: boolean | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) labelWidth?: number | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) noColon?: boolean | null;
   @Input({ transform: booleanAttribute }) hideLabel = false;
 
   @Input()

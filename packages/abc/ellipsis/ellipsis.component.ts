@@ -12,12 +12,12 @@ import {
   ViewChild,
   ViewEncapsulation,
   booleanAttribute,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { take } from 'rxjs';
 
-import { toNumber } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -49,8 +49,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   targetCount = 0;
 
   @Input({ transform: booleanAttribute }) tooltip = false;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) length?: number;
-  @Input({ transform: (v: NzSafeAny) => toNumber(v, null) }) lines?: number;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) length?: number;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) lines?: number;
   @Input({ transform: booleanAttribute }) fullWidthRecognition = false;
   @Input() tail = '...';
 

@@ -1,12 +1,10 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
-
-import { InputNumber } from '@delon/util/decorator';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, numberAttribute } from '@angular/core';
 
 @Directive({ selector: '[fixed-label]' })
 export class SFFixedDirective implements AfterViewInit, OnChanges {
   private _inited = false;
 
-  @Input('fixed-label') @InputNumber() num?: number | null;
+  @Input({ alias: 'fixed-label', transform: numberAttribute }) num?: number | null;
 
   private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;

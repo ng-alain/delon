@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  booleanAttribute,
+  numberAttribute
+} from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniAreaData {
@@ -30,21 +38,15 @@ export interface G2MiniAreaClickItem {
   standalone: true
 })
 export class G2MiniAreaComponent extends G2BaseComponent {
-  static ngAcceptInputType_borderWidth: NumberInput;
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_fit: BooleanInput;
-  static ngAcceptInputType_line: BooleanInput;
-  static ngAcceptInputType_animate: BooleanInput;
-
   // #region fields
 
   @Input() color = 'rgba(24, 144, 255, 0.2)';
   @Input() borderColor = '#1890FF';
-  @Input() @InputNumber() borderWidth = 2;
-  @Input() @InputNumber() height = 56;
-  @Input() @InputBoolean() fit = true;
-  @Input() @InputBoolean() line = false;
-  @Input() @InputBoolean() animate = true;
+  @Input({ transform: numberAttribute }) borderWidth = 2;
+  @Input({ transform: numberAttribute }) height = 56;
+  @Input({ transform: booleanAttribute }) fit = true;
+  @Input({ transform: booleanAttribute }) line = false;
+  @Input({ transform: booleanAttribute }) animate = true;
   @Input() xAxis: NzSafeAny;
   @Input() yAxis: NzSafeAny;
   @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];

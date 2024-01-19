@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  numberAttribute
+} from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
@@ -31,14 +38,11 @@ export interface G2MiniBarClickItem {
   standalone: true
 })
 export class G2MiniBarComponent extends G2BaseComponent {
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_borderWidth: NumberInput;
-
   // #region fields
 
   @Input() color = '#1890FF';
-  @Input() @InputNumber() height = 0;
-  @Input() @InputNumber() borderWidth = 5;
+  @Input({ transform: numberAttribute }) height = 0;
+  @Input({ transform: numberAttribute }) borderWidth = 5;
   @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
   @Input() data: G2MiniBarData[] = [];
   @Input() yTooltipSuffix = '';

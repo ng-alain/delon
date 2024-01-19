@@ -13,11 +13,12 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  numberAttribute
 } from '@angular/core';
 import { fromEvent, Subscription, debounceTime } from 'rxjs';
 
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 @Component({
@@ -32,23 +33,18 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   imports: [NgStyle, NzStringTemplateOutletDirective]
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
-  static ngAcceptInputType_animate: BooleanInput;
-  static ngAcceptInputType_delay: NumberInput;
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_percent: NumberInput;
-
   private resize$: Subscription | null = null;
   @ViewChild('container', { static: true }) private node!: ElementRef;
   private timer!: number;
 
   // #region fields
 
-  @Input() @InputBoolean() animate = true;
-  @Input() @InputNumber() delay = 0;
+  @Input({ transform: booleanAttribute }) animate = true;
+  @Input({ transform: numberAttribute }) delay = 0;
   @Input() title?: string | TemplateRef<void> | null;
   @Input() color = '#1890FF';
-  @Input() @InputNumber() height = 160;
-  @Input() @InputNumber() percent?: number;
+  @Input({ transform: numberAttribute }) height = 160;
+  @Input({ transform: numberAttribute }) percent?: number;
 
   // #endregion
 
