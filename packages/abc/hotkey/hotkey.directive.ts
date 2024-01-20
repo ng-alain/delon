@@ -1,10 +1,14 @@
 import { Platform } from '@angular/cdk/platform';
-import { Directive, ElementRef, Input, NgZone, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, NgZone, OnDestroy, inject } from '@angular/core';
 
 import { install, uninstall } from '@github/hotkey';
 
 @Directive({ selector: '[hotkey]', standalone: true })
 export class HotkeyDirective implements OnDestroy {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly ngZone = inject(NgZone);
+  private readonly platform = inject(Platform);
+
   /**
    * Specify [hotkey format](https://github.com/github/hotkey#hotkey-string-format)
    *
@@ -14,18 +18,12 @@ export class HotkeyDirective implements OnDestroy {
   set hotkey(key: string) {
     if (!this.platform.isBrowser) return;
 
-    this.ngZone.runOutsideAngular(() => install(this.el.nativeElement, key));
+    this.ngZone.runOutsideAngular(() => install(this.el, key));
   }
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private ngZone: NgZone,
-    private platform: Platform
-  ) {}
 
   ngOnDestroy(): void {
     if (!this.platform.isBrowser) return;
 
-    this.ngZone.runOutsideAngular(() => uninstall(this.el.nativeElement));
+    this.ngZone.runOutsideAngular(() => uninstall(this.el));
   }
 }

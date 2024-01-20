@@ -5,7 +5,8 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 
 import { LocaleData } from '@delon/theme';
@@ -134,6 +135,8 @@ import { _STColumn } from './st.types';
   encapsulation: ViewEncapsulation.None
 })
 export class STFilterComponent {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   visible = false;
   @Input() col!: _STColumn;
   @Input() locale: LocaleData = {};
@@ -143,8 +146,6 @@ export class STFilterComponent {
   get icon(): STIcon {
     return this.f.icon as STIcon;
   }
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   stopPropagation($event: MouseEvent): void {
     $event.stopPropagation();

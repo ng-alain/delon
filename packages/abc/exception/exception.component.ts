@@ -8,7 +8,6 @@ import {
   ElementRef,
   Input,
   OnInit,
-  Optional,
   ViewChild,
   ViewEncapsulation,
   inject
@@ -42,13 +41,18 @@ export type ExceptionType = 403 | 404 | 500;
 export class ExceptionComponent implements OnInit {
   static ngAcceptInputType_type: ExceptionType | string;
 
-  private destroy$ = inject(DestroyRef);
+  private readonly i18n = inject(DelonLocaleService);
+  private readonly dom = inject(DomSanitizer);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
+
   @ViewChild('conTpl', { static: true }) private conTpl!: ElementRef;
 
   _type!: ExceptionType;
   locale: LocaleData = {};
   hasCon = false;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   _img: SafeUrl = '';
   _title: SafeHtml = '';
@@ -92,13 +96,7 @@ export class ExceptionComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  constructor(
-    private i18n: DelonLocaleService,
-    private dom: DomSanitizer,
-    configSrv: AlainConfigService,
-    @Optional() private directionality: Directionality,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'exception', {
       typeDict: {
         403: {
@@ -118,8 +116,8 @@ export class ExceptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

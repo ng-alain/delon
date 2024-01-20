@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
+import { Injectable, Injector, OnDestroy, inject } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -14,7 +14,7 @@ import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManager } from './reuse-tab.cache';
+import { REUSE_TAB_CACHED_MANAGER } from './reuse-tab.cache';
 import {
   ReuseComponentRef,
   ReuseHookOnReuseInitType,
@@ -25,10 +25,16 @@ import {
   ReuseTabRouteParamMatchMode,
   ReuseTitle
 } from './reuse-tab.interfaces';
-import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
+import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ReuseTabService implements OnDestroy {
+  private readonly injector = inject(Injector);
+  private readonly menuService = inject(MenuService);
+  private readonly cached = inject(REUSE_TAB_CACHED_MANAGER);
+  private readonly stateKey = inject(REUSE_TAB_STORAGE_KEY);
+  private readonly stateSrv = inject(REUSE_TAB_STORAGE_STATE);
+
   private _inited = false;
   private _max = 10;
   private _keepingScroll = false;
@@ -84,7 +90,7 @@ export class ReuseTabService implements OnDestroy {
   get keepingScroll(): boolean {
     return this._keepingScroll;
   }
-  keepingScrollContainer?: Element;
+  keepingScrollContainer?: Element | null;
   /** 获取已缓存的路由 */
   get items(): ReuseTabCached[] {
     return this.cached.list;
@@ -369,13 +375,7 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(
-    private injector: Injector,
-    private menuService: MenuService,
-    @Optional() @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
-    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
-    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
-  ) {
+  constructor() {
     if (this.cached == null) {
       this.cached = { list: [], title: {}, closable: {} };
     }

@@ -8,16 +8,16 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Inject,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
-  Optional,
   Output,
   SimpleChange,
   ViewEncapsulation,
-  inject
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, timer, debounceTime, filter } from 'rxjs';
@@ -29,7 +29,7 @@ import { fromEvent, timer, debounceTime, filter } from 'rxjs';
 // import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
 
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
@@ -71,17 +71,15 @@ const BORDER_WIDTH = 9;
   imports: [NzSkeletonComponent]
 })
 export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
-  static ngAcceptInputType_pi: NumberInput;
-  static ngAcceptInputType_delay: NumberInput;
-  static ngAcceptInputType_showAllPages: BooleanInput;
-  static ngAcceptInputType_stickToPage: BooleanInput;
-  static ngAcceptInputType_originalSize: BooleanInput;
-  static ngAcceptInputType_fitToPage: BooleanInput;
-  static ngAcceptInputType_disableTextLayer: BooleanInput;
-  static ngAcceptInputType_removePageBorders: BooleanInput;
+  private readonly lazySrv = inject(LazyService);
+  private readonly platform = inject(Platform);
+  private readonly _el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly doc = inject(DOCUMENT);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly destroy$ = inject(DestroyRef);
 
   inited = false;
-  private destroy$ = inject(DestroyRef);
   private lib: string = '';
   private _pdf?: PDFDocumentProxy | null;
   private loadingTask?: PDFDocumentLoadingTask;
@@ -107,44 +105,43 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     this._src = dataOrBuffer;
     this.load();
   }
-  @Input()
-  @InputNumber()
+  @Input({ transform: numberAttribute })
   set pi(val: number) {
     this._pi = this.getValidPi(val);
     if (this.pageViewer) {
       this.pageViewer.scrollPageIntoView({ pageNumber: this._pi });
     }
   }
-  @Input() @InputBoolean() set showAll(val: boolean) {
+  @Input({ transform: booleanAttribute }) set showAll(val: boolean) {
     this._showAll = val;
     this.resetDoc();
   }
-  @Input() @InputBoolean() set renderText(val: boolean) {
+  @Input({ transform: booleanAttribute }) set renderText(val: boolean) {
     this._renderText = val;
     if (this.pageViewer) {
       this.resetDoc();
     }
   }
   @Input() textLayerMode = PdfTextLayerMode.ENABLE;
-  @Input() @InputBoolean() showBorders = false;
-  @Input() @InputBoolean() stickToPage = false;
-  @Input() @InputBoolean() originalSize = true;
-  @Input() @InputBoolean() fitToPage = false;
-  @Input() @InputNumber() set zoom(val: number) {
+  @Input({ transform: booleanAttribute }) showBorders = false;
+  @Input({ transform: booleanAttribute }) stickToPage = false;
+  @Input({ transform: booleanAttribute }) originalSize = true;
+  @Input({ transform: booleanAttribute }) fitToPage = false;
+  @Input({ transform: numberAttribute }) set zoom(val: number) {
     if (val <= 0) return;
     this._zoom = val;
   }
   @Input() zoomScale: PdfZoomScale = 'page-width';
-  @Input() @InputNumber() set rotation(val: number) {
+  @Input({ transform: numberAttribute }) set rotation(val: number) {
     if (val % 90 !== 0) {
       console.warn(`Invalid rotation angle, shoule be divisible by 90.`);
       return;
     }
     this._rotation = val;
   }
-  @Input() @InputBoolean() autoReSize = true;
+  @Input({ transform: booleanAttribute }) autoReSize = true;
   @Input() externalLinkTarget = PdfExternalLinkTarget.BLANK;
-  @Input() @InputNumber() delay?: number;
+  @Input({ transform: numberAttribute }) delay?: number;
   @Output() readonly change = new EventEmitter<PdfChangeEvent>();
 
   get loading(): boolean {
@@ -180,18 +177,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private get el(): HTMLElement {
-    return this._el.nativeElement.querySelector('.pdf-container') as HTMLElement;
+    return this._el.querySelector('.pdf-container') as HTMLElement;
   }
 
-  constructor(
-    private ngZone: NgZone,
-    configSrv: AlainConfigService,
-    private lazySrv: LazyService,
-    private platform: Platform,
-    private _el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: NzSafeAny,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(configSrv: AlainConfigService) {
     const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
 

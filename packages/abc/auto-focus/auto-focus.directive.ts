@@ -18,9 +18,9 @@ import { timer } from 'rxjs';
   standalone: true
 })
 export class AutoFocusDirective implements AfterViewInit {
-  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly platform = inject(Platform);
-  private readonly d$ = inject(DestroyRef);
+  private readonly destroy$ = inject(DestroyRef);
 
   @Input({ transform: booleanAttribute }) enabled = true;
   @Input({ transform: numberAttribute }) delay = 300;
@@ -31,7 +31,7 @@ export class AutoFocusDirective implements AfterViewInit {
       return;
     }
     timer(this.delay)
-      .pipe(takeUntilDestroyed(this.d$))
+      .pipe(takeUntilDestroyed(this.destroy$))
       .subscribe(() => el.focus({ preventScroll: false }));
   }
 }

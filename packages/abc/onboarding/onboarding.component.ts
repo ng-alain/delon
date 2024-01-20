@@ -8,11 +8,10 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Inject,
   OnDestroy,
-  Optional,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -48,6 +47,11 @@ interface OnboardingLightData {
   imports: [NzPopoverDirective, NzStringTemplateOutletDirective, NzButtonComponent, NzNoAnimationDirective]
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly platform = inject(Platform);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly doc = inject(DOCUMENT);
+
   private time: NzSafeAny;
   private prevSelectorEl?: HTMLElement;
   config!: OnboardingConfig;
@@ -74,13 +78,6 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
   private _getWin(): Window {
     return this._getDoc().defaultView || window;
   }
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DOCUMENT) private doc: NzSafeAny,
-    private platform: Platform,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   private getLightData(): OnboardingLightData | null {
     const doc = this._getDoc();
@@ -143,7 +140,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
       return;
     }
 
-    const lightStyle = (this.el.nativeElement.querySelector('.onboarding__light') as HTMLElement).style;
+    const lightStyle = (this.el.querySelector('.onboarding__light') as HTMLElement).style;
     lightStyle.top = `${pos.top}px`;
     lightStyle.left = `${pos.left}px`;
     lightStyle.width = `${pos.width}px`;

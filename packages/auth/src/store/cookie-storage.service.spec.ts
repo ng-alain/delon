@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { TestBed } from '@angular/core/testing';
+
 import { CookieOptions, CookieService } from '@delon/util/browser';
 
 import { CookieStorageStore } from './cookie-storage.service';
@@ -16,13 +18,22 @@ describe('auth: cookie-storage', () => {
   beforeEach(() => {
     data = {};
     putSpy = jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value));
-    store = new CookieStorageStore({
-      put: putSpy,
-      get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
-      remove: jasmine.createSpy('remove').and.callFake((key: string) => {
-        delete data[key];
-      })
-    } as unknown as CookieService);
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: CookieService,
+          useValue: {
+            put: putSpy,
+            get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
+            remove: jasmine.createSpy('remove').and.callFake((key: string) => {
+              delete data[key];
+            })
+          }
+        },
+        CookieStorageStore
+      ]
+    });
+    store = TestBed.inject(CookieStorageStore);
   });
 
   it('should be never return null', () => {

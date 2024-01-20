@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { AlainI18nBaseService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -13,17 +13,16 @@ export type LangType = 'en-US' | 'zh-CN';
 
 @Injectable({ providedIn: 'root' })
 export class I18NService extends AlainI18nBaseService {
+  private readonly zorroI18n = inject(NzI18nService);
+  private readonly delonI18n = inject(DelonLocaleService);
+  private readonly platform = inject(Platform);
+
   private _langs = [
     { code: 'en-US', text: 'English' },
     { code: 'zh-CN', text: '中文' }
   ];
 
-  constructor(
-    private zorroI18n: NzI18nService,
-    private delonI18n: DelonLocaleService,
-    private platform: Platform,
-    cogSrv: AlainConfigService
-  ) {
+  constructor(cogSrv: AlainConfigService) {
     super(cogSrv);
     // from browser
     const lang = (this.getBrowserLang() || this.defaultLang) as LangType;

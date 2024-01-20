@@ -4,16 +4,10 @@
 </span>
 @switch (i.type) {
   @case ('color') {
-    <input
-      nz-input
-      type="color"
-      style="min-width: 88px"
-      [(ngModel)]="i.value"
-      [ngModelOptions]="{ standalone: true }"
-    />
+    <input nz-input type="color" style="width: 88px" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
   }
   @case ('input') {
-    <input nz-input style="min-width: 88px" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
+    <input nz-input style="width: 88px" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
   }
   @case ('px') {
     <nz-input-number

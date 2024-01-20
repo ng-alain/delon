@@ -1,3 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-export const DELON_LOCALE = new InjectionToken<string>('delon-locale');
+import type { FullLocaleData } from './locale.types';
+
+export const DELON_LOCALE = new InjectionToken<FullLocaleData>('delon-locale');

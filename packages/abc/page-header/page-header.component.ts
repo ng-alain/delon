@@ -7,26 +7,27 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
-  Inject,
   Input,
   OnChanges,
   OnInit,
-  Optional,
   Renderer2,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { merge, filter } from 'rxjs';
+import { merge, filter, Observable } from 'rxjs';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -58,21 +59,21 @@ interface PageHeaderPath {
   ]
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
-  static ngAcceptInputType_loading: BooleanInput;
-  static ngAcceptInputType_wide: BooleanInput;
-  static ngAcceptInputType_autoBreadcrumb: BooleanInput;
-  static ngAcceptInputType_autoTitle: BooleanInput;
-  static ngAcceptInputType_syncTitle: BooleanInput;
-  static ngAcceptInputType_fixed: BooleanInput;
-  static ngAcceptInputType_fixedOffsetTop: NumberInput;
-  static ngAcceptInputType_recursiveBreadcrumb: BooleanInput;
+  private readonly renderer = inject(Renderer2);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly menuSrv = inject(MenuService);
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly titleSrv = inject(TitleService, { optional: true });
+  private readonly reuseSrv = inject(ReuseTabService, { optional: true });
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly destroy$ = inject(DestroyRef);
 
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
   isBrowser = true;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   private get menus(): Menu[] {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
@@ -98,18 +99,18 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
   @Input() titleSub?: string | TemplateRef<void> | null;
 
-  @Input() @InputBoolean() loading = false;
-  @Input() @InputBoolean() wide = false;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) wide = false;
   @Input() home?: string;
   @Input() homeLink?: string;
   @Input() homeI18n?: string;
-  @Input() @InputBoolean() autoBreadcrumb!: boolean;
-  @Input() @InputBoolean() autoTitle!: boolean;
-  @Input() @InputBoolean() syncTitle!: boolean;
-  @Input() @InputBoolean() fixed!: boolean;
-  @Input() @InputNumber() fixedOffsetTop!: number;
+  @Input({ transform: booleanAttribute }) autoBreadcrumb!: boolean;
+  @Input({ transform: booleanAttribute }) autoTitle!: boolean;
+  @Input({ transform: booleanAttribute }) syncTitle!: boolean;
+  @Input({ transform: booleanAttribute }) fixed!: boolean;
+  @Input({ transform: numberAttribute }) fixedOffsetTop!: number;
   @Input() breadcrumb?: TemplateRef<NzSafeAny> | null = null;
-  @Input() @InputBoolean() recursiveBreadcrumb!: boolean;
+  @Input({ transform: booleanAttribute }) recursiveBreadcrumb!: boolean;
   @Input() logo?: TemplateRef<void> | null = null;
   @Input() action?: TemplateRef<void> | null = null;
   @Input() content?: TemplateRef<void> | null = null;
@@ -118,19 +119,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   // #endregion
 
-  constructor(
-    settings: SettingsService,
-    private renderer: Renderer2,
-    private router: Router,
-    private menuSrv: MenuService,
-    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    @Optional() @Inject(TitleService) private titleSrv: TitleService,
-    @Optional() @Inject(ReuseTabService) private reuseSrv: ReuseTabService,
-    private cdr: ChangeDetectorRef,
-    configSrv: AlainConfigService,
-    platform: Platform,
-    @Optional() private directionality: Directionality
-  ) {
+  constructor(settings: SettingsService, configSrv: AlainConfigService, platform: Platform) {
     this.isBrowser = platform.isBrowser;
     configSrv.attach(this, 'pageHeader', {
       home: '首页',
@@ -149,7 +138,10 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
       )
       .subscribe(() => this.affix.updatePosition({} as NzSafeAny));
 
-    merge(menuSrv.change, router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
+    const obsList: Array<Observable<NzSafeAny>> = [this.router.events.pipe(filter(ev => ev instanceof NavigationEnd))];
+    if (this.menuSrv != null) obsList.push(this.menuSrv.change);
+    if (this.i18nSrv != null) obsList.push(this.i18nSrv.change);
+    merge(...obsList)
       .pipe(
         takeUntilDestroyed(),
         filter(() => this.inited)
@@ -215,8 +207,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

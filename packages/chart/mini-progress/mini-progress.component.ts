@@ -5,11 +5,12 @@ import {
   Component,
   Input,
   OnChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
+  numberAttribute
 } from '@angular/core';
 
 import { DelonLocaleService } from '@delon/theme';
-import { InputNumber, NumberInput, toNumber } from '@delon/util/decorator';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
@@ -24,22 +25,16 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   imports: [NzTooltipDirective, NgStyle]
 })
 export class G2MiniProgressComponent implements OnChanges {
-  static ngAcceptInputType_target: NumberInput;
-  static ngAcceptInputType_percent: NumberInput;
-  static ngAcceptInputType_strokeWidth: NumberInput;
+  readonly i18n = inject(DelonLocaleService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @Input() color = '#1890FF';
-  @Input() @InputNumber() target?: number | null;
-  @Input() @InputNumber() percent?: number | null;
-  @Input() @InputNumber() strokeWidth?: number | null;
-
-  constructor(
-    public i18n: DelonLocaleService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  @Input({ transform: numberAttribute }) target?: number | null;
+  @Input({ transform: numberAttribute }) percent?: number | null;
+  @Input({ transform: numberAttribute }) strokeWidth?: number | null;
 
   private fixNum(value: number | undefined | null): number {
-    return Math.min(Math.max(toNumber(value), 0), 100);
+    return Math.min(Math.max(numberAttribute(value), 0), 100);
   }
 
   ngOnChanges(): void {

@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, ViewContainerRef, inject } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -7,13 +7,11 @@ import { STColumn, STData } from './st.interfaces';
 
 @Directive({ selector: '[st-widget-host]' })
 export class STWidgetHostDirective implements OnInit {
+  private readonly stWidgetRegistry = inject(STWidgetRegistry);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
   @Input() record!: STData;
   @Input() column!: STColumn;
-
-  constructor(
-    private stWidgetRegistry: STWidgetRegistry,
-    private viewContainerRef: ViewContainerRef
-  ) {}
 
   ngOnInit(): void {
     const widget = this.column.widget!;

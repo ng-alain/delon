@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpHeaders, HttpContext } from '@angular/common/http';
-import { Inject, Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
 import { ACLService, ACLCanType } from '@delon/acl';
@@ -17,7 +17,7 @@ import { _HttpClient } from './http.client';
  */
 @Injectable()
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) {}
+  protected readonly injector = inject(Injector);
 }
 
 export interface HttpOptions {

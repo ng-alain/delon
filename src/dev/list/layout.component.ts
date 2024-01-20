@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 
 import { format } from 'date-fns';
@@ -21,10 +21,10 @@ import { PageHeaderModule } from '@delon/abc/page-header';
   imports: [PageHeaderModule, JsonPipe, RouterOutlet]
 })
 export class DevLayoutListComponent implements OnInit, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-
-  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     console.log('LAYOUT LIST: ngOnInit');

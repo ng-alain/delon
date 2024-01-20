@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, share } from 'rxjs';
 
 import { AlainConfigService, AlainMediaConfig } from '@delon/util/config';
@@ -6,6 +6,9 @@ import { LazyService } from '@delon/util/other';
 
 @Injectable({ providedIn: 'root' })
 export class MediaService {
+  private readonly cogSrv = inject(AlainConfigService);
+  private readonly lazySrv = inject(LazyService);
+
   private _cog!: AlainMediaConfig;
   private loading = false;
   private loaded = false;
@@ -23,11 +26,6 @@ export class MediaService {
       val
     )!;
   }
-
-  constructor(
-    private cogSrv: AlainConfigService,
-    private lazySrv: LazyService
-  ) {}
 
   load(): this {
     if (this.loading) {

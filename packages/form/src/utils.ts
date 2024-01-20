@@ -1,6 +1,5 @@
 import { Observable, of, map } from 'rxjs';
 
-import { toBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
@@ -15,7 +14,7 @@ export function isBlank(o: NzSafeAny): boolean {
 }
 
 export function toBool(value: NzSafeAny, defaultValue: boolean): boolean {
-  return toBoolean(value, defaultValue)!!;
+  return value == null ? defaultValue : `${value}` !== 'false';
 }
 
 export function di(ui: SFUISchema, ...args: NzSafeAny[]): void {

@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, booleanAttribute } from '@angular/core';
 
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -25,13 +24,10 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NzIconDirective]
 })
 export class TrendComponent {
-  static ngAcceptInputType_colorful: BooleanInput;
-  static ngAcceptInputType_reverseColor: BooleanInput;
-
   /** 上升下降标识 */
   @Input() flag?: 'up' | 'down';
   /** 是否彩色标记 */
-  @Input() @InputBoolean() colorful = true;
+  @Input({ transform: booleanAttribute }) colorful = true;
   /** 颜色反转 */
-  @Input() @InputBoolean() reverseColor = false;
+  @Input({ transform: booleanAttribute }) reverseColor = false;
 }

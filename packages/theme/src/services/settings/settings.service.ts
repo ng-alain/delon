@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { Inject, Injectable, InjectionToken, Provider } from '@angular/core';
+import { Injectable, InjectionToken, Provider, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -27,15 +27,13 @@ export const ALAIN_SETTING_DEFAULT: Provider = {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService<L extends Layout = Layout, U extends User = User, A extends App = App> {
+  private readonly KEYS = inject(ALAIN_SETTING_KEYS);
+  private readonly platform = inject(Platform);
+
   private notify$ = new Subject<SettingsNotify>();
   private _app: A | null = null;
   private _user: U | null = null;
   private _layout: L | null = null;
-
-  constructor(
-    private platform: Platform,
-    @Inject(ALAIN_SETTING_KEYS) private KEYS: SettingsKeys
-  ) {}
 
   getData(key: string): NzSafeAny {
     if (!this.platform.isBrowser) {

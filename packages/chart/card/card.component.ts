@@ -5,10 +5,11 @@ import {
   Input,
   OnChanges,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject
 } from '@angular/core';
 
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
@@ -25,11 +26,9 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
   imports: [NzCardComponent, NzSpinComponent, NzStringTemplateOutletDirective]
 })
 export class G2CardComponent implements OnChanges {
-  static ngAcceptInputType_bordered: BooleanInput;
-  static ngAcceptInputType_loading: BooleanInput;
-
+  private readonly cdr = inject(ChangeDetectorRef);
   /** 是否显示边框 */
-  @Input() @InputBoolean() bordered = false;
+  @Input({ transform: booleanAttribute }) bordered = false;
   @Input() avatar?: string | TemplateRef<void> | null;
   @Input() title?: string | TemplateRef<void> | null;
   @Input() action?: string | TemplateRef<void> | null;
@@ -43,9 +42,7 @@ export class G2CardComponent implements OnChanges {
   }
   @Input() footer?: string | TemplateRef<void> | null;
   /** 是否显示Loading */
-  @Input() @InputBoolean() loading = false;
-
-  constructor(private cdr: ChangeDetectorRef) {}
+  @Input({ transform: booleanAttribute }) loading = false;
 
   ngOnChanges(): void {
     this.cdr.detectChanges();

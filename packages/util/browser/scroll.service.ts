@@ -1,11 +1,11 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
-
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ScrollService {
+  private readonly _doc = inject(DOCUMENT);
+  private readonly platform = inject(Platform);
   private _getDoc(): Document {
     return this._doc || document;
   }
@@ -15,17 +15,12 @@ export class ScrollService {
     return doc.defaultView || window;
   }
 
-  constructor(
-    @Inject(DOCUMENT) private _doc: NzSafeAny,
-    private platform: Platform
-  ) {}
-
   /**
    * 获取滚动条位置
    *
    * @param element 指定元素，默认 `window`
    */
-  getScrollPosition(element?: Element | Window): [number, number] {
+  getScrollPosition(element?: Element | Window | null): [number, number] {
     if (!this.platform.isBrowser) {
       return [0, 0];
     }

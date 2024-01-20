@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
 import { AlainConfigService, AlainLodopConfig } from '@delon/util/config';
@@ -9,6 +9,8 @@ import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
+  private readonly scriptSrv = inject(LazyService);
+
   private defaultConfig: AlainLodopConfig;
   private _cog!: AlainLodopConfig;
   private pending = false;
@@ -17,10 +19,7 @@ export class LodopService implements OnDestroy {
   private _events = new Subject<LodopPrintResult>();
   private printBuffer: NzSafeAny[] = [];
 
-  constructor(
-    private scriptSrv: LazyService,
-    configSrv: AlainConfigService
-  ) {
+  constructor(configSrv: AlainConfigService) {
     this.defaultConfig = configSrv.merge('lodop', {
       url: '//localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',

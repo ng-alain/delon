@@ -6,6 +6,8 @@ type: Tools
 
 ## toBoolean, @InputBoolean
 
+> 建议使用内置的 `transform` 来替代，并且不再需要 `static ngAcceptInputType_`
+
 转换 `boolean` 属性，其中 `@InputBoolean()` 可以强化布尔属性绑定的体验，例如：
 
 ```ts
@@ -23,6 +25,8 @@ type: Tools
 ```
 
 ## toNumber, @InputNumber
+
+> 建议使用内置的 `transform` 来替代，并且不再需要 `static ngAcceptInputType_`
 
 转换 `number` 属性，其中 `@InputNumber()` 可以强化数字属性绑定的体验，例如：
 

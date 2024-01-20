@@ -11,10 +11,12 @@ import {
   Output,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
@@ -33,23 +35,18 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NgStyle, NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
-  static ngAcceptInputType_top: NumberInput;
-  static ngAcceptInputType_width: NumberInput;
-  static ngAcceptInputType_expand: BooleanInput;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly render = inject(Renderer2);
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private el: ElementRef,
-    private render: Renderer2
-  ) {}
   ctrlStyle: { [key: string]: string | undefined } = {};
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
-  @Input() @InputNumber() top = 120;
-  @Input() @InputNumber() width = 200;
+  @Input({ transform: numberAttribute }) top = 120;
+  @Input({ transform: numberAttribute }) width = 200;
   @Input() bgColor?: string;
   @Input() borderColor?: string;
-  @Input() @InputBoolean() expand: boolean = false;
+  @Input({ transform: booleanAttribute }) expand: boolean = false;
   @Output() readonly expandChange = new EventEmitter<boolean>();
 
   private show = false;
@@ -78,7 +75,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     if (this.borderColor) {
       res.push(`border-color:${this.borderColor}`);
     }
-    this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
+    this.render.setAttribute(this.el, 'style', res.join(';'));
     this.cdr.detectChanges();
   }
 

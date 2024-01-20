@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { Injectable, Type, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { map, Observable, of } from 'rxjs';
 
@@ -22,6 +22,9 @@ import type {
 
 @Injectable({ providedIn: 'root' })
 export class CellService {
+  private readonly nzI18n = inject(NzI18nService);
+  private readonly currency = inject(CurrencyService);
+  private readonly dom = inject(DomSanitizer);
   private globalOptions!: AlainCellConfig;
   private widgets: { [key: string]: CellWidget } = {
     date: {
@@ -63,12 +66,7 @@ export class CellService {
     }
   };
 
-  constructor(
-    configSrv: AlainConfigService,
-    private nzI18n: NzI18nService,
-    private currency: CurrencyService,
-    private dom: DomSanitizer
-  ) {
+  constructor(configSrv: AlainConfigService) {
     this.globalOptions = configSrv.merge('cell', {
       date: { format: 'yyyy-MM-dd HH:mm:ss' },
       img: { size: 32 },

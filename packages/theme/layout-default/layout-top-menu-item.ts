@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, booleanAttribute } from '@angular/core';
 
 @Component({
   selector: 'layout-default-top-menu-item',
@@ -16,9 +14,6 @@ import { BooleanInput, InputBoolean } from '@delon/util/decorator';
   encapsulation: ViewEncapsulation.None
 })
 export class LayoutDefaultTopMenuItemComponent {
-  static ngAcceptInputType_selected: BooleanInput;
-  static ngAcceptInputType_disabled: BooleanInput;
-
-  @Input() @InputBoolean() selected = false;
-  @Input() @InputBoolean() disabled = false;
+  @Input({ transform: booleanAttribute }) selected = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
 }

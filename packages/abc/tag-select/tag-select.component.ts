@@ -7,15 +7,14 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Optional,
   Output,
   ViewEncapsulation,
+  booleanAttribute,
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -36,27 +35,23 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NzIconDirective]
 })
 export class TagSelectComponent implements OnInit {
-  static ngAcceptInputType_expandable: BooleanInput;
-
-  private destroy$ = inject(DestroyRef);
+  private readonly i18n = inject(DelonLocaleService);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
   locale: LocaleData = {};
   expand = false;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   /** 是否启用 `展开与收进` */
-  @Input() @InputBoolean() expandable = true;
+  @Input({ transform: booleanAttribute }) expandable = true;
   @Output() readonly change = new EventEmitter<boolean>();
 
-  constructor(
-    private i18n: DelonLocaleService,
-    @Optional() private directionality: Directionality,
-    private cdr: ChangeDetectorRef
-  ) {}
-
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
+      this.cdr.detectChanges();
     });
     this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => {
       this.locale = this.i18n.getData('tagSelect');

@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, Renderer2, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subscription, filter } from 'rxjs';
 
 import { ACLService } from './acl.service';
@@ -10,6 +11,10 @@ import { ACLCanType } from './acl.type';
   standalone: true
 })
 export class ACLDirective implements OnDestroy {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly renderer = inject(Renderer2);
+  private readonly srv = inject(ACLService);
+
   private _value!: ACLCanType;
   private change$: Subscription;
 
@@ -26,7 +31,7 @@ export class ACLDirective implements OnDestroy {
   private set(value: ACLCanType): void {
     this._value = value;
     const CLS = 'acl__hide';
-    const el = this.el.nativeElement;
+    const el = this.el;
     if (this.srv.can(this._value)) {
       this.renderer.removeClass(el, CLS);
     } else {
@@ -34,12 +39,13 @@ export class ACLDirective implements OnDestroy {
     }
   }
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    protected srv: ACLService
-  ) {
-    this.change$ = this.srv.change.pipe(filter(r => r != null)).subscribe(() => this.set(this._value));
+  constructor() {
+    this.change$ = this.srv.change
+      .pipe(
+        takeUntilDestroyed(),
+        filter(r => r != null)
+      )
+      .subscribe(() => this.set(this._value));
   }
 
   ngOnDestroy(): void {

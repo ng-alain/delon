@@ -1,4 +1,4 @@
-import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
+import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%>, inject } from '@angular/core';<% if(!modal) { %>
 import { ActivatedRoute } from '@angular/router';<% } %>
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';<% if(modal) { %>
@@ -16,16 +16,14 @@ import { SHARED_IMPORTS } from '@shared';<%}%>
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
 })
 export class <%= componentName %> implements OnInit {
+  private readonly http = inject(_HttpClient);
+  private readonly msgSrv = inject(NzMessageService);<% if(modal) { %>
+  private readonly modal = inject(NzModalRef);<% } else { %>
+  private readonly route = inject(ActivatedRoute);<% } %>
+
   <% if(modal) { %>record: any = {};<% } else { %>
   id = this.route.snapshot.params.id;<% } %>
   i: any;
-
-  constructor(<% if(modal) { %>
-    private modal: NzModalRef,<% } else { %>
-    private route: ActivatedRoute,<% } %>
-    private msgSrv: NzMessageService,
-    private http: _HttpClient
-  ) { }
 
   ngOnInit(): void {<% if(modal) { %>
     this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);<% } else { %>

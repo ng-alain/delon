@@ -8,7 +8,8 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -35,6 +36,9 @@ let nextUniqueId = 0;
   providers: [NzFormStatusService]
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly widgetFactory = inject(WidgetFactory);
+  private readonly terminator = inject(TerminatorService);
+
   private ref!: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
   readonly destroy$ = new Subject<void>();
   widget: Widget<FormProperty, SFUISchemaItem> | null = null;
@@ -44,11 +48,6 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChild('target', { read: ViewContainerRef, static: true })
   private container!: ViewContainerRef;
-
-  constructor(
-    private widgetFactory: WidgetFactory,
-    private terminator: TerminatorService
-  ) {}
 
   onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>): void {
     this.widget = widget;

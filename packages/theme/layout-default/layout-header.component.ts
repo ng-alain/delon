@@ -71,7 +71,10 @@ interface LayoutDefaultHeaderItem {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutDefaultHeaderComponent implements AfterViewInit {
-  private destroy$ = inject(DestroyRef);
+  private readonly settings = inject(SettingsService);
+  private readonly srv = inject(LayoutDefaultService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
 
   @Input() items!: QueryList<LayoutDefaultHeaderItemComponent>;
 
@@ -94,12 +97,6 @@ export class LayoutDefaultHeaderComponent implements AfterViewInit {
   get collapsedIcon(): string {
     return this.srv.collapsedIcon;
   }
-
-  constructor(
-    private srv: LayoutDefaultService,
-    private settings: SettingsService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   private refresh(): void {
     const arr = this.items.toArray();

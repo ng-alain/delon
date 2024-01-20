@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { format } from 'date-fns';
@@ -16,11 +16,11 @@ import { format } from 'date-fns';
   imports: [JsonPipe]
 })
 export class DevLazyPageComponent implements OnInit {
+  readonly route = inject(ActivatedRoute);
+
   first = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   now = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
   id = 0;
-
-  constructor(public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => (this.id = +params.id));

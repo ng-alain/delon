@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 
 import { FullContentComponent } from './full-content.component';
 
@@ -11,7 +11,7 @@ import { FullContentComponent } from './full-content.component';
   standalone: true
 })
 export class FullContentToggleDirective {
-  constructor(private parent: FullContentComponent) {}
+  private readonly parent = inject(FullContentComponent);
 
   _click(): void {
     this.parent.toggle();

@@ -7,21 +7,19 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Output,
   ViewEncapsulation,
-  inject
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { fromEvent, debounceTime, filter } from 'rxjs';
-
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { FullContentService } from './full-content.service';
 
@@ -43,29 +41,23 @@ const hideTitleCls = `full-content__hidden-title`;
   standalone: true
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_fullscreen: BooleanInput;
-  static ngAcceptInputType_hideTitle: BooleanInput;
-  static ngAcceptInputType_padding: NumberInput;
+  private readonly destroy$ = inject(DestroyRef);
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly srv = inject(FullContentService);
+  private readonly router = inject(Router);
+  private readonly doc = inject(DOCUMENT);
 
-  private bodyEl!: HTMLElement;
+  private bodyEl = this.doc.querySelector('body')!;
   private inited = false;
   private id = `_full-content-${Math.random().toString(36).substring(2)}`;
-  private destroy$ = inject(DestroyRef);
 
   _height = 0;
 
-  @Input() @InputBoolean() fullscreen?: boolean;
-  @Input() @InputBoolean() hideTitle = true;
-  @Input() @InputNumber() padding = 24;
+  @Input({ transform: booleanAttribute }) fullscreen?: boolean;
+  @Input({ transform: booleanAttribute }) hideTitle = true;
+  @Input({ transform: numberAttribute }) padding = 24;
   @Output() readonly fullscreenChange = new EventEmitter<boolean>();
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private cdr: ChangeDetectorRef,
-    private srv: FullContentService,
-    private router: Router,
-    @Inject(DOCUMENT) private doc: NzSafeAny
-  ) {}
 
   private updateCls(): void {
     const clss = this.bodyEl.classList;
@@ -89,8 +81,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   private updateHeight(): void {
-    this._height =
-      this.bodyEl.getBoundingClientRect().height - this.el.nativeElement.getBoundingClientRect().top - this.padding;
+    this._height = this.bodyEl.getBoundingClientRect().height - this.el.getBoundingClientRect().top - this.padding;
     this.cdr.detectChanges();
   }
 
@@ -100,9 +91,8 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   ngOnInit(): void {
     this.inited = true;
-    this.bodyEl = this.doc.querySelector('body');
     this.bodyEl.classList.add(wrapCls);
-    this.el.nativeElement.id = this.id;
+    this.el.id = this.id;
 
     this.updateCls();
 

@@ -9,15 +9,15 @@ import {
   ContentChild,
   DestroyRef,
   ElementRef,
-  Host,
   Input,
   OnChanges,
-  Optional,
   Renderer2,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
-  inject
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControlName, NgModel, RequiredValidator, Validator, Validators } from '@angular/forms';
@@ -25,7 +25,6 @@ import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -59,15 +58,14 @@ let nextUniqueId = 0;
   imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
-  static ngAcceptInputType_col: NumberInput;
-  static ngAcceptInputType_required: BooleanInput;
-  static ngAcceptInputType_line: BooleanInput;
-  static ngAcceptInputType_labelWidth: NumberInput;
-  static ngAcceptInputType_noColon: BooleanInput;
-  static ngAcceptInputType_hideLabel: BooleanInput;
+  private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true })!;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly rep = inject(ResponsiveService);
+  private readonly ren = inject(Renderer2);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly statusSrv = inject(NzFormStatusService);
+  private readonly destroy$ = inject(DestroyRef);
 
-  private el: HTMLElement;
-  private destroy$ = inject(DestroyRef);
   @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName?: FormControlName;
@@ -93,13 +91,13 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
   @Input() extra?: string | TemplateRef<void> | null;
   @Input() label?: string | TemplateRef<void> | null;
-  @Input() @InputNumber(null) col?: number | null;
-  @Input() @InputBoolean() required = false;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col?: number | null;
+  @Input({ transform: booleanAttribute }) required = false;
   @Input() controlClass?: string | null = '';
-  @Input() @InputBoolean(null) line?: boolean | null;
-  @Input() @InputNumber(null) labelWidth?: number | null;
-  @Input() @InputBoolean(null) noColon?: boolean | null;
-  @Input() @InputBoolean() hideLabel = false;
+  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) line?: boolean | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) labelWidth?: number | null;
+  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) noColon?: boolean | null;
+  @Input({ transform: booleanAttribute }) hideLabel = false;
 
   @Input()
   set id(value: string) {
@@ -113,7 +111,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   // #endregion
 
   get paddingValue(): number {
-    return (this.parent.gutter as number) / 2;
+    return (this.parentComp.gutter as number) / 2;
   }
 
   get showErr(): boolean {
@@ -121,28 +119,20 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   get compact(): boolean {
-    return this.parent.size === 'compact';
+    return this.parentComp.size === 'compact';
   }
 
   private get ngControl(): NgModel | FormControlName | null | undefined {
     return this.ngModel || this.formControlName;
   }
 
-  constructor(
-    el: ElementRef,
-    @Optional() @Host() private parent: SEContainerComponent,
-    private statusSrv: NzFormStatusService,
-    private rep: ResponsiveService,
-    private ren: Renderer2,
-    private cdr: ChangeDetectorRef
-  ) {
-    if (parent == null) {
+  constructor() {
+    if (this.parentComp == null) {
       throw new Error(`[se] must include 'se-container' component`);
     }
-    this.el = el.nativeElement;
-    parent.errorNotify
+    this.parentComp.errorNotify
       .pipe(
-        takeUntilDestroyed(this.destroy$),
+        takeUntilDestroyed(),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
       )
       .subscribe(item => {
@@ -152,7 +142,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep, noColon } = this;
+    const { el, ren, clsMap, col, cdr, line, labelWidth, rep, noColon } = this;
+    const parent = this.parentComp!;
     this._noColon = noColon != null ? noColon : parent.noColon;
     this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
     clsMap.forEach(cls => ren.removeClass(el, cls));
@@ -203,7 +194,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
       return;
     }
     this.invalid =
-      !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
+      !this.onceFlag && invalid && this.parentComp.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
     const errors = this.ngControl?.errors;
     if (errors != null && Object.keys(errors).length > 0) {
       const key = Object.keys(errors)[0] || '';
@@ -231,7 +222,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    this.onceFlag = this.parent.firstVisual;
+    this.onceFlag = this.parentComp.firstVisual;
     if (this.inited) {
       this.setClass().bindModel();
     }

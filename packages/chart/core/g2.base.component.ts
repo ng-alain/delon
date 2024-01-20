@@ -11,19 +11,28 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { Subject, Subscription, filter, takeUntil } from 'rxjs';
 
 import type { Chart, Types } from '@antv/g2';
 
-import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2Service } from './g2.servicce';
 
 @Directive()
 export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
+  protected readonly srv = inject(G2Service);
+  protected readonly el: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
+  protected readonly ngZone = inject(NgZone);
+  protected readonly platform = inject(Platform);
+  protected readonly cdr = inject(ChangeDetectorRef);
+
   get chart(): Chart {
     return this._chart;
   }
@@ -32,14 +41,8 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
     return (window as NzSafeAny).G2;
   }
 
-  constructor(
-    protected srv: G2Service,
-    protected el: ElementRef<HTMLElement>,
-    protected ngZone: NgZone,
-    protected platform: Platform,
-    protected cdr: ChangeDetectorRef
-  ) {
-    this.theme = srv.cog.theme!;
+  constructor() {
+    this.theme = this.srv.cog.theme!;
     this.srv.notify
       .pipe(
         takeUntil(this.destroy$),
@@ -47,9 +50,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
       )
       .subscribe(() => this.load());
   }
-  static ngAcceptInputType_repaint: BooleanInput;
-  static ngAcceptInputType_delay: NumberInput;
-  @Input() @InputBoolean() repaint = true;
+  @Input({ transform: booleanAttribute }) repaint = true;
 
   @ViewChild('container', { static: true }) protected node!: ElementRef;
   protected resize$?: Subscription;
@@ -57,7 +58,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   protected _chart!: Chart;
   loaded = false;
 
-  @Input() @InputNumber() delay = 0;
+  @Input({ transform: numberAttribute }) delay = 0;
   @Input() theme: string | Types.LooseObject;
   @Output() readonly ready = new EventEmitter<Chart>();
 

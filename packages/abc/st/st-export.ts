@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util/other';
@@ -9,7 +9,7 @@ import { _STColumn } from './st.types';
 
 @Injectable()
 export class STExport {
-  constructor(@Optional() private xlsxSrv: XlsxService) {}
+  private readonly xlsxSrv = inject(XlsxService, { optional: true });
 
   private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
     const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
@@ -59,7 +59,7 @@ export class STExport {
       if (invalidFn(col)) continue;
       if (!wpx && col._width != null) wpx = true;
       ++validColCount;
-      const columnName = this.xlsxSrv.numberToSchema(validColCount);
+      const columnName = this.xlsxSrv!.numberToSchema(validColCount);
       sheet[`${columnName}1`] = {
         t: 's',
         v: typeof col.title === 'object' ? col.title.text : col.title
@@ -74,13 +74,20 @@ export class STExport {
     }
 
     if (validColCount > 0 && dataLen > 0) {
-      sheet['!ref'] = `A1:${this.xlsxSrv.numberToSchema(validColCount)}${dataLen + 1}`;
+      sheet['!ref'] = `A1:${this.xlsxSrv!.numberToSchema(validColCount)}${dataLen + 1}`;
     }
 
     return sheets;
   }
 
   async export(opt: STExportOptions): Promise<XlsxExportResult> {
+    if (this.xlsxSrv == null) {
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`XlsxService service not found`);
+      }
+      return Promise.reject();
+    }
+
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

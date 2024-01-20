@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
-import { I18NService } from './i18n/service';
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -33,6 +32,7 @@ const FULLMETAS = [
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
   private _platMenus!: any[];
   private _menus: any[] | null = null;
   private _type!: string;
@@ -41,11 +41,11 @@ export class MetaService {
   next: any;
   prev: any;
 
-  constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {
+  constructor() {
     // plat titles
     for (const g of FULLMETAS) {
       for (const item of g.list!) {
-        const curTitle = item.meta![i18n.defaultLang].title;
+        const curTitle = item.meta![this.i18n.defaultLang].title;
         item._t =
           typeof curTitle !== 'string'
             ? Object.values(curTitle!)

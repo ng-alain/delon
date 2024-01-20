@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
@@ -17,6 +17,7 @@ const DEFAULT: LayoutDefaultOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class LayoutDefaultService {
+  private readonly settings = inject(SettingsService);
   private _options$ = new BehaviorSubject<LayoutDefaultOptions>(DEFAULT);
   private _options: LayoutDefaultOptions = DEFAULT;
 
@@ -36,8 +37,6 @@ export class LayoutDefaultService {
     }
     return `menu-${type}`;
   }
-
-  constructor(private settings: SettingsService) {}
 
   private notify(): void {
     this._options$.next(this._options);

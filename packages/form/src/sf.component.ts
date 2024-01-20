@@ -4,27 +4,26 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
   Injector,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   SimpleChange,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { merge, Observable, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
@@ -78,15 +77,14 @@ export function useFactory(
   encapsulation: ViewEncapsulation.None
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_liveValidate: BooleanInput;
-  static ngAcceptInputType_firstVisual: BooleanInput;
-  static ngAcceptInputType_onlyVisual: BooleanInput;
-  static ngAcceptInputType_compact: BooleanInput;
-  static ngAcceptInputType_loading: BooleanInput;
-  static ngAcceptInputType_disabled: BooleanInput;
-  static ngAcceptInputType_noColon: BooleanInput;
-  static ngAcceptInputType_cleanValue: BooleanInput;
-  static ngAcceptInputType_delay: BooleanInput;
+  private readonly formPropertyFactory = inject(FormPropertyFactory);
+  private readonly terminator = inject(TerminatorService);
+  private readonly dom = inject(DomSanitizer);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly localeSrv = inject(DelonLocaleService);
+  private readonly aclSrv = inject(ACLService, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly platform = inject(Platform);
 
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
@@ -127,7 +125,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - `true` 每一次都校验
    * - `false` 提交时校验
    */
-  @Input() @InputBoolean() liveValidate = true;
+  @Input({ transform: booleanAttribute }) liveValidate = true;
   /** 指定表单 `autocomplete` 值 */
   @Input() autocomplete: 'on' | 'off';
   /**
@@ -135,14 +133,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 是否立即显示错误视觉
    */
-  @Input() @InputBoolean() firstVisual = true;
+  @Input({ transform: booleanAttribute }) firstVisual = true;
   /**
    * Whether to only display error visuals but not error text
    *
    * 是否只展示错误视觉不显示错误文本
    */
-  @Input() @InputBoolean() onlyVisual = false;
-  @Input() @InputBoolean() compact = false;
+  @Input({ transform: booleanAttribute }) onlyVisual = false;
+  @Input({ transform: booleanAttribute }) compact = false;
   /**
    * Form default mode, will force override `layout`, `firstVisual`, `liveValidate` parameters
    *
@@ -177,11 +175,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Whether to load status，when `true` reset button is disabled status, submit button is loading status
    */
-  @Input() @InputBoolean() loading = false;
-  @Input() @InputBoolean() disabled = false;
-  @Input() @InputBoolean() noColon = false;
-  @Input() @InputBoolean() cleanValue = false;
-  @Input() @InputBoolean() delay = false;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) noColon = false;
+  @Input({ transform: booleanAttribute }) cleanValue = false;
+  @Input({ transform: booleanAttribute }) delay = false;
   @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
   @Output() readonly formChange = new EventEmitter<Record<string, unknown>>();
   @Output() readonly formSubmit = new EventEmitter<Record<string, unknown>>();
@@ -305,17 +303,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.formSubmit.emit(this.value);
   }
 
-  constructor(
-    private formPropertyFactory: FormPropertyFactory,
-    private terminator: TerminatorService,
-    private dom: DomSanitizer,
-    private cdr: ChangeDetectorRef,
-    private localeSrv: DelonLocaleService,
-    @Optional() private aclSrv: ACLService,
-    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    cogSrv: AlainConfigService,
-    private platform: Platform
-  ) {
+  constructor(cogSrv: AlainConfigService) {
     this.options = mergeConfig(cogSrv);
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;

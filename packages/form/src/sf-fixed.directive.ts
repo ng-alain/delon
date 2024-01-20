@@ -1,16 +1,26 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
-
-import { InputNumber } from '@delon/util/decorator';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnChanges,
+  Renderer2,
+  inject,
+  numberAttribute
+} from '@angular/core';
 
 @Directive({ selector: '[fixed-label]' })
 export class SFFixedDirective implements AfterViewInit, OnChanges {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly render = inject(Renderer2);
+
   private _inited = false;
 
-  @Input('fixed-label') @InputNumber() num?: number | null;
+  @Input({ alias: 'fixed-label', transform: (v: unknown) => numberAttribute(v, 0) }) num?: number | null;
 
   private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;
-    const el = this.el.nativeElement;
+    const el = this.el;
     const widgetEl = el.querySelector<HTMLElement>('.ant-row') || el;
     this.render.addClass(widgetEl, 'sf__fixed');
     const labelEl = widgetEl.querySelector('.ant-form-item-label');
@@ -23,11 +33,6 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
       this.render.setStyle(controlEl, 'margin-left', unit);
     }
   }
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private render: Renderer2
-  ) {}
 
   ngAfterViewInit(): void {
     this._inited = true;

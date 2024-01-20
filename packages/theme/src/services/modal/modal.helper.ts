@@ -1,6 +1,6 @@
 import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, TemplateRef, Type } from '@angular/core';
+import { Injectable, TemplateRef, Type, inject } from '@angular/core';
 import { Observable, Observer, filter, take } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
@@ -40,18 +40,12 @@ export interface ModalHelperDragOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class ModalHelper {
-  private document: Document;
-
-  constructor(
-    private srv: NzModalService,
-    private drag: DragDrop,
-    @Inject(DOCUMENT) doc: NzSafeAny
-  ) {
-    this.document = doc;
-  }
+  private readonly srv = inject(NzModalService);
+  private readonly drag = inject(DragDrop);
+  private readonly doc = inject(DOCUMENT);
 
   private createDragRef(options: ModalHelperDragOptions, wrapCls: string): DragRef {
-    const wrapEl = this.document.querySelector(wrapCls) as HTMLDivElement;
+    const wrapEl = this.doc.querySelector(wrapCls) as HTMLDivElement;
     const modalEl = wrapEl.firstChild as HTMLDivElement;
     const handelEl = options.handleCls ? wrapEl.querySelector<HTMLDivElement>(options.handleCls) : null;
     if (handelEl) {

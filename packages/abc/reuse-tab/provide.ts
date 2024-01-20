@@ -47,6 +47,7 @@ export function provideReuseTabConfig(options?: {
   store?: ReuseTabFeature<ReuseTabFeatureKind.Store>;
 }): EnvironmentProviders {
   const providers: Provider[] = [
+    ReuseTabService,
     {
       provide: REUSE_TAB_STORAGE_KEY,
       useValue: options?.storeKey ?? '_reuse-tab-state'
