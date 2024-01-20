@@ -34,7 +34,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly ren = inject(Renderer2);
   private readonly rep = inject(ResponsiveService);
-  private readonly parent = inject(SGContainerComponent, { host: true, optional: true })!;
+  private readonly parentComp = inject(SGContainerComponent, { host: true, optional: true })!;
 
   private clsMap: string[] = [];
   private inited = false;
@@ -42,17 +42,17 @@ export class SGComponent implements OnChanges, AfterViewInit {
   @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col: number | null = null;
 
   get paddingValue(): number {
-    return this.parent.gutter / 2;
+    return this.parentComp.gutter / 2;
   }
 
   constructor() {
-    if (parent == null) {
+    if (this.parentComp == null) {
       throw new Error(`[sg] must include 'sg-container' component`);
     }
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent } = this;
+    const { el, ren, clsMap, col, parentComp: parent } = this;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     const parentCol = parent.colInCon || parent.col;

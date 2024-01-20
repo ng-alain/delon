@@ -31,17 +31,17 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 })
 export class SVTitleComponent implements OnInit {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly parent = inject(SVContainerComponent, { host: true, optional: true });
+  private readonly parentComp = inject(SVContainerComponent, { host: true, optional: true });
   private readonly ren = inject(Renderer2);
 
   constructor() {
-    if (this.parent == null) {
+    if (this.parentComp == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }
   }
 
   private setClass(): void {
-    const gutter = this.parent!.gutter;
+    const gutter = this.parentComp!.gutter;
     const el = this.el;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);

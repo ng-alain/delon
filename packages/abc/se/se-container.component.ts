@@ -33,18 +33,18 @@ import { SEErrorRefresh, SELayout } from './se.types';
   standalone: true
 })
 export class SETitleComponent implements OnInit {
-  private readonly parent = inject(SEContainerComponent, { host: true, optional: true });
+  private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true });
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly ren = inject(Renderer2);
   constructor() {
-    if (parent == null) {
+    if (this.parentComp == null) {
       throw new Error(`[se-title] must include 'se-container' component`);
     }
   }
 
   private setClass(): void {
     const { el } = this;
-    const gutter = this.parent!.gutter as number;
+    const gutter = this.parentComp!.gutter as number;
     this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
     this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
   }

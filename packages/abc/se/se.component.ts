@@ -58,7 +58,7 @@ let nextUniqueId = 0;
   imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
-  private readonly parent = inject(SEContainerComponent, { host: true, optional: true })!;
+  private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true })!;
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly rep = inject(ResponsiveService);
   private readonly ren = inject(Renderer2);
@@ -111,7 +111,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   // #endregion
 
   get paddingValue(): number {
-    return (this.parent.gutter as number) / 2;
+    return (this.parentComp.gutter as number) / 2;
   }
 
   get showErr(): boolean {
@@ -119,7 +119,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   get compact(): boolean {
-    return this.parent.size === 'compact';
+    return this.parentComp.size === 'compact';
   }
 
   private get ngControl(): NgModel | FormControlName | null | undefined {
@@ -127,10 +127,10 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   constructor() {
-    if (this.parent == null) {
+    if (this.parentComp == null) {
       throw new Error(`[se] must include 'se-container' component`);
     }
-    this.parent.errorNotify
+    this.parentComp.errorNotify
       .pipe(
         takeUntilDestroyed(),
         filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
@@ -142,7 +142,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep, noColon } = this;
+    const { el, ren, clsMap, col, parentComp: parent, cdr, line, labelWidth, rep, noColon } = this;
     this._noColon = noColon != null ? noColon : parent.noColon;
     this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
     clsMap.forEach(cls => ren.removeClass(el, cls));
@@ -193,7 +193,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
       return;
     }
     this.invalid =
-      !this.onceFlag && invalid && this.parent.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
+      !this.onceFlag && invalid && this.parentComp.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
     const errors = this.ngControl?.errors;
     if (errors != null && Object.keys(errors).length > 0) {
       const key = Object.keys(errors)[0] || '';
@@ -221,7 +221,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    this.onceFlag = this.parent.firstVisual;
+    this.onceFlag = this.parentComp.firstVisual;
     if (this.inited) {
       this.setClass().bindModel();
     }

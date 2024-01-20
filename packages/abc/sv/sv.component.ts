@@ -41,7 +41,7 @@ const prefixCls = `sv`;
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly parent = inject(SVContainerComponent, { host: true, optional: true });
+  private readonly parentComp = inject(SVContainerComponent, { host: true, optional: true });
   private readonly rep = inject(ResponsiveService);
   private readonly ren = inject(Renderer2);
 
@@ -66,24 +66,24 @@ export class SVComponent implements AfterViewInit, OnChanges {
   // #endregion
 
   get paddingValue(): number | null {
-    if (this.parent!.bordered) return null;
-    return this.parent!.gutter / 2;
+    if (this.parentComp!.bordered) return null;
+    return this.parentComp!.gutter / 2;
   }
 
   get labelWidth(): number | null | undefined {
-    const { labelWidth, layout } = this.parent!;
+    const { labelWidth, layout } = this.parentComp!;
     return layout === 'horizontal' ? labelWidth : null;
   }
 
   constructor() {
-    if (this.parent == null) {
+    if (this.parentComp == null) {
       throw new Error(`[sv] must include 'sv-container' component`);
     }
   }
 
   private setClass(): void {
     const { ren, col, clsMap, type, rep, noColon } = this;
-    const parent = this.parent!;
+    const parent = this.parentComp!;
     const el = this.el;
     this._noColon = parent.bordered ? true : noColon != null ? noColon : parent.noColon;
     clsMap.forEach(cls => ren.removeClass(el, cls));
@@ -108,7 +108,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
   checkContent(): void {
     const { conEl } = this;
     const def = this.default;
-    if (!(def != null ? def : this.parent?.default)) {
+    if (!(def != null ? def : this.parentComp?.default)) {
       return;
     }
     const el = conEl.nativeElement as HTMLElement;
