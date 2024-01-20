@@ -4,26 +4,25 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
   Injector,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   SimpleChange,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
-  booleanAttribute
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { merge, Observable, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -78,6 +77,15 @@ export function useFactory(
   encapsulation: ViewEncapsulation.None
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly formPropertyFactory = inject(FormPropertyFactory);
+  private readonly terminator = inject(TerminatorService);
+  private readonly dom = inject(DomSanitizer);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly localeSrv = inject(DelonLocaleService);
+  private readonly aclSrv = inject(ACLService, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly platform = inject(Platform);
+
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
   private _valid = true;
@@ -295,17 +303,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.formSubmit.emit(this.value);
   }
 
-  constructor(
-    private formPropertyFactory: FormPropertyFactory,
-    private terminator: TerminatorService,
-    private dom: DomSanitizer,
-    private cdr: ChangeDetectorRef,
-    private localeSrv: DelonLocaleService,
-    @Optional() private aclSrv: ACLService,
-    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    cogSrv: AlainConfigService,
-    private platform: Platform
-  ) {
+  constructor(cogSrv: AlainConfigService) {
     this.options = mergeConfig(cogSrv);
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;

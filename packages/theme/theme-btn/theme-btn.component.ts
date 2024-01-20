@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   inject,
   InjectionToken,
@@ -47,6 +48,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   private readonly configSrv = inject(AlainConfigService);
   private readonly directionality = inject(Directionality, { optional: true });
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
 
   private theme = 'default';
   isDev = isDevMode();
@@ -63,7 +65,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

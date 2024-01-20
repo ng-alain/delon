@@ -7,6 +7,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   Input,
   OnChanges,
@@ -66,6 +67,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly titleSrv = inject(TitleService, { optional: true });
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
   private readonly directionality = inject(Directionality, { optional: true });
+  private readonly destroy$ = inject(DestroyRef);
 
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
@@ -206,7 +208,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe(direction => {
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   inject,
   Input,
   isDevMode,
@@ -39,6 +40,7 @@ export class SettingDrawerComponent implements OnInit {
   private readonly ngZone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
   private readonly directionality = inject(Directionality, { optional: true });
+  private readonly destroy$ = inject(DestroyRef);
 
   @Input({ transform: booleanAttribute }) autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
@@ -71,7 +73,7 @@ export class SettingDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe(direction => {
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
