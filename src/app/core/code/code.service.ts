@@ -31,30 +31,10 @@ export class CodeService {
     return `node_modules/@delon/theme/${this.appSrv.theme}.css`;
   }
 
-  private genPackage({
-    dependencies = [],
-    includeCli = false
-  }: {
-    dependencies: string[];
-    includeCli: boolean;
-  }): Record<string, string | Record<string, string>> {
+  private genPackage({ includeCli = false }: { includeCli: boolean }): Record<string, string | Record<string, string>> {
     const ngCoreVersion = pkg.dependencies['@angular/core'];
     // const mainVersion = ngCoreVersion.substring(1).split('.').shift();
     const res = packageJSON as Record<string, NzSafeAny>;
-    [
-      'ng-zorro-antd',
-      'ng-antd-color-picker',
-      '@delon/theme',
-      '@delon/abc',
-      '@delon/chart',
-      '@delon/acl',
-      '@delon/auth',
-      '@delon/cache',
-      '@delon/mock',
-      '@delon/form',
-      '@delon/util',
-      ...dependencies
-    ];
     if (includeCli) {
       res.devDependencies = {
         '@angular-devkit/build-angular': '^17.0.0',
@@ -136,7 +116,7 @@ export class CodeService {
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ dependencies: [], includeCli });
+    const packageJson = this.genPackage({ includeCli });
     packageJson.description = title;
     const files: Record<string, string> = {
       'angular.json': `${JSON.stringify(json, null, 2)}`,
@@ -188,7 +168,7 @@ export class CodeService {
     const mockObj = this.genMock;
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ dependencies: [], includeCli });
+    const packageJson = this.genPackage({ includeCli });
     // packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
     const files: {
