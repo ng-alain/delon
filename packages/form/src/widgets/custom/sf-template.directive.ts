@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, TemplateRef } from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef, inject } from '@angular/core';
 
 import { SF_SEQ } from '../../const';
 import { SFComponent } from '../../sf.component';
@@ -7,12 +7,10 @@ import { SFComponent } from '../../sf.component';
   selector: '[sf-template]'
 })
 export class SFTemplateDirective implements OnInit {
-  @Input('sf-template') path!: string;
+  private readonly table = inject(SFComponent);
+  private readonly templateRef = inject(TemplateRef);
 
-  constructor(
-    private templateRef: TemplateRef<void>,
-    private table: SFComponent
-  ) {}
+  @Input('sf-template') path!: string;
 
   ngOnInit(): void {
     this.table._addTpl(this.path.startsWith(SF_SEQ) ? this.path : SF_SEQ + this.path, this.templateRef);

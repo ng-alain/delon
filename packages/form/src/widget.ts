@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Inject, Injector } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, HostBinding, Injector, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs';
 
@@ -19,6 +19,11 @@ import type { SFArrayWidgetSchema, SFObjectWidgetSchema } from './widgets';
 
 @Directive()
 export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem> implements AfterViewInit {
+  readonly cd = inject(ChangeDetectorRef);
+  readonly injector = inject(Injector);
+  readonly sfItemComp = inject(SFItemComponent);
+  readonly sfComp = inject(SFComponent);
+
   formProperty!: T;
   error?: string;
   showError = false;
@@ -54,13 +59,6 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   get cleanValue(): boolean {
     return this.sfComp?.cleanValue!;
   }
-
-  constructor(
-    @Inject(ChangeDetectorRef) public readonly cd: ChangeDetectorRef,
-    @Inject(Injector) public readonly injector: Injector,
-    @Inject(SFItemComponent) public readonly sfItemComp?: SFItemComponent,
-    @Inject(SFComponent) public readonly sfComp?: SFComponent
-  ) {}
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges
