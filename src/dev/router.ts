@@ -24,6 +24,7 @@ export const routes: Routes = [
       { path: 'l7', component: DevPageComponent },
       { path: 'l8', component: DevPageComponent },
       { path: 'login', component: DevPageComponent },
+      { path: 'view/1', component: DevPageComponent, data: { reuseClosable: false } },
       { path: 'view/:id', component: DevPageComponent },
       {
         path: 'lazy',

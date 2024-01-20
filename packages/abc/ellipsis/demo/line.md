@@ -20,7 +20,7 @@ Also note that, in this mode, the outer container needs to have a specified widt
 ```ts
 import { Component } from '@angular/core';
 
-import { EllipsisModule } from '@delon/abc/ellipsis';
+import { EllipsisComponent } from '@delon/abc/ellipsis';
 
 @Component({
   selector: 'app-demo',
@@ -34,7 +34,7 @@ import { EllipsisModule } from '@delon/abc/ellipsis';
     </ellipsis>
   `,
   standalone: true,
-  imports: [EllipsisModule]
+  imports: [EllipsisComponent]
 })
 export class DemoComponent {}
 ```

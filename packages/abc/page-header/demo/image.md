@@ -11,7 +11,7 @@ bg: f2f4f5
 ```ts
 import { Component } from '@angular/core';
 
-import { PageHeaderModule } from '@delon/abc/page-header';
+import { PageHeaderComponent } from '@delon/abc/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
@@ -50,7 +50,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
     </page-header>
   `,
   standalone: true,
-  imports: [PageHeaderModule, NzBreadCrumbModule]
+  imports: [PageHeaderComponent, NzBreadCrumbModule]
 })
 export class DemoComponent {}
 ```

@@ -8,7 +8,7 @@ title: 基础样例
 ```ts
 import { Component } from '@angular/core';
 
-import { TagSelectModule } from '@delon/abc/tag-select';
+import { TagSelectComponent } from '@delon/abc/tag-select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
 interface TagSelectDemoItem {
@@ -29,7 +29,7 @@ interface TagSelectDemoItem {
     </tag-select>
   `,
   standalone: true,
-  imports: [TagSelectModule, NzTagModule]
+  imports: [TagSelectComponent, NzTagModule]
 })
 export class DemoComponent {
   categories: TagSelectDemoItem[] = [

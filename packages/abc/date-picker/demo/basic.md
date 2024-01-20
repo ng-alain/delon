@@ -18,7 +18,7 @@ import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { DatePickerModule } from '@delon/abc/date-picker';
+import { RangePickerDirective } from '@delon/abc/date-picker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
@@ -28,7 +28,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" />
   `,
   standalone: true,
-  imports: [JsonPipe, FormsModule, NzDatePickerModule, DatePickerModule]
+  imports: [JsonPipe, FormsModule, NzDatePickerModule, RangePickerDirective]
 })
 export class DemoComponent {
   i: { start?: Date; end?: Date } = {};

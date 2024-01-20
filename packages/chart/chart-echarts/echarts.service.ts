@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { AlainChartConfig, AlainConfigService } from '@delon/util/config';
@@ -6,6 +6,8 @@ import { LazyService } from '@delon/util/other';
 
 @Injectable({ providedIn: 'root' })
 export class ChartEChartsService implements OnDestroy {
+  private readonly cogSrv = inject(AlainConfigService);
+  private readonly lazySrv = inject(LazyService);
   private _cog!: AlainChartConfig;
   private loading = false;
   private loaded = false;
@@ -25,10 +27,7 @@ export class ChartEChartsService implements OnDestroy {
     )!;
   }
 
-  constructor(
-    private cogSrv: AlainConfigService,
-    private lazySrv: LazyService
-  ) {
+  constructor() {
     this.cog = { theme: '' };
   }
 

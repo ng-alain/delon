@@ -11,7 +11,7 @@ Cell formatting is supported for multiple data types, and supports widget mode.
 
 ## API
 
-### cell
+### cell:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

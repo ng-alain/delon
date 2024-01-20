@@ -8,8 +8,7 @@ import { G2GaugeComponent } from './gauge.component';
 const COMPONENTS = [G2GaugeComponent];
 
 @NgModule({
-  imports: [CommonModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2GaugeModule {}

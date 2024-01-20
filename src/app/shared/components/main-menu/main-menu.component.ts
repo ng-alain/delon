@@ -4,7 +4,6 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
-  Inject,
   OnInit,
   Output,
   inject
@@ -19,7 +18,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { I18NService, MetaService } from '@core';
+import { MetaService } from '@core';
 
 @Component({
   selector: 'main-menu, [main-menu]',
@@ -29,7 +28,10 @@ import { I18NService, MetaService } from '@core';
   imports: [RouterLink, RouterLinkActive, NzToolTipModule, NzBadgeModule, NzTagModule, NzMenuModule]
 })
 export class MainMenuComponent implements OnInit {
-  private destroy$ = inject(DestroyRef);
+  private readonly meta = inject(MetaService);
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
   count = 0;
 
   @Output() readonly to = new EventEmitter<string>();
@@ -37,12 +39,6 @@ export class MainMenuComponent implements OnInit {
   get menus(): NzSafeAny[] {
     return this.meta.menus!;
   }
-
-  constructor(
-    private meta: MetaService,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.cdr.markForCheck());

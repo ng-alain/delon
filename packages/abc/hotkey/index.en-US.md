@@ -13,7 +13,7 @@ Based on the [@github/hotke](https://github.com/github/hotkey) hotkey library.
 
 ## API
 
-### LoadingShowOptions
+### [hotkey]:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

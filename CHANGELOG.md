@@ -1,3 +1,48 @@
+# [17.1.0](https://github.com/ng-alain/delon/compare/17.0.5...17.1.0) (2024-01-20)
+
+
+### Bug Fixes
+
+* **abc:reuse-tab:** fix keep open order ([#1743](https://github.com/ng-alain/delon/issues/1743)) ([e17f5e7](https://github.com/ng-alain/delon/commit/e17f5e7813ff1da26ce4bada81c5b098bc190b8c))
+* **abc:st:** corrected error null value syntax ([#1744](https://github.com/ng-alain/delon/issues/1744)) ([69bb0bb](https://github.com/ng-alain/delon/commit/69bb0bb432b100cf8a6c5ec87e0fd28dd2923d7d))
+
+
+### Features
+
+* add Vietnamese locate ([#1751](https://github.com/ng-alain/delon/issues/1751)) ([385dc1c](https://github.com/ng-alain/delon/commit/385dc1c716327e899f5e61d9823c3deba26ee4bf))
+* **cli:** add `withViewTransitions` ([#1736](https://github.com/ng-alain/delon/issues/1736)) ([c03a797](https://github.com/ng-alain/delon/commit/c03a797c9fb2405acb8455e9c236f23296577c0e))
+* **form:** add `setDisabled`, `setRequired` method ([#1733](https://github.com/ng-alain/delon/issues/1733)) ([581f197](https://github.com/ng-alain/delon/commit/581f197be67e33189aee44b31465fb8b6d21c640))
+* **theme:layout-default:** add `hideEmptyChildren` ([#1746](https://github.com/ng-alain/delon/issues/1746)) ([b6ab5f0](https://github.com/ng-alain/delon/commit/b6ab5f01c18d1668989925377da84b467aa8ee27))
+
+
+### Performance Improvements
+
+* **abc:auto-focus:** perf code ([#1753](https://github.com/ng-alain/delon/issues/1753)) ([7032139](https://github.com/ng-alain/delon/commit/7032139472381e5f4619dc0b71c31e43a986965b))
+* **auth:** remove default value of `ignores` ([#1745](https://github.com/ng-alain/delon/issues/1745)) ([e473ff4](https://github.com/ng-alain/delon/commit/e473ff4efc4299a7f2cb2e96dd44fdefedae8e82))
+* support standalone ([#1750](https://github.com/ng-alain/delon/issues/1750)) ([7940464](https://github.com/ng-alain/delon/commit/7940464f69f93f3a1c3013a916d29f73146516d9))
+
+
+
+## <small>17.0.5 (2023-12-25)</small>
+
+* ci: add `ng-less-javascript-enabled-patch` (#1739) ([35acf68](https://github.com/ng-alain/delon/commit/35acf68)), closes [#1739](https://github.com/ng-alain/delon/issues/1739)
+* fix(abc:st): fix export mismatch (#1740) ([a46f2ee](https://github.com/ng-alain/delon/commit/a46f2ee)), closes [#1740](https://github.com/ng-alain/delon/issues/1740)
+* fix(form:array): fix invalid trackBy (#1741) ([3e55228](https://github.com/ng-alain/delon/commit/3e55228)), closes [#1741](https://github.com/ng-alain/delon/issues/1741)
+
+
+
+## <small>17.0.4 (2023-12-20)</small>
+
+* fix(abc:se): fix missing required of reactive (#1737) ([a2ca109](https://github.com/ng-alain/delon/commit/a2ca109)), closes [#1737](https://github.com/ng-alain/delon/issues/1737)
+* fix(abc:sv): fix bottom spacing in border mode (#1732) ([b5bea4e](https://github.com/ng-alain/delon/commit/b5bea4e)), closes [#1732](https://github.com/ng-alain/delon/issues/1732)
+* fix(util:pipe:filter): use `pure` (#1735) ([f374209](https://github.com/ng-alain/delon/commit/f374209)), closes [#1735](https://github.com/ng-alain/delon/issues/1735)
+* fix(cli): correct 'providers' spelling errors (#1731) ([5eafa8f](https://github.com/ng-alain/delon/commit/5eafa8f)), closes [#1731](https://github.com/ng-alain/delon/issues/1731)
+* chore: remove sandbox (#1730) ([1869b59](https://github.com/ng-alain/delon/commit/1869b59)), closes [#1730](https://github.com/ng-alain/delon/issues/1730)
+* ci: save yarn.lock to assets (#1729) ([33a4952](https://github.com/ng-alain/delon/commit/33a4952)), closes [#1729](https://github.com/ng-alain/delon/issues/1729)
+* docs: sc of demo (#1728) ([3fc0180](https://github.com/ng-alain/delon/commit/3fc0180)), closes [#1728](https://github.com/ng-alain/delon/issues/1728)
+
+
+
 ## <small>17.0.3 (2023-12-08)</small>
 
 * fix(theme:i18n): correct params type of `i18e` pipe (#1723) ([bdf0e62](https://github.com/ng-alain/delon/commit/bdf0e62)), closes [#1723](https://github.com/ng-alain/delon/issues/1723)

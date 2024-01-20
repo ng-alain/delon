@@ -27,7 +27,11 @@
     @for (i of allThemes; track $index) {
       <div nz-carousel-content>
         <a [attr.href]="i.url" target="_blank">
-          <img src="./assets/screenshot/{{ i.screenshot }}" />
+          <img
+            src="./assets/screenshot/{{ i.screenshot }}"
+            [attr.alt]="'app.home.theme.' + i.type | i18n"
+            [attr.title]="'app.home.theme.' + i.type | i18n"
+          />
         </a>
       </div>
     }
@@ -127,7 +131,11 @@
             data-aos-delay="0"
             [attr.data-theme]="t"
           >
-            <img src="./assets/screenshot/{{ t.screenshot }}" />
+            <img
+              src="./assets/screenshot/{{ t.screenshot }}"
+              [attr.alt]="'app.home.theme.' + t.type | i18n"
+              [attr.title]="'app.home.theme.' + t.type | i18n"
+            />
             <h3>{{ 'app.home.theme.' + t.type | i18n }}</h3>
             <p>{{ 'app.home.theme.' + t.type + '.desc' | i18n }}</p>
           </a>

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, inject } from '@angular/core';
 
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
@@ -14,6 +14,8 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   encapsulation: ViewEncapsulation.None
 })
 export class SFItemWrapComponent implements OnChanges {
+  private readonly statusSrv = inject(NzFormStatusService);
+
   _showTitle: boolean = false;
   @Input() id?: string;
   @Input() schema!: SFSchema;
@@ -33,8 +35,6 @@ export class SFItemWrapComponent implements OnChanges {
   get oh(): SFOptionalHelp {
     return this.ui.optionalHelp as SFOptionalHelp;
   }
-
-  constructor(private statusSrv: NzFormStatusService) {}
 
   ngOnChanges(): void {
     const hasError = !!this.error;

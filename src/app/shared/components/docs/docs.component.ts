@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
@@ -15,9 +16,10 @@ import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { I18NService, MetaService } from '@core';
+import { MetaService } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
+import { RouteTransferDirective } from '../route-transfer/route-transfer.directive';
 
 declare var hljs: any;
 
@@ -25,31 +27,42 @@ declare var hljs: any;
   selector: 'app-docs',
   templateUrl: './docs.component.html',
   standalone: true,
-  imports: [I18nPipe, NzAffixModule, NzAnchorModule, NzAlertModule, NzToolTipModule, EditButtonComponent]
+  imports: [
+    I18nPipe,
+    RouteTransferDirective,
+    NzAffixModule,
+    NzAnchorModule,
+    NzAlertModule,
+    NzToolTipModule,
+    EditButtonComponent
+  ]
 })
 export class DocsComponent implements OnInit, OnDestroy {
+  readonly meta = inject(MetaService);
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly msg = inject(NzMessageService);
+  private readonly router = inject(Router);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly doc = inject(DOCUMENT);
+
   private i18NChange$: Subscription;
   demoStr!: string;
   demoContent!: SafeHtml;
   data: any = {};
-  isBrowser = true;
+  isBrowser = inject(Platform).isBrowser;
 
   @Input() codes!: any[];
   @Input() item: any;
 
-  constructor(
-    public meta: MetaService,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private router: Router,
-    private sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private doc: any,
-    private msg: NzMessageService,
-    platform: Platform
-  ) {
-    this.isBrowser = platform.isBrowser;
-    this.i18NChange$ = this.i18n.change.pipe(filter(() => !!this.item)).subscribe(() => {
-      this.init();
-    });
+  constructor() {
+    this.i18NChange$ = this.i18n.change
+      .pipe(
+        takeUntilDestroyed(),
+        filter(() => !!this.item)
+      )
+      .subscribe(() => {
+        this.init();
+      });
   }
 
   private genData(): void {

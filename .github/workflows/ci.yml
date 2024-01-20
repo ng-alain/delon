@@ -1,0 +1,119 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          state: all
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Comment on github
+        run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
+        env:
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+      - name: Build artifacts
+        run: ./scripts/ci/build-artifacts.sh
+        env:
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
+      - name: Build site
+        run: yarn run site:build
+      - name: 'Deploy Site'
+        run: |
+          export DEPLOY_DOMAIN=https://preview-${{ steps.findPr.outputs.pr }}-ng-alain-delon.surge.sh
+          echo "Deploy to $DEPLOY_DOMAIN"
+          cp ./src/dist/browser/index.html ./src/dist/browser/404.html
+          npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
+        env:
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      - name: 'Update comment on github'
+        run: |
+          export DEPLOY_DOMAIN=https://preview-${{ steps.findPr.outputs.pr }}-ng-alain-delon.surge.sh
+          node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
+        env:
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+      - name: 'When failed'
+        if: failure()
+        run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
+        env:
+          ACCESS_REPO: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
+          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn run test
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          files: cobertura-coverage.xml
+          fail_ci_if_error: true
+          verbose: true
+
+  test-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn run test:cli
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+      - name: Check code lint
+        run: yarn run lint

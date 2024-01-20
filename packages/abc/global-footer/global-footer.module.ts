@@ -8,8 +8,7 @@ import { GlobalFooterComponent } from './global-footer.component';
 const COMPONENTS = [GlobalFooterComponent, GlobalFooterItemComponent];
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, RouterModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class GlobalFooterModule {}

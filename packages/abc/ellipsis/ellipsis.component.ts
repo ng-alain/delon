@@ -1,22 +1,25 @@
-import { DOCUMENT } from '@angular/common';
+import { CdkObserveContent } from '@angular/cdk/observers';
+import { DOCUMENT, NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject,
   Input,
   NgZone,
   OnChanges,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { take } from 'rxjs';
 
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'ellipsis',
@@ -24,14 +27,16 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   templateUrl: './ellipsis.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [CdkObserveContent, NzTooltipDirective, NgTemplateOutlet, NgClass, NgStyle]
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
-  static ngAcceptInputType_tooltip: BooleanInput;
-  static ngAcceptInputType_length: NumberInput;
-  static ngAcceptInputType_lines: NumberInput;
-  static ngAcceptInputType_fullWidthRecognition: BooleanInput;
-
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly ngZone = inject(NgZone);
+  private readonly dom = inject(DomSanitizer);
+  private readonly doc = inject(DOCUMENT);
+  private readonly cdr = inject(ChangeDetectorRef);
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
   @ViewChild('orgEl', { static: false }) private orgEl!: ElementRef;
   @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl!: ElementRef;
@@ -43,10 +48,10 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   text = '';
   targetCount = 0;
 
-  @Input() @InputBoolean() tooltip = false;
-  @Input() @InputNumber(null) length?: number;
-  @Input() @InputNumber(null) lines?: number;
-  @Input() @InputBoolean() fullWidthRecognition = false;
+  @Input({ transform: booleanAttribute }) tooltip = false;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) length?: number;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) lines?: number;
+  @Input({ transform: booleanAttribute }) fullWidthRecognition = false;
   @Input() tail = '...';
 
   get linsWord(): string {
@@ -60,14 +65,6 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   private get win(): NzSafeAny {
     return this.doc.defaultView || window;
   }
-
-  constructor(
-    private el: ElementRef,
-    private ngZone: NgZone,
-    private dom: DomSanitizer,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   private getStrFullLength(str: string): number {
     return str.split('').reduce((pre, cur) => {
@@ -177,7 +174,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       const lineText = orgNode.innerText || orgNode.textContent!;
       const lineHeight = parseInt(this.win.getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
       const targetHeight = lines! * lineHeight;
-      this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
+      const handleEl = this.getEl('.ellipsis__handle');
+      handleEl!.style.height = `${targetHeight}px`;
 
       if (orgNode.offsetHeight <= targetHeight) {
         this.text = lineText;
@@ -195,8 +193,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  private getEl(cls: string): HTMLElement {
-    return this.el.nativeElement.querySelector(cls);
+  private getEl(cls: string): HTMLElement | null {
+    return this.el.querySelector<HTMLElement>(cls);
   }
 
   private executeOnStable(fn: () => void): void {

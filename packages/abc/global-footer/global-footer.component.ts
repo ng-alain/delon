@@ -1,22 +1,22 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  Inject,
+  DestroyRef,
   Input,
   OnInit,
-  Optional,
   QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
@@ -31,13 +31,21 @@ import { GlobalFooterLink } from './global-footer.types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class GlobalFooterComponent implements OnInit {
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
+  private readonly router = inject(Router);
+  private readonly win = inject(WINDOW);
+  private readonly dom = inject(DomSanitizer);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroy$ = inject(DestroyRef);
+
   private _links: GlobalFooterLink[] = [];
 
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   @Input()
   set links(val: GlobalFooterLink[]) {
@@ -48,15 +56,7 @@ export class GlobalFooterComponent implements OnInit {
     return this._links;
   }
 
-  @ContentChildren(GlobalFooterItemComponent) items!: QueryList<GlobalFooterItemComponent>;
-
-  constructor(
-    private router: Router,
-    @Inject(WINDOW) private win: NzSafeAny,
-    private dom: DomSanitizer,
-    @Optional() private directionality: Directionality,
-    private cdr: ChangeDetectorRef
-  ) {}
+  @ContentChildren(GlobalFooterItemComponent) readonly items!: QueryList<GlobalFooterItemComponent>;
 
   to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     if (!item.href) {
@@ -74,8 +74,8 @@ export class GlobalFooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

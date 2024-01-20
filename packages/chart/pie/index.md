@@ -10,7 +10,7 @@ module: import { G2PieModule } from '@delon/chart/pie';
 
 ## API
 
-### g2-pie
+### g2-pie:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

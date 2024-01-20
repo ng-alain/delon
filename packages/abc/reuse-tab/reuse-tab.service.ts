@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector, OnDestroy, Optional } from '@angular/core';
+import { Injectable, Injector, OnDestroy, inject } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -8,13 +8,13 @@ import {
   Router,
   ROUTER_CONFIGURATION
 } from '@angular/router';
-import { BehaviorSubject, Observable, timer, Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Observable, take, timer, Unsubscribable } from 'rxjs';
 
 import { Menu, MenuService } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManager } from './reuse-tab.cache';
+import { REUSE_TAB_CACHED_MANAGER } from './reuse-tab.cache';
 import {
   ReuseComponentRef,
   ReuseHookOnReuseInitType,
@@ -25,10 +25,16 @@ import {
   ReuseTabRouteParamMatchMode,
   ReuseTitle
 } from './reuse-tab.interfaces';
-import { ReuseTabStorageState, REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
+import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ReuseTabService implements OnDestroy {
+  private readonly injector = inject(Injector);
+  private readonly menuService = inject(MenuService);
+  private readonly cached = inject(REUSE_TAB_CACHED_MANAGER);
+  private readonly stateKey = inject(REUSE_TAB_STORAGE_KEY);
+  private readonly stateSrv = inject(REUSE_TAB_STORAGE_STATE);
+
   private _inited = false;
   private _max = 10;
   private _keepingScroll = false;
@@ -84,7 +90,7 @@ export class ReuseTabService implements OnDestroy {
   get keepingScroll(): boolean {
     return this._keepingScroll;
   }
-  keepingScrollContainer?: Element;
+  keepingScrollContainer?: Element | null;
   /** 获取已缓存的路由 */
   get items(): ReuseTabCached[] {
     return this.cached.list;
@@ -219,12 +225,16 @@ export class ReuseTabService implements OnDestroy {
    */
   replace(newUrl: string): void {
     const url = this.curUrl;
-    if (this.exists(url)) {
-      this.close(url, true);
-    } else {
-      this.removeUrlBuffer = url;
-    }
-    this.injector.get<Router>(Router).navigateByUrl(newUrl);
+    this.injector
+      .get(Router)
+      .navigateByUrl(newUrl)
+      .then(() => {
+        if (this.exists(url)) {
+          this.close(url, true);
+        } else {
+          this.removeUrlBuffer = url;
+        }
+      });
   }
   /**
    * 获取标题，顺序如下：
@@ -365,13 +375,7 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(
-    private injector: Injector,
-    private menuService: MenuService,
-    @Optional() @Inject(REUSE_TAB_CACHED_MANAGER) private cached: ReuseTabCachedManager,
-    @Optional() @Inject(REUSE_TAB_STORAGE_KEY) private stateKey: string,
-    @Optional() @Inject(REUSE_TAB_STORAGE_STATE) private stateSrv: ReuseTabStorageState
-  ) {
+  constructor() {
     if (this.cached == null) {
       this.cached = { list: [], title: {}, closable: {} };
     }
@@ -437,13 +441,48 @@ export class ReuseTabService implements OnDestroy {
     return this.can(route);
   }
 
+  saveCache(snapshot: ActivatedRouteSnapshot, _handle?: NzSafeAny, pos?: number): void {
+    const snapshotTrue = this.getTruthRoute(snapshot);
+    const url = this.getUrl(snapshot);
+    const idx = this.index(url);
+    const item: ReuseTabCached = {
+      title: this.getTitle(url, snapshotTrue),
+      url,
+      closable: this.getClosable(url, snapshot),
+      _snapshot: snapshot,
+      _handle
+    };
+    if (idx < 0) {
+      this.items.splice(pos ?? this.items.length, 0, item);
+      if (this.count > this._max) {
+        // Get the oldest closable location
+        const closeIdx = this.items.findIndex(w => w.url !== url && w.closable!);
+        if (closeIdx !== -1) {
+          const closeItem = this.items[closeIdx];
+          this.remove(closeIdx, false);
+          timer(1)
+            .pipe(take(1))
+            .subscribe(() => this._cachedChange.next({ active: 'close', url: closeItem.url, list: this.cached.list }));
+        }
+      }
+    } else {
+      this.items[idx] = item;
+    }
+  }
+
   /**
    * 存储
    */
   store(_snapshot: ActivatedRouteSnapshot, _handle: NzSafeAny): void {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
-    const isAdd = idx === -1;
+    if (idx === -1) return;
+
+    if (_handle != null) {
+      this.saveCache(_snapshot, _handle);
+    }
+
+    const list = this.cached.list;
 
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
@@ -453,33 +492,24 @@ export class ReuseTabService implements OnDestroy {
       _snapshot,
       _handle
     };
-    if (isAdd) {
-      if (this.count >= this._max) {
-        // Get the oldest closable location
-        const closeIdx = this.cached.list.findIndex(w => w.closable!);
-        if (closeIdx !== -1) this.remove(closeIdx, false);
-      }
-      this.cached.list.push(item);
-    } else {
-      // Current handler is null when activate routes
-      // For better reliability, we need to wait for the component to be attached before call _onReuseInit
-      const cahcedComponentRef = this.cached.list[idx]._handle?.componentRef;
-      if (_handle == null && cahcedComponentRef != null) {
-        timer(100).subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
-      }
-      this.cached.list[idx] = item;
+    // Current handler is null when activate routes
+    // For better reliability, we need to wait for the component to be attached before call _onReuseInit
+    const cahcedComponentRef = list[idx]._handle?.componentRef;
+    if (_handle == null && cahcedComponentRef != null) {
+      timer(100)
+        .pipe(take(1))
+        .subscribe(() => this.runHook('_onReuseInit', cahcedComponentRef));
     }
+    list[idx] = item;
     this.removeUrlBuffer = null;
 
-    this.di('#store', isAdd ? '[new]' : '[override]', url);
+    this.di('#store', '[override]', url);
 
     if (_handle && _handle.componentRef) {
       this.runHook('_onReuseDestroy', _handle.componentRef);
     }
 
-    if (!isAdd) {
-      this._cachedChange.next({ active: 'override', item, list: this.cached.list });
-    }
+    this._cachedChange.next({ active: 'override', item, list });
   }
 
   /**

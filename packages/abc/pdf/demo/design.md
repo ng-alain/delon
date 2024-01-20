@@ -18,7 +18,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import { PdfChangeEvent, PdfComponent, PdfModule, PdfZoomScale } from '@delon/abc/pdf';
+import { PdfChangeEvent, PdfComponent, PdfZoomScale } from '@delon/abc/pdf';
 import { SEModule } from '@delon/abc/se';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -151,7 +151,7 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
   standalone: true,
   imports: [
     NzButtonModule,
-    PdfModule,
+    PdfComponent,
     NzGridModule,
     NzInputModule,
     FormsModule,

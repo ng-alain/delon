@@ -82,14 +82,7 @@
               "date-fns",
               "extend",
               "aos"
-            ],
-            "server": "src/main.server.ts",
-            "prerender": {
-              "routesFile": "scripts/site/route-paths.txt"
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -100,13 +93,19 @@
                 }
               ],
               "outputHashing": "all",
-              "serviceWorker": "ngsw-config.json"
+              "serviceWorker": "ngsw-config.json",
+              "server": "src/main.server.ts",
+              "prerender": {
+                "routesFile": "scripts/site/route-paths.txt"
+              },
+              "ssr": {
+                "entry": "src/server.ts"
+              }
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "ssr": false
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"

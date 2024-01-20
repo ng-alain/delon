@@ -1,7 +1,7 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ComponentRef, Injectable, OnDestroy, Optional } from '@angular/core';
+import { ComponentRef, Injectable, OnDestroy, inject } from '@angular/core';
 import { Subject, Subscription, timer, debounce } from 'rxjs';
 
 import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
@@ -11,6 +11,10 @@ import { LoadingShowOptions } from './loading.types';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService implements OnDestroy {
+  private readonly overlay = inject(Overlay);
+  private readonly configSrv = inject(AlainConfigService);
+  private readonly directionality = inject(Directionality, { optional: true });
+
   private _overlayRef?: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
   private opt: LoadingShowOptions | null = null;
@@ -22,12 +26,8 @@ export class LoadingService implements OnDestroy {
     return this.compRef != null ? this.compRef.instance : null;
   }
 
-  constructor(
-    private overlay: Overlay,
-    private configSrv: AlainConfigService,
-    @Optional() private directionality: Directionality
-  ) {
-    this.cog = configSrv.merge('loading', {
+  constructor() {
+    this.cog = this.configSrv.merge('loading', {
       type: 'spin',
       text: '加载中...',
       icon: {
@@ -55,7 +55,7 @@ export class LoadingService implements OnDestroy {
       backdropClass: 'loading-backdrop'
     });
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
-    const dir = this.configSrv.get('loading')!.direction || this.directionality.value;
+    const dir = this.configSrv.get('loading')!.direction || this.directionality?.value;
     if (this.instance != null) {
       this.instance!!.options = this.opt;
       this.instance!!.dir = dir;

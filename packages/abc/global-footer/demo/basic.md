@@ -9,7 +9,7 @@ browser: 400
 ```ts
 import { Component } from '@angular/core';
 
-import { GlobalFooterLink, GlobalFooterModule } from '@delon/abc/global-footer';
+import { GlobalFooterComponent, GlobalFooterLink } from '@delon/abc/global-footer';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -30,7 +30,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ],
   standalone: true,
-  imports: [GlobalFooterModule, NzIconModule]
+  imports: [GlobalFooterComponent, NzIconModule]
 })
 export class DemoComponent {
   links: GlobalFooterLink[] = [

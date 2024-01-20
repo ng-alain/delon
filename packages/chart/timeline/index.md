@@ -10,7 +10,7 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 
 ## API
 
-### g2-timeline
+### g2-timeline:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

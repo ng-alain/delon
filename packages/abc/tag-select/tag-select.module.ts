@@ -9,8 +9,7 @@ import { TagSelectComponent } from './tag-select.component';
 const COMPONENTS = [TagSelectComponent];
 
 @NgModule({
-  imports: [CommonModule, NzIconModule, DelonLocaleModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzIconModule, DelonLocaleModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class TagSelectModule {}

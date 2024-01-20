@@ -1438,7 +1438,7 @@ describe('abc: st', () => {
     describe('#export', () => {
       let exportSrv: STExport;
       beforeEach(() => {
-        exportSrv = comp['exportSrv'] = {
+        exportSrv = (comp as any)['exportSrv'] = {
           export: jasmine.createSpy('export')
         } as any;
       });

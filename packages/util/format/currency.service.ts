@@ -1,5 +1,5 @@
 import { CurrencyPipe, formatNumber } from '@angular/common';
-import { DEFAULT_CURRENCY_CODE, Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, Injectable, LOCALE_ID, inject } from '@angular/core';
 
 import { AlainConfigService, AlainUtilCurrencyConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -14,15 +14,14 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
+  private readonly locale = inject(LOCALE_ID);
+  private readonly defCurrencyCode = inject(DEFAULT_CURRENCY_CODE, { optional: true }) ?? 'USD';
+
   private c: AlainUtilCurrencyConfig;
   private readonly currencyPipe: CurrencyPipe;
 
-  constructor(
-    cog: AlainConfigService,
-    @Inject(LOCALE_ID) private locale: string,
-    @Inject(DEFAULT_CURRENCY_CODE) _defaultCurrencyCode: string = 'USD'
-  ) {
-    this.currencyPipe = new CurrencyPipe(locale, _defaultCurrencyCode);
+  constructor(cog: AlainConfigService) {
+    this.currencyPipe = new CurrencyPipe(this.locale, this.defCurrencyCode);
     this.c = cog.merge('utilCurrency', {
       startingUnit: 'yuan',
       megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },

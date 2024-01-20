@@ -7,19 +7,17 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Inject,
   Input,
   OnInit,
-  Optional,
   ViewEncapsulation,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
-import { InputNumber } from '@delon/util/decorator';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'error-collect, [error-collect]',
@@ -36,27 +34,28 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzIconDirective]
 })
 export class ErrorCollectComponent implements OnInit {
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly doc = inject(DOCUMENT);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly platform = inject(Platform);
+  private readonly destroy$ = inject(DestroyRef);
+
   private formEl: HTMLFormElement | null = null;
-  private destroy$ = inject(DestroyRef);
 
   _hiden = true;
   count = 0;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
-  @Input() @InputNumber() freq!: number;
-  @Input() @InputNumber() offsetTop!: number;
+  @Input({ transform: numberAttribute }) freq!: number;
+  @Input({ transform: numberAttribute }) offsetTop!: number;
 
-  constructor(
-    private el: ElementRef,
-    private cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    configSrv: AlainConfigService,
-    @Optional() private directionality: Directionality,
-    private platform: Platform
-  ) {
+  constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });
   }
 
@@ -84,8 +83,8 @@ export class ErrorCollectComponent implements OnInit {
   }
 
   private install(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
@@ -110,7 +109,7 @@ export class ErrorCollectComponent implements OnInit {
   ngOnInit(): void {
     if (!this.platform.isBrowser) return;
 
-    this.formEl = this.findParent(this.el.nativeElement, 'form');
+    this.formEl = this.findParent(this.el, 'form');
     if (this.formEl === null) throw new Error('No found form element');
     this.install();
   }

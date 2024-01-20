@@ -16,7 +16,7 @@ Download a file.
 ```ts
 import { Component } from '@angular/core';
 
-import { DownFileModule } from '@delon/abc/down-file';
+import { DownFileDirective } from '@delon/abc/down-file';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -29,7 +29,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     }
   `,
   standalone: true,
-  imports: [DownFileModule, NzButtonModule]
+  imports: [DownFileDirective, NzButtonModule]
 })
 export class DemoComponent {
   fileTypes = ['.xlsx', '.docx', '.pptx', '.pdf'];

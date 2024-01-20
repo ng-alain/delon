@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, SimpleChanges, inject } from '@angular/core';
 
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -25,11 +25,10 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
   imports: [NzToolTipModule, NzImageModule]
 })
 export class STImgWidget implements OnChanges {
+  private readonly msg = inject(NzMessageService);
   static readonly KEY = 'img';
 
   img!: string;
-
-  constructor(private msg: NzMessageService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);

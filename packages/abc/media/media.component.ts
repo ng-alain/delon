@@ -14,14 +14,15 @@ import {
   Renderer2,
   SimpleChange,
   ViewEncapsulation,
-  inject
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timer, take } from 'rxjs';
 
 import type Plyr from 'plyr';
 
-import { InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MediaService } from './media.service';
@@ -37,32 +38,29 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
-  static ngAcceptInputType_delay: NumberInput;
+  private readonly destroy$ = inject(DestroyRef);
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly renderer = inject(Renderer2);
+  private readonly ngZone = inject(NgZone);
+  private readonly srv = inject(MediaService);
+  private readonly platform = inject(Platform);
 
   private _p?: Plyr | null;
   private videoEl?: HTMLElement;
-  private destroy$ = inject(DestroyRef);
 
   @Input() type: MediaType = 'video';
   @Input() source?: string | Plyr.SourceInfo;
   @Input() options?: Plyr.Options;
-  @Input() @InputNumber() delay = 0;
+  @Input({ transform: numberAttribute }) delay = 0;
   @Output() readonly ready = new EventEmitter<Plyr>();
 
   get player(): Plyr | undefined | null {
     return this._p;
   }
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private srv: MediaService,
-    private ngZone: NgZone,
-    private platform: Platform
-  ) {}
 
   @ZoneOutside()
   private initDelay(): void {
@@ -94,11 +92,11 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private ensureElement(): void {
     const { type } = this;
-    let el = this.el.nativeElement.querySelector(type) as HTMLElement;
+    let el = this.el.querySelector(type) as HTMLElement;
     if (!el) {
       el = this.renderer.createElement(type);
       (el as HTMLVideoElement).controls = true;
-      this.el.nativeElement.appendChild(el);
+      this.el.appendChild(el);
     }
     this.videoEl = el;
   }

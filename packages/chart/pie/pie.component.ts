@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,14 +6,18 @@ import {
   Input,
   Output,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  numberAttribute
 } from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
 
 import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 export interface G2PieData {
   x: NzSafeAny;
@@ -48,37 +53,30 @@ export interface G2PieRatio {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzDividerComponent, NgStyle]
 })
 export class G2PieComponent extends G2BaseComponent {
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_animate: BooleanInput;
-  static ngAcceptInputType_hasLegend: BooleanInput;
-  static ngAcceptInputType_percent: NumberInput;
-  static ngAcceptInputType_tooltip: BooleanInput;
-  static ngAcceptInputType_lineWidth: NumberInput;
-  static ngAcceptInputType_blockMaxWidth: NumberInput;
-  static ngAcceptInputType_select: BooleanInput;
-
   private percentColor!: (value: string) => string;
   legendData: NzSafeAny[] = [];
   isPercent = false;
 
   // #region fields
 
-  @Input() @InputBoolean() animate = true;
+  @Input({ transform: booleanAttribute }) animate = true;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() subTitle?: string | TemplateRef<void> | null;
   @Input() total?: string | number | TemplateRef<void> | null;
-  @Input() @InputNumber() height = 0;
-  @Input() @InputBoolean() hasLegend = false;
+  @Input({ transform: numberAttribute }) height = 0;
+  @Input({ transform: booleanAttribute }) hasLegend = false;
   @Input() inner = 0.75;
   @Input() padding: number | number[] | 'auto' = [12, 0, 12, 0];
-  @Input() @InputNumber() percent?: number;
-  @Input() @InputBoolean() tooltip = true;
-  @Input() @InputNumber() lineWidth = 0;
-  @Input() @InputNumber() blockMaxWidth = 380;
-  @Input() @InputBoolean() select = true;
+  @Input({ transform: numberAttribute }) percent?: number;
+  @Input({ transform: booleanAttribute }) tooltip = true;
+  @Input({ transform: numberAttribute }) lineWidth = 0;
+  @Input({ transform: numberAttribute }) blockMaxWidth = 380;
+  @Input({ transform: booleanAttribute }) select = true;
   @Input() valueFormat?: (y: number) => string;
   @Input() data: G2PieData[] = [];
   @Input() colors?: string[];

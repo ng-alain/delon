@@ -20,7 +20,7 @@ Allows to reuse computed value in several places in template to avoid recalculat
 
 ## API
 
-### [let]
+### [let]:standalone
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

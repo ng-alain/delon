@@ -1,10 +1,10 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { I18NService, MetaService } from '@core';
+import { MetaService } from '@core';
 
 @Component({
   selector: 'edit-button',
@@ -23,15 +23,13 @@ import { I18NService, MetaService } from '@core';
   imports: [I18nPipe, NzIconModule, NzToolTipModule]
 })
 export class EditButtonComponent {
+  private readonly meta = inject(MetaService);
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+
   _full!: string;
 
   @Input()
   set item(data: { urls: string }) {
     this._full = `${this.meta.github}/edit/master/${this.i18n.get(data.urls)}`;
   }
-
-  constructor(
-    private meta: MetaService,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
-  ) {}
 }

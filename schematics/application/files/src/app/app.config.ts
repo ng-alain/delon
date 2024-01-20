@@ -2,7 +2,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { default as ngLang } from '@angular/common/locales/zh';
 import { ApplicationConfig, EnvironmentProviders, Provider } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withHashLocation, RouterFeatures } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withViewTransitions, withInMemoryScrolling, withHashLocation, RouterFeatures } from '@angular/router';
 import { <% if (i18n) { %>I18NService, <% } %>defaultInterceptor, provideStartup } from '@core';
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
@@ -35,7 +35,11 @@ const alainConfig: AlainConfig = {
 
 const ngZorroConfig: NzConfig = {};
 
-const routerFeatures: RouterFeatures[] = [withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'top' })];
+const routerFeatures: RouterFeatures[] = [
+  withComponentInputBinding(),
+  withViewTransitions(),
+  withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+];
 if (environment.useHash) routerFeatures.push(withHashLocation());
 
 const providers: Array<Provider | EnvironmentProviders> = [

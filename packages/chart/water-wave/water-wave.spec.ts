@@ -25,7 +25,7 @@ describe('chart: water-wave', () => {
       const styleSpy = spyOn(page.comp.renderer, 'setStyle');
       page.context.animate = false;
       page.context.height = 100;
-      spyOnProperty(page.comp.el.nativeElement.parentNode, 'offsetWidth').and.returnValue(50);
+      spyOnProperty(page.comp.el.parentNode, 'offsetWidth').and.returnValue(50);
       page.dcFirst();
       expect(styleSpy.calls.mostRecent().args[2]).toBe('scale(0.5)');
     }));

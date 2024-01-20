@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, numberAttribute } from '@angular/core';
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 @Component({
   selector: 'sg-container, [sg-container]',
@@ -16,16 +15,14 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class SGContainerComponent {
-  static ngAcceptInputType_gutter: NumberInput;
-  static ngAcceptInputType_colInCon: NumberInput;
-  static ngAcceptInputType_col: NumberInput;
-
-  @Input() @InputNumber() gutter!: number;
-  @Input('sg-container') @InputNumber(null) colInCon?: REP_TYPE;
-  @Input() @InputNumber(null) col!: REP_TYPE;
+  @Input({ transform: numberAttribute }) gutter!: number;
+  @Input({ alias: 'sg-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
+  colInCon?: REP_TYPE;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col!: REP_TYPE;
 
   get marginValue(): number {
     return -(this.gutter / 2);

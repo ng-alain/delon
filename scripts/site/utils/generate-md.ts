@@ -20,15 +20,19 @@ const converters = [highlight()].concat([
     (node: any) => {
       const tagName = JsonML.getTagName(node) as string;
       const children = JsonML.getChildren(node);
-      const sluggedId = generateSluggedId(children).id;
+      const sluggedData = generateSluggedId(children);
       // <a href="#${sluggedId}" class="anchor">#</a>
-      const childrenHtml = children.map(toHtml).join('');
+      // const childrenHtml = children.map(toHtml).join('');
       // const goTo = tagName === 'h2' ? `<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a>` : '';
+      const apiTypes = ['directive', 'standalone', 'service', 'class']
+        .filter(key => (sluggedData as any)[key] === true)
+        .map(w => `<label class="api-type-label ${w}">${w}</label>`)
+        .join('');
       const copy =
         /h[0-9]{1}/g.test(tagName) && +tagName.substring(1) > 1
-          ? `<a class="lake-link"><i data-anchor="${sluggedId}"></i></a>`
+          ? `<a class="lake-link"><i data-anchor="${sluggedData.id}"></i></a>`
           : ``;
-      return `<${tagName} id="${sluggedId}">${copy}${childrenHtml}</${tagName}>`;
+      return `<${tagName} id="${sluggedData.id}">${copy}${sluggedData.id}${apiTypes}</${tagName}>`;
     }
   ],
   [
@@ -54,7 +58,7 @@ const converters = [highlight()].concat([
   ],
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
-    (node: any, index: number) => {
+    (node: any, _: number) => {
       const attrs = { ...JsonML.getAttributes(node) };
       let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
       if (~attrs.href.indexOf('ng-alain.com')) target = '';
@@ -65,7 +69,7 @@ const converters = [highlight()].concat([
   ],
   [
     (node: any) => !Array.isArray(node),
-    (node: any, index: number) => {
+    (node: any, _: number) => {
       if (!node.url) return '';
       return `<!--${node.url}-->`;
     }

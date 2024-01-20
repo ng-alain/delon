@@ -1,13 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { ErrorHandler, Inject, Injectable } from '@angular/core';
+import { ErrorHandler, Injectable, inject } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Injectable()
 export class CustomErrorHandler extends ErrorHandler {
-  constructor(@Inject(DOCUMENT) private doc: NzSafeAny) {
-    super();
-  }
+  private readonly doc = inject(DOCUMENT);
 
   handleError(error: NzSafeAny): void {
     try {

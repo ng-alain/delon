@@ -41,7 +41,14 @@ export function genValidId(id: string): string {
   return id.replace(/[() `?]*/g, '');
 }
 
-export function generateSluggedId(children: any): { id: string; text: string } {
+export function generateSluggedId(children: any): {
+  id: string;
+  text: string;
+  directive: boolean;
+  standalone: boolean;
+  service: boolean;
+  class: boolean;
+} {
   const headingText = children
     .map((node: any) => {
       if (JsonML.isElement(node)) {
@@ -52,10 +59,15 @@ export function generateSluggedId(children: any): { id: string; text: string } {
       }
       return node;
     })
-    .join('');
+    .join('')
+    .trim();
   return {
-    id: genValidId(headingText.trim()),
-    text: headingText
+    id: genValidId(headingText).split(':')[0],
+    text: headingText,
+    directive: children.some((node: any) => JsonML.isElement(node)),
+    standalone: headingText.includes(':standalone'),
+    service: headingText.includes(':service'),
+    class: headingText.includes(':class')
   };
 }
 

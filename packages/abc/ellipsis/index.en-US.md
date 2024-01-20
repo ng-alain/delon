@@ -10,7 +10,7 @@ When the text is too long, the Ellipsis automatically shortens it according to i
 
 ## API
 
-### ellipsis
+### ellipsis:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

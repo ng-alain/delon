@@ -17,9 +17,8 @@
       "request": "launch",
       "name": "site generate",
       "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
-      "protocol": "inspector",
       "internalConsoleOptions": "openOnSessionStart",
-      "args": ["${workspaceFolder}/scripts/site/generate.ts", "getting-started"],
+      "args": ["${workspaceFolder}/scripts/site/generate.ts", "auto-focus"],
       "env": {
         "TS_NODE_PROJECT": "${workspaceFolder}/scripts/site/tsconfig.json",
         "TS_NODE_TRANSPILE_ONLY": "true"
@@ -31,7 +30,6 @@
       "name": "schematics test",
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
       "sourceMaps": true,
       "internalConsoleOptions": "openOnSessionStart",
       "env": {

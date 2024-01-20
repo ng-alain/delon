@@ -1,20 +1,24 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
+import { NgClass, NgStyle } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   Input,
   OnChanges,
-  Optional,
   QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzAvatarComponent } from 'ng-zorro-antd/avatar';
 import type { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
@@ -28,19 +32,22 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgStyle, NgClass, NzAvatarComponent, NzTooltipDirective]
 })
 export class AvatarListComponent implements AfterViewInit, OnChanges {
-  static ngAcceptInputType_maxLength: NumberInput;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly destroy$ = inject(DestroyRef);
 
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
-  private _items!: QueryList<AvatarListItemComponent>;
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
+  private readonly _items!: QueryList<AvatarListItemComponent>;
 
   items: AvatarListItemComponent[] = [];
   exceedCount = 0;
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
 
   cls = '';
   avatarSize: NzSizeLDSType = 'default';
@@ -58,13 +65,8 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
         break;
     }
   }
-  @Input() @InputNumber() maxLength = 0;
+  @Input({ transform: numberAttribute }) maxLength = 0;
   @Input() excessItemsStyle: NgStyleInterface | null = null;
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-    @Optional() private directionality: Directionality
-  ) {}
 
   private gen(): void {
     const { _items } = this;
@@ -77,8 +79,8 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

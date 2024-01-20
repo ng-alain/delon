@@ -53,6 +53,10 @@ export function toBoolean(
 }
 
 /**
+ * @deprecated Recommended to use the built-in `transform` and `static ngAcceptInputType_` can be removed
+ * - Use `@Input({ transform: booleanAttribute })` instead of `@InputBoolean()`
+ * - Use `@Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) })` instead of `@InputBoolean(null)`
+ *
  * Input decorator that handle a prop to do get/set automatically with toBoolean
  *
  * ```ts
@@ -71,6 +75,10 @@ export function toNumber(value: unknown, fallbackValue: number = 0): number {
 }
 
 /**
+ * @deprecated Recommended to use the built-in `transform` and `static ngAcceptInputType_` can be removed
+ * - Use `@Input({ transform: numberAttribute })` instead of `@InputNumber()`
+ * - Use `@Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })` instead of `@InputNumber(null)`
+ *
  * Input decorator that handle a prop to do get/set automatically with toNumber
  *
  * ```ts

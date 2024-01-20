@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, filter, share } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -28,11 +28,11 @@ export interface LazyLoadOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class LazyService {
+  private readonly doc = inject(DOCUMENT);
+
   private list: { [key: string]: boolean } = {};
   private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
-
-  constructor(@Inject(DOCUMENT) private doc: NzSafeAny) {}
 
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(

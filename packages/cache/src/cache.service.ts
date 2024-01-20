@@ -14,6 +14,10 @@ import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
 @Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
+  private readonly store = inject(DC_STORE_STORAGE_TOKEN);
+  private readonly http = inject(HttpClient);
+  private readonly platform = inject(Platform);
+
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
   private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<
     string,
@@ -28,9 +32,6 @@ export class CacheService implements OnDestroy {
     prefix: '',
     meta_key: '__cache_meta'
   })!;
-  private readonly store = inject(DC_STORE_STORAGE_TOKEN);
-  private readonly http = inject(HttpClient);
-  private readonly platform = inject(Platform);
 
   constructor() {
     if (!this.platform.isBrowser) return;

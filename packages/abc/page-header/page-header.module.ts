@@ -20,9 +20,9 @@ const COMPONENTS = [PageHeaderComponent];
     NzAffixModule,
     NzSkeletonModule,
     NzBreadCrumbModule,
-    NzOutletModule
+    NzOutletModule,
+    ...COMPONENTS
   ],
-  declarations: COMPONENTS,
   exports: COMPONENTS
 })
 export class PageHeaderModule {}

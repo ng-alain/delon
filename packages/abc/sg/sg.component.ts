@@ -3,16 +3,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Host,
   Input,
   OnChanges,
-  Optional,
   Renderer2,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
+  numberAttribute
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
 
 import { SGContainerComponent } from './sg-container.component';
 
@@ -28,35 +27,33 @@ const prefixCls = `sg`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class SGComponent implements OnChanges, AfterViewInit {
-  static ngAcceptInputType_col: NumberInput;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly ren = inject(Renderer2);
+  private readonly rep = inject(ResponsiveService);
+  private readonly parentComp = inject(SGContainerComponent, { host: true, optional: true })!;
 
-  private el: HTMLElement;
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input() @InputNumber(null) col: number | null = null;
+  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col: number | null = null;
 
   get paddingValue(): number {
-    return this.parent.gutter / 2;
+    return this.parentComp.gutter / 2;
   }
 
-  constructor(
-    el: ElementRef,
-    private ren: Renderer2,
-    @Optional() @Host() private parent: SGContainerComponent,
-    private rep: ResponsiveService
-  ) {
-    if (parent == null) {
+  constructor() {
+    if (this.parentComp == null) {
       throw new Error(`[sg] must include 'sg-container' component`);
     }
-    this.el = el.nativeElement;
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent } = this;
+    const { el, ren, clsMap, col } = this;
+    const parent = this.parentComp;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     const parentCol = parent.colInCon || parent.col;

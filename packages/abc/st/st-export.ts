@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { XlsxExportResult, XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util/other';
@@ -9,7 +9,7 @@ import { _STColumn } from './st.types';
 
 @Injectable()
 export class STExport {
-  constructor(@Optional() private xlsxSrv: XlsxService) {}
+  private readonly xlsxSrv = inject(XlsxService, { optional: true });
 
   private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
     const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
@@ -41,7 +41,7 @@ export class STExport {
       }
     }
 
-    ret.v = ret.v || '';
+    ret.v = ret.v ?? '';
 
     return ret;
   }
@@ -50,35 +50,44 @@ export class STExport {
     const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
     const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
     const dataLen = opt.data!.length;
+    const columns = opt.columens! as _STColumn[];
     let validColCount = 0;
-    const columns = (opt.columens! as _STColumn[]).filter(
-      col => !(col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0))
-    );
-    if (columns.findIndex(w => w._width != null) !== -1) {
-      // wpx: width in screen pixels https://github.com/SheetJS/sheetjs#column-properties
-      sheet['!cols'] = columns.map(col => ({ wpx: col._width }));
-    }
-    for (let colIdx = 0; colIdx < columns.length; colIdx++) {
-      const col = columns[colIdx];
+    let wpx = false;
+    const invalidFn = (col: _STColumn): boolean =>
+      col.exported === false || !col.index || !(!col.buttons || col.buttons.length === 0);
+    for (const [idx, col] of columns.entries()) {
+      if (invalidFn(col)) continue;
+      if (!wpx && col._width != null) wpx = true;
       ++validColCount;
-      const columnName = this.xlsxSrv.numberToSchema(colIdx + 1);
+      const columnName = this.xlsxSrv!.numberToSchema(validColCount);
       sheet[`${columnName}1`] = {
         t: 's',
         v: typeof col.title === 'object' ? col.title.text : col.title
       };
       for (let dataIdx = 0; dataIdx < dataLen; dataIdx++) {
-        sheet[`${columnName}${dataIdx + 2}`] = this._stGet(opt.data![dataIdx], col, dataIdx, colIdx);
+        sheet[`${columnName}${dataIdx + 2}`] = this._stGet(opt.data![dataIdx], col, dataIdx, idx);
       }
+    }
+    if (wpx) {
+      // wpx: width in screen pixels https://github.com/SheetJS/sheetjs#column-properties
+      sheet['!cols'] = columns.filter(col => !invalidFn(col)).map(col => ({ wpx: col._width }));
     }
 
     if (validColCount > 0 && dataLen > 0) {
-      sheet['!ref'] = `A1:${this.xlsxSrv.numberToSchema(validColCount)}${dataLen + 1}`;
+      sheet['!ref'] = `A1:${this.xlsxSrv!.numberToSchema(validColCount)}${dataLen + 1}`;
     }
 
     return sheets;
   }
 
   async export(opt: STExportOptions): Promise<XlsxExportResult> {
+    if (this.xlsxSrv == null) {
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`XlsxService service not found`);
+      }
+      return Promise.reject();
+    }
+
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

@@ -19,9 +19,8 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { AppService, CodeService, I18NService } from '@core';
 
-const stackBlitzTpl = `
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+const stackBlitzTpl = `import { Component, inject } from '@angular/core';
+import { DelonFormModule, SFLayout, SFSchema, SFUISchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -31,25 +30,26 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       (formSubmit)="submit($event)"
       (formChange)="change($event)"
       (formError)="error($event)"></sf>
-    \`
+    \`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class DemoComponent {
-  schema = {schema};
-  formData = {formData};
-  ui = {ui};
-  layout = '{layout}';
+  private readonly msg = inject(NzMessageService);
+  schema: SFSchema = {schema};
+  formData: Record<string, any> = {formData};
+  ui: SFUISchema = {ui};
+  layout: SFLayout = '{layout}';
 
-  constructor(private msg: NzMessageService) { }
-
-  submit(value: any) {
+  submit(value: any): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: any) {
+  change(value: any): void {
     console.log('formChange', value);
   }
 
-  error(value: any) {
+  error(value: any): void {
     console.log('formError', value);
   }
 }`;

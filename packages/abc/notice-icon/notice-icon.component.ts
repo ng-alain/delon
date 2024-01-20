@@ -1,3 +1,4 @@
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,14 +9,22 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject,
+  numberAttribute
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { BooleanInput, InputBoolean, InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import type { NgClassType } from 'ng-zorro-antd/core/types';
+import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
+import { NoticeIconTabComponent } from './notice-icon-tab.component';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -25,24 +34,34 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    NgClass,
+    NgTemplateOutlet,
+    NzBadgeComponent,
+    NzIconDirective,
+    NzDropDownDirective,
+    NzDropdownMenuComponent,
+    NzSpinComponent,
+    NzTabSetComponent,
+    NzTabComponent,
+    NoticeIconTabComponent
+  ]
 })
 export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_count: NumberInput;
-  static ngAcceptInputType_loading: BooleanInput;
-  static ngAcceptInputType_popoverVisible: BooleanInput;
-  static ngAcceptInputType_centered: BooleanInput;
-
+  private readonly i18n = inject(DelonLocaleService);
+  private readonly cdr = inject(ChangeDetectorRef);
   private i18n$!: Subscription;
   locale: LocaleData = {};
 
   @Input() data: NoticeItem[] = [];
-  @Input() @InputNumber() count?: number;
-  @Input() @InputBoolean() loading = false;
-  @Input() @InputBoolean() popoverVisible = false;
+  @Input({ transform: numberAttribute }) count?: number;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) popoverVisible = false;
   @Input() btnClass?: NgClassType;
   @Input() btnIconClass?: NgClassType;
-  @Input() @InputBoolean() centered = false;
+  @Input({ transform: booleanAttribute }) centered = false;
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
@@ -50,11 +69,6 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   get overlayCls(): string {
     return `header-dropdown notice-icon${!this.centered ? ' notice-icon__tab-left' : ''}`;
   }
-
-  constructor(
-    private i18n: DelonLocaleService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   onVisibleChange(result: boolean): void {
     this.popoverVisibleChange.emit(result);

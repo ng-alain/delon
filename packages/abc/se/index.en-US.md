@@ -33,7 +33,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 
 ## API
 
-### se-container
+### se-container:standalone
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
@@ -50,7 +50,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[errors]` | Batch modify `se` error value | `SEErrorRefresh[]` | - |  |
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
-### se
+### se:standalone
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -69,7 +69,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[line]` | whether separation line style (Inherited from `se-container`) | `boolean` | - |
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 
-### se-title
+### se-title:standalone
 
 Display title.
 

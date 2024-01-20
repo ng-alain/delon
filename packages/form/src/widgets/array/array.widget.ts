@@ -46,7 +46,7 @@ import { ArrayLayoutWidget } from '../../widget';
     <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
       <div class="ant-form-item-control" [class.has-error]="showError">
         <div nz-row class="sf__array-container">
-          @for (i of $any(formProperty).properties; track $index) {
+          <ng-container *ngFor="let i of $any(formProperty).properties; let $index = index">
             @if (i.visible && !i.ui.hidden) {
               <div nz-col [nzSpan]="arraySpan" [attr.data-index]="$index" class="sf__array-item">
                 <nz-card>
@@ -59,7 +59,7 @@ import { ArrayLayoutWidget } from '../../widget';
                 </nz-card>
               </div>
             }
-          }
+          </ng-container>
         </div>
         @if (!ui.onlyVisual && showError) {
           <div class="ant-form-explain">{{ error }}</div>
@@ -115,16 +115,12 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addItem(): void {
     const property = this.formProperty.add({});
     this.reValid();
-    if (this.ui.add) {
-      this.ui.add(property);
-    }
+    this.ui.add?.(property);
   }
 
   removeItem(index: number): void {
     this.formProperty.remove(index);
     this.reValid();
-    if (this.ui.remove) {
-      this.ui.remove(index);
-    }
+    this.ui.remove?.(index);
   }
 }

@@ -233,7 +233,6 @@
   &__bordered {
     overflow: hidden;
     border-top: 1px solid @border-color-split;
-    border-bottom: 1px solid @border-color-split;
     border-left: 1px solid @border-color-split;
 
     @{sv-prefix}__item {
@@ -263,6 +262,11 @@
       @{sv-prefix}__detail {
         padding: @descriptions-small-padding;
       }
+    }
+
+    // offset the padding-bottom of last row
+    .@{ant-prefix}-row {
+      margin-bottom: 0;
     }
   }
 }

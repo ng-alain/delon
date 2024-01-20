@@ -9,8 +9,7 @@ import { ResultComponent } from './result.component';
 const COMPONENTS = [ResultComponent];
 
 @NgModule({
-  imports: [CommonModule, NzIconModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzIconModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class ResultModule {}

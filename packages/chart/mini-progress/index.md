@@ -10,7 +10,7 @@ module: import { G2MiniProgressModule } from '@delon/chart/mini-progress';
 
 ## API
 
-### g2-mini-progress
+### g2-mini-progress:standalone
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

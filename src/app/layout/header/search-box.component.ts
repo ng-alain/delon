@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
@@ -7,8 +7,6 @@ import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
-
-import { I18NService } from '@core';
 
 declare const docsearch: NzSafeAny;
 
@@ -24,15 +22,13 @@ declare const docsearch: NzSafeAny;
   imports: [NzIconModule, NzInputModule, I18nPipe]
 })
 export class HeaderSearchComponent implements AfterViewInit {
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly platform = inject(Platform);
+  private readonly router = inject(Router);
+  private readonly lazySrv = inject(LazyService);
+
   @ViewChild('searchInput', { static: false })
   searchInput!: ElementRef<HTMLInputElement>;
-
-  constructor(
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private platform: Platform,
-    private router: Router,
-    private lazySrv: LazyService
-  ) {}
 
   ngAfterViewInit(): void {
     this.initDocSearch();

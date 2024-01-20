@@ -10,8 +10,7 @@ import { G2CardComponent } from './card.component';
 const COMPONENTS = [G2CardComponent];
 
 @NgModule({
-  imports: [CommonModule, NzCardModule, NzSpinModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzCardModule, NzSpinModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class G2CardModule {}

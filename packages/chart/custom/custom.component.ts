@@ -5,12 +5,13 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  numberAttribute
 } from '@angular/core';
 import { fromEvent, debounceTime, takeUntil } from 'rxjs';
 
 import { G2BaseComponent } from '@delon/chart/core';
-import { InputNumber, NumberInput } from '@delon/util/decorator';
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'g2,g2-custom',
@@ -26,16 +27,15 @@ import { InputNumber, NumberInput } from '@delon/util/decorator';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzSkeletonComponent]
 })
 export class G2CustomComponent extends G2BaseComponent {
-  static ngAcceptInputType_height: NumberInput;
-  static ngAcceptInputType_resizeTime: NumberInput;
-
   // #region fields
 
-  @Input() @InputNumber() height?: number;
-  @Input() @InputNumber() resizeTime = 0;
+  @Input({ transform: numberAttribute }) height?: number;
+  @Input({ transform: numberAttribute }) resizeTime = 0;
   @Output() readonly render = new EventEmitter<ElementRef>();
   @Output() readonly resize = new EventEmitter<ElementRef>();
   @Output() readonly destroy = new EventEmitter<ElementRef>();

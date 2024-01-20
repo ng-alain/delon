@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
@@ -22,18 +22,18 @@ export abstract class SchemaValidatorFactory {
 
 @Injectable()
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
+  private readonly ngZone = inject(NgZone);
+  private readonly cogSrv = inject(AlainConfigService);
+
   protected ajv!: Ajv;
   protected options!: AlainSFConfig;
 
-  constructor(
-    @Inject(AlainConfigService) cogSrv: AlainConfigService,
-    private ngZone: NgZone
-  ) {
+  constructor() {
     super();
     if (!(typeof document === 'object' && !!document)) {
       return;
     }
-    this.options = mergeConfig(cogSrv);
+    this.options = mergeConfig(this.cogSrv);
     const customOptions = this.options.ajv || {};
     this.ngZone.runOutsideAngular(() => {
       this.ajv = new Ajv({

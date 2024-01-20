@@ -22,15 +22,13 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
   imports: [RouterOutlet, RouterLink, FooterComponent, NzAffixModule, NzIconModule, MainMenuComponent, NzGridModule]
 })
 export class ContentComponent implements OnInit {
+  readonly meta = inject(MetaService);
+  private readonly mobileSrv = inject(MobileService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   private destroy$ = inject(DestroyRef);
   isMobile!: boolean;
   opened = false;
-
-  constructor(
-    public meta: MetaService,
-    private mobileSrv: MobileService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.mobileSrv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(res => {

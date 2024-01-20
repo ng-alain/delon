@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { finalize } from 'rxjs';
 
 import { saveAs } from 'file-saver';
@@ -12,10 +12,12 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   exportAs: 'downFile',
   host: {
     '(click)': '_click($event)'
-  }
+  },
+  standalone: true
 })
 export class DownFileDirective {
-  private isFileSaverSupported = true;
+  private readonly el: HTMLButtonElement = inject(ElementRef).nativeElement;
+  private readonly _http = inject(_HttpClient);
   @Input('http-data') httpData: NzSafeAny;
   @Input('http-body') httpBody: NzSafeAny;
   @Input('http-method') httpMethod: string = 'get';
@@ -38,23 +40,19 @@ export class DownFileDirective {
       });
     return arr.reduce((_o, item) => item, {});
   }
+  private isFileSaverSupported = false;
 
-  constructor(
-    private el: ElementRef<HTMLButtonElement>,
-    private _http: _HttpClient
-  ) {
-    let isFileSaverSupported = false;
+  constructor() {
     try {
-      isFileSaverSupported = !!new Blob();
+      this.isFileSaverSupported = !!new Blob();
     } catch {}
-    this.isFileSaverSupported = isFileSaverSupported;
-    if (!isFileSaverSupported) {
-      el.nativeElement.classList.add(`down-file__not-support`);
+    if (!this.isFileSaverSupported) {
+      this.el.classList.add(`down-file__not-support`);
     }
   }
 
   private setDisabled(status: boolean): void {
-    const el = this.el.nativeElement;
+    const el = this.el;
     el.disabled = status;
     el.classList[status ? 'add' : 'remove'](`down-file__disabled`);
   }

@@ -1,3 +1,5 @@
+import { inject } from '@angular/core';
+
 import { CookieService } from '@delon/util/browser';
 
 import { IStore } from './interface';
@@ -11,7 +13,7 @@ import { ITokenModel } from '../token/interface';
  * ```
  */
 export class CookieStorageStore implements IStore {
-  constructor(private srv: CookieService) {}
+  private readonly srv = inject(CookieService);
 
   get(key: string): ITokenModel {
     try {

@@ -9,8 +9,7 @@ import { QuickMenuComponent } from './quick-menu.component';
 const COMPONENTS = [QuickMenuComponent];
 
 @NgModule({
-  imports: [CommonModule, NzIconModule, NzOutletModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzIconModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class QuickMenuModule {}

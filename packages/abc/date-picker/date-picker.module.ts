@@ -10,8 +10,7 @@ import { RangePickerDirective } from './range.directive';
 const COMPONENTS = [RangePickerDirective, RangePickerShortcutTplComponent];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, NzDatePickerModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, FormsModule, NzDatePickerModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class DatePickerModule {}

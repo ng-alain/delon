@@ -1,3 +1,4 @@
+import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouteReuseStrategy } from '@angular/router';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -5,7 +6,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ReuseTabService } from './reuse-tab.service';
 
 export class ReuseTabStrategy implements RouteReuseStrategy {
-  constructor(private srv: ReuseTabService) {}
+  private readonly srv = inject(ReuseTabService);
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return this.srv.shouldDetach(route);

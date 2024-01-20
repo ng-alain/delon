@@ -3,17 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   Input,
   OnDestroy,
   OnInit,
   Renderer2,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  booleanAttribute,
+  inject
 } from '@angular/core';
 
-import { BooleanInput, InputBoolean } from '@delon/util/decorator';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { ErrorCollectComponent } from '@delon/abc/error-collect';
+import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 const CLSBODY = 'footer-toolbar__body';
 
@@ -23,30 +24,24 @@ const CLSBODY = 'footer-toolbar__body';
   templateUrl: './footer-toolbar.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NzStringTemplateOutletDirective, ErrorCollectComponent]
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
-  static ngAcceptInputType_errorCollect: BooleanInput;
+  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly renderer = inject(Renderer2);
+  private readonly bodyCls = inject(DOCUMENT).querySelector('body')?.classList;
 
-  @Input() @InputBoolean() errorCollect = false;
+  @Input({ transform: booleanAttribute }) errorCollect = false;
   @Input() extra?: string | TemplateRef<void>;
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private doc: NzSafeAny
-  ) {}
-
-  private get bodyCls(): DOMTokenList {
-    return (this.doc.querySelector('body') as HTMLElement).classList;
-  }
-
   ngOnInit(): void {
-    this.renderer.addClass(this.el.nativeElement, 'footer-toolbar');
-    this.bodyCls.add(CLSBODY);
+    this.renderer.addClass(this.el, 'footer-toolbar');
+    this.bodyCls?.add(CLSBODY);
   }
 
   ngOnDestroy(): void {
-    this.bodyCls.remove(CLSBODY);
+    this.bodyCls?.remove(CLSBODY);
   }
 }

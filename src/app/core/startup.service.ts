@@ -1,6 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { APP_INITIALIZER, Inject, Injectable, Injector, Provider } from '@angular/core';
+import { APP_INITIALIZER, Injectable, Injector, Provider, inject } from '@angular/core';
 
 import { TitleService } from '@delon/theme';
 import { LazyService } from '@delon/util/other';
@@ -23,13 +23,11 @@ export function provideStartup(): Provider[] {
 
 @Injectable()
 export class StartupService {
-  constructor(
-    private injector: Injector,
-    iconSrv: NzIconService,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private lazy: LazyService,
-    private platform: Platform
-  ) {
+  private readonly injector = inject(Injector);
+  private readonly doc = inject(DOCUMENT);
+  private readonly platform = inject(Platform);
+  private readonly lazy = inject(LazyService);
+  constructor(iconSrv: NzIconService) {
     iconSrv.addIcon(...ICONS);
   }
 

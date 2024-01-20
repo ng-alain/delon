@@ -101,6 +101,10 @@ describe('abc: table: export', () => {
       expect(sheet).not.toBeNull();
       const cc = columns.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
       expect(sheet['!ref']).toBe(`A1:${String.fromCharCode(65 + cc.length - 1)}${data.length + 1}`);
+      expect(sheet['A1'].v).toBe('id');
+      expect(sheet['A2'].v).toBe(1);
+      expect(sheet['B1'].v).toBe('name');
+      expect(sheet['B2'].v).toBe('n1');
     });
 
     it('should auto specify sheet name [Sheet1]', async () => {

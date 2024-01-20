@@ -1,24 +1,20 @@
-import { Inject, Injectable, Optional, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
 
-import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
+import { ALAIN_I18N_TOKEN } from './i18n';
 
 @Injectable({ providedIn: 'root' })
 export class AlainI18NGuardService {
-  constructor(
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    private i18nSrv: AlainI18NService,
-    private cogSrv: AlainConfigService
-  ) {}
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly cogSrv = inject(AlainConfigService);
 
   process(route: ActivatedRouteSnapshot): Observable<boolean> {
     const lang = route.params && route.params[this.cogSrv.get('themeI18n')?.paramNameOfUrlGuard ?? 'i18n'];
     if (lang != null) {
-      this.i18nSrv.use(lang);
+      this.i18nSrv?.use(lang);
     }
     return of(true);
   }

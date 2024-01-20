@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseContextCloseEvent, ReuseContextI18n } from './reuse-tab.interfaces';
@@ -9,8 +9,8 @@ import { ReuseContextCloseEvent, ReuseContextI18n } from './reuse-tab.interfaces
   template: ``,
   standalone: true
 })
-export class ReuseTabContextComponent implements OnDestroy {
-  private sub$: Subscription = new Subscription();
+export class ReuseTabContextComponent {
+  private readonly srv = inject(ReuseTabContextService);
 
   @Input()
   set i18n(value: ReuseContextI18n | undefined) {
@@ -19,12 +19,8 @@ export class ReuseTabContextComponent implements OnDestroy {
 
   @Output() readonly change = new EventEmitter<ReuseContextCloseEvent>();
 
-  constructor(private srv: ReuseTabContextService) {
-    this.sub$.add(srv.show.subscribe(context => this.srv.open(context)));
-    this.sub$.add(srv.close.subscribe(res => this.change.emit(res)));
-  }
-
-  ngOnDestroy(): void {
-    this.sub$.unsubscribe();
+  constructor() {
+    this.srv.show.pipe(takeUntilDestroyed()).subscribe(context => this.srv.open(context));
+    this.srv.close.pipe(takeUntilDestroyed()).subscribe(res => this.change.emit(res));
   }
 }

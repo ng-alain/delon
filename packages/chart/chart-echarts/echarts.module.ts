@@ -8,8 +8,7 @@ import { ChartEChartsComponent } from './echarts.component';
 const COMPONENTS = [ChartEChartsComponent];
 
 @NgModule({
-  imports: [CommonModule, NzSkeletonModule],
-  declarations: COMPONENTS,
+  imports: [CommonModule, NzSkeletonModule, ...COMPONENTS],
   exports: COMPONENTS
 })
 export class ChartEChartsModule {}

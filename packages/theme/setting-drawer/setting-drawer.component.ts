@@ -1,21 +1,22 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
+  DestroyRef,
+  inject,
   Input,
   isDevMode,
   NgZone,
-  OnInit,
-  Optional
+  OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
-import { InputBoolean, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -32,14 +33,22 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingDrawerComponent implements OnInit {
-  @Input() @InputBoolean() autoApplyColor = true;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly msg = inject(NzMessageService);
+  private readonly settingSrv = inject(SettingsService);
+  private readonly lazy = inject(LazyService);
+  private readonly ngZone = inject(NgZone);
+  private readonly doc = inject(DOCUMENT);
+  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly destroy$ = inject(DestroyRef);
+
+  @Input({ transform: booleanAttribute }) autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
   @Input() devTips = `When the color can't be switched, you need to run it once: npm run color-less`;
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
-  private dir$ = this.directionality.change?.pipe(takeUntilDestroyed());
-  dir: Direction = 'ltr';
+  dir?: Direction = 'ltr';
   isDev = isDevMode();
   collapse = false;
   get layout(): Layout {
@@ -49,15 +58,7 @@ export class SettingDrawerComponent implements OnInit {
   color: string;
   colors = DEFAULT_COLORS;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private msg: NzMessageService,
-    private settingSrv: SettingsService,
-    private lazy: LazyService,
-    private ngZone: NgZone,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    @Optional() private directionality: Directionality
-  ) {
+  constructor() {
     this.color = this.cachedData['@primary-color'] || this.DEFAULT_PRIMARY;
     this.resetData(this.cachedData, false);
   }
@@ -71,8 +72,8 @@ export class SettingDrawerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.dir$.subscribe((direction: Direction) => {
+    this.dir = this.directionality?.value;
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

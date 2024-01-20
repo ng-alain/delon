@@ -1,6 +1,6 @@
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
@@ -13,13 +13,13 @@ import {
 
 @Injectable()
 export class ReuseTabContextService {
+  private readonly overlay = inject(Overlay);
+
   private ref: OverlayRef | null = null;
   i18n?: ReuseContextI18n;
 
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
   close: Subject<ReuseContextCloseEvent> = new Subject<ReuseContextCloseEvent>();
-
-  constructor(private overlay: Overlay) {}
 
   remove(): void {
     if (!this.ref) return;

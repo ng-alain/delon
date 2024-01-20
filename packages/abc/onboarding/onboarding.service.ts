@@ -4,11 +4,10 @@ import {
   ApplicationRef,
   ComponentRef,
   EmbeddedViewRef,
-  Inject,
   Injectable,
   OnDestroy,
-  Optional,
-  createComponent
+  createComponent,
+  inject
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, pipe, Subscription, delay, switchMap } from 'rxjs';
@@ -18,11 +17,19 @@ import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { OnboardingComponent } from './onboarding.component';
-import { ONBOARDING_STORE_TOKEN, OnBoardingKeyStore } from './onboarding.storage';
+import { ONBOARDING_STORE_TOKEN } from './onboarding.storage';
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OnboardingService implements OnDestroy {
+  private readonly i18n = inject(DelonLocaleService);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly router = inject(Router);
+  private readonly doc = inject(DOCUMENT);
+  private readonly configSrv = inject(AlainConfigService);
+  private readonly keyStoreSrv = inject(ONBOARDING_STORE_TOKEN);
+  private readonly directionality = inject(Directionality, { optional: true });
+
   private compRef!: ComponentRef<OnboardingComponent>;
   private op$!: Subscription;
   private config?: OnboardingConfig;
@@ -43,16 +50,6 @@ export class OnboardingService implements OnDestroy {
   get running(): boolean {
     return this._running;
   }
-
-  constructor(
-    private i18n: DelonLocaleService,
-    private appRef: ApplicationRef,
-    private router: Router,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private configSrv: AlainConfigService,
-    @Inject(ONBOARDING_STORE_TOKEN) private keyStoreSrv: OnBoardingKeyStore,
-    @Optional() private directionality: Directionality
-  ) {}
 
   private attach(): void {
     const compRef = createComponent(OnboardingComponent, {
@@ -119,7 +116,7 @@ export class OnboardingService implements OnDestroy {
       ...this.i18n.getData('onboarding'),
       ...items[this.active]
     } as OnboardingItem;
-    const dir = this.configSrv.get('onboarding')!.direction || this.directionality.value;
+    const dir = this.configSrv.get('onboarding')!.direction || this.directionality?.value;
     Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length, dir });
     const pipes = [
       switchMap(() => (item.url ? this.router.navigateByUrl(item.url) : of(true))),
