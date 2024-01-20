@@ -46,7 +46,6 @@ export class SettingDrawerComponent implements OnInit {
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   dir?: Direction = 'ltr';
   isDev = isDevMode();
   collapse = false;
@@ -72,7 +71,7 @@ export class SettingDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

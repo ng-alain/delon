@@ -67,7 +67,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
   private readonly directionality = inject(Directionality, { optional: true });
 
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
@@ -207,7 +206,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

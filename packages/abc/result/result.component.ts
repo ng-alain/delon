@@ -31,7 +31,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 export class ResultComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality, { optional: true });
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
+
   _type = '';
   _icon = '';
   @Input()
@@ -57,7 +57,7 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

@@ -58,13 +58,12 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
   @Output() readonly themeChange = new EventEmitter<string>();
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   dir?: Direction = 'ltr';
   private key = inject(ALAIN_THEME_BTN_KEYS, { optional: true }) ?? 'site-theme';
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed()).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

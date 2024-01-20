@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   Input,
   OnChanges,
   QueryList,
@@ -38,7 +39,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
 export class AvatarListComponent implements AfterViewInit, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality, { optional: true });
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
+  private readonly destroy$ = inject(DestroyRef);
 
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
@@ -79,7 +80,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

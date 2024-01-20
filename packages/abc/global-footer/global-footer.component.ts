@@ -43,7 +43,6 @@ export class GlobalFooterComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroy$ = inject(DestroyRef);
 
-  private dir$ = this.directionality?.change?.pipe(takeUntilDestroyed());
   private _links: GlobalFooterLink[] = [];
 
   dir?: Direction = 'ltr';
@@ -76,7 +75,7 @@ export class GlobalFooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.dir = this.directionality?.value;
-    this.dir$?.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
