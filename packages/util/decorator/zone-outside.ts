@@ -37,7 +37,7 @@ function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): Decor
  *
  * ```ts
  * class MockClass {
- *  constructor(public ngZone: NgZone) {}
+ *  readonly ngZone = inject(NgZone);
  *
  *  {AT}ZoneOutside()
  *  runOutsideAngular(): void {}
@@ -55,7 +55,7 @@ export function ZoneOutside(options?: ZoneOptions): DecoratorType {
  *
  * ```ts
  * class MockClass {
- *  constructor(public ngZone: NgZone) {}
+ *  readonly ngZone = inject(NgZone);
  *
  *  {AT}ZoneRun()
  *  run(): void {}

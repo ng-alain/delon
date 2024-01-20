@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -21,9 +21,9 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
   imports: [NzButtonModule, JsonPipe]
 })
 export class DemoModalComponent {
-  @Input() record: NzSafeAny;
+  private readonly modal = inject(NzModalRef);
 
-  constructor(private modal: NzModalRef) {}
+  @Input() record: NzSafeAny;
 
   ok(): void {
     this.modal.destroy(`new time: ${+new Date()}`);

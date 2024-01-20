@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';<% if(!modal) { %>
+import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%>, inject } from '@angular/core';<% if(!modal) { %>
   import { ActivatedRoute } from '@angular/router';
   import { Location } from '@angular/common';<% } %><% if(modal) { %>
   import { NzModalRef } from 'ng-zorro-antd/modal';<% } %>
@@ -14,6 +14,12 @@ import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncaps
     changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
   })
   export class <%= componentName %> implements OnInit {
+    private readonly http = inject(_HttpClient);
+    private readonly msgSrv = inject(NzMessageService);<% if(modal) { %>
+    private readonly modal = inject(NzModalRef);<% } else { %>
+    private readonly route = inject(ActivatedRoute);
+    readonly location = inject(Location);<% } %>
+
     <% if(modal) { %>record: any = {};<% } else { %>
     id = this.route.snapshot.params.id;<% } %>
     i: any;
@@ -24,14 +30,6 @@ import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncaps
         grid: { span: 12 },
       },
     };
-
-    constructor(<% if(modal) { %>
-      private modal: NzModalRef,<% } else { %>
-      private route: ActivatedRoute,
-      public location: Location,<% } %>
-      private msgSrv: NzMessageService,
-      public http: _HttpClient,
-    ) {}
 
     ngOnInit(): void {
       <% if(modal) { %>if (this.record.id > 0)<% } else { %>if (this.id > 0)<% } %>

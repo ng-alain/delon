@@ -4,11 +4,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
   Input,
   NgZone,
   OnInit,
-  booleanAttribute
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -21,8 +21,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
-
-import { I18NService } from '@core';
 
 @Component({
   selector: 'app-footer',
@@ -37,21 +35,19 @@ import { I18NService } from '@core';
   imports: [NzGridModule, NzColorPickerModule, NgStyle, I18nPipe, RouterLink]
 })
 export class FooterComponent implements OnInit {
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly msg = inject(NzMessageService);
+  private readonly loading = inject(LoadingService);
+  private readonly lazy = inject(LazyService);
+  private readonly iconSrv = inject(NzIconService);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly platform = inject(Platform);
+
   color = `#1890ff`;
   lessLoaded = false;
 
   @Input({ transform: booleanAttribute }) small = false;
-
-  constructor(
-    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
-    private msg: NzMessageService,
-    private loading: LoadingService,
-    private lazy: LazyService,
-    private iconSrv: NzIconService,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-    private platform: Platform
-  ) {}
 
   onCopy(value: string): void {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));

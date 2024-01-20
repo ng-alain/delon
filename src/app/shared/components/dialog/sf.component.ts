@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { DelonFormModule, SFSchema } from '@delon/form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -24,6 +24,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
   imports: [NzButtonModule, DelonFormModule]
 })
 export class DemoSfComponent {
+  private readonly modal = inject(NzModalRef);
+
   i: NzSafeAny;
   schema: SFSchema = {
     properties: {
@@ -46,8 +48,6 @@ export class DemoSfComponent {
   //     grid: { span: 24 },
   //   },
   // };
-
-  constructor(private modal: NzModalRef) {}
 
   save(value: NzSafeAny): void {
     this.modal.destroy(value);

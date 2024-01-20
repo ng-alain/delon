@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { CookieOptions, CookieService } from '@delon/util/browser';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -17,13 +17,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   imports: [NzButtonModule]
 })
 export class DemoComponent {
+  private readonly cookieSrv = inject(CookieService);
+  private readonly msg = inject(NzMessageService);
+
   key = 'test-key';
   value?: string;
 
-  constructor(
-    private cookieSrv: CookieService,
-    private msg: NzMessageService
-  ) {
+  constructor() {
     this.get();
   }
 
