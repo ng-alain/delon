@@ -52,7 +52,8 @@ export class SGComponent implements OnChanges, AfterViewInit {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parentComp: parent } = this;
+    const { el, ren, clsMap, col } = this;
+    const parent = this.parentComp;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     const parentCol = parent.colInCon || parent.col;

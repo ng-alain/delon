@@ -81,7 +81,12 @@ export class STExport {
   }
 
   async export(opt: STExportOptions): Promise<XlsxExportResult> {
-    if (this.xlsxSrv == null) return Promise.reject();
+    if (this.xlsxSrv == null) {
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        console.warn(`XlsxService service not found`);
+      }
+      return Promise.reject();
+    }
 
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
