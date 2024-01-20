@@ -54,7 +54,6 @@ export class CodeService {
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
-    console.log(res);
 
     return res;
   }
