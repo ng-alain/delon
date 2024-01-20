@@ -35,7 +35,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   imports: [NzGridModule, NzColorPickerModule, NgStyle, I18nPipe, RouterLink]
 })
 export class FooterComponent implements OnInit {
-  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly msg = inject(NzMessageService);
   private readonly loading = inject(LoadingService);
   private readonly lazy = inject(LazyService);
