@@ -107,7 +107,7 @@ export class ArrayProperty extends PropertyGroup {
       // TODO: 受限于 sf 的设计思路，对于移除数组项需要重新对每个子项进行校验，防止错误被父级合并后引起始终是错误的现象
       if (property instanceof ObjectProperty) {
         property.forEachChild(p => {
-          p.updateValueAndValidity();
+          p.updateValueAndValidity({ emitValueEvent: false });
         });
       }
     });
