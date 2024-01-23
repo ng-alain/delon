@@ -56,6 +56,16 @@ describe('cache: interceptor', () => {
     httpBed.expectOne('/test').flush(res, { headers: { 'cache-control': 'max-age=60' } });
   });
 
+  it('should be support POST data', done => {
+    const key = 'b';
+    const res = 'ok';
+    http.post(key, { responseType: 'text', context: new HttpContext().set(CACHE, { key }) }).subscribe(() => {
+      expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
+      done();
+    });
+    httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
+  });
+
   describe('Ignore cache', () => {
     it('when response cache-control', done => {
       const key = 'b';
