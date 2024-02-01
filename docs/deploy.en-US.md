@@ -50,17 +50,13 @@ npm run analyze:view
 
 ## Release
 
-When you are ready to deploy (release) your the app, you need only to publish the generated build artifacts - that is, the files in the `dist` folder - to your cdn or static server. Note that the `index.html` is usually the entry page for your app and handles all missing file requests. You may need to change the import path of the page after determining the static of js and css.
+When you are ready to deploy (release) your the app, you need only to publish the generated build artifacts - that is, the files in the `dist/browser` folder - to your cdn or static server. Note that the `index.html` is usually the entry page for your app and handles all missing file requests. You may need to change the import path of the page after determining the static of js and css.
 
-The default static resource reference path directly points to the directory where the `dist` folder is published. For example, if you post `dist` to the root directory of the `ng-alain.com` site, the requested URL is `//ng-alain.com/***.js`, `//ng-alain.com/***.css`, if `dist` is posted to a directory under a certain directory, such as `v2`, request The URL is `//ng-alain.com/v2/***.js`, `//ng-alain.com/v2/***.css`.
-
-If your static resource is deployed to another domain name (such as a separate CDN address), you can specify a CDN address with the `--deployUrl` parameter.
+If your static resource is deployed to another domain name (such as a separate CDN address), you can specify a CDN address with the `--base-href` parameter.
 
 ```bash
-ng build -deployUrl=//cdn.ng-alain.com/
+ng build --base-href=https://cdn.ng-alain.com/
 ```
-
-The generated `index.html` with its `*.js`, `*.css` files will automatically refer to `//cdn.ng-alain.com/*.js`, `//cdn.ng-alain.com/*css`, respectively.
 
 ### Routing strategy
 

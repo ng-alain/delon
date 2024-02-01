@@ -50,17 +50,13 @@ npm run analyze:view
 
 ## 发布
 
-对于发布来讲，只需要将最终生成的静态文件，也就是通常情况下 `dist` 文件夹的静态文件发布到你的 cdn 或者静态服务器即可，需要注意的是其中的 `index.html` 通常会是你后台服务的入口页面，在确定了 js 和 css 的静态之后可能需要改变页面的引入路径。
+对于发布来讲，只需要将最终生成的静态文件，也就是通常情况下 `dist/browser` 文件夹的静态文件发布到你的 cdn 或者静态服务器即可，需要注意的是其中的 `index.html` 通常会是你后台服务的入口页面，在确定了 js 和 css 的静态之后可能需要改变页面的引入路径。
 
-默认的静态资源引用路径直接指向 `dist` 文件夹发布所处应用的目录下，例如你将 `dist` 发布至 `ng-alain.com` 站点的根目录里则请求的网址是 `//ng-alain.com/***.js`、`//ng-alain.com/***.css`，若 `dist` 发布至某站点下某个目录如 `v2` 文件夹下，则请求的网址是 `//ng-alain.com/v2/***.js`、`//ng-alain.com/v2/***.css`。
-
-如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `-d` 参数指定一个 cdn 地址。
+如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `--base-href` 参数指定一个 cdn 地址。
 
 ```bash
-ng build -d=//cdn.ng-alain.com/
+ng build --base-href=https://cdn.ng-alain.com/
 ```
-
-这样生成的 `index.html` 内 `*.js`、`*.css` 会自动加上 `//cdn.ng-alain.com/*.js`。
 
 ### 路由策略
 
