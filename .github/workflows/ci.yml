@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jwalton/gh-find-current-pr@v1
+      - uses: jwalton/gh-find-current-pr@master
         id: findPr
         with:
           state: all
