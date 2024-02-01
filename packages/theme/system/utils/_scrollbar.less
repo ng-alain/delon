@@ -39,10 +39,12 @@
 }
 
 // scrollbar
-// TODO: (.nz-measure-scrollbar-placeholder) https://github.com/NG-ZORRO/ng-zorro-antd/pull/2617
-.scrollbar-mixin(
-  ~'body, @{scrollbar-prefix}, .@{ant-prefix}-dialog-wrap, .@{ant-prefix}-drawer-body, .@{ant-prefix}-drawer-wrapper-body, .@{ant-prefix}-anchor-wrapper, textarea.@{ant-prefix}-input'
-);
+.scrollbar-default-mixin(@enabled) when(@enabled=true) {
+  .scrollbar-mixin(
+    ~'body, @{scrollbar-prefix}, .@{ant-prefix}-dialog-wrap, .@{ant-prefix}-drawer-body, .@{ant-prefix}-drawer-wrapper-body, .@{ant-prefix}-anchor-wrapper, textarea.@{ant-prefix}-input'
+  );
+}
+.scrollbar-default-mixin(@scrollbar-enabled);
 
 // table
 .scrollbar-table-mixin(@enabled) when(@enabled=true) {
