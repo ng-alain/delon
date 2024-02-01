@@ -3,6 +3,7 @@ import { SafeHtml } from '@angular/platform-browser';
 
 import { NzButtonType } from 'ng-zorro-antd/button';
 
+import { SFUpdateValueAndValidity } from '../../interface';
 import type { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
@@ -108,8 +109,13 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
   }
 
-  private reValid(): void {
-    this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: true });
+  private reValid(options?: SFUpdateValueAndValidity): void {
+    this.formProperty.updateValueAndValidity({
+      onlySelf: false,
+      emitValueEvent: false,
+      emitValidator: true,
+      ...options
+    });
   }
 
   addItem(): void {
@@ -119,8 +125,9 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   removeItem(index: number): void {
+    const updatePath = (this.formProperty.properties as FormProperty[])[index].path;
     this.formProperty.remove(index);
-    this.reValid();
+    this.reValid({ updatePath, emitValueEvent: true });
     this.ui.remove?.(index);
   }
 }
