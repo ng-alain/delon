@@ -86,6 +86,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
 | `[resizable]` | Resize header of the current table, **Multiple headers not supported** | `STResizable, boolean` | - | - |
+| `[trackBy]` | `TrackByFunction` function of list loop `@for` | `TrackByFunction<T>` | - | - |
 | `(change)` | Events | `EventEmitter<STChange>` | - | - |
 | `(error)` | Error event | `EventEmitter<STError>` | - | - |
 

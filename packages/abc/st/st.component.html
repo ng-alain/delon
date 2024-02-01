@@ -55,7 +55,7 @@
 >
   @if (showHeader) {
     <thead>
-      @for (row of _headers; track $index) {
+      @for (row of _headers; track row) {
         <tr>
           @if ($first && expand) {
             <th nzWidth="50px" [rowSpan]="_headers.length"></th>
@@ -194,7 +194,7 @@
         <ng-template [ngTemplateOutlet]="bodyTpl" [ngTemplateOutletContext]="{ $implicit: i, index: index }" />
       </ng-template>
     } @else {
-      @for (i of _data; track $index) {
+      @for (i of _data; track trackBy($index, i)) {
         <ng-template [ngTemplateOutlet]="bodyTpl" [ngTemplateOutletContext]="{ $implicit: i, index: $index }" />
       }
     }

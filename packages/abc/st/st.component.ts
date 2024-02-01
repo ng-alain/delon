@@ -225,6 +225,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input({ transform: numberAttribute }) virtualMinBufferPx = 100;
   @Input() customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
   @Input() virtualForTrackBy: TrackByFunction<STData> = index => index;
+  @Input() trackBy: TrackByFunction<STData> = (_, item) => item;
 
   /**
    * Get the number of the current page

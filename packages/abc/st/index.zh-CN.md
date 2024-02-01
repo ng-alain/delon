@@ -86,6 +86,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[responsive]` | 是否开启响应式 | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false` | ✅ |
 | `[resizable]` | 当前表格所有列的调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
+| `[trackBy]` | `@for` 列表循环的 `TrackByFunction` 函数 | `TrackByFunction<T>` | - | - |
 | `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | - | - |
 | `(error)` | 异常时回调 | `EventEmitter<STError>` | - | - |
 
