@@ -26,15 +26,14 @@ export class CacheService implements OnDestroy {
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
   private freqTime: any;
-  private cog: AlainCacheConfig;
+  private cog: AlainCacheConfig = inject(AlainConfigService).merge('cache', {
+    mode: 'promise',
+    reName: '',
+    prefix: '',
+    meta_key: '__cache_meta'
+  })!;
 
-  constructor(cogSrv: AlainConfigService) {
-    this.cog = cogSrv.merge('cache', {
-      mode: 'promise',
-      reName: '',
-      prefix: '',
-      meta_key: '__cache_meta'
-    })!;
+  constructor() {
     if (!this.platform.isBrowser) return;
     this.loadMeta();
     this.startExpireNotify();

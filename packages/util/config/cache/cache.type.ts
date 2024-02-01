@@ -38,4 +38,31 @@ export interface AlainCacheConfig {
    * Custom request
    */
   request?: (key: string) => Observable<unknown>;
+  /**
+   * Default configuration of interceptor
+   *
+   * 拦截器默认配置项
+   */
+  interceptor?: AlainCacheInterceptor;
+}
+
+export interface AlainCacheInterceptor {
+  /**
+   * Whether to enable, default `true`
+   *
+   * 是否启用，默认 `true`
+   */
+  enabled?: boolean;
+  /**
+   * Specify the storage method, `m` means memory, `s` means persistence; default: `m`
+   *
+   * 指定存储方式，`m` 表示内存，`s` 表示持久化；默认：`m`
+   */
+  saveType?: 'm' | 's';
+  /**
+   * Whether to trigger a notification, default: `true`
+   *
+   * 是否触发通知，默认：`true`
+   */
+  emitNotify?: boolean;
 }
