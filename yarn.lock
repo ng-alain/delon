@@ -6984,7 +6984,7 @@ __metadata:
     ng-github-button: "npm:^17.0.0"
     ng-less-javascript-enabled-patch: "npm:17.0.2"
     ng-packagr: "npm:^17.1.0"
-    ng-zorro-antd: "npm:^17.1.0"
+    ng-zorro-antd: "npm:^17.2.0"
     ngx-countdown: "npm:^17.1.1"
     ngx-highlight-js: "npm:^17.0.0"
     ngx-tinymce: "npm:^17.0.0"
@@ -12448,9 +12448,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-zorro-antd@npm:^17.1.0":
-  version: 17.1.0
-  resolution: "ng-zorro-antd@npm:17.1.0"
+"ng-zorro-antd@npm:^17.2.0":
+  version: 17.2.0
+  resolution: "ng-zorro-antd@npm:17.2.0"
   dependencies:
     "@angular/cdk": "npm:^17.0.0"
     "@ant-design/icons-angular": "npm:^17.0.0"
@@ -12463,7 +12463,7 @@ __metadata:
     "@angular/forms": ^17.0.0
     "@angular/platform-browser": ^17.0.0
     "@angular/router": ^17.0.0
-  checksum: adfa1258912046dc171b1834756dca7149a382f58832dc37499f257d1d4456d257309be8161254eae883c7d3f87911e77f7738ed14491d596543a75d72fd49cb
+  checksum: d73a14650bb9f635bf6fe2e51e1c302052b243d3ad660fce5201fcb3d4da60c554de57a5c281ea11b150b6009ec2bd8c78cff016d8281841b1518eceeeb32126
   languageName: node
   linkType: hard
 

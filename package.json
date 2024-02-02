@@ -78,7 +78,7 @@
     "extend": "^3.0.2",
     "file-saver": "^2.0.5",
     "ng-github-button": "^17.0.0",
-    "ng-zorro-antd": "^17.1.0",
+    "ng-zorro-antd": "^17.2.0",
     "@angular/cdk": "^17.1.0",
     "ngx-countdown": "^17.1.1",
     "ngx-highlight-js": "^17.0.0",
