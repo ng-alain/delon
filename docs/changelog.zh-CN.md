@@ -14,6 +14,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [17.2.0](https://github.com/ng-alain/delon/compare/17.1.0...17.2.0) (2024-02-02)
+
+### Bug Fixes
+
+* 修复Chrome 121色块 ([#1761](https://github.com/ng-alain/delon/issues/1761)) ([6861343](https://github.com/ng-alain/delon/commit/6861343bbe3219dd588cb7ffc062984fa8a3a64e))
+* **form:widget:array:** 修复移除时导致重复性通知 ([#1758](https://github.com/ng-alain/delon/issues/1758)) ([4957399](https://github.com/ng-alain/delon/commit/49573999a63796a93a63eae63f392ff4da994e3d))
+
+### Features
+
+* **abc:st:** 新增 `trackBy` 属性 ([#1760](https://github.com/ng-alain/delon/issues/1760)) ([f4b2fec](https://github.com/ng-alain/delon/commit/f4b2feca272139ad70b7814e3ce5f407e07ef931))
+* **cache:** 新增 `CacheInterceptor` 本地缓存拦截器 ([#1576](https://github.com/ng-alain/delon/issues/1576)) ([837f4f0](https://github.com/ng-alain/delon/commit/837f4f0f7ac90da9912be8c6b3a1d7aa0c22b220))
+
+
 # [17.1.0](https://github.com/ng-alain/delon/compare/17.0.5...17.1.0) (2024-01-20)
 
 ### Bug Fixes

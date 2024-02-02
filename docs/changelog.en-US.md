@@ -14,6 +14,19 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [17.2.0](https://github.com/ng-alain/delon/compare/17.1.0...17.2.0) (2024-02-02)
+
+### Bug Fixes
+
+* fix scrollbar thumb color default is `transparent` ([#1761](https://github.com/ng-alain/delon/issues/1761)) ([6861343](https://github.com/ng-alain/delon/commit/6861343bbe3219dd588cb7ffc062984fa8a3a64e))
+* **form:widget:array:** fix error remove notify ([#1758](https://github.com/ng-alain/delon/issues/1758)) ([4957399](https://github.com/ng-alain/delon/commit/49573999a63796a93a63eae63f392ff4da994e3d))
+
+### Features
+
+* **abc:st:** add `trackBy` property ([#1760](https://github.com/ng-alain/delon/issues/1760)) ([f4b2fec](https://github.com/ng-alain/delon/commit/f4b2feca272139ad70b7814e3ce5f407e07ef931))
+* **cache:** add `CacheInterceptor` ([#1576](https://github.com/ng-alain/delon/issues/1576)) ([837f4f0](https://github.com/ng-alain/delon/commit/837f4f0f7ac90da9912be8c6b3a1d7aa0c22b220))
+
+
 # [17.1.0](https://github.com/ng-alain/delon/compare/17.0.5...17.1.0) (2024-01-20)
 
 ### Bug Fixes
