@@ -27,7 +27,7 @@ async function withGithub(url, json, method) {
 }
 
 (async function run() {
-  if (PR == null) {
+  if (!PR) {
     console.log('未获取到PR，忽略处理')
     return;
   }
