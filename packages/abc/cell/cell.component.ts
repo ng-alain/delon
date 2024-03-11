@@ -62,7 +62,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
           <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
         }
         @case ('widget') {
-          @if (res != null) {
+          @if (res) {
             <ng-template cell-widget-host [data]="res" />
           }
         }
