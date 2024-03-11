@@ -1,16 +1,13 @@
 name: CI
 
-on: push
+# on: push
+on: [pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jwalton/gh-find-current-pr@master
-        id: findPr
-        with:
-          state: all
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -20,7 +17,7 @@ jobs:
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+          PR_NUMBER: ${{ github.event.number }}
       - uses: actions/cache@v3
         with:
           path: ./node_modules
@@ -35,7 +32,7 @@ jobs:
         run: yarn run site:build
       - name: 'Deploy Site'
         run: |
-          export DEPLOY_DOMAIN=https://preview-${{ steps.findPr.outputs.pr }}-ng-alain-delon.surge.sh
+          export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           echo "Deploy to $DEPLOY_DOMAIN"
           cp ./src/dist/browser/index.html ./src/dist/browser/404.html
           npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
@@ -46,19 +43,19 @@ jobs:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: 'Update comment on github'
         run: |
-          export DEPLOY_DOMAIN=https://preview-${{ steps.findPr.outputs.pr }}-ng-alain-delon.surge.sh
+          export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+          PR_NUMBER: ${{ github.event.number }}
       - name: 'When failed'
         if: failure()
         run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ steps.findPr.outputs.pr }}
+          PR_NUMBER: ${{ github.event.number }}
 
   test:
     runs-on: ubuntu-latest
