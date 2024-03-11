@@ -17,7 +17,7 @@ jobs:
           cache: 'yarn'
       - name: Comment on github
         run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
-        if: !!github.event.number
+        if: github.event.number
         env:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
@@ -35,7 +35,7 @@ jobs:
       - name: Build site
         run: yarn run site:build
       - name: 'Deploy Site'
-        if: !!github.event.number
+        if: github.event.number
         run: |
           export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           echo "Deploy to $DEPLOY_DOMAIN"
@@ -47,7 +47,7 @@ jobs:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: 'Update comment on github'
-        if: !!github.event.number
+        if: github.event.number
         run: |
           export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
@@ -56,7 +56,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
       - name: 'When failed'
-        if: !!github.event.number && failure()
+        if: github.event.number && failure()
         run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         env:
           ACCESS_REPO: ${{ github.repository }}
