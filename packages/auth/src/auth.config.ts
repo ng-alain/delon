@@ -9,7 +9,8 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   token_send_place: 'header',
   login_url: '/login',
   refreshTime: 3000,
-  refreshOffset: 6000
+  refreshOffset: 6000,
+  ignores: [/\/assets\//]
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainAuthConfig {
