@@ -16,7 +16,7 @@ export class CellHostDirective implements OnInit {
   @Input() data!: CellTextResult;
 
   ngOnInit(): void {
-    const widget = this.data.options!.widget!;
+    const widget = this.data.options.widget!;
     const componentType = this.srv.getWidget(widget.key!)?.ref as Type<unknown>;
     if (componentType == null) {
       if (typeof ngDevMode === 'undefined' || ngDevMode) {
