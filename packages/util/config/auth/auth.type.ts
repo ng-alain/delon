@@ -32,7 +32,7 @@ export interface AlainAuthConfig {
    */
   login_url?: string;
   /**
-   * 忽略TOKEN的URL地址列表，默认值为：`[/\/login/, /assets\//, /passport\//]`
+   * 忽略TOKEN的URL地址列表，默认值为：`[/\/assets\//]`
    */
   ignores?: RegExp[];
   /**
