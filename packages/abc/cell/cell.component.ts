@@ -33,7 +33,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { CellHostDirective } from './cell-host.directive';
 import { CellService } from './cell.service';
-import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidgetData } from './cell.types';
+import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './cell.types';
 
 @Component({
   selector: 'cell, [cell]',
@@ -59,10 +59,10 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue, CellWidge
           </nz-tag>
         }
         @case ('badge') {
-          <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
+          <nz-badge [nzStatus]="res?.result?.color" [nzText]="_text" />
         }
         @case ('widget') {
-          <ng-template cell-widget-host [data]="hostData" />
+          <ng-template cell-widget-host [data]="res" />
         }
         @case ('img') {
           @for (i of $any(_text); track $index) {
@@ -153,13 +153,6 @@ export class CellComponent implements OnChanges, OnDestroy {
 
   get isText(): boolean {
     return this.res?.safeHtml === 'text';
-  }
-
-  get hostData(): CellWidgetData {
-    return {
-      value: this.value,
-      options: this.srv.fixOptions(this.options)
-    };
   }
 
   private updateValue(): void {

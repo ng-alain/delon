@@ -67,25 +67,27 @@ Cell formatting is supported for multiple data types, and supports widget mode.
 Just implement the `CellWidgetInstance` interface, for example:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import type { CellWidgetData, CellWidgetInstance } from '@delon/abc/cell';
+import type { CellTextResult, CellWidgetInstance } from '@delon/abc/cell';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'cell-widget-test',
-  template: ` <img nz-tooltip nzTooltipTitle="Client it" [src]="data.value" class="img" style="cursor: pointer" /> `,
+  template: `<img nz-tooltip nzTooltipTitle="Client it" [src]="data.result.text" class="img" style="cursor: pointer" /> `,
   host: {
     '(click)': 'show()'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ NzToolTipModule ]
 })
 export class CellTestWidget implements CellWidgetInstance {
+  private readonly msg = inject(NzMessageService);
   static readonly KEY = 'test';
 
-  readonly data!: CellWidgetData;
-
-  constructor(private msg: NzMessageService) {}
+  readonly data!: CellTextResult;
 
   show(): void {
     this.msg.info(`click`);
