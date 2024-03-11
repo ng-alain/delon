@@ -6,5 +6,13 @@
     "flatModuleFile": "theme",
     "entryFile": "public_api.ts"
   },
-  "allowedNonPeerDependencies": ["date-fns", "ng-zorro-antd", "@delon/acl", "@delon/util", "@ant-design/icons-angular"]
+  "allowedNonPeerDependencies": [
+    "date-fns",
+    "ng-zorro-antd",
+    "@delon/acl",
+    "@delon/abc",
+    "@delon/form",
+    "@delon/util",
+    "@ant-design/icons-angular"
+  ]
 }
