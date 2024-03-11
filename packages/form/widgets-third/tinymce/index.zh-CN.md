@@ -12,10 +12,8 @@ Tinymce富文本。
 
 `npm i -S ngx-tinymce`
 
-**导入模块**
-
-- 1、在 `app.module.ts` 下导入 `NgxTinymceModule.forRoot()`
-- 2、在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `TinymceWidgetModule`。
+- 1、在 `app.config.ts` 下注册 `provideTinymce()`
+- 2、在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withTinymceWidget`。
 
 > 关于更多 tinymce 配置请参考 [ngx-tinymce](https://github.com/cipchk/ngx-tinymce)。
 

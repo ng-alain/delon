@@ -6,9 +6,9 @@ type: Non-built-in widgets
 
 Double column transfer choice box.
 
-## Import module
+## How to use
 
-Non-built-in modules, Should be import `TransferWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+Non-built-in modules need to additionally register `withTransferWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## Note
 

@@ -6,9 +6,9 @@ type: Non-built-in widgets
 
 Tag for categorizing or markup, **Notice:** Just only supported `checkable` tag mode.
 
-## Import module
+## How to use
 
-Non-built-in modules, Should be import `TagWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+Non-built-in modules need to additionally register `withTagWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## API
 

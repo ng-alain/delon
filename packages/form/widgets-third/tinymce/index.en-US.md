@@ -14,10 +14,8 @@ Since the Tinymce editor relies on a third-party plug-in [ngx-tinymce](https://g
 
 `npm i -S ngx-tinymce`
 
-**Import module**    
-
-- 1. Import `NgxTinymceModule.forRoot()` in `app.module.ts`
-- 2. Import `TinymceWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+- 1. Register `provideNuMonacoEditorConfig()` in `app.config.ts`
+- 2. Register `withTinymceWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 > For more tinymce configuration, please refer to [ngx-tinymce](https://github.com/cipchk/ngx-tinymce).
 

@@ -6,9 +6,9 @@ type: Non-built-in widgets
 
 一般用于省市区，公司层级，事物分类等。
 
-## 导入模块
+## 如何使用
 
-非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `CascaderWidgetModule`。
+非内置模块，需要额外在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withCascaderWidget`。
 
 ## 注意事项
 

@@ -6,9 +6,9 @@ type: Non-built-in widgets
 
 Usually, it's used in province/city/district, company hierarchy, category of things, etc.
 
-## Import module
+## How to use
 
-Non-built-in modules, Should be import `CascaderWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+Non-built-in modules need to additionally register `withCascaderWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## Note
 
