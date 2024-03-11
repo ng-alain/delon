@@ -337,7 +337,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   private loadData(options?: STDataSourceOptions): Observable<STDataSourceResult> {
-    const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
+    const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName, _columns, _headers } = this;
     return this.dataSource
       .process({
         pi,
@@ -347,7 +347,8 @@ export class STComponent implements AfterViewInit, OnChanges {
         req,
         res,
         page,
-        columns: this._columns,
+        columns: _columns,
+        headers: _headers,
         singleSort,
         multiSort,
         rowClassName,
@@ -620,18 +621,20 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   // #region sort
 
-  sort(col: _STColumn, idx: number, value: NzSafeAny): void {
+  sort(col: _STColumn, value: NzSafeAny): void {
     if (this.multiSort) {
       col._sort.default = value;
       col._sort.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
+      this._headers.forEach(row => {
+        row.forEach(item => (item.column._sort.default = item.column === col ? value : null));
+      });
     }
     this.cdr.detectChanges();
     this.loadPageData().subscribe(() => {
       const res = {
         value,
-        map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
+        map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._headers),
         column: col
       };
       this.changeEmit('sort', res);
@@ -639,7 +642,9 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   clearSort(): this {
-    this._columns.forEach(item => (item._sort.default = null));
+    this._headers.forEach(row => {
+      row.forEach(item => (item.column._sort.default = null));
+    });
     return this;
   }
 

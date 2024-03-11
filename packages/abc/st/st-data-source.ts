@@ -35,7 +35,7 @@ import type {
   STStatisticalResults,
   STStatisticalType
 } from './st.interfaces';
-import { _STColumn, _STColumnButton, _STDataValue } from './st.types';
+import type { _STColumn, _STColumnButton, _STDataValue, _STHeader } from './st.types';
 
 export interface STDataSourceOptions {
   pi: number;
@@ -47,6 +47,7 @@ export interface STDataSourceOptions {
   res: STRes;
   page: STPage;
   columns: _STColumn[];
+  headers: _STHeader[][];
   singleSort?: STSingleSort | null;
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName | null;
@@ -89,7 +90,7 @@ export class STDataSource {
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
     let data$: Observable<STData[]>;
     let isRemote = false;
-    const { data, res, total, page, pi, ps, paginator, columns } = options;
+    const { data, res, total, page, pi, ps, paginator, columns, headers } = options;
     let retTotal: number;
     let retPs: number;
     let retList: STData[];
@@ -141,7 +142,7 @@ export class STDataSource {
         map((result: STData[]) => {
           rawData = result;
           let copyResult = deepCopy(result);
-          const sorterFn = this.getSorterFn(columns as _STColumn[]);
+          const sorterFn = this.getSorterFn(headers);
           if (sorterFn) {
             copyResult = copyResult.sort(sorterFn);
           }
@@ -277,7 +278,7 @@ export class STDataSource {
   }
 
   private getByRemote(url: string, options: STDataSourceOptions): Observable<unknown> {
-    const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
+    const { req, page, paginator, pi, ps, singleSort, multiSort, columns, headers } = options;
     const method = (req.method || 'GET').toUpperCase();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let params: { [param: string]: any } = {};
@@ -298,7 +299,7 @@ export class STDataSource {
     params = {
       ...params,
       ...req.params,
-      ...this.getReqSortMap(singleSort, multiSort, columns),
+      ...this.getReqSortMap(singleSort, multiSort, headers),
       ...this.getReqFilterMap(columns)
     };
     if (options.req.ignoreParamNull == true) {
@@ -417,12 +418,18 @@ export class STDataSource {
 
   // #region sort
 
-  private getValidSort(columns: _STColumn[]): STSortMap[] {
-    return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
+  private getValidSort(headers: _STHeader[][]): STSortMap[] {
+    return headers.reduce((a, header) => {
+      const ls = header
+        .map(i => i.column)
+        .filter(item => item._sort && item._sort.enabled && item._sort.default)
+        .map(item => item._sort!);
+      return a.concat(...ls);
+    }, [] as STSortMap[]);
   }
 
-  private getSorterFn(columns: _STColumn[]): ((a: STData, b: STData) => number) | void {
-    const sortList = this.getValidSort(columns);
+  private getSorterFn(headers: _STHeader[][]): ((a: STData, b: STData) => number) | void {
+    const sortList = this.getValidSort(headers);
     if (sortList.length === 0) {
       return;
     }
@@ -453,10 +460,10 @@ export class STDataSource {
   getReqSortMap(
     singleSort: STSingleSort | undefined | null,
     multiSort: STMultiSort | undefined,
-    columns: _STColumn[]
+    headers: _STHeader[][]
   ): STMultiSortResultType {
     let ret: STMultiSortResultType = {};
-    const sortList = this.getValidSort(columns);
+    const sortList = this.getValidSort(headers);
 
     if (multiSort) {
       const ms: STMultiSort = {

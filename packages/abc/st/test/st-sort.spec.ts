@@ -39,7 +39,7 @@ describe('abc: st-sort', () => {
       it('muse provide the compare function', fakeAsync(() => {
         spyOn(console, 'warn');
         page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as NzSafeAny }]);
-        comp.sort(comp._columns[0], 0, 'descend');
+        comp.sort(comp._columns[0], 'descend');
         page.cd();
         expect(console.warn).toHaveBeenCalled();
         page.asyncEnd();
@@ -47,14 +47,14 @@ describe('abc: st-sort', () => {
       it('should be auto generate compose when sort is true', fakeAsync(() => {
         context.data = [{ i: 1 }, { i: 2 }];
         page.updateColumn([{ title: '', index: 'i', sort: true }]);
-        comp.sort(comp._columns[0], 0, 'descend');
+        comp.sort(comp._columns[0], 'descend');
         page.cd();
         expect(context.comp.list[0].i).toBe(2);
         page.asyncEnd();
       }));
       it('should be sorting', fakeAsync(() => {
         page.cd();
-        comp.sort(comp._columns[0], 0, 'descend');
+        comp.sort(comp._columns[0], 'descend');
         const sortList = comp._columns
           .filter(item => item._sort && item._sort.enabled && item._sort.default)
           .map(item => item._sort!);
@@ -67,8 +67,8 @@ describe('abc: st-sort', () => {
       beforeEach(() => (context.multiSort = true));
       it('should be sorting', fakeAsync(() => {
         page.cd();
-        comp.sort(comp._columns[0], 0, 'descend');
-        comp.sort(comp._columns[1], 0, 'ascend');
+        comp.sort(comp._columns[0], 'descend');
+        comp.sort(comp._columns[1], 'ascend');
         const sortList = comp._columns
           .filter(item => item._sort && item._sort.enabled && item._sort.default)
           .map(item => item._sort!);

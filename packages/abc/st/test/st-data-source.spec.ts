@@ -67,6 +67,7 @@ describe('abc: table: data-souce', () => {
       res: deepCopy(ST_DEFAULT_CONFIG.res),
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
+      headers: [[{ colSpan: 1, rowSpan: 1, hasSubColumns: false, column: { title: '', index: 'id' } as _STColumn }]],
       paginator: true
     };
     TestBed.configureTestingModule({
@@ -167,14 +168,14 @@ describe('abc: table: data-souce', () => {
     describe('[sort]', () => {
       beforeEach(() => {
         options.data = genData(DEFAULT.total, true);
-        options.columns[0]._sort = {
+        options.headers[0][0].column._sort = {
           enabled: true,
           compare: (a: any, b: any) => a.id - b.id
         };
       });
       it(`should be decremented`, done => {
         (options.data as STData[])[1].id = 100000;
-        options.columns[0]._sort.default = 'descend';
+        options.headers[0][0].column._sort.default = 'descend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(100000);
           done();
@@ -182,14 +183,14 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be incremented`, done => {
         (options.data as STData[])[1].id = -100000;
-        options.columns[0]._sort.default = 'ascend';
+        options.headers[0][0].column._sort.default = 'ascend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(-100000);
           done();
         });
       });
       it('should be null, muse be ingore sort processing', done => {
-        options.columns[0]._sort = {
+        options.headers[0][0].column._sort = {
           enabled: true,
           compare: null,
           default: 'descend'
@@ -464,7 +465,7 @@ describe('abc: table: data-souce', () => {
       beforeEach(() => {
         genModule();
         options.data = '/mockurl';
-        options.columns[0]._sort = {
+        options.headers[0][0].column._sort = {
           enabled: true,
           key: 'id'
         };
@@ -474,30 +475,30 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be decremented`, done => {
-        options.columns[0]._sort.default = 'descend';
+        options.headers[0][0].column._sort.default = 'descend';
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('descend');
           done();
         });
       });
       it(`should be incremented`, done => {
-        options.columns[0]._sort.default = 'ascend';
+        options.headers[0][0].column._sort.default = 'ascend';
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('ascend');
           done();
         });
       });
       it(`should be re-name`, done => {
-        options.columns[0]._sort.default = 'ascend';
-        options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
+        options.headers[0][0].column._sort.default = 'ascend';
+        options.headers[0][0].column._sort.reName = { ascend: 'A', descend: 'D' };
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('A');
           done();
         });
       });
       it(`should be used default key when invalid re-name paraments`, done => {
-        options.columns[0]._sort.default = 'ascend';
-        options.columns[0]._sort.reName = {};
+        options.headers[0][0].column._sort.default = 'ascend';
+        options.headers[0][0].column._sort.reName = {};
         srv.process(options).subscribe(() => {
           expect(resParams.get('id')!).toBe('ascend');
           done();
@@ -521,6 +522,12 @@ describe('abc: table: data-souce', () => {
               index: 'id2',
               _sort: { enabled: true, default: 'ascend', key: 'id2' }
             }
+          ];
+          options.headers = [
+            [
+              { colSpan: 1, rowSpan: 1, hasSubColumns: false, column: options.columns[0] },
+              { colSpan: 1, rowSpan: 1, hasSubColumns: false, column: options.columns[1] }
+            ]
           ];
         });
         it(`should be`, done => {
@@ -553,6 +560,12 @@ describe('abc: table: data-souce', () => {
               sort: true
             }
           ] as _STColumn[];
+          options.headers = [
+            [
+              { colSpan: 1, rowSpan: 1, hasSubColumns: false, column: options.columns[0] },
+              { colSpan: 1, rowSpan: 1, hasSubColumns: false, column: options.columns[1] }
+            ]
+          ];
           srv.process(options).subscribe(() => {
             expect(resParams.has('SORT')).toBe(false);
             done();
@@ -586,7 +599,7 @@ describe('abc: table: data-souce', () => {
       });
       describe('[singleSort]', () => {
         it(`should working`, done => {
-          options.columns[0]._sort.default = 'ascend';
+          options.headers[0][0].column._sort.default = 'ascend';
           options.singleSort = {};
           srv.process(options).subscribe(() => {
             expect(resParams.get('sort')).toBe('id.ascend');
@@ -594,7 +607,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it(`should specify options`, done => {
-          options.columns[0]._sort.default = 'ascend';
+          options.headers[0][0].column._sort.default = 'ascend';
           options.singleSort = { key: 'SORT', nameSeparator: '-' };
           srv.process(options).subscribe(() => {
             expect(resParams.get('SORT')).toBe('id-ascend');

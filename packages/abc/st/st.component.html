@@ -60,7 +60,7 @@
           @if ($first && expand) {
             <th nzWidth="50px" [rowSpan]="_headers.length"></th>
           }
-          @for (h of row; track index; let index = $index; let last = $last) {
+          @for (h of row; track h; let index = $index; let last = $last) {
             <th
               *let="h.column as _c"
               [colSpan]="h.colSpan"
@@ -73,7 +73,7 @@
               [attr.data-col-index]="index"
               [nzShowSort]="_c._sort.enabled"
               [nzSortOrder]="$any(_c)._sort.default"
-              (nzSortOrderChange)="sort(_c, index, $event)"
+              (nzSortOrderChange)="sort(_c, $event)"
               [nzCustomFilter]="!!_c.filter"
               [class.st__has-filter]="_c.filter"
               nz-resizable
