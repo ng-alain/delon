@@ -155,6 +155,7 @@
             "include": [
               "./test.ts",
               // "**/st.spec.ts"
+              // "**/st/**/*.spec.ts"
               "**/*.spec.ts"
             ]
           }

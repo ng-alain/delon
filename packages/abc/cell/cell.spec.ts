@@ -15,7 +15,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { CellComponent } from './cell.component';
 import { CellModule } from './cell.module';
 import { CellService } from './cell.service';
-import { CellFuValue, CellOptions, CellWidgetData } from './cell.types';
+import { CellFuValue, CellOptions, CellTextResult } from './cell.types';
 import { provideCellWidgets } from './provide';
 
 const DATE = new Date(2022, 0, 1, 1, 2, 3);
@@ -354,12 +354,12 @@ describe('abc: cell', () => {
 });
 
 @Component({
-  template: `{{ data.value }}-{{ data.options.widget.data }}`
+  template: `{{ data.result.text }}-{{ data.options.widget.data }}`
 })
 class TestWidget {
   static readonly KEY = 'test';
 
-  data!: CellWidgetData;
+  data!: CellTextResult;
 }
 
 @Component({

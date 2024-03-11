@@ -3,7 +3,7 @@ import { Directive, Input, OnInit, Type, ViewContainerRef, inject } from '@angul
 import { warn } from '@delon/util/other';
 
 import { CellService } from './cell.service';
-import { CellWidgetData } from './cell.types';
+import { CellTextResult } from './cell.types';
 
 @Directive({
   selector: '[cell-widget-host]',
@@ -13,7 +13,7 @@ export class CellHostDirective implements OnInit {
   private readonly srv = inject(CellService);
   private readonly viewContainerRef = inject(ViewContainerRef);
 
-  @Input() data!: CellWidgetData;
+  @Input() data!: CellTextResult;
 
   ngOnInit(): void {
     const widget = this.data.options!.widget!;
@@ -27,6 +27,6 @@ export class CellHostDirective implements OnInit {
 
     this.viewContainerRef.clear();
     const componentRef = this.viewContainerRef.createComponent(componentType);
-    (componentRef.instance as { data: CellWidgetData }).data = this.data;
+    (componentRef.instance as { data: CellTextResult }).data = this.data;
   }
 }
