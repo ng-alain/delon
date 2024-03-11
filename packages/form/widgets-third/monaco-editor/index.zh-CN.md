@@ -12,10 +12,8 @@ Markdown编辑器。
 
 `yarn add @ng-util/monaco-editor`
 
-**导入模块**
-
-- 1、在 `app.module.ts` 下导入 `NuMonacoEditorModule.forRoot()`
-- 2、在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `MonacoEditorWidgetModule`。
+- 1、在 `app.config.ts` 下注册 `provideNuMonacoEditorConfig()`
+- 2、在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withMonacoEditorWidget`。
 
 > 关于更多 Monaco Editor 配置请参考 [@ng-util/monaco-editor](https://github.com/ng-util/ng-util/blob/master/packages/monaco-editor/README.md#usage)。
 

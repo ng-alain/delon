@@ -12,9 +12,8 @@ type: Non-built-in widgets
 
 `yarn add ng-antd-color-picker`
 
-**导入模块**
+非内置模块，需要额外在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withColorWidget`。
 
-非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `ColorWidgetModule`。
 
 ## API
 

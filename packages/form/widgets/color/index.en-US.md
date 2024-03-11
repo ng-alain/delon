@@ -6,15 +6,13 @@ type: Non-built-in widgets
 
 Used when the user needs to customize the color selection.
 
-## How to Use
+## How to use
 
 **Installation dependencies**  
 
 `yarn add ng-antd-color-picker`
 
-**Import Module**
-
-Non-built-in modules, Should be import `ColorWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+Non-built-in modules need to additionally register `withColorWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## API
 

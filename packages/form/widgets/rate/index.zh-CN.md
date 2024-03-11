@@ -6,9 +6,9 @@ type: Non-built-in widgets
 
 对评价进行展示，对事物进行快速的评级操作。
 
-## 导入模块
+## 如何使用
 
-非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `RateWidgetModule`。
+非内置模块，需要额外在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withRateWidget`。
 
 ## API
 

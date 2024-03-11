@@ -7,9 +7,9 @@ type: Non-built-in widgets
 - 用于展示多个选项并允许用户选择其中单个选项；
 - 当切换选中选项时，关联区域的内容会发生变化。
 
-## 导入模块
+## 如何使用
 
-非内置模块，需要额外在 [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11) 导入 `SegmentedWidgetModule`。
+非内置模块，需要额外在 [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9) 注册 `withSegmentedWidget`。
 
 ## API
 

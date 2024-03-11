@@ -12,10 +12,8 @@ Markdown Editor
 
 `yarn add @ng-util/monaco-editor`
 
-**Import module**    
-
-- 1. Import `NuMonacoEditorModule.forRoot()` in `app.module.ts`
-- 2. Import `MonacoEditorWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+- 1. Register `provideNuMonacoEditorConfig()` in `app.config.ts`
+- 2. Register `withMonacoEditorWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 > For more Monaco Editor configuration, please refer to [@ng-util/monaco-editor](https://github.com/ng-util/ng-util/blob/master/packages/monaco-editor/README.md#usage).
 

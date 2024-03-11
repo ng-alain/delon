@@ -7,9 +7,9 @@ type: Non-built-in widgets
 - When displaying multiple options and user can select a single option;
 - When switching the selected option, the content of the associated area changes.
 
-## Import module
+## How to use
 
-Non-built-in modules, Should be import `SegmentedWidgetModule` in [json-schema.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts#L11).
+Non-built-in modules need to additionally register `withSegmentedWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## API
 
