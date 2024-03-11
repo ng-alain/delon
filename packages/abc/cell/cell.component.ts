@@ -59,10 +59,12 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
           </nz-tag>
         }
         @case ('badge') {
-          <nz-badge [nzStatus]="res?.result?.color" [nzText]="_text" />
+          <nz-badge [nzStatus]="res?.result?.color" nzText="{{ _text }}" />
         }
         @case ('widget') {
-          <ng-template cell-widget-host [data]="res" />
+          @if (res != null) {
+            <ng-template cell-widget-host [data]="res" />
+          }
         }
         @case ('img') {
           @for (i of $any(_text); track $index) {
