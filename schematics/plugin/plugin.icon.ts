@@ -11,8 +11,8 @@ import { getSourceFile } from '../utils';
 
 // includes ng-zorro-antd & @delon/*
 const WHITE_ICONS = [
-  // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/icons.ts
-  // new Array(...new Set([...document.querySelectorAll('.pl-smi')].map(el => el.innerText).filter(val => /(Fill|Outline)$/g.test(val))))
+  // - zorro: https://raw.githubusercontent.com/NG-ZORRO/ng-zorro-antd/master/components/icon/icons.ts
+  // new Array(...new Set(document.querySelector('pre').innerText.split('\n').map(t => t.trim()).filter(val => /(Fill|Outline)[,]?$/g.test(val)))).map(v => v.substring(0, v.length - 1))
   'BarsOutline',
   'CalendarOutline',
   'CaretDownFill',
@@ -55,12 +55,14 @@ const WHITE_ICONS = [
   'UpOutline',
   'VerticalAlignTopOutline',
   'ZoomInOutline',
-  'ZoomOutOutline',
-  // - @delon: https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33
+  'ZoomOutOutlin',
+  // - @delon: https://github.com/ng-alain/delon/blob/master/packages/theme/src/provide.ts#L15
   'BellOutline',
   'DeleteOutline',
   'PlusOutline',
-  'InboxOutline'
+  'InboxOutline',
+  'MenuFoldOutline',
+  'MenuUnfoldOutline'
 ];
 
 const ATTRIBUTES = {
