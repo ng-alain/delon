@@ -13,11 +13,9 @@ DIST="$(pwd)/dist"
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
 commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
-commitMessage=$(git show -s --format=%s)
-commitMessageCheck=$(git show -s --format=%s)
 
 echo "Current commit author name: ${commitAuthorName}"
-echo "Current commit message: ${commitMessageCheck}"
+echo "Current commit message: ${MESSAGE}"
 
 # if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
 #   echo "Warning: Just only 卡色 or cipchk user"
@@ -44,7 +42,7 @@ branchName=${TRAVIS_BRANCH:-'master'}
 
 buildVersionName="${buildVersion}-${commitSha}"
 buildTagName="${branchName}-${commitSha}"
-buildCommitMessage="${branchName} - ${commitMessage}"
+buildCommitMessage="${branchName} - ${MESSAGE}"
 
 repoUrl="https://github.com/ng-alain/${packageRepo}.git"
 repoDir="${DIST}/${packageRepo}"
@@ -80,7 +78,7 @@ cp -r ${buildDir}/* ./
 echo "Removed everything from ${packageRepo}#${branchName} and added the new build output."
 
 # 替换版本号
-if [[ $commitMessageCheck =~ "release(" ]]; then
+if [[ $MESSAGE =~ "release(" ]]; then
   echo "===== Release version does not need to change version ====="
 else
   echo "Replace build version..."
@@ -110,9 +108,9 @@ git push origin ${branchName} --tags
 
 echo "Published package artifacts for ${packageName}#${buildVersionName} into ${branchName}"
 
-if [[ $commitMessageCheck =~ "release(" ]]; then
+if [[ $MESSAGE =~ "release(" ]]; then
   echo "Release version does not need to change version ====="
-  echo "COMMIT SOURCE: ${commitMessageCheck}"
+  echo "COMMIT SOURCE: ${MESSAGE}"
 fi
 
 echo "Download link:"
