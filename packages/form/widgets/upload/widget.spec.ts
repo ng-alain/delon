@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
@@ -18,7 +19,7 @@ describe('form: widget: upload', () => {
   let dl: DebugElement;
   const widget = 'upload';
 
-  configureSFTestSuite({ widgets: [withUploadWidget()], imports: [NzImageModule] });
+  configureSFTestSuite({ widgets: [withUploadWidget()], imports: [NzImageModule, NzIconTestModule] });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
