@@ -14,6 +14,23 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [17.3.0](https://github.com/ng-alain/delon/compare/17.2.0...17.3.0) (2024-03-13)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** fix can't cache when component is not used ([#1769](https://github.com/ng-alain/delon/issues/1769)) ([4cb939b](https://github.com/ng-alain/delon/commit/4cb939b390967262584f1ca50623f764fe98fa7f))
+* **abc:st:** fix sorting trigger misalignment in mulit-column ([#1767](https://github.com/ng-alain/delon/issues/1767)) ([4e9aab8](https://github.com/ng-alain/delon/commit/4e9aab89105df1f01061c51acfc921e06270c772))
+* update theme/package.json to depend on @delon/abc and @delon/form ([#1766](https://github.com/ng-alain/delon/issues/1766)) ([b7ea5ac](https://github.com/ng-alain/delon/commit/b7ea5ac9d08d97bec9609f6a4572213ba79116a8))
+
+### Features
+
+* **auth:** ignore all local resource ([#1775](https://github.com/ng-alain/delon/issues/1775)) ([cd8641e](https://github.com/ng-alain/delon/commit/cd8641e5902e1eedd78053591e84320426502be9))
+
+### Breaking Changes
+
+* **abc:cell** widget `data` type changed to `CellTextResult` ([#1771](https://github.com/ng-alain/delon/issues/1771)) ([920b5ab](https://github.com/ng-alain/delon/commit/920b5abc240761a2248feaa45d8f2fd046177f19))
+
+
 # [17.2.0](https://github.com/ng-alain/delon/compare/17.1.0...17.2.0) (2024-02-02)
 
 ### Bug Fixes
