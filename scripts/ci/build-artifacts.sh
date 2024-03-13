@@ -4,18 +4,18 @@ set -e
 
 readonly thisDir=$(cd $(dirname $0); pwd)
 
-${thisDir}/build.sh
-
-cd $(dirname $0)/../..
-
-DIST="$(pwd)/dist"
-
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
 commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
 
 echo "Current commit author name: ${commitAuthorName}"
 echo "Current commit message: ${MESSAGE}"
+
+${thisDir}/build.sh
+
+cd $(dirname $0)/../..
+
+DIST="$(pwd)/dist"
 
 # if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
 #   echo "Warning: Just only 卡色 or cipchk user"
