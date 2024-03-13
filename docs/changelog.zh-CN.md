@@ -14,6 +14,23 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [17.3.0](https://github.com/ng-alain/delon/compare/17.2.0...17.3.0) (2024-03-13)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复未使用组件时无法触发路由复用 ([#1769](https://github.com/ng-alain/delon/issues/1769)) ([4cb939b](https://github.com/ng-alain/delon/commit/4cb939b390967262584f1ca50623f764fe98fa7f))
+* **abc:st:** 修复多表头下触发排序错位 ([#1767](https://github.com/ng-alain/delon/issues/1767)) ([4e9aab8](https://github.com/ng-alain/delon/commit/4e9aab89105df1f01061c51acfc921e06270c772))
+* `@delon/theme` 依赖安装 `@delon/abc` 和 `@delon/form` ([#1766](https://github.com/ng-alain/delon/issues/1766)) ([b7ea5ac](https://github.com/ng-alain/delon/commit/b7ea5ac9d08d97bec9609f6a4572213ba79116a8))
+
+### Features
+
+* **auth:** 忽略所有本地路径，指的是 `assets/` 路径 ([#1775](https://github.com/ng-alain/delon/issues/1775)) ([cd8641e](https://github.com/ng-alain/delon/commit/cd8641e5902e1eedd78053591e84320426502be9))
+
+### Breaking Changes
+
+* **abc:cell** 自定义小部件 `data` 属性类型由变更为 `CellTextResult` ([#1771](https://github.com/ng-alain/delon/issues/1771)) ([920b5ab](https://github.com/ng-alain/delon/commit/920b5abc240761a2248feaa45d8f2fd046177f19))
+
+
 # [17.2.0](https://github.com/ng-alain/delon/compare/17.1.0...17.2.0) (2024-02-02)
 
 ### Bug Fixes
