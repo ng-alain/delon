@@ -13,8 +13,8 @@ DIST="$(pwd)/dist"
 commitSha=$(git rev-parse --short HEAD)
 commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
 commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
-commitMessage=$(git log --oneline -n 1)
-commitMessageCheck=$(git log --oneline -n 2)
+commitMessage=$(git show -s --format=%s)
+commitMessageCheck=$(git show -s --format=%s)
 
 echo "Current commit author name: ${commitAuthorName}"
 echo "Current commit message: ${commitMessageCheck}"
