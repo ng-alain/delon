@@ -34,22 +34,6 @@ cacheService.set('/data/unit', [ '个', '件' ]);
 npm i -S @delon/cache
 ```
 
-**注册**
-
-在根模块 `AppModule` 导入 `DelonCacheModule`；
-
-```ts
-import { DelonCacheModule } from '@delon/cache';
-
-@NgModule({
-  imports: [
-    DelonCacheModule
-  ]
-})
-```
-
-**注** 建议在根模块中导入，因为它只有 Service 为了防止重复被导入。
-
 ### 参数
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
