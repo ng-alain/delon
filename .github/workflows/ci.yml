@@ -33,6 +33,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           MESSAGE: ${{ github.event.pull_request.title || github.event.head_commit.message }}
+          BRANCH: ${{ github.ref_name }}
       - name: Build site
         run: yarn run site:build
       - name: 'Deploy Site'

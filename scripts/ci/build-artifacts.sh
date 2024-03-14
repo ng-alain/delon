@@ -2,6 +2,12 @@
 
 set -e
 
+if [ -z ${ACCESS_TOKEN} ]; then
+  echo "Error: No access token for GitHub could be found." \
+       "Please set the environment variable 'ACCESS_TOKEN'."
+  exit 0
+fi
+
 readonly thisDir=$(cd $(dirname $0); pwd)
 
 commitSha=$(git rev-parse --short HEAD)
@@ -17,19 +23,6 @@ cd $(dirname $0)/../..
 
 DIST="$(pwd)/dist"
 
-# if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
-#   echo "Warning: Just only 卡色 or cipchk user"
-#   exit 0
-# fi
-
-# echo "ACCESS_TOKEN: ${ACCESS_TOKEN}.."
-
-if [ -z ${ACCESS_TOKEN} ]; then
-  echo "Error: No access token for GitHub could be found." \
-       "Please set the environment variable 'ACCESS_TOKEN'."
-  exit 0
-fi
-
 buildDir=${DIST}/publish
 rm -rf ${buildDir}
 mkdir -p ${buildDir}
@@ -38,7 +31,7 @@ cp -r ${DIST}/ng-alain ${buildDir}/ng-alain
 
 packageRepo=delon-builds
 buildVersion=$(node -pe "require('./package.json').version")
-branchName=${TRAVIS_BRANCH:-'master'}
+branchName=${BRANCH:-'master'}
 
 buildVersionName="${buildVersion}-${commitSha}"
 buildTagName="${branchName}-${commitSha}"
