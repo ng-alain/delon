@@ -1,4 +1,3 @@
-@import '../../../theme/index.less';
 @sv-prefix: ~'.sv';
 
 @{sv-prefix} {
@@ -11,7 +10,7 @@
   &__container {
     display: block;
 
-    // offset the padding-bottom of last row
+    /** offset the padding-bottom of last row */
     .@{ant-prefix}-row {
       overflow: hidden;
       margin-bottom: -@sv-bottom;
@@ -125,7 +124,7 @@
   }
 
   &__small {
-    // offset the padding-bottom of last row
+    /** offset the padding-bottom of last row */
     .@{ant-prefix}-row {
       margin-bottom: -8px;
     }
@@ -157,7 +156,6 @@
     }
 
     &-text {
-      // font-weight: 700;font-weight
       font-size: @sv-value-default-value-font-size;
     }
 
