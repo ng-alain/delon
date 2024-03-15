@@ -10,7 +10,7 @@ function copyLess(name) {
   let sourcePath = path.join(root, `packages/${name}`);
   let targetPath = path.join(root, `dist/@delon/${name}`);
   // index.less
-  [`index.less`, `theme-default.less`, `theme-dark.less`, `theme-compact.less`]
+  [`index.less`, `theme-default.less`, `theme-dark.less`, `theme-compact.less`, `theme-variable.less`]
     .filter(fileName => fse.existsSync(`${sourcePath}/${fileName}`))
     .forEach(fileName => {
       fse.copySync(`${sourcePath}/${fileName}`, `${targetPath}/${fileName}`);
@@ -31,9 +31,11 @@ function copyTheme() {
     'default.less',
     'dark.less',
     'compact.less',
+    'variable.less',
     `theme-default.less`,
     `theme-dark.less`,
     `theme-compact.less`,
+    `theme-variable.less`,
   ].forEach(fileName => {
     fse.copySync(path.join(root, `packages/theme/${fileName}`), path.join(root, `dist/@delon/theme/${fileName}`));
   });
