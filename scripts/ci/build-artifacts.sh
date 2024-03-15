@@ -34,7 +34,10 @@ buildVersion=$(node -pe "require('./package.json').version")
 branchName=${BRANCH:-'master'}
 
 buildVersionName="${buildVersion}-${commitSha}"
-buildTagName="${branchName}-${commitSha}"
+buildTagName=${TAG_NAME:-"${branchName}-${commitSha}"}
+if [[ -n "${GITHUB_HEAD_REF}" ]]; then
+  buildTagName="${branchName}-${GITHUB_HEAD_REF}"
+fi
 buildCommitMessage="${branchName} - ${MESSAGE}"
 
 repoUrl="https://github.com/ng-alain/${packageRepo}.git"
