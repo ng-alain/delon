@@ -34,13 +34,16 @@ buildVersion=$(node -pe "require('./package.json').version")
 branchName=${BRANCH:-'master'}
 
 buildVersionName="${buildVersion}-${commitSha}"
-buildTagName="${branchName}-${commitSha}"
+buildTagName=${TAG_NAME:-"${branchName}-${commitSha}"}
+if [[ -n "${GITHUB_HEAD_REF}" ]]; then
+  buildTagName="${branchName}-${GITHUB_HEAD_REF}"
+fi
 buildCommitMessage="${branchName} - ${MESSAGE}"
 
 repoUrl="https://github.com/ng-alain/${packageRepo}.git"
 repoDir="${DIST}/${packageRepo}"
 
-echo "Starting publish process ${buildVersionName} into ${branchName}.."
+echo "Starting publish process ${buildVersionName} into ${branchName}(tag:${buildTagName}).."
 
 rm -rf ${repoDir}
 mkdir -p ${repoDir}
@@ -89,7 +92,8 @@ echo "https://${ACCESS_TOKEN}:@github.com" > .git/credentials
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
-  git push origin :refs/tags/${buildTagName}
+  # git push origin :refs/tags/${buildTagName}
+  git push --delete origin ${buildTagName}
 fi
 
 echo "Git configuration has been updated to match the last commit author. Publishing now.."
