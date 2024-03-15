@@ -111,18 +111,19 @@ Dynamically create a `link` tag, dynamically load style files into the applicati
 > You can also use the [theme-btn](https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/) component directly.
 
 ```ts
+private readonly doc = inject(DOCUMENT);
 changeTheme(theme: 'default' | 'dark'): void {
+  const el = this.doc.querySelector<HTMLLinkElement>('#dark-theme');
   if (theme === 'dark') {
-    const style = document.createElement('link');
+    if (el) return;
+    const style = this.doc.createElement('link');
     style.type = 'text/css';
     style.rel = 'stylesheet';
     style.id = 'dark-theme';
     style.href = 'assets/style.dark.css';
+    this.doc.head.appendChild(style);
   } else {
-    const dom = document.getElementById('dark-theme');
-    if (dom) {
-      dom.remove();
-    }
+    el?.remove();
   }
 }
 ```
