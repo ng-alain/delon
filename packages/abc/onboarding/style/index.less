@@ -1,4 +1,4 @@
-@import '../../../theme/theme-default.less';
+@import '../../../theme/index.less';
 @onboarding-prefix: ~'.onboarding';
 
 @{onboarding-prefix} {
@@ -10,7 +10,6 @@
     position: fixed;
     z-index: @onboarding-zindex - 1;
     inset: 0;
-    opacity: @onboarding-mask-opacity;
     background-color: @onboarding-mask-background-color;
   }
 
@@ -26,7 +25,6 @@
     animation: @onboarding-light-ant;
 
     &-el {
-      // position: relative;
       z-index: @onboarding-zindex + 1 !important;
     }
 

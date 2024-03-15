@@ -21,6 +21,8 @@
 /auth/set/zh
 /cache/getting-started/en
 /cache/getting-started/zh
+/cache/interceptor/en
+/cache/interceptor/zh
 /cache/service/en
 /cache/service/zh
 /chart/bar/en
