@@ -43,7 +43,7 @@ buildCommitMessage="${branchName} - ${MESSAGE}"
 repoUrl="https://github.com/ng-alain/${packageRepo}.git"
 repoDir="${DIST}/${packageRepo}"
 
-echo "Starting publish process ${buildVersionName} into ${branchName}.."
+echo "Starting publish process ${buildVersionName} into ${branchName}(tag:${buildTagName}).."
 
 rm -rf ${repoDir}
 mkdir -p ${repoDir}
