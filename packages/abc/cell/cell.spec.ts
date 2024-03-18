@@ -208,6 +208,7 @@ describe('abc: cell', () => {
             const srv = TestBed.inject(CellService);
             srv.registerWidget(TestWidget.KEY, TestWidget);
             page.update('1', { widget: { key: TestWidget.KEY, data: 'new data' } }).check('1-new data');
+            page.update('1', { widget: { key: TestWidget.KEY, data: 'new data2' } }).check('1-new data2');
           });
           it('when key is invalid', () => {
             spyOn(console, 'warn');
