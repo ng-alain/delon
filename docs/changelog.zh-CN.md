@@ -14,6 +14,16 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [17.3.1](https://github.com/ng-alain/delon/compare/17.3.0...17.3.1) (2024-03-18)
+
+### Bug Fixes
+
+* **abc:cell:** 修复自定义部件下无法变更检测 ([#1787](https://github.com/ng-alain/delon/issues/1787)) ([e9753cb](https://github.com/ng-alain/delon/commit/e9753cb43c392a5807319813c4db501701a72dc3))
+* **abc:st:** 修复拖拽手柄会触发排序或过滤事件 ([#1788](https://github.com/ng-alain/delon/issues/1788)) ([7939034](https://github.com/ng-alain/delon/commit/79390340d50d7ce5fb7698857be574df663b250b))
+* **cli:** 在 `startup.service` 中对请求当前资源路径增加 `./` ([#1780](https://github.com/ng-alain/delon/issues/1780)) ([905014b](https://github.com/ng-alain/delon/commit/905014bd09994b784dc467ae2884a1a3e99875de))
+* **theme:** 纠正 `.no-data` 暗黑模式下文字颜色 ([#1782](https://github.com/ng-alain/delon/issues/1782)) ([c74c639](https://github.com/ng-alain/delon/commit/c74c6395bb96b59a15e480736c133889c911f709))
+
+
 # [17.3.0](https://github.com/ng-alain/delon/compare/17.2.0...17.3.0) (2024-03-13)
 
 ### Bug Fixes
