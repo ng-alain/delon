@@ -143,10 +143,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       <div nz-col nzSpan="8"> Text Unit => <cell [value]="{ text: '100', unit: '元' }" /> </div>
       <div nz-col nzSpan="8">
         custom widget =>
-        <cell
-          value="https://randomuser.me/api/portraits/thumb/women/47.jpg"
-          [options]="{ widget: { key: 'test', data: 'new url' } }"
-        />
+        <cell [value]="imageValue" [options]="{ widget: { key: 'test', data: 'new url' } }" />
+        <a (click)="refreshImage()">Refresh Image</a>
       </div>
     </div>
   `,
@@ -165,6 +163,7 @@ export class DemoComponent implements OnInit {
   private readonly ds = inject(DomSanitizer);
   private readonly cdr = inject(ChangeDetectorRef);
   value: unknown = 'string';
+  imageValue = 'https://randomuser.me/api/portraits/thumb/women/47.jpg';
   checkbox = false;
   radio = true;
   disabled = false;
@@ -219,6 +218,11 @@ export class DemoComponent implements OnInit {
 
   updateSafeHtml(): void {
     this.safeHtml = this.ds.bypassSecurityTrustHtml(`alert('a');<script>alert('a')</script>`);
+    this.cdr.detectChanges();
+  }
+
+  refreshImage(): void {
+    this.imageValue = `https://randomuser.me/api/portraits/thumb/women/${Math.floor(Math.random() * 50) + 10}.jpg`;
     this.cdr.detectChanges();
   }
 }

@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, Type, ViewContainerRef, inject } from '@angular/core';
+import { Directive, Input, OnChanges, Type, ViewContainerRef, inject } from '@angular/core';
 
 import { warn } from '@delon/util/other';
 
@@ -9,13 +9,13 @@ import { CellTextResult } from './cell.types';
   selector: '[cell-widget-host]',
   standalone: true
 })
-export class CellHostDirective implements OnInit {
+export class CellHostDirective implements OnChanges {
   private readonly srv = inject(CellService);
-  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly vcr = inject(ViewContainerRef);
 
   @Input() data!: CellTextResult;
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     const widget = this.data.options.widget!;
     const componentType = this.srv.getWidget(widget.key!)?.ref as Type<unknown>;
     if (componentType == null) {
@@ -25,8 +25,8 @@ export class CellHostDirective implements OnInit {
       return;
     }
 
-    this.viewContainerRef.clear();
-    const componentRef = this.viewContainerRef.createComponent(componentType);
+    this.vcr.clear();
+    const componentRef = this.vcr.createComponent(componentType);
     (componentRef.instance as { data: CellTextResult }).data = this.data;
   }
 }
