@@ -1,4 +1,4 @@
-import{a as w,b as P}from"./chunk-T7RXZIJN.js";import{a as O}from"./chunk-64Y5MOQG.js";import"./chunk-AF4AECKR.js";import{a as s}from"./chunk-WYMATNOQ.js";import{a as L}from"./chunk-UUNXNAT6.js";import"./chunk-3T26VEYA.js";import"./chunk-U5X5LNAR.js";import"./chunk-JIHCE7VO.js";import{s as D,t as M,u as A}from"./chunk-2GKQ4GWX.js";import{R as C}from"./chunk-XUF4VQ5T.js";import{Db as h,Ja as b,Ka as N,Kg as T,Lb as c,Qg as _,Ua as S,Va as n,Xa as i,cg as y,da as r,dg as k,fg as v,hb as m,hg as x,ib as u,jb as l,qb as g,va as f}from"./chunk-LBINBHXL.js";var R=(()=>{let t=class t{constructor(){this.item={cols:1,urls:{"zh-CN":"packages/theme/docs/component-styles.md"},content:{"zh-CN":{content:`<section class="markdown"><p>\u5F53\u4F60\u5728\u4F7F\u7528 <code>ng g ng-alain:list</code> \u6765\u751F\u6210\u9875\u9762\u65F6\uFF0C\u4F1A\u53D1\u73B0\u5E76\u4E0D\u4F1A\u4EA7\u751F Less \u6587\u4EF6\uFF0C\u4E3B\u8981\u662F NG-ALAIN \u6709\u81EA\u5DF1\u7684\u4E00\u5957\u4E3B\u9898\u7CFB\u7EDF\uFF0CNG-ALAIN \u5E0C\u671B\u5229\u7528\u8FD9\u5957\u4E3B\u9898\u7CFB\u7EDF\u6765\u6784\u5EFA\u7EC4\u4EF6\uFF0C\u8BA9 CSS \u53D8\u6210\u7F16\u7A0B\u5316\u3002\u7136\u800C\u5B83\u5E76\u4E0D\u80FD\u6EE1\u8DB3\u6240\u6709\u9700\u6C42\uFF0C\u672C\u6587\u4F1A\u9488\u5BF9\u8FD9\u65B9\u9762\u505A\u4E00\u4E2A\u5168\u9762\u63CF\u8FF0\u3002</p><h2 id="\u5982\u4F55\u5F00\u59CB"><a class="lake-link"><i data-anchor="\u5982\u4F55\u5F00\u59CB"></i></a>\u5982\u4F55\u5F00\u59CB</h2><p>\u624B\u52A8\u521B\u5EFA\u7EC4\u4EF6\u6837\u5F0F\u6587\u4EF6\uFF0C\u4E0B\u9762\u4EE5 <code>img.component.less</code> \u4E3A\u793A\u4F8B\uFF1A</p><pre class="hljs language-less"><code>// \u5BFC\u5165 Less \u53D8\u91CF\u53C2\u6570
+import{a as w,b as P}from"./chunk-T7RXZIJN.js";import{a as O}from"./chunk-IPIC3QY6.js";import"./chunk-NDMAXOMU.js";import{a as s}from"./chunk-WYMATNOQ.js";import{a as L}from"./chunk-UUNXNAT6.js";import"./chunk-3T26VEYA.js";import"./chunk-U5X5LNAR.js";import"./chunk-JIHCE7VO.js";import{s as D,t as M,u as A}from"./chunk-2GKQ4GWX.js";import{R as C}from"./chunk-XUF4VQ5T.js";import{Db as h,Ja as b,Ka as N,Kg as T,Lb as c,Qg as _,Ua as S,Va as n,Xa as i,cg as y,da as r,dg as k,fg as v,hb as m,hg as x,ib as u,jb as l,qb as g,va as f}from"./chunk-LBINBHXL.js";var R=(()=>{let t=class t{constructor(){this.item={cols:1,urls:{"zh-CN":"packages/theme/docs/component-styles.md"},content:{"zh-CN":{content:`<section class="markdown"><p>\u5F53\u4F60\u5728\u4F7F\u7528 <code>ng g ng-alain:list</code> \u6765\u751F\u6210\u9875\u9762\u65F6\uFF0C\u4F1A\u53D1\u73B0\u5E76\u4E0D\u4F1A\u4EA7\u751F Less \u6587\u4EF6\uFF0C\u4E3B\u8981\u662F NG-ALAIN \u6709\u81EA\u5DF1\u7684\u4E00\u5957\u4E3B\u9898\u7CFB\u7EDF\uFF0CNG-ALAIN \u5E0C\u671B\u5229\u7528\u8FD9\u5957\u4E3B\u9898\u7CFB\u7EDF\u6765\u6784\u5EFA\u7EC4\u4EF6\uFF0C\u8BA9 CSS \u53D8\u6210\u7F16\u7A0B\u5316\u3002\u7136\u800C\u5B83\u5E76\u4E0D\u80FD\u6EE1\u8DB3\u6240\u6709\u9700\u6C42\uFF0C\u672C\u6587\u4F1A\u9488\u5BF9\u8FD9\u65B9\u9762\u505A\u4E00\u4E2A\u5168\u9762\u63CF\u8FF0\u3002</p><h2 id="\u5982\u4F55\u5F00\u59CB"><a class="lake-link"><i data-anchor="\u5982\u4F55\u5F00\u59CB"></i></a>\u5982\u4F55\u5F00\u59CB</h2><p>\u624B\u52A8\u521B\u5EFA\u7EC4\u4EF6\u6837\u5F0F\u6587\u4EF6\uFF0C\u4E0B\u9762\u4EE5 <code>img.component.less</code> \u4E3A\u793A\u4F8B\uFF1A</p><pre class="hljs language-less"><code>// \u5BFC\u5165 Less \u53D8\u91CF\u53C2\u6570
 @import '@delon/theme/index';
 
 :host {
@@ -69,18 +69,19 @@ import{a as w,b as P}from"./chunk-T7RXZIJN.js";import{a as O}from"./chunk-64Y5MO
       }
     ]
   }
-}</code></pre><p>Finally, run the following command:</p><pre class="hljs language-bash"><code>npx ng-alain-plugin-theme -t=themeCss</code></pre><p>Two style files will be generated in <code>src/assets/style.dark.css</code> and <code>src/assets/style.dust.css</code>.</p><ol><li><p>Switch Theme at Runtime</p></li></ol><p>Dynamically create a <code>link</code> tag, dynamically load style files into the application, and remove them otherwise.</p><blockquote><p>You can also use the <a target="_blank" href="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/" data-url="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/">theme-btn</a> component directly.</p></blockquote><pre class="hljs language-ts"><code>changeTheme(theme: 'default' | 'dark'): void {
+}</code></pre><p>Finally, run the following command:</p><pre class="hljs language-bash"><code>npx ng-alain-plugin-theme -t=themeCss</code></pre><p>Two style files will be generated in <code>src/assets/style.dark.css</code> and <code>src/assets/style.dust.css</code>.</p><ol><li><p>Switch Theme at Runtime</p></li></ol><p>Dynamically create a <code>link</code> tag, dynamically load style files into the application, and remove them otherwise.</p><blockquote><p>You can also use the <a target="_blank" href="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/" data-url="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/">theme-btn</a> component directly.</p></blockquote><pre class="hljs language-ts"><code>private readonly doc = inject(DOCUMENT);
+changeTheme(theme: 'default' | 'dark'): void {
+  const el = this.doc.querySelector<HTMLLinkElement>('#dark-theme');
   if (theme === 'dark') {
-    const style = document.createElement('link');
+    if (el) return;
+    const style = this.doc.createElement('link');
     style.type = 'text/css';
     style.rel = 'stylesheet';
     style.id = 'dark-theme';
     style.href = 'assets/style.dark.css';
+    this.doc.head.appendChild(style);
   } else {
-    const dom = document.getElementById('dark-theme');
-    if (dom) {
-      dom.remove();
-    }
+    el?.remove();
   }
 }</code></pre><p>Note: If you use <code>@delon/chart</code> or third-party component, you may need to manually modify the component to support the corresponding theme.</p><h2 id="Componentdevelopmentissues"><a class="lake-link"><i data-anchor="Componentdevelopmentissues"></i></a>Componentdevelopmentissues</h2><p>The above theme switching method is based on the fact that all Less style content is independent of <code>src/styles.less</code>. Sometimes, it is also defined in the component, like:</p><pre class="hljs language-ts"><code>@Component({
   selector: 'app-dashboard-analysis',
@@ -132,18 +133,19 @@ export class DashboardAnalysisComponent {}</code></pre><pre class="hljs language
       }
     ]
   }
-}</code></pre><p>\u6700\u540E\u8FD0\u884C\u4EE5\u4E0B\u547D\u4EE4\uFF1A</p><pre class="hljs language-bash"><code>npx ng-alain-plugin-theme -t=themeCss</code></pre><p>\u4F1A\u5728 <code>src/assets/style.dark.css</code> \u548C <code>src/assets/style.dust.css</code> \u751F\u6210\u4E24\u4E2A\u6837\u5F0F\u6587\u4EF6\u3002</p><ol><li><p>\u8FD0\u884C\u65F6\u5207\u6362\u6837\u5F0F</p></li></ol><p>\u52A8\u6001\u521B\u5EFA <code>link</code> \u6807\u7B7E\uFF0C\u5C06\u6837\u5F0F\u6587\u4EF6\u52A8\u6001\u52A0\u8F7D\u5728\u5E94\u7528\u4E2D\uFF0C\u53CD\u4E4B\u79FB\u9664\u3002</p><blockquote><p>\u4E5F\u53EF\u4EE5\u76F4\u63A5\u4F7F\u7528 <a target="_blank" href="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/" data-url="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/">theme-btn</a> \u7EC4\u4EF6\u3002</p></blockquote><pre class="hljs language-ts"><code>changeTheme(theme: 'default' | 'dark'): void {
+}</code></pre><p>\u6700\u540E\u8FD0\u884C\u4EE5\u4E0B\u547D\u4EE4\uFF1A</p><pre class="hljs language-bash"><code>npx ng-alain-plugin-theme -t=themeCss</code></pre><p>\u4F1A\u5728 <code>src/assets/style.dark.css</code> \u548C <code>src/assets/style.dust.css</code> \u751F\u6210\u4E24\u4E2A\u6837\u5F0F\u6587\u4EF6\u3002</p><ol><li><p>\u8FD0\u884C\u65F6\u5207\u6362\u6837\u5F0F</p></li></ol><p>\u52A8\u6001\u521B\u5EFA <code>link</code> \u6807\u7B7E\uFF0C\u5C06\u6837\u5F0F\u6587\u4EF6\u52A8\u6001\u52A0\u8F7D\u5728\u5E94\u7528\u4E2D\uFF0C\u53CD\u4E4B\u79FB\u9664\u3002</p><blockquote><p>\u4E5F\u53EF\u4EE5\u76F4\u63A5\u4F7F\u7528 <a target="_blank" href="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/" data-url="https://github.com/ng-alain/delon/tree/master/packages/theme/theme-btn/">theme-btn</a> \u7EC4\u4EF6\u3002</p></blockquote><pre class="hljs language-ts"><code>private readonly doc = inject(DOCUMENT);
+changeTheme(theme: 'default' | 'dark'): void {
+  const el = this.doc.querySelector<HTMLLinkElement>('#dark-theme');
   if (theme === 'dark') {
-    const style = document.createElement('link');
+    if (el) return;
+    const style = this.doc.createElement('link');
     style.type = 'text/css';
     style.rel = 'stylesheet';
     style.id = 'dark-theme';
     style.href = 'assets/style.dark.css';
+    this.doc.head.appendChild(style);
   } else {
-    const dom = document.getElementById('dark-theme');
-    if (dom) {
-      dom.remove();
-    }
+    el?.remove();
   }
 }</code></pre><blockquote><p>\u6CE8\u610F\uFF1A\u5982\u679C\u4F60\u4F7F\u7528 <code>@delon/chart</code> \u6216\u7B2C\u4E09\u65B9\u7EC4\u4EF6\uFF0C\u53EF\u80FD\u9700\u8981\u624B\u52A8\u4FEE\u6539\u7EC4\u4EF6\u6765\u652F\u6301\u76F8\u5E94\u7684\u4E3B\u9898\u3002</p></blockquote><h2 id="\u7EC4\u4EF6\u5F00\u53D1\u95EE\u9898"><a class="lake-link"><i data-anchor="\u7EC4\u4EF6\u5F00\u53D1\u95EE\u9898"></i></a>\u7EC4\u4EF6\u5F00\u53D1\u95EE\u9898</h2><p>\u4EE5\u4E0A\u4E3B\u9898\u5207\u6362\u65B9\u5F0F\u662F\u5728\u4E00\u4E2A\u5C06\u6240\u6709 Less \u6837\u5F0F\u5185\u5BB9\u72EC\u7ACB\u4E8E <code>src/styles.less</code> \u4E0B\u9762\uFF0C\u5F53\u6B63\u5E38\u60C5\u51B5\u4E0B\uFF0C\u8FD8\u4F1A\u5728\u7EC4\u4EF6\u5185\u5B9A\u4E49\uFF0C\u5C31\u50CF\uFF1A</p><pre class="hljs language-ts"><code>@Component({
   selector: 'app-dashboard-analysis',
