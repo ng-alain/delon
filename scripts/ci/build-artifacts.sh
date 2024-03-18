@@ -92,8 +92,9 @@ echo "https://${ACCESS_TOKEN}:@github.com" > .git/credentials
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
-  # git push origin :refs/tags/${buildTagName}
   git push --delete origin ${buildTagName}
+  git push origin :refs/tags/${buildTagName}
+  sleep 5
 fi
 
 echo "Git configuration has been updated to match the last commit author. Publishing now.."
@@ -101,7 +102,7 @@ echo "Git configuration has been updated to match the last commit author. Publis
 git add -A
 git commit --allow-empty -m "${buildCommitMessage}"
 git tag "${buildTagName}"
-git push origin ${branchName} --tags
+git push origin ${branchName} --tags -f
 
 echo "Published package artifacts for ${packageName}#${buildVersionName} into ${branchName}"
 

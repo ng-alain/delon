@@ -1,22 +1,19 @@
-@import 'ng-zorro-antd/src/style/mixins/index.less';
-@import './mixins/index.less';
-
 @root-entry-name: default;
-
-@white:     #fff;
-@black:     #000;
 
 // grey
 @grey-1:  #ffffff;
 @grey-2:  #fafafa;
 @grey-3:  #f5f5f5;
-@grey-4:  #e8e8e8;
+@grey-4:  #f0f0f0;
 @grey-5:  #d9d9d9;
 @grey-6:  #bfbfbf;
 @grey-7:  #8c8c8c;
 @grey-8:  #595959;
-@grey-9:  #262626;
-@grey-10: #000000;
+@grey-9:  #434343;
+@grey-10: #262626;
+@grey-11: #1f1f1f;
+@grey-12: #141414;
+@grey-13: #000000;
 
 @color-light-index:      5;
 @color-basic-index:      6;
@@ -137,23 +134,18 @@
 
 @muted-color:  @grey-7;
 
-// Colors
-@white:     #fff;
-@black:     #000;
-
 // scrollbar
 @scrollbar-enabled:         true;
 @scrollbar-width:           6px;
 @scrollbar-height:          6px;
-@scrollbar-track-color:     rgba(0, 0, 0, 0.3);
+@scrollbar-track-color:     fade(@black, 30%);
 @scrollbar-thumb-color:     transparent;
 @scrollbar-table-enabled:   false;
 
 // type
 // ==========
 
-// font-size
-// https://ant.design/docs/spec/font-cn#字号
+/** font-size https://ant.design/docs/spec/font-cn#字号 */
 @font-size-large:         @font-size-base + 8;  // 20px
 @font-size-small:         @font-size-base;      // 12px
 
@@ -167,8 +159,8 @@
 @enable-all-colors:           false;
 
 // Code
-@code-border-color:           #eee;
-@code-bg:                     #f7f7f7;
+@code-border-color:       @border-color-base;
+@code-bg:                 @tag-default-bg;
 
 @drawer-xl: 1200px;
 @drawer-lg: 900px;
@@ -208,22 +200,22 @@
 @nz-table-rep-max-width: @mobile-max;
 @nz-table-rep-min-width: @nz-table-rep-max-width + 1;
 @nz-table-rep-header-background: @border-color-split;
-@nz-table-rep-even-background: #f9f9f9;
+@nz-table-rep-even-background: @item-hover-bg;
 @nz-table-rep-padding-vertical: (@table-padding-vertical / 2);
 @nz-table-rep-padding-horizontal: (@table-padding-horizontal / 2);
 @nz-table-rep-column-name-width: 100px;
 @nz-table-rep-column-name-text-align: right;
 @nz-table-rep-column-name-padding-right: 8px;
-@nz-table-rep-column-name-color: rgba(0, 0, 0, 0.5);
+@nz-table-rep-column-name-color: fade(@black, 50%);
 
 // Forced to turn off Modal animation
 @forced-turn-off-nz-modal-animation-enabled: false;
 
 @sf-title-text-align: left;
-@sf-optional-color: rgba(0, 0, 0, 0.35);
+@sf-optional-color: fade(@black, 35%);
 @sf-optional-margin: 2px;
 @sf-inline-ant-select-min-width: 100px;
-@sf-widget-array-type-card-remove-bg: rgba(0, 0, 0, 0.26);
+@sf-widget-array-type-card-remove-bg: fade(@black, 26%);
 
 @yn-yes-color: @blue-6;
 @yn-no-color: @grey-7;

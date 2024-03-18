@@ -1,7 +1,7 @@
 // st
 // --
-@st-btn-disabled-color: rgba(0, 0, 0, 0.25);
-@st-title-optional-color: rgba(0, 0, 0, 0.35);
+@st-btn-disabled-color: fade(@black, 25%);
+@st-title-optional-color: fade(@black, 35%);
 @st-resizable-handle-width: 1px;
 @st-resizable-handle-height: 60%;
 @st-resizable-handle-color: @border-color-base;
@@ -9,8 +9,8 @@
 
 // sv
 // --
-@sv-label-color: rgba(0, 0, 0, 0.5);
-@sv-label-optional-color: rgba(0, 0, 0, 0.35);
+@sv-label-color: fade(@black, 50%);
+@sv-label-optional-color: fade(@black, 35%);
 @sv-detail-color: @text-color;
 @sv-type-primary-color: @primary-color;
 @sv-type-success-color: @success-color;
@@ -32,7 +32,7 @@
 
 // se
 // --
-@se-label-optional-color: rgba(0, 0, 0, 0.35);
+@se-label-optional-color: fade(@black, 35%);
 @se-compact-bottom: @layout-gutter;
 @se-optional-margin: 2px;
 
@@ -47,7 +47,7 @@
 // footer-toolbar
 // --
 @footer-toolbar-height: 56px;
-@footer-toolbar-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+@footer-toolbar-box-shadow: 0 -1px 2px fade(@black, 3%);
 @footer-toolbar-bg: #fff;
 @footer-toolbar-border-top: 1px solid @border-color-split;
 @footer-toolbar-padding: 0 24px;
@@ -86,15 +86,14 @@
 // loading
 // --
 @loading-zindex: 9999;
-@loading-backdrop-bg: rgba(0, 0, 0, 0.15);
+@loading-backdrop-bg: fade(@black, 15%);
 @loading-icon-color: @primary-color;
 @loading-text-color: @primary-color;
 
 // onboarding
 // --
-@onboarding-mask-opacity: 0.5;
-@onboarding-mask-background-color: #000;
-@onboarding-light-background-color: rgba(255, 255, 255, 0.9);
+@onboarding-mask-background-color: fade(@black, 50%);
+@onboarding-light-background-color: fade(@white, 90%);
 @onboarding-light-ant: 2500ms cubic-bezier(0.55, 0.05, 0.6, 0.2) 0s infinite normal none running onboardingAnt;
 @onboarding-light-ant-color: rgb(255, 255, 255);
 @onboarding-changing-ant: all 0.3s ease-out;
