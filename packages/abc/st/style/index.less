@@ -81,31 +81,8 @@
   }
   // Title
   &__has-filter {
-    @st-th-icon-width: 12px;
-    @st-filter-and-sort-gutter: 4px;
-    @st-filter-icon-size: @st-th-icon-width + @st-filter-and-sort-gutter;
-    @st-sort-size: @st-th-icon-width + @st-filter-and-sort-gutter;
-
-    .@{ant-prefix}-table-column-sorters {
-      padding-right: @st-filter-icon-size;
-    }
     @{st-prefix}__filter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      place-items: center center;
-    }
-
-    .@{ant-prefix}-table-filter-trigger {
-      height: 100%;
-    }
-
-    &.@{ant-prefix}-table-column-has-sorters {
-      @{st-prefix}__filter {
-        right: -(@st-sort-size + @st-filter-icon-size);
-      }
+      display: inline-flex;
     }
   }
 
