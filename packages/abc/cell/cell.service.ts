@@ -78,8 +78,8 @@ export class CellService {
     this.widgets[key] = { type: 'widget', ref: widget };
   }
 
-  getWidget(key?: string): CellWidget | undefined {
-    return key ? this.widgets[key] : undefined;
+  getWidget(key: string): CellWidget | undefined {
+    return this.widgets[key];
   }
 
   private genType(value: unknown, options: CellOptions): CellType {
