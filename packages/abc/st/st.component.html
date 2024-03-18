@@ -85,7 +85,7 @@
               (nzResizeEnd)="colResize($event, _c)"
             >
               @if ($any(!last && !$any(_c).resizable.disabled)) {
-                <nz-resize-handle nzDirection="right">
+                <nz-resize-handle nzDirection="right" (click)="_stopPropagation($event)">
                   <i></i>
                 </nz-resize-handle>
               }
