@@ -11,7 +11,7 @@ type: Documents
 ```ts
 this.http.post(`login`, {
  name: 'cipchk', pwd: '123456'
-}, {
+}, null, {
  context: new HttpContext().set(ALLOW_ANONYMOUS, true)
 });
 ```
