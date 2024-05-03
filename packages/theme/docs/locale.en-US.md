@@ -42,20 +42,21 @@ Note: `en_US` is the package name, follow below.
 
 | Language | Filename |
 |----------|----------|
-| English | en_US |
-| Chinese (Simplified) | zh_CN |
-| Chinese (Traditional) | zh_TW |
-| Turkish | tr_TR |
-| Polish | pl_PL |
-| Greek | el_GR |
-| Korean | ko_KR |
-| Croatian | hr_HR |
-| Japanese | ja_JP |
-| Slovenian | sl_SI |
-| French | fr_FR |
-| Spanish | es_ES |
-| Italian | it_IT |
-| Vietnamese | vi_VI |
+| English | en_US    |
+| Chinese (Simplified) | zh_CN    |
+| Chinese (Traditional) | zh_TW    |
+| Turkish | tr_TR    |
+| Polish | pl_PL    |
+| Greek | el_GR    |
+| Korean | ko_KR    |
+| Croatian | hr_HR    |
+| Japanese | ja_JP    |
+| Slovenian | sl_SI    |
+| French | fr_FR    |
+| Spanish | es_ES    |
+| Italian | it_IT    |
+| Vietnamese | vi_VI    |
+| Arabic | ar_SA    |
 
 ## Add a new language
 
