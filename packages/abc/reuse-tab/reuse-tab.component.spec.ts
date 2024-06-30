@@ -1,6 +1,7 @@
 import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
@@ -45,6 +46,7 @@ describe('abc: reuse-tab', () => {
       imports: [
         DelonLocaleModule,
         ReuseTabComponent,
+        NoopAnimationsModule,
         RouterTestingModule.withRoutes(
           [
             {
