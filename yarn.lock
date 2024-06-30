@@ -7542,7 +7542,6 @@ __metadata:
     mustache: "npm:^4.2.0"
     ng-alain-plugin-theme: "npm:^16.0.2"
     ng-alain-sts: "npm:^0.0.2"
-    ng-antd-color-picker: "npm:^1.1.0"
     ng-github-button: "npm:^18.0.0"
     ng-less-javascript-enabled-patch: "npm:17.0.2"
     ng-packagr: "npm:^18.0.0"
@@ -13267,19 +13266,6 @@ __metadata:
   bin:
     ng-alain-sts: src/index.js
   checksum: 42098a3979aa943f0a8ff5cb2d32a0a11d902a5460cd6a1e1ede8f024178e2e003988ea66b96e69028c5706e74895d4a93c6c99b83927e1776d33cc3865b7862
-  languageName: node
-  linkType: hard
-
-"ng-antd-color-picker@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "ng-antd-color-picker@npm:1.1.0"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  peerDependencies:
-    "@angular/common": ^17.0.0
-    "@angular/core": ^17.0.0
-    "@ctrl/tinycolor": ^3.6.0
-  checksum: b6183341f7e74d335c66037a04e8f531c5e23158c86badbabb1e81a4d159e5724204971e887227aff79875894b6bee07acf675c9be97255f71cce678903d34da
   languageName: node
   linkType: hard
 
