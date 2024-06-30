@@ -7,10 +7,10 @@ import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withAutoCompleteWidget } from './index';
 import { SFAutoCompleteWidgetSchema } from './schema';
 import { AutoCompleteWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: autocomplete', () => {
   let fixture: ComponentFixture<TestFormComponent>;

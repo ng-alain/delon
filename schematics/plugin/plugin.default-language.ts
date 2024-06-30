@@ -1,8 +1,8 @@
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 
-import { PluginOptions } from './interface';
 import { getLangConfig } from '../core/lang.config';
 import { getProject } from '../utils';
+import { PluginOptions } from './interface';
 
 export function pluginDefaultLanguage(options: PluginOptions): Rule {
   return async (tree: Tree) => {

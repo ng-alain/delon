@@ -5,9 +5,9 @@ import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuInner } from './interface';
 import { MenuService } from './menu.service';
-import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 
 class MockACLService {
   can(val: string): boolean {

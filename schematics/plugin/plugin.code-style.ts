@@ -1,8 +1,8 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
 
-import { PluginOptions } from './interface';
 import { readPackage, writePackage } from '../utils';
 import { LINT_STAGED, LINT_STAGED_CONFIG } from '../utils/code-style';
+import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
   return (tree: Tree) => {

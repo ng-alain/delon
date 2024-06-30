@@ -12,11 +12,11 @@ import { deepCopy } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
-import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
 import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { WidgetRegistry } from '../src/widget.factory';
+import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
 registerLocaleData(zh);
 
 describe('form: component', () => {

@@ -4,9 +4,9 @@ import { of } from 'rxjs';
 
 import { createTestContext } from '@delon/testing';
 
-import { SFStringWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
+import { SFStringWidgetSchema } from './schema';
 
 describe('form: widget: string', () => {
   let fixture: ComponentFixture<TestFormComponent>;

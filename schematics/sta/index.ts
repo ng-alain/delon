@@ -9,10 +9,10 @@ import { parse } from 'jsonc-parser';
 import { resolve, join } from 'path';
 import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-typescript-api';
 
-import { Schema } from './schema';
-import { STAConfig } from './types';
 import { ModifyJSONParam, modifyJSON, readJSON, writeJSON } from '../utils/json';
 import { getProject, isMulitProject } from '../utils/workspace';
+import { Schema } from './schema';
+import { STAConfig } from './types';
 
 let project: ProjectDefinition;
 let projectName: string;

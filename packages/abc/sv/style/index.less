@@ -4,7 +4,7 @@
 @{sv-prefix} {
   display: block;
 
-  + @{sv-prefix} {
+  +@{sv-prefix} {
     margin-top: @sv-bottom;
   }
 
@@ -33,8 +33,9 @@
         flex: 1 0 0;
       }
     }
-    + .@{ant-prefix}-divider {
-      margin: 0 0 @sv-bottom 0;
+
+    +.@{ant-prefix}-divider {
+      margin: 0 0 @sv-bottom;
     }
   }
 
@@ -74,7 +75,7 @@
         margin-left: 0;
       }
 
-      > .anticon {
+      >.anticon {
         margin-left: @sv-optional-margin;
       }
     }
@@ -114,7 +115,7 @@
       content: @sv-default-text;
     }
 
-    ~ @{sv-prefix}__unit {
+    ~@{sv-prefix}__unit {
       display: none !important;
     }
   }
@@ -126,6 +127,7 @@
   }
 
   &__small {
+
     // offset the padding-bottom of last row
     .@{ant-prefix}-row {
       margin-bottom: -8px;
@@ -251,6 +253,7 @@
     }
 
     &@{sv-prefix}__large {
+
       @{sv-prefix}__label,
       @{sv-prefix}__detail {
         padding: @descriptions-default-padding;
@@ -258,6 +261,7 @@
     }
 
     &@{sv-prefix}__small {
+
       @{sv-prefix}__label,
       @{sv-prefix}__detail {
         padding: @descriptions-small-padding;

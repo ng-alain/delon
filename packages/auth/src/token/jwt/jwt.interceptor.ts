@@ -4,11 +4,11 @@ import { inject } from '@angular/core';
 
 import { AlainConfigService } from '@delon/util/config';
 
-import { JWTTokenModel } from './jwt.model';
 import { mergeConfig } from '../../auth.config';
 import { isAnonymous, throwErr } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
+import { JWTTokenModel } from './jwt.model';
 
 function newReq(req: HttpRequest<unknown>, model: JWTTokenModel): HttpRequest<unknown> {
   return req.clone({

@@ -1,8 +1,8 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
-import jsonSchema from './files/jsonSchemaModule';
 import { tryAddFile } from '../../../utils';
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
+import jsonSchema from './files/jsonSchemaModule';
 
 describe('Schematic: ng-update: v17Rule', () => {
   let runner: SchematicTestRunner;

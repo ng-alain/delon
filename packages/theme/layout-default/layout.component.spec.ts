@@ -8,12 +8,12 @@ import { createTestContext } from '@delon/testing';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+import { SettingsService } from '../src/services/settings/settings.service';
+import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultOptions } from './types';
-import { SettingsService } from '../src/services/settings/settings.service';
-import { AlainThemeModule } from '../src/theme.module';
 
 describe('theme: layout-default', () => {
   let fixture: ComponentFixture<TestComponent>;

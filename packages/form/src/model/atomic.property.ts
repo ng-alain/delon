@@ -1,5 +1,5 @@
-import { FormProperty } from './form.property';
 import { SFValue } from '../interface';
+import { FormProperty } from './form.property';
 
 export abstract class AtomicProperty extends FormProperty {
   abstract fallbackValue(): SFValue;

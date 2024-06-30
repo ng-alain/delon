@@ -64,7 +64,7 @@ import { _STColumn } from './st.types';
               @if (f.date!.range) {
                 <nz-range-picker
                   nzInline
-                  [nzMode]="f.date!.mode"
+                  [nzMode]="$any(f.date!.mode)"
                   [(ngModel)]="f.menus![0]!.value"
                   (ngModelChange)="n.emit($event)"
                   [nzShowNow]="f.date!.showNow"
@@ -75,7 +75,7 @@ import { _STColumn } from './st.types';
               } @else {
                 <nz-date-picker
                   nzInline
-                  [nzMode]="f.date!.mode"
+                  [nzMode]="$any(f.date!.mode)"
                   [(ngModel)]="f.menus![0]!.value"
                   (ngModelChange)="n.emit($event)"
                   [nzShowNow]="f.date!.showNow"

@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, CanMatchFn } from '@angular/router';
 
-import { JWTTokenModel } from './jwt.model';
 import { CheckJwt, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
+import { JWTTokenModel } from './jwt.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthJWTGuardService {

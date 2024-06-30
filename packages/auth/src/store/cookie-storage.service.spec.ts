@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { CookieOptions, CookieService } from '@delon/util/browser';
 
-import { CookieStorageStore } from './cookie-storage.service';
 import { ITokenModel } from '../token/interface';
+import { CookieStorageStore } from './cookie-storage.service';
 
 describe('auth: cookie-storage', () => {
   let data: { [key: string]: any } = {};

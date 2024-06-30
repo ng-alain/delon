@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { urlBase64Decode } from './jwt.helper';
 import { ITokenModel } from '../interface';
+import { urlBase64Decode } from './jwt.helper';
 
 export interface JWT {
   /**

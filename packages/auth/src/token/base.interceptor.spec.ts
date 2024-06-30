@@ -15,11 +15,11 @@ import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
+import { provideAuth } from '../provide';
+import { ALLOW_ANONYMOUS } from '../token';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { authSimpleInterceptor } from './simple';
 import { SimpleTokenModel } from './simple/simple.model';
-import { provideAuth } from '../provide';
-import { ALLOW_ANONYMOUS } from '../token';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`): any {
   const model: any = new modelType();

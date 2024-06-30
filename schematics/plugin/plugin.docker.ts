@@ -1,7 +1,7 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
 
-import { PluginOptions } from './interface';
 import { tryAddFile, tryDelFile } from '../utils';
+import { PluginOptions } from './interface';
 
 function setIgnore(tree: Tree, options: PluginOptions): void {
   const filePath = `${options.root}/.dockerignore`;
