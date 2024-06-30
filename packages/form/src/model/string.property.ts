@@ -1,5 +1,5 @@
-import { AtomicProperty } from './atomic.property';
 import { SFValue } from '../interface';
+import { AtomicProperty } from './atomic.property';
 
 export class StringProperty extends AtomicProperty {
   fallbackValue(): null {

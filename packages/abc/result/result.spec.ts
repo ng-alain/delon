@@ -1,8 +1,9 @@
 import { Directionality } from '@angular/cdk/bidi';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -17,7 +18,8 @@ describe('abc: result', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ResultModule, HttpClientTestingModule],
+      imports: [ResultModule, NoopAnimationsModule],
+      providers: [provideHttpClientTesting()],
       declarations: [TestComponent]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));

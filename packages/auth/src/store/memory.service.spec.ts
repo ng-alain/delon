@@ -1,5 +1,5 @@
-import { MemoryStore } from './memory.service';
 import { ITokenModel } from '../token/interface';
+import { MemoryStore } from './memory.service';
 
 describe('auth: memory', () => {
   const store = new MemoryStore();

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { SFBooleanWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
+import { SFBooleanWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-boolean',

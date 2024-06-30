@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { SFCustomWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
+import { SFCustomWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-custom',

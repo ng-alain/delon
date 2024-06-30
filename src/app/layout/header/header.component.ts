@@ -22,9 +22,9 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { I18NService, LangType, MobileService } from '@core';
 
-import { HeaderSearchComponent } from './search-box.component';
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
+import { HeaderSearchComponent } from './search-box.component';
 
 const pkg = require('../../../../package.json');
 const minimumVersion = +pkg.version.split('.')[0] - 2;

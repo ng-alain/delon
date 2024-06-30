@@ -1,7 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
-import { Schema as ModuleOptions } from './schema';
 import { createAlainApp } from '../utils/testing';
+import { Schema as ModuleOptions } from './schema';
 
 describe('NgAlainSchematic: module', () => {
   let runner: SchematicTestRunner;

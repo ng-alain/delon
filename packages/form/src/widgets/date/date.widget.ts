@@ -5,11 +5,11 @@ import { format } from 'date-fns';
 import { toDate } from '@delon/util/date-time';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { SFDateWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
+import { SFDateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-date',
@@ -106,7 +106,7 @@ import { ControlUIWidget } from '../../widget';
           [nzShowTime]="ui.showTime"
           [nzSeparator]="ui.separator"
           [nzShowWeekNumber]="ui.showWeekNumber || false"
-          [nzMode]="ui.rangeMode"
+          [nzMode]="$any(ui.rangeMode)"
           [nzInputReadOnly]="ui.inputReadOnly"
           [nzInline]="ui.inline!"
           (nzOnOk)="_ok($event)"

@@ -42,8 +42,9 @@ buildLess() {
   node ./scripts/build/copy-less.js
   echo 'fix zorro path...'
   node ./scripts/build/fix-zorro-path.js
-  echo 'build full css...'
-  node ./scripts/build/generate-css.js
+  # TODO: https://github.com/NG-ZORRO/ng-zorro-antd/issues/8618
+  # echo 'build full css...'
+  # node ./scripts/build/generate-css.js
 }
 
 addBanners() {

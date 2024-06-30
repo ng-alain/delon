@@ -4,8 +4,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { withSegmentedWidget, SFSegmentedWidgetSchema } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { withSegmentedWidget, SFSegmentedWidgetSchema } from './index';
 
 describe('form: widget: segmented', () => {
   let fixture: ComponentFixture<TestFormComponent>;

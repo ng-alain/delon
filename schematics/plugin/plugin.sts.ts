@@ -11,8 +11,8 @@ import {
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
-import { PluginOptions } from './interface';
 import { addPackage, removePackage } from '../utils';
+import { PluginOptions } from './interface';
 
 function fixPackage(options: PluginOptions): Rule {
   return (tree: Tree) => {

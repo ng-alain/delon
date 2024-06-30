@@ -8,9 +8,9 @@ import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withUploadWidget } from './index';
 import { UploadWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: upload', () => {
   let fixture: ComponentFixture<TestFormComponent>;

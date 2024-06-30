@@ -22,7 +22,7 @@
     "source.fixAll.stylelint": "explicit"
   },
   "[html]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "[typescript]": {
     "editor.formatOnSave": true

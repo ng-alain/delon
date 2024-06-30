@@ -12,6 +12,8 @@ import { provideTinymce } from 'ngx-tinymce';
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
 import { provideSFConfig } from '@delon/form';
+import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
+import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
 import { withAutoCompleteWidget } from '@delon/form/widgets/autocomplete';
 import { withCascaderWidget } from '@delon/form/widgets/cascader';
 import { withColorWidget } from '@delon/form/widgets/color';
@@ -25,8 +27,6 @@ import { withTimeWidget } from '@delon/form/widgets/time';
 import { withTransferWidget } from '@delon/form/widgets/transfer';
 import { withTreeSelectWidget } from '@delon/form/widgets/tree-select';
 import { withUploadWidget } from '@delon/form/widgets/upload';
-import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
-import { withTinymceWidget } from '@delon/form/widgets-third/tinymce';
 import { mockInterceptor, provideMockConfig } from '@delon/mock';
 import { zh_CN as delonLang, AlainProvideLang, provideAlain } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
@@ -35,13 +35,13 @@ import { zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 
 import { I18NService, provideStartup } from '@core';
 
+import * as MOCKDATA from '../../_mock';
+import { environment } from '../environments/environment';
 import { provideElements } from './core/elements';
 import { CustomErrorHandler } from './core/error-handler';
 import { routes } from './routes/routes';
 import { CELL_WIDGETS } from './shared/cell-widget';
 import { ST_WIDGETS } from './shared/st-widget';
-import * as MOCKDATA from '../../_mock';
-import { environment } from '../environments/environment';
 
 const defaultLang: AlainProvideLang = {
   abbr: 'zh-CN',

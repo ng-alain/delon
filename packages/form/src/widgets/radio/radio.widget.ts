@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { SFRadioWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema/index';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
+import { SFRadioWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-radio',

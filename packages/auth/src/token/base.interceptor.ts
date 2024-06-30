@@ -4,8 +4,8 @@ import { Observable, Observer } from 'rxjs';
 
 import { AlainAuthConfig } from '@delon/util/config';
 
-import { ToLogin } from './helper';
 import { ALLOW_ANONYMOUS } from '../token';
+import { ToLogin } from './helper';
 
 export function isAnonymous(req: HttpRequest<unknown>, options: AlainAuthConfig): boolean {
   if (req.context.get(ALLOW_ANONYMOUS)) return true;

@@ -3,8 +3,8 @@
   "schematics": {
     "migration-v17": {
       "version": "17",
-      "description": "Updates NG-ALAIN to v17 [https://github.com/ng-alain/ng-alain/issues/2440]",
-      "factory": "./ng-update/index#updateToV17"
+      "description": "Updates NG-ALAIN to v18 [https://github.com/ng-alain/ng-alain/issues/2502]",
+      "factory": "./ng-update/index#updateToV18"
     },
     "ng-post-update": {
       "description": "Performs cleanup after ng-update.",

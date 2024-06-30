@@ -11,11 +11,13 @@
     max-width: @page-header-wide;
     margin: auto;
   }
+
   .@{ant-prefix}-breadcrumb {
     margin-bottom: @margin-md;
   }
+
   .@{ant-prefix}-tabs {
-    margin: 0 0 (-(@margin-md + 1)) 0;
+    margin: 0 0 (-(@margin-md + 1));
 
     &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
@@ -131,17 +133,20 @@
 
   @media screen and (max-width: @screen-xs) {
     &__action {
+
       .@{ant-prefix}-btn-group,
       .@{ant-prefix}-btn {
         display: block;
         margin-bottom: 8px;
       }
+
       .@{ant-prefix}-input-search-enter-button {
         .@{ant-prefix}-btn {
           margin-bottom: 0;
         }
       }
-      .@{ant-prefix}-btn-group > .@{ant-prefix}-btn {
+
+      .@{ant-prefix}-btn-group>.@{ant-prefix}-btn {
         display: inline-block;
         margin-bottom: 0;
       }

@@ -6,9 +6,9 @@ import type { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withMentionWidget } from './index';
 import { MentionWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 

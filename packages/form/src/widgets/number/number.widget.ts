@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { SFNumberWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
+import { SFNumberWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-number',

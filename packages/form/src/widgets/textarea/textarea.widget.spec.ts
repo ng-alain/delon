@@ -3,9 +3,9 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { SFTextareaWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { SFTextareaWidgetSchema } from './schema';
 
 describe('form: widget: textarea', () => {
   let fixture: ComponentFixture<TestFormComponent>;

@@ -1,5 +1,5 @@
-import { SessionStorageStore } from './session-storage.service';
 import { ITokenModel } from '../token/interface';
+import { SessionStorageStore } from './session-storage.service';
 
 describe('auth: session-storage', () => {
   const store = new SessionStorageStore();

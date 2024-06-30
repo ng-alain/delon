@@ -6,8 +6,8 @@ import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
-import { withTagWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { withTagWidget } from './index';
 
 describe('form: widget: tag', () => {
   let fixture: ComponentFixture<TestFormComponent>;

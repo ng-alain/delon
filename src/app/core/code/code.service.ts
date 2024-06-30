@@ -9,6 +9,8 @@ import { getParameters } from 'codesandbox/lib/api/define';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import pkg from '../../../../package.json';
+import { AppService } from '../app.service';
 import angularJSON from './files/angular.json';
 import appConfigTS from './files/app.config';
 import mainTS from './files/main';
@@ -18,8 +20,6 @@ import readme from './files/readme-cli';
 import sandboxConfigJSON from './files/sandbox';
 import startupServiceTS from './files/startup.service';
 import tsconfigJSON from './files/tsconfig.json';
-import pkg from '../../../../package.json';
-import { AppService } from '../app.service';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
