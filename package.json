@@ -48,8 +48,7 @@
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh",
-    "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js",
-    "postinstall": "ng-less-javascript-enabled-patch"
+    "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
   },
   "dependencies": {
     "@angular/animations": "^18.0.0",
