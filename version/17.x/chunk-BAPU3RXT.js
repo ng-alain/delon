@@ -1,0 +1,1 @@
+function i(e,a){return(p,f,t)=>{let n=t.value;return t.value=function(...r){let o=this[a?.ngZoneName||"ngZone"];if(!o)return n.call(this,...r);let u;return o[e](()=>{u=n.call(this,...r)}),u},t}}function d(e){return i("runOutsideAngular",e)}export{d as a};
