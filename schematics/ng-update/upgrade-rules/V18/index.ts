@@ -9,10 +9,6 @@ function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
 
-    logWarn(context, `Please check the modified files. Some upgrades may have incorrect formats or missing imports.`);
-    logWarn(context, `Please check the modified files. Some upgrades may have incorrect formats or missing imports.`);
-    logWarn(context, `Please check the modified files. Some upgrades may have incorrect formats or missing imports.`);
-
     logFinished(
       context,
       `Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2502`
