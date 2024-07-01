@@ -4,7 +4,6 @@ export * from './date-picker.type';
 export * from './loading.type';
 export * from './lodop.type';
 export * from './page-header.type';
-export * from './qr.type';
 export * from './se.type';
 export * from './sv.type';
 export * from './sg.type';
