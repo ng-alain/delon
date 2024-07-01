@@ -80,7 +80,6 @@
     "extend": "^3.0.2",
     "file-saver": "^2.0.5",
     "isutf8": "^4.0.0",
-    "ng-antd-color-picker": "^1.1.0",
     "ng-github-button": "^18.0.0",
     "ng-zorro-antd": "^18.0.1",
     "ngx-countdown": "^18.0.0",

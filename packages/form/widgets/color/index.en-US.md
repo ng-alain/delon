@@ -8,10 +8,6 @@ Used when the user needs to customize the color selection.
 
 ## How to use
 
-**Installation dependencies**  
-
-`yarn add ng-antd-color-picker`
-
 Non-built-in modules need to additionally register `withColorWidget` in [json-schema](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/index.ts#L9).
 
 ## API
