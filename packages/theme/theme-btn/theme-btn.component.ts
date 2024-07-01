@@ -46,7 +46,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   private readonly platform = inject(Platform);
   private readonly renderer = inject(Renderer2);
   private readonly configSrv = inject(AlainConfigService);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroy$ = inject(DestroyRef);
 
@@ -64,8 +64,8 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   private key = inject(ALAIN_THEME_BTN_KEYS, { optional: true }) ?? 'site-theme';
 
   ngOnInit(): void {
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

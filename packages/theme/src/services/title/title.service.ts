@@ -28,10 +28,10 @@ export class TitleService implements OnDestroy {
   private readonly injector = inject(Injector);
   private readonly title = inject(Title);
   private readonly menuSrv = inject(MenuService);
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
 
   constructor() {
-    this.i18nSrv?.change.pipe(takeUntilDestroyed()).subscribe(() => this.setTitle());
+    this.i18nSrv.change.pipe(takeUntilDestroyed()).subscribe(() => this.setTitle());
   }
 
   /**
@@ -109,7 +109,7 @@ export class TitleService implements OnDestroy {
     let next = this.injector.get(ActivatedRoute);
     while (next.firstChild) next = next.firstChild;
     const data: RouteTitle = (next.snapshot && next.snapshot.data) || {};
-    if (data.titleI18n && this.i18nSrv) data.title = this.i18nSrv.fanyi(data.titleI18n);
+    if (data.titleI18n) data.title = this.i18nSrv.fanyi(data.titleI18n);
     return isObservable(data.title) ? data.title : of(data.title!);
   }
 
@@ -119,7 +119,7 @@ export class TitleService implements OnDestroy {
 
     const item = menus[menus.length - 1];
     let title;
-    if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
+    if (item.i18n) title = this.i18nSrv.fanyi(item.i18n);
     return of(title || item.text!);
   }
 
@@ -157,7 +157,7 @@ export class TitleService implements OnDestroy {
    * Set i18n key of the document title
    */
   setTitleByI18n(key: string, params?: unknown): void {
-    this.setTitle(this.i18nSrv?.fanyi(key, params));
+    this.setTitle(this.i18nSrv.fanyi(key, params));
   }
 
   ngOnDestroy(): void {

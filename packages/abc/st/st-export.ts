@@ -9,7 +9,7 @@ import { _STColumn } from './st.types';
 
 @Injectable()
 export class STExport {
-  private readonly xlsxSrv = inject(XlsxService, { optional: true });
+  private readonly xlsxSrv = inject(XlsxService);
 
   private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
     const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
@@ -81,13 +81,6 @@ export class STExport {
   }
 
   async export(opt: STExportOptions): Promise<XlsxExportResult> {
-    if (this.xlsxSrv == null) {
-      if (typeof ngDevMode === 'undefined' || ngDevMode) {
-        console.warn(`XlsxService service not found`);
-      }
-      return Promise.reject();
-    }
-
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

@@ -63,10 +63,10 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly menuSrv = inject(MenuService);
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
-  private readonly titleSrv = inject(TitleService, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
+  private readonly titleSrv = inject(TitleService);
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
   private readonly destroy$ = inject(DestroyRef);
 
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
@@ -140,7 +140,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
     const obsList: Array<Observable<NzSafeAny>> = [this.router.events.pipe(filter(ev => ev instanceof NavigationEnd))];
     if (this.menuSrv != null) obsList.push(this.menuSrv.change);
-    if (this.i18nSrv != null) obsList.push(this.i18nSrv.change);
+    obsList.push(this.i18nSrv.change);
     merge(...obsList)
       .pipe(
         takeUntilDestroyed(),
@@ -163,13 +163,13 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
       let title = item.text;
-      if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
+      if (item.i18n) title = this.i18nSrv.fanyi(item.i18n);
       paths.push({ title, link: (item.link && [item.link]) as string[] });
     });
     // add home
     if (this.home) {
       paths.splice(0, 0, {
-        title: (this.homeI18n && this.i18nSrv && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
+        title: (this.homeI18n && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
         link: [this.homeLink!]
       });
     }
@@ -180,16 +180,14 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     if (this._title == null && this._titleTpl == null && this.autoTitle && this.menus.length > 0) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
-      if (item.i18n && this.i18nSrv) {
+      if (item.i18n) {
         title = this.i18nSrv.fanyi(item.i18n);
       }
       this._titleVal = title!;
     }
 
     if (this._titleVal && this.syncTitle) {
-      if (this.titleSrv) {
-        this.titleSrv.setTitle(this._titleVal);
-      }
+      this.titleSrv.setTitle(this._titleVal);
       if (!this.inited && this.reuseSrv) {
         this.reuseSrv.title = this._titleVal;
       }
@@ -207,8 +205,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

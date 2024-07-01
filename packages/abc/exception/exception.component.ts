@@ -43,7 +43,7 @@ export class ExceptionComponent implements OnInit {
 
   private readonly i18n = inject(DelonLocaleService);
   private readonly dom = inject(DomSanitizer);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroy$ = inject(DestroyRef);
 
@@ -116,8 +116,8 @@ export class ExceptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

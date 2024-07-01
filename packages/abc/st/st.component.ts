@@ -94,7 +94,7 @@ import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType }
   encapsulation: ViewEncapsulation.None
 })
 export class STComponent implements AfterViewInit, OnChanges {
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly doc = inject(DOCUMENT);
@@ -254,7 +254,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       }
     });
 
-    this.i18nSrv?.change
+    this.i18nSrv.change
       .pipe(
         takeUntilDestroyed(),
         filter(() => this._columns.length > 0)

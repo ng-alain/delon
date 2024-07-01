@@ -79,10 +79,10 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly doc = inject(DOCUMENT);
   private readonly platform = inject(Platform);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
   private readonly stateKey = inject(REUSE_TAB_STORAGE_KEY);
   private readonly stateSrv = inject(REUSE_TAB_STORAGE_STATE);
 
@@ -124,7 +124,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   // #endregion
 
   private genTit(title: ReuseTitle): string {
-    return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text!;
+    return title.i18n ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }
 
   private get curUrl(): string {
@@ -302,8 +302,8 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   // #endregion
 
   ngOnInit(): void {
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });
@@ -327,7 +327,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
       this.genList(res);
     });
 
-    this.i18nSrv?.change
+    this.i18nSrv.change
       .pipe(
         filter(() => this.srv.inited),
         takeUntilDestroyed(this.destroy$),
