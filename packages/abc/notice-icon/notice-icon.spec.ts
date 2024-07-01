@@ -68,7 +68,7 @@ describe('abc: notice-icon', () => {
     });
     it('should be control loading in visible popover', done => {
       context.loading = true;
-      context.popoverVisible = true;
+      context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
         const el = document.querySelector('.ant-spin-container') as HTMLElement;
@@ -78,7 +78,7 @@ describe('abc: notice-icon', () => {
     });
     it('should be select item', done => {
       spyOn(context, 'select');
-      context.popoverVisible = true;
+      context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
         expect(context.select).not.toHaveBeenCalled();
@@ -90,7 +90,7 @@ describe('abc: notice-icon', () => {
     });
     it('should be clear', done => {
       spyOn(context, 'clear');
-      context.popoverVisible = true;
+      context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
         expect(context.clear).not.toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('abc: notice-icon', () => {
     });
     it('#centered', done => {
       context.centered = true;
-      context.popoverVisible = true;
+      context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
         expect(document.querySelectorAll('.notice-icon__tab-left').length).toBe(0);
@@ -112,7 +112,7 @@ describe('abc: notice-icon', () => {
   });
 
   it('#i18n', done => {
-    context.popoverVisible = true;
+    context.comp.onVisibleChange(true);
     context.data = [{ title: 'a1', list: [] }];
     fixture.detectChanges();
     setTimeout(() => {
