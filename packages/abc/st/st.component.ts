@@ -102,7 +102,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   private readonly columnSource = inject(STColumnSource);
   private readonly dataSource = inject(STDataSource);
   private readonly delonI18n = inject(DelonLocaleService);
-  private readonly cms = inject(NzContextMenuService);
+  private readonly cms = inject(NzContextMenuService, { optional: true });
   private readonly destroy$ = inject(DestroyRef);
 
   private totalTpl = ``;
@@ -798,7 +798,7 @@ export class STComponent implements AfterViewInit, OnChanges {
           return i;
         });
         this.cdr.detectChanges();
-        this.cms.create(event, this.contextmenuTpl);
+        this.cms?.create(event, this.contextmenuTpl);
       });
   }
   // #endregion
