@@ -27,8 +27,8 @@
       }
     }
 
-    + .@{ant-prefix}-divider {
-      margin: 0 0 @form-item-margin-bottom 0;
+    +.@{ant-prefix}-divider {
+      margin: 0 0 @form-item-margin-bottom;
     }
   }
 
@@ -47,7 +47,7 @@
         margin-left: 0;
       }
 
-      > .anticon {
+      >.anticon {
         margin-left: @se-optional-margin;
       }
     }
@@ -59,12 +59,13 @@
   }
 
   &__compact {
-    > @{se-prefix}__title,
-    > @{se-prefix}__item {
+
+    >@{se-prefix}__title,
+    >@{se-prefix}__item {
       margin-bottom: @se-compact-bottom;
 
-      + .@{ant-prefix}-divider {
-        margin: 0 0 @se-compact-bottom 0;
+      +.@{ant-prefix}-divider {
+        margin: 0 0 @se-compact-bottom;
       }
     }
 
@@ -87,7 +88,7 @@
   }
 
   &__horizontal {
-    > @{se-prefix}__item {
+    >@{se-prefix}__item {
       display: flex;
 
       &:last-child {
@@ -109,7 +110,7 @@
           line-height: inherit;
         }
 
-        &-label > label::after {
+        &-label>label::after {
           margin-left: 4px;
         }
       }
@@ -117,13 +118,14 @@
   }
 
   &__vertical {
-    > @{se-prefix}__item {
+    >@{se-prefix}__item {
       display: block;
       width: 100%;
     }
   }
 
   &__inline {
+
     .@{ant-prefix}-form-item-label,
     @{se-prefix}__control {
       display: inline-block;
@@ -132,7 +134,7 @@
       vertical-align: top;
     }
 
-    > @{se-prefix}__item {
+    >@{se-prefix}__item {
       margin-right: 16px;
 
       &[col='1'] {
@@ -154,7 +156,7 @@
 @media (max-width: @mobile-max) {
   @{se-prefix} {
     &__horizontal {
-      > @{se-prefix}__item {
+      >@{se-prefix}__item {
         display: block;
 
         .@{ant-prefix}-form-item-label {
@@ -170,6 +172,7 @@
 
     &__horizontal,
     &__vertical {
+
       @{se-prefix}__label,
       @{se-prefix}__control {
         width: 100% !important;

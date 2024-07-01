@@ -4,8 +4,8 @@ import { BehaviorSubject, Observable, Subscription, share } from 'rxjs';
 import { ACLService } from '@delon/acl';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { Menu, MenuIcon, MenuInner } from './interface';
 import { ALAIN_I18N_TOKEN } from '../i18n/i18n';
+import { Menu, MenuIcon, MenuInner } from './interface';
 
 /**
  * 菜单服务，[在线文档](https://ng-alain.com/theme/menu)

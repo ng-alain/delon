@@ -11,8 +11,6 @@ import { deepCopy } from '@delon/util/other';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import { STWidgetRegistry } from './../st-widget';
-import { PS, DEFAULTCOUNT, USERS, MOCKDATE, MOCKIMG, genData, PageObject, TestComponent, genModule } from './base.spec';
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
 import { STComponent } from '../st.component';
@@ -25,6 +23,8 @@ import {
   STResReNameType
 } from '../st.interfaces';
 import { _STColumn } from '../st.types';
+import { STWidgetRegistry } from './../st-widget';
+import { PS, DEFAULTCOUNT, USERS, MOCKDATE, MOCKIMG, genData, PageObject, TestComponent, genModule } from './base.spec';
 
 describe('abc: st', () => {
   let fixture: ComponentFixture<TestComponent>;

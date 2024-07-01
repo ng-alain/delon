@@ -1,0 +1,7 @@
+- [x] remove ng-antd-color-picker
+- [ ] styles javaenabled
+- [ ] eslint upgrade
+- [ ] 过期函数
+- [ ] cli
+- [ ] remove ng-less-javascript-enabled-patch
+- 

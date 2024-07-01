@@ -3,7 +3,6 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild } from '@ang
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -22,7 +21,7 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FullContentModule, RouterTestingModule.withRoutes([])],
+      imports: [FullContentModule],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }]

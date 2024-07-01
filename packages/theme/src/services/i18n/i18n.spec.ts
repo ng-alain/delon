@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, RouterModule } from '@angular/router';
 
 import { provideAlainConfig } from '@delon/util/config';
 
+import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
-import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -110,7 +109,7 @@ describe('theme: i18n', () => {
       TestBed.configureTestingModule({
         imports: [
           AlainThemeModule,
-          RouterTestingModule.withRoutes([
+          RouterModule.forRoot([
             {
               path: ':i18n',
               component: TestComponent,
@@ -134,9 +133,7 @@ describe('theme: i18n', () => {
       TestBed.configureTestingModule({
         imports: [
           AlainThemeModule,
-          RouterTestingModule.withRoutes([
-            { path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }
-          ])
+          RouterModule.forRoot([{ path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }])
         ],
         declarations: [TestComponent]
       });
@@ -153,9 +150,7 @@ describe('theme: i18n', () => {
       TestBed.configureTestingModule({
         imports: [
           AlainThemeModule,
-          RouterTestingModule.withRoutes([
-            { path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }
-          ])
+          RouterModule.forRoot([{ path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }])
         ],
         declarations: [TestComponent],
         providers: [provideAlainConfig({ themeI18n: { paramNameOfUrlGuard: 'lang' } })]

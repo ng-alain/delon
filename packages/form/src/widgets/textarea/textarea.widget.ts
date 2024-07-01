@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import type { AutoSizeType } from 'ng-zorro-antd/input';
 
-import { SFTextareaWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
+import { SFTextareaWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-textarea',

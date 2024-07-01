@@ -33,7 +33,6 @@ export default {
     '@delon/form': '~17.0.3',
     '@delon/util': '~17.0.3',
     'ng-zorro-antd': '^17.1.0',
-    'ng-antd-color-picker': '^0.0.2',
     ajv: '^8.12.0',
     'ajv-formats': '^2.1.1',
     'date-fns': '^2.16.1',

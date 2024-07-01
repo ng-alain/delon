@@ -3,8 +3,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { SFObjectWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFObjectWidgetSchema } from './schema';
 
 describe('form: widget: object', () => {
   let fixture: ComponentFixture<TestFormComponent>;

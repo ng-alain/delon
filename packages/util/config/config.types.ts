@@ -12,7 +12,6 @@ import {
   AlainOnboardingConfig,
   AlainPageHeaderConfig,
   AlainPdfConfig,
-  AlainQRConfig,
   AlainSEConfig,
   AlainSGConfig,
   AlainSTConfig,
@@ -40,7 +39,6 @@ export interface AlainConfig {
   onboarding?: AlainOnboardingConfig;
   lodop?: AlainLodopConfig;
   pageHeader?: AlainPageHeaderConfig;
-  qr?: AlainQRConfig;
   se?: AlainSEConfig;
   sg?: AlainSGConfig;
   sv?: AlainSVConfig;

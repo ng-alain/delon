@@ -1,14 +1,15 @@
 import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { provideReuseTabConfig } from './provide';
 import { ReuseTabComponent } from './reuse-tab.component';
 import {
@@ -21,7 +22,6 @@ import {
 import { ReuseTabService } from './reuse-tab.service';
 import { REUSE_TAB_STORAGE_STATE } from './reuse-tab.state';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
 let i18nResult = 'zh';
 @Injectable()
@@ -45,7 +45,8 @@ describe('abc: reuse-tab', () => {
       imports: [
         DelonLocaleModule,
         ReuseTabComponent,
-        RouterTestingModule.withRoutes(
+        NoopAnimationsModule,
+        RouterModule.forRoot(
           [
             {
               path: '',

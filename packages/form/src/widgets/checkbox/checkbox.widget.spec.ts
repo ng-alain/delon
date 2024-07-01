@@ -4,9 +4,9 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { CheckboxWidget } from './checkbox.widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../schema';
+import { CheckboxWidget } from './checkbox.widget';
 
 describe('form: widget: checkbox', () => {
   let fixture: ComponentFixture<TestFormComponent>;

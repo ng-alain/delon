@@ -10,8 +10,8 @@ import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
-import { HeaderComponent } from './header/header.component';
 import { AppService, SiteTheme } from '../core/app.service';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-layout',

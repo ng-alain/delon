@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { dispatchDropDown } from '@delon/testing';
@@ -16,7 +17,6 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
-import { STWidgetRegistry } from './../st-widget';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STComponent } from '../st.component';
 import {
@@ -36,6 +36,7 @@ import {
 } from '../st.interfaces';
 import { STModule } from '../st.module';
 import { _STColumn } from '../st.types';
+import { STWidgetRegistry } from './../st-widget';
 
 export const MOCKDATE = new Date();
 export const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -102,14 +103,15 @@ export function genModule<T extends TestComponent>(
     NoopAnimationsModule,
     CommonModule,
     FormsModule,
-    HttpClientTestingModule,
-    RouterTestingModule.withRoutes([]),
+    RouterModule.forRoot([]),
     NzModalModule,
     NzDrawerModule,
     STModule,
     DelonLocaleModule
   ];
   const providers = [
+    provideHttpClient(),
+    provideHttpClientTesting(),
     {
       provide: ALAIN_I18N_TOKEN,
       useClass: MockI18NServiceFake

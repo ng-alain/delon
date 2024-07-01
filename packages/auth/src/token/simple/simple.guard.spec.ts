@@ -1,10 +1,9 @@
 import { Component, NgModule } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, provideRouter } from '@angular/router';
 
-import { authSimpleCanActivate, authSimpleCanActivateChild, authSimpleCanMatch } from './simple.guard';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
+import { authSimpleCanActivate, authSimpleCanActivateChild, authSimpleCanMatch } from './simple.guard';
 
 describe('auth: SimpleGuard', () => {
   let srv: ITokenService;
@@ -13,8 +12,8 @@ describe('auth: SimpleGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
-      imports: [
-        RouterTestingModule.withRoutes([
+      providers: [
+        provideRouter([
           {
             path: 'home',
             component: MockComponent,

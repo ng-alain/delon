@@ -5,6 +5,7 @@ import {
   classNames,
   constructorChecks,
   cssSelectors,
+  cssTokens,
   elementSelectors,
   inputNames,
   methodCallChecks,
@@ -22,5 +23,6 @@ export const ruleUpgradeData: UpgradeData = {
   methodCallChecks,
   outputNames,
   propertyNames,
-  symbolRemoval
+  symbolRemoval,
+  cssTokens
 };

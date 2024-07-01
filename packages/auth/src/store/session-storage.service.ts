@@ -1,5 +1,5 @@
-import { IStore } from './interface';
 import { ITokenModel } from '../token/interface';
+import { IStore } from './interface';
 
 /**
  * `sessionStorage` storage, **lost after closing the browser**.

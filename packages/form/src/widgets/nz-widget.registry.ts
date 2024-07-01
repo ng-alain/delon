@@ -1,3 +1,4 @@
+import { WidgetRegistry } from '../widget.factory';
 import { ArrayWidget } from './array/array.widget';
 import { BooleanWidget } from './boolean/boolean.widget';
 import { CheckboxWidget } from './checkbox/checkbox.widget';
@@ -10,7 +11,6 @@ import { SelectWidget } from './select/select.widget';
 import { StringWidget } from './string/string.widget';
 import { TextWidget } from './text/text.widget';
 import { TextareaWidget } from './textarea/textarea.widget';
-import { WidgetRegistry } from '../widget.factory';
 
 export class NzWidgetRegistry extends WidgetRegistry {
   constructor() {

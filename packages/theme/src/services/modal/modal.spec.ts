@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 
-import { ModalHelper } from './modal.helper';
 import { AlainThemeModule } from '../../theme.module';
+import { ModalHelper } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
   let modal: ModalHelper;

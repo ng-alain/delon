@@ -2,8 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, provideRouter } from '@angular/router';
 
 import { createTestContext } from '@delon/testing';
 import {
@@ -18,9 +17,9 @@ import {
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderModule } from './page-header.module';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string): string {
@@ -36,12 +35,12 @@ describe('abc: page-header', () => {
   let router: Router;
 
   function genModule(other: { template?: string; providers?: NzSafeAny[]; created?: boolean }): void {
-    const imports = [
-      RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
-      PageHeaderModule,
-      AlainThemeModule
+    const imports = [PageHeaderModule, AlainThemeModule];
+    const providers = [
+      provideRouter([{ path: '1-1/:name', component: TestComponent }]),
+      { provide: APP_BASE_HREF, useValue: '/' },
+      SettingsService
     ];
-    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
     }
@@ -75,12 +74,12 @@ describe('abc: page-header', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
-          PageHeaderModule,
-          AlainThemeModule
+        imports: [PageHeaderModule, AlainThemeModule],
+        providers: [
+          provideRouter([{ path: '1-1/:name', component: TestComponent }]),
+          { provide: APP_BASE_HREF, useValue: '/' },
+          SettingsService
         ],
-        providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent]
       });
     });

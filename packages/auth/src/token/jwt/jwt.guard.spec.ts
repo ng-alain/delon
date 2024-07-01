@@ -1,10 +1,9 @@
 import { Component, NgModule } from '@angular/core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, provideRouter } from '@angular/router';
 
-import { authJWTCanActivate, authJWTCanActivateChild, authJWTCanMatch } from './jwt.guard';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
+import { authJWTCanActivate, authJWTCanActivateChild, authJWTCanMatch } from './jwt.guard';
 
 describe('auth: JWTGuard', () => {
   let srv: ITokenService;
@@ -13,8 +12,8 @@ describe('auth: JWTGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
-      imports: [
-        RouterTestingModule.withRoutes([
+      providers: [
+        provideRouter([
           {
             path: 'home',
             component: MockComponent,

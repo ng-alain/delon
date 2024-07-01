@@ -4,8 +4,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { SFColorWidgetSchema, withColorWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { SFColorWidgetSchema, withColorWidget } from './index';
 
 describe('form: widget: color', () => {
   let fixture: ComponentFixture<TestFormComponent>;

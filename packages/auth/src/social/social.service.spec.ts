@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { DefaultUrlSerializer, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { DefaultUrlSerializer, Router, provideRouter } from '@angular/router';
 
-import { SocialService } from './social.service';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
+import { SocialService } from './social.service';
 
 const mockRouter = {
   url: '',
@@ -51,8 +51,10 @@ describe('auth: social.service', () => {
 
   function genModule(tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
         SocialService,
         { provide: DOCUMENT, useClass: MockDocument },
         { provide: Router, useValue: mockRouter }

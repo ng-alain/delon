@@ -4,7 +4,6 @@ import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
 
-import { PluginOptions } from './interface';
 import {
   addImportToModule,
   addValueToVariable,
@@ -13,6 +12,7 @@ import {
   overwriteIfExists,
   readContent
 } from '../utils';
+import { PluginOptions } from './interface';
 
 let project: ProjectDefinition;
 

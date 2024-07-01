@@ -119,8 +119,6 @@
 /components/page-header/zh
 /components/pdf/en
 /components/pdf/zh
-/components/qr/en
-/components/qr/zh
 /components/quick-menu/en
 /components/quick-menu/zh
 /components/result/en

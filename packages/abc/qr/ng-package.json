@@ -1,6 +1,0 @@
-{
-  "lib": {
-    "flatModuleFile": "qr",
-    "entryFile": "public_api.ts"
-  }
-}

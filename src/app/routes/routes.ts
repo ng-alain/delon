@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
+import { LayoutComponent } from '../layout/layout.component';
 import { NotFoundComponent } from './404/404.component';
 import { HomeComponent } from './home/home.component';
-import { LayoutComponent } from '../layout/layout.component';
 
 export const routes: Routes = [
   {

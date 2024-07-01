@@ -3,8 +3,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { withRateWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { withRateWidget } from './index';
 
 describe('form: widget: rate', () => {
   let fixture: ComponentFixture<TestFormComponent>;

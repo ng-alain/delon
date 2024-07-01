@@ -4,11 +4,11 @@ import { inject } from '@angular/core';
 
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 
-import { SimpleTokenModel } from './simple.model';
 import { mergeConfig } from '../../auth.config';
 import { isAnonymous, throwErr } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
+import { SimpleTokenModel } from './simple.model';
 
 function newReq(req: HttpRequest<unknown>, model: SimpleTokenModel, options: AlainAuthConfig): HttpRequest<unknown> {
   const { token_send_template, token_send_key } = options;
