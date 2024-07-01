@@ -353,10 +353,6 @@ describe('abc: page-header', () => {
         genModule({
           providers: [
             {
-              provide: TitleService,
-              useFactory: () => null
-            },
-            {
               provide: ReuseTabService,
               useFactory: () => null
             }

@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { merge, Observable, filter } from 'rxjs';
+import { merge, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
@@ -82,8 +82,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private readonly dom = inject(DomSanitizer);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly localeSrv = inject(DelonLocaleService);
-  private readonly aclSrv = inject(ACLService, { optional: true });
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly aclSrv = inject(ACLService);
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly platform = inject(Platform);
 
   private _renders = new Map<string, TemplateRef<void>>();
@@ -317,22 +317,16 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.cdr.markForCheck();
       }
     });
-    const refSchemas: Array<Observable<NzSafeAny> | null> = [
-      this.aclSrv ? this.aclSrv.change : null,
-      this.i18nSrv ? this.i18nSrv.change : null
-    ].filter(o => o != null);
-    if (refSchemas.length > 0) {
-      merge(...(refSchemas as Array<Observable<NzSafeAny>>))
-        .pipe(
-          filter(() => this._inited),
-          takeUntilDestroyed()
-        )
-        .subscribe(() => this.refreshSchema());
-    }
+    merge(this.aclSrv.change, this.i18nSrv.change)
+      .pipe(
+        filter(() => this._inited),
+        takeUntilDestroyed()
+      )
+      .subscribe(() => this.refreshSchema());
   }
 
   protected fanyi(key: string): string {
-    return (this.i18nSrv ? this.i18nSrv.fanyi(key) : '') || key;
+    return this.i18nSrv.fanyi(key) || key;
   }
 
   private inheritUI(ui: SFUISchemaItemRun): void {

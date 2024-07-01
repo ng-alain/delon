@@ -3,11 +3,12 @@ import { createMigrationSchematicRule, NullableDevkitMigration, TargetVersion } 
 import { chain, Rule, SchematicContext } from '@angular-devkit/schematics';
 
 import { ruleUpgradeData } from './upgrade-data';
+import { v18Rule } from './upgrade-rules/V18';
 
 const migrations: NullableDevkitMigration[] = [];
 
 export function updateToV18(): Rule {
-  return chain([createMigrationSchematicRule(TargetVersion.V18, migrations, ruleUpgradeData, postUpdate)]);
+  return chain([v18Rule(), createMigrationSchematicRule(TargetVersion.V18, migrations, ruleUpgradeData, postUpdate)]);
 }
 
 /** Post-update schematic to be called when update is finished. */

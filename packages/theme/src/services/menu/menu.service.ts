@@ -12,8 +12,8 @@ import { Menu, MenuIcon, MenuInner } from './interface';
  */
 @Injectable({ providedIn: 'root' })
 export class MenuService implements OnDestroy {
-  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
-  private readonly aclService = inject(ACLService, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
+  private readonly aclService = inject(ACLService);
   private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private i18n$?: Subscription;
   private data: Menu[] = [];
@@ -23,7 +23,7 @@ export class MenuService implements OnDestroy {
   openStrictly = false;
 
   constructor() {
-    this.i18n$ = this.i18nSrv?.change.subscribe(() => this.resume());
+    this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
   }
 
   get change(): Observable<Menu[]> {
@@ -93,7 +93,7 @@ export class MenuService implements OnDestroy {
       item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
     }
 
-    item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
+    item.text = item.i18n ? this.i18nSrv.fanyi(item.i18n) : item.text;
 
     // group
     item.group = item.group !== false;
@@ -105,7 +105,7 @@ export class MenuService implements OnDestroy {
     item.disabled = typeof item.disabled === 'undefined' ? false : item.disabled;
 
     // acl
-    item._aclResult = item.acl && this.aclService ? this.aclService.can(item.acl) : true;
+    item._aclResult = item.acl ? this.aclService.can(item.acl) : true;
 
     item.open = item.open != null ? item.open : false;
   }
@@ -162,7 +162,7 @@ export class MenuService implements OnDestroy {
       this.data[0].children!.splice(pos, 0, shortcutMenu);
     }
     let _data = this.data[0].children![pos];
-    if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
+    if (_data.i18n) _data.text = this.i18nSrv.fanyi(_data.i18n);
     _data = Object.assign(_data, {
       shortcutRoot: true,
       _id: -1,

@@ -28,7 +28,7 @@ export class OnboardingService implements OnDestroy {
   private readonly doc = inject(DOCUMENT);
   private readonly configSrv = inject(AlainConfigService);
   private readonly keyStoreSrv = inject(ONBOARDING_STORE_TOKEN);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
 
   private compRef!: ComponentRef<OnboardingComponent>;
   private op$!: Subscription;
@@ -116,7 +116,7 @@ export class OnboardingService implements OnDestroy {
       ...this.i18n.getData('onboarding'),
       ...items[this.active]
     } as OnboardingItem;
-    const dir = this.configSrv.get('onboarding')!.direction || this.directionality?.value;
+    const dir = this.configSrv.get('onboarding')!.direction || this.directionality.value;
     Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length, dir });
     const pipes = [
       switchMap(() => (item.url ? this.router.navigateByUrl(item.url) : of(true))),
