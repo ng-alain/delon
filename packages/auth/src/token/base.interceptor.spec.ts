@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-  provideHttpClientTesting
-} from '@angular/common/http/testing';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, provideRouter } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
@@ -67,8 +61,8 @@ describe('auth: base.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
+        provideRouter([]),
         { provide: DOCUMENT, useValue: MockDoc },
         provideHttpClient(withInterceptors([authSimpleInterceptor])),
         provideHttpClientTesting(),

@@ -1,6 +1,6 @@
 /* eslint-disable deprecation/deprecation */
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -27,8 +27,9 @@ describe('abc: down-file', () => {
 
   function createComp(): void {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, DownFileModule],
-      declarations: [TestComponent]
+      imports: [DownFileModule],
+      declarations: [TestComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     });
 
     fixture = TestBed.createComponent(TestComponent);

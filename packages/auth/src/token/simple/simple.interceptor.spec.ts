@@ -3,8 +3,7 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { DefaultUrlSerializer, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { DefaultUrlSerializer, Router, provideRouter } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
@@ -56,8 +55,8 @@ describe('auth: simple.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel): void {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([])],
       providers: [
+        provideRouter([]),
         provideHttpClient(withInterceptors([authSimpleInterceptor])),
         provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),

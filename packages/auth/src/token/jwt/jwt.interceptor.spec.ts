@@ -2,7 +2,7 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { of, catchError } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
@@ -30,15 +30,13 @@ describe('auth: jwt.interceptor', () => {
   function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel): void {
     TestBed.configureTestingModule({
       declarations: [MockComponent],
-      imports: [
-        RouterTestingModule.withRoutes([
+      providers: [
+        provideRouter([
           {
             path: 'login',
             component: MockComponent
           }
-        ])
-      ],
-      providers: [
+        ]),
         provideHttpClient(withInterceptors([authJWTInterceptor])),
         provideHttpClientTesting(),
         provideAlainConfig({ auth: options }),

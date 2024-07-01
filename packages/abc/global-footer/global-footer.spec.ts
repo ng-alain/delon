@@ -2,8 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter, Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
 
@@ -32,10 +31,11 @@ describe('abc: global-footer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([]), GlobalFooterModule],
+      imports: [GlobalFooterModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
       providers: [
+        provideRouter([]),
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: WINDOW, useFactory: () => new MockWindow() }
       ]

@@ -1,8 +1,13 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NavigationCancel, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import {
+  NavigationCancel,
+  NavigationError,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  RouterModule
+} from '@angular/router';
 
 import { createTestContext } from '@delon/testing';
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
@@ -23,7 +28,7 @@ describe('theme: layout-default', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LayoutDefaultModule, RouterTestingModule, NzIconTestModule, AlainThemeModule],
+      imports: [LayoutDefaultModule, RouterModule.forRoot([]), NzIconTestModule, AlainThemeModule],
       declarations: [TestComponent]
     });
 

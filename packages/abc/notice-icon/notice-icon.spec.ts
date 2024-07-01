@@ -1,4 +1,5 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -20,8 +21,9 @@ describe('abc: notice-icon', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NoticeIconModule, HttpClientTestingModule, DelonLocaleModule],
-      declarations: [TestComponent]
+      imports: [NoopAnimationsModule, NoticeIconModule, DelonLocaleModule],
+      declarations: [TestComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
   });
