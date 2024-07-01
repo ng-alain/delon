@@ -41,25 +41,25 @@
 .for-each(@colors, {
   .bg-@{adKey}-light {
     @color-bg-light-color: extract(@adItem, @color-light-position);
-    e(~`genCommentTypeColor('background', '@{color-bg-light-color}')`);
+    genCommentTypeColor('background', '@{color-bg-light-color}');
     background-color: @color-bg-light-color !important;
   }
 
   .bg-@{adKey} {
     @color-bg-color: extract(@adItem, @color-basic-position);
-    e(~`genCommentTypeColor('background', '@{color-bg-color}')`);
+    genCommentTypeColor('background', '@{color-bg-color}');
     background-color: @color-bg-color !important;
   }
 
   .bg-@{adKey}-dark {
     @color-bg-dark-color: extract(@adItem, @color-dark-position);
-    e(~`genCommentTypeColor('background', '@{color-bg-dark-color}')`);
+    genCommentTypeColor('background', '@{color-bg-dark-color}');
     background-color: @color-bg-dark-color !important;
   }
 
   .bg-@{adKey}-light-h {
     @color-bg-light-h-color: extract(@adItem, @color-light-position);
-    e(~`genCommentTypeColor('hoverBackground', '@{color-bg-light-h-color}')`);
+    genCommentTypeColor('hoverBackground', '@{color-bg-light-h-color}');
     transition: background-color 300ms;
 
     &:hover {
@@ -69,7 +69,7 @@
 
   .bg-@{adKey}-h {
     @color-bg-basic-h-color: extract(@adItem, @color-basic-position);
-    e(~`genCommentTypeColor('hoverBackground', '@{color-bg-basic-h-color}')`);
+    genCommentTypeColor('hoverBackground', '@{color-bg-basic-h-color}');
     transition: background-color 300ms;
 
     &:hover {
@@ -79,7 +79,7 @@
 
   .bg-@{adKey}-dark-h {
     @color-bg-dark-h-color: extract(@adItem, @color-dark-position);
-    e(~`genCommentTypeColor('hoverBackground', '@{color-bg-dark-h-color}')`);
+    genCommentTypeColor('hoverBackground', '@{color-bg-dark-h-color}');
     transition: background-color 300ms;
 
     &:hover {
@@ -89,19 +89,19 @@
 
   .text-@{adKey}-light {
     @color-text-light-color: extract(@adItem, @color-light-position);
-    e(~`genCommentTypeColor('text', '@{color-text-light-color}')`);
+    genCommentTypeColor('text', '@{color-text-light-color}');
     color: @color-text-light-color !important;
   }
 
   .text-@{adKey} {
     @color-text-basic-color: extract(@adItem, @color-basic-position);
-    e(~`genCommentTypeColor('text', '@{color-text-basic-color}')`);
+    genCommentTypeColor('text', '@{color-text-basic-color}');
     color: @color-text-basic-color !important;
   }
 
   .text-@{adKey}-dark {
     @color-text-dark-color: extract(@adItem, @color-dark-position);
-    e(~`genCommentTypeColor('text', '@{color-text-dark-color}')`);
+    genCommentTypeColor('text', '@{color-text-dark-color}');
     color: @color-text-dark-color !important;
   }
 });
@@ -109,23 +109,23 @@
 .for-each(@aliasColors, {
   .bg-@{adKey}-light {
     @alias-bg-light-color: color(colorPalette('@{adValue}', @color-light-index));
-    e(~`genCommentTypeColor('background', '@{alias-bg-light-color}')`);
+    genCommentTypeColor('background', '@{alias-bg-light-color}');
     background-color: @alias-bg-light-color !important;
   }
 
   .bg-@{adKey} {
-    e(~`genCommentTypeColor('background', '@{adValue}')`);
+    genCommentTypeColor('background', '@{adValue}');
     background-color: @adValue !important;
   }
 
   .bg-@{adKey}-dark {
     @alias-bg-dark-color: color(colorPalette('@{adValue}', @color-dark-index));
-    e(~`genCommentTypeColor('background', '@{alias-bg-dark-color}')`);
+    genCommentTypeColor('background', '@{alias-bg-dark-color}');
     background-color: @alias-bg-dark-color !important;
   }
 
   .bg-@{adKey}-h {
-    e(~`genCommentTypeColor('hoverBackground', '@{adValue}')`);
+    genCommentTypeColor('hoverBackground', '@{adValue}');
     transition: background-color 300ms;
 
     &:hover {
@@ -135,18 +135,18 @@
 
   .text-@{adKey}-light {
     @alias-text-light-color: color(colorPalette('@{adValue}', @color-light-index));
-    e(~`genCommentTypeColor('text', '@{alias-text-light-color}')`);
+    genCommentTypeColor('text', '@{alias-text-light-color}');
     color: @alias-text-light-color !important;
   }
 
   .text-@{adKey} {
-    e(~`genCommentTypeColor('text', '@{adValue}')`);
+    genCommentTypeColor('text', '@{adValue}');
     color: @adValue !important;
   }
 
   .text-@{adKey}-dark {
     @alias-text-dark-color: color(colorPalette('@{adValue}', @color-dark-index));
-    e(~`genCommentTypeColor('text', '@{alias-text-dark-color}')`);
+    genCommentTypeColor('text', '@{alias-text-dark-color}');
     color: @alias-text-dark-color !important;
   }
 });
@@ -154,12 +154,12 @@
 // grey
 .for-each(@greyColorer, {
   .bg-grey-@{adKey} {
-    e(~`genCommentTypeColor('background', '@{adValue}')`);
+    genCommentTypeColor('background', '@{adValue}');
     background-color: @adValue !important;
   }
 
   .bg-grey-@{adKey}-h {
-    e(~`genCommentTypeColor('hoverBackground', '@{adValue}')`);
+    genCommentTypeColor('hoverBackground', '@{adValue}');
     transition: background-color 300ms;
 
     &:hover {
@@ -168,7 +168,7 @@
   }
 
   .text-grey-@{adKey} {
-    e(~`genCommentTypeColor('text', '@{adValue}')`);
+    genCommentTypeColor('text', '@{adValue}');
     color: @adValue !important;
   }
 });
@@ -179,12 +179,12 @@
     @nameValue: e(@@name);
 
     .bg-@{adKey}-@{i} {
-      e(~`genCommentTypeColor('background', '@{nameValue}')`);
+      genCommentTypeColor('background', '@{nameValue}');
       background-color: @nameValue !important;
     }
 
     .bg-@{adKey}-@{i}-h {
-      e(~`genCommentTypeColor('hoverBackground', '@{nameValue}')`);
+      genCommentTypeColor('hoverBackground', '@{nameValue}');
       transition: background-color 300ms;
 
       &:hover {
@@ -193,7 +193,7 @@
     }
 
     .text-@{adKey}-@{i} {
-      e(~`genCommentTypeColor('text', '@{nameValue}')`);
+      genCommentTypeColor('text', '@{nameValue}');
       color: @nameValue !important;
     }
 

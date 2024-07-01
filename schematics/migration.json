@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "migration-v17": {
-      "version": "17",
+    "migration-v18": {
+      "version": "18",
       "description": "Updates NG-ALAIN to v18 [https://github.com/ng-alain/ng-alain/issues/2502]",
       "factory": "./ng-update/index#updateToV18"
     },

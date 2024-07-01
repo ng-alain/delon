@@ -7540,10 +7540,9 @@ __metadata:
     mark-twain: "npm:^2.0.3"
     mockjs: "npm:^1.1.0"
     mustache: "npm:^4.2.0"
-    ng-alain-plugin-theme: "npm:^16.0.2"
+    ng-alain-plugin-theme: "npm:^18.0.0"
     ng-alain-sts: "npm:^0.0.2"
     ng-github-button: "npm:^18.0.0"
-    ng-less-javascript-enabled-patch: "npm:17.0.2"
     ng-packagr: "npm:^18.0.0"
     ng-zorro-antd: "npm:^18.0.1"
     ngx-countdown: "npm:^18.0.0"
@@ -13239,9 +13238,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-alain-plugin-theme@npm:^16.0.2":
-  version: 16.0.2
-  resolution: "ng-alain-plugin-theme@npm:16.0.2"
+"ng-alain-plugin-theme@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "ng-alain-plugin-theme@npm:18.0.0"
   dependencies:
     jsonc-parser: "npm:^3.2.0"
     less: "npm:^4.1.3"
@@ -13252,7 +13251,7 @@ __metadata:
     postcss-less: "npm:^6.0.0"
   bin:
     ng-alain-plugin-theme: lib/index.js
-  checksum: 11e8f8298865163164d8e11c7685ea1b482189dc6a43c0acd82e79c42d46d66adfb0b3705852c801ed08d5982c349d13ce24dcdaa654cc280ee75d8d88643275
+  checksum: 278700a1bc07b1e8f00cdd02b5e96644d345e394ac35367a8a735c3e8af98dc44616a13f9149e1a61e8bd0da9f7ff5a47ac868980fad175768bfe388241d15b4
   languageName: node
   linkType: hard
 
@@ -13275,17 +13274,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.3.0"
   checksum: 9018bc44e69c9fd9bbd15a11ef616a9afc8356582f65983d8d5ce4fa59e8357b79aed343d35e11432fa917230361a47ae75fa0c043d0a2b3ec110184099be2d1
-  languageName: node
-  linkType: hard
-
-"ng-less-javascript-enabled-patch@npm:17.0.2":
-  version: 17.0.2
-  resolution: "ng-less-javascript-enabled-patch@npm:17.0.2"
-  peerDependencies:
-    ansi-colors: ^4.0.0
-  bin:
-    ng-less-javascript-enabled-patch: index.js
-  checksum: e6db52fbd31378587ae242a07c31af96d5c2ee5fcf0a959a05b9d6f1f82912289b44c51ce3443471362ebbef126f383f1fcc28a1dcd9b0eacc9dc0795c8824ed
   languageName: node
   linkType: hard
 
