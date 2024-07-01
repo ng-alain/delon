@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router, RouterModule } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, RouterModule, provideRouter } from '@angular/router';
 
 import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
@@ -101,15 +101,11 @@ describe('theme: layout-default-nav', () => {
 
   function createModule(): void {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        RouterModule.forRoot([]),
-        AlainThemeModule,
-        HttpClientTestingModule,
-        LayoutDefaultModule
-      ],
+      imports: [NoopAnimationsModule, RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
       declarations: [TestComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: ACLService, useClass: MockACLService },
         { provide: WINDOW, useFactory: () => new MockWindow() }
       ]
@@ -546,11 +542,9 @@ describe('theme: layout-default-nav', () => {
   describe('should be recursive path', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          RouterModule.forRoot([]),
-          AlainThemeModule,
-          LayoutDefaultModule,
-          RouterTestingModule.withRoutes([
+        imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
+        providers: [
+          provideRouter([
             { path: 'user', component: TestRouteComponent },
             { path: 'user2', component: TestRouteComponent },
             { path: 'user/type', component: TestRouteComponent }

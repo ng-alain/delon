@@ -1,4 +1,5 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -77,15 +78,9 @@ export function builder(options?: {
 export function configureSFTestSuite(options?: { imports?: NzSafeAny[]; widgets?: SFWidgetProvideConfig[] }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        AlainThemeModule,
-        DelonFormModule,
-        HttpClientTestingModule,
-        ...(options?.imports ?? [])
-      ],
+      imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
       declarations: [TestFormComponent],
-      providers: [provideSFConfig({ widgets: options?.widgets })]
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideSFConfig({ widgets: options?.widgets })]
     });
   });
 }

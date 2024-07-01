@@ -2,8 +2,7 @@ import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@an
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
@@ -47,7 +46,7 @@ describe('abc: reuse-tab', () => {
         DelonLocaleModule,
         ReuseTabComponent,
         NoopAnimationsModule,
-        RouterTestingModule.withRoutes(
+        RouterModule.forRoot(
           [
             {
               path: '',

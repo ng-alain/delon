@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpParams, HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpParams, HttpResponse, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, catchError } from 'rxjs';
@@ -22,12 +22,11 @@ describe('theme: http.client', () => {
   const BODY = 'body data';
 
   function createModule(config?: AlainThemeHttpClientConfig): void {
-    const providers: any[] = [_HttpClient];
+    const providers: any[] = [provideHttpClient(), provideHttpClientTesting(), _HttpClient];
     if (config) {
       providers.push(provideAlainConfig({ themeHttp: config }));
     }
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers
     });
 

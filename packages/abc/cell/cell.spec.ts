@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
@@ -29,7 +28,7 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      imports: [CellModule, NoopAnimationsModule, BrowserModule, RouterTestingModule.withRoutes([]), NzIconTestModule],
+      imports: [CellModule, NoopAnimationsModule, BrowserModule, NzIconTestModule],
       declarations: [TestComponent, TestWidget]
     });
   };

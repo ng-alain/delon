@@ -1,8 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -34,7 +33,7 @@ describe('Service: Title', () => {
   function genModule(providers: NzSafeAny[] = [], loadI18n: boolean = true): void {
     const i18nProvider: NzSafeAny[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule, RouterTestingModule],
+      imports: [AlainThemeModule, RouterModule.forRoot([])],
       providers: [TitleService, MenuService, { provide: Title, useClass: TestTitleService }, ...i18nProvider].concat(
         providers
       )

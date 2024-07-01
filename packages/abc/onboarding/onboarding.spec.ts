@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { createTestContext } from '@delon/testing';
@@ -20,7 +19,8 @@ describe('abc: onboarding', () => {
 
   function genModule(): void {
     TestBed.configureTestingModule({
-      imports: [OnboardingModule, NoopAnimationsModule, RouterTestingModule],
+      imports: [OnboardingModule, NoopAnimationsModule],
+      providers: [provideRouter([])],
       declarations: [TestComponent]
     });
     ({ fixture } = createTestContext(TestComponent));

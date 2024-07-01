@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -29,9 +29,11 @@ describe('abc: xlsx', () => {
   let srv: XlsxService;
   function genModule(): void {
     TestBed.configureTestingModule({
-      imports: [XlsxModule, HttpClientTestingModule],
+      imports: [XlsxModule],
       declarations: [TestComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: HttpClient, useClass: MockHttpClient },
         { provide: LazyService, useClass: MockLazyService }
       ]
