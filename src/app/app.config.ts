@@ -70,9 +70,6 @@ const alainConfig: AlainConfig = {
   zip: {
     url: '/assets/jszip/jszip.min.js'
   },
-  qr: {
-    lib: '/assets/qrious/qrious.min.js'
-  },
   // pdf: {
   //   lib: '/assets/pdfjs/'
   // },
