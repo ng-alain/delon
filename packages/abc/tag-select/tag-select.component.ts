@@ -36,7 +36,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 })
 export class TagSelectComponent implements OnInit {
   private readonly i18n = inject(DelonLocaleService);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroy$ = inject(DestroyRef);
   locale: LocaleData = {};
@@ -48,8 +48,8 @@ export class TagSelectComponent implements OnInit {
   @Output() readonly change = new EventEmitter<boolean>();
 
   ngOnInit(): void {
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

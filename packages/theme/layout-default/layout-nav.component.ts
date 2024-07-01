@@ -56,7 +56,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
   private readonly sanitizer = inject(DomSanitizer);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
 
   private bodyEl!: HTMLBodyElement;
   private destroy$ = inject(DestroyRef);
@@ -259,8 +259,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       .subscribe(() => this.clearFloating());
     this.underPad();
 
-    this.dir = this.directionality?.value;
-    this.directionality?.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
+    this.dir = this.directionality.value;
+    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
       this.dir = direction;
       this.cdr.detectChanges();
     });

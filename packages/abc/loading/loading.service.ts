@@ -13,7 +13,7 @@ import { LoadingShowOptions } from './loading.types';
 export class LoadingService implements OnDestroy {
   private readonly overlay = inject(Overlay);
   private readonly configSrv = inject(AlainConfigService);
-  private readonly directionality = inject(Directionality, { optional: true });
+  private readonly directionality = inject(Directionality);
 
   private _overlayRef?: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
@@ -55,7 +55,7 @@ export class LoadingService implements OnDestroy {
       backdropClass: 'loading-backdrop'
     });
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
-    const dir = this.configSrv.get('loading')!.direction || this.directionality?.value;
+    const dir = this.configSrv.get('loading')!.direction || this.directionality.value;
     if (this.instance != null) {
       this.instance!!.options = this.opt;
       this.instance!!.dir = dir;
