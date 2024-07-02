@@ -10,6 +10,7 @@ import { zhCN as dateLang } from 'date-fns/locale';
 import { provideTinymce } from 'ngx-tinymce';
 
 import { provideCellWidgets } from '@delon/abc/cell';
+import { ReuseTabMatchMode, provideReuseTabConfig } from '@delon/abc/reuse-tab';
 import { provideSTWidgets } from '@delon/abc/st';
 import { provideSFConfig } from '@delon/form';
 import { withMonacoEditorWidget } from '@delon/form/widgets-third/monaco-editor';
@@ -133,7 +134,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ErrorHandler, useClass: CustomErrorHandler },
     // Elements
     importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })),
-    provideElements()
-    // provideReuseTabConfig({ max: 2 })
+    provideElements(),
+    provideReuseTabConfig({ max: 2, mode: ReuseTabMatchMode.MenuForce })
   ]
 };
