@@ -7,4 +7,4 @@
 @alain-default-aside-nav-selected-bg: @component-background;
 @alain-default-content-heading-bg: @component-background;
 @alain-default-content-heading-border: @border-color-split;
-@alain-default-content-bg: @body-background;
+@alain-default-content-bg: ~'var(--@{alain-default-name}-content-bg, @{body-background})';

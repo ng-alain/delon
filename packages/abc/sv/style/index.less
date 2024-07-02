@@ -1,4 +1,3 @@
-@import '../../../theme/theme-default.less';
 @sv-prefix: ~'.sv';
 
 @{sv-prefix} {
@@ -11,7 +10,7 @@
   &__container {
     display: block;
 
-    // offset the padding-bottom of last row
+    /** offset the padding-bottom of last row */
     .@{ant-prefix}-row {
       overflow: hidden;
       margin-bottom: -@sv-bottom;
@@ -52,7 +51,6 @@
 
   &__label {
     display: table-cell;
-    // margin-right: 8px;
     padding-bottom: @sv-bottom;
     line-height: 22px;
     color: @sv-label-color;
@@ -82,7 +80,7 @@
   }
 
   &__detail {
-    // contents 对 ie, edge 不支持，但对于子组件的支持会更友好
+    /** contents 对 ie, edge 不支持，但对于子组件的支持会更友好 */
     display: table-cell;
     width: 100%;
     padding-bottom: @sv-bottom;
@@ -160,7 +158,6 @@
     }
 
     &-text {
-      // font-weight: 700;
       font-size: @sv-value-default-value-font-size;
     }
 
