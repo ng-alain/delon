@@ -1,4 +1,4 @@
-name: docker-build-doc-site
+name: build-doc-site-aliyun-docker
 
 # on: push
 on:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   website:
-    if: "startsWith(github.event.commits[0].message, 'release')"
+    if: "startsWith(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -20,12 +20,9 @@ jobs:
       - name: Login Docker
         uses: docker/login-action@v2
         with:
-          # registry: registry.gitlab.com
-          # username: ${{ secrets.GITLAB_USERNAME }}
-          # password: ${{ secrets.GITLAB_PASSWORD }}
-          # Docker Hub
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -33,6 +30,4 @@ jobs:
           context: .
           file: ./Dockerfile.docs
           push: true
-          tags:
-            cipchk/ng-alain-docs:latest
-            # registry.gitlab.com/ng-alain/images:docs
+          tags: registry.cn-hangzhou.aliyuncs.com/alain/docs:latest
