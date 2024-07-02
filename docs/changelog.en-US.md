@@ -14,6 +14,11 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## <small>18.0.1 (2024-07-02)</small>
+
+* fix(cli): corrected missing setup `src/assets` of `angular.json` (#1809) ([18166bc](https://github.com/ng-alain/delon/commit/18166bc)), closes [#1809](https://github.com/ng-alain/delon/issues/1809)
+
+
 ## 18.0.0 (2024-07-02)
 
 ### Breaking Changes

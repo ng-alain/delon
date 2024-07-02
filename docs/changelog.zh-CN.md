@@ -14,7 +14,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
-variable
+## <small>18.0.1 (2024-07-02)</small>
+
+* fix(cli): 纠正 `angular.json` 缺少设置 `src/assets` (#1809) ([18166bc](https://github.com/ng-alain/delon/commit/18166bc)), closes [#1809](https://github.com/ng-alain/delon/issues/1809)
+
 ## 18.0.0 (2024-07-02)
 
 ### Breaking Changes
