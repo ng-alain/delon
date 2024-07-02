@@ -1,3 +1,9 @@
+## <small>18.0.1 (2024-07-02)</small>
+
+* fix(cli): corrected missing setup `src/assets` of `angular.json` (#1809) ([18166bc](https://github.com/ng-alain/delon/commit/18166bc)), closes [#1809](https://github.com/ng-alain/delon/issues/1809)
+
+
+
 ## 18.0.0 (2024-07-02)
 
 * docs: release 18 (#1807) ([553a6af](https://github.com/ng-alain/delon/commit/553a6af)), closes [#1807](https://github.com/ng-alain/delon/issues/1807)
