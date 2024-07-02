@@ -33,7 +33,6 @@ scripts/build/var.less
 /schematics/plugin/files/rtl
 
 # Yarn
-# yarn.lock
 yarn-error.log
 .yarn/*
 !.yarn/patches
