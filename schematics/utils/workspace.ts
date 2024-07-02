@@ -177,6 +177,17 @@ export function addStylePreprocessorOptions(workspace: WorkspaceDefinition, proj
   build.options.stylePreprocessorOptions['includePaths'] = includePaths;
 }
 
+export function addStyleResources(workspace: WorkspaceDefinition, projectName: string): void {
+  const project = getProjectFromWorkspace(workspace, projectName);
+  if (project == null) return;
+
+  const build = project.targets.get(BUILD_TARGET_BUILD);
+  if (build == null || build.options == null) return;
+
+  if (!Array.isArray(build.options.assets)) build.options.assets = [];
+  (build.options.assets as string[]).push(`src/assets`);
+}
+
 export function addSchematicCollections(workspace: WorkspaceDefinition): void {
   const cli = workspace.extensions.cli as Record<string, unknown>;
   if (cli && cli.schematicCollections) return;

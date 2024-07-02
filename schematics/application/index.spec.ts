@@ -23,6 +23,10 @@ describe('NgAlainSchematic: application', () => {
       const angualrJson = tree.readContent('angular.json');
       expect(angualrJson).toContain(`fileReplacements`);
     });
+    it('should be add src/assets', () => {
+      const angualrJson = tree.readContent('angular.json');
+      expect(angualrJson).toContain(`"src/assets"`);
+    });
   });
 
   describe('#i18n', () => {

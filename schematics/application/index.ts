@@ -27,6 +27,7 @@ import {
   addPackage,
   addSchematicCollections,
   addStylePreprocessorOptions,
+  addStyleResources,
   BUILD_TARGET_BUILD,
   BUILD_TARGET_SERVE,
   DEFAULT_WORKSPACE_PATH,
@@ -80,6 +81,7 @@ function fixAngularJson(): Rule {
     if (serveTarget.options == null) serveTarget.options = {};
     serveTarget.options.proxyConfig = 'proxy.conf.js';
 
+    addStyleResources(workspace, projectName);
     addStylePreprocessorOptions(workspace, projectName);
     addSchematicCollections(workspace);
     addFileReplacements(workspace, projectName);
