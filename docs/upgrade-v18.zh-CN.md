@@ -24,6 +24,8 @@ hot: true
 - 将项目升级到 Angular 17 运行 `ng update @angular/core@18 @angular/cli@18 @angular-eslint/schematics@18 ng-zorro-antd@18 ng-alain@18`。
 - _如果你有单独使用 `@angular/cdk` 请执行 `ng update @angular/cdk@18`_
 
+> NG-ALAIN脚手架升级全部变更文件，请参考：[#2394](https://github.com/ng-alain/ng-alain/pull/2504/files)。
+
 ### QA
 
 **throw new Error(`Not found ${lessLangPath}`);**

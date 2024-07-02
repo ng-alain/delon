@@ -23,6 +23,8 @@ hot: true
 - Upgrade Angular to 17.x version, Run `ng update @angular/core@18 @angular/cli@18 @angular-eslint/schematics@18 ng-zorro-antd@18 ng-alain@18`.
 - _Run `ng update @angular/cdk@18`, if you have used `@angular/cdk`._
 
+> NG-ALAIN scaffolding upgrade all change files, please refer to: [#2394](https://github.com/ng-alain/ng-alain/pull/2504/files).
+
 ### QA
 
 **throw new Error(`Not found ${lessLangPath}`);**
