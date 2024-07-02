@@ -7,13 +7,15 @@ export function removeNljep(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const json = readPackage(tree);
     if (json == null) return;
-    if (!json.devDependencies[PACKAGE_NAME]) return;
-    const postinstall = json.scripts.postinstall;
-    if (typeof postinstall !== 'string') return;
-    if (!postinstall.includes(PACKAGE_NAME)) return;
 
-    json.scripts.postinstall = postinstall.replace(`${PACKAGE_NAME}`, '');
-    delete json.devDependencies[PACKAGE_NAME];
+    const postinstall = json.scripts.postinstall;
+    if (typeof postinstall === 'string' && postinstall.includes(PACKAGE_NAME)) {
+      json.scripts.postinstall = postinstall.replace(`${PACKAGE_NAME}`, '');
+    }
+
+    if (json.devDependencies[PACKAGE_NAME]) {
+      delete json.devDependencies[PACKAGE_NAME];
+    }
 
     writePackage(tree, json);
 
