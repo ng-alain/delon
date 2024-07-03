@@ -750,31 +750,6 @@ describe('abc: st', () => {
             .asyncEnd();
         }));
       });
-      // TODO: 当前版本自动设置，无须参与计算
-      xdescribe('[fixed]', () => {
-        it('should be fixed left column', fakeAsync(() => {
-          page.updateColumn([
-            { title: '1', index: 'id', fixed: 'left', width: '100px' },
-            { title: '2', index: 'id', fixed: 'left', width: '100px' },
-            { title: '3', index: 'id', fixed: 'left', width: '100px' }
-          ]);
-          expect(page.getCell(1, 1).style.left).toBe('0px');
-          expect(page.getCell(1, 2).style.left).toBe('100px');
-          expect(page.getCell(1, 3).style.left).toBe('200px');
-          page.asyncEnd();
-        }));
-        it('should be fixed right column', fakeAsync(() => {
-          page.updateColumn([
-            { title: '1', index: 'id', fixed: 'right', width: '100px' },
-            { title: '2', index: 'id', fixed: 'right', width: '100px' },
-            { title: '3', index: 'id', fixed: 'right', width: '100px' }
-          ]);
-          expect(page.getCell(1, 1).style.right).toBe('200px');
-          expect(page.getCell(1, 2).style.right).toBe('100px');
-          expect(page.getCell(1, 3).style.right).toBe('0px');
-          page.asyncEnd();
-        }));
-      });
       describe('[Mulit Headers]', () => {
         it('should be working', fakeAsync(() => {
           page.updateColumn([
