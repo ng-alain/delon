@@ -1,3 +1,9 @@
+## <small>18.0.2 (2024-07-04)</small>
+
+* build: correct css not generated (#1811) ([22d3878](https://github.com/ng-alain/delon/commit/22d3878)), closes [#1811](https://github.com/ng-alain/delon/issues/1811)
+
+
+
 ## <small>18.0.1 (2024-07-02)</small>
 
 * fix(cli): corrected missing setup `src/assets` of `angular.json` (#1809) ([18166bc](https://github.com/ng-alain/delon/commit/18166bc)), closes [#1809](https://github.com/ng-alain/delon/issues/1809)
