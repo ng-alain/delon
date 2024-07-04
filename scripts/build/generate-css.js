@@ -21,8 +21,7 @@ async function genCss(name, min) {
   less.render
     .call(less, content, {
       plugins,
-      paths: ['node_modules/'],
-      javascriptEnabled: true,
+      paths: [path.join(__dirname, '../../node_modules/')]
     })
     .then(({ css }) => {
       const savePath = path.join(ROOT_DIR, `theme/${name}${min ? '.min' : ''}.css`);
