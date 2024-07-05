@@ -8,6 +8,8 @@ module: import { LetModule } from '@delon/abc/let';
 deprecated: 19.0.0
 ---
 
+# Will be removed in v19, Please use `@let` instead.
+
 允许在模板内复用计算值（包含异步），避免重复重新计算。
 
 ```html
