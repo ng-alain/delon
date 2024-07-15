@@ -123,7 +123,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       maxTagCount: maxTagCount || undefined,
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
-      showArrow: typeof showArrow !== 'boolean' ? undefined : showArrow,
+      showArrow: toBool(showArrow, true),
       compareWith: compareWith || ((o1: NzSafeAny, o2: NzSafeAny) => o1 === o2)
     };
 
