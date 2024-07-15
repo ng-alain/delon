@@ -120,7 +120,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       mode: mode || 'default',
       showSearch: toBool(showSearch, true),
       tokenSeparators: tokenSeparators || [],
-      maxTagCount: maxTagCount || undefined,
+      maxTagCount: maxTagCount || Infinity,
       optionHeightPx: optionHeightPx || 32,
       optionOverflowSize: optionOverflowSize || 8,
       showArrow: toBool(showArrow, true),
