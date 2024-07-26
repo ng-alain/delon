@@ -86,10 +86,18 @@ export class LodopService implements OnDestroy {
     if (!this._lodop) throw new Error(`请务必先调用 lodop 获取对象`);
   }
 
+  private requestUrl(): string {
+    const urlObj = new URL(this.cog.url!);
+    const params = new URLSearchParams(urlObj.search);
+    params.set('name', this.cog.name!);
+    urlObj.search = params.toString();
+    return urlObj.toString();
+  }
+
   private request(): void {
     this.pending = true;
 
-    const url = `${this.cog.url}?name=${this.cog.name}`;
+    const url = this.requestUrl();
     let checkMaxCount = this.cog.checkMaxCount as number;
     const onResolve = (status: NzSafeAny, error?: NzSafeAny): void => {
       this._init.next({
@@ -160,7 +168,7 @@ export class LodopService implements OnDestroy {
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
-        } catch {}
+        } catch { }
 
         if (arr != null && Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {
