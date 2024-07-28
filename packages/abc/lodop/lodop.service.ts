@@ -87,9 +87,15 @@ export class LodopService implements OnDestroy {
   }
 
   private requestUrl(): string {
-    const urlObj = new URL(this.cog.url!);
+    if (!this.cog.url) {
+      throw new Error('URL is not defined');
+    }
+    if (!this.cog.name) {
+      throw new Error('Name is not defined');
+    }
+    const urlObj = new URL(this.cog.url);
     const params = new URLSearchParams(urlObj.search);
-    params.set('name', this.cog.name!);
+    params.set('name', this.cog.name);
     urlObj.search = params.toString();
     return urlObj.toString();
   }
