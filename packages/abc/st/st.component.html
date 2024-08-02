@@ -160,6 +160,7 @@
           <td
             [nzShowExpand]="expand && i.showExpand !== false"
             [nzExpand]="i.expand"
+            [nzExpandIcon]="expandIcon"
             (nzExpandChange)="_expandChange(i, $event)"
             (click)="_stopPropagation($event)"
             nzWidth="50px"
