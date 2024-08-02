@@ -11,8 +11,10 @@ export class DatePipe implements PipeTransform {
 
   transform(value: Date | string | number, formatString?: string | null): string {
     const formatStr = formatString ?? this.cog?.dateFormat ?? 'yyyy-MM-dd HH:mm';
-    if (this.cog?.custom) return this.cog.custom(value, formatStr);
 
-    return formatDate(value, formatStr, this.nzI18n.getDateLocale());
+    return formatDate(value, formatStr, {
+      locale: this.nzI18n.getDateLocale(),
+      customFormat: this.cog?.dateFormatCustom
+    });
   }
 }

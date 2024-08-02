@@ -17,6 +17,7 @@ import {
   formatDistanceToNow
 } from 'date-fns';
 
+import type { AlainThemePipeDateFormatCustom } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DateLocale } from 'ng-zorro-antd/i18n';
 
@@ -129,10 +130,14 @@ export function toDate(value?: Date | string | number | null, options?: string |
  * @param formatString Please refer to [date-fnd format](https://date-fns.org/v2.30.0/docs/format) for string format
  * @param dateLocale Recommended to be consistent with NG-ZORRO by using `inject(NZ_DATE_LOCALE)`
  */
-export function formatDate(value: Date | string | number, formatString: string, dateLocale?: DateLocale): string {
+export function formatDate(
+  value: Date | string | number,
+  formatString: string,
+  options?: { locale?: DateLocale; customFormat?: AlainThemePipeDateFormatCustom }
+): string {
   value = toDate(value);
   if (isNaN(value as NzSafeAny)) return '';
 
-  const langOpt = { locale: dateLocale };
+  const langOpt = { locale: options?.locale };
   return formatString === 'fn' ? formatDistanceToNow(value, langOpt) : format(value, formatString, langOpt);
 }

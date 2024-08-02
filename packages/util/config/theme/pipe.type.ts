@@ -1,4 +1,10 @@
 export interface AlainThemePipeConfig {
   dateFormat?: string;
-  custom?: (value: Date | string | number, formatString?: string | null) => string;
+  dateFormatCustom?: AlainThemePipeDateFormatCustom;
 }
+
+export type AlainThemePipeDateFormatCustom = (
+  value: Date | string | number,
+  formatString?: string | null,
+  options?: { locale?: Locale }
+) => string;
