@@ -14,6 +14,9 @@ export class LetContext<T> {
   }
 }
 
+/**
+ * @deprecated Will be removed in v19, Please use `@let` instead.
+ */
 @Directive({ selector: '[let]', standalone: true })
 export class LetDirective<T> {
   @Input({ required: true }) let!: T;

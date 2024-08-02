@@ -4,7 +4,10 @@ title: result
 subtitle: Result
 cols: 1
 module: import { ResultModule } from '@delon/abc/result';
+deprecated: 20.0.0
 ---
+
+# Will be removed in v20, Please use `nz-result` instead.
 
 Used to feedback the processing results of a series of tasks performed by the user.
 

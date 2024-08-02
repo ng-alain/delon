@@ -83,6 +83,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false` | ✅ |
 | `[expandAccordion]` | Accordion mode | `boolean` | `false` | ✅ |
 | `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - | - |
+| `[expandIcon]`   | Custom expand icon | `TemplateRef<void>` | - |
 | `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
 | `[resizable]` | Resize header of the current table, **Multiple headers not supported** | `STResizable, boolean` | - | - |
