@@ -4,7 +4,7 @@ export interface AlainThemePipeConfig {
 }
 
 export type AlainThemePipeDateFormatCustom = (
-  value: Date | string | number,
+  value: Date,
   formatString?: string | null,
   options?: { locale?: Locale }
 ) => string;
