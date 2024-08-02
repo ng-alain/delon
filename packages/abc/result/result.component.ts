@@ -15,6 +15,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
+/**
+ * @deprecated Will be removed in v20, Please use `nz-result` instead.
+ */
 @Component({
   selector: 'result',
   exportAs: 'result',

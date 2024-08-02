@@ -8,6 +8,9 @@ import { ResultComponent } from './result.component';
 
 const COMPONENTS = [ResultComponent];
 
+/**
+ * @deprecated Will be removed in v20, Please use `nz-result` instead.
+ */
 @NgModule({
   imports: [CommonModule, NzIconModule, NzOutletModule, ...COMPONENTS],
   exports: COMPONENTS
