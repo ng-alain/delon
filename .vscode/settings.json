@@ -40,6 +40,7 @@
     "editor.formatOnSave": false
   },
   "files.associations": {
+    "package.json": "json",
     "*.json": "jsonc",
     ".prettierrc": "json"
   },
