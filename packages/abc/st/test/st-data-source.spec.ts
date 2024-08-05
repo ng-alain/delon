@@ -791,6 +791,14 @@ describe('abc: table: data-souce', () => {
             done();
           });
         });
+        it('should be return default value when is 0 timestamp', done => {
+          options.columns[0] = { index: 'date', type: 'date', default: '-' } as _STColumn;
+          options.data = [{ date: 0 }, { date: new Date() }];
+          srv.process(options).subscribe(res => {
+            expect(res.list[0]._values[0].text).toBe('-');
+            done();
+          });
+        });
       });
       it('via yn', done => {
         options.columns[0].type = 'yn';
