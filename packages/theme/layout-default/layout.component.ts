@@ -135,7 +135,7 @@ export class LayoutDefaultComponent {
     }
     if (ev instanceof NavigationError || ev instanceof NavigationCancel) {
       this.isFetching = false;
-      const err = this.customError === null ? null : this.customError ?? `Could not load ${ev.url} route`;
+      const err = this.customError === null ? null : (this.customError ?? `Could not load ${ev.url} route`);
       if (err && ev instanceof NavigationError) {
         this.msgSrv.error(err, { nzDuration: 1000 * 3 });
       }

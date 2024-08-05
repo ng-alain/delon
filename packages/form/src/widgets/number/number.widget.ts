@@ -67,7 +67,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     }
     if (ui.formatter) this.formatter = ui.formatter;
     if (ui.parser) this.parser = ui.parser;
-    this.width = typeof ui.widgetWidth === 'number' ? `${ui.widgetWidth}px` : ui.widgetWidth ?? '90px';
+    this.width = typeof ui.widgetWidth === 'number' ? `${ui.widgetWidth}px` : (ui.widgetWidth ?? '90px');
   }
 
   _setValue(val: number): void {
