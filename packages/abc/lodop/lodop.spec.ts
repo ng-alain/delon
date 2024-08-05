@@ -59,7 +59,7 @@ describe('abc: lodop', () => {
   }
 
   describe('[default]', () => {
-    xit('should get lodop instance', (done: () => void) => {
+    it('should get lodop instance', (done: () => void) => {
       genModule();
       srv.lodop.subscribe(res => {
         expect(res).not.toBeNull();
@@ -67,7 +67,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should throw err when can not get variable name', (done: () => void) => {
+    it('should throw err when can not get variable name', (done: () => void) => {
       genModule();
       isNullLodop = true;
       srv.lodop.subscribe(res => {
@@ -75,7 +75,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should wait for websocket completed', (done: () => void) => {
+    it('should wait for websocket completed', (done: () => void) => {
       genModule();
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
@@ -93,7 +93,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should be multi get', (done: () => void) => {
+    it('should be multi get', (done: () => void) => {
       genModule();
       concat(srv.lodop, srv.lodop).subscribe({
         next: () => {
@@ -107,7 +107,7 @@ describe('abc: lodop', () => {
         }
       });
     });
-    xit('#checkMaxCount', (done: () => void) => {
+    it('#checkMaxCount', (done: () => void) => {
       cog.lodop!.checkMaxCount = 2;
       genModule();
       mockLodop = {
@@ -121,7 +121,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should get exists lodop', (done: () => void) => {
+    it('should get exists lodop', (done: () => void) => {
       genModule();
       srv.lodop.subscribe(() => {
         srv.lodop.subscribe(res => {
@@ -131,7 +131,7 @@ describe('abc: lodop', () => {
         });
       });
     });
-    xit('should get printer list', (done: () => void) => {
+    it('should get printer list', (done: () => void) => {
       genModule();
       srv.lodop.subscribe(() => {
         expect(srv.printer.length).toBe(1);
@@ -139,14 +139,14 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should throw error when lodop is null', () => {
+    it('should throw error when lodop is null', () => {
       expect(() => {
         genModule();
         const ls = srv.printer;
         console.log(ls);
       }).toThrowError('请务必先调用 lodop 获取对象');
     });
-    xit('should throw error when http request error', (done: () => void) => {
+    it('should throw error when http request error', (done: () => void) => {
       genModule();
       isErrRequest = true;
       srv.lodop.subscribe(res => {
@@ -154,7 +154,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('#reset', (done: () => void) => {
+    it('#reset', (done: () => void) => {
       genModule();
       srv.lodop.pipe(take(1)).subscribe(res => {
         expect(res).not.toBeNull();
@@ -176,7 +176,7 @@ describe('abc: lodop', () => {
   });
 
   describe('#attachCode', () => {
-    xit('should be attach to lodop', (done: () => void) => {
+    it('should be attach to lodop', (done: () => void) => {
       genModule();
       const code = `
             LODOP.PRINT_INITA(10, 10, 762, 533, 'title');
@@ -198,7 +198,7 @@ describe('abc: lodop', () => {
         done();
       });
     });
-    xit('should be custom parser', (done: () => void) => {
+    it('should be custom parser', (done: () => void) => {
       genModule();
       const code = `
             LODOP.PRINT_INITA(10, 10, 762, 533, '{{title}}');
@@ -229,7 +229,7 @@ describe('abc: lodop', () => {
     });
   });
 
-  xit('#design', (done: () => void) => {
+  it('#design', (done: () => void) => {
     genModule();
     const code = `
         LODOP.PRINT_INITA(10, 10, 762, 533, '{{title}}');
@@ -280,7 +280,7 @@ describe('abc: lodop', () => {
         }
       };
     });
-    xit('should be print', (done: () => void) => {
+    it('should be print', (done: () => void) => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -293,7 +293,7 @@ describe('abc: lodop', () => {
           done();
         });
     });
-    xit('should be betch printes', (done: () => void) => {
+    it('should be betch printes', (done: () => void) => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -306,7 +306,7 @@ describe('abc: lodop', () => {
           done();
         });
     });
-    xit('should be call bat not data', (done: () => void) => {
+    it('should be call bat not data', (done: () => void) => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -317,7 +317,7 @@ describe('abc: lodop', () => {
           done();
         });
     });
-    xit('should report error when lodp throw 缺纸', (done: () => void) => {
+    it('should report error when lodp throw 缺纸', (done: () => void) => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
