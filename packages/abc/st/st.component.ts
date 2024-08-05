@@ -1,4 +1,4 @@
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import type { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DecimalPipe, DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
@@ -805,7 +805,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   // #endregion
 
   get cdkVirtualScrollViewport(): CdkVirtualScrollViewport | undefined {
-    return this.orgTable?.cdkVirtualScrollViewport;
+    return this.orgTable?.cdkVirtualScrollViewport as NzSafeAny;
   }
 
   private _resetColumns(options?: STResetColumnsOption): Observable<this> {
