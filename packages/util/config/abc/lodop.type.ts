@@ -18,8 +18,8 @@ export interface AlainLodopConfig {
   /**
    * Lodop 远程脚本URL地址，**注意**务必使用 `name` 属性指定变量值
    *
-   * - http://localhost:18000/CLodopfuncs.js
-   * - https://localhost:8443/CLodopfuncs.js [默认]
+   * - http://localhost:18000/CLodopfuncs.js [默认]
+   * - https://localhost:8443/CLodopfuncs.js
    */
   url?: string;
   /**

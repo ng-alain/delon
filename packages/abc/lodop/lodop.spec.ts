@@ -163,6 +163,16 @@ describe('abc: lodop', () => {
       });
       srv.reset();
     });
+    it('should be custom url', () => {
+      const url = 'http://a.com/lodop.js?aa=1';
+      cog.lodop!.url = url;
+      genModule();
+      const scriptSrv = (srv as NzSafeAny).scriptSrv;
+      spyOn(scriptSrv, 'loadScript').and.callFake(() => Promise.resolve({ status: 'ok' }));
+      srv.reset();
+      expect(scriptSrv.loadScript).toHaveBeenCalled();
+      expect(scriptSrv.loadScript.calls.first().args[0]).toBe(`${url}&name=LODOP`);
+    });
   });
 
   describe('#attachCode', () => {

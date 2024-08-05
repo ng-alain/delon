@@ -21,7 +21,7 @@ export class LodopService implements OnDestroy {
 
   constructor(configSrv: AlainConfigService) {
     this.defaultConfig = configSrv.merge('lodop', {
-      url: '//localhost:8443/CLodopfuncs.js',
+      url: 'http://localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',
       companyName: '',
       checkMaxCount: 100
@@ -88,8 +88,10 @@ export class LodopService implements OnDestroy {
 
   private request(): void {
     this.pending = true;
+    const urlObj = new URL(this.cog.url!);
+    urlObj.searchParams.set('name', this.cog.name!);
+    const url = urlObj.toString();
 
-    const url = `${this.cog.url}?name=${this.cog.name}`;
     let checkMaxCount = this.cog.checkMaxCount as number;
     const onResolve = (status: NzSafeAny, error?: NzSafeAny): void => {
       this._init.next({
