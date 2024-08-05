@@ -14,6 +14,24 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## 18.1.0 (2024-08-05)
+
+### Features
+
+* feat(abc:let): Angular 18.1 以后请使用内置 `@let` 替代 (#1814) ([5dd82df](https://github.com/ng-alain/delon/commit/5dd82df)), closes [#1814](https://github.com/ng-alain/delon/issues/1814)
+* feat(abc:result): 使用 `nz-result` 替代 (#1818) ([62da4d1](https://github.com/ng-alain/delon/commit/62da4d1)), closes [#1818](https://github.com/ng-alain/delon/issues/1818)
+* feat(abc:st): 新增 `expandIcon` 属性 (#1812) ([663b764](https://github.com/ng-alain/delon/commit/663b764)), closes [#1812](https://github.com/ng-alain/delon/issues/1812)
+* feat(theme): `_date` 管道支持自定义处理时间格式化处理 (#1822) ([772ecb4](https://github.com/ng-alain/delon/commit/772ecb4)), closes [#1822](https://github.com/ng-alain/delon/issues/1822)
+
+### Bug Fixes
+
+* fix(abc:lodop): `url` 支持带有URL参数 (#1824) ([a3dc917](https://github.com/ng-alain/delon/commit/a3dc917)), closes [#1824](https://github.com/ng-alain/delon/issues/1824)
+* fix(abc:st): 纠正 `date` 类型时间戳默认值不正确 (#1823) ([40ae0dc](https://github.com/ng-alain/delon/commit/40ae0dc)), closes [#1823](https://github.com/ng-alain/delon/issues/1823)
+* fix(form:select): 修复 `maxTagCount` 默认值应该是 `Infinity` (#1815) ([bafe3ab](https://github.com/ng-alain/delon/commit/bafe3ab)), closes [#1815](https://github.com/ng-alain/delon/issues/1815)
+* fix(form:select): 修复 `showArrow` 不正确默认值 (#1816) ([666c17a](https://github.com/ng-alain/delon/commit/666c17a)), closes [#1816](https://github.com/ng-alain/delon/issues/1816)
+* fix(theme): 修复暗黑颜色样式 (#1819) ([6389ec1](https://github.com/ng-alain/delon/commit/6389ec1)), closes [#1819](https://github.com/ng-alain/delon/issues/1819)
+
+
 ## <small>18.0.2 (2024-07-04)</small>
 
 * build: 纠正没有生成 css 文件 (#1811) ([22d3878](https://github.com/ng-alain/delon/commit/22d3878)), closes [#1811](https://github.com/ng-alain/delon/issues/1811)
