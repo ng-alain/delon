@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { map, Observable, of } from 'rxjs';
 
 import { yn } from '@delon/theme';
-import { AlainCellConfig, AlainConfigService } from '@delon/util/config';
+import { AlainConfigService } from '@delon/util/config';
 import { formatDate } from '@delon/util/date-time';
 import { CurrencyService, formatMask } from '@delon/util/format';
 import { deepMerge } from '@delon/util/other';
@@ -25,12 +25,22 @@ export class CellService {
   private readonly nzI18n = inject(NzI18nService);
   private readonly currency = inject(CurrencyService);
   private readonly dom = inject(DomSanitizer);
-  private globalOptions!: AlainCellConfig;
+  private readonly configSrv = inject(AlainConfigService);
+  private globalOptions = this.configSrv.merge('cell', {
+    date: { format: 'yyyy-MM-dd HH:mm:ss' },
+    img: { size: 32 },
+    default: { text: '-' }
+  })!;
   private widgets: { [key: string]: CellWidget } = {
     date: {
       type: 'fn',
       ref: (value, opt) => {
-        return { text: formatDate(value as string, opt.date!.format!, this.nzI18n.getDateLocale()) };
+        return {
+          text: formatDate(value as string, opt.date!.format!, {
+            locale: this.nzI18n.getDateLocale(),
+            customFormat: this.configSrv.get('themePipe')?.dateFormatCustom
+          })
+        };
       }
     },
     mega: {
@@ -65,14 +75,6 @@ export class CellService {
       }
     }
   };
-
-  constructor(configSrv: AlainConfigService) {
-    this.globalOptions = configSrv.merge('cell', {
-      date: { format: 'yyyy-MM-dd HH:mm:ss' },
-      img: { size: 32 },
-      default: { text: '-' }
-    })!;
-  }
 
   registerWidget(key: string, widget: Type<unknown>): void {
     this.widgets[key] = { type: 'widget', ref: widget };
