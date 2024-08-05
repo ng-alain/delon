@@ -239,7 +239,7 @@ export class STDataSource {
           text = this.currencySrv.format(value, col.currency?.format);
           break;
         case 'date':
-          text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
+          text = value == null || value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
           break;
         case 'yn':
           text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);
