@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import type { SFSchemaEnum, SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NgStyleInterface, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 
 export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   /**
@@ -129,4 +129,6 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
    * 点击展开树节点图标调用
    */
   expandChange?: (e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>;
+
+  change?: (value: NzSafeAny[] | NzSafeAny) => void;
 }
