@@ -1,11 +1,11 @@
 import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
 import { Injectable, TemplateRef, Type, inject } from '@angular/core';
-import { Observable, Observer, filter, take } from 'rxjs';
+import { Observable, Observer, delay, filter, take, tap } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
+import { ModalOptions, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 const CLS_DRAG = 'MODAL-DRAG';
 
@@ -26,6 +26,11 @@ export interface ModalHelperOptions {
    * 是否强制使用 `nzData` 传递参数，若为 `false` 表示参数会直接映射到组件实例中，其他值只能通过 `NZ_MODAL_DATA` 的方式来获取参数，默认：`false`
    */
   useNzData?: boolean;
+
+  /**
+   * 设置焦点按钮
+   */
+  focus?: 'ok' | 'cancel';
 }
 
 export interface ModalHelperDragOptions {
@@ -76,20 +81,21 @@ export class ModalHelper {
    * this.nzModalRef.destroy();
    */
   create(
-    comp: TemplateRef<NzSafeAny> | Type<NzSafeAny>,
-    params?: NzSafeAny,
+    comp?: TemplateRef<NzSafeAny> | Type<NzSafeAny> | 'confirm' | 'info' | 'success' | 'error' | 'warning',
+    params?: NzSafeAny | ModalHelperOptions | null,
     options?: ModalHelperOptions
   ): Observable<NzSafeAny> {
+    const isBuildIn = typeof comp === 'string';
     options = deepMerge(
       {
         size: 'lg',
         exact: true,
         includeTabs: false
       },
-      options
+      isBuildIn && arguments.length === 2 ? params : options
     );
     return new Observable((observer: Observer<NzSafeAny>) => {
-      const { size, includeTabs, modalOptions, drag, useNzData } = options as ModalHelperOptions;
+      const { size, includeTabs, modalOptions, drag, useNzData, focus } = options as ModalHelperOptions;
       let cls: string[] = [];
       let width = '';
       if (size) {
@@ -118,25 +124,46 @@ export class ModalHelper {
         };
         cls.push(CLS_DRAG, dragWrapCls);
       }
-      const subject = this.srv.create({
+      const mth = isBuildIn ? this.srv[comp] : this.srv.create;
+      const subject: NzModalRef<NzSafeAny, NzSafeAny> = mth.call(this.srv, {
         nzWrapClassName: cls.join(' '),
-        nzContent: comp,
+        nzContent: isBuildIn ? undefined : comp,
         nzWidth: width ? width : undefined,
         nzFooter: null,
         nzData: params,
         ...modalOptions
-      });
+      } as ModalOptions);
       // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取
-      if (useNzData !== true) {
+      if (subject.componentInstance != null && useNzData !== true) {
         Object.assign(subject.componentInstance, params);
       }
       subject.afterOpen
         .pipe(
           take(1),
-          filter(() => dragOptions != null)
+          tap(() => {
+            if (dragOptions != null) {
+              dragRef = this.createDragRef(dragOptions, `.${dragWrapCls}`);
+            }
+          }),
+          filter(() => focus != null),
+          delay(modalOptions?.nzNoAnimation ? 10 : 200)
         )
         .subscribe(() => {
-          dragRef = this.createDragRef(dragOptions!!, `.${dragWrapCls}`);
+          const btns = subject
+            .getElement()
+            .querySelector<HTMLDivElement>('.ant-modal-confirm-btns, .modal-footer')
+            ?.querySelectorAll<HTMLButtonElement>('.ant-btn');
+          const btnSize = btns?.length ?? 0;
+          let el: HTMLButtonElement | null = null;
+          if (btnSize === 1) {
+            el = btns![0];
+          } else if (btnSize > 1) {
+            el = btns![focus === 'ok' ? 1 : 0];
+          }
+          if (el != null) {
+            el.focus();
+            el.dataset.focused = focus;
+          }
         });
       subject.afterClose.pipe(take(1)).subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
