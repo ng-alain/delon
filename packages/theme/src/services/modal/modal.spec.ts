@@ -29,7 +29,7 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#create', () => {
-    xit('should be open', fakeAsync(() => {
+    it('should be open', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
@@ -38,7 +38,7 @@ describe('theme: ModalHelper', () => {
       tick(1000);
       fixture.detectChanges();
     }));
-    xit('should be open a tabset', fakeAsync(() => {
+    it('should be open a tabset', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }, { includeTabs: true }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
@@ -48,7 +48,7 @@ describe('theme: ModalHelper', () => {
       fixture.detectChanges();
       expect(document.querySelector('.modal-include-tabs')).not.toBeNull();
     }));
-    xit('should be useNzData is true', fakeAsync(() => {
+    it('should be useNzData is true', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'a' }, { useNzData: true }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
@@ -60,7 +60,7 @@ describe('theme: ModalHelper', () => {
       expect(document.querySelector<HTMLElement>('.nzData')?.innerText.trim()).toBe('a');
     }));
     describe('#exact width true', () => {
-      xit('should be not trigger subscript when return a undefined value', fakeAsync(() => {
+      it('should be not trigger subscript when return a undefined value', fakeAsync(() => {
         modal.create(TestModalComponent, { ret: undefined }, { includeTabs: true, exact: true }).subscribe({
           next: () => {
             expect(false).toBeTruthy();
@@ -81,7 +81,7 @@ describe('theme: ModalHelper', () => {
       }));
     });
     describe('#drag', () => {
-      xit('should be working', fakeAsync(() => {
+      it('should be working', fakeAsync(() => {
         modal
           .create(TestModalComponent, { ret: 'true' }, { drag: true, modalOptions: { nzTitle: 'test' } })
           .subscribe();
@@ -90,7 +90,7 @@ describe('theme: ModalHelper', () => {
         fixture.detectChanges();
         expect(document.querySelectorAll('.MODAL-DRAG').length).toBe(1);
       }));
-      xit('#handleCls', fakeAsync(() => {
+      it('#handleCls', fakeAsync(() => {
         modal
           .create(
             TestModalComponent,
@@ -106,7 +106,7 @@ describe('theme: ModalHelper', () => {
       }));
     });
     describe('#focus', () => {
-      xit('should be focus ok button', fakeAsync(() => {
+      it('should be focus ok button', fakeAsync(() => {
         modal.create('confirm', {}, { focus: 'ok', modalOptions: { nzNoAnimation: true } }).subscribe();
         fixture.detectChanges();
         tick(1000);
@@ -115,7 +115,7 @@ describe('theme: ModalHelper', () => {
         expect(btn != null).toBe(true);
         expect(btn?.classList).toContain('ant-btn-primary');
       }));
-      xit('should be focus cancel button', fakeAsync(() => {
+      it('should be focus cancel button', fakeAsync(() => {
         modal.create('confirm', {}, { focus: 'cancel', modalOptions: { nzNoAnimation: true } }).subscribe();
         fixture.detectChanges();
         tick(1000);
@@ -136,7 +136,7 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#createStatic', () => {
-    xit('should be open', fakeAsync(() => {
+    it('should be open', fakeAsync(() => {
       const id = `${+new Date()}`;
       modal
         .createStatic(TestModalComponent, {
@@ -152,7 +152,7 @@ describe('theme: ModalHelper', () => {
       tick(1000);
       fixture.detectChanges();
     }));
-    xit('should be open sm size', fakeAsync(() => {
+    it('should be open sm size', fakeAsync(() => {
       const id = `${+new Date()}`;
       modal
         .createStatic(
@@ -172,7 +172,7 @@ describe('theme: ModalHelper', () => {
       tick(1000);
       fixture.detectChanges();
     }));
-    xit('should be 80% size', fakeAsync(() => {
+    it('should be 80% size', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }, { size: '10%' }).subscribe();
       fixture.detectChanges();
       tick(1000);
