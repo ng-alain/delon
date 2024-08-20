@@ -30,7 +30,8 @@ constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
 
 ```ts
 providers: [
-  provideAuth(withJWT(), withLocalStorage()),
+  provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authJWTInterceptor, defaultInterceptor])),
+  provideAuth(withLocalStorage()),
 ]
 ```
 
