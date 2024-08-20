@@ -9,7 +9,8 @@ import { IStore } from './interface';
  * `cookie` storage
  *
  * ```ts
- * provideAuth(withJWT(), withCookie())
+  provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authJWTInterceptor, defaultInterceptor])),
+  provideAuth(withCookie()),
  * ```
  */
 export class CookieStorageStore implements IStore {

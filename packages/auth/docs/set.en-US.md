@@ -32,7 +32,8 @@ The default is to use `withLocalStorage` persistent storage. You can change othe
 
 ```ts
 providers: [
-  provideAuth(withJWT(), withLocalStorage()),
+  provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authJWTInterceptor, defaultInterceptor])),
+  provideAuth(withLocalStorage()),
 ]
 ```
 

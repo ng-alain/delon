@@ -9,7 +9,8 @@ export function DA_STORE_TOKEN_LOCAL_FACTORY(): IStore {
  * `localStorage` storage, **not lost after closing the browser**.
  *
  * ```ts
- * provideAuth(withJWT(), withLocalStorage())
+  provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authJWTInterceptor, defaultInterceptor])),
+  provideAuth(withLocalStorage()),
  * ```
  */
 export class LocalStorageStore implements IStore {
