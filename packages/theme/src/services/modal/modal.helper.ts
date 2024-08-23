@@ -146,7 +146,7 @@ export class ModalHelper {
             }
           }),
           filter(() => focus != null),
-          delay(modalOptions?.nzNoAnimation ? 10 : 200)
+          delay(modalOptions?.nzNoAnimation ? 10 : 241)
         )
         .subscribe(() => {
           const btns = subject
