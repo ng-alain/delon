@@ -51,3 +51,25 @@
   .scrollbar-mixin(~'.@{ant-prefix}-table-header, .@{ant-prefix}-table-body');
 }
 .scrollbar-table-mixin(@scrollbar-table-enabled);
+
+/**
+ * Hide scrollbar
+ *
+ * 隐藏滚动条
+ */
+.hide-scrollbar {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
