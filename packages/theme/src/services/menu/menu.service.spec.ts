@@ -44,7 +44,7 @@ describe('Service: Menu', () => {
     },
     { text: 'text', externalLink: '//ng-alain.com' },
     { text: 'text', link: '/demo2', i18n: 'text' },
-    { text: 'sub', children: [] },
+    { text: 'sub', children: [{ text: 'text', link: '/test', badge: 10 }] },
     { text: 'hide', link: '/hide', hide: true }
   ];
 
@@ -341,6 +341,12 @@ describe('Service: Menu', () => {
       it('custom result via cb', () => {
         const res = srv.find({ url: `/always-first-item`, cb: _ => true });
         expect(res).toBe(srv.menus[0]);
+      });
+      it('return last item', () => {
+        const first = srv.find({ url: `/test` });
+        expect((first as NzSafeAny)._parent == null).toBe(true);
+        const last = srv.find({ url: `/test`, last: true });
+        expect((last as NzSafeAny)._parent != null).toBe(true);
       });
     });
 
