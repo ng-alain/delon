@@ -211,8 +211,14 @@ export class MenuService implements OnDestroy {
      * 是否忽略隐藏的项，默认：`false`
      */
     ignoreHide?: boolean;
+    /**
+     * Whether to return the last one, default: `false`
+     *
+     * 是否返回最后一个，默认：`false`
+     */
+    last?: boolean;
   }): Menu | null {
-    const opt = { recursive: false, ignoreHide: false, ...options };
+    const opt = { recursive: false, ignoreHide: false, last: false, ...options };
     if (opt.key != null) {
       return this.getItem(opt.key);
     }
@@ -223,12 +229,15 @@ export class MenuService implements OnDestroy {
 
     while (!item && url) {
       this.visit(opt.data ?? this.data, i => {
+        if (!opt.last && item != null) {
+          return;
+        }
         if (opt.ignoreHide && i.hide) {
           return;
         }
         if (opt.cb) {
           const res = opt.cb(i);
-          if (!item && typeof res === 'boolean' && res) {
+          if (typeof res === 'boolean' && res) {
             item = i;
           }
         }
