@@ -8,6 +8,8 @@ type: Service
 Based on the `NzModalService` package, it solves some known issues:
 
 - More friendly handling callbacks
+- Default Button Focus
+- Responsive Width
 
 ## Usage
 

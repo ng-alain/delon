@@ -6,7 +6,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 
 import { AlainThemeModule } from '../../theme.module';
-import { ModalHelper } from './modal.helper';
+import { ModalHelper, ModalHelperOptions } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
   let modal: ModalHelper;
@@ -25,8 +25,7 @@ describe('theme: ModalHelper', () => {
   });
 
   afterEach(() => {
-    const a = document.querySelector('nz-modal');
-    if (a) a.remove();
+    document.querySelector('nz-modal')?.remove();
   });
 
   describe('#create', () => {
@@ -106,6 +105,34 @@ describe('theme: ModalHelper', () => {
         expect(handle?.classList).toContain('handle');
       }));
     });
+    describe('#focus', () => {
+      it('should be focus ok button', fakeAsync(() => {
+        modal.create('confirm', {}, { focus: 'ok', modalOptions: { nzNoAnimation: true } }).subscribe();
+        fixture.detectChanges();
+        tick(1000);
+        fixture.detectChanges();
+        const btn = document.querySelector<HTMLButtonElement>('[data-focused="ok"]');
+        expect(btn != null).toBe(true);
+        expect(btn?.classList).toContain('ant-btn-primary');
+      }));
+      it('should be focus cancel button', fakeAsync(() => {
+        modal.create('confirm', {}, { focus: 'cancel', modalOptions: { nzNoAnimation: true } }).subscribe();
+        fixture.detectChanges();
+        tick(1000);
+        fixture.detectChanges();
+        const btn = document.querySelector<HTMLButtonElement>('[data-focused="cancel"]');
+        expect(btn != null).toBe(true);
+        expect(btn?.classList).not.toContain('ant-btn-primary');
+      }));
+    });
+    it('should argument length is 2', fakeAsync(() => {
+      modal.create('info', { size: '23%' } as ModalHelperOptions).subscribe();
+      fixture.detectChanges();
+      tick(1000);
+      fixture.detectChanges();
+      const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
+      expect(width).toBe('23%');
+    }));
   });
 
   describe('#createStatic', () => {
