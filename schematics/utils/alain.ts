@@ -16,9 +16,9 @@ import {
 } from '@angular-devkit/schematics';
 import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
 import {
-  findNode,
   insertImport,
-  addProviderToModule as _addProviderToModule
+  addProviderToModule as _addProviderToModule,
+  getSourceNodes
 } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
@@ -31,8 +31,6 @@ import * as ts from 'typescript';
 import { addServiceToModuleOrStandalone, findRoutesPath, getSourceFile, ROUTINS_FILENAME } from './ast';
 import { isStandalone } from './standalone';
 import { getProject, NgAlainProjectDefinition } from './workspace';
-
-const TEMPLATE_FILENAME_RE = /\.template$/;
 
 export interface CommonSchema extends ComponentSchema {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -178,7 +176,9 @@ export function addValueToVariable(
   needWrap: boolean = true
 ): void {
   const source = getSourceFile(tree, filePath);
-  const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
+  const node = getSourceNodes(source).find(
+    node => node.kind == ts.SyntaxKind.Identifier && node.getText() === variableName
+  );
   if (!node) {
     throw new SchematicsException(`Could not find any [${variableName}] variable in path '${filePath}'.`);
   }
