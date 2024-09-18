@@ -176,8 +176,6 @@ export function addValueToVariable(
   needWrap: boolean = true
 ): void {
   const source = getSourceFile(tree, filePath);
-  // const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
-  // https://github.com/ng-alain/ng-alain/issues/2517
   const node = getSourceNodes(source).find(
     node => node.kind == ts.SyntaxKind.Identifier && node.getText() === variableName
   );
