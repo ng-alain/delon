@@ -29,7 +29,7 @@ Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/b
 
 > You can override them via [Global Configuration](/docs/global-config).
 
-| Property | Description | Type | Default | Global Config |
+| Property | Type | Default | Description | Global Config |
 |----------|-------------|------|---------|---------------|
 | `[data]` | `any` | - | Mock data rule | ✅ |
 | `[delay]` | `number` | `300` | Request delay, unit is milliseconds | ✅ |
