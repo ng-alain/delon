@@ -14,14 +14,19 @@ order: 2
 Schema 内嵌 UI 风格：
 
 ```ts
-const schema = {
-  list: {
-    type: 'array',
-    items: {
-      a: { type: 'string' },
-      b: { type: 'number', ui: { spanLabel: 10 } }
-    },
-    ui: { spanLabel: 5, grid: { arraySpan: 12 } }
+const schema: SFSchema = {
+  properties: {
+    list: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          a: { type: 'string' },
+          b: { type: 'number', ui: { spanLabel: 10 } }
+        }
+      },
+      ui: { spanLabel: 5, grid: { arraySpan: 12 } }
+    }
   }
 };
 ```
