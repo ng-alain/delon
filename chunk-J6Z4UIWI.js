@@ -1,1 +1,0 @@
-import{C as i,P as m,T as c,V as f,da as t,fa as r,jc as n,w as e}from"./chunk-FML4Y3RM.js";var a=new t("WINDOW",{factory:()=>{let{defaultView:o}=r(n);if(!o)throw new Error("Window is not available");return o}});var E=new t("PAGE_VISIBILITY`",{factory:()=>{let o=r(n);return i(o,"visibilitychange").pipe(f(0),e(()=>!o.hidden),m(),c())}});export{a};
