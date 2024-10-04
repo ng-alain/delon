@@ -14,14 +14,19 @@ Array layout is divided into array itself and array element layout, `arraySpan` 
 UI embed in Schema:
 
 ```ts
-const schema = {
-  list: {
-    type: 'array',
-    items: {
-      a: { type: 'string' },
-      b: { type: 'number', ui: { spanLabel: 10 } }
-    },
-    ui: { spanLabel: 5, grid: { arraySpan: 12 } }
+const schema: SFSchema = {
+  properties: {
+    list: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          a: { type: 'string' },
+          b: { type: 'number', ui: { spanLabel: 10 } }
+        }
+      },
+      ui: { spanLabel: 5, grid: { arraySpan: 12 } }
+    }
   }
 };
 ```
