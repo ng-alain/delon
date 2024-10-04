@@ -1,3 +1,20 @@
+## 18.2.0 (2024-10-04)
+
+* chore: bump angualr to `18.2` (#1831) ([67291ce](https://github.com/ng-alain/delon/commit/67291ce)), closes [#1831](https://github.com/ng-alain/delon/issues/1831)
+* chore: bump angular to 18.2 (#1839) ([3b98303](https://github.com/ng-alain/delon/commit/3b98303)), closes [#1839](https://github.com/ng-alain/delon/issues/1839)
+* docs: missing 17 doc link (#1829) ([f8d383a](https://github.com/ng-alain/delon/commit/f8d383a)), closes [#1829](https://github.com/ng-alain/delon/issues/1829)
+* docs: typo (#1838) ([4519194](https://github.com/ng-alain/delon/commit/4519194)), closes [#1838](https://github.com/ng-alain/delon/issues/1838)
+* docs(auth): typo (#1830) ([86f009a](https://github.com/ng-alain/delon/commit/86f009a)), closes [#1830](https://github.com/ng-alain/delon/issues/1830)
+* docs(mock): 修复Mock组件文档中MockOptions配置表格中的表头错位. (#1837) ([6477587](https://github.com/ng-alain/delon/commit/6477587)), closes [#1837](https://github.com/ng-alain/delon/issues/1837)
+* fix(cli): fix could not find any [routes] variable (#1832) ([380f7ab](https://github.com/ng-alain/delon/commit/380f7ab)), closes [#1832](https://github.com/ng-alain/delon/issues/1832)
+* feat(form:tree-select): add `change` of schema (#1827) ([f110664](https://github.com/ng-alain/delon/commit/f110664)), closes [#1827](https://github.com/ng-alain/delon/issues/1827)
+* feat(theme:menu): add `last` argument of `find` (#1834) ([c581b94](https://github.com/ng-alain/delon/commit/c581b94)), closes [#1834](https://github.com/ng-alain/delon/issues/1834)
+* feat(theme:modal): support build-in and focus button (#1828) ([145de7d](https://github.com/ng-alain/delon/commit/145de7d)), closes [#1828](https://github.com/ng-alain/delon/issues/1828)
+* fix(abc:st): fix submenu blank area to be clickable (#1833) ([89278a3](https://github.com/ng-alain/delon/commit/89278a3)), closes [#1833](https://github.com/ng-alain/delon/issues/1833)
+* feat(theme): add `.hide-scrollbar` style (#1835) ([c4e07f2](https://github.com/ng-alain/delon/commit/c4e07f2)), closes [#1835](https://github.com/ng-alain/delon/issues/1835)
+
+
+
 ## 18.1.0 (2024-08-05)
 
 * chore: bump angular to 18.1 (#1825) ([151b63f](https://github.com/ng-alain/delon/commit/151b63f)), closes [#1825](https://github.com/ng-alain/delon/issues/1825)

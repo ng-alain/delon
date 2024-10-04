@@ -14,6 +14,22 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+
+## 18.2.0 (2024-10-04)
+
+### Features
+
+* feat(form:tree-select): 在 schema 下新增 `change` 接口 (#1827) ([f110664](https://github.com/ng-alain/delon/commit/f110664)), closes [#1827](https://github.com/ng-alain/delon/issues/1827)
+* feat(theme:menu): `find` 方法新增 `last` 选项 (#1834) ([c581b94](https://github.com/ng-alain/delon/commit/c581b94)), closes [#1834](https://github.com/ng-alain/delon/issues/1834)
+* feat(theme:modal): 新增支持内置方法与焦点按钮 (#1828) ([145de7d](https://github.com/ng-alain/delon/commit/145de7d)), closes [#1828](https://github.com/ng-alain/delon/issues/1828)
+* feat(theme): 新增 `.hide-scrollbar` 隐藏滚动条样式 (#1835) ([c4e07f2](https://github.com/ng-alain/delon/commit/c4e07f2)), closes [#1835](https://github.com/ng-alain/delon/issues/1835)
+
+### Bug Fixes
+
+* fix(abc:st): 修复子菜单空白区域不触发点击 (#1833) ([89278a3](https://github.com/ng-alain/delon/commit/89278a3)), closes [#1833](https://github.com/ng-alain/delon/issues/1833)
+* fix(cli): 修复未找到 [routes] 变量 (#1832) ([380f7ab](https://github.com/ng-alain/delon/commit/380f7ab)), closes [#1832](https://github.com/ng-alain/delon/issues/1832)
+
+
 ## 18.1.0 (2024-08-05)
 
 ### Features

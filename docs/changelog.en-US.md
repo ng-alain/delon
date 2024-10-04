@@ -14,6 +14,21 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## 18.2.0 (2024-10-04)
+
+### Features
+
+* feat(form:tree-select): add `change` of schema (#1827) ([f110664](https://github.com/ng-alain/delon/commit/f110664)), closes [#1827](https://github.com/ng-alain/delon/issues/1827)
+* feat(theme:menu): add `last` argument of `find` (#1834) ([c581b94](https://github.com/ng-alain/delon/commit/c581b94)), closes [#1834](https://github.com/ng-alain/delon/issues/1834)
+* feat(theme:modal): support build-in and focus button (#1828) ([145de7d](https://github.com/ng-alain/delon/commit/145de7d)), closes [#1828](https://github.com/ng-alain/delon/issues/1828)
+* feat(theme): add `.hide-scrollbar` style (#1835) ([c4e07f2](https://github.com/ng-alain/delon/commit/c4e07f2)), closes [#1835](https://github.com/ng-alain/delon/issues/1835)
+
+### Bug Fixes
+
+* fix(abc:st): fix submenu blank area to be clickable (#1833) ([89278a3](https://github.com/ng-alain/delon/commit/89278a3)), closes [#1833](https://github.com/ng-alain/delon/issues/1833)
+* fix(cli): fix could not find any [routes] variable (#1832) ([380f7ab](https://github.com/ng-alain/delon/commit/380f7ab)), closes [#1832](https://github.com/ng-alain/delon/issues/1832)
+
+
 ## 18.1.0 (2024-08-05)
 
 ### Features
