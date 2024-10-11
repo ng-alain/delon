@@ -213,8 +213,8 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input() body?: TemplateRef<{ $implicit: STStatisticalResults }> | null;
   @Input({ transform: booleanAttribute }) expandRowByClick = false;
   @Input({ transform: booleanAttribute }) expandAccordion = false;
-  @Input() expand: TemplateRef<{ $implicit: NzSafeAny; index: number }> | null = null;
-  @Input() expandIcon: TemplateRef<{ $implicit: NzSafeAny; index: number }> | null = null;
+  @Input() expand: TemplateRef<{ $implicit: STData; index: number }> | null = null;
+  @Input() expandIcon: TemplateRef<{ $implicit: STData; index: number }> | null = null;
   @Input() noResult?: string | TemplateRef<void> | null;
   @Input({ transform: booleanAttribute }) responsive: boolean = true;
   @Input({ transform: booleanAttribute }) responsiveHideHeaderFooter?: boolean;

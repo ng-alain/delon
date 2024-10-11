@@ -82,8 +82,8 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | - | - |
 | `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false` | ✅ |
 | `[expandAccordion]` | Accordion mode | `boolean` | `false` | ✅ |
-| `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | - | - |
-| `[expandIcon]`   | Custom expand icon | `TemplateRef<void>` | - |
+| `[expand]` | Whether current column include expand icon | `TemplateRef<{ $implicit: STData; index: number }>` | - | - |
+| `[expandIcon]`   | Custom expand icon | `TemplateRef<{ $implicit: STData; index: number }>` | - |
 | `[responsive]` | Whether to turn on responsive | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false` | ✅ |
 | `[resizable]` | Resize header of the current table, **Multiple headers not supported** | `STResizable, boolean` | - | - |
