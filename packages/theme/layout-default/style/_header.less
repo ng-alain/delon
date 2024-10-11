@@ -83,7 +83,7 @@
         background-color: @alain-default-header-nav-bg-hover;
       }
 
-      > i,
+      > .anticon,
       &-icon {
         // fix ant-dropdown-trigger
         transform: none !important;
@@ -106,7 +106,7 @@
 
     &-disabled {
       pointer-events: none;
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 }
@@ -147,7 +147,9 @@
     .@{ant-prefix}-input-affix-wrapper {
       i {
         color: #fff;
-        transition: color 300ms, transform 400ms;
+        transition:
+          color 300ms,
+          transform 400ms;
       }
     }
 
