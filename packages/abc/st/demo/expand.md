@@ -17,20 +17,34 @@ Use `#expand` template implement expandable, allowing you to receive three value
 import { Component } from '@angular/core';
 
 import { STColumn, STData, STModule } from '@delon/abc/st';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <st [data]="users" [columns]="columns" [expand]="expand" expandRowByClick expandAccordion>
+    <button nz-button nzType="primary" (click)="customIcon = !customIcon">Use Custom Icon</button>
+    <st
+      [data]="users"
+      [columns]="columns"
+      [expand]="expand"
+      expandRowByClick
+      expandAccordion
+      [expandIcon]="customIcon ? expandIcon : null"
+    >
       <ng-template #expand let-item let-index="index" let-column="column">
         {{ item.description }}
+      </ng-template>
+      <ng-template #expandIcon let-i let-index="index">
+        <span nz-icon [nzType]="i.expand ? 'up' : 'down'"></span>
       </ng-template>
     </st>
   `,
   standalone: true,
-  imports: [STModule]
+  imports: [STModule, NzIconDirective, NzButtonComponent]
 })
 export class DemoComponent {
+  customIcon = false;
   users: STData[] = Array(10)
     .fill({})
     .map((_, idx) => ({

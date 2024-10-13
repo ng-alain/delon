@@ -160,11 +160,16 @@
           <td
             [nzShowExpand]="expand && i.showExpand !== false"
             [nzExpand]="i.expand"
-            [nzExpandIcon]="expandIcon"
+            [nzExpandIcon]="expandIcon ? wrapExpandIcon : null"
             (nzExpandChange)="_expandChange(i, $event)"
             (click)="_stopPropagation($event)"
             nzWidth="50px"
           ></td>
+          <ng-template #wrapExpandIcon>
+            <span (click)="_expandChange(i, !i.expand)">
+              <ng-template [ngTemplateOutlet]="expandIcon" [ngTemplateOutletContext]="{ $implicit: i, index: index }" />
+            </span>
+          </ng-template>
         }
         @for (c of _columns; track cIdx; let cIdx = $index) {
           @if (i._values[cIdx].props?.colSpan > 0 && i._values[cIdx].props?.rowSpan > 0) {

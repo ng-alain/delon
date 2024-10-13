@@ -82,8 +82,8 @@ module: import { STModule } from '@delon/abc/st';
 | `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | - | - |
 | `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false` | ✅ |
 | `[expandAccordion]` | 手风琴模式 | `boolean` | `false` | ✅ |
-| `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | - | - |
-| `[expandIcon]`   | 自定义展开图标 | `TemplateRef<void>` | - |
+| `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<{ $implicit: STData; index: number }>` | - | - |
+| `[expandIcon]`   | 自定义展开图标 | `TemplateRef<{ $implicit: STData; index: number }>` | - |
 | `[responsive]` | 是否开启响应式 | `boolean` | `true` | ✅ |
 | `[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false` | ✅ |
 | `[resizable]` | 当前表格所有列的调整表头配置项，**不支持多表头** | `STResizable, boolean` | - | - |
