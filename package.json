@@ -182,5 +182,5 @@
       "npm run lint:style"
     ]
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.5.0"
 }
