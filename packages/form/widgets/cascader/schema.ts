@@ -25,6 +25,11 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   allowClear?: boolean;
 
   /**
+   * 清空时默认值，默认：`undefined`
+   */
+  clearValue?: NzSafeAny;
+
+  /**
    * 清除按钮的标题，默认：`清除`
    */
   clearText?: string;
