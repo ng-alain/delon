@@ -161,7 +161,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     if (this.ui.change) {
       this.ui.change(values, this.getOrgData(values));
     }
-    this.setValue(values == null ? undefined : values);
+    this.setValue(values == null ? this.ui.clearValue : values);
   }
 
   private getOrgData(values: SFValue): SFSchemaEnum | SFSchemaEnum[] {
