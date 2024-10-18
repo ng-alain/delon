@@ -32,6 +32,7 @@ type: Non-built-in widgets
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[allowClear]` | 支持清除 | `boolean` | `false` |
+| `[clearValue]` | 清空时默认值 | `any` | `undefined` |
 | `[dropdownMatchSelectWidth]` | 下拉菜单和选择器同宽 | `boolean` | `true` |
 | `[dropdownStyle]` | 下拉菜单的 style 属性 | `object` | - |
 | `[dropdownClassName]` | 下拉菜单的 className 属性 | `string` | - |

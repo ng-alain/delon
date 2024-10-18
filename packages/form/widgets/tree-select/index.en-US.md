@@ -32,6 +32,7 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 | `[placeholder]` | Placeholder | `string` | - |
 | `[notFoundContent]` | Text to display when a column is empty | `string` | - |
 | `[allowClear]` | Whether show clear button | `boolean` | `false` |
+| `[clearValue]` | Default value when cleared | `any` | `undefined` |
 | `[dropdownMatchSelectWidth]` | Determine whether the dropdown menu and the select input are the same width | `boolean` | `true` |
 | `[dropdownStyle]` | Set the style of the dropdown menu | `object` | - |
 | `[dropdownClassName]` | Set className of the dropdown menu | `string` | - |
