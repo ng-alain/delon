@@ -42,6 +42,7 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 | `[placeholder]` | Placeholder | `string` | - |
 | `[showSearch]` | Whether support search | `bool` | `false` |
 | `[allowClear]` | Whether show clear button | `bool` | `true` |
+| `[clearValue]` | Default value when cleared | `any` | `undefined` |
 | `[clearText]` | Title of clear button | `string` | `清除` |
 | `[showArrow]` | Whether show arrow | `bool` | `true` |
 | `[showInput]` | Whether show input | `bool` | `true` |

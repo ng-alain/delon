@@ -26,6 +26,7 @@ Select.
 | `[placeholder]` | Placeholder | `string` | - |
 | `[autoClearSearchValue]` | Whether clear search box when an option is selected, only valid when `mode` is `multiple` or `tags`. | `boolean` | `true` |
 | `[allowClear]` | Allow clear | `boolean` | `false` |
+| `[clearValue]` | Default value when cleared | `any` | `undefined` |
 | `[borderless]` | Whether has border | `boolean` | `false` |
 | `[autoFocus]` | Focused by default | `boolean` | `false` |
 | `[dropdownClassName]` | className property of dropdown list | `string` | - |

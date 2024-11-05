@@ -83,7 +83,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
   }
 
   _change(value: NzSafeAny[] | null): void {
-    this.setValue(value);
+    this.setValue(value == null ? this.ui.clearValue : value);
     if (this.ui.change) {
       this.ui.change(value);
     }
