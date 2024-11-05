@@ -14,6 +14,19 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## 18.3.0 (2024-11-05)
+
+### Features
+
+* feat(form:select,cascader,tree-select): default value when cleared (#1844) ([655806d](https://github.com/ng-alain/delon/commit/655806d)), closes [#1844](https://github.com/ng-alain/delon/issues/1844)
+
+### Bug Fixes
+
+* fix(abc:st): a more friendly expandIcon (#1842) ([9537212](https://github.com/ng-alain/delon/commit/9537212)), closes [#1842](https://github.com/ng-alain/delon/issues/1842)
+* fix(theme:default): fix inconsistency of top icon size (#1841) ([27ff917](https://github.com/ng-alain/delon/commit/27ff917)), closes [#1841](https://github.com/ng-alain/delon/issues/1841)
+* fix(theme): fix `lg` size of modal style (#1845) ([8f9e5c0](https://github.com/ng-alain/delon/commit/8f9e5c0)), closes [#1845](https://github.com/ng-alain/delon/issues/1845)
+
+
 ## 18.2.0 (2024-10-04)
 
 ### Features

@@ -14,6 +14,18 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## 18.3.0 (2024-11-05)
+
+### Features
+
+* feat(form:select,cascader,tree-select): 新增允许清空默认值 (#1844) ([655806d](https://github.com/ng-alain/delon/commit/655806d)), closes [#1844](https://github.com/ng-alain/delon/issues/1844)
+
+### Bug Fixes
+
+* fix(abc:st): 更友好的使用 `expandIcon` (#1842) ([9537212](https://github.com/ng-alain/delon/commit/9537212)), closes [#1842](https://github.com/ng-alain/delon/issues/1842)
+* fix(theme:default): 修复顶部图标大小不一致问题 (#1841) ([27ff917](https://github.com/ng-alain/delon/commit/27ff917)), closes [#1841](https://github.com/ng-alain/delon/issues/1841)
+* fix(theme): 修复模态样式的 `lg` 大小 (#1845) ([8f9e5c0](https://github.com/ng-alain/delon/commit/8f9e5c0)), closes [#1845](https://github.com/ng-alain/delon/issues/1845)
+
 
 ## 18.2.0 (2024-10-04)
 

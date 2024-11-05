@@ -1,3 +1,13 @@
+## 18.3.0 (2024-11-05)
+
+* feat(form:select,cascader,tree-select): default value when cleared (#1844) ([655806d](https://github.com/ng-alain/delon/commit/655806d)), closes [#1844](https://github.com/ng-alain/delon/issues/1844)
+* fix(abc:st): a more friendly expandIcon (#1842) ([9537212](https://github.com/ng-alain/delon/commit/9537212)), closes [#1842](https://github.com/ng-alain/delon/issues/1842)
+* fix(theme:default): fix inconsistency of top icon size (#1841) ([27ff917](https://github.com/ng-alain/delon/commit/27ff917)), closes [#1841](https://github.com/ng-alain/delon/issues/1841)
+* fix(theme): fix `lg` size of modal style (#1845) ([8f9e5c0](https://github.com/ng-alain/delon/commit/8f9e5c0)), closes [#1845](https://github.com/ng-alain/delon/issues/1845)
+* build: update yarn to v4.5.0 (#1843) ([70e40b8](https://github.com/ng-alain/delon/commit/70e40b8)), closes [#1843](https://github.com/ng-alain/delon/issues/1843)
+
+
+
 ## 18.2.0 (2024-10-04)
 
 * chore: bump angualr to `18.2` (#1831) ([67291ce](https://github.com/ng-alain/delon/commit/67291ce)), closes [#1831](https://github.com/ng-alain/delon/issues/1831)
