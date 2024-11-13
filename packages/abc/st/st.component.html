@@ -61,8 +61,8 @@
             <th nzWidth="50px" [rowSpan]="_headers.length"></th>
           }
           @for (h of row; track h; let index = $index; let last = $last) {
+            @let _c = h.column;
             <th
-              *let="h.column as _c"
               [colSpan]="h.colSpan"
               [rowSpan]="h.rowSpan"
               [nzWidth]="$any(_c).width"
@@ -172,14 +172,15 @@
           </ng-template>
         }
         @for (c of _columns; track cIdx; let cIdx = $index) {
-          @if (i._values[cIdx].props?.colSpan > 0 && i._values[cIdx].props?.rowSpan > 0) {
+          @let props = i._values[cIdx].props;
+          @if (props?.colSpan > 0 && props?.rowSpan > 0) {
             <td
               [nzLeft]="!!c._left"
               [nzRight]="!!c._right"
               [attr.data-col-index]="cIdx"
               [ngClass]="c._className"
-              [attr.colspan]="i._values[cIdx].props?.colSpan === 1 ? null : i._values[cIdx].props?.colSpan"
-              [attr.rowspan]="i._values[cIdx].props?.rowSpan === 1 ? null : i._values[cIdx].props?.rowSpan"
+              [attr.colspan]="props?.colSpan === 1 ? null : props?.colSpan"
+              [attr.rowspan]="props?.rowSpan === 1 ? null : props?.rowSpan"
             >
               @if (responsive) {
                 <span class="ant-table-rep__title">

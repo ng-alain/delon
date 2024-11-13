@@ -9,7 +9,7 @@ module: import { HotkeyModule } from '@delon/abc/hotkey';
 
 基于 [@github/hotke](https://github.com/github/hotkey) 热键库。
 
-> 如果不清楚热键值，可通过[热键代码](https://github.github.io/hotkey/hotkey_mapper.html)来获取。
+> 如果不清楚热键值，可通过[热键代码](https://github.github.com/hotkey/hotkey_mapper.html)来获取。
 
 ## API
 
