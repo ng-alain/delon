@@ -3,8 +3,9 @@
 </ng-template>
 <ng-template #btnTpl>
   @if (button !== 'none') {
-    @if (_btn && _btn.render) {
-      <nz-form-item [ngClass]="_btn.render!.class!" class="sf-btns" [fixed-label]="_btn.render!.spanLabelFixed!">
+    @let btnRender = _btn.render;
+    @if (btnRender) {
+      <nz-form-item [ngClass]="btnRender.class!" class="sf-btns" [fixed-label]="btnRender.spanLabelFixed!">
         <div
           nz-col
           class="ant-form-item-control"
@@ -25,7 +26,7 @@
                   nz-button
                   data-type="submit"
                   [nzType]="_btn.submit_type!"
-                  [nzSize]="_btn.render!.size!"
+                  [nzSize]="btnRender.size!"
                   [nzLoading]="loading"
                   [disabled]="liveValidate && !valid"
                 >
@@ -46,17 +47,18 @@
                     nz-button
                     data-type="reset"
                     [nzType]="_btn.reset_type!"
-                    [nzSize]="_btn.render!.size!"
+                    [nzSize]="btnRender.size!"
                     [disabled]="loading"
                     (click)="reset(true)"
                   >
-                    @if (_btn.reset_icon) {
+                    @let resetIcon = _btn.reset_icon;
+                    @if (resetIcon) {
                       <i
                         nz-icon
-                        [nzType]="_btn.reset_icon.type!"
-                        [nzTheme]="_btn.reset_icon.theme!"
-                        [nzTwotoneColor]="_btn.reset_icon.twoToneColor!"
-                        [nzIconfont]="_btn.reset_icon.iconfont!"
+                        [nzType]="resetIcon.type!"
+                        [nzTheme]="resetIcon.theme!"
+                        [nzTwotoneColor]="resetIcon.twoToneColor!"
+                        [nzIconfont]="resetIcon.iconfont!"
                       ></i>
                     }
                     {{ _btn.reset }}

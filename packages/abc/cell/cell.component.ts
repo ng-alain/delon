@@ -68,13 +68,14 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
         }
         @case ('img') {
           @for (i of $any(_text); track $index) {
+            @let img = safeOpt.img;
             <img
               [attr.src]="i"
-              [attr.height]="safeOpt.img?.size"
-              [attr.width]="safeOpt.img?.size"
+              [attr.height]="img?.size"
+              [attr.width]="img?.size"
               (click)="_showImg(i)"
               class="img"
-              [class.point]="safeOpt.img?.big"
+              [class.point]="img?.big"
             />
           }
         }

@@ -9,14 +9,15 @@
 </ng-template>
 <ng-template #btnItemTpl let-i>
   @if (i.pop) {
+    @let pop = i.pop;
     <a
       nz-popconfirm
-      [nzPopconfirmTitle]="i.pop.title"
-      [nzIcon]="i.pop.icon"
-      [nzCondition]="i.pop.condition(i)"
-      [nzCancelText]="i.pop.cancelText"
-      [nzOkText]="i.pop.okText"
-      [nzOkType]="i.pop.okType"
+      [nzPopconfirmTitle]="pop.title"
+      [nzIcon]="pop.icon"
+      [nzCondition]="pop.condition(i)"
+      [nzCancelText]="pop.cancelText"
+      [nzOkText]="pop.okText"
+      [nzOkType]="pop.okType"
       (nzOnConfirm)="_btn(i)"
       class="st__btn-text"
       [ngClass]="i._className"
@@ -32,15 +33,16 @@
 </ng-template>
 <ng-template #btnTextTpl let-i>
   @if (i._icon) {
-    @if (i._icon.iconfont) {
-      <i nz-icon [nzIconfont]="i._icon.iconfont"></i>
+    @let icon = i._icon;
+    @if (icon.iconfont) {
+      <i nz-icon [nzIconfont]="icon.iconfont"></i>
     } @else {
       <i
         nz-icon
-        [nzType]="i._icon.type"
-        [nzTheme]="i._icon.theme"
-        [nzSpin]="i._icon.spin"
-        [nzTwotoneColor]="i._icon.twoToneColor"
+        [nzType]="icon.type"
+        [nzTheme]="icon.theme"
+        [nzSpin]="icon.spin"
+        [nzTwotoneColor]="icon.twoToneColor"
       ></i>
     }
   }
@@ -49,6 +51,7 @@
 @if (c.__render) {
   <ng-template [ngTemplateOutlet]="c.__render!" [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }" />
 } @else {
+  @let col = i._values[cIdx];
   @switch (c.type) {
     @case ('checkbox') {
       <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkbox($event)"></label>
@@ -57,35 +60,31 @@
       <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_radio()"></label>
     }
     @case ('link') {
-      <a (click)="_link($event)" [innerHTML]="i._values[cIdx]._text" [attr.title]="i._values[cIdx].text"></a>
+      <a (click)="_link($event)" [innerHTML]="col._text" [attr.title]="col.text"></a>
     }
     @case ('tag') {
-      <nz-tag [nzColor]="i._values[cIdx].color" [nz-tooltip]="i._values[cIdx].tooltip">
-        <span [innerHTML]="i._values[cIdx]._text"></span>
+      <nz-tag [nzColor]="col.color" [nz-tooltip]="col.tooltip">
+        <span [innerHTML]="col._text"></span>
       </nz-tag>
     }
     @case ('badge') {
-      <nz-badge
-        [nzStatus]="i._values[cIdx].color"
-        [nzText]="i._values[cIdx].text"
-        [nz-tooltip]="i._values[cIdx].tooltip"
-      />
+      <nz-badge [nzStatus]="col.color" [nzText]="col.text" [nz-tooltip]="col.tooltip" />
     }
     @case ('cell') {
-      <cell [value]="i._values[cIdx].text" [options]="i._values[cIdx].cell ?? c.cell" />
+      <cell [value]="col.text" [options]="col.cell ?? c.cell" />
     }
     @case ('widget') {
       <ng-template st-widget-host [record]="i" [column]="c" />
     }
     @default {
       @if (c.safeType === 'text') {
-        <span [innerText]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+        <span [innerText]="col._text" [attr.title]="c._isTruncate ? col.text : null"></span>
       } @else {
-        <span [innerHTML]="i._values[cIdx]._text" [attr.title]="c._isTruncate ? i._values[cIdx].text : null"></span>
+        <span [innerHTML]="col._text" [attr.title]="c._isTruncate ? col.text : null"></span>
       }
     }
   }
-  @for (btn of i._values[cIdx].buttons; track $index) {
+  @for (btn of col.buttons; track $index) {
     @if (btn.children!.length > 0) {
       <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
         <span [innerHTML]="btn._text"></span>

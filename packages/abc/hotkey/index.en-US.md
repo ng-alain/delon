@@ -9,7 +9,7 @@ module: import { HotkeyModule } from '@delon/abc/hotkey';
 
 Based on the [@github/hotke](https://github.com/github/hotkey) hotkey library.
 
-> If you don't know the hotkey value, you can get it through [Hotkey Code](https://github.github.io/hotkey/hotkey_mapper.html).
+> If you don't know the hotkey value, you can get it through [Hotkey Code](https://github.github.com/hotkey/hotkey_mapper.html).
 
 ## API
 
