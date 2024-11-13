@@ -4,6 +4,7 @@ title: avatar-list
 subtitle: 用户头像列表
 cols: 1
 module: import { AvatarListModule } from '@delon/abc/avatar-list';
+deprecated: 20.0.0
 ---
 
 一组用户头像，常用在项目/团队成员列表。可通过设置 `size` 属性来指定头像大小。

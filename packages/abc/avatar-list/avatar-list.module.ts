@@ -9,6 +9,9 @@ import { AvatarListComponent } from './avatar-list.component';
 
 const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
 
+/**
+ * @deprecated Will be removed in v20, Please use `nz-avatar-group` instead.
+ */
 @NgModule({
   imports: [CommonModule, NzAvatarModule, NzToolTipModule, ...COMPONENTS],
   exports: COMPONENTS
