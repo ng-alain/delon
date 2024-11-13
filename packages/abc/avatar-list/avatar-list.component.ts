@@ -22,6 +22,9 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
+/**
+ * @deprecated Will be removed in v20, Please use `nz-avatar-group` instead.
+ */
 @Component({
   selector: 'avatar-list',
   exportAs: 'avatarList',
