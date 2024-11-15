@@ -315,6 +315,19 @@ describe('Service: Menu', () => {
       });
     });
 
+    describe('#getDefaultRedirect', () => {
+      beforeEach(() => srv.add(deepCopy(DATA)));
+      it('should be get first link', () => {
+        expect(srv.getDefaultRedirect()).toBe('/dashboard');
+      });
+      it('should be specifies whether the jump link is valid', () => {
+        expect(srv.getDefaultRedirect({ redirectUrl: '/dashboard/v1' })).toBe('/dashboard/v1');
+      });
+      it('should be return first link when redirectUrl is invalid', () => {
+        expect(srv.getDefaultRedirect({ redirectUrl: '/dashboard/invalid' })).toBe('/dashboard');
+      });
+    });
+
     describe('#find', () => {
       beforeEach(() => srv.add(deepCopy(DATA)));
       it('via key', () => {

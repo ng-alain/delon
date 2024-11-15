@@ -27,6 +27,7 @@ This is because menus it's essential part of the applications, And it can be use
 | `open` | Open of the menu |
 | `toggleOpen` | Toggle menu open or close |
 | `openAll` | Toggle all menu open or close |
+| `getDefaultRedirect` | Returns a default menu link |
 
 **recursive**
 

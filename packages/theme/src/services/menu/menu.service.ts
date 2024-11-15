@@ -34,6 +34,24 @@ export class MenuService implements OnDestroy {
     return this.data;
   }
 
+  /**
+   * Returns a default menu link
+   *
+   * 返回一个默认跳转的菜单链接
+   */
+  getDefaultRedirect(opt: { redirectUrl?: string } = {}): string | null | undefined {
+    let ret: string | null | undefined;
+    this.visit(this.menus, (item: MenuInner) => {
+      if (typeof item.link !== 'string' || item.link.length <= 0 || !item._aclResult || item._hidden === true) {
+        return;
+      }
+      if (ret == null || ret.length <= 0 || item.link == opt?.redirectUrl) {
+        ret = item.link;
+      }
+    });
+    return ret;
+  }
+
   visit<T extends Menu = Menu>(data: T[], callback: (item: T, parentMenum: T | null, depth?: number) => void): void;
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void;
   visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void): void {
