@@ -26,6 +26,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: `
     <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
     <button nz-button (click)="updateStatus()">Update Status</button>
+    <button nz-button (click)="updateAsyncData()">Update async data</button>
   `,
   standalone: true,
   imports: [DelonFormModule, NzButtonModule]
@@ -33,6 +34,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class DemoComponent {
   private readonly msg = inject(NzMessageService);
   @ViewChild('sf', { static: false }) private sf!: SFComponent;
+  asyncData = [
+    {
+      label: '订单状态',
+      group: true,
+      children: [
+        { label: '待支付', value: 'WAIT_BUYER_PAY' },
+        { label: '已支付', value: 'TRADE_SUCCESS' },
+        { label: '交易完成', value: 'TRADE_FINISHED' }
+      ]
+    }
+  ];
+  delay = 1200;
   schema: SFSchema = {
     properties: {
       status: {
@@ -71,18 +84,7 @@ export class DemoComponent {
         default: 'WAIT_BUYER_PAY',
         ui: {
           widget: 'select',
-          asyncData: () =>
-            of([
-              {
-                label: '订单状态',
-                group: true,
-                children: [
-                  { label: '待支付', value: 'WAIT_BUYER_PAY' },
-                  { label: '已支付', value: 'TRADE_SUCCESS' },
-                  { label: '交易完成', value: 'TRADE_FINISHED' }
-                ]
-              }
-            ]).pipe(delay(1200))
+          asyncData: () => of(this.asyncData).pipe(delay(this.delay))
         } as SFSelectWidgetSchema
       },
       hide: {
@@ -106,6 +108,24 @@ export class DemoComponent {
     const statusProperty = this.sf.getProperty('/status')!;
     statusProperty.schema.enum = ['1', '2', '3'];
     statusProperty.widget.reset('2');
+  }
+
+  updateAsyncData(): void {
+    this.delay = 0;
+    this.asyncData = [
+      {
+        label: 'Order Status',
+        group: true,
+        children: [
+          { label: 'Wait buyer pay', value: 'WAIT_BUYER_PAY' },
+          { label: 'Trade success', value: 'TRADE_SUCCESS' },
+          { label: 'Trade finished', value: 'TRADE_FINISHED' }
+        ]
+      }
+    ];
+    // Reset the value to make the element load data again
+    const updatePath = '/async';
+    this.sf.setValue(updatePath, this.sf.getProperty(updatePath)?.value);
   }
 }
 ```
