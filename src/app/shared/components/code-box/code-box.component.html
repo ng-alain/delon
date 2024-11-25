@@ -1,5 +1,5 @@
 <section class="code-box-demo" [style]="{ background: item.bg }">
-  <div [class.browser-mockup]="item.browser" [style]="{ 'height.px': item.browser }">
+  <div [class.browser-mockup]="item.browser" [style]="{ height: item.browser + 'px' }">
     <div [class.browser-scroll]="item.browser">
       <ng-content />
     </div>

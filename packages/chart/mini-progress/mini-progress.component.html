@@ -2,7 +2,7 @@
   nz-tooltip
   [nzTooltipTitle]="i18n.getData('miniProgress').target + target + '%'"
   class="g2-mini-progress__target"
-  [style]="{ 'left.%': target }"
+  [style]="{ left: target + '%' }"
 >
   <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color }"></span>
   <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color }"></span>
@@ -10,6 +10,6 @@
 <div class="g2-mini-progress__wrap">
   <div
     class="g2-mini-progress__value"
-    [style]="{ 'background-color': color, 'width.%': percent, 'height.px': strokeWidth }"
+    [style]="{ 'background-color': color, width: percent + '%', height: strokeWidth + 'px' }"
   ></div>
 </div>

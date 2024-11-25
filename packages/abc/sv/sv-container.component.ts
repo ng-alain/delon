@@ -94,8 +94,8 @@ export class SVContainerComponent {
   @Input({ transform: booleanAttribute }) noColon = false;
   @Input({ transform: booleanAttribute }) bordered = false;
 
-  get margin(): { [k: string]: number } {
-    return this.bordered ? {} : { 'margin-left.px': -(this.gutter / 2), 'margin-right.px': -(this.gutter / 2) };
+  get margin(): { [k: string]: string } {
+    return this.bordered ? {} : { 'margin-left': `${-(this.gutter / 2)}px`, 'margin-right': `${-(this.gutter / 2)}px` };
   }
 
   constructor(configSrv: AlainConfigService) {
