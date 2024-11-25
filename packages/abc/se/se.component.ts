@@ -1,5 +1,4 @@
 import { CdkObserveContent } from '@angular/cdk/observers';
-import { NgClass } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -55,7 +54,7 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgClass, NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
+  imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true })!;

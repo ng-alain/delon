@@ -1,6 +1,6 @@
 <ul class="avatar-list__wrap">
   @for (i of items; track $index) {
-    <li [ngClass]="cls">
+    <li [class]="cls">
       @if (i.tips) {
         <nz-avatar
           nz-tooltip
@@ -16,8 +16,8 @@
     </li>
   }
   @if (exceedCount > 0) {
-    <li [ngClass]="cls">
-      <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [ngStyle]="excessItemsStyle" [nzText]="'+' + exceedCount" />
+    <li [class]="cls">
+      <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [style]="excessItemsStyle" [nzText]="'+' + exceedCount" />
     </li>
   }
 </ul>

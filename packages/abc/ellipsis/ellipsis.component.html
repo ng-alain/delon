@@ -15,7 +15,7 @@
 </ng-template>
 @switch (type) {
   @case ('default') {
-    <span [ngClass]="cls"></span>
+    <span [class]="cls"></span>
   }
   @case ('length') {
     <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{ $implicit: lengthTpl }" />
@@ -24,11 +24,11 @@
   @case ('line-clamp') {
     <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{ $implicit: lineClampTpl }" />
     <ng-template #lineClampTpl>
-      <div [ngClass]="cls" [ngStyle]="{ '-webkit-line-clamp': lines, '-webkit-box-orient': 'vertical' }"></div>
+      <div [class]="cls" [style]="{ '-webkit-line-clamp': lines, '-webkit-box-orient': 'vertical' }"></div>
     </ng-template>
   }
   @case ('line') {
-    <div [ngClass]="cls">
+    <div [class]="cls">
       <div class="ellipsis__handle">
         <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{ $implicit: lineTpl }" />
         <ng-template #lineTpl>{{ linsWord }}</ng-template>

@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -43,7 +42,7 @@ export interface G2RadarClickItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective, NgStyle]
+  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective]
 })
 export class G2RadarComponent extends G2BaseComponent {
   legendData: NzSafeAny[] = [];

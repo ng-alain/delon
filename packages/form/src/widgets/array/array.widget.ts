@@ -47,7 +47,7 @@ import { ArrayLayoutWidget } from '../../widget';
     <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
       <div class="ant-form-item-control" [class.has-error]="showError">
         <div nz-row class="sf__array-container">
-          <ng-container *ngFor="let i of $any(formProperty).properties; let $index = index">
+          @for (i of $any(formProperty).properties; track $index) {
             @if (i.visible && !i.ui.hidden) {
               <div nz-col [nzSpan]="arraySpan" [attr.data-index]="$index" class="sf__array-item">
                 <nz-card>
@@ -60,7 +60,7 @@ import { ArrayLayoutWidget } from '../../widget';
                 </nz-card>
               </div>
             }
-          </ng-container>
+          }
         </div>
         @if (!ui.onlyVisual && showError) {
           <div class="ant-form-explain">{{ error }}</div>

@@ -82,7 +82,7 @@
 </nz-drawer>
 <div
   class="setting-drawer__handle"
-  [ngClass]="{ 'setting-drawer__handle-opened': collapse }"
+  [class.setting-drawer__handle-opened]="collapse"
   (click)="toggle()"
   nz-tooltip
   [nzTooltipTitle]="isDev ? devTips : null"

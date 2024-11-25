@@ -1,7 +1,7 @@
-<div [ngStyle]="{ 'height.px': height, 'width.px': height, overflow: 'hidden' }">
-  <canvas #container class="g2-water-wave__canvas" width="{{ height * 2 }}" height="{{ height * 2 }}"></canvas>
+<div [style]="{ height: height + 'px', width: height + 'px', overflow: 'hidden' }">
+  <canvas #container class="g2-water-wave__canvas" [attr.width]="height * 2" [attr.height]="height * 2"></canvas>
 </div>
-<div class="g2-water-wave__desc" [ngStyle]="{ 'width.px': height }">
+<div class="g2-water-wave__desc" [style]="{ width: height + 'px' }">
   @if (title) {
     <span class="g2-water-wave__desc-title">
       <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>

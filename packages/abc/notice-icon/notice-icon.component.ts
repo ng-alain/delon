@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -37,7 +37,6 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgClass,
     NgTemplateOutlet,
     NzBadgeComponent,
     NzIconDirective,
