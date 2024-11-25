@@ -26,7 +26,7 @@
   <ul class="g2-pie__legend">
     @for (item of legendData; track $index) {
       <li (click)="_click($index)" class="g2-pie__legend-item">
-        <span class="g2-pie__legend-dot" [ngStyle]="{ 'background-color': !item.checked ? '#aaa' : item.color }"></span>
+        <span class="g2-pie__legend-dot" [style]="{ 'background-color': !item.checked ? '#aaa' : item.color }"></span>
         <span class="g2-pie__legend-title">{{ item.x }}</span>
         <nz-divider nzType="vertical" />
         <span class="g2-pie__legend-percent">{{ item.percent }}%</span>

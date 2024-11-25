@@ -20,13 +20,13 @@
       [nzOkType]="pop.okType"
       (nzOnConfirm)="_btn(i)"
       class="st__btn-text"
-      [ngClass]="i._className"
+      [class]="i._className"
       (click)="_stopPropagation($event)"
     >
       <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
     </a>
   } @else {
-    <a (click)="_btn(i, $event)" class="st__btn-text" [ngClass]="i._className">
+    <a (click)="_btn(i, $event)" class="st__btn-text" [class]="i._className">
       <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i }" />
     </a>
   }
@@ -46,7 +46,7 @@
       ></i>
     }
   }
-  <span [innerHTML]="i._text" [ngClass]="{ 'pl-xs': i._icon }"></span>
+  <span [innerHTML]="i._text" [class.pl-xs]="i._icon"></span>
 </ng-template>
 @if (c.__render) {
   <ng-template [ngTemplateOutlet]="c.__render!" [ngTemplateOutletContext]="{ $implicit: i, index: index, column: c }" />

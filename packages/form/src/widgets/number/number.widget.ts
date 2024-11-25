@@ -27,7 +27,7 @@ import { SFNumberWidgetSchema } from './schema';
       [nzPrecision]="ui.precision"
       [nzPlaceHolder]="ui.placeholder || ''"
       [style.width]="width"
-      [ngClass]="{ 'ant-input-number__hide-step': ui.hideStep }"
+      [class.ant-input-number__hide-step]="ui.hideStep"
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,

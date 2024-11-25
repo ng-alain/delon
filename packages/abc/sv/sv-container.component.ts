@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -56,7 +55,7 @@ export class SVTitleComponent implements OnInit {
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
   template: `
-    <div class="ant-row" [ngStyle]="margin">
+    <div class="ant-row" [style]="margin">
       @if (title) {
         <sv-title>
           <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
@@ -78,7 +77,7 @@ export class SVTitleComponent implements OnInit {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgStyle, SVTitleComponent, NzStringTemplateOutletDirective]
+  imports: [SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {
   @Input({ alias: 'sv-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })

@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -32,7 +31,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgStyle, NzIconDirective, NzStringTemplateOutletDirective]
+  imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);

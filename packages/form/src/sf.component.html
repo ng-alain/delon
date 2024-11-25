@@ -5,7 +5,7 @@
   @if (button !== 'none') {
     @let btnRender = _btn.render;
     @if (btnRender) {
-      <nz-form-item [ngClass]="btnRender.class!" class="sf-btns" [fixed-label]="btnRender.spanLabelFixed!">
+      <nz-form-item [class]="btnRender.class!" class="sf-btns" [fixed-label]="btnRender.spanLabelFixed!">
         <div
           nz-col
           class="ant-form-item-control"

@@ -1,5 +1,5 @@
 import { CdkObserveContent } from '@angular/cdk/observers';
-import { DOCUMENT, NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -29,7 +29,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CdkObserveContent, NzTooltipDirective, NgTemplateOutlet, NgClass, NgStyle]
+  imports: [CdkObserveContent, NzTooltipDirective, NgTemplateOutlet]
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;

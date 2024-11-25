@@ -38,7 +38,7 @@
             (click)="to(i)"
             [attr.data-id]="i._id"
             class="sidebar-nav__item-link"
-            [ngClass]="{ 'sidebar-nav__item-disabled': i.disabled }"
+            [class.sidebar-nav__item-disabled]="i.disabled"
             (mouseenter)="closeSubMenu()"
           >
             @if (i._needIcon) {

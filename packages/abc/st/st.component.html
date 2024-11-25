@@ -68,7 +68,7 @@
               [nzWidth]="$any(_c).width"
               [nzLeft]="_c._left!"
               [nzRight]="_c._right!"
-              [ngClass]="_c._className"
+              [class]="_c._className"
               [attr.data-col]="_c.indexKey"
               [attr.data-col-index]="index"
               [nzShowSort]="_c._sort.enabled"
@@ -154,7 +154,7 @@
         [attr.data-index]="index"
         (click)="_rowClick($event, i, index, false)"
         (dblclick)="_rowClick($event, i, index, true)"
-        [ngClass]="i._rowClassName"
+        [class]="i._rowClassName"
       >
         @if (expand) {
           <td
@@ -178,7 +178,7 @@
               [nzLeft]="!!c._left"
               [nzRight]="!!c._right"
               [attr.data-col-index]="cIdx"
-              [ngClass]="c._className"
+              [class]="c._className"
               [attr.colspan]="props?.colSpan === 1 ? null : props?.colSpan"
               [attr.rowspan]="props?.rowSpan === 1 ? null : props?.rowSpan"
             >

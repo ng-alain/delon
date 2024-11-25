@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -55,7 +54,7 @@ export interface G2PieRatio {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzDividerComponent, NgStyle]
+  imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzDividerComponent]
 })
 export class G2PieComponent extends G2BaseComponent {
   private percentColor!: (value: string) => string;

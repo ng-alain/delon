@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -22,7 +21,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NzTooltipDirective, NgStyle]
+  imports: [NzTooltipDirective]
 })
 export class G2MiniProgressComponent implements OnChanges {
   readonly i18n = inject(DelonLocaleService);

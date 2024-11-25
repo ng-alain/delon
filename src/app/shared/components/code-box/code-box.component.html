@@ -1,6 +1,6 @@
-<section class="code-box-demo" [ngStyle]="{ background: item.bg }">
-  <div [ngClass]="{ 'browser-mockup': item.browser }" [ngStyle]="{ 'height.px': item.browser }">
-    <div [ngClass]="{ 'browser-scroll': item.browser }">
+<section class="code-box-demo" [style]="{ background: item.bg }">
+  <div [class.browser-mockup]="item.browser" [style]="{ 'height.px': item.browser }">
+    <div [class.browser-scroll]="item.browser">
       <ng-content />
     </div>
   </div>
@@ -64,7 +64,8 @@
             ? 'https://gw.alipayobjects.com/zos/antfincdn/btT3qDZn1U/wSAkBuJFbdxsosKKpqyq.svg'
             : 'https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg'
         "
-        [ngClass]="{ 'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand }"
+        [class.code-expand-icon-hide]="expand"
+        [class.code-expand-icon-show]="!expand"
         (click)="handle()"
       />
       <img
@@ -74,13 +75,14 @@
             ? 'https://gw.alipayobjects.com/zos/antfincdn/CjZPwcKUG3/OpROPHYqWmrMDBFMZtKF.svg'
             : 'https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg'
         "
-        [ngClass]="{ 'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand }"
+        [class.code-expand-icon-show]="expand"
+        [class.code-expand-icon-hide]="!expand"
         (click)="handle()"
       />
     </i>
   </div>
 </section>
-<section class="highlight-wrapper" [ngClass]="{ 'highlight-wrapper-expand': expand }">
+<section class="highlight-wrapper" [class.highlight-wrapper-expand]="expand">
   <div class="highlight">
     <pre class="hljs language-ts"><code>{{item.code}}</code></pre>
   </div>

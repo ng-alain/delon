@@ -9,7 +9,7 @@
   <div nz-row class="g2-radar__legend">
     @for (i of legendData; track $index) {
       <div nz-col [nzSpan]="24 / legendData.length" (click)="_click($index)" class="g2-radar__legend-item">
-        <i class="g2-radar__legend-dot" [ngStyle]="{ 'background-color': !i.checked ? '#aaa' : i.color }"></i>
+        <i class="g2-radar__legend-dot" [style]="{ 'background-color': !i.checked ? '#aaa' : i.color }"></i>
         {{ i.name }}
         <h6 class="g2-radar__legend-title">{{ i.value }}</h6>
       </div>
