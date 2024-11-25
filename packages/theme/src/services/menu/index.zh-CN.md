@@ -25,6 +25,7 @@ type: Service
 | `open` | 展开某菜单 |
 | `toggleOpen` | 切换菜单的展开或关闭 |
 | `openAll` | 展开或关闭所有菜单 |
+| `getDefaultRedirect` | 返回一个默认跳转的菜单链接 |
 
 **recursive**
 
