@@ -604,12 +604,26 @@ export class STComponent implements AfterViewInit, OnChanges {
    * this.st.setRow(item, { price: 100 })
    * ```
    */
-  setRow(index: number | STData, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
+  setRow(
+    index: number | STData,
+    item: STData,
+    options?: {
+      refreshSchema?: boolean;
+      emitReload?: boolean;
+      /**
+       *
+       * @param arrayProcessMethod 数组处理方式
+       *  - `true` 表示替换新值，不管新值为哪种类型
+       *  - `false` 表示会合并整个数组（将旧数据与新数据合并成新数组）
+       */
+      arrayProcessMethod?: boolean;
+    }
+  ): this {
     options = { refreshSchema: false, emitReload: false, ...options };
     if (typeof index !== 'number') {
       index = this._data.indexOf(index);
     }
-    this._data[index] = deepMergeKey(this._data[index], false, item);
+    this._data[index] = deepMergeKey(this._data[index], options?.arrayProcessMethod ?? false, item);
     this.optimizeData();
     if (options.refreshSchema) {
       this.resetColumns({ emitReload: options.emitReload });
