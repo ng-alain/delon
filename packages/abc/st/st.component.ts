@@ -158,6 +158,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     this.updateTotalTpl();
   }
   @Input() data?: string | STData[] | Observable<STData[]>;
+  @Input() delay?: boolean = false;
   @Input() columns?: STColumn[] | null;
   @Input() contextmenu?: STContextmenuFn | null;
   @Input({ transform: (v: unknown) => numberAttribute(v, 10) }) ps = 10;
@@ -894,7 +895,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    this.refreshColumns();
+    if (!this.delay) this.refreshColumns();
     if (!this.req.lazyLoad) this.loadPageData().subscribe();
     this.inied = true;
   }
