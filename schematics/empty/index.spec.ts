@@ -73,7 +73,7 @@ describe('Schematic: empty', () => {
         tree = await runner.runSchematic('empty', { name: 'list', module: 'trade', standalone: true }, tree);
         [routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
         expect(tree.exists(servicePath)).toBe(false);
-        expect(tree.readContent(tsPath)).toContain(`standalone: true,`);
+        expect(tree.readContent(tsPath)).toContain(`imports:`);
         expect(tree.readContent(tsPath)).toContain(`SHARED_IMPORTS`);
         expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
         expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
