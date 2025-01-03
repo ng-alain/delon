@@ -32,7 +32,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     </ol>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzButtonModule, JsonPipe]
 })
 export class DemoComponent {

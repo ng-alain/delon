@@ -6,8 +6,7 @@ import { ReuseContextCloseEvent, ReuseContextI18n } from './reuse-tab.interfaces
 
 @Component({
   selector: 'reuse-tab-context',
-  template: ``,
-  standalone: true
+  template: ``
 })
 export class ReuseTabContextComponent {
   private readonly srv = inject(ReuseTabContextService);

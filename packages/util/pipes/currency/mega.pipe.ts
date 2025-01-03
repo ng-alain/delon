@@ -7,7 +7,7 @@ import { CurrencyMegaOptions, CurrencyService } from '@delon/util/format';
  *
  * 大数据格式化
  */
-@Pipe({ name: 'mega', standalone: true })
+@Pipe({ name: 'mega' })
 export class CurrencyMegaPipe implements PipeTransform {
   private readonly srv = inject(CurrencyService);
   private isCN = inject(LOCALE_ID).startsWith('zh');

@@ -19,7 +19,6 @@ import { ResultModule } from '@delon/abc/result';
       <div style="background: #3ba0e9; color:#fff">操作建议，一般放置按钮组</div>
     </result>
   `,
-  standalone: true,
   imports: [ResultModule]
 })
 export class DemoComponent {}

@@ -11,7 +11,7 @@ import { CurrencyFormatOptions, CurrencyService } from '@delon/util/format';
  * 10000.567 => `10,000.57`
  * ```
  */
-@Pipe({ name: 'price', standalone: true })
+@Pipe({ name: 'price' })
 export class CurrencyPricePipe implements PipeTransform {
   private readonly srv = inject(CurrencyService);
 

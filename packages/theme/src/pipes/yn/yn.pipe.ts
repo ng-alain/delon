@@ -35,7 +35,7 @@ export function yn(value: boolean, opt?: YNOptions): string {
   return html;
 }
 
-@Pipe({ name: 'yn', standalone: true })
+@Pipe({ name: 'yn' })
 export class YNPipe implements PipeTransform {
   private readonly dom = inject(DomSanitizer);
 

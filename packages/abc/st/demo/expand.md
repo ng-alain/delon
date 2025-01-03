@@ -40,7 +40,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
       </ng-template>
     </st>
   `,
-  standalone: true,
   imports: [STModule, NzIconDirective, NzButtonComponent]
 })
 export class DemoComponent {

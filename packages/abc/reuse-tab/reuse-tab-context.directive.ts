@@ -8,8 +8,7 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
   exportAs: 'reuseTabContextMenu',
   host: {
     '(contextmenu)': '_onContextMenu($event)'
-  },
-  standalone: true
+  }
 })
 export class ReuseTabContextDirective {
   private readonly srv = inject(ReuseTabContextService);

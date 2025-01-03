@@ -30,7 +30,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: ` <st #st [data]="users" [columns]="columns" (change)="change($event)" /> `,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

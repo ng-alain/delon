@@ -51,7 +51,6 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
       </ng-template>
     </sf>
   `,
-  standalone: true,
   imports: [DelonFormModule, FormsModule, NzGridModule, NzInputModule, NzButtonModule, NzQRCodeModule]
 })
 export class DemoComponent {

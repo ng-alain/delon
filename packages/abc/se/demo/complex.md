@@ -86,7 +86,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
       </se>
     </form>
   `,
-  standalone: true,
   imports: [
     SEModule,
     NzFormModule,

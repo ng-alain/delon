@@ -36,7 +36,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       (change)="_click($event)"
       [clickRowClassName]="clickRowClassName"
     />`,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

@@ -46,7 +46,6 @@ import { SGModule } from '@delon/abc/sg';
       }
     `
   ],
-  standalone: true,
   imports: [SGModule]
 })
 export class DemoComponent {

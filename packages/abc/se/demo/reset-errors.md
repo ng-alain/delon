@@ -72,7 +72,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </se>
     </form>
   `,
-  standalone: true,
   imports: [SEModule, NzFormModule, NzInputModule, ReactiveFormsModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {

@@ -31,7 +31,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       (clickItem)="handleClick($event)"
     />
   `,
-  standalone: true,
   imports: [NzButtonModule, G2PieModule]
 })
 export class DemoComponent {

@@ -50,7 +50,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </sv>
     </div>
   `,
-  standalone: true,
   imports: [SVModule, NzButtonModule, NzRadioModule, NzToolTipModule, FormsModule]
 })
 export class DemoComponent {

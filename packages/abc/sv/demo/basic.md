@@ -55,7 +55,6 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
       </sv>
     </sv-container>
   `,
-  standalone: true,
   imports: [SVModule, NzDividerModule]
 })
 export class DemoComponent {}

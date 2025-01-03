@@ -9,7 +9,6 @@ describe('cli: ast', () => {
     tree.create(
       '1.ts',
       `@Component({
-        standalone: true,
         imports: [ RouterOutlet ]
       })
       export class Comp {}

@@ -22,7 +22,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'form-date-simple',
   template: ` <sf [schema]="schema" (formSubmit)="submit($event)" (formChange)="change($event)" /> `,
-  standalone: true,
   imports: [DelonFormModule]
 })
 export class DemoComponent {

@@ -28,7 +28,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       </button>
     }
   `,
-  standalone: true,
   imports: [DownFileDirective, NzButtonModule]
 })
 export class DemoComponent {

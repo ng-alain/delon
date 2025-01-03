@@ -19,7 +19,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       <input type="text" nz-input [(ngModel)]="value" />
     </nz-input-group>
   `,
-  standalone: true,
   imports: [NzInputModule, FormsModule, CurrencyCNYPipe]
 })
 export class DemoComponent {

@@ -25,7 +25,6 @@ import { EllipsisComponent } from '@delon/abc/ellipsis';
     <h4 class="mt-lg">Show Tooltip</h4>
     <ellipsis length="100" tooltip>{{ article }}</ellipsis>
   `,
-  standalone: true,
   imports: [EllipsisComponent]
 })
 export class DemoComponent {

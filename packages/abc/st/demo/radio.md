@@ -33,7 +33,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       [res]="{ process: dataChange }"
       (change)="change($event)"
     />`,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

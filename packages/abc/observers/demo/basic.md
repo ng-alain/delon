@@ -31,7 +31,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       <chart-echarts #echart [option]="option" (events)="handleEvents($event)" />
     </div>
   `,
-  standalone: true,
   imports: [NzButtonModule, ChartEChartsModule, ObserverSize]
 })
 export class DemoComponent {

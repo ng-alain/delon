@@ -46,7 +46,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       </ng-template>
     </st>
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule, CurrencyPricePipe]
 })
 export class DemoComponent {

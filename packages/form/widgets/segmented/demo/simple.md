@@ -25,7 +25,6 @@ import { NzSegmentedOptions } from 'ng-zorro-antd/segmented';
 @Component({
   selector: 'app-demo',
   template: `<sf [schema]="schema" (formSubmit)="submit($event)" />`,
-  standalone: true,
   imports: [DelonFormModule]
 })
 export class DemoComponent {

@@ -64,7 +64,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </ng-template>
     </st>
   `,
-  standalone: true,
   imports: [
     STModule,
     NzButtonModule,

@@ -34,7 +34,6 @@ import { NzTreeNode } from 'ng-zorro-antd/tree';
       </span>
     </ng-template>
   `,
-  standalone: true,
   imports: [DelonFormModule, NzIconModule]
 })
 export class DemoComponent implements OnInit {

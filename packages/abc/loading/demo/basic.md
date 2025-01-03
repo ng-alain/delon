@@ -26,7 +26,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button (click)="show('spin')">Spin</button>
     <button nz-button (click)="show('text')">Only Text</button>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

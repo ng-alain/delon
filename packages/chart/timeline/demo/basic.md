@@ -21,7 +21,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     [height]="200"
     (clickItem)="handleClick($event)"
   />`,
-  standalone: true,
   imports: [G2TimelineModule]
 })
 export class DemoComponent implements OnInit {

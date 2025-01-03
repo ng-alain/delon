@@ -29,7 +29,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
     <p class="mt-sm">result: {{ data | json }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzButtonModule, JsonPipe]
 })
 export class DemoComponent {

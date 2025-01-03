@@ -28,7 +28,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="open()">Open</button>
     <button nz-button (click)="static()">Static</button>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

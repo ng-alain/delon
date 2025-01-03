@@ -24,7 +24,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 @Component({
   selector: 'chart-custom-basic',
   template: ` <g2-custom delay="100" (render)="render($event)" /> `,
-  standalone: true,
   imports: [G2CustomModule]
 })
 export class DemoComponent {

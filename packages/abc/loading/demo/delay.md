@@ -25,7 +25,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button (click)="show()">Display after 1 seconds</button>
     <button nz-button (click)="close()">Close</button>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

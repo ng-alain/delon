@@ -88,7 +88,6 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
       </ng-template>
     </page-header>
   `,
-  standalone: true,
   imports: [
     PageHeaderComponent,
     NzBreadCrumbModule,

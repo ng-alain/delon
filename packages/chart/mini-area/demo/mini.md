@@ -15,7 +15,6 @@ import { G2MiniAreaData, G2MiniAreaModule } from '@delon/chart/mini-area';
 @Component({
   selector: 'app-demo',
   template: ` <g2-mini-area line color="#cceafe" height="45" [data]="visitData" tooltipType="mini" /> `,
-  standalone: true,
   imports: [G2MiniAreaModule]
 })
 export class DemoComponent implements OnInit {

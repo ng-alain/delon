@@ -49,7 +49,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button nzType="link" type="button" (click)="updateValue()">Update value via patchValue</button>
     </se>
   </form>`,
-  standalone: true,
   imports: [SEModule, NzFormModule, NzInputModule, ReactiveFormsModule, NzButtonModule]
 })
 export class DemoComponent {

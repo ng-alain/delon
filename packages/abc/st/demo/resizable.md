@@ -31,7 +31,6 @@ import { STChange, STColumn, STModule } from '@delon/abc/st';
   template: `
     <st [data]="url" [columns]="columns" [widthMode]="{ type: 'strict' }" resizable (change)="onChange($event)" />
   `,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

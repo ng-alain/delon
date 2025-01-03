@@ -38,7 +38,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       }
     `
   ],
-  standalone: true,
   imports: [NzHighlightModule, NzInputModule, FormsModule]
 })
 export class DemoComponent {

@@ -33,7 +33,6 @@ import { EllipsisComponent } from '@delon/abc/ellipsis';
       </p>
     </ellipsis>
   `,
-  standalone: true,
   imports: [EllipsisComponent]
 })
 export class DemoComponent {}

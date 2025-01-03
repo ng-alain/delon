@@ -28,7 +28,6 @@ import { SVModule } from '@delon/abc/sv';
       <sv label="danger" type="danger">hhhh</sv>
     </sv-container>
   `,
-  standalone: true,
   imports: [SVModule]
 })
 export class DemoComponent {}

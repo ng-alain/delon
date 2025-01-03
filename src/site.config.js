@@ -36,8 +36,7 @@ module.exports = {
           src: ['./docs'],
           hasSubDir: false
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'components',
@@ -221,8 +220,7 @@ module.exports = {
 
           hasSubDir: true
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'auth',
@@ -243,8 +241,7 @@ module.exports = {
           src: ['./packages/auth/docs'],
           hasSubDir: false
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'acl',
@@ -265,8 +262,7 @@ module.exports = {
           src: ['./packages/acl/docs'],
           hasSubDir: false
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'cache',
@@ -287,8 +283,7 @@ module.exports = {
           src: ['./packages/cache/docs'],
           hasSubDir: false
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'mock',
@@ -309,8 +304,7 @@ module.exports = {
           src: ['./packages/mock/docs'],
           hasSubDir: false
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'util',
@@ -344,8 +338,7 @@ module.exports = {
           ignores: ['docs'],
           hasSubDir: true
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'form',
@@ -410,8 +403,7 @@ module.exports = {
 
           hasSubDir: true
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'chart',
@@ -445,8 +437,7 @@ module.exports = {
           ignores: ['docs'],
           hasSubDir: true
         }
-      ],
-      standalone: true
+      ]
     },
     {
       name: 'cli',
@@ -462,7 +453,6 @@ module.exports = {
       defaultRoute: 'getting-started',
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
-      standalone: true,
       dir: [
         {
           src: ['./schematics/docs'],
@@ -532,8 +522,7 @@ module.exports = {
           src: ['./packages/theme/src/services'],
           hasSubDir: true
         }
-      ],
-      standalone: true
+      ]
     }
   ]
 };

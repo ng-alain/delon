@@ -80,7 +80,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     '(click)': 'show()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ NzToolTipModule ]
 })
 export class CellTestWidget implements CellWidgetInstance {

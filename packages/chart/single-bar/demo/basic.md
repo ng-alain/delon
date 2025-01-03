@@ -49,7 +49,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     `
   ],
   encapsulation: ViewEncapsulation.Emulated,
-  standalone: true,
   imports: [NzButtonModule, NzTableModule, G2SingleBarModule]
 })
 export class DemoComponent {

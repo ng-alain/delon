@@ -23,7 +23,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     maskSlider="MM月dd日"
     (clickItem)="handleClick($event)"
   />`,
-  standalone: true,
   imports: [G2TimelineModule]
 })
 export class DemoComponent implements OnInit {

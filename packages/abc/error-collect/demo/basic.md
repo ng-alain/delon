@@ -25,7 +25,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       <error-collect />
     </form>
   `,
-  standalone: true,
   imports: [NzFormModule, ReactiveFormsModule, NzInputModule, ErrorCollectComponent]
 })
 export class DemoComponent implements OnInit {

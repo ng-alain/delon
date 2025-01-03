@@ -29,7 +29,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     >
     <st #st [data]="data" [columns]="columns" class="mt-sm" />
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

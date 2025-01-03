@@ -25,8 +25,7 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent implements OnInit {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;

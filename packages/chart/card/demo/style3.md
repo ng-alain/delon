@@ -24,7 +24,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </ng-template>
     </g2-card>
   `,
-  standalone: true,
   imports: [G2CardModule, NzToolTipModule, NzIconModule]
 })
 export class DemoComponent {}

@@ -74,7 +74,7 @@ describe('Schematic: list', () => {
       [routesPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
       expect(tree.readContent(routesPath)).toContain(`import { TradeListComponent } from './list/list.component';`);
       expect(tree.readContent(tsPath)).toContain(`TradeListComponent`);
-      expect(tree.readContent(tsPath)).toContain(`standalone: true,`);
+      expect(tree.readContent(tsPath)).toContain(`imports:`);
       expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
     });
 

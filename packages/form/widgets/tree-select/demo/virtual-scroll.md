@@ -24,7 +24,6 @@ import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 @Component({
   selector: 'app-demo',
   template: ` <sf [schema]="schema" (formSubmit)="submit($event)" /> `,
-  standalone: true,
   imports: [DelonFormModule]
 })
 export class DemoComponent {

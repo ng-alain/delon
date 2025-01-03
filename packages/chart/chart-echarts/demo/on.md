@@ -22,7 +22,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: ` <chart-echarts [option]="option" [on]="on" /> `,
-  standalone: true,
   imports: [ChartEChartsModule]
 })
 export class DemoComponent {

@@ -20,7 +20,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <g2-tag-cloud [data]="tags" height="400" (clickItem)="handleClick($event)" />
   `,
-  standalone: true,
   imports: [NzButtonModule, G2TagCloudModule]
 })
 export class DemoComponent {

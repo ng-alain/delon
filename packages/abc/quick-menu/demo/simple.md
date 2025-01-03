@@ -34,7 +34,6 @@ import { NzListModule } from 'ng-zorro-antd/list';
       </nz-list>
     </quick-menu>
   `,
-  standalone: true,
   imports: [NzButtonModule, QuickMenuComponent, NzListModule]
 })
 export class DemoComponent {

@@ -18,7 +18,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   selector: 'app-demo',
   template: ` <g2-gauge [title]="'核销率'" height="164" [percent]="percent" [color]="color" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [G2GaugeModule]
 })
 export class DemoComponent implements OnDestroy {

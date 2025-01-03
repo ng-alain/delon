@@ -148,7 +148,6 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
       </div>
     </div>
   `,
-  standalone: true,
   imports: [
     NzButtonModule,
     PdfComponent,

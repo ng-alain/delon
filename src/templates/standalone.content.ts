@@ -6,7 +6,6 @@ import { DocsComponent } from '@shared';
   selector: `{{selector}}`,
   template: `<app-docs [codes]="codes" [item]="item">{{{demos}}}</app-docs>`,
   host: { '[class.d-block]': `'true'` },
-  standalone: true,
   imports: [DocsComponent{{standaloneImports}}]
 })
 export class {{componentName}} {

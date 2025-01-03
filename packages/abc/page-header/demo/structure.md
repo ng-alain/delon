@@ -61,7 +61,6 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     `
   ],
   encapsulation: ViewEncapsulation.Emulated,
-  standalone: true,
   imports: [PageHeaderComponent, NzTabsModule]
 })
 export class DemoComponent {}

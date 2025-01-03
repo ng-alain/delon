@@ -71,7 +71,6 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
       <button nz-button>打 印</button>
     </result>
   `,
-  standalone: true,
   imports: [ResultModule, NzGridModule, NzStepsModule, NzIconModule, NzButtonModule]
 })
 export class DemoComponent {

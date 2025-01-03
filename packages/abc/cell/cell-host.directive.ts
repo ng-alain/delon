@@ -6,8 +6,7 @@ import { CellService } from './cell.service';
 import { CellTextResult } from './cell.types';
 
 @Directive({
-  selector: '[cell-widget-host]',
-  standalone: true
+  selector: '[cell-widget-host]'
 })
 export class CellHostDirective implements OnChanges {
   private readonly srv = inject(CellService);

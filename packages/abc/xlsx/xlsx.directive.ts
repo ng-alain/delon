@@ -8,8 +8,7 @@ import { XlsxExportOptions } from './xlsx.types';
   exportAs: 'xlsx',
   host: {
     '(click)': '_click()'
-  },
-  standalone: true
+  }
 })
 export class XlsxDirective {
   private readonly srv = inject(XlsxService);

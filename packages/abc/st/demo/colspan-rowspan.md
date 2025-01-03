@@ -31,7 +31,6 @@ const sharedOnCell = (_: STData, index: number): STOnCellResult => {
 @Component({
   selector: 'app-demo',
   template: ` <st #st [data]="url" [ps]="5" [req]="{ params: params }" [columns]="columns" bordered size="middle" />`,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

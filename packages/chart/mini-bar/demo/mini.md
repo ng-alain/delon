@@ -15,7 +15,6 @@ import { G2MiniBarData, G2MiniBarModule } from '@delon/chart/mini-bar';
 @Component({
   selector: 'app-demo',
   template: ` <g2-mini-bar height="45" [data]="visitData" yTooltipSuffix="%" tooltipType="mini" /> `,
-  standalone: true,
   imports: [G2MiniBarModule]
 })
 export class DemoComponent implements OnInit {

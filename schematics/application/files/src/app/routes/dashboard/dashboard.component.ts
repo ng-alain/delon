@@ -5,7 +5,6 @@ import { PageHeaderModule } from '@delon/abc/page-header';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [PageHeaderModule]
 })
 export class DashboardComponent {}

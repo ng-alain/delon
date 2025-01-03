@@ -31,7 +31,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="cd.instance.pause()">Pause</button>
     <button nz-button (click)="cd.instance.resume()">Resume</button>
   `,
-  standalone: true,
   imports: [CountDownComponent, NzButtonModule]
 })
 export class DemoComponent {

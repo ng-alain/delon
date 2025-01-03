@@ -49,7 +49,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
       </tbody>
     </nz-table>
   `,
-  standalone: true,
   imports: [NzTableModule]
 })
 export class DemoComponent {

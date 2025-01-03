@@ -13,7 +13,6 @@ import { NoticeIconComponent } from '@delon/abc/notice-icon';
 @Component({
   selector: 'app-demo',
   template: ` <notice-icon count="5" /> `,
-  standalone: true,
   imports: [NoticeIconComponent]
 })
 export class DemoComponent {}

@@ -3,7 +3,6 @@ title: currency
 subtitle: 货币管道
 type: Pipes
 module: import { CurrencyPipeModule } from '@delon/util/pipes/currency';
-standalone: true
 ---
 
 > 可以通过[全局配置](/docs/global-config)覆盖 `startingUnit`、`megaUnit`、`precision`、`ingoreZeroPrecision` 等参数。

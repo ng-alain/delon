@@ -258,6 +258,7 @@ function generateModule(config: ModuleConfig): void {
 
 for (const m of siteConfig.modules) {
   // if (m.module !== 'docs') continue;
+  m.standalone = m.standalone ?? true;
   generateModule(m);
 }
 

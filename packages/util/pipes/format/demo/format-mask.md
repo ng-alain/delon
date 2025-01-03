@@ -23,7 +23,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       <input type="text" nz-input [(ngModel)]="maskStr" />
     </nz-input-group>
   `,
-  standalone: true,
   imports: [JsonPipe, FormatMaskPipe, NzInputModule, FormsModule]
 })
 export class DemoComponent {

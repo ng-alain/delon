@@ -21,7 +21,6 @@ import { STColumn, STModule } from '@delon/abc/st';
 @Component({
   selector: 'app-demo',
   template: ` <st #st [data]="url" [req]="{ params: params }" [columns]="columns" bordered size="middle" />`,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

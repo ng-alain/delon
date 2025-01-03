@@ -19,7 +19,6 @@ import { G2PieModule } from '@delon/chart/pie';
       <g2-pie percent="28" subTitle="中式快餐" total="28%" height="130" />
     </div>
   `,
-  standalone: true,
   imports: [G2PieModule]
 })
 export class DemoComponent {}

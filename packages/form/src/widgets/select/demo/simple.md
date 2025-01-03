@@ -28,7 +28,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="updateStatus()">Update Status</button>
     <button nz-button (click)="updateAsyncData()">Update async data</button>
   `,
-  standalone: true,
   imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent {

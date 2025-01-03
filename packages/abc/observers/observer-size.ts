@@ -81,8 +81,7 @@ export class SizeObserver implements OnDestroy {
 
 @Directive({
   selector: '[observeSize]',
-  exportAs: 'observeSize',
-  standalone: true
+  exportAs: 'observeSize'
 })
 export class ObserverSize implements AfterViewInit, OnDestroy {
   private readonly _obs = inject(SizeObserver);

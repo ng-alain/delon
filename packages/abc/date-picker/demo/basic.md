@@ -27,7 +27,6 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     result: {{ i | json }}<br />
     <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" />
   `,
-  standalone: true,
   imports: [JsonPipe, FormsModule, NzDatePickerModule, RangePickerDirective]
 })
 export class DemoComponent {
