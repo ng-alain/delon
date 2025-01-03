@@ -8076,7 +8076,7 @@ __metadata:
     ng-alain-sts: "npm:^0.0.2"
     ng-github-button: "npm:^19.0.0"
     ng-packagr: "npm:^19.0.1"
-    ng-zorro-antd: "npm:^19.0.0"
+    ng-zorro-antd: "npm:^19.0.1"
     ngx-countdown: "npm:^19.0.0"
     ngx-highlight-js: "npm:^19.0.0"
     ngx-tinymce: "npm:^19.0.0"
@@ -14213,9 +14213,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-zorro-antd@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "ng-zorro-antd@npm:19.0.0"
+"ng-zorro-antd@npm:^19.0.1":
+  version: 19.0.1
+  resolution: "ng-zorro-antd@npm:19.0.1"
   dependencies:
     "@angular/cdk": "npm:^19.0.0"
     "@ant-design/icons-angular": "npm:^19.0.0"
@@ -14228,7 +14228,7 @@ __metadata:
     "@angular/forms": ^19.0.0
     "@angular/platform-browser": ^19.0.0
     "@angular/router": ^19.0.0
-  checksum: 10c0/0da9d1b5b18db3c543085f86edc26312f0f2c0f55ee8501fddafe4a6da6a87e3a60f1ce29302ce853b6e391e42732046fe326c3e7b3b654e9c8c536cf4d6bbf4
+  checksum: 10c0/2a7dbc1ea6555a04a791cb6e71c256947948261eef20ffe4ca32ad5668f088eacb84636f769e37346cfd2165aaa57f6184495a210dbbcbe13f862d5984bae5f1
   languageName: node
   linkType: hard
 
