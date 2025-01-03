@@ -21,7 +21,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <g2-radar [hasLegend]="true" [data]="radarData" height="286" (clickItem)="handleClick($event)" />
   `,
-  standalone: true,
   imports: [NzButtonModule, G2RadarModule]
 })
 export class DemoComponent {

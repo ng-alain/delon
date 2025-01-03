@@ -22,7 +22,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <g2-mini-area line color="#cceafe" height="45" [data]="visitData" (clickItem)="handleClick($event)" />
   `,
-  standalone: true,
   imports: [NzButtonModule, G2MiniAreaModule]
 })
 export class DemoComponent {

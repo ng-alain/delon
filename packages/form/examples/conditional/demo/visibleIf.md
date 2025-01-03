@@ -28,7 +28,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button type="button" nz-button (click)="toggleMobile(true)">Show mobile</button>
     <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
   `,
-  standalone: true,
   imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent implements OnInit, OnDestroy {

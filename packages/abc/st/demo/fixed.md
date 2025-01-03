@@ -29,7 +29,6 @@ import { STColumn, STData, STModule } from '@delon/abc/st';
 @Component({
   selector: 'app-demo',
   template: ` <st [data]="users" [columns]="columns" [scroll]="{ x: '1300px' }" /> `,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

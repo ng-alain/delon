@@ -6,7 +6,6 @@ import { CodeBoxComponent } from '@shared';
     selector: `{{selector}}`,
     template: `{{{demos}}}`,
     host: { '[class.d-block]': `'true'` },
-    standalone: true,
     imports: [CodeBoxComponent{{standaloneImports}}]
 })
 export class {{componentName}} {

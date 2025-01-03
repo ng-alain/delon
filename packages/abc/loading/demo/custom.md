@@ -25,7 +25,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   template: ` @for (i of customs; track $index) {
     <button nz-button (click)="show(i)">{{ i.name }}</button>
   }`,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

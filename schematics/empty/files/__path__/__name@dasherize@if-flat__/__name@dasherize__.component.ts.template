@@ -4,7 +4,6 @@ import { SHARED_IMPORTS } from '@shared';<%}%>
 
 @Component({
   selector: '<%= selector %>',<% if(standalone) {%>
-  standalone: true,
   imports: [...SHARED_IMPORTS],<%}%>
   templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
   styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %><% if(!!viewEncapsulation) { %>,

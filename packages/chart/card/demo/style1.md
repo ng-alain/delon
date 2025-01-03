@@ -34,7 +34,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       <trend flag="down" style="margin: 0 0 0 8px; color: rgba(0,0,0,.85)">11%</trend>
     </g2-card>
   `,
-  standalone: true,
   imports: [G2CardModule, NzToolTipModule, TrendModule]
 })
 export class DemoComponent {}

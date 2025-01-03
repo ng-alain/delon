@@ -26,7 +26,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button nzType="primary" (click)="setRow()">setRow Method</button>
     <st #st [widthMode]="{ type: 'strict' }" [data]="url" [req]="{ params: params }" [columns]="columns" />
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

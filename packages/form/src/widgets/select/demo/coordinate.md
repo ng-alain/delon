@@ -23,7 +23,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: ` <sf #sf [schema]="schema" [formData]="data" (formSubmit)="submit($event)" /> `,
-  standalone: true,
   imports: [DelonFormModule]
 })
 export class DemoComponent {

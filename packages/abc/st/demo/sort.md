@@ -32,7 +32,6 @@ interface UserData extends STData {
     <button nz-button (click)="st.reset()">重置</button>
     <st #st [data]="url" [req]="{ params: params }" [columns]="columns" multiSort />
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

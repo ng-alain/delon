@@ -31,7 +31,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       (formChange)="change($event)"
       (formError)="error($event)"></sf>
     \`,
-  standalone: true,
   imports: [DelonFormModule]
 })
 export class DemoComponent {

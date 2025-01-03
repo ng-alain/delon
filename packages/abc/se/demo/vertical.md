@@ -35,7 +35,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
     </se>
   </form>`,
-  standalone: true,
   imports: [SEModule, NzFormModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {

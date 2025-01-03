@@ -15,7 +15,6 @@ import { G2MiniProgressModule } from '@delon/chart/mini-progress';
 @Component({
   selector: 'app-demo',
   template: ` <g2-mini-progress percent="78" strokeWidth="8" target="80" /> `,
-  standalone: true,
   imports: [G2MiniProgressModule]
 })
 export class DemoComponent {}

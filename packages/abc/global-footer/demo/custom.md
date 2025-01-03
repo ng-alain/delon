@@ -34,7 +34,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       }
     `
   ],
-  standalone: true,
   imports: [GlobalFooterModule, NzIconModule]
 })
 export class DemoComponent {}

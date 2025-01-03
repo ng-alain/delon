@@ -29,7 +29,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     </div>
     <button nz-button (click)="start()">Start</button>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

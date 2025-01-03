@@ -38,7 +38,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     </div>
     <st #st [data]="url" [req]="{ params: params }" [columns]="columns" />
   `,
-  standalone: true,
   imports: [STModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {

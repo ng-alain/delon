@@ -25,7 +25,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: ` <button nz-button type="button" (click)="open()">Open</button> `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

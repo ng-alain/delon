@@ -50,7 +50,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
       </ng-template>
     </st>
   `,
-  standalone: true,
   imports: [STModule, NzInputModule, FormsModule, NzInputNumberModule, NzSwitchModule]
 })
 export class DemoComponent {

@@ -16,7 +16,6 @@ import { TrendModule } from '@delon/chart/trend';
     <trend flag="up">12%</trend>
     <trend flag="down" class="ml-sm">11%</trend>
   `,
-  standalone: true,
   imports: [TrendModule]
 })
 export class DemoComponent {}

@@ -83,7 +83,6 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
     }
     <theme-btn />
   `,
-  standalone: true,
   imports: [
     RouterOutlet,
     RouterLink,

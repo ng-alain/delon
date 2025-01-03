@@ -18,7 +18,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="set({ expires: 10 })">Set 10s expired</button>
     <button nz-button (click)="remove()">Remove</button>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

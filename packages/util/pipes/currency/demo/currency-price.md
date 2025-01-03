@@ -23,7 +23,6 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
       <nz-input-number [(ngModel)]="precision" [nzMin]="0" [nzMax]="292" />
     </nz-input-group>
   `,
-  standalone: true,
   imports: [NzInputModule, FormsModule, NzInputNumberModule, CurrencyPricePipe]
 })
 export class DemoComponent {

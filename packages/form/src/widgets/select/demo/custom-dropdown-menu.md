@@ -55,7 +55,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       }
     `
   ],
-  standalone: true,
   imports: [DelonFormModule, NzDividerModule, NzInputModule, NzIconModule]
 })
 export class DemoComponent implements OnInit {

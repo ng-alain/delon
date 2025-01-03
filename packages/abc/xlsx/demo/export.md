@@ -27,7 +27,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button (click)="download('csv')">Export Csv</button>
     <st [data]="users" [ps]="3" [columns]="columns" class="mt-sm" />
   `,
-  standalone: true,
   imports: [NzButtonModule, STModule]
 })
 export class DemoComponent {

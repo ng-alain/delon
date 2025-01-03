@@ -45,7 +45,6 @@ export function withTestWidget(): SFWidgetProvideConfig {
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DelonFormModule]
 })
 class TestWidget extends ControlWidget implements OnInit {

@@ -30,7 +30,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     </div>
     <chart-echarts [option]="two ? option1 : option2" [theme]="dark ? 'dark' : null" (events)="handleEvents($event)" />
   `,
-  standalone: true,
   imports: [FormsModule, NzSwitchModule, NzButtonModule, ChartEChartsModule]
 })
 export class DemoComponent {

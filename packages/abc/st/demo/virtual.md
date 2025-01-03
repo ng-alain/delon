@@ -26,7 +26,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button (click)="scrollToIndex(200)">Scroll To Index 200</button>
     <st #st [data]="data" [columns]="columns" [page]="page" virtualScroll [scroll]="{ x: '1300px', y: '240px' }" />
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent implements AfterViewInit {

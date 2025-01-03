@@ -31,7 +31,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       [contextmenu]="handleContextmenu"
     />
   `,
-  standalone: true,
   imports: [STModule]
 })
 export class DemoComponent {

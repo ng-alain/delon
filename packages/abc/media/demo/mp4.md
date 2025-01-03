@@ -29,7 +29,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     </div>
     <div media #media [source]="mp4"></div>
   `,
-  standalone: true,
   imports: [NzButtonModule, MediaComponent]
 })
 export class DemoComponent {
