@@ -55,7 +55,6 @@ import type { SFTreeSelectWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzTreeSelectModule]
 })
 export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> implements OnInit {

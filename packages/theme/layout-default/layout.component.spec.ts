@@ -4,21 +4,21 @@ import { By } from '@angular/platform-browser';
 import {
   NavigationCancel,
   NavigationError,
+  provideRouter,
   RouteConfigLoadEnd,
-  RouteConfigLoadStart,
-  RouterModule
+  RouteConfigLoadStart
 } from '@angular/router';
 
 import { createTestContext } from '@delon/testing';
-import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
+import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { SettingsService } from '../src/services/settings/settings.service';
-import { AlainThemeModule } from '../src/theme.module';
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
 import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultOptions } from './types';
+import { SettingsService } from '../src/services/settings/settings.service';
+import { AlainThemeModule } from '../src/theme.module';
 
 describe('theme: layout-default', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -28,7 +28,8 @@ describe('theme: layout-default', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LayoutDefaultModule, RouterModule.forRoot([]), NzIconTestModule, AlainThemeModule],
+      providers: [provideNzIconsTesting(), provideRouter([])],
+      imports: [LayoutDefaultModule, AlainThemeModule],
       declarations: [TestComponent]
     });
 

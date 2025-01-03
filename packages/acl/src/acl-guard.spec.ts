@@ -183,5 +183,7 @@ describe('acl: guard', () => {
   });
 });
 
-@Component({ template: `` })
+@Component({
+  template: ``
+})
 class TestComponent {}

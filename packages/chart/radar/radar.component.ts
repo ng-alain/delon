@@ -41,7 +41,6 @@ export interface G2RadarClickItem {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective]
 })
 export class G2RadarComponent extends G2BaseComponent {

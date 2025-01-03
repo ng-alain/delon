@@ -32,7 +32,6 @@ import type { SFRateWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzRateModule]
 })
 export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements OnInit {

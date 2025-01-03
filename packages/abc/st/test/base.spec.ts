@@ -5,7 +5,7 @@ import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } fro
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -100,7 +100,6 @@ export function genModule<T extends TestComponent>(
     ...other
   };
   const imports = [
-    NoopAnimationsModule,
     CommonModule,
     FormsModule,
     RouterModule.forRoot([]),
@@ -110,6 +109,7 @@ export function genModule<T extends TestComponent>(
     DelonLocaleModule
   ];
   const providers = [
+    provideNoopAnimations(),
     provideHttpClient(),
     provideHttpClientTesting(),
     {

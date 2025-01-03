@@ -30,7 +30,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class QuickMenuComponent implements OnInit, OnChanges {

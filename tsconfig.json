@@ -5,9 +5,9 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -40,7 +40,6 @@
     "types": [
       "jasmine"
     ],
-    "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false
   }
 }

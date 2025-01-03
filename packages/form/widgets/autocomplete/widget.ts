@@ -50,7 +50,6 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [AsyncPipe, FormsModule, DelonFormModule, NzInputModule, NzAutocompleteModule]
 })
 export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {

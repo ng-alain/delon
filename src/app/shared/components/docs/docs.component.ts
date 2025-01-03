@@ -26,7 +26,6 @@ declare var hljs: any;
 @Component({
   selector: 'app-docs',
   templateUrl: './docs.component.html',
-  standalone: true,
   imports: [
     I18nPipe,
     RouteTransferDirective,

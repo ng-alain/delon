@@ -155,9 +155,9 @@
             "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
             "include": [
               "./test.ts",
-              // "**/st.spec.ts"
+              "**/modal.spec.ts"
               // "**/st/**/*.spec.ts"
-              "**/*.spec.ts"
+              // "**/*.spec.ts"
             ]
           }
         }

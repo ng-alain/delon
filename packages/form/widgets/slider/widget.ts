@@ -34,7 +34,6 @@ import type { SFSliderWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzSliderModule]
 })
 export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implements OnInit {

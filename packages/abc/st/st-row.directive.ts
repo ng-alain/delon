@@ -18,7 +18,11 @@ export class STRowSource {
   }
 }
 
-@Directive({ selector: '[st-row]' })
+@Directive({
+  selector: '[st-row]',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
+})
 export class STRowDirective implements OnInit {
   private readonly source = inject(STRowSource, { host: true });
   private readonly ref = inject(TemplateRef);

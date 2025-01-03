@@ -69,7 +69,6 @@ import type { SFUploadWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzUploadModule, NzIconModule, NzButtonModule]
 })
 export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {

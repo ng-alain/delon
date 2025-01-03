@@ -58,7 +58,6 @@ export class DemoComponent {
   selector: 'form-validator',
   templateUrl: './validator.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     FormsModule,
     NzGridModule,

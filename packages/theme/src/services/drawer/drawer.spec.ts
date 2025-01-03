@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
 
-import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: DrawerHelper', () => {
   let drawer: DrawerHelper;
@@ -301,5 +301,7 @@ class TestDrawerComponent {
   }
 }
 
-@Component({ template: `` })
+@Component({
+  template: ``
+})
 class TestComponent {}

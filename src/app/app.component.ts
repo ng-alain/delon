@@ -10,7 +10,6 @@ import { I18NService, MetaService, MobileService } from '@core';
 @Component({
   selector: 'app-root',
   template: ` <router-outlet />`,
-  standalone: true,
   imports: [RouterOutlet]
 })
 export class AppComponent {

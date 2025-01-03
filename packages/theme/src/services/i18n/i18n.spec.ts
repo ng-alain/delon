@@ -5,9 +5,9 @@ import { Router, RouterModule } from '@angular/router';
 
 import { provideAlainConfig } from '@delon/util/config';
 
-import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;

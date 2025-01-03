@@ -36,7 +36,6 @@ const prefixCls = `sv`;
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
 export class SVComponent implements AfterViewInit, OnChanges {

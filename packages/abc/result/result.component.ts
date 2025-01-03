@@ -29,7 +29,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
 export class ResultComponent implements OnInit {

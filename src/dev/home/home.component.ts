@@ -24,7 +24,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       <button nz-button (click)="srv.setOptions({})">恢复默认</button>
     </div>
   `,
-  standalone: true,
   imports: [JsonPipe, PageHeaderModule, NzButtonModule]
 })
 export class DevHomeComponent {

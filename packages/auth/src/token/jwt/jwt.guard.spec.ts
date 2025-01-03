@@ -85,7 +85,9 @@ describe('auth: JWTGuard', () => {
   }));
 });
 
-@Component({ template: '' })
+@Component({
+  template: ''
+})
 class MockComponent {}
 
 @NgModule({})

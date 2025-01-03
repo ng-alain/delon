@@ -38,7 +38,6 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
     '[class.theme-btn-rtl]': `dir === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzDropDownDirective, NzDropdownMenuComponent, NzMenuDirective, NzMenuItemComponent, NzTooltipDirective]
 })
 export class ThemeBtnComponent implements OnInit, OnDestroy {

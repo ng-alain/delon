@@ -29,7 +29,6 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzStringTemplateOutletDirective]
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {

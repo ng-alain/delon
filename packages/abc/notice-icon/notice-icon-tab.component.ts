@@ -14,7 +14,6 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   templateUrl: './notice-icon-tab.component.html',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     NzStringTemplateOutletDirective,

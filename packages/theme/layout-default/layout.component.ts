@@ -69,7 +69,9 @@ import { LayoutDefaultOptions } from './types';
       <ng-container *ngTemplateOutlet="content" />
       <ng-content />
     </section>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class LayoutDefaultComponent {
   @ContentChildren(LayoutDefaultHeaderItemComponent, { descendants: false })

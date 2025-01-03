@@ -17,7 +17,6 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
       <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()"> OK </button>
     </div>
   `,
-  standalone: true,
   imports: [NzButtonModule, JsonPipe]
 })
 export class DemoModalComponent {

@@ -28,7 +28,6 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [CdkObserveContent, NzTooltipDirective, NgTemplateOutlet]
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {

@@ -26,7 +26,6 @@ interface ThemeItem {
   host: {
     '[class.home-wrapper]': 'true'
   },
-  standalone: true,
   imports: [
     RouterLink,
     I18nPipe,

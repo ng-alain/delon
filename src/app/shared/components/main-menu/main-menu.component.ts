@@ -24,7 +24,6 @@ import { MetaService } from '@core';
   selector: 'main-menu, [main-menu]',
   templateUrl: './main-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, RouterLinkActive, NzToolTipModule, NzBadgeModule, NzTagModule, NzMenuModule]
 })
 export class MainMenuComponent implements OnInit {

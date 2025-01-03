@@ -19,7 +19,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
       <button nz-button nzType="primary" (click)="replace('/dev/view/2')">Replace /dev/view/2</button>
     </div>
   `,
-  standalone: true,
   imports: [PageHeaderModule, JsonPipe, NzButtonModule]
 })
 export class DevPageComponent implements OnInit {

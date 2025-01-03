@@ -76,7 +76,6 @@ export class SVTitleComponent implements OnInit {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {

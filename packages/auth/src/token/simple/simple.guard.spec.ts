@@ -83,7 +83,9 @@ describe('auth: SimpleGuard', () => {
   }));
 });
 
-@Component({ template: '' })
+@Component({
+  template: ''
+})
 class MockComponent {}
 
 @NgModule({})

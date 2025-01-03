@@ -32,7 +32,6 @@ import { EditButtonComponent } from '../edit-button/edit-button.component';
     '[class.expand]': 'expand'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [I18nPipe, NzToolTipModule, NzIconModule, EditButtonComponent]
 })
 export class CodeBoxComponent implements OnInit {

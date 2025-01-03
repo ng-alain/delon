@@ -74,7 +74,9 @@ export function useFactory(
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private readonly formPropertyFactory = inject(FormPropertyFactory);

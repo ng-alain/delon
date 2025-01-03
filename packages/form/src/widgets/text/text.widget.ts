@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { SFTextWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFTextWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-text',
@@ -23,7 +23,9 @@ import { SFTextWidgetSchema } from './schema';
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TextWidget extends ControlUIWidget<SFTextWidgetSchema> implements OnInit {
   text: string = '';

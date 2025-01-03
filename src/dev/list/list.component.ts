@@ -12,7 +12,6 @@ import { format } from 'date-fns';
     <p>id: {{ id | json }}</p>
     page: {{ route.url | json }}
   `,
-  standalone: true,
   imports: [JsonPipe]
 })
 export class DevListComponent implements OnInit, OnDestroy {

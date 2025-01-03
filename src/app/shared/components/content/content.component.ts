@@ -18,7 +18,6 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
     '[class.main-wrapper]': 'true'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterOutlet, RouterLink, FooterComponent, NzAffixModule, NzIconModule, MainMenuComponent, NzGridModule]
 })
 export class ContentComponent implements OnInit {

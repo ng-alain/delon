@@ -75,12 +75,21 @@ export function builder(options?: {
   };
 }
 
-export function configureSFTestSuite(options?: { imports?: NzSafeAny[]; widgets?: SFWidgetProvideConfig[] }): void {
+export function configureSFTestSuite(options?: {
+  imports?: NzSafeAny[];
+  widgets?: SFWidgetProvideConfig[];
+  providers?: NzSafeAny[];
+}): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
       declarations: [TestFormComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideSFConfig({ widgets: options?.widgets })]
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideSFConfig({ widgets: options?.widgets }),
+        ...(options?.providers ?? [])
+      ]
     });
   });
 }

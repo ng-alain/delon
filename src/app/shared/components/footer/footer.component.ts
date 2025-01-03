@@ -25,7 +25,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     '[class.footer__small]': 'small'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzGridModule, NzColorPickerModule, I18nPipe, RouterLink]
 })
 export class FooterComponent {

@@ -46,7 +46,6 @@ import type { SFTimeWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzTimePickerModule]
 })
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {

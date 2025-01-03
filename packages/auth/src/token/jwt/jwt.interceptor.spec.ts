@@ -74,5 +74,7 @@ describe('auth: jwt.interceptor', () => {
   });
 });
 
-@Component({ template: '' })
+@Component({
+  template: ''
+})
 class MockComponent {}

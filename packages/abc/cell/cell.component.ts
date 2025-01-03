@@ -114,7 +114,6 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     FormsModule,
     NgTemplateOutlet,

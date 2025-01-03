@@ -83,5 +83,7 @@ describe('abc: loading', () => {
   });
 });
 
-@Component({ template: `` })
+@Component({
+  template: ``
+})
 class TestComponent {}

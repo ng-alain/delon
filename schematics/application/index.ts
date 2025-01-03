@@ -46,8 +46,8 @@ import {
   writePackage,
   ZORROVERSION
 } from '../utils';
-import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
 import { Schema as ApplicationOptions } from './schema';
+import { addESLintRule, UpgradeMainVersions } from '../utils/versions';
 
 let project: ProjectDefinition;
 let projectName: string;

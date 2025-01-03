@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, numberAttribute, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { ControlUIWidget } from '../../widget';
 import { SFNumberWidgetSchema } from './schema';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-number',
@@ -24,21 +24,23 @@ import { SFNumberWidgetSchema } from './schema';
       [nzStep]="step"
       [nzFormatter]="formatter"
       [nzParser]="parser"
-      [nzPrecision]="ui.precision"
+      [nzPrecision]="ui.precision || null"
       [nzPlaceHolder]="ui.placeholder || ''"
       [style.width]="width"
       [class.ant-input-number__hide-step]="ui.hideStep"
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
   min!: number;
   max!: number;
   step!: number;
-  formatter: (value: number) => string | number = value => value;
-  parser: (value: string) => string = value => value;
+  formatter: (value: number) => string = value => value.toString();
+  parser: (value: string) => number = value => +value;
   width = '';
 
   ngOnInit(): void {
@@ -59,11 +61,11 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     const ui = this.ui;
     if (ui.prefix != null) {
       ui.formatter = value => (value == null ? '' : `${ui.prefix} ${value}`);
-      ui.parser = value => value.replace(`${ui.prefix} `, '');
+      ui.parser = value => numberAttribute(value.replace(`${ui.prefix} `, ''));
     }
     if (ui.unit != null) {
       ui.formatter = value => (value == null ? '' : `${value} ${ui.unit}`);
-      ui.parser = value => value.replace(` ${ui.unit}`, '');
+      ui.parser = value => numberAttribute(value.replace(` ${ui.unit}`, ''));
     }
     if (ui.formatter) this.formatter = ui.formatter;
     if (ui.parser) this.parser = ui.parser;

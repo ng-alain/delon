@@ -44,7 +44,6 @@ import type { SFTransferWidgetSchema } from './schema';
   </sf-item-wrap> `,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzTransferModule]
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {

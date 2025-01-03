@@ -4,8 +4,8 @@ import { BehaviorSubject, interval, Observable, Subject, Subscription, filter, m
 import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
 
 import { mergeConfig } from '../auth.config';
-import { DA_STORE_TOKEN } from '../store/interface';
 import { AuthReferrer, ITokenModel, ITokenService } from './interface';
+import { DA_STORE_TOKEN } from '../store/interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
   return new TokenService(inject(AlainConfigService));

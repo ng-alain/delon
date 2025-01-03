@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
+import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzImageService } from 'ng-zorro-antd/image';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -28,7 +28,8 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      imports: [CellModule, NoopAnimationsModule, BrowserModule, NzIconTestModule],
+      providers: [provideNzIconsTesting()],
+      imports: [CellModule, NoopAnimationsModule, BrowserModule],
       declarations: [TestComponent, TestWidget]
     });
   };

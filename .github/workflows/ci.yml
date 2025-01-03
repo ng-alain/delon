@@ -22,7 +22,7 @@ jobs:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
@@ -72,7 +72,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
@@ -80,7 +80,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Test
         run: yarn run test
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/
@@ -96,7 +96,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
@@ -113,7 +113,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}

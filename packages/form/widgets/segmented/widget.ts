@@ -23,13 +23,11 @@ import type { SFSegmentedWidgetSchema } from './schema';
       [nzSize]="$any(ui.size)"
       [nzBlock]="ui.block ?? false"
       [nzOptions]="list"
-      [nzLabelTemplate]="ui.labelTemplate ?? null"
       (nzValueChange)="valueChange($event)"
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzSegmentedModule]
 })
 export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
@@ -46,9 +44,9 @@ export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
     });
   }
 
-  valueChange(index: number): void {
+  valueChange(index: string | number): void {
     if (this.ui.valueChange) {
-      this.ui.valueChange({ index, item: this.list[index] as SFValue });
+      this.ui.valueChange({ index, item: typeof index === 'number' ? (this.list[index] as SFValue) : null });
     }
   }
 }

@@ -6,7 +6,6 @@ import { ALAIN_I18N_TOKEN } from '@delon/theme';
 @Component({
   selector: 'not-found',
   templateUrl: './404.component.html',
-  standalone: true,
   imports: [RouterLink]
 })
 export class NotFoundComponent {

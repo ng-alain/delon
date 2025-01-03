@@ -18,7 +18,6 @@ declare const docsearch: NzSafeAny;
     '[attr.id]': '"search-box"'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzIconModule, NzInputModule, I18nPipe]
 })
 export class HeaderSearchComponent implements AfterViewInit {

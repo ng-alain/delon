@@ -677,5 +677,7 @@ class TestComponent {
   select(): void {}
 }
 
-@Component({ template: `` })
+@Component({
+  template: ``
+})
 class TestRouteComponent {}

@@ -19,7 +19,6 @@ import { MetaService } from '@core';
       <i nz-icon nzType="edit"></i>
     </a>
   `,
-  standalone: true,
   imports: [I18nPipe, NzIconModule, NzToolTipModule]
 })
 export class EditButtonComponent {

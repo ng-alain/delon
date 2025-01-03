@@ -35,7 +35,6 @@ export type ExceptionType = 403 | 404 | 500;
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [CdkObserveContent, NzButtonComponent, RouterLink]
 })
 export class ExceptionComponent implements OnInit {
