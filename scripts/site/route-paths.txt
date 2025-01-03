@@ -101,8 +101,6 @@
 /components/highlight/zh
 /components/hotkey/en
 /components/hotkey/zh
-/components/let/en
-/components/let/zh
 /components/loading/en
 /components/loading/zh
 /components/lodop/en
