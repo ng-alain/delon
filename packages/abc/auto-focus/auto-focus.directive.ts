@@ -14,8 +14,7 @@ import { timer } from 'rxjs';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
-  exportAs: 'autoFocus',
-  standalone: true
+  exportAs: 'autoFocus'
 })
 export class AutoFocusDirective implements AfterViewInit {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;

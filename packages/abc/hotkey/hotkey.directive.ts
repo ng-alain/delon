@@ -3,7 +3,7 @@ import { Directive, ElementRef, Input, NgZone, OnDestroy, inject } from '@angula
 
 import { install, uninstall } from '@github/hotkey';
 
-@Directive({ selector: '[hotkey]', standalone: true })
+@Directive({ selector: '[hotkey]' })
 export class HotkeyDirective implements OnDestroy {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly ngZone = inject(NgZone);

@@ -10,8 +10,7 @@ import { AlainDateRangePickerShortcutItem } from '@delon/util/config';
         <a (click)="click(i)" [innerHTML]="i._text" [class.ml-sm]="!$first"></a>
       }
     </ng-template>
-  `,
-  standalone: true
+  `
 })
 export class RangePickerShortcutTplComponent {
   @ViewChild('tpl', { static: true })

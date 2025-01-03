@@ -7,8 +7,7 @@ import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[acl]',
-  exportAs: 'acl',
-  standalone: true
+  exportAs: 'acl'
 })
 export class ACLDirective implements OnDestroy {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;

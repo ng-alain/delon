@@ -34,8 +34,7 @@ export interface G2MiniBarClickItem {
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class G2MiniBarComponent extends G2BaseComponent {
   // #region fields

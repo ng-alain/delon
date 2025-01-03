@@ -38,8 +38,7 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly destroy$ = inject(DestroyRef);

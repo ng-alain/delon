@@ -14,8 +14,7 @@ import {
   template: ` <ng-template #host><ng-content /></ng-template> `,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class GlobalFooterItemComponent {
   @ViewChild('host', { static: true }) host!: TemplateRef<void>;

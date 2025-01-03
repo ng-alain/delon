@@ -12,8 +12,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   exportAs: 'downFile',
   host: {
     '(click)': '_click($event)'
-  },
-  standalone: true
+  }
 })
 export class DownFileDirective {
   private readonly el: HTMLButtonElement = inject(ElementRef).nativeElement;

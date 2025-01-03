@@ -93,10 +93,6 @@ export class CodeService {
 
   private attachStandalone(code: string): string {
     return code;
-    // // standalone: true,
-    // if (code.includes(`standalone: true`)) return code;
-
-    // return `${code.replace(`@Component({`, `@Component({\n  standalone: true,\n`)}`;
   }
 
   private yarnLock?: string;

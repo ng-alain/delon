@@ -2,7 +2,7 @@ import { Pipe, PipeTransform, inject } from '@angular/core';
 
 import { ALAIN_I18N_TOKEN } from './i18n';
 
-@Pipe({ name: 'i18n', standalone: true })
+@Pipe({ name: 'i18n' })
 export class I18nPipe implements PipeTransform {
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
 
