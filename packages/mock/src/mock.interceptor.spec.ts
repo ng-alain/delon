@@ -48,7 +48,6 @@ describe('mock: interceptor', () => {
 
   function genModule(data: any, options: AlainMockConfig, spyConsole: boolean = true): void {
     TestBed.configureTestingModule({
-      declarations: [RootComponent],
       providers: [
         provideHttpClient(withInterceptors([mockInterceptor])),
         provideHttpClientTesting(),
@@ -62,6 +61,7 @@ describe('mock: interceptor', () => {
         provideMockConfig({ data })
       ]
     });
+    TestBed.createComponent(RootComponent);
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     if (spyConsole) {

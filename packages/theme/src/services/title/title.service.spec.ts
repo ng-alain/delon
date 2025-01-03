@@ -4,13 +4,13 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { RouteTitle, TitleService } from './title.service';
 import { AlainThemeModule } from '../../theme.module';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu } from '../menu/interface';
 import { MenuService } from '../menu/menu.service';
-import { RouteTitle, TitleService } from './title.service';
 
 describe('Service: Title', () => {
   let getPathByUrlData: NzSafeAny;

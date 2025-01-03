@@ -7,7 +7,7 @@ import { of, catchError } from 'rxjs';
 
 import { AlainThemeHttpClientConfig, provideAlainConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _HttpClient } from './http.client';
 

@@ -38,7 +38,6 @@ import type { SFColorWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, DelonFormModule, NzColorPickerModule]
 })
 export class ColorWidget extends ControlUIWidget<SFColorWidgetSchema> {

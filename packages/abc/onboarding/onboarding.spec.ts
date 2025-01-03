@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { DelonLocaleModule } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';
 import { ONBOARDING_STORE_TOKEN } from './onboarding.storage';
 import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
@@ -19,9 +19,8 @@ describe('abc: onboarding', () => {
 
   function genModule(): void {
     TestBed.configureTestingModule({
-      imports: [OnboardingModule, NoopAnimationsModule],
-      providers: [provideRouter([])],
-      declarations: [TestComponent]
+      imports: [DelonLocaleModule],
+      providers: [provideRouter([]), provideNoopAnimations()]
     });
     ({ fixture } = createTestContext(TestComponent));
     srv = TestBed.inject<OnboardingService>(OnboardingService);

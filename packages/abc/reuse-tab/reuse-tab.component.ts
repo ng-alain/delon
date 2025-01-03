@@ -29,7 +29,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
 
-import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabContextService } from './reuse-tab-context.service';
@@ -63,12 +62,10 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.stat
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     NzTabSetComponent,
     NzTabComponent,
-    ReuseTabContextMenuComponent,
     ReuseTabContextDirective,
     ReuseTabContextComponent,
     NzIconDirective

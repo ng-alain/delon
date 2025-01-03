@@ -22,7 +22,6 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzCardComponent, NzSpinComponent, NzStringTemplateOutletDirective]
 })
 export class G2CardComponent implements OnChanges {

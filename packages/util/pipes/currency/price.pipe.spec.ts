@@ -4,16 +4,12 @@ import { By } from '@angular/platform-browser';
 
 import { CurrencyFormatOptions } from '@delon/util/format';
 
-import { CurrencyPipeModule } from './module';
+import { CurrencyPricePipe } from './price.pipe';
 
 describe('Pipe: price', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [CurrencyPipeModule],
-      declarations: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
   });
   it('should working', () => {
@@ -30,7 +26,8 @@ describe('Pipe: price', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | price: options }}</p> `
+  template: ` <p id="result">{{ value | price: options }}</p> `,
+  imports: [CurrencyPricePipe]
 })
 class TestComponent {
   value?: number;

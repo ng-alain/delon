@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniAreaComponent } from './mini-area.component';
 import { G2MiniAreaModule } from './mini-area.module';
@@ -94,7 +94,9 @@ describe('chart: mini-area', () => {
       [xAxis]="xAxis"
       [yAxis]="yAxis"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniAreaComponent;

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { ControlUIWidget } from '../../widget';
 import { SFCustomWidgetSchema } from './schema';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-custom',
@@ -21,6 +21,8 @@ import { SFCustomWidgetSchema } from './schema';
     </sf-item-wrap>
   `,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class CustomWidget extends ControlUIWidget<SFCustomWidgetSchema> {}

@@ -1,7 +1,7 @@
 import { fakeAsync } from '@angular/core/testing';
 
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _STColumn } from '../st.types';
 import { PageObject, genModule, TestExpandComponent, USERS } from './base.spec';

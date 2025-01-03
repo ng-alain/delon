@@ -35,7 +35,6 @@ export interface G2TagCloudClickItem {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSkeletonComponent]
 })
 export class G2TagCloudComponent extends G2BaseComponent {

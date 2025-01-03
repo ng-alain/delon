@@ -37,7 +37,6 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
     '[class.clearfix]': `true`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     FormsModule,
     RouterLink,

@@ -68,7 +68,9 @@ interface LayoutDefaultHeaderItem {
   host: {
     '[class.alain-default__header]': `true`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class LayoutDefaultHeaderComponent implements AfterViewInit {
   private readonly settings = inject(SettingsService);

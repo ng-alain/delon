@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { interval, startWith } from 'rxjs';
 
 import { LetDirective } from '@delon/abc/let';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'app-demo',

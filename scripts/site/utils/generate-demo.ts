@@ -24,8 +24,8 @@ function fixExample(item: any, filePath: string, config: ModuleConfig): void {
     item: JSON.stringify(item)
   } as unknown as ContentTemplateData;
   const exampleComponentName = `${genUpperName(`${config.name}-${item.name}`)}Component`;
-  obj.imports = `import { NzGridModule } from 'ng-zorro-antd/grid';\nimport { ${exampleComponentName} } from './${item.name}';`;
-  obj.standaloneImports = `,NzGridModule,${exampleComponentName}`;
+  obj.imports = `\nimport { ${exampleComponentName} } from './${item.name}';`;
+  obj.standaloneImports = `,${exampleComponentName}`;
   generateDoc(obj, exampleIndexTpl!!, filePath);
 }
 

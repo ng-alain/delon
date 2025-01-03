@@ -2,20 +2,12 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ErrorCollectModule } from '../error-collect/error-collect.module';
-import { FooterToolbarModule } from './footer-toolbar.module';
+import { FooterToolbarComponent } from './footer-toolbar.component';
 
 describe('abc: footer-toolbar', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [ErrorCollectModule, FooterToolbarModule],
-      declarations: [TestComponent]
-    });
-  });
 
   function create(): void {
     fixture = TestBed.createComponent(TestComponent);
@@ -58,7 +50,8 @@ describe('abc: footer-toolbar', () => {
 });
 
 @Component({
-  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra" /></form> `
+  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra" /></form> `,
+  imports: [FooterToolbarComponent]
 })
 class TestComponent {
   errorCollect = true;

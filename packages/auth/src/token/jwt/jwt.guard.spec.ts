@@ -11,7 +11,6 @@ describe('auth: JWTGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent],
       providers: [
         provideRouter([
           {
@@ -85,7 +84,9 @@ describe('auth: JWTGuard', () => {
   }));
 });
 
-@Component({ template: '' })
+@Component({
+  template: ''
+})
 class MockComponent {}
 
 @NgModule({})

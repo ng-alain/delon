@@ -18,7 +18,6 @@ import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSkeletonComponent]
 })
 export class G2GaugeComponent extends G2BaseComponent {

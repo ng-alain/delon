@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { SFCheckboxWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFCheckboxWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-checkbox',
@@ -55,7 +55,7 @@ import { SFCheckboxWidgetSchema } from './schema';
         } @else {
           @if (grid_span === 0) {
             <ng-template [ngTemplateOutlet]="all" />
-            <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()" />
+            <nz-checkbox-group [ngModel]="value" [nzOptions]="$any(data)" (ngModelChange)="notifySet()" />
           } @else {
             <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
               <div nz-row>
@@ -78,7 +78,9 @@ import { SFCheckboxWidgetSchema } from './schema';
       }
     </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   data: SFSchemaEnum[] = [];

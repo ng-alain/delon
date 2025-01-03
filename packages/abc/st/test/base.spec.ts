@@ -5,14 +5,14 @@ import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } fro
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { dispatchDropDown } from '@delon/testing';
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, _HttpClient } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
@@ -100,7 +100,6 @@ export function genModule<T extends TestComponent>(
     ...other
   };
   const imports = [
-    NoopAnimationsModule,
     CommonModule,
     FormsModule,
     RouterModule.forRoot([]),
@@ -110,6 +109,7 @@ export function genModule<T extends TestComponent>(
     DelonLocaleModule
   ];
   const providers = [
+    provideNoopAnimations(),
     provideHttpClient(),
     provideHttpClientTesting(),
     {
@@ -427,7 +427,9 @@ export class PageObject<T extends TestComponent> {
       <span>In tpl</span>
       <a class="close_in_tpl" (click)="handle.close()">close</a>
     </ng-template>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;
@@ -480,13 +482,17 @@ export class TestComponent {
         {{ item.id }}
       </ng-template>
     </st>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TestExpandComponent extends TestComponent {}
 
 @Component({
   template: ` <div class="widget-id-value">{{ id }}</div>
-    <div class="widget-record-value">{{ record?.id }}</div>`
+    <div class="widget-record-value">{{ record?.id }}</div>`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TestWidgetComponent {
   id!: number;

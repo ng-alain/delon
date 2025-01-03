@@ -5,9 +5,9 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router, provideRouter } from '@angular/router';
 
+import { SocialService } from './social.service';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
-import { SocialService } from './social.service';
 
 const mockRouter = {
   url: '',

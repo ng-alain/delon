@@ -14,7 +14,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       [nzIconfont]="iconfont"
     ></i>
   `,
-  standalone: true,
   imports: [NzIconModule]
 })
 export class IconComponent {

@@ -6,7 +6,6 @@ import { createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
 
 import { TagSelectComponent } from './tag-select.component';
-import { TagSelectModule } from './tag-select.module';
 
 describe('abc: tag-select', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -15,8 +14,7 @@ describe('abc: tag-select', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TagSelectModule, DelonLocaleModule],
-      declarations: [TestComponent]
+      imports: [DelonLocaleModule]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -64,7 +62,8 @@ describe('abc: tag-select', () => {
         <li style="width: 30%">{{ i.text }}</li>
       }
     </tag-select>
-  `
+  `,
+  imports: [TagSelectComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

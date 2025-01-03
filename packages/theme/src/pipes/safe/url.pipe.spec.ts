@@ -2,16 +2,12 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AlainThemeModule } from '../../theme.module';
+import { URLPipe } from './url.pipe';
 
 describe('Pipe: url', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AlainThemeModule],
-      declarations: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
   });
@@ -30,7 +26,8 @@ describe('Pipe: url', () => {
 });
 
 @Component({
-  template: ` <a id="result" [href]="value | url"></a> `
+  template: ` <a id="result" [href]="value | url"></a> `,
+  imports: [URLPipe]
 })
 class TestComponent {
   value = '';

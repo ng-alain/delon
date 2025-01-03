@@ -1,9 +1,9 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   Provider,
   inject,
-  makeEnvironmentProviders
+  makeEnvironmentProviders,
+  provideEnvironmentInitializer
 } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -46,7 +46,7 @@ export function provideReuseTabConfig(options?: {
   cacheManager?: ReuseTabFeature<ReuseTabFeatureKind.CacheManager>;
   store?: ReuseTabFeature<ReuseTabFeatureKind.Store>;
 }): EnvironmentProviders {
-  const providers: Provider[] = [
+  return makeEnvironmentProviders([
     ReuseTabService,
     {
       provide: REUSE_TAB_STORAGE_KEY,
@@ -59,21 +59,15 @@ export function provideReuseTabConfig(options?: {
       useClass: ReuseTabStrategy,
       deps: [ReuseTabService]
     },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
-        const srv = inject(ReuseTabService);
-        if (options?.debug) srv.debug = options.debug;
-        if (options?.mode) srv.mode = options.mode;
-        if (options?.routeParamMatchMode) srv.routeParamMatchMode = options.routeParamMatchMode;
-        if (options?.max) srv.max = options.max;
-        if (options?.excludes) srv.excludes = options.excludes;
-      }
-    }
-  ];
-
-  return makeEnvironmentProviders(providers);
+    provideEnvironmentInitializer(() => {
+      const srv = inject(ReuseTabService);
+      if (options?.debug) srv.debug = options.debug;
+      if (options?.mode) srv.mode = options.mode;
+      if (options?.routeParamMatchMode) srv.routeParamMatchMode = options.routeParamMatchMode;
+      if (options?.max) srv.max = options.max;
+      if (options?.excludes) srv.excludes = options.excludes;
+    })
+  ]);
 }
 
 export function withCacheManager(): ReuseTabFeature<ReuseTabFeatureKind.CacheManager> {

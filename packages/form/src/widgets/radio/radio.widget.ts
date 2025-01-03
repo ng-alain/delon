@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { SFRadioWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema/index';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFRadioWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-radio',
@@ -39,7 +39,9 @@ import { SFRadioWidgetSchema } from './schema';
     </nz-radio-group>
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   data: SFSchemaEnum[] = [];

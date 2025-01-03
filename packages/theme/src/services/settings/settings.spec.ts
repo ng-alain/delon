@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { AlainThemeModule } from '../../theme.module';
 import { SettingsService } from './settings.service';
 import { App, User, Layout } from './types';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('Service: Settings', () => {
   let srv: SettingsService;

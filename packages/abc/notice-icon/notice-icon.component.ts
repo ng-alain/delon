@@ -35,7 +35,6 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     NzBadgeComponent,

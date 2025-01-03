@@ -20,7 +20,6 @@ import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdo
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [CountdownComponent]
 })
 export class CountDownComponent {

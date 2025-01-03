@@ -1,10 +1,10 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   NgZone,
   Provider,
   inject,
-  makeEnvironmentProviders
+  makeEnvironmentProviders,
+  provideEnvironmentInitializer
 } from '@angular/core';
 
 import { AlainConfigService } from '@delon/util/config';
@@ -32,14 +32,12 @@ export function provideSFConfig(options?: { widgets?: SFWidgetProvideConfig[] })
     { provide: WidgetRegistry, useClass: NzWidgetRegistry }
   ];
   if (options?.widgets) {
-    provides.push({
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
+    provides.push(
+      provideEnvironmentInitializer(() => {
         const srv = inject(WidgetRegistry);
         options?.widgets?.forEach(widget => srv.register(widget.KEY, widget.type));
-      }
-    });
+      })
+    );
   }
   return makeEnvironmentProviders(provides);
 }

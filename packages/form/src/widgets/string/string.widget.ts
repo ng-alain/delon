@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, debounceTime, switchMap, takeUntil } from 'rxjs';
 
+import { SFStringWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { ControlUIWidget } from '../../widget';
-import { SFStringWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-string',
@@ -54,7 +54,9 @@ import { SFStringWidgetSchema } from './schema';
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implements OnInit {
   type!: string;

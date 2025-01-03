@@ -7,12 +7,12 @@ import { format, formatISO } from 'date-fns';
 
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
 import { DateWidget } from './date.widget';
 import { SFDateWidgetSchema } from './schema';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFSchema } from '../../../src/schema/index';
 
 registerLocaleData(zh);
 

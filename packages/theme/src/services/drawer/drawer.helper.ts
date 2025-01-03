@@ -104,7 +104,7 @@ export class DrawerHelper {
       if (footer) {
         // The 24 value is @drawer-body-padding
         defaultOptions.nzBodyStyle = {
-          'padding-bottom.px': footerHeight! + 24
+          'padding-bottom': `${footerHeight! + 24}px`
         };
       }
 

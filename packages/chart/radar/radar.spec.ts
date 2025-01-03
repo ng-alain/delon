@@ -35,7 +35,9 @@ describe('chart: radar', () => {
 @Component({
   template: `
     <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay" />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2RadarComponent;

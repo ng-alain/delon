@@ -16,7 +16,6 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSpinComponent, NzIconDirective]
 })
 export class LoadingDefaultComponent {

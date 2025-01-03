@@ -10,10 +10,11 @@ import {
   Validators
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 import { SEContainerComponent } from './se-container.component';
@@ -32,8 +33,7 @@ describe('abc: edit', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      imports: [SEModule, FormsModule, NzRadioModule, NoopAnimationsModule],
-      declarations: [TestComponent]
+      providers: [provideNoopAnimations()]
     });
   };
 
@@ -366,8 +366,7 @@ describe('abc: edit', () => {
     });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
-        imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-        declarations: [TestReactiveComponent]
+        providers: [provideNoopAnimations()]
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
@@ -398,8 +397,7 @@ describe('abc: edit', () => {
       });
       it('in reactive form', () => {
         TestBed.configureTestingModule({
-          imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
-          declarations: [TestReactiveComponent]
+          imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);
         dl = fixture2.debugElement;
@@ -569,7 +567,8 @@ describe('abc: edit', () => {
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
     </form>
-  `
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
 })
 class TestComponent {
   @ViewChild('seComp', { static: true })
@@ -612,13 +611,14 @@ class TestComponent {
   template: `
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32">
       <se label="App Key" error="Please input your username!">
-        <input formControlName="userName" nz-input placeholder="Username" />
+        <input formControlName="userName" placeholder="Username" />
       </se>
       <se label="dis" id="dis">
-        <input formControlName="dis" nz-input />
+        <input formControlName="dis" />
       </se>
     </form>
-  `
+  `,
+  imports: [FormsModule, ReactiveFormsModule, SEModule]
 })
 class TestReactiveComponent {
   validateForm: UntypedFormGroup;

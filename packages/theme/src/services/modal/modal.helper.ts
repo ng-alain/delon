@@ -131,6 +131,7 @@ export class ModalHelper {
         nzWidth: width ? width : undefined,
         nzFooter: null,
         nzData: params,
+        nzDraggable: false,
         ...modalOptions
       } as ModalOptions);
       // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取

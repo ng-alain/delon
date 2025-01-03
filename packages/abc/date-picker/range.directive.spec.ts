@@ -118,7 +118,9 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       [(ngModelEnd)]="i.end"
       [shortcut]="shortcut"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: RangePickerDirective;
@@ -127,7 +129,9 @@ class TestComponent {
 }
 
 @Component({
-  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `
+  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestThrowComponent {
   i: { start?: Date; end?: Date } = {};

@@ -46,7 +46,6 @@ interface PageHeaderPath {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     NzAffixComponent,
     NgTemplateOutlet,

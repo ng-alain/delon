@@ -29,7 +29,6 @@ import { HeaderComponent } from './header/header.component';
   host: {
     '[attr.id]': `'ng-content'`
   },
-  standalone: true,
   imports: [RouterOutlet, HeaderComponent, NzSpinModule, NzBackTopModule, ThemeBtnComponent]
 })
 export class LayoutComponent {

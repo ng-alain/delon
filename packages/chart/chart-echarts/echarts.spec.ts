@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ChartEChartsOn } from '.';
 import { ChartEChartsComponent } from './echarts.component';
@@ -97,7 +97,9 @@ describe('chart: chart-echarts', () => {
       [on]="on"
       (events)="handleEvents($event)"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;

@@ -4,8 +4,8 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withSegmentedWidget, SFSegmentedWidgetSchema } from './index';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: segmented', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -36,7 +36,7 @@ describe('form: widget: segmented', () => {
       }
     };
     page.newSchema(s).typeEvent('click', '.ant-segmented-item:nth-child(2) .ant-segmented-item-label');
-    expect(page.getValue('/a')).toBe(1);
+    expect(page.getValue('/a')).toBe('Daily');
     expect(valueChange).toHaveBeenCalled();
   }));
 });

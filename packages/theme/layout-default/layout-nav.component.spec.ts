@@ -11,7 +11,7 @@ import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { WINDOW } from '@delon/util/token';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LayoutDefaultNavComponent, Nav } from './layout-nav.component';
 import { LayoutDefaultModule } from './layout.module';
@@ -664,7 +664,9 @@ describe('theme: layout-default-nav', () => {
       [openStrictly]="openStrictly"
       (select)="select()"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -677,5 +679,9 @@ class TestComponent {
   select(): void {}
 }
 
-@Component({ template: `` })
+@Component({
+  template: ``,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
+})
 class TestRouteComponent {}

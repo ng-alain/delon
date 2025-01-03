@@ -7,7 +7,7 @@ import { firstValueFrom, of, throwError } from 'rxjs';
 import { DatePipe, YNPipe } from '@delon/theme';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
 import { ST_DEFAULT_CONFIG } from '../st.config';

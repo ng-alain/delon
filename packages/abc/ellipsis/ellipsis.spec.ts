@@ -2,11 +2,10 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { EllipsisComponent } from './ellipsis.component';
-import { EllipsisModule } from './ellipsis.module';
 
 describe('abc: ellipsis', () => {
   let fixture: ComponentFixture<TestBaseComponent>;
@@ -14,16 +13,7 @@ describe('abc: ellipsis', () => {
   let context: TestBaseComponent;
   let page: PageObject;
 
-  function genModule(): void {
-    TestBed.configureTestingModule({
-      imports: [EllipsisModule],
-      declarations: [TestLengthComponent, TestLineComponent]
-    });
-  }
-
   describe('', () => {
-    beforeEach(() => genModule());
-
     it('should be not length & line', () => {
       fixture = TestBed.createComponent(TestLengthComponent);
       dl = fixture.debugElement;
@@ -118,7 +108,6 @@ describe('abc: ellipsis', () => {
   describe('**slow**', () => {
     it('should be throw error when include html element', fakeAsync(() => {
       expect(() => {
-        genModule();
         TestBed.overrideTemplate(TestLengthComponent, `<ellipsis length="1"><p>asdf</p></ellipsis>`);
         fixture = TestBed.createComponent(TestLengthComponent);
         dl = fixture.debugElement;
@@ -203,7 +192,8 @@ class TestBaseComponent {
     <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{
       text
     }}</ellipsis>
-  `
+  `,
+  imports: [EllipsisComponent]
 })
 class TestLengthComponent extends TestBaseComponent {}
 
@@ -218,6 +208,7 @@ class TestLengthComponent extends TestBaseComponent {}
       style="width: 1px; display: block;"
       ><div [innerHTML]="html"></div
     ></ellipsis>
-  `
+  `,
+  imports: [EllipsisComponent]
 })
 class TestLineComponent extends TestBaseComponent {}

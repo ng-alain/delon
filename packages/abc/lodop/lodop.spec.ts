@@ -3,7 +3,7 @@ import { concat, filter, mergeMap, take, tap } from 'rxjs';
 
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util/config';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';

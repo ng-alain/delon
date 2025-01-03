@@ -64,7 +64,9 @@ describe('chart: timeline', () => {
       [slider]="slider"
       [delay]="delay"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2TimelineComponent;

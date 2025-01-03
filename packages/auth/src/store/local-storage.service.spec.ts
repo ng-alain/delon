@@ -1,5 +1,5 @@
-import { ITokenModel } from '../token/interface';
 import { LocalStorageStore } from './local-storage.service';
+import { ITokenModel } from '../token/interface';
 
 describe('auth: local-storage', () => {
   const store = new LocalStorageStore();

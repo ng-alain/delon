@@ -2,16 +2,12 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { FilterPipeModule } from './module';
+import { FilterPipe } from './filter.pipe';
 
 describe('Pipe: filter', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [FilterPipeModule],
-      declarations: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
   });
   it('should working', () => {
@@ -26,7 +22,8 @@ describe('Pipe: filter', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ list | filter: matcher : other }}</p> `
+  template: ` <p id="result">{{ list | filter: matcher : other }}</p> `,
+  imports: [FilterPipe]
 })
 class TestComponent {
   list = [1, 2, 3];

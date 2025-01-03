@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { AlainThemeModule } from '../../theme.module';
 import { LTR, RTL, RTLService } from './rtl.service';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('Service: RTL', () => {
   let srv: RTLService;

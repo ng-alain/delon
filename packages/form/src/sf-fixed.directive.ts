@@ -9,7 +9,11 @@ import {
   numberAttribute
 } from '@angular/core';
 
-@Directive({ selector: '[fixed-label]' })
+@Directive({
+  selector: '[fixed-label]',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
+})
 export class SFFixedDirective implements AfterViewInit, OnChanges {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly render = inject(Renderer2);

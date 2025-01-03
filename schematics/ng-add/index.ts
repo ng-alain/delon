@@ -4,10 +4,10 @@ import * as colors from 'ansi-colors';
 
 import { Schema as ApplicationOptions } from '../application/schema';
 import { DEFAULT_WORKSPACE_PATH, readJSON, readPackage } from '../utils';
-import { getNodeMajorVersion } from '../utils/node';
 import { Schema as NgAddOptions } from './schema';
+import { getNodeMajorVersion } from '../utils/node';
 
-const V = 18;
+const V = 19;
 
 function genRules(options: NgAddOptions): Rule {
   return () => {
@@ -63,11 +63,11 @@ export default function (options: NgAddOptions): Rule {
     // }
 
     const nodeVersion = getNodeMajorVersion();
-    const allowNodeVersions = [18, 20];
+    const allowNodeVersions = [18, 20, 22];
     if (!allowNodeVersions.some(v => nodeVersion === v)) {
       const versions = allowNodeVersions.join(', ');
       throw new SchematicsException(
-        `Sorry, currently only supports ${versions} major version number of node (Got ${process.version}), pls refer to https://angular.io/guide/versions`
+        `Sorry, currently only supports ${versions} major version number of node (Got ${process.version}), pls refer to https://angular.dev/reference/versions#actively-supported-versions`
       );
     }
 

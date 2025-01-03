@@ -30,7 +30,6 @@ import {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzMenuDirective, NzMenuItemComponent]
 })
 export class ReuseTabContextMenuComponent implements OnInit {
