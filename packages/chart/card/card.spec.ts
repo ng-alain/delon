@@ -41,7 +41,9 @@ describe('chart: card', () => {
       footer="日访问量 12,423"
       [contentHeight]="contentHeight"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   contentHeight: number | string = 46;

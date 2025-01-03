@@ -53,7 +53,9 @@ describe('chart: water-wave', () => {
       [delay]="delay"
       [animate]="animate"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2WaterWaveComponent;

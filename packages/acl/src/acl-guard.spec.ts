@@ -4,7 +4,6 @@ import { Router, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { ACLGuardService, aclCanActivate, aclCanActivateChild, aclCanMatch } from './acl-guard';
-import { DelonACLModule } from './acl.module';
 import { ACLService } from './acl.service';
 import { ACLGuardData } from './acl.type';
 
@@ -16,7 +15,6 @@ describe('acl: guard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponent],
       providers: [
         provideRouter([
           { path: '403', component: TestComponent },
@@ -39,8 +37,7 @@ describe('acl: guard', () => {
             data: { guard: { role: ['admin'] } } as ACLGuardData
           }
         ])
-      ],
-      imports: [DelonACLModule]
+      ]
     });
     srv = TestBed.inject<ACLGuardService>(ACLGuardService);
     acl = TestBed.inject<ACLService>(ACLService);

@@ -11,7 +11,6 @@ describe('auth: SimpleGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent],
       providers: [
         provideRouter([
           {

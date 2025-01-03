@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { ModalHelper, ModalHelperOptions } from './modal.helper';
-import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: ModalHelper', () => {
   let modal: ModalHelper;
@@ -14,8 +12,7 @@ describe('theme: ModalHelper', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()],
-      imports: [CommonModule, AlainThemeModule, NzModalModule, TestModalComponent, TestComponent]
+      providers: [provideNoopAnimations(), NzModalService]
     });
     fixture = TestBed.createComponent(TestComponent);
     modal = TestBed.inject<ModalHelper>(ModalHelper);
@@ -26,38 +23,32 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#create', () => {
-    xit('should be open', fakeAsync(() => {
+    it('should be open', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
       });
       fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
     }));
-    xit('should be open a tabset', fakeAsync(() => {
+    it('should be open a tabset', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'true' }, { includeTabs: true }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
       });
       fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
       expect(document.querySelector('.modal-include-tabs')).not.toBeNull();
     }));
-    xit('should be useNzData is true', fakeAsync(() => {
+    it('should be useNzData is true', fakeAsync(() => {
       modal.create(TestModalComponent, { ret: 'a' }, { useNzData: true }).subscribe(() => {
         expect(true).toBeTruthy();
         flush();
       });
       fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
       expect(document.querySelector<HTMLElement>('.noNzData')?.innerText.trim()).toBe('true');
       expect(document.querySelector<HTMLElement>('.nzData')?.innerText.trim()).toBe('a');
     }));
     describe('#exact width true', () => {
-      xit('should be not trigger subscript when return a undefined value', fakeAsync(() => {
+      it('should be not trigger subscript when return a undefined value', fakeAsync(() => {
         modal.create(TestModalComponent, { ret: undefined }, { includeTabs: true, exact: true }).subscribe({
           next: () => {
             expect(false).toBeTruthy();
@@ -73,21 +64,17 @@ describe('theme: ModalHelper', () => {
           }
         });
         fixture.detectChanges();
-        tick(1000);
-        fixture.detectChanges();
       }));
     });
     describe('#drag', () => {
-      xit('should be working', fakeAsync(() => {
+      it('should be working', fakeAsync(() => {
         modal
           .create(TestModalComponent, { ret: 'true' }, { drag: true, modalOptions: { nzTitle: 'test' } })
           .subscribe();
         fixture.detectChanges();
-        tick(1000);
-        fixture.detectChanges();
         expect(document.querySelectorAll('.MODAL-DRAG').length).toBe(1);
       }));
-      xit('#handleCls', fakeAsync(() => {
+      it('#handleCls', fakeAsync(() => {
         modal
           .create(
             TestModalComponent,
@@ -96,36 +83,31 @@ describe('theme: ModalHelper', () => {
           )
           .subscribe();
         fixture.detectChanges();
-        tick(1000);
-        fixture.detectChanges();
+        tick(10);
         const handle = document.querySelector<HTMLDivElement>('.MODAL-DRAG-HANDLE');
         expect(handle?.classList).toContain('handle');
       }));
     });
     describe('#focus', () => {
-      xit('should be focus ok button', fakeAsync(() => {
+      it('should be focus ok button', fakeAsync(() => {
         modal.create('confirm', {}, { focus: 'ok', modalOptions: { nzNoAnimation: true } }).subscribe();
         fixture.detectChanges();
-        tick(1000);
-        fixture.detectChanges();
+        tick(10);
         const btn = document.querySelector<HTMLButtonElement>('[data-focused="ok"]');
         expect(btn != null).toBe(true);
         expect(btn?.classList).toContain('ant-btn-primary');
       }));
-      xit('should be focus cancel button', fakeAsync(() => {
+      it('should be focus cancel button', fakeAsync(() => {
         modal.create('confirm', {}, { focus: 'cancel', modalOptions: { nzNoAnimation: true } }).subscribe();
         fixture.detectChanges();
-        tick(1000);
-        fixture.detectChanges();
+        tick(10);
         const btn = document.querySelector<HTMLButtonElement>('[data-focused="cancel"]');
         expect(btn != null).toBe(true);
         expect(btn?.classList).not.toContain('ant-btn-primary');
       }));
     });
-    xit('should argument length is 2', fakeAsync(() => {
+    it('should argument length is 2', fakeAsync(() => {
       modal.create('info', { size: '23%' } as ModalHelperOptions).subscribe();
-      fixture.detectChanges();
-      tick(1000);
       fixture.detectChanges();
       const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
       expect(width).toBe('23%');
@@ -133,7 +115,7 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#createStatic', () => {
-    xit('should be open', fakeAsync(() => {
+    it('should be open', fakeAsync(() => {
       const id = `${+new Date()}`;
       modal
         .createStatic(TestModalComponent, {
@@ -146,10 +128,8 @@ describe('theme: ModalHelper', () => {
           flush();
         });
       fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
     }));
-    xit('should be open sm size', fakeAsync(() => {
+    it('should be open sm size', fakeAsync(() => {
       const id = `${+new Date()}`;
       modal
         .createStatic(
@@ -166,13 +146,9 @@ describe('theme: ModalHelper', () => {
           flush();
         });
       fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
     }));
     it('should be 80% size', fakeAsync(() => {
-      modal.create(TestModalComponent, { ret: 'true' }, { size: '10%' }).subscribe();
-      fixture.detectChanges();
-      tick(1000);
+      modal.createStatic(TestModalComponent, { ret: 'true' }, { size: '10%' }).subscribe();
       fixture.detectChanges();
       const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
       expect(width).toBe('10%');

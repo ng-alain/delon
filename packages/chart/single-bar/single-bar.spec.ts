@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
@@ -49,7 +49,9 @@ describe('chart: single-bar', () => {
       [textStyle]="textStyle"
       [delay]="delay"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2SingleBarComponent;

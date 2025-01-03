@@ -97,7 +97,9 @@ describe('abc: error-collect', () => {
       </nz-form-item>
       <error-collect #ec [freq]="freq" [offsetTop]="offsetTop" />
     </form>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent implements OnInit {
   freq = 20;

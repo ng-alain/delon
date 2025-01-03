@@ -29,7 +29,6 @@ describe('auth: jwt.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: JWTTokenModel): void {
     TestBed.configureTestingModule({
-      declarations: [MockComponent],
       providers: [
         provideRouter([
           {

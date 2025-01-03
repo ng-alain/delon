@@ -9,7 +9,7 @@ import { ACLService, DelonACLModule } from '@delon/acl';
 import { createTestContext } from '@delon/testing';
 import { AlainI18NService, AlainThemeModule, ALAIN_I18N_TOKEN, DelonLocaleService, en_US } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
@@ -896,6 +896,8 @@ describe('form: component', () => {
 @Component({
   template: `
     <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading" />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestModeComponent extends TestFormComponent {}

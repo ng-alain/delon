@@ -43,7 +43,9 @@ describe('abc: hotkey', () => {
 });
 
 @Component({
-  template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />`
+  template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild(HotkeyDirective, { static: true }) readonly comp!: HotkeyDirective;

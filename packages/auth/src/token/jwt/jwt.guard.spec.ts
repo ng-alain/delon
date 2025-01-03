@@ -11,7 +11,6 @@ describe('auth: JWTGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent],
       providers: [
         provideRouter([
           {

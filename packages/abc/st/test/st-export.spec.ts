@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { XlsxService } from '../../xlsx/xlsx.service';
 import { XlsxExportOptions } from '../../xlsx/xlsx.types';

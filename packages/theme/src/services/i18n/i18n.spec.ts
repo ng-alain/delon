@@ -7,7 +7,7 @@ import { provideAlainConfig } from '@delon/util/config';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
-import { AlainThemeModule } from '../../theme.module';
+import { I18nPipe } from './i18n.pipe';
 
 describe('theme: i18n', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -21,10 +21,6 @@ describe('theme: i18n', () => {
 
   describe('', () => {
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [AlainThemeModule],
-        declarations: [TestComponent]
-      });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
       srv.use('en', {
@@ -88,8 +84,6 @@ describe('theme: i18n', () => {
 
   it('#interpolation', () => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule],
-      declarations: [TestComponent],
       providers: [provideAlainConfig({ themeI18n: { interpolation: ['#', '#'] } })]
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -108,7 +102,6 @@ describe('theme: i18n', () => {
     it('should be working', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule,
           RouterModule.forRoot([
             {
               path: ':i18n',
@@ -117,8 +110,7 @@ describe('theme: i18n', () => {
               canActivateChild: [alainI18nCanActivateChild]
             }
           ])
-        ],
-        declarations: [TestComponent]
+        ]
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
@@ -132,10 +124,8 @@ describe('theme: i18n', () => {
     it('should be can not work', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule,
           RouterModule.forRoot([{ path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }])
-        ],
-        declarations: [TestComponent]
+        ]
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
@@ -149,10 +139,8 @@ describe('theme: i18n', () => {
     it('should be working', fakeAsync(() => {
       TestBed.configureTestingModule({
         imports: [
-          AlainThemeModule,
           RouterModule.forRoot([{ path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }])
         ],
-        declarations: [TestComponent],
         providers: [provideAlainConfig({ themeI18n: { paramNameOfUrlGuard: 'lang' } })]
       });
       fixture = TestBed.createComponent(TestComponent);
@@ -170,7 +158,8 @@ describe('theme: i18n', () => {
   template: `
     <div id="simple">{{ key | i18n }}</div>
     <div id="param">{{ key | i18n: params }}</div>
-  `
+  `,
+  imports: [I18nPipe]
 })
 class TestComponent {
   key = 'simple';

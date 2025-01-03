@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { RouteTitle, TitleService } from './title.service';
 import { AlainThemeModule } from '../../theme.module';

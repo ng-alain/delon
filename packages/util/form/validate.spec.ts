@@ -1,6 +1,6 @@
 import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _Validators } from './validators';
 import { TEST_DATA } from '../format/validate.spec';

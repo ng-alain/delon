@@ -7,7 +7,7 @@ import { format, formatISO } from 'date-fns';
 
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DateWidget } from './date.widget';
 import { SFDateWidgetSchema } from './schema';

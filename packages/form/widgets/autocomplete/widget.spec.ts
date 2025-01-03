@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { mergeConfig, SFSchema, SFSchemaEnum } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withAutoCompleteWidget } from './index';
 import { SFAutoCompleteWidgetSchema } from './schema';

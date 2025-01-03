@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFWidgetProvideConfig, provideSFConfig } from '../src';
 import { SF_SEQ } from '../src/const';
@@ -309,6 +309,12 @@ export class SFPage {
     return this.dc();
   }
 
+  typeCharOnly(value: NzSafeAny, cls: string = 'input'): this {
+    const node = this.getEl(cls) as HTMLInputElement;
+    typeInElement(value, node);
+    return this;
+  }
+
   typeChar(value: NzSafeAny, cls: string = 'input'): this {
     const node = this.getEl(cls) as HTMLInputElement;
     typeInElement(value, node);
@@ -380,7 +386,9 @@ export class SFPage {
       (formReset)="formReset($event)"
       (formError)="formError($event)"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp!: SFComponent;

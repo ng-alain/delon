@@ -2,16 +2,12 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AlainThemeModule } from '../../theme.module';
+import { HTMLPipe } from './html.pipe';
 
 describe('Pipe: html', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AlainThemeModule],
-      declarations: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
   });
@@ -31,7 +27,8 @@ describe('Pipe: html', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | html"></div> `
+  template: ` <div id="result" [innerHTML]="value | html"></div> `,
+  imports: [HTMLPipe]
 })
 class TestComponent {
   value = '';

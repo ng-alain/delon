@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import type { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withMentionWidget } from './index';
 import { MentionWidget } from './widget';

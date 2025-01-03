@@ -5,10 +5,10 @@ import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { FullContentToggleDirective } from './full-content-toggle.directive';
 import { FullContentComponent } from './full-content.component';
-import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
@@ -21,8 +21,6 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FullContentModule],
-      declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }]
     });
@@ -170,7 +168,8 @@ describe('abc: full-content', () => {
     >
       <button full-toggle>Full</button>
     </full-content>
-  `
+  `,
+  imports: [FullContentComponent, FullContentToggleDirective]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: FullContentComponent;

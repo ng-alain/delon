@@ -3,13 +3,12 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ResultComponent } from './result.component';
-import { ResultModule } from './result.module';
 
 describe('abc: result', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -18,9 +17,7 @@ describe('abc: result', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ResultModule, NoopAnimationsModule],
-      providers: [provideHttpClientTesting()],
-      declarations: [TestComponent]
+      providers: [provideHttpClientTesting(), provideNoopAnimations()]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -110,7 +107,8 @@ describe('abc: result', () => {
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #descriptionTpl><p id="descriptionTpl">descriptionTpl</p></ng-template>
     <ng-template #extraTpl><p id="extraTpl">extraTpl</p></ng-template>
-  `
+  `,
+  imports: [ResultComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

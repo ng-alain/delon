@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSliderComponent } from 'ng-zorro-antd/slider';
 
 import { withSliderWidget } from './index';

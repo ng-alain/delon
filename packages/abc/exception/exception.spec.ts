@@ -8,7 +8,6 @@ import { createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US } from '@delon/theme';
 
 import { ExceptionComponent, ExceptionType } from './exception.component';
-import { ExceptionModule } from './exception.module';
 
 describe('abc: exception', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -17,9 +16,8 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ExceptionModule, DelonLocaleModule],
-      providers: [provideRouter([])],
-      declarations: [TestComponent]
+      imports: [DelonLocaleModule],
+      providers: [provideRouter([])]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -74,7 +72,8 @@ describe('abc: exception', () => {
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
     </exception>
-  `
+  `,
+  imports: [ExceptionComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

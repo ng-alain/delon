@@ -1,4 +1,4 @@
-import { Component, numberAttribute, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { SFNumberWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
@@ -13,6 +13,7 @@ import { ControlUIWidget } from '../../widget';
     [error]="error"
     [showTitle]="schema.title"
   >
+    min - {{ min }}, {{ max }}
     <nz-input-number
       [nzId]="id"
       [ngModel]="value"
@@ -61,11 +62,11 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     const ui = this.ui;
     if (ui.prefix != null) {
       ui.formatter = value => (value == null ? '' : `${ui.prefix} ${value}`);
-      ui.parser = value => numberAttribute(value.replace(`${ui.prefix} `, ''));
+      ui.parser = value => +value.replace(`${ui.prefix} `, '');
     }
     if (ui.unit != null) {
       ui.formatter = value => (value == null ? '' : `${value} ${ui.unit}`);
-      ui.parser = value => numberAttribute(value.replace(` ${ui.unit}`, ''));
+      ui.parser = value => +value.replace(` ${ui.unit}`, '');
     }
     if (ui.formatter) this.formatter = ui.formatter;
     if (ui.parser) this.parser = ui.parser;

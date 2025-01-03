@@ -3,7 +3,7 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core
 
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
 import { ObjectProperty } from '../src/model/object.property';

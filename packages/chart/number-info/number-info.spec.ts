@@ -110,7 +110,9 @@ describe('abc: number-info', () => {
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>
     <ng-template #subTotalTpl><p id="subTotalTpl">subTotalTpl</p></ng-template>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('ni', { static: true }) comp!: NumberInfoComponent;

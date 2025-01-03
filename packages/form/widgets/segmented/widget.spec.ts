@@ -36,7 +36,7 @@ describe('form: widget: segmented', () => {
       }
     };
     page.newSchema(s).typeEvent('click', '.ant-segmented-item:nth-child(2) .ant-segmented-item-label');
-    expect(page.getValue('/a')).toBe(1);
+    expect(page.getValue('/a')).toBe('Daily');
     expect(valueChange).toHaveBeenCalled();
   }));
 });

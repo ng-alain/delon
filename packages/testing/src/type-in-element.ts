@@ -19,4 +19,5 @@ export function typeInElement(value: string, element: HTMLInputElement): void {
   element.focus();
   element.value = value;
   dispatchFakeEvent(element, 'input');
+  dispatchFakeEvent(element, 'change');
 }

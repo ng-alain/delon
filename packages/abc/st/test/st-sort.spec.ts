@@ -1,7 +1,7 @@
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { provideAlainConfig } from '@delon/util/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STComponent } from '../st.component';
 import { STMultiSort } from '../st.interfaces';

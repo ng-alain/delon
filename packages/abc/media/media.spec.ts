@@ -8,7 +8,6 @@ import { LazyService } from '@delon/util/other';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 
 import { MediaComponent, MediaType } from './media.component';
-import { MediaModule } from './media.module';
 
 class MockPlyr {
   source: NzSafeAny = {};
@@ -27,10 +26,6 @@ describe('abc: media', () => {
   const win: NzSafeAny = window;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [MediaModule],
-      declarations: [TestComponent, TestCustomVideoComponent]
-    });
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
     lazySrv = TestBed.inject(LazyService);
@@ -106,7 +101,8 @@ describe('abc: media', () => {
 @Component({
   template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()">
     <span></span>
-  </media>`
+  </media>`,
+  imports: [MediaComponent]
 })
 class TestComponent {
   @ViewChild('comp') comp!: MediaComponent;
@@ -117,6 +113,7 @@ class TestComponent {
   ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`,
+  imports: [MediaComponent]
 })
 class TestCustomVideoComponent extends TestComponent {}

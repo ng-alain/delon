@@ -1,6 +1,6 @@
 import { NgZone } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ZoneOutside, ZoneRun } from './zone-outside';
 

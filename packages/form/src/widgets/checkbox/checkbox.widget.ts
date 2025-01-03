@@ -55,7 +55,7 @@ import { ControlUIWidget } from '../../widget';
         } @else {
           @if (grid_span === 0) {
             <ng-template [ngTemplateOutlet]="all" />
-            <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()" />
+            <nz-checkbox-group [ngModel]="value" [nzOptions]="$any(data)" (ngModelChange)="notifySet()" />
           } @else {
             <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
               <div nz-row>

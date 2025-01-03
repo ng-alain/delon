@@ -8,9 +8,9 @@ import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
 
 import { _HttpClient } from '@delon/theme';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { DownFileModule } from './down-file.module';
+import { DownFileDirective } from './down-file.directive';
 
 function genFile(isRealFile: boolean = true): Blob {
   const blob = new Blob([
@@ -27,8 +27,6 @@ describe('abc: down-file', () => {
 
   function createComp(): void {
     TestBed.configureTestingModule({
-      imports: [DownFileModule],
-      declarations: [TestComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()]
     });
 
@@ -221,7 +219,8 @@ describe('abc: down-file', () => {
         {{ i }}
       </button>
     }
-  `
+  `,
+  imports: [DownFileDirective]
 })
 class TestComponent {
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];

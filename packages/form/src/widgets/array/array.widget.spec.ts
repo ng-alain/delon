@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFArrayWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';

@@ -3,7 +3,7 @@ import { filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { Menu, MenuInner } from './interface';
 import { MenuService } from './menu.service';

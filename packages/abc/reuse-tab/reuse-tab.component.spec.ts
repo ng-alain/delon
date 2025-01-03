@@ -2,12 +2,19 @@ import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@an
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ExtraOptions, RouteReuseStrategy, ROUTER_CONFIGURATION, RouterModule } from '@angular/router';
+import {
+  ExtraOptions,
+  RouteReuseStrategy,
+  ROUTER_CONFIGURATION,
+  RouterModule,
+  RouterOutlet,
+  RouterLink
+} from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, zh_CN } from '@delon/theme';
 import { ScrollService } from '@delon/util/browser';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { provideReuseTabConfig } from './provide';
 import { ReuseTabComponent } from './reuse-tab.component';
@@ -41,7 +48,6 @@ describe('abc: reuse-tab', () => {
 
   function genModule(needI18n: boolean = false): void {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
         DelonLocaleModule,
         ReuseTabComponent,
@@ -849,7 +855,8 @@ describe('abc: reuse-tab', () => {
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
     <router-outlet />
-  `
+  `,
+  imports: [RouterLink, RouterOutlet]
 })
 class AppComponent {}
 
@@ -878,7 +885,8 @@ class AppComponent {}
     />
     <div id="children"><router-outlet /></div>
     <ng-template #titleRender let-i>{{ i.url }}</ng-template>
-  `
+  `,
+  imports: [ReuseTabComponent, RouterOutlet]
 })
 class LayoutComponent {
   @ViewChild('comp', { static: true })
@@ -923,7 +931,8 @@ class AComponent {
     <div id="time">{{ time }}</div>
     <a id="b2" [routerLink]="['/b/2']">b2</a>
     <a id="b3" [routerLink]="['/b/3']">b3</a>
-  `
+  `,
+  imports: [RouterLink]
 })
 class BComponent {
   time = +new Date();
@@ -937,7 +946,8 @@ class BComponent {
     c:
     <div id="time">{{ time }}</div>
     <a id="to-d" routerLink="/d">to-d</a>
-  `
+  `,
+  imports: [RouterLink]
 })
 class CComponent {
   time = +new Date();
@@ -954,7 +964,8 @@ class CComponent {
     d:
     <div id="time">{{ time }}</div>
     <a id="to-c" routerLink="/c">to-c</a>
-  `
+  `,
+  imports: [RouterLink]
 })
 class DComponent {
   time = +new Date();

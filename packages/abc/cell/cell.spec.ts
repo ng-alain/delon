@@ -1,13 +1,13 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzImageService } from 'ng-zorro-antd/image';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
@@ -28,8 +28,8 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting()],
-      imports: [CellModule, NoopAnimationsModule, BrowserModule],
+      providers: [provideNzIconsTesting(), provideNoopAnimations()],
+      imports: [CellModule, BrowserModule],
       declarations: [TestComponent, TestWidget]
     });
   };
@@ -356,7 +356,9 @@ describe('abc: cell', () => {
 });
 
 @Component({
-  template: `{{ data.result.text }}-{{ data.options.widget.data }}`
+  template: `{{ data.result.text }}-{{ data.options.widget.data }}`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestWidget {
   static readonly KEY = 'test';
@@ -374,7 +376,9 @@ class TestWidget {
       [loading]="loading"
       [disabled]="disabled"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

@@ -234,7 +234,9 @@ describe('theme: layout-default', () => {
     <ng-template #contentTpl>
       <span class="custom-content">custom-content</span>
     </ng-template>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;

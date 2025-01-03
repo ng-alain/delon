@@ -284,7 +284,9 @@ describe('theme: DrawerHelper', () => {
 });
 
 @Component({
-  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `
+  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestDrawerComponent {
   id: string = '';
@@ -297,11 +299,13 @@ class TestDrawerComponent {
       } else {
         this.modal.close(this.ret);
       }
-    });
+    }, 10);
   }
 }
 
 @Component({
-  template: ``
+  template: ``,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {}

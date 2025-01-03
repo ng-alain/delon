@@ -2,18 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { AutoFocusDirective } from './auto-focus.directive';
-import { AutoFocusModule } from './auto-focus.module';
 
 describe('abc: auto-focus', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AutoFocusModule],
-      declarations: [TestComponent]
-    });
-
     fixture = TestBed.createComponent(TestComponent);
     context = fixture.componentInstance;
     spyOn(context, 'focus');
@@ -47,7 +41,8 @@ describe('abc: auto-focus', () => {
         <input auto-focus (focus)="focus()" delay="1" [enabled]="enabled" />
       </div>
     }
-  `
+  `,
+  imports: [AutoFocusDirective]
 })
 class TestComponent {
   @ViewChild(AutoFocusDirective) comp!: AutoFocusDirective;

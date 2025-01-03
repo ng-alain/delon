@@ -3,7 +3,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 
 import { cleanCdkOverlayHtml } from '@delon/testing';
 
-import { LoadingModule } from './loading.module';
 import { LoadingService } from './loading.service';
 
 describe('abc: loading', () => {
@@ -11,10 +10,6 @@ describe('abc: loading', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [LoadingModule],
-      declarations: [TestComponent]
-    });
     srv = TestBed.inject(LoadingService);
     fixture = TestBed.createComponent(TestComponent);
   });

@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';

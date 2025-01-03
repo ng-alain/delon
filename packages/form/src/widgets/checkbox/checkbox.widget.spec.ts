@@ -2,7 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { CheckboxWidget } from './checkbox.widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -32,9 +32,9 @@ describe('form: widget: checkbox', () => {
       }
     });
     page.setValue('/a', 'item1').dc(1);
-    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item1');
+    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent?.trim()).toBe('item1');
     page.setValue('/a', 'item2').dc(1);
-    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item2');
+    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent?.trim()).toBe('item2');
   }));
 
   it('#visibleIf', fakeAsync(() => {

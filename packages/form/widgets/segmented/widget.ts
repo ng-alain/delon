@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFValue, getData } from '@delon/form';
-import { NzSegmentedModule, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { NzSegmentedComponent, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
 
 import type { SFSegmentedWidgetSchema } from './schema';
 
@@ -28,7 +28,7 @@ import type { SFSegmentedWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  imports: [FormsModule, DelonFormModule, NzSegmentedModule]
+  imports: [FormsModule, DelonFormModule, NzSegmentedComponent]
 })
 export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   static readonly KEY = 'segmented';

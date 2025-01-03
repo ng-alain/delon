@@ -62,11 +62,9 @@ describe('form: widget: number', () => {
       };
       page
         .newSchema(s)
-        .typeChar(minimum - 1)
-        .typeEvent('blur')
+        .typeCharOnly(minimum - 1)
         .checkValue('a', minimum)
-        .typeChar(maximum + 1)
-        .typeEvent('blur')
+        .typeCharOnly(maximum + 1)
         .checkValue('a', maximum);
     }));
     it('should be exclusive min(max)imum via exclusive', fakeAsync(() => {
@@ -86,11 +84,9 @@ describe('form: widget: number', () => {
       };
       page
         .newSchema(s)
-        .typeChar(minimum - 1)
-        .typeEvent('blur')
+        .typeCharOnly(minimum - 1)
         .checkValue('a', minimum + 1)
-        .typeChar(maximum + 1)
-        .typeEvent('blur')
+        .typeCharOnly(maximum + 1)
         .checkValue('a', maximum - 1);
     }));
     it('should be trunc value when schema type is integer', fakeAsync(() => {
@@ -101,11 +97,9 @@ describe('form: widget: number', () => {
       };
       page
         .newSchema(s)
-        .typeChar(minimum - 1)
-        .typeEvent('blur')
+        .typeCharOnly(minimum - 1)
         .checkValue('a', 10)
-        .typeChar(maximum + 1)
-        .typeEvent('blur')
+        .typeCharOnly(maximum + 1)
         .checkValue('a', 100);
     }));
   });
@@ -116,11 +110,11 @@ describe('form: widget: number', () => {
         properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } }
       };
       const property = page.newSchema(s).getProperty('/a');
-      page.typeChar(1);
+      page.typeChar(1).dc();
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
       expect(ipt.value).toBe(`a 1`);
       property.setValue(null, true);
-      page.typeChar(null);
+      page.typeChar(null).dc();
       expect(ipt.value).toBe(``);
     }));
 

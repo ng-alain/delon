@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withTransferWidget } from './index';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
