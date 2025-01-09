@@ -25,7 +25,6 @@ const CLSBODY = 'footer-toolbar__body';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzStringTemplateOutletDirective, ErrorCollectComponent]
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {

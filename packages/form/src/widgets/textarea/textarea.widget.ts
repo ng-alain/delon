@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import type { AutoSizeType } from 'ng-zorro-antd/input';
 
-import { ControlUIWidget } from '../../widget';
 import { SFTextareaWidgetSchema } from './schema';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-textarea',
@@ -61,7 +61,9 @@ import { SFTextareaWidgetSchema } from './schema';
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> implements OnInit {
   autosize: string | boolean | AutoSizeType = true;

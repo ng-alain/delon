@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { DelonACLModule } from './acl.module';
+import { ACLDirective } from './acl.directive';
 import { ACLService } from './acl.service';
 
 const CLS = 'acl__hide';
@@ -13,8 +13,6 @@ describe('acl: directive', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponent],
-      imports: [DelonACLModule],
       providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }]
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -53,7 +51,8 @@ describe('acl: directive', () => {
 });
 
 @Component({
-  template: ` <button [acl]="role" [acl-ability]="ability"></button> `
+  template: ` <button [acl]="role" [acl-ability]="ability"></button> `,
+  imports: [ACLDirective]
 })
 class TestComponent {
   role = 'admin';

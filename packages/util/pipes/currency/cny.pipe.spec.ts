@@ -4,16 +4,12 @@ import { By } from '@angular/platform-browser';
 
 import { CurrencyCNYOptions } from '@delon/util/format';
 
-import { CurrencyPipeModule } from './module';
+import { CurrencyCNYPipe } from './cny.pipe';
 
 describe('Pipe: cny', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [CurrencyPipeModule],
-      declarations: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
   });
   it('should working', () => {
@@ -30,7 +26,8 @@ describe('Pipe: cny', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | cny: options }}</p> `
+  template: ` <p id="result">{{ value | cny: options }}</p> `,
+  imports: [CurrencyCNYPipe]
 })
 class TestComponent {
   value?: number;

@@ -6,7 +6,7 @@ import { Observable, of, throwError } from 'rxjs';
 import * as fs from 'file-saver';
 
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ZipService } from './zip.service';
 

@@ -33,7 +33,9 @@ let nextUniqueId = 0;
   `,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  providers: [NzFormStatusService]
+  providers: [NzFormStatusService],
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private readonly widgetFactory = inject(WidgetFactory);

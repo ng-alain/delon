@@ -2,9 +2,9 @@ import { Platform } from '@angular/cdk/platform';
 import { Component, ViewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { createTestContext } from '../../testing';
 import { HotkeyDirective } from './hotkey.directive';
 import { HotkeyModule } from './hotkey.module';
+import { createTestContext } from '../../testing';
 
 describe('abc: hotkey', () => {
   let context: TestComponent;
@@ -42,7 +42,11 @@ describe('abc: hotkey', () => {
   });
 });
 
-@Component({ template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />` })
+@Component({
+  template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
+})
 class TestComponent {
   @ViewChild(HotkeyDirective, { static: true }) readonly comp!: HotkeyDirective;
   hotkey = 'q';

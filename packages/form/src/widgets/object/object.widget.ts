@@ -2,12 +2,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import type { SFObjectWidgetRenderType } from './schema';
 import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
 import type { SFGridSchema } from '../../schema/ui';
 import { toBool } from '../../utils';
 import { ObjectLayoutWidget } from '../../widget';
-import type { SFObjectWidgetRenderType } from './schema';
 
 @Component({
   selector: 'sf-object',
@@ -51,7 +51,6 @@ import type { SFObjectWidgetRenderType } from './schema';
         [nzActions]="ui.cardActions || []"
         [nzBodyStyle]="ui.cardBodyStyle!"
         [nzBordered]="ui.cardBordered || true"
-        [nzBorderless]="ui.cardBorderless || false"
         class="sf__object-card"
         [class.sf__object-card-fold]="!expand"
       >
@@ -90,7 +89,9 @@ import type { SFObjectWidgetRenderType } from './schema';
       <ng-template [ngTemplateOutlet]="default" />
     }`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: NzSafeAny;

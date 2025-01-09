@@ -1,6 +1,6 @@
 import { filter } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import enUS from './languages/en-US';
 import zhCN from './languages/zh-CN';

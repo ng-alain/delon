@@ -81,7 +81,9 @@ describe('abc: trend', () => {
 });
 
 @Component({
-  template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor" />`
+  template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor" />`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: TrendComponent;

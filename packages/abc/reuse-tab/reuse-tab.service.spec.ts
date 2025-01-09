@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs';
 
 import { MenuService } from '@delon/theme';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { REUSE_TAB_CACHED_MANAGER, ReuseTabCachedManagerFactory } from './reuse-tab.cache';
 import { ReuseItem, ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';

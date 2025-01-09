@@ -43,7 +43,6 @@ interface OnboardingLightData {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzPopoverDirective, NzStringTemplateOutletDirective, NzButtonComponent, NzNoAnimationDirective]
 })
 export class OnboardingComponent implements OnDestroy, AfterViewInit {

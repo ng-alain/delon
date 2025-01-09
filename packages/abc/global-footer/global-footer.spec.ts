@@ -6,7 +6,8 @@ import { provideRouter, Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
 
-import { GlobalFooterModule } from './global-footer.module';
+import { GlobalFooterItemComponent } from './global-footer-item.component';
+import { GlobalFooterComponent } from './global-footer.component';
 import { GlobalFooterLink } from './global-footer.types';
 
 class MockWindow {
@@ -31,9 +32,7 @@ describe('abc: global-footer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [GlobalFooterModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [TestComponent],
       providers: [
         provideRouter([]),
         { provide: APP_BASE_HREF, useValue: '/' },
@@ -164,7 +163,8 @@ describe('abc: global-footer', () => {
     <global-footer [links]="links">
       <div id="copyright">copyright</div>
     </global-footer>
-  `
+  `,
+  imports: [GlobalFooterComponent, GlobalFooterItemComponent]
 })
 class TestComponent {
   links: GlobalFooterLink[] = [];

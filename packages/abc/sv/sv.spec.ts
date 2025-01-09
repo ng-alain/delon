@@ -17,15 +17,7 @@ describe('abc: view', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  const moduleAction = (): void => {
-    TestBed.configureTestingModule({
-      imports: [SVModule],
-      declarations: [TestComponent]
-    });
-  };
-
   function genModule(template?: string): void {
-    moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
     }
@@ -35,8 +27,6 @@ describe('abc: view', () => {
   }
 
   describe('', () => {
-    beforeEach(moduleAction);
-
     describe('[property]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -286,7 +276,8 @@ describe('abc: view', () => {
       <sv-value size="small">small</sv-value>
       <sv-value size="default">default</sv-value>
     </sv-container>
-  `
+  `,
+  imports: [SVModule]
 })
 class TestComponent {
   @ViewChild('svComp', { static: true })

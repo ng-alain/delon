@@ -2,8 +2,8 @@
 import * as fse from 'fs-extra';
 
 import { SiteConfig } from '../interfaces';
-import { toc } from '../plugins/toc';
 import { generateMd } from './generate-md';
+import { toc } from '../plugins/toc';
 
 const MT = require('mark-twain');
 

@@ -32,7 +32,6 @@ import { GlobalFooterLink } from './global-footer.types';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NgTemplateOutlet]
 })
 export class GlobalFooterComponent implements OnInit {

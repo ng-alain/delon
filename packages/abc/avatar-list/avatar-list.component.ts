@@ -35,7 +35,6 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzAvatarComponent, NzTooltipDirective]
 })
 export class AvatarListComponent implements AfterViewInit, OnChanges {

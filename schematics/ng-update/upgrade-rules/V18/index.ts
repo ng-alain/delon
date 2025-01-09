@@ -1,9 +1,9 @@
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
+import { removeNljep } from './remove-ng-less-javascript-enabled-patch';
 import { logFinished, logInfo, logWarn } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
-import { removeNljep } from './remove-ng-less-javascript-enabled-patch';
 
 function finished(): Rule {
   return (_tree: Tree, context: SchematicContext) => {

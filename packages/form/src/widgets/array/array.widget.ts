@@ -73,7 +73,9 @@ import { ArrayLayoutWidget } from '../../widget';
   </nz-form-item>`,
   host: { '[class.sf__array]': 'true' },
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle!: SafeHtml;

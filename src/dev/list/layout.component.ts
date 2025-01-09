@@ -17,7 +17,6 @@ import { PageHeaderModule } from '@delon/abc/page-header';
       <router-outlet />
     </div>
   `,
-  standalone: true,
   imports: [PageHeaderModule, JsonPipe, RouterOutlet]
 })
 export class DevLayoutListComponent implements OnInit, OnDestroy {

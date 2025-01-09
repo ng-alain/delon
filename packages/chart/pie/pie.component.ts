@@ -53,7 +53,6 @@ export interface G2PieRatio {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzDividerComponent]
 })
 export class G2PieComponent extends G2BaseComponent {

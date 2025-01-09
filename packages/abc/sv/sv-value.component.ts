@@ -23,7 +23,6 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzTooltipDirective]
 })
 export class SVValueComponent {

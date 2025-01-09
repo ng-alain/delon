@@ -1,5 +1,5 @@
 import { MethodCallUpgradeData, TargetVersion, VersionChanges } from '@angular/cdk/schematics';
 
 export const methodCallChecks: VersionChanges<MethodCallUpgradeData> = {
-  [TargetVersion.V18]: []
+  [TargetVersion.V19]: []
 };

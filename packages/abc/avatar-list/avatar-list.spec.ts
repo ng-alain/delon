@@ -5,17 +5,14 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 
-import { AvatarListModule } from './avatar-list.module';
+import { AvatarListItemComponent } from './avatar-list-item.component';
+import { AvatarListComponent } from './avatar-list.component';
 
 describe('abc: avatar-list', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AvatarListModule],
-      declarations: [TestComponent]
-    });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
@@ -74,7 +71,8 @@ describe('abc: avatar-list', () => {
       <avatar-list-item tips="Cipchk" text="Cipchk" />
       <avatar-list-item tips="heart-o" />
     </avatar-list>
-  `
+  `,
+  imports: [AvatarListItemComponent, AvatarListComponent]
 })
 class TestComponent {
   size: 'large' | 'small' | 'mini' | 'default' = 'default';

@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2BarComponent, G2BarData } from './bar.component';
 import { G2BarModule } from './bar.module';
@@ -84,7 +84,9 @@ describe('chart: bar', () => {
       (clickItem)="clickItem($event)"
     />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent implements OnInit {
   @ViewChild('comp', { static: true }) comp!: G2BarComponent;

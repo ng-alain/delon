@@ -4,6 +4,8 @@ import { Directive } from '@angular/core';
   selector: '[layout-default-header-item-trigger]',
   host: {
     '[class.alain-default__nav-item]': `true`
-  }
+  },
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class LayoutDefaultHeaderItemTriggerDirective {}

@@ -11,7 +11,9 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   templateUrl: './sf-item-wrap.component.html',
   animations: [helpMotion],
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class SFItemWrapComponent implements OnChanges {
   private readonly statusSrv = inject(NzFormStatusService);

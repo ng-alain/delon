@@ -78,7 +78,6 @@ export interface G2TimelineClickItem {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzStringTemplateOutletDirective, NzSkeletonComponent]
 })
 export class G2TimelineComponent extends G2BaseComponent {

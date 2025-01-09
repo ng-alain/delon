@@ -15,7 +15,6 @@ import { PageHeaderModule } from '@delon/abc/page-header';
       <router-outlet />
     </div>
   `,
-  standalone: true,
   imports: [RouterOutlet, PageHeaderModule, JsonPipe]
 })
 export class DevLazyLayoutComponent {

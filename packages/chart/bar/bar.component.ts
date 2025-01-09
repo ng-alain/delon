@@ -50,7 +50,6 @@ export interface G2BarClickItem {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzStringTemplateOutletDirective, NzSkeletonComponent]
 })
 export class G2BarComponent extends G2BaseComponent {

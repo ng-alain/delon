@@ -48,7 +48,6 @@ import type { SFTagWidgetSchema } from './schema';
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [FormsModule, NgTemplateOutlet, DelonFormModule, NzTagModule, NzIconModule]
 })
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {

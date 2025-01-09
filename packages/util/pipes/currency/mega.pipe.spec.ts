@@ -4,17 +4,13 @@ import { By } from '@angular/platform-browser';
 
 import { CurrencyMegaOptions } from '@delon/util/format';
 
-import { CurrencyPipeModule } from './module';
+import { CurrencyMegaPipe } from './mega.pipe';
 
 describe('Pipe: mega', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   describe('default', () => {
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [CurrencyPipeModule],
-        declarations: [TestComponent]
-      });
       fixture = TestBed.createComponent(TestComponent);
     });
     it('should working', () => {
@@ -33,8 +29,6 @@ describe('Pipe: mega', () => {
   describe('CN', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [CurrencyPipeModule],
-        declarations: [TestComponent],
         providers: [{ provide: LOCALE_ID, useValue: 'zh' }]
       });
       fixture = TestBed.createComponent(TestComponent);
@@ -48,7 +42,8 @@ describe('Pipe: mega', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | mega: options }}</p> `
+  template: ` <p id="result">{{ value | mega: options }}</p> `,
+  imports: [CurrencyMegaPipe]
 })
 class TestComponent {
   value?: number;

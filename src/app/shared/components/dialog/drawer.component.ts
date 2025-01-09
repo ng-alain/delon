@@ -15,7 +15,6 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
       <button nz-button [nzType]="'primary'" (click)="ok()"> OK </button>
     </div>
   `,
-  standalone: true,
   imports: [NzButtonModule, JsonPipe]
 })
 export class DemoDrawerComponent {

@@ -8,7 +8,9 @@ import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from 
     <ng-template #host>
       <ng-content />
     </ng-template>
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class LayoutDefaultHeaderItemComponent {
   @ViewChild('host', { static: true }) host!: TemplateRef<void>;

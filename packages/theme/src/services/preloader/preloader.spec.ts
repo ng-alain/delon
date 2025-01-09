@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { EnvironmentInjector, Injector, PLATFORM_ID, runInInjectionContext } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { stepPreloader } from './preloader';
 

@@ -30,7 +30,9 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
     '[class.setting-drawer]': 'true',
     '[class.setting-drawer-rtl]': `dir === 'rtl'`
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class SettingDrawerComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);

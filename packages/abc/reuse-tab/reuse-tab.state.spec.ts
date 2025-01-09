@@ -1,4 +1,4 @@
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ReuseItem } from './reuse-tab.interfaces';
 import { ReuseTabLocalStorageState } from './reuse-tab.state';

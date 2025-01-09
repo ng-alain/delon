@@ -21,7 +21,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     '(click)': 'show()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NzToolTipModule, NzImageModule]
 })
 export class STImgWidget implements OnChanges {

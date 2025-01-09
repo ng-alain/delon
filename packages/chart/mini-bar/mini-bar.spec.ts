@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniBarComponent } from './mini-bar.component';
 import { G2MiniBarModule } from './mini-bar.module';
@@ -57,7 +57,9 @@ describe('chart: mini-bar', () => {
       [data]="data"
       [delay]="delay"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniBarComponent;

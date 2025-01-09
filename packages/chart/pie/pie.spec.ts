@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2PieComponent } from './pie.component';
 import { G2PieModule } from './pie.module';
@@ -99,7 +99,9 @@ describe('chart: pie', () => {
       [select]="select"
       [colors]="colors"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestMiniComponent {
   @ViewChild('comp', { static: true }) comp!: G2PieComponent;
@@ -137,7 +139,9 @@ class TestMiniComponent {
       [colors]="colors"
       [delay]="delay"
     />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestFullComponent {
   @ViewChild('comp', { static: true }) comp!: G2PieComponent;

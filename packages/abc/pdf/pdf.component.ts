@@ -67,7 +67,6 @@ const BORDER_WIDTH = 9;
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NzSkeletonComponent]
 })
 export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {

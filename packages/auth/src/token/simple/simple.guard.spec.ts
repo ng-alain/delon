@@ -11,7 +11,6 @@ describe('auth: SimpleGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent],
       providers: [
         provideRouter([
           {
@@ -83,7 +82,9 @@ describe('auth: SimpleGuard', () => {
   }));
 });
 
-@Component({ template: '' })
+@Component({
+  template: ''
+})
 class MockComponent {}
 
 @NgModule({})

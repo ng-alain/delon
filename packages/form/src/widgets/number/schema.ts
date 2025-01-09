@@ -18,17 +18,17 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
   /**
    * 指定输入框展示值的格式
    */
-  formatter?: (value: number) => string | number;
+  formatter?: (value: number) => string;
 
   /**
    * 指定从 nzFormatter 里转换回数字的方式，和 nzFormatter 搭配使用
    */
-  parser?: (value: string) => string;
+  parser?: (value: string) => number;
 
   /**
    * 数值精度
    */
-  precision?: number;
+  precision?: number | null;
 
   /**
    * 指定 `nz-number` 宽度

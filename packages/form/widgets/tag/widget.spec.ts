@@ -3,11 +3,11 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withTagWidget } from './index';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: tag', () => {
   let fixture: ComponentFixture<TestFormComponent>;

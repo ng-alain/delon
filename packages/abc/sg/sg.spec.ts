@@ -1,14 +1,13 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
 import { SGContainerComponent } from './sg-container.component';
 import { SGComponent } from './sg.component';
-import { SGModule } from './sg.module';
 
 const prefixCls = `.sg__`;
 
@@ -20,8 +19,7 @@ describe('abc: sg', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      imports: [SGModule, NoopAnimationsModule],
-      declarations: [TestComponent]
+      providers: [provideNoopAnimations()]
     });
   };
 
@@ -130,7 +128,8 @@ describe('abc: sg', () => {
     <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
       <sg #viewComp [col]="col" />
     </div>
-  `
+  `,
+  imports: [SGContainerComponent, SGComponent]
 })
 class TestComponent {
   @ViewChild('sgComp', { static: true })

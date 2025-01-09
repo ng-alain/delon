@@ -9,10 +9,10 @@ import {
   inject
 } from '@angular/core';
 
-import { LocaleData } from '@delon/theme';
+import type { LocaleData } from '@delon/theme';
 
-import { STColumnFilter, STColumnFilterMenu, STIcon } from './st.interfaces';
-import { _STColumn } from './st.types';
+import type { STColumnFilter, STColumnFilterMenu, STIcon } from './st.interfaces';
+import type { _STColumn } from './st.types';
 
 @Component({
   selector: 'st-filter',
@@ -53,7 +53,7 @@ import { _STColumn } from './st.types';
                 [nzMin]="f.number!.min!"
                 [nzMax]="f.number!.max!"
                 [nzStep]="f.number!.step!"
-                [nzPrecision]="f.number!.precision"
+                [nzPrecision]="f.number!.precision || null"
                 [nzPlaceHolder]="f.placeholder!"
                 class="width-100"
               />
@@ -132,7 +132,9 @@ import { _STColumn } from './st.types';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class STFilterComponent {
   private readonly cdr = inject(ChangeDetectorRef);

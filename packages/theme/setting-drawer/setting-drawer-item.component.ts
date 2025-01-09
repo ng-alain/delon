@@ -7,7 +7,9 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   templateUrl: './setting-drawer-item.component.html',
   host: {
     '[class.setting-drawer__body-item]': 'true'
-  }
+  },
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class SettingDrawerItemComponent {
   i: NzSafeAny = {};

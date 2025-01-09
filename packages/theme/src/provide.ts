@@ -1,13 +1,13 @@
 import { registerLocaleData } from '@angular/common';
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   LOCALE_ID,
   Provider,
   Type,
   importProvidersFrom,
   inject,
-  makeEnvironmentProviders
+  makeEnvironmentProviders,
+  provideEnvironmentInitializer
 } from '@angular/core';
 
 import type { IconDefinition } from '@ant-design/icons-angular';
@@ -83,12 +83,10 @@ export function provideAlain(options: AlainProvideOptions): EnvironmentProviders
     MenuUnfoldOutline,
     ...(options.icons ?? [])
   ];
-  provides.push({
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useValue: () => {
+  provides.push(
+    provideEnvironmentInitializer(() => {
       inject(NzIconService, { optional: true })?.addIcon(...icons);
-    }
-  });
+    })
+  );
   return makeEnvironmentProviders(provides);
 }

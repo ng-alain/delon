@@ -11,7 +11,9 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, booleanAt
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class LayoutDefaultTopMenuItemComponent {
   @Input({ transform: booleanAttribute }) selected = false;

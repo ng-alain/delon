@@ -1,4 +1,4 @@
-import { ENVIRONMENT_INITIALIZER, EnvironmentProviders, inject, makeEnvironmentProviders } from '@angular/core';
+import { EnvironmentProviders, inject, makeEnvironmentProviders, provideEnvironmentInitializer } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -14,13 +14,9 @@ export interface CellWidgetProvideConfig {
  */
 export function provideCellWidgets(...widgets: CellWidgetProvideConfig[]): EnvironmentProviders {
   return makeEnvironmentProviders([
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
-        const srv = inject(CellService);
-        widgets.forEach(widget => srv.registerWidget(widget.KEY, widget.type));
-      }
-    }
+    provideEnvironmentInitializer(() => {
+      const srv = inject(CellService);
+      widgets.forEach(widget => srv.registerWidget(widget.KEY, widget.type));
+    })
   ]);
 }

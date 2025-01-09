@@ -102,7 +102,6 @@ const ICONS = [
   host: {
     '[class.alain-default]': 'true'
   },
-  standalone: true,
   imports: [
     UpperCasePipe,
     LayoutDefaultModule,

@@ -11,8 +11,8 @@ registerLocaleData(localeZhHans);
 import { formatDistanceToNow } from 'date-fns';
 import { zhCN as dateFnsLang } from 'date-fns/locale';
 
-import { AlainThemeModule } from '../../theme.module';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { DatePipe } from './date.pipe';
 
 describe('Pipe: _date', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -20,8 +20,6 @@ describe('Pipe: _date', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule],
-      declarations: [TestComponent],
       providers: [{ provide: NZ_DATE_LOCALE, useValue: dateFnsLang }]
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -59,7 +57,8 @@ describe('Pipe: _date', () => {
 });
 
 @Component({
-  template: ` <p id="result">{{ value | _date: format }}</p> `
+  template: ` <p id="result">{{ value | _date: format }}</p> `,
+  imports: [DatePipe]
 })
 class TestComponent {
   value?: Date | string | number;

@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
 
-import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: DrawerHelper', () => {
   let drawer: DrawerHelper;
@@ -284,7 +284,9 @@ describe('theme: DrawerHelper', () => {
 });
 
 @Component({
-  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `
+  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestDrawerComponent {
   id: string = '';
@@ -297,9 +299,13 @@ class TestDrawerComponent {
       } else {
         this.modal.close(this.ret);
       }
-    });
+    }, 10);
   }
 }
 
-@Component({ template: `` })
+@Component({
+  template: ``,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
+})
 class TestComponent {}

@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFValue, getData } from '@delon/form';
-import { NzSegmentedModule, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { NzSegmentedComponent, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
 
 import type { SFSegmentedWidgetSchema } from './schema';
 
@@ -23,14 +23,12 @@ import type { SFSegmentedWidgetSchema } from './schema';
       [nzSize]="$any(ui.size)"
       [nzBlock]="ui.block ?? false"
       [nzOptions]="list"
-      [nzLabelTemplate]="ui.labelTemplate ?? null"
       (nzValueChange)="valueChange($event)"
     />
   </sf-item-wrap>`,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [FormsModule, DelonFormModule, NzSegmentedModule]
+  imports: [FormsModule, DelonFormModule, NzSegmentedComponent]
 })
 export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   static readonly KEY = 'segmented';
@@ -46,9 +44,9 @@ export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
     });
   }
 
-  valueChange(index: number): void {
+  valueChange(index: string | number): void {
     if (this.ui.valueChange) {
-      this.ui.valueChange({ index, item: this.list[index] as SFValue });
+      this.ui.valueChange({ index, item: typeof index === 'number' ? (this.list[index] as SFValue) : null });
     }
   }
 }

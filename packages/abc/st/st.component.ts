@@ -91,7 +91,9 @@ import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType }
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class STComponent implements AfterViewInit, OnChanges {
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
@@ -920,7 +922,9 @@ export class STComponent implements AfterViewInit, OnChanges {
   templateUrl: './st-td.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class STTdComponent {
   private readonly stComp = inject(STComponent, { host: true });

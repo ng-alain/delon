@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CodeBoxComponent, DocsComponent } from '@shared';
+import { CodeBoxComponent } from '@shared';
 {{{imports}}}
 
 @Component({
@@ -7,7 +7,7 @@ import { CodeBoxComponent, DocsComponent } from '@shared';
     template: `{{{demos}}}`,
     host: { '[class.d-block]': `'true'` },
     standalone: true,
-    imports: [DocsComponent,CodeBoxComponent{{standaloneImports}}]
+    imports: [CodeBoxComponent{{standaloneImports}}]
 })
 export class {{componentName}} {
     item: any = {{{item}}};

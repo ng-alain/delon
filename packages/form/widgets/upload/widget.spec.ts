@@ -3,14 +3,14 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 import { withUploadWidget } from './index';
 import { UploadWidget } from './widget';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: upload', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -19,7 +19,11 @@ describe('form: widget: upload', () => {
   let dl: DebugElement;
   const widget = 'upload';
 
-  configureSFTestSuite({ widgets: [withUploadWidget()], imports: [NzImageModule, NzIconTestModule] });
+  configureSFTestSuite({
+    providers: [provideNzIconsTesting()],
+    widgets: [withUploadWidget()],
+    imports: [NzImageModule]
+  });
 
   beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));

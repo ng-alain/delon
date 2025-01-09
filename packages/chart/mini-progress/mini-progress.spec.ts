@@ -45,7 +45,9 @@ describe('chart: mini-progress', () => {
 @Component({
   template: `
     <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent" [strokeWidth]="strokeWidth" />
-  `
+  `,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniProgressComponent;

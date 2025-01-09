@@ -5,11 +5,11 @@ import { format } from 'date-fns';
 import { toDate } from '@delon/util/date-time';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { SFDateWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
-import { SFDateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-date',
@@ -141,7 +141,9 @@ import { SFDateWidgetSchema } from './schema';
     }
   </sf-item-wrap>`,
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
   private startFormat!: string;
