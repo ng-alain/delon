@@ -10,7 +10,7 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 
 ## API
 
-### g2-mini-bar:standalone
+### g2-mini-bar
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

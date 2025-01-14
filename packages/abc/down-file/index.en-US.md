@@ -10,7 +10,7 @@ A file download based on `blob`.
 
 ## API
 
-### [down-file]:standalone
+### [down-file]
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

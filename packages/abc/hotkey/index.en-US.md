@@ -13,7 +13,7 @@ Based on the [@github/hotke](https://github.com/github/hotkey) hotkey library.
 
 ## API
 
-### [hotkey]:standalone
+### [hotkey]
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

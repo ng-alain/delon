@@ -10,7 +10,7 @@ module: import { TrendModule } from '@delon/chart/trend';
 
 ## API
 
-### trend:standalone
+### trend
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

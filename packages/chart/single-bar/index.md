@@ -10,7 +10,7 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 
 ## API
 
-### g2-single-bar:standalone
+### g2-single-bar
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

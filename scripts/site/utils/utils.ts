@@ -65,7 +65,7 @@ export function generateSluggedId(children: any): {
     id: genValidId(headingText).split(':')[0],
     text: headingText,
     directive: children.some((node: any) => JsonML.isElement(node)),
-    standalone: headingText.includes(':standalone'),
+    standalone: true, // headingText.includes(':standalone'),
     service: headingText.includes(':service'),
     class: headingText.includes(':class')
   };

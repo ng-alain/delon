@@ -10,14 +10,14 @@ The footer is part of the global navigation as a supplement to the top navigatio
 
 ## API
 
-### global-footer:standalone
+### global-footer
 
 | Property | Description | Type | Default |
 |----|----|----|-----|
 | `[links]` | Link data | `GlobalFooterLink` | - |
 | `[copyright]` | Copyright Information | `TemplateRef` | - |
 
-### global-footer-item:standalone
+### global-footer-item
 
 | Property | Description | Type | Default |
 |----|----|----|-----|

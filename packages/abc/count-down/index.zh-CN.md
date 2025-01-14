@@ -16,7 +16,7 @@ npm i -S ngx-countdown
 
 ## API
 
-### count-down:standalone
+### count-down
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

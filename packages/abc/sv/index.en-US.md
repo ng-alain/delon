@@ -11,7 +11,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 
 ## API
 
-### sv-container:standalone
+### sv-container
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
@@ -26,7 +26,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 | `[bordered]` | Whether to display the border | `boolean` | `false` | - |
 
-### sv:standalone
+### sv
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -41,11 +41,11 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[noColon]` | Whether to not display : after label text | `boolean` | `false` | - |
 | `[hideLabel]` | Whether to hide the current label | `boolean` | `false` |
 
-### sv-title:standalone
+### sv-title
 
 Display title.
 
-### sv-value:standalone
+### sv-value
 
 值展示。
 

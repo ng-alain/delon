@@ -13,7 +13,7 @@ deprecated: 20.0.0
 
 ## API
 
-### result:standalone
+### result
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

@@ -10,7 +10,7 @@ module: import { ObserversModule } from '@delon/abc/observers';
 
 ## API
 
-### [observeSize]:standalone
+### [observeSize]
 
 观察DOM大小变化。
 

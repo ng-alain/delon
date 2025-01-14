@@ -12,7 +12,7 @@ module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 
 ## API
 
-### g2-water-wave:standalone
+### g2-water-wave
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

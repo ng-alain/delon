@@ -10,7 +10,7 @@ module: import { G2RadarModule } from '@delon/chart/radar';
 
 ## API
 
-### g2-radar:standalone
+### g2-radar
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

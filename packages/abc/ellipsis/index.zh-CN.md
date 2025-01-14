@@ -10,7 +10,7 @@ module: import { EllipsisModule } from '@delon/abc/ellipsis';
 
 ## API
 
-### ellipsis:standalone
+### ellipsis
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

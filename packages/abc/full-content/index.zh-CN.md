@@ -10,7 +10,7 @@ module: import { FullContentModule } from '@delon/abc/full-content';
 
 ## API
 
-### full-content:standalone
+### full-content
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -18,7 +18,7 @@ module: import { FullContentModule } from '@delon/abc/full-content';
 | `[hideTitle]` | 完整全屏时是否隐藏标题 | `boolean` | `true` |
 | `[padding]` | 工作区内边距 | `number` | `24` |
 
-### [full-toggle]:standalone
+### [full-toggle]
 
 切换是否全屏。
 

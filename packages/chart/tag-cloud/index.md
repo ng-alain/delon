@@ -10,7 +10,7 @@ module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 
 ## API
 
-### g2-tag-cloud:standalone
+### g2-tag-cloud
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

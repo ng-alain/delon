@@ -10,7 +10,7 @@ Based on the `nz-range-picker` further optimization, better service to start and
 
 ## API
 
-### [extend]:standalone
+### [extend]
 
 It needs to be used with [nz-range-picker](https://ng.ant.design/components/date-picker/zh#nz-range-picker), for example:
 

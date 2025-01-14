@@ -10,7 +10,7 @@ Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.s
 
 ## API
 
-### full-content:standalone
+### full-content
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -18,7 +18,7 @@ Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.s
 | `[hideTitle]` | Hide title when `fullscreen` is true | `boolean` | `true` |
 | `[padding]` | Padding of work area | `number` | `24` |
 
-### [full-toggle]:standalone
+### [full-toggle]
 
 Switch whether it is full screen.
 

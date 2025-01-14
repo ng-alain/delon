@@ -10,7 +10,7 @@ module: import { NumberInfoModule } from '@delon/chart/number-info';
 
 ## API
 
-### number-info:standalone
+### number-info
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

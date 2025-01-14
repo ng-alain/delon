@@ -10,7 +10,7 @@ module: import { AutoFocusModule } from '@delon/abc/auto-focus';
 
 ## API
 
-### [auto-focus]:standalone
+### [auto-focus]
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

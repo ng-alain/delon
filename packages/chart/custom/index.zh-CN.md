@@ -39,7 +39,7 @@ export class DemoComponent {
 
 ## API
 
-### g2-custom:standalone
+### g2-custom
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

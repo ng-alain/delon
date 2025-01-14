@@ -10,7 +10,7 @@ module: import { DownFileModule } from '@delon/abc/down-file';
 
 ## API
 
-### [down-file]:standalone
+### [down-file]
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
