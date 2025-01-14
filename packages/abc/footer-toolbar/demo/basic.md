@@ -28,7 +28,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       </footer-toolbar>
     </form>
   `,
-  standalone: true,
   imports: [NzFormModule, ReactiveFormsModule, NzInputModule, FooterToolbarComponent, NzButtonModule]
 })
 export class DemoComponent implements OnInit {

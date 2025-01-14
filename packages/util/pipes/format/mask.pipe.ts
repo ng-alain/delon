@@ -21,7 +21,7 @@ import { formatMask, FormatMaskOption } from '@delon/util/format';
  * formatMask('15900000000', '999****9999') => 159****0000
  * ```
  */
-@Pipe({ name: 'mask', standalone: true })
+@Pipe({ name: 'mask' })
 export class FormatMaskPipe implements PipeTransform {
   transform(value: string, mask: string | FormatMaskOption): string {
     return formatMask(value, mask);

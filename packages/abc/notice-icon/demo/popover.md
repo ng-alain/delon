@@ -35,7 +35,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </ng-template>
     </div>
   `,
-  standalone: true,
   imports: [NoticeIconComponent]
 })
 export class DemoComponent {

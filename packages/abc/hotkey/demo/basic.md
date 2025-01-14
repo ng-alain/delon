@@ -62,7 +62,6 @@ text area 1, press q to focus this textarea and select all text</textarea
       }
     `
   ],
-  standalone: true,
   imports: [NzButtonModule, HotkeyDirective, NzInputModule, NzSwitchModule]
 })
 export class DemoComponent {

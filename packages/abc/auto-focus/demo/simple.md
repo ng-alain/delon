@@ -30,7 +30,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       </div>
     }
   `,
-  standalone: true,
   imports: [NzButtonModule, NzInputModule, AutoFocusDirective]
 })
 export class DemoComponent {

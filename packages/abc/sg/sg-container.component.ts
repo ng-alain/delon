@@ -15,8 +15,7 @@ import { AlainConfigService } from '@delon/util/config';
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class SGContainerComponent {
   @Input({ transform: numberAttribute }) gutter!: number;

@@ -35,7 +35,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
       </ng-template>
     </se>
   </form>`,
-  standalone: true,
   imports: [SEModule, NzFormModule, NzInputModule, FormsModule, NzButtonModule]
 })
 export class DemoComponent {}

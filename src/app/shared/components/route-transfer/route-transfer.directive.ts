@@ -6,8 +6,7 @@ import { copy } from '@delon/util/browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Directive({
-  selector: '[routeTransfer]',
-  standalone: true
+  selector: '[routeTransfer]'
 })
 export class RouteTransferDirective {
   private readonly router = inject(Router);

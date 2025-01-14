@@ -7,8 +7,7 @@ import { ACLCanType } from './acl.type';
 
 @Directive({
   selector: '[aclIf]',
-  exportAs: 'aclIf',
-  standalone: true
+  exportAs: 'aclIf'
 })
 export class ACLIfDirective implements OnDestroy {
   private readonly srv = inject(ACLService);

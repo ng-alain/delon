@@ -30,7 +30,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       <button nz-button [nzType]="'primary'">返回修改</button>
     </result>
   `,
-  standalone: true,
   imports: [ResultModule, NzIconModule, NzButtonModule]
 })
 export class DemoComponent {}

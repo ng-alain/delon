@@ -41,7 +41,6 @@ const r = (min: number, max: number): number => Math.floor(Math.random() * (max 
     <button nz-button (click)="reload()">Reload</button>
     <st #st [data]="users" [columns]="columns" [page]="{ position: 'both' }" />
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

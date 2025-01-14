@@ -27,7 +27,6 @@ import { AvatarListModule } from '@delon/abc/avatar-list';
     <avatar-list-item tips="Cipchk" text="Cipchk" />
     <avatar-list-item tips="heart-o" icon="heart-o" />
   </avatar-list>`,
-  standalone: true,
   imports: [AvatarListModule]
 })
 export class DemoComponent {}

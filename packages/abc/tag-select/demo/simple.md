@@ -28,7 +28,6 @@ interface TagSelectDemoItem {
       }
     </tag-select>
   `,
-  standalone: true,
   imports: [TagSelectComponent, NzTagModule]
 })
 export class DemoComponent {

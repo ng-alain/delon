@@ -22,7 +22,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     }
     <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300" />
   `,
-  standalone: true,
   imports: [G2TimelineModule, NzButtonModule]
 })
 export class DemoComponent {

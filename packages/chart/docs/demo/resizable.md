@@ -34,7 +34,6 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     <nz-resize-handles />
     <g2-bar #bar [height]="height" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)" />
   </div>`,
-  standalone: true,
   imports: [NzResizableModule, G2BarModule]
 })
 export class DemoComponent {

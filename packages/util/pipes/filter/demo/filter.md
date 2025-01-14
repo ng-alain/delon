@@ -23,7 +23,6 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
       <nz-input-number [(ngModel)]="number" />
     </nz-input-group>
   `,
-  standalone: true,
   imports: [JsonPipe, FilterPipe, NzInputModule, NzInputNumberModule, FormsModule]
 })
 export class DemoComponent {

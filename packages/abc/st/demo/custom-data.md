@@ -40,7 +40,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </div>
     </ng-template>
   `,
-  standalone: true,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent implements OnInit {

@@ -25,7 +25,6 @@ import { NumberInfoModule } from '@delon/chart/number-info';
     <number-info subTitle="本周访问" total="12,32100" />
     <number-info subTitle="本月访问" total="12,32100000" />
   `,
-  standalone: true,
   imports: [NumberInfoModule]
 })
 export class DemoComponent {}

@@ -37,8 +37,7 @@ const hideTitleCls = `full-content__hidden-title`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private readonly destroy$ = inject(DestroyRef);

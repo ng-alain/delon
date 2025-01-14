@@ -37,7 +37,6 @@ import { SVModule } from '@delon/abc/sv';
       </sv>
     </sv-container>
   `,
-  standalone: true,
   imports: [SVModule]
 })
 export class DemoComponent {}

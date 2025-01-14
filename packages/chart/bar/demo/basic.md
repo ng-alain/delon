@@ -20,7 +20,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
     <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)" />
   `,
-  standalone: true,
   imports: [NzButtonModule, G2BarModule]
 })
 export class DemoComponent {

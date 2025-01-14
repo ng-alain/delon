@@ -43,7 +43,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <button nz-button (click)="unRegisterNotify()">UnRegister</button>
     </div>
   `,
-  standalone: true,
   imports: [JsonPipe, NzButtonModule]
 })
 export class DemoComponent implements OnDestroy {

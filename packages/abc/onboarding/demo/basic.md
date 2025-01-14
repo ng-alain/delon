@@ -40,7 +40,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       onboarding.json
     </a>
   `,
-  standalone: true,
   imports: [NzButtonModule]
 })
 export class DemoComponent {

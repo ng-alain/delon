@@ -7,7 +7,7 @@ import { CurrencyCNYOptions, CurrencyService } from '@delon/util/format';
  *
  * 转化成人民币表示法
  */
-@Pipe({ name: 'cny', standalone: true })
+@Pipe({ name: 'cny' })
 export class CurrencyCNYPipe implements PipeTransform {
   private readonly srv = inject(CurrencyService);
 

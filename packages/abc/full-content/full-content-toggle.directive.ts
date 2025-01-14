@@ -7,8 +7,7 @@ import { FullContentComponent } from './full-content.component';
   exportAs: 'fullToggle',
   host: {
     '(click)': '_click()'
-  },
-  standalone: true
+  }
 })
 export class FullContentToggleDirective {
   private readonly parent = inject(FullContentComponent);

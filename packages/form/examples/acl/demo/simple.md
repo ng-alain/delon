@@ -30,7 +30,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button nzType="primary" (click)="acl.setRole(['admin'])">Admin Role</button>
     <button nz-button nzType="primary" (click)="acl.setRole(['user'])">User Role</button>
   `,
-  standalone: true,
   imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent {

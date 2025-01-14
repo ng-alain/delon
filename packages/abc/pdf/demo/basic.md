@@ -25,7 +25,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     <button nz-button nzType="primary" (click)="src = src === one ? two : one">Change File</button>
     <pdf [src]="src" style="height: 300px" (change)="handle($event)" />
   `,
-  standalone: true,
   imports: [NzButtonModule, PdfComponent]
 })
 export class DemoComponent {

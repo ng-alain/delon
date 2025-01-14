@@ -49,7 +49,6 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
       </ng-template>
     </page-header>
   `,
-  standalone: true,
   imports: [PageHeaderComponent, NzBreadCrumbModule]
 })
 export class DemoComponent {}

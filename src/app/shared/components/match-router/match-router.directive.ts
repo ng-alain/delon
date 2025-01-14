@@ -8,8 +8,7 @@ export interface MatchRouterOptions {
 }
 
 @Directive({
-  selector: '[matchRouter]',
-  standalone: true
+  selector: '[matchRouter]'
 })
 export class MatchRouterDirective implements AfterViewInit, OnDestroy {
   private readonly router = inject(Router);

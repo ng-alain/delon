@@ -28,7 +28,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     <button nz-button type="button" (click)="changeLang('ref')">Change Language Via call refresh schema</button>
     <sf #sf [schema]="schema" (formSubmit)="submit($event)" />
   `,
-  standalone: true,
   imports: [DelonFormModule, NzButtonModule]
 })
 export class DemoComponent {

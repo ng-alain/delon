@@ -27,8 +27,7 @@ const prefixCls = `sg`;
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;

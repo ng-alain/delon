@@ -156,7 +156,6 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CellModule, FormsModule, JsonPipe, NzGridModule]
 })
 export class DemoComponent implements OnInit {
