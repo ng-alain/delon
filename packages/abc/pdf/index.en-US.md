@@ -40,7 +40,7 @@ const alainConfig: AlainConfig = {
 
 ## API
 
-### pdf:standalone
+### pdf
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

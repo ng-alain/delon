@@ -33,7 +33,7 @@ module: import { SEModule } from '@delon/abc/se';
 
 ## API
 
-### se-container:standalone
+### se-container
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
@@ -50,7 +50,7 @@ module: import { SEModule } from '@delon/abc/se';
 | `[errors]` | 批量修改 `se` 错误消息描述 | `SEErrorRefresh[]` | - |  |
 | `[noColon]` | 默认是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
-### se:standalone
+### se
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -69,7 +69,7 @@ module: import { SEModule } from '@delon/abc/se';
 | `[line]` | 分隔线（继承于 `se-container`） | `boolean` | - |
 | `[noColon]` | 是否不显示 label 后面的冒号 | `boolean` | `false` | - |
 
-### se-title:standalone
+### se-title
 
 用于展示标题，单独一行。
 

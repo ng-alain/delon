@@ -39,7 +39,7 @@ const alainConfig: AlainConfig = {
 
 ## API
 
-### [media]:standalone
+### [media]
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

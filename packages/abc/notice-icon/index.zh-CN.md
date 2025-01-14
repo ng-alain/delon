@@ -10,7 +10,7 @@ module: import { NoticeIconModule } from '@delon/abc/notice-icon';
 
 ## API
 
-### notice-icon:standalone
+### notice-icon
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

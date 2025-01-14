@@ -10,7 +10,7 @@ module: import { QuickMenuModule } from '@delon/abc/quick-menu';
 
 ## API
 
-### quick-menu:standalone
+### quick-menu
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

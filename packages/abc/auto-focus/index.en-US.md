@@ -10,7 +10,7 @@ Allows to focus HTML-element right after its appearance, By default, it will tak
 
 ## API
 
-### [auto-focus]:standalone
+### [auto-focus]
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

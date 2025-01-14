@@ -13,7 +13,7 @@ module: import { HotkeyModule } from '@delon/abc/hotkey';
 
 ## API
 
-### [hotkey]:standalone
+### [hotkey]
 
 | 成员 | 说明 | 类型 | 默认值 | 
 |----|----|----|-----|

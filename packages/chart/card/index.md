@@ -10,7 +10,7 @@ module: import { G2CardModule } from '@delon/chart/card';
 
 ## API
 
-### g2-card:standalone
+### g2-card
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

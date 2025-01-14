@@ -11,7 +11,7 @@ A list of user's avatar for project or group member list frequently. If a large 
 
 ## API
 
-### avatar-list:standalone
+### avatar-list
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
@@ -19,7 +19,7 @@ A list of user's avatar for project or group member list frequently. If a large 
 | `[maxLength]` | max items to show | `number` | - |
 | `[excessItemsStyle]` | the excess item style | `{ [key: string]: string }` | - |
 
-### avatar-list-item:standalone
+### avatar-list-item
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

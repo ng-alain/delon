@@ -10,7 +10,7 @@ module: import { TagSelectModule } from '@delon/abc/tag-select';
 
 ## API
 
-### tag-select:standalone
+### tag-select
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

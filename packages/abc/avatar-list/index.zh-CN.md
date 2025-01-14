@@ -11,7 +11,7 @@ deprecated: 20.0.0
 
 ## API
 
-### avatar-list:standalone
+### avatar-list
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
@@ -19,7 +19,7 @@ deprecated: 20.0.0
 | `[maxLength]` | 要显示的最大项目 | `number` | - |
 | `[excessItemsStyle]` | 多余的项目风格 | `{ [key: string]: string }` | - |
 
-### avatar-list-item:standalone
+### avatar-list-item
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|

@@ -10,7 +10,7 @@ Used on the navigation toolbar as a unified notification center for the entire p
 
 ## API
 
-### notice-icon:standalone
+### notice-icon
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

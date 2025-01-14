@@ -9,7 +9,7 @@ The `ObserversModule` package provides convenience directives built on top of na
 
 ## API
 
-### [observeSize]:standalone
+### [observeSize]
 
 Watch the DOM size change.
 

@@ -10,7 +10,7 @@ The page header is used to declare the subject of the page and contains the most
 
 ## API
 
-### page-header:standalone
+### page-header
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|

@@ -10,7 +10,7 @@ module: import { PageHeaderModule } from '@delon/abc/page-header';
 
 ## API
 
-### page-header:standalone
+### page-header
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|

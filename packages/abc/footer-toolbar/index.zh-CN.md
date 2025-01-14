@@ -14,7 +14,7 @@ module: import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 
 ## API
 
-### footer-toolbar:standalone
+### footer-toolbar
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
