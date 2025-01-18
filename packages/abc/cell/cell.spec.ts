@@ -1,7 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -9,7 +9,6 @@ import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzImageService } from 'ng-zorro-antd/image';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { CellComponent } from './cell.component';
@@ -29,8 +28,7 @@ describe('abc: cell', () => {
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideNoopAnimations()],
-      imports: [CellModule, BrowserModule],
-      declarations: [TestComponent, TestWidget]
+      imports: [CellModule, BrowserModule]
     });
   };
 
@@ -117,22 +115,16 @@ describe('abc: cell', () => {
             page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2);
           });
           it('should be preview array', () => {
-            const imgSrv = TestBed.inject(NzImageService);
-            spyOn(imgSrv, 'preview').and.returnValue({
-              switchTo: () => {}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any);
             page
               .update(['1.jpg', '2.jpg'], { img: { big: true } })
               .count('.img', 2)
               .click('.img');
-            expect(imgSrv.preview).toHaveBeenCalled();
+            const progress = document.querySelector('.ant-image-preview-operations-progress')?.innerHTML?.trim();
+            expect(progress).toBe('1 / 2');
           });
           it('should be disabled preview when big is false', () => {
-            const imgSrv = TestBed.inject(NzImageService);
-            spyOn(imgSrv, 'preview');
             page.update(['1.jpg', '2.jpg'], { img: {} }).count('.img', 2).click('.img');
-            expect(imgSrv.preview).not.toHaveBeenCalled();
+            expect(document.querySelector('.ant-image-preview-operations-progress') == null).toBe(true);
           });
           it('should be reset big image', () => {
             page.update(['1.jpg', '2.jpg'], { img: { big: src => `new${src}` } }).click('.img');
@@ -298,9 +290,7 @@ describe('abc: cell', () => {
   describe('[widget]', () => {
     it('via provideCellWidgets', () => {
       TestBed.configureTestingModule({
-        imports: [CellModule, NoopAnimationsModule],
-        declarations: [TestComponent, TestWidget],
-        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget })]
+        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget }), provideNoopAnimations()]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       page = new PageObject();
@@ -356,9 +346,7 @@ describe('abc: cell', () => {
 });
 
 @Component({
-  template: `{{ data.result.text }}-{{ data.options.widget.data }}`,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  template: `{{ data.result.text }}-{{ data.options.widget.data }}`
 })
 class TestWidget {
   static readonly KEY = 'test';
@@ -377,8 +365,7 @@ class TestWidget {
       [disabled]="disabled"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [CellComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })

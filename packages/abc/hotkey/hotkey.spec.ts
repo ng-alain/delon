@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { HotkeyDirective } from './hotkey.directive';
-import { HotkeyModule } from './hotkey.module';
 import { createTestContext } from '../../testing';
 
 describe('abc: hotkey', () => {
@@ -11,9 +10,7 @@ describe('abc: hotkey', () => {
 
   function genModule(isBrowser: boolean): void {
     TestBed.configureTestingModule({
-      imports: [HotkeyModule],
-      providers: [{ provide: Platform, useValue: { isBrowser } }],
-      declarations: [TestComponent]
+      providers: [{ provide: Platform, useValue: { isBrowser } }]
     });
     ({ context } = createTestContext(TestComponent));
     spyOn(context, 'focus');
@@ -44,8 +41,7 @@ describe('abc: hotkey', () => {
 
 @Component({
   template: `<input #el hotkey="q" class="ipt" (focus)="focus()" />`,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [HotkeyDirective]
 })
 class TestComponent {
   @ViewChild(HotkeyDirective, { static: true }) readonly comp!: HotkeyDirective;

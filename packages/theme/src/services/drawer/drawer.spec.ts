@@ -1,25 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
+import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 
 import { DrawerHelper } from './drawer.helper';
-import { AlainThemeModule } from '../../theme.module';
 
 describe('theme: DrawerHelper', () => {
   let drawer: DrawerHelper;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    @NgModule({
-      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule, NzDrawerModule],
-      declarations: [TestDrawerComponent, TestComponent]
-    })
-    class TestModule {}
-
-    TestBed.configureTestingModule({ imports: [TestModule] });
+    TestBed.configureTestingModule({
+      providers: [provideNoopAnimations(), NzDrawerService]
+    });
     fixture = TestBed.createComponent(TestComponent);
     drawer = TestBed.inject<DrawerHelper>(DrawerHelper);
   });
@@ -284,9 +278,7 @@ describe('theme: DrawerHelper', () => {
 });
 
 @Component({
-  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `
 })
 class TestDrawerComponent {
   id: string = '';
@@ -304,8 +296,6 @@ class TestDrawerComponent {
 }
 
 @Component({
-  template: ``,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  template: ``
 })
 class TestComponent {}

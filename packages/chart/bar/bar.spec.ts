@@ -5,14 +5,13 @@ import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testin
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2BarComponent, G2BarData } from './bar.component';
-import { G2BarModule } from './bar.module';
 
 describe('chart: bar', () => {
   let page: PageG2<TestComponent>;
 
   describe('', () => {
     beforeEach(fakeAsync(() => {
-      page = new PageG2<TestComponent>().makeModule(G2BarModule, TestComponent);
+      page = new PageG2<TestComponent>().genComp(TestComponent, true);
     }));
 
     it('should be working', () => {
@@ -66,7 +65,7 @@ describe('chart: bar', () => {
     it('tooltip', () => page.checkTooltip('1月'));
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2BarModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
@@ -85,8 +84,7 @@ describe('chart: bar', () => {
     />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2BarComponent]
 })
 class TestComponent implements OnInit {
   @ViewChild('comp', { static: true }) comp!: G2BarComponent;

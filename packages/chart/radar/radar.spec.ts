@@ -4,14 +4,13 @@ import { fakeAsync } from '@angular/core/testing';
 import { checkDelay, PageG2 } from '@delon/testing';
 
 import { G2RadarComponent, G2RadarData } from './radar.component';
-import { G2RadarModule } from './radar.module';
 
 describe('chart: radar', () => {
   describe('defualt', () => {
     let page: PageG2<TestComponent>;
 
     beforeEach(fakeAsync(() => {
-      page = new PageG2<TestComponent>().genModule(G2RadarModule, TestComponent);
+      page = new PageG2<TestComponent>().genComp(TestComponent, true);
       page.genComp(TestComponent, true);
     }));
 
@@ -29,15 +28,14 @@ describe('chart: radar', () => {
     });
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2RadarModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
   template: `
     <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay" />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2RadarComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2RadarComponent;

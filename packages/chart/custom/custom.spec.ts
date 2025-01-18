@@ -6,17 +6,12 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2Service } from '../core';
 import { G2CustomComponent } from './custom.component';
-import { G2CustomModule } from './custom.module';
 
 describe('chart: custom', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [G2CustomModule],
-      declarations: [TestComponent]
-    });
     ({ fixture, context } = createTestContext(TestComponent));
 
     spyOn(context, 'render');
@@ -52,8 +47,7 @@ describe('chart: custom', () => {
 
 @Component({
   template: ` <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()" />`,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2CustomComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2CustomComponent;

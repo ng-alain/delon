@@ -5,14 +5,13 @@ import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniBarComponent } from './mini-bar.component';
-import { G2MiniBarModule } from './mini-bar.module';
 
 describe('chart: mini-bar', () => {
   let page: PageG2<TestComponent>;
   describe('', () => {
     describe('', () => {
       beforeEach(fakeAsync(() => {
-        page = new PageG2<TestComponent>().makeModule(G2MiniBarModule, TestComponent);
+        page = new PageG2<TestComponent>().genComp(TestComponent, true);
       }));
       it('should be working', () => {
         page
@@ -28,9 +27,7 @@ describe('chart: mini-bar', () => {
 
     describe('#tooltipType', () => {
       beforeEach(() => {
-        page = new PageG2<TestComponent>().makeModule(G2MiniBarModule, TestComponent, {
-          dc: false
-        });
+        page = new PageG2<TestComponent>().genComp(TestComponent, false);
       });
       it('with default', fakeAsync(() => {
         page.context.tooltipType = 'default';
@@ -43,7 +40,7 @@ describe('chart: mini-bar', () => {
     });
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2MiniBarModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
@@ -58,8 +55,7 @@ describe('chart: mini-bar', () => {
       [delay]="delay"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2MiniBarComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniBarComponent;

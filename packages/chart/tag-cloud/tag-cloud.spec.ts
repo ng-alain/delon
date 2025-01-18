@@ -4,16 +4,15 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { checkDelay, PageG2 } from '@delon/testing';
 
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
-import { G2TagCloudModule } from './tag-cloud.module';
 
 describe('chart: tag-cloud', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().genModule(G2TagCloudModule, TestComponent);
+    beforeEach(fakeAsync(() => {
+      page = new PageG2<TestComponent>().genComp(TestComponent, true);
       page.genComp(TestComponent);
-    });
+    }));
 
     it('should be repaint when window resize', fakeAsync(() => {
       page.dcFirst();
@@ -36,13 +35,12 @@ describe('chart: tag-cloud', () => {
     }));
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2TagCloudModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
   template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data" [delay]="delay" />`,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2TagCloudComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2TagCloudComponent;

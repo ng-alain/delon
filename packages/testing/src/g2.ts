@@ -29,24 +29,11 @@ export class PageG2<T> {
     return this.comp.chart;
   }
 
-  genModule<M>(module: M, comp: Type<T>): this {
-    TestBed.configureTestingModule({
-      imports: [module],
-      declarations: [comp]
-    });
-    return this;
-  }
-
   genComp(comp: Type<T>, dc: boolean = false): this {
     this.fixture = TestBed.createComponent(comp);
     if (dc) {
       this.dcFirst();
     }
-    return this;
-  }
-
-  makeModule<M>(module: M, comp: Type<T>, options: { dc: boolean } = { dc: true }): PageG2<T> {
-    this.genModule(module, comp).genComp(comp, options.dc);
     return this;
   }
 
@@ -169,9 +156,9 @@ export class PageG2<T> {
   }
 }
 
-export function checkDelay<M, T>(module: M, comp: Type<T>, page: PageG2<T> | null = null): void {
+export function checkDelay<T>(comp: Type<T>, page: PageG2<T> | null = null): void {
   if (page == null) {
-    page = new PageG2<T>().makeModule(module, comp, { dc: false });
+    page = new PageG2<T>().genComp(comp, false);
   }
   const context = page.context as NzSafeAny;
   if (typeof context.delay === 'undefined') {

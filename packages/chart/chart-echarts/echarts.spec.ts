@@ -8,7 +8,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ChartEChartsOn } from '.';
 import { ChartEChartsComponent } from './echarts.component';
-import { ChartEChartsModule } from './echarts.module';
 import { ChartEChartsEvent, ChartEChartsOption } from './echarts.types';
 
 // let isClassECharts = false;
@@ -35,9 +34,7 @@ describe('chart: chart-echarts', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: LazyService, useClass: MockLazyService }],
-      imports: [ChartEChartsModule],
-      declarations: [TestComponent]
+      providers: [{ provide: LazyService, useClass: MockLazyService }]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     spyOn(context, 'handleEvents');
@@ -98,8 +95,7 @@ describe('chart: chart-echarts', () => {
       (events)="handleEvents($event)"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [ChartEChartsComponent]
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;

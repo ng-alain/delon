@@ -4,16 +4,15 @@ import { fakeAsync } from '@angular/core/testing';
 import { checkDelay, PageG2 } from '@delon/testing';
 
 import { G2TimelineComponent, G2TimelineData, G2TimelineMap } from './timeline.component';
-import { G2TimelineModule } from './timeline.module';
 
 describe('chart: timeline', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().genModule(G2TimelineModule, TestComponent);
+    beforeEach(fakeAsync(() => {
+      page = new PageG2<TestComponent>().genComp(TestComponent, true);
       page.genComp(TestComponent);
-    });
+    }));
 
     it('should be working', fakeAsync(() => {
       page.context.position = 'left';
@@ -45,7 +44,7 @@ describe('chart: timeline', () => {
     }));
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2TimelineModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
@@ -65,8 +64,7 @@ describe('chart: timeline', () => {
       [delay]="delay"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2TimelineComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2TimelineComponent;
