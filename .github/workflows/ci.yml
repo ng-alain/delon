@@ -40,7 +40,8 @@ jobs:
         run: |
           export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           echo "Deploy to $DEPLOY_DOMAIN"
-          cp ./src/dist/browser/index.html ./src/dist/browser/404.html
+          cp ./src/dist/browser/index.csr.html ./src/dist/browser/index.html
+          cp ./src/dist/browser/index.csr.html ./src/dist/browser/404.html
           npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
         env:
           ACCESS_REPO: ${{ github.repository }}
