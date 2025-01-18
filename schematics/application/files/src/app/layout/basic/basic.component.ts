@@ -22,17 +22,17 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
     <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
       <layout-default-header-item direction="left">
         <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
-          <i nz-icon nzType="github"></i>
+          <nz-icon nzType="github" />
         </a>
       </layout-default-header-item>
       <layout-default-header-item direction="left" hidden="mobile">
         <a layout-default-header-item-trigger routerLink="/passport/lock">
-          <i nz-icon nzType="lock"></i>
+          <nz-icon nzType="lock" />
         </a>
       </layout-default-header-item>
       <layout-default-header-item direction="left" hidden="pc">
         <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
-          <i nz-icon nzType="search"></i>
+          <nz-icon nzType="search" />
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
@@ -40,7 +40,7 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
       </layout-default-header-item>
       <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
-          <i nz-icon nzType="setting"></i>
+          <nz-icon nzType="setting" />
         </div>
         <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
           <div nz-menu style="width: 200px;">

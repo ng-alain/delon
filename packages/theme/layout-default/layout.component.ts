@@ -57,7 +57,7 @@ import { LayoutDefaultOptions } from './types';
                 <ng-container *ngTemplateOutlet="asideBottom" />
               } @else {
                 <div class="alain-default__aside-link-collapsed" (click)="toggleCollapsed()">
-                  <span nz-icon [nzType]="collapsedIcon"></span>
+                  <nz-icon [nzType]="collapsedIcon" />
                 </div>
               }
             </div>

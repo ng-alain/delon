@@ -72,7 +72,7 @@ import { ControlUIWidget } from '../../widget';
       }
       @if (loading) {
         <nz-option nzDisabled nzCustomContent>
-          <i nz-icon nzType="loading"></i>
+          <nz-icon nzType="loading" />
           {{ ui.searchLoadingText }}
         </nz-option>
       }

@@ -43,7 +43,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       <ng-template st-row="customTitle" type="title" let-c>
         {{ c.title.text }}
         <span nz-dropdown [nzDropdownMenu]="menuTpl" nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight">
-          <i nz-icon nzType="down"></i>
+          <nz-icon nzType="down" />
         </span>
         <nz-dropdown-menu #menuTpl="nzDropdownMenu">
           <div class="ant-table-filter-dropdown p-sm">

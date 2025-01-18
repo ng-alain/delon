@@ -44,8 +44,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
             <ng-template #createDesc>
               <div style="font-size: 14px; position: relative; left: 38px; text-align: left;">
                 <div style="margin-top: 8px; margin-bottom: 4px;"
-                  >曲丽丽<i nz-icon nzType="dingding" class="ml-sm"></i
-                ></div>
+                  >曲丽丽<nz-icon nzType="dingding" class="ml-sm" /></div>
                 <div style="margin-top: 8px; margin-bottom: 4px;">2016-12-12 12:32</div>
               </div>
             </ng-template>
@@ -54,7 +53,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
             <ng-template #checkedDesc>
               <div style="font-size: 14px; position: relative; left: 38px; text-align: left;">
                 <div style="margin-top: 8px; margin-bottom: 4px;">
-                  周毛毛<i nz-icon nzType="dingding" class="ml-sm" style="color: #00a0e9;"></i>
+                  周毛毛<nz-icon nzType="dingding" class="ml-sm" style="color: #00a0e9;"/>
                 </div>
                 <div style="margin-top: 8px; margin-bottom: 4px;">
                   <a (click)="msg.success('click')">催一下</a>

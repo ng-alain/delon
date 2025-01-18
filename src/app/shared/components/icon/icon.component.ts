@@ -1,20 +1,19 @@
 import { Component, Input, booleanAttribute } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-icon',
+  selector: 'icon',
   template: `
-    <i
-      nz-icon
+    <nz-icon
       [nzType]="type"
       [nzTheme]="theme"
       [nzSpin]="spin"
       [nzTwotoneColor]="twoToneColor"
       [nzIconfont]="iconfont"
-    ></i>
+    />
   `,
-  imports: [NzIconModule]
+  imports: [NzIconDirective]
 })
 export class IconComponent {
   @Input()

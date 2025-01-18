@@ -43,7 +43,7 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
           </se>
           <se label="Local of the pdf file">
             <nz-upload nzAccept=".pdf" [nzBeforeUpload]="beforeUpload">
-              <button nz-button><i nz-icon nzType="upload"></i>Select File</button>
+              <button nz-button><nz-icon nzType="upload" />Select File</button>
             </nz-upload>
           </se>
           <se label="Render Text">

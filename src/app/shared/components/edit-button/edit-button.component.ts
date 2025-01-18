@@ -16,7 +16,7 @@ import { MetaService } from '@core';
       nz-tooltip
       nzTooltipTitle="{{ 'app.content.edit-page' | i18n }}"
     >
-      <i nz-icon nzType="edit"></i>
+      <nz-icon nzType="edit" />
     </a>
   `,
   imports: [I18nPipe, NzIconModule, NzToolTipModule]

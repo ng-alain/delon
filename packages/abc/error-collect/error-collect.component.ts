@@ -23,7 +23,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   selector: 'error-collect, [error-collect]',
   exportAs: 'errorCollect',
   template: `
-    <i nz-icon nzType="exclamation-circle"></i>
+    <nz-icon nzType="exclamation-circle" />
     <span class="error-collect__count">{{ count }}</span>
   `,
   host: {

@@ -35,6 +35,7 @@ const testCases: Record<string, string> = {
     <i nz-icon nzType="step-backward" theme="fill"></i>
     <i nz-icon nzType="nz-step-a" nzTheme="fill"></i>
     <i nz-icon nzType="up-circle" theme="twotone"></i>
+    <nz-icon nzType="up-circle2" />
     <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
     \`
   })
@@ -93,5 +94,7 @@ describe('NgAlainSchematic: plugin: icon', () => {
     // <i nz-icon [nzType]="d.status === 'NORMAL' ? 'close1' : 'close2'"></i>
     expect(content).toContain(`Close1Outline`);
     expect(content).toContain(`Close2Outline`);
+    // <nz-icon nzType="up-circle" theme="twotone" />
+    expect(content).toContain(`UpCircle2Outline`);
   });
 });

@@ -105,7 +105,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
       }
     </ng-template>
     @if (loading) {
-      <span nz-icon nzType="loading"></span>
+      <nz-icon nzType="loading" />
     } @else {
       <ng-template [ngTemplateOutlet]="textWrap" />
     }

@@ -115,7 +115,7 @@ function genByClass(node: Element): string | null {
 }
 
 function genByComp(node: Element): string[] | null {
-  if (!node.attrs.find(attr => attr.name === 'nz-icon')) return null;
+  if (node.nodeName != 'nz-icon' && !node.attrs.find(attr => attr.name === 'nz-icon')) return null;
 
   const type = node.attrs.find(attr => ['type', '[type]', 'nztype', '[nztype]'].includes(attr.name));
   if (!type) return null;
@@ -150,7 +150,7 @@ function getNgValue(attr: Attribute): string[] | null {
   const templatVarIndex = str.indexOf('{{');
 
   if (templatVarIndex === -1) {
-    // <i nz-icon [nzType]="d.status === 'NORMAL' ? 'close1' : 'close2'"></i>
+    // <nz-icon [nzType]="d.status === 'NORMAL' ? 'close1' : 'close2'"></i>
     const conMatch = /\? ['"]([^'"]+)['"] : ['"]([^'"]+)['"]/g.exec(str);
     if (conMatch != null && conMatch.length === 3) {
       return [conMatch[1], conMatch[2]];

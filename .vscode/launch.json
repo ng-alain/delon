@@ -28,14 +28,11 @@
       "type": "node",
       "request": "launch",
       "name": "schematics test",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "cwd": "${workspaceRoot}",
-      "sourceMaps": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "env": {
-        "TS_NODE_PROJECT": "${workspaceFolder}/schematics/tsconfig.spec.json"
-      },
-      "args": ["${workspaceFolder}/schematics/test.ts"]
+      "program": "${workspaceFolder}/schematics/test.ts",
+      "runtimeExecutable": "tsx",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": []
     }
   ]
 }

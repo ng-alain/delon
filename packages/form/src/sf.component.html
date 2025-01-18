@@ -31,13 +31,12 @@
                   [disabled]="liveValidate && !valid"
                 >
                   @if (_btn.submit_icon) {
-                    <i
-                      nz-icon
+                    <nz-icon
                       [nzType]="_btn.submit_icon.type!"
                       [nzTheme]="_btn.submit_icon.theme!"
                       [nzTwotoneColor]="_btn.submit_icon.twoToneColor!"
                       [nzIconfont]="_btn.submit_icon.iconfont!"
-                    ></i>
+                    />
                   }
                   {{ _btn.submit }}
                 </button>
@@ -53,13 +52,12 @@
                   >
                     @let resetIcon = _btn.reset_icon;
                     @if (resetIcon) {
-                      <i
-                        nz-icon
+                      <nz-icon
                         [nzType]="resetIcon.type!"
                         [nzTheme]="resetIcon.theme!"
                         [nzTwotoneColor]="resetIcon.twoToneColor!"
                         [nzIconfont]="resetIcon.iconfont!"
-                      ></i>
+                      />
                     }
                     {{ _btn.reset }}
                   </button>

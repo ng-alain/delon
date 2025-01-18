@@ -19,15 +19,14 @@ import type { SFTagWidgetSchema } from './schema';
     [showTitle]="schema.title"
   >
     <ng-template #icon let-i>
-      <i
-        nz-icon
+      <nz-icon
         [nzType]="i.type"
         [nzTheme]="i.theme"
         [nzTwotoneColor]="i.twotoneColor"
         [nzRotate]="i.rotate"
         [nzIconfont]="i.iconfont"
         [nzSpin]="i.spin"
-      ></i>
+      />
     </ng-template>
     @for (i of data; track $index) {
       <nz-tag
