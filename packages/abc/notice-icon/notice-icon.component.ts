@@ -1,18 +1,17 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   ViewEncapsulation,
   booleanAttribute,
+  effect,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  output,
+  signal
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -47,35 +46,35 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
     NoticeIconTabComponent
   ]
 })
-export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
+export class NoticeIconComponent implements OnInit, OnDestroy {
   private readonly i18n = inject(DelonLocaleService);
-  private readonly cdr = inject(ChangeDetectorRef);
   private i18n$?: Subscription;
-  locale: LocaleData = {};
+  locale = signal<LocaleData>({});
 
-  @Input() data: NoticeItem[] = [];
-  @Input({ transform: numberAttribute }) count?: number;
-  @Input({ transform: booleanAttribute }) loading = false;
-  @Input({ transform: booleanAttribute }) popoverVisible = false;
-  @Input() btnClass?: NgClassType;
-  @Input() btnIconClass?: NgClassType;
-  @Input({ transform: booleanAttribute }) centered = false;
-  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
-  @Output() readonly clear = new EventEmitter<string>();
-  @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
+  data = input<NoticeItem[]>([]);
+  count = input<number | undefined, number | string | null | undefined>(undefined, { transform: numberAttribute });
+  loading = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
+  popoverVisible = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
+  btnClass = input<NgClassType>();
+  btnIconClass = input<NgClassType>();
+  centered = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
+  readonly select = output<NoticeIconSelect>();
+  readonly clear = output<string>();
+  readonly popoverVisibleChange = output<boolean>();
 
-  get overlayCls(): string {
-    return `header-dropdown notice-icon${!this.centered ? ' notice-icon__tab-left' : ''}`;
+  overlayCls = signal<string>('');
+
+  constructor() {
+    effect(() => {
+      this.overlayCls.set(`header-dropdown notice-icon${!this.centered() ? ' notice-icon__tab-left' : ''}`);
+      if (!this.popoverVisible()) this.delayShow.set(false);
+    });
   }
 
-  delayShow = false;
+  delayShow = signal(false);
   onVisibleChange(result: boolean): void {
-    this.delayShow = result;
+    this.delayShow.set(result);
     this.popoverVisibleChange.emit(result);
-    if (result) {
-      // Next tick run
-      Promise.resolve().then(() => this.cdr.detectChanges());
-    }
   }
 
   onSelect(i: NoticeIconSelect): void {
@@ -88,13 +87,8 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.i18n$ = this.i18n.change.subscribe(() => {
-      this.locale = this.i18n.getData('noticeIcon');
-      this.cdr.markForCheck();
+      this.locale.set(this.i18n.getData('noticeIcon'));
     });
-  }
-
-  ngOnChanges(): void {
-    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {

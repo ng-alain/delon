@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, input, output, ViewEncapsulation } from '@angular/core';
 
 import { LocaleData } from '@delon/theme';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -24,16 +24,16 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   ]
 })
 export class NoticeIconTabComponent {
-  @Input() locale: LocaleData = {};
-  @Input() data!: NoticeItem;
-  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
-  @Output() readonly clear = new EventEmitter<string>();
+  locale = input.required<LocaleData>();
+  item = input.required<NoticeItem>();
+  readonly select = output<NoticeIconSelect>();
+  readonly clear = output<string>();
 
   onClick(item: NoticeItem): void {
-    this.select.emit({ title: this.data.title, item });
+    this.select.emit({ title: this.item().title, item });
   }
 
   onClear(): void {
-    this.clear.emit(this.data.title);
+    this.clear.emit(this.item().title);
   }
 }

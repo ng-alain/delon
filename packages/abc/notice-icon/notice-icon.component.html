@@ -1,29 +1,30 @@
 <ng-template #badgeTpl>
-  <nz-badge [nzCount]="count" [class]="btnClass!" [nzStyle]="{ 'box-shadow': 'none' }">
-    <nz-icon nzType="bell" [class]="btnIconClass!" />
+  <nz-badge [nzCount]="count()" [class]="btnClass()" [nzStyle]="{ 'box-shadow': 'none' }">
+    <nz-icon nzType="bell" [class]="btnIconClass()" />
   </nz-badge>
 </ng-template>
-@if (data!.length <= 0) {
+@let d = data();
+@if (d.length <= 0) {
   <ng-template [ngTemplateOutlet]="badgeTpl" />
 } @else {
   <div
     nz-dropdown
-    [nzVisible]="popoverVisible"
+    [nzVisible]="popoverVisible()"
     (nzVisibleChange)="onVisibleChange($event)"
     nzTrigger="click"
     nzPlacement="bottomRight"
-    [nzOverlayClassName]="overlayCls"
+    [nzOverlayClassName]="overlayCls()"
     [nzDropdownMenu]="noticeMenu"
   >
     <ng-template [ngTemplateOutlet]="badgeTpl" />
   </div>
   <nz-dropdown-menu #noticeMenu="nzDropdownMenu">
-    <nz-spin [nzSpinning]="loading" [nzDelay]="0">
-      @if (delayShow) {
-        <nz-tabset [nzSelectedIndex]="0" [nzCentered]="centered">
-          @for (i of data; track $index) {
+    <nz-spin [nzSpinning]="loading()" [nzDelay]="0">
+      @if (delayShow()) {
+        <nz-tabset [nzSelectedIndex]="0" [nzCentered]="centered()">
+          @for (i of d; track $index) {
             <nz-tab [nzTitle]="i.title">
-              <notice-icon-tab [locale]="locale" [data]="i" (select)="onSelect($event)" (clear)="onClear($event)" />
+              <notice-icon-tab [locale]="locale()" [item]="i" (select)="onSelect($event)" (clear)="onClear($event)" />
             </nz-tab>
           }
         </nz-tabset>
