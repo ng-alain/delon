@@ -110,7 +110,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/jasminewd2": "~2.0.13",
     "@types/mockjs": "^1.0.10",
-    "@types/node": "^18.19.1",
+    "@types/node": "^18.20.0",
     "@types/parse5": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
