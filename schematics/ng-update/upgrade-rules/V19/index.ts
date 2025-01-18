@@ -1,8 +1,7 @@
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
-import { removeNljep } from './remove-ng-less-javascript-enabled-patch';
-import { logFinished, logInfo, logWarn } from '../../../utils';
+import { logFinished, logInfo } from '../../../utils';
 import { UpgradeMainVersions } from '../../../utils/versions';
 
 function finished(): Rule {
@@ -11,15 +10,15 @@ function finished(): Rule {
 
     logFinished(
       context,
-      `Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2502`
+      `Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2547`
     );
   };
 }
 
-export function v18Rule(): Rule {
+export function v19Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logInfo(context, `Upgrade dependency version number`);
-    return chain([removeNljep(), finished()]);
+    return chain([finished()]);
   };
 }
