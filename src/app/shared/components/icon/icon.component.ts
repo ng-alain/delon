@@ -1,9 +1,9 @@
 import { Component, Input, booleanAttribute } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-icon',
+  selector: 'icon',
   template: `
     <nz-icon
       [nzType]="type"
@@ -13,7 +13,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       [nzIconfont]="iconfont"
     />
   `,
-  imports: [NzIconModule]
+  imports: [NzIconDirective]
 })
 export class IconComponent {
   @Input()

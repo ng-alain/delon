@@ -10,7 +10,7 @@ import {
 import { createCustomElement } from '@angular/elements';
 
 import { EXAMPLE_COMPONENTS } from '../routes/gen/examples';
-import { IconComponent } from '../shared/components/icon/icon.component';
+// import { IconComponent } from '../shared/components/icon/icon.component';
 
 export function provideElements(): Array<Provider | EnvironmentProviders> {
   return [
@@ -32,5 +32,5 @@ function registerElements(injector: Injector, platformId: {}): void {
     customElements.define(key, element);
   });
   // icon
-  customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+  // customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
 }
