@@ -1,6 +1,6 @@
 {
   "lib": {
-    "flatModuleFile": "widgets-color",
+    "flatModuleFile": "widgets-segmented",
     "entryFile": "index.ts"
   }
 }
