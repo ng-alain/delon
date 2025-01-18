@@ -13,7 +13,6 @@ import { ControlUIWidget } from '../../widget';
     [error]="error"
     [showTitle]="schema.title"
   >
-    min - {{ min }}, {{ max }}
     <nz-input-number
       [nzId]="id"
       [ngModel]="value"

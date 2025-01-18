@@ -36,6 +36,7 @@ import type { SFCascaderWidgetSchema } from './schema';
       [nzValueProperty]="ui.valueProperty || 'value'"
       [nzLoadData]="loadData"
       [nzPlaceHolder]="ui.placeholder!"
+      [nzPlacement]="ui.placement ?? 'bottomLeft'"
       [nzShowArrow]="showArrow"
       [nzShowInput]="showInput"
       [nzShowSearch]="ui.showSearch!"
