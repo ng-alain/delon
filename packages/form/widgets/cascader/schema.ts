@@ -1,5 +1,10 @@
 import { SFUISchemaItem } from '@delon/form';
-import { NzCascaderExpandTrigger, NzCascaderOption, NzShowSearchOptions } from 'ng-zorro-antd/cascader';
+import type {
+  NzCascaderExpandTrigger,
+  NzCascaderOption,
+  NzCascaderPlacement,
+  NzShowSearchOptions
+} from 'ng-zorro-antd/cascader';
 import { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { CascaderWidget } from './widget';
@@ -13,6 +18,8 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
    * 在文字框中显示提示讯息
    */
   placeholder?: string;
+
+  placement?: NzCascaderPlacement;
 
   /**
    * 是否支持搜索，默认：`false`
