@@ -24,7 +24,7 @@ const converters = [highlight()].concat([
       // <a href="#${sluggedId}" class="anchor">#</a>
       // const childrenHtml = children.map(toHtml).join('');
       // const goTo = tagName === 'h2' ? `<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a>` : '';
-      const apiTypes = ['directive', 'standalone', 'service', 'class']
+      const apiTypes = ['directive', 'service', 'class']
         .filter(key => (sluggedData as any)[key] === true)
         .map(w => `<label class="api-type-label ${w}">${w}</label>`)
         .join('');
