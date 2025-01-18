@@ -14,7 +14,7 @@
       <div class="prev-next-nav">
         @if (meta.prev) {
           <a class="prev-page" routerLink="{{ meta.prev.url }}">
-            <i nz-icon nzType="left" class="footer-nav-icon-before"></i>
+            <nz-icon nzType="left" class="footer-nav-icon-before" />
             <span>{{ meta.prev.title }}</span>
             <span class="chinese">{{ meta.prev.subtitle }}</span>
           </a>
@@ -23,7 +23,7 @@
           <a class="next-page" routerLink="{{ meta.next.url }}">
             <span>{{ meta.next.title }}</span>
             <span class="chinese">{{ meta.next.subtitle }}</span>
-            <i nz-icon nzType="right" class="footer-nav-icon-after"></i>
+            <nz-icon nzType="right" class="footer-nav-icon-after" />
           </a>
         }
       </div>
@@ -39,7 +39,7 @@
         <div class="drawer-content">
           <main-menu (to)="to()" />
         </div>
-        <div class="drawer-button" (click)="opened = !opened"><i nz-icon nzType="menu-unfold"></i></div>
+        <div class="drawer-button" (click)="opened = !opened"><nz-icon nzType="menu-unfold" /></div>
       </div>
     </div>
   </div>

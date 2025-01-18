@@ -38,7 +38,7 @@ import type { _STColumn } from './st.types';
       nzOverlayClassName="st__filter-wrap"
       (click)="stopPropagation($event)"
     >
-      <i nz-icon [nzType]="icon.type" [nzTheme]="icon.theme!"></i>
+      <nz-icon [nzType]="icon.type" [nzTheme]="icon.theme!" />
     </span>
     <nz-dropdown-menu #filterMenu="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">

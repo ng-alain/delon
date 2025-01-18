@@ -49,7 +49,7 @@ interface LayoutDefaultHeaderItem {
         @if (!opt.hideAside && opt.showHeaderCollapse) {
           <li>
             <div class="alain-default__nav-item alain-default__nav-item--collapse" (click)="toggleCollapsed()">
-              <span nz-icon [nzType]="collapsedIcon"></span>
+              <nz-icon [nzType]="collapsedIcon" />
             </div>
           </li>
         }

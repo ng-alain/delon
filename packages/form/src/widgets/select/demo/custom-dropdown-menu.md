@@ -32,7 +32,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       <nz-divider />
       <div class="container">
         <input type="text" nz-input #inputElement />
-        <a class="add-item" (click)="addItem(inputElement)"><i nz-icon nzType="plus"></i> Add item</a>
+        <a class="add-item" (click)="addItem(inputElement)"><nz-icon nzType="plus"/> Add item</a>
       </div>
     </ng-template>
   `,

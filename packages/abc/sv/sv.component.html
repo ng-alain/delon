@@ -13,13 +13,12 @@
       <span class="sv__label-optional" [class.sv__label-optional-no-text]="!optional">
         <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
         @if (optionalHelp) {
-          <i
+          <nz-icon
             nz-tooltip
             [nzTooltipTitle]="optionalHelp"
             [nzTooltipColor]="optionalHelpColor"
-            nz-icon
             nzType="question-circle"
-          ></i>
+          />
         }
       </span>
     }

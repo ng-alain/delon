@@ -19,7 +19,7 @@
     <span class="number-info__value-text number-info__value-sub">
       <ng-container *nzStringTemplateOutlet="subTotal">{{ subTotal }}</ng-container>
       @if (status) {
-        <i nz-icon nzType="caret-{{ status }}"></i>
+        <nz-icon nzType="caret-{{ status }}" />
       }
     </span>
   }

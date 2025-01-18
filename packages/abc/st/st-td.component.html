@@ -35,15 +35,9 @@
   @if (i._icon) {
     @let icon = i._icon;
     @if (icon.iconfont) {
-      <i nz-icon [nzIconfont]="icon.iconfont"></i>
+      <nz-icon [nzIconfont]="icon.iconfont" />
     } @else {
-      <i
-        nz-icon
-        [nzType]="icon.type"
-        [nzTheme]="icon.theme"
-        [nzSpin]="icon.spin"
-        [nzTwotoneColor]="icon.twoToneColor"
-      ></i>
+      <nz-icon [nzType]="icon.type" [nzTheme]="icon.theme" [nzSpin]="icon.spin" [nzTwotoneColor]="icon.twoToneColor" />
     }
   }
   <span [innerHTML]="i._text" [class.pl-xs]="i._icon"></span>
@@ -88,7 +82,7 @@
     @if (btn.children!.length > 0) {
       <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
         <span [innerHTML]="btn._text"></span>
-        <i nz-icon nzType="down"></i>
+        <nz-icon nzType="down" />
       </a>
       <nz-dropdown-menu #btnMenu="nzDropdownMenu">
         <ul nz-menu>

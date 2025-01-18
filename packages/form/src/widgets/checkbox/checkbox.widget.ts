@@ -37,7 +37,7 @@ import { ControlUIWidget } from '../../widget';
             <span class="sf__optional">
               {{ ui.optional }}
               @if (oh) {
-                <i
+                <nz-icon
                   nz-tooltip
                   [nzTooltipTitle]="oh.text"
                   [nzTooltipPlacement]="oh.placement"
@@ -46,9 +46,8 @@ import { ControlUIWidget } from '../../widget';
                   [nzTooltipOverlayStyle]="oh.overlayStyle"
                   [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
                   [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
-                  nz-icon
                   [nzType]="oh.icon!"
-                ></i>
+                />
               }
             </span>
           </label>

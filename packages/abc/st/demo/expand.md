@@ -36,7 +36,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
         {{ item.description }}
       </ng-template>
       <ng-template #expandIcon let-i let-index="index">
-        <span nz-icon [nzType]="i.expand ? 'up' : 'down'"></span>
+        <nz-icon [nzType]="i.expand ? 'up' : 'down'" />
       </ng-template>
     </st>
   `,

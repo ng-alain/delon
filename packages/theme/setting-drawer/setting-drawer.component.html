@@ -16,7 +16,7 @@
           class="setting-drawer__theme-tag"
         >
           @if (color === c.color) {
-            <i nz-icon nzType="check"></i>
+            <nz-icon nzType="check" />
           }
         </span>
       }
@@ -87,5 +87,5 @@
   nz-tooltip
   [nzTooltipTitle]="isDev ? devTips : null"
 >
-  <i nz-icon [nzType]="!collapse ? 'setting' : 'close'" class="setting-drawer__handle-icon"></i>
+  <nz-icon [nzType]="!collapse ? 'setting' : 'close'" class="setting-drawer__handle-icon" />
 </div>

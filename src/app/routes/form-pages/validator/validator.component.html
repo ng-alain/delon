@@ -14,7 +14,7 @@
   <div nz-col [nzSpan]="6" class="text-right">
     <nz-button-group>
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
-        <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}"></i>
+        <nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}" />
       </button>
       <button
         nz-tooltip
@@ -23,10 +23,10 @@
         (click)="openOnStackBlitz()"
         class="ml-sm"
       >
-        <i nz-icon nzType="form"></i>
+        <nz-icon nzType="form" />
       </button>
       <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()" class="ml-sm">
-        <i nz-icon nzType="copy"></i>
+        <nz-icon nzType="copy" />
       </button>
     </nz-button-group>
   </div>

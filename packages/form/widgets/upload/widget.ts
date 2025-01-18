@@ -53,16 +53,16 @@ import type { SFUploadWidgetSchema } from './schema';
     >
       @switch (btnType) {
         @case ('plus') {
-          <i nz-icon nzType="plus"></i>
+          <nz-icon nzType="plus" />
           <div class="ant-upload-text" [innerHTML]="i.text"></div>
         }
         @case ('drag') {
-          <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
+          <p class="ant-upload-drag-icon"><nz-icon nzType="inbox" /></p>
           <p class="ant-upload-text" [innerHTML]="i.text"></p>
           <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
         }
         @default {
-          <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
+          <button type="button" nz-button><nz-icon nzType="upload" /><span [innerHTML]="i.text"></span></button>
         }
       }
     </nz-upload>

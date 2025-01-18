@@ -19,12 +19,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       <ng-template #resultExtra>
         <div class="mb-md text-lg">您提交的内容有如下错误：</div>
         <div class="mb-md">
-          <i nz-icon nzType="close-circle" class="text-error pr-sm"></i>您的账户已被冻结
-          <a class="ml-md">立即解冻<i nz-icon nzType="right" class="pl-sm"></i></a>
+          <nz-icon nzType="close-circle" class="text-error pr-sm"/>您的账户已被冻结
+          <a class="ml-md">立即解冻<nz-icon nzType="right" class="pl-sm"/></a>
         </div>
         <div>
-          <i nz-icon nzType="close-circle" class="text-error pr-sm"></i>您的账户还不具备申请资格
-          <a class="ml-md">立即升级<i nz-icon nzType="right" class="pl-sm"></i></a>
+          <nz-icon nzType="close-circle" class="text-error pr-sm"/>您的账户还不具备申请资格
+          <a class="ml-md">立即升级<nz-icon nzType="right" class="pl-sm"/></a>
         </div>
       </ng-template>
       <button nz-button [nzType]="'primary'">返回修改</button>

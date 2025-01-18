@@ -57,15 +57,14 @@ import { ObjectLayoutWidget } from '../../widget';
         <ng-template #cardTitleTpl>
           <div [class.point]="showExpand" (click)="changeExpand()">
             @if (showExpand) {
-              <i nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs"></i>
+              <nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs" />
             }
             {{ title }}
             @if (ui.optional || oh) {
               <span class="sf__optional">
                 {{ ui.optional }}
                 @if (oh) {
-                  <i
-                    s
+                  <nz-icon
                     nz-tooltip
                     [nzTooltipTitle]="oh.text"
                     [nzTooltipPlacement]="oh.placement"
@@ -75,9 +74,8 @@ import { ObjectLayoutWidget } from '../../widget';
                     [nzTooltipOverlayStyle]="oh.overlayStyle"
                     [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
                     [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
-                    nz-icon
                     [nzType]="oh.icon!"
-                  ></i>
+                  />
                 }
               </span>
             }

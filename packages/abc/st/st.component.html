@@ -4,7 +4,7 @@
     <small class="st__head-optional" [innerHTML]="i.optional"></small>
   }
   @if (i.optionalHelp) {
-    <i class="st__head-tip" nz-tooltip [nzTooltipTitle]="i.optionalHelp" nz-icon nzType="question-circle"></i>
+    <nz-icon class="st__head-tip" nz-tooltip [nzTooltipTitle]="i.optionalHelp" nzType="question-circle" />
   }
 </ng-template>
 <ng-template #chkAllTpl let-custom>
@@ -110,7 +110,7 @@
                               [nzDropdownMenu]="selectionMenu"
                               class="ant-table-selection-down st__checkall-selection"
                             >
-                              <i nz-icon nzType="down"></i>
+                              <nz-icon nzType="down" />
                             </div>
                           </div>
                         }

@@ -32,12 +32,12 @@ import { environment } from '@env/environment';
     <layout-default [options]="options" [asideUser]="asideUserTpl" [nav]="navTpl" [content]="contentTpl">
       <layout-default-header-item direction="left">
         <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
-          <i nz-icon nzType="github"></i>
+          <nz-icon nzType="github" />
         </a>
       </layout-default-header-item>
       <layout-default-header-item direction="left" hidden="pc">
         <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
-          <i nz-icon nzType="search"></i>
+          <nz-icon nzType="search" />
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">

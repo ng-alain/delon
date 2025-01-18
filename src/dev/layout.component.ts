@@ -63,13 +63,13 @@ const ICONS = [
     <layout-default [options]="options" [asideUser]="asideUserTpl">
       <layout-default-header-item direction="left">
         <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
-          <i nz-icon nzType="github"></i>
+          <nz-icon nzType="github" />
         </a>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
         @for (m of topMenus; track $index) {
           <layout-default-top-menu-item (click)="changeMenu(m.key)" [selected]="m.selected" [disabled]="m.disabled">
-            <i nz-icon nzType="github"></i> {{ m.label }}
+            <nz-icon nzType="github" /> {{ m.label }}
           </layout-default-top-menu-item>
         }
       </layout-default-header-item>

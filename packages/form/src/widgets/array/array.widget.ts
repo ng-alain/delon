@@ -17,7 +17,7 @@ import { ArrayLayoutWidget } from '../../widget';
           <span class="sf__optional">
             {{ ui.optional }}
             @if (oh) {
-              <i
+              <nz-icon
                 nz-tooltip
                 [nzTooltipTitle]="oh.text"
                 [nzTooltipPlacement]="oh.placement"
@@ -26,9 +26,8 @@ import { ArrayLayoutWidget } from '../../widget';
                 [nzTooltipOverlayStyle]="oh.overlayStyle"
                 [nzTooltipMouseEnterDelay]="oh.mouseEnterDelay"
                 [nzTooltipMouseLeaveDelay]="oh.mouseLeaveDelay"
-                nz-icon
                 [nzType]="oh.icon!"
-              ></i>
+              />
             }
           </span>
         </label>
@@ -54,7 +53,7 @@ import { ArrayLayoutWidget } from '../../widget';
                   <sf-item [formProperty]="i" />
                   @if (showRemove) {
                     <span class="sf__array-remove" (click)="removeItem($index)" [attr.title]="removeTitle">
-                      <i nz-icon nzType="delete"></i>
+                      <nz-icon nzType="delete" />
                     </span>
                   }
                 </nz-card>

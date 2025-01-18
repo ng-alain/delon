@@ -5,14 +5,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'nz-icon',
   template: `
-    <i
-      nz-icon
+    <nz-icon
       [nzType]="type"
       [nzTheme]="theme"
       [nzSpin]="spin"
       [nzTwotoneColor]="twoToneColor"
       [nzIconfont]="iconfont"
-    ></i>
+    />
   `,
   imports: [NzIconModule]
 })

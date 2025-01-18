@@ -26,7 +26,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       [action]="action"
     >
       <ng-template #action>
-        <i nz-tooltip nzTooltipTitle="指标说明" nz-icon nzType="info-circle"></i>
+        <nz-icon nz-tooltip nzTooltipTitle="指标说明" nzType="info-circle" />
       </ng-template>
       周同比
       <trend flag="up" style="margin: 0 16px 0 8px; color: rgba(0,0,0,.85)">12%</trend>

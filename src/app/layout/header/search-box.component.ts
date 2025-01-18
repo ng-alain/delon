@@ -12,8 +12,10 @@ declare const docsearch: NzSafeAny;
 
 @Component({
   selector: 'header-search',
-  template: `<i nz-icon nzType="search"></i>
-    <input nz-input #searchInput [placeholder]="'app.header.search' | i18n" /> `,
+  template: `
+    <nz-icon nzType="search" />
+    <input nz-input #searchInput [placeholder]="'app.header.search' | i18n" />
+  `,
   host: {
     '[attr.id]': '"search-box"'
   },

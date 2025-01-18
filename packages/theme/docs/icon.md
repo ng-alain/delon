@@ -47,12 +47,12 @@ export class StartupService {
 <i class="anticon anticon-user"></i>
 <i class="anticon anticon-question-circle-o"></i>
 <i class="anticon anticon-spin anticon-loading"></i>
-<i nz-icon class="anticon anticon-user"></i>
-<i nz-icon nzType="align-{{type ? 'left' : 'right'}}"></i>
-<i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
-<i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
-<i nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
-<i nz-icon nzType="filter" theme="outline"></i>
+<nz-icon class="anticon anticon-user"/>
+<nz-icon nzType="align-{{type ? 'left' : 'right'}}"/>
+<nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"/>
+<nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"/>
+<nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"/>
+<nz-icon nzType="filter" theme="outline"/>
 <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
 ```
 
@@ -100,7 +100,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'nz-icon',
-  template: `<i nz-icon [type]="type"></i>`,
+  template: `<nz-icon [type]="type" />`,
 })
 export class IconComponent {
   @Input()
