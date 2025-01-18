@@ -39,7 +39,6 @@
     "noImplicitThis": true,
     "types": [
       "jasmine"
-    ],
-    "useDefineForClassFields": false
+    ]
   }
 }
