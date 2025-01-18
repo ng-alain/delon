@@ -21,9 +21,11 @@ export default {
     lib: ['ES2022', 'dom']
   },
   angularCompilerOptions: {
-    enableI18nLegacyMessageIdFormat: false,
-    strictInjectionParameters: true,
-    strictInputAccessModifiers: true,
-    strictTemplates: true
+    strictStandalone: true,
+    extendedDiagnostics: {
+      checks: {
+        optionalChainNotNullable: 'suppress'
+      }
+    }
   }
 };
