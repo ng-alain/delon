@@ -4,13 +4,13 @@ import {
   DestroyRef,
   Directive,
   ElementRef,
-  Input,
   booleanAttribute,
   inject,
+  input,
   numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { timer } from 'rxjs';
+import { take, timer } from 'rxjs';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
@@ -21,16 +21,16 @@ export class AutoFocusDirective implements AfterViewInit {
   private readonly platform = inject(Platform);
   private readonly destroy$ = inject(DestroyRef);
 
-  @Input({ transform: booleanAttribute }) enabled = true;
-  @Input({ transform: numberAttribute }) delay = 300;
+  enabled = input<boolean, boolean | string | null | undefined>(true, { transform: booleanAttribute });
+  delay = input<number, number | string | null | undefined>(300, { transform: numberAttribute });
 
   ngAfterViewInit(): void {
     const el = this.el;
-    if (!this.platform.isBrowser || !(el instanceof HTMLElement) || !this.enabled) {
+    if (!this.platform.isBrowser || !(el instanceof HTMLElement) || !this.enabled()) {
       return;
     }
-    timer(this.delay)
-      .pipe(takeUntilDestroyed(this.destroy$))
+    timer(this.delay())
+      .pipe(takeUntilDestroyed(this.destroy$), take(1))
       .subscribe(() => el.focus({ preventScroll: false }));
   }
 }
