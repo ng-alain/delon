@@ -1,9 +1,9 @@
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { G2CardModule } from './card.module';
+import { G2CardComponent } from './card.component';
 
 describe('chart: card', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,10 +11,6 @@ describe('chart: card', () => {
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [G2CardModule],
-      declarations: [TestComponent]
-    });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
@@ -42,8 +38,7 @@ describe('chart: card', () => {
       [contentHeight]="contentHeight"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2CardComponent]
 })
 class TestComponent {
   contentHeight: number | string = 46;

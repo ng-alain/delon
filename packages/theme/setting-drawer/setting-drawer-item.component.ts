@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'setting-drawer-item',
@@ -8,8 +13,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   host: {
     '[class.setting-drawer__body-item]': 'true'
   },
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzInputDirective, NzInputNumberComponent, NzSwitchComponent, NzDrawerModule]
 })
 export class SettingDrawerItemComponent {
   i: NzSafeAny = {};

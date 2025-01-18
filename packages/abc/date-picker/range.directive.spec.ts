@@ -4,15 +4,14 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { differenceInDays } from 'date-fns';
 
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
-import { DatePickerModule } from './date-picker.module';
 import { RangePickerDirective } from './range.directive';
 
 registerLocaleData(zh);
@@ -24,10 +23,6 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 
   it('should be throw error when not attached to nz-range-picker component', () => {
     expect(() => {
-      TestBed.configureTestingModule({
-        imports: [DatePickerModule, FormsModule, NoopAnimationsModule, NzDatePickerModule],
-        declarations: [TestThrowComponent]
-      });
       createTestContext(TestThrowComponent);
       fixture.detectChanges();
     }).toThrow();
@@ -36,8 +31,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [DatePickerModule, FormsModule, NoopAnimationsModule, NzDatePickerModule],
-        declarations: [TestComponent]
+        providers: [provideNoopAnimations()]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();
@@ -119,8 +113,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       [shortcut]="shortcut"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzRangePickerComponent, NzDatePickerComponent, RangePickerDirective]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: RangePickerDirective;
@@ -130,8 +123,7 @@ class TestComponent {
 
 @Component({
   template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, RangePickerDirective]
 })
 class TestThrowComponent {
   i: { start?: Date; end?: Date } = {};

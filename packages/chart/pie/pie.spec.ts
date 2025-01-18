@@ -5,16 +5,13 @@ import { checkDelay, PageG2 } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2PieComponent } from './pie.component';
-import { G2PieModule } from './pie.module';
 
 describe('chart: pie', () => {
   let page: PageG2<TestMiniComponent | TestFullComponent>;
 
   describe('[mini]', () => {
     beforeEach(() => {
-      page = new PageG2<TestMiniComponent>().makeModule(G2PieModule, TestMiniComponent, {
-        dc: false
-      });
+      page = new PageG2<TestMiniComponent>().genComp(TestMiniComponent, false);
       page.context.percent = 10;
     });
 
@@ -36,9 +33,7 @@ describe('chart: pie', () => {
 
   describe('[full]', () => {
     beforeEach(fakeAsync(() => {
-      page = new PageG2<TestFullComponent>().makeModule(G2PieModule, TestFullComponent, {
-        dc: false
-      });
+      page = new PageG2<TestFullComponent>().genComp(TestFullComponent, false);
       page.context.data = [
         { x: '1', y: 50 },
         { x: '2', y: 20 },
@@ -61,9 +56,7 @@ describe('chart: pie', () => {
 
   describe('#tooltip', () => {
     beforeEach(() => {
-      page = new PageG2<TestMiniComponent>().makeModule(G2PieModule, TestFullComponent, {
-        dc: false
-      });
+      page = new PageG2<TestMiniComponent>().genComp(TestFullComponent, false);
       page.context.inner = 0.1;
       page.context.data = [{ x: '1', y: 100 }];
     });
@@ -80,7 +73,7 @@ describe('chart: pie', () => {
     }));
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2PieModule, TestFullComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestFullComponent)));
 });
 
 @Component({
@@ -100,8 +93,7 @@ describe('chart: pie', () => {
       [colors]="colors"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2PieComponent]
 })
 class TestMiniComponent {
   @ViewChild('comp', { static: true }) comp!: G2PieComponent;
@@ -140,8 +132,7 @@ class TestMiniComponent {
       [delay]="delay"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2PieComponent]
 })
 class TestFullComponent {
   @ViewChild('comp', { static: true }) comp!: G2PieComponent;

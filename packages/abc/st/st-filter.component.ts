@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,8 +9,17 @@ import {
   ViewEncapsulation,
   inject
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import type { LocaleData } from '@delon/theme';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzRadioComponent } from 'ng-zorro-antd/radio';
 
 import type { STColumnFilter, STColumnFilterMenu, STIcon } from './st.interfaces';
 import type { _STColumn } from './st.types';
@@ -133,8 +143,19 @@ import type { _STColumn } from './st.types';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    FormsModule,
+    NzDropDownModule,
+    NzIconDirective,
+    NzInputDirective,
+    NzInputNumberComponent,
+    NzRangePickerComponent,
+    NzDatePickerComponent,
+    NgTemplateOutlet,
+    NzMenuModule,
+    NzCheckboxComponent,
+    NzRadioComponent
+  ]
 })
 export class STFilterComponent {
   private readonly cdr = inject(ChangeDetectorRef);

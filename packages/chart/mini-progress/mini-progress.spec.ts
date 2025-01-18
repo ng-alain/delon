@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { createTestContext, PageG2 } from '@delon/testing';
+import { DelonLocaleModule } from '@delon/theme';
 
 import { G2MiniProgressComponent } from './mini-progress.component';
-import { G2MiniProgressModule } from './mini-progress.module';
 
 describe('chart: mini-progress', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,8 +13,7 @@ describe('chart: mini-progress', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [G2MiniProgressModule],
-      declarations: [TestComponent]
+      imports: [DelonLocaleModule]
     });
     ({ fixture, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -46,8 +45,7 @@ describe('chart: mini-progress', () => {
   template: `
     <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent" [strokeWidth]="strokeWidth" />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2MiniProgressComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniProgressComponent;

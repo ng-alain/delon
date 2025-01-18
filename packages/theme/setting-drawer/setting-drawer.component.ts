@@ -13,14 +13,24 @@ import {
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
+import { NzAlertComponent } from 'ng-zorro-antd/alert';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
+import { SettingDrawerItemComponent } from './setting-drawer-item.component';
 import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.types';
 
 @Component({
@@ -31,8 +41,18 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
     '[class.setting-drawer-rtl]': `dir === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    FormsModule,
+    NzDrawerModule,
+    NzTooltipDirective,
+    NzIconDirective,
+    NzDividerModule,
+    NzTabsModule,
+    SettingDrawerItemComponent,
+    NzSwitchModule,
+    NzButtonComponent,
+    NzAlertComponent
+  ]
 })
 export class SettingDrawerComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);

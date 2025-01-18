@@ -3,12 +3,13 @@ import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputDirective } from 'ng-zorro-antd/input';
 
 import { ErrorCollectComponent } from './error-collect.component';
-import { ErrorCollectModule } from './error-collect.module';
 
 describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -17,8 +18,7 @@ describe('abc: error-collect', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ErrorCollectModule, ReactiveFormsModule, NzFormModule],
-      declarations: [TestComponent]
+      providers: [provideNoopAnimations()]
     });
   });
 
@@ -98,8 +98,7 @@ describe('abc: error-collect', () => {
       <error-collect #ec [freq]="freq" [offsetTop]="offsetTop" />
     </form>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [NzFormModule, NzInputDirective, ErrorCollectComponent, ReactiveFormsModule]
 })
 class TestComponent implements OnInit {
   freq = 20;

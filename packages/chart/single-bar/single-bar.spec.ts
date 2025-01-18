@@ -5,16 +5,15 @@ import { checkDelay, PageG2 } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2SingleBarComponent } from './single-bar.component';
-import { G2SingleBarModule } from './single-bar.module';
 
 describe('chart: single-bar', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().genModule(G2SingleBarModule, TestComponent);
+    beforeEach(fakeAsync(() => {
+      page = new PageG2<TestComponent>().genComp(TestComponent, true);
       page.genComp(TestComponent);
-    });
+    }));
 
     it('should be working', fakeAsync(() => {
       page.dcFirst().isDataCount('geometries', 1);
@@ -29,7 +28,7 @@ describe('chart: single-bar', () => {
     }));
   });
 
-  it('#delay', fakeAsync(() => checkDelay(G2SingleBarModule, TestComponent)));
+  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
 });
 
 @Component({
@@ -50,8 +49,7 @@ describe('chart: single-bar', () => {
       [delay]="delay"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [G2SingleBarComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2SingleBarComponent;

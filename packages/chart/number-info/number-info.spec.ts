@@ -1,11 +1,10 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 
 import { NumberInfoComponent } from './number-info.component';
-import { NumberInfoModule } from './number-info.module';
 
 describe('abc: number-info', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,10 +12,6 @@ describe('abc: number-info', () => {
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NumberInfoModule],
-      declarations: [TestComponent]
-    });
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
@@ -111,8 +106,7 @@ describe('abc: number-info', () => {
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>
     <ng-template #subTotalTpl><p id="subTotalTpl">subTotalTpl</p></ng-template>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [NumberInfoComponent]
 })
 class TestComponent {
   @ViewChild('ni', { static: true }) comp!: NumberInfoComponent;
