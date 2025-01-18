@@ -6,9 +6,7 @@ import { STWidgetRegistry } from './st-widget';
 import { STColumn, STData } from './st.interfaces';
 
 @Directive({
-  selector: '[st-widget-host]',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  selector: '[st-widget-host]'
 })
 export class STWidgetHostDirective implements OnInit {
   private readonly stWidgetRegistry = inject(STWidgetRegistry);

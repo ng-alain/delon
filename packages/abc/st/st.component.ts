@@ -1,5 +1,5 @@
 import type { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { DecimalPipe, DOCUMENT } from '@angular/common';
+import { DecimalPipe, DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -22,6 +22,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isObservable, Observable, of, filter, catchError, map, finalize, throwError, lastValueFrom } from 'rxjs';
 
@@ -36,14 +37,24 @@ import {
 } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { NzTableComponent } from 'ng-zorro-antd/table';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
+import { STFilterComponent } from './st-filter.component';
 import { STRowSource } from './st-row.directive';
 import { ST_DEFAULT_CONFIG } from './st.config';
 import type {
@@ -74,6 +85,139 @@ import type {
   STWidthMode
 } from './st.interfaces';
 import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType } from './st.types';
+import { CellComponent } from '../cell';
+import { STWidgetHostDirective } from './st-widget-host.directive';
+
+@Component({
+  selector: 'st-td',
+  templateUrl: './st-td.component.html',
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  imports: [
+    FormsModule,
+    NzTooltipDirective,
+    NgTemplateOutlet,
+    NzPopconfirmDirective,
+    NzIconDirective,
+    NzCheckboxComponent,
+    NzRadioComponent,
+    NzTagComponent,
+    NzBadgeComponent,
+    CellComponent,
+    STWidgetHostDirective,
+    NzDropDownModule,
+    NzMenuModule,
+    NzDividerComponent
+  ]
+})
+export class STTdComponent {
+  private readonly stComp = inject(STComponent, { host: true });
+  private readonly router = inject(Router);
+  private readonly modalHelper = inject(ModalHelper);
+  private readonly drawerHelper = inject(DrawerHelper);
+
+  @Input() c!: _STColumn;
+  @Input() cIdx!: number;
+  @Input() data!: STData[];
+  @Input() i!: STData;
+  @Input() index!: number;
+  @Output() readonly n = new EventEmitter<_STTdNotify>();
+
+  private get routerState(): { pi: number; ps: number; total: number } {
+    const { pi, ps, total } = this.stComp;
+    return { pi, ps, total };
+  }
+
+  private report(type: _STTdNotifyType): void {
+    this.n.emit({ type, item: this.i, col: this.c });
+  }
+
+  _checkbox(value: boolean): void {
+    this.i.checked = value;
+    this.report('checkbox');
+  }
+
+  _radio(): void {
+    this.data.filter(w => !w.disabled).forEach(i => (i.checked = false));
+    this.i.checked = true;
+    this.report('radio');
+  }
+
+  _link(e: Event): boolean {
+    this._stopPropagation(e);
+    const res = this.c.click!(this.i, this.stComp);
+    if (typeof res === 'string') {
+      this.router.navigateByUrl(res, { state: this.routerState });
+    }
+    return false;
+  }
+
+  _stopPropagation(ev: Event): void {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  _btn(btn: STColumnButton, ev?: Event): void {
+    ev?.stopPropagation();
+    const cog = this.stComp.cog;
+    let record = this.i;
+    if (btn.type === 'modal' || btn.type === 'static') {
+      if (cog.modal!.pureRecoard === true) {
+        record = this.stComp.pureItem(record)!;
+      }
+      const modal = btn.modal!;
+      const obj = { [modal.paramsName!]: record };
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
+        modal.component,
+        { ...obj, ...(modal.params && modal.params(record)) },
+        deepMergeKey({}, true, cog.modal, modal)
+      )
+        .pipe(filter(w => typeof w !== 'undefined'))
+        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
+      return;
+    } else if (btn.type === 'drawer') {
+      if (cog.drawer!.pureRecoard === true) {
+        record = this.stComp.pureItem(record)!;
+      }
+      const drawer = btn.drawer!;
+      const obj = { [drawer.paramsName!]: record };
+      this.drawerHelper
+        .create(
+          drawer.title!,
+          drawer.component,
+          { ...obj, ...(drawer.params && drawer.params(record)) },
+          deepMergeKey({}, true, cog.drawer, drawer)
+        )
+        .pipe(filter(w => typeof w !== 'undefined'))
+        .subscribe(res => this.btnCallback(record, btn, res));
+      return;
+    } else if (btn.type === 'link') {
+      const clickRes = this.btnCallback(record, btn);
+      if (typeof clickRes === 'string') {
+        this.router.navigateByUrl(clickRes, { state: this.routerState });
+      }
+      return;
+    }
+    this.btnCallback(record, btn);
+  }
+
+  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
+    if (!btn.click) return;
+    if (typeof btn.click === 'string') {
+      switch (btn.click) {
+        case 'load':
+          this.stComp.load();
+          break;
+        case 'reload':
+          this.stComp.reload();
+          break;
+      }
+    } else {
+      return btn.click(record, modal, this.stComp);
+    }
+  }
+}
 
 @Component({
   selector: 'st',
@@ -92,8 +236,19 @@ import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType }
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    FormsModule,
+    NzTableModule,
+    NzTooltipDirective,
+    NzCheckboxComponent,
+    NzResizableModule,
+    NgTemplateOutlet,
+    NzDropDownModule,
+    NzIconDirective,
+    NzMenuModule,
+    STFilterComponent,
+    STTdComponent
+  ]
 })
 export class STComponent implements AfterViewInit, OnChanges {
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
@@ -912,123 +1067,6 @@ export class STComponent implements AfterViewInit, OnChanges {
     }
     if (changes.data) {
       this.loadPageData().subscribe();
-    }
-  }
-}
-
-@Component({
-  selector: 'st-td',
-  templateUrl: './st-td.component.html',
-  preserveWhitespaces: false,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
-})
-export class STTdComponent {
-  private readonly stComp = inject(STComponent, { host: true });
-  private readonly router = inject(Router);
-  private readonly modalHelper = inject(ModalHelper);
-  private readonly drawerHelper = inject(DrawerHelper);
-
-  @Input() c!: _STColumn;
-  @Input() cIdx!: number;
-  @Input() data!: STData[];
-  @Input() i!: STData;
-  @Input() index!: number;
-  @Output() readonly n = new EventEmitter<_STTdNotify>();
-
-  private get routerState(): { pi: number; ps: number; total: number } {
-    const { pi, ps, total } = this.stComp;
-    return { pi, ps, total };
-  }
-
-  private report(type: _STTdNotifyType): void {
-    this.n.emit({ type, item: this.i, col: this.c });
-  }
-
-  _checkbox(value: boolean): void {
-    this.i.checked = value;
-    this.report('checkbox');
-  }
-
-  _radio(): void {
-    this.data.filter(w => !w.disabled).forEach(i => (i.checked = false));
-    this.i.checked = true;
-    this.report('radio');
-  }
-
-  _link(e: Event): boolean {
-    this._stopPropagation(e);
-    const res = this.c.click!(this.i, this.stComp);
-    if (typeof res === 'string') {
-      this.router.navigateByUrl(res, { state: this.routerState });
-    }
-    return false;
-  }
-
-  _stopPropagation(ev: Event): void {
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
-  _btn(btn: STColumnButton, ev?: Event): void {
-    ev?.stopPropagation();
-    const cog = this.stComp.cog;
-    let record = this.i;
-    if (btn.type === 'modal' || btn.type === 'static') {
-      if (cog.modal!.pureRecoard === true) {
-        record = this.stComp.pureItem(record)!;
-      }
-      const modal = btn.modal!;
-      const obj = { [modal.paramsName!]: record };
-      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as NzSafeAny)(
-        modal.component,
-        { ...obj, ...(modal.params && modal.params(record)) },
-        deepMergeKey({}, true, cog.modal, modal)
-      )
-        .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
-      return;
-    } else if (btn.type === 'drawer') {
-      if (cog.drawer!.pureRecoard === true) {
-        record = this.stComp.pureItem(record)!;
-      }
-      const drawer = btn.drawer!;
-      const obj = { [drawer.paramsName!]: record };
-      this.drawerHelper
-        .create(
-          drawer.title!,
-          drawer.component,
-          { ...obj, ...(drawer.params && drawer.params(record)) },
-          deepMergeKey({}, true, cog.drawer, drawer)
-        )
-        .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe(res => this.btnCallback(record, btn, res));
-      return;
-    } else if (btn.type === 'link') {
-      const clickRes = this.btnCallback(record, btn);
-      if (typeof clickRes === 'string') {
-        this.router.navigateByUrl(clickRes, { state: this.routerState });
-      }
-      return;
-    }
-    this.btnCallback(record, btn);
-  }
-
-  private btnCallback(record: STData, btn: STColumnButton, modal?: NzSafeAny): NzSafeAny {
-    if (!btn.click) return;
-    if (typeof btn.click === 'string') {
-      switch (btn.click) {
-        case 'load':
-          this.stComp.load();
-          break;
-        case 'reload':
-          this.stComp.reload();
-          break;
-      }
-    } else {
-      return btn.click(record, modal, this.stComp);
     }
   }
 }

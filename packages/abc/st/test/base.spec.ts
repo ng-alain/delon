@@ -18,6 +18,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
+import { STRowDirective } from '../st-row.directive';
 import { STComponent } from '../st.component';
 import {
   STChange,
@@ -122,10 +123,9 @@ export function genModule<T extends TestComponent>(
   }
   TestBed.configureTestingModule({
     imports,
-    declarations: [TestComponent, TestExpandComponent, TestWidgetComponent],
     providers
   });
-  if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
+  if (other.template && other.template?.length > 0) TestBed.overrideTemplate(TestComponent, other.template);
   if (other.createComp) {
     return new PageObject<T>(other.minColumn, type);
   }
@@ -428,8 +428,7 @@ export class PageObject<T extends TestComponent> {
       <a class="close_in_tpl" (click)="handle.close()">close</a>
     </ng-template>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [STComponent, STRowDirective]
 })
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;
@@ -467,6 +466,7 @@ export class TestComponent {
   error(): void {}
   change(): void {}
 }
+
 @Component({
   template: `
     <st
@@ -483,16 +483,13 @@ export class TestComponent {
       </ng-template>
     </st>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [STComponent]
 })
 export class TestExpandComponent extends TestComponent {}
 
 @Component({
   template: ` <div class="widget-id-value">{{ id }}</div>
-    <div class="widget-record-value">{{ record?.id }}</div>`,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+    <div class="widget-record-value">{{ record?.id }}</div>`
 })
 export class TestWidgetComponent {
   id!: number;
