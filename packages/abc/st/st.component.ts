@@ -691,19 +691,19 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   private _refColAndData(): this {
-    this._columns.forEach(c => {
+    this._columns.forEach((c, cIdx) => {
       this._data.forEach((i, idx) => {
         const values = i._values as _STDataValue[];
         if (c.type === 'no') {
           const text = `${this.dataSource.getNoIndex(i, c, idx)}`;
-          values[c.__point!] = {
+          values[cIdx] = {
             text,
             _text: text,
             org: idx,
             safeType: 'text'
           } as _STDataValue;
         }
-        values[c.__point!].props = this.dataSource.getCell(c, i, idx);
+        values[cIdx].props = this.dataSource.getCell(c, i, idx);
       });
     });
 

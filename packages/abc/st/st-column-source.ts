@@ -417,7 +417,6 @@ export class STColumnSource {
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;
-    let point = 0;
     const columns: _STColumn[] = [];
 
     const processItem = (item: _STColumn): _STColumn => {
@@ -519,8 +518,6 @@ export class STColumnSource {
         ...options.resizable,
         ...(typeof item.resizable === 'boolean' ? ({ disabled: !item.resizable } as STResizable) : item.resizable)
       };
-
-      item.__point = point++;
 
       return item;
     };
