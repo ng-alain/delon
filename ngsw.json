@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1737294701288,
+  "timestamp": 1737296715700,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -59,7 +59,7 @@
         "/chunk-Z2I5DIVO.js",
         "/chunk-ZT6RQOUS.js",
         "/index.html",
-        "/main-WTQZUXKC.js",
+        "/main-URSDHNEE.js",
         "/ngsw-worker.js",
         "/polyfills-ET2SH2M6.js",
         "/safety-worker.js",
@@ -253,7 +253,7 @@
     "/chunk-Z2I5DIVO.js": "da638c445d8f0abae8c5ee65f0bcf5e3b63a6e6b",
     "/chunk-ZT6RQOUS.js": "5cd040318a7d9dc24d558590d1f0ac13de06be5c",
     "/index.html": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-    "/main-WTQZUXKC.js": "70910321737741aef37067fb5c8f26765681c11f",
+    "/main-URSDHNEE.js": "70f62d52c103e55c7bfcb8331174fbde79a39eb2",
     "/ngsw-worker.js": "16acb82045608d96c6864ab46d8db88ce179beae",
     "/polyfills-ET2SH2M6.js": "414d3fd204b6386a328e7c04ae677e1d75ce1418",
     "/safety-worker.js": "3b3c24f5fca13ee61325298c2009282aeef273c7",
