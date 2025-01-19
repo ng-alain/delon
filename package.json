@@ -38,7 +38,7 @@
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "analyze": "npm run ng-high-memory build -- --source-map",
     "analyze:view": "source-map-explorer src/dist/browser/*.js",
-    "site:gen": "node scripts/site/main init && ng-alain-plugin-theme -t=themeCss",
+    "site:gen": "tsx scripts/site/index init && ng-alain-plugin-theme -t=themeCss",
     "site:build": "npm run site:gen && ng b site && npm run site:ngsw && npm run site:minify && npm run site:sitemap && npm run site:helper",
     "site:helper": "bash scripts/ci/helper.sh",
     "site:minify": "node scripts/build/minify.js",
@@ -168,8 +168,6 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "swagger-typescript-api": "^12.0.4",
     "terser": "^5.37.0",
-    "ts-node": "~10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "~5.7.2",
     "xlsx": "^0.18.5"
