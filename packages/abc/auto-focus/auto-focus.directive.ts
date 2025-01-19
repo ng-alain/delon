@@ -21,8 +21,8 @@ export class AutoFocusDirective implements AfterViewInit {
   private readonly platform = inject(Platform);
   private readonly destroy$ = inject(DestroyRef);
 
-  enabled = input<boolean, boolean | string | null | undefined>(true, { transform: booleanAttribute });
-  delay = input<number, number | string | null | undefined>(300, { transform: numberAttribute });
+  enabled = input<boolean, unknown>(true, { transform: booleanAttribute });
+  delay = input<number, unknown>(300, { transform: numberAttribute });
 
   ngAfterViewInit(): void {
     const el = this.el;

@@ -334,7 +334,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input({ transform: booleanAttribute }) bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
   @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
-  drag = input<STDragOptions | null, STDragOptions | boolean | string | null | undefined>(null, {
+  drag = input<STDragOptions | null, unknown>(null, {
     transform: v => {
       const obj: STDragOptions | null = typeof v === 'object' ? v : booleanAttribute(v) ? {} : null;
       if (obj == null) return null;

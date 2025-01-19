@@ -2,8 +2,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
   ViewEncapsulation,
   booleanAttribute,
   effect,
@@ -13,7 +11,8 @@ import {
   output,
   signal
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
@@ -46,18 +45,15 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
     NoticeIconTabComponent
   ]
 })
-export class NoticeIconComponent implements OnInit, OnDestroy {
-  private readonly i18n = inject(DelonLocaleService);
-  private i18n$?: Subscription;
-  locale = signal<LocaleData>({});
-
+export class NoticeIconComponent {
+  locale = toSignal<LocaleData>(inject(DelonLocaleService).change.pipe(map(data => data['noticeIcon'])));
   data = input<NoticeItem[]>([]);
-  count = input<number | undefined, number | string | null | undefined>(undefined, { transform: numberAttribute });
-  loading = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
-  popoverVisible = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
+  count = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
+  loading = input<boolean, unknown>(false, { transform: booleanAttribute });
+  popoverVisible = input<boolean, unknown>(false, { transform: booleanAttribute });
   btnClass = input<NgClassType>();
   btnIconClass = input<NgClassType>();
-  centered = input<boolean, boolean | string | null | undefined>(false, { transform: booleanAttribute });
+  centered = input<boolean, unknown>(false, { transform: booleanAttribute });
   readonly select = output<NoticeIconSelect>();
   readonly clear = output<string>();
   readonly popoverVisibleChange = output<boolean>();
@@ -83,15 +79,5 @@ export class NoticeIconComponent implements OnInit, OnDestroy {
 
   onClear(title: string): void {
     this.clear.emit(title);
-  }
-
-  ngOnInit(): void {
-    this.i18n$ = this.i18n.change.subscribe(() => {
-      this.locale.set(this.i18n.getData('noticeIcon'));
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.i18n$?.unsubscribe();
   }
 }

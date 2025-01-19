@@ -6,7 +6,6 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  InputSignalWithTransform,
   OnInit,
   ViewEncapsulation,
   inject,
@@ -49,8 +48,8 @@ export class ErrorCollectComponent implements OnInit {
   count = signal(0);
   dir = toSignal(inject(Directionality).change);
 
-  readonly freq: InputSignalWithTransform<number, unknown> = input(0, { transform: numberAttribute });
-  readonly offsetTop: InputSignalWithTransform<number, unknown> = input(0, { transform: numberAttribute });
+  readonly freq = input<number, unknown>(0, { transform: numberAttribute });
+  readonly offsetTop = input<number, unknown>(0, { transform: numberAttribute });
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'errorCollect', { freq: 250, offsetTop: 65 + 64 + 8 * 2 });
