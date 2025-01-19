@@ -31,7 +31,7 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 Please make sure global Angular Cli is latest version via `ng version` command, please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
 
 ```bash
-npm install -g @angular/cli
+npm install -g @angular/cli@19
 ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
@@ -42,7 +42,7 @@ npm start
 **Multiple projects**
 
 ```bash
-yarn global add @angular/cli
+yarn global add @angular/cli@19
 ng new my-workspace --no-create-application --package-manager yarn
 cd my-workspace
 ng g application mgr --style less --routing
@@ -88,7 +88,7 @@ NG-ALAIN is a standard Angular CLI project that includes common routes for admin
 │   │   ├── shared                              # Shared module
 │   │   │   ├── shared-delon.module.ts          # @Delon/* import of secondary shared modules
 │   │   │   ├── shared-zorro.module.ts          # NG-ZORRO import of secondary shared modules
-│   │   │   └── shared.module.ts                # Shared module file
+│   │   │   └── shared-imports.ts               # Shared module file
 │   │   ├── app.component.ts                    # Root component
 │   │   └── app.module.ts                       # Root module
 │   │   └── global-config.module.ts             # @delon & ng-zorro global config
