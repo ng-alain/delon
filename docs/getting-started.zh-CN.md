@@ -34,7 +34,7 @@ nnrm use taobao
 安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 `ng` 命令，可以通过终端窗口中运行：
 
 ```bash
-npm install -g @angular/cli
+npm install -g @angular/cli@19
 ```
 
 ### 创建NG-ALAIN项目
