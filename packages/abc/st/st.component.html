@@ -58,7 +58,7 @@
       @for (row of _headers; track row) {
         <tr>
           @if ($first && expand) {
-            <th nzWidth="50px" [rowSpan]="_headers.length" [nzLeft]="row[0].column._left! ? true : false"></th>
+            <th nzWidth="50px" [rowSpan]="_headers.length" [nzLeft]="row[0].column._left ? true : false"></th>
           }
           @for (h of row; track h; let index = $index; let last = $last) {
             @let _c = h.column;
@@ -66,8 +66,8 @@
               [colSpan]="h.colSpan"
               [rowSpan]="h.rowSpan"
               [nzWidth]="$any(_c).width"
-              [nzLeft]="_c._left!"
-              [nzRight]="_c._right!"
+              [nzLeft]="_c._left"
+              [nzRight]="_c._right"
               [class]="_c._className"
               [attr.data-col]="_c.indexKey"
               [attr.data-col-index]="index"
@@ -164,7 +164,7 @@
             (nzExpandChange)="_expandChange(i, $event)"
             (click)="_stopPropagation($event)"
             nzWidth="50px"
-            [nzLeft]="_columns[0]._left! ? true : false"
+            [nzLeft]="_columns[0]._left ? true : false"
           ></td>
           <ng-template #wrapExpandIcon>
             <span (click)="_expandChange(i, !i.expand)">
@@ -176,8 +176,8 @@
           @let props = i._values[cIdx].props;
           @if (props?.colSpan > 0 && props?.rowSpan > 0) {
             <td
-              [nzLeft]="c._left!"
-              [nzRight]="c._right!"
+              [nzLeft]="c._left"
+              [nzRight]="c._right"
               [attr.data-col-index]="cIdx"
               [class]="c._className"
               [attr.colspan]="props?.colSpan === 1 ? null : props?.colSpan"
