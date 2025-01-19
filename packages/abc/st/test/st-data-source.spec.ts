@@ -515,12 +515,16 @@ describe('abc: table: data-souce', () => {
             {
               title: '',
               index: 'id1',
-              _sort: { enabled: true, default: 'descend', key: 'id1' }
+              _sort: { enabled: true, default: 'descend', key: 'id1' },
+              _left: false,
+              _right: false
             },
             {
               title: '',
               index: 'id2',
-              _sort: { enabled: true, default: 'ascend', key: 'id2' }
+              _sort: { enabled: true, default: 'ascend', key: 'id2' },
+              _left: false,
+              _right: false
             }
           ];
           options.headers = [
