@@ -87,6 +87,7 @@ export function genModule<T extends TestComponent>(
   other: {
     template?: string;
     i18n?: boolean;
+    i18nIgnoreOverride?: boolean;
     minColumn?: boolean;
     providers?: NzSafeAny[];
     createComp?: boolean;
@@ -109,15 +110,21 @@ export function genModule<T extends TestComponent>(
     STModule,
     DelonLocaleModule
   ];
-  const providers = [
+  const providers: NzSafeAny[] = [
     provideNoopAnimations(),
     provideHttpClient(),
-    provideHttpClientTesting(),
-    {
+    provideHttpClientTesting()
+    // {
+    //   provide: ALAIN_I18N_TOKEN,
+    //   useClass: MockI18NServiceFake
+    // }
+  ];
+  if (other.i18nIgnoreOverride !== true) {
+    providers.push({
       provide: ALAIN_I18N_TOKEN,
       useClass: MockI18NServiceFake
-    }
-  ];
+    });
+  }
   if (other.providers!.length > 0) {
     providers.push(...other.providers!);
   }
