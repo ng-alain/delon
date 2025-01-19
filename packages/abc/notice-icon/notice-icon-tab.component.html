@@ -1,19 +1,21 @@
-@if (data.list && data.list.length > 0) {
+@let d = item();
+@let list = d.list;
+@if (list && list.length > 0) {
   <ng-template [ngTemplateOutlet]="listTpl" />
 } @else {
   <div class="notice-icon__notfound">
-    @if (data.emptyImage) {
-      <img class="notice-icon__notfound-img" [attr.src]="data.emptyImage" alt="not found" />
+    @if (d.emptyImage) {
+      <img class="notice-icon__notfound-img" [attr.src]="d.emptyImage" alt="not found" />
     }
     <p>
-      <ng-container *nzStringTemplateOutlet="data.emptyText">
-        {{ data.emptyText || locale.emptyText }}
+      <ng-container *nzStringTemplateOutlet="d.emptyText">
+        {{ d.emptyText || locale().emptyText }}
       </ng-container>
     </p>
   </div>
 }
 <ng-template #listTpl>
-  <nz-list [nzDataSource]="data.list" [nzRenderItem]="item">
+  <nz-list [nzDataSource]="list" [nzRenderItem]="item">
     <ng-template #item let-item>
       <nz-list-item (click)="onClick(item)" [class.notice-icon__item-read]="item.read">
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" [nzAvatar]="item.avatar">
@@ -43,5 +45,5 @@
       </nz-list-item>
     </ng-template>
   </nz-list>
-  <div class="notice-icon__clear" (click)="onClear()">{{ data.clearText || locale.clearText }}</div>
+  <div class="notice-icon__clear" (click)="onClear()">{{ d.clearText || locale().clearText }}</div>
 </ng-template>

@@ -49,10 +49,10 @@ describe('abc: notice-icon', () => {
     describe('should be show dropdown', () => {
       it('via popoverVisible property', () => {
         spyOn(context, 'popupVisibleChange');
-        expect(context.comp.popoverVisible).toBe(false);
+        expect(context.comp.popoverVisible()).toBe(false);
         context.popoverVisible = true;
         fixture.detectChanges();
-        expect(context.comp.popoverVisible).toBe(true);
+        expect(context.comp.popoverVisible()).toBe(true);
       });
       it('via click', done => {
         expect(context.popoverVisible).toBeUndefined();
