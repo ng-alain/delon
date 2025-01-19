@@ -1,2 +1,1 @@
-- [ ] add `declaration-property-value-no-unknown` in `.stylelintrc.js`
 - 
