@@ -46,7 +46,9 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   ]
 })
 export class NoticeIconComponent {
-  locale = toSignal<LocaleData>(inject(DelonLocaleService).change.pipe(map(data => data['noticeIcon'])));
+  locale = toSignal<LocaleData>(inject(DelonLocaleService).change.pipe(map(data => data['noticeIcon'])), {
+    requireSync: true
+  });
   data = input<NoticeItem[]>([]);
   count = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
   loading = input<boolean, unknown>(false, { transform: booleanAttribute });
