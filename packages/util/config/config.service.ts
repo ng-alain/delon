@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { SIGNAL, SignalNode } from '@angular/core/primitives/signals';
 
 import { deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -8,11 +9,7 @@ import { AlainConfig, AlainConfigKey, ALAIN_CONFIG } from './config.types';
 
 @Injectable({ providedIn: 'root' })
 export class AlainConfigService {
-  private config: AlainConfig;
-
-  constructor(@Optional() @Inject(ALAIN_CONFIG) defaultConfig?: AlainConfig) {
-    this.config = { ...defaultConfig };
-  }
+  private readonly config = { ...inject(ALAIN_CONFIG, { optional: true }) };
 
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
     const res = ((this.config[componentName] as { [key: string]: unknown }) || {}) as NzSafeAny;
@@ -23,12 +20,20 @@ export class AlainConfigService {
     return deepMergeKey({}, true, ...defaultValues, this.get(componentName));
   }
 
+  /**
+   * 将配置附加到当前实例中，支持 Signal 信号
+   */
   attach<T extends AlainConfigKey>(componentThis: unknown, componentName: T, defaultValues: AlainConfig[T]): void {
-    Object.assign(componentThis as any, this.merge(componentName, defaultValues));
-  }
-
-  attachKey<T extends AlainConfigKey>(componentThis: unknown, componentName: T, key: string): void {
-    Object.assign(componentThis as any, this.get(componentName, key));
+    const data = this.merge<T>(componentName, defaultValues);
+    Object.entries(data as Object).forEach(([key, value]) => {
+      const t = componentThis as any;
+      const s = t[key]?.[SIGNAL] as SignalNode<any>;
+      if (s != null) {
+        s.value = value;
+      } else {
+        t[key] = value;
+      }
+    });
   }
 
   set<T extends AlainConfigKey>(componentName: T, value: AlainConfig[T]): void {
