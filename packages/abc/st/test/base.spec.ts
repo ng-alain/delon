@@ -28,6 +28,7 @@ import {
   STColumnTitle,
   STContextmenuFn,
   STCustomRequestOptions,
+  STDragOptions,
   STError,
   STMultiSort,
   STPage,
@@ -427,6 +428,7 @@ export class PageObject<T extends TestComponent> {
       [showHeader]="showHeader"
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
+      [drag]="drag"
       (change)="change($event)"
       (error)="error($event)"
     />
@@ -469,6 +471,8 @@ export class TestComponent {
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
   ];
+
+  drag?: STDragOptions | boolean = false;
 
   error(): void {}
   change(): void {}
