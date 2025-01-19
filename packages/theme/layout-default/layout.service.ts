@@ -1,4 +1,6 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
@@ -36,6 +38,18 @@ export class LayoutDefaultService {
       type = collapsed ? 'fold' : 'unfold';
     }
     return `menu-${type}`;
+  }
+
+  constructor(bm: BreakpointObserver) {
+    const mobileMedia = 'only screen and (max-width: 767.99px)';
+    bm.observe(mobileMedia)
+      .pipe(takeUntilDestroyed())
+      .subscribe(state => this.checkMedia(state.matches));
+    this.checkMedia(bm.isMatched(mobileMedia));
+  }
+
+  private checkMedia(value: boolean): void {
+    this.settings.setLayout('collapsed', value);
   }
 
   private notify(): void {

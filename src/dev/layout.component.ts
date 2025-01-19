@@ -119,7 +119,7 @@ export class DevLayoutComponent implements OnInit {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
     hideHeader: false,
-    showHeaderCollapse: false,
+    showHeaderCollapse: true,
     showSiderCollapse: true
     // hideAside: true
   };
