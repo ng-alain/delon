@@ -918,6 +918,8 @@ export interface STColumnButtonPop<T extends STData = any> {
    */
   title?: string;
 
+  titleI18n?: string;
+
   /**
    * Popover trigger mode, default: `click`
    */
@@ -955,10 +957,14 @@ export interface STColumnButtonPop<T extends STData = any> {
    */
   cancelText?: string;
 
+  cancelTextI18n?: string;
+
   /**
    * Text of the Confirm button
    */
   okText?: string;
+
+  okTextI18n?: string;
 
   /**
    * Button `type` of the Confirm button

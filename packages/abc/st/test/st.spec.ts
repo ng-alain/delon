@@ -1648,4 +1648,22 @@ describe('abc: st', () => {
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     }));
   });
+  describe('[i18n without fake]', () => {
+    let curLang = 'en';
+    beforeEach(() => {
+      page = genModule(TestComponent, { i18n: true, i18nIgnoreOverride: true })!;
+      refAssign();
+    });
+    it(`should be auto i18n in pop type`, fakeAsync(() => {
+      curLang = 'zh';
+      i18nSrv.use(curLang, { a: '一', b: '二', c: '三' });
+      const columns: STColumn[] = [
+        {
+          title: '',
+          buttons: [{ text: 'pop', pop: { titleI18n: 'a', okTextI18n: 'b', cancelTextI18n: 'c' } }]
+        }
+      ];
+      page.updateColumn(columns).click('.st__btn-text').cd().expectElContent('.ant-popover-message-title', '一');
+    }));
+  });
 });
