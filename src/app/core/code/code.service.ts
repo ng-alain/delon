@@ -37,13 +37,12 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     if (includeCli) {
       res.devDependencies = {
-        '@angular-devkit/build-angular': '^17.0.0',
-        '@angular/cli': '^17.0.0',
-        '@angular/compiler-cli': '^17.0.0',
-        '@types/node': '^18.18.0',
-        'ts-node': '~10.9.1',
-        typescript: '~5.2.2',
-        'ng-alain': '~17.0.3'
+        '@angular-devkit/build-angular': '^19.1.2',
+        '@angular/cli': '^19.1.2',
+        '@angular/compiler-cli': '^19.1.0',
+        '@types/node': '^18.19.1',
+        typescript: '~5.7.2',
+        'ng-alain': '^19.0.0'
       };
     }
 
