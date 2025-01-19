@@ -145,7 +145,15 @@
       }
     </thead>
   }
-  <tbody class="st__body">
+  <tbody
+    class="st__body"
+    cdkDropList
+    [cdkDropListDisabled]="drag() === null"
+    (cdkDropListDropped)="drag()?.dropped?.($event)"
+    (cdkDropListEntered)="drag()?.entered?.($event)"
+    (cdkDropListExited)="drag()?.exited?.($event)"
+    (cdkDropListSorted)="drag()?.sorted?.($event)"
+  >
     @if (!_loading) {
       <ng-template [ngTemplateOutlet]="bodyHeader!" [ngTemplateOutletContext]="{ $implicit: _statistical }" />
     }
@@ -155,6 +163,7 @@
         (click)="_rowClick($event, i, index, false)"
         (dblclick)="_rowClick($event, i, index, true)"
         [class]="i._rowClassName"
+        cdkDrag
       >
         @if (expand) {
           <td

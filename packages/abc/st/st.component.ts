@@ -1,3 +1,4 @@
+import { moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import type { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DecimalPipe, DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
@@ -10,6 +11,7 @@ import {
   ElementRef,
   EventEmitter,
   inject,
+  input,
   Input,
   numberAttribute,
   OnChanges,
@@ -72,6 +74,7 @@ import type {
   STContextmenuItem,
   STCustomRequestOptions,
   STData,
+  STDragOptions,
   STError,
   STExportOptions,
   STLoadOptions,
@@ -251,7 +254,8 @@ export class STTdComponent {
     NzIconDirective,
     NzMenuModule,
     STFilterComponent,
-    STTdComponent
+    STTdComponent,
+    DragDropModule
   ]
 })
 export class STComponent implements AfterViewInit, OnChanges {
@@ -330,6 +334,20 @@ export class STComponent implements AfterViewInit, OnChanges {
   @Input({ transform: booleanAttribute }) bordered = false;
   @Input() size!: 'small' | 'middle' | 'default';
   @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
+  drag = input<STDragOptions | null, STDragOptions | boolean | string | null | undefined>(null, {
+    transform: v => {
+      const obj: STDragOptions | null = typeof v === 'object' ? v : booleanAttribute(v) ? {} : null;
+      if (obj == null) return null;
+
+      if (typeof obj.dropped !== 'function') {
+        obj.dropped = e => {
+          moveItemInArray(this._data, e.previousIndex, e.currentIndex);
+          this.cd();
+        };
+      }
+      return obj;
+    }
+  });
   @Input() singleSort?: STSingleSort | null;
   private _multiSort?: STMultiSort;
   @Input()
