@@ -37,7 +37,12 @@ describe('st: column-source', () => {
   let rowSrv: STRowSource;
   let stWidgetRegistry: STWidgetRegistry;
   let page: PageObject;
-  const options: STColumnSourceProcessOptions = { widthMode, resizable: { disabled: true }, safeType: 'safeHtml' };
+  const options: STColumnSourceProcessOptions = {
+    widthMode,
+    resizable: { disabled: true },
+    safeType: 'safeHtml',
+    expand: false
+  };
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }): void {
     aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
@@ -228,7 +233,8 @@ describe('st: column-source', () => {
       it('should be working when className is object', () => {
         const res = srv.process([{ title: '', width: 10, type: 'number', className: { a: true, b: false } }], {
           widthMode: { strictBehavior: 'truncate' },
-          safeType: 'html'
+          safeType: 'html',
+          expand: false
         }).columns;
         const obj = res[0]._className as NgClassInterface;
         expect(obj['text-truncate']).toBe(true);

@@ -27,6 +27,7 @@ export interface STColumnSourceProcessOptions {
   widthMode: STWidthMode;
   resizable?: STResizable;
   safeType: STColumnSafeType;
+  expand: boolean;
 }
 
 @Injectable()
@@ -140,12 +141,13 @@ export class STColumnSource {
     }
   }
 
-  private fixedCoerce(list: _STColumn[]): void {
+  private fixedCoerce(list: _STColumn[], expand: boolean): void {
     const countReduce = (a: number, b: _STColumn): number => a + +b.width!.toString().replace('px', '');
+    const expandWidth = expand ? 50 : 0;
     // left width
     list
       .filter(w => w.fixed && w.fixed === 'left' && w.width)
-      .forEach((item, idx) => (item._left = `${list.slice(0, idx).reduce(countReduce, 0)}px`));
+      .forEach((item, idx) => (item._left = `${list.slice(0, idx).reduce(countReduce, 0) + expandWidth}px`));
     // right width
     list
       .filter(w => w.fixed && w.fixed === 'right' && w.width)
@@ -536,7 +538,7 @@ export class STColumnSource {
       throw new Error(`[st]: just only one column radio`);
     }
 
-    this.fixedCoerce(columns as _STColumn[]);
+    this.fixedCoerce(columns as _STColumn[], options.expand);
     return {
       columns: columns.filter(w => !Array.isArray(w.children) || w.children.length === 0),
       ...this.genHeaders(copyList)
