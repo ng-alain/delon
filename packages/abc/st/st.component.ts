@@ -1018,7 +1018,8 @@ export class STComponent implements AfterViewInit, OnChanges {
     const res = this.columnSource.process(this.columns as _STColumn[], {
       widthMode: this.widthMode,
       resizable: this._resizable,
-      safeType: this.cog.safeType as STColumnSafeType
+      safeType: this.cog.safeType as STColumnSafeType,
+      expand: this.expand != null
     });
     this._columns = res.columns;
     this._headers = res.headers;
