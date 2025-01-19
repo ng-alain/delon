@@ -49,7 +49,6 @@ export interface _STColumn extends STColumn {
   _width?: number;
   _left?: string | boolean;
   _right?: string | boolean;
-  __point?: number;
   __renderTitle?: TemplateRef<any>;
   __render?: TemplateRef<any>;
 }
