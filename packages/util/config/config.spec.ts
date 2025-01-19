@@ -1,6 +1,5 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { AlainChartConfig } from './chart/chart.type';
 import { AlainConfigService } from './config.service';
@@ -21,10 +20,17 @@ describe('util: config', () => {
     expect(srv.get('chart')?.theme).toBe('dark');
   });
 
-  it('#attachKey', () => {
-    const res: NzSafeAny = {};
-    srv.set('chart', { theme: 'a' });
-    srv.attachKey(res, 'chart', 'theme');
-    expect(res.theme).toBe('a');
+  describe('#attach', () => {
+    it('support signal', () => {
+      class MockSignal {
+        guard_url = signal<string>('a');
+
+        constructor() {
+          srv.attach(this, 'acl', { guard_url: 'override' });
+        }
+      }
+      const obj = new MockSignal();
+      expect(obj.guard_url()).toBe('override');
+    });
   });
 });
