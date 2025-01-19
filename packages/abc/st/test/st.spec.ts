@@ -394,6 +394,11 @@ describe('abc: st', () => {
             .expectElCount('.cell', PS)
             .expectElCount('.ant-checkbox', 1);
         }));
+        it('can be click', fakeAsync(() => {
+          const columns: STColumn[] = [{ index: 'id', cell: { type: 'boolean' }, click: jasmine.createSpy() }];
+          page.updateColumn(columns).clickCell('.cell');
+          expect(columns[0].click).toHaveBeenCalled();
+        }));
       });
       describe('[other]', () => {
         it('should custom render via format', fakeAsync(() => {

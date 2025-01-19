@@ -66,7 +66,16 @@ export class DemoComponent {
         } as CellOptions;
       }
     },
-    { title: '可用', index: 'disabled', width: 64, cell: { type: 'boolean' } },
+    {
+      title: '可用',
+      index: 'disabled',
+      width: 64,
+      cell: { type: 'boolean', tooltip: '点击可切换状态' },
+      className: 'point',
+      click: i => {
+        this.st.setRow(i, { disabled: !i.disabled });
+      }
+    },
     { title: '注册时间', index: 'registered', width: 180, cell: { type: 'date' } }
   ];
 

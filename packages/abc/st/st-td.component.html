@@ -65,7 +65,7 @@
       <nz-badge [nzStatus]="col.color" [nzText]="col.text" [nz-tooltip]="col.tooltip" />
     }
     @case ('cell') {
-      <cell [value]="col.text" [options]="col.cell ?? c.cell" />
+      <cell [value]="col.text" [options]="col.cell ?? c.cell" (click)="_client()" />
     }
     @case ('widget') {
       <ng-template st-widget-host [record]="i" [column]="c" />
