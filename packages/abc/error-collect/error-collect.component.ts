@@ -1,19 +1,20 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
-  Input,
+  InputSignalWithTransform,
   OnInit,
   ViewEncapsulation,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  signal
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 
 import { AlainConfigService } from '@delon/util/config';
@@ -24,12 +25,12 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   exportAs: 'errorCollect',
   template: `
     <nz-icon nzType="exclamation-circle" />
-    <span class="error-collect__count">{{ count }}</span>
+    <span class="error-collect__count">{{ count() }}</span>
   `,
   host: {
     '[class.error-collect]': 'true',
-    '[class.error-collect-rtl]': `dir === 'rtl'`,
-    '[class.d-none]': '_hiden',
+    '[class.error-collect-rtl]': `dir() === 'rtl'`,
+    '[class.d-none]': '_hiden()',
     '(click)': '_click()'
   },
   preserveWhitespaces: false,
@@ -38,24 +39,21 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   imports: [NzIconDirective]
 })
 export class ErrorCollectComponent implements OnInit {
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
-  private readonly directionality = inject(Directionality);
   private readonly platform = inject(Platform);
   private readonly destroy$ = inject(DestroyRef);
-
   private formEl: HTMLFormElement | null = null;
 
-  _hiden = true;
-  count = 0;
-  dir?: Direction = 'ltr';
+  _hiden = signal(true);
+  count = signal(0);
+  dir = toSignal(inject(Directionality).change);
 
-  @Input({ transform: numberAttribute }) freq!: number;
-  @Input({ transform: numberAttribute }) offsetTop!: number;
+  readonly freq: InputSignalWithTransform<number, unknown> = input(0, { transform: numberAttribute });
+  readonly offsetTop: InputSignalWithTransform<number, unknown> = input(0, { transform: numberAttribute });
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });
+    configSrv.attach(this, 'errorCollect', { freq: 250, offsetTop: 65 + 64 + 8 * 2 });
   }
 
   private get errEls(): NodeListOf<HTMLElement> {
@@ -64,36 +62,23 @@ export class ErrorCollectComponent implements OnInit {
 
   private update(): void {
     const count = this.errEls.length;
-    if (count === this.count) return;
-    this.count = count;
-    this._hiden = count === 0;
-    this.cdr.markForCheck();
+    if (count === this.count()) return;
+    this.count.set(count);
+    this._hiden.set(count === 0);
   }
 
   _click(): boolean {
-    if (this.count === 0) return false;
+    if (this.count() === 0) return false;
     // nz-form-control
     const els = this.errEls;
     const formItemEl = this.findParent(els[0], '[nz-form-control]') || els[0];
     formItemEl.scrollIntoView(true);
     // fix header height
-    this.doc.documentElement.scrollTop -= this.offsetTop;
+    this.doc.documentElement.scrollTop -= this.offsetTop();
     return true;
   }
 
-  private install(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    interval(this.freq)
-      .pipe(takeUntilDestroyed(this.destroy$))
-      .subscribe(() => this.update());
-    this.update();
-  }
-
-  private findParent(el: Element, selector: string): HTMLFormElement | null {
+  private findParent(el: HTMLElement, selector: string): HTMLFormElement | null {
     let retEl: HTMLFormElement | null = null;
     while (el) {
       if (el.querySelector(selector)) {
@@ -110,6 +95,11 @@ export class ErrorCollectComponent implements OnInit {
 
     this.formEl = this.findParent(this.el, 'form');
     if (this.formEl === null) throw new Error('No found form element');
-    this.install();
+
+    interval(this.freq())
+      .pipe(takeUntilDestroyed(this.destroy$))
+      .subscribe(() => this.update());
+
+    this.update();
   }
 }

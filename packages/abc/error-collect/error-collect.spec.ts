@@ -40,14 +40,14 @@ describe('abc: error-collect', () => {
     beforeEach(() => getPropertiesAndCreate());
     it('should be collect error', (done: () => void) => {
       setTimeout(() => {
-        expect(context.comp.count).toBe(1);
+        expect(context.comp.count()).toBe(1);
         done();
       }, 21);
     });
 
     it('should be click go to first error element', (done: () => void) => {
       setTimeout(() => {
-        expect(context.comp.count).toBe(1);
+        expect(context.comp.count()).toBe(1);
         const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
         spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
