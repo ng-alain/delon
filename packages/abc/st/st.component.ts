@@ -153,6 +153,10 @@ export class STTdComponent {
     return false;
   }
 
+  _client(): void {
+    this.c.click?.(this.i, this.stComp);
+  }
+
   _stopPropagation(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
