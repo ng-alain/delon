@@ -176,8 +176,8 @@
           @let props = i._values[cIdx].props;
           @if (props?.colSpan > 0 && props?.rowSpan > 0) {
             <td
-              [nzLeft]="!!c._left"
-              [nzRight]="!!c._right"
+              [nzLeft]="c._left!"
+              [nzRight]="c._right!"
               [attr.data-col-index]="cIdx"
               [class]="c._className"
               [attr.colspan]="props?.colSpan === 1 ? null : props?.colSpan"
