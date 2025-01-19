@@ -391,6 +391,7 @@ export class ReuseTabService implements OnDestroy {
     if (!this.storageState) return;
 
     this.cached.list = this.stateSrv.get(this.stateKey).map(v => ({
+      ...v,
       title: { text: v.title },
       url: v.url,
       position: v.position
