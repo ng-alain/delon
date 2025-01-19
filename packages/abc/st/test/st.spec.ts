@@ -1591,6 +1591,14 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
     });
+    describe('#drag', () => {
+      it('should be working', fakeAsync(() => {
+        page.updateColumn([{ title: 'a', index: 'id' }]).expectElCount('.cdk-drop-list-disabled', 1);
+        context.drag = {};
+        fixture.detectChanges();
+        page.updateColumn([{ title: 'a', index: 'id' }]).expectElCount('.cdk-drop-list-disabled', 0);
+      }));
+    });
   });
   describe('[custom render template]', () => {
     it('with column title', fakeAsync(() => {
