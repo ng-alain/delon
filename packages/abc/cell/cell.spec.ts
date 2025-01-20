@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -223,7 +223,7 @@ describe('abc: cell', () => {
 
       it('#valueChange', () => {
         spyOn(context, 'valueChange');
-        context.value = true;
+        context.value = false;
         context.options = { type: 'checkbox' };
         fixture.detectChanges();
         expect(context.valueChange).not.toHaveBeenCalled();
@@ -368,9 +368,6 @@ class TestWidget {
   imports: [CellComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true })
-  comp!: CellComponent;
-
   value?: unknown;
   valueChange(_?: NzSafeAny): void {}
   options?: CellOptions;

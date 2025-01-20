@@ -2,7 +2,14 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import ngLang from '@angular/common/locales/zh';
 import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import {
+  provideRouter,
+  RouterFeatures,
+  withComponentInputBinding,
+  withHashLocation,
+  withInMemoryScrolling,
+  withViewTransitions
+} from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
@@ -85,17 +92,19 @@ const alainConfig: AlainConfig = {
 
 const ngZorroConfig: NzConfig = {};
 
+const routerFeatures: RouterFeatures[] = [
+  withComponentInputBinding(),
+  withViewTransitions(),
+  withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+];
+if (!environment.production) routerFeatures.push(withHashLocation());
+
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
     provideAnimations(),
-    provideRouter(
-      routes,
-      withComponentInputBinding(),
-      withViewTransitions(),
-      withInMemoryScrolling({ scrollPositionRestoration: 'top' })
-    ),
+    provideRouter(routes, ...routerFeatures),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
     provideAlain({ config: alainConfig, defaultLang, i18nClass: I18NService }),
     provideNzConfig(ngZorroConfig),

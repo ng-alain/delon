@@ -48,8 +48,8 @@ export class ErrorCollectComponent implements OnInit {
   count = signal(0);
   dir = toSignal(inject(Directionality).change);
 
-  readonly freq = input<number, unknown>(0, { transform: numberAttribute });
-  readonly offsetTop = input<number, unknown>(0, { transform: numberAttribute });
+  readonly freq = input(0, { transform: numberAttribute });
+  readonly offsetTop = input(0, { transform: numberAttribute });
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach(this, 'errorCollect', { freq: 250, offsetTop: 65 + 64 + 8 * 2 });

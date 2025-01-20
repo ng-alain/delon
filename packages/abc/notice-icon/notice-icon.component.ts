@@ -50,12 +50,12 @@ export class NoticeIconComponent {
     requireSync: true
   });
   data = input<NoticeItem[]>([]);
-  count = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
-  loading = input<boolean, unknown>(false, { transform: booleanAttribute });
-  popoverVisible = input<boolean, unknown>(false, { transform: booleanAttribute });
+  count = input(undefined, { transform: numberAttribute });
+  loading = input(false, { transform: booleanAttribute });
+  popoverVisible = input(false, { transform: booleanAttribute });
   btnClass = input<NgClassType>();
   btnIconClass = input<NgClassType>();
-  centered = input<boolean, unknown>(false, { transform: booleanAttribute });
+  centered = input(false, { transform: booleanAttribute });
   readonly select = output<NoticeIconSelect>();
   readonly clear = output<string>();
   readonly popoverVisibleChange = output<boolean>();
