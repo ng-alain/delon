@@ -154,6 +154,13 @@
       "default": true,
       "description": "指定是否使用模态框 (Specifies using modal mode)",
       "x-prompt": "Would you like to modal mode?"
+    },
+    "swaggerPath": {
+      "type": "string",
+      "description": "Specify the swagger path, for example: https://petstore.swagger.io/v2/swagger.json (Only tpl wagger-list u)"
+    },
+    "swaggerMethod": {
+      "type": "string"
     }
   },
   "required": ["tplName", "name", "module", "modal"]
