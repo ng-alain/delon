@@ -10,8 +10,8 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { XlsxExportOptions, XlsxExportResult, XlsxExportSheet } from './xlsx.types';
 
-declare var XLSX: NzSafeAny;
-declare var cptable: NzSafeAny;
+declare const XLSX: NzSafeAny;
+declare const cptable: NzSafeAny;
 
 @Injectable({ providedIn: 'root' })
 export class XlsxService {
@@ -35,7 +35,7 @@ export class XlsxService {
   }
 
   @ZoneOutside()
-  private read(data: NzSafeAny): { [key: string]: NzSafeAny[][] } {
+  private read(data: NzSafeAny): Record<string, NzSafeAny[][]> {
     const {
       read,
       utils: { sheet_to_json }
@@ -60,8 +60,8 @@ export class XlsxService {
   /**
    * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
    */
-  import(fileOrUrl: File | string): Promise<{ [key: string]: NzSafeAny[][] }> {
-    return new Promise<{ [key: string]: NzSafeAny[][] }>((resolve, reject) => {
+  import(fileOrUrl: File | string): Promise<Record<string, NzSafeAny[][]>> {
+    return new Promise<Record<string, NzSafeAny[][]>>((resolve, reject) => {
       const r = (data: NzSafeAny): void => this.ngZone.run(() => resolve(this.read(data)));
       this.init()
         .then(() => {

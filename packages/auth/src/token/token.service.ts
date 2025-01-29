@@ -50,7 +50,6 @@ export class TokenService implements ITokenService, OnDestroy {
     return res;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get(type?: any): any;
   get<T extends ITokenModel>(type?: new () => T): T;
   get<T extends ITokenModel>(type?: new () => T): T {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tree } from '@angular-devkit/schematics';
 import { parse, modify, applyEdits, JSONPath, ModificationOptions } from 'jsonc-parser';
 

@@ -108,7 +108,7 @@ export class CurrencyService {
     }
 
     res.value = (isNegative ? '-' : '') + abs;
-    res.unitI18n = (options.unitI18n as { [key: string]: NzSafeAny })[res.unit];
+    res.unitI18n = (options.unitI18n as Record<string, NzSafeAny>)[res.unit];
     return res;
   }
 
@@ -146,7 +146,7 @@ export class CurrencyService {
     }
     integer = (+integer).toString();
     const inWords = options.inWords;
-    const unit: { [key: string]: string[] } = {
+    const unit: Record<string, string[]> = {
       num: inWords
         ? ['', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '点']
         : ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '点'],

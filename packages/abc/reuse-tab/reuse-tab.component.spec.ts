@@ -33,7 +33,7 @@ import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 let i18nResult = 'zh';
 @Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string): string {
+  fanyi(): string {
     return i18nResult;
   }
 }

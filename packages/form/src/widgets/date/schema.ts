@@ -60,7 +60,7 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   /**
    * To customize the style of the popup calendar
    */
-  popupStyle?: { [klass: string]: NzSafeAny };
+  popupStyle?: Record<string, NzSafeAny>;
 
   /**
    * To customize the className of the popup calendar

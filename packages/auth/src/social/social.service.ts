@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOCUMENT } from '@angular/common';
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';

@@ -15,11 +15,7 @@ import {
   url
 } from '@angular-devkit/schematics';
 import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
-import {
-  insertImport,
-  addProviderToModule as _addProviderToModule,
-  getSourceNodes
-} from '@schematics/angular/utility/ast-utils';
+import { insertImport, getSourceNodes } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
@@ -33,7 +29,6 @@ import { isStandalone } from './standalone';
 import { getProject, NgAlainProjectDefinition } from './workspace';
 
 export interface CommonSchema extends ComponentSchema {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
   _filesPath?: string;
   schematicName?: string;
@@ -182,7 +177,7 @@ export function addValueToVariable(
   if (!node) {
     throw new SchematicsException(`Could not find any [${variableName}] variable in path '${filePath}'.`);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(

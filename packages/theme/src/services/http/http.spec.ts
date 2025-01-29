@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpParams, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
@@ -18,7 +17,7 @@ describe('theme: http.client', () => {
   const time = new Date();
   const URL = '/user';
   const OK = 'ok!';
-  const PARAMS: { [key: string]: string } = { a: `1` };
+  const PARAMS: Record<string, string> = { a: `1` };
   const BODY = 'body data';
 
   function createModule(config?: AlainThemeHttpClientConfig): void {
@@ -60,7 +59,7 @@ describe('theme: http.client', () => {
       it('should be loading is false when request throw error', fakeAsync(() => {
         http
           .get('/error-url')
-          .pipe(catchError(_err => of(null)))
+          .pipe(catchError(() => of(null)))
           .subscribe();
         tick();
         backend.expectOne(() => true).error(new ProgressEvent('404'));

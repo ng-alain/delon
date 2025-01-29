@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
@@ -21,7 +20,7 @@ import { MetaService } from '@core';
 import { EditButtonComponent } from '../edit-button/edit-button.component';
 import { RouteTransferDirective } from '../route-transfer/route-transfer.directive';
 
-declare var hljs: any;
+declare const hljs: any;
 
 @Component({
   selector: 'app-docs',
@@ -126,9 +125,9 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => {
       const elements = this.doc.querySelectorAll('[class*="language-"], [class*="lang-"]');
-      for (let i = 0, element; (element = elements[i++]); ) {
+      elements.forEach(element => {
         hljs.highlightBlock(element);
-      }
+      });
     }, 250);
   }
 

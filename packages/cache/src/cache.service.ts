@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy, inject } from '@angular/core';

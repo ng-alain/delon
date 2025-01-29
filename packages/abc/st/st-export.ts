@@ -12,7 +12,7 @@ export class STExport {
   private readonly xlsxSrv = inject(XlsxService);
 
   private _stGet(item: NzSafeAny, col: STColumn, index: number, colIndex: number): NzSafeAny {
-    const ret: { [key: string]: NzSafeAny } = { t: 's', v: '' };
+    const ret: Record<string, NzSafeAny> = { t: 's', v: '' };
 
     if (col.format) {
       ret.v = col.format(item, col, index);
@@ -33,10 +33,11 @@ export class STExport {
               ret.z = col.dateFormat;
             }
             break;
-          case 'yn':
+          case 'yn': {
             const yn = col.yn!;
             ret.v = val === yn.truth ? yn.yes : yn.no;
             break;
+          }
         }
       }
     }
@@ -46,9 +47,9 @@ export class STExport {
     return ret;
   }
 
-  private genSheet(opt: STExportOptions): { [sheet: string]: unknown } {
-    const sheets: { [sheet: string]: { [key: string]: NzSafeAny } } = {};
-    const sheet: { [key: string]: NzSafeAny } = (sheets[opt.sheetname || 'Sheet1'] = {});
+  private genSheet(opt: STExportOptions): Record<string, unknown> {
+    const sheets: Record<string, Record<string, NzSafeAny>> = {};
+    const sheet: Record<string, NzSafeAny> = (sheets[opt.sheetname || 'Sheet1'] = {});
     const dataLen = opt.data!.length;
     const columns = opt.columens! as _STColumn[];
     let validColCount = 0;

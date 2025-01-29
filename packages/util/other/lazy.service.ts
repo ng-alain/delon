@@ -17,7 +17,7 @@ export interface LazyLoadItem {
 
 export interface LazyLoadOptions {
   innerContent?: string;
-  attributes?: { [qualifiedName: string]: string };
+  attributes?: Record<string, string>;
   rel?: string;
 }
 
@@ -30,8 +30,8 @@ export interface LazyLoadOptions {
 export class LazyService {
   private readonly doc = inject(DOCUMENT);
 
-  private list: { [key: string]: boolean } = {};
-  private cached: { [key: string]: LazyResult } = {};
+  private list: Record<string, boolean> = {};
+  private cached: Record<string, LazyResult> = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
   get change(): Observable<LazyResult[]> {
@@ -46,7 +46,7 @@ export class LazyService {
     this.cached = {};
   }
 
-  private attachAttributes(el: HTMLElement, attributes?: { [qualifiedName: string]: string }): void {
+  private attachAttributes(el: HTMLElement, attributes?: Record<string, string>): void {
     if (attributes == null) return;
 
     Object.entries(attributes).forEach(([key, value]) => {
@@ -86,7 +86,7 @@ export class LazyService {
   loadScript(
     path: string,
     innerContent?: string | LazyLoadOptions,
-    attributes?: { [qualifiedName: string]: string }
+    attributes?: Record<string, string>
   ): Promise<LazyResult> {
     const options: LazyLoadOptions =
       typeof innerContent === 'object'
@@ -138,7 +138,7 @@ export class LazyService {
     path: string,
     rel?: string | LazyLoadOptions,
     innerContent?: string,
-    attributes?: { [qualifiedName: string]: string }
+    attributes?: Record<string, string>
   ): Promise<LazyResult> {
     const options: LazyLoadOptions =
       typeof rel === 'object'

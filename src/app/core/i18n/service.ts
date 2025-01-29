@@ -71,7 +71,7 @@ export class I18NService extends AlainI18nBaseService {
     return this._langs;
   }
 
-  get defaultLang(): LangType {
+  override get defaultLang(): LangType {
     return 'zh-CN';
   }
 
@@ -83,7 +83,7 @@ export class I18NService extends AlainI18nBaseService {
     return ['zh-CN', 'en-US'];
   }
 
-  get(i: string | { [key: string]: string } | null): string {
+  get(i: string | Record<string, string> | null): string {
     if (i == null) return '';
     return typeof i === 'string' ? i : i[this.currentLang] || i[this.defaultLang] || '';
   }

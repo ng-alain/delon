@@ -43,7 +43,7 @@ export class ObjectProperty extends PropertyGroup {
       console.error(`Invalid ${this.schema.title || 'root'} object field configuration:`, e);
     }
     orderedProperties!.forEach(propertyId => {
-      (this.properties as { [key: string]: FormProperty })[propertyId] = this.formPropertyFactory.createProperty(
+      (this.properties as Record<string, FormProperty>)[propertyId] = this.formPropertyFactory.createProperty(
         this.schema.properties![propertyId],
         this.ui[`$${propertyId}`],
         ((this.formData || {}) as NzSafeAny)[propertyId],
@@ -55,9 +55,9 @@ export class ObjectProperty extends PropertyGroup {
   }
 
   setValue(value: SFValue, onlySelf: boolean): void {
-    const properties = this.properties as { [key: string]: FormProperty };
+    const properties = this.properties as Record<string, FormProperty>;
     for (const propertyId in value) {
-      if (value.hasOwnProperty(propertyId) && properties[propertyId]) {
+      if (Object.prototype.hasOwnProperty.call(value, propertyId) && properties[propertyId]) {
         (properties[propertyId] as FormProperty).setValue(value[propertyId], true);
       }
     }
@@ -67,9 +67,9 @@ export class ObjectProperty extends PropertyGroup {
 
   resetValue(value: SFValue, onlySelf: boolean): void {
     value = value || this.schema.default || {};
-    const properties = this.properties as { [key: string]: FormProperty };
+    const properties = this.properties as Record<string, FormProperty>;
     for (const propertyId in this.schema.properties) {
-      if (this.schema.properties.hasOwnProperty(propertyId)) {
+      if (Object.prototype.hasOwnProperty.call(this.schema.properties, propertyId)) {
         properties[propertyId].resetValue(value[propertyId], true);
       }
     }

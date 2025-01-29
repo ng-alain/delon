@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SiteConfig } from '../interfaces';
 import { generateSluggedId, genValidId, isHeading } from '../utils/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const JsonML = require('jsonml.js/lib/utils');
 
 interface TocItem {
@@ -21,7 +21,7 @@ function fixChildren(list: TocItem[]): TocItem[] {
       if (!result[resultPointer].children) {
         result[resultPointer].children = [];
       }
-      result[resultPointer].children!!.push(item);
+      result[resultPointer].children!.push(item);
     } else {
       parentH = item.h;
       ++resultPointer;

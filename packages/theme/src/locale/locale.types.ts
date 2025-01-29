@@ -1,8 +1,6 @@
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-export interface LocaleData {
-  [key: string]: NzSafeAny;
-}
+export type LocaleData = Record<string, NzSafeAny>;
 
 export interface ExceptionLocaleData extends LocaleData {
   403: string;

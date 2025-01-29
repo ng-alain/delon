@@ -19,12 +19,12 @@ export interface MetaList {
 
   order?: number;
 
-  meta?: { [key: string]: MetaItem };
+  meta?: Record<string, MetaItem>;
 }
 
 export interface MetaItem {
   [key: string]: NzSafeAny;
-  title?: string | { [key: string]: string };
+  title?: string | Record<string, string>;
   type?: string;
   order?: number;
 }

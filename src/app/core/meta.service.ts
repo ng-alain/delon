@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, inject } from '@angular/core';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -162,7 +161,7 @@ export class MetaService {
     category.list!.forEach(item => {
       const meta = item.meta![this.i18n.currentLang] || item.meta![this.i18n.defaultLang];
       let typeIdx = category.types!.findIndex(
-        (w: { [key: string]: string }) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
+        (w: Record<string, string>) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
       );
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);

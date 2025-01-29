@@ -46,9 +46,10 @@ export class CookieService {
    *
    * 获取所有Cookie键值对
    */
-  getAll(): { [key: string]: string } {
-    const ret: { [key: string]: string } = {};
+  getAll(): Record<string, string> {
+    const ret: Record<string, string> = {};
     const arr = this.cookie.split('; ');
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < arr.length; i++) {
       const cookie = arr[i];
       const index = cookie.indexOf('=');
@@ -87,14 +88,13 @@ export class CookieService {
     if (typeof opt.expires !== 'string') {
       opt.expires = opt.expires ? opt.expires.toUTCString() : '';
     }
-    const optStr: { [key: string]: string | boolean } = opt as NzSafeAny;
+    const optStr: Record<string, string | boolean> = opt as NzSafeAny;
     const attributes = Object.keys(optStr)
       .filter(k => optStr[k] && optStr[k] !== true)
       .map(k => `${k}=${(optStr[k] as string).split(';')[0]}`)
       .join(';');
-    this.doc.cookie = `${encodeURIComponent(String(key))}=${encodeURIComponent(String(value))}${
-      attributes ? `; ${attributes}` : ''
-    }`;
+    const keyValue = `${encodeURIComponent(String(key))}=${encodeURIComponent(String(value))}`;
+    this.doc.cookie = `${keyValue}${attributes ? `; ${attributes}` : ''}`;
   }
 
   /**

@@ -212,6 +212,7 @@ describe('abc: lodop', () => {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function (): void {
+          // eslint-disable-next-line prefer-rest-params
           mockRes = arguments[4];
         }),
         webskt: {

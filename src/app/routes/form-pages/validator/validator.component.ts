@@ -89,9 +89,9 @@ export class FormValidatorComponent implements OnInit {
   schema!: string;
   schemaData!: SFSchema;
   formCode!: string;
-  formData!: {};
+  formData!: object;
   uiCode!: string;
-  uiSchema!: {};
+  uiSchema!: object;
   expand = true;
   editorOptions = { language: 'json', theme: 'vs' };
 
@@ -147,7 +147,7 @@ export class FormValidatorComponent implements OnInit {
   }
 
   openOnStackBlitz(): void {
-    const obj: { [key: string]: NzSafeAny } = {
+    const obj: Record<string, NzSafeAny> = {
       schema: this.schema,
       layout: this.layout,
       formData: this.formCode || '{}',

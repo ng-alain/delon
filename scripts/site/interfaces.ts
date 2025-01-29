@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface SiteConfig {
   /** github 项目地址 */
   github: string;
@@ -31,7 +30,7 @@ export interface ModuleConfig {
   /** 生成目标位置 */
   dist: string;
   /** 分类数据 */
-  types: Array<{ [key: string]: string }>;
+  types: Array<Record<string, string>>;
   /** 默认路由 */
   defaultRoute: string;
   /** 额外路由元数据 */
@@ -59,9 +58,7 @@ export interface ModuleDirConfig {
   reName?: string;
 }
 
-export interface Langs {
-  [key: string]: any;
-}
+export type Langs = Record<string, any>;
 
 export interface MetaOriginal {
   /** 示例顺序 */
@@ -69,7 +66,7 @@ export interface MetaOriginal {
   /** 示例栏数 */
   cols: number;
   /** 标题 */
-  title: string | { [key: string]: any };
+  title: string | Record<string, any>;
   /** 分类 */
   type: string;
 

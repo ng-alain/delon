@@ -116,7 +116,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
         debounceTime(200)
       )
       .subscribe(() => {
-        if (!!this.doc.querySelector(`#${this.id}`)) {
+        if (this.doc.querySelector(`#${this.id}`)) {
           this.bodyEl.classList.add(wrapCls);
           this.updateCls();
         } else {

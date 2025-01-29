@@ -353,7 +353,7 @@ describe('form: component', () => {
       });
 
       it('#disabled', () => {
-        const CLS: { [key: string]: string | NzSafeAny[] } = {
+        const CLS: Record<string, string | NzSafeAny[]> = {
           input: '.ant-input[disabled]',
           number: '.ant-input-number-disabled',
           switch: '.ant-switch-disabled'

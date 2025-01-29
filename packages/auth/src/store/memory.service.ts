@@ -5,7 +5,7 @@ import { ITokenModel } from '../token/interface';
  * 内存存储，关掉浏览器标签后**丢失**。
  */
 export class MemoryStore implements IStore {
-  private cache: { [key: string]: ITokenModel | null } = {};
+  private cache: Record<string, ITokenModel | null> = {};
 
   get(key: string): ITokenModel {
     return this.cache[key] || ({} as ITokenModel);

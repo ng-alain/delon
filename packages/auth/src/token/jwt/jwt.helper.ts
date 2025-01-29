@@ -27,7 +27,7 @@ function b64decode(str: string): string {
 
   for (
     // initialize result and counters
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     let bc = 0, bs: any, buffer: any, idx = 0;
     // get next character
     (buffer = str.charAt(idx++));

@@ -37,6 +37,7 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "resolveJsonModule": true,
     "types": [
       "jasmine"
     ]

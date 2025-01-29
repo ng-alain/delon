@@ -241,7 +241,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   private get endProperty(): FormProperty {
-    return (this.formProperty.parent!.properties as { [key: string]: FormProperty })[this.ui.end!];
+    return (this.formProperty.parent!.properties as Record<string, FormProperty>)[this.ui.end!];
   }
 
   private setEnd(value: string | null): void {

@@ -61,7 +61,7 @@ export class CodeService {
     return startupServiceTS({ ajvVersion: pkg.dependencies.ajv.substring(1) });
   }
 
-  private get genMock(): { [key: string]: string } {
+  private get genMock(): Record<string, string> {
     return {
       '_mock/user.ts': mockUser,
       '_mock/index.ts': `export * from './user';`
@@ -167,12 +167,13 @@ export class CodeService {
     const packageJson = this.genPackage({ includeCli });
     // packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
-    const files: {
-      [key: string]: {
+    const files: Record<
+      string,
+      {
         content: string;
         isBinary: boolean;
-      };
-    } = {
+      }
+    > = {
       'package.json': {
         content: JSON.stringify(packageJson, null, 2),
         isBinary: false

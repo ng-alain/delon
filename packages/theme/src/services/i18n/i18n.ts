@@ -4,8 +4,6 @@ import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { AlainConfigService, AlainThemeI18nConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { _HttpClient } from '../http/http.client';
-
 export interface AlainI18NService {
   [key: string]: NzSafeAny;
 
@@ -129,15 +127,14 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     if (!params) return content;
 
     if (typeof params === 'object') {
-      const interpolation = this.cog.interpolation!!;
+      const interpolation = this.cog.interpolation!;
       const objParams = params as Record<string, unknown>;
-      Object.keys(objParams).forEach(
-        key =>
-          (content = content.replace(
-            new RegExp(`${interpolation[0]}\\s?${key}\\s?${interpolation[1]}`, 'g'),
-            `${objParams[key]}`
-          ))
-      );
+      Object.keys(objParams).forEach(key => {
+        content = content.replace(
+          new RegExp(`${interpolation[0]}\\s?${key}\\s?${interpolation[1]}`, 'g'),
+          `${objParams[key]}`
+        );
+      });
     }
 
     (Array.isArray(params) ? params : [params]).forEach(

@@ -12,7 +12,7 @@ export interface LoadingIcon {
 
 export interface LoadingCustom {
   html?: string | SafeHtml;
-  style?: { [key: string]: NzSafeAny };
+  style?: Record<string, NzSafeAny>;
   [key: string]: NzSafeAny;
 }
 

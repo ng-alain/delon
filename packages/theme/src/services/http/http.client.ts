@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpContext, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, delay, finalize, switchMap, tap } from 'rxjs';
@@ -6,7 +5,7 @@ import { Observable, of, delay, finalize, switchMap, tap } from 'rxjs';
 import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
+export type _HttpHeaders = HttpHeaders | Record<string, string | string[]>;
 export type HttpObserve = 'body' | 'events' | 'response';
 
 /**

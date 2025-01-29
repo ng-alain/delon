@@ -5,7 +5,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STComponent } from '../st.component';
 import { STMultiSort } from '../st.interfaces';
-import { _STColumn } from '../st.types';
 import { PageObject, TestComponent, genModule } from './base.spec';
 
 describe('abc: st-sort', () => {

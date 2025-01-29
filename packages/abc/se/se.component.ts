@@ -167,7 +167,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
-      if (!!control) {
+      if (control) {
         if (control.id) {
           this._id = control.id;
         } else {
@@ -231,7 +231,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
     this.inited = true;
     if (this.onceFlag) {
       Promise.resolve().then(() => {
-        this.updateStatus(this.ngControl?.invalid!);
+        this.updateStatus(this.ngControl!.invalid!);
         this.onceFlag = false;
       });
     }

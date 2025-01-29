@@ -24,7 +24,7 @@ export function format(
 
 export interface FormatMaskOption {
   mask: string;
-  tokens?: { [key: string]: FormatMaskToken };
+  tokens?: Record<string, FormatMaskToken>;
 }
 
 export interface FormatMaskToken {
@@ -59,7 +59,7 @@ export function formatMask(value: string, option: string | FormatMaskOption): st
   const opt: FormatMaskOption = {
     ...(typeof option === 'string' ? { mask: option } : option)
   };
-  const tokens: { [key: string]: FormatMaskToken } = {
+  const tokens: Record<string, FormatMaskToken> = {
     '0': { pattern: /\d/, default: '0' },
     '9': { pattern: /\d/ },
     '#': { pattern: /[a-zA-Z0-9]/ },
@@ -73,7 +73,7 @@ export function formatMask(value: string, option: string | FormatMaskOption): st
     },
     '*': {
       pattern: /.*/,
-      transform: _ => `*`
+      transform: () => `*`
     },
     ...opt.tokens
   };

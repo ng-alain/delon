@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as path from 'path';
@@ -26,7 +26,7 @@ function fixExample(item: any, filePath: string, config: ModuleConfig): void {
   const exampleComponentName = `${genUpperName(`${config.name}-${item.name}`)}Component`;
   obj.imports = `\nimport { ${exampleComponentName} } from './${item.name}';`;
   obj.standaloneImports = `,${exampleComponentName}`;
-  generateDoc(obj, exampleIndexTpl!!, filePath);
+  generateDoc(obj, exampleIndexTpl!, filePath);
 }
 
 export function generateDemo(
@@ -59,8 +59,8 @@ export function generateDemo(
       console.error(`invalid ${filePath}`, err);
       return;
     }
-    mt!!.name = name.replace('.md', '');
-    mt!!.filePath = filePath;
+    mt!.name = name.replace('.md', '');
+    mt!.filePath = filePath;
     return mt;
   });
 

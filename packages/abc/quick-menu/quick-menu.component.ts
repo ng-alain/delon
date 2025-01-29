@@ -37,7 +37,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly render = inject(Renderer2);
 
-  ctrlStyle: { [key: string]: string | undefined } = {};
+  ctrlStyle: Record<string, string | undefined> = {};
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input({ transform: numberAttribute }) top = 120;

@@ -689,7 +689,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     const className = config.fn(item, index);
     const trEl = el.closest('tr') as HTMLElement;
     if (config.exclusive) {
-      trEl.parentElement!!.querySelectorAll('tr').forEach((a: HTMLElement) => a.classList.remove(className));
+      trEl.parentElement!.querySelectorAll('tr').forEach((a: HTMLElement) => a.classList.remove(className));
     }
     if (trEl.classList.contains(className)) {
       trEl.classList.remove(className);
@@ -762,7 +762,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       }
 
       const curData = this._data;
-      for (var i = curData.length; i--; ) {
+      for (let i = curData.length; i >= 0; i--) {
         if (data.indexOf(curData[i]) !== -1) {
           curData.splice(i, 1);
         }

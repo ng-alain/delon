@@ -27,7 +27,6 @@ function fixImport(options: PluginOptions): Rule {
       tree.overwrite(basicComponentPath, content);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isStandalone = await isStandaloneSchematic(tree, options as any);
     if (isStandalone) {
       // import HeaderRTLComponent

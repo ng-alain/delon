@@ -32,7 +32,7 @@ export interface SFObjectWidgetSchema extends SFUISchemaItem {
   /**
    * 等同 `nzBodyStyle` 属性
    */
-  cardBodyStyle?: { [key: string]: string };
+  cardBodyStyle?: Record<string, string>;
   /**
    * 等同 `nzExtra` 属性
    */

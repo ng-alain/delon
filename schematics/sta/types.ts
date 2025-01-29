@@ -29,5 +29,5 @@ export interface STAConfig {
   /**
    * Swagger tag mapping dictionary
    */
-  tagsMapping?: { [key: string]: string };
+  tagsMapping?: Record<string, string>;
 }

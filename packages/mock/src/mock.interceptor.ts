@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpErrorResponse, HttpResponse, HttpResponseBase, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Observable, of, throwError, delay, isObservable, from, map, switchMap } from 'rxjs';
@@ -19,7 +18,7 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
 
   let res$: Observable<any>;
   switch (typeof rule!.callback) {
-    case 'function':
+    case 'function': {
       const mockRequest: MockRequest = {
         original: req,
         body: req.body,
@@ -62,21 +61,22 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
         );
       }
       break;
+    }
     default:
       res$ = of(rule!.callback);
       break;
   }
 
   res$ = res$.pipe(
-    map(res =>
-      res instanceof HttpResponseBase
+    map(res => {
+      return res instanceof HttpResponseBase
         ? res
         : new HttpResponse({
             status: 200,
             url: req.url,
             body: deepCopy(res)
-          })
-    ),
+          });
+    }),
     map((res: HttpResponseBase) => {
       const anyRes: any = res;
       if (anyRes.body) {

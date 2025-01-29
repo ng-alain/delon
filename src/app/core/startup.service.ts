@@ -51,6 +51,7 @@ export class StartupService {
     win.hj =
       win.hj ||
       function () {
+        // eslint-disable-next-line prefer-rest-params
         (win.hj.q = win.hj.q || []).push(arguments);
       };
     win._hjSettings = {

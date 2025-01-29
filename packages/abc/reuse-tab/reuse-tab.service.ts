@@ -41,7 +41,7 @@ export class ReuseTabService implements OnDestroy {
   private _cachedChange = new BehaviorSubject<ReuseTabNotify | null>(null);
   private _router$?: Unsubscribable;
   private removeUrlBuffer: string | null = null;
-  private positionBuffer: { [url: string]: [number, number] } = {};
+  private positionBuffer: Record<string, [number, number]> = {};
   componentRef?: ReuseComponentRef;
   debug = false;
   routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';

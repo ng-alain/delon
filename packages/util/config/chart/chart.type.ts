@@ -10,7 +10,7 @@ export interface AlainChartConfig {
    */
   libs?: string[];
 
-  theme?: string | { [key: string]: NzSafeAny };
+  theme?: string | Record<string, NzSafeAny>;
 
   /**
    * [ECharts](https://echarts.apache.org/) library path

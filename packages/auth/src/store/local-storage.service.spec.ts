@@ -9,8 +9,7 @@ describe('auth: local-storage', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let data: { [key: string]: any } = {};
+    let data: Record<string, any> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;

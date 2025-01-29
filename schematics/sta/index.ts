@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
@@ -49,7 +47,7 @@ function cleanOutput(p: string): void {
   try {
     rmSync(p, { recursive: true });
     mkdirSync(p);
-  } catch (e) {}
+  } catch {}
 }
 
 function tagsMapping(res: GenerateApiOutput, config: STAConfig): void {

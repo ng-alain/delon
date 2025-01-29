@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { dispatchDropDown } from '@delon/testing';
-import { ALAIN_I18N_TOKEN, DelonLocaleModule, _HttpClient } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
@@ -18,7 +18,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
-import { STRowDirective } from '../st-row.directive';
 import { STComponent } from '../st.component';
 import {
   STChange,
@@ -37,7 +36,6 @@ import {
   STWidthMode
 } from '../st.interfaces';
 import { STModule } from '../st.module';
-import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 
 export const MOCKDATE = new Date();
@@ -72,7 +70,7 @@ export const USERS: NzSafeAny[] = genData(DEFAULTCOUNT);
 
 @Injectable()
 export class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string): string {
+  fanyi(): string {
     return 'zh';
   }
 }
@@ -429,15 +427,15 @@ export class PageObject<T extends TestComponent> {
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
       [drag]="drag"
-      (change)="change($event)"
-      (error)="error($event)"
+      (change)="change()"
+      (error)="error()"
     />
     <ng-template #tpl let-handle="handle">
       <span>In tpl</span>
       <a class="close_in_tpl" (click)="handle.close()">close</a>
     </ng-template>
   `,
-  imports: [STComponent, STRowDirective]
+  imports: [STComponent]
 })
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;
@@ -467,7 +465,7 @@ export class TestComponent {
   virtualScroll = false;
   showHeader = true;
   customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
-  contextmenu: STContextmenuFn | null = _ => [
+  contextmenu: STContextmenuFn | null = () => [
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
   ];
@@ -487,7 +485,7 @@ export class TestComponent {
       [expand]="expand"
       [expandRowByClick]="expandRowByClick"
       [expandAccordion]="expandAccordion"
-      (change)="change($event)"
+      (change)="change()"
     >
       <ng-template #expand let-item let-index="index" let-column="column">
         {{ item.id }}

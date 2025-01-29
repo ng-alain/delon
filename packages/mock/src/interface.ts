@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type HttpRequest } from '@angular/common/http';
 import type { Observable } from 'rxjs';
 

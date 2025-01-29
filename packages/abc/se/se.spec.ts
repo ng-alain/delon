@@ -591,7 +591,7 @@ class TestComponent {
 
   optional?: string;
   optionalHelp?: string;
-  error: string | TemplateRef<void> | { [key: string]: string | TemplateRef<void> } = 'required';
+  error: string | TemplateRef<void> | Record<string, string | TemplateRef<void>> = 'required';
   extra?: string;
   label?: string;
   required?: boolean | null;

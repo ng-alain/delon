@@ -8,7 +8,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ChartEChartsOn } from '.';
 import { ChartEChartsComponent } from './echarts.component';
-import { ChartEChartsEvent, ChartEChartsOption } from './echarts.types';
+import { ChartEChartsOption } from './echarts.types';
 
 // let isClassECharts = false;
 class MockLazyService {
@@ -115,5 +115,5 @@ class TestComponent {
       handler: console.log
     }
   ];
-  handleEvents(_: ChartEChartsEvent): void {}
+  handleEvents(): void {}
 }

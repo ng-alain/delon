@@ -114,7 +114,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
     this.grid = grid as SFGridSchema;
     const list: NzSafeAny[] = [];
     for (const key of formProperty.propertiesId) {
-      const property = (formProperty.properties as { [key: string]: FormProperty })[key] as FormProperty;
+      const property = (formProperty.properties as Record<string, FormProperty>)[key] as FormProperty;
       const item = {
         property,
         grid: property.ui.grid || grid || {},
