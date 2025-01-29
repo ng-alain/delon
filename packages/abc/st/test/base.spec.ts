@@ -18,6 +18,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
+import { STRowDirective } from '../st-row.directive';
 import { STComponent } from '../st.component';
 import {
   STChange,
@@ -427,15 +428,15 @@ export class PageObject<T extends TestComponent> {
       [contextmenu]="contextmenu"
       [customRequest]="customRequest"
       [drag]="drag"
-      (change)="change()"
-      (error)="error()"
+      (change)="change($event)"
+      (error)="error($event)"
     />
     <ng-template #tpl let-handle="handle">
       <span>In tpl</span>
       <a class="close_in_tpl" (click)="handle.close()">close</a>
     </ng-template>
   `,
-  imports: [STComponent]
+  imports: [STComponent, STRowDirective]
 })
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;
@@ -472,8 +473,10 @@ export class TestComponent {
 
   drag?: STDragOptions | boolean = false;
 
-  error(): void {}
-  change(): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  error(_: any): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  change(_: any): void {}
 }
 
 @Component({
@@ -485,7 +488,7 @@ export class TestComponent {
       [expand]="expand"
       [expandRowByClick]="expandRowByClick"
       [expandAccordion]="expandAccordion"
-      (change)="change()"
+      (change)="change($event)"
     >
       <ng-template #expand let-item let-index="index" let-column="column">
         {{ item.id }}

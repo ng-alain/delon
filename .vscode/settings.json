@@ -45,5 +45,6 @@
     "*.json": "jsonc",
     ".prettierrc": "json"
   },
-  "typescript.referencesCodeLens.enabled": true
+  "typescript.referencesCodeLens.enabled": true,
+  "angular.enable-strict-mode-prompt": false
 }
