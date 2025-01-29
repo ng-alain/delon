@@ -14,6 +14,14 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [19.0.1](https://github.com/ng-alain/delon/compare/19.0.0...19.0.1) (2025-01-21)
+
+### Bug Fixes
+
+* **cli:** fix Unknown argument: `--swaggerPath` ([#1884](https://github.com/ng-alain/delon/issues/1884)) ([a2d214d](https://github.com/ng-alain/delon/commit/a2d214dea3ecdb04265cbc78b92d5e1e6def2279))
+* **util:config:** support signal of `attach` ([#1882](https://github.com/ng-alain/delon/issues/1882)) ([a1c4fb1](https://github.com/ng-alain/delon/commit/a1c4fb113455bc1468e3ab0f600625d7b1cc1547))
+
+
 ## 19.0.0 (2025-01-19)
 
 ### Features
