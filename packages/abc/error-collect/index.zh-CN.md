@@ -14,5 +14,5 @@ module: import { ErrorCollectModule } from '@delon/abc/error-collect';
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
-| `[freq]` | 监听频率，单位：毫秒 | `number` | `500` | ✅ |
+| `[freq]` | 监听频率，单位：毫秒 | `number` | `250` | ✅ |
 | `[offsetTop]` | 顶部偏移值，单位：`px` | `number` | `145` | ✅ |

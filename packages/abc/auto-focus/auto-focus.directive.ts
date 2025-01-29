@@ -1,36 +1,35 @@
-import { Platform } from '@angular/cdk/platform';
 import {
-  AfterViewInit,
-  DestroyRef,
   Directive,
   ElementRef,
+  afterNextRender,
   booleanAttribute,
   inject,
   input,
-  numberAttribute
+  numberAttribute,
+  output
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { take, timer } from 'rxjs';
 
 @Directive({
   selector: '[auto-focus], input[autofocus="autofocus"], textarea[autofocus="autofocus"]',
   exportAs: 'autoFocus'
 })
-export class AutoFocusDirective implements AfterViewInit {
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly platform = inject(Platform);
-  private readonly destroy$ = inject(DestroyRef);
+export class AutoFocusDirective {
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  enabled = input(true, { transform: booleanAttribute });
+  delay = input(25, { transform: numberAttribute });
+  readonly focus = output();
 
-  enabled = input<boolean, boolean | string | null | undefined>(true, { transform: booleanAttribute });
-  delay = input<number, number | string | null | undefined>(300, { transform: numberAttribute });
-
-  ngAfterViewInit(): void {
-    const el = this.el;
-    if (!this.platform.isBrowser || !(el instanceof HTMLElement) || !this.enabled()) {
-      return;
-    }
-    timer(this.delay())
-      .pipe(takeUntilDestroyed(this.destroy$), take(1))
-      .subscribe(() => el.focus({ preventScroll: false }));
+  constructor() {
+    afterNextRender(() => {
+      if (this.enabled()) {
+        timer(this.delay())
+          .pipe(take(1))
+          .subscribe(() => {
+            this.el.focus({ preventScroll: false });
+            this.focus.emit();
+          });
+      }
+    });
   }
 }
