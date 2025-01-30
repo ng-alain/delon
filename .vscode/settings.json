@@ -29,7 +29,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[less]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "[javascript]": {
     "editor.formatOnSave": true
