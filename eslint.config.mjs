@@ -35,13 +35,13 @@ export default tseslint.config(
       jsdoc,
       import: importPlugin,
       prettier,
-      'unused-imports': unusedImports
+      'unused-imports': unusedImports,
     },
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended
+      ...angular.configs.tsRecommended,
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -194,6 +194,7 @@ export default tseslint.config(
       'max-len': 'off',
       'no-empty': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-deprecated': 'warn'
     }
   },
   {
