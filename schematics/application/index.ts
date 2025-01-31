@@ -193,19 +193,7 @@ function addCodeStylesToPackageJson(): Rule {
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
-        `stylelint-config-clean-order@DEP-0.0.0-PLACEHOLDER`,
-        `angular-eslint@DEP-0.0.0-PLACEHOLDER`,
-        `@typescript-eslint/eslint-plugin@DEP-0.0.0-PLACEHOLDER`,
-        `@typescript-eslint/parser@DEP-0.0.0-PLACEHOLDER`,
-        `@typescript-eslint/utils@DEP-0.0.0-PLACEHOLDER`,
-        `eslint@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-plugin-import@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-plugin-jsdoc@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-plugin-prefer-arrow@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-plugin-prettier@DEP-0.0.0-PLACEHOLDER`,
-        `eslint-plugin-unused-imports@DEP-0.0.0-PLACEHOLDER`,
-        `typescript-eslint@DEP-0.0.0-PLACEHOLDER`
+        `stylelint-config-clean-order@DEP-0.0.0-PLACEHOLDER`
       ],
       'devDependencies'
     );
