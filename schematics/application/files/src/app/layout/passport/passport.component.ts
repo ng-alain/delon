@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { DA_SERVICE_TOKEN } from '@delon/auth';
-import { ThemeBtnComponent } from '@delon/theme/theme-btn';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 <% if (i18n) { %>
 import { HeaderI18nComponent } from '../basic/widgets/i18n.component';<% } %>
@@ -23,14 +22,14 @@ import { HeaderI18nComponent } from '../basic/widgets/i18n.component';<% } %>
         <router-outlet />
         <global-footer [links]="links">
           Copyright
-          <i class="anticon anticon-copyright"></i> 2023
+          <i class="anticon anticon-copyright"></i> 2025
           <a href="//github.com/cipchk" target="_blank">卡色</a>出品
         </global-footer>
       </div>
     </div>
   `,
   styleUrls: ['./passport.component.less'],
-  imports: [RouterOutlet<% if (i18n) { %>, HeaderI18nComponent<% } %>, GlobalFooterModule, NzIconModule, ThemeBtnComponent]
+  imports: [RouterOutlet<% if (i18n) { %>, HeaderI18nComponent<% } %>, GlobalFooterModule, NzIconModule]
 })
 export class LayoutPassportComponent implements OnInit {
   private tokenService = inject(DA_SERVICE_TOKEN);

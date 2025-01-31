@@ -18,7 +18,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     <div style="height: 280px;"></div>
     <global-footer [links]="links">
       Copyright<nz-icon nzType="copyright" class="mx-sm" />
-      2023
+      2025
       <a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
     </global-footer>
   `,

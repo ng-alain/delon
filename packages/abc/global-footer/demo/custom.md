@@ -23,7 +23,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       </global-footer-item>
       <global-footer-item href="https://ng-alain.surge.sh/" blankTarget>预览</global-footer-item>
       Copyright<nz-icon nzType="copyright" class="mx-sm" />
-      2023
+      2025
       <a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
     </global-footer>
   `,
