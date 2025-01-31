@@ -173,7 +173,7 @@ function addCodeStylesToPackageJson(): Rule {
     const json = readPackage(tree);
     if (json == null) return tree;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `ng lint --fix`;
+    json.scripts['lint:ts'] = `npx eslint --cache --fix`;
     json.scripts['lint:style'] = `npx stylelint \\"src/**/*.less\\" --fix`;
     json.scripts['prepare'] = 'husky install';
     writePackage(tree, json);

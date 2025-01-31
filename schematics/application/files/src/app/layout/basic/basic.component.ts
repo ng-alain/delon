@@ -85,8 +85,8 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
   `,
   imports: [
     RouterOutlet,
-    RouterLink,
-    I18nPipe,
+    RouterLink,<% if (i18n) { %>
+    I18nPipe,<% } %>
     LayoutDefaultModule,
     SettingDrawerModule,
     ThemeBtnComponent,
