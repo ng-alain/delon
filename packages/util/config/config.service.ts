@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
 import { SIGNAL, SignalNode } from '@angular/core/primitives/signals';
 
@@ -12,7 +11,7 @@ export class AlainConfigService {
   private readonly config = { ...inject(ALAIN_CONFIG, { optional: true }) };
 
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
-    const res = ((this.config[componentName] as { [key: string]: unknown }) || {}) as NzSafeAny;
+    const res = ((this.config[componentName] as Record<string, unknown>) || {}) as NzSafeAny;
     return key ? { [key]: res[key] } : res;
   }
 
@@ -25,7 +24,7 @@ export class AlainConfigService {
    */
   attach<T extends AlainConfigKey>(componentThis: unknown, componentName: T, defaultValues: AlainConfig[T]): void {
     const data = this.merge<T>(componentName, defaultValues);
-    Object.entries(data as Object).forEach(([key, value]) => {
+    Object.entries(data as object).forEach(([key, value]) => {
       const t = componentThis as any;
       const s = t[key]?.[SIGNAL] as SignalNode<any>;
       if (s != null) {

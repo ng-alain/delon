@@ -70,6 +70,7 @@ export function createKeyboardEvent(type: string, keyCode: number, target?: Elem
   // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
   event.preventDefault = function (): NzSafeAny {
     Object.defineProperty(event, 'defaultPrevented', { get: () => true });
+    // eslint-disable-next-line prefer-rest-params
     return originalPreventDefault.apply(this, arguments);
   };
 

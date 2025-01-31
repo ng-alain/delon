@@ -57,8 +57,8 @@ export class LoadingService implements OnDestroy {
     this.compRef = this._overlayRef.attach(new ComponentPortal(LoadingDefaultComponent));
     const dir = this.configSrv.get('loading')!.direction || this.directionality.value;
     if (this.instance != null) {
-      this.instance!!.options = this.opt;
-      this.instance!!.dir = dir;
+      this.instance!.options = this.opt;
+      this.instance!.dir = dir;
     }
     this.compRef.changeDetectorRef.markForCheck();
   }

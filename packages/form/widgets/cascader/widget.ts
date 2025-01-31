@@ -65,7 +65,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.showArrow = toBool(showArrow, true);
     this.showInput = toBool(showInput, true);
     this.triggerAction = triggerAction || ['click'];
-    if (!!asyncData) {
+    if (asyncData) {
       this.loadData = (node: NzCascaderOption, index: number) =>
         asyncData(node, index, this).then(() => this.detectChanges());
     }

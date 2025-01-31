@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 
@@ -15,19 +14,21 @@ function newReq(req: HttpRequest<unknown>, model: SimpleTokenModel, options: Ala
   const token = token_send_template!.replace(/\$\{([\w]+)\}/g, (_: string, g) => model[g]);
   switch (options.token_send_place) {
     case 'header':
+      // eslint-disable-next-line no-case-declarations
       const obj: any = {};
       obj[token_send_key!] = token;
       req = req.clone({
         setHeaders: obj
       });
       break;
-    case 'body':
+    case 'body': {
       const body: any = req.body || {};
       body[token_send_key!] = token;
       req = req.clone({
         body
       });
       break;
+    }
     case 'url':
       req = req.clone({
         params: req.params.append(token_send_key!, token)

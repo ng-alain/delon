@@ -56,7 +56,7 @@ export class ExceptionComponent implements OnInit {
   _img: SafeUrl = '';
   _title: SafeHtml = '';
   _desc: SafeHtml = '';
-  private typeDict!: { [key: number | string]: { img: string; title: string; desc?: string } };
+  private typeDict!: Record<number | string, { img: string; title: string; desc?: string }>;
 
   @Input()
   set type(value: ExceptionType) {

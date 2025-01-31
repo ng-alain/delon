@@ -121,7 +121,7 @@ export class LodopService implements OnDestroy {
         return;
       }
       const win = window as NzSafeAny;
-      if (win.hasOwnProperty(this.cog.name!)) {
+      if (Object.prototype.hasOwnProperty.call(win, this.cog.name!)) {
         this._lodop = win[this.cog.name!] as Lodop;
       }
       if (this._lodop === null) {

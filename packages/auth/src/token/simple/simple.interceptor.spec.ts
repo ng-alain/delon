@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
@@ -38,9 +37,7 @@ class MockTokenService implements ITokenService {
   clear(): void {
     this._data = null;
   }
-  get login_url(): string {
-    return '/login';
-  }
+  readonly login_url = '/login';
 }
 
 describe('auth: simple.interceptor', () => {

@@ -13,7 +13,7 @@ describe('abc: reuse-tab(state)', () => {
   ];
 
   beforeEach(() => {
-    let data: { [key: string]: NzSafeAny } = {};
+    let data: Record<string, NzSafeAny> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;

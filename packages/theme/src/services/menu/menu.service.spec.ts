@@ -352,7 +352,7 @@ describe('Service: Menu', () => {
         expect(srv.find({ url: `/hide`, ignoreHide: false })).not.toBe(null);
       });
       it('custom result via cb', () => {
-        const res = srv.find({ url: `/always-first-item`, cb: _ => true });
+        const res = srv.find({ url: `/always-first-item`, cb: () => true });
         expect(res).toBe(srv.menus[0]);
       });
       it('return last item', () => {

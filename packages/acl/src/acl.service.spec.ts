@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 

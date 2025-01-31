@@ -80,7 +80,7 @@ export interface ErrorSchema {
   /**
    * 自定义错误信息文本，键名赞同 `ErrorData.keyword` 值
    */
-  errors?: { [key: string]: string | ((obj: ErrorData) => string) };
+  errors?: Record<string, string | ((obj: ErrorData) => string)>;
   /**
    * 是否只展示错误视觉不显示错误文本，默认：`false`
    */

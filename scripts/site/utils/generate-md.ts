@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { escapeHTML, genAttr, generateSluggedId, isHeading, isStandalone } from './utils';
 import { highlight } from '../converters/highlight';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const JsonML = require('jsonml.js/lib/utils');
 
 let headingList: any[] = [];
@@ -58,18 +58,16 @@ const converters = [highlight()].concat([
   ],
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
-    (node: any, _: number) => {
+    (node: any) => {
       const attrs = { ...JsonML.getAttributes(node) };
       let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
       if (~attrs.href.indexOf('ng-alain.com')) target = '';
-      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node)
-        .map(toHtml)
-        .join('')}</a>`;
+      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
     }
   ],
   [
     (node: any) => !Array.isArray(node),
-    (node: any, _: number) => {
+    (node: any) => {
       if (!node.url) return '';
       return `<!--${node.url}-->`;
     }
@@ -79,9 +77,8 @@ const converters = [highlight()].concat([
     (node: any) => {
       const tagName = JsonML.getTagName(node);
       const attrs = genAttr({ ...JsonML.getAttributes(node) });
-      return `${tagName ? `<${tagName}${attrs ? ` ${attrs}` : ''}>` : ''}${
-        isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('') + (tagName ? `</${tagName}>` : '')
-      }`;
+      const tag = `${tagName ? `<${tagName}${attrs ? ` ${attrs}` : ''}>` : ''}`;
+      return `${tag}${isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('') + (tagName ? `</${tagName}>` : '')}`;
     }
   ]
 ]);
@@ -132,9 +129,9 @@ function fixAngular(html: string): string {
 export function generateMd(markdownData: any): any {
   const contentChildren = JsonML.getChildren(markdownData.content);
   headingList = contentChildren
-    .filter(node => JsonML.isElement(node) && isHeading(node))
-    .filter(arr => arr.length === 2)
-    .map(arr => arr[1]);
+    .filter((node: any) => JsonML.isElement(node) && isHeading(node))
+    .filter((arr: any[]) => arr.length === 2)
+    .map((arr: any[]) => arr[1]);
 
   const apiStartIndex = contentChildren.findIndex(
     (node: any) => JsonML.getTagName(node) === 'h2' && /^API/.test(JsonML.getChildren(node)[0])

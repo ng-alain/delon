@@ -22,7 +22,7 @@ export class STWidgetHostDirective implements OnInit {
     this.viewContainerRef.clear();
     const componentRef = this.viewContainerRef.createComponent(componentType);
     const { record, column } = this;
-    const data: { [key: string]: NzSafeAny } = widget.params ? widget.params({ record, column }) : { record };
+    const data: Record<string, NzSafeAny> = widget.params ? widget.params({ record, column }) : { record };
     Object.keys(data).forEach(key => {
       (componentRef.instance as NzSafeAny)[key] = data[key];
     });

@@ -85,7 +85,7 @@ export class SettingDrawerComponent implements OnInit {
     this.resetData(this.cachedData, false);
   }
 
-  private get cachedData(): { [key: string]: NzSafeAny } {
+  private get cachedData(): Record<string, NzSafeAny> {
     return this.settingSrv.layout[ALAINDEFAULTVAR] || {};
   }
 
@@ -131,7 +131,7 @@ export class SettingDrawerComponent implements OnInit {
 
   private genVars(): NzSafeAny {
     const { data, color, validKeys } = this;
-    const vars: { [key: string]: string } = {
+    const vars: Record<string, string> = {
       [`@primary-color`]: color
     };
     validKeys.filter(key => key !== 'primary-color').forEach(key => (vars[`@${key}`] = data[key].value));
@@ -170,7 +170,7 @@ export class SettingDrawerComponent implements OnInit {
     this.settingSrv.setLayout(name, value);
   }
 
-  private resetData(nowData?: { [key: string]: NzSafeAny }, run: boolean = true): void {
+  private resetData(nowData?: Record<string, NzSafeAny>, run: boolean = true): void {
     nowData = nowData || {};
     const data = deepCopy(DEFAULT_VARS);
     Object.keys(data).forEach(key => {

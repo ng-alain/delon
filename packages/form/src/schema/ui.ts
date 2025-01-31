@@ -175,9 +175,10 @@ export interface SFVisibleIfReturn {
   required?: boolean;
 }
 
-export interface SFVisibleIf {
-  [key: string]: NzSafeAny[] | ((value: SFValue, property: FormProperty) => boolean | SFVisibleIfReturn | null);
-}
+export type SFVisibleIf = Record<
+  string,
+  NzSafeAny[] | ((value: SFValue, property: FormProperty) => boolean | SFVisibleIfReturn | null)
+>;
 
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema, SFSchemaI18n {
@@ -238,9 +239,7 @@ export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema
  * - 结构层级应同 `SFSchema` 一致
  * - 当KEY为 `*` 时表示对所有子表单元素都有效
  */
-export interface SFUISchema {
-  [key: string]: SFUISchemaItem | SFUISchemaItemRun;
-}
+export type SFUISchema = Record<string, SFUISchemaItem | SFUISchemaItemRun>;
 
 /**
  * @inner

@@ -9,12 +9,12 @@ export const REUSE_TAB_CACHED_MANAGER = new InjectionToken<ReuseTabCachedManager
 
 export interface ReuseTabCachedManager {
   list: ReuseTabCached[];
-  title: { [url: string]: ReuseTitle };
-  closable: { [url: string]: boolean };
+  title: Record<string, ReuseTitle>;
+  closable: Record<string, boolean>;
 }
 
 export class ReuseTabCachedManagerFactory implements ReuseTabCachedManager {
   list: ReuseTabCached[] = [];
-  title: { [url: string]: ReuseTitle } = {};
-  closable: { [url: string]: boolean } = {};
+  title: Record<string, ReuseTitle> = {};
+  closable: Record<string, boolean> = {};
 }

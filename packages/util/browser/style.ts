@@ -1,10 +1,10 @@
 import { Renderer2 } from '@angular/core';
 
-function removeClass(el: HTMLElement, classMap: { [klass: string]: unknown }, renderer: Renderer2): void {
+function removeClass(el: HTMLElement, classMap: Record<string, unknown>, renderer: Renderer2): void {
   Object.keys(classMap).forEach(key => renderer.removeClass(el, key));
 }
 
-function addClass(el: HTMLElement, classMap: { [klass: string]: unknown }, renderer: Renderer2): void {
+function addClass(el: HTMLElement, classMap: Record<string, unknown>, renderer: Renderer2): void {
   for (const i in classMap) {
     if (classMap[i]) {
       renderer.addClass(el, i);
@@ -32,7 +32,7 @@ function addClass(el: HTMLElement, classMap: { [klass: string]: unknown }, rende
 export function updateHostClass(
   el: HTMLElement,
   renderer: Renderer2,
-  classMap: { [klass: string]: unknown },
+  classMap: Record<string, unknown>,
   preClean: boolean = false
 ): void {
   if (preClean === true) {

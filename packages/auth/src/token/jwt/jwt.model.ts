@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';
 
@@ -59,7 +58,7 @@ export class JWTTokenModel implements ITokenModel {
    */
   get exp(): number | null {
     const decoded = this.payload;
-    if (!decoded.hasOwnProperty('exp')) return null;
+    if (!Object.prototype.hasOwnProperty.call(decoded, 'exp')) return null;
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date.valueOf();

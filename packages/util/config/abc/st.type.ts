@@ -45,7 +45,7 @@ export interface AlainSTConfig {
      *
      * 是否忽略参数中 `null` 或 `undefind` 值
      */
-    ignoreParamNull?: Boolean;
+    ignoreParamNull?: boolean;
     /** 请求方法，默认：`GET` */
     method?: string;
     /** 请求体 `Header` */
@@ -293,7 +293,7 @@ export interface AlainSTConfig {
     /**
      * Style of the popover card
      */
-    overlayStyle?: { [key: string]: string };
+    overlayStyle?: Record<string, string>;
 
     /**
      * Text of the Cancel button
@@ -418,16 +418,8 @@ export interface AlainSTConfig {
     url: string;
     options: {
       body?: unknown;
-      headers?:
-        | HttpHeaders
-        | {
-            [header: string]: string | string[];
-          };
-      params?:
-        | HttpParams
-        | {
-            [param: string]: string | string[];
-          };
+      headers?: HttpHeaders | Record<string, string | string[]>;
+      params?: HttpParams | Record<string, string | string[]>;
     };
   }) => Observable<NzSafeAny>;
   /**

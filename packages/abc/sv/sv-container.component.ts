@@ -92,7 +92,7 @@ export class SVContainerComponent {
   @Input({ transform: booleanAttribute }) noColon = false;
   @Input({ transform: booleanAttribute }) bordered = false;
 
-  get margin(): { [k: string]: string } {
+  get margin(): Record<string, string> {
     return this.bordered ? {} : { 'margin-left': `${-(this.gutter / 2)}px`, 'margin-right': `${-(this.gutter / 2)}px` };
   }
 

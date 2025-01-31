@@ -26,6 +26,7 @@ import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
 import { HeaderSearchComponent } from './search-box.component';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const pkg = require('../../../../package.json');
 const minimumVersion = +pkg.version.split('.')[0] - 2;
 

@@ -84,7 +84,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 设置上传的请求头部
    */
-  headers?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
+  headers?: object | ((file: NzUploadFile) => object | Observable<object>);
 
   /**
    * 上传列表的内建样式，默认：`text`
@@ -109,7 +109,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 上传所需参数或返回上传参数的方法
    */
-  data?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
+  data?: object | ((file: NzUploadFile) => object | Observable<object>);
 
   /**
    * 上传请求时是否携带 cookie，默认：`false`

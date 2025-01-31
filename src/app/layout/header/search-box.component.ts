@@ -58,7 +58,7 @@ export class HeaderSearchComponent implements AfterViewInit {
         handleSelected: (_input: NzSafeAny, _event: NzSafeAny, suggestion: { url: string }) => {
           const url = suggestion?.url || '';
           if (isLocal || curHost === this.getHost(url)) {
-            const pathName = url.replace(/.*\/\/[^\/]*/, '');
+            const pathName = url.replace(/.*\/\/[^\\/]*/, '');
             this.router.navigateByUrl(pathName);
             return;
           }
@@ -70,7 +70,7 @@ export class HeaderSearchComponent implements AfterViewInit {
   }
 
   private getHost(url: string): string {
-    const m = url.match(/^https?\:\/\/([^\/:?#]+)(?:[\/:?#]|$)/i);
+    const m = url.match(/^https?\\:\/\/([^\\/:?#]+)(?:[\\/:?#]|$)/i);
     return m ? m[1] : '';
   }
 }

@@ -6,7 +6,7 @@ export interface XlsxExportOptions {
    * - `{ Sheet1: { A1: { t:"n", v:10000 } } }`
    * - `[['1'], [1]]`
    */
-  sheets: { [sheet: string]: NzSafeAny } | XlsxExportSheet[];
+  sheets: Record<string, NzSafeAny> | XlsxExportSheet[];
   /** File format, default: `xlsx` */
   format?: 'csv' | 'xlsx';
   /** save file name, default: `export.xlsx` */

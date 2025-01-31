@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 
-import { DelonFormModule, SFLayout, SFSchema } from '@delon/form';
+import { DelonFormModule, SFLayout, SFSchema, SFUISchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, I18nPipe, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -89,9 +89,9 @@ export class FormValidatorComponent implements OnInit {
   schema!: string;
   schemaData!: SFSchema;
   formCode!: string;
-  formData!: {};
+  formData!: object;
   uiCode!: string;
-  uiSchema!: {};
+  uiSchema!: SFUISchema;
   expand = true;
   editorOptions = { language: 'json', theme: 'vs' };
 
@@ -147,7 +147,7 @@ export class FormValidatorComponent implements OnInit {
   }
 
   openOnStackBlitz(): void {
-    const obj: { [key: string]: NzSafeAny } = {
+    const obj: Record<string, NzSafeAny> = {
       schema: this.schema,
       layout: this.layout,
       formData: this.formCode || '{}',

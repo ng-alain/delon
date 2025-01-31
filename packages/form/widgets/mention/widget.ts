@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { map, tap } from 'rxjs';
 
-import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, getEnum } from '@delon/form';
+import { ControlUIWidget, DelonFormModule, SFSchemaEnum, getData, getEnum } from '@delon/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { MentionOnSearchTypes, NzMentionComponent, NzMentionModule } from 'ng-zorro-antd/mention';
@@ -102,7 +102,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
     }
   }
 
-  reset(_value: SFValue): void {
+  reset(): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
       this.detectChanges();

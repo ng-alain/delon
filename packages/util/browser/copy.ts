@@ -14,7 +14,6 @@ export function copy(value: string): Promise<string> {
       document.body.appendChild(copyTextArea);
       copyTextArea.value = value;
       copyTextArea.select();
-      // eslint-disable-next-line deprecation/deprecation
       document.execCommand('copy');
       resolve(value);
     } finally {

@@ -9,8 +9,7 @@ describe('auth: session-storage', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let data: { [key: string]: any } = {};
+    let data: Record<string, any> = {};
 
     spyOn(sessionStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;

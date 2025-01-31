@@ -109,7 +109,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   @Input() customContextMenu: ReuseCustomContextMenu[] = [];
   @Input() tabBarExtraContent?: TemplateRef<void>;
   @Input() tabBarGutter?: number;
-  @Input() tabBarStyle: { [key: string]: string } | null = null;
+  @Input() tabBarStyle: Record<string, string> | null = null;
   @Input() tabType: 'line' | 'card' = 'line';
   @Input() routeParamMatchMode: ReuseTabRouteParamMatchMode = 'strict';
   @Input({ transform: booleanAttribute }) disabled = false;

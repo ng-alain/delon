@@ -20,7 +20,7 @@ export function provideElements(): Array<Provider | EnvironmentProviders> {
   ];
 }
 
-function registerElements(injector: Injector, platformId: {}): void {
+function registerElements(injector: Injector, platformId: object): void {
   // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
   if (!isPlatformBrowser(platformId) || customElements.get('nz-icon')) {
     return;

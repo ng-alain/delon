@@ -227,17 +227,12 @@ export class DevLayoutComponent implements OnInit {
   }
 
   changeMenu(key: string): void {
-    this.menuSrv.add(
-      key === ''
-        ? deepCopy(this.menus)
-        : [
-            {
-              text: 'test',
-              group: true,
-              children: [{ text: `TYPE - ${key}`, link: '/dev/view/1', icon: 'anticon anticon-appstore' }]
-            }
-          ]
-    );
+    const type: Menu = {
+      text: 'test',
+      group: true,
+      children: [{ text: `TYPE - ${key}`, link: '/dev/view/1', icon: 'anticon anticon-appstore' }]
+    };
+    this.menuSrv.add(key === '' ? deepCopy(this.menus) : [type]);
     for (let tm of this.topMenus) {
       tm.selected = tm.key === key;
     }
@@ -279,6 +274,6 @@ export class DevLayoutComponent implements OnInit {
       }
     });
     if (res == null) return;
-    this.router.navigateByUrl(res.link!!);
+    this.router.navigateByUrl(res.link!);
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -1036,9 +1035,9 @@ describe('abc: st', () => {
         context.scroll = { x: '100px', y: '100px' };
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-        spyOn(context.comp.cdkVirtualScrollViewport!!, 'checkViewportSize');
+        spyOn(context.comp.cdkVirtualScrollViewport!, 'checkViewportSize');
         page.cd().go(2);
-        expect(context.comp.cdkVirtualScrollViewport!!.checkViewportSize).toHaveBeenCalled();
+        expect(context.comp.cdkVirtualScrollViewport!.checkViewportSize).toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be working in only x is set', fakeAsync(() => {

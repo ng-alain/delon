@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -33,6 +32,7 @@ const isSyncSpecific = !!target && target !== 'init';
 if (!target) throw new Error(`Should specify the generation type, 'init' is all module`);
 
 const rootDir = path.resolve(__dirname, '../../');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const siteConfig = require(path.join(rootDir, 'src/site.config.js')) as SiteConfig;
 const defaultLang = siteConfig.defaultLang;
 

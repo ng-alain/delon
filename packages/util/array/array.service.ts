@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 
 import { AlainConfigService, AlainUtilArrayConfig } from '@delon/util/config';
@@ -45,8 +44,8 @@ export class ArrayService {
       cb: null,
       ...options
     } as ArrayServiceTreeToArrOptions;
-    const result: Array<{ [key: string]: any }> = [];
-    const inFn = (list: ReadonlyArray<{ [key: string]: any }>, parent: T | null, deep: number = 0): void => {
+    const result: Array<Record<string, any>> = [];
+    const inFn = (list: ReadonlyArray<Record<string, any>>, parent: T | null, deep: number = 0): void => {
       for (const i of list) {
         i[opt.deepMapName!] = deep;
         i[opt.parentMapName!] = parent;
@@ -85,9 +84,9 @@ export class ArrayService {
       ...options
     } as ArrayServiceArrToTreeOptions<T>;
     const tree: T[] = [];
-    const childrenOf: { [key: string]: T[] } = {};
+    const childrenOf: Record<string, T[]> = {};
     let rootPid = opt.rootParentIdValue;
-    const arrType = arr as ReadonlyArray<{ [key: string]: any }>;
+    const arrType = arr as ReadonlyArray<Record<string, any>>;
     if (!rootPid) {
       const pids = arrType.map(i => i[opt.parentIdMapName!]);
       const emptyPid = pids.findIndex(w => w == null);
@@ -132,7 +131,7 @@ export class ArrayService {
       parentIdMapName: opt.parentIdMapName,
       childrenMapName: 'children'
     });
-    this.visitTree<T>(tree, (item: { [key: string]: any }, parent, deep) => {
+    this.visitTree<T>(tree, (item: Record<string, any>, parent, deep) => {
       item.key = item[opt.idMapName!];
       item.title = item[opt.titleMapName!];
       item.checked = item[opt.checkedMapname!];
@@ -169,7 +168,7 @@ export class ArrayService {
     const inFn = (data: readonly T[], parent: T | null, deep: number): void => {
       for (const item of data) {
         cb(item, parent, deep);
-        const childrenVal = (item as { [key: string]: any })[options!.childrenMapName!];
+        const childrenVal = (item as Record<string, any>)[options!.childrenMapName!];
         if (Array.isArray(childrenVal) && childrenVal.length > 0) {
           inFn(childrenVal, item, deep + 1);
         }

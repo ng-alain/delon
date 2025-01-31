@@ -37,13 +37,13 @@ describe('Schematic: list', () => {
 
     it('should be throw error when directory already exists', async () => {
       spyOn(fs, 'existsSync').and.returnValue(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
       try {
         tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: false }, tree);
         expect(true).toBe(false);
       } catch (e) {
-        expect(e.message).toContain(`already exists`);
+        expect((e as { message: string }).message).toContain(`already exists`);
       }
     });
 
@@ -89,13 +89,13 @@ describe('Schematic: list', () => {
 
     it('should be throw error when directory already exists', async () => {
       spyOn(fs, 'existsSync').and.returnValue(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
       try {
         tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: true }, tree);
         expect(true).toBe(false);
       } catch (e) {
-        expect(e.message).toContain(`already exists`);
+        expect((e as { message: string }).message).toContain(`already exists`);
       }
     });
 

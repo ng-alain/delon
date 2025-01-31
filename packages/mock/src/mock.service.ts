@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';

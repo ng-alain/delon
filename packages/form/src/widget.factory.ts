@@ -7,11 +7,11 @@ import { SFUISchemaItem } from './schema/ui';
 import type { Widget } from './widget';
 
 export class WidgetRegistry {
-  private _widgets: { [type: string]: Widget<FormProperty, SFUISchemaItem> } = {};
+  private _widgets: Record<string, Widget<FormProperty, SFUISchemaItem>> = {};
 
   private defaultWidget!: Widget<FormProperty, SFUISchemaItem>;
 
-  get widgets(): { [type: string]: Widget<FormProperty, SFUISchemaItem> } {
+  get widgets(): Record<string, Widget<FormProperty, SFUISchemaItem>> {
     return this._widgets;
   }
 
@@ -24,7 +24,7 @@ export class WidgetRegistry {
   }
 
   has(type: string): boolean {
-    return this._widgets.hasOwnProperty(type);
+    return Object.prototype.hasOwnProperty.call(this._widgets, type);
   }
 
   getType(type: string): Widget<FormProperty, SFUISchemaItem> {

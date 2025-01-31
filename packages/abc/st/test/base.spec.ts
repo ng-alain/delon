@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { dispatchDropDown } from '@delon/testing';
-import { ALAIN_I18N_TOKEN, DelonLocaleModule, _HttpClient } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
@@ -37,7 +37,6 @@ import {
   STWidthMode
 } from '../st.interfaces';
 import { STModule } from '../st.module';
-import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
 
 export const MOCKDATE = new Date();
@@ -72,7 +71,7 @@ export const USERS: NzSafeAny[] = genData(DEFAULTCOUNT);
 
 @Injectable()
 export class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string): string {
+  fanyi(): string {
     return 'zh';
   }
 }
@@ -467,15 +466,17 @@ export class TestComponent {
   virtualScroll = false;
   showHeader = true;
   customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
-  contextmenu: STContextmenuFn | null = _ => [
+  contextmenu: STContextmenuFn | null = () => [
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
   ];
 
   drag?: STDragOptions | boolean = false;
 
-  error(): void {}
-  change(): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  error(_: any): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  change(_: any): void {}
 }
 
 @Component({

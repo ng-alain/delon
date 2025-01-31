@@ -21,14 +21,13 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll.stylelint": "explicit"
   },
-  "[html]": {
-    "editor.formatOnSave": false
-  },
   "[typescript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[less]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "[javascript]": {
     "editor.formatOnSave": true
@@ -44,6 +43,6 @@
     "*.json": "jsonc",
     ".prettierrc": "json"
   },
-  "angular.enable-strict-mode-prompt": false,
-  "typescript.referencesCodeLens.enabled": true
+  "typescript.referencesCodeLens.enabled": true,
+  "angular.enable-strict-mode-prompt": false
 }

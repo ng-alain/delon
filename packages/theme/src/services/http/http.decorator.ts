@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpHeaders, HttpContext } from '@angular/common/http';
 import { Injectable, Injector, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
@@ -63,13 +62,7 @@ export function BaseUrl(url: string) {
  * 默认 `headers`
  * - 有效范围：类
  */
-export function BaseHeaders(
-  headers:
-    | HttpHeaders
-    | {
-        [header: string]: string | string[];
-      }
-) {
+export function BaseHeaders(headers: HttpHeaders | Record<string, string | string[]>) {
   return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseHeaders = headers;

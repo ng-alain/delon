@@ -59,7 +59,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉菜单的 style 属性
    */
-  dropdownStyle?: { [key: string]: string } | null;
+  dropdownStyle?: Record<string, string> | null;
 
   /**
    * 是否使用服务端搜索，当为 `true` 时，将不再在前端对 `nz-option` 进行过滤，默认：`false`

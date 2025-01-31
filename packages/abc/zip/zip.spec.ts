@@ -1,4 +1,3 @@
-/* eslint-disable deprecation/deprecation */
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
@@ -13,16 +12,15 @@ import { ZipService } from './zip.service';
 let isErrorRequest = false;
 let isClassZIP = false;
 let isErrorGenZip = false;
+class JSZip {
+  file(): void {}
+  generateAsync(): Promise<void> {
+    return isErrorGenZip ? Promise.reject('') : Promise.resolve();
+  }
+}
 class MockLazyService {
   load(): Promise<void> {
-    (window as NzSafeAny).JSZip = isClassZIP
-      ? class JSZip {
-          file(): void {}
-          generateAsync(): Promise<void> {
-            return isErrorGenZip ? Promise.reject('') : Promise.resolve();
-          }
-        }
-      : DEFAULTMOCKJSZIP;
+    (window as NzSafeAny).JSZip = isClassZIP ? JSZip : DEFAULTMOCKJSZIP;
     return Promise.resolve();
   }
 }
@@ -169,7 +167,6 @@ describe('abc: zip', () => {
       spyOn(fs, 'saveAs');
       srv.save(zip, { filename: '123.zip' }).then(
         () => {
-          // eslint-disable-next-line deprecation/deprecation
           expect(fs.saveAs).toHaveBeenCalled();
           expect(true).toBe(true);
           done();
@@ -190,7 +187,6 @@ describe('abc: zip', () => {
         .then(
           () => {
             expect(count).toBe(1);
-            // eslint-disable-next-line deprecation/deprecation
             expect(fs.saveAs).toHaveBeenCalled();
             done();
           },
@@ -209,7 +205,6 @@ describe('abc: zip', () => {
           done();
         },
         () => {
-          // eslint-disable-next-line deprecation/deprecation
           expect(fs.saveAs).not.toHaveBeenCalled();
           expect(true).toBe(true);
           done();

@@ -74,6 +74,7 @@ export abstract class G2BaseComponent implements OnInit, OnChanges, OnDestroy {
   onInit(): void {}
 
   /** 等同 `ngOnChanges` */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChanges(_: SimpleChanges): void {}
 
   @ZoneOutside()

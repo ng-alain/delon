@@ -9,7 +9,7 @@ import { AlainThemeModule } from '../../theme.module';
 describe('Service: Settings', () => {
   let srv: SettingsService;
   beforeEach(() => {
-    let data: { [key: string]: NzSafeAny } = {};
+    let data: Record<string, NzSafeAny> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;

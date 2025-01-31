@@ -83,7 +83,7 @@ describe('acl: guard', () => {
     it(`should load route via function`, (done: () => void) => {
       srv
         .process({
-          guard: (_srv, _injector) => of('user')
+          guard: () => of('user')
         })
         .subscribe(res => {
           expect(res).toBeTruthy();

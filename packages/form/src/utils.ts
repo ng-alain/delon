@@ -34,7 +34,7 @@ function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition): Nz
     let current: NzSafeAny = definitions;
     for (let part of parts) {
       part = part.replace(/~1/g, SF_SEQ).replace(/~0/g, '~');
-      if (current.hasOwnProperty(part)) {
+      if (Object.prototype.hasOwnProperty.call(current, part)) {
         current = current[part];
       } else {
         throw new Error(`Could not find a definition for ${$ref}.`);
@@ -49,9 +49,10 @@ function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition): Nz
  * 取回Schema，并处理 `$ref` 的关系
  */
 export function retrieveSchema(schema: SFSchema, definitions: SFSchemaDefinition = {}): SFSchema {
-  if (schema.hasOwnProperty('$ref')) {
+  if (Object.prototype.hasOwnProperty.call(schema, '$ref')) {
     const $refSchema = findSchemaDefinition(schema.$ref!, definitions);
     // remove $ref property
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { $ref, ...localSchema } = schema;
     return retrieveSchema({ ...$refSchema, ...localSchema }, definitions);
   }
@@ -78,7 +79,8 @@ export function resolveIfSchema(_schema: SFSchema, _ui: SFUISchemaItemRun): void
 }
 
 function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
-  if (!(schema.hasOwnProperty('if') && schema.hasOwnProperty('then'))) return null;
+  if (!(Object.prototype.hasOwnProperty.call(schema, 'if') && Object.prototype.hasOwnProperty.call(schema, 'then')))
+    return null;
   if (!schema.if!.properties) throw new Error(`if: does not contain 'properties'`);
 
   const allKeys = Object.keys(schema.properties!);
@@ -86,7 +88,7 @@ function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | null {
   detectKey(allKeys, ifKeys);
   detectKey(allKeys, schema.then!.required!);
   schema.required = schema.required!.concat(schema.then!.required!);
-  const hasElse = schema.hasOwnProperty('else');
+  const hasElse = Object.prototype.hasOwnProperty.call(schema, 'else');
   if (hasElse) {
     detectKey(allKeys, schema.else!.required!);
     schema.required = schema.required.concat(schema.else!.required!);

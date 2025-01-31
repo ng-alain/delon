@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { _HttpClient } from './http.client';
 import {
   BaseApi,
   BaseHeaders,

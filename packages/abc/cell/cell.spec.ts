@@ -7,7 +7,6 @@ import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -369,7 +368,7 @@ class TestWidget {
 })
 class TestComponent {
   value?: unknown;
-  valueChange(_?: NzSafeAny): void {}
+  valueChange(): void {}
   options?: CellOptions;
   loading = false;
   disabled = false;

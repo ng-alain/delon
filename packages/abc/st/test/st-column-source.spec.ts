@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util/other';
@@ -14,7 +12,7 @@ import { _STColumn } from '../st.types';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(_key: string): string {
+  fanyi(): string {
     return i18nResult;
   }
 }
@@ -768,7 +766,7 @@ describe('st: column-source', () => {
       const newColumns = srv.process(columns, options).columns;
       if (type) {
         expect(newColumns.length).toBe(1);
-        expect((newColumns[0] as { [key: string]: any })[type].length).toBe(count);
+        expect((newColumns[0] as Record<string, any>)[type].length).toBe(count);
       } else {
         expect(newColumns.length).toBe(count);
       }

@@ -31,7 +31,7 @@ export class CellService {
     img: { size: 32 },
     default: { text: '-' }
   })!;
-  private widgets: { [key: string]: CellWidget } = {
+  private widgets: Record<string, CellWidget> = {
     date: {
       type: 'fn',
       ref: (value, opt) => {

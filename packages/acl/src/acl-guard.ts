@@ -23,7 +23,7 @@ export class ACLGuardService {
       map(v => this.srv.can(v)),
       tap(v => {
         if (v) return;
-        this.router.navigateByUrl(data!!.guard_url!!);
+        this.router.navigateByUrl(data!.guard_url!);
       })
     );
   }

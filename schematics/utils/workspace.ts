@@ -13,7 +13,7 @@ export const NG_ALAIN_JSON = `ng-alain.json`;
 export const DEFAULT_WORKSPACE_PATH = `/angular.json`;
 
 export interface NgAlainDefinition {
-  projects?: { [key: string]: NgAlainProjectDefinition };
+  projects?: Record<string, NgAlainProjectDefinition>;
 }
 
 export interface NgAlainProjectDefinition {
@@ -34,7 +34,6 @@ export function getNgAlainJson(tree: Tree): NgAlainDefinition | undefined {
   return readJSON(tree, NG_ALAIN_JSON);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function writeNgAlainJson(tree: Tree, json: any): any {
   return writeJSON(tree, NG_ALAIN_JSON, json);
 }

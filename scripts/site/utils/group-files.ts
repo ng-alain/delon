@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as path from 'path';
 
 import { ModuleDirConfig, SiteConfig } from '../interfaces';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const klawSync = require('klaw-sync');
 
 export function groupFiles(
@@ -12,7 +12,7 @@ export function groupFiles(
   target: string,
   siteConfig: SiteConfig
 ): any {
-  const files: Array<{ key: string; data: { [key: string]: string } }> = [];
+  const files: Array<{ key: string; data: Record<string, string> }> = [];
   const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
   srcPaths.forEach(srcPath => {
     klawSync(srcPath, {

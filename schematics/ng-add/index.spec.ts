@@ -5,6 +5,7 @@ import { createAlainApp } from '../utils/testing';
 import { DEFAULT_WORKSPACE_PATH } from '../utils/workspace';
 
 describe('Schematic: ng-add', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
@@ -27,7 +28,7 @@ describe('Schematic: ng-add', () => {
     try {
       await createAlainApp();
       expect(true).toBe(false);
-    } catch (ex) {
+    } catch {
       expect(true).toBe(true);
     }
   });

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DecimalPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
@@ -11,7 +10,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
 import { ST_DEFAULT_CONFIG } from '../st.config';
-import { STColumnButton, STColumnFilterMenu, STData } from '../st.interfaces';
+import { STColumnButton, STColumnFilterMenu, STData, STReq } from '../st.interfaces';
 import { _STColumn, _STDataValue } from '../st.types';
 
 const DEFAULT = {
@@ -46,6 +45,7 @@ describe('abc: table: data-souce', () => {
   let mockDomSanitizer: MockDomSanitizer;
 
   class MockHttpClient {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(_method: string, _url: string, _opt: any): any {
       return of(httpResponse);
     }
@@ -63,7 +63,7 @@ describe('abc: table: data-souce', () => {
       ps: DEFAULT.ps,
       data: [],
       total: DEFAULT.total,
-      req: deepCopy(ST_DEFAULT_CONFIG.req),
+      req: deepCopy(ST_DEFAULT_CONFIG.req as unknown as STReq),
       res: deepCopy(ST_DEFAULT_CONFIG.res),
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
@@ -366,8 +366,8 @@ describe('abc: table: data-souce', () => {
         options.req.ignoreParamNull = true;
         options.req.params = { a: null, b: 1 };
         options.req.process = res => {
-          expect(Object.keys(res.params!!)).not.toContain(`a`);
-          expect(Object.keys(res.params!!)).toContain(`b`);
+          expect(Object.keys(res.params!)).not.toContain(`a`);
+          expect(Object.keys(res.params!)).toContain(`b`);
           return res;
         };
         srv.process(options).subscribe(() => done());
@@ -972,6 +972,7 @@ describe('abc: table: data-souce', () => {
       options.data = [{ id: 1 }];
       options.columns = [
         {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           buttons: [{ text: (_, __) => `fn` }]
         }
       ] as _STColumn[];

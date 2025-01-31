@@ -145,7 +145,7 @@ describe('abc: onboarding', () => {
     }
 
     checkActive(active: number = 0): this {
-      expect(parseInt(this.el.dataset.onboardingActive?.toString()!, 10)).toBe(active);
+      expect(parseInt(this.el.dataset.onboardingActive!.toString(), 10)).toBe(active);
       return this;
     }
 

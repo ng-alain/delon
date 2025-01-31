@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpEvent, HttpInterceptorFn, HttpResponseBase } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { map, of, OperatorFunction } from 'rxjs';
@@ -60,8 +59,8 @@ function save(srv: CacheService, ev: HttpEvent<any>, options: CacheOptions): Htt
     expire = +ageMatch[1];
   }
   if (expire > 0) {
-    srv.set(options.key!!, ev, {
-      type: options.saveType!!,
+    srv.set(options.key!, ev, {
+      type: options.saveType!,
       expire: expire
     });
   }

@@ -11,7 +11,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ZipSaveOptions } from './zip.types';
 
-declare var JSZip: jsZipType;
+declare const JSZip: jsZipType;
 
 @Injectable({ providedIn: 'root' })
 export class ZipService {

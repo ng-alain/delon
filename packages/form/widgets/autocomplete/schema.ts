@@ -59,7 +59,7 @@ export interface SFAutoCompleteWidgetSchema extends SFUISchemaItem {
   /**
    * 下拉根元素的样式
    */
-  overlayStyle?: { [key: string]: string };
+  overlayStyle?: Record<string, string>;
 
   /**
    * 与 [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) 相同

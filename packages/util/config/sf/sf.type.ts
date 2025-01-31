@@ -50,7 +50,7 @@ export interface AlainSFConfig {
   /**
    * 自定义通用错误信息，默认：`{}`
    */
-  errors?: { [key: string]: string };
+  errors?: Record<string, string>;
   /**
    * 默认全局布局，类型为：`SFUISchemaItem`，使用时加上可智能提示，例如：
    *

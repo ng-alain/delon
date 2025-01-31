@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 

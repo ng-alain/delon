@@ -4,11 +4,10 @@ import * as LANG from '../core/lang.config';
 import { APPNAME, createAlainApp, createAlainRunner, createNgRunner } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {
-  let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
   describe(``, () => {
-    beforeEach(async () => ({ runner, tree } = await createAlainApp()));
+    beforeEach(async () => ({ tree } = await createAlainApp()));
     it(`should add @delon to dependencies`, () => {
       const packageJson = JSON.parse(tree.readContent('package.json'));
       expect(packageJson.dependencies['@delon/theme']).toBeDefined();
@@ -31,14 +30,14 @@ describe('NgAlainSchematic: application', () => {
 
   describe('#i18n', () => {
     describe('with true', () => {
-      beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: true })));
+      beforeEach(async () => ({ tree } = await createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
         expect(specTs).toContain(`I18NService`);
       });
     });
     describe('with false', () => {
-      beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: false })));
+      beforeEach(async () => ({ tree } = await createAlainApp({ i18n: false })));
       it(`can't add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
         expect(specTs).not.toContain(`I18NService`);
@@ -106,7 +105,7 @@ describe('NgAlainSchematic: application', () => {
 
   describe('#form', () => {
     it(`should be export json-schema.ts in shared/index.ts`, async () => {
-      ({ runner, tree } = await createAlainApp({ form: false }));
+      ({ tree } = await createAlainApp({ form: false }));
       const content = tree.readContent('/projects/foo/src/app/shared/index.ts');
       expect(content).not.toContain(`json-schema`);
     });
@@ -176,7 +175,7 @@ describe('NgAlainSchematic: application', () => {
         );
         expect(true).toBe(false);
       } catch (ex) {
-        expect(ex.message).toContain(`Not found under the projects node of angular.json`);
+        expect((ex as { message: string }).message).toContain(`Not found under the projects node of angular.json`);
       }
     });
   });

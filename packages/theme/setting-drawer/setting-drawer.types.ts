@@ -39,7 +39,7 @@ export const DEFAULT_COLORS = [
     color: '#001529'
   }
 ];
-export const DEFAULT_VARS: { [key: string]: NzSafeAny } = {
+export const DEFAULT_VARS: Record<string, NzSafeAny> = {
   'primary-color': { label: '主颜色', type: 'color', default: '#1890ff' },
   'alain-default-header-hg': {
     label: '高',

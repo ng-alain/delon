@@ -74,18 +74,10 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
       suffixIcon,
       autofocus
     } = this.ui;
-    this.type = !!(
-      addOnAfter ||
-      addOnBefore ||
-      addOnAfterIcon ||
-      addOnBeforeIcon ||
-      prefix ||
-      prefixIcon ||
-      suffix ||
-      suffixIcon
-    )
-      ? 'addon'
-      : '';
+    this.type =
+      addOnAfter || addOnBefore || addOnAfterIcon || addOnBeforeIcon || prefix || prefixIcon || suffix || suffixIcon
+        ? 'addon'
+        : '';
     if (autofocus === true) {
       setTimeout(() => {
         (
