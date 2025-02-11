@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { delay, finalize, of, take } from 'rxjs';
@@ -38,8 +38,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       <div nz-col nzSpan="8"> currency => <cell value="100000" [options]="{ unit: '$' }" /> </div>
       <div nz-col nzSpan="8"> cny => <cell value="100000" [options]="{ type: 'cny' }" /> </div>
       <div nz-col nzSpan="8">
-        yn => <cell [value]="yn" [options]="{ type: 'boolean' }" />
-        <a (click)="yn = !yn">Change Value</a>
+        yn => <cell [value]="yn()" [options]="{ type: 'boolean' }" />
+        <a (click)="yn.set(!yn())">Change Value</a>
       </div>
       <div nz-col nzSpan="8">
         img =>
@@ -64,8 +64,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       </div>
       <div nz-col nzSpan="8">
         link =>
-        <cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }" [disabled]="disabled" />
-        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+        <cell value="Link" [options]="{ link: { url: 'https://ng-alain.com' } }" [disabled]="disabled()" />
+        <a (click)="disabled.set(!disabled())" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         html =>
@@ -73,7 +73,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       </div>
       <div nz-col nzSpan="8">
         SafeHtml =>
-        <cell [value]="safeHtml" />
+        <cell [value]="safeHtml()" />
         <a (click)="updateSafeHtml()" class="ml-sm">updateSafeHtml</a>
       </div>
       <div nz-col nzSpan="8">
@@ -89,20 +89,21 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
         <cell
           [(value)]="checkbox"
           [options]="{ type: 'checkbox', tooltip: 'Tooltip', checkbox: { label: 'Label' } }"
-          [disabled]="disabled"
+          [disabled]="disabled()"
         />
-        {{ checkbox }}
-        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+        {{ checkbox() }}
+        <a (click)="disabled.set(!disabled())" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         radio =>
         <cell
           [(value)]="radio"
           [options]="{ type: 'radio', tooltip: 'Tooltip', radio: { label: 'Radio' } }"
-          [disabled]="disabled"
+          [disabled]="disabled()"
         />
-        <a (click)="radio = !radio">Change Value</a>
-        <a (click)="disabled = !disabled" class="ml-sm">Change Disabled</a>
+        {{ radio() }}
+        <a (click)="radio.set(!radio())">Change Value</a>
+        <a (click)="disabled.set(!disabled())" class="ml-sm">Change Disabled</a>
       </div>
       <div nz-col nzSpan="8">
         enum =>
@@ -130,13 +131,13 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       </div>
       <div nz-col nzSpan="8">
         loading =>
-        <cell value="Done" [loading]="loading" />
-        <a (click)="loading = !loading" class="ml-md">Change</a>
+        <cell value="Done" [loading]="loading()" />
+        <a (click)="loading.set(!loading())" class="ml-md">Change</a>
       </div>
       <div nz-col nzSpan="8">
         Async =>
-        <cell [value]="async" [loading]="asyncLoading" />
-        @if (!asyncLoading) {
+        <cell [value]="async" [loading]="asyncLoading()" />
+        @if (!asyncLoading()) {
           <a (click)="again()" class="ml-md">Again</a>
         }
       </div>
@@ -144,7 +145,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
       <div nz-col nzSpan="8"> Text Unit => <cell [value]="{ text: '100', unit: '元' }" /> </div>
       <div nz-col nzSpan="8">
         custom widget =>
-        <cell [value]="imageValue" [options]="{ widget: { key: 'test', data: 'new url' } }" />
+        <cell [value]="imageValue()" [options]="{ widget: { key: 'test', data: 'new url' } }" />
         <a (click)="refreshImage()">Refresh Image</a>
       </div>
     </div>
@@ -161,29 +162,24 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 })
 export class DemoComponent implements OnInit {
   private readonly ds = inject(DomSanitizer);
-  private readonly cdr = inject(ChangeDetectorRef);
-  value: unknown = 'string';
-  imageValue = 'https://randomuser.me/api/portraits/thumb/women/47.jpg';
-  checkbox = false;
-  radio = true;
-  disabled = false;
-  yn = true;
+  imageValue = signal('https://randomuser.me/api/portraits/thumb/women/47.jpg');
+  checkbox = signal(false);
+  radio = signal(true);
+  disabled = signal(false);
+  yn = signal(true);
+  loading = signal(true);
   default: string = '-';
-  defaultCondition: unknown = '*';
-  options?: CellOptions;
   baseList = ['string', true, false, 100, 1000000, new Date()];
   typeList: CellRenderType[] = ['primary', 'success', 'danger', 'warning'];
-  now = new Date();
   day3 = subDays(new Date(), 3);
   HTML = `<strong>Strong</string>`;
   status: CellBadge = {
     WAIT: { text: 'Wait', tooltip: 'Refers to waiting for the user to ship' },
     FINISHED: { text: 'Done', color: 'success' }
   };
-  loading = true;
-  asyncLoading = true;
+  asyncLoading = signal(true);
   async?: CellFuValue;
-  safeHtml = this.ds.bypassSecurityTrustHtml(`<strong>Strong Html</strong>`);
+  safeHtml = signal(this.ds.bypassSecurityTrustHtml(`<strong>Strong Html</strong>`));
   enum = { 1: 'Success', 2: 'Error' };
   enumValue = 1;
   bigImg: CellOptions = {
@@ -197,33 +193,22 @@ export class DemoComponent implements OnInit {
     this.again();
   }
 
-  refresh(): void {
-    this.value = new Date();
-    this.cdr.detectChanges();
-  }
-
   again(): void {
-    this.asyncLoading = true;
+    this.asyncLoading.set(true);
     this.async = (() =>
       of({ text: `${+new Date()}` }).pipe(
         take(1),
         delay(1000 * 1),
-        finalize(() => {
-          this.asyncLoading = false;
-          this.cdr.detectChanges();
-        })
+        finalize(() => this.asyncLoading.set(false))
       )) as CellFuValue;
-    this.cdr.detectChanges();
   }
 
   updateSafeHtml(): void {
-    this.safeHtml = this.ds.bypassSecurityTrustHtml(`alert('a');<script>alert('a')</script>`);
-    this.cdr.detectChanges();
+    this.safeHtml.set(this.ds.bypassSecurityTrustHtml(`alert('a');<script>alert('a')</script>`));
   }
 
   refreshImage(): void {
-    this.imageValue = `https://randomuser.me/api/portraits/thumb/women/${Math.floor(Math.random() * 50) + 10}.jpg`;
-    this.cdr.detectChanges();
+    this.imageValue.set(`https://randomuser.me/api/portraits/thumb/women/${Math.floor(Math.random() * 50) + 10}.jpg`);
   }
 }
 ```
