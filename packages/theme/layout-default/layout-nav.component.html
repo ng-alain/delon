@@ -62,7 +62,12 @@
         }
         <!-- badge -->
         @if (i.badge) {
-          <nz-badge [nzCount]="i.badge" [nzDot]="i.badgeDot" nzStandalone [nzOverflowCount]="9" />
+          <nz-badge
+            [nzCount]="i.badge"
+            [nzDot]="i.badgeDot"
+            nzStandalone
+            [nzOverflowCount]="i.badgeOverflowCount ? i.badgeOverflowCount : 9"
+          />
         }
         @if (i.children.length > 0) {
           <ul class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ i._depth }}">

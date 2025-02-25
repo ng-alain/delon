@@ -46,6 +46,8 @@ export interface Menu {
   badgeDot?: boolean;
   /** Badge [color](https://ng.ant.design/components/badge/en#nz-badge) */
   badgeStatus?: 'success' | 'processing' | 'default' | 'error' | 'warning';
+  /** Maximum count to show in badge, show `${badgeOverflowCount}+` when exceed */
+  badgeOverflowCount?: number;
   /** Whether disable for the menu item */
   disabled?: boolean;
   /** Whether hidden for the menu item */

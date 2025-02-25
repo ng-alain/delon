@@ -350,6 +350,14 @@ describe('theme: layout-default-nav', () => {
           page.showSubMenu();
           expect(page.getEl('.sidebar-nav__floating-container .sidebar-nav__item', true) != null).toBe(true);
         });
+        it('should be working when include badgeOverflowCount', () => {
+          const mockMenu = deepCopy(MOCKMENUS) as Nav[];
+          mockMenu[0].children![0].badge = 100;
+          mockMenu[0].children![0].badgeOverflowCount = 99;
+          menuSrv.add(mockMenu);
+          fixture.detectChanges();
+          expect(page.getEl<HTMLElement>('.ant-badge-count')!.childNodes.item(1).nodeValue == ' 99+ ').toBe(true);
+        });
         it('should be ingore children title trigger event', () => {
           spyOn(context, 'select');
           expect(context.select).not.toHaveBeenCalled();
