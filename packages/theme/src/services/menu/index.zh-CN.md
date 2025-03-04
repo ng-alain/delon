@@ -45,6 +45,7 @@ type: Service
 | `badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | - |
 | `badgeDot` | 徽标数，显示小红点 | `boolean` | - |
 | `badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
+| `badgeOverflowCount` | 徽标数值显示上限，超过显示 `${badgeOverflowCount}+` | `number` | - |
 | `open` | 是否打开菜单 | `boolean` | `false` |
 | `disabled` | 是否禁用菜单 | `boolean` | `false` |
 | `hide` | 是否隐藏菜单 | `boolean` | `false` |

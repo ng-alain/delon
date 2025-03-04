@@ -47,6 +47,7 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 | `badge` | Badget for the menu item when `group` is `true` | `number` | - |
 | `badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | - |
 | `badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `success,processing,default,error,warning` | `error` |
+| `badgeOverflowCount` | Maximum count to show in badge, show `${badgeOverflowCount}+` when exceed | `number` | - |
 | `open` | Whether open for the menu item | `boolean` | `false` |
 | `disabled` | Whether disable for the menu item | `boolean` | `false` |
 | `hide` | Whether hidden for the menu item | `boolean` | `false` |
