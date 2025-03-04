@@ -180,7 +180,7 @@ export function getData(
   asyncArgs?: NzSafeAny
 ): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
-    return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getEnum(list, formData, schema.readOnly!)));
+    return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getCopyEnum(list, formData, schema.readOnly!)));
   }
   return of(getCopyEnum(schema.enum!, formData, schema.readOnly!));
 }
