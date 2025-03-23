@@ -46,7 +46,7 @@ import { ArrayLayoutWidget } from '../../widget';
     <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl!" [nzOffset]="ui.offsetControl!">
       <div class="ant-form-item-control" [class.has-error]="showError">
         <div nz-row class="sf__array-container">
-          @for (i of $any(formProperty).properties; track $index) {
+          @for (i of $any(formProperty).properties; track i) {
             @if (i.visible && !i.ui.hidden) {
               <div nz-col [nzSpan]="arraySpan" [attr.data-index]="$index" class="sf__array-item">
                 <nz-card>
