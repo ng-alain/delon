@@ -14,6 +14,18 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [19.1.0](https://github.com/ng-alain/delon/compare/19.0.1...19.1.0) (2025-03-23)
+
+### Bug Fixes
+
+* **form:array:** fix `track` to identify each item uniquely ([#1892](https://github.com/ng-alain/delon/issues/1892)) ([9538891](https://github.com/ng-alain/delon/commit/95388910d6cc0d165d6120bde74745c0de6e42dd))
+* **form:utils:** replace `getEnum` with `getCopyEnum` in getData ([#1890](https://github.com/ng-alain/delon/issues/1890)) ([ace3a28](https://github.com/ng-alain/delon/commit/ace3a288bca484fef40d0f506d4bcf07ac1b57e5))
+
+### Features
+
+* **module:theme:** add the `badgeOverflowCount` property to Menu ([#1891](https://github.com/ng-alain/delon/issues/1891)) ([634a138](https://github.com/ng-alain/delon/commit/634a138fa9d99abd6607afb5e0a6c87babb96b36))
+
+
 ## [19.0.1](https://github.com/ng-alain/delon/compare/19.0.0...19.0.1) (2025-01-21)
 
 ### Bug Fixes
