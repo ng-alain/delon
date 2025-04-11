@@ -194,7 +194,7 @@ export class STColumnSource {
     }
 
     if (!Array.isArray(res.directions)) {
-      res.directions = ['ascend', 'descend', null];
+      res.directions = this.cog.sortDirections ?? ['ascend', 'descend', null];
     }
 
     res.enabled = true;
