@@ -40,6 +40,7 @@ import type { SFCascaderWidgetSchema } from './schema';
       [nzShowArrow]="showArrow"
       [nzShowInput]="showInput"
       [nzShowSearch]="ui.showSearch!"
+      [nzMultiple]="ui.multiple"
       (nzClear)="_clear()"
       (nzVisibleChange)="_visibleChange($event)"
       (nzSelectionChange)="_selectionChange($event)"
