@@ -278,6 +278,16 @@ describe('st: column-source', () => {
         expect(res.enabled).toBe(true);
         expect(res.key).toBe('aa');
       });
+      it('when sort is ascend or descend', () => {
+        let res = srv.process([{ title: '', index: 'aa', sort: 'ascend' }], options).columns[0]._sort!;
+        expect(res.enabled).toBe(true);
+        expect(res.directions?.[0]).toBe('ascend');
+        expect(res.directions?.[1]).toBe(null);
+        res = srv.process([{ title: '', index: 'aa', sort: 'descend' }], options).columns[0]._sort!;
+        expect(res.enabled).toBe(true);
+        expect(res.directions?.[0]).toBe('descend');
+        expect(res.directions?.[1]).toBe(null);
+      });
     });
     describe('[filter]', () => {
       it('should be disabled when invalid menus', () => {

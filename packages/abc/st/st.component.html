@@ -72,6 +72,7 @@
               [attr.data-col]="_c.indexKey"
               [attr.data-col-index]="index"
               [nzShowSort]="_c._sort.enabled"
+              [nzSortDirections]="_c._sort.directions!"
               [nzSortOrder]="$any(_c)._sort.default"
               (nzSortOrderChange)="sort(_c, $event)"
               [nzCustomFilter]="!!_c.filter"

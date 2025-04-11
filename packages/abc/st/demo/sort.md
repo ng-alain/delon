@@ -70,7 +70,7 @@ export class DemoComponent {
       },
       sort: true
     },
-    { title: '注册时间', type: 'date', index: 'registered' }
+    { title: '注册时间', type: 'date', index: 'registered', sort: 'descend' }
   ];
 }
 ```
