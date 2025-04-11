@@ -107,6 +107,11 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   labelProperty?: string;
 
   /**
+   * 是否多选，默认：`false`
+   */
+  multiple?: boolean;
+
+  /**
    * 异步加载事件
    */
   visibleChange?: (value: boolean) => void;

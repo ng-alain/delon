@@ -69,6 +69,7 @@ export class DemoComponent {
         title: 'RealTime',
         ui: {
           widget: 'cascader',
+          multiple: true,
           asyncData: (node, index) => {
             return new Promise(resolve => {
               setTimeout(() => {
@@ -95,7 +96,7 @@ export class DemoComponent {
     }
   };
 
-  submit(value: {}): void {
+  submit(value: Record<string, unknown>): void {
     this.msg.success(JSON.stringify(value));
   }
 }
