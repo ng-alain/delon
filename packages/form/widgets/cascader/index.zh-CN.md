@@ -58,7 +58,8 @@ type: Non-built-in widgets
 | `[triggerAction]` | 触发菜单出现的行为 | `('click', 'hover')[]` | `['click']` |
 | `[valueProperty]` | 值 `value` 的属性名称 | `string` | `value` |
 | `[labelProperty]` | 值 `label` 的属性名称 | `string` | `label` |
-| `[visibleChange]` | 异步加载事件 | `(value: boolean) => void` | - |
-| `[change]` | 选项值变更事件 | `(values: any[]) => void` | - |
-| `[selectionChange]` | 选项变更事件 | `(values: NzCascaderOption[]) => void` | - |
-| `[clear]` | 内容被清空事件 | `() => void` | - |
+| `[multiple]` | 是否多选 | `boolean` | `false` |
+| `(visibleChange)` | 异步加载事件 | `(value: boolean) => void` | - |
+| `(change)` | 选项值变更事件 | `(values: any[]) => void` | - |
+| `(selectionChange)` | 选项变更事件 | `(values: NzCascaderOption[]) => void` | - |
+| `(clear)` | 内容被清空事件 | `() => void` | - |
