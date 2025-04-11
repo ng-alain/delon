@@ -62,6 +62,13 @@ export interface SFTransferWidgetSchema extends SFUISchemaItem {
   notFoundContent?: string;
 
   /**
+   * Display as single direction
+   *
+   * 展示为单向样式
+   */
+  oneWay?: boolean;
+
+  /**
    * 穿梭时二次校验
    */
   canMove?: (arg: TransferCanMove) => Observable<TransferItem[]>;

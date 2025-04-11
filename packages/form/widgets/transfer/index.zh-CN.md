@@ -37,6 +37,7 @@ type: Non-built-in widgets
 | `[searchPlaceholder]` | 搜索框的默认值 | `string` | - |
 | `[notFoundContent]` | 当列表为空时显示的内容 | `string` | - |
 | `[canMove]` | 穿梭时二次校验。 | `function` | - |
-| `[change]` | 选项在两栏之间转移时的回调函数 | `(options: TransferChange) => void` | - |
-| `[searchChange]` | 搜索框内容时改变时的回调函数 | `(options: TransferSearchChange) => void` | - |
-| `[selectChange]` | 选中项发生改变时的回调函数 | `(options: TransferSelectChange) => void` | - |
+| `[oneWay]` | 展示为单向样式 | `boolean` | `false` |
+| `(change)` | 选项在两栏之间转移时的回调函数 | `(options: TransferChange) => void` | - |
+| `(searchChange)` | 搜索框内容时改变时的回调函数 | `(options: TransferSearchChange) => void` | - |
+| `(selectChange)` | 选中项发生改变时的回调函数 | `(options: TransferSelectChange) => void` | - |
