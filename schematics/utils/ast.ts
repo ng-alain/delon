@@ -94,7 +94,7 @@ function addSymbolToComponentMetadata(
     }
     return [new InsertChange(filePath, position, toInsert)];
   }
-  const assignment = matchingProperties[0];
+  const assignment = matchingProperties[0] as ts.Node;
 
   // If it's not an array, nothing we can do really.
   if (!ts.isPropertyAssignment(assignment) || !ts.isArrayLiteralExpression(assignment.initializer)) {
