@@ -74,6 +74,6 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
 
   _setValue(val: number): void {
     this.setValue(this.schema.type === 'integer' ? Math.floor(val) : val);
-    if (this.ui.change) this.ui.change(this.value);
+    this.ui.change?.(this.value);
   }
 }
