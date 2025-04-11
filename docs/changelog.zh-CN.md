@@ -14,6 +14,15 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## 19.2.0 (2025-04-11)
+
+### Features
+
+* feat(abc:st): 增加排序方向 (#1894) ([f4aeb6c](https://github.com/ng-alain/delon/commit/f4aeb6c)), closes [#1894](https://github.com/ng-alain/delon/issues/1894)
+* feat(form:cascader): 支持多选 (#1895) ([0575b22](https://github.com/ng-alain/delon/commit/0575b22)), closes [#1895](https://github.com/ng-alain/delon/issues/1895)
+* feat(form:transfer): 增加 `oneWay` 参数 (#1896) ([12e30aa](https://github.com/ng-alain/delon/commit/12e30aa)), closes [#1896](https://github.com/ng-alain/delon/issues/1896)
+
+
 # [19.1.0](https://github.com/ng-alain/delon/compare/19.0.1...19.1.0) (2025-03-23)
 
 ### Bug Fixes

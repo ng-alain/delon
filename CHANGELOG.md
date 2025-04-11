@@ -1,3 +1,13 @@
+## 19.2.0 (2025-04-11)
+
+* build: bump angular to 19.2 (#1898) ([cc14cb3](https://github.com/ng-alain/delon/commit/cc14cb3)), closes [#1898](https://github.com/ng-alain/delon/issues/1898)
+* docs: update (#1897) ([7c2d2e1](https://github.com/ng-alain/delon/commit/7c2d2e1)), closes [#1897](https://github.com/ng-alain/delon/issues/1897)
+* feat(abc:st): add sort directions (#1894) ([f4aeb6c](https://github.com/ng-alain/delon/commit/f4aeb6c)), closes [#1894](https://github.com/ng-alain/delon/issues/1894)
+* feat(form:cascader): add multiple (#1895) ([0575b22](https://github.com/ng-alain/delon/commit/0575b22)), closes [#1895](https://github.com/ng-alain/delon/issues/1895)
+* feat(form:transfer): add `oneWay` (#1896) ([12e30aa](https://github.com/ng-alain/delon/commit/12e30aa)), closes [#1896](https://github.com/ng-alain/delon/issues/1896)
+
+
+
 # [19.1.0](https://github.com/ng-alain/delon/compare/19.0.1...19.1.0) (2025-03-23)
 
 

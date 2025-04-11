@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "19.1.0",
+  "version": "19.2.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -48,6 +48,7 @@
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh",
+    "pre-commit": "tsc -p packages/tsconfig.json --noEmit && lint-staged",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
   },
   "dependencies": {
