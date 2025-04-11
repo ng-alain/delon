@@ -271,7 +271,7 @@ class TestComponent {
 | `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-error`, pls refer to [Style Tools](/theme/tools) | `string` | - |
 | `[colSpan]` | Span of this column's title | `number` | - |
 | `[onCell]` | Set props on per cell | `(item: T, index: number) => STOnCellResult;` | - |
-| `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
+| `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`ascend`<br>`descend`<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |
@@ -310,6 +310,7 @@ class TestComponent {
 | `[compare]` | Sort function for local sort, see [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)'s compareFunction, `null` ingore local sort but keeping sort function. | `(a: STData, b: STData) => number, null` | - |
 | `[key]` | Unique key of this column, default is `index` property value<br>`multiSort: false` => `key: 'name' => ?name=1&pi=1`<br>`multiSort: true` allow multiple sort keys, or use `STMultiSort` to specify multi-column sort key merge rule | `string` | - |
 | `[reName]` | Map name<br>`{ ascend: '0', descend: '1' }` => `?name=1&pi=1`<br>`{ ascend: 'asc', descend: 'desc' }` => `?name=desc&pi=1` | `{ ascend?: string, descend?: string }` | - |
+| `[directions]`  | Supported sort order, could be `'ascend'`, `'descend'`, `null` | `Array<'ascend' \| 'descend' \| null>`        | `['ascend', 'descend', null]` | ✅ |
 
 ### STColumnFilter
 

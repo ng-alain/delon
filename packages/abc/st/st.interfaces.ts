@@ -14,7 +14,7 @@ import type { DisabledTimeFn } from 'ng-zorro-antd/date-picker';
 import type { NzDrawerOptions } from 'ng-zorro-antd/drawer';
 import type { ModalOptions } from 'ng-zorro-antd/modal';
 import type { PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
-import type { NzTablePaginationType } from 'ng-zorro-antd/table';
+import type { NzTablePaginationType, NzTableSortOrder } from 'ng-zorro-antd/table';
 
 import type { STComponent } from './st.component';
 
@@ -329,9 +329,11 @@ export interface STColumn<T extends STData = any> {
   /**
    * 排序配置项，远程数据配置**优先**规则：
    * - `true` 表示允许排序，且若数据源为本地时自动生成 `compare: (a, b) => a[index] - b[index]` 方法
+   * - `ascend` 表示升序
+   * - `descend` 表示降序
    * - `string` 表示远程数据排序相对应 `key` 值
    */
-  sort?: true | string | STColumnSort<T>;
+  sort?: true | STColumnSort<T> | 'ascend' | 'descend' | string;
   /**
    * 过滤配置项
    */
@@ -534,6 +536,12 @@ export interface STColumnSort<T extends STData = any> {
    * - `{ ascend: 'asc', descend: 'desc' }` 结果 `?name=desc&pi=1`
    */
   reName?: { ascend?: string; descend?: string };
+  /**
+   * 支持的排序方式
+   *
+   * Supported sort order
+   */
+  directions?: NzTableSortOrder[];
 }
 
 export interface STSortMap<T extends STData = any> extends STColumnSort<T> {
