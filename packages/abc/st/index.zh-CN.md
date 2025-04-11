@@ -271,7 +271,7 @@ class TestComponent {
 | `[className]` | 列 `class` 属性值，例如：`text-center` 居中； `text-right` 居右； `text-error` 异常色，更多参考[样式工具类](/theme/tools) | `string` | - |
 | `[colSpan]` | 合并列 | `number` | - |
 | `[onCell]` | 设置单元格属性 | `(item: T, index: number) => STOnCellResult;` | - |
-| `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序，且若数据源为本地数据时会自动生成 `compare: (a, b) => a[index] - b[index]` 方法<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | - |
+| `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序，且若数据源为本地数据时会自动生成 `compare: (a, b) => a[index] - b[index]` 方法<br>`ascend` 表示升序<br>`descend` 表示降序<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | - |
 | `[filter]` | 过滤配置项 | `STColumnFilter` | - |
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |
@@ -310,6 +310,7 @@ class TestComponent {
 | `[compare]` | 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)，`null` 忽略本地排序，但保持排序功能 | `(a: any, b: any) => number, null` | - |
 | `[key]` | 远程数据的排序时后端相对应的KEY，默认使用 `index` 属性<br>若 `multiSort: false` 时：`key: 'name' => ?name=1&pi=1`<br>若 `multiSort: true` 允许多个排序 key 存在，或使用 `STMultiSort` 指定多列排序key合并规则 | `string` | - |
 | `[reName]` | 远程数据的排序时后端相对应的VALUE<br>`{ ascend: '0', descend: '1' }` 结果 `?name=1&pi=1`<br>`{ ascend: 'asc', descend: 'desc' }` 结果 `?name=desc&pi=1` | `{ ascend?: string, descend?: string }` | - |
+| `[directions]`  | 支持的排序方式，取值为 `'ascend'`, `'descend'`, `null` | `Array<'ascend' \| 'descend' \| null>`  | `['ascend', 'descend', null]` | ✅ |
 
 ### STColumnFilter
 
