@@ -29,6 +29,6 @@ Create an object widget, valid only for `schema.type="object"`.
 | `[type]` | Render type of object | `card, default` | `default` |
 | `[cardSize]` | The same as `nzSize` | `small, default` | `small` |
 | `[cardBodyStyle]` | The same as `nzBodyStyle` | `{ [key: string]: string }` | - |
-| `[cardBorderless]` | The same as `nzBorderless` | `boolean` | `false` |
+| `[cardBordered]` | The same as `nzBordered` | `boolean` | `false` |
 | `[cardExtra]` | The same as `nzExtra` | `string, TemplateRef<void>` | - |
 | `[cardActions]` | The same as `nzActions` | `Array<TemplateRef<void>>` | - |
