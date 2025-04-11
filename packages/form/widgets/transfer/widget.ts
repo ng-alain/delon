@@ -36,6 +36,7 @@ import type { SFTransferWidgetSchema } from './schema';
       [nzFilterOption]="ui.filterOption"
       [nzSearchPlaceholder]="ui.searchPlaceholder"
       [nzNotFoundContent]="ui.notFoundContent"
+      [nzOneWay]="ui.oneWay"
       [nzCanMove]="_canMove"
       (nzChange)="_change($event)"
       (nzSearchChange)="_searchChange($event)"

@@ -37,6 +37,7 @@ Non-built-in modules need to additionally register `withTransferWidget` in [json
 | `[searchPlaceholder]` | Placeholder of search box | `string` | - |
 | `[notFoundContent]` | Text to display when a column is empty | `string` | - |
 | `[canMove]` | Second verification when transfer choice box | `function` | - |
-| `[change]` | Callback function when the transfer between columns is complete | `(options: TransferChange) => void` | - |
-| `[searchChange]` | Callback function when search field is changed | `(options: TransferSearchChange) => void` | - |
-| `[selectChange]` | Callback function when selected items are changed | `(options: TransferSelectChange) => void` | - |
+| `[oneWay]` | Display as single direction | `boolean` | `false` |
+| `(change)` | Callback function when the transfer between columns is complete | `(options: TransferChange) => void` | - |
+| `(searchChange)` | Callback function when search field is changed | `(options: TransferSearchChange) => void` | - |
+| `(selectChange)` | Callback function when selected items are changed | `(options: TransferSelectChange) => void` | - |
