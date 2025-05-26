@@ -36,7 +36,7 @@ To select or input a date.
 | `[mode]` | Render mode | `date,week,month,year` | `date` |
 | `[rangeMode]` | Set picker mode of range picker | `date,week,month,year` | `date` |
 | `[size]` | Size of the `nz-date-picker` | `default,large,small` | - |
-| `[placeholder]` | Placeholder of date input | `string` | - |
+| `[placeholder]` | Placeholder of date input | `string, string[]` | - |
 | `[displayFormat]` | Display format([nzFormat](https://ng.ant.design/components/date-picker/en#api)) | `string` | `yyyy-MM-dd HH:mm:ss` |
 | `[end]` | End `key` value for the date range | `string` | - |
 | `[allowClear]` | Whether to show clear button | `boolean` | `true` |

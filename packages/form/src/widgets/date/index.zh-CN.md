@@ -36,7 +36,7 @@ type: Widgets
 | `[mode]` | 渲染模式 | `date,week,month,year` | `date` |
 | `[rangeMode]` | 范围选择器的选择模式 | `date,week,month,year` | `date` |
 | `[size]` | 大小，等同 `nzSize` | `default,large,small` | - |
-| `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[placeholder]` | 在文字框中显示提示讯息 | `string, string[]` | - |
 | `[format]` | 数据格式化 | `string` | - |
 | `[displayFormat]` | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值） | `string` | `yyyy-MM-dd HH:mm:ss` |
 | `[end]` | 日期范围所对应的结束值 `key` | `string` | - |
