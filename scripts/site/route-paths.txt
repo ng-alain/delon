@@ -75,8 +75,6 @@
 /cli/sta/zh
 /components/auto-focus/en
 /components/auto-focus/zh
-/components/avatar-list/en
-/components/avatar-list/zh
 /components/cell/en
 /components/cell/zh
 /components/count-down/en
@@ -119,8 +117,6 @@
 /components/pdf/zh
 /components/quick-menu/en
 /components/quick-menu/zh
-/components/result/en
-/components/result/zh
 /components/reuse-tab/en
 /components/reuse-tab/zh
 /components/se/en

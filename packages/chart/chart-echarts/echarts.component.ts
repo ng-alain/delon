@@ -18,7 +18,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, debounceTime, filter } from 'rxjs';
 
-import { NumberInput, ZoneOutside } from '@delon/util/decorator';
+import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
@@ -51,9 +51,6 @@ import {
   imports: [NzSkeletonComponent]
 })
 export class ChartEChartsComponent implements OnInit, OnDestroy {
-  static ngAcceptInputType_width: NumberInput;
-  static ngAcceptInputType_height: NumberInput;
-
   private readonly srv = inject(ChartEChartsService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
@@ -75,10 +72,10 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   _height = '400px';
 
   @Input()
-  set width(val: NumberInput) {
+  set width(val: number | string | null | undefined) {
     this._width = typeof val === 'number' ? `${val}px` : `${val}`;
   }
-  @Input() set height(val: NumberInput) {
+  @Input() set height(val: number | string | null | undefined) {
     this._height = typeof val === 'number' ? `${val}px` : `${val}`;
   }
   @Input()
