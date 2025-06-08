@@ -74,12 +74,4 @@ export class NoticeIconComponent {
     this.delayShow.set(result);
     this.popoverVisibleChange.emit(result);
   }
-
-  onSelect(i: NoticeIconSelect): void {
-    this.select.emit(i);
-  }
-
-  onClear(title: string): void {
-    this.clear.emit(title);
-  }
 }

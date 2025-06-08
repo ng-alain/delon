@@ -24,7 +24,7 @@
         <nz-tabset [nzSelectedIndex]="0" [nzCentered]="centered()">
           @for (i of d; track $index) {
             <nz-tab [nzTitle]="i.title">
-              <notice-icon-tab [locale]="locale()" [item]="i" (select)="onSelect($event)" (clear)="onClear($event)" />
+              <notice-icon-tab [locale]="locale()" [item]="i" (select)="select.emit($event)" (clear)="clear.emit($event)" />
             </nz-tab>
           }
         </nz-tabset>

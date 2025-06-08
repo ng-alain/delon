@@ -29,8 +29,8 @@ export class NoticeIconTabComponent {
   readonly select = output<NoticeIconSelect>();
   readonly clear = output<string>();
 
-  onClick(item: NoticeItem): void {
-    this.select.emit({ title: this.item().title, item });
+  onClick(item: NoticeItem, event: Event): void {
+    this.select.emit({ title: this.item().title, item, event });
   }
 
   onClear(): void {
