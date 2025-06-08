@@ -29,7 +29,6 @@ import { GlobalFooterLink } from './global-footer.types';
     '[class.global-footer]': 'true',
     '[class.global-footer-rtl]': `dir === 'rtl'`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NgTemplateOutlet]

@@ -38,7 +38,6 @@ export interface G2RadarClickItem {
     '[style.height.px]': 'height',
     '[class.g2-radar]': 'true'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective]

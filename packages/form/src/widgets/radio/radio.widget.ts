@@ -38,7 +38,6 @@ import { ControlUIWidget } from '../../widget';
       }
     </nz-radio-group>
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

@@ -19,7 +19,6 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
   exportAs: 'g2Card',
   templateUrl: './card.component.html',
   host: { '[class.g2-card]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzCardComponent, NzSpinComponent, NzStringTemplateOutletDirective]

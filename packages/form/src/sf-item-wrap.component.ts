@@ -10,7 +10,6 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   selector: 'sf-item-wrap',
   templateUrl: './sf-item-wrap.component.html',
   animations: [helpMotion],
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

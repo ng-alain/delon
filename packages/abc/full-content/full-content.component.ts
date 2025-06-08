@@ -35,7 +35,6 @@ const hideTitleCls = `full-content__hidden-title`;
     '[class.full-content]': 'true',
     '[style.height.px]': '_height'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

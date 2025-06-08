@@ -19,7 +19,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
     '[class.number-info__light]': `theme === 'light'`,
     '[class.number-info__default]': `theme === 'default'`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, NzIconDirective]

@@ -86,7 +86,6 @@ import { ObjectLayoutWidget } from '../../widget';
     } @else {
       <ng-template [ngTemplateOutlet]="default" />
     }`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

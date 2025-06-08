@@ -48,7 +48,6 @@ let nextUniqueId = 0;
     '[class.ant-form-item-has-error]': 'invalid',
     '[class.ant-form-item-with-help]': 'showErr'
   },
-  preserveWhitespaces: false,
   providers: [NzFormStatusService],
   animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,

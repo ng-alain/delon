@@ -13,7 +13,6 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
     '[class.loading-default]': 'true',
     '[class.loading-default-rtl]': `dir === 'rtl'`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzSpinComponent, NzIconDirective]
