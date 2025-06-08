@@ -52,3 +52,4 @@ Used on the navigation toolbar as a unified notification center for the entire p
 |----------|-------------|------|---------|
 | `[title]` | Title of the select item | `string` | - |
 | `[item]` | Data of the select item | `NoticeItem` | - |
+| `[event]` | Click Event | `Event` | - |
