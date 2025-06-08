@@ -71,7 +71,6 @@ import { ArrayLayoutWidget } from '../../widget';
     </div>
   </nz-form-item>`,
   host: { '[class.sf__array]': 'true' },
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

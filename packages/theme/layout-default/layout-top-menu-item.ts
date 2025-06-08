@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, booleanAt
     '[class.alain-default__top-menu-item-selected]': `selected`,
     '[class.alain-default__top-menu-item-disabled]': `disabled`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone

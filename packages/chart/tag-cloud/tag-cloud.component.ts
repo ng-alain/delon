@@ -32,7 +32,6 @@ export interface G2TagCloudClickItem {
   template: `@if (!loaded) {
     <nz-skeleton />
   }`,
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzSkeletonComponent]

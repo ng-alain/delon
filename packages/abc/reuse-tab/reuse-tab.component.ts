@@ -59,7 +59,6 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.stat
     '[class.reuse-tab-rtl]': `dir === 'rtl'`
   },
   providers: [ReuseTabContextService],
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [

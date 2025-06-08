@@ -43,7 +43,6 @@ export function withTestWidget(): SFWidgetProvideConfig {
     </tinymce>
     <!-- 结束自定义控件区域 -->
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DelonFormModule]
 })

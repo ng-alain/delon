@@ -12,7 +12,6 @@ import {
   selector: 'global-footer-item',
   exportAs: 'globalFooterItem',
   template: ` <ng-template #host><ng-content /></ng-template> `,
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

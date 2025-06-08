@@ -42,7 +42,6 @@ const FLOATINGCLS = 'sidebar-nav__floating';
     '(document:click)': 'closeSubMenu()',
     '[class.d-block]': `true`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone

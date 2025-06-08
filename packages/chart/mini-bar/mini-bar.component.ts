@@ -32,7 +32,6 @@ export interface G2MiniBarClickItem {
   host: {
     '[style.height.px]': 'height'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

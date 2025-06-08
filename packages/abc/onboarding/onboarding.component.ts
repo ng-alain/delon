@@ -40,7 +40,6 @@ interface OnboardingLightData {
     '[class.onboarding-rtl]': `dir === 'rtl'`,
     '[attr.data-onboarding-active]': `active`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzPopoverDirective, NzStringTemplateOutletDirective, NzButtonComponent, NzNoAnimationDirective]

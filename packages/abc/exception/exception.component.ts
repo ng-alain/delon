@@ -32,7 +32,6 @@ export type ExceptionType = 403 | 404 | 500;
     '[class.exception]': 'true',
     '[class.exception-rtl]': `dir === 'rtl'`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [CdkObserveContent, NzButtonComponent, RouterLink]

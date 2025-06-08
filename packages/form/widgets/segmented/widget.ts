@@ -26,7 +26,6 @@ import type { SFSegmentedWidgetSchema } from './schema';
       (nzValueChange)="valueChange($event)"
     />
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzSegmentedComponent]
 })

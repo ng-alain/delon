@@ -32,7 +32,6 @@ import type { SFSliderWidgetSchema } from './schema';
       (nzOnAfterChange)="_afterChange($event)"
     />
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzSliderModule]
 })

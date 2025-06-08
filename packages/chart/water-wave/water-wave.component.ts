@@ -26,7 +26,6 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   exportAs: 'g2WaterWave',
   templateUrl: './water-wave.component.html',
   host: { '[class.g2-water-wave]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective]

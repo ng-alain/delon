@@ -30,7 +30,6 @@ import { ControlUIWidget } from '../../widget';
       [class.ant-input-number__hide-step]="ui.hideStep"
     />
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

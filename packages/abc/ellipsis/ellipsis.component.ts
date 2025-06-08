@@ -25,7 +25,6 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   selector: 'ellipsis',
   exportAs: 'ellipsis',
   templateUrl: './ellipsis.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [CdkObserveContent, NzTooltipDirective, NgTemplateOutlet]

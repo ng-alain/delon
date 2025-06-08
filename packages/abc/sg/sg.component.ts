@@ -20,12 +20,11 @@ const prefixCls = `sg`;
 @Component({
   selector: 'sg',
   exportAs: 'sg',
-  template: ` <ng-content /> `,
+  template: `<ng-content />`,
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

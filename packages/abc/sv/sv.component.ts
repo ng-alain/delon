@@ -33,7 +33,6 @@ const prefixCls = `sv`;
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]

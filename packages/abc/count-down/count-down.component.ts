@@ -17,7 +17,6 @@ import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdo
   template: `@if (config) {
     <countdown #cd [config]="config" (event)="handleEvent($event)" />
   }`,
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [CountdownComponent]

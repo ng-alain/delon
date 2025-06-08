@@ -31,7 +31,6 @@ let nextUniqueId = 0;
     <ng-template #target />
     <ng-container *ngTemplateOutlet="footer" />
   `,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   providers: [NzFormStatusService],
   // eslint-disable-next-line @angular-eslint/prefer-standalone

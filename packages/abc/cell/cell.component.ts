@@ -112,7 +112,6 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
     }
   `,
   exportAs: 'cell',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [

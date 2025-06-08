@@ -30,7 +30,6 @@ import type { SFRateWidgetSchema } from './schema';
       <span class="ant-rate-text">{{ text }}</span>
     }
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzRateModule]
 })
