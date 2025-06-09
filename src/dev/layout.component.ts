@@ -149,6 +149,7 @@ export class DevLayoutComponent implements OnInit {
         },
         { text: '测试view1-id', link: '/dev/view/1', icon: 'anticon anticon-appstore' },
         { text: '测试view2-id', link: '/dev/view/2', icon: 'anticon anticon-appstore' },
+        { render_type: 'divider' },
         { text: 'lazy测试1', link: '/dev/lazy/p1', icon: 'anticon anticon-appstore' },
         { text: 'lazy测试2', link: '/dev/lazy/p2', icon: 'anticon anticon-appstore' },
         { text: 'lazy测试view1-id', link: '/dev/lazy/1/view', icon: 'anticon anticon-appstore' },
@@ -163,9 +164,11 @@ export class DevLayoutComponent implements OnInit {
               link: '#',
               children: [
                 { text: 'Level3A', link: '/dev/l1' },
+                { render_type: 'divider' },
                 { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true }
               ]
             },
+            { render_type: 'divider' },
             { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true }
           ]
         },
