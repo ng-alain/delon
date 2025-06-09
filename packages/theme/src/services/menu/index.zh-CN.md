@@ -35,6 +35,7 @@ type: Service
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `render_type` | 菜单项的渲染类型 | `item, divider` | - |
 | `text` | 文本（支持HTML），**必填项** | `string` | - |
 | `i18n` | i18n主键（支持HTML） | `string` | - |
 | `group` | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true` |

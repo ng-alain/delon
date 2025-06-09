@@ -490,6 +490,31 @@ describe('theme: layout-default-nav', () => {
         page.checkCount('.sidebar-nav__open', 0);
       });
     });
+
+    describe('#render_type', () => {
+      it('should be render divider', () => {
+        createComp();
+        menuSrv.add([
+          {
+            text: '主导航',
+            group: true,
+            children: [
+              {
+                text: '仪表盘',
+                children: [{ text: 'v1', link: '/v1' }, { render_type: 'divider' }, { text: 'v2', link: '/v2' }]
+              },
+              { render_type: 'divider' },
+              {
+                text: 'widgets',
+                disabled: true
+              }
+            ]
+          }
+        ]);
+        fixture.detectChanges();
+        page.checkCount('.sidebar-nav__divider', 2);
+      });
+    });
   });
 
   describe('[underPad]', () => {

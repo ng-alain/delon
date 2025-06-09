@@ -37,6 +37,7 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `render_type` | Rendering type of menu item | `item, divider` | - |
 | `text` | Text of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | - |
 | `i18n` | I18n key of menu item, can be choose one of `text` or `i18n` (Support HTML) | `string` | - |
 | `group` | Whether to display the group name | `boolean` | `true` |

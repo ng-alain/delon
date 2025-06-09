@@ -210,6 +210,7 @@ The content area is the business page area, the specification details：
 | `@alain-default-aside-nav-group-text-color` | `rgba(0, 0, 0, 0.43)` | Group text color |
 | `@alain-default-aside-nav-selected-text-color` | `#108ee9` | Nav selected text color |
 | `@alain-default-aside-nav-selected-bg` | `#fcfcfc` | Nav selected background color |
+| `@alain-default-aside-nav-divider-bg` | `#efe3e5` | Nav divider background color |
 | `@alain-default-aside-collapsed-wd` | `@layout-gutter * 8` | Width of aside collapsed |
 | `@alain-default-aside-collapsed-nav-fs` | `24px` | Font size of aside collapsed |
 | `@alain-default-aside-collapsed-nav-img-wh` | `24px` | Width & height nav image of aside collapsed |

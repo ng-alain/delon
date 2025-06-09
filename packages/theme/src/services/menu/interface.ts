@@ -26,6 +26,8 @@ export interface MenuIcon {
 
 export interface Menu {
   [key: string]: NzSafeAny;
+  /** Rendering type of menu item */
+  render_type?: 'item' | 'divider';
   /** Text of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
   text?: string;
   /** I18n key of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
