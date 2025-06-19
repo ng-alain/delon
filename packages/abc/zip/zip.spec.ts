@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 
-import * as fs from 'file-saver';
+import fs from 'file-saver';
 
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

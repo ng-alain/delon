@@ -92,6 +92,7 @@
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
     "@angular/platform-browser-dynamic": "^20.0.0",
+    "@angular/platform-server": "^20.0.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-angular": "^19.8.1",
     "@eslint/js": "^9.28.0",

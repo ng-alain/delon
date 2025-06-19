@@ -403,6 +403,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/platform-server@npm:^20.0.0":
+  version: 20.0.4
+  resolution: "@angular/platform-server@npm:20.0.4"
+  dependencies:
+    tslib: "npm:^2.3.0"
+    xhr2: "npm:^0.2.0"
+  peerDependencies:
+    "@angular/common": 20.0.4
+    "@angular/compiler": 20.0.4
+    "@angular/core": 20.0.4
+    "@angular/platform-browser": 20.0.4
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: 10c0/86063d36d2565c26094eb569533d9318d995834582e025ffaea0398ce9898c188c0f2e12ab9a272ec6fb46f845da2b94d10ecbd22dfee83e6e2266d8bf08f900
+  languageName: node
+  linkType: hard
+
 "@angular/router@npm:^20.0.0":
   version: 20.0.4
   resolution: "@angular/router@npm:20.0.4"
@@ -5804,6 +5820,7 @@ __metadata:
     "@angular/forms": "npm:^20.0.0"
     "@angular/platform-browser": "npm:^20.0.0"
     "@angular/platform-browser-dynamic": "npm:^20.0.0"
+    "@angular/platform-server": "npm:^20.0.0"
     "@angular/router": "npm:^20.0.0"
     "@angular/service-worker": "npm:^20.0.2"
     "@angular/ssr": "npm:^20.0.1"
@@ -15786,6 +15803,13 @@ __metadata:
   version: 3.0.0
   resolution: "xdg-basedir@npm:3.0.0"
   checksum: 10c0/c3be36400d8a69c9154ce6ccff98832dae0d04f8bacda806f609d3955beb23dc7c9dde724438b81e6128bf253d440a2bfe0239dd37d70333ab625c4e170b77b2
+  languageName: node
+  linkType: hard
+
+"xhr2@npm:^0.2.0":
+  version: 0.2.1
+  resolution: "xhr2@npm:0.2.1"
+  checksum: 10c0/eebe95bd0ae9087da9b4dda636abee1f30cf9b424fbe8ebd0c7dcfd9be5db3e4aa634cf1837fa3e82b486aace9396a2dbf6be2dc8084862c8239dccec4e16dca
   languageName: node
   linkType: hard
 

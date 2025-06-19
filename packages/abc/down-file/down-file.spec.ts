@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import * as fs from 'file-saver';
+import fs from 'file-saver';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 

@@ -123,7 +123,7 @@ describe('form: widget: number', () => {
       const s: SFSchema = { properties: { a: { type: 'number', default: 1 } } };
       const ui = (s.properties!.a.ui = {
         formatter: jasmine.createSpy('formatter'),
-        parser: jasmine.createSpy('parser')
+        parser: jasmine.createSpy('parser').and.callFake((v: string) => +v)
       });
       page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();
