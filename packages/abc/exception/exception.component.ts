@@ -1,24 +1,26 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkObserveContent } from '@angular/cdk/observers';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
   ViewEncapsulation,
-  inject
+  afterNextRender,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+  viewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { map } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { AlainConfigService } from '@delon/util/config';
+import { AlainConfigService, AlainExceptionType } from '@delon/util/config';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -27,73 +29,70 @@ export type ExceptionType = 403 | 404 | 500;
 @Component({
   selector: 'exception',
   exportAs: 'exception',
-  templateUrl: './exception.component.html',
+  template: `
+    @let l = locale();
+    <div class="exception__img-block">
+      <div class="exception__img" [style.backgroundImage]="_img()"></div>
+    </div>
+    <div class="exception__cont">
+      @if (_title()) {
+        <h1 class="exception__cont-title" [innerHTML]="_title()"></h1>
+      }
+      <div class="exception__cont-desc" [innerHTML]="_desc()"></div>
+      <div class="exception__cont-actions">
+        <div (cdkObserveContent)="checkContent()" #conTpl>
+          <ng-content />
+        </div>
+        @if (!hasCon()) {
+          <button nz-button [routerLink]="backRouterLink()" [nzType]="'primary'">
+            {{ l.backToHome }}
+          </button>
+        }
+      </div>
+    </div>
+  `,
   host: {
     '[class.exception]': 'true',
-    '[class.exception-rtl]': `dir === 'rtl'`
+    '[class.exception-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [CdkObserveContent, NzButtonComponent, RouterLink]
 })
-export class ExceptionComponent implements OnInit {
-  static ngAcceptInputType_type: ExceptionType | string;
-
+export class ExceptionComponent {
   private readonly i18n = inject(DelonLocaleService);
   private readonly dom = inject(DomSanitizer);
   private readonly directionality = inject(Directionality);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroy$ = inject(DestroyRef);
   private readonly cogSrv = inject(AlainConfigService);
 
-  @ViewChild('conTpl', { static: true }) private conTpl!: ElementRef;
+  private readonly conTpl = viewChild.required<ElementRef<HTMLElement>>('conTpl');
+  locale = toSignal(this.i18n.change.pipe(map(() => this.i18n.getData('exception'))), {
+    initialValue: {} as LocaleData
+  });
+  dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
 
-  _type!: ExceptionType;
-  locale: LocaleData = {};
-  hasCon = false;
-  dir?: Direction = 'ltr';
+  hasCon = signal(false);
+  private typeDict!: NonNullable<AlainExceptionType['typeDict']>;
+  typeItem = signal<NonNullable<AlainExceptionType['typeDict']>[ExceptionType] | null>(null);
 
-  _img: SafeUrl = '';
-  _title: SafeHtml = '';
-  _desc: SafeHtml = '';
-  private typeDict!: Record<number | string, { img: string; title: string; desc?: string }>;
+  type = input<ExceptionType>(404);
+  img = input<string>();
+  title = input<string>();
+  desc = input<string>();
+  backRouterLink = input<string | NzSafeAny[]>('/');
 
-  @Input()
-  set type(value: ExceptionType) {
-    const item = this.typeDict[value];
-    if (!item) return;
-
-    this.fixImg(item.img);
-    this._type = value;
-    this._title = item.title;
-    this._desc = '';
-  }
-
-  private fixImg(src: string): void {
-    this._img = this.dom.bypassSecurityTrustStyle(`url('${src}')`);
-  }
-
-  @Input()
-  set img(value: string) {
-    this.fixImg(value);
-  }
-
-  @Input()
-  set title(value: string) {
-    this._title = this.dom.bypassSecurityTrustHtml(value);
-  }
-
-  @Input()
-  set desc(value: string) {
-    this._desc = this.dom.bypassSecurityTrustHtml(value);
-  }
-
-  @Input() backRouterLink: string | NzSafeAny[] = '/';
-
-  checkContent(): void {
-    this.hasCon = !isEmpty(this.conTpl.nativeElement);
-    this.cdr.detectChanges();
-  }
+  _img = computed(() => {
+    const v = this.typeItem()?.img ?? this.img();
+    return v == null ? null : this.dom.bypassSecurityTrustStyle(`url('${v}')`);
+  });
+  _title = computed(() => {
+    const v = this.typeItem()?.title ?? this.title();
+    return v == null ? null : this.dom.bypassSecurityTrustHtml(v);
+  });
+  _desc = computed(() => {
+    const v = this.typeItem()?.desc ?? this.desc() ?? this.locale()[this.type()];
+    return v == null ? null : this.dom.bypassSecurityTrustHtml(v);
+  });
 
   constructor() {
     this.cogSrv.attach(this, 'exception', {
@@ -112,18 +111,18 @@ export class ExceptionComponent implements OnInit {
         }
       }
     });
+
+    effect(() => {
+      const type = this.type();
+      this.typeItem.set(this.typeDict?.[type]);
+    });
+
+    afterNextRender(() => {
+      this.checkContent();
+    });
   }
 
-  ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => {
-      this.locale = this.i18n.getData('exception');
-      this.cdr.detectChanges();
-    });
-    this.checkContent();
+  checkContent(): void {
+    this.hasCon.set(!isEmpty(this.conTpl().nativeElement));
   }
 }
