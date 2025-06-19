@@ -76,6 +76,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
   private readonly destroy$ = inject(DestroyRef);
+  private readonly cogSrv = inject(AlainConfigService);
 
   inited = false;
   private lib: string = '';
@@ -178,8 +179,8 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._el.querySelector('.pdf-container') as HTMLElement;
   }
 
-  constructor(configSrv: AlainConfigService) {
-    const cog = configSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
+  constructor() {
+    const cog = this.cogSrv.merge('pdf', PDF_DEFULAT_CONFIG)!;
     Object.assign(this, cog);
 
     const lib = cog.lib!;

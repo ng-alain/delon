@@ -3,12 +3,12 @@ import {
   Component,
   ContentChildren,
   ElementRef,
-  Inject,
   Input,
   QueryList,
   Renderer2,
   TemplateRef,
-  booleanAttribute
+  booleanAttribute,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -112,16 +112,16 @@ export class LayoutDefaultComponent {
     this.srv.toggleCollapsed();
   }
 
-  constructor(
-    router: Router,
-    private msgSrv: NzMessageService,
-    private settings: SettingsService,
-    private el: ElementRef,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private srv: LayoutDefaultService
-  ) {
-    router.events
+  private readonly router = inject(Router);
+  private readonly msgSrv = inject(NzMessageService);
+  private readonly settings = inject(SettingsService);
+  private readonly el = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly doc = inject(DOCUMENT);
+  private readonly srv = inject(LayoutDefaultService);
+
+  constructor() {
+    this.router.events
       .pipe(
         takeUntilDestroyed(),
         filter(() => !this.fetchingStrictly)

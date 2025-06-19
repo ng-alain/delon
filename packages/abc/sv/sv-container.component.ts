@@ -76,6 +76,8 @@ export class SVTitleComponent implements OnInit {
   imports: [SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {
+  private readonly cogSrv = inject(AlainConfigService);
+
   @Input({ alias: 'sv-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
   colInCon?: REP_TYPE;
   @Input() title?: string | TemplateRef<void>;
@@ -94,8 +96,8 @@ export class SVContainerComponent {
     return this.bordered ? {} : { 'margin-left': `${-(this.gutter / 2)}px`, 'margin-right': `${-(this.gutter / 2)}px` };
   }
 
-  constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'sv', {
+  constructor() {
+    this.cogSrv.attach(this, 'sv', {
       size: 'large',
       gutter: 32,
       layout: 'horizontal',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, numberAttribute } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, inject, numberAttribute } from '@angular/core';
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -17,6 +17,7 @@ import { AlainConfigService } from '@delon/util/config';
   encapsulation: ViewEncapsulation.None
 })
 export class SGContainerComponent {
+  private readonly cogSrv = inject(AlainConfigService);
   @Input({ transform: numberAttribute }) gutter!: number;
   @Input({ alias: 'sg-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
   colInCon?: REP_TYPE;
@@ -26,8 +27,8 @@ export class SGContainerComponent {
     return -(this.gutter / 2);
   }
 
-  constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'sg', {
+  constructor() {
+    this.cogSrv.attach(this, 'sg', {
       gutter: 32,
       col: 2
     });

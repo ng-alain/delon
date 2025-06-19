@@ -1,19 +1,21 @@
-import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 
 import { AlainConfigService, AlainMockConfig } from '@delon/util/config';
 
-import { MockCachedRule, MockOptions, MockRule } from './interface';
+import { MockCachedRule, MockRule } from './interface';
 import { MOCK_DEFULAT_CONFIG } from './mock.config';
 import { DELON_MOCK_CONFIG } from './provide';
 
 @Injectable({ providedIn: 'root' })
 export class MockService implements OnDestroy {
+  private readonly cogSrv = inject(AlainConfigService);
+  private readonly options = inject(DELON_MOCK_CONFIG, { optional: true });
   private cached: MockCachedRule[] = [];
   readonly config: AlainMockConfig;
 
-  constructor(cogSrv: AlainConfigService, @Optional() @Inject(DELON_MOCK_CONFIG) options?: MockOptions) {
-    this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
-    this.setData(options?.data);
+  constructor() {
+    this.config = this.cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
+    this.setData(this.options?.data);
   }
 
   /**

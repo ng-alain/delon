@@ -2,7 +2,6 @@ import { Platform } from '@angular/cdk/platform';
 import { Injectable, inject } from '@angular/core';
 
 import { AlainI18nBaseService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
-import { AlainConfigService } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 
@@ -22,8 +21,8 @@ export class I18NService extends AlainI18nBaseService {
     { code: 'zh-CN', text: '中文' }
   ];
 
-  constructor(cogSrv: AlainConfigService) {
-    super(cogSrv);
+  constructor() {
+    super();
     // from browser
     const lang = (this.getBrowserLang() || this.defaultLang) as LangType;
     this.use(lang, {}, false);

@@ -78,6 +78,7 @@ export class SETitleComponent implements OnInit {
   imports: [SETitleComponent, NzStringTemplateOutletDirective]
 })
 export class SEContainerComponent {
+  private readonly cogSrv = inject(AlainConfigService);
   private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input({ alias: 'se-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
   colInCon?: REP_TYPE;
@@ -124,8 +125,8 @@ export class SEContainerComponent {
     return this.errorNotify$.pipe(filter(v => v != null));
   }
 
-  constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'se', {
+  constructor() {
+    this.cogSrv.attach(this, 'se', {
       size: 'default',
       nzLayout: 'horizontal',
       gutter: 32,

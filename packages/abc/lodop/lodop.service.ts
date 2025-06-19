@@ -10,6 +10,7 @@ import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
   private readonly scriptSrv = inject(LazyService);
+  private readonly cogSrv = inject(AlainConfigService);
 
   private defaultConfig: AlainLodopConfig;
   private _cog!: AlainLodopConfig;
@@ -19,8 +20,8 @@ export class LodopService implements OnDestroy {
   private _events = new Subject<LodopPrintResult>();
   private printBuffer: NzSafeAny[] = [];
 
-  constructor(configSrv: AlainConfigService) {
-    this.defaultConfig = configSrv.merge('lodop', {
+  constructor() {
+    this.defaultConfig = this.cogSrv.merge('lodop', {
       url: 'http://localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',
       companyName: '',

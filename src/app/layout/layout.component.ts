@@ -1,12 +1,12 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { delay, filter } from 'rxjs';
 
 import { RTL, RTLService, SettingsService } from '@delon/theme';
 import { ThemeBtnComponent } from '@delon/theme/theme-btn';
-import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { NzFloatButtonTopComponent } from 'ng-zorro-antd/float-button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
@@ -22,35 +22,35 @@ import { HeaderComponent } from './header/header.component';
         <nz-spin class="fetching" nzSpinning />
       }
       <router-outlet />
-      <nz-back-top />
+      <nz-float-button-top />
       <theme-btn (themeChange)="themeChange($event)" />
     }
   `,
   host: {
     '[attr.id]': `'ng-content'`
   },
-  imports: [RouterOutlet, HeaderComponent, NzSpinModule, NzBackTopModule, ThemeBtnComponent]
+  imports: [RouterOutlet, HeaderComponent, NzSpinModule, NzFloatButtonTopComponent, ThemeBtnComponent]
 })
 export class LayoutComponent {
   isFetching = false;
   render = true;
 
-  constructor(
-    private router: Router,
-    msg: NzMessageService,
-    private settingsSrv: SettingsService,
-    private location: Location,
-    rtl: RTLService,
-    private appSrv: AppService
-  ) {
-    rtl.change.subscribe(() => this.fixDirection());
-    router.events.pipe(takeUntilDestroyed()).subscribe(evt => {
+  private readonly router = inject(Router);
+  private readonly msg = inject(NzMessageService);
+  private readonly settingsSrv = inject(SettingsService);
+  private readonly location = inject(Location);
+  private readonly rtl = inject(RTLService);
+  private readonly appSrv = inject(AppService);
+
+  constructor() {
+    this.rtl.change.subscribe(() => this.fixDirection());
+    this.router.events.pipe(takeUntilDestroyed()).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
       if (evt instanceof NavigationError) {
         this.isFetching = false;
-        msg.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+        this.msg.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
         return;
       }
       if (!(evt instanceof NavigationEnd)) {
@@ -58,7 +58,7 @@ export class LayoutComponent {
       }
       this.isFetching = false;
     });
-    router.events
+    this.router.events
       .pipe(
         takeUntilDestroyed(),
         filter(ev => ev instanceof NavigationEnd),

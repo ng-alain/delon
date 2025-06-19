@@ -2,7 +2,6 @@ import { Injectable, Injector, OnDestroy, inject } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
-  ExtraOptions,
   NavigationEnd,
   NavigationStart,
   Router,
@@ -579,7 +578,7 @@ export class ReuseTabService implements OnDestroy {
   }
 
   private get isDisabledInRouter(): boolean {
-    const routerConfig = this.injector.get<ExtraOptions>(ROUTER_CONFIGURATION, {} as NzSafeAny);
+    const routerConfig = this.injector.get(ROUTER_CONFIGURATION, {} as NzSafeAny);
     return routerConfig.scrollPositionRestoration === 'disabled';
   }
 

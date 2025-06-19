@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { AlainConfigService, AlainUtilArrayConfig } from '@delon/util/config';
 import { NzTreeNode } from 'ng-zorro-antd/core/tree';
@@ -13,10 +13,11 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class ArrayService {
+  private readonly cogSrv = inject(AlainConfigService);
   private c: AlainUtilArrayConfig;
 
-  constructor(cog: AlainConfigService) {
-    this.c = cog.merge('utilArray', {
+  constructor() {
+    this.c = this.cogSrv.merge('utilArray', {
       deepMapName: 'deep',
       parentMapName: 'parent',
       idMapName: 'id',

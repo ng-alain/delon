@@ -66,6 +66,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
   private readonly directionality = inject(Directionality);
   private readonly destroy$ = inject(DestroyRef);
+  private readonly settings = inject(SettingsService);
+  private readonly platform = inject(Platform);
+  private readonly cogSrv = inject(AlainConfigService);
 
   @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
@@ -117,9 +120,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   // #endregion
 
-  constructor(settings: SettingsService, configSrv: AlainConfigService, platform: Platform) {
-    this.isBrowser = platform.isBrowser;
-    configSrv.attach(this, 'pageHeader', {
+  constructor() {
+    this.isBrowser = this.platform.isBrowser;
+    this.cogSrv.attach(this, 'pageHeader', {
       home: '首页',
       homeLink: '/',
       autoBreadcrumb: true,
@@ -129,7 +132,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
       fixed: false,
       fixedOffsetTop: 64
     });
-    settings.notify
+    this.settings.notify
       .pipe(
         takeUntilDestroyed(),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed')

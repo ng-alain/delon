@@ -1,4 +1,4 @@
-import { Component, DebugElement, Injectable, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, inject, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -950,8 +950,9 @@ class BComponent {
   imports: [RouterLink]
 })
 class CComponent {
+  private readonly srv = inject(ReuseTabService);
   time = +new Date();
-  constructor(private srv: ReuseTabService) {
+  constructor() {
     this.srv.title = 'new c title';
   }
   _onReuseInit(): void {}
@@ -981,9 +982,10 @@ class DComponent {
   `
 })
 class EComponent {
+  private readonly reuse = inject(ReuseTabService);
   time = +new Date();
-  constructor(reuse: ReuseTabService) {
-    reuse.closable = false;
+  constructor() {
+    this.reuse.closable = false;
   }
   _onReuseInit(): void {}
   _onReuseDestroy(): void {}

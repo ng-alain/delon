@@ -44,6 +44,7 @@ export class ExceptionComponent implements OnInit {
   private readonly directionality = inject(Directionality);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroy$ = inject(DestroyRef);
+  private readonly cogSrv = inject(AlainConfigService);
 
   @ViewChild('conTpl', { static: true }) private conTpl!: ElementRef;
 
@@ -94,8 +95,8 @@ export class ExceptionComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'exception', {
+  constructor() {
+    this.cogSrv.attach(this, 'exception', {
       typeDict: {
         403: {
           img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',

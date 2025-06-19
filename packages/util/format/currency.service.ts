@@ -16,13 +16,14 @@ import {
 export class CurrencyService {
   private readonly locale = inject(LOCALE_ID);
   private readonly defCurrencyCode = inject(DEFAULT_CURRENCY_CODE, { optional: true }) ?? 'USD';
+  private readonly cogSrv = inject(AlainConfigService);
 
   private c: AlainUtilCurrencyConfig;
   private readonly currencyPipe: CurrencyPipe;
 
-  constructor(cog: AlainConfigService) {
+  constructor() {
     this.currencyPipe = new CurrencyPipe(this.locale, this.defCurrencyCode);
-    this.c = cog.merge('utilCurrency', {
+    this.c = this.cogSrv.merge('utilCurrency', {
       startingUnit: 'yuan',
       megaUnit: { Q: '京', T: '兆', B: '亿', M: '万', K: '千' },
       precision: 2,

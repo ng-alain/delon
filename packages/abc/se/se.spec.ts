@@ -1,4 +1,4 @@
-import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, inject, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   UntypedFormBuilder,
@@ -621,9 +621,10 @@ class TestComponent {
   imports: [FormsModule, ReactiveFormsModule, SEModule]
 })
 class TestReactiveComponent {
+  private readonly fb = inject(UntypedFormBuilder);
   validateForm: UntypedFormGroup;
-  constructor(fb: UntypedFormBuilder) {
-    this.validateForm = fb.group({
+  constructor() {
+    this.validateForm = this.fb.group({
       userName: [null, [Validators.required]],
       dis: { value: '', disabled: true }
     });
