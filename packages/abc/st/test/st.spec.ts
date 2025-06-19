@@ -1598,6 +1598,12 @@ describe('abc: st', () => {
         page.updateColumn([{ title: 'a', index: 'id' }]).expectElCount('.cdk-drop-list-disabled', 0);
       }));
     });
+    it('#delay', () => {
+      context.columns = [{ title: 'test', index: 'id' }];
+      context.delay = true;
+      fixture.detectChanges();
+      page.expectElCount('.ant-table-thead tr th', 0);
+    });
   });
   describe('[custom render template]', () => {
     it('with column title', fakeAsync(() => {

@@ -66,7 +66,7 @@ When an exception is thrown when parsing column data, *INVALID DATA* will be for
 | `[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null` | - |
 | `[loadingIndicator]` | The spinning indicator | `TemplateRef<void>` | - | ✅ |
 | `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0` | ✅ |
-| [delay] | Whether to delay table rendering, requires manual call to refreshColumns() to render | boolean | false | - |
+| `[delay]` | Whether to delay table rendering, requires manual call to `refreshColumns()` to render | boolean | false | - |
 | `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | - | - |
 | `[virtualScroll]` | Enable virtual scroll mode，work with `[nzScroll]` | `boolean` | `false` | ✅ |
 | `[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `54` | ✅ |
