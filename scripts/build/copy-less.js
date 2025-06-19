@@ -16,7 +16,7 @@ function copyLess(name) {
       fse.copySync(`${sourcePath}/${fileName}`, `${targetPath}/${fileName}`);
     });
   // modules less
-  fs.readdirSync(targetPath)
+  fs.readdirSync(sourcePath)
     .filter(name => fs.existsSync(`${sourcePath}/${name}/style/index.less`))
     .forEach(name => {
       fse.copySync(`${sourcePath}/${name}/style`, `${targetPath}/${name}/style`);

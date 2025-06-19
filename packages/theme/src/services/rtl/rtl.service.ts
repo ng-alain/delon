@@ -41,7 +41,7 @@ export class RTLService {
     this.updateHtml();
     // Should be wait inited
     Promise.resolve().then(() => {
-      (this.d as NzSafeAny).value = value;
+      this.d.valueSignal.set(value);
       this.d.change.emit(value);
       this.srv.setLayout(RTL_DIRECTION, value);
     });

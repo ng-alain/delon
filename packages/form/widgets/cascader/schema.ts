@@ -5,7 +5,7 @@ import type {
   NzCascaderPlacement,
   NzShowSearchOptions
 } from 'ng-zorro-antd/cascader';
-import { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { CascaderWidget } from './widget';
 

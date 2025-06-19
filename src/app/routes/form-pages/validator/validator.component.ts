@@ -14,6 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
@@ -63,6 +64,7 @@ export class DemoComponent {
     NzSelectModule,
     NzRadioModule,
     NzButtonModule,
+    NzSpaceCompactComponent,
     NzToolTipModule,
     NzIconModule,
     NzTabsModule,

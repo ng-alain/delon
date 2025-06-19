@@ -7,9 +7,9 @@ const propertiesOrder = propertyGroups.map(properties => ({
 }));
 
 export default {
-  extends: "stylelint-config-standard",
+  extends: ["stylelint-config-standard", "stylelint-config-clean-order"],
   customSyntax: 'postcss-less',
-  plugins: ['stylelint-order', 'stylelint-declaration-block-no-ignored-properties'],
+  plugins: ['stylelint-declaration-block-no-ignored-properties'],
   rules: {
     'function-name-case': ['lower', { ignoreFunctions: ['/colorPalette/'] }],
     'function-no-unknown': [

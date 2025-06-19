@@ -5,7 +5,7 @@ import type Plyr from 'plyr';
 
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MediaComponent, MediaType } from './media.component';
 

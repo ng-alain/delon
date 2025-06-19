@@ -6,11 +6,16 @@ import * as parse5 from 'parse5';
 import { BUILD_TARGET_BUILD, getProjectTarget } from './workspace';
 
 /** Gets the app index.html file */
-export function getIndexHtmlPath(_host: Tree, project: ProjectDefinition): string {
+export function getIndexHtmlPath(host: Tree, project: ProjectDefinition): string {
   const targetOptions = getProjectTarget(project, BUILD_TARGET_BUILD);
 
   if (typeof targetOptions.index === 'string' && targetOptions.index.endsWith('index.html')) {
     return targetOptions.index;
+  }
+
+  const htmlPath = `${project.sourceRoot}/index.html`;
+  if (host.exists(htmlPath)) {
+    return htmlPath;
   }
 
   throw new SchematicsException('No index.html file was found.');
