@@ -30,7 +30,6 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   exportAs: 'noticeIcon',
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [
@@ -73,13 +72,5 @@ export class NoticeIconComponent {
   onVisibleChange(result: boolean): void {
     this.delayShow.set(result);
     this.popoverVisibleChange.emit(result);
-  }
-
-  onSelect(i: NoticeIconSelect): void {
-    this.select.emit(i);
-  }
-
-  onClear(title: string): void {
-    this.clear.emit(title);
   }
 }

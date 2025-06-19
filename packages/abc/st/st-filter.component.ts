@@ -140,7 +140,6 @@ import type { _STColumn } from './st.types';
     '[class.st__filter]': `true`,
     '[class.ant-table-filter-trigger-container-open]': `visible`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [

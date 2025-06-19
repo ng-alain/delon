@@ -43,7 +43,6 @@ interface PageHeaderPath {
   selector: 'page-header',
   exportAs: 'pageHeader',
   templateUrl: './page-header.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [

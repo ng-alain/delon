@@ -34,9 +34,8 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
   exportAs: 'mediaComponent',
   template: `<ng-content />`,
   host: {
-    '[style.display]': `'block'`
+    class: 'd-block'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

@@ -20,7 +20,6 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   host: {
     '[style.height.px]': 'height'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

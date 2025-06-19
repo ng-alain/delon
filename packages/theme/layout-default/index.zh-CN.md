@@ -210,6 +210,7 @@ export class LayoutBasicComponent {
 | `@alain-default-aside-nav-group-text-color` | `rgba(0, 0, 0, 0.43)` | 侧边栏菜单分组文本颜色 |
 | `@alain-default-aside-nav-selected-text-color` | `#108ee9` | 侧边栏菜单激活时文本颜色 |
 | `@alain-default-aside-nav-selected-bg` | `#fcfcfc` | 侧边栏菜单激活时背景颜色 |
+| `@alain-default-aside-nav-divider-bg` | `#efe3e5` | 分隔线颜色 |
 | `@alain-default-aside-collapsed-wd` | `@layout-gutter * 8` | 侧边栏收缩后宽度 |
 | `@alain-default-aside-collapsed-nav-fs` | `24px` | 侧边栏收缩后文本字号 |
 | `@alain-default-aside-collapsed-nav-img-wh` | `24px` | 侧边栏收缩后图像宽高 |

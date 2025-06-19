@@ -28,7 +28,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
     '[class.tag-select__has-expand]': 'expandable',
     '[class.tag-select__expanded]': 'expand'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzIconDirective]

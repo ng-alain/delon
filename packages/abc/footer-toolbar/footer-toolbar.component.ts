@@ -22,7 +22,6 @@ const CLSBODY = 'footer-toolbar__body';
   selector: 'footer-toolbar',
   exportAs: 'footerToolbar',
   templateUrl: './footer-toolbar.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, ErrorCollectComponent]

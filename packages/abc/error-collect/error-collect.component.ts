@@ -32,7 +32,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
     '[class.d-none]': '_hiden()',
     '(click)': '_click()'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzIconDirective]

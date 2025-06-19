@@ -77,6 +77,7 @@ export class MenuService implements OnDestroy {
   private fixItem(item: MenuInner): void {
     item._aclResult = true;
 
+    if (!item.render_type) item.render_type = 'item';
     if (!item.link) item.link = '';
     if (!item.externalLink) item.externalLink = '';
 
