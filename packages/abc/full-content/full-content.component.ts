@@ -6,15 +6,14 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   ViewEncapsulation,
   booleanAttribute,
   inject,
+  input,
+  model,
   numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +29,7 @@ const hideTitleCls = `full-content__hidden-title`;
 @Component({
   selector: 'full-content',
   exportAs: 'fullContent',
-  template: ` <ng-content /> `,
+  template: `<ng-content />`,
   host: {
     '[class.full-content]': 'true',
     '[style.height.px]': '_height'
@@ -52,21 +51,20 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   _height = 0;
 
-  @Input({ transform: booleanAttribute }) fullscreen?: boolean;
-  @Input({ transform: booleanAttribute }) hideTitle = true;
-  @Input({ transform: numberAttribute }) padding = 24;
-  @Output() readonly fullscreenChange = new EventEmitter<boolean>();
+  hideTitle = input(true, { transform: booleanAttribute });
+  padding = input(24, { transform: numberAttribute });
+  fullscreen = model<boolean>();
 
   private updateCls(): void {
     const clss = this.bodyEl.classList;
-    if (this.fullscreen) {
+    if (this.fullscreen()) {
       clss.add(openedCls);
-      if (this.hideTitle) {
+      if (this.hideTitle()) {
         clss.add(hideTitleCls);
       }
     } else {
       clss.remove(openedCls);
-      if (this.hideTitle) {
+      if (this.hideTitle()) {
         clss.remove(hideTitleCls);
       }
     }
@@ -75,11 +73,11 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   private update(): void {
     this.updateCls();
     this.updateHeight();
-    this.fullscreenChange.emit(this.fullscreen);
+    this.fullscreen.set(this.fullscreen());
   }
 
   private updateHeight(): void {
-    this._height = this.bodyEl.getBoundingClientRect().height - this.el.getBoundingClientRect().top - this.padding;
+    this._height = this.bodyEl.getBoundingClientRect().height - this.el.getBoundingClientRect().top - this.padding();
     this.cdr.detectChanges();
   }
 
@@ -125,7 +123,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   toggle(): void {
-    this.fullscreen = !this.fullscreen;
+    this.fullscreen.set(!this.fullscreen());
     this.update();
     this.updateHeight();
   }
