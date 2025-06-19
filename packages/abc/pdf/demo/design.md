@@ -14,6 +14,7 @@ title:
 Provide rich interfaces for customization.
 
 ```ts
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -161,7 +162,8 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
     NzSelectModule,
     NzInputNumberModule,
     NzPaginationModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NgTemplateOutlet
   ]
 })
 export class DemoComponent implements OnInit {
@@ -220,8 +222,9 @@ export class DemoComponent implements OnInit {
     this.src = src;
   }
 
-  changeShowAllPages(_val: boolean): void {
+  changeShowAllPages(v: boolean): void {
     this.stickToPage = true;
+    console.log('changeShowAllPages', v);
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {

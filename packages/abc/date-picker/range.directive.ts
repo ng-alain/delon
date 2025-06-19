@@ -16,8 +16,7 @@ import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerS
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { DatePickerService } from 'ng-zorro-antd/date-picker/date-picker.service';
+import { NzDatePickerComponent, NzRangePickerComponent, type ɵDatePickerService } from 'ng-zorro-antd/date-picker';
 
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 
@@ -65,7 +64,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     return this.nativeComp!.datePicker;
   }
 
-  private get srv(): DatePickerService {
+  private get srv(): ɵDatePickerService {
     return this.dp.datePickerService;
   }
 

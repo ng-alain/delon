@@ -12,7 +12,7 @@ export class AlainConfigService {
 
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
     const res = ((this.config[componentName] as Record<string, unknown>) || {}) as NzSafeAny;
-    return key ? { [key]: res[key] } : res;
+    return key ? ({ [key]: res[key] } as AlainConfig[T]) : res;
   }
 
   merge<T extends AlainConfigKey>(componentName: T, ...defaultValues: Array<AlainConfig[T]>): AlainConfig[T] {

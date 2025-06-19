@@ -3,7 +3,6 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick
 
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';
-import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 
 import { PdfComponent } from './pdf.component';
 
@@ -39,12 +38,11 @@ describe('abc: pdf', () => {
 });
 
 @Component({
-  template: ` <pdf #comp [src]="src" [options]="options" [delay]="delay" (change)="change()" /> `,
+  template: ` <pdf #comp [src]="src" [delay]="delay" (change)="change()" /> `,
   imports: [PdfComponent]
 })
 class TestComponent {
   @ViewChild('comp') comp!: PdfComponent;
-  options: NzSafeAny;
   src = '';
   delay = 0;
   change(): void {}

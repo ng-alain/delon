@@ -5,7 +5,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsMod
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 

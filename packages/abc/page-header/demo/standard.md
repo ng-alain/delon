@@ -20,6 +20,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
 
 @Component({
   selector: 'app-demo',
@@ -42,10 +43,10 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
       </ng-template>
       <ng-template #logo><img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" /></ng-template>
       <ng-template #action>
-        <nz-button-group>
+        <nz-space-compact>
           <button nz-button>操作</button>
           <button nz-button>操作</button>
-        </nz-button-group>
+        </nz-space-compact>
         <button nz-button nz-dropdown [nzDropdownMenu]="actionMoreMenu" class="mx-sm">
           <nz-icon nzType="ellipsis" />
         </button>
@@ -92,6 +93,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     PageHeaderComponent,
     NzBreadCrumbModule,
     NzButtonModule,
+    NzSpaceCompactComponent,
     NzDropDownModule,
     NzTabsModule,
     NzGridModule,

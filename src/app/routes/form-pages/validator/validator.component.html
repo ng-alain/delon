@@ -12,7 +12,7 @@
     </nz-radio-group>
   </div>
   <div nz-col [nzSpan]="6" class="text-right">
-    <nz-button-group>
+    <nz-space-compact>
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
         <nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}" />
       </button>
@@ -21,14 +21,13 @@
         [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
         nz-button
         (click)="openOnStackBlitz()"
-        class="ml-sm"
       >
         <nz-icon nzType="form" />
       </button>
-      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()" class="ml-sm">
+      <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()">
         <nz-icon nzType="copy" />
       </button>
-    </nz-button-group>
+    </nz-space-compact>
   </div>
 </div>
 <div nz-row class="border-bottom-1 pb-sm mb-md" [nzGutter]="24">

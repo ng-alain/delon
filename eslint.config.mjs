@@ -194,7 +194,8 @@ export default tseslint.config(
       'max-len': 'off',
       'no-empty': 'off',
       '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-deprecated': 'warn'
+      '@typescript-eslint/no-deprecated': 'warn',
+      '@angular-eslint/prefer-inject': 'off'
     }
   },
   {
