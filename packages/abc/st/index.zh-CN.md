@@ -66,6 +66,7 @@ module: import { STModule } from '@delon/abc/st';
 | `[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null` | - |
 | `[loadingIndicator]` | 加载指示符 | `TemplateRef<void>` | - | ✅ |
 | `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0` | ✅ |
+| `[delay]` | 是否延迟渲染表格,需手动调用`refreshColumns()`渲染 | `boolean` | `false` | - |
 | `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | - | - |
 | `[virtualScroll]` | 是否启用虚拟滚动模式，与 `[nzScroll]` 配合使用 | `boolean` | `false` | ✅ |
 | `[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `54` | ✅ |
