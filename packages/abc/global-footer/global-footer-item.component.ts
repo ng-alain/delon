@@ -1,23 +1,23 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   TemplateRef,
-  ViewChild,
   ViewEncapsulation,
-  booleanAttribute
+  booleanAttribute,
+  input,
+  viewChild
 } from '@angular/core';
 
 @Component({
   selector: 'global-footer-item',
   exportAs: 'globalFooterItem',
-  template: ` <ng-template #host><ng-content /></ng-template> `,
+  template: `<ng-template #host><ng-content /></ng-template>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class GlobalFooterItemComponent {
-  @ViewChild('host', { static: true }) host!: TemplateRef<void>;
-
-  @Input() href?: string;
-  @Input({ transform: booleanAttribute }) blankTarget?: boolean;
+  host = viewChild.required<TemplateRef<void>>('host');
+  // @ViewChild('host', { static: true }) host!: TemplateRef<void>;
+  href = input<string>();
+  blankTarget = input(false, { transform: booleanAttribute });
 }
