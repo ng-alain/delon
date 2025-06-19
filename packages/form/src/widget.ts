@@ -45,7 +45,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   }
 
   get l(): LocaleData {
-    return this.formProperty.root.widget!.sfComp!.locale;
+    return this.formProperty.root.widget!.sfComp!.locale();
   }
 
   get oh(): SFOptionalHelp {

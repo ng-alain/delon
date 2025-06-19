@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { filter } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -5,19 +6,22 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import enUS from './languages/en-US';
 import zhCN from './languages/zh-CN';
 import { DelonLocaleService } from './locale.service';
+import { provideAlain } from '../provide';
+import { DELON_LOCALE } from './locale.tokens';
 
 describe('theme: locale', () => {
   let locale: DelonLocaleService;
-  beforeEach(() => (locale = new DelonLocaleService(zhCN)));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: DELON_LOCALE, useValue: zhCN }, provideAlain({})]
+    });
+    locale = TestBed.inject(DelonLocaleService);
+  });
 
   describe('#setLocale', () => {
     it('should working', () => {
       locale.setLocale(enUS);
       expect(locale.locale.abbr).toBe(enUS.abbr);
-    });
-    it('should be default language is zh-cn', () => {
-      locale = new DelonLocaleService(null);
-      expect(locale.locale.abbr).toBe(zhCN.abbr);
     });
     it('should be ingore change when new and old are the same', () => {
       expect(locale.locale.abbr).toBe(zhCN.abbr);

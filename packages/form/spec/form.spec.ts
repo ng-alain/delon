@@ -697,12 +697,12 @@ describe('form: component', () => {
           required: ['a']
         };
         page.newSchema(s, undefined, { a: '', arr: [{ name: '' }] });
-        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
+        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale().error.required);
         const i18n = TestBed.inject(DelonLocaleService);
         i18n.setLocale(en_US);
         fixture.detectChanges();
-        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
-        expect(page.getProperty('/arr').errors![0].message).toBe(context.comp.locale.error.required);
+        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale().error.required);
+        expect(page.getProperty('/arr').errors![0].message).toBe(context.comp.locale().error.required);
       });
 
       it('should be display required * when showRequired is true', () => {

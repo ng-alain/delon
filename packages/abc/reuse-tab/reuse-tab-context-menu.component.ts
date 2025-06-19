@@ -32,13 +32,13 @@ import {
   imports: [NzMenuDirective, NzMenuItemComponent]
 })
 export class ReuseTabContextMenuComponent implements OnInit {
-  private readonly i18nSrv = inject(DelonLocaleService);
+  private locale = inject(DelonLocaleService).valueSignal('reuseTab');
 
   private _i18n!: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
     this._i18n = {
-      ...this.i18nSrv.getData('reuseTab'),
+      ...this.locale(),
       ...value
     };
   }

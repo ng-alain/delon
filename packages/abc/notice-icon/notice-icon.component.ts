@@ -11,10 +11,8 @@ import {
   output,
   signal
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
 
-import { DelonLocaleService, LocaleData } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import type { NgClassType } from 'ng-zorro-antd/core/types';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -45,9 +43,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   ]
 })
 export class NoticeIconComponent {
-  locale = toSignal<LocaleData>(inject(DelonLocaleService).change.pipe(map(data => data['noticeIcon'])), {
-    requireSync: true
-  });
+  locale = inject(DelonLocaleService).valueSignal('noticeIcon');
   data = input<NoticeItem[]>([]);
   count = input(undefined, { transform: numberAttribute });
   loading = input(false, { transform: booleanAttribute });

@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
+  effect,
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,7 +23,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { merge, filter } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
-import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleService } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -82,7 +83,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private readonly terminator = inject(TerminatorService);
   private readonly dom = inject(DomSanitizer);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly localeSrv = inject(DelonLocaleService);
   private readonly aclSrv = inject(ACLService);
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly platform = inject(Platform);
@@ -95,7 +95,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   readonly options: AlainSFConfig;
 
   _inited = false;
-  locale: LocaleData = {};
+  locale = inject(DelonLocaleService).valueSignal('sf');
   rootProperty: FormProperty | null = null;
   _formData!: Record<string, unknown>;
   _btn!: SFButton;
@@ -311,13 +311,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';
     this.delay = this.options.delay as boolean;
-    this.localeSrv.change.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.locale = this.localeSrv.getData('sf');
-      if (this._inited) {
-        this.validator({ emitError: false, onlyRoot: false });
-        this.coverButtonProperty();
-        this.cdr.markForCheck();
-      }
+
+    effect(() => {
+      this.locale();
+      if (!this._inited) return;
+
+      this.validator({ emitError: false, onlyRoot: false });
+      this.coverButtonProperty();
+      this.cdr.markForCheck();
     });
     merge(this.aclSrv.change, this.i18nSrv.change)
       .pipe(
@@ -518,7 +519,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private coverButtonProperty(): void {
     this._btn = {
       render: { size: 'default' },
-      ...this.locale,
+      ...this.locale(),
       ...this.options.button,
       ...(this.button as SFButton)
     };

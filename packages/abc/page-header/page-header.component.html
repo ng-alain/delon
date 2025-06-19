@@ -6,7 +6,7 @@
   <ng-template [ngTemplateOutlet]="phTpl" />
 }
 <ng-template #phTpl>
-  <div class="page-header" [class.page-header-rtl]="dir === 'rtl'">
+  <div class="page-header" [class.page-header-rtl]="dir() === 'rtl'">
     <div [class.page-header__wide]="wide">
       <nz-skeleton
         [nzLoading]="loading"

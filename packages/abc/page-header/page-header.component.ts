@@ -1,4 +1,4 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkObserveContent } from '@angular/cdk/observers';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
@@ -7,7 +7,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   Input,
   OnChanges,
@@ -64,8 +63,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly titleSrv = inject(TitleService);
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
-  private readonly directionality = inject(Directionality);
-  private readonly destroy$ = inject(DestroyRef);
   private readonly settings = inject(SettingsService);
   private readonly platform = inject(Platform);
   private readonly cogSrv = inject(AlainConfigService);
@@ -74,7 +71,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
   inited = false;
   isBrowser = true;
-  dir?: Direction = 'ltr';
+  dir = inject(Directionality).valueSignal;
 
   private get menus(): Menu[] {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
@@ -206,11 +203,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
     this.refresh();
     this.inited = true;
   }

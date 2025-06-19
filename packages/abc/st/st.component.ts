@@ -8,6 +8,7 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   EventEmitter,
   inject,
@@ -29,15 +30,7 @@ import { Router } from '@angular/router';
 import { isObservable, Observable, of, filter, catchError, map, finalize, throwError, lastValueFrom } from 'rxjs';
 
 import { CellComponent } from '@delon/abc/cell';
-import {
-  ALAIN_I18N_TOKEN,
-  DatePipe,
-  DelonLocaleService,
-  DrawerHelper,
-  LocaleData,
-  ModalHelper,
-  YNPipe
-} from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleService, DrawerHelper, ModalHelper, YNPipe } from '@delon/theme';
 import { AlainConfigService, AlainSTConfig } from '@delon/util/config';
 import { deepCopy, deepMergeKey } from '@delon/util/other';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
@@ -264,7 +257,6 @@ export class STComponent implements AfterViewInit, OnChanges {
   private readonly exportSrv = inject(STExport);
   private readonly columnSource = inject(STColumnSource);
   private readonly dataSource = inject(STDataSource);
-  private readonly delonI18n = inject(DelonLocaleService);
   private readonly cms = inject(NzContextMenuService, { optional: true });
   private readonly destroy$ = inject(DestroyRef);
   private readonly cogSrv = inject(AlainConfigService);
@@ -278,7 +270,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   private _widthMode!: STWidthMode;
   private customWidthConfig: boolean = false;
   _widthConfig: string[] = [];
-  locale: LocaleData = {};
+  locale = inject(DelonLocaleService).valueSignal('st');
   _loading = false;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
@@ -426,8 +418,8 @@ export class STComponent implements AfterViewInit, OnChanges {
   }
 
   constructor() {
-    this.delonI18n.change.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.locale = this.delonI18n.getData('st');
+    effect(() => {
+      this.locale();
       if (this._columns.length > 0) {
         this.updateTotalTpl();
         this.cd();
@@ -503,7 +495,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
     } else if (booleanAttribute(total)) {
-      this.totalTpl = this.locale.total;
+      this.totalTpl = this.locale().total;
     } else {
       this.totalTpl = '';
     }
