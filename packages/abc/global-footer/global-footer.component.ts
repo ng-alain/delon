@@ -1,18 +1,14 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ContentChildren,
-  DestroyRef,
-  Input,
-  OnInit,
-  QueryList,
   ViewEncapsulation,
-  inject
+  computed,
+  contentChildren,
+  inject,
+  input
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
@@ -24,58 +20,64 @@ import { GlobalFooterLink } from './global-footer.types';
 @Component({
   selector: 'global-footer',
   exportAs: 'globalFooter',
-  templateUrl: './global-footer.component.html',
+  template: `
+    @if (linkHtmls().length > 0 || items().length > 0) {
+      <div class="global-footer__links">
+        @for (i of linkHtmls(); track $index) {
+          <a class="global-footer__links-item" (click)="to(i)" [innerHTML]="i.title"></a>
+        }
+        @for (i of items(); track $index) {
+          <a class="global-footer__links-item" (click)="to(i)">
+            <ng-container *ngTemplateOutlet="i.host()" />
+          </a>
+        }
+      </div>
+    }
+    <div class="global-footer__copyright">
+      <ng-content />
+    </div>
+  `,
   host: {
     '[class.global-footer]': 'true',
-    '[class.global-footer-rtl]': `dir === 'rtl'`
+    '[class.global-footer-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NgTemplateOutlet]
 })
-export class GlobalFooterComponent implements OnInit {
+export class GlobalFooterComponent {
   private readonly router = inject(Router);
   private readonly win = inject(WINDOW);
   private readonly dom = inject(DomSanitizer);
-  private readonly directionality = inject(Directionality);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroy$ = inject(DestroyRef);
 
-  private _links: GlobalFooterLink[] = [];
+  dir = inject(Directionality).valueSignal;
 
-  dir?: Direction = 'ltr';
+  links = input<GlobalFooterLink[]>([]);
+  readonly items = contentChildren(GlobalFooterItemComponent);
 
-  @Input()
-  set links(val: GlobalFooterLink[]) {
-    val.forEach(i => (i._title = this.dom.bypassSecurityTrustHtml(i.title)));
-    this._links = val;
-  }
-  get links(): GlobalFooterLink[] {
-    return this._links;
-  }
-
-  @ContentChildren(GlobalFooterItemComponent) readonly items!: QueryList<GlobalFooterItemComponent>;
+  linkHtmls = computed(() => {
+    return this.links().map(item => {
+      if (typeof item.title === 'string') {
+        item.title = this.dom.bypassSecurityTrustHtml(item.title);
+      }
+      return item;
+    });
+  });
 
   to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
-    if (!item.href) {
+    const href = typeof item.href === 'string' ? item.href : item.href();
+    if (!href) {
       return;
     }
-    if (item.blankTarget) {
-      this.win.open(item.href);
+    const blankTarget = typeof item.blankTarget === 'boolean' ? item.blankTarget : item.blankTarget?.();
+    if (blankTarget) {
+      this.win.open(href);
       return;
     }
-    if (/^https?:\/\//.test(item.href)) {
-      this.win.location.href = item.href;
+    if (/^https?:\/\//.test(href)) {
+      this.win.location.href = href;
     } else {
-      this.router.navigateByUrl(item.href);
+      this.router.navigateByUrl(href);
     }
-  }
-
-  ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
   }
 }
