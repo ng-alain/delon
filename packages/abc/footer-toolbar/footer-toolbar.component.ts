@@ -2,15 +2,13 @@ import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  Input,
   OnDestroy,
-  OnInit,
-  Renderer2,
   TemplateRef,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
-  inject
+  inject,
+  input
 } from '@angular/core';
 
 import { ErrorCollectComponent } from '@delon/abc/error-collect';
@@ -21,22 +19,32 @@ const CLSBODY = 'footer-toolbar__body';
 @Component({
   selector: 'footer-toolbar',
   exportAs: 'footerToolbar',
-  templateUrl: './footer-toolbar.component.html',
+  template: `
+    <div class="footer-toolbar__left">
+      <ng-container *nzStringTemplateOutlet="extra()">{{ extra() }}</ng-container>
+    </div>
+    <div class="footer-toolbar__right">
+      @if (errorCollect()) {
+        <error-collect />
+      }
+      <ng-content />
+    </div>
+  `,
+  host: {
+    class: 'footer-toolbar'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, ErrorCollectComponent]
 })
-export class FooterToolbarComponent implements OnInit, OnDestroy {
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly renderer = inject(Renderer2);
+export class FooterToolbarComponent implements OnDestroy {
   private readonly bodyCls = inject(DOCUMENT).querySelector('body')?.classList;
 
-  @Input({ transform: booleanAttribute }) errorCollect = false;
-  @Input() extra?: string | TemplateRef<void>;
+  errorCollect = input(false, { transform: booleanAttribute });
+  extra = input<string | TemplateRef<void>>();
 
-  ngOnInit(): void {
-    this.renderer.addClass(this.el, 'footer-toolbar');
-    this.bodyCls?.add(CLSBODY);
+  constructor() {
+    afterNextRender(() => this.bodyCls?.add(CLSBODY));
   }
 
   ngOnDestroy(): void {
