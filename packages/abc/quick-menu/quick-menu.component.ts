@@ -27,7 +27,6 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
     '[class.quick-menu]': 'true',
     '(click)': '_click()'
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzIconDirective, NzStringTemplateOutletDirective]

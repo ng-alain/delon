@@ -94,7 +94,6 @@ import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType }
 @Component({
   selector: 'st-td',
   templateUrl: './st-td.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [
@@ -240,7 +239,6 @@ export class STTdComponent {
     '[class.ant-table-rep]': `responsive`,
     '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [

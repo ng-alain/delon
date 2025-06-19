@@ -20,7 +20,6 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
     '[class.sv__value-small]': `size === 'small'`,
     '[class.sv__value-large]': `size === 'large'`
   },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzTooltipDirective]
