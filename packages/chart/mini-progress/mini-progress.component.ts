@@ -18,7 +18,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   template: `
     <div
       nz-tooltip
-      [nzTooltipTitle]="targetSuffix + target + '%'"
+      [nzTooltipTitle]="locale().targetSuffix + target + '%'"
       class="g2-mini-progress__target"
       [style]="{ left: target + '%' }"
     >
@@ -38,7 +38,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   imports: [NzTooltipDirective]
 })
 export class G2MiniProgressComponent implements OnChanges {
-  readonly targetSuffix = inject(DelonLocaleService).getData('miniProgress').target;
+  locale = inject(DelonLocaleService).valueSignal('miniProgress');
   private readonly cdr = inject(ChangeDetectorRef);
 
   @Input() color = '#1890FF';

@@ -1,11 +1,9 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   EventEmitter,
   inject,
   InjectionToken,
@@ -16,7 +14,6 @@ import {
   Output,
   Renderer2
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AlainConfigService } from '@delon/util/config';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -35,7 +32,7 @@ export const ALAIN_THEME_BTN_KEYS = new InjectionToken<string>('ALAIN_THEME_BTN_
   templateUrl: './theme-btn.component.html',
   host: {
     '[class.theme-btn]': `true`,
-    '[class.theme-btn-rtl]': `dir === 'rtl'`
+    '[class.theme-btn-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NzDropDownDirective, NzDropdownMenuComponent, NzMenuDirective, NzMenuItemComponent, NzTooltipDirective]
@@ -45,9 +42,6 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   private readonly platform = inject(Platform);
   private readonly renderer = inject(Renderer2);
   private readonly configSrv = inject(AlainConfigService);
-  private readonly directionality = inject(Directionality);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroy$ = inject(DestroyRef);
 
   private theme = 'default';
   isDev = isDevMode();
@@ -59,15 +53,10 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
   @Input() devTips = `When the dark.css file can't be found, you need to run it once: npm run theme`;
   @Input() deployUrl = '';
   @Output() readonly themeChange = new EventEmitter<string>();
-  dir?: Direction = 'ltr';
+  dir = inject(Directionality).valueSignal;
   private key = inject(ALAIN_THEME_BTN_KEYS, { optional: true }) ?? 'site-theme';
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
     this.initTheme();
   }
 

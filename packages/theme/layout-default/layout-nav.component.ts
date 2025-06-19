@@ -1,4 +1,4 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -57,12 +57,11 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
   private readonly sanitizer = inject(DomSanitizer);
-  private readonly directionality = inject(Directionality);
 
   private bodyEl!: HTMLBodyElement;
   private destroy$ = inject(DestroyRef);
   private floatingEl!: HTMLDivElement;
-  dir?: Direction = 'ltr';
+  dir = inject(Directionality).valueSignal;
   list: Nav[] = [];
 
   @Input({ transform: booleanAttribute }) disabledAcl = false;
@@ -157,7 +156,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       offsetHeight = rect.top + node.clientHeight - docHeight + spacing;
     }
     node.style.top = `${rect.top + scrollTop - offsetHeight}px`;
-    if (this.dir === 'rtl') {
+    if (this.dir() === 'rtl') {
       node.style.right = `${rect.width + spacing}px`;
     } else {
       node.style.left = `${rect.right + spacing}px`;
@@ -253,11 +252,6 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       .subscribe(() => this.clearFloating());
     this.underPad();
 
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
     this.openByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloating());
   }

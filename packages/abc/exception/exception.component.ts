@@ -13,12 +13,10 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-import { map } from 'rxjs';
 
-import { DelonLocaleService, LocaleData } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService, AlainExceptionType } from '@delon/util/config';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -30,7 +28,6 @@ export type ExceptionType = 403 | 404 | 500;
   selector: 'exception',
   exportAs: 'exception',
   template: `
-    @let l = locale();
     <div class="exception__img-block">
       <div class="exception__img" [style.backgroundImage]="_img()"></div>
     </div>
@@ -45,7 +42,7 @@ export type ExceptionType = 403 | 404 | 500;
         </div>
         @if (!hasCon()) {
           <button nz-button [routerLink]="backRouterLink()" [nzType]="'primary'">
-            {{ l.backToHome }}
+            {{ locale().backToHome }}
           </button>
         }
       </div>
@@ -60,16 +57,12 @@ export type ExceptionType = 403 | 404 | 500;
   imports: [CdkObserveContent, NzButtonComponent, RouterLink]
 })
 export class ExceptionComponent {
-  private readonly i18n = inject(DelonLocaleService);
   private readonly dom = inject(DomSanitizer);
-  private readonly directionality = inject(Directionality);
   private readonly cogSrv = inject(AlainConfigService);
 
   private readonly conTpl = viewChild.required<ElementRef<HTMLElement>>('conTpl');
-  locale = toSignal(this.i18n.change.pipe(map(() => this.i18n.getData('exception'))), {
-    initialValue: {} as LocaleData
-  });
-  dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
+  locale = inject(DelonLocaleService).valueSignal('exception');
+  dir = inject(Directionality).valueSignal;
 
   hasCon = signal(false);
   private typeDict!: NonNullable<AlainExceptionType['typeDict']>;

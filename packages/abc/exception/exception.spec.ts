@@ -60,7 +60,7 @@ describe('abc: exception', () => {
   it('#rtl', () => {
     expect(dl.query(By.css('.exception-rtl'))).toBeNull();
     const srv = TestBed.inject(Directionality);
-    srv.change.emit('rtl');
+    srv.valueSignal.set('rtl');
     fixture.detectChanges();
     expect(dl.query(By.css('.exception-rtl'))).not.toBeNull();
   });

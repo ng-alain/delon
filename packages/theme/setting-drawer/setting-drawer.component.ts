@@ -1,18 +1,16 @@
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   inject,
   Input,
   isDevMode,
   NgZone,
   OnInit
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { Layout, SettingsService } from '@delon/theme';
@@ -38,7 +36,7 @@ import { ALAINDEFAULTVAR, DEFAULT_COLORS, DEFAULT_VARS } from './setting-drawer.
   templateUrl: './setting-drawer.component.html',
   host: {
     '[class.setting-drawer]': 'true',
-    '[class.setting-drawer-rtl]': `dir === 'rtl'`
+    '[class.setting-drawer-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
@@ -61,8 +59,6 @@ export class SettingDrawerComponent implements OnInit {
   private readonly lazy = inject(LazyService);
   private readonly ngZone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly directionality = inject(Directionality);
-  private readonly destroy$ = inject(DestroyRef);
 
   @Input({ transform: booleanAttribute }) autoApplyColor = true;
   @Input() compilingText = 'Compiling...';
@@ -70,7 +66,7 @@ export class SettingDrawerComponent implements OnInit {
   @Input() lessJs = 'https://cdn.jsdelivr.net/npm/less';
 
   private loadedLess = false;
-  dir?: Direction = 'ltr';
+  dir = inject(Directionality).valueSignal;
   isDev = isDevMode();
   collapse = false;
   get layout(): Layout {
@@ -94,11 +90,6 @@ export class SettingDrawerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
     if (this.autoApplyColor && this.color !== this.DEFAULT_PRIMARY) {
       this.changeColor(this.color);
       this.runLess();

@@ -1,6 +1,6 @@
 <nz-drawer
   [nzVisible]="collapse"
-  [nzPlacement]="dir === 'rtl' ? 'left' : 'right'"
+  [nzPlacement]="dir() === 'rtl' ? 'left' : 'right'"
   [nzWidth]="500"
   (nzOnClose)="toggle()"
 >

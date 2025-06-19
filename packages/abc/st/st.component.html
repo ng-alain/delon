@@ -138,7 +138,7 @@
                   nz-th-extra
                   [col]="h.column"
                   [f]="_c.filter!"
-                  [locale]="locale"
+                  [locale]="locale()"
                   (n)="handleFilterNotify($event)"
                   (handle)="_handleFilter(_c, $event)"
                 />

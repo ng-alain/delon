@@ -22,7 +22,6 @@ import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingService implements OnDestroy {
-  private readonly i18n = inject(DelonLocaleService);
   private readonly appRef = inject(ApplicationRef);
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);
@@ -37,6 +36,7 @@ export class OnboardingService implements OnDestroy {
   private running$: Subscription | null = null;
   private _running = false;
   private type: OnboardingOpType | null = null;
+  private locale = inject(DelonLocaleService).valueSignal('onboarding');
 
   private _getDoc(): Document {
     return this.doc;
@@ -113,7 +113,7 @@ export class OnboardingService implements OnDestroy {
       position: 'bottomLeft',
       before: of(true),
       after: of(true),
-      ...this.i18n.getData('onboarding'),
+      ...this.locale(),
       ...items[this.active]
     } as OnboardingItem;
     const dir = this.configSrv.get('onboarding')!.direction || this.directionality.value;

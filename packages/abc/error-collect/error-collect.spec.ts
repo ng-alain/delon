@@ -60,7 +60,7 @@ describe('abc: error-collect', () => {
     it('#rtl', () => {
       expect(dl.query(By.css('.error-collect-rtl'))).toBeNull();
       const srv = TestBed.inject(Directionality);
-      srv.change.emit('rtl');
+      srv.valueSignal.set('rtl');
       fixture.detectChanges();
       expect(dl.query(By.css('.error-collect-rtl'))).not.toBeNull();
     });
