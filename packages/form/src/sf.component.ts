@@ -86,6 +86,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private readonly aclSrv = inject(ACLService);
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly platform = inject(Platform);
+  private readonly cogSrv = inject(AlainConfigService);
 
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
@@ -304,8 +305,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.formSubmit.emit(this.value);
   }
 
-  constructor(cogSrv: AlainConfigService) {
-    this.options = mergeConfig(cogSrv);
+  constructor() {
+    this.options = mergeConfig(this.cogSrv);
     this.liveValidate = this.options.liveValidate as boolean;
     this.firstVisual = this.options.firstVisual as boolean;
     this.autocomplete = this.options.autocomplete as 'on' | 'off';

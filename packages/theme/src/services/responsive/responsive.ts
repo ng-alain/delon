@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { AlainConfigService, AlainThemeResponsiveConfig } from '@delon/util/config';
 
@@ -9,9 +9,10 @@ export type REP_TYPE = 1 | 2 | 3 | 4 | 5 | 6;
 
 @Injectable({ providedIn: 'root' })
 export class ResponsiveService {
+  private readonly cogSrv = inject(AlainConfigService);
   private cog: AlainThemeResponsiveConfig;
-  constructor(cogSrv: AlainConfigService) {
-    this.cog = cogSrv.merge('themeResponsive', {
+  constructor() {
+    this.cog = this.cogSrv.merge('themeResponsive', {
       rules: {
         1: { xs: 24 },
         2: { xs: 24, sm: 12 },

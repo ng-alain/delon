@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, inject } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -141,7 +141,7 @@ describe('acl-if: directive', () => {
   imports: [ACLIfDirective]
 })
 class TestComponent {
+  readonly srv = inject(ACLService);
   role: ACLCanType = 'admin';
   except = false;
-  constructor(public srv: ACLService) {}
 }

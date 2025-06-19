@@ -20,6 +20,7 @@ const DEFAULT: LayoutDefaultOptions = {
 @Injectable({ providedIn: 'root' })
 export class LayoutDefaultService {
   private readonly settings = inject(SettingsService);
+  private readonly bm = inject(BreakpointObserver);
   private _options$ = new BehaviorSubject<LayoutDefaultOptions>(DEFAULT);
   private _options: LayoutDefaultOptions = DEFAULT;
 
@@ -40,12 +41,13 @@ export class LayoutDefaultService {
     return `menu-${type}`;
   }
 
-  constructor(bm: BreakpointObserver) {
+  constructor() {
     const mobileMedia = 'only screen and (max-width: 767.99px)';
-    bm.observe(mobileMedia)
+    this.bm
+      .observe(mobileMedia)
       .pipe(takeUntilDestroyed())
       .subscribe(state => this.checkMedia(state.matches));
-    this.checkMedia(bm.isMatched(mobileMedia));
+    this.checkMedia(this.bm.isMatched(mobileMedia));
   }
 
   private checkMedia(value: boolean): void {

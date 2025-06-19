@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Inject,
   Input,
   OnInit,
   inject
@@ -19,7 +18,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { AppService, CodeService, I18NService } from '@core';
+import { AppService, CodeService } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
 
@@ -34,6 +33,13 @@ import { EditButtonComponent } from '../edit-button/edit-button.component';
   imports: [I18nPipe, NzToolTipModule, NzIconModule, EditButtonComponent]
 })
 export class CodeBoxComponent implements OnInit {
+  private readonly appService = inject(AppService);
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly msg = inject(NzMessageService);
+  private readonly codeSrv = inject(CodeService);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   private _item: any;
   private _orgItem: any;
   private destroy$ = inject(DestroyRef);
@@ -61,15 +67,6 @@ export class CodeBoxComponent implements OnInit {
   }
   @Input() type: 'default' | 'simple' = 'default';
   @Input() expand: boolean = false;
-
-  constructor(
-    private appService: AppService,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private msg: NzMessageService,
-    private codeSrv: CodeService,
-    private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this.appService.theme$.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {

@@ -1,4 +1,6 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TestBed } from '@angular/core/testing';
+
+import { provideAlainConfig } from '@delon/util/config';
 
 import { ResponsiveService } from './responsive';
 
@@ -7,17 +9,26 @@ describe('theme: responsive', () => {
 
   it('should be throw error when invalid range', () => {
     expect(() => {
-      srv = new ResponsiveService({
-        merge: (_key: string, def: NzSafeAny) => ({ ...def, ...{ rules: { 10: {} } } })
-      } as NzSafeAny);
+      TestBed.configureTestingModule({
+        providers: [
+          provideAlainConfig({
+            themeResponsive: {
+              rules: { 10: { xs: 24 } }
+            }
+          }),
+          ResponsiveService
+        ]
+      });
+      srv = TestBed.inject(ResponsiveService);
     }).toThrow();
   });
 
   describe('#genCls', () => {
     beforeEach(() => {
-      srv = new ResponsiveService({
-        merge: (_key: string, def: NzSafeAny) => ({ ...def })
-      } as NzSafeAny);
+      TestBed.configureTestingModule({
+        providers: [ResponsiveService]
+      });
+      srv = TestBed.inject(ResponsiveService);
     });
     it('rule 1', () => {
       const res = srv.genCls(1);

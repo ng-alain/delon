@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AlainACLConfig, AlainConfigService } from '@delon/util/config';
@@ -11,6 +11,7 @@ import { ACLCanType, ACLType } from './acl.type';
  */
 @Injectable({ providedIn: 'root' })
 export class ACLService {
+  private readonly cogSrv = inject(AlainConfigService);
   private options: AlainACLConfig;
   private roles: string[] = [];
   private abilities: Array<number | string> = [];
@@ -35,8 +36,8 @@ export class ACLService {
     return this.options.guard_url!;
   }
 
-  constructor(configSrv: AlainConfigService) {
-    this.options = configSrv.merge('acl', ACL_DEFAULT_CONFIG)!;
+  constructor() {
+    this.options = this.cogSrv.merge('acl', ACL_DEFAULT_CONFIG)!;
   }
 
   private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {

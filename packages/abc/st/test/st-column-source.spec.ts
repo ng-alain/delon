@@ -1,5 +1,8 @@
+import { Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util/other';
 import type { NgClassInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -11,15 +14,10 @@ import { STColumn, STColumnButtonPop, STIcon, STResizable, STWidthMode } from '.
 import { _STColumn } from '../st.types';
 
 const i18nResult = 'zh';
+@Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(): string {
     return i18nResult;
-  }
-}
-
-class MockDomSanitizer {
-  bypassSecurityTrustHtml(text: string): string {
-    return text;
   }
 }
 
@@ -29,7 +27,6 @@ const widthMode: STWidthMode = {
 };
 
 describe('st: column-source', () => {
-  let aclSrv: ACLService | null;
   let i18nSrv: AlainI18NService | null;
   let srv: STColumnSource;
   let rowSrv: STRowSource;
@@ -43,11 +40,18 @@ describe('st: column-source', () => {
   };
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }): void {
-    aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
-    i18nSrv = other.i18n ? new MockI18NServiceFake({ merge: () => {} } as NzSafeAny) : null;
-    rowSrv = new STRowSource();
-    stWidgetRegistry = new STWidgetRegistry();
-    srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, stWidgetRegistry);
+    const providers: any[] = [STRowSource, STWidgetRegistry, STColumnSource];
+    if (other.acl) {
+      providers.push(ACLService);
+    }
+    if (other.i18n) {
+      providers.push({ provide: ALAIN_I18N_TOKEN, useClass: MockI18NServiceFake });
+    }
+    TestBed.configureTestingModule({ providers });
+    rowSrv = TestBed.inject(STRowSource);
+    stWidgetRegistry = TestBed.inject(STWidgetRegistry);
+    i18nSrv = TestBed.inject(ALAIN_I18N_TOKEN);
+    srv = TestBed.inject(STColumnSource);
     srv.setCog(other.cog || ST_DEFAULT_CONFIG);
     page = new PageObject();
   }
@@ -648,7 +652,7 @@ describe('st: column-source', () => {
   describe('[acl]', () => {
     beforeEach(() => {
       genModule({ acl: true });
-      aclSrv!.set({ role: ['user'] });
+      TestBed.inject(ACLService).set({ role: ['user'] });
     });
 
     it('in columns', () => {

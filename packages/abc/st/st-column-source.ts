@@ -1,8 +1,8 @@
-import { Host, Inject, Injectable, Optional, TemplateRef } from '@angular/core';
+import { inject, Injectable, TemplateRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { AlainSTConfig } from '@delon/util/config';
 import { deepCopy, warn } from '@delon/util/other';
 import type { NgClassInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -32,15 +32,12 @@ export interface STColumnSourceProcessOptions {
 
 @Injectable()
 export class STColumnSource {
+  private readonly dom = inject(DomSanitizer);
+  private readonly rowSource = inject(STRowSource, { host: true });
+  private readonly acl = inject(ACLService, { optional: true });
+  private readonly i18nSrv = inject(ALAIN_I18N_TOKEN, { optional: true });
+  private readonly stWidgetRegistry = inject(STWidgetRegistry);
   private cog!: AlainSTConfig;
-
-  constructor(
-    private dom: DomSanitizer,
-    @Host() private rowSource: STRowSource,
-    @Optional() private acl: ACLService,
-    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    private stWidgetRegistry: STWidgetRegistry
-  ) {}
 
   setCog(val: AlainSTConfig): void {
     this.cog = val;
@@ -274,7 +271,7 @@ export class STColumnSource {
     this.updateDefault(res);
 
     if (this.acl) {
-      res.menus = res.menus?.filter(w => this.acl.can(w.acl!));
+      res.menus = res.menus?.filter(w => this.acl!.can(w.acl!));
     }
 
     return res.menus?.length === 0 ? null : res;
@@ -464,7 +461,7 @@ export class STColumnSource {
         }
       }
       if (this.acl) {
-        item.selections = item.selections.filter(w => this.acl.can(w.acl!));
+        item.selections = item.selections.filter(w => this.acl!.can(w.acl!));
       }
       // radio
       if (item.type === 'radio') {

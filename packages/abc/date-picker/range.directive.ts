@@ -30,6 +30,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   private readonly dom = inject(DomSanitizer);
   private readonly vcr = inject(ViewContainerRef);
   private readonly nativeComp = inject(NzRangePickerComponent, { host: true, optional: true });
+  private readonly cogSrv = inject(AlainConfigService);
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
   private _shortcut: AlainDateRangePickerShortcut | null = null;
@@ -68,14 +69,14 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     return this.dp.datePickerService;
   }
 
-  constructor(configSrv: AlainConfigService) {
+  constructor() {
     if (typeof ngDevMode === 'undefined' || ngDevMode) {
       assert(
         !!this.nativeComp,
         `It should be attached to nz-range-picker component, for example: '<nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" shortcut></nz-range-picker>'`
       );
     }
-    const cog = configSrv.merge('dataRange', {
+    const cog = this.cogSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
       nzAllowClear: true,
       nzAutoFocus: false,

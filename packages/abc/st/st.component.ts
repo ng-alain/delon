@@ -267,6 +267,7 @@ export class STComponent implements AfterViewInit, OnChanges {
   private readonly delonI18n = inject(DelonLocaleService);
   private readonly cms = inject(NzContextMenuService, { optional: true });
   private readonly destroy$ = inject(DestroyRef);
+  private readonly cogSrv = inject(AlainConfigService);
 
   private totalTpl = ``;
   private inied = false;
@@ -423,7 +424,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     return this.columns == null;
   }
 
-  constructor(configSrv: AlainConfigService) {
+  constructor() {
     this.delonI18n.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -439,7 +440,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       )
       .subscribe(() => this.refreshColumns());
 
-    this.setCog(configSrv.merge('st', ST_DEFAULT_CONFIG)!);
+    this.setCog(this.cogSrv.merge('st', ST_DEFAULT_CONFIG)!);
   }
 
   private setCog(cog: AlainSTConfig): void {

@@ -18,11 +18,11 @@ export class ZipService {
   private readonly http = inject(HttpClient);
   private readonly lazy = inject(LazyService);
   private readonly ngZone = inject(NgZone);
-
+  private readonly cogSrv = inject(AlainConfigService);
   private cog: AlainZipConfig;
 
-  constructor(configSrv: AlainConfigService) {
-    this.cog = configSrv.merge('zip', {
+  constructor() {
+    this.cog = this.cogSrv.merge('zip', {
       url: 'https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js',
       utils: []
     })!;

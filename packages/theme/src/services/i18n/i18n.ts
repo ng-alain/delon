@@ -55,11 +55,13 @@ export interface AlainI18NService {
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainI18nToken', {
   providedIn: 'root',
-  factory: () => new AlainI18NServiceFake(inject(AlainConfigService))
+  factory: () => new AlainI18NServiceFake()
 });
 
 @Injectable()
 export abstract class AlainI18nBaseService implements AlainI18NService {
+  protected readonly cogSrv = inject(AlainConfigService);
+
   private cog: AlainThemeI18nConfig;
   protected _change$ = new BehaviorSubject<string | null>(null);
   protected _currentLang: string = '';
@@ -78,8 +80,8 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
     return this._data;
   }
 
-  constructor(cogSrv: AlainConfigService) {
-    this.cog = cogSrv.merge('themeI18n', {
+  constructor() {
+    this.cog = this.cogSrv.merge('themeI18n', {
       interpolation: ['{{', '}}']
     })!;
   }

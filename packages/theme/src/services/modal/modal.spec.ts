@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -166,10 +166,10 @@ class TestModalComponent {
   id = '';
   ret = 'true';
 
-  constructor(
-    private modal: NzModalRef,
-    @Inject(NZ_MODAL_DATA) public data: { ret: string }
-  ) {
+  private readonly modal = inject(NzModalRef);
+  readonly data = inject<{ ret: string }>(NZ_MODAL_DATA, { optional: true });
+
+  constructor() {
     setTimeout(() => {
       if (this.ret === 'destroy') {
         this.modal.destroy();

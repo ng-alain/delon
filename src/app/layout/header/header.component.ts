@@ -1,5 +1,5 @@
 import { DOCUMENT, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
@@ -10,7 +10,6 @@ import { GithubButtonComponent } from 'ng-github-button';
 import { ALAIN_I18N_TOKEN, RTLService, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -58,7 +57,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
     NzGridModule
   ]
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent {
   private inited = false;
   isMobile!: boolean;
   oldVersionList = [18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
@@ -87,17 +86,17 @@ export class HeaderComponent implements AfterViewInit {
     return (this.doc as Document).defaultView || window;
   }
 
-  constructor(
-    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
-    private router: Router,
-    private msg: NzMessageService,
-    private mobileSrv: MobileService,
-    @Inject(DOCUMENT) private doc: NzSafeAny,
-    private cdr: ChangeDetectorRef,
-    public rtl: RTLService,
-    private layout: LayoutComponent
-  ) {
-    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
+  readonly i18n = inject<I18NService>(ALAIN_I18N_TOKEN);
+  readonly rtl = inject(RTLService);
+  private readonly router = inject(Router);
+  private readonly msg = inject(NzMessageService);
+  private readonly mobileSrv = inject(MobileService);
+  private readonly doc = inject(DOCUMENT);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly layout = inject(LayoutComponent);
+
+  constructor() {
+    this.router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
       this.menuVisible = false;
       this.genDelonType();
     });
@@ -106,6 +105,11 @@ export class HeaderComponent implements AfterViewInit {
       if (this.inited) {
         this.cdr.detectChanges();
       }
+    });
+
+    afterNextRender(() => {
+      this.inited = true;
+      this.genDelonType();
     });
   }
 
@@ -116,11 +120,6 @@ export class HeaderComponent implements AfterViewInit {
     const match = this.router.url.match(this.regexs.delon.regex);
     this.delonType = match == null ? undefined : match[1];
     this.cdr.detectChanges();
-  }
-
-  ngAfterViewInit(): void {
-    this.inited = true;
-    this.genDelonType();
   }
 
   toVersion(version: number): void {

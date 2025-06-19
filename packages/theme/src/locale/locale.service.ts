@@ -10,6 +10,7 @@ export class DelonLocaleService {
   private _locale: FullLocaleData = zhCN;
   private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(DELON_LOCALE) locale: FullLocaleData | null) {
     this.setLocale(locale || zhCN);
   }

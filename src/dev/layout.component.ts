@@ -1,5 +1,5 @@
 import { UpperCasePipe } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
 import {
@@ -34,7 +34,7 @@ import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { I18NService, LangType } from '@core';
+import { LangType } from '@core';
 
 const ICONS = [
   MenuFoldOutline,
@@ -115,6 +115,14 @@ const ICONS = [
   ]
 })
 export class DevLayoutComponent implements OnInit {
+  private readonly menuSrv = inject(MenuService);
+  private readonly router = inject(Router);
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly iconSrv = inject(NzIconService);
+  readonly rtl = inject(RTLService);
+  readonly settings = inject(SettingsService);
+  readonly msgSrv = inject(NzMessageService);
+
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
@@ -216,16 +224,8 @@ export class DevLayoutComponent implements OnInit {
     }
   ];
 
-  constructor(
-    iconSrv: NzIconService,
-    private menuSrv: MenuService,
-    public settings: SettingsService,
-    public msgSrv: NzMessageService,
-    private router: Router,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    public rtl: RTLService
-  ) {
-    iconSrv.addIcon(...ICONS);
+  constructor() {
+    this.iconSrv.addIcon(...ICONS);
     // this.testReuse();
   }
 

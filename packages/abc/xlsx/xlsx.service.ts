@@ -18,11 +18,12 @@ export class XlsxService {
   private readonly http = inject(HttpClient);
   private readonly lazy = inject(LazyService);
   private readonly ngZone = inject(NgZone);
+  private readonly cogSrv = inject(AlainConfigService);
 
   private cog: AlainXlsxConfig;
 
-  constructor(configSrv: AlainConfigService) {
-    this.cog = configSrv.merge('xlsx', {
+  constructor() {
+    this.cog = this.cogSrv.merge('xlsx', {
       url: 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js',
       modules: [`https://cdn.jsdelivr.net/npm/xlsx/dist/cpexcel.js`]
     })!;

@@ -8,7 +8,7 @@ import { AuthReferrer, ITokenModel, ITokenService } from './interface';
 import { DA_STORE_TOKEN } from '../store/interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
-  return new TokenService(inject(AlainConfigService));
+  return new TokenService();
 }
 
 /**
@@ -17,14 +17,15 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
 @Injectable()
 export class TokenService implements ITokenService, OnDestroy {
   private readonly store = inject(DA_STORE_TOKEN);
+  private readonly cogSrv = inject(AlainConfigService);
   private refresh$ = new Subject<ITokenModel>();
   private change$ = new BehaviorSubject<ITokenModel | null>(null);
   private interval$?: Subscription;
   private _referrer: AuthReferrer = {};
   private _options: AlainAuthConfig;
 
-  constructor(configSrv: AlainConfigService) {
-    this._options = mergeConfig(configSrv);
+  constructor() {
+    this._options = mergeConfig(this.cogSrv);
   }
 
   get refresh(): Observable<ITokenModel> {

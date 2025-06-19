@@ -41,6 +41,7 @@ export class ErrorCollectComponent implements OnInit {
   private readonly doc = inject(DOCUMENT);
   private readonly platform = inject(Platform);
   private readonly destroy$ = inject(DestroyRef);
+  private readonly cogSrv = inject(AlainConfigService);
   private formEl: HTMLFormElement | null = null;
 
   _hiden = signal(true);
@@ -50,8 +51,8 @@ export class ErrorCollectComponent implements OnInit {
   readonly freq = input(0, { transform: numberAttribute });
   readonly offsetTop = input(0, { transform: numberAttribute });
 
-  constructor(configSrv: AlainConfigService) {
-    configSrv.attach(this, 'errorCollect', { freq: 250, offsetTop: 65 + 64 + 8 * 2 });
+  constructor() {
+    this.cogSrv.attach(this, 'errorCollect', { freq: 250, offsetTop: 65 + 64 + 8 * 2 });
   }
 
   private get errEls(): NodeListOf<HTMLElement> {

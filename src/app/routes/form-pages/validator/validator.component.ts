@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ViewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
@@ -18,7 +25,7 @@ import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { AppService, CodeService, I18NService } from '@core';
+import { AppService, CodeService } from '@core';
 
 const stackBlitzTpl = `import { Component, inject } from '@angular/core';
 import { DelonFormModule, SFLayout, SFSchema, SFUISchema } from '@delon/form';
@@ -73,7 +80,14 @@ export class DemoComponent {
     I18nPipe
   ]
 })
-export class FormValidatorComponent implements OnInit {
+export class FormValidatorComponent {
+  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly codeSrv = inject(CodeService);
+  private readonly http = inject(_HttpClient);
+  private readonly msg = inject(NzMessageService);
+  private readonly appService = inject(AppService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   @ViewChild('schemaEditor') private schemaEditor!: NuMonacoEditorComponent;
   @ViewChild('formCodeEditor') private formCodeEditor!: NuMonacoEditorComponent;
   @ViewChild('uiEditor') private uiEditor!: NuMonacoEditorComponent;
@@ -97,24 +111,15 @@ export class FormValidatorComponent implements OnInit {
   expand = true;
   editorOptions = { language: 'json', theme: 'vs' };
 
-  constructor(
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private codeSrv: CodeService,
-    private http: _HttpClient,
-    private msg: NzMessageService,
-    private appService: AppService,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
     this.appService.theme$.pipe(takeUntilDestroyed()).subscribe(data => {
       this.editorOptions = { language: 'json', theme: data === 'dark' ? 'vs-dark' : 'vs' };
     });
-  }
 
-  ngOnInit(): void {
-    this.getSchema();
+    afterNextRender(() => this.getSchema());
   }
 
   refreshLayout(type: 'schemaEditor' | 'formCodeEditor' | 'uiEditor'): void {
