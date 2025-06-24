@@ -11,6 +11,7 @@ export interface SFCheckboxWidgetSchema extends SFUISchemaItem {
 
   /**
    * 指定每个选框单元格数量，参考[布局](https://ng.ant.design/components/checkbox/zh#components-checkbox-demo-layout)
+   * @deprecated Will be removed in v21. `nz-checkbox-wrapper` has been deprecated, so the `span` attribute is no longer needed
    */
   span?: number;
 
