@@ -1,6 +1,7 @@
 import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
 import { Injectable, TemplateRef, Type, inject } from '@angular/core';
+import { SIGNAL, SignalNode } from '@angular/core/primitives/signals';
 import { Observable, Observer, delay, filter, take, tap } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
@@ -136,7 +137,15 @@ export class ModalHelper {
       } as ModalOptions);
       // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取
       if (subject.componentInstance != null && useNzData !== true) {
-        Object.assign(subject.componentInstance, params);
+        Object.entries(params as object).forEach(([key, value]) => {
+          const t = subject.componentInstance as any;
+          const s = t[key]?.[SIGNAL] as SignalNode<any>;
+          if (s != null) {
+            s.value = value;
+          } else {
+            t[key] = value;
+          }
+        });
       }
       subject.afterOpen
         .pipe(
