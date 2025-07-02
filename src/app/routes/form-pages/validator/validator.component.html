@@ -32,7 +32,7 @@
 </div>
 <div nz-row class="border-bottom-1 pb-sm mb-md" [nzGutter]="24">
   <div nz-col [nzSpan]="12" [hidden]="!expand">
-    <nz-tabset>
+    <nz-tabs>
       <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
         <nu-monaco-editor
           #schemaEditor
@@ -60,7 +60,7 @@
           height="500px"
         />
       </nz-tab>
-    </nz-tabset>
+    </nz-tabs>
   </div>
   @if (schemaData) {
     <div nz-col [nzSpan]="expand ? 12 : 24">

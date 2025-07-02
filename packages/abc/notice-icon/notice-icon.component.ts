@@ -18,7 +18,7 @@ import type { NgClassType } from 'ng-zorro-antd/core/types';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
-import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
+import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
 
 import { NoticeIconTabComponent } from './notice-icon-tab.component';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
@@ -37,7 +37,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
     NzDropDownDirective,
     NzDropdownMenuComponent,
     NzSpinComponent,
-    NzTabSetComponent,
+    NzTabsComponent,
     NzTabComponent,
     NoticeIconTabComponent
   ]

@@ -82,10 +82,10 @@ import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
         </div>
       </ng-template>
       <ng-template #tab>
-        <nz-tabset [nzSize]="'default'">
+        <nz-tabs [nzSize]="'default'">
           <nz-tab nzTitle="详情" />
           <nz-tab nzTitle="规则" />
-        </nz-tabset>
+        </nz-tabs>
       </ng-template>
     </page-header>
   `,
