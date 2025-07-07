@@ -60,7 +60,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
 export class HeaderComponent {
   private inited = false;
   isMobile!: boolean;
-  oldVersionList = [18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
+  oldVersionList = [19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
   currentVersion = pkg.version;
   delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
