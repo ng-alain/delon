@@ -21,13 +21,13 @@
   <nz-dropdown-menu #noticeMenu="nzDropdownMenu">
     <nz-spin [nzSpinning]="loading()" [nzDelay]="0">
       @if (delayShow()) {
-        <nz-tabset [nzSelectedIndex]="0" [nzCentered]="centered()">
+        <nz-tabs [nzSelectedIndex]="0" [nzCentered]="centered()">
           @for (i of d; track $index) {
             <nz-tab [nzTitle]="i.title">
               <notice-icon-tab [locale]="locale()" [item]="i" (select)="select.emit($event)" (clear)="clear.emit($event)" />
             </nz-tab>
           }
-        </nz-tabset>
+        </nz-tabs>
       }
     </nz-spin>
   </nz-dropdown-menu>

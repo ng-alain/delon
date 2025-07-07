@@ -49,7 +49,8 @@ export class STColumnSource {
       return;
     }
 
-    let pop = {
+    let pop: STColumnButtonPop = {
+      okType: 'primary',
       ...def
     };
     if (typeof i.pop === 'string') {

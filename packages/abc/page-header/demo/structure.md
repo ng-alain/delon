@@ -33,11 +33,11 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
       <ng-template #content><div class="desc">content</div></ng-template>
       <ng-template #extra><div class="extra">extra</div></ng-template>
       <ng-template #tab>
-        <nz-tabset [nzSize]="'default'">
+        <nz-tabs [nzSize]="'default'">
           <nz-tab nzTitle="页签一" />
           <nz-tab nzTitle="页签二" />
           <nz-tab nzTitle="页签三" />
-        </nz-tabset>
+        </nz-tabs>
       </ng-template>
     </page-header>
   `,

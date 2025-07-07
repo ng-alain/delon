@@ -27,7 +27,7 @@ import { debounceTime, filter, of } from 'rxjs';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
+import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
 
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
@@ -63,7 +63,7 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.stat
   encapsulation: ViewEncapsulation.None,
   imports: [
     NgTemplateOutlet,
-    NzTabSetComponent,
+    NzTabsComponent,
     NzTabComponent,
     ReuseTabContextDirective,
     ReuseTabContextComponent,
@@ -81,7 +81,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   private readonly stateKey = inject(REUSE_TAB_STORAGE_KEY);
   private readonly stateSrv = inject(REUSE_TAB_STORAGE_STATE);
 
-  @ViewChild('tabset') private tabset!: NzTabSetComponent;
+  @ViewChild('tabset') private tabset!: NzTabsComponent;
   private destroy$ = inject(DestroyRef);
   private _keepingScrollContainer?: Element | null;
   list: ReuseItem[] = [];
