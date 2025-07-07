@@ -1,0 +1,1 @@
+import{E as i,R as a,U as m,W as c,fa as t,ha as r,qa as e,z as n}from"./chunk-R4G4X3NR.js";var I=new t("WINDOW",{factory:()=>{let{defaultView:o}=r(e);if(!o)throw new Error("Window is not available");return o}});var W=new t("PAGE_VISIBILITY`",{factory:()=>{let o=r(e);return i(o,"visibilitychange").pipe(c(0),n(()=>!o.hidden),a(),m())}});export{I as a};
