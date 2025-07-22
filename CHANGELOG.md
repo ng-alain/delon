@@ -1,3 +1,10 @@
+## <small>20.0.1 (2025-07-22)</small>
+
+* chore: fix site code (#1921) ([07b9087](https://github.com/ng-alain/delon/commit/07b9087)), closes [#1921](https://github.com/ng-alain/delon/issues/1921)
+* build: bump ng-zorro-antd to 20.1.0 (#1922) ([04b4306](https://github.com/ng-alain/delon/commit/04b4306)), closes [#1922](https://github.com/ng-alain/delon/issues/1922)
+
+
+
 ## 20.0.0 (2025-07-07)
 
 * feat(abc:notice-icon): add event of select (#1904) ([7a59856](https://github.com/ng-alain/delon/commit/7a59856)), closes [#1904](https://github.com/ng-alain/delon/issues/1904)
