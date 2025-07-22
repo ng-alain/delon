@@ -17,7 +17,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { I18NService, LangType, MobileService } from '@core';
 
@@ -51,7 +51,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
     NzSelectModule,
     NzIconModule,
     NzPopoverModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzDropDownModule,
     NzMenuModule,
     NzGridModule

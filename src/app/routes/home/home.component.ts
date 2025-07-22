@@ -11,7 +11,7 @@ import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { ZoneOutside } from '@delon/util/decorator';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 interface ThemeItem {
   type: string;
@@ -30,7 +30,7 @@ interface ThemeItem {
     RouterLink,
     I18nPipe,
     NzCarouselModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzButtonModule,
     GithubButtonComponent,
     FooterComponent

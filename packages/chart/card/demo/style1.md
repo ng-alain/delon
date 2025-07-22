@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 
 import { G2CardModule } from '@delon/chart/card';
 import { TrendModule } from '@delon/chart/trend';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -34,7 +34,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       <trend flag="down" style="margin: 0 0 0 8px; color: rgba(0,0,0,.85)">11%</trend>
     </g2-card>
   `,
-  imports: [G2CardModule, NzToolTipModule, TrendModule]
+  imports: [G2CardModule, NzTooltipModule, TrendModule]
 })
 export class DemoComponent {}
 ```

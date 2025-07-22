@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 
 import { G2CardModule } from '@delon/chart/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -24,7 +24,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </ng-template>
     </g2-card>
   `,
-  imports: [G2CardModule, NzToolTipModule, NzIconModule]
+  imports: [G2CardModule, NzTooltipModule, NzIconModule]
 })
 export class DemoComponent {}
 ```

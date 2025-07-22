@@ -13,7 +13,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { MetaService } from '@core';
 
@@ -31,7 +31,7 @@ declare const hljs: any;
     NzAffixModule,
     NzAnchorModule,
     NzAlertModule,
-    NzToolTipModule,
+    NzTooltipModule,
     EditButtonComponent
   ]
 })

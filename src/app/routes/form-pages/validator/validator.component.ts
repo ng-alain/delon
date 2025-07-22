@@ -23,7 +23,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { AppService, CodeService } from '@core';
 
@@ -72,7 +72,7 @@ export class DemoComponent {
     NzRadioModule,
     NzButtonModule,
     NzSpaceCompactComponent,
-    NzToolTipModule,
+    NzTooltipModule,
     NzIconModule,
     NzTabsModule,
     NuMonacoEditorComponent,
