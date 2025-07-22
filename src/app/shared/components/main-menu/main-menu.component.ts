@@ -16,7 +16,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { MetaService } from '@core';
 
@@ -24,7 +24,7 @@ import { MetaService } from '@core';
   selector: 'main-menu, [main-menu]',
   templateUrl: './main-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, NzToolTipModule, NzBadgeModule, NzTagModule, NzMenuModule]
+  imports: [RouterLink, RouterLinkActive, NzTooltipModule, NzBadgeModule, NzTagModule, NzMenuModule]
 })
 export class MainMenuComponent implements OnInit {
   private readonly meta = inject(MetaService);

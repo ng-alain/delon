@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { MetaService } from '@core';
 
@@ -19,7 +19,7 @@ import { MetaService } from '@core';
       <nz-icon nzType="edit" />
     </a>
   `,
-  imports: [I18nPipe, NzIconModule, NzToolTipModule]
+  imports: [I18nPipe, NzIconModule, NzTooltipModule]
 })
 export class EditButtonComponent {
   private readonly meta = inject(MetaService);

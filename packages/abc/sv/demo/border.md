@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { SVModule } from '@delon/abc/sv';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -50,7 +50,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </sv>
     </div>
   `,
-  imports: [SVModule, NzButtonModule, NzRadioModule, NzToolTipModule, FormsModule]
+  imports: [SVModule, NzButtonModule, NzRadioModule, NzTooltipModule, FormsModule]
 })
 export class DemoComponent {
   bordered = true;

@@ -19,7 +19,7 @@ import { Component, inject } from '@angular/core';
 import { STColumn, STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -43,7 +43,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       </sv>
     </sv-container>
   `,
-  imports: [SVModule, NzToolTipModule, STModule]
+  imports: [SVModule, NzTooltipModule, STModule]
 })
 export class DemoComponent {
   readonly msg = inject(NzMessageService);

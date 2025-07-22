@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnChanges, SimpleChanges, inject } 
 
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'st-widget-img',
@@ -21,7 +21,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     '(click)': 'show()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzToolTipModule, NzImageModule]
+  imports: [NzTooltipModule, NzImageModule]
 })
 export class STImgWidget implements OnChanges {
   private readonly msg = inject(NzMessageService);

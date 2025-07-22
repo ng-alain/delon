@@ -6,7 +6,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { LayoutDefaultHeaderItemTriggerDirective } from './layout-header-item-trigger.directive';
 import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
@@ -25,7 +25,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NzToolTipModule, NzIconModule, NzAvatarModule, NzDropDownModule, NzBadgeModule],
+  imports: [CommonModule, RouterModule, NzTooltipModule, NzIconModule, NzAvatarModule, NzDropDownModule, NzBadgeModule],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })
