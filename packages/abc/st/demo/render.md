@@ -27,7 +27,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-demo',
@@ -72,7 +72,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzDropDownModule,
     NzIconModule,
     NzInputModule,
-    NzToolTipModule
+    NzTooltipModule
   ]
 })
 export class DemoComponent {

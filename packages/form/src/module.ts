@@ -16,7 +16,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -35,7 +35,7 @@ const ZORROS = [
   NzRadioModule,
   NzSelectModule,
   NzSwitchModule,
-  NzToolTipModule
+  NzTooltipModule
 ];
 
 import { SFFixedDirective } from './sf-fixed.directive';

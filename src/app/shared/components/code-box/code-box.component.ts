@@ -16,7 +16,7 @@ import { copy } from '@delon/util/browser';
 import { deepCopy } from '@delon/util/other';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { AppService, CodeService } from '@core';
 
@@ -30,7 +30,7 @@ import { EditButtonComponent } from '../edit-button/edit-button.component';
     '[class.expand]': 'expand'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [I18nPipe, NzToolTipModule, NzIconModule, EditButtonComponent]
+  imports: [I18nPipe, NzTooltipModule, NzIconModule, EditButtonComponent]
 })
 export class CodeBoxComponent implements OnInit {
   private readonly appService = inject(AppService);

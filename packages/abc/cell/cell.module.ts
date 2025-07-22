@@ -8,7 +8,7 @@ import { NzImageModule } from 'ng-zorro-antd/experimental/image';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { CellHostDirective } from './cell-host.directive';
 import { CellComponent } from './cell.component';
@@ -23,7 +23,7 @@ const COMPS = [CellComponent];
     NzRadioModule,
     NzBadgeModule,
     NzTagModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzIconModule,
     NzImageModule,
     ...COMPS,
