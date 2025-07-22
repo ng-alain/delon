@@ -14,6 +14,11 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>20.0.1 (2025-07-22)</small>
+
+* build: bump ng-zorro-antd to 20.1.0 (#1922) ([04b4306](https://github.com/ng-alain/delon/commit/04b4306)), closes [#1922](https://github.com/ng-alain/delon/issues/1922)
+
+
 ## 20.0.0 (2025-07-07)
 
 ### Features
