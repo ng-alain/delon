@@ -8,7 +8,7 @@ export default {
     demo: {
       architect: {
         build: {
-          builder: '@angular-devkit/build-angular:application',
+          builder: '@angular/build:application',
           configurations: {
             development: {
               extractLicenses: false,
@@ -26,23 +26,25 @@ export default {
             }
           },
           options: {
+            browser: 'src/main.ts',
+            polyfills: ['zone.js'],
             assets: [],
             index: 'src/index.html',
-            browser: 'src/main.ts',
             outputPath: 'dist/demo',
             scripts: [],
+            inlineStyleLanguage: 'less',
             styles: ['src/styles.css'],
             tsConfig: 'tsconfig.json'
           }
         },
         serve: {
-          builder: '@angular-devkit/build-angular:dev-server',
+          builder: '@angular/build:dev-server',
           configurations: {
             development: {
-              buildTarget: 'demo:build:development'
+              buildTarget: '::development'
             },
             production: {
-              buildTarget: 'demo:build:production'
+              buildTarget: '::production'
             }
           },
           defaultConfiguration: 'development'
