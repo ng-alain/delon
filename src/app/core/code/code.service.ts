@@ -37,12 +37,11 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     if (includeCli) {
       res.devDependencies = {
-        '@angular-devkit/build-angular': '^19.1.2',
-        '@angular/cli': '^19.1.2',
-        '@angular/compiler-cli': '^19.1.0',
-        '@types/node': '^18.19.1',
-        typescript: '~5.7.2',
-        'ng-alain': '^19.0.0'
+        '@angular/cli': '^20.0.0',
+        '@angular/compiler-cli': '^20.0.0',
+        '@types/node': '^20.19.1',
+        typescript: '~5.8.2',
+        'ng-alain': '^20.0.0'
       };
     }
 
@@ -53,6 +52,8 @@ export class CodeService {
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
+
+    console.log(res);
 
     return res;
   }
