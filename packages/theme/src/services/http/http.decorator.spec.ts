@@ -145,7 +145,7 @@ describe('theme: http.decorator', () => {
 
   class MockInjector {
     get(token: any, notFoundValue: null = null): any {
-      const tokenStr = `${token}`;
+      const tokenStr = typeof token === 'function' && token.name ? token.name : `${token}`;
       if (tokenStr.includes('_HttpClient')) {
         return tokens._HttpClient;
       }
