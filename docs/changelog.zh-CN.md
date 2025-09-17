@@ -14,6 +14,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>20.0.2 (2025-09-17)</small>
+
+* fix(abc:exception): 修复无法覆盖 `img`, `title`, `desc` (#1928) ([727018b](https://github.com/ng-alain/delon/commit/727018b)), closes [#1928](https://github.com/ng-alain/delon/issues/1928)
+* fix(schematics): 修复新项目包含过期模块 (#1924) ([15c26e0](https://github.com/ng-alain/delon/commit/15c26e0)), closes [#1924](https://github.com/ng-alain/delon/issues/1924)
+
+
 ## <small>20.0.1 (2025-07-22)</small>
 
 * build: bump ng-zorro-antd to 20.1.0 (#1922) ([04b4306](https://github.com/ng-alain/delon/commit/04b4306)), closes [#1922](https://github.com/ng-alain/delon/issues/1922)
