@@ -39,6 +39,7 @@ describe('form: widget: mention', () => {
     };
     page
       .newSchema(s)
+      .dc(1)
       .typeChar('@')
       .checkCount('.ant-mentions-dropdown-menu-item', DATA.length, true)
       .typeEvent('click', '.ant-mentions-dropdown-menu-item');
@@ -52,10 +53,10 @@ describe('form: widget: mention', () => {
         a: { type: 'string', minimum: 1, maximum: 2, ui: { widget, asyncData: () => of(DATA) } }
       }
     };
-    page.newSchema(s).typeChar('@').checkError(`最少提及 1 次`);
+    page.newSchema(s).dc(1).typeChar('@').checkError(`最少提及 1 次`);
 
     spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
-    page.typeChar('@').checkError(`最多提及 2 次`);
+    page.dc(1).typeChar('@').checkError(`最多提及 2 次`);
   }));
 
   it('should be remove search', fakeAsync(() => {
