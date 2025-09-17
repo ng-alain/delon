@@ -1,3 +1,11 @@
+## <small>20.0.2 (2025-09-17)</small>
+
+* chore: bump angular to 20.3 (#1927) ([495b90e](https://github.com/ng-alain/delon/commit/495b90e)), closes [#1927](https://github.com/ng-alain/delon/issues/1927)
+* fix(abc:exception): fix force overlay to `img` (#1928) ([727018b](https://github.com/ng-alain/delon/commit/727018b)), closes [#1928](https://github.com/ng-alain/delon/issues/1928)
+* fix(schematics): remove obsolete modules (#1924) ([15c26e0](https://github.com/ng-alain/delon/commit/15c26e0)), closes [#1924](https://github.com/ng-alain/delon/issues/1924)
+
+
+
 ## <small>20.0.1 (2025-07-22)</small>
 
 * chore: fix site code (#1921) ([07b9087](https://github.com/ng-alain/delon/commit/07b9087)), closes [#1921](https://github.com/ng-alain/delon/issues/1921)
