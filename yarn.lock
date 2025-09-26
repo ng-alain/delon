@@ -14954,14 +14954,14 @@ __metadata:
   linkType: hard
 
 "tar-fs@npm:^1.15.3":
-  version: 1.16.5
-  resolution: "tar-fs@npm:1.16.5"
+  version: 1.16.6
+  resolution: "tar-fs@npm:1.16.6"
   dependencies:
     chownr: "npm:^1.0.1"
     mkdirp: "npm:^0.5.1"
     pump: "npm:^1.0.0"
     tar-stream: "npm:^1.1.2"
-  checksum: 10c0/903d2b1163fdd10a26c06811f4817a78a4c16c75e88d8834025c729e7b7d9e25ad668da538a2d397a93e62e651d25b4379af8b800761975b0f395d44018b00e6
+  checksum: 10c0/9ea1690788fc27b89138dd1f4be7a5c13a2215521b7985211af514dc0043ae23755514367a0fab76a5a78eb4bf9247a828a3c3fc27419aef759182ed05117aa7
   languageName: node
   linkType: hard
 
