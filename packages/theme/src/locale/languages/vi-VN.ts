@@ -1,7 +1,7 @@
 import { FullLocaleData } from '../locale.types';
 
 export default {
-  abbr: 'vi-VI',
+  abbr: 'vi-VN',
   exception: {
     403: `Xin lỗi, bạn không có quyền truy cập vào trang này`,
     404: `Xin lỗi, trang bạn truy cập không tồn tại`,

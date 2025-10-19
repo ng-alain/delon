@@ -44,6 +44,7 @@ Note: `en_US` is the package name, follow below.
 |----------|----------|
 | English | en_US    |
 | Chinese (Simplified) | zh_CN    |
+| Chinese (Traditional) | zh_HK |
 | Chinese (Traditional) | zh_TW    |
 | Turkish | tr_TR    |
 | Polish | pl_PL    |
@@ -55,8 +56,12 @@ Note: `en_US` is the package name, follow below.
 | French | fr_FR    |
 | Spanish | es_ES    |
 | Italian | it_IT    |
-| Vietnamese | vi_VI    |
+| Vietnamese | vi_VN    |
 | Arabic | ar_SA    |
+| Indonesian | id_ID    |
+| Khmer | km_KH    |
+| Malay | ms_MY    |
+| Thai | th_TH    |
 
 ## Add a new language
 
