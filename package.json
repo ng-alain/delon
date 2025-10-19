@@ -60,7 +60,7 @@
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@angular/service-worker": "^20.3.0",
-    "@angular/ssr": "^20.3.1",
+    "@angular/ssr": "^20.3.6",
     "@antv/data-set": "^0.11.8",
     "@antv/g2": "^4.2.11",
     "@github/hotkey": "^3.1.1",

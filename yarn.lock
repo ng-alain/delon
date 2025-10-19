@@ -602,9 +602,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/ssr@npm:^20.3.1":
-  version: 20.3.1
-  resolution: "@angular/ssr@npm:20.3.1"
+"@angular/ssr@npm:^20.3.6":
+  version: 20.3.6
+  resolution: "@angular/ssr@npm:20.3.6"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
@@ -615,7 +615,7 @@ __metadata:
   peerDependenciesMeta:
     "@angular/platform-server":
       optional: true
-  checksum: 10c0/3248ebe567c39d64c46fc0db318967fefc04aa362ad0702e655dc2e43e3cf8a5a083f0368f4e4577f6537b24b8bc8777970c103cca5a697b8dac764c1241e71b
+  checksum: 10c0/85bded604e31158918827ea959b8ca1218b42c263d627dd3c754e5bc3399ac91bbd50a1aa16cbb7fcf8cf547ba0ffe8dce84abebed0fc99295f2ff02da17b7eb
   languageName: node
   linkType: hard
 
@@ -6146,7 +6146,7 @@ __metadata:
     "@angular/platform-server": "npm:^20.3.0"
     "@angular/router": "npm:^20.3.0"
     "@angular/service-worker": "npm:^20.3.0"
-    "@angular/ssr": "npm:^20.3.1"
+    "@angular/ssr": "npm:^20.3.6"
     "@antv/data-set": "npm:^0.11.8"
     "@antv/g2": "npm:^4.2.11"
     "@commitlint/cli": "npm:^20.1.0"
