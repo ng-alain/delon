@@ -44,6 +44,7 @@ switchLanguage() {
 |----|-------|
 | 英语（美式） | en_US |
 | 简体中文 | zh_CN |
+| 繁体中文 | zh_HK |
 | 繁体中文 | zh_TW |
 | 土耳其语 | tr_TR |
 | 波兰语 | pl_PL |
@@ -55,8 +56,12 @@ switchLanguage() {
 | 法文 | fr_FR |
 | 西班牙语 | es_ES |
 | 意大利语 | it_IT |
-| 越南语 | vi_VI |
+| 越南语 | vi_VN |
 | 阿拉伯语 | ar_SA |
+| 印度尼西亚语 | id_ID    |
+| 高棉语 | km_KH    |
+| 马来语 | ms_MY    |
+| 泰语 | th_TH    |
 
 ## 增加语言包
 
