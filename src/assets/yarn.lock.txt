@@ -5510,7 +5510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.45.1":
+"core-js@npm:^3.26.1":
   version: 3.46.0
   resolution: "core-js@npm:3.46.0"
   checksum: 10c0/12d559d39a58227881bc6c86c36d24dcfbe2d56e52dac42e35e8643278172596ab67f57ede98baf40b153ca1b830f37420ea32c3f7417c0c5a1fed46438ae187
@@ -6226,7 +6226,7 @@ __metadata:
     ngx-highlight-js: "npm:^20.0.0"
     ngx-tinymce: "npm:^20.0.0"
     parse5: "npm:^8.0.0"
-    plyr: "npm:~3.8.3"
+    plyr: "npm:~3.7.0"
     prettier: "npm:^3.6.2"
     qrious: "npm:^4.0.2"
     readline-sync: "npm:^1.4.10"
@@ -10341,7 +10341,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loadjs@npm:^4.3.0":
+"loadjs@npm:^4.2.0":
   version: 4.3.0
   resolution: "loadjs@npm:4.3.0"
   checksum: 10c0/8884520a7c5f3b0f6e4d3bc01d200c73b9c468986bea26acb54939d4a3f5da08f40f712812fadc1ff6030fca936e8c9eeb842aaafd287e32ca0ce6ae9f10e759
@@ -12651,16 +12651,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plyr@npm:~3.8.3":
-  version: 3.8.3
-  resolution: "plyr@npm:3.8.3"
+"plyr@npm:~3.7.0":
+  version: 3.7.8
+  resolution: "plyr@npm:3.7.8"
   dependencies:
-    core-js: "npm:^3.45.1"
+    core-js: "npm:^3.26.1"
     custom-event-polyfill: "npm:^1.0.7"
-    loadjs: "npm:^4.3.0"
+    loadjs: "npm:^4.2.0"
     rangetouch: "npm:^2.0.1"
-    url-polyfill: "npm:^1.1.13"
-  checksum: 10c0/a75774c53cbfbb861a80c06b1e1db66cbbf834d5898ea74a784eba7bea4357a276a18e6ef658a6d2a21e4e5d420fa9838044ee361654b0a6a0e19bb9262cf1f4
+    url-polyfill: "npm:^1.1.12"
+  checksum: 10c0/75c3e070f7829f76409e0d34784bf8070b827ad99c4713a36338af7ce8dff7cf38998403f34a4a0b4d6e99efd1856ee056443c7e838db1dbb98ed38828110a97
   languageName: node
   linkType: hard
 
@@ -15803,7 +15803,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-polyfill@npm:^1.1.13":
+"url-polyfill@npm:^1.1.12":
   version: 1.1.14
   resolution: "url-polyfill@npm:1.1.14"
   checksum: 10c0/945aa8d618da4f30c98a021ea5dd68c5aec711dd45cf6a494ddd30f3525b1d93c5f2f3e205ad3758193f289a66e03c8fa6da2ea4bce2dd0e7de4542c22499a06
