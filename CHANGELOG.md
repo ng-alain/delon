@@ -1,3 +1,9 @@
+## 20.1.0 (2025-10-19)
+
+* feat(theme): add locals (#1932) ([4ed8e5f](https://github.com/ng-alain/delon/commit/4ed8e5f)), closes [#1932](https://github.com/ng-alain/delon/issues/1932)
+
+
+
 ## <small>20.0.2 (2025-09-17)</small>
 
 * chore: bump angular to 20.3 (#1927) ([495b90e](https://github.com/ng-alain/delon/commit/495b90e)), closes [#1927](https://github.com/ng-alain/delon/issues/1927)

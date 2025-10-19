@@ -14,6 +14,11 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## 20.1.0 (2025-10-19)
+
+* feat(theme): 增加若干语言 (#1932) ([4ed8e5f](https://github.com/ng-alain/delon/commit/4ed8e5f)), closes [#1932](https://github.com/ng-alain/delon/issues/1932)
+
+
 ## <small>20.0.2 (2025-09-17)</small>
 
 * fix(abc:exception): 修复无法覆盖 `img`, `title`, `desc` (#1928) ([727018b](https://github.com/ng-alain/delon/commit/727018b)), closes [#1928](https://github.com/ng-alain/delon/issues/1928)
