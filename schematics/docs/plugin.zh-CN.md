@@ -139,7 +139,6 @@ export class StartupService {
 <nz-icon [nzType]="d.status === 'NORMAL' ? 'close1' : 'close2'" />
 <nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}" />
 <nz-icon nzType="filter" theme="outline" />
-<nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
 ```
 
 ### rtl

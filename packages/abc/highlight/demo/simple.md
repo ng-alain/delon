@@ -24,12 +24,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
   selector: 'app-demo',
   template: `
     <p class="mb-md" [innerHTML]="str | nzHighlight: searchValue : 'i' : 'highlight'"></p>
-    <nz-input-group nzAddOnBefore="String" class="mb-md">
+    <nz-input-wrapper nzAddonBefore="String" class="mb-md">
       <input type="text" nz-input [(ngModel)]="str" />
-    </nz-input-group>
-    <nz-input-group nzAddOnBefore="Search Value">
+    </nz-input-wrapper>
+    <nz-input-wrapper nzAddonBefore="Search Value">
       <input type="text" nz-input [(ngModel)]="searchValue" />
-    </nz-input-group>
+    </nz-input-wrapper>
   `,
   styles: [
     `
