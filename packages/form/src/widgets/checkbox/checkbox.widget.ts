@@ -8,7 +8,8 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-checkbox',
-  template: `<ng-template #all>
+  template: `
+    <ng-template #all>
       @if (ui.checkAll) {
         <label
           nz-checkbox
@@ -56,7 +57,7 @@ import { ControlUIWidget } from '../../widget';
             <ng-template [ngTemplateOutlet]="all" />
             <nz-checkbox-group [ngModel]="value" [nzOptions]="$any(data)" (ngModelChange)="groupInGridChange($event)" />
           } @else {
-            <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
+            <nz-checkbox-group class="sf__checkbox-list" [ngModel]="value" (ngModelChange)="groupInGridChange($event)">
               <div nz-row>
                 @if (ui.checkAll) {
                   <div nz-col [nzSpan]="grid_span">
@@ -71,11 +72,12 @@ import { ControlUIWidget } from '../../widget';
                   </div>
                 }
               </div>
-            </nz-checkbox-wrapper>
+            </nz-checkbox-group>
           }
         }
       }
-    </sf-item-wrap>`,
+    </sf-item-wrap>
+  `,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

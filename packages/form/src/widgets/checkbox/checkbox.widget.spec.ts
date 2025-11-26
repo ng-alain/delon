@@ -119,7 +119,7 @@ describe('form: widget: checkbox', () => {
     });
   });
 
-  it('should be use nz-checkbox-wrapper when spcify grid_span value', fakeAsync(() => {
+  it('should be use nz-checkbox-group when spcify grid_span value', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -129,7 +129,7 @@ describe('form: widget: checkbox', () => {
         }
       }
     };
-    page.newSchema(s).time(1000).checkCount('nz-checkbox-wrapper', 1).click('.ant-col-8 label').asyncEnd();
+    page.newSchema(s).time(1000).checkCount('nz-checkbox-group', 1).click('.ant-col-8 label').asyncEnd();
     expect(page.getValue('a').length).toBe(1);
     expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
   }));
