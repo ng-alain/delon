@@ -72,7 +72,7 @@
     "aos": "^3.0.0-beta.6",
     "codesandbox": "^2.2.3",
     "echarts": "^6.0.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "extend": "^3.0.2",
     "file-saver": "^2.0.5",
     "isutf8": "^4.0.1",
