@@ -1,22 +1,22 @@
 import { SchematicContext } from '@angular-devkit/schematics';
-import * as colors from 'ansi-colors';
+import { color } from 'listr2';
 
 export function logStart(context: SchematicContext, message: string): void {
-  context.logger.info(`${colors.green('✓')} ${message}`);
+  context.logger.info(`${color.green('✓')} ${message}`);
 }
 
 export function logInfo(context: SchematicContext, message: string): void {
-  context.logger.info(`  ${colors.green('✓')} ${message}`);
+  context.logger.info(`  ${color.green('✓')} ${message}`);
 }
 
 export function logWarn(context: SchematicContext, message: string): void {
-  context.logger.info(`  ${colors.yellow(`⚠ ${message}`)}`);
+  context.logger.info(`  ${color.yellow(`⚠ ${message}`)}`);
 }
 
 export function logEx(context: SchematicContext, message: string): void {
-  context.logger.error(`  ${colors.yellow(`x ${message}`)}`);
+  context.logger.error(`  ${color.yellow(`x ${message}`)}`);
 }
 
 export function logFinished(context: SchematicContext, message: string): void {
-  context.logger.info(`${colors.green(`✓ ${message}`)}`);
+  context.logger.info(`${color.green(`✓ ${message}`)}`);
 }

@@ -1,6 +1,6 @@
 import { chain, Rule, schematic, Tree, SchematicContext, SchematicsException } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import * as colors from 'ansi-colors';
+import { color } from 'listr2';
 
 import { Schema as ApplicationOptions } from '../application/schema';
 import { DEFAULT_WORKSPACE_PATH, readJSON, readPackage } from '../utils';
@@ -47,7 +47,7 @@ function finished(): Rule {
     context.addTask(new NodePackageInstallTask());
 
     context.logger.info(
-      colors.green(`
+      color.green(`
 ✓  Congratulations, NG-ALAIN scaffold generation complete 🎉.
 
 NG-ALAIN documentation site: https://ng-alain.com
