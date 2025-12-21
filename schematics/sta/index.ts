@@ -1,9 +1,9 @@
 import { normalize } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
-import * as colors from 'ansi-colors';
 import { rmSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { parse } from 'jsonc-parser';
+import { color } from 'listr2';
 import { resolve, join } from 'path';
 import { generateApi, GenerateApiOutput, GenerateApiParams } from 'swagger-typescript-api';
 
@@ -120,18 +120,18 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
 
 function genProxy(config: STAConfig): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info(colors.blue(`- Name: ${config.name}`));
+    context.logger.info(color.blue(`- Name: ${config.name}`));
     const output = (config.output = resolve(process.cwd(), config.output ?? `./src/app/_${config.name}`));
     const templates = resolve(__dirname, './templates');
     if (config.url) {
-      context.logger.info(colors.blue(`- Using url data: ${config.url}`));
+      context.logger.info(color.blue(`- Using url data: ${config.url}`));
     } else if (config.filePath) {
-      context.logger.info(colors.blue(`- Using file data: ${config.filePath}`));
+      context.logger.info(color.blue(`- Using file data: ${config.filePath}`));
     }
-    context.logger.info(colors.blue(`- Output: ${output}`));
+    context.logger.info(color.blue(`- Output: ${output}`));
 
     return new Promise<void>(resolve => {
-      context.logger.info(colors.blue(`Start generating...`));
+      context.logger.info(color.blue(`Start generating...`));
       const options = {
         name: `${config.name}.ts`,
         url: config.url,
@@ -215,7 +215,7 @@ function genProxy(config: STAConfig): Rule {
 
 function finished(): Rule {
   return (_: Tree, context: SchematicContext) => {
-    context.logger.info(colors.green(`✓  Finished, refer to: https://ng-alain.com/cli/sta`));
+    context.logger.info(color.green(`✓  Finished, refer to: https://ng-alain.com/cli/sta`));
   };
 }
 
@@ -224,7 +224,7 @@ function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfi
 
   try {
     const configFile = resolve(process.cwd(), configPath);
-    context.logger.info(colors.blue(`- Use config file: ${configFile}`));
+    context.logger.info(color.blue(`- Use config file: ${configFile}`));
     if (existsSync(configFile)) {
       return parse(readFileSync(configFile).toString('utf8'));
     }
