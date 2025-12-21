@@ -11,7 +11,7 @@ export class AlainConfigService {
   private readonly config = { ...inject(ALAIN_CONFIG, { optional: true }) };
 
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
-    const res = ((this.config[componentName] as Record<string, unknown>) || {}) as NzSafeAny;
+    const res = ((this.config[componentName] as Record<string, unknown>) ?? {}) as NzSafeAny;
     return key ? ({ [key]: res[key] } as AlainConfig[T]) : res;
   }
 

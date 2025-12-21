@@ -16,7 +16,7 @@ export function deepGet(obj: NzSafeAny, path: string | string[] | null | undefin
     const checkObj = obj[path[0]];
     return typeof checkObj === 'undefined' ? defaultValue : checkObj;
   }
-  const res = path.reduce((o, k) => (o || {})[k], obj);
+  const res = path.reduce((o, k) => (o ?? {})[k], obj);
   return typeof res === 'undefined' ? defaultValue : res;
 }
 

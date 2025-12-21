@@ -17,8 +17,8 @@ export function format(
   obj: NzSafeAny | null | undefined,
   needDeepGet: boolean = false
 ): string {
-  return (str || '').replace(/\${([^}]+)}/g, (_work: string, key: string) =>
-    needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || ''
+  return (str ?? '').replace(/\${([^}]+)}/g, (_work: string, key: string) =>
+    needDeepGet ? deepGet(obj, key.split('.'), '') : ((obj ?? {})[key] ?? '')
   );
 }
 

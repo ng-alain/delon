@@ -12,7 +12,7 @@ function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): Decor
     const source = descriptor.value;
     descriptor.value = function (...data: NzSafeAny[]): () => void {
       const that = this as NzSafeAny;
-      const ngZone = that[options?.ngZoneName || 'ngZone'];
+      const ngZone = that[options?.ngZoneName ?? 'ngZone'];
       if (!ngZone) {
         if (typeof ngDevMode === 'undefined' || ngDevMode) {
           warn(`ZoneOutside: Decorator should have 'ngZone' property with 'NgZone' class.`);

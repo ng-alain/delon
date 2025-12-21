@@ -29,7 +29,7 @@ export class CookieService {
   private readonly platform = inject(Platform);
 
   private get doc(): Document {
-    return this._doc || document;
+    return this._doc ?? document;
   }
 
   /**

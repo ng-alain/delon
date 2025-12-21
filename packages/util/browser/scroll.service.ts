@@ -7,12 +7,12 @@ export class ScrollService {
   private readonly _doc = inject(DOCUMENT);
   private readonly platform = inject(Platform);
   private _getDoc(): Document {
-    return this._doc || document;
+    return this._doc ?? document;
   }
 
   private _getWin(): Window {
     const doc = this._getDoc();
-    return doc.defaultView || window;
+    return doc.defaultView ?? window;
   }
 
   /**
@@ -42,7 +42,7 @@ export class ScrollService {
     if (!this.platform.isBrowser) {
       return;
     }
-    (element || this._getWin()).scrollTo(position[0], position[1]);
+    (element ?? this._getWin()).scrollTo(position[0], position[1]);
   }
 
   /**
