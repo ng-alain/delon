@@ -55,7 +55,7 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
             url: req.url,
             headers: req.headers,
             status: e instanceof MockStatusError ? e.status : 400,
-            statusText: e.statusText || 'Unknown Error',
+            statusText: e.statusText ?? 'Unknown Error',
             error: e.error
           })
         );
