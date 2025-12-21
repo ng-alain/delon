@@ -27,7 +27,7 @@ export function ToLogin(options: AlainAuthConfig, url?: string): void {
   const router = inject(Router);
   const token = inject(DA_SERVICE_TOKEN) as ITokenService;
   const doc = inject(DOCUMENT);
-  token.referrer!.url = url || router.url;
+  token.referrer!.url = url ?? router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
       if (/^https?:\/\//g.test(options.login_url!)) {

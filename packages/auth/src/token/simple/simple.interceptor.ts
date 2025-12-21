@@ -22,7 +22,7 @@ function newReq(req: HttpRequest<unknown>, model: SimpleTokenModel, options: Ala
       });
       break;
     case 'body': {
-      const body: any = req.body || {};
+      const body: any = req.body ?? {};
       body[token_send_key!] = token;
       req = req.clone({
         body

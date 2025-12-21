@@ -15,7 +15,7 @@ export function DA_STORE_TOKEN_LOCAL_FACTORY(): IStore {
  */
 export class LocalStorageStore implements IStore {
   get(key: string): ITokenModel {
-    return JSON.parse(localStorage.getItem(key) || '{}') || {};
+    return JSON.parse(localStorage.getItem(key) ?? '{}') ?? {};
   }
 
   set(key: string, value: ITokenModel | null): boolean {

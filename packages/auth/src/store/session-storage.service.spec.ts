@@ -12,7 +12,7 @@ describe('auth: session-storage', () => {
     let data: Record<string, any> = {};
 
     spyOn(sessionStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
+      return data[key] ?? null;
     });
     spyOn(sessionStorage, 'removeItem').and.callFake((key: string): void => {
       delete data[key];
