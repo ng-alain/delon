@@ -47,10 +47,10 @@ import { ObjectLayoutWidget } from '../../widget';
       <nz-card
         [nzTitle]="cardTitleTpl"
         [nzExtra]="ui.cardExtra"
-        [nzSize]="ui.cardSize || 'small'"
-        [nzActions]="ui.cardActions || []"
+        [nzSize]="ui.cardSize ?? 'small'"
+        [nzActions]="ui.cardActions ?? []"
         [nzBodyStyle]="ui.cardBodyStyle!"
-        [nzBordered]="ui.cardBordered || true"
+        [nzBordered]="ui.cardBordered ?? true"
         class="sf__object-card"
         [class.sf__object-card-fold]="!expand"
       >
@@ -116,7 +116,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
       const property = (formProperty.properties as Record<string, FormProperty>)[key] as FormProperty;
       const item = {
         property,
-        grid: property.ui.grid || grid || {},
+        grid: property.ui.grid ?? grid ?? {},
         spanLabelFixed: property.ui.spanLabelFixed,
         show: property.ui.hidden === false
       };

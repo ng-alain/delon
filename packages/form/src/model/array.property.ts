@@ -49,7 +49,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   resetValue(value: SFValue, onlySelf: boolean): void {
-    this._value = value || this.schema.default || [];
+    this._value = value ?? this.schema.default ?? [];
     this.setValue(this._value, onlySelf);
   }
 

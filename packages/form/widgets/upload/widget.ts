@@ -43,7 +43,7 @@ import type { SFUploadWidgetSchema } from './schema';
       [nzWithCredentials]="i.withCredentials"
       [nzBeforeUpload]="i.beforeUpload"
       [nzCustomRequest]="i.customRequest"
-      [nzRemove]="ui.remove || handleRemove"
+      [nzRemove]="ui.remove ?? handleRemove"
       [nzPreview]="handlePreview"
       [nzPreviewFile]="ui.previewFile"
       [nzDownload]="ui.download"
@@ -102,26 +102,26 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       limitFileCount
     } = this.ui;
     const res: NzSafeAny = {
-      type: type || 'select',
-      text: text || '点击上传',
-      action: action || '',
-      accept: accept || '',
+      type: type ?? 'select',
+      text: text ?? '点击上传',
+      action: action ?? '',
+      accept: accept ?? '',
       directory: toBool(directory, false),
       openFileDialogOnClick: toBool(openFileDialogOnClick, true),
       limit: limit == null ? 0 : +limit,
       filter: filter == null ? [] : filter,
       size: fileSize == null ? 0 : +fileSize,
-      fileType: fileType || '',
-      listType: listType || 'text',
+      fileType: fileType ?? '',
+      listType: listType ?? 'text',
       multiple: toBool(multiple, false),
-      name: name || 'file',
+      name: name ?? 'file',
       showUploadList: showUploadList == null ? true : showUploadList,
       withCredentials: toBool(withCredentials, false),
-      resReName: (resReName || '').split('.'),
-      urlReName: (urlReName || '').split('.'),
+      resReName: (resReName ?? '').split('.'),
+      urlReName: (urlReName ?? '').split('.'),
       beforeUpload: typeof beforeUpload === 'function' ? beforeUpload : null,
       customRequest: typeof customRequest === 'function' ? customRequest : null,
-      limitFileCount: limitFileCount || 999
+      limitFileCount: limitFileCount ?? 999
     };
     if (res.listType === 'picture-card') {
       this.btnType = 'plus';
@@ -129,8 +129,8 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     if (res.type === 'drag') {
       res.listType = null;
       this.btnType = 'drag';
-      res.text = text || `单击或拖动文件到该区域上传`;
-      res.hint = hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
+      res.text = text ?? `单击或拖动文件到该区域上传`;
+      res.hint = hint ?? `支持单个或批量，严禁上传公司数据或其他安全文件`;
     }
     this.i = res;
   }
@@ -181,7 +181,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       this.ui.preview(file);
       return;
     }
-    const _url = file.thumbUrl || file.url;
+    const _url = file.thumbUrl ?? file.url;
     if (!_url) {
       return;
     }

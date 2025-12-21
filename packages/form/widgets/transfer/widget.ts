@@ -56,10 +56,10 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
   ngOnInit(): void {
     const { titles, operations, itemUnit, itemsUnit } = this.ui;
     this.i = {
-      titles: titles || ['', ''],
-      operations: operations || ['', ''],
-      itemUnit: itemUnit || '项',
-      itemsUnit: itemsUnit || '项'
+      titles: titles ?? ['', ''],
+      operations: operations ?? ['', ''],
+      itemUnit: itemUnit ?? '项',
+      itemsUnit: itemsUnit ?? '项'
     };
   }
 

@@ -49,7 +49,7 @@ export abstract class FormProperty {
       ingoreKeywords: this.ui.ingoreKeywords as string[],
       debug: (ui as SFUISchemaItem)!.debug!
     });
-    this.formData = formData || schema.default;
+    this.formData = formData ?? schema.default;
     this._parent = parent;
     if (parent) {
       this._root = parent.root;
@@ -142,7 +142,7 @@ export abstract class FormProperty {
     this._updateValue();
 
     if (options.emitValueEvent) {
-      options.updatePath = options.updatePath || this.path;
+      options.updatePath = options.updatePath ?? this.path;
       options.updateValue = options.updateValue == null ? this.value : options.updateValue;
       this.valueChanges.next({ value: this.value, path: options.updatePath, pathValue: options.updateValue });
     }
@@ -211,7 +211,7 @@ export abstract class FormProperty {
     } else if (isEmpty) {
       errors = [];
     } else {
-      errors = this.schemaValidator(this._value) || [];
+      errors = this.schemaValidator(this._value) ?? [];
     }
     const customValidator = (this.ui as SFUISchemaItemRun).validator;
     if (typeof customValidator === 'function') {
@@ -262,12 +262,12 @@ export abstract class FormProperty {
     let arrErrs = Array.isArray(errors) ? errors : [errors];
 
     if (emitFormat && arrErrs && !this.ui.onlyVisual) {
-      const l = (this.widget && this.widget.l.error) || {};
+      const l = (this.widget && this.widget.l.error) ?? {};
       arrErrs = arrErrs.map((err: ErrorData) => {
         let message: string | ((err: ErrorData) => string) =
           err.keyword == null && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword!] || this._options.errors![err.keyword!] || l[err.keyword!] || ``;
+            : ((this.ui.errors ?? {})[err.keyword!] ?? this._options.errors![err.keyword!] ?? l[err.keyword!] ?? ``);
 
         if (message && typeof message === 'function') {
           message = message(err);
@@ -275,7 +275,7 @@ export abstract class FormProperty {
 
         if (message) {
           if (~message.indexOf('{') && err.params) {
-            message = message.replace(/{([.a-zA-Z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
+            message = message.replace(/{([.a-zA-Z0-9]+)}/g, (_v: string, key: string) => err.params![key] ?? '');
           }
           err.message = message;
         }

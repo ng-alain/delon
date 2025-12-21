@@ -49,7 +49,7 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports || []),
+    imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
     declarations: [TestFormComponent]
   });
   if (options.template) {

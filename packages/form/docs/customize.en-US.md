@@ -55,8 +55,8 @@ class TestWidget extends ControlWidget implements OnInit {
   loadingTip: string;
 
   ngOnInit(): void {
-    this.loadingTip = this.ui.loadingTip || 'Loading……';
-    this.config = this.ui.config || {};
+    this.loadingTip = this.ui.loadingTip ?? 'Loading……';
+    this.config = this.ui.config ?? {};
   }
 
   // reset can better solve the problem of new data required during the form reset process

@@ -104,9 +104,9 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
       this.arraySpan = grid.arraySpan;
     }
 
-    this.addTitle = this.dom.bypassSecurityTrustHtml(addTitle || this.l.addText);
-    this.addType = addType || 'dashed';
-    this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
+    this.addTitle = this.dom.bypassSecurityTrustHtml(addTitle ?? this.l.addText);
+    this.addType = addType ?? 'dashed';
+    this.removeTitle = removable === false ? null : (removeTitle ?? this.l.removeText);
   }
 
   private reValid(options?: SFUpdateValueAndValidity): void {
