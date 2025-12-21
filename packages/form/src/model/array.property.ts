@@ -86,7 +86,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   private clearErrors(property?: FormProperty): void {
-    (property || this)._objErrors = {};
+    (property ?? this)._objErrors = {};
   }
 
   // #region actions
