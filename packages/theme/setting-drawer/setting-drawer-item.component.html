@@ -15,7 +15,7 @@
       (ngModelChange)="pxChange($event)"
       [nzMin]="i.min"
       [nzMax]="i.max"
-      [nzStep]="i.step || 2"
+      [nzStep]="i.step ?? 2"
       [nzFormatter]="format"
     />
   }

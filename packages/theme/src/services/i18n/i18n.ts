@@ -123,7 +123,7 @@ export abstract class AlainI18nBaseService implements AlainI18NService {
   abstract getLangs(): NzSafeAny[];
 
   fanyi(path: string, params?: unknown | unknown[]): string {
-    let content = this._data[path] || '';
+    let content = this._data[path] ?? '';
     if (!content) return path;
 
     if (!params) return content;

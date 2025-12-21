@@ -39,7 +39,7 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     if (!this.platform.isBrowser) {
       return null;
     }
-    return JSON.parse(localStorage.getItem(key) || 'null') || null;
+    return JSON.parse(localStorage.getItem(key) ?? 'null') ?? null;
   }
 
   setData(key: string, value: NzSafeAny): void {
