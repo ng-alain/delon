@@ -297,7 +297,7 @@ export class CacheService implements OnDestroy {
 
   /** 是否缓存 `key` */
   has(key: string): boolean {
-    return this.memory.has(key) || this.meta.has(key);
+    return this.memory.has(key) ?? this.meta.has(key);
   }
 
   // #endregion

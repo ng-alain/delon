@@ -15,7 +15,7 @@ export class LocalStorageCacheService implements ICacheStore {
     if (!this.platform.isBrowser) {
       return null;
     }
-    return JSON.parse(localStorage.getItem(key) || 'null') || null;
+    return JSON.parse(localStorage.getItem(key) ?? 'null') ?? null;
   }
 
   set(key: string, value: ICache): boolean {
