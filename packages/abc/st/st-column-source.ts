@@ -136,7 +136,7 @@ export class STColumnSource {
 
   private btnCoerceIf(list: STColumnButton[]): void {
     for (const item of list) {
-      item.iifBehavior = item.iifBehavior || this.cog.iifBehavior;
+      item.iifBehavior = item.iifBehavior ?? this.cog.iifBehavior;
       if (item.children && item.children.length > 0) {
         this.btnCoerceIf(item.children);
       } else {
@@ -206,7 +206,7 @@ export class STColumnSource {
     }
 
     let res: STColumnFilter | null = item.filter;
-    res.type = res.type || 'default';
+    res.type = res.type ?? 'default';
     res.showOPArea = res.showOPArea !== false;
 
     let icon = 'filter';
@@ -257,10 +257,10 @@ export class STColumnSource {
       res.multiple = true;
     }
 
-    res.confirmText = res.confirmText || this.cog.filterConfirmText;
-    res.clearText = res.clearText || this.cog.filterClearText;
-    res.key = res.key || item.indexKey;
-    res.icon = res.icon || icon;
+    res.confirmText = res.confirmText ?? this.cog.filterConfirmText;
+    res.clearText = res.clearText ?? this.cog.filterClearText;
+    res.key = res.key ?? item.indexKey;
+    res.icon = res.icon ?? icon;
 
     const baseIcon = { type: icon, theme: iconTheme } as STIcon;
     if (typeof res.icon === 'string') {
@@ -306,7 +306,7 @@ export class STColumnSource {
     const widths: string[] = [];
     const fillRowCells = (columns: _STColumn[], colIndex: number, rowIndex = 0): number[] => {
       // Init rows
-      rows[rowIndex] = rows[rowIndex] || [];
+      rows[rowIndex] = rows[rowIndex] ?? [];
 
       let currentColIndex = colIndex;
       const colSpans: number[] = columns.map(column => {
@@ -323,7 +323,7 @@ export class STColumnSource {
           colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce((total, count) => total + count, 0);
           cell.hasSubColumns = true;
         } else {
-          widths.push((cell.column.width as string) || '');
+          widths.push((cell.column.width as string) ?? '');
         }
 
         if ('colSpan' in column) {
@@ -436,7 +436,7 @@ export class STColumnSource {
 
       // #region title
 
-      const tit = (typeof item.title === 'string' ? { text: item.title } : item.title) || {};
+      const tit = (typeof item.title === 'string' ? { text: item.title } : item.title) ?? {};
       if (tit.i18n && this.i18nSrv) {
         tit.text = this.i18nSrv.fanyi(tit.i18n);
       }
@@ -482,7 +482,7 @@ export class STColumnSource {
       }
       // date
       if (item.type === 'date') {
-        item.dateFormat = item.dateFormat || this.cog.date?.format;
+        item.dateFormat = item.dateFormat ?? this.cog.date?.format;
       }
       if (
         (item.type === 'link' && typeof item.click !== 'function') ||

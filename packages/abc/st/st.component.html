@@ -30,7 +30,7 @@
   [nzFrontPagination]="false"
   [nzBordered]="bordered"
   [nzSize]="size"
-  [nzLoading]="noColumns || _loading"
+  [nzLoading]="noColumns ?? _loading"
   [nzLoadingDelay]="loadingDelay"
   [nzLoadingIndicator]="loadingIndicator"
   [nzTitle]="header!"
@@ -78,7 +78,7 @@
               [nzCustomFilter]="!!_c.filter"
               [class.st__has-filter]="_c.filter"
               nz-resizable
-              [nzDisabled]="last || $any(_c).resizable.disabled"
+              [nzDisabled]="last ?? $any(_c).resizable.disabled"
               [nzMaxWidth]="$any(_c).resizable.maxWidth"
               [nzMinWidth]="$any(_c).resizable.minWidth"
               [nzBounds]="$any(_c).resizable.bounds"

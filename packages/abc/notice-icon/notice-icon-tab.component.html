@@ -9,7 +9,7 @@
     }
     <p>
       <ng-container *nzStringTemplateOutlet="d.emptyText">
-        {{ d.emptyText || locale().emptyText }}
+        {{ d.emptyText ?? locale().emptyText }}
       </ng-container>
     </p>
   </div>
@@ -45,5 +45,5 @@
       </nz-list-item>
     </ng-template>
   </nz-list>
-  <div class="notice-icon__clear" (click)="onClear()">{{ d.clearText || locale().clearText }}</div>
+  <div class="notice-icon__clear" (click)="onClear()">{{ d.clearText ?? locale().clearText }}</div>
 </ng-template>

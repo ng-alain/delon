@@ -167,7 +167,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     // add home
     if (this.home) {
       paths.splice(0, 0, {
-        title: (this.homeI18n && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
+        title: (this.homeI18n && this.i18nSrv.fanyi(this.homeI18n)) ?? this.home,
         link: [this.homeLink!]
       });
     }

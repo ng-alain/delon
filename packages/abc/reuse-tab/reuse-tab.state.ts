@@ -16,7 +16,7 @@ export interface ReuseTabStorageState {
 
 export class ReuseTabLocalStorageState implements ReuseTabStorageState {
   get(key: string): ReuseItem[] {
-    return JSON.parse(localStorage.getItem(key) || '[]') || [];
+    return JSON.parse(localStorage.getItem(key) ?? '[]') ?? [];
   }
 
   update(key: string, value: ReuseItem[]): boolean {

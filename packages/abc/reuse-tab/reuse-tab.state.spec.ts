@@ -16,7 +16,7 @@ describe('abc: reuse-tab(state)', () => {
     let data: Record<string, NzSafeAny> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
+      return data[key];
     });
     spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
       delete data[key];
