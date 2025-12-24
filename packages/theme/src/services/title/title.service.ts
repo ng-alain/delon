@@ -98,7 +98,7 @@ export class TitleService implements OnDestroy {
               text = val.textContent!.trim();
             }
           });
-          return text ?? el.firstChild!.textContent!.trim();
+          return text || el.firstChild!.textContent!.trim();
         }
         return '';
       })
@@ -133,7 +133,7 @@ export class TitleService implements OnDestroy {
         switchMap(tit => (tit ? of(tit) : this.getByRoute())),
         switchMap(tit => (tit ? of(tit) : this.getByMenu())),
         switchMap(tit => (tit ? of(tit) : this.getByElement())),
-        map(tit => tit ?? this.default),
+        map(tit => tit || this.default),
         map(title => (!Array.isArray(title) ? [title] : title)),
         takeUntilDestroyed(this.destroy$)
       )

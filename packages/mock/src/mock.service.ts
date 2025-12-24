@@ -119,8 +119,8 @@ export class MockService implements OnDestroy {
 
   // #endregion
 
-  getRule(method: string, url: string): MockRule | null {
-    method = (method ?? 'GET').toUpperCase();
+  getRule(method: string | null | undefined, url: string): MockRule | null {
+    method = (method || 'GET').toUpperCase();
     const params: any = {};
     const list = this.cached.filter(w => w.method === method && (w.martcher ? w.martcher.test(url) : w.url === url));
     if (list.length === 0) return null;
