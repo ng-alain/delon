@@ -18,7 +18,7 @@ export class CookieStorageStore implements IStore {
 
   get(key: string): ITokenModel {
     try {
-      return JSON.parse(this.srv.get(key) || '{}');
+      return JSON.parse(this.srv.get(key) ?? '{}');
     } catch (ex) {
       if (typeof ngDevMode === 'undefined' || ngDevMode) {
         console.error(`CookieStorageStore: Invalid key-value format ${key}`, ex);

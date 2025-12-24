@@ -40,7 +40,7 @@ import type { SFMentionWidgetSchema } from './schema';
           [nzSize]="ui.size!"
           [ngModel]="value"
           (ngModelChange)="setValue($event)"
-          [attr.maxLength]="schema.maxLength || null"
+          [attr.maxLength]="schema.maxLength ?? null"
           [attr.placeholder]="ui.placeholder"
           [nzAutosize]="i.autosize"
         >
@@ -55,7 +55,7 @@ import type { SFMentionWidgetSchema } from './schema';
           [nzSize]="ui.size!"
           [ngModel]="value"
           (ngModelChange)="setValue($event)"
-          [attr.maxLength]="schema.maxLength || null"
+          [attr.maxLength]="schema.maxLength ?? null"
           [attr.placeholder]="ui.placeholder"
           autocomplete="off"
         />
@@ -76,10 +76,10 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
   ngOnInit(): void {
     const { valueWith, notFoundContent, placement, prefix, autosize } = this.ui;
     this.i = {
-      valueWith: valueWith || (item => item.label),
-      notFoundContent: notFoundContent || '无匹配结果，轻敲空格完成输入',
-      placement: placement || 'bottom',
-      prefix: prefix || '@',
+      valueWith: valueWith ?? (item => item.label),
+      notFoundContent: notFoundContent ?? '无匹配结果，轻敲空格完成输入',
+      placement: placement ?? 'bottom',
+      prefix: prefix ?? '@',
       autosize: typeof autosize === 'undefined' ? true : this.ui.autosize
     };
 

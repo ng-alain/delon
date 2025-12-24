@@ -48,7 +48,7 @@ export class DateTimePickerUtil {
   getDiffDays(dateLeft: Date | number, dateRight?: Date | number): number {
     return differenceInCalendarDays(
       dateLeft,
-      typeof dateRight === 'number' ? addDays(this.date, dateRight) : dateRight || this.date
+      typeof dateRight === 'number' ? addDays(this.date, dateRight) : (dateRight ?? this.date)
     );
   }
   /**
@@ -75,7 +75,7 @@ export class DateTimePickerUtil {
       if (cur == null) {
         return {} as NzSafeAny;
       }
-      const now = addSeconds(this.now, offsetSeconds || 0);
+      const now = addSeconds(this.now, offsetSeconds ?? 0);
       const nowHours = now.getHours();
       const nowMinutes = now.getMinutes();
       const curHours = cur.getHours();

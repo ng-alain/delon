@@ -28,7 +28,7 @@ import type { SFTreeSelectWidgetSchema } from './schema';
       [nzExpandedKeys]="ui.expandedKeys!"
       [nzNotFoundContent]="ui.notFoundContent"
       [nzMaxTagCount]="ui.maxTagCount!"
-      [nzMaxTagPlaceholder]="ui.maxTagPlaceholder || null"
+      [nzMaxTagPlaceholder]="ui.maxTagPlaceholder ?? null"
       [nzTreeTemplate]="ui.treeTemplate!"
       [nzDisabled]="disabled"
       [nzShowSearch]="i.showSearch"
@@ -46,9 +46,9 @@ import type { SFTreeSelectWidgetSchema } from './schema';
       [nzDisplayWith]="i.displayWith!"
       [ngModel]="value"
       [nzVirtualHeight]="ui.virtualHeight!"
-      [nzVirtualItemSize]="ui.virtualItemSize || 28"
-      [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx || 500"
-      [nzVirtualMinBufferPx]="ui.virtualMinBufferPx || 28"
+      [nzVirtualItemSize]="ui.virtualItemSize ?? 28"
+      [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx ?? 500"
+      [nzVirtualMinBufferPx]="ui.virtualMinBufferPx ?? 28"
       (ngModelChange)="change($event)"
       (nzExpandChange)="expandChange($event)"
     />
@@ -77,7 +77,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
       checkStrictly: toBool(ui.checkStrictly, false),
       hideUnMatched: toBool(ui.hideUnMatched, false),
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
-      displayWith: ui.displayWith || ((node: NzTreeNode) => node.title)
+      displayWith: ui.displayWith ?? ((node: NzTreeNode) => node.title)
     };
     this.asyncData = typeof ui.expandChange === 'function';
   }

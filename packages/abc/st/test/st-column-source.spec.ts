@@ -52,7 +52,7 @@ describe('st: column-source', () => {
     stWidgetRegistry = TestBed.inject(STWidgetRegistry);
     i18nSrv = TestBed.inject(ALAIN_I18N_TOKEN);
     srv = TestBed.inject(STColumnSource);
-    srv.setCog(other.cog || ST_DEFAULT_CONFIG);
+    srv.setCog(other.cog ?? ST_DEFAULT_CONFIG);
     page = new PageObject();
   }
 

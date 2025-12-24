@@ -13,7 +13,7 @@ export class DelonLocaleService {
   private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
   constructor() {
-    this.setLocale(this.defLocale || zhCN);
+    this.setLocale(this.defLocale ?? zhCN);
   }
 
   get change(): Observable<FullLocaleData> {
@@ -40,12 +40,12 @@ export class DelonLocaleService {
   }
 
   getData<K extends keyof FullLocaleData>(key: K): FullLocaleData[K] {
-    return (this._locale[key] || {}) as FullLocaleData[K];
+    return (this._locale[key] ?? {}) as FullLocaleData[K];
   }
 }
 
 export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(exist: DelonLocaleService): DelonLocaleService {
-  return exist || new DelonLocaleService();
+  return exist ?? new DelonLocaleService();
 }
 
 export const DELON_LOCALE_SERVICE_PROVIDER: Provider = {

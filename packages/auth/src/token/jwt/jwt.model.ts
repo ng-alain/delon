@@ -46,7 +46,7 @@ export class JWTTokenModel implements ITokenModel {
    * 获取载荷信息
    */
   get payload(): JWT {
-    const parts = (this.token || '').split('.');
+    const parts = (this.token ?? '').split('.');
     if (parts.length !== 3) throw new Error('JWT must have 3 parts');
 
     const decoded = urlBase64Decode(parts[1]);

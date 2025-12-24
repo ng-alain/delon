@@ -91,7 +91,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   loading = false;
 
   private checkGroup(list: SFSchemaEnum[]): void {
-    this.hasGroup = (list || []).filter(w => w.group === true).length > 0;
+    this.hasGroup = (list ?? []).filter(w => w.group === true).length > 0;
   }
 
   ngOnInit(): void {
@@ -117,15 +117,15 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       autoFocus: toBool(autoFocus, false),
       dropdownMatchSelectWidth: toBool(dropdownMatchSelectWidth, true),
       serverSearch: toBool(serverSearch, false),
-      maxMultipleCount: maxMultipleCount || Infinity,
-      mode: mode || 'default',
+      maxMultipleCount: maxMultipleCount ?? Infinity,
+      mode: mode ?? 'default',
       showSearch: toBool(showSearch, true),
-      tokenSeparators: tokenSeparators || [],
-      maxTagCount: maxTagCount || Infinity,
-      optionHeightPx: optionHeightPx || 32,
-      optionOverflowSize: optionOverflowSize || 8,
+      tokenSeparators: tokenSeparators ?? [],
+      maxTagCount: maxTagCount ?? Infinity,
+      optionHeightPx: optionHeightPx ?? 32,
+      optionOverflowSize: optionOverflowSize ?? 8,
       showArrow: toBool(showArrow, true),
-      compareWith: compareWith || ((o1: NzSafeAny, o2: NzSafeAny) => o1 === o2)
+      compareWith: compareWith ?? ((o1: NzSafeAny, o2: NzSafeAny) => o1 === o2)
     };
 
     const onSearch = this.ui.onSearch!;
@@ -134,7 +134,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
         .pipe(
           takeUntil(this.sfItemComp!.destroy$),
           distinctUntilChanged(),
-          debounceTime(this.ui.searchDebounceTime || 300),
+          debounceTime(this.ui.searchDebounceTime ?? 300),
           switchMap(text => onSearch(text)),
           catchError(() => [])
         )

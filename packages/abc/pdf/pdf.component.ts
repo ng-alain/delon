@@ -172,7 +172,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private get win(): NzSafeAny {
-    return this.doc.defaultView || window;
+    return this.doc.defaultView ?? window;
   }
 
   private get el(): HTMLElement {
@@ -330,7 +330,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this._pdf!.getPage(currentViewer.currentPageNumber).then((page: NzSafeAny) => {
       const { _rotation, _zoom } = this;
-      const rotation = _rotation || page.rotate;
+      const rotation = _rotation ?? page.rotate;
       const viewportWidth =
         page.getViewport({
           scale: _zoom,

@@ -29,7 +29,7 @@ import type { _STColumn } from './st.types';
   template: `
     <span
       class="ant-table-filter-trigger"
-      [class.active]="visible || f.default"
+      [class.active]="visible ?? f.default"
       nz-dropdown
       [nzDropdownMenu]="filterMenu"
       nzTrigger="click"
@@ -63,7 +63,7 @@ import type { _STColumn } from './st.types';
                 [nzMin]="f.number!.min!"
                 [nzMax]="f.number!.max!"
                 [nzStep]="f.number!.step!"
-                [nzPrecision]="f.number!.precision || null"
+                [nzPrecision]="f.number!.precision ?? null"
                 [nzPlaceHolder]="f.placeholder!"
                 class="width-100"
               />
@@ -125,10 +125,10 @@ import type { _STColumn } from './st.types';
         @if (f.showOPArea) {
           <div class="ant-table-filter-dropdown-btns">
             <a class="ant-table-filter-dropdown-link confirm" (click)="confirm()">
-              <span>{{ f.confirmText || locale.filterConfirm }}</span>
+              <span>{{ f.confirmText ?? locale.filterConfirm }}</span>
             </a>
             <a class="ant-table-filter-dropdown-link clear" (click)="reset()">
-              <span>{{ f.clearText || locale.filterReset }}</span>
+              <span>{{ f.clearText ?? locale.filterReset }}</span>
             </a>
           </div>
         }

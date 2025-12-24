@@ -100,7 +100,7 @@ export class G2PieComponent extends G2BaseComponent {
     this.select = false;
     this.tooltip = false;
     const { text, inverse, color: textColor, inverseColor } = this.ratio;
-    this.percentColor = (value: string) => (value === text ? textColor || color : inverseColor);
+    this.percentColor = (value: string) => (value === text ? (textColor ?? color) : inverseColor);
     this.data = [
       {
         x: text,

@@ -34,6 +34,6 @@ export class TextWidget extends ControlUIWidget<SFTextWidgetSchema> implements O
   }
 
   reset(value: SFValue): void {
-    this.text = value || this.ui.defaultText || '-';
+    this.text = value ?? this.ui.defaultText ?? '-';
   }
 }

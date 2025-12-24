@@ -24,8 +24,8 @@ import { ControlUIWidget } from '../../widget';
       [nzStep]="step"
       [nzFormatter]="formatter"
       [nzParser]="parser"
-      [nzPrecision]="ui.precision || null"
-      [nzPlaceHolder]="ui.placeholder || ''"
+      [nzPrecision]="ui.precision ?? null"
+      [nzPlaceHolder]="ui.placeholder ?? ''"
       [style.width]="width"
       [class.ant-input-number__hide-step]="ui.hideStep"
     />
@@ -35,16 +35,16 @@ import { ControlUIWidget } from '../../widget';
   standalone: false
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
-  min!: number;
-  max!: number;
+  min = Number.MIN_SAFE_INTEGER;
+  max = Number.MAX_SAFE_INTEGER;
   step!: number;
-  formatter: (value: number) => string = value => value.toString();
-  parser: (value: string) => number = value => +value;
+  formatter?: ((value: number) => string) | null;
+  parser?: ((value: string) => number) | null;
   width = '';
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
-    this.step = multipleOf || 1;
+    this.step = multipleOf ?? 1;
     if (typeof minimum !== 'undefined') {
       this.min = exclusiveMinimum ? minimum + this.step : minimum;
     }

@@ -18,7 +18,7 @@ import { ControlUIWidget } from '../../widget';
           (ngModelChange)="onAllChecked()"
           [nzIndeterminate]="indeterminate"
         >
-          {{ ui.checkAllText || l.checkAllText }}
+          {{ ui.checkAllText ?? l.checkAllText }}
         </label>
       }
     </ng-template>

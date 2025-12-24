@@ -108,7 +108,7 @@ export class TitleService implements OnDestroy {
   private getByRoute(): Observable<string> {
     let next = this.injector.get(ActivatedRoute);
     while (next.firstChild) next = next.firstChild;
-    const data: RouteTitle = (next.snapshot && next.snapshot.data) || {};
+    const data: RouteTitle = (next.snapshot && next.snapshot.data) ?? {};
     if (data.titleI18n) data.title = this.i18nSrv.fanyi(data.titleI18n);
     return isObservable(data.title) ? data.title : of(data.title!);
   }
@@ -120,7 +120,7 @@ export class TitleService implements OnDestroy {
     const item = menus[menus.length - 1];
     let title;
     if (item.i18n) title = this.i18nSrv.fanyi(item.i18n);
-    return of(title || item.text!);
+    return of(title ?? item.text!);
   }
 
   /**

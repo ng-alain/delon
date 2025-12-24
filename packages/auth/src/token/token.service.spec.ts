@@ -18,7 +18,7 @@ describe('auth: token.service', () => {
     let data: Record<string, any> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
+      return data[key] ?? null;
     });
     spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
       delete data[key];

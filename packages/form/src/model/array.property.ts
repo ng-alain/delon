@@ -49,7 +49,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   resetValue(value: SFValue, onlySelf: boolean): void {
-    this._value = value || this.schema.default || [];
+    this._value = value ?? this.schema.default ?? [];
     this.setValue(this._value, onlySelf);
   }
 
@@ -86,7 +86,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   private clearErrors(property?: FormProperty): void {
-    (property || this)._objErrors = {};
+    (property ?? this)._objErrors = {};
   }
 
   // #region actions

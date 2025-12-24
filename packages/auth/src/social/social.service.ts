@@ -122,7 +122,7 @@ export class SocialService implements OnDestroy {
     if (!data || !data.token) throw new Error(`invalide token data`);
     this.tokenService.set(data);
 
-    const url = localStorage.getItem(HREFCALLBACK) || '/';
+    const url = localStorage.getItem(HREFCALLBACK) ?? '/';
     localStorage.removeItem(HREFCALLBACK);
     const type = localStorage.getItem(OPENTYPE);
     localStorage.removeItem(OPENTYPE);

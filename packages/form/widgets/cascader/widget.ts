@@ -32,8 +32,8 @@ import type { SFCascaderWidgetSchema } from './schema';
       [nzMenuClassName]="ui.menuClassName"
       [nzMenuStyle]="ui.menuStyle!"
       [nzNotFoundContent]="ui.notFoundContent"
-      [nzLabelProperty]="ui.labelProperty || 'label'"
-      [nzValueProperty]="ui.valueProperty || 'value'"
+      [nzLabelProperty]="ui.labelProperty ?? 'label'"
+      [nzValueProperty]="ui.valueProperty ?? 'value'"
       [nzLoadData]="loadData"
       [nzPlaceHolder]="ui.placeholder!"
       [nzPlacement]="ui.placement ?? 'bottomLeft'"
@@ -61,10 +61,10 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
 
   ngOnInit(): void {
     const { clearText, showArrow, showInput, triggerAction, asyncData } = this.ui;
-    this.clearText = clearText || '清除';
+    this.clearText = clearText ?? '清除';
     this.showArrow = toBool(showArrow, true);
     this.showInput = toBool(showInput, true);
-    this.triggerAction = triggerAction || ['click'];
+    this.triggerAction = triggerAction ?? ['click'];
     if (asyncData) {
       this.loadData = (node: NzCascaderOption, index: number) =>
         asyncData(node, index, this).then(() => this.detectChanges());

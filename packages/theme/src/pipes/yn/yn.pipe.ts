@@ -17,8 +17,8 @@ export interface YNOptions {
 export function yn(value: boolean, opt?: YNOptions): string {
   let html = '';
   let { yes, no, mode } = { ...opt };
-  yes = yes || '是';
-  no = no || '否';
+  yes = yes ?? '是';
+  no = no ?? '否';
   switch (mode) {
     case 'full':
       html = value

@@ -77,12 +77,12 @@ export class SettingDrawerComponent implements OnInit {
   colors = DEFAULT_COLORS;
 
   constructor() {
-    this.color = this.cachedData['@primary-color'] || this.DEFAULT_PRIMARY;
+    this.color = this.cachedData['@primary-color'] ?? this.DEFAULT_PRIMARY;
     this.resetData(this.cachedData, false);
   }
 
   private get cachedData(): Record<string, NzSafeAny> {
-    return this.settingSrv.layout[ALAINDEFAULTVAR] || {};
+    return this.settingSrv.layout[ALAINDEFAULTVAR] ?? {};
   }
 
   private get DEFAULT_PRIMARY(): string {
@@ -162,10 +162,10 @@ export class SettingDrawerComponent implements OnInit {
   }
 
   private resetData(nowData?: Record<string, NzSafeAny>, run: boolean = true): void {
-    nowData = nowData || {};
+    nowData = nowData ?? {};
     const data = deepCopy(DEFAULT_VARS);
     Object.keys(data).forEach(key => {
-      const value = nowData![`@${key}`] || data[key].default || '';
+      const value = nowData![`@${key}`] ?? data[key].default ?? '';
       data[key].value = value === `@primary-color` ? this.color : value;
     });
     this.data = data;

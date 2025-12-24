@@ -62,7 +62,7 @@ export class CurrencyService {
         cur.currencyCode,
         cur.display,
         cur.digitsInfo,
-        cur.locale || this.locale
+        cur.locale ?? this.locale
       )!;
     }
     const res = formatNumber(

@@ -12,7 +12,7 @@ describe('Service: Settings', () => {
     let data: Record<string, NzSafeAny> = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
+      return data[key] ?? null;
     });
     spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
       delete data[key];

@@ -33,7 +33,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
 
   @HostBinding('class')
   get cls(): NgClassType {
-    return this.ui.class || '';
+    return this.ui.class ?? '';
   }
 
   get disabled(): boolean {

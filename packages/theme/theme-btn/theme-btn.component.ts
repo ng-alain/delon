@@ -64,7 +64,7 @@ export class ThemeBtnComponent implements OnInit, OnDestroy {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.theme = localStorage.getItem(this.key) || 'default';
+    this.theme = localStorage.getItem(this.key) ?? 'default';
     this.updateChartTheme();
     this.onThemeChange(this.theme);
   }
