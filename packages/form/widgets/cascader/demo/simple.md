@@ -84,7 +84,7 @@ export class DemoComponent {
                   { value: 310104, label: '徐汇区', parent: 310100 }
                 ].filter((w: NzSafeAny) => {
                   w.isLeaf = index === 1;
-                  return w.parent === (node.value || 0);
+                  return w.parent === (node.value ?? 0);
                 });
                 resolve();
               }, 300);

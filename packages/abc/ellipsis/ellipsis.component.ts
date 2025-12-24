@@ -61,7 +61,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   }
 
   private get win(): NzSafeAny {
-    return this.doc.defaultView || window;
+    return this.doc.defaultView ?? window;
   }
 
   private getStrFullLength(str: string): number {
@@ -169,7 +169,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     } else if (type === 'line') {
       const { shadowOrgEl, shadowTextEl } = this;
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
-      const lineText = orgNode.innerText || orgNode.textContent!;
+      const lineText = orgNode.innerText ?? orgNode.textContent!;
       const lineHeight = parseInt(this.win.getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
       const targetHeight = lines! * lineHeight;
       const handleEl = this.getEl('.ellipsis__handle');

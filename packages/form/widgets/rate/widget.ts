@@ -22,7 +22,7 @@ import type { SFRateWidgetSchema } from './schema';
       (ngModelChange)="setValue($event)"
       [nzAllowClear]="allowClear"
       [nzAllowHalf]="allowHalf"
-      [nzTooltips]="ui.tooltips || []"
+      [nzTooltips]="ui.tooltips ?? []"
       [nzAutoFocus]="autoFocus"
       [nzCount]="$any(count)"
     />
@@ -48,8 +48,8 @@ export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements O
 
   ngOnInit(): void {
     const { schema, ui } = this;
-    this.count = schema.maximum || 5;
-    this.allowHalf = (schema.multipleOf || 0.5) === 0.5;
+    this.count = schema.maximum ?? 5;
+    this.allowHalf = (schema.multipleOf ?? 0.5) === 0.5;
     this.allowClear = toBool(ui.allowClear, true);
     this.autoFocus = toBool(ui.autoFocus, false);
     this.hasText = !!ui.text;

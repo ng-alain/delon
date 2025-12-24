@@ -63,7 +63,7 @@ export class MockService implements OnDestroy {
       });
     });
     // regular ordering
-    this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
+    this.cached.sort((a, b) => (b.martcher ?? '').toString().length - (a.martcher ?? '').toString().length);
   }
 
   private genRule(key: string, callback: any): MockCachedRule {
@@ -119,12 +119,12 @@ export class MockService implements OnDestroy {
 
   // #endregion
 
-  getRule(method: string, url: string): MockRule | null {
+  getRule(method: string | null | undefined, url: string): MockRule | null {
     method = (method || 'GET').toUpperCase();
     const params: any = {};
     const list = this.cached.filter(w => w.method === method && (w.martcher ? w.martcher.test(url) : w.url === url));
     if (list.length === 0) return null;
-    const ret = list.find(w => w.url === url) || list[0];
+    const ret = list.find(w => w.url === url) ?? list[0];
     if (ret.martcher) {
       const execArr = ret.martcher.exec(url);
       execArr!.slice(1).map((value: string, index: number) => {

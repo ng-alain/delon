@@ -29,7 +29,7 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       [nzSize]="ui.size!"
       [ngModel]="typing"
       (ngModelChange)="_setValue($event)"
-      [attr.maxLength]="schema.maxLength || null"
+      [attr.maxLength]="schema.maxLength ?? null"
       [attr.placeholder]="ui.placeholder"
       autocomplete="off"
     />
@@ -38,8 +38,8 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       [nzBackfill]="i.backfill"
       [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
       [nzWidth]="i.width"
-      [nzOverlayStyle]="ui.overlayStyle || {}"
-      [nzOverlayClassName]="ui.overlayClassName || ''"
+      [nzOverlayStyle]="ui.overlayStyle ?? {}"
+      [nzOverlayClassName]="ui.overlayClassName ?? ''"
       [compareWith]="i.compareWith"
       (selectionChange)="updateValue($event)"
     >
@@ -84,19 +84,19 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     this.i = {
       backfill: toBool(backfill, false),
       defaultActiveFirstOption: toBool(defaultActiveFirstOption, true),
-      width: nzWidth || undefined,
-      compareWith: compareWith || ((o1, o2) => o1 === o2)
+      width: nzWidth ?? undefined,
+      compareWith: compareWith ?? ((o1, o2) => o1 === o2)
     };
 
     let filterOptionValue = filterOption == null ? true : filterOption;
     if (typeof filterOptionValue === 'boolean') {
       filterOptionValue = (input: string, option: SFSchemaEnum) =>
-        option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
+        option.label.toLowerCase().indexOf((input ?? '').toLowerCase()) > -1;
     }
     this.filterOption = filterOptionValue;
 
     this.isAsync = !!asyncData;
-    const orgTime = +(this.ui.debounceTime || 0);
+    const orgTime = +(this.ui.debounceTime ?? 0);
     const time = Math.max(0, this.isAsync ? Math.max(50, orgTime) : orgTime);
 
     this.list = this.ngModel.valueChanges!.pipe(
@@ -124,7 +124,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     switch (this.ui.type) {
       case 'email':
         this.fixData = getCopyEnum(
-          this.schema.enum! || this.formProperty.options.uiEmailSuffixes,
+          this.schema.enum! ?? this.formProperty.options.uiEmailSuffixes,
           null,
           this.schema.readOnly!
         );

@@ -4,12 +4,12 @@ import { AlainSFConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFValue } from '../interface';
+import { FormProperty, PropertyGroup } from './form.property';
+import { FormPropertyFactory } from './form.property.factory';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { orderProperties } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
-import { FormProperty, PropertyGroup } from './form.property';
-import { FormPropertyFactory } from './form.property.factory';
 
 export class ObjectProperty extends PropertyGroup {
   private _propertiesId: string[] = [];
@@ -40,13 +40,13 @@ export class ObjectProperty extends PropertyGroup {
     try {
       orderedProperties = orderProperties(Object.keys(this.schema.properties!), this.ui.order as string[]);
     } catch (e) {
-      console.error(`Invalid ${this.schema.title || 'root'} object field configuration:`, e);
+      console.error(`Invalid ${this.schema.title ?? 'root'} object field configuration:`, e);
     }
     orderedProperties!.forEach(propertyId => {
       (this.properties as Record<string, FormProperty>)[propertyId] = this.formPropertyFactory.createProperty(
         this.schema.properties![propertyId],
         this.ui[`$${propertyId}`],
-        ((this.formData || {}) as NzSafeAny)[propertyId],
+        ((this.formData ?? {}) as NzSafeAny)[propertyId],
         this,
         propertyId
       );
@@ -66,7 +66,7 @@ export class ObjectProperty extends PropertyGroup {
   }
 
   resetValue(value: SFValue, onlySelf: boolean): void {
-    value = value || this.schema.default || {};
+    value = value ?? this.schema.default ?? {};
     const properties = this.properties as Record<string, FormProperty>;
     for (const propertyId in this.schema.properties) {
       if (Object.prototype.hasOwnProperty.call(this.schema.properties, propertyId)) {

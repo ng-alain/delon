@@ -34,7 +34,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       return;
     }
     this.options = mergeConfig(this.cogSrv);
-    const customOptions = this.options.ajv || {};
+    const customOptions = this.options.ajv ?? {};
     this.ngZone.runOutsideAngular(() => {
       this.ajv = new Ajv({
         allErrors: true,
@@ -58,7 +58,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   ): (value: SFValue) => ErrorData[] {
     const ingoreKeywords: string[] = [
       ...(this.options.ingoreKeywords as string[]),
-      ...((extraOptions.ingoreKeywords as string[]) || [])
+      ...((extraOptions.ingoreKeywords as string[]) ?? [])
     ];
 
     return (value: SFValue): ErrorData[] => {

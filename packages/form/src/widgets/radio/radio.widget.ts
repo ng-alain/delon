@@ -21,7 +21,7 @@ import { ControlUIWidget } from '../../widget';
       [nzName]="id"
       [ngModel]="value"
       (ngModelChange)="_setValue($event)"
-      [nzButtonStyle]="ui.buttonStyle || 'outline'"
+      [nzButtonStyle]="ui.buttonStyle ?? 'outline'"
     >
       @if (styleType) {
         @for (option of data; track $index) {
@@ -47,7 +47,7 @@ export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   styleType!: boolean;
 
   reset(value: SFValue): void {
-    this.styleType = (this.ui.styleType || 'default') === 'default';
+    this.styleType = (this.ui.styleType ?? 'default') === 'default';
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.detectChanges();

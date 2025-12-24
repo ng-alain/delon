@@ -170,7 +170,7 @@ export function getEnum(list: NzSafeAny[], formData: NzSafeAny, readOnly: boolea
 }
 
 export function getCopyEnum(list: NzSafeAny[], formData: NzSafeAny, readOnly: boolean): SFSchemaEnum[] {
-  return getEnum(deepCopy(list || []), formData, readOnly);
+  return getEnum(deepCopy(list ?? []), formData, readOnly);
 }
 
 export function getData(

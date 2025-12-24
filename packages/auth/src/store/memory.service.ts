@@ -8,7 +8,7 @@ export class MemoryStore implements IStore {
   private cache: Record<string, ITokenModel | null> = {};
 
   get(key: string): ITokenModel {
-    return this.cache[key] || ({} as ITokenModel);
+    return this.cache[key] ?? ({} as ITokenModel);
   }
 
   set(key: string, value: ITokenModel): boolean {

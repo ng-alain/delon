@@ -70,7 +70,7 @@ export class ErrorCollectComponent implements OnInit {
     if (this.count() === 0) return false;
     // nz-form-control
     const els = this.errEls;
-    const formItemEl = this.findParent(els[0], '[nz-form-control]') || els[0];
+    const formItemEl = this.findParent(els[0], '[nz-form-control]') ?? els[0];
     formItemEl.scrollIntoView(true);
     // fix header height
     this.doc.documentElement.scrollTop -= this.offsetTop();

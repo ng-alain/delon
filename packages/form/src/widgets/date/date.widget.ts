@@ -105,7 +105,7 @@ import { ControlUIWidget } from '../../widget';
           [nzRanges]="ui.ranges"
           [nzShowTime]="ui.showTime"
           [nzSeparator]="ui.separator"
-          [nzShowWeekNumber]="ui.showWeekNumber || false"
+          [nzShowWeekNumber]="ui.showWeekNumber ?? false"
           [nzMode]="$any(ui.rangeMode)"
           [nzInputReadOnly]="ui.inputReadOnly"
           [nzInline]="ui.inline!"
@@ -132,7 +132,7 @@ import { ControlUIWidget } from '../../widget';
           [nzRenderExtraFooter]="ui.renderExtraFooter"
           [nzShowTime]="ui.showTime"
           [nzShowToday]="i.showToday"
-          [nzShowWeekNumber]="ui.showWeekNumber || false"
+          [nzShowWeekNumber]="ui.showWeekNumber ?? false"
           [nzInputReadOnly]="ui.inputReadOnly"
           [nzInline]="ui.inline!"
           (nzOnOk)="_ok($event)"
@@ -155,7 +155,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
 
   ngOnInit(): void {
     const { mode, end, displayFormat, allowClear, showToday } = this.ui;
-    this.mode = mode || 'date';
+    this.mode = mode ?? 'date';
     this.flatRange = end != null;
     // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
     this.startFormat = this.ui._format!;
@@ -195,7 +195,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
     if (this.flatRange) {
       const endValue = toDate(this.endProperty.formData as NzSafeAny, {
-        formatString: this.endFormat || this.startFormat,
+        formatString: this.endFormat ?? this.startFormat,
         defaultValue: null
       });
       this.displayValue = value == null || endValue == null ? [] : [value, endValue];
@@ -220,7 +220,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     }
 
     const res = Array.isArray(value)
-      ? [format(value[0], this.startFormat), format(value[1], this.endFormat || this.startFormat)]
+      ? [format(value[0], this.startFormat), format(value[1], this.endFormat ?? this.startFormat)]
       : format(value, this.startFormat);
 
     if (this.flatRange) {

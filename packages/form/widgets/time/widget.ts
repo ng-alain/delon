@@ -58,15 +58,15 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
     const ui = this.ui;
     this.valueFormat = ui._format;
     const opt = {
-      displayFormat: ui.displayFormat || 'HH:mm:ss',
+      displayFormat: ui.displayFormat ?? 'HH:mm:ss',
       allowEmpty: toBool(ui.allowEmpty, true),
-      clearText: ui.clearText || '清除',
-      defaultOpenValue: ui.defaultOpenValue || new Date(),
+      clearText: ui.clearText ?? '清除',
+      defaultOpenValue: ui.defaultOpenValue ?? new Date(),
       hideDisabledOptions: toBool(ui.hideDisabledOptions, false),
       use12Hours: toBool(ui.use12Hours, false),
-      hourStep: ui.hourStep || 1,
-      minuteStep: ui.minuteStep || 1,
-      secondStep: ui.secondStep || 1
+      hourStep: ui.hourStep ?? 1,
+      minuteStep: ui.minuteStep ?? 1,
+      secondStep: ui.secondStep ?? 1
     };
     if (opt.use12Hours && !ui.displayFormat) {
       opt.displayFormat = `h:mm:ss a`;

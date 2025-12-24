@@ -44,7 +44,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
 
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
-    this.step = multipleOf || 1;
+    this.step = multipleOf ?? 1;
     if (typeof minimum !== 'undefined') {
       this.min = exclusiveMinimum ? minimum + this.step : minimum;
     }

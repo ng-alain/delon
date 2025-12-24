@@ -55,8 +55,8 @@ class TestWidget extends ControlWidget implements OnInit {
   loadingTip: string;
 
   ngOnInit(): void {
-    this.loadingTip = this.ui.loadingTip || '加载中……';
-    this.config = this.ui.config || {};
+    this.loadingTip = this.ui.loadingTip ?? '加载中……';
+    this.config = this.ui.config ?? {};
   }
 
   // reset 可以更好的解决表单重置过程中所需要的新数据问题

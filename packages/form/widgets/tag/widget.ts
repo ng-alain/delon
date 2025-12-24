@@ -30,7 +30,7 @@ import type { SFTagWidgetSchema } from './schema';
     </ng-template>
     @for (i of data; track $index) {
       <nz-tag
-        [nzMode]="ui.mode || 'checkable'"
+        [nzMode]="ui.mode ?? 'checkable'"
         [nzChecked]="i.checked"
         (nzOnClose)="_close($event)"
         (nzCheckedChange)="onChange(i)"

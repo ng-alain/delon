@@ -525,7 +525,7 @@ export class STComponent implements AfterViewInit, OnChanges {
         multiSort,
         rowClassName,
         paginator: true,
-        customRequest: this.customRequest || this.cog.customRequest,
+        customRequest: this.customRequest ?? this.cog.customRequest,
         ...options
       })
       .pipe(takeUntilDestroyed(this.destroy$));

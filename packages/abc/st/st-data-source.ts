@@ -124,7 +124,7 @@ export class STDataSource {
               }
               // total
               const resultTotal = reName.total && deepGet(result, reName.total as string[], null);
-              retTotal = resultTotal == null ? total || 0 : +resultTotal;
+              retTotal = resultTotal == null ? (total ?? 0) : +resultTotal;
             }
           }
           return deepCopy(ret);
@@ -193,8 +193,8 @@ export class STDataSource {
     return data$.pipe(
       map(result => {
         retList = result;
-        const realTotal = retTotal || total;
-        const realPs = retPs || ps;
+        const realTotal = retTotal ?? total;
+        const realPs = retPs ?? ps;
 
         return {
           pi: retPi,
@@ -212,7 +212,7 @@ export class STDataSource {
     try {
       const safeHtml = col.safeType === 'safeHtml';
       if (col.format) {
-        const formatRes = col.format(item, col, idx) || '';
+        const formatRes = col.format(item, col, idx) ?? '';
         return {
           text: formatRes,
           _text: safeHtml ? this.dom.bypassSecurityTrustHtml(formatRes) : formatRes,
@@ -284,7 +284,7 @@ export class STDataSource {
 
   private getByRemote(url: string, options: STDataSourceOptions): Observable<unknown> {
     const { req, page, paginator, pi, ps, singleSort, multiSort, columns, headers } = options;
-    const method = (req.method || 'GET').toUpperCase();
+    const method = (req.method ?? 'GET').toUpperCase();
 
     let params: Record<string, any> = {};
     const reName = req.reName as STReqReNameType;
@@ -391,7 +391,7 @@ export class STDataSource {
 
     const fnText = (btns: _STColumnButton[]): _STColumnButton[] => {
       for (const btn of btns) {
-        btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : btn.text || '';
+        btn._text = typeof btn.text === 'function' ? btn.text(item, btn) : (btn.text ?? '');
         btn._className = typeof btn.className === 'function' ? btn.className(item, btn) : btn.className;
         btn._icon = typeof btn.icon === 'function' ? btn.icon(item, btn) : (btn.icon as STIcon);
         if (btn.children?.length) {
@@ -482,7 +482,7 @@ export class STDataSource {
 
       const sortMap = sortList
         .sort((a, b) => a.tick - b.tick)
-        .map(item => item.key! + ms.nameSeparator + ((item.reName || {})[item.default!] || item.default));
+        .map(item => item.key! + ms.nameSeparator + ((item.reName ?? {})[item.default!] ?? item.default));
 
       ret = { [ms.key!]: ms.arrayParam ? sortMap : sortMap.join(ms.separator) };
 
@@ -493,10 +493,10 @@ export class STDataSource {
 
     const mapData = sortList[0];
     let sortFiled = mapData.key;
-    let sortValue = (sortList[0].reName || {})[mapData.default!] || mapData.default;
+    let sortValue = (sortList[0].reName ?? {})[mapData.default!] ?? mapData.default;
     if (singleSort) {
-      sortValue = sortFiled + (singleSort.nameSeparator || '.') + sortValue;
-      sortFiled = singleSort.key || 'sort';
+      sortValue = sortFiled + (singleSort.nameSeparator ?? '.') + sortValue;
+      sortFiled = singleSort.key ?? 'sort';
     }
     ret[sortFiled as string] = sortValue as string;
     return ret;
@@ -535,7 +535,7 @@ export class STDataSource {
   private genStatistical(columns: _STColumn[], list: STData[], rawData: NzSafeAny): STStatisticalResults {
     const res: Record<string, NzSafeAny> = {};
     columns.forEach((col, index) => {
-      res[col.key || col.indexKey || index] =
+      res[col.key ?? col.indexKey ?? index] =
         col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;

@@ -138,7 +138,7 @@ function makeMethod(method: METHOD_TYPE) {
   return function (url: string = '', options?: HttpOptions) {
     return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
       descriptor!.value = function (...args: any[]): Observable<any> {
-        options = options || {};
+        options = options ?? {};
 
         const injector = (this as NzSafeAny).injector as Injector;
         const http = injector.get(_HttpClient, null) as _HttpClient;
@@ -151,8 +151,8 @@ function makeMethod(method: METHOD_TYPE) {
         const baseData = setParam(this);
         const data = setParam(baseData, targetKey);
 
-        let requestUrl = url || '';
-        requestUrl = [baseData.baseUrl || '', requestUrl.startsWith('/') ? requestUrl.substring(1) : requestUrl].join(
+        let requestUrl = url ?? '';
+        requestUrl = [baseData.baseUrl ?? '', requestUrl.startsWith('/') ? requestUrl.substring(1) : requestUrl].join(
           '/'
         );
         // fix last split
@@ -173,19 +173,19 @@ function makeMethod(method: METHOD_TYPE) {
         }
 
         requestUrl = requestUrl.replace(/::/g, '^^');
-        ((data.path as ParamType[]) || [])
+        ((data.path as ParamType[]) ?? [])
           .filter(w => typeof args[w.index] !== 'undefined')
           .forEach((i: ParamType) => {
             requestUrl = requestUrl.replace(new RegExp(`:${i.key}`, 'g'), encodeURIComponent(args[i.index]));
           });
         requestUrl = requestUrl.replace(/\^\^/g, `:`);
 
-        const params = (data.query || []).reduce((p: NzSafeAny, i: ParamType) => {
+        const params = (data.query ?? []).reduce((p: NzSafeAny, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});
 
-        const headers = (data.headers || []).reduce((p: NzSafeAny, i: ParamType) => {
+        const headers = (data.headers ?? []).reduce((p: NzSafeAny, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});

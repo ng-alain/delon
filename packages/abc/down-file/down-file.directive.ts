@@ -27,7 +27,7 @@ export class DownFileDirective {
   @Output() readonly error = new EventEmitter<NzSafeAny>();
 
   private getDisposition(data: string | null): NzSafeAny {
-    const arr: Array<Record<string, string>> = (data || '')
+    const arr: Array<Record<string, string>> = (data ?? '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {
@@ -65,7 +65,7 @@ export class DownFileDirective {
     this.setDisabled(true);
     this._http
       .request(this.httpMethod, this.httpUrl, {
-        params: this.httpData || {},
+        params: this.httpData ?? {},
         responseType: 'blob',
         observe: 'response',
         body: this.httpBody

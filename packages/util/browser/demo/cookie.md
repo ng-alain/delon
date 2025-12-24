@@ -12,7 +12,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: `
-    <p classs="mb-md">Result: {{ value || 'NULL' }}</p>
+    <p classs="mb-md">Result: {{ value ?? 'NULL' }}</p>
     <button nz-button (click)="get()">Get</button>
     <button nz-button (click)="set()">Set</button>
     <button nz-button (click)="set({ expires: 10 })">Set 10s expired</button>

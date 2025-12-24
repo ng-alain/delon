@@ -25,7 +25,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
   private init(): void {
     if (!this._inited || this.num == null || this.num <= 0) return;
     const el = this.el;
-    const widgetEl = el.querySelector<HTMLElement>('.ant-row') || el;
+    const widgetEl = el.querySelector<HTMLElement>('.ant-row') ?? el;
     this.render.addClass(widgetEl, 'sf__fixed');
     const labelEl = widgetEl.querySelector('.ant-form-item-label');
     const controlEl = widgetEl.querySelector('.ant-form-item-control-wrapper,.ant-form-item-control');

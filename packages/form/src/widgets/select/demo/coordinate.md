@@ -69,7 +69,7 @@ export class DemoComponent {
     const cityProperty = this.sf.getProperty('/city')!;
     const items = this.cityData[province];
     cityProperty.schema.enum = items;
-    cityProperty.widget.reset(city || items[0]);
+    cityProperty.widget.reset(city ?? items[0]);
   }
 }
 ```

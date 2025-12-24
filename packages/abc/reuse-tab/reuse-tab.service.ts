@@ -125,7 +125,7 @@ export class ReuseTabService implements OnDestroy {
   }
   /** 获取指定路径缓存 */
   get(url?: string): ReuseTabCached | null {
-    return url ? this.cached.list.find(w => w.url === url) || null : null;
+    return url ? (this.cached.list.find(w => w.url === url) ?? null) : null;
   }
   private remove(url: string | number, includeNonCloseable: boolean): boolean {
     const idx = typeof url === 'string' ? this.index(url) : url;
@@ -534,7 +534,7 @@ export class ReuseTabService implements OnDestroy {
     if (this.hasInValidRoute(route)) return null;
     const url = this.getUrl(route);
     const data = this.get(url);
-    const ret = (data && data._handle) || null;
+    const ret = data && data._handle;
     this.di('#retrieve', url, ret);
     return ret;
   }
@@ -546,12 +546,12 @@ export class ReuseTabService implements OnDestroy {
     let ret = future.routeConfig === curr.routeConfig;
     if (!ret) return false;
 
-    const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
+    const path = ((future.routeConfig && future.routeConfig.path) ?? '') as string;
     if (path.length > 0 && ~path.indexOf(':')) {
       if (this.routeParamMatchMode === 'strict') {
         ret = this.getUrl(future) === this.getUrl(curr);
       } else {
-        ret = path === ((curr.routeConfig && curr.routeConfig.path) || '');
+        ret = path === ((curr.routeConfig && curr.routeConfig.path) ?? '');
       }
     }
     this.di('=====================');

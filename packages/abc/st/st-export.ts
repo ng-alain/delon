@@ -49,7 +49,7 @@ export class STExport {
 
   private genSheet(opt: STExportOptions): Record<string, unknown> {
     const sheets: Record<string, Record<string, NzSafeAny>> = {};
-    const sheet: Record<string, NzSafeAny> = (sheets[opt.sheetname || 'Sheet1'] = {});
+    const sheet: Record<string, NzSafeAny> = (sheets[opt.sheetname ?? 'Sheet1'] = {});
     const dataLen = opt.data!.length;
     const columns = opt.columens! as _STColumn[];
     let validColCount = 0;

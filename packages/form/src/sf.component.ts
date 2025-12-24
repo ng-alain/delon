@@ -266,7 +266,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     const key = path.split(SF_SEQ).pop()!;
-    const parentRequired = property.parent?.schema.required || [];
+    const parentRequired = property.parent?.schema.required ?? [];
     const idx = parentRequired.findIndex(w => w === key);
     if (status) {
       if (idx === -1) parentRequired.push(key);
@@ -328,7 +328,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   protected fanyi(key: string): string {
-    return this.i18nSrv.fanyi(key) || key;
+    return this.i18nSrv.fanyi(key) ?? key;
   }
 
   private inheritUI(ui: SFUISchemaItemRun): void {
@@ -479,7 +479,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (property.properties && Object.keys(property.properties).length) {
-          inFn(property, schema, uiSchema[uiKey] || {}, ui, ui);
+          inFn(property, schema, uiSchema[uiKey] ?? {}, ui, ui);
         }
       });
     };
