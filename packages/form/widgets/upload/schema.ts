@@ -2,10 +2,10 @@ import { Observable, Subscription } from 'rxjs';
 
 import type { SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
 import type {
+  NzBeforeUploadFileType,
   NzShowUploadList,
   NzUploadChangeParam,
   NzUploadFile,
-  NzUploadTransformFileType,
   NzUploadXHRArgs,
   UploadFilter
 } from 'ng-zorro-antd/upload';
@@ -159,7 +159,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 在上传之前转换文件。支持返回一个 Observable 对象
    */
-  transformFile?: (file: NzUploadFile) => NzUploadTransformFileType;
+  transformFile?: (file: NzUploadFile) => NzBeforeUploadFileType;
 
   /**
    * 上传文件改变时的状态
