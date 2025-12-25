@@ -14,6 +14,11 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## <small>20.1.1 (2025-12-25)</small>
+
+* fix(form:widget:number): fix missing precision (#1939) ([79cf1cf](https://github.com/ng-alain/delon/commit/79cf1cf)), closes [#1939](https://github.com/ng-alain/delon/issues/1939)
+* fix(cli): ansi-colors bump to listr2 (#1938) ([cbb9f3c](https://github.com/ng-alain/delon/commit/cbb9f3c)), closes [#1938](https://github.com/ng-alain/delon/issues/1938)
+
 ## 20.1.0 (2025-10-19)
 
 * feat(theme): add locals (#1932) ([4ed8e5f](https://github.com/ng-alain/delon/commit/4ed8e5f)), closes [#1932](https://github.com/ng-alain/delon/issues/1932)
