@@ -23,7 +23,7 @@ Default widget, A basic widget for getting the user input is a text field.
 | `[size]` | Size of the `nz-input` | `string` | - |
 | `[type]` | type of the input, e.g: `password` | `string` | - |
 | `[placeholder]` | placeholder of the input | `string` | - |
-| `[borderless]` | Whether hide border | `boolean` | `false` |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[autocomplete]` | autocomplete of the input | `HTML Attribute` | - |
 | `[autofocus]` | autofocus of the input | `HTML Attribute` | - |
 | `[addOnBefore]` | The label text displayed before (on the left side of) the input field. | `string` | - |

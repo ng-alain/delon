@@ -1,4 +1,4 @@
-import type { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
 
 import { SFUISchemaItem } from '../../schema/ui';
 
@@ -19,9 +19,9 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
   };
 
   /**
-   * Whether hide border, Default: `false`
+   * 变体
    */
-  borderless?: boolean;
+  variant?: NzVariant;
 
   /**
    * `textarea` maximum character count displayed

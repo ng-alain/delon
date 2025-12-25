@@ -27,7 +27,7 @@ order: 6
 | `[autoClearSearchValue]` | 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效。 | `boolean` | `true` |
 | `[allowClear]` | 支持清除 | `boolean` | `false` |
 | `[clearValue]` | 清空时默认值 | `any` | `undefined` |
-| `[borderless]` | 是否无边框 | `boolean` | `false` |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[autoFocus]` | 默认获取焦点 | `boolean` | `false` |
 | `[dropdownClassName]` | 下拉菜单的 className 属性 | `string` | - |
 | `[dropdownMatchSelectWidth]` | 下拉菜单和选择器同宽 | `boolean` | `true` |

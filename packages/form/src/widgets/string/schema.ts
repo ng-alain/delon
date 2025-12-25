@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny, NzVariant } from 'ng-zorro-antd/core/types';
 
 import type { SFUISchemaItem } from '../../schema/ui';
 
@@ -45,14 +45,10 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
    */
   suffix?: string;
 
-  variant?: 'outlined' | 'borderless' | 'filled' | 'underlined';
-
   /**
-   * Whether hide border, Default: `false`
-   *
-   * @deprecated Will be removed in v21. It is recommended to use `variant` instead.
+   * 变体
    */
-  borderless?: boolean;
+  variant?: NzVariant;
 
   /**
    * `change` event throttling and sequence control threshold
