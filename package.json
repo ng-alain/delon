@@ -152,7 +152,7 @@
     "ng-alain-sts": "^0.0.2",
     "ng-packagr": "^21.0.1",
     "parse5": "^8.0.0",
-    "plyr": "~3.8.3",
+    "plyr": "^3.8.3",
     "prettier": "^3.7.4",
     "readline-sync": "^1.4.10",
     "screenfull": "^6.0.2",

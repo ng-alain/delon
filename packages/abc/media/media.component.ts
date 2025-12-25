@@ -20,7 +20,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timer, take } from 'rxjs';
 
-import type Plyr from 'plyr';
+import type * as Plyr from 'plyr';
 
 import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

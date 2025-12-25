@@ -97,7 +97,6 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
   ngOnInit(): void {
     const {
       autoClearSearchValue,
-      borderless,
       autoFocus,
       dropdownMatchSelectWidth,
       serverSearch,
@@ -113,7 +112,6 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     } = this.ui;
     this.i = {
       autoClearSearchValue: toBool(autoClearSearchValue, true),
-      borderless: toBool(borderless, false),
       autoFocus: toBool(autoFocus, false),
       dropdownMatchSelectWidth: toBool(dropdownMatchSelectWidth, true),
       serverSearch: toBool(serverSearch, false),

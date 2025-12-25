@@ -6984,7 +6984,7 @@ __metadata:
     ngx-highlight-js: "npm:^21.0.0"
     ngx-tinymce: "npm:^21.0.0"
     parse5: "npm:^8.0.0"
-    plyr: "npm:~3.8.3"
+    plyr: "npm:^3.8.3"
     prettier: "npm:^3.7.4"
     qrious: "npm:^4.0.2"
     readline-sync: "npm:^1.4.10"
@@ -13704,7 +13704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plyr@npm:~3.8.3":
+"plyr@npm:^3.8.3":
   version: 3.8.3
   resolution: "plyr@npm:3.8.3"
   dependencies:

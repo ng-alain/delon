@@ -16,7 +16,7 @@ Specify `source` and` options` to customize the player.
 ```ts
 import { Component } from '@angular/core';
 
-import type Plyr from 'plyr';
+import type * as Plyr from 'plyr';
 
 import { MediaComponent } from '@delon/abc/media';
 import { NzButtonModule } from 'ng-zorro-antd/button';

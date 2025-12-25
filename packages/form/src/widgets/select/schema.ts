@@ -36,6 +36,9 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
    */
   allowClear?: boolean;
 
+  /**
+   * 变体，默认：`outlined`
+   */
   variant?: NzVariant;
 
   /**
