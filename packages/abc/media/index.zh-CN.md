@@ -54,5 +54,5 @@ const alainConfig: AlainConfig = {
 ### 如何更友好的使用 Plyr 类型
 
 ```ts
-import type Plyr from 'plyr';
+import type * as Plyr from 'plyr';
 ```

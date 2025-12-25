@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
-import type Plyr from 'plyr';
+import type * as Plyr from 'plyr';
 
 import { createTestContext } from '@delon/testing';
 import { LazyService } from '@delon/util/other';

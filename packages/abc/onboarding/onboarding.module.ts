@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { DelonLocaleModule } from '@delon/theme';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { NzNoAnimationModule } from 'ng-zorro-antd/core/animation';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 

@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { NzNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';

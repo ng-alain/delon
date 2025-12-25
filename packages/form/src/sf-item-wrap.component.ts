@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, ViewEncapsulation, inject } from '@angular/core';
 
-import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 
 import type { SFSchema } from './schema/index';
@@ -9,7 +9,6 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 @Component({
   selector: 'sf-item-wrap',
   templateUrl: './sf-item-wrap.component.html',
-  animations: [helpMotion],
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
@@ -36,6 +35,9 @@ export class SFItemWrapComponent implements OnChanges {
   get oh(): SFOptionalHelp {
     return this.ui.optionalHelp as SFOptionalHelp;
   }
+
+  protected readonly nzValidateAnimationEnter = withAnimationCheck(() => 'ant-form-validate_animation-enter');
+  protected readonly nzValidateAnimationLeave = withAnimationCheck(() => 'ant-form-validate_animation-leave');
 
   ngOnChanges(): void {
     const hasError = !!this.error;

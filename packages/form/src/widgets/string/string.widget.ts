@@ -29,7 +29,7 @@ import { ControlUIWidget } from '../../widget';
             [disabled]="disabled"
             [attr.disabled]="disabled"
             [nzSize]="ui.size!"
-            [nzVariant]="ui.variant!"
+            [nzVariant]="ui.variant ?? 'outlined'"
             [ngModel]="value"
             (ngModelChange)="change($event)"
             [attr.maxLength]="schema.maxLength ?? null"

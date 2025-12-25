@@ -10,12 +10,12 @@ function finished(): Rule {
 
     logFinished(
       context,
-      `Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2562`
+      `Congratulations, Abort more detail please refer to upgrade guide https://github.com/ng-alain/ng-alain/issues/2589`
     );
   };
 }
 
-export function v20Rule(): Rule {
+export function v21Rule(): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     UpgradeMainVersions(tree);
     logInfo(context, `Upgrade dependency version number`);
