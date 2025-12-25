@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 
 import { provideAlainConfig } from '@delon/util/config';
 
-import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
+import { AlainI18NService, ALAIN_I18N_TOKEN, AlainI18nBaseService } from './i18n';
 import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guard';
 import { I18nPipe } from './i18n.pipe';
 
@@ -22,7 +22,7 @@ describe('theme: i18n', () => {
   describe('', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestComponent);
-      srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
+      srv = TestBed.inject(ALAIN_I18N_TOKEN);
       srv.use('en', {
         simple: 'a',
         param: 'a-{{value}}',
@@ -79,6 +79,19 @@ describe('theme: i18n', () => {
       expect(srv.fanyi('name')).toBe(`Name`);
       expect(srv.fanyi('sys')).toBe(`System`);
       expect(srv.fanyi('sys.title')).toBe(`Title`);
+    });
+
+    it('#mergeData', () => {
+      srv.use('en', {
+        name: 'Name',
+        keep: '1'
+      });
+      expect(srv.fanyi('name')).toBe(`Name`);
+      (srv as AlainI18nBaseService).mergeData({
+        name: 'Name2'
+      });
+      expect(srv.fanyi('name')).toBe(`Name2`);
+      expect(srv.fanyi('keep')).toBe(`1`);
     });
   });
 
