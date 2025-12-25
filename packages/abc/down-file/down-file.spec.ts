@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
+/* eslint-disable */
 import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';

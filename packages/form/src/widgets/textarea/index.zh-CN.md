@@ -21,8 +21,8 @@ type: Widgets
 |----|----|----|-----|
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
-| `[autosize]` | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | `Boolean|Object` | `true` |
-| `[borderless]` | 是否隐藏边框 | `boolean` | `false` |
+| `[autosize]` | 自适应内容高度，可设置对象：`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[maxCharacterCount]` | `textarea` 数字提示显示的最大值 | `number` | - |
 | `[computeCharacterCount]` | 自定义计算 `characterCount` 的函数 | `(v: string) => number` | `v => v.length` |
 | `[change]` | 内容变更事件 | `(val: string) => void` | - |

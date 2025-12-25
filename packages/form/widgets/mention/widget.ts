@@ -1,3 +1,4 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { map, tap } from 'rxjs';
@@ -42,7 +43,9 @@ import type { SFMentionWidgetSchema } from './schema';
           (ngModelChange)="setValue($event)"
           [attr.maxLength]="schema.maxLength ?? null"
           [attr.placeholder]="ui.placeholder"
-          [nzAutosize]="i.autosize"
+          cdkTextareaAutosize
+          [cdkAutosizeMinRows]="i.autosize?.minRows ?? 1"
+          [cdkAutosizeMaxRows]="i.autosize?.maxRows ?? 0"
         >
         </textarea>
       } @else {
@@ -63,7 +66,7 @@ import type { SFMentionWidgetSchema } from './schema';
     </nz-mention>
   </sf-item-wrap>`,
   encapsulation: ViewEncapsulation.None,
-  imports: [FormsModule, DelonFormModule, NzInputModule, NzMentionModule]
+  imports: [FormsModule, DelonFormModule, NzInputModule, NzMentionModule, CdkTextareaAutosize]
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   static readonly KEY = 'mention';

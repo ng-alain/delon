@@ -22,7 +22,7 @@ describe('form: widget: string', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  it('should be render input group when include addon', () => {
+  it('should be render input wrapper when include addon', () => {
     page
       .newSchema({
         properties: {
@@ -34,7 +34,7 @@ describe('form: widget: string', () => {
           }
         }
       })
-      .checkCount('nz-input-group', 1);
+      .checkCount('nz-input-wrapper', 1);
   });
 
   it('should be default color #000000 when format is color and default is null', () => {

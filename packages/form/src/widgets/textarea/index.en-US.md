@@ -21,8 +21,8 @@ Textarea.
 |----------|-------------|------|---------|
 | `[size]` | Size of the `nz-input` | `string` | - |
 | `[placeholder]` | placeholder of the input | `string` | - |
-| `[autosize]` | height autosize feature, can be set to `boolean` or an object `{ minRows: 2, maxRows: 6 }` | `boolean丨{ minRows: number, maxRows: number }` | `true` |
-| `[borderless]` | Whether hide border | `boolean` | `false` |
+| `[autosize]` | height autosize feature, can be set object `{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[maxCharacterCount]` | `textarea` maximum character count displayed | `number` | - |
 | `[computeCharacterCount]` | customized `characterCount` computation function | `(v: string) => number` | `v => v.length` |
 | `[change]` | The content event for the Input. | `(val: string) => void` | - |

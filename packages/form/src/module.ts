@@ -17,6 +17,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 import { DelonLocaleModule } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
@@ -82,7 +83,7 @@ const WIDGETS = [
 // #endregion
 
 @NgModule({
-  imports: [CommonModule, FormsModule, DelonLocaleModule, ...ZORROS],
+  imports: [CommonModule, FormsModule, DelonLocaleModule, CdkTextareaAutosize, ...ZORROS],
   declarations: [...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS
 })

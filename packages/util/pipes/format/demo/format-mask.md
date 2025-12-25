@@ -16,12 +16,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     <p class="mb-md">
       &#123;&#123;<span> {{ value }} | mask: {{ maskStr | json }} </span>&#125;&#125; = {{ value | mask: maskStr }}
     </p>
-    <nz-input-group nzAddOnBefore="Value" class="mb-md">
+    <nz-input-wrapper nzAddonBefore="Value" class="mb-md">
       <input type="text" nz-input [(ngModel)]="value" />
-    </nz-input-group>
-    <nz-input-group nzAddOnBefore="Mask">
+    </nz-input-wrapper>
+    <nz-input-wrapper nzAddonBefore="Mask">
       <input type="text" nz-input [(ngModel)]="maskStr" />
-    </nz-input-group>
+    </nz-input-wrapper>
   `,
   imports: [JsonPipe, FormatMaskPipe, NzInputModule, FormsModule]
 })

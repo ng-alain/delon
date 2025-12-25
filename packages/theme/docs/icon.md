@@ -53,7 +53,6 @@ export class StartupService {
 <nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"/>
 <nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"/>
 <nz-icon nzType="filter" theme="outline"/>
-<nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
 ```
 
 ## 动态加载

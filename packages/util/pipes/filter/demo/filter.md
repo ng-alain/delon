@@ -19,9 +19,9 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
       {{ list | filter: matcher : number | json }}
     </p>
     <p class="mb-md">matcher = (item: PriceObject, number: number) => item.price > number;</p>
-    <nz-input-group nzAddOnBefore="number">
+    <nz-input-wrapper nzAddonBefore="number">
       <nz-input-number [(ngModel)]="number" />
-    </nz-input-group>
+    </nz-input-wrapper>
   `,
   imports: [JsonPipe, FilterPipe, NzInputModule, NzInputNumberModule, FormsModule]
 })

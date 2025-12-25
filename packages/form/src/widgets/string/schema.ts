@@ -1,5 +1,4 @@
-import { TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import type { NzSafeAny, NzVariant } from 'ng-zorro-antd/core/types';
 
@@ -29,51 +28,26 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
   /**
    * 前置标签，等同 `nzAddOnBefore`
    */
-  addOnBefore?: string | TemplateRef<void>;
+  addOnBefore?: string;
 
   /**
    * 后置标签，等同 `nzAddOnAfter`
    */
-  addOnAfter?: string | TemplateRef<void>;
+  addOnAfter?: string;
 
   /**
    * 带有前缀图标的 input，等同 `nzPrefix`
    */
-  prefix?: string | TemplateRef<void>;
+  prefix?: string;
 
   /**
    * 带有后缀图标的 input，等同 `nzSuffix`
    */
-  suffix?: string | TemplateRef<void>;
+  suffix?: string;
 
   /**
-   * 前置Icon，等同 `nzAddOnBeforeIcon`
-   *
-   * @deprecated `nz-input` 可能未来不再支持
+   * 变体
    */
-  addOnBeforeIcon?: string;
-
-  /**
-   * 后置Icon，等同 `nzAddOnAfterIcon`
-   *
-   * @deprecated `nz-input` 可能未来不再支持
-   */
-  addOnAfterIcon?: string;
-
-  /**
-   * 后缀图标，等同 `nzSuffixIcon`
-   *
-   * @deprecated `nz-input` 可能未来不再支持
-   */
-  suffixIcon?: string;
-
-  /**
-   * 前缀图标，等同 `nzPrefixIcon`
-   *
-   * @deprecated `nz-input` 可能未来不再支持
-   */
-  prefixIcon?: string;
-
   variant?: NzVariant;
 
   /**

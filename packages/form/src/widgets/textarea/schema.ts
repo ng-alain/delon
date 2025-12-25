@@ -1,5 +1,4 @@
 import type { NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
-import { AutoSizeType } from 'ng-zorro-antd/input';
 
 import { SFUISchemaItem } from '../../schema/ui';
 
@@ -12,10 +11,16 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
   placeholder?: string;
 
   /**
-   * 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`
+   * 自适应内容高度
    */
-  autosize?: string | boolean | AutoSizeType;
+  autosize?: {
+    minRows?: number;
+    maxRows?: number;
+  };
 
+  /**
+   * 变体
+   */
   variant?: NzVariant;
 
   /**

@@ -14,7 +14,8 @@ title:
 Get print server information (including: remote).
 
 ```ts
-import { Component } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Lodop, LodopService } from '@delon/abc/lodop';
@@ -44,7 +45,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
         <nz-form-item nz-row>
           <nz-form-label nz-col [nzSm]="6">打印服务器</nz-form-label>
           <nz-form-control nz-col [nzSm]="18">
-            <nz-input-group>
+            <nz-input-wrapper>
               <div nz-col [nzSpan]="16">
                 <input
                   nz-input
@@ -56,7 +57,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
               <div nz-col [nzSpan]="8">
                 <button nz-button (click)="reload(null)">重新加载打印机</button>
               </div>
-            </nz-input-group>
+            </nz-input-wrapper>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>
@@ -97,7 +98,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
         <nz-form-item nz-row>
           <nz-form-label nz-col [nzSm]="6">打印内容</nz-form-label>
           <nz-form-control nz-col [nzSm]="18" nzExtra="仅限HTML，更多类型支持请参考官网">
-            <textarea nz-input [(ngModel)]="cog.html" name="html" nzAutosize></textarea>
+            <textarea nz-input [(ngModel)]="cog.html" name="html" cdkTextareaAutosize></textarea>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>
@@ -109,13 +110,22 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
       </form>
     }
   `,
-  imports: [NzFormModule, NzAlertModule, NzGridModule, FormsModule, NzInputModule, NzButtonModule, NzSelectModule]
+  imports: [
+    NzFormModule,
+    NzAlertModule,
+    NzGridModule,
+    FormsModule,
+    NzInputModule,
+    NzButtonModule,
+    NzSelectModule,
+    CdkTextareaAutosize
+  ]
 })
 export class DemoComponent {
-  constructor(
-    private lodopSrv: LodopService,
-    private msg: NzMessageService
-  ) {
+  private lodopSrv = inject(LodopService);
+  private msg = inject(NzMessageService);
+
+  constructor() {
     this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
       if (!ok) {
         this.error = true;

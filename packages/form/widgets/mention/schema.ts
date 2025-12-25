@@ -2,7 +2,6 @@ import type { Observable } from 'rxjs';
 
 import type { SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
 import type { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import type { AutoSizeType } from 'ng-zorro-antd/input';
 import type { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
 
 export interface SFMentionWidgetSchema extends SFUISchemaItem {
@@ -54,7 +53,10 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
   inputStyle?: 'text' | 'textarea';
 
   /**
-   * 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`
+   * 自适应内容高度
    */
-  autosize?: boolean | AutoSizeType;
+  autosize?: {
+    minRows?: number;
+    maxRows?: number;
+  };
 }

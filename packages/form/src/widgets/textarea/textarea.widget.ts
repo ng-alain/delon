@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import type { AutoSizeType } from 'ng-zorro-antd/input';
-
 import { SFTextareaWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-textarea',
-  template: `<sf-item-wrap
+  template: ` <sf-item-wrap
     [id]="id"
     [schema]="schema"
     [ui]="ui"
@@ -15,6 +13,8 @@ import { ControlUIWidget } from '../../widget';
     [error]="error"
     [showTitle]="schema.title"
   >
+    @let minRows = autosize?.minRows ?? 1;
+    @let maxRows = autosize?.maxRows ?? 0;
     <ng-template #ipt>
       <textarea
         nz-input
@@ -26,7 +26,9 @@ import { ControlUIWidget } from '../../widget';
         (ngModelChange)="change($event)"
         [attr.maxLength]="schema.maxLength ?? null"
         [attr.placeholder]="ui.placeholder"
-        [nzAutosize]="autosize"
+        cdkTextareaAutosize
+        [cdkAutosizeMinRows]="minRows"
+        [cdkAutosizeMaxRows]="maxRows"
         [nzVariant]="ui.variant ?? 'outlined'"
         (focus)="focus($event)"
         (blur)="blur($event)"
@@ -49,7 +51,9 @@ import { ControlUIWidget } from '../../widget';
           (ngModelChange)="change($event)"
           [attr.maxLength]="schema.maxLength ?? null"
           [attr.placeholder]="ui.placeholder"
-          [nzAutosize]="autosize"
+          cdkTextareaAutosize
+          [cdkAutosizeMinRows]="minRows"
+          [cdkAutosizeMaxRows]="maxRows"
           [nzVariant]="ui.variant ?? 'outlined'"
           (focus)="focus($event)"
           (blur)="blur($event)"
@@ -65,7 +69,10 @@ import { ControlUIWidget } from '../../widget';
   standalone: false
 })
 export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> implements OnInit {
-  autosize: string | boolean | AutoSizeType = true;
+  autosize?: {
+    minRows?: number;
+    maxRows?: number;
+  };
 
   ngOnInit(): void {
     if (this.ui.autosize != null) {

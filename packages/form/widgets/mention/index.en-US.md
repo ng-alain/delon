@@ -49,4 +49,4 @@ Every select triggers a HTTP request, data source is from `asyncData`.
 | `[valueWith]` | Function that maps a suggestion value | `(value: any) => string` | - |
 | `[select]` | Callback when option in dropdown list is selected | `(value: any) => void` | - |
 | `[inputStyle]` | Input type | `text, textarea` | `text` |
-| `[autosize]` | Adaptive content height, set to `true|false` or object:`{ minRows: 2, maxRows: 6 }` | `boolean,AutoSizeType` | `true` |
+| `[autosize]` | Adaptive content height, can be set object:`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
