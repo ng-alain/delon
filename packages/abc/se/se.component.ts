@@ -24,7 +24,7 @@ import { filter } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
-import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -49,7 +49,6 @@ let nextUniqueId = 0;
     '[class.ant-form-item-with-help]': 'showErr'
   },
   providers: [NzFormStatusService],
-  animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
@@ -122,6 +121,9 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
   private get ngControl(): NgModel | FormControlName | null | undefined {
     return this.ngModel ?? this.formControlName;
   }
+
+  protected readonly nzValidateAnimationEnter = withAnimationCheck(() => 'ant-form-validate_animation-enter');
+  protected readonly nzValidateAnimationLeave = withAnimationCheck(() => 'ant-form-validate_animation-leave');
 
   constructor() {
     if (this.parentComp == null) {

@@ -2,7 +2,7 @@ import { DebugElement } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzDropDownDirective } from 'ng-zorro-antd/dropdown';
+import { NzDropdownDirective } from 'ng-zorro-antd/dropdown';
 
 import { dispatchFakeEvent } from './dispatch-events';
 
@@ -16,11 +16,11 @@ export function dispatchDropDown(
   trigger: 'mouseleave' | 'click',
   allowNull: boolean = true
 ): boolean {
-  const directive = dl.query(By.directive(NzDropDownDirective));
+  const directive = dl.query(By.directive(NzDropdownDirective));
   if (allowNull && directive == null) {
     return false;
   }
-  const el = directive.injector.get<NzDropDownDirective>(NzDropDownDirective).elementRef.nativeElement as HTMLElement;
+  const el = directive.injector.get(NzDropdownDirective).elementRef.nativeElement as HTMLElement;
   if (trigger === 'click') {
     dispatchFakeEvent(el, 'click');
   } else {

@@ -39,7 +39,7 @@ import { ControlUIWidget } from '../../widget';
       [nzMaxTagPlaceholder]="ui.maxTagPlaceholder!"
       [nzDropdownRender]="ui.dropdownRender!"
       [nzAutoClearSearchValue]="i.autoClearSearchValue"
-      [nzBorderless]="i.borderless"
+      [nzVariant]="ui.variant ?? 'outlined'"
       [nzAutoFocus]="i.autoFocus"
       [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth!"
       [nzServerSearch]="i.serverSearch"

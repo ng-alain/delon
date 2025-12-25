@@ -1,4 +1,4 @@
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
 import { AutoSizeType } from 'ng-zorro-antd/input';
 
 import { SFUISchemaItem } from '../../schema/ui';
@@ -16,10 +16,7 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
    */
   autosize?: string | boolean | AutoSizeType;
 
-  /**
-   * Whether hide border, Default: `false`
-   */
-  borderless?: boolean;
+  variant?: NzVariant;
 
   /**
    * `textarea` maximum character count displayed

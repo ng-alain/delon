@@ -27,7 +27,7 @@ import { ControlUIWidget } from '../../widget';
         [attr.maxLength]="schema.maxLength ?? null"
         [attr.placeholder]="ui.placeholder"
         [nzAutosize]="autosize"
-        [nzBorderless]="ui.borderless"
+        [nzVariant]="ui.variant ?? 'outlined'"
         (focus)="focus($event)"
         (blur)="blur($event)"
       >
@@ -50,7 +50,7 @@ import { ControlUIWidget } from '../../widget';
           [attr.maxLength]="schema.maxLength ?? null"
           [attr.placeholder]="ui.placeholder"
           [nzAutosize]="autosize"
-          [nzBorderless]="ui.borderless"
+          [nzVariant]="ui.variant ?? 'outlined'"
           (focus)="focus($event)"
           (blur)="blur($event)"
         >

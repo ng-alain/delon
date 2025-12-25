@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny, NzVariant } from 'ng-zorro-antd/core/types';
 
 import type { SFUISchemaItem } from '../../schema/ui';
 
@@ -74,10 +74,7 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
    */
   prefixIcon?: string;
 
-  /**
-   * Whether hide border, Default: `false`
-   */
-  borderless?: boolean;
+  variant?: NzVariant;
 
   /**
    * `change` event throttling and sequence control threshold
