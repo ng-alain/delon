@@ -1,7 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
 
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
@@ -24,7 +22,6 @@ import tsconfigJSON from './files/tsconfig.json';
 @Injectable({ providedIn: 'root' })
 export class CodeService {
   private appSrv = inject(AppService);
-  private http = inject(HttpClient);
   private document = inject(DOCUMENT);
 
   private get themePath(): string {
@@ -95,19 +92,6 @@ export class CodeService {
     return code;
   }
 
-  private yarnLock?: string;
-  private async getYarnLock(): Promise<string> {
-    if (this.yarnLock != null) return this.yarnLock;
-    try {
-      const res = await lastValueFrom(this.http.get('./assets/yarn.lock.txt', { responseType: 'text' }));
-      this.yarnLock = res;
-      return res;
-    } catch (ex) {
-      console.warn(`Unable to load yarn.lock file: ${ex}`);
-    }
-    return '';
-  }
-
   async openOnStackBlitz(title: string, appComponentCode: string, includeCli: boolean = false): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
@@ -138,7 +122,6 @@ export class CodeService {
         null,
         2
       );
-      files['yarn.lock'] = await this.getYarnLock();
       files['package.json'] = `${JSON.stringify(packageJson, null, 2)}`;
     }
     sdk.openProject(
@@ -217,10 +200,6 @@ export class CodeService {
       },
       '_mock/index.ts': {
         content: mockObj['_mock/index.ts'],
-        isBinary: false
-      },
-      'yarn.lock': {
-        content: await this.getYarnLock(),
         isBinary: false
       }
     };
