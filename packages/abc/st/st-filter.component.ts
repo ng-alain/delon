@@ -159,7 +159,7 @@ import type { _STColumn } from './st.types';
 export class STFilterComponent {
   private readonly cdr = inject(ChangeDetectorRef);
 
-  visible = false;
+  visible?: boolean = false;
   @Input() col!: _STColumn;
   @Input() locale: LocaleData = {};
   @Input() f!: STColumnFilter;
