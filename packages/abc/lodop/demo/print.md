@@ -44,7 +44,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
         <nz-form-item nz-row>
           <nz-form-label nz-col [nzSm]="6">打印服务器</nz-form-label>
           <nz-form-control nz-col [nzSm]="18">
-            <nz-input-group>
+            <nz-input-wrapper>
               <div nz-col [nzSpan]="16">
                 <input
                   nz-input
@@ -56,7 +56,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
               <div nz-col [nzSpan]="8">
                 <button nz-button (click)="reload(null)">重新加载打印机</button>
               </div>
-            </nz-input-group>
+            </nz-input-wrapper>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>

@@ -15,9 +15,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     <p class="mb-md">
       &#123;&#123;<span> {{ value }} | cny </span>&#125;&#125; = {{ value | cny }}
     </p>
-    <nz-input-group nzAddOnBefore="Value">
+    <nz-input-wrapper nzAddonBefore="Value">
       <input type="text" nz-input [(ngModel)]="value" />
-    </nz-input-group>
+    </nz-input-wrapper>
   `,
   imports: [NzInputModule, FormsModule, CurrencyCNYPipe]
 })

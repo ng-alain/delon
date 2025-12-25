@@ -22,7 +22,7 @@ type: Widgets
 成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源  | `() => Observable<SFSchemaEnumType[]>` | -
-(deprecated) `[span]` | 指定每个选框单元格数量，参考[布局](https://ng.ant.design/components/checkbox/zh#components-checkbox-demo-layout) | `number` | -
+`[span]` | 指定每个选框单元格数量 | `number` | -
 `[styleType]` | radio的样式  | `default, button` | `default`
 `[checkAll]` | 是否需要全选  | `boolean` | -
 `[checkAllText]` | 全选按钮文本  | `string` | `全选`

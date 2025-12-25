@@ -47,7 +47,6 @@ import type { SFUploadWidgetSchema } from './schema';
       [nzPreview]="handlePreview"
       [nzPreviewFile]="ui.previewFile"
       [nzDownload]="ui.download"
-      [nzTransformFile]="ui.transformFile"
       (nzChange)="change($event)"
       [nzShowButton]="fileList.length < i.limitFileCount"
     >

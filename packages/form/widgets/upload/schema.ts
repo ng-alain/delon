@@ -5,7 +5,6 @@ import type {
   NzShowUploadList,
   NzUploadChangeParam,
   NzUploadFile,
-  NzUploadTransformFileType,
   NzUploadXHRArgs,
   UploadFilter
 } from 'ng-zorro-antd/upload';
@@ -155,11 +154,6 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
    * 点击下载文件时的回调，如果没有指定，则默认跳转到文件 url 对应的标签页
    */
   download?: (file: NzUploadFile) => void;
-
-  /**
-   * 在上传之前转换文件。支持返回一个 Observable 对象
-   */
-  transformFile?: (file: NzUploadFile) => NzUploadTransformFileType;
 
   /**
    * 上传文件改变时的状态

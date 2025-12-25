@@ -59,15 +59,13 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
       </se>
       <nz-divider />
       <se label="Phone Number" required>
-        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-          <ng-template #addOnBeforeTemplate>
-            <nz-select [(ngModel)]="i.phoneNumberPrefix" name="phoneNumberPrefix" style="width: 70px;">
-              <nz-option nzLabel="+86" nzValue="+86" />
-              <nz-option nzLabel="+87" nzValue="+87" />
-            </nz-select>
-          </ng-template>
+        <nz-input-wrapper>
+          <nz-select nzInputAddonBefore [(ngModel)]="i.phoneNumberPrefix" name="phoneNumberPrefix" style="width: 70px;">
+            <nz-option nzLabel="+86" nzValue="+86" />
+            <nz-option nzLabel="+87" nzValue="+87" />
+          </nz-select>
           <input type="text" nz-input [(ngModel)]="i.phoneNumber" name="phoneNumber" required maxlength="32" />
-        </nz-input-group>
+        </nz-input-wrapper>
       </se>
       <se>
         <label nz-checkbox [(ngModel)]="i.agree" name="agree">
