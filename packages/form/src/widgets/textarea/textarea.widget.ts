@@ -29,7 +29,7 @@ import { ControlUIWidget } from '../../widget';
         cdkTextareaAutosize
         [cdkAutosizeMinRows]="minRows"
         [cdkAutosizeMaxRows]="maxRows"
-        [nzBorderless]="ui.borderless"
+        [nzVariant]="ui.variant ?? 'outlined'"
         (focus)="focus($event)"
         (blur)="blur($event)"
       >
@@ -54,7 +54,7 @@ import { ControlUIWidget } from '../../widget';
           cdkTextareaAutosize
           [cdkAutosizeMinRows]="minRows"
           [cdkAutosizeMaxRows]="maxRows"
-          [nzBorderless]="ui.borderless"
+          [nzVariant]="ui.variant ?? 'outlined'"
           (focus)="focus($event)"
           (blur)="blur($event)"
         >

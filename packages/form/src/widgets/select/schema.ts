@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny, NzVariant } from 'ng-zorro-antd/core/types';
 import { NzOptionComponent, NzSelectModeType } from 'ng-zorro-antd/select';
 
 import { SFValue } from '../../interface';
@@ -37,9 +37,9 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   allowClear?: boolean;
 
   /**
-   * 是否无边框，默认：`false`
+   * 变体，默认：`outlined`
    */
-  borderless?: boolean;
+  variant?: NzVariant;
 
   /**
    * 默认获取焦点，默认：`false`
