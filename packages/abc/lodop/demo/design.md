@@ -14,7 +14,8 @@ title:
 Use print design for font, font size, object layout, etc., and use `attachCode` method to automatically append the generated code to the Lodop instance(support dynamic parameters). Call the `print` method to print the data, and make the next print by listening `events`, that achieve unlimited batch printing.
 
 ```ts
-import { Component } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Lodop, LodopService } from '@delon/abc/lodop';
@@ -52,7 +53,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
         <nz-form-item nz-row>
           <nz-form-label nz-col [nzSm]="6">打印内容</nz-form-label>
           <nz-form-control nz-col [nzSm]="18">
-            <textarea [(ngModel)]="code" name="code" nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+            <textarea
+              [(ngModel)]="code"
+              name="code"
+              nz-input
+              cdkTextareaAutosize
+              [cdkAutosizeMinRows]="2"
+              [cdkAutosizeMaxRows]="6"
+            ></textarea>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>
@@ -66,9 +74,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       </form>
     }
   `,
-  imports: [NzFormModule, NzAlertModule, NzGridModule, FormsModule, NzInputModule, NzButtonModule]
+  imports: [NzFormModule, NzAlertModule, NzGridModule, FormsModule, NzInputModule, NzButtonModule, CdkTextareaAutosize]
 })
 export class DemoComponent {
+  private lodopSrv = inject(LodopService);
+  private msg = inject(NzMessageService);
+
   doing = false;
   error = false;
   lodop: Lodop | null = null;
@@ -83,10 +94,8 @@ LODOP.SET_PRINT_STYLEA(0,"FontColor","#800000");
 LODOP.SET_PRINT_STYLEA(0,"Alignment",2);
 LODOP.ADD_PRINT_TEXT(259,579,100,23,"{{费用}}");
 LODOP.ADD_PRINT_TEXT(260,520,58,24,"合计：");`;
-  constructor(
-    private lodopSrv: LodopService,
-    private msg: NzMessageService
-  ) {
+
+  constructor() {
     this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
       if (!ok) {
         this.error = true;

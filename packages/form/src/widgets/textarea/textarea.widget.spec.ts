@@ -36,7 +36,7 @@ describe('form: widget: textarea', () => {
           type: 'string',
           ui: {
             widget,
-            autosize: true,
+            autosize: {},
             change: jasmine.createSpy('change'),
             focus: jasmine.createSpy('focus'),
             blur: jasmine.createSpy('blur')
