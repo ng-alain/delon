@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -150,33 +150,39 @@ describe('acl: guard', () => {
   });
 
   describe('#router', () => {
-    it('canMatch', async () => {
+    it('canMatch', fakeAsync(async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canMatch';
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe(targetUrl);
-    });
-    it('canActivate', async () => {
+    }));
+    it('canActivate', fakeAsync(async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canActivate';
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe(targetUrl);
-    });
-    it('canActivateChild', async () => {
+    }));
+    it('canActivateChild', fakeAsync(async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canActivateChild/1';
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
+      tick();
       expect(router.url).toBe(targetUrl);
-    });
+    }));
   });
 });
 
