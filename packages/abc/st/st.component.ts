@@ -574,7 +574,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       this.clearStatus();
     }
     this._data = [];
-    this.checkboxList = [];
+    this.checkList = [];
     return this.cd();
   }
 
@@ -862,11 +862,11 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   // #region checkbox
 
-  checkboxList: STData[] = [];
+  checkList: STData[] = [];
 
   /** 清除所有 `checkbox` */
   clearCheck(): this {
-    this.checkboxList = [];
+    this.checkList = [];
     return this.checkAll(false);
   }
 
@@ -896,18 +896,18 @@ export class STComponent implements AfterViewInit, OnChanges {
     const idMap = this.page.checkboxIdMap;
     if (idMap != null) {
       const rowIds = this.list.map(w => w[idMap]);
-      this.checkboxList = this.checkboxList.filter(w => rowIds.indexOf(w[idMap]) === -1).concat(res);
+      this.checkList = this.checkList.filter(w => rowIds.indexOf(w[idMap]) === -1).concat(res);
     } else {
-      this.checkboxList = res;
+      this.checkList = res;
     }
-    this.changeEmit('checkbox', this.checkboxList);
+    this.changeEmit('checkbox', this.checkList);
     return this;
   }
 
   _restoreCheck(): void {
     const idMap = this.page.checkboxIdMap;
     if (idMap == null) return;
-    this.list.forEach(u => (u.checked = this.checkboxList.some(w => w[idMap] === u[idMap])));
+    this.list.forEach(u => (u.checked = this.checkList.some(w => w[idMap] === u[idMap])));
   }
 
   // #endregion

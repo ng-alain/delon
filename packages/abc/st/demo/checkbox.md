@@ -22,7 +22,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 @Component({
   selector: 'app-demo',
   template: ` <div class="mb-md">
-      Check Count:{{ st.checkboxList.length }}
+      Check Count:{{ st.checkList.length }}
       <button nz-button (click)="st.checkAll(true)">All</button>
       <button nz-button (click)="st.clearCheck()">Clean</button>
     </div>
