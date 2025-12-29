@@ -43,7 +43,11 @@
       </div>
     </div>
     @if (!ui.onlyVisual && showError) {
-      <div @helpMotion class="ant-form-item-explain ant-form-item-explain-connected">
+      <div
+        [animate.enter]="nzValidateAnimationEnter()"
+        [animate.leave]="nzValidateAnimationLeave()"
+        class="ant-form-item-explain ant-form-item-explain-connected"
+      >
         <div role="alert" class="ant-form-item-explain-error">
           {{ error }}
         </div>

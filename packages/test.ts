@@ -1,6 +1,13 @@
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { getTestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
 
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
-  teardown: { destroyAfterEach: false }
+
+@NgModule({
+  providers: [provideZoneChangeDetection()],
+})
+class AppTestingModule {}
+
+getTestBed().initTestEnvironment([BrowserTestingModule,AppTestingModule], platformBrowserTesting(), {
+  teardown: { destroyAfterEach: false },
 });

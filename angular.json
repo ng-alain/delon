@@ -145,6 +145,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
+            "inlineStyleLanguage": "less",
             "main": "packages/test.ts",
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": [

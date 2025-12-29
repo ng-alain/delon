@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "../out-tsc/spec",
-    "types": ["jasmine", "node"],
+    "types": ["jasmine"],
     "paths": {
       "@delon/*": ["./*"]
     },
@@ -12,5 +12,8 @@
     "noImplicitThis": false
   },
   "files": ["test.ts"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": [
+    "**/*.spec.ts",
+    "**/*.d.ts"
+  ]
 }

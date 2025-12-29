@@ -749,7 +749,7 @@ describe('form: component', () => {
         aProp?.setErrors([{ message: 'BB' }]);
         page.checkError(`BB`);
         aProp?.setErrors();
-        page.checkError(``);
+        page.checkCount(`.ant-form-item-explain`, 0);
       });
     });
   });
