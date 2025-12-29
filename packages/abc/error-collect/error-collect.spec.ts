@@ -4,7 +4,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputDirective } from 'ng-zorro-antd/input';
@@ -17,9 +16,7 @@ describe('abc: error-collect', () => {
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideNzNoAnimation()]
-    });
+    TestBed.configureTestingModule({});
   });
 
   function getPropertiesAndCreate(): void {

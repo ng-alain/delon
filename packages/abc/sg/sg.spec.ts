@@ -4,7 +4,6 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 
 import { SGContainerComponent } from './sg-container.component';
 import { SGComponent } from './sg.component';
@@ -18,9 +17,7 @@ describe('abc: sg', () => {
   let page: PageObject;
 
   const moduleAction = (): void => {
-    TestBed.configureTestingModule({
-      providers: [provideNzNoAnimation()]
-    });
+    TestBed.configureTestingModule({});
   };
 
   function genModule(template?: string): void {

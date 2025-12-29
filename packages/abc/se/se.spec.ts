@@ -13,7 +13,6 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 
@@ -32,9 +31,7 @@ describe('abc: edit', () => {
   let page: PageObject;
 
   const moduleAction = (): void => {
-    TestBed.configureTestingModule({
-      providers: [provideNzNoAnimation()]
-    });
+    TestBed.configureTestingModule({});
   };
 
   function genModule(template?: string): void {
@@ -365,9 +362,7 @@ describe('abc: edit', () => {
       page.expect('.ant-form-item-required', 1);
     });
     it('should be reactive form', () => {
-      TestBed.configureTestingModule({
-        providers: [provideNzNoAnimation()]
-      });
+      TestBed.configureTestingModule({});
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
       fixture2.detectChanges();
@@ -397,7 +392,6 @@ describe('abc: edit', () => {
       });
       it('in reactive form', () => {
         TestBed.configureTestingModule({
-          providers: [provideNzNoAnimation()],
           imports: [SEModule, FormsModule, ReactiveFormsModule]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);

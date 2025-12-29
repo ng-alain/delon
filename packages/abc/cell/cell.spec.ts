@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -26,7 +25,7 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNzNoAnimation()],
+      providers: [provideNzIconsTesting()],
       imports: [CellModule, BrowserModule]
     });
   };
@@ -289,7 +288,7 @@ describe('abc: cell', () => {
   describe('[widget]', () => {
     it('via provideCellWidgets', () => {
       TestBed.configureTestingModule({
-        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget }), provideNzNoAnimation()]
+        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget })]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       page = new PageObject();
