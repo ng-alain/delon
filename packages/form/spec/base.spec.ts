@@ -3,6 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
@@ -49,7 +50,8 @@ export function builder(options?: {
 } {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [provideNzNoAnimation(), AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
+    providers: [provideNoopAnimations(), provideNzNoAnimation()],
+    imports: [AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
     declarations: [TestFormComponent]
   });
   if (options.template) {
@@ -82,9 +84,11 @@ export function configureSFTestSuite(options?: {
 }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [provideNzNoAnimation(), AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
+      imports: [AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
       declarations: [TestFormComponent],
       providers: [
+        provideNoopAnimations(),
+        provideNzNoAnimation(),
         provideHttpClient(),
         provideHttpClientTesting(),
         provideSFConfig({ widgets: options?.widgets }),

@@ -1,5 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NZ_MODAL_DATA, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
@@ -12,7 +13,7 @@ describe('theme: ModalHelper', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzNoAnimation(), NzModalService]
+      providers: [provideNoopAnimations(), provideNzNoAnimation(), NzModalService]
     });
     fixture = TestBed.createComponent(TestComponent);
     modal = TestBed.inject<ModalHelper>(ModalHelper);

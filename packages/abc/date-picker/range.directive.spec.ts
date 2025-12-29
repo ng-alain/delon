@@ -4,12 +4,12 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { differenceInDays } from 'date-fns';
 
 import { createTestContext } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
 import { RangePickerDirective } from './range.directive';
@@ -31,7 +31,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideNzNoAnimation()]
+        providers: [provideNoopAnimations()]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();

@@ -2,13 +2,13 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { ACLService, DelonACLModule } from '@delon/acl';
 import { createTestContext } from '@delon/testing';
 import { AlainI18NService, AlainThemeModule, ALAIN_I18N_TOKEN, DelonLocaleService, en_US } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
-import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
@@ -27,12 +27,13 @@ describe('form: component', () => {
 
   function genModule(options: { acl?: boolean; i18n?: boolean } = {}): void {
     options = { acl: false, i18n: false, ...options };
-    const imports: NzSafeAny[] = [provideNzNoAnimation(), DelonFormModule.forRoot(), AlainThemeModule];
+    const imports: NzSafeAny[] = [DelonFormModule.forRoot(), AlainThemeModule];
     if (options.acl) {
       imports.push(DelonACLModule);
     }
     TestBed.configureTestingModule({
       imports,
+      providers: [provideNoopAnimations()],
       declarations: [TestFormComponent, TestModeComponent]
     });
   }
