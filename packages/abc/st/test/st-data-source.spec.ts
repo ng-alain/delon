@@ -915,8 +915,9 @@ describe('abc: table: data-souce', () => {
           title: 'btn',
           iif: () => true,
           buttons: [
-            { text: 'btn1', iif: () => true, children: [] },
-            { text: 'btn2', iif: () => true, children: [{ text: 'btn2-1', iif: () => true, children: [] }] }
+            { text: 'btn1', iif: () => true, children: [{ text: 'btn1-1' }] },
+            { text: 'btn2', iif: () => true, children: [{ text: 'btn2-1', iif: () => true, children: [] }] },
+            { text: 'btn3', children: [] } // When children is empty, btn3 will be ignored
           ]
         }
       ] as _STColumn[];

@@ -79,7 +79,7 @@
     }
   }
   @for (btn of col.buttons; track $index) {
-    @if (btn.children!.length > 0) {
+    @if (btn.children && btn.children.length > 0) {
       <a nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
         <span [innerHTML]="btn._text"></span>
         <nz-icon nzType="down" />
