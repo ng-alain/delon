@@ -548,7 +548,10 @@ export class ReuseTabService implements OnDestroy {
 
     const path = ((future.routeConfig && future.routeConfig.path) ?? '') as string;
     if (path.length > 0 && ~path.indexOf(':')) {
-      if (this.routeParamMatchMode === 'strict') {
+      const mode = this.routeParamMatchMode;
+      if (typeof mode === 'function') {
+        ret = mode(future, curr);
+      } else if (mode === 'strict') {
         ret = this.getUrl(future) === this.getUrl(curr);
       } else {
         ret = path === ((curr.routeConfig && curr.routeConfig.path) ?? '');
