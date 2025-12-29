@@ -188,9 +188,9 @@ export interface STPage {
    */
   toTopOffset?: number;
   /**
-   * 缓存 checkbox 列表的标识列，数值表示列索引，默认：`0`
+   * 缓存 checkbox 列表的标识列
    */
-  checkbox_id_map?: string | number;
+  checkbox_id_map?: string;
 }
 
 /**

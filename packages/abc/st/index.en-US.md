@@ -175,6 +175,7 @@ class TestComponent {
 | `[toTopOffset]` | To top offset value | `number` | `100` | ✅ |
 | `[itemRender]` | To customize Pagination item, same as Pagination | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
 | `[simple]` | Whether to use simple mode | `boolean` | - | ✅ |
+| `[checkbox_id_map]` | The identifier column of the cached checkbox list | `string` | - | - |
 
 ### STError
 
