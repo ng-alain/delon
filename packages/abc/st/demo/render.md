@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { STColumn, STData, STModule } from '@delon/abc/st';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -69,7 +69,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzButtonModule,
     NzCheckboxModule,
     FormsModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzIconModule,
     NzInputModule,
     NzTooltipModule

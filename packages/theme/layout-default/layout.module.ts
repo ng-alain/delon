@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
@@ -25,7 +25,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NzTooltipModule, NzIconModule, NzAvatarModule, NzDropDownModule, NzBadgeModule],
+  imports: [CommonModule, RouterModule, NzTooltipModule, NzIconModule, NzAvatarModule, NzDropdownModule, NzBadgeModule],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })

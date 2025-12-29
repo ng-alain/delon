@@ -37,7 +37,7 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzContextMenuService, NzDropdownMenuComponent, NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -101,7 +101,7 @@ import type { _STColumn, _STDataValue, _STHeader, _STTdNotify, _STTdNotifyType }
     NzBadgeComponent,
     CellComponent,
     STWidgetHostDirective,
-    NzDropDownModule,
+    NzDropdownModule,
     NzMenuModule,
     NzDividerComponent
   ]
@@ -241,7 +241,7 @@ export class STTdComponent {
     NzCheckboxComponent,
     NzResizableModule,
     NgTemplateOutlet,
-    NzDropDownModule,
+    NzDropdownModule,
     NzIconDirective,
     NzMenuModule,
     STFilterComponent,

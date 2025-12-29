@@ -6,7 +6,7 @@ import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnComponent } from '@delon/theme/theme-btn';
 import { environment } from '@env/environment';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 
@@ -92,7 +92,7 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
     ThemeBtnComponent,
     NzIconModule,
     NzMenuModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzAvatarModule,
     HeaderSearchComponent,
     HeaderClearStorageComponent,
