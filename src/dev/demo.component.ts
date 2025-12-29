@@ -1,41 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { CookieOptions, CookieService } from '@delon/util/browser';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { STChange, STColumn, STComponent, STData, STModule } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <p classs="mb-md">Result: {{ value || 'NULL' }}</p>
-    <button nz-button (click)="get()">Get</button>
-    <button nz-button (click)="set()">Set</button>
-    <button nz-button (click)="set({ expires: 10 })">Set 10s expired</button>
-    <button nz-button (click)="remove()">Remove</button>
-  `,
-  imports: [NzButtonModule]
+  template: ` <st #st [data]="users" [columns]="columns" (change)="change($event)" /> `,
+  imports: [STModule]
 })
 export class DemoComponent {
-  private readonly cookieSrv = inject(CookieService);
-  private readonly msg = inject(NzMessageService);
+  @ViewChild('st') readonly st!: STComponent;
 
-  key = 'test-key';
-  value?: string;
+  users: STData[] = Array(10)
+    .fill({})
+    .map((_, idx) => ({
+      id: idx + 1,
+      name: `name ${idx + 1}`,
+      age: Math.ceil(Math.random() * 10) + 20
+    }));
+  columns: STColumn[] = [
+    { title: '序号', type: 'no' },
+    { title: '编号', index: 'id' },
+    { title: '姓名', index: 'name' },
+    { title: '年龄', index: 'age' },
+    {
+      title: '操作区',
+      buttons: [{ text: '更多1' }, { text: '更多', children: [] }]
+    }
+  ];
 
-  constructor() {
-    this.get();
-  }
-
-  get(): void {
-    this.value = this.cookieSrv.get(this.key)!;
-  }
-
-  set(options?: CookieOptions): void {
-    this.cookieSrv.put(this.key, (+new Date()).toString(), options);
-    this.msg.success(`Success`);
-  }
-
-  remove(): void {
-    this.cookieSrv.remove(this.key);
+  change(e: STChange): void {
+    console.log(e);
   }
 }

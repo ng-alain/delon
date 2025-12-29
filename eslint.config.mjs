@@ -203,6 +203,8 @@ export default tseslint.config(
       // todo(a11y)
       // ...angular.configs.templateAccessibility,
     ],
-    rules: {}
+    rules: {
+      "@angular-eslint/template/eqeqeq": "off"
+    }
   }
 );

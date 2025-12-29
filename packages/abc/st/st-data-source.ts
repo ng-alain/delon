@@ -353,7 +353,7 @@ export class STDataSource {
         const props = this.getCell(c, result[i], i);
 
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons, result[i], c), _text: '', props };
+          return { buttons: this.genButtons(c.buttons as _STColumnButton[], result[i], c), _text: '', props };
         }
 
         let cell: CellOptions | undefined;
@@ -380,8 +380,12 @@ export class STDataSource {
         const isRenderDisabled = btn.iifBehavior === 'disabled';
         btn._result = result;
         btn._disabled = !result && isRenderDisabled;
-        if (btn.children?.length) {
-          btn.children = fn(btn.children!);
+        if (Array.isArray(btn.children)) {
+          if (btn.children.length > 0) {
+            btn.children = fn(btn.children);
+          } else {
+            return false;
+          }
         }
         return result || isRenderDisabled;
       });

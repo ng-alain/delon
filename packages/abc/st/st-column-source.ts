@@ -121,7 +121,7 @@ export class STColumnSource {
         } as STIcon;
       }
 
-      item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
+      item.children = Array.isArray(item.children) ? this.btnCoerce(item.children) : null;
 
       // i18n
       if (item.i18n && this.i18nSrv) {
@@ -139,8 +139,6 @@ export class STColumnSource {
       item.iifBehavior = item.iifBehavior ?? this.cog.iifBehavior;
       if (item.children && item.children.length > 0) {
         this.btnCoerceIf(item.children);
-      } else {
-        item.children = [];
       }
     }
   }
