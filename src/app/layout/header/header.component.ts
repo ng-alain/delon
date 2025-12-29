@@ -10,7 +10,7 @@ import { GithubButtonComponent } from 'ng-github-button';
 import { ALAIN_I18N_TOKEN, RTLService, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -52,7 +52,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
     NzIconModule,
     NzPopoverModule,
     NzTooltipModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzMenuModule,
     NzGridModule
   ]

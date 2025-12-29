@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import type { LocaleData } from '@delon/theme';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
@@ -144,7 +144,7 @@ import type { _STColumn } from './st.types';
   encapsulation: ViewEncapsulation.None,
   imports: [
     FormsModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzIconDirective,
     NzInputDirective,
     NzInputNumberComponent,

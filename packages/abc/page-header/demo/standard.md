@@ -15,7 +15,7 @@ import { PageHeaderComponent } from '@delon/abc/page-header';
 import { SVModule } from '@delon/abc/sv';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -94,7 +94,7 @@ import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
     NzBreadCrumbModule,
     NzButtonModule,
     NzSpaceCompactComponent,
-    NzDropDownModule,
+    NzDropdownModule,
     NzTabsModule,
     NzGridModule,
     NzIconModule,

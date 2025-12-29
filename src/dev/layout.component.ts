@@ -29,7 +29,7 @@ import { LayoutDefaultModule, LayoutDefaultOptions } from '@delon/theme/layout-d
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { deepCopy } from '@delon/util/other';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -106,7 +106,7 @@ const ICONS = [
     UpperCasePipe,
     LayoutDefaultModule,
     NzIconModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzAvatarModule,
     NzMenuModule,
     ReuseTabComponent,
