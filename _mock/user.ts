@@ -10,9 +10,12 @@ export const USERS = {
       list: [],
       total
     };
-    for (let i = 0; i < +req.queryString.ps; i++) {
+    const ps = +req.queryString.ps || 3;
+    const pi = +req.queryString.pi || 1;
+    const ignoreDisabled = req.queryString.ignoreDisabled === '1';
+    for (let i = 0; i < ps; i++) {
       res.list.push({
-        id: i + 1,
+        id: ps * (pi - 1) + i + 1,
         type: r(1, 3),
         picture: {
           thumbnail: `https://randomuser.me/api/portraits/thumb/${r(0, 1) === 0 ? 'men' : 'women'}/${r(1, 50)}.jpg`
@@ -28,7 +31,7 @@ export const USERS = {
         price: r(10, 10000000),
         total: r(10, 10000000),
         website: `https://${r(10, 10000000)}.com/`,
-        disabled: r(1, 100) > 50,
+        disabled: ignoreDisabled ? false : r(1, 100) > 50,
         registered: new Date()
       });
     }

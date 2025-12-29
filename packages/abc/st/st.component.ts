@@ -555,12 +555,13 @@ export class STComponent implements AfterViewInit, OnChanges {
         }
         this._data = result.list ?? [];
         this._statistical = result.statistical as STStatisticalResults;
+        this._restoreCheck();
+        this._refCheck();
         // Should be re-render in next tike when using virtual scroll
         // https://github.com/ng-alain/ng-alain/issues/1836
         if (this.cdkVirtualScrollViewport != null) {
           Promise.resolve().then(() => this.cdkVirtualScrollViewport?.checkViewportSize());
         }
-        this._refCheck();
         this.changeEmit('loaded', result.list);
         return this;
       })
@@ -573,6 +574,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       this.clearStatus();
     }
     this._data = [];
+    this.checklist = [];
     return this.cd();
   }
 
@@ -845,7 +847,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
-    this.loadPageData().subscribe(() => this.changeEmit('filter', col));
+    this.loadPageData().subscribe(() => this.changeEmit('filter', confirm ? col : null));
   }
 
   handleFilterNotify(value?: unknown): void {
@@ -860,8 +862,11 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   // #region checkbox
 
+  checklist: STData[] = [];
+
   /** 清除所有 `checkbox` */
   clearCheck(): this {
+    this.checklist = [];
     return this.checkAll(false);
   }
 
@@ -888,8 +893,21 @@ export class STComponent implements AfterViewInit, OnChanges {
 
   _checkNotify(): this {
     const res = this._data.filter(w => !w.disabled && w.checked === true);
-    this.changeEmit('checkbox', res);
+    const idMap = this.page.checkbox_id_map;
+    if (idMap != null) {
+      const rowIds = this.list.map(w => w[idMap]);
+      this.checklist = this.checklist.filter(w => rowIds.indexOf(w[idMap]) === -1).concat(res);
+    } else {
+      this.checklist = res;
+    }
+    this.changeEmit('checkbox', this.checklist);
     return this;
+  }
+
+  _restoreCheck(): void {
+    const idMap = this.page.checkbox_id_map;
+    if (idMap == null) return;
+    this.list.forEach(u => (u.checked = this.checklist.some(w => w[idMap] === u[idMap])));
   }
 
   // #endregion
