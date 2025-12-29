@@ -92,7 +92,6 @@
     "@angular/build": "^21.0.0",
     "@angular/cli": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
-    "@angular/platform-browser-dynamic": "^21.0.6",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-angular": "^20.2.0",
     "@types/aos": "^3.0.7",
@@ -125,7 +124,6 @@
     "jasmine": "^5.10.0",
     "jasmine-core": "~5.9.0",
     "jasmine-spec-reporter": "^7.0.0",
-    "jsdom": "^27.1.0",
     "jsonml.js": "^0.1.0",
     "jszip": "^3.10.1",
     "karma": "~6.4.0",
@@ -168,7 +166,6 @@
     "tsx": "^4.21.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.47.0",
-    "vitest": "^4.0.8",
     "xlsx": "^0.18.5"
   },
   "lint-staged": {
