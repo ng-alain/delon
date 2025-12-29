@@ -276,6 +276,11 @@ describe('abc: reuse-tab', () => {
             page.to('#b').to('#b2').to('#b3').expectCount(2);
           }));
         });
+        it('with custom function', fakeAsync(() => {
+          layoutComp.routeParamMatchMode = (future, curr) => future.routeConfig?.path === curr.routeConfig?.path;
+          fixture.detectChanges();
+          page.to('#b').to('#b2').to('#b3').expectCount(2);
+        }));
       });
       it('#disabled', () => {
         layoutComp.disabled = true;
