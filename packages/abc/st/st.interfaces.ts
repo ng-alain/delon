@@ -1131,7 +1131,6 @@ export type STChangeType =
   | 'sort'
   | 'filter'
   | 'filterChange'
-  | 'filterReset'
   | 'click'
   | 'dblClick'
   | 'expand'

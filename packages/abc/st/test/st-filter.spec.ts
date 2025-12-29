@@ -102,7 +102,7 @@ describe('abc: st-filter', () => {
       filterComp.reset();
       const res = filter.menus!.filter(w => w.checked);
       expect(res.length).toBe(0);
-      expect(page.changeSpy.calls.mostRecent().args[0].type).toBe('filterReset');
+      expect(page.changeSpy.calls.mostRecent().args[0].filter).toBe(undefined);
     });
   });
   describe('when type is keyword', () => {
