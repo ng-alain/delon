@@ -6745,7 +6745,7 @@ __metadata:
     ng-alain-sts: "npm:^0.0.2"
     ng-github-button: "npm:^21.0.1"
     ng-packagr: "npm:^21.0.1"
-    ng-zorro-antd: "npm:^21.0.0-next.2"
+    ng-zorro-antd: "npm:^21.0.0-beta.0"
     ngx-countdown: "npm:^21.0.0"
     ngx-highlight-js: "npm:^21.0.0"
     ngx-tinymce: "npm:^21.0.0"
@@ -12126,7 +12126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-zorro-antd@npm:^21.0.0-next.2":
+"ng-zorro-antd@npm:^21.0.0-beta.0":
   version: 21.0.0-next.2
   resolution: "ng-zorro-antd@npm:21.0.0-next.2"
   dependencies:
