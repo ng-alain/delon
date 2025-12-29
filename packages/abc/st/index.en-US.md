@@ -195,7 +195,7 @@ class TestComponent {
 | `[checkbox]` | Parameters of type `checkbox` | `STData[]` | - |
 | `[radio]` | Parameters of type `radio` | `STData` | - |
 | `[sort]` | Parameters of type `sort` | `STChangeSort` | - |
-| `[filter]` | Parameters of type `filter` | `STColumn` | - |
+| `[filter]`, `[filterChange]`, `[filterReset]` | Parameters of type `filter` | `STColumn` | - |
 | `[click]` | Parameters of type `click` | `STChangeRowClick` | - |
 | `[dblClick]` | Parameters of type `dblClick` | `STChangeRowClick` | - |
 | `[expand]` | Parameters of type `expand` | `STData` | - |

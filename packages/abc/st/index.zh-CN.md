@@ -195,7 +195,7 @@ class TestComponent {
 | `[checkbox]` | `checkbox` 参数 | `STData[]` | - |
 | `[radio]` | `radio` 参数 | `STData` | - |
 | `[sort]` | 排序参数 | `STChangeSort` | - |
-| `[filter]` | 过滤参数 | `STColumn` | - |
+| `[filter]`, `[filterChange]`, `[filterReset]` | 过滤参数 | `STColumn` | - |
 | `[click]` | 行点击参数 | `STChangeRowClick` | - |
 | `[dblClick]` | 行双击参数 | `STChangeRowClick` | - |
 | `[expand]` | `expand` 参数 | `STData` | - |

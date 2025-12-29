@@ -474,7 +474,7 @@ export class STComponent implements AfterViewInit, OnChanges {
       total: this.total
     };
     if (data != null) {
-      res[type] = data;
+      (res as NzSafeAny)[type] = data;
     }
     this.change.emit(res);
   }
@@ -845,7 +845,7 @@ export class STComponent implements AfterViewInit, OnChanges {
     // 过滤表示一种数据的变化应重置页码为 `1`
     this.pi = 1;
     this.columnSource.updateDefault(col.filter!);
-    this.loadPageData().subscribe(() => this.changeEmit('filter', col));
+    this.loadPageData().subscribe(() => this.changeEmit(confirm ? 'filter' : 'filterReset', col));
   }
 
   handleFilterNotify(value?: unknown): void {
