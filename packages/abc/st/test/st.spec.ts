@@ -118,12 +118,12 @@ describe('abc: st', () => {
             comp.clearCheck();
             page.expectData(1, 'checked', false).asyncEnd();
           }));
-          it('#checkbox_id_map', fakeAsync(() => {
-            page.context.page = { checkbox_id_map: 'id' };
+          it('#checkboxIdMap', fakeAsync(() => {
+            page.context.page = { checkboxIdMap: 'id' };
             page.updateColumn([{ title: '', index: 'id', type: 'checkbox' }]).click('.st__body .ant-checkbox-wrapper');
-            expect(page.context.comp.checklist.length).toEqual(1);
+            expect(page.context.comp.checkboxList.length).toEqual(1);
             page.go(2).click('.st__body .ant-checkbox-wrapper');
-            expect(page.context.comp.checklist.length).toEqual(2);
+            expect(page.context.comp.checkboxList.length).toEqual(2);
             page.go(1).expectData(1, 'checked', true).asyncEnd();
           }));
         });

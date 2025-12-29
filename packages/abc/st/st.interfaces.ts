@@ -190,7 +190,7 @@ export interface STPage {
   /**
    * 缓存 checkbox 列表的标识列
    */
-  checkbox_id_map?: string;
+  checkboxIdMap?: string;
 }
 
 /**

@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-利用 `change` 监听所选的数据；使用 `page.checkbox_id_map` 标识实现分页缓存可选择数据。
+利用 `change` 监听所选的数据；使用 `page.checkboxIdMap` 标识实现分页缓存可选择数据。
 
 ## en-US
 
-Use `change` event get selected data, and use `page.checkbox_id_map` as an identifier to enable paginated caching of selectable items.
+Use `change` event get selected data, and use `page.checkboxIdMap` as an identifier to enable paginated caching of selectable items.
 
 ```ts
 import { Component } from '@angular/core';
@@ -22,11 +22,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 @Component({
   selector: 'app-demo',
   template: ` <div class="mb-md">
-      Check Count:{{ st.checklist.length }}
+      Check Count:{{ st.checkboxList.length }}
       <button nz-button (click)="st.checkAll(true)">All</button>
       <button nz-button (click)="st.clearCheck()">Clean</button>
     </div>
-    <st #st [data]="url" [columns]="columns" [page]="{ checkbox_id_map: 'id' }" />`,
+    <st #st [data]="url" [columns]="columns" [page]="{ checkboxIdMap: 'id' }" />`,
   imports: [STModule, NzButtonModule]
 })
 export class DemoComponent {

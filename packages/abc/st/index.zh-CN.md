@@ -175,7 +175,7 @@ class TestComponent {
 | `[toTopOffset]` | 返回顶部偏移值 | `number` | `100` | ✅ |
 | `[itemRender]` | 用于自定义页码的结构，用法参照 Pagination 组件 | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - | ✅ |
 | `[simple]` | 当添加该属性时，显示为简单分页 | `boolean` | - | ✅ |
-| `[checkbox_id_map]` | 缓存 checkbox 列表的标识列 | `string` | - | - |
+| `[checkboxIdMap]` | 缓存 checkbox 列表的标识列 | `string` | - | ✅ |
 
 ### STError
 
