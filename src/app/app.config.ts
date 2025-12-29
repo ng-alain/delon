@@ -1,7 +1,6 @@
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import ngLang from '@angular/common/locales/zh';
 import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideRouter,
   RouterFeatures,
@@ -103,7 +102,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
-    provideAnimations(),
     provideRouter(routes, ...routerFeatures),
     // provideClientHydration(), // 暂时不开启水合，除了编译时间长，还有就是对DOM要求比较高
     provideAlain({ config: alainConfig, defaultLang, i18nClass: I18NService }),

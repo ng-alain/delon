@@ -1,12 +1,12 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -26,7 +26,7 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()],
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()],
       imports: [CellModule, BrowserModule]
     });
   };
@@ -289,7 +289,7 @@ describe('abc: cell', () => {
   describe('[widget]', () => {
     it('via provideCellWidgets', () => {
       TestBed.configureTestingModule({
-        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget }), provideNoopAnimations()]
+        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget }), provideNzNoAnimation()]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       page = new PageObject();

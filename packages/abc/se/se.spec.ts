@@ -10,10 +10,10 @@ import {
   Validators
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 
@@ -33,7 +33,7 @@ describe('abc: edit', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
   };
 
@@ -366,7 +366,7 @@ describe('abc: edit', () => {
     });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
+        providers: [provideNzNoAnimation()]
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
@@ -397,7 +397,8 @@ describe('abc: edit', () => {
       });
       it('in reactive form', () => {
         TestBed.configureTestingModule({
-          imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule]
+          providers: [provideNzNoAnimation()],
+          imports: [SEModule, FormsModule, ReactiveFormsModule]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);
         dl = fixture2.debugElement;

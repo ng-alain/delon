@@ -1,10 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 
 import { SGContainerComponent } from './sg-container.component';
 import { SGComponent } from './sg.component';
@@ -19,7 +19,7 @@ describe('abc: sg', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
   };
 

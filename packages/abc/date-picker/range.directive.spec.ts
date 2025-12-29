@@ -4,12 +4,12 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { differenceInDays } from 'date-fns';
 
-import { createTestContext, dispatchMouseEvent } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
 import { RangePickerDirective } from './range.directive';
@@ -31,7 +31,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
+        providers: [provideNzNoAnimation()]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();
@@ -87,7 +87,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 
   function openPicker(): HTMLInputElement {
     const el = dl.query(By.css('.ant-picker-input input')).nativeElement as HTMLInputElement;
-    dispatchMouseEvent(el, 'click');
+    el.click();
     cd();
     return el;
   }

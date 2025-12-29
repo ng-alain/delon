@@ -3,10 +3,10 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeItem } from './notice-icon.types';
@@ -21,7 +21,7 @@ describe('abc: notice-icon', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [DelonLocaleModule],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideNoopAnimations()]
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideNzNoAnimation()]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
   });

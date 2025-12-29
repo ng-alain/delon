@@ -5,20 +5,19 @@ import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } fro
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { dispatchDropDown } from '@delon/testing';
 import { ALAIN_I18N_TOKEN, DelonLocaleModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
-import { STRowDirective } from '../st-row.directive';
 import { STComponent } from '../st.component';
 import {
   STChange,
@@ -111,7 +110,7 @@ export function genModule<T extends TestComponent>(
     DelonLocaleModule
   ];
   const providers: NzSafeAny[] = [
-    provideNoopAnimations(),
+    provideNzNoAnimation(),
     provideHttpClient(),
     provideHttpClientTesting()
     // {
@@ -437,7 +436,7 @@ export class PageObject<T extends TestComponent> {
       <a class="close_in_tpl" (click)="handle.close()">close</a>
     </ng-template>
   `,
-  imports: [STComponent, STRowDirective]
+  imports: [STComponent]
 })
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;

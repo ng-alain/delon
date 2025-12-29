@@ -4,7 +4,6 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideStartup } from './startup.service';
 import {
   zh_CN as delonLang,
@@ -51,7 +50,6 @@ const ngZorroConfig: NzConfig = {};
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
-    provideAnimations(),
     provideAlain({ config: alainConfig, defaultLang }),
     provideNzConfig(ngZorroConfig),
     provideMockConfig({ data: MOCKDATA }),
