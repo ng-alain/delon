@@ -455,6 +455,7 @@ describe('form: component', () => {
       it('#formValueChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formValueChange).toHaveBeenCalled();
+        expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
       });
 
       it('#formSubmit', () => {

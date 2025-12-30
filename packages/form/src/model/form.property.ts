@@ -135,14 +135,13 @@ export abstract class FormProperty {
       onlySelf: false,
       emitValidator: true,
       emitValueEvent: true,
-      updatePath: '',
       updateValue: null,
       ...options
     };
     this._updateValue();
 
     if (options.emitValueEvent) {
-      options.updatePath = options.updatePath ?? this.path;
+      options.updatePath = options.updatePath ?? this.path ?? '';
       options.updateValue = options.updateValue == null ? this.value : options.updateValue;
       this.valueChanges.next({ value: this.value, path: options.updatePath, pathValue: options.updateValue });
     }
