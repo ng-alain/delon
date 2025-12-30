@@ -1,5 +1,5 @@
-import { ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import type { ActivatedRouteSnapshot } from '@angular/router';
+import type { Observable } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -37,7 +37,10 @@ export enum ReuseTabMatchMode {
   URL
 }
 
-export type ReuseTabRouteParamMatchMode = 'strict' | 'loose';
+export type ReuseTabRouteParamMatchMode =
+  | 'strict'
+  | 'loose'
+  | ((future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot) => boolean);
 
 export interface ReuseTitle {
   text?: string;
