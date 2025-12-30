@@ -1,16 +1,16 @@
 import {
-  AfterViewInit,
+  DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter,
   Injectable,
   NgModule,
-  NgZone,
   OnDestroy,
-  Output,
-  inject
+  afterNextRender,
+  inject,
+  output
 } from '@angular/core';
-import { Observable, Observer, Subject, Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, Observer, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SizeObserver implements OnDestroy {
@@ -83,34 +83,20 @@ export class SizeObserver implements OnDestroy {
   selector: '[observeSize]',
   exportAs: 'observeSize'
 })
-export class ObserverSize implements AfterViewInit, OnDestroy {
+export class ObserverSize {
   private readonly _obs = inject(SizeObserver);
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly ngZone = inject(NgZone);
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly d$ = inject(DestroyRef);
 
-  private _sub$: Subscription | null = null;
-  @Output('observeSize') readonly event = new EventEmitter<MutationRecord[]>();
+  protected readonly event = output<MutationRecord[]>({ alias: 'observeSize' });
 
-  ngAfterViewInit(): void {
-    if (!this._sub$) {
-      this._sub();
-    }
-  }
-
-  private _sub(): void {
-    this._unsub();
-    const stream = this._obs.observe(this.el);
-    this.ngZone.runOutsideAngular(() => {
-      this._sub$ = stream.subscribe(this.event);
+  constructor() {
+    afterNextRender(() => {
+      this._obs
+        .observe(this.el)
+        .pipe(takeUntilDestroyed(this.d$))
+        .subscribe(res => this.event.emit(res));
     });
-  }
-
-  private _unsub(): void {
-    this._sub$?.unsubscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._unsub();
   }
 }
 

@@ -18,6 +18,5 @@ export class RangePickerShortcutTplComponent {
 
   list: AlainDateRangePickerShortcutItem[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   click(_: AlainDateRangePickerShortcutItem): void {}
 }
