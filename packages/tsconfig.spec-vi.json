@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "./",
+    "outDir": "../out-tsc/spec",
+    "types": [
+      "jasmine",
+      "vitest/globals"
+    ],
+    "paths": {
+      "@delon/*": ["./*"]
+    },
+    "esModuleInterop": true,
+    "noImplicitThis": false
+  },
+  "include": [
+    "**/*.d.ts",
+    "**/auto-focus.directive.spec.ts",
+    // "**/*.spec.ts"
+  ]
+}
