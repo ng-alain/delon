@@ -155,6 +155,10 @@ export interface AlainSTConfig {
      * 返回顶部偏移值，默认：`100`
      */
     toTopOffset?: number;
+    /**
+     * 缓存 checkbox 列表的标识列
+     */
+    checkboxIdMap?: string;
   };
   /**
    * 重命名排序值，`columns` 的重命名高于属性
