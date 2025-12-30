@@ -135,7 +135,6 @@ export abstract class FormProperty {
       onlySelf: false,
       emitValidator: true,
       emitValueEvent: true,
-      updatePath: '',
       updateValue: null,
       ...options
     };
