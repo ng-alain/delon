@@ -80,5 +80,16 @@ export default {
     prev: `前へ`,
     next: `次`,
     done: `できた`
+  },
+  datePicker: {
+    today: '今日',
+    yesterday: '昨日',
+    last3Days: '直近3日',
+    last7Days: '直近7日',
+    thisWeek: '今週',
+    lastWeek: '先週',
+    thisMonth: '今月',
+    lastMonth: '先月',
+    thisYear: '今年'
   }
 } as FullLocaleData;

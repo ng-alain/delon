@@ -80,5 +80,16 @@ export default {
     prev: `السابق`,
     next: `التالي`,
     done: `تم`
+  },
+  datePicker: {
+    today: 'اليوم',
+    yesterday: 'أمس',
+    last3Days: 'آخر 3 أيام',
+    last7Days: 'آخر 7 أيام',
+    thisWeek: 'هذا الأسبوع',
+    lastWeek: 'الأسبوع الماضي',
+    thisMonth: 'هذا الشهر',
+    lastMonth: 'الشهر الماضي',
+    thisYear: 'هذا العام'
   }
 } as FullLocaleData;

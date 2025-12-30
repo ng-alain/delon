@@ -9,6 +9,18 @@ export interface ExceptionLocaleData extends LocaleData {
   backToHome: string;
 }
 
+export interface DatePickerLocaleData extends LocaleData {
+  today: string;
+  yesterday: string;
+  last3Days: string;
+  last7Days: string;
+  thisWeek: string;
+  lastWeek: string;
+  thisMonth: string;
+  lastMonth: string;
+  thisYear: string;
+}
+
 export interface NoticeIconLocaleData extends LocaleData {
   emptyText: string;
   clearText: string;
@@ -98,6 +110,7 @@ export interface FullLocaleData {
   reuseTab: ReuseTabLocaleData;
   tagSelect: TagSelectLocaleData;
   onboarding: OnboardingLocaleData;
+  datePicker: DatePickerLocaleData;
   miniProgress: MiniProgressLocaleData;
   st: STLocaleData;
   sf: SFLocaleData;

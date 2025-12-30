@@ -29,4 +29,4 @@ It needs to be used with [nz-range-picker](https://ng.ant.design/components/date
 |----------|-------------|------|---------|
 | `[enabled]` | Whether to enable | `boolean` | `false` |
 | `[closed]` | Whether to close the panel after clicking | `boolean` | `true` |
-| `[enabled]` | Shortcut list | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |
+| `[list]` | Shortcut list, supports using `['today', 'yesterday', '-3', '-7', 'week', 'lastWeek', 'month', 'lastMonth', 'year']` to represent... | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |

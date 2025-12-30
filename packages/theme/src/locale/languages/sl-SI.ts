@@ -79,5 +79,16 @@ export default {
     prev: `Prejšnje`,
     next: `Naslednji`,
     done: `Končano`
+  },
+  datePicker: {
+    today: 'Danes',
+    yesterday: 'Včeraj',
+    last3Days: 'Zadnji 3 dnevi',
+    last7Days: 'Zadnjih 7 dni',
+    thisWeek: 'Ta teden',
+    lastWeek: 'Prejšnji teden',
+    thisMonth: 'Ta mesec',
+    lastMonth: 'Prejšnji mesec',
+    thisYear: 'Letos'
   }
 } as FullLocaleData;

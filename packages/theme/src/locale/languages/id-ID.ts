@@ -80,5 +80,16 @@ export default {
     prev: `Sebelumnya`,
     next: `Berikutnya`,
     done: `Selesai`
+  },
+  datePicker: {
+    today: 'Hari Ini',
+    yesterday: 'Kemarin',
+    last3Days: '3 Hari Terakhir',
+    last7Days: '7 Hari Terakhir',
+    thisWeek: 'Minggu Ini',
+    lastWeek: 'Minggu Lalu',
+    thisMonth: 'Bulan Ini',
+    lastMonth: 'Bulan Lalu',
+    thisYear: 'Tahun Ini'
   }
 } as FullLocaleData;

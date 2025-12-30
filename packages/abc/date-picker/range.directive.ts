@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { DelonLocaleService } from '@delon/theme';
 import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/util/config';
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
@@ -37,22 +38,20 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   private shortcutFactory: ComponentRef<RangePickerShortcutTplComponent> | null = null;
   start: Date | null = null;
   end: Date | null = null;
+  private locale = inject(DelonLocaleService).getData('datePicker');
 
   @Input()
   set shortcut(val: AlainDateRangePickerShortcut | null) {
-    const item = deepMergeKey(
+    const cog = deepMergeKey(
       { list: [] },
       true,
       this.defaultShortcuts,
       val == null ? {} : val
     ) as AlainDateRangePickerShortcut;
     if (typeof val !== 'object') {
-      item.enabled = val !== false;
+      cog.enabled = val !== false;
     }
-    (item.list ?? []).forEach(i => {
-      i._text = this.dom.bypassSecurityTrustHtml(i.text);
-    });
-    this._shortcut = item;
+    this._shortcut = cog;
     this.refreshShortcut();
   }
   get shortcut(): AlainDateRangePickerShortcut | null {
@@ -85,36 +84,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       shortcuts: {
         enabled: false,
         closed: true,
-        list: [
-          {
-            text: '今天',
-            fn: () => getTimeDistance('today')
-          },
-          {
-            text: '昨天',
-            fn: () => getTimeDistance('yesterday')
-          },
-          {
-            text: '近3天',
-            fn: () => getTimeDistance(-2)
-          },
-          {
-            text: '近7天',
-            fn: () => getTimeDistance(-6)
-          },
-          {
-            text: '本周',
-            fn: () => getTimeDistance('week')
-          },
-          {
-            text: '本月',
-            fn: () => getTimeDistance('month')
-          },
-          {
-            text: '全年',
-            fn: () => getTimeDistance('year')
-          }
-        ]
+        list: ['today', 'yesterday', '-3', '-7', 'week', 'lastWeek', 'month', 'lastMonth', 'year']
       }
     })!;
     this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
@@ -154,7 +124,61 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     if (!this._shortcut) {
       return;
     }
-    const { enabled, list } = this._shortcut;
+    const { enabled } = this._shortcut;
+    const list = (this._shortcut.list ?? []).map(i => {
+      let item: AlainDateRangePickerShortcutItem = typeof i === 'string' ? ({} as AlainDateRangePickerShortcutItem) : i;
+      if (typeof i === 'string') {
+        switch (i) {
+          case 'today': {
+            item.fn = () => getTimeDistance('today');
+            item.text = this.locale.today;
+            break;
+          }
+          case 'yesterday': {
+            item.fn = () => getTimeDistance('yesterday');
+            item.text = this.locale.yesterday;
+            break;
+          }
+          case '-3': {
+            item.fn = () => getTimeDistance(-2);
+            item.text = this.locale.last3Days;
+            break;
+          }
+          case '-7': {
+            item.fn = () => getTimeDistance(-6);
+            item.text = this.locale.last7Days;
+            break;
+          }
+          case 'week': {
+            item.fn = () => getTimeDistance('week');
+            item.text = this.locale.thisWeek;
+            break;
+          }
+          case 'lastWeek': {
+            item.fn = () => getTimeDistance('-week');
+            item.text = this.locale.lastWeek;
+            break;
+          }
+          case 'month': {
+            item.fn = () => getTimeDistance('month');
+            item.text = this.locale.thisMonth;
+            break;
+          }
+          case 'lastMonth': {
+            item.fn = () => getTimeDistance('-month');
+            item.text = this.locale.lastMonth;
+            break;
+          }
+          case 'year': {
+            item.fn = () => getTimeDistance('year');
+            item.text = this.locale.thisYear;
+            break;
+          }
+        }
+      }
+      item._text = this.dom.bypassSecurityTrustHtml(item.text);
+      return item;
+    });
     let extraFooter: TemplateRef<NzSafeAny> | undefined;
     if (!this.nativeComp || !enabled) {
       extraFooter = undefined;
@@ -163,7 +187,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
         this.shortcutFactory = this.vcr.createComponent(RangePickerShortcutTplComponent);
       }
       const { instance } = this.shortcutFactory;
-      instance.list = list!;
+      instance.list = list;
       instance.click = (item: AlainDateRangePickerShortcutItem) => {
         const res = item.fn([this.start, this.end]);
         this.srv.setValue(this.srv.makeValue(res as Date[]));

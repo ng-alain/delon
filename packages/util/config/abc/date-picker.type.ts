@@ -42,8 +42,23 @@ export interface AlainDateRangePickerShortcut {
   closed?: boolean;
   /**
    * Shortcut list, default: `今天`, `昨天`, `近3天`, `近7天`, `本周`, `本月`, `全年`
+   * 列表支持两种格式：
+   *
+   * 1. 字符串：today, yesterday, -3, -7, week, month, year
+   * 2. 对象：自定义快捷选项，详见 `AlainDateRangePickerShortcutItem`
    */
-  list?: AlainDateRangePickerShortcutItem[];
+  list?: Array<
+    | AlainDateRangePickerShortcutItem
+    | 'today'
+    | 'yesterday'
+    | '-3'
+    | '-7'
+    | 'week'
+    | 'lastWeek'
+    | 'month'
+    | 'lastMonth'
+    | 'year'
+  >;
 }
 
 export interface AlainDateRangePickerShortcutItem {

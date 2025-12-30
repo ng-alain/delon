@@ -80,5 +80,16 @@ export default {
     prev: `이전`,
     next: `다음`,
     done: `끝난`
+  },
+  datePicker: {
+    today: '오늘',
+    yesterday: '어제',
+    last3Days: '지난 3일',
+    last7Days: '지난 7일',
+    thisWeek: '이번 주',
+    lastWeek: '지난주',
+    thisMonth: '이번 달',
+    lastMonth: '지난달',
+    thisYear: '올해'
   }
 } as FullLocaleData;
