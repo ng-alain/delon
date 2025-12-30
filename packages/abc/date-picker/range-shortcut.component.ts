@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, viewChild } from '@angular/core';
 
 import { AlainDateRangePickerShortcutItem } from '@delon/util/config';
 
@@ -13,8 +13,7 @@ import { AlainDateRangePickerShortcutItem } from '@delon/util/config';
   `
 })
 export class RangePickerShortcutTplComponent {
-  @ViewChild('tpl', { static: true })
-  readonly tpl!: TemplateRef<void>;
+  readonly tpl = viewChild.required<TemplateRef<void>>('tpl');
 
   list: AlainDateRangePickerShortcutItem[] = [];
 
