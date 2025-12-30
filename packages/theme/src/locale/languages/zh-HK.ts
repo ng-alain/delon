@@ -28,7 +28,8 @@ export default {
   st: {
     total: '共 {{total}} 條',
     filterConfirm: '確定',
-    filterReset: '重設'
+    filterReset: '重設',
+    more: '更多'
   },
   sf: {
     submit: '提交',
@@ -91,5 +92,8 @@ export default {
     thisMonth: '本月',
     lastMonth: '上個月',
     thisYear: '今年'
+  },
+  pageHeader: {
+    home: '主頁'
   }
 } as FullLocaleData;

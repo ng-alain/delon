@@ -24,7 +24,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { merge, filter, Observable } from 'rxjs';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, DelonLocaleService, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
 import { AlainConfigService } from '@delon/util/config';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
@@ -117,10 +117,12 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   // #endregion
 
+  private locale = inject(DelonLocaleService).getData('pageHeader');
+
   constructor() {
     this.isBrowser = this.platform.isBrowser;
     this.cogSrv.attach(this, 'pageHeader', {
-      home: '首页',
+      home: this.locale.home,
       homeLink: '/',
       autoBreadcrumb: true,
       recursiveBreadcrumb: false,
