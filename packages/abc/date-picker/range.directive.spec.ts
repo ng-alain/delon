@@ -9,6 +9,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { differenceInDays } from 'date-fns';
 
 import { createTestContext } from '@delon/testing';
+import { DelonLocaleModule } from '@delon/theme';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
@@ -31,7 +32,8 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
   describe('', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
+        providers: [provideNoopAnimations()],
+        imports: [DelonLocaleModule]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();
@@ -81,6 +83,21 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
         fixture.detectChanges();
         openPicker();
         expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
+      }));
+      it('with custom function', fakeAsync(() => {
+        const start = new Date(2025, 12, 30);
+        const end = new Date(2025, 12, 31);
+        context.shortcut = {
+          enabled: true,
+          list: ['today', { text: 'test', fn: () => [start, end] }]
+        };
+        fixture.detectChanges();
+        openPicker();
+        console.log(getPickerFooterExtra().querySelectorAll('a'));
+        getPickerFooterExtra().querySelectorAll('a')[1].click();
+        cd();
+        expect(context.i.start?.toLocaleDateString()).toBe(start.toLocaleDateString());
+        expect(context.i.end?.toLocaleDateString()).toBe(end.toLocaleDateString());
       }));
     });
   });
