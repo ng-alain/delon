@@ -30,8 +30,7 @@
             "tsConfig": "src/tsconfig.site.json",
             "polyfills": [
               "@webcomponents/custom-elements",
-              "@webcomponents/custom-elements/src/native-shim",
-              "zone.js"
+              "@webcomponents/custom-elements/src/native-shim"
             ],
             "assets": [
               "src/assets",

@@ -1,6 +1,12 @@
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import ngLang from '@angular/common/locales/zh';
-import { APP_ID, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
+import {
+  APP_ID,
+  ApplicationConfig,
+  ErrorHandler,
+  importProvidersFrom,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideRouter,
@@ -102,6 +108,7 @@ if (!environment.production) routerFeatures.push(withHashLocation());
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
+    provideZonelessChangeDetection(),
     { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
     provideRouter(routes, ...routerFeatures),
