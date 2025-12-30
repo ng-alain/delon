@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{rango[0]}} - {{rango[1]}} de {{total}}',
     filterConfirm: 'Aceptar',
-    filterReset: 'Reiniciar'
+    filterReset: 'Reiniciar',
+    more: 'Más'
   },
   sf: {
     submit: 'Submit',
@@ -91,5 +92,8 @@ export default {
     thisMonth: 'Este mes',
     lastMonth: 'Mes pasado',
     thisYear: 'Este año'
+  },
+  pageHeader: {
+    home: 'Inicio'
   }
 } as FullLocaleData;
