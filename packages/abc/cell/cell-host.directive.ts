@@ -12,7 +12,7 @@ export class CellHostDirective {
   private readonly srv = inject(CellService);
   private readonly vcr = inject(ViewContainerRef);
 
-  data = input.required<CellTextResult>();
+  readonly data = input.required<CellTextResult>();
 
   constructor() {
     effect(() => {

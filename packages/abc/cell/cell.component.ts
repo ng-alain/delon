@@ -2,8 +2,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
-  OnDestroy,
   Renderer2,
   ViewEncapsulation,
   booleanAttribute,
@@ -127,7 +127,7 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
     CellHostDirective
   ]
 })
-export class CellComponent implements OnDestroy {
+export class CellComponent {
   private readonly srv = inject(CellService);
   private readonly router = inject(Router);
   private readonly renderer = inject(Renderer2);
@@ -135,36 +135,37 @@ export class CellComponent implements OnDestroy {
   private readonly win = inject(WINDOW);
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
 
-  private destroy$?: Subscription;
+  private d$ = inject(DestroyRef);
 
-  _text = signal<string | SafeValue | string[] | number>('');
-  _unit = signal<string | undefined>(undefined);
-  _res = signal<CellTextResult | undefined>(undefined);
-  showDefault = computed(() => this.value() == (this.safeOpt.default as CellDefaultText)?.condition);
+  protected _text = signal<string | SafeValue | string[] | number>('');
+  protected _unit = signal<string | undefined>(undefined);
+  protected _res = signal<CellTextResult | undefined>(undefined);
+  protected showDefault = computed(() => this.value() == (this.safeOpt.default as CellDefaultText)?.condition);
 
   value = model<CellValue>();
   options = input<CellOptions>();
   loading = input(false, { transform: booleanAttribute });
   disabled = input(false, { transform: booleanAttribute });
 
-  get safeOpt(): CellOptions {
+  protected get safeOpt(): CellOptions {
     return this._res()?.options ?? {};
   }
 
-  isText = computed(() => this._res()?.safeHtml === 'text');
+  protected isText = computed(() => this._res()?.safeHtml === 'text');
 
   constructor() {
     combineLatest([toObservable(this.loading), toObservable(this.disabled)])
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.setClass());
 
+    let sub: Subscription | null = null;
     effect(() => {
       const v = this.value();
       const o = this.options();
-      this.destroy$?.unsubscribe();
-      this.destroy$ = this.srv
+      sub?.unsubscribe();
+      sub = this.srv
         .get(v, o)
-        .pipe(take(1))
+        .pipe(take(1), takeUntilDestroyed(this.d$))
         .subscribe(res => {
           this._res.set(res);
           this._text.set(res.result?.text ?? '');
@@ -188,7 +189,7 @@ export class CellComponent implements OnDestroy {
     el.setAttribute('data-type', `${type}`);
   }
 
-  _link(e: Event): void {
+  protected _link(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 
@@ -205,7 +206,7 @@ export class CellComponent implements OnDestroy {
     }
   }
 
-  _showImg(img: string): void {
+  protected _showImg(img: string): void {
     const config = this.safeOpt.img;
     if (config == null || config.big == null) return;
 
@@ -220,9 +221,5 @@ export class CellComponent implements OnDestroy {
         config.previewOptions
       )
       .switchTo(idx);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$?.unsubscribe();
   }
 }
