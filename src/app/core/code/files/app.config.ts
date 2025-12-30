@@ -1,4 +1,4 @@
-export default `import { ApplicationConfig } from '@angular/core';
+export default `import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import {
   provideHttpClient,
   withFetch,
@@ -49,6 +49,7 @@ const ngZorroConfig: NzConfig = {};
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),
     provideAlain({ config: alainConfig, defaultLang }),
     provideNzConfig(ngZorroConfig),
