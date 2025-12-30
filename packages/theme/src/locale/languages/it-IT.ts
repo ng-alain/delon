@@ -80,5 +80,16 @@ export default {
     prev: `Precedente`,
     next: `Successivo`,
     done: `Fatto`
+  },
+  datePicker: {
+    today: 'Oggi',
+    yesterday: 'Ieri',
+    last3Days: 'Ultimi 3 gg',
+    last7Days: 'Ultimi 7 gg',
+    thisWeek: 'Questa sett.',
+    lastWeek: 'Sett. scorsa',
+    thisMonth: 'Questo mese',
+    lastMonth: 'Mese scorso',
+    thisYear: "Quest'anno"
   }
 } as FullLocaleData;

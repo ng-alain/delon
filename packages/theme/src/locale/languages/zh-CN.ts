@@ -80,5 +80,16 @@ export default {
     prev: `上一项`,
     next: `下一项`,
     done: `完成`
+  },
+  datePicker: {
+    today: '今天',
+    yesterday: '昨天',
+    last3Days: '近3天',
+    last7Days: '近7天',
+    thisWeek: '本周',
+    lastWeek: '上周',
+    thisMonth: '本月',
+    lastMonth: '上个月',
+    thisYear: '今年'
   }
 } as FullLocaleData;

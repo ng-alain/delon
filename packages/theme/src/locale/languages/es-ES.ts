@@ -80,5 +80,16 @@ export default {
     prev: `Previo`,
     next: `Siguiente`,
     done: `Terminado`
+  },
+  datePicker: {
+    today: 'Hoy',
+    yesterday: 'Ayer',
+    last3Days: 'Últ. 3 días',
+    last7Days: 'Últ. 7 días',
+    thisWeek: 'Esta sem.',
+    lastWeek: 'Sem. pasada',
+    thisMonth: 'Este mes',
+    lastMonth: 'Mes pasado',
+    thisYear: 'Este año'
   }
 } as FullLocaleData;

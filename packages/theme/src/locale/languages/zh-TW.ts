@@ -3,8 +3,8 @@ import { FullLocaleData } from '../locale.types';
 export default {
   abbr: 'zh-TW',
   exception: {
-    403: '抱歉，你無權訪問該頁面',
-    404: '抱歉，你訪問的頁面不存在',
+    403: '抱歉，你無權訪問該頁麵',
+    404: '抱歉，你訪問的頁麵不存在',
     500: '抱歉，服務器出錯了',
     backToHome: '返回首頁'
   },
@@ -80,5 +80,16 @@ export default {
     prev: `上一項`,
     next: `下一項`,
     done: `完成`
+  },
+  datePicker: {
+    today: '今天',
+    yesterday: '昨天',
+    last3Days: '近3天',
+    last7Days: '近7天',
+    thisWeek: '本週',
+    lastWeek: '上週',
+    thisMonth: '本月',
+    lastMonth: '上個月',
+    thisYear: '今年'
   }
 } as FullLocaleData;

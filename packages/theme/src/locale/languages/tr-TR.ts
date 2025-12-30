@@ -80,5 +80,16 @@ export default {
     prev: `Önceki`,
     next: `Sonraki`,
     done: `Bitti`
+  },
+  datePicker: {
+    today: 'Bugün',
+    yesterday: 'Dün',
+    last3Days: 'Son 3 Gün',
+    last7Days: 'Son 7 Gün',
+    thisWeek: 'Bu Hafta',
+    lastWeek: 'Geçen Hafta',
+    thisMonth: 'Bu Ay',
+    lastMonth: 'Geçen Ay',
+    thisYear: 'Bu Yıl'
   }
 } as FullLocaleData;

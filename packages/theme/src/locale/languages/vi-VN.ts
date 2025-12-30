@@ -80,5 +80,16 @@ export default {
     prev: `Trước`,
     next: `Tiếp`,
     done: `Hoàn thành`
+  },
+  datePicker: {
+    today: 'Hôm nay',
+    yesterday: 'Hôm qua',
+    last3Days: '3 ngày qua',
+    last7Days: '7 ngày qua',
+    thisWeek: 'Tuần này',
+    lastWeek: 'Tuần trước',
+    thisMonth: 'Tháng này',
+    lastMonth: 'Tháng trước',
+    thisYear: 'Năm nay'
   }
 } as FullLocaleData;

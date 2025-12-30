@@ -29,4 +29,4 @@ module: import { DatePickerModule } from '@delon/abc/date-picker';
 |----|----|----|-----|
 | `[enabled]` | 是否启用 | `boolean` | `false` |
 | `[closed]` | 是否点击后立即关闭面板 | `boolean` | `true` |
-| `[enabled]` | 快捷列表 | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |
+| `[list]` | 快捷列表，支持使用 `['today', 'yesterday', '-3', '-7', 'week', 'lastWeek', 'month', 'lastMonth', 'year']` 来表示 | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |

@@ -80,5 +80,16 @@ export default {
     prev: `Προηγούμενο`,
     next: `Επόμενο`,
     done: `Ολοκληρώθηκε`
+  },
+  datePicker: {
+    today: 'Σήμερα',
+    yesterday: 'Χθές',
+    last3Days: 'Τελ. 3 ημ.',
+    last7Days: 'Τελ. 7 ημ.',
+    thisWeek: 'Αυτή την εβδ.',
+    lastWeek: 'Προηγ. εβδ.',
+    thisMonth: 'Αυτό το μήνα',
+    lastMonth: 'Προηγ. μήνα',
+    thisYear: 'Αυτό το έτος'
   }
 } as FullLocaleData;
