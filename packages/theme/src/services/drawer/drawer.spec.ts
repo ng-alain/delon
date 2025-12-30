@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 
 import { DrawerHelper } from './drawer.helper';
@@ -12,7 +13,7 @@ describe('theme: DrawerHelper', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), NzDrawerService]
+      providers: [provideNoopAnimations(), provideNzNoAnimation(), NzDrawerService]
     });
     fixture = TestBed.createComponent(TestComponent);
     drawer = TestBed.inject<DrawerHelper>(DrawerHelper);

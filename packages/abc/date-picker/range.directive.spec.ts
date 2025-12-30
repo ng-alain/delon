@@ -8,7 +8,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { differenceInDays } from 'date-fns';
 
-import { createTestContext, dispatchMouseEvent } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { AlainDateRangePickerShortcut } from '@delon/util/config';
 import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 
@@ -87,7 +87,7 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 
   function openPicker(): HTMLInputElement {
     const el = dl.query(By.css('.ant-picker-input input')).nativeElement as HTMLInputElement;
-    dispatchMouseEvent(el, 'click');
+    el.click();
     cd();
     return el;
   }

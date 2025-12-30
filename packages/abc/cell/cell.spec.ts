@@ -1,7 +1,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -26,7 +25,7 @@ describe('abc: cell', () => {
 
   const moduleAction = (): void => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()],
+      providers: [provideNzIconsTesting()],
       imports: [CellModule, BrowserModule]
     });
   };
@@ -289,7 +288,7 @@ describe('abc: cell', () => {
   describe('[widget]', () => {
     it('via provideCellWidgets', () => {
       TestBed.configureTestingModule({
-        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget }), provideNoopAnimations()]
+        providers: [provideCellWidgets({ KEY: TestWidget.KEY, type: TestWidget })]
       });
       ({ fixture, dl, context } = createTestContext(TestComponent));
       page = new PageObject();

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { DelonLocaleModule } from '@delon/theme';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNoAnimationModule } from 'ng-zorro-antd/core/animation';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
@@ -12,15 +12,8 @@ import { OnboardingComponent } from './onboarding.component';
 const COMPONENTS = [OnboardingComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DelonLocaleModule,
-    NzPopoverModule,
-    NzOutletModule,
-    NzButtonModule,
-    NzNoAnimationModule,
-    COMPONENTS
-  ],
+  providers: [provideNzNoAnimation()],
+  imports: [CommonModule, DelonLocaleModule, NzPopoverModule, NzOutletModule, NzButtonModule, COMPONENTS],
   exports: COMPONENTS
 })
 export class OnboardingModule {}

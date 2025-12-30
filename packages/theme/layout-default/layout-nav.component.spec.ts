@@ -4,13 +4,14 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router, RouterModule, provideRouter } from '@angular/router';
 
 import { ACLService } from '@delon/acl';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util/other';
 import { WINDOW } from '@delon/util/token';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { LayoutDefaultNavComponent, Nav } from './layout-nav.component';
@@ -101,9 +102,11 @@ describe('theme: layout-default-nav', () => {
 
   function createModule(): void {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
+      imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
       declarations: [TestComponent],
       providers: [
+        provideNoopAnimations(),
+        provideNzNoAnimation(),
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ACLService, useClass: MockACLService },

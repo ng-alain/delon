@@ -1,7 +1,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
@@ -18,9 +17,7 @@ describe('abc: sg', () => {
   let page: PageObject;
 
   const moduleAction = (): void => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
-    });
+    TestBed.configureTestingModule({});
   };
 
   function genModule(template?: string): void {

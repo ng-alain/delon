@@ -3,7 +3,6 @@ import { Component, DebugElement, inject, OnInit, ViewChild } from '@angular/cor
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -17,9 +16,7 @@ describe('abc: error-collect', () => {
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
-    });
+    TestBed.configureTestingModule({});
   });
 
   function getPropertiesAndCreate(): void {

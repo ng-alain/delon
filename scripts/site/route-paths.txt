@@ -95,8 +95,6 @@
 /components/full-content/zh
 /components/global-footer/en
 /components/global-footer/zh
-/components/highlight/en
-/components/highlight/zh
 /components/hotkey/en
 /components/hotkey/zh
 /components/loading/en

@@ -2,7 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { ACLService, DelonACLModule } from '@delon/acl';
@@ -27,12 +27,13 @@ describe('form: component', () => {
 
   function genModule(options: { acl?: boolean; i18n?: boolean } = {}): void {
     options = { acl: false, i18n: false, ...options };
-    const imports: NzSafeAny[] = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule];
+    const imports: NzSafeAny[] = [DelonFormModule.forRoot(), AlainThemeModule];
     if (options.acl) {
       imports.push(DelonACLModule);
     }
     TestBed.configureTestingModule({
       imports,
+      providers: [provideNoopAnimations()],
       declarations: [TestFormComponent, TestModeComponent]
     });
   }

@@ -10,7 +10,6 @@ import {
   Validators
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
@@ -32,9 +31,7 @@ describe('abc: edit', () => {
   let page: PageObject;
 
   const moduleAction = (): void => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
-    });
+    TestBed.configureTestingModule({});
   };
 
   function genModule(template?: string): void {
@@ -365,9 +362,7 @@ describe('abc: edit', () => {
       page.expect('.ant-form-item-required', 1);
     });
     it('should be reactive form', () => {
-      TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
-      });
+      TestBed.configureTestingModule({});
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
       dl = fixture2.debugElement;
       fixture2.detectChanges();
@@ -397,7 +392,7 @@ describe('abc: edit', () => {
       });
       it('in reactive form', () => {
         TestBed.configureTestingModule({
-          imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule]
+          imports: [SEModule, FormsModule, ReactiveFormsModule]
         });
         const fixture2 = TestBed.createComponent(TestReactiveComponent);
         dl = fixture2.debugElement;
