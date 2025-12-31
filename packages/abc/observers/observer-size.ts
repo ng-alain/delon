@@ -88,7 +88,7 @@ export class ObserverSize {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly d$ = inject(DestroyRef);
 
-  protected readonly event = output<MutationRecord[]>({ alias: 'observeSize' });
+  readonly event = output<MutationRecord[]>({ alias: 'observeSize' });
 
   constructor() {
     afterNextRender(() => {
