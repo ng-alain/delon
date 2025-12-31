@@ -91,7 +91,7 @@ describe('abc: view', () => {
             page
               .expect(`${prefixCls}bordered`)
               // noColon 始终为 true
-              .expect(`${prefixCls}no-colon`, 0, 'noColon应始终为true');
+              .expect(`${prefixCls}no-colon`, 1, 'noColon应始终为true');
             // gutter 始终为 空
             const marginLeft = page.getEl(`.ant-row`).style.marginLeft;
             expect(marginLeft).toBe('');
