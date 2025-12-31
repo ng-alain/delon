@@ -1,19 +1,18 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
   Renderer2,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
+  computed,
+  effect,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  output,
+  signal
 } from '@angular/core';
 
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -22,69 +21,71 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'quick-menu',
   exportAs: 'quickMenu',
-  templateUrl: './quick-menu.component.html',
+  template: `
+    <div class="quick-menu__inner">
+      <div class="quick-menu__ctrl" [style]="ctrlStyle()">
+        <div class="quick-menu__ctrl-icon">
+          @let ic = icon();
+          <ng-container *nzStringTemplateOutlet="ic">
+            <nz-icon [nzType]="$any(ic)" />
+          </ng-container>
+        </div>
+      </div>
+      <ng-content />
+    </div>
+  `,
   host: {
-    '[class.quick-menu]': 'true',
+    class: 'quick-menu',
     '(click)': '_click()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzIconDirective, NzStringTemplateOutletDirective]
 })
-export class QuickMenuComponent implements OnInit, OnChanges {
-  private readonly cdr = inject(ChangeDetectorRef);
+export class QuickMenuComponent {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly render = inject(Renderer2);
 
-  ctrlStyle: Record<string, string | undefined> = {};
+  readonly icon = input<string | TemplateRef<void>>('question-circle');
+  readonly top = input(120, { transform: numberAttribute });
+  readonly width = input(200, { transform: numberAttribute });
+  readonly bgColor = input<string>();
+  readonly borderColor = input<string>();
+  readonly expand = input(false, { transform: booleanAttribute });
+  readonly expandChange = output<boolean>();
 
-  @Input() icon: string | TemplateRef<void> = 'question-circle';
-  @Input({ transform: numberAttribute }) top = 120;
-  @Input({ transform: numberAttribute }) width = 200;
-  @Input() bgColor?: string;
-  @Input() borderColor?: string;
-  @Input({ transform: booleanAttribute }) expand: boolean = false;
-  @Output() readonly expandChange = new EventEmitter<boolean>();
+  private show = signal(false);
 
-  private show = false;
-  private initFlag = false;
+  protected ctrlStyle = computed(() => {
+    const ret: Record<string, string | undefined> = {
+      'background-color': this.bgColor(),
+      'border-color': this.borderColor()
+    };
+    return ret;
+  });
+
+  constructor() {
+    effect(() => {
+      this.show.set(this.expand());
+    });
+    effect(() => {
+      const res: string[] = [
+        `top:${this.top()}px`,
+        `width:${this.width()}px`,
+        `margin-right:-${this.show() ? 0 : this.width()}px`
+      ];
+      if (this.bgColor) {
+        res.push(`background-color:${this.bgColor()}`);
+      }
+      if (this.borderColor) {
+        res.push(`border-color:${this.borderColor()}`);
+      }
+      this.render.setAttribute(this.el, 'style', res.join(';'));
+    });
+  }
 
   _click(): void {
-    this.show = !this.show;
-    this.expandChange.emit(this.show);
-    this.setStyle();
-  }
-
-  private setStyle(): void {
-    this.ctrlStyle = {
-      'background-color': this.bgColor,
-      'border-color': this.borderColor
-    };
-
-    const res: string[] = [
-      `top:${this.top}px`,
-      `width:${this.width}px`,
-      `margin-right:-${this.show ? 0 : this.width}px`
-    ];
-    if (this.bgColor) {
-      res.push(`background-color:${this.bgColor}`);
-    }
-    if (this.borderColor) {
-      res.push(`border-color:${this.borderColor}`);
-    }
-    this.render.setAttribute(this.el, 'style', res.join(';'));
-    this.cdr.detectChanges();
-  }
-
-  ngOnInit(): void {
-    this.initFlag = true;
-    this.setStyle();
-  }
-
-  ngOnChanges(): void {
-    this.show = this.expand;
-    if (this.initFlag) {
-      this.setStyle();
-    }
+    this.show.set(!this.show());
+    this.expandChange.emit(this.show());
   }
 }
