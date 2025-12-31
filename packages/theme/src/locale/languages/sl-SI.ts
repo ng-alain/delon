@@ -92,6 +92,9 @@ export default {
     lastMonth: 'Prejšnji mesec',
     thisYear: 'Letos'
   },
+  loading: {
+    text: 'Nalaganje...'
+  },
   pageHeader: {
     home: 'Domov'
   }

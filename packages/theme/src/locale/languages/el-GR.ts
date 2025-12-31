@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Προηγ. μήνα',
     thisYear: 'Αυτό το έτος'
   },
+  loading: {
+    text: 'Φόρτωση...'
+  },
   pageHeader: {
     home: 'Αρχική'
   }

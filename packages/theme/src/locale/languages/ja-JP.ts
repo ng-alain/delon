@@ -93,6 +93,9 @@ export default {
     lastMonth: '先月',
     thisYear: '今年'
   },
+  loading: {
+    text: '読み込み中...'
+  },
   pageHeader: {
     home: 'ホーム'
   }

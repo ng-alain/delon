@@ -93,6 +93,9 @@ export default {
     lastMonth: 'ខែមុន',
     thisYear: 'ឆ្នាំនេះ'
   },
+  loading: {
+    text: 'កំពុងផ្ទុក...'
+  },
   pageHeader: {
     home: 'ទំព័រដើម'
   }

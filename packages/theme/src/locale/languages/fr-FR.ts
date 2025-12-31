@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Mois dernier',
     thisYear: 'Année en cours'
   },
+  loading: {
+    text: 'Chargement...'
+  },
   pageHeader: {
     home: 'Accueil'
   }

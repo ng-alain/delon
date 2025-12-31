@@ -21,6 +21,10 @@ export interface DatePickerLocaleData extends LocaleData {
   thisYear: string;
 }
 
+export interface LoadingLocaleData extends LocaleData {
+  text: string;
+}
+
 export interface PageHeaderLocaleData extends LocaleData {
   home: string;
 }
@@ -116,6 +120,7 @@ export interface FullLocaleData {
   tagSelect: TagSelectLocaleData;
   onboarding: OnboardingLocaleData;
   datePicker: DatePickerLocaleData;
+  loading: LoadingLocaleData;
   pageHeader: PageHeaderLocaleData;
   miniProgress: MiniProgressLocaleData;
   st: STLocaleData;

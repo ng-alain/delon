@@ -93,6 +93,9 @@ export default {
     lastMonth: 'الشهر الماضي',
     thisYear: 'هذا العام'
   },
+  loading: {
+    text: 'جاري التحميل...'
+  },
   pageHeader: {
     home: 'الرئيسية'
   }

@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Bulan Lalu',
     thisYear: 'Tahun Ini'
   },
+  loading: {
+    text: 'Memuat...'
+  },
   pageHeader: {
     home: 'Laman Utama'
   }

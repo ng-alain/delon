@@ -93,6 +93,9 @@ export default {
     lastMonth: '지난달',
     thisYear: '올해'
   },
+  loading: {
+    text: '로딩 중...'
+  },
   pageHeader: {
     home: '홈'
   }

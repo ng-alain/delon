@@ -93,6 +93,9 @@ export default {
     lastMonth: '上个月',
     thisYear: '今年'
   },
+  loading: {
+    text: '加载中...'
+  },
   pageHeader: {
     home: '首页'
   }

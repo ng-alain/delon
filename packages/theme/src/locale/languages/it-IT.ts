@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Mese scorso',
     thisYear: "Quest'anno"
   },
+  loading: {
+    text: 'Caricamento...'
+  },
   pageHeader: {
     home: 'Home'
   }

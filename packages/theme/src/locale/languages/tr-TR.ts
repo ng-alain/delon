@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Geçen Ay',
     thisYear: 'Bu Yıl'
   },
+  loading: {
+    text: 'Yükleniyor...'
+  },
   pageHeader: {
     home: 'Ana Sayfa'
   }

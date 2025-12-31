@@ -93,6 +93,9 @@ export default {
     lastMonth: 'Tháng trước',
     thisYear: 'Năm nay'
   },
+  loading: {
+    text: 'Đang tải...'
+  },
   pageHeader: {
     home: 'Trang chủ'
   }

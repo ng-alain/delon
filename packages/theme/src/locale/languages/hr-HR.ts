@@ -57,6 +57,9 @@ export default {
     lastMonth: 'Prošli mjesec',
     thisYear: 'Ova godina'
   },
+  loading: {
+    text: 'Učitavanje...'
+  },
   pageHeader: {
     home: 'Početna'
   }
