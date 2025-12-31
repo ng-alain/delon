@@ -1,22 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Renderer2,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
+  computed,
   inject,
+  input,
   numberAttribute
 } from '@angular/core';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
 
 import type { REP_TYPE } from '@delon/theme';
-import { AlainConfigService } from '@delon/util/config';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SEErrorRefresh, SELayout } from './se.types';
 
@@ -25,121 +20,76 @@ import { SEErrorRefresh, SELayout } from './se.types';
   exportAs: 'seTitle',
   template: '<ng-content />',
   host: {
-    '[class.se__title]': 'true'
+    class: 'se__title',
+    '[class]': 'cls()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class SETitleComponent implements OnInit {
+export class SETitleComponent {
   private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true });
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly ren = inject(Renderer2);
   constructor() {
     if (this.parentComp == null) {
       throw new Error(`[se-title] must include 'se-container' component`);
     }
   }
 
-  private setClass(): void {
-    const { el } = this;
-    const gutter = this.parentComp!.gutter as number;
-    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
-    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
-  }
-
-  ngOnInit(): void {
-    this.setClass();
-  }
+  protected cls = computed(() => {
+    const gutter = this.parentComp!._gutter() as number;
+    return {
+      'padding-left': `${gutter / 2}px`,
+      'padding-right': `${gutter / 2}px`
+    };
+  });
 }
 
 @Component({
   selector: 'se-container, [se-container]',
   exportAs: 'seContainer',
   template: `
-    @if (title) {
+    @let tit = title();
+    @if (tit) {
       <div se-title>
-        <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+        <ng-container *nzStringTemplateOutlet="tit">{{ tit }}</ng-container>
       </div>
     }
     <ng-content />
   `,
   host: {
-    '[class.ant-row]': `true`,
-    '[class.se__container]': `true`,
-    '[class.se__horizontal]': `nzLayout === 'horizontal'`,
-    '[class.se__vertical]': `nzLayout === 'vertical'`,
-    '[class.se__inline]': `nzLayout === 'inline'`,
-    '[class.se__compact]': `size === 'compact'`,
-    '[style.margin-left.px]': `margin`,
-    '[style.margin-right.px]': `margin`
+    class: 'ant-row se__container',
+    '[class.se__horizontal]': `nzLayout() === 'horizontal'`,
+    '[class.se__vertical]': `nzLayout() === 'vertical'`,
+    '[class.se__inline]': `nzLayout() === 'inline'`,
+    '[class.se__compact]': `_size() === 'compact'`,
+    '[style.margin-left.px]': `margin()`,
+    '[style.margin-right.px]': `margin()`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [SETitleComponent, NzStringTemplateOutletDirective]
 })
 export class SEContainerComponent {
-  private readonly cogSrv = inject(AlainConfigService);
-  private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
-  @Input({ alias: 'se-container', transform: (v: unknown) => (v == null ? null : numberAttribute(v)) })
-  colInCon?: REP_TYPE;
-  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col!: REP_TYPE;
-  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) labelWidth!: number;
-  @Input({ transform: booleanAttribute }) noColon = false;
-  @Input() title?: string | TemplateRef<void> | null;
+  readonly colInCon = input(null, {
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE)),
+    alias: 'se-container'
+  });
+  readonly labelWidth = input(150, {
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE))
+  });
+  readonly col = input(2, {
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE))
+  });
+  readonly noColon = input(false, { transform: booleanAttribute });
+  readonly title = input<string | TemplateRef<void> | null>();
+  readonly gutter = input(32, { transform: numberAttribute });
+  readonly nzLayout = input<SELayout>('horizontal');
+  readonly size = input<'default' | 'compact'>('default');
+  readonly firstVisual = input(false, { transform: booleanAttribute });
+  readonly ingoreDirty = input(false, { transform: booleanAttribute });
+  readonly line = input(false, { transform: booleanAttribute });
+  readonly errors = input<SEErrorRefresh[]>([]);
 
-  @Input({ transform: numberAttribute })
-  get gutter(): number {
-    return this.nzLayout === 'horizontal' ? this._gutter : 0;
-  }
-  set gutter(value: number) {
-    this._gutter = value;
-  }
-  private _gutter!: number;
-
-  @Input()
-  get nzLayout(): SELayout {
-    return this._nzLayout;
-  }
-  set nzLayout(value: SELayout) {
-    this._nzLayout = value;
-    if (value === 'inline') {
-      this.size = 'compact';
-    }
-  }
-  private _nzLayout!: SELayout;
-
-  @Input() size!: 'default' | 'compact';
-  @Input({ transform: booleanAttribute }) firstVisual!: boolean;
-  @Input({ transform: booleanAttribute }) ingoreDirty!: boolean;
-  @Input({ transform: booleanAttribute }) line = false;
-  @Input()
-  set errors(val: SEErrorRefresh[]) {
-    this.setErrors(val);
-  }
-
-  get margin(): number {
-    return -((this.gutter as number) / 2);
-  }
-
-  get errorNotify(): Observable<SEErrorRefresh> {
-    return this.errorNotify$.pipe(filter(v => v != null));
-  }
-
-  constructor() {
-    this.cogSrv.attach(this, 'se', {
-      size: 'default',
-      nzLayout: 'horizontal',
-      gutter: 32,
-      col: 2,
-      labelWidth: 150,
-      firstVisual: false,
-      ingoreDirty: false
-    });
-  }
-
-  setErrors(errors: SEErrorRefresh[]): void {
-    for (const error of errors) {
-      this.errorNotify$.next(error);
-    }
-  }
+  readonly _gutter = computed(() => (this.nzLayout() === 'horizontal' ? this.gutter() : 0));
+  readonly _size = computed(() => (this.nzLayout() === 'inline' ? 'compact' : this.size()));
+  protected margin = computed(() => -(this._gutter() / 2));
 }

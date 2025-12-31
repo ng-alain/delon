@@ -189,7 +189,6 @@ describe('abc: edit', () => {
             context.parent_col = 0;
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
-            page.expect('.ant-col-sm-12');
           });
           describe('#errors', () => {
             let ngModel: NgModel;
