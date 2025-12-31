@@ -12,7 +12,7 @@ import { FullContentComponent } from './full-content.component';
 export class FullContentToggleDirective {
   private readonly parent = inject(FullContentComponent);
 
-  _click(): void {
+  protected _click(): void {
     this.parent.toggle();
   }
 }

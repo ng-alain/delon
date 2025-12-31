@@ -29,7 +29,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   host: {
     '[class.error-collect]': 'true',
     '[class.error-collect-rtl]': `dir() === 'rtl'`,
-    '[class.d-none]': '_hiden()',
+    '[class.d-none]': 'count() === 0',
     '(click)': '_click()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,9 +44,8 @@ export class ErrorCollectComponent implements OnInit {
   private readonly cogSrv = inject(AlainConfigService);
   private formEl: HTMLFormElement | null = null;
 
-  _hiden = signal(true);
-  count = signal(0);
-  dir = inject(Directionality).valueSignal;
+  protected count = signal(0);
+  protected dir = inject(Directionality).valueSignal;
 
   readonly freq = input(0, { transform: numberAttribute });
   readonly offsetTop = input(0, { transform: numberAttribute });
@@ -63,10 +62,9 @@ export class ErrorCollectComponent implements OnInit {
     const count = this.errEls.length;
     if (count === this.count()) return;
     this.count.set(count);
-    this._hiden.set(count === 0);
   }
 
-  _click(): boolean {
+  protected _click(): boolean {
     if (this.count() === 0) return false;
     // nz-form-control
     const els = this.errEls;

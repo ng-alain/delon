@@ -113,7 +113,7 @@ describe('abc: full-content', () => {
       fixture.detectChanges();
       tick(210);
       expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
-      expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
+      expect(context.comp._height()).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
     }));
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<NzSafeAny>(null);

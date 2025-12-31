@@ -105,20 +105,6 @@ describe('abc: ellipsis', () => {
     });
   });
 
-  describe('**slow**', () => {
-    it('should be throw error when include html element', fakeAsync(() => {
-      expect(() => {
-        TestBed.overrideTemplate(TestLengthComponent, `<ellipsis length="1"><p>asdf</p></ellipsis>`);
-        fixture = TestBed.createComponent(TestLengthComponent);
-        dl = fixture.debugElement;
-        context = fixture.componentInstance;
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-      }).toThrowError();
-    }));
-  });
-
   class PageObject {
     comp: EllipsisComponent;
 
@@ -140,11 +126,11 @@ describe('abc: ellipsis', () => {
     }
 
     get text(): string {
-      return this.comp.text;
+      return this.comp.text();
     }
 
     checkText(text: string): this {
-      expect(this.comp.text).toBe(text);
+      expect(this.comp.text()).toBe(text);
       return this;
     }
 

@@ -38,7 +38,7 @@ import { GlobalFooterLink } from './global-footer.types';
     </div>
   `,
   host: {
-    '[class.global-footer]': 'true',
+    class: 'global-footer',
     '[class.global-footer-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,12 +50,12 @@ export class GlobalFooterComponent {
   private readonly win = inject(WINDOW);
   private readonly dom = inject(DomSanitizer);
 
-  dir = inject(Directionality).valueSignal;
+  protected dir = inject(Directionality).valueSignal;
 
-  links = input<GlobalFooterLink[]>([]);
+  readonly links = input<GlobalFooterLink[]>([]);
   readonly items = contentChildren(GlobalFooterItemComponent);
 
-  linkHtmls = computed(() => {
+  protected linkHtmls = computed(() => {
     return this.links().map(item => {
       if (typeof item.title === 'string') {
         item.title = this.dom.bypassSecurityTrustHtml(item.title);
@@ -64,7 +64,7 @@ export class GlobalFooterComponent {
     });
   });
 
-  to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
+  protected to(item: GlobalFooterLink | GlobalFooterItemComponent): void {
     const href = typeof item.href === 'string' ? item.href : item.href();
     if (!href) {
       return;
