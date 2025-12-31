@@ -91,5 +91,8 @@ export default {
     thisMonth: 'هذا الشهر',
     lastMonth: 'الشهر الماضي',
     thisYear: 'هذا العام'
+  },
+  loading: {
+    text: 'جاري التحميل...'
   }
 } as FullLocaleData;

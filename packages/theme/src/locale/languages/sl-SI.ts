@@ -90,5 +90,8 @@ export default {
     thisMonth: 'Ta mesec',
     lastMonth: 'Prejšnji mesec',
     thisYear: 'Letos'
+  },
+  loading: {
+    text: 'Nalaganje...'
   }
 } as FullLocaleData;

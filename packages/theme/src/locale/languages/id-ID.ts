@@ -91,5 +91,8 @@ export default {
     thisMonth: 'Bulan Ini',
     lastMonth: 'Bulan Lalu',
     thisYear: 'Tahun Ini'
+  },
+  loading: {
+    text: 'Memuat...'
   }
 } as FullLocaleData;

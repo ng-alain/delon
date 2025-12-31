@@ -91,5 +91,8 @@ export default {
     thisMonth: 'This Month',
     lastMonth: 'Last Month',
     thisYear: 'This Year'
+  },
+  loading: {
+    text: 'Loading...'
   }
 } as FullLocaleData;

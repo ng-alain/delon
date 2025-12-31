@@ -91,5 +91,8 @@ export default {
     thisMonth: '이번 달',
     lastMonth: '지난달',
     thisYear: '올해'
+  },
+  loading: {
+    text: '로딩 중...'
   }
 } as FullLocaleData;

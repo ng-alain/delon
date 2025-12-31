@@ -55,5 +55,8 @@ export default {
     thisMonth: 'Ovaj mjesec',
     lastMonth: 'Prošli mjesec',
     thisYear: 'Ova godina'
+  },
+  loading: {
+    text: 'Učitavanje...'
   }
 } as FullLocaleData;

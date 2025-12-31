@@ -91,5 +91,8 @@ export default {
     thisMonth: 'Tháng này',
     lastMonth: 'Tháng trước',
     thisYear: 'Năm nay'
+  },
+  loading: {
+    text: 'Đang tải...'
   }
 } as FullLocaleData;

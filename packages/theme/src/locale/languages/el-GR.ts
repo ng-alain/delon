@@ -91,5 +91,8 @@ export default {
     thisMonth: 'Αυτό το μήνα',
     lastMonth: 'Προηγ. μήνα',
     thisYear: 'Αυτό το έτος'
+  },
+  loading: {
+    text: 'Φόρτωση...'
   }
 } as FullLocaleData;

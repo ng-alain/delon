@@ -91,5 +91,8 @@ export default {
     thisMonth: '本月',
     lastMonth: '上个月',
     thisYear: '今年'
+  },
+  loading: {
+    text: '加载中...'
   }
 } as FullLocaleData;
