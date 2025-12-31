@@ -3,21 +3,21 @@ import { CdkObserveContent } from '@angular/cdk/observers';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
   Renderer2,
   TemplateRef,
-  ViewChild,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  computed,
+  effect,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  signal,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -41,7 +41,91 @@ interface PageHeaderPath {
 @Component({
   selector: 'page-header',
   exportAs: 'pageHeader',
-  templateUrl: './page-header.component.html',
+  template: `
+    @if (isBrowser && fixed()) {
+      <nz-affix #affix [nzOffsetTop]="fixedOffsetTop()">
+        <ng-template [ngTemplateOutlet]="phTpl" />
+      </nz-affix>
+    } @else {
+      <ng-template [ngTemplateOutlet]="phTpl" />
+    }
+    <ng-template #phTpl>
+      <div class="page-header" [class.page-header-rtl]="dir() === 'rtl'">
+        <div [class.page-header__wide]="wide()">
+          <nz-skeleton
+            [nzLoading]="loading()"
+            [nzTitle]="false"
+            [nzActive]="true"
+            [nzParagraph]="{ rows: 3 }"
+            [nzAvatar]="{ size: 'large', shape: 'circle' }"
+            class="d-block"
+          >
+            @if (breadcrumb()) {
+              <ng-template [ngTemplateOutlet]="breadcrumb()" />
+            } @else {
+              @let list = paths();
+              @if (list && list.length > 0) {
+                <nz-breadcrumb>
+                  @for (i of list; track $index) {
+                    <nz-breadcrumb-item>
+                      @if (i.link) {
+                        <a [routerLink]="i.link">{{ i.title }}</a>
+                      } @else {
+                        {{ i.title }}
+                      }
+                    </nz-breadcrumb-item>
+                  }
+                </nz-breadcrumb>
+              }
+            }
+            <div class="page-header__detail">
+              @if (logo()) {
+                <div class="page-header__logo">
+                  <ng-template [ngTemplateOutlet]="logo()" />
+                </div>
+              }
+              <div class="page-header__main">
+                <div class="page-header__row">
+                  @if (title() || titleText()) {
+                    <h1 class="page-header__title">
+                      @if (titleIsTpl()) {
+                        <ng-template [ngTemplateOutlet]="$any(title())" />
+                      } @else {
+                        {{ titleText() }}
+                        @let sub = titleSub();
+                        @if (sub) {
+                          <small>
+                            <ng-container *nzStringTemplateOutlet="sub">{{ sub }}</ng-container>
+                          </small>
+                        }
+                      }
+                    </h1>
+                  }
+                  @if (action()) {
+                    <div class="page-header__action">
+                      <ng-template [ngTemplateOutlet]="action()" />
+                    </div>
+                  }
+                </div>
+                <div class="page-header__row">
+                  <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
+                    <ng-content />
+                    <ng-template [ngTemplateOutlet]="content()" />
+                  </div>
+                  @if (extra()) {
+                    <div class="page-header__extra">
+                      <ng-template [ngTemplateOutlet]="extra()" />
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <ng-template [ngTemplateOutlet]="tab()" />
+          </nz-skeleton>
+        </div>
+      </div>
+    </ng-template>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [
@@ -55,108 +139,104 @@ interface PageHeaderPath {
     CdkObserveContent
   ]
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
+export class PageHeaderComponent {
   private readonly renderer = inject(Renderer2);
   private readonly router = inject(Router);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly menuSrv = inject(MenuService);
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly titleSrv = inject(TitleService);
   private readonly reuseSrv = inject(ReuseTabService, { optional: true });
   private readonly settings = inject(SettingsService);
-  private readonly platform = inject(Platform);
   private readonly cogSrv = inject(AlainConfigService);
 
-  @ViewChild('conTpl', { static: false }) private conTpl!: ElementRef;
-  @ViewChild('affix', { static: false }) private affix!: NzAffixComponent;
-  inited = false;
-  isBrowser = true;
-  dir = inject(Directionality).valueSignal;
+  private readonly conTpl = viewChild.required<ElementRef<HTMLElement>>('conTpl');
+  private readonly affix = viewChild(NzAffixComponent);
+  protected readonly isBrowser = inject(Platform).isBrowser;
+  protected readonly dir = inject(Directionality).valueSignal;
 
   private get menus(): Menu[] {
-    return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
+    return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb());
   }
 
-  _titleVal: string | null = '';
-  paths: PageHeaderPath[] = [];
+  protected paths = signal<PageHeaderPath[]>([]);
+  protected titleIsTpl = computed(() => this.title() instanceof TemplateRef);
+  protected titleText = signal<string | undefined | null>(null);
+  readonly titleSub = input<string | TemplateRef<void> | null>();
 
   // #region fields
 
-  _title: string | null = null;
-  _titleTpl: TemplateRef<NzSafeAny> | null = null;
-  @Input()
-  set title(value: string | TemplateRef<void> | null) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-      this._titleVal = '';
-    } else {
-      this._title = value;
-      this._titleVal = this._title;
-    }
-  }
-  @Input() titleSub?: string | TemplateRef<void> | null;
-
-  @Input({ transform: booleanAttribute }) loading = false;
-  @Input({ transform: booleanAttribute }) wide = false;
-  @Input() home?: string;
-  @Input() homeLink?: string;
-  @Input() homeI18n?: string;
-  @Input({ transform: booleanAttribute }) autoBreadcrumb!: boolean;
-  @Input({ transform: booleanAttribute }) autoTitle!: boolean;
-  @Input({ transform: booleanAttribute }) syncTitle!: boolean;
-  @Input({ transform: booleanAttribute }) fixed!: boolean;
-  @Input({ transform: numberAttribute }) fixedOffsetTop!: number;
-  @Input() breadcrumb?: TemplateRef<NzSafeAny> | null = null;
-  @Input({ transform: booleanAttribute }) recursiveBreadcrumb!: boolean;
-  @Input() logo?: TemplateRef<void> | null = null;
-  @Input() action?: TemplateRef<void> | null = null;
-  @Input() content?: TemplateRef<void> | null = null;
-  @Input() extra?: TemplateRef<void> | null = null;
-  @Input() tab?: TemplateRef<void> | null = null;
+  readonly title = input<string | TemplateRef<void> | null>();
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly wide = input(false, { transform: booleanAttribute });
+  readonly home = input<string>();
+  readonly homeLink = input('/');
+  readonly homeI18n = input<string>();
+  readonly autoBreadcrumb = input(true, { transform: booleanAttribute });
+  readonly autoTitle = input(true, { transform: booleanAttribute });
+  readonly syncTitle = input(true, { transform: booleanAttribute });
+  readonly fixed = input(false, { transform: booleanAttribute });
+  readonly fixedOffsetTop = input(64, { transform: numberAttribute });
+  readonly breadcrumb = input<TemplateRef<NzSafeAny> | null>(null);
+  readonly recursiveBreadcrumb = input(false, { transform: booleanAttribute });
+  readonly logo = input<TemplateRef<void> | null>(null);
+  readonly action = input<TemplateRef<void> | null>(null);
+  readonly content = input<TemplateRef<void> | null>(null);
+  readonly extra = input<TemplateRef<void> | null>(null);
+  readonly tab = input<TemplateRef<void> | null>(null);
 
   // #endregion
 
   private locale = inject(DelonLocaleService).getData('pageHeader');
 
   constructor() {
-    this.isBrowser = this.platform.isBrowser;
     this.cogSrv.attach(this, 'pageHeader', {
-      home: this.locale.home,
-      homeLink: '/',
-      autoBreadcrumb: true,
-      recursiveBreadcrumb: false,
-      autoTitle: true,
-      syncTitle: true,
-      fixed: false,
-      fixedOffsetTop: 64
+      home: this.locale.home
     });
     this.settings.notify
       .pipe(
         takeUntilDestroyed(),
-        filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed')
+        filter(w => this.affix() != null && w.type === 'layout' && w.name === 'collapsed')
       )
-      .subscribe(() => this.affix.updatePosition({} as NzSafeAny));
+      .subscribe(() => this.affix()?.updatePosition({} as NzSafeAny));
 
     const obsList: Array<Observable<NzSafeAny>> = [this.router.events.pipe(filter(ev => ev instanceof NavigationEnd))];
     if (this.menuSrv != null) obsList.push(this.menuSrv.change);
     obsList.push(this.i18nSrv.change);
     merge(...obsList)
-      .pipe(
-        takeUntilDestroyed(),
-        filter(() => this.inited)
-      )
+      .pipe(takeUntilDestroyed())
       .subscribe(() => this.refresh());
+
+    effect(() => this.refresh());
+
+    afterNextRender(() => this.checkContent());
   }
 
   refresh(): void {
-    this.setTitle().genBreadcrumb();
-    this.cdr.detectChanges();
+    let title: string | undefined | null;
+    if (this.title() == null && this.autoTitle() && this.menus.length > 0) {
+      const item = this.menus[this.menus.length - 1];
+      title = item.text;
+      if (item.i18n) {
+        title = this.i18nSrv.fanyi(item.i18n);
+      }
+    } else {
+      title = this.titleIsTpl() ? '' : (this.title() as string);
+    }
+    this.titleText.set(title);
+    // sync title to title & reuse service
+    if (title && this.syncTitle()) {
+      this.titleSrv.setTitle(title);
+      if (this.reuseSrv) {
+        this.reuseSrv.title = title;
+      }
+    }
+    // build breadcrumb
+    this.genBreadcrumb();
   }
 
   private genBreadcrumb(): void {
-    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) {
-      this.paths = [];
+    if (this.breadcrumb() || !this.autoBreadcrumb() || this.menus.length <= 0) {
+      this.paths.set([]);
       return;
     }
     const paths: PageHeaderPath[] = [];
@@ -167,55 +247,23 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
       paths.push({ title, link: (item.link && [item.link]) as string[] });
     });
     // add home
-    if (this.home) {
+    const home = this.home();
+    if (home) {
+      const homeI18n = this.homeI18n();
       paths.splice(0, 0, {
-        title: (this.homeI18n && this.i18nSrv.fanyi(this.homeI18n)) ?? this.home,
-        link: [this.homeLink!]
+        title: (homeI18n && this.i18nSrv.fanyi(homeI18n)) ?? home,
+        link: [this.homeLink()!]
       });
     }
-    this.paths = paths;
+    this.paths.set(paths);
   }
 
-  private setTitle(): this {
-    if (this._title == null && this._titleTpl == null && this.autoTitle && this.menus.length > 0) {
-      const item = this.menus[this.menus.length - 1];
-      let title = item.text;
-      if (item.i18n) {
-        title = this.i18nSrv.fanyi(item.i18n);
-      }
-      this._titleVal = title!;
-    }
-
-    if (this._titleVal && this.syncTitle) {
-      this.titleSrv.setTitle(this._titleVal);
-      if (!this.inited && this.reuseSrv) {
-        this.reuseSrv.title = this._titleVal;
-      }
-    }
-
-    return this;
-  }
-
-  checkContent(): void {
-    if (isEmpty(this.conTpl.nativeElement)) {
-      this.renderer.setAttribute(this.conTpl.nativeElement, 'hidden', '');
+  protected checkContent(): void {
+    const el = this.conTpl().nativeElement;
+    if (isEmpty(el)) {
+      this.renderer.setAttribute(el, 'hidden', '');
     } else {
-      this.renderer.removeAttribute(this.conTpl.nativeElement, 'hidden');
-    }
-  }
-
-  ngOnInit(): void {
-    this.refresh();
-    this.inited = true;
-  }
-
-  ngAfterViewInit(): void {
-    this.checkContent();
-  }
-
-  ngOnChanges(): void {
-    if (this.inited) {
-      this.refresh();
+      this.renderer.removeAttribute(el, 'hidden');
     }
   }
 }
