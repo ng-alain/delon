@@ -25,6 +25,10 @@ export interface LoadingLocaleData extends LocaleData {
   text: string;
 }
 
+export interface PageHeaderLocaleData extends LocaleData {
+  home: string;
+}
+
 export interface NoticeIconLocaleData extends LocaleData {
   emptyText: string;
   clearText: string;
@@ -50,6 +54,7 @@ export interface STLocaleData extends LocaleData {
   total: string;
   filterConfirm: string;
   filterReset: string;
+  more: string;
 }
 
 export interface SFLocaleData extends LocaleData {
@@ -116,6 +121,7 @@ export interface FullLocaleData {
   onboarding: OnboardingLocaleData;
   datePicker: DatePickerLocaleData;
   loading: LoadingLocaleData;
+  pageHeader: PageHeaderLocaleData;
   miniProgress: MiniProgressLocaleData;
   st: STLocaleData;
   sf: SFLocaleData;

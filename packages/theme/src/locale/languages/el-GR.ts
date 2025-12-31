@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} από {{total}}',
     filterConfirm: 'ΟΚ',
-    filterReset: 'Επαναφορά'
+    filterReset: 'Επαναφορά',
+    more: 'Περισσότερα'
   },
   sf: {
     submit: 'Υποβολή',
@@ -94,5 +95,8 @@ export default {
   },
   loading: {
     text: 'Φόρτωση...'
+  },
+  pageHeader: {
+    home: 'Αρχική'
   }
 } as FullLocaleData;

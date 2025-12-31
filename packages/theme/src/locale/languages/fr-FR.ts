@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} de {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Réinitialiser'
+    filterReset: 'Réinitialiser',
+    more: 'Plus'
   },
   sf: {
     submit: 'Soumettre',
@@ -94,5 +95,8 @@ export default {
   },
   loading: {
     text: 'Chargement...'
+  },
+  pageHeader: {
+    home: 'Accueil'
   }
 } as FullLocaleData;

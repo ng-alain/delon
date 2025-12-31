@@ -28,7 +28,8 @@ export default {
   st: {
     total: '전체 {{total}}건',
     filterConfirm: '확인',
-    filterReset: '초기화'
+    filterReset: '초기화',
+    more: '더보기'
   },
   sf: {
     submit: '제출',
@@ -94,5 +95,8 @@ export default {
   },
   loading: {
     text: '로딩 중...'
+  },
+  pageHeader: {
+    home: '홈'
   }
 } as FullLocaleData;

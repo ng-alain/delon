@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} dari {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Atur ulang'
+    filterReset: 'Atur ulang',
+    more: 'Lainnya'
   },
   sf: {
     submit: 'Kirim',
@@ -94,5 +95,8 @@ export default {
   },
   loading: {
     text: 'Memuat...'
+  },
+  pageHeader: {
+    home: 'Beranda'
   }
 } as FullLocaleData;

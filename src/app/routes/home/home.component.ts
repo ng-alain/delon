@@ -1,6 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { FooterComponent } from '@shared';
@@ -8,7 +8,6 @@ import AOS from 'aos';
 import { GithubButtonComponent } from 'ng-github-button';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
-import { ZoneOutside } from '@delon/util/decorator';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -38,7 +37,6 @@ interface ThemeItem {
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly i18n = inject(ALAIN_I18N_TOKEN);
-  readonly ngZone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
   private readonly platform = inject(Platform);
 
@@ -60,7 +58,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.doc.querySelector('body') as HTMLElement;
   }
 
-  @ZoneOutside()
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
     AOS.init();

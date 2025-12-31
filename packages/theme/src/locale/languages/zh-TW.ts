@@ -28,7 +28,8 @@ export default {
   st: {
     total: '共 {{total}} 條',
     filterConfirm: '確定',
-    filterReset: '重置'
+    filterReset: '重置',
+    more: '更多'
   },
   sf: {
     submit: '提交',
@@ -94,5 +95,8 @@ export default {
   },
   loading: {
     text: '加載中...'
+  },
+  pageHeader: {
+    home: '首頁'
   }
 } as FullLocaleData;
