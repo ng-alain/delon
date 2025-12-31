@@ -67,7 +67,8 @@ describe('abc: table: data-souce', () => {
       page: deepCopy(ST_DEFAULT_CONFIG.page),
       columns: [{ title: '', index: 'id' }] as _STColumn[],
       headers: [[{ colSpan: 1, rowSpan: 1, hasSubColumns: false, column: { title: '', index: 'id' } as _STColumn }]],
-      paginator: true
+      paginator: true,
+      locale: { more: 'More' } as NzSafeAny
     };
     TestBed.configureTestingModule({
       providers: [DatePipe, YNPipe, DecimalPipe, CurrencyService]

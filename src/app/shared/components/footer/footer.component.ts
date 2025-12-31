@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  NgZone,
-  booleanAttribute,
-  inject
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, booleanAttribute, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
@@ -31,7 +23,6 @@ export class FooterComponent {
   readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly msg = inject(NzMessageService);
   private readonly iconSrv = inject(NzIconService);
-  private readonly ngZone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
 
   color = `#1890ff`;
@@ -47,11 +38,9 @@ export class FooterComponent {
     const hex = res.color.toHexString();
     window.scrollTo(0, 0);
     document.documentElement.style.setProperty('--ant-primary-color', hex);
-    this.ngZone.run(() => {
-      this.color = hex;
-      this.iconSrv.twoToneColor.primaryColor = this.color;
-      this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
-      this.cdr.detectChanges();
-    });
+    this.color = hex;
+    this.iconSrv.twoToneColor.primaryColor = this.color;
+    this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
+    this.cdr.detectChanges();
   }
 }

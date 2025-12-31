@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} / {{total}}',
     filterConfirm: '確定',
-    filterReset: 'リセット'
+    filterReset: 'リセット',
+    more: 'もっと'
   },
   sf: {
     submit: '送信',
@@ -91,5 +92,11 @@ export default {
     thisMonth: '今月',
     lastMonth: '先月',
     thisYear: '今年'
+  },
+  loading: {
+    text: '読み込み中...'
+  },
+  pageHeader: {
+    home: 'ホーム'
   }
 } as FullLocaleData;

@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} จาก {{total}}',
     filterConfirm: 'ตกลง',
-    filterReset: 'รีเซ็ต'
+    filterReset: 'รีเซ็ต',
+    more: 'เพิ่มเติม'
   },
   sf: {
     submit: 'ส่งข้อมูล',
@@ -91,5 +92,11 @@ export default {
     thisMonth: 'เดือนนี้',
     lastMonth: 'เดือนที่แล้ว',
     thisYear: 'ปีนี้'
+  },
+  loading: {
+    text: 'กำลังโหลด...'
+  },
+  pageHeader: {
+    home: 'หน้าหลัก'
   }
 } as FullLocaleData;
