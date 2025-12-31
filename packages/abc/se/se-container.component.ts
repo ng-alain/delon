@@ -21,7 +21,8 @@ import { SEErrorRefresh, SELayout } from './se.types';
   template: '<ng-content />',
   host: {
     class: 'se__title',
-    '[class]': 'cls()'
+    '[style.padding-left.px]': 'paddingValue()',
+    '[style.padding-right.px]': 'paddingValue()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -33,14 +34,7 @@ export class SETitleComponent {
       throw new Error(`[se-title] must include 'se-container' component`);
     }
   }
-
-  protected cls = computed(() => {
-    const gutter = this.parentComp!._gutter() as number;
-    return {
-      'padding-left': `${gutter / 2}px`,
-      'padding-right': `${gutter / 2}px`
-    };
-  });
+  protected paddingValue = computed(() => this.parentComp!._gutter() / 2);
 }
 
 @Component({

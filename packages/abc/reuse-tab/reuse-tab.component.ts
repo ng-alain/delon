@@ -146,8 +146,6 @@ export class ReuseTabComponent implements OnInit, OnChanges {
 
   // #endregion
 
-  constructor() {}
-
   private genTit(title: ReuseTitle): string {
     return title.i18n ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }

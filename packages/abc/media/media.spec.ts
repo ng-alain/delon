@@ -32,7 +32,7 @@ describe('abc: media', () => {
     spyOn(lazySrv, 'load').and.returnValue(Promise.resolve([]));
   });
 
-  xit('should be throw error when not found Plyr in window', fakeAsync(() => {
+  it('should be throw error when not found Plyr in window', fakeAsync(() => {
     expect(() => page.cd().end()).toThrow();
   }));
 
@@ -40,12 +40,12 @@ describe('abc: media', () => {
     beforeEach(() => (win.Plyr = MockPlyr));
     afterEach(() => delete win.Plyr);
 
-    xit('should be working', fakeAsync(() => {
+    it('should be working', fakeAsync(() => {
       page.cd();
       expect(page.player != null).toBe(true);
     }));
 
-    xit('should be load once libs', fakeAsync(() => {
+    it('should be load once libs', fakeAsync(() => {
       page.cd();
       expect(lazySrv.load).toHaveBeenCalledTimes(1);
       const fixture2 = TestBed.createComponent(TestComponent);
@@ -64,13 +64,13 @@ describe('abc: media', () => {
       expect(page.player.source.type).toBe('audio');
     }));
 
-    xit('#ready', fakeAsync(() => {
+    it('#ready', fakeAsync(() => {
       spyOn(context, 'ready');
       page.cd();
       expect(context.ready).toHaveBeenCalled();
     }));
 
-    xit('should be custom vedio dom', fakeAsync(() => {
+    it('should be custom vedio dom', fakeAsync(() => {
       const fixture2 = TestBed.createComponent(TestCustomVideoComponent);
       fixture2.detectChanges();
       tick();

@@ -17,17 +17,17 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   selector: 'sv-title, [sv-title]',
   exportAs: 'svTitle',
   template: '<ng-content />',
-  host: { class: 'sv__title', '[style]': `padding()` },
+  host: {
+    class: 'sv__title',
+    '[style.padding-left.px]': 'paddingValue()',
+    '[style.padding-right.px]': 'paddingValue()'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class SVTitleComponent {
   private readonly parentComp = inject(SVContainerComponent, { host: true, optional: true });
-
-  protected padding = computed(() => {
-    const gutter = this.parentComp!.gutter();
-    return { 'padding-left': `${gutter / 2}px`, 'padding-right': `${gutter / 2}px` };
-  });
+  protected paddingValue = computed(() => this.parentComp!.gutter() / 2);
 
   constructor() {
     if (this.parentComp == null) {
