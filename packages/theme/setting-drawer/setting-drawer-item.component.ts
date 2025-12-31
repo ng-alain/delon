@@ -9,10 +9,43 @@ import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'setting-drawer-item',
-  templateUrl: './setting-drawer-item.component.html',
-  host: {
-    '[class.setting-drawer__body-item]': 'true'
-  },
+  template: `
+    <span>
+      {{ i.label }}
+      <span class="pl-sm text-grey">{{ i.tip }}</span>
+    </span>
+    @switch (i.type) {
+      @case ('color') {
+        <input
+          nz-input
+          type="color"
+          style="width: 88px"
+          [(ngModel)]="i.value"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      }
+      @case ('input') {
+        <input nz-input style="width: 88px" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
+      }
+      @case ('px') {
+        <nz-input-number
+          [(ngModel)]="pxVal"
+          (ngModelChange)="pxChange($event)"
+          [nzMin]="i.min"
+          [nzMax]="i.max"
+          [nzStep]="i.step ?? 2"
+          [nzFormatter]="format"
+        />
+      }
+      @case ('switch') {
+        <nz-switch nzSize="small" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
+      }
+      @default {
+        <ng-template nzDrawerContent />
+      }
+    }
+  `,
+  host: { class: 'setting-drawer__body-item' },
   imports: [FormsModule, NzInputDirective, NzInputNumberComponent, NzSwitchComponent, NzDrawerModule]
 })
 export class SettingDrawerItemComponent {

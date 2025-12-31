@@ -36,11 +36,110 @@ const FLOATINGCLS = 'sidebar-nav__floating';
 
 @Component({
   selector: 'layout-default-nav',
-  templateUrl: './layout-nav.component.html',
+  template: `
+    <ng-template #icon let-i>
+      @if (i) {
+        @switch (i.type) {
+          @case ('icon') {
+            <nz-icon
+              class="sidebar-nav__item-icon"
+              [nzType]="i.value"
+              [nzTheme]="i.theme"
+              [nzSpin]="i.spin"
+              [nzTwotoneColor]="i.twoToneColor"
+              [nzIconfont]="i.iconfont"
+              [nzRotate]="i.rotate"
+            />
+          }
+          @case ('iconfont') {
+            <nz-icon class="sidebar-nav__item-icon" [nzIconfont]="i.iconfont" />
+          }
+          @case ('img') {
+            <img [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
+          }
+          @case ('svg') {
+            <span class="sidebar-nav__item-icon sidebar-nav__item-svg" [innerHTML]="i.value"></span>
+          }
+          @default {
+            <i class="sidebar-nav__item-icon {{ i.value }}"></i>
+          }
+        }
+      }
+    </ng-template>
+    <ng-template #tree let-ls>
+      @for (i of ls; track $index) {
+        @if (i._hidden !== true) {
+          @if (i.render_type === 'divider') {
+            <li class="sidebar-nav__divider"></li>
+          } @else {
+            <li
+              class="sidebar-nav__item"
+              [class.sidebar-nav__selected]="i._selected"
+              [class.sidebar-nav__open]="i.open"
+            >
+              <!-- link -->
+              @if (i.children.length === 0) {
+                <a
+                  (click)="to(i)"
+                  [attr.data-id]="i._id"
+                  class="sidebar-nav__item-link"
+                  [class.sidebar-nav__item-disabled]="i.disabled"
+                  (mouseenter)="closeSubMenu()"
+                >
+                  @if (i._needIcon) {
+                    @if (collapsed) {
+                      <span nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i.text">
+                        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
+                      </span>
+                    } @else {
+                      <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
+                    }
+                  }
+                  <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
+                </a>
+              }
+              <!-- has children link -->
+              @if (i.children.length > 0) {
+                <a (click)="toggleOpen(i)" (mouseenter)="showSubMenu($event, i)" class="sidebar-nav__item-link">
+                  <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }" />
+                  <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
+                  <i class="sidebar-nav__sub-arrow"></i>
+                </a>
+              }
+              <!-- badge -->
+              @if (i.badge) {
+                <nz-badge
+                  [nzCount]="i.badge"
+                  [nzDot]="i.badgeDot"
+                  nzStandalone
+                  [nzOverflowCount]="i.badgeOverflowCount ? i.badgeOverflowCount : 9"
+                />
+              }
+              @if (i.children.length > 0) {
+                <ul class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ i._depth }}">
+                  <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: i.children }" />
+                </ul>
+              }
+            </li>
+          }
+        }
+      }
+    </ng-template>
+    <ul class="sidebar-nav">
+      @for (group of list; track $index) {
+        @if (group.group) {
+          <li class="sidebar-nav__item sidebar-nav__group-title">
+            <span [innerHTML]="group._text"></span>
+          </li>
+        }
+        <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }" />
+      }
+    </ul>
+  `,
   host: {
+    class: 'd-block',
     '(click)': '_click()',
-    '(document:click)': 'closeSubMenu()',
-    '[class.d-block]': `true`
+    '(document:click)': 'closeSubMenu()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
