@@ -5,18 +5,17 @@ import { createAlainApp } from '../utils/testing';
 import { DEFAULT_WORKSPACE_PATH } from '../utils/workspace';
 
 describe('Schematic: ng-add', () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let runner: SchematicTestRunner;
+  let _runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
   it('should dependencies @delon of an application', async () => {
-    ({ runner, tree } = await createAlainApp());
+    ({ runner: _runner, tree } = await createAlainApp());
     const packageJson = JSON.parse(tree.readContent('package.json'));
     expect(packageJson.dependencies['@delon/theme']).toBeDefined();
   });
 
   it('#issues-https://github.com/ng-alain/ng-alain/issues/2359', async () => {
-    ({ runner, tree } = await createAlainApp());
+    ({ runner: _runner, tree } = await createAlainApp());
     const json = JSON.parse(tree.readContent(DEFAULT_WORKSPACE_PATH));
     const budgets = json.projects['foo'].architect.build.configurations.production.budgets;
     expect(budgets[0].maximumWarning).toBe('2mb');

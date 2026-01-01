@@ -16,8 +16,7 @@ import {
   encapsulation: ViewEncapsulation.None
 })
 export class GlobalFooterItemComponent {
-  host = viewChild.required<TemplateRef<void>>('host');
-  // @ViewChild('host', { static: true }) host!: TemplateRef<void>;
-  href = input<string>();
-  blankTarget = input(false, { transform: booleanAttribute });
+  readonly host = viewChild.required<TemplateRef<void>>('host');
+  readonly href = input<string>();
+  readonly blankTarget = input(false, { transform: booleanAttribute });
 }

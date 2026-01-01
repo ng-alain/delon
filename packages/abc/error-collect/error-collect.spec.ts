@@ -1,7 +1,7 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, inject, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -24,27 +24,26 @@ describe('abc: error-collect', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-    const iptEl = dl.query(By.css('#email'));
-    if (iptEl) {
-      const ipt = iptEl.nativeElement as HTMLInputElement;
-      ipt.value = '1';
-      ipt.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-    }
+  }
+
+  function getCount(): number {
+    return +dl.query(By.css('.error-collect__count')).nativeElement.innerText;
   }
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
     it('should be collect error', (done: () => void) => {
       setTimeout(() => {
-        expect(context.comp.count()).toBe(1);
+        fixture.detectChanges();
+        expect(getCount()).toBe(1);
         done();
       }, 21);
     });
 
     it('should be click go to first error element', (done: () => void) => {
       setTimeout(() => {
-        expect(context.comp.count()).toBe(1);
+        fixture.detectChanges();
+        expect(getCount()).toBe(1);
         const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
         spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
@@ -103,12 +102,9 @@ class TestComponent implements OnInit {
   offsetTop = 65 + 16;
   @ViewChild('ec', { static: true })
   comp!: ErrorCollectComponent;
-  validateForm: UntypedFormGroup;
-  constructor() {
-    this.validateForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]]
-    });
-  }
+  validateForm = this.fb.group({
+    email: [null, [Validators.required, Validators.email]]
+  });
 
   get email(): AbstractControl {
     return this.validateForm.controls.email;

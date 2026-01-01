@@ -45,7 +45,6 @@ describe('abc: table: data-souce', () => {
   let mockDomSanitizer: MockDomSanitizer;
 
   class MockHttpClient {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(_method: string, _url: string, _opt: any): any {
       return of(httpResponse);
     }
@@ -974,7 +973,6 @@ describe('abc: table: data-souce', () => {
       options.data = [{ id: 1 }];
       options.columns = [
         {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           buttons: [{ text: (_, __) => `fn` }]
         }
       ] as _STColumn[];

@@ -8,9 +8,28 @@ import { LoadingCustom, LoadingIcon, LoadingShowOptions } from './loading.types'
 
 @Component({
   selector: 'loading-default',
-  templateUrl: './loading.component.html',
+  template: `
+    @if (options.type! !== 'text') {
+      <div class="loading-default__icon">
+        @switch (options.type) {
+          @case ('spin') {
+            <nz-spin nzSimple />
+          }
+          @case ('icon') {
+            <nz-icon [nzType]="icon.type!" [nzTheme]="icon.theme!" [nzSpin]="icon.spin" />
+          }
+          @default {
+            <div class="loading-default__custom" [style]="custom.style!" [innerHTML]="custom.html"></div>
+          }
+        }
+      </div>
+    }
+    @if (options.text) {
+      <div class="loading-default__text">{{ options.text }}</div>
+    }
+  `,
   host: {
-    '[class.loading-default]': 'true',
+    class: 'loading-default',
     '[class.loading-default-rtl]': `dir === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,

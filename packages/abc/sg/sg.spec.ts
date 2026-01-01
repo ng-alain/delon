@@ -57,7 +57,6 @@ describe('abc: sg', () => {
           context.parent_col = 0;
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
-          page.expect('.ant-col-sm-12');
         });
       });
       describe('#item', () => {

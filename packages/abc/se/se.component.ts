@@ -1,26 +1,28 @@
 import { CdkObserveContent } from '@angular/cdk/observers';
 import {
-  AfterContentInit,
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ContentChild,
   DestroyRef,
   ElementRef,
-  Input,
-  OnChanges,
-  Renderer2,
+  Injector,
   TemplateRef,
-  ViewChild,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  computed,
+  contentChild,
+  effect,
   inject,
-  numberAttribute
+  input,
+  linkedSignal,
+  numberAttribute,
+  runInInjectionContext,
+  signal,
+  viewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormControlName, NgModel, RequiredValidator, Validator, Validators } from '@angular/forms';
-import { filter } from 'rxjs';
+import { filter, map, Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty } from '@delon/util/browser';
@@ -32,7 +34,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { SEContainerComponent } from './se-container.component';
-import { SEError, SEErrorType } from './se.types';
+import { SEErrorType } from './se.types';
 
 const prefixCls = `se`;
 let nextUniqueId = 0;
@@ -40,87 +42,146 @@ let nextUniqueId = 0;
 @Component({
   selector: 'se',
   exportAs: 'se',
-  templateUrl: './se.component.html',
+  template: `
+    @let _label = label();
+    <div class="ant-form-item-label" [class.se__nolabel]="hideLabel() || !_label" [style.width.px]="_labelWidth()">
+      @if (_label) {
+        <label
+          [attr.for]="_id()"
+          class="se__label"
+          [class.ant-form-item-required]="_required()"
+          [class.se__no-colon]="_noColon()"
+        >
+          <span class="se__label-text">
+            <ng-container *nzStringTemplateOutlet="_label">{{ _label }}</ng-container>
+          </span>
+          @let _optional = optional();
+          @let _optionalHelp = optionalHelp();
+          @if (_optional || _optionalHelp) {
+            <span class="se__label-optional" [class.se__label-optional-no-text]="!_optional">
+              <ng-container *nzStringTemplateOutlet="_optional">{{ _optional }}</ng-container>
+              @if (_optionalHelp) {
+                <nz-icon
+                  nz-tooltip
+                  [nzTooltipTitle]="_optionalHelp"
+                  [nzTooltipColor]="optionalHelpColor()"
+                  nzType="question-circle"
+                />
+              }
+            </span>
+          }
+        </label>
+      }
+    </div>
+    <div class="ant-form-item-control se__control">
+      <div class="ant-form-item-control-input" [class]="controlClass()">
+        <div class="ant-form-item-control-input-content" (cdkObserveContent)="checkContent()" #contentElement>
+          <ng-content />
+        </div>
+      </div>
+      @if (showErr()) {
+        <div
+          [animate.enter]="nzValidateAnimationEnter()"
+          [animate.leave]="nzValidateAnimationLeave()"
+          class="ant-form-item-explain ant-form-item-explain-connected"
+        >
+          <div role="alert" class="ant-form-item-explain-error">
+            <ng-container *nzStringTemplateOutlet="errorText()">{{ errorText() }}</ng-container>
+          </div>
+        </div>
+      }
+      @let _extra = extra();
+      @if (_extra && !compact()) {
+        <div class="ant-form-item-extra">
+          <ng-container *nzStringTemplateOutlet="_extra">{{ _extra }}</ng-container>
+        </div>
+      }
+    </div>
+  `,
   host: {
-    '[style.padding-left.px]': 'paddingValue',
-    '[style.padding-right.px]': 'paddingValue',
-    '[class.se__hide-label]': 'hideLabel',
-    '[class.ant-form-item-has-error]': 'invalid',
-    '[class.ant-form-item-with-help]': 'showErr'
+    '[style.padding-left.px]': 'paddingValue()',
+    '[style.padding-right.px]': 'paddingValue()',
+    '[class.se__hide-label]': 'hideLabel()',
+    '[class.ant-form-item-has-error]': 'invalid()',
+    '[class.ant-form-item-with-help]': 'showErr()',
+    '[class.se__item-empty]': 'empty()',
+    '[class]': 'cls()'
   },
   providers: [NzFormStatusService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, NzTooltipDirective, NzIconDirective, CdkObserveContent]
 })
-export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
+export class SEComponent {
   private readonly parentComp = inject(SEContainerComponent, { host: true, optional: true })!;
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly rep = inject(ResponsiveService);
-  private readonly ren = inject(Renderer2);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly statusSrv = inject(NzFormStatusService);
   private readonly destroy$ = inject(DestroyRef);
+  private readonly injector = inject(Injector);
 
-  @ContentChild(NgModel, { static: true }) private readonly ngModel?: NgModel;
-  @ContentChild(FormControlName, { static: true })
-  private readonly formControlName?: FormControlName;
-  @ViewChild('contentElement', { static: true }) private readonly contentElement!: ElementRef;
-  private clsMap: string[] = [];
-  private inited = false;
+  private readonly ngModel = contentChild(NgModel);
+  private readonly formControlName = contentChild(FormControlName);
+  private ngControl = computed(() => this.ngModel() ?? this.formControlName());
+  private readonly contentElement = viewChild.required<ElementRef<HTMLElement>>('contentElement');
   private onceFlag = false;
-  private errorData: SEError = {};
-  private isBindModel = false;
-  invalid = false;
-  _labelWidth: number | null = null;
-  _noColon: boolean | null = null;
-  _error?: string | TemplateRef<void>;
+  private bindModel$?: Subscription;
+  protected empty = signal(false);
 
   // #region fields
 
-  @Input() optional?: string | TemplateRef<void> | null = null;
-  @Input() optionalHelp?: string | TemplateRef<void> | null = null;
-  @Input() optionalHelpColor?: string;
-  @Input()
-  set error(val: SEErrorType) {
-    this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;
-  }
-  @Input() extra?: string | TemplateRef<void> | null;
-  @Input() label?: string | TemplateRef<void> | null;
-  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) col?: number | null;
-  @Input({ transform: booleanAttribute }) required = false;
-  @Input() controlClass?: string | null = '';
-  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) line?: boolean | null;
-  @Input({ transform: (v: unknown) => (v == null ? null : numberAttribute(v)) }) labelWidth?: number | null;
-  @Input({ transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) }) noColon?: boolean | null;
-  @Input({ transform: booleanAttribute }) hideLabel = false;
-
-  @Input()
-  set id(value: string) {
-    this._id = value;
-    this._autoId = false;
-  }
-
-  _id = `_se-${++nextUniqueId}`;
-  _autoId = true;
+  readonly optional = input<string | TemplateRef<void> | null>();
+  readonly optionalHelp = input<string | TemplateRef<void> | null>();
+  readonly optionalHelpColor = input<string>();
+  error = input<SEErrorType>();
+  readonly extra = input<string | TemplateRef<void> | null>();
+  readonly label = input<string | TemplateRef<void> | null>();
+  readonly col = input(null, { transform: (v: unknown) => (v == null ? null : numberAttribute(v)) });
+  readonly required = input(false, { transform: booleanAttribute });
+  readonly controlClass = input<string | null>();
+  readonly line = input(null, { transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) });
+  readonly labelWidth = input(null, { transform: (v: unknown) => (v == null ? null : numberAttribute(v)) });
+  readonly noColon = input(null, { transform: (v: unknown) => (v == null ? null : booleanAttribute(v)) });
+  readonly hideLabel = input(false, { transform: booleanAttribute });
+  readonly id = input<string>();
 
   // #endregion
 
-  get paddingValue(): number {
-    return (this.parentComp.gutter as number) / 2;
-  }
+  protected invalid = signal(false);
+  protected showErr = computed(() => this.invalid() && !!this.errorText() && !this.compact());
+  protected errorType = linkedSignal(() => this.error());
+  protected errorData = computed(() => {
+    const err = this.errorType();
+    return typeof err === 'string' || err instanceof TemplateRef ? { '': err } : err;
+  });
+  protected errorText = signal<string | TemplateRef<void> | null>(null);
+  protected _required = linkedSignal(() => this.required() === true);
 
-  get showErr(): boolean {
-    return this.invalid && !!this._error && !this.compact;
-  }
+  protected paddingValue = computed(() => this.parentComp._gutter() / 2);
 
-  get compact(): boolean {
-    return this.parentComp.size === 'compact';
-  }
-
-  private get ngControl(): NgModel | FormControlName | null | undefined {
-    return this.ngModel ?? this.formControlName;
-  }
+  protected compact = computed(() => this.parentComp._size() === 'compact');
+  protected _id = linkedSignal(() => this.id());
+  protected _noColon = computed(() => {
+    const noColon = this.noColon();
+    return noColon != null ? noColon : this.parentComp!.noColon();
+  });
+  protected _labelWidth = computed(() => {
+    const parent = this.parentComp!;
+    const labelWidth = this.labelWidth();
+    return parent.nzLayout() === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth()) : null;
+  });
+  protected cls = computed(() => {
+    const parent = this.parentComp!;
+    const parentCol = parent.colInCon() ?? parent.col();
+    const col = this.col();
+    const repCls =
+      parent.nzLayout() === 'horizontal' ? this.rep.genCls(col != null ? col : parentCol!, parentCol!) : [];
+    const ret: string[] = [];
+    ret.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
+    if (this.line() || parent.line()) {
+      ret.push(`${prefixCls}__line`);
+    }
+    return ret;
+  });
 
   protected readonly nzValidateAnimationEnter = withAnimationCheck(() => 'ant-form-validate_animation-enter');
   protected readonly nzValidateAnimationLeave = withAnimationCheck(() => 'ant-form-validate_animation-leave');
@@ -129,112 +190,84 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit {
     if (this.parentComp == null) {
       throw new Error(`[se] must include 'se-container' component`);
     }
-    this.parentComp.errorNotify
+
+    toObservable(this.parentComp.errors)
       .pipe(
         takeUntilDestroyed(),
-        filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name)
+        map(ls => ls.find(w => this.ngControl()?.name === w.name)),
+        filter(w => w != null)
       )
       .subscribe(item => {
-        this.error = item.error;
-        this.updateStatus(this.ngControl!.invalid!);
+        this.errorType.set(item.error);
+        this.updateStatus();
       });
-  }
 
-  private setClass(): this {
-    const { el, ren, clsMap, col, cdr, line, labelWidth, rep, noColon } = this;
-    const parent = this.parentComp!;
-    this._noColon = noColon != null ? noColon : parent.noColon;
-    this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
-    clsMap.forEach(cls => ren.removeClass(el, cls));
-    clsMap.length = 0;
-    const parentCol = parent.colInCon ?? parent.col;
-    const repCls = parent.nzLayout === 'horizontal' ? rep.genCls(col != null ? col : parentCol, parentCol) : [];
-    clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
-    if (line || parent.line) {
-      clsMap.push(`${prefixCls}__line`);
-    }
-    clsMap.forEach(cls => ren.addClass(el, cls));
-    cdr.detectChanges();
-    return this;
-  }
+    effect(() => this.checkContent());
 
-  private bindModel(): void {
-    if (!this.ngControl || this.isBindModel) return;
+    effect(() => {
+      const control = this.ngControl();
+      if (!control) return;
 
-    this.isBindModel = true;
-    this.ngControl
-      .statusChanges!.pipe(takeUntilDestroyed(this.destroy$))
-      .subscribe(res => this.updateStatus(res === 'INVALID'));
-    if (this._autoId) {
-      const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
-      const control = (controlAccessor?.elementRef ?? controlAccessor?._elementRef)?.nativeElement as HTMLElement;
-      if (control) {
-        if (control.id) {
-          this._id = control.id;
+      this.bindModel$?.unsubscribe();
+      this.bindModel$ = control
+        .statusChanges!.pipe(takeUntilDestroyed(this.destroy$))
+        .subscribe(res => this.updateStatus(res === 'INVALID'));
+
+      // set unique id
+      let id = this.id() ?? `_se-${++nextUniqueId}`;
+      const controlAccessor = this.ngControl()?.valueAccessor as NzSafeAny;
+      const controlEl = (controlAccessor?.elementRef ?? controlAccessor?._elementRef)?.nativeElement as HTMLElement;
+      if (controlEl) {
+        if (controlEl.id) {
+          this._id.set(controlEl.id);
         } else {
-          control.id = this._id;
+          controlEl.id = id;
         }
       }
-    }
-    // auto required
-    if (this.required !== true) {
-      let required = this.ngControl?.control?.hasValidator(Validators.required);
-      if (required !== true) {
-        const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Validator[];
-        required = rawValidators.find(w => w instanceof RequiredValidator) != null;
+
+      // auto required
+      if (this.required() !== true) {
+        let required = control?.control?.hasValidator(Validators.required);
+        if (required !== true) {
+          const rawValidators = (control as NzSafeAny)?._rawValidators as Validator[];
+          required = rawValidators.find(w => w instanceof RequiredValidator) != null;
+        }
+        this._required.set(required);
       }
-      this.required = required;
-      this.cdr.detectChanges();
-    }
+    });
+
+    effect(() => {
+      this.onceFlag = this.parentComp.firstVisual();
+      if (!this.onceFlag) return;
+
+      runInInjectionContext(this.injector, () => {
+        afterNextRender(() => {
+          this.updateStatus();
+          this.onceFlag = false;
+        });
+      });
+    });
   }
 
-  private updateStatus(invalid: boolean): void {
-    if (this.ngControl?.disabled || this.ngControl?.isDisabled) {
-      return;
-    }
-    this.invalid =
-      !this.onceFlag && invalid && this.parentComp.ingoreDirty === false && !this.ngControl?.dirty ? false : invalid;
-    const errors = this.ngControl?.errors;
+  private updateStatus(invalid?: boolean | null): void {
+    const control = this.ngControl();
+    if (!control || control.disabled || control.isDisabled) return;
+    if (invalid == null) invalid = control.invalid;
+    this.invalid.set(
+      !this.onceFlag && invalid && this.parentComp.ingoreDirty() === false && !control?.dirty ? false : invalid!
+    );
+    const errors = control?.errors;
     if (errors != null && Object.keys(errors).length > 0) {
       const key = Object.keys(errors)[0] ?? '';
-      const err = this.errorData[key];
-      this._error = err != null ? err : (this.errorData[''] ?? '');
+      const err = this.errorData()?.[key];
+      this.errorText.set(err != null ? err : (this.errorData()?.[''] ?? ''));
     }
 
-    this.statusSrv.formStatusChanges.next({ status: this.invalid ? 'error' : '', hasFeedback: false });
-
-    this.cdr.detectChanges();
+    this.statusSrv.formStatusChanges.next({ status: this.invalid() ? 'error' : '', hasFeedback: false });
   }
 
   checkContent(): void {
-    const el = this.contentElement.nativeElement;
-    const cls = `${prefixCls}__item-empty`;
-    if (isEmpty(el)) {
-      this.ren.addClass(el, cls);
-    } else {
-      this.ren.removeClass(el, cls);
-    }
-  }
-
-  ngAfterContentInit(): void {
-    this.checkContent();
-  }
-
-  ngOnChanges(): void {
-    this.onceFlag = this.parentComp.firstVisual;
-    if (this.inited) {
-      this.setClass().bindModel();
-    }
-  }
-
-  ngAfterViewInit(): void {
-    this.setClass().bindModel();
-    this.inited = true;
-    if (this.onceFlag) {
-      Promise.resolve().then(() => {
-        this.updateStatus(this.ngControl!.invalid!);
-        this.onceFlag = false;
-      });
-    }
+    const el = this.contentElement().nativeElement;
+    this.empty.set(isEmpty(el));
   }
 }

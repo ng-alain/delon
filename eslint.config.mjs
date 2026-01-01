@@ -193,7 +193,14 @@ export default tseslint.config(
       'max-len': 'off',
       'no-empty': 'off',
       '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-deprecated': 'warn'
+      '@typescript-eslint/no-deprecated': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ]
     }
   },
   {

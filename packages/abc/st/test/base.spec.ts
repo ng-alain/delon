@@ -476,9 +476,7 @@ export class TestComponent {
 
   delay = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   error(_: any): void {}
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   change(_: any): void {}
 }
 

@@ -2,22 +2,26 @@ import { Direction } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
+  Injector,
   OnDestroy,
-  ViewChild,
   ViewEncapsulation,
-  inject
+  afterNextRender,
+  effect,
+  inject,
+  runInInjectionContext,
+  signal,
+  viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, fromEvent } from 'rxjs';
 
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 
 import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
@@ -34,9 +38,61 @@ interface OnboardingLightData {
 
 @Component({
   selector: 'onboarding',
-  templateUrl: './onboarding.component.html',
+  template: `
+    @if (!running() && config.mask) {
+      <div class="onboarding__mask" (click)="handleMask()"></div>
+    }
+    <div
+      class="onboarding__light"
+      [class.onboarding__light-hide]="running()"
+      [attr.style]="item.lightStyle"
+      nz-popover
+      [nzPopoverTitle]="item.title"
+      [nzPopoverContent]="content"
+      [nzPopoverVisible]="!running()"
+      [nzPopoverTrigger]="null"
+      [nzPopoverPlacement]="item.position"
+      [nzPopoverOverlayClassName]="item.className"
+      [nzPopoverOverlayStyle]="{ 'max-width.px': item.width, direction: dir }"
+      [nzNoAnimation]="true"
+    ></div>
+    <ng-template #content>
+      <ng-container *nzStringTemplateOutlet="item.content">
+        <div [innerHTML]="item.content"></div>
+      </ng-container>
+      <div class="flex-center-between onboarding__footer">
+        <span class="onboarding__total">
+          @if (config.showTotal) {
+            {{ active + 1 }}/{{ max }}
+          }
+        </span>
+        <div class="onboarding__btns">
+          @if (!last && item.skip !== null && item.skip !== undefined) {
+            <a nz-button nzType="link" (click)="to('skip')" nzSize="small" data-btnType="skip">
+              <ng-container *nzStringTemplateOutlet="item.skip">{{ item.skip }}</ng-container>
+            </a>
+          }
+          @if (!first && item.prev !== null) {
+            <a nz-button (click)="to('prev')" nzSize="small" data-btnType="prev">
+              <ng-container *nzStringTemplateOutlet="item.prev">{{ item.prev }}</ng-container>
+            </a>
+          }
+          @if (!last && item.next !== null && item.next !== undefined) {
+            <a nz-button (click)="to('next')" nzType="primary" nzSize="small" data-btnType="next">
+              <ng-container *nzStringTemplateOutlet="item.next">{{ item.next }}</ng-container>
+            </a>
+          }
+          @if (last && item.done !== null && item.done !== undefined) {
+            <a nz-button (click)="to('done')" nzType="primary" nzSize="small" data-btnType="done">
+              <ng-container *nzStringTemplateOutlet="item.done">{{ item.done }}</ng-container>
+            </a>
+          }
+        </div>
+      </div>
+    </ng-template>
+  `,
   host: {
-    '[class.onboarding]': `true`,
+    class: 'onboarding',
     '[class.onboarding-rtl]': `dir === 'rtl'`,
     '[attr.data-onboarding-active]': `active`
   },
@@ -44,42 +100,37 @@ interface OnboardingLightData {
   encapsulation: ViewEncapsulation.None,
   imports: [NzPopoverDirective, NzStringTemplateOutletDirective, NzButtonComponent, NzNoAnimationDirective]
 })
-export class OnboardingComponent implements OnDestroy, AfterViewInit {
+export class OnboardingComponent implements OnDestroy {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly injector = inject(Injector);
   private readonly platform = inject(Platform);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly doc = inject(DOCUMENT);
 
-  private time: NzSafeAny;
   private prevSelectorEl?: HTMLElement;
   config!: OnboardingConfig;
   item!: OnboardingItem;
   active = 0;
   max = 0;
   readonly op = new EventEmitter<OnboardingOpType>();
-  running = false;
+  running = signal(false);
   dir: Direction = 'ltr';
-  @ViewChild('popover', { static: false }) private popover!: NzPopoverDirective;
+  popover = viewChild.required(NzPopoverDirective);
 
-  get first(): boolean {
+  protected get first(): boolean {
     return this.active === 0;
   }
 
-  get last(): boolean {
+  protected get last(): boolean {
     return this.active === this.max - 1;
   }
 
-  private _getDoc(): Document {
-    return this.doc;
-  }
-
-  private _getWin(): Window {
-    return this._getDoc().defaultView ?? window;
+  private get _getWin(): Window {
+    return this.doc.defaultView ?? window;
   }
 
   private getLightData(): OnboardingLightData | null {
-    const doc = this._getDoc();
-    const win = this._getWin();
+    const doc = this.doc;
+    const win = this._getWin;
     const el = doc.querySelector(this.item.selectors) as HTMLElement;
     if (!el) {
       return null;
@@ -105,24 +156,37 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-    // Waiting https://github.com/NG-ZORRO/ng-zorro-antd/issues/6491
-    this.popover.component!.onClickOutside = () => {};
+  constructor() {
+    afterNextRender(() => {
+      // Waiting https://github.com/NG-ZORRO/ng-zorro-antd/issues/6491
+      this.popover().component!.onClickOutside = () => {};
+    });
+    effect(() => {
+      const running = this.running();
+      if (!running) {
+        runInInjectionContext(this.injector, () => {
+          afterNextRender(() => {
+            this.updatePosition();
+          });
+        });
+      }
+    });
+
+    // when window resize
+    fromEvent(window, 'resize')
+      .pipe(takeUntilDestroyed(), debounceTime(100))
+      .subscribe(() => this.updatePosition());
   }
 
   private scroll(pos: OnboardingLightData): void {
     this.prevSelectorEl = pos.el;
     const scrollY = pos.top - (pos.clientHeight - pos.height) / 2;
-    this._getWin().scrollTo({ top: scrollY });
+    this._getWin.scrollTo({ top: scrollY });
     this.updatePrevElStatus(true);
   }
 
   updateRunning(status: boolean): void {
-    this.running = status;
-    this.cdr.detectChanges();
-    if (!status) {
-      this.updatePosition();
-    }
+    this.running.set(status);
   }
 
   private updatePosition(): void {
@@ -160,13 +224,12 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
 
   handleMask(): void {
     if (this.config.maskClosable === true) {
-      this.popover.component!.hide();
+      this.popover().component?.hide();
       this.to('done');
     }
   }
 
   ngOnDestroy(): void {
-    clearTimeout(this.time);
     this.updatePrevElStatus(false);
   }
 }

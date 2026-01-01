@@ -772,7 +772,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     get list(): ReuseItem[] {
-      return rtComp.list;
+      return rtComp.list();
     }
     get count(): number {
       return this.list.length;
