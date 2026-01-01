@@ -1,7 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
-import { Injectable, InjectionToken, Provider, Signal, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map, Observable, Subject } from 'rxjs';
+import { Injectable, InjectionToken, Provider, inject, signal } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -32,9 +31,18 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
   private readonly platform = inject(Platform);
 
   private notify$ = new Subject<SettingsNotify>();
-  private _app: A | null = null;
-  private _user: U | null = null;
-  private _layout: L | null = null;
+  readonly appSignal = signal<A>({
+    year: new Date().getFullYear(),
+    ...this.getData(this.KEYS.app)
+  });
+  readonly userSignal = signal<U>({ ...this.getData(this.KEYS.user) });
+  readonly layoutSignal = signal<L>({
+    fixed: true,
+    collapsed: false,
+    boxed: false,
+    lang: null,
+    ...this.getData(this.KEYS.layout)
+  });
 
   getData(key: string): NzSafeAny {
     if (!this.platform.isBrowser) {
@@ -51,69 +59,15 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
   }
 
   get layout(): L {
-    if (!this._layout) {
-      this._layout = {
-        fixed: true,
-        collapsed: false,
-        boxed: false,
-        lang: null,
-        ...this.getData(this.KEYS.layout)
-      };
-      this.setData(this.KEYS.layout, this._layout);
-    }
-    return this._layout as L;
-  }
-
-  get layoutSignal(): Signal<Layout> {
-    const ret = toSignal(
-      this.notify$.pipe(
-        filter(v => v.type === 'layout'),
-        map(() => ({ ...this.layout }))
-      ),
-      { initialValue: this.layout }
-    );
-    return ret;
+    return this.layoutSignal() as L;
   }
 
   get app(): A {
-    if (!this._app) {
-      this._app = {
-        year: new Date().getFullYear(),
-        ...this.getData(this.KEYS.app)
-      };
-      this.setData(this.KEYS.app, this._app);
-    }
-    return this._app as A;
-  }
-
-  get appSignal(): Signal<App> {
-    const ret = toSignal(
-      this.notify$.pipe(
-        filter(v => v.type === 'app'),
-        map(() => ({ ...this.app }))
-      ),
-      { initialValue: this.app }
-    );
-    return ret;
+    return this.appSignal() as A;
   }
 
   get user(): U {
-    if (!this._user) {
-      this._user = { ...this.getData(this.KEYS.user) };
-      this.setData(this.KEYS.user, this._user);
-    }
-    return this._user as U;
-  }
-
-  get userSignal(): Signal<User> {
-    const ret = toSignal(
-      this.notify$.pipe(
-        filter(v => v.type === 'user'),
-        map(() => ({ ...this.user }))
-      ),
-      { initialValue: this.user }
-    );
-    return ret;
+    return this.userSignal() as U;
   }
 
   get notify(): Observable<SettingsNotify> {
@@ -123,38 +77,40 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
   setLayout<T extends Layout = Layout>(name: T, value?: NzSafeAny): boolean;
   setLayout(name: string | L, value?: NzSafeAny): boolean;
   setLayout(name: string | L, value?: NzSafeAny): boolean {
-    if (typeof name === 'string') {
-      (this.layout as Layout)[name] = value;
-    } else {
-      this._layout = name;
-    }
-    this.setData(this.KEYS.layout, this._layout);
+    this.layoutSignal.update(l => {
+      if (typeof name === 'string') {
+        (l as Layout)[name] = value;
+        return { ...l };
+      }
+      return { ...name };
+    });
+    this.setData(this.KEYS.layout, this.layout);
     this.notify$.next({ type: 'layout', name, value } as NzSafeAny);
     return true;
   }
   getLayout<T>(): T {
-    return this._layout as unknown as T;
+    return this.layout as unknown as T;
   }
 
   setApp<T extends App = App>(value: T): void;
   setApp(value: A): void;
   setApp(value: A): void {
-    this._app = value;
+    this.appSignal.set(value);
     this.setData(this.KEYS.app, value);
     this.notify$.next({ type: 'app', value });
   }
   getApp<T>(): T {
-    return this._app as unknown as T;
+    return this.app as unknown as T;
   }
 
   setUser<T extends User = User>(value: T): void;
   setUser(value: U): void;
   setUser(value: U): void {
-    this._user = value;
+    this.userSignal.set(value);
     this.setData(this.KEYS.user, value);
     this.notify$.next({ type: 'user', value });
   }
   getUser<T>(): T {
-    return this._user as unknown as T;
+    return this.user as unknown as T;
   }
 }

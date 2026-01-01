@@ -57,11 +57,10 @@ export class LayoutDefaultService {
    * 设置布局配置
    */
   setOptions(options?: LayoutDefaultOptions | null): void {
-    this.options.update(v => ({
+    this.options.set({
       ...DEFAULT,
-      ...v,
       ...options
-    }));
+    });
   }
 
   /**

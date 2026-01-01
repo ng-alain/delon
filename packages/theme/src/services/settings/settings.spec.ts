@@ -58,6 +58,13 @@ describe('Service: Settings', () => {
       });
       srv.setLayout('collapsed', 1);
     });
+
+    it('#layoutSignal', () => {
+      const v = srv.layoutSignal;
+      expect(v().collapsed).toBe(false);
+      srv.setLayout('collapsed', true);
+      expect(v().collapsed).toBe(true);
+    });
   });
 
   describe('#app', () => {
@@ -81,6 +88,13 @@ describe('Service: Settings', () => {
       });
       srv.setApp({ name: 'a' });
     });
+
+    it('#appSignal', () => {
+      const v = srv.appSignal;
+      expect(v().name).toBeUndefined();
+      srv.setApp({ name: 'a' });
+      expect(v().name).toBe('a');
+    });
   });
 
   describe('#user', () => {
@@ -103,6 +117,13 @@ describe('Service: Settings', () => {
         done();
       });
       srv.setUser({ name: 'a' });
+    });
+
+    it('#userSignal', () => {
+      const v = srv.userSignal;
+      expect(v().name).toBeUndefined();
+      srv.setUser({ name: 'a' });
+      expect(v().name).toBe('a');
     });
   });
 });
