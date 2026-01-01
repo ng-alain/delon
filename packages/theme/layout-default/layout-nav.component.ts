@@ -1,21 +1,19 @@
 import { Directionality } from '@angular/cdk/bidi';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
-  EventEmitter,
-  Input,
-  NgZone,
   OnDestroy,
-  OnInit,
-  Output,
   Renderer2,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  effect,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  output,
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -23,8 +21,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 import { Menu, MenuIcon, MenuInner, MenuService, SettingsService } from '@delon/theme';
-import { ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 export interface Nav extends MenuInner {
   _needIcon?: boolean;
@@ -126,7 +126,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
       }
     </ng-template>
     <ul class="sidebar-nav">
-      @for (group of list; track $index) {
+      @for (group of list(); track $index) {
         @if (group.group) {
           <li class="sidebar-nav__item sidebar-nav__group-title">
             <span [innerHTML]="group._text"></span>
@@ -141,41 +141,81 @@ const FLOATINGCLS = 'sidebar-nav__floating';
     '(click)': '_click()',
     '(document:click)': 'closeSubMenu()'
   },
+  imports: [NgTemplateOutlet, NzIconDirective, NzTooltipDirective, NzBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  encapsulation: ViewEncapsulation.None
 })
-export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
+export class LayoutDefaultNavComponent implements OnDestroy {
   private readonly doc = inject(DOCUMENT);
   private readonly win = inject(WINDOW);
   private readonly router = inject(Router);
   private readonly render = inject(Renderer2);
   private readonly menuSrv = inject(MenuService);
   private readonly settings = inject(SettingsService);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly ngZone = inject(NgZone);
   private readonly sanitizer = inject(DomSanitizer);
 
-  private bodyEl!: HTMLBodyElement;
-  private destroy$ = inject(DestroyRef);
+  private bodyEl = this.doc.querySelector<HTMLBodyElement>('body')!;
   private floatingEl!: HTMLDivElement;
   dir = inject(Directionality).valueSignal;
-  list: Nav[] = [];
+  list = signal<Nav[]>([]);
 
-  @Input({ transform: booleanAttribute }) disabledAcl = false;
-  @Input({ transform: booleanAttribute }) autoCloseUnderPad = true;
-  @Input({ transform: booleanAttribute }) recursivePath = true;
-  @Input({ transform: booleanAttribute }) hideEmptyChildren = true;
-  @Input({ transform: booleanAttribute })
-  set openStrictly(value: boolean) {
-    this.menuSrv.openStrictly = value;
-  }
-  @Input({ transform: numberAttribute }) maxLevelIcon = 3;
-  @Output() readonly select = new EventEmitter<Menu>();
+  readonly disabledAcl = input(false, { transform: booleanAttribute });
+  readonly autoCloseUnderPad = input(true, { transform: booleanAttribute });
+  readonly recursivePath = input(true, { transform: booleanAttribute });
+  readonly hideEmptyChildren = input(true, { transform: booleanAttribute });
+  readonly openStrictly = input<boolean>();
+  readonly maxLevelIcon = input(3, { transform: numberAttribute });
+  readonly select = output<Menu>();
 
   get collapsed(): boolean {
     return this.settings.layout.collapsed;
+  }
+
+  constructor() {
+    effect(() => {
+      const openStrictly = this.openStrictly();
+      if (openStrictly != null) {
+        this.menuSrv.openStrictly = openStrictly;
+      }
+    });
+
+    this.menuSrv.change.pipe(takeUntilDestroyed()).subscribe(data => {
+      this.menuSrv.visit(data, (i: Nav, _p, depth) => {
+        i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
+        i._needIcon = depth! <= this.maxLevelIcon() && !!i.icon;
+        if (!i._aclResult) {
+          if (this.disabledAcl()) {
+            i.disabled = true;
+          } else {
+            i._hidden = true;
+          }
+        }
+        const icon = i.icon as MenuIcon;
+        if (icon && icon.type === 'svg' && typeof icon.value === 'string') {
+          icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!);
+        }
+      });
+      if (this.hideEmptyChildren()) this.fixHide(data);
+      this.list.set(data.filter((w: Nav) => w._hidden !== true));
+    });
+    this.router.events.pipe(takeUntilDestroyed()).subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        this.openByUrl(e.urlAfterRedirects);
+        this.underPad();
+      }
+    });
+    this.settings.notify
+      .pipe(
+        takeUntilDestroyed(),
+        filter(t => t.type === 'layout' && t.name === 'collapsed')
+      )
+      .subscribe(() => this.clearFloating());
+
+    afterNextRender(() => {
+      this.underPad();
+      this.openByUrl(this.router.url);
+      this.genFloating();
+    });
   }
 
   private getLinkNode(node: HTMLElement): HTMLElement | null {
@@ -196,7 +236,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     }
 
     let item: Nav;
-    this.menuSrv.visit(this.list, (i: Nav) => {
+    this.menuSrv.visit(this.list(), (i: Nav) => {
       if (!item && i._id === id) {
         item = i;
       }
@@ -262,8 +302,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  @ZoneOutside()
-  showSubMenu(e: MouseEvent, item: Nav): void {
+  protected showSubMenu(e: MouseEvent, item: Nav): void {
     if (this.collapsed !== true) {
       return;
     }
@@ -276,7 +315,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     this.calPos(linkNode as HTMLLinkElement, subNode);
   }
 
-  to(item: Menu): void {
+  protected to(item: Menu): void {
     this.select.emit(item);
     if (item.disabled) return;
 
@@ -288,21 +327,21 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
       }
       return;
     }
-    this.ngZone.run(() => this.router.navigateByUrl(item.link!));
+    this.router.navigateByUrl(item.link!);
   }
 
-  toggleOpen(item: Nav): void {
+  protected toggleOpen(item: Nav): void {
     this.menuSrv.toggleOpen(item);
   }
 
-  _click(): void {
+  protected _click(): void {
     if (this.isPad && this.collapsed) {
       this.openAside(false);
       this.hideAll();
     }
   }
 
-  closeSubMenu(): void {
+  protected closeSubMenu(): void {
     if (this.collapsed) {
       this.hideAll();
     }
@@ -310,49 +349,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
 
   private openByUrl(url: string | null): void {
     const { menuSrv, recursivePath } = this;
-    this.menuSrv.open(menuSrv.find({ url, recursive: recursivePath }));
-  }
-
-  ngOnInit(): void {
-    const { doc, router, menuSrv, settings, cdr } = this;
-    this.bodyEl = doc.querySelector<HTMLBodyElement>('body')!;
-    menuSrv.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
-      menuSrv.visit(data, (i: Nav, _p, depth) => {
-        i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
-        i._needIcon = depth! <= this.maxLevelIcon && !!i.icon;
-        if (!i._aclResult) {
-          if (this.disabledAcl) {
-            i.disabled = true;
-          } else {
-            i._hidden = true;
-          }
-        }
-        const icon = i.icon as MenuIcon;
-        if (icon && icon.type === 'svg' && typeof icon.value === 'string') {
-          icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!);
-        }
-      });
-      if (this.hideEmptyChildren) this.fixHide(data);
-      this.list = data.filter((w: Nav) => w._hidden !== true);
-      cdr.detectChanges();
-    });
-    router.events.pipe(takeUntilDestroyed(this.destroy$)).subscribe(e => {
-      if (e instanceof NavigationEnd) {
-        this.openByUrl(e.urlAfterRedirects);
-        this.underPad();
-        this.cdr.detectChanges();
-      }
-    });
-    settings.notify
-      .pipe(
-        takeUntilDestroyed(this.destroy$),
-        filter(t => t.type === 'layout' && t.name === 'collapsed')
-      )
-      .subscribe(() => this.clearFloating());
-    this.underPad();
-
-    this.openByUrl(router.url);
-    this.ngZone.runOutsideAngular(() => this.genFloating());
+    this.menuSrv.open(menuSrv.find({ url, recursive: recursivePath() }));
   }
 
   private fixHide(ls: Nav[]): void {
@@ -370,10 +367,6 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     inFn(ls);
   }
 
-  ngOnDestroy(): void {
-    this.clearFloating();
-  }
-
   // #region Under pad
 
   private get isPad(): boolean {
@@ -381,7 +374,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   private underPad(): void {
-    if (this.autoCloseUnderPad && this.isPad && !this.collapsed) {
+    if (this.autoCloseUnderPad() && this.isPad && !this.collapsed) {
       setTimeout(() => this.openAside(true));
     }
   }
@@ -391,4 +384,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   // #endregion
+
+  ngOnDestroy(): void {
+    this.clearFloating();
+  }
 }

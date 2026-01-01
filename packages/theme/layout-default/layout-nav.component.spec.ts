@@ -139,6 +139,7 @@ describe('theme: layout-default-nav', () => {
         spyOn(context, 'select');
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
+        fixture.detectChanges();
         expect(context.select).not.toHaveBeenCalled();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         const itemEl = page.getEl<HTMLElement>('.sidebar-nav__depth1 a');
@@ -151,6 +152,7 @@ describe('theme: layout-default-nav', () => {
       describe('should be navigate external link', () => {
         it('with target is _blank', () => {
           createComp();
+          fixture.detectChanges();
           const win = TestBed.inject(WINDOW);
           spyOn(win, 'open');
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="6"]');
@@ -159,6 +161,7 @@ describe('theme: layout-default-nav', () => {
         });
         it('with target is _top', () => {
           createComp();
+          fixture.detectChanges();
           const win = TestBed.inject(WINDOW);
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="7"]');
           itemEl!.click();
@@ -168,6 +171,7 @@ describe('theme: layout-default-nav', () => {
 
       it('should be hide group name', () => {
         createComp();
+        fixture.detectChanges();
         page.checkCount('.sidebar-nav__group-title');
         const data = deepCopy(MOCKMENUS) as Nav[];
         data[0].group = false;
@@ -180,6 +184,7 @@ describe('theme: layout-default-nav', () => {
         createComp();
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
+        fixture.detectChanges();
         expect(data[0].children![0].open).toBe(false);
         const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__item-link');
         subTitleEl!.click();
@@ -189,6 +194,7 @@ describe('theme: layout-default-nav', () => {
 
       it('should be reset menu when service is changed', () => {
         createComp();
+        fixture.detectChanges();
         page.checkText('.sidebar-nav__group-title', MOCKMENUS[0].text);
         const newMenu = deepCopy(MOCKMENUS);
         newMenu[0].text = 'new主导航';
@@ -208,6 +214,7 @@ describe('theme: layout-default-nav', () => {
         ];
         menuSrv.add(newMenus);
         expect(context.select).not.toHaveBeenCalled();
+        fixture.detectChanges();
         const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item-disabled');
         itemEl!.click();
         fixture.detectChanges();
@@ -217,8 +224,10 @@ describe('theme: layout-default-nav', () => {
       it('should be support html in text or i18n', () => {
         createComp();
         menuSrv.add([{ text: 'text <strong>1</strong>' }]);
+        fixture.detectChanges();
         page.checkText('.sidebar-nav__item', `text 1`);
         menuSrv.add([{ i18n: 'i18n <strong>1</strong>' }]);
+        fixture.detectChanges();
         page.checkText('.sidebar-nav__item', `i18n 1`);
       });
 
@@ -234,6 +243,7 @@ describe('theme: layout-default-nav', () => {
               ]
             }
           ]);
+          fixture.detectChanges();
           page.checkCount('.sidebar-nav__group-title', 1);
           menuSrv.add([
             {
@@ -244,6 +254,7 @@ describe('theme: layout-default-nav', () => {
               ]
             }
           ]);
+          fixture.detectChanges();
           page.checkCount('.sidebar-nav__group-title', 0);
         });
         it('with false', () => {
@@ -259,6 +270,7 @@ describe('theme: layout-default-nav', () => {
               ]
             }
           ]);
+          fixture.detectChanges();
           page.checkCount('.sidebar-nav__group-title', 1);
           menuSrv.add([
             {
@@ -269,6 +281,7 @@ describe('theme: layout-default-nav', () => {
               ]
             }
           ]);
+          fixture.detectChanges();
           page.checkCount('.sidebar-nav__group-title', 1);
         });
       });
@@ -459,6 +472,7 @@ describe('theme: layout-default-nav', () => {
         context.disabledAcl = true;
         fixture.detectChanges();
         menuSrv.add(newMenus);
+        fixture.detectChanges();
         const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="3"]');
         expect(itemEl!.classList).toContain('sidebar-nav__item-disabled');
       });
@@ -466,6 +480,7 @@ describe('theme: layout-default-nav', () => {
         context.disabledAcl = false;
         fixture.detectChanges();
         menuSrv.add(newMenus);
+        fixture.detectChanges();
         const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="3"]');
         expect(itemEl == null).toBe(true);
       });
@@ -606,6 +621,7 @@ describe('theme: layout-default-nav', () => {
           ]
         }
       ]);
+      fixture.detectChanges();
     }));
     it('with true', fakeAsync(() => {
       context.recursivePath = true;
@@ -635,6 +651,7 @@ describe('theme: layout-default-nav', () => {
       context.openStrictly = true;
       fixture.detectChanges();
       menuSrv.add(deepCopy(MOCKOPENSTRICTLY));
+      fixture.detectChanges();
       page.checkCount('.sidebar-nav__open', 2);
       router.navigateByUrl('/user2');
       fixture.detectChanges();

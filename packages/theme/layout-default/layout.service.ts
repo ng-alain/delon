@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 
@@ -21,25 +21,8 @@ const DEFAULT: LayoutDefaultOptions = {
 export class LayoutDefaultService {
   private readonly settings = inject(SettingsService);
   private readonly bm = inject(BreakpointObserver);
-  private _options$ = new BehaviorSubject<LayoutDefaultOptions>(DEFAULT);
-  private _options: LayoutDefaultOptions = DEFAULT;
-
-  get options(): LayoutDefaultOptions {
-    return this._options;
-  }
-
-  get options$(): Observable<LayoutDefaultOptions> {
-    return this._options$.asObservable();
-  }
-
-  get collapsedIcon(): string {
-    const collapsed = this.settings.layout.collapsed;
-    let type = collapsed ? 'unfold' : 'fold';
-    if (this.settings.layout.direction === 'rtl') {
-      type = collapsed ? 'fold' : 'unfold';
-    }
-    return `menu-${type}`;
-  }
+  readonly options = signal(DEFAULT);
+  readonly collapsedIcon = signal('');
 
   constructor() {
     const mobileMedia = 'only screen and (max-width: 767.99px)';
@@ -48,14 +31,24 @@ export class LayoutDefaultService {
       .pipe(takeUntilDestroyed())
       .subscribe(state => this.checkMedia(state.matches));
     this.checkMedia(this.bm.isMatched(mobileMedia));
+
+    const settings = this.settings;
+    settings.notify
+      .pipe(
+        filter(w => w.type === 'layout'),
+        map(() => {
+          const collapsed = settings.layout.collapsed;
+          const ret =
+            settings.layout.direction === 'rtl' ? (collapsed ? 'fold' : 'unfold') : collapsed ? 'unfold' : 'fold';
+          return ret;
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe(type => this.collapsedIcon.set(`menu-${type}`));
   }
 
   private checkMedia(value: boolean): void {
     this.settings.setLayout('collapsed', value);
-  }
-
-  private notify(): void {
-    this._options$.next(this._options);
   }
 
   /**
@@ -64,11 +57,11 @@ export class LayoutDefaultService {
    * 设置布局配置
    */
   setOptions(options?: LayoutDefaultOptions | null): void {
-    this._options = {
+    this.options.update(v => ({
       ...DEFAULT,
+      ...v,
       ...options
-    };
-    this.notify();
+    }));
   }
 
   /**
@@ -78,6 +71,5 @@ export class LayoutDefaultService {
    */
   toggleCollapsed(status?: boolean): void {
     this.settings.setLayout('collapsed', status != null ? status : !this.settings.layout.collapsed);
-    this.notify();
   }
 }

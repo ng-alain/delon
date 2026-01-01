@@ -61,15 +61,15 @@ describe('theme: layout-default', () => {
     srv.toggleCollapsed(true);
     fixture.detectChanges();
     const el = page.getEl('.alain-default__nav-item--collapse');
-    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
     srv.toggleCollapsed(false);
     fixture.detectChanges();
-    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
   });
 
   it('#colorWeak', () => {
     const srv = TestBed.inject(SettingsService);
-    spyOnProperty(srv, 'layout').and.returnValue({ colorWeak: true });
+    srv.setLayout('colorWeak', true);
     fixture.detectChanges();
     expect(document.body.classList).toContain(`color-weak`);
   });
@@ -98,16 +98,16 @@ describe('theme: layout-default', () => {
 
   describe('RTL', () => {
     it('should be toggle collapsed', () => {
-      const srv = TestBed.inject(SettingsService);
-      let collapsed = false;
-      spyOnProperty(srv, 'layout').and.returnValue({ collapsed, direction: 'rtl' });
+      const settingSrv = TestBed.inject(SettingsService);
+      const srv = TestBed.inject(LayoutDefaultService);
+      settingSrv.setLayout('direction', 'rtl');
+      srv.toggleCollapsed(true);
       fixture.detectChanges();
       const el = page.getEl('.alain-default__nav-item--collapse');
-      expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
-      collapsed = true;
+      expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
       el.click();
       fixture.detectChanges();
-      expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+      expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
     });
   });
 
@@ -142,7 +142,7 @@ describe('theme: layout-default', () => {
     }));
 
     it('should toggle fetching status when load lzay config', fakeAsync(() => {
-      expect(context.comp.showFetching).toBe(true);
+      expect(context.comp.showFetching()).toBe(true);
       lazyEnd();
     }));
 
@@ -150,7 +150,7 @@ describe('theme: layout-default', () => {
       it('should be invalid module', fakeAsync(() => {
         const spy = spyOn(msgSrv, 'error');
         lazyError();
-        expect(context.comp.showFetching).toBe(false);
+        expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
         expect(spy.calls.first().args[0]).toContain('Could not load ');
         lazyEnd();
@@ -160,7 +160,7 @@ describe('theme: layout-default', () => {
         context.customError = 'test';
         fixture.detectChanges();
         lazyError();
-        expect(context.comp.showFetching).toBe(false);
+        expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
         expect(spy.calls.first().args[0]).toBe('test');
         lazyEnd();
@@ -170,13 +170,13 @@ describe('theme: layout-default', () => {
         context.customError = null;
         fixture.detectChanges();
         lazyError();
-        expect(context.comp.showFetching).toBe(false);
+        expect(context.comp.showFetching()).toBe(false);
         expect(spy).not.toHaveBeenCalled();
         lazyEnd();
       }));
       it('should be cancel load config', fakeAsync(() => {
         lazyCancel();
-        expect(context.comp.showFetching).toBe(false);
+        expect(context.comp.showFetching()).toBe(false);
         lazyEnd();
       }));
     });

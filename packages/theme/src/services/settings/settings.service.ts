@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
-import { Injectable, InjectionToken, Provider, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable, InjectionToken, Provider, Signal, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, Observable, Subject } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -63,6 +64,17 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     return this._layout as L;
   }
 
+  get layoutSignal(): Signal<Layout> {
+    const ret = toSignal(
+      this.notify$.pipe(
+        filter(v => v.type === 'layout'),
+        map(() => ({ ...this.layout }))
+      ),
+      { initialValue: this.layout }
+    );
+    return ret;
+  }
+
   get app(): A {
     if (!this._app) {
       this._app = {
@@ -74,12 +86,34 @@ export class SettingsService<L extends Layout = Layout, U extends User = User, A
     return this._app as A;
   }
 
+  get appSignal(): Signal<App> {
+    const ret = toSignal(
+      this.notify$.pipe(
+        filter(v => v.type === 'app'),
+        map(() => ({ ...this.app }))
+      ),
+      { initialValue: this.app }
+    );
+    return ret;
+  }
+
   get user(): U {
     if (!this._user) {
       this._user = { ...this.getData(this.KEYS.user) };
       this.setData(this.KEYS.user, this._user);
     }
     return this._user as U;
+  }
+
+  get userSignal(): Signal<User> {
+    const ret = toSignal(
+      this.notify$.pipe(
+        filter(v => v.type === 'user'),
+        map(() => ({ ...this.user }))
+      ),
+      { initialValue: this.user }
+    );
+    return ret;
   }
 
   get notify(): Observable<SettingsNotify> {
