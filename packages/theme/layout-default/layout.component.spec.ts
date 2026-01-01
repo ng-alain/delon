@@ -61,10 +61,10 @@ describe('theme: layout-default', () => {
     srv.toggleCollapsed(true);
     fixture.detectChanges();
     const el = page.getEl('.alain-default__nav-item--collapse');
-    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
+    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
     srv.toggleCollapsed(false);
     fixture.detectChanges();
-    expect(el.querySelector('.anticon-menu-unfold') != null).toBe(true);
+    expect(el.querySelector('.anticon-menu-fold') != null).toBe(true);
   });
 
   it('#colorWeak', () => {
