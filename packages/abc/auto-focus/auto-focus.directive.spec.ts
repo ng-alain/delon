@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AutoFocusDirective } from './auto-focus.directive';
 
@@ -10,23 +10,24 @@ describe('abc: auto-focus', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     context = fixture.componentInstance;
-    spyOn(context, 'focus');
+    vi.useFakeTimers();
+    vi.spyOn(context, 'focus');
   });
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', () => {
     context.showInput = true;
     fixture.detectChanges();
-    tick(2);
+    vi.advanceTimersByTime(2);
     expect(context.focus).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be not when enabled is false', fakeAsync(() => {
+  it('should be not when enabled is false', () => {
     context.enabled = false;
     context.showInput = true;
     fixture.detectChanges();
-    tick(2);
+    vi.advanceTimersByTime(2);
     expect(context.focus).not.toHaveBeenCalled();
-  }));
+  });
 });
 
 @Component({
