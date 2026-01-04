@@ -272,10 +272,6 @@ function addStyle(): Rule {
   };
 }
 
-function addReuseTab(): Rule {
-  return (_tree: Tree) => {};
-}
-
 function addFilesToRoot(options: ApplicationOptions): Rule {
   return chain([
     mergeWith(
@@ -410,7 +406,6 @@ export default function (options: ApplicationOptions): Rule {
       addFilesToRoot(options),
       forceLess(),
       addStyle(),
-      addReuseTab(),
       fixLang(options),
       fixAngularJson(),
       fixBrowserBuilderBudgets(),
