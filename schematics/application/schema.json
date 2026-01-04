@@ -22,6 +22,12 @@
       "default": true,
       "x-prompt": "Would you like to add mock plugin? (default: Y)"
     },
+    "reuseTab": {
+      "type": "boolean",
+      "description": "Generate reuse-tab plugin",
+      "default": false,
+      "x-prompt": "Would you like to add a multi-tag implementation? (default: N)"
+    },
     "i18n": {
       "type": "boolean",
       "description": "Generate i18n plugin",
