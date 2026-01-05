@@ -74,8 +74,10 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
           </ul>
         </nz-dropdown-menu>
       </ng-template>
-      <ng-template #contentTpl>
-        <router-outlet />
+      <ng-template #contentTpl><% if (reuseTab) { %>
+        <reuse-tab #reuseTab />
+        <router-outlet (activate)="reuseTab.activate($event)" (attach)="reuseTab.activate($event)" /><% } else { %>
+        <router-outlet /><% } %>
       </ng-template>
     </layout-default>
     @if (showSettingDrawer) {

@@ -111,6 +111,16 @@ describe('NgAlainSchematic: application', () => {
     });
   });
 
+  describe('#reuse-tab', () => {
+    it(`should be working`, async () => {
+      ({ tree } = await createAlainApp({ reuseTab: true }));
+      const appConfig = tree.readContent('/projects/foo/src/app/app.config.ts');
+      expect(appConfig).toContain(`provideReuseTabConfig(),`);
+      const baseComp = tree.readContent('/projects/foo/src/app/layout/basic/basic.component.ts');
+      expect(baseComp).toContain(`<reuse-tab #reuseTab />`);
+    });
+  });
+
   describe('#multiple-projects', () => {
     let runner: SchematicTestRunner;
     let tree: UnitTestTree;

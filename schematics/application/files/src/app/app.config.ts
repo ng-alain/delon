@@ -7,7 +7,8 @@ import { <% if (i18n) { %>I18NService, <% } %>defaultInterceptor, provideStartup
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
 import { authSimpleInterceptor, provideAuth } from '@delon/auth';<% if (form) { %>
-import { provideSFConfig } from '@delon/form';<% } %>
+import { provideSFConfig } from '@delon/form';<% } %><% if (reuseTab) { %>
+import { provideReuseTabConfig } from '@delon/abc/reuse-tab';<% } %>
 import { AlainProvideLang, provideAlain, zh_CN as delonLang } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { environment } from '@env/environment';
@@ -45,7 +46,8 @@ if (environment.useHash) routerFeatures.push(withHashLocation());
 const providers: Array<Provider | EnvironmentProviders> = [
   provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authSimpleInterceptor, defaultInterceptor])),
   provideAnimations(),
-  provideRouter(routes, ...routerFeatures),
+  provideRouter(routes, ...routerFeatures),<% if (reuseTab) { %>
+  provideReuseTabConfig(),<% } %>
   provideAlain({ config: alainConfig, defaultLang<% if (i18n) { %>, i18nClass: I18NService<% } %>, icons: [...ICONS_AUTO, ...ICONS] }),
   provideNzConfig(ngZorroConfig),
   provideAuth(),
