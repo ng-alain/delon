@@ -39,7 +39,8 @@
     "noImplicitThis": true,
     "resolveJsonModule": true,
     "types": [
-      "jasmine"
+      "jasmine",
+      "vitest/globals"
     ]
   }
 }
