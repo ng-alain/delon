@@ -801,7 +801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@antv/g2@npm:^4.2.11":
+"@antv/g2@npm:^4.2.12":
   version: 4.2.12
   resolution: "@antv/g2@npm:4.2.12"
   dependencies:
@@ -3823,7 +3823,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*, @types/jasmine@npm:~5.1.0":
+"@types/jasmine@npm:*, @types/jasmine@npm:~5.1.13":
   version: 5.1.13
   resolution: "@types/jasmine@npm:5.1.13"
   checksum: 10c0/f162b7949f44e1e68391711772e6e19ad8db77318dbff8068f79e06f9532956f4e762a814797a48abf3356786830cb23487623eb9bf1dd55624e21a1935bc09f
@@ -6567,7 +6567,7 @@ __metadata:
     "@angular/service-worker": "npm:^21.0.8"
     "@angular/ssr": "npm:^21.0.5"
     "@antv/data-set": "npm:^0.11.8"
-    "@antv/g2": "npm:^4.2.11"
+    "@antv/g2": "npm:^4.2.12"
     "@commitlint/cli": "npm:^20.3.1"
     "@commitlint/config-angular": "npm:^20.3.1"
     "@github/hotkey": "npm:^3.1.1"
@@ -6579,7 +6579,7 @@ __metadata:
     "@types/extend": "npm:^3.0.4"
     "@types/file-saver": "npm:^2.0.7"
     "@types/fs-extra": "npm:^11.0.4"
-    "@types/jasmine": "npm:~5.1.0"
+    "@types/jasmine": "npm:~5.1.13"
     "@types/jasminewd2": "npm:~2.0.13"
     "@types/mockjs": "npm:^1.0.10"
     "@types/node": "npm:^22.19.3"
@@ -6616,7 +6616,7 @@ __metadata:
     jasmine-spec-reporter: "npm:^7.0.0"
     jsonml.js: "npm:^0.1.0"
     jszip: "npm:^3.10.1"
-    karma: "npm:~6.4.0"
+    karma: "npm:~6.4.4"
     karma-chrome-launcher: "npm:~3.2.0"
     karma-coverage: "npm:~2.2.1"
     karma-jasmine: "npm:~5.1.0"
@@ -6640,7 +6640,7 @@ __metadata:
     ng-alain-sts: "npm:^0.0.2"
     ng-github-button: "npm:^21.0.1"
     ng-packagr: "npm:^21.0.1"
-    ng-zorro-antd: "npm:^21.0.0-beta.0"
+    ng-zorro-antd: "npm:^21.0.0"
     ngx-countdown: "npm:^21.0.0"
     ngx-highlight-js: "npm:^21.0.0"
     ngx-tinymce: "npm:^21.0.0"
@@ -10699,7 +10699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma@npm:~6.4.0":
+"karma@npm:~6.4.4":
   version: 6.4.4
   resolution: "karma@npm:6.4.4"
   dependencies:
@@ -12033,9 +12033,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-zorro-antd@npm:^21.0.0-beta.0":
-  version: 21.0.0-next.2
-  resolution: "ng-zorro-antd@npm:21.0.0-next.2"
+"ng-zorro-antd@npm:^21.0.0":
+  version: 21.0.0
+  resolution: "ng-zorro-antd@npm:21.0.0"
   dependencies:
     "@angular/cdk": "npm:^21.0.0"
     "@ant-design/icons-angular": "npm:^21.0.0"
@@ -12043,13 +12043,12 @@ __metadata:
     date-fns: "npm:^2.16.1"
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/animations": ^21.0.0
     "@angular/common": ^21.0.0
     "@angular/core": ^21.0.0
     "@angular/forms": ^21.0.0
     "@angular/platform-browser": ^21.0.0
     "@angular/router": ^21.0.0
-  checksum: 10c0/75c66639fd35a496c26173098e6d5c9d904ba032e83ac5a58d877b0165d88f84d76bba912463418672c07f2c6dfcabb6f43f958e1b486f9601dbde6578a0d7c3
+  checksum: 10c0/d76c59b3890eec43c4fe1bd6f7d64a2f2125f2a613aac01ffe6eeddacd006b151ab592a88f532a307b21242690a0aac7714951b6d8cf5c4d1a2af4ce53750b6e
   languageName: node
   linkType: hard
 
