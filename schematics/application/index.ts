@@ -193,7 +193,8 @@ function addCodeStylesToPackageJson(): Rule {
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
-        `stylelint-config-clean-order@DEP-0.0.0-PLACEHOLDER`
+        `stylelint-config-clean-order@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-order@DEP-0.0.0-PLACEHOLDER`
       ],
       'devDependencies'
     );

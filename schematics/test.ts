@@ -15,6 +15,7 @@ const runner = new Jasmine({ projectBaseDir });
 
 const files = `schematics/**/*.spec.ts`;
 // const files = `schematics/application/index.spec.ts`;
+// const files = `schematics/ng-update/upgrade-rules/V21/index.spec.ts`;
 
 const tests = glob.sync(files).map((p: string) => relative(projectBaseDir, p));
 
