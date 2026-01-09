@@ -2,7 +2,7 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 
 import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
-describe('Schematic: ng-update: v20Rule', () => {
+describe('Schematic: ng-update: v21Rule', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
   const logs: string[] = [];
@@ -21,7 +21,7 @@ describe('Schematic: ng-update: v20Rule', () => {
   it('#addStylelintOrderLib', async () => {
     const filePath = '/package.json';
     let content = tree.readContent(filePath);
-    const lib = `"stylelint-order": "DEP-0.0.0-PLACEHOLDER"`;
+    const lib = `"stylelint-order":`;
     tree.overwrite(filePath, content.replace(lib, ''));
     content = tree.readContent(filePath);
     expect(content).not.toContain(lib);
