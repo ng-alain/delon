@@ -41,7 +41,6 @@ export default {
     'custom-property-pattern': null,
     'number-max-precision': 8,
     'alpha-value-notation': 'number',
-    'color-function-notation': 'legacy',
     'selector-class-pattern': null,
     'selector-id-pattern': null,
     'plugin/declaration-block-no-ignored-properties': true,
