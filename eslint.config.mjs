@@ -1,4 +1,5 @@
 // @ts-check
+import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
@@ -8,7 +9,7 @@ import prettier from 'eslint-plugin-prettier';
 import * as importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: [
       '.*/',
@@ -44,7 +45,7 @@ export default tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      'prettier/prettier': ['error', {}],
+      'prettier/prettier': ['error'],
       '@angular-eslint/component-selector': [
         'off',
         {
@@ -205,12 +206,16 @@ export default tseslint.config(
   },
   {
     files: ['**/*.html'],
+    plugins: {
+      prettier,
+    },
     extends: [
       ...angular.configs.templateRecommended
       // todo(a11y)
       // ...angular.configs.templateAccessibility,
     ],
     rules: {
+      "prettier/prettier": ["error"],
       "@angular-eslint/template/eqeqeq": "off"
     }
   }

@@ -24,13 +24,15 @@
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
+  "stylelint.validate": ["css", "less", "scss"],
+  "stylelint.customSyntax": "postcss-less",
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[less]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.formatOnSave": true
