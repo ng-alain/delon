@@ -1,34 +1,32 @@
-// import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
-// import { tryAddFile } from '../../../utils';
-// import { createAlainApp, migrationCollection } from '../../../utils/testing';
+import { createAlainApp, migrationCollection } from '../../../utils/testing';
 
-// describe('Schematic: ng-update: v20Rule', () => {
-//   let runner: SchematicTestRunner;
-//   let tree: UnitTestTree;
-//   const logs: string[] = [];
+describe('Schematic: ng-update: v20Rule', () => {
+  let runner: SchematicTestRunner;
+  let tree: UnitTestTree;
+  const logs: string[] = [];
 
-//   beforeEach(async () => {
-//     ({ runner, tree } = await createAlainApp());
-//   });
+  beforeEach(async () => {
+    ({ runner, tree } = await createAlainApp());
+  });
 
-//   async function runMigration(): Promise<void> {
-//     logs.length = 0;
-//     runner = new SchematicTestRunner('schematics', migrationCollection);
-//     runner.logger.subscribe(e => logs.push(e.message));
-//     await runner.runSchematic('migration-v20', {}, tree);
-//   }
+  async function runMigration(): Promise<void> {
+    logs.length = 0;
+    runner = new SchematicTestRunner('schematics', migrationCollection);
+    runner.logger.subscribe(e => logs.push(e.message));
+    await runner.runSchematic('migration-v21', {}, tree);
+  }
 
-//   it('add declaration-property-value-no-unknown', async () => {
-//     const filePath = '/.stylelintrc.js';
-//     tryAddFile(
-//       tree,
-//       filePath,
-//       `    'media-query-no-invalid': null,
-//     'order/order': [`
-//     );
-//     await runMigration();
-//     const content = tree.readContent(filePath);
-//     expect(content).toContain(`declaration-property-value-no-unknown`);
-//   });
-// });
+  it('#addStylelintOrderLib', async () => {
+    const filePath = '/package.json';
+    let content = tree.readContent(filePath);
+    const lib = `"stylelint-order": "DEP-0.0.0-PLACEHOLDER"`;
+    tree.overwrite(filePath, content.replace(lib, ''));
+    content = tree.readContent(filePath);
+    expect(content).not.toContain(lib);
+    await runMigration();
+    content = tree.readContent(filePath);
+    expect(content).toContain(lib);
+  });
+});
