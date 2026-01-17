@@ -61,10 +61,10 @@ function removeOrginalFiles(): Rule {
       `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/styles.less`,
       `${project.sourceRoot}/public/favicon.ico`,
-      `${project.sourceRoot}/app/app.component.spec.ts`,
-      `${project.sourceRoot}/app/app.component.ts`,
-      `${project.sourceRoot}/app/app.component.html`,
-      `${project.sourceRoot}/app/app.component.less`,
+      `${project.sourceRoot}/app/app.spec.ts`,
+      `${project.sourceRoot}/app/app.ts`,
+      `${project.sourceRoot}/app/app.html`,
+      `${project.sourceRoot}/app/app.less`,
       `${project.sourceRoot}/app/app.config.ts`,
       `${project.sourceRoot}/app/app.routes.ts`
     ]
