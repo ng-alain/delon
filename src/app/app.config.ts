@@ -7,7 +7,6 @@ import {
   importProvidersFrom,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideRouter,
   RouterFeatures,
@@ -107,7 +106,6 @@ if (!environment.production) routerFeatures.push(withHashLocation());
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
     provideZonelessChangeDetection(),
     { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),

@@ -1,12 +1,12 @@
-import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
+import { createDragRef, DragRef } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
-import { Injectable, TemplateRef, Type, inject } from '@angular/core';
+import { Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
 import { SIGNAL, SignalNode } from '@angular/core/primitives/signals';
-import { Observable, Observer, delay, filter, take, tap } from 'rxjs';
+import { Observable, Observer, delay, take, tap } from 'rxjs';
 
 import { deepMerge } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { ModalOptions, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 
 const CLS_DRAG = 'MODAL-DRAG';
 
@@ -47,10 +47,10 @@ export interface ModalHelperDragOptions {
 @Injectable({ providedIn: 'root' })
 export class ModalHelper {
   private readonly srv = inject(NzModalService);
-  private readonly drag = inject(DragDrop);
+  private readonly injector = inject(Injector);
   private readonly doc = inject(DOCUMENT);
 
-  private createDragRef(options: ModalHelperDragOptions, wrapCls: string): DragRef {
+  private buildDrag(options: ModalHelperDragOptions, wrapCls: string): DragRef {
     const wrapEl = this.doc.querySelector(wrapCls) as HTMLDivElement;
     const modalEl = wrapEl.firstChild as HTMLDivElement;
     const handelEl = options.handleCls ? wrapEl.querySelector<HTMLDivElement>(options.handleCls) : null;
@@ -58,8 +58,7 @@ export class ModalHelper {
       handelEl.classList.add(`${CLS_DRAG}-HANDLE`);
     }
 
-    return this.drag
-      .createDrag(handelEl ?? modalEl)
+    return createDragRef(this.injector, handelEl ?? modalEl)
       .withHandles([handelEl ?? modalEl])
       .withBoundaryElement(wrapEl)
       .withRootElement(modalEl);
@@ -126,19 +125,20 @@ export class ModalHelper {
         cls.push(CLS_DRAG, dragWrapCls);
       }
       const mth = isBuildIn ? this.srv[comp] : this.srv.create;
-      const subject: NzModalRef<NzSafeAny, NzSafeAny> = mth.call(this.srv, {
+      const callOptions: ModalOptions = {
         nzWrapClassName: cls.join(' '),
-        nzContent: isBuildIn ? undefined : comp,
-        nzWidth: width ? width : undefined,
         nzFooter: null,
         nzData: params,
         nzDraggable: false,
         ...modalOptions
-      } as ModalOptions);
+      };
+      if (!isBuildIn) callOptions.nzContent = comp;
+      if (width) callOptions.nzWidth = width;
+      const modalRef = mth.call(this.srv, callOptions);
       // 保留 nzComponentParams 原有风格，但依然可以通过 @Inject(NZ_MODAL_DATA) 获取
-      if (subject.componentInstance != null && useNzData !== true) {
+      if (modalRef.componentInstance != null && useNzData !== true && params != null) {
         Object.entries(params as object).forEach(([key, value]) => {
-          const t = subject.componentInstance as any;
+          const t = modalRef.componentInstance as any;
           const s = t[key]?.[SIGNAL] as SignalNode<any>;
           if (s != null) {
             s.value = value;
@@ -147,19 +147,19 @@ export class ModalHelper {
           }
         });
       }
-      subject.afterOpen
+      modalRef.afterOpen
         .pipe(
           take(1),
+          delay(modalOptions?.nzNoAnimation ? 10 : 341),
           tap(() => {
             if (dragOptions != null) {
-              dragRef = this.createDragRef(dragOptions, `.${dragWrapCls}`);
+              dragRef = this.buildDrag(dragOptions, `.${dragWrapCls}`);
             }
-          }),
-          filter(() => focus != null),
-          delay(modalOptions?.nzNoAnimation ? 10 : 241)
+          })
         )
         .subscribe(() => {
-          const btns = subject
+          if (focus == null) return;
+          const btns = modalRef
             .getElement()
             .querySelector<HTMLDivElement>('.ant-modal-confirm-btns, .modal-footer')
             ?.querySelectorAll<HTMLButtonElement>('.ant-btn');
@@ -175,7 +175,7 @@ export class ModalHelper {
             el.dataset.focused = focus;
           }
         });
-      subject.afterClose.pipe(take(1)).subscribe((res: NzSafeAny) => {
+      modalRef.afterClose.pipe(take(1)).subscribe((res: NzSafeAny) => {
         if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
