@@ -80,12 +80,8 @@
     />
   </div>
 </nz-drawer>
-<div
-  class="setting-drawer__handle"
-  [class.setting-drawer__handle-opened]="collapse"
-  (click)="toggle()"
-  nz-tooltip
-  [nzTooltipTitle]="isDev ? devTips : null"
->
-  <nz-icon [nzType]="!collapse ? 'setting' : 'close'" class="setting-drawer__handle-icon" />
-</div>
+@if (!collapse) {
+  <div class="setting-drawer__handle" (click)="toggle()" nz-tooltip [nzTooltipTitle]="isDev ? devTips : null">
+    <nz-icon nzType="setting" class="setting-drawer__handle-icon" />
+  </div>
+}
