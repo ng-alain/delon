@@ -46,33 +46,6 @@ export default defineConfig(
     processor: angular.processInlineTemplates,
     rules: {
       'prettier/prettier': ['error'],
-      '@angular-eslint/component-selector': [
-        'off',
-        {
-          type: ['element', 'attribute'],
-          prefix: ['nz', 'test'],
-          style: 'kebab-case'
-        }
-      ],
-      '@angular-eslint/component-class-suffix': [
-        'off',
-        {
-          suffixes: ['Directive', 'Component', 'Base', 'Widget', 'Property', 'HarnessTest']
-        }
-      ],
-      '@angular-eslint/directive-class-suffix': [
-        'off',
-        {
-          suffixes: ['Directive', 'Component', 'Base', 'Widget']
-        }
-      ],
-      '@angular-eslint/directive-selector': [
-        'off',
-        {
-          type: 'attribute',
-          prefix: ['nz']
-        }
-      ],
       '@angular-eslint/no-attribute-decorator': 'error',
       '@angular-eslint/no-conflicting-lifecycle': 'off',
       '@angular-eslint/no-forward-ref': 'off',
