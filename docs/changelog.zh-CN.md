@@ -14,6 +14,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>21.0.1 (2026-01-17)</small>
+
+* fix(cli): 修复缺少 `ReuseTabComponent` 导入 (#1970) ([3fbafb1](https://github.com/ng-alain/delon/commit/3fbafb1)), closes [#1970](https://github.com/ng-alain/delon/issues/1970)
+* fix(cli): 修复移除 `provideAnimations` (#1971) ([4c92bca](https://github.com/ng-alain/delon/commit/4c92bca)), closes [#1971](https://github.com/ng-alain/delon/issues/1971)
+
+
 ## 21.0.0 (2026-01-17)
 
 ### Code Refactoring
