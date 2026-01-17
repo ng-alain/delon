@@ -3,7 +3,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { I18nPipe, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultModule, LayoutDefaultOptions } from '@delon/theme/layout-default';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
-import { ThemeBtnComponent } from '@delon/theme/theme-btn';
+import { ThemeBtnComponent } from '@delon/theme/theme-btn';<% if (reuseTab) { %>
+import { ReuseTabComponent } from '@delon/abc/reuse-tab';<% } %>
 import { environment } from '@env/environment';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
@@ -91,7 +92,8 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
     I18nPipe,<% } %>
     LayoutDefaultModule,
     SettingDrawerModule,
-    ThemeBtnComponent,
+    ThemeBtnComponent,<% if (reuseTab) { %>,
+    ReuseTabComponent<% } %>
     NzIconModule,
     NzMenuModule,
     NzDropdownModule,
