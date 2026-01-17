@@ -28,14 +28,7 @@ import { NzSwitchComponent } from 'ng-zorro-antd/switch';
         <input nz-input style="width: 88px" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
       }
       @case ('px') {
-        <nz-input-number
-          [(ngModel)]="pxVal"
-          (ngModelChange)="pxChange($event)"
-          [nzMin]="i.min"
-          [nzMax]="i.max"
-          [nzStep]="i.step ?? 2"
-          [nzFormatter]="format"
-        />
+        <nz-input-number [(ngModel)]="pxVal" (ngModelChange)="pxChange($event)" [nzFormatter]="format" />
       }
       @case ('switch') {
         <nz-switch nzSize="small" [(ngModel)]="i.value" [ngModelOptions]="{ standalone: true }" />
