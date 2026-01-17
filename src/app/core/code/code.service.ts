@@ -34,11 +34,11 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     if (includeCli) {
       res.devDependencies = {
-        '@angular/cli': '^20.0.0',
-        '@angular/compiler-cli': '^20.0.0',
-        '@types/node': '^20.19.1',
+        '@angular/cli': '^21.0.0',
+        '@angular/compiler-cli': '^21.0.0',
+        '@types/node': '^21.19.1',
         typescript: '~5.8.2',
-        'ng-alain': '^20.0.0'
+        'ng-alain': '^21.0.0'
       };
     }
 
@@ -104,10 +104,9 @@ export class CodeService {
       'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
       'src/index.html': res.html,
       'src/main.ts': mainTS(res.componentName),
-      'src/app/app.component.ts': appComponentCode,
+      'src/app/app.ts': appComponentCode,
       'src/app/app.config.ts': appConfigTS,
       'src/app/startup.service.ts': this.genStartupService,
-      'src/styles.css': ``,
       ...this.genMock
     };
     if (includeCli) {
