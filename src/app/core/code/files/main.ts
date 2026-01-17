@@ -1,7 +1,7 @@
 export default (componentName: string): string => `import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
 
-import { ${componentName} } from './app/app.component';
+import { ${componentName} } from './app/app';
 import { appConfig } from './app/app.config';
 
 bootstrapApplication(${componentName}, appConfig).catch((err) =>

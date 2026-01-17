@@ -1,3 +1,31 @@
+## 21.0.0 (2026-01-17)
+
+* feat(abc:date-picker): supports using string identifiers (#1954) ([4cbac18](https://github.com/ng-alain/delon/commit/4cbac18)), closes [#1954](https://github.com/ng-alain/delon/issues/1954)
+* feat(abc:loading): add locale of `text` (#1959) ([31fac3f](https://github.com/ng-alain/delon/commit/31fac3f)), closes [#1959](https://github.com/ng-alain/delon/issues/1959)
+* feat(abc:reuse-tab): `routeParamMatchMode` support custom function (#1952) ([f3505e2](https://github.com/ng-alain/delon/commit/f3505e2)), closes [#1952](https://github.com/ng-alain/delon/issues/1952)
+* feat(abc:st): `filter` is null when call reset (#1950) ([891ff48](https://github.com/ng-alain/delon/commit/891ff48)), closes [#1950](https://github.com/ng-alain/delon/issues/1950)
+* feat(abc:st): add `page.checkboxIdMap` cach check data (#1951) ([4144847](https://github.com/ng-alain/delon/commit/4144847)), closes [#1951](https://github.com/ng-alain/delon/issues/1951)
+* feat(module:i18n): add missing translations (#1955) ([3cb28c5](https://github.com/ng-alain/delon/commit/3cb28c5)), closes [#1955](https://github.com/ng-alain/delon/issues/1955)
+* feat(theme:i18n): add `mergeData` method (#1945) ([4f1a351](https://github.com/ng-alain/delon/commit/4f1a351)), closes [#1945](https://github.com/ng-alain/delon/issues/1945)
+* fix(abc:st): can't render button when `children` is empty array (#1947) ([a4be8d1](https://github.com/ng-alain/delon/commit/a4be8d1)), closes [#1947](https://github.com/ng-alain/delon/issues/1947)
+* fix(theme:setting-drawer): fix style (#1968) ([f82dc34](https://github.com/ng-alain/delon/commit/f82dc34)), closes [#1968](https://github.com/ng-alain/delon/issues/1968)
+* refactor(module:*): remove APIs were marked as deprecated in v20 (#1934) ([64aaf36](https://github.com/ng-alain/delon/commit/64aaf36)), closes [#1934](https://github.com/ng-alain/delon/issues/1934)
+* chore: `NzDropDownModule` instead of `NzDropdownModule` (#1948) ([ef07715](https://github.com/ng-alain/delon/commit/ef07715)), closes [#1948](https://github.com/ng-alain/delon/issues/1948)
+* chore: bump angular to 21 (#1946) ([25e0919](https://github.com/ng-alain/delon/commit/25e0919)), closes [#1946](https://github.com/ng-alain/delon/issues/1946)
+* chore: bump ng-zorro-antd to 21 (#1965) ([8d360b5](https://github.com/ng-alain/delon/commit/8d360b5)), closes [#1965](https://github.com/ng-alain/delon/issues/1965)
+* chore: release 21.0.0-next.1 (#1962) ([3c30835](https://github.com/ng-alain/delon/commit/3c30835)), closes [#1962](https://github.com/ng-alain/delon/issues/1962)
+* chore(site): remove zone.js (#1957) ([c9ffc34](https://github.com/ng-alain/delon/commit/c9ffc34)), closes [#1957](https://github.com/ng-alain/delon/issues/1957)
+* style: fix eslint config (#1963) ([44d87e0](https://github.com/ng-alain/delon/commit/44d87e0)), closes [#1963](https://github.com/ng-alain/delon/issues/1963)
+* style: remove color-function-notation config (#1964) ([1a060bc](https://github.com/ng-alain/delon/commit/1a060bc)), closes [#1964](https://github.com/ng-alain/delon/issues/1964)
+* feat(cli): add `reuseTab` option in ng-add (#1961) ([478f009](https://github.com/ng-alain/delon/commit/478f009)), closes [#1961](https://github.com/ng-alain/delon/issues/1961)
+* refactor(*): bump to signal (#1958) ([6ed879a](https://github.com/ng-alain/delon/commit/6ed879a)), closes [#1958](https://github.com/ng-alain/delon/issues/1958)
+* refactor(*): use `CdkTextareaAutosize` instead of `nzAutosize` (#1943) ([849660f](https://github.com/ng-alain/delon/commit/849660f)), closes [#1943](https://github.com/ng-alain/delon/issues/1943)
+* refactor(*): use `nzVariant` instead of `nzBorderless` (#1944) ([6e61fec](https://github.com/ng-alain/delon/commit/6e61fec)), closes [#1944](https://github.com/ng-alain/delon/issues/1944)
+* refactor(*): use native animation (#1949) ([0055b2d](https://github.com/ng-alain/delon/commit/0055b2d)), closes [#1949](https://github.com/ng-alain/delon/issues/1949)
+* fix(form): fix `path` invalid value in `formValueChange` (#1953) ([86a9b4e](https://github.com/ng-alain/delon/commit/86a9b4e)), closes [#1953](https://github.com/ng-alain/delon/issues/1953)
+
+
+
 ## <small>20.1.1 (2025-12-25)</small>
 
 * refactor(*): use nullish coalescing instead of `||` (#1940) ([0099ef9](https://github.com/ng-alain/delon/commit/0099ef9)), closes [#1940](https://github.com/ng-alain/delon/issues/1940)
