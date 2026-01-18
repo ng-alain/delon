@@ -14,6 +14,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>21.0.2 (2026-01-18)</small>
+
+* fix(acl:if): 修复 NG0950 错误 (#1974) ([2cdef54](https://github.com/ng-alain/delon/commit/2cdef54)), closes [#1974](https://github.com/ng-alain/delon/issues/1974)
+* fix(cli): 修复 `ng add ng-alain` 缺少 vitest 配置 (#1973) ([f708066](https://github.com/ng-alain/delon/commit/f708066)), closes [#1973](https://github.com/ng-alain/delon/issues/1973)
+
+
 ## <small>21.0.1 (2026-01-17)</small>
 
 * fix(cli): 修复缺少 `ReuseTabComponent` 导入 (#1970) ([3fbafb1](https://github.com/ng-alain/delon/commit/3fbafb1)), closes [#1970](https://github.com/ng-alain/delon/issues/1970)
