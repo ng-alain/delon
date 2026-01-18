@@ -8,7 +8,7 @@ describe('NgAlainSchematic: application', () => {
 
   describe(``, () => {
     beforeEach(async () => ({ tree } = await createAlainApp()));
-    xit(`should add @delon to dependencies`, () => {
+    it(`should add @delon to dependencies`, () => {
       const packageJson = JSON.parse(tree.readContent('package.json'));
       expect(packageJson.dependencies['@delon/theme']).toBeDefined();
       expect(packageJson.dependencies['@delon/abc']).toBeDefined();
@@ -18,11 +18,11 @@ describe('NgAlainSchematic: application', () => {
       expect(packageJson.dependencies['@delon/cache']).toBeDefined();
       expect(packageJson.dependencies['@delon/mock']).toBeDefined();
     });
-    xit('should be add addFileReplacements', () => {
+    it('should be add addFileReplacements', () => {
       const angualrJson = tree.readContent('angular.json');
       expect(angualrJson).toContain(`fileReplacements`);
     });
-    xit('should be add src/assets', () => {
+    it('should be add src/assets', () => {
       const angualrJson = tree.readContent('angular.json');
       expect(angualrJson).toContain(`"src/assets"`);
     });
@@ -37,20 +37,20 @@ describe('NgAlainSchematic: application', () => {
   describe('#i18n', () => {
     describe('with true', () => {
       beforeEach(async () => ({ tree } = await createAlainApp({ i18n: true })));
-      xit(`can add i18n related`, () => {
+      it(`can add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
         expect(specTs).toContain(`I18NService`);
       });
     });
     describe('with false', () => {
       beforeEach(async () => ({ tree } = await createAlainApp({ i18n: false })));
-      xit(`can't add i18n related`, () => {
+      it(`can't add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.config.ts');
         expect(specTs).not.toContain(`I18NService`);
       });
     });
     describe('default language', () => {
-      xit(`with use zh`, async () => {
+      it(`with use zh`, async () => {
         spyOn(LANG, 'getLangData').and.returnValue({
           key1: 'Key1',
           key2: 'KEY2'
@@ -110,7 +110,7 @@ describe('NgAlainSchematic: application', () => {
   });
 
   describe('#form', () => {
-    xit(`should be export json-schema.ts in shared/index.ts`, async () => {
+    it(`should be export json-schema.ts in shared/index.ts`, async () => {
       ({ tree } = await createAlainApp({ form: false }));
       const content = tree.readContent('/projects/foo/src/app/shared/index.ts');
       expect(content).not.toContain(`json-schema`);
@@ -118,7 +118,7 @@ describe('NgAlainSchematic: application', () => {
   });
 
   describe('#reuse-tab', () => {
-    xit(`should be working`, async () => {
+    it(`should be working`, async () => {
       ({ tree } = await createAlainApp({ reuseTab: true }));
       const appConfig = tree.readContent('/projects/foo/src/app/app.config.ts');
       expect(appConfig).toContain(`provideReuseTabConfig(),`);
@@ -166,7 +166,7 @@ describe('NgAlainSchematic: application', () => {
       );
       runner = createAlainRunner();
     });
-    xit(`should be working`, async () => {
+    it(`should be working`, async () => {
       tree = await runner.runSchematic(
         'ng-add',
         {
@@ -179,7 +179,7 @@ describe('NgAlainSchematic: application', () => {
       expect(content).toContain(`provideAlain`);
       expect(tree.exists(`/projects/h5/src/app/shared/index.ts`)).toBe(false);
     });
-    xit(`should be throw error when not found project name`, async () => {
+    it(`should be throw error when not found project name`, async () => {
       try {
         tree = await runner.runSchematic(
           'ng-add',
