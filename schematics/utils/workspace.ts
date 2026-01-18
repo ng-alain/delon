@@ -212,3 +212,17 @@ export function addFileReplacements(workspace: WorkspaceDefinition, projectName:
     with: 'src/environments/environment.prod.ts'
   });
 }
+
+export function addViTestConfig(workspace: WorkspaceDefinition, projectName: string): void {
+  const project = getProjectFromWorkspace(workspace, projectName);
+  if (project == null) return;
+  const test = project.targets.get(BUILD_TARGET_TEST);
+  if (test == null) return;
+  if (test.options == null) test.options = {};
+  test.options['browsers'] = 'chromium';
+  test.options['runnerConfig'] = 'vitest.config.ts';
+  if (test.configurations == null) test.configurations = {};
+  if (test.configurations['coverage'] == null) test.configurations['coverage'] = {};
+  test.configurations['coverage']['coverageReporters'] = ['lcov'];
+  test.configurations['coverage']['browsers'] = ['ChromiumHeadless'];
+}

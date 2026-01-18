@@ -66,6 +66,8 @@ copyFiles() {
     "${1}.nvmrc|${2}application/files/root"
     "${1}proxy.conf.js|${2}application/files/root"
     "${1}.husky|${2}application/files/root/.husky"
+    # vi test
+    "${1}vitest.config.ts|${2}application/files/root"
     # ng-alain.json
     "${1}ng-alain.json|${2}application/files/root/"
     # ci

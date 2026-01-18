@@ -26,6 +26,12 @@ describe('NgAlainSchematic: application', () => {
       const angualrJson = tree.readContent('angular.json');
       expect(angualrJson).toContain(`"src/assets"`);
     });
+    it('should be add vitest config', () => {
+      const angualrJson = tree.readContent('angular.json');
+      expect(angualrJson).toContain(`"runnerConfig": "vitest.config.ts"`);
+      const packageJson = tree.readContent('package.json');
+      expect(packageJson).toContain(`"@playwright/test":`);
+    });
   });
 
   describe('#i18n', () => {

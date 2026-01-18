@@ -27,15 +27,23 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       `eslint-plugin-prefer-arrow@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-prettier@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-unused-imports@DEP-0.0.0-PLACEHOLDER`,
+      `typescript@DEP-0.0.0-PLACEHOLDER`,
       `typescript-eslint@DEP-0.0.0-PLACEHOLDER`,
       `prettier@DEP-0.0.0-PLACEHOLDER`,
+      `prettier-eslint@DEP-0.0.0-PLACEHOLDER`,
       `husky@DEP-0.0.0-PLACEHOLDER`,
       `ng-alain@${version}`,
       `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
       `source-map-explorer@DEP-0.0.0-PLACEHOLDER`,
       `ngx-tinymce@DEP-0.0.0-PLACEHOLDER`,
       `@ng-util/monaco-editor@DEP-0.0.0-PLACEHOLDER`,
-      `@delon/testing@${version}`
+      `@delon/testing@${version}`,
+      // vi test
+      `@playwright/test@DEP-0.0.0-PLACEHOLDER`,
+      `@vitest/browser-playwright@DEP-0.0.0-PLACEHOLDER`,
+      `@vitest/coverage-v8@DEP-0.0.0-PLACEHOLDER`,
+      `vitest@DEP-0.0.0-PLACEHOLDER`,
+      `jsdom@DEP-0.0.0-PLACEHOLDER`
     ],
     'devDependencies'
   );
