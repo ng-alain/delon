@@ -1,8 +1,10 @@
 import {
+  DestroyRef,
   Directive,
   EmbeddedViewRef,
   TemplateRef,
   ViewContainerRef,
+  afterNextRender,
   booleanAttribute,
   effect,
   inject,
@@ -21,6 +23,7 @@ import { ACLCanType } from './acl.type';
 export class ACLIfDirective {
   private readonly srv = inject(ACLService);
   private readonly _viewContainer = inject(ViewContainerRef);
+  private readonly d$ = inject(DestroyRef);
 
   private _thenViewRef: EmbeddedViewRef<void> | null = null;
   private _elseViewRef: EmbeddedViewRef<void> | null = null;
@@ -31,14 +34,16 @@ export class ACLIfDirective {
   readonly except = input(false, { transform: booleanAttribute });
 
   constructor() {
-    this.srv.change
-      .pipe(
-        takeUntilDestroyed(),
-        filter(r => r != null)
-      )
-      .subscribe(() => this.updateView());
-
     effect(() => this.updateView());
+
+    afterNextRender(() => {
+      this.srv.change
+        .pipe(
+          takeUntilDestroyed(this.d$),
+          filter(r => r != null)
+        )
+        .subscribe(() => this.updateView());
+    });
   }
 
   private updateView(): void {
