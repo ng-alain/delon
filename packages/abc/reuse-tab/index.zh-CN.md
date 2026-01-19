@@ -14,7 +14,7 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 ## 如何使用
 
 1. 在 `app.config.ts` 下提供 `provideReuseTabConfig()` 配置
-2. 在需要展示标签的地方调用 `<reuse-tab>`，一般在 `src/app/layout/basic/basic.component.ts`，例如：
+2. 在需要展示标签的地方调用 `<reuse-tab>`，一般在 `src/app/layout/basic/basic.ts`，例如：
 
 ```html
 - <router-outlet />
