@@ -176,6 +176,10 @@ function addCodeStylesToPackageJson(): Rule {
     json.scripts['lint:ts'] = `ng lint`;
     json.scripts['lint:style'] = `npx stylelint \\"src/**/*.less\\" --fix`;
     json.scripts['prepare'] = 'husky install';
+    // remove prettier node
+    if (json.prettier) {
+      delete json.prettier;
+    }
     writePackage(tree, json);
     // fix polyfills.ts
     const polyfillsPath = `${project.sourceRoot}/polyfills.ts`;
