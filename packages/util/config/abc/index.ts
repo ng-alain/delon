@@ -1,5 +1,4 @@
 export * from './error-collect.type';
-export * from './image.type';
 export * from './date-picker.type';
 export * from './loading.type';
 export * from './lodop.type';
