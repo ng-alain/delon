@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, input, numberAttribute } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  computed,
+  inject,
+  input,
+  numberAttribute
+} from '@angular/core';
 
 import type { REP_TYPE } from '@delon/theme';
+import { AlainConfigService } from '@delon/util/config';
 
 @Component({
   selector: 'sg-container, [sg-container]',
@@ -16,6 +25,7 @@ import type { REP_TYPE } from '@delon/theme';
   encapsulation: ViewEncapsulation.None
 })
 export class SGContainerComponent {
+  private readonly cogSrv = inject(AlainConfigService);
   readonly gutter = input(32, { transform: numberAttribute });
   readonly colInCon = input(null, {
     transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE)),
@@ -27,4 +37,11 @@ export class SGContainerComponent {
   });
 
   protected marginValue = computed(() => -(this.gutter() / 2));
+
+  constructor() {
+    this.cogSrv.attach(this, 'sg', {
+      gutter: 32,
+      col: 2
+    });
+  }
 }

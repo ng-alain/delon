@@ -5,7 +5,6 @@ import {
   AlainDateRangePickerConfig,
   AlainErrorCollectConfig,
   AlainExceptionType,
-  AlainImageConfig,
   AlainLoadingConfig,
   AlainLodopConfig,
   AlainMediaConfig,
@@ -34,7 +33,6 @@ export interface AlainConfig {
   dataRange?: AlainDateRangePickerConfig;
   exception?: AlainExceptionType;
   errorCollect?: AlainErrorCollectConfig;
-  image?: AlainImageConfig;
   loading?: AlainLoadingConfig;
   onboarding?: AlainOnboardingConfig;
   lodop?: AlainLodopConfig;
