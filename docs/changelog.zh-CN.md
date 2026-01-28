@@ -14,6 +14,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## <small>21.0.4 (2026-01-28)</small>
+
+* fix(abc:se,sg,sv): 修复全局配置无法工作 (#1980) ([be765b4](https://github.com/ng-alain/delon/commit/be765b4)), closes [#1980](https://github.com/ng-alain/delon/issues/1980)
+
 ## <small>21.0.3 (2026-01-25)</small>
 
 * fix(cli): 修复 `ng add` 生成的依赖版本号不准确 (#1978) ([e5b5e02](https://github.com/ng-alain/delon/commit/e5b5e02)), closes [#1978](https://github.com/ng-alain/delon/issues/1978)

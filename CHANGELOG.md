@@ -1,3 +1,10 @@
+## <small>21.0.4 (2026-01-28)</small>
+
+* chore: bump dev version (#1981) ([3877ce3](https://github.com/ng-alain/delon/commit/3877ce3)), closes [#1981](https://github.com/ng-alain/delon/issues/1981)
+* fix(abc:se,sg,sv): fix global config not working (#1980) ([be765b4](https://github.com/ng-alain/delon/commit/be765b4)), closes [#1980](https://github.com/ng-alain/delon/issues/1980)
+
+
+
 ## <small>21.0.3 (2026-01-25)</small>
 
 * fix(cli): fix missing dependencies version (#1978) ([e5b5e02](https://github.com/ng-alain/delon/commit/e5b5e02)), closes [#1978](https://github.com/ng-alain/delon/issues/1978)

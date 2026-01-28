@@ -14,6 +14,10 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## <small>21.0.4 (2026-01-28)</small>
+
+* fix(abc:se,sg,sv): fix global config not working (#1980) ([be765b4](https://github.com/ng-alain/delon/commit/be765b4)), closes [#1980](https://github.com/ng-alain/delon/issues/1980)
+
 ## <small>21.0.3 (2026-01-25)</small>
 
 * fix(cli): fix missing dependencies version (#1978) ([e5b5e02](https://github.com/ng-alain/delon/commit/e5b5e02)), closes [#1978](https://github.com/ng-alain/delon/issues/1978)
