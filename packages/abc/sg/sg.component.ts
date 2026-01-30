@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SGContainerComponent } from './sg-container.component';
 
@@ -33,7 +34,7 @@ export class SGComponent {
   protected paddingValue = computed(() => this.parentComp.gutter() / 2);
 
   readonly col = input(null, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as number))
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as number))
   });
 
   readonly cls = computed(() => {

@@ -13,6 +13,7 @@ import {
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SEErrorRefresh, SELayout } from './se.types';
 
@@ -67,14 +68,14 @@ export class SEContainerComponent {
   private readonly cogSrv = inject(AlainConfigService);
 
   readonly colInCon = input(null, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE)),
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE)),
     alias: 'se-container'
   });
   readonly labelWidth = input(150, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE))
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE))
   });
   readonly col = input(2, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE))
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE))
   });
   readonly noColon = input(false, { transform: booleanAttribute });
   readonly title = input<string | TemplateRef<void> | null>();

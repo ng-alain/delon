@@ -227,10 +227,11 @@ describe('abc: view', () => {
     });
     it('should be support global config', () => {
       TestBed.configureTestingModule({
-        providers: [provideAlain({ config: { sv: { labelWidth: 10 } } })]
+        providers: [provideAlain({ config: { sv: { labelWidth: 10, col: 2 } } })]
       });
       genModule(`<div sv-container><sv label="a" /></div>`);
       expect(page.getEl('.sv__label').style.width).toBe(`10px`);
+      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
     });
   });
 
