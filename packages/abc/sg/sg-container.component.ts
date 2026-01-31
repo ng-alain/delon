@@ -10,6 +10,7 @@ import {
 
 import type { REP_TYPE } from '@delon/theme';
 import { AlainConfigService } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'sg-container, [sg-container]',
@@ -28,12 +29,12 @@ export class SGContainerComponent {
   private readonly cogSrv = inject(AlainConfigService);
   readonly gutter = input(32, { transform: numberAttribute });
   readonly colInCon = input(null, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE)),
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE)),
     alias: 'sg-container'
   });
 
   readonly col = input(2, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE))
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE))
   });
 
   protected marginValue = computed(() => -(this.gutter() / 2));

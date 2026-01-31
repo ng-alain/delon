@@ -106,7 +106,7 @@ describe('abc: sg', () => {
     });
     it('should be support global config', () => {
       TestBed.configureTestingModule({
-        providers: [provideAlain({ config: { sg: { gutter: 10 } } })]
+        providers: [provideAlain({ config: { sg: { gutter: 10, col: 2 } } })]
       });
       TestBed.overrideTemplate(TestComponent, `<div sg-container><sg /></div>`);
       const fixture2 = TestBed.createComponent(TestComponent);
@@ -114,6 +114,7 @@ describe('abc: sg', () => {
       fixture2.detectChanges();
       page = new PageObject();
       expect(page.getEl('.ant-row').style.marginLeft).toBe(`-5px`);
+      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
     });
   });
 
