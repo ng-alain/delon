@@ -150,7 +150,7 @@ export class ModalHelper {
       modalRef.afterOpen
         .pipe(
           take(1),
-          delay(modalOptions?.nzNoAnimation ? 10 : 341),
+          delay(modalOptions?.nzNoAnimation ? 25 : 341),
           tap(() => {
             if (dragOptions != null) {
               dragRef = this.buildDrag(dragOptions, `.${dragWrapCls}`);
@@ -171,7 +171,7 @@ export class ModalHelper {
             el = btns![focus === 'ok' ? 1 : 0];
           }
           if (el != null) {
-            setTimeout(() => el.focus());
+            el.focus();
             el.dataset.focused = focus;
           }
         });
