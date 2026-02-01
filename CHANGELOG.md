@@ -1,3 +1,13 @@
+## [21.0.5](https://github.com/ng-alain/delon/compare/21.0.4...21.0.5) (2026-02-01)
+
+
+### Bug Fixes
+
+* **abc:se,sg,sv:** fix global config not working ([#1983](https://github.com/ng-alain/delon/issues/1983)) ([1e28fdf](https://github.com/ng-alain/delon/commit/1e28fdf562b9ad810554f8c6c3680f499a2c6e43))
+* **theme:ModalHelper:** fix `focus` can't working when `nzNoAnimation… ([#1984](https://github.com/ng-alain/delon/issues/1984)) ([55731fd](https://github.com/ng-alain/delon/commit/55731fdc831b2326a5684543ae515609bbe1a661))
+
+
+
 ## <small>21.0.4 (2026-01-28)</small>
 
 * chore: bump dev version (#1981) ([3877ce3](https://github.com/ng-alain/delon/commit/3877ce3)), closes [#1981](https://github.com/ng-alain/delon/issues/1981)
