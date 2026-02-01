@@ -142,6 +142,13 @@ describe('theme: ModalHelper', () => {
         expect(btn != null).toBe(true);
         expect(btn?.classList).not.toContain('ant-btn-primary');
       });
+      it('should be focus when nzNoAnimation is true', async () => {
+        modal.create('confirm', {}, { focus: 'ok', modalOptions: { nzNoAnimation: false } }).subscribe();
+        await animationDone();
+        const btn = document.querySelector<HTMLButtonElement>('[data-focused="ok"]');
+        expect(btn != null).toBe(true);
+        expect(btn?.classList).toContain('ant-btn-primary');
+      });
     });
     it('should argument length is 2', fakeAsync(() => {
       modal.create('info', { size: '23%' } as ModalHelperOptions).subscribe();
