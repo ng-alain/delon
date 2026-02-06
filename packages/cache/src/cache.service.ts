@@ -207,16 +207,15 @@ export class CacheService implements OnDestroy {
     if (!this.platform.isBrowser) return null;
 
     const ret = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
-    const fnIsPromise = ret instanceof Promise;
     const isValid = (value?: ICache): boolean =>
       value != null && (value.e == 0 || (value.e > 0 && value.e > new Date().valueOf()));
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
     if (!isPromise) {
       const retObj = ret as ICache;
-      return isValid(retObj) ? retObj?.v : null;
+      return isValid(retObj) ? retObj.v : null;
     }
 
-    return (fnIsPromise ? from(ret) : of(ret)).pipe(
+    return (ret instanceof Promise ? from(ret) : of(ret)).pipe(
       switchMap((data: ICache) => {
         if (isValid(data)) return of(data.v);
         return this.cog.request ? this.cog.request(key) : this.http.get(key);
