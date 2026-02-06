@@ -122,7 +122,7 @@ describe('NgAlainSchematic: application', () => {
       ({ tree } = await createAlainApp({ reuseTab: true }));
       const appConfig = tree.readContent('/projects/foo/src/app/app.config.ts');
       expect(appConfig).toContain(`provideReuseTabConfig(),`);
-      const baseComp = tree.readContent('/projects/foo/src/app/layout/basic/basic.component.ts');
+      const baseComp = tree.readContent('/projects/foo/src/app/layout/basic/basic.ts');
       expect(baseComp).toContain(`<reuse-tab #reuseTab />`);
     });
   });

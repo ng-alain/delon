@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { I18nPipe, SettingsService, User } from '@delon/theme';
 import { LayoutDefaultModule, LayoutDefaultOptions } from '@delon/theme/layout-default';
@@ -11,11 +11,11 @@ import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 
-import { HeaderClearStorageComponent } from './widgets/clear-storage.component';
-import { HeaderFullScreenComponent } from './widgets/fullscreen.component';
-import { HeaderSearchComponent } from './widgets/search.component';
-import { HeaderUserComponent } from './widgets/user.component';<% if (i18n) { %>
-import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
+import { HeaderClearStorage } from './widgets/clear-storage';
+import { HeaderFullScreen } from './widgets/fullscreen';
+import { HeaderSearch } from './widgets/search';
+import { HeaderUser } from './widgets/user';<% if (i18n) { %>
+import { HeaderI18n } from './widgets/i18n';<% } %>
 
 @Component({
   selector: 'layout-basic',
@@ -32,12 +32,12 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
         </a>
       </layout-default-header-item>
       <layout-default-header-item direction="left" hidden="pc">
-        <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
+        <div layout-default-header-item-trigger (click)="searchToggleStatus.set(!searchToggleStatus())">
           <nz-icon nzType="search" />
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
-        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus" />
+        <header-search [(toggleChange)]="searchToggleStatus" />
       </layout-default-header-item>
       <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
@@ -98,22 +98,19 @@ import { HeaderI18nComponent } from './widgets/i18n.component';<% } %>
     NzMenuModule,
     NzDropdownModule,
     NzAvatarModule,
-    HeaderSearchComponent,
-    HeaderClearStorageComponent,
-    HeaderFullScreenComponent,
-    HeaderUserComponent<% if (i18n) { %>,
-    HeaderI18nComponent<% } %>
+    HeaderSearch,
+    HeaderClearStorage,
+    HeaderFullScreen,
+    HeaderUser<% if (i18n) { %>,
+    HeaderI18n<% } %>
   ]
 })
-export class LayoutBasicComponent {
-  private readonly settings = inject(SettingsService);
-  options: LayoutDefaultOptions = {
+export class LayoutBasic {
+  readonly user = inject(SettingsService).user;
+  protected options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`
   };
-  searchToggleStatus = false;
-  showSettingDrawer = !environment.production;
-  get user(): User {
-    return this.settings.user;
-  }
+  protected searchToggleStatus = signal(false);
+  protected showSettingDrawer = !environment.production;
 }
