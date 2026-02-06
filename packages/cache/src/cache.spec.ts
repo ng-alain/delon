@@ -7,7 +7,8 @@ import { firstValueFrom, Observable, of, filter } from 'rxjs';
 import { AlainCacheConfig, provideAlainConfig } from '@delon/util/config';
 
 import { CacheService } from './cache.service';
-import { ICache } from './interface';
+import { ICache, ICacheStore } from './interface';
+import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
 describe('cache: service', () => {
   let srv: CacheService;
@@ -34,13 +35,13 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule(options?: AlainCacheConfig): void {
-    const providers: any[] = [provideHttpClient(), provideHttpClientTesting()];
+  function genModule(options?: AlainCacheConfig, providers?: any[]): void {
+    const p: any[] = [provideHttpClient(), provideHttpClientTesting(), ...(providers ?? [])];
     if (options) {
-      providers.push(provideAlainConfig({ cache: options }));
+      p.push(provideAlainConfig({ cache: options }));
     }
     TestBed.configureTestingModule({
-      providers
+      providers: p
     });
 
     srv = TestBed.inject<CacheService>(CacheService);
@@ -352,5 +353,29 @@ describe('cache: service', () => {
     const res = await firstValueFrom(srv.get('/data/1', { mode: 'promise', type: 'm' }));
     expect(request).toHaveBeenCalled();
     expect(res).toBe(returnValue);
+  });
+
+  describe('cache store support async', () => {
+    it('should be working', () => {
+      const mockDict: Record<string, ICache> = {};
+      class MockStore implements ICacheStore {
+        get(key: string): ICache | PromiseLike<ICache> | null {
+          return Promise.resolve(mockDict[key]);
+        }
+        set(key: string, value: ICache): boolean | PromiseLike<boolean> {
+          mockDict[key] = value;
+          return Promise.resolve(true);
+        }
+        remove(key: string): void {
+          delete mockDict[key];
+        }
+      }
+      genModule(undefined, [{ provide: DC_STORE_STORAGE_TOKEN, useClass: MockStore, multi: false }]);
+      srv.set('a', 123, { type: 's' });
+      expect(mockDict['a']).not.toBeNull();
+      srv.get('a').subscribe(res => {
+        expect(res).toBe(123);
+      });
+    });
   });
 });

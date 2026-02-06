@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, Observable, of, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, from, switchMap, map } from 'rxjs';
 
 import { addSeconds } from 'date-fns';
 
@@ -52,8 +52,9 @@ export class CacheService implements OnDestroy {
     this.saveMeta();
   }
 
-  private loadMeta(): void {
-    const ret = this.store.get(this.cog.meta_key!);
+  private async loadMeta(): Promise<void> {
+    const fn = this.store.get(this.cog.meta_key!);
+    const ret = fn instanceof Promise ? await fn : fn;
     if (ret && ret.v) {
       (ret.v as string[]).forEach(key => this.meta.add(key));
     }
@@ -205,28 +206,36 @@ export class CacheService implements OnDestroy {
   ): Observable<any> | any {
     if (!this.platform.isBrowser) return null;
 
+    const ret = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
+    const fnIsPromise = ret instanceof Promise;
+    const isValid = (value?: ICache): boolean =>
+      value != null && (value.e == 0 || (value.e > 0 && value.e > new Date().valueOf()));
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
-    const value = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
-    if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
-      if (isPromise) {
-        return (this.cog.request ? this.cog.request(key) : this.http.get(key)).pipe(
-          map((ret: any) => deepGet(ret, this.cog.reName as string[], ret)),
-          tap(v =>
-            this.set(key, v, {
-              type: options.type as any,
-              expire: options.expire,
-              emitNotify: options.emitNotify
-            })
-          )
-        );
-      }
-      return null;
+    if (!isPromise) {
+      const retObj = ret as ICache;
+      return isValid(retObj) ? retObj?.v : null;
     }
 
-    return isPromise ? of(value.v) : value.v;
+    return (fnIsPromise ? from(ret) : of(ret)).pipe(
+      switchMap((data: ICache) => {
+        if (isValid(data)) return of(data.v);
+        return this.cog.request ? this.cog.request(key) : this.http.get(key);
+      }),
+      map(data => {
+        const v = deepGet(data, this.cog.reName as string[], data);
+        this.set(key, v, {
+          type: options.type as any,
+          expire: options.expire,
+          emitNotify: options.emitNotify
+        });
+        return v;
+      })
+    );
   }
 
-  /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */
+  /**
+   * 获取缓存数据，若 `key` 不存在或已过期则返回 null
+   */
   getNone<T>(key: string): T;
   /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */
   getNone(key: string): any {
