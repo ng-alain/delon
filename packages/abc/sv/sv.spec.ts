@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
-import { REP_MAX } from '@delon/theme';
+import { provideAlain, REP_MAX } from '@delon/theme';
 
 import { SVContainerComponent } from './sv-container.component';
 import { SVComponent } from './sv.component';
@@ -224,6 +224,14 @@ describe('abc: view', () => {
         <sv-title></sv-title>
         `);
       }).toThrowError();
+    });
+    it('should be support global config', () => {
+      TestBed.configureTestingModule({
+        providers: [provideAlain({ config: { sv: { labelWidth: 10, col: 2 } } })]
+      });
+      genModule(`<div sv-container><sv label="a" /></div>`);
+      expect(page.getEl('.sv__label').style.width).toBe(`10px`);
+      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
     });
   });
 

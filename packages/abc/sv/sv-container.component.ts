@@ -11,7 +11,9 @@ import {
 } from '@angular/core';
 
 import type { REP_TYPE } from '@delon/theme';
+import { AlainConfigService } from '@delon/util/config';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'sv-title, [sv-title]',
@@ -64,8 +66,9 @@ export class SVTitleComponent {
   imports: [SVTitleComponent, NzStringTemplateOutletDirective]
 })
 export class SVContainerComponent {
+  private readonly cogSrv = inject(AlainConfigService);
   readonly colInCon = input(null, {
-    transform: (v: unknown) => (v == null ? null : (numberAttribute(v) as REP_TYPE)),
+    transform: (v: unknown) => (v == null ? null : (numberAttribute(v, null as NzSafeAny) as REP_TYPE)),
     alias: 'sv-container'
   });
   readonly title = input<string | TemplateRef<void>>();
@@ -85,4 +88,14 @@ export class SVContainerComponent {
       ? {}
       : { 'margin-left': `${-(this.gutter() / 2)}px`, 'margin-right': `${-(this.gutter() / 2)}px` };
   });
+
+  constructor() {
+    this.cogSrv.attach(this, 'sv', {
+      size: 'large',
+      gutter: 32,
+      layout: 'horizontal',
+      col: 3,
+      default: true
+    });
+  }
 }

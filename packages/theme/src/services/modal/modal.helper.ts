@@ -150,7 +150,7 @@ export class ModalHelper {
       modalRef.afterOpen
         .pipe(
           take(1),
-          delay(modalOptions?.nzNoAnimation ? 10 : 341),
+          delay(modalOptions?.nzNoAnimation ? 25 : 341),
           tap(() => {
             if (dragOptions != null) {
               dragRef = this.buildDrag(dragOptions, `.${dragWrapCls}`);

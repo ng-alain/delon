@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
+import { provideAlain } from '@delon/theme';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
 import { SGContainerComponent } from './sg-container.component';
@@ -102,6 +103,18 @@ describe('abc: sg', () => {
         <sg></sg>
         `);
       }).toThrowError();
+    });
+    it('should be support global config', () => {
+      TestBed.configureTestingModule({
+        providers: [provideAlain({ config: { sg: { gutter: 10, col: 2 } } })]
+      });
+      TestBed.overrideTemplate(TestComponent, `<div sg-container><sg /></div>`);
+      const fixture2 = TestBed.createComponent(TestComponent);
+      dl = fixture2.debugElement;
+      fixture2.detectChanges();
+      page = new PageObject();
+      expect(page.getEl('.ant-row').style.marginLeft).toBe(`-5px`);
+      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
     });
   });
 

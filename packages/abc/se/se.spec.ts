@@ -12,7 +12,7 @@ import {
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
-import { REP_MAX } from '@delon/theme';
+import { provideAlain, REP_MAX } from '@delon/theme';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 
@@ -497,6 +497,17 @@ describe('abc: edit', () => {
       </form>
       `);
       page.expect('.se__item-empty', 1);
+    });
+    it('should be support global config', () => {
+      TestBed.configureTestingModule({
+        providers: [provideAlain({ config: { se: { labelWidth: 10, col: 2 } } })]
+      });
+      const fixture2 = TestBed.createComponent(TestReactiveComponent);
+      dl = fixture2.debugElement;
+      fixture2.detectChanges();
+      page = new PageObject();
+      expect(page.getEl('.ant-form-item-label').style.width).toBe(`10px`);
+      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
     });
   });
 
