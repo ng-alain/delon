@@ -11,14 +11,14 @@ export const DC_STORE_STORAGE_TOKEN = new InjectionToken<ICacheStore>('DC_STORE_
 export class LocalStorageCacheService implements ICacheStore {
   private readonly platform = inject(Platform);
 
-  get(key: string): ICache | null {
+  get(key: string): ICache | PromiseLike<ICache> | null {
     if (!this.platform.isBrowser) {
       return null;
     }
     return JSON.parse(localStorage.getItem(key) ?? 'null') ?? null;
   }
 
-  set(key: string, value: ICache): boolean {
+  set(key: string, value: ICache): boolean | PromiseLike<boolean> {
     if (!this.platform.isBrowser) {
       return true;
     }
@@ -26,10 +26,11 @@ export class LocalStorageCacheService implements ICacheStore {
     return true;
   }
 
-  remove(key: string): void {
+  remove(key: string): boolean | PromiseLike<boolean> {
     if (!this.platform.isBrowser) {
-      return;
+      return true;
     }
     localStorage.removeItem(key);
+    return true;
   }
 }

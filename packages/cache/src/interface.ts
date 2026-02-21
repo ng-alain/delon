@@ -9,7 +9,7 @@ export interface ICacheStore {
 
   set(key: string, value: ICache): boolean | PromiseLike<boolean>;
 
-  remove(key: string): void;
+  remove(key: string): boolean | PromiseLike<boolean>;
 }
 
 export type CacheNotifyType = 'set' | 'remove' | 'expire';

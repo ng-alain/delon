@@ -366,8 +366,9 @@ describe('cache: service', () => {
           mockDict[key] = value;
           return Promise.resolve(true);
         }
-        remove(key: string): void {
+        remove(key: string): PromiseLike<boolean> {
           delete mockDict[key];
+          return Promise.resolve(true);
         }
       }
       genModule(undefined, [{ provide: DC_STORE_STORAGE_TOKEN, useClass: MockStore, multi: false }]);
