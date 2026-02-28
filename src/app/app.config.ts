@@ -5,6 +5,7 @@ import {
   ApplicationConfig,
   ErrorHandler,
   importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
 import {
@@ -106,6 +107,7 @@ if (!environment.production) routerFeatures.push(withHashLocation());
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     { provide: APP_ID, useValue: 'ngAlainDoc' },
     provideHttpClient(withFetch(), withInterceptors([mockInterceptor])),

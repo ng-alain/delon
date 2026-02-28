@@ -18,7 +18,7 @@ Import in `src/styles.less`:
 
 ### 2. Using `layout-default` component
 
-Creat a new layout in `src/app/layout/basic/basic.component.ts`:
+Creat a new layout in `src/app/layout/basic/basic.ts`:
 
 ```ts
 import { Component } from '@angular/core';
@@ -75,18 +75,14 @@ import { environment } from '@env/environment';
     <theme-btn />
   `,
 })
-export class LayoutBasicComponent {
-  options: LayoutDefaultOptions = {
+export class LayoutBasic {
+  readonly user = inject(SettingsService).user;
+  protected options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`,
+    logoCollapsed: `./assets/logo.svg`
   };
-  searchToggleStatus = false;
-  showSettingDrawer = !environment.production;
-  get user(): User {
-    return this.settings.user;
-  }
-
-  constructor(private settings: SettingsService) {}
+  protected searchToggleStatus = signal(false);
+  protected showSettingDrawer = !environment.production;
 }
 ```
 

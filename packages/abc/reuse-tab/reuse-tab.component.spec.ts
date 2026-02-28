@@ -1,7 +1,6 @@
 import { Component, DebugElement, inject, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import {
   ExtraOptions,
   RouteReuseStrategy,
@@ -75,7 +74,6 @@ describe('abc: reuse-tab', () => {
         )
       ],
       providers: [
-        provideNoopAnimations(),
         { provide: RouteReuseStrategy, useClass: ReuseTabStrategy, deps: [ReuseTabService] },
         MenuService,
         provideReuseTabConfig(),

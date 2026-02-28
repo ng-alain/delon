@@ -2,7 +2,6 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { ACLService, DelonACLModule } from '@delon/acl';
@@ -33,7 +32,6 @@ describe('form: component', () => {
     }
     TestBed.configureTestingModule({
       imports,
-      providers: [provideNoopAnimations()],
       declarations: [TestFormComponent, TestModeComponent]
     });
   }

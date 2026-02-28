@@ -4,7 +4,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Router, RouterModule, provideRouter } from '@angular/router';
 
 import { ACLService } from '@delon/acl';
@@ -105,7 +104,6 @@ describe('theme: layout-default-nav', () => {
       imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
       declarations: [TestComponent],
       providers: [
-        provideNoopAnimations(),
         provideNzNoAnimation(),
         provideHttpClient(),
         provideHttpClientTesting(),
