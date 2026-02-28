@@ -188,7 +188,15 @@ export default defineConfig(
       // ...angular.configs.templateAccessibility,
     ],
     rules: {
-      "prettier/prettier": ["error"],
+      'prettier/prettier': [
+        'error',
+        {
+          parser: 'angular'
+        },
+        {
+          usePrettierrc: true
+        }
+      ],
       "@angular-eslint/template/eqeqeq": "off",
       "@angular-eslint/template/prefer-self-closing-tags": "error"
     }
