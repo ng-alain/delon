@@ -18,18 +18,23 @@
     "**/src/app/routes/gen/": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
+    "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "explicit"
+  },
+  "eslint.validate": ["typescript", "html"],
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   },
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
   "stylelint.validate": ["css", "less", "scss"],
   "stylelint.customSyntax": "postcss-less",
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-  },
   "[less]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
