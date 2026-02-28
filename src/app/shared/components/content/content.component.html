@@ -1,8 +1,8 @@
 <div nz-row>
-  @if (!isMobile) {
+  @if (!mobile()) {
     <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
       <nz-affix>
-        <div main-menu (to)="to()" class="main-menu-inner"></div>
+        <div main-menu (to)="opened.set(false)" class="main-menu-inner"></div>
       </nz-affix>
     </div>
   }
@@ -31,15 +31,15 @@
     <app-footer small />
   </div>
 </div>
-@if (isMobile) {
+@if (mobile()) {
   <div class="drawer-wrapper">
-    <div class="drawer drawer-left" [class.drawer-open]="opened">
-      <div class="drawer-mask" (click)="opened = !opened"></div>
+    <div class="drawer drawer-left" [class.drawer-open]="opened()">
+      <div class="drawer-mask" (click)="opened.set(!opened())"></div>
       <div class="drawer-content-wrapper">
         <div class="drawer-content">
-          <main-menu (to)="to()" />
+          <main-menu (to)="opened.set(false)" />
         </div>
-        <div class="drawer-button" (click)="opened = !opened"><nz-icon nzType="menu-unfold" /></div>
+        <div class="drawer-button" (click)="opened.set(!opened())"><nz-icon nzType="menu-unfold" /></div>
       </div>
     </div>
   </div>

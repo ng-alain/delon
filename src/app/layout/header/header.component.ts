@@ -19,7 +19,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { I18NService, LangType, MobileService } from '@core';
+import { I18NService, LangType, MOBILE } from '@core';
 
 import { MetaSearchGroupItem } from '../../interfaces';
 import { LayoutComponent } from '../layout.component';
@@ -59,7 +59,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
 })
 export class HeaderComponent {
   private inited = false;
-  isMobile!: boolean;
+  protected mobile = MOBILE;
   oldVersionList = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
   currentVersion = pkg.version;
   delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
@@ -90,7 +90,6 @@ export class HeaderComponent {
   readonly rtl = inject(RTLService);
   private readonly router = inject(Router);
   private readonly msg = inject(NzMessageService);
-  private readonly mobileSrv = inject(MobileService);
   private readonly doc = inject(DOCUMENT);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly layout = inject(LayoutComponent);
@@ -99,12 +98,6 @@ export class HeaderComponent {
     this.router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
       this.menuVisible = false;
       this.genDelonType();
-    });
-    this.mobileSrv.change.subscribe(res => {
-      this.isMobile = res;
-      if (this.inited) {
-        this.cdr.detectChanges();
-      }
     });
 
     afterNextRender(() => {

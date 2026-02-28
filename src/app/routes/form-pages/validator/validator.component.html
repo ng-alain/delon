@@ -33,7 +33,7 @@
           #schemaEditor
           [(ngModel)]="schema"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>
@@ -42,7 +42,7 @@
           #formCodeEditor
           [(ngModel)]="formCode"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>
@@ -51,7 +51,7 @@
           #uiEditor
           [(ngModel)]="uiCode"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>
