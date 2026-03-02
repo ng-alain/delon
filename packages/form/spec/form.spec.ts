@@ -450,10 +450,17 @@ describe('form: component', () => {
         expect(context.formChange).toHaveBeenCalled();
       });
 
-      it('#formValueChange', () => {
-        page.setValue('/name', 'cipchk');
-        expect(context.formValueChange).toHaveBeenCalled();
-        expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+      describe('#formValueChange', () => {
+        it('should be working', () => {
+          page.setValue('/name', 'cipchk');
+          expect(context.formValueChange).toHaveBeenCalled();
+          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+        });
+        it('when value is null', () => {
+          page.setValue('/name', null);
+          expect(context.formValueChange).toHaveBeenCalled();
+          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].pathValue).toBe(null);
+        });
       });
 
       it('#formSubmit', () => {

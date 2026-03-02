@@ -142,8 +142,10 @@ export abstract class FormProperty {
 
     if (options.emitValueEvent) {
       options.updatePath = options.updatePath ?? this.path ?? '';
-      options.updateValue = options.updateValue == null ? this.value : options.updateValue;
+
       this.valueChanges.next({ value: this.value, path: options.updatePath, pathValue: options.updateValue });
+
+      options.updateValue = options.updateValue == null ? this.value : options.updateValue;
     }
 
     // `emitValidator` 每一次数据变更已经包含完整错误链路，后续父节点数据变更无须再触发校验
