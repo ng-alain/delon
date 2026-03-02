@@ -58,7 +58,7 @@ import { REUSE_TAB_STORAGE_KEY, REUSE_TAB_STORAGE_STATE } from './reuse-tab.stat
       [nzTabBarGutter]="tabBarGutter()"
       [nzTabBarStyle]="tabBarStyle()"
     >
-      @for (i of list(); track i) {
+      @for (i of list(); track trackByFn()(i)) {
         <nz-tab [nzTitle]="titleTemplate" (nzClick)="_to($index)">
           <ng-template #titleTemplate>
             <div
@@ -116,8 +116,8 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   private readonly tabset = viewChild.required(NzTabsComponent);
   private destroy$ = inject(DestroyRef);
   protected dir = inject(Directionality).valueSignal;
-  list = signal<ReuseItem[]>([]);
-  item?: ReuseItem;
+  readonly list = signal<ReuseItem[]>([]);
+  protected item?: ReuseItem;
   protected pos = signal(0);
 
   // #region fields
@@ -141,6 +141,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly titleRender = input<TemplateRef<{ $implicit: ReuseItem }>>();
   readonly canClose = input<ReuseCanClose>();
+  readonly trackByFn = input<(item: ReuseItem) => NzSafeAny>(item => item.url);
   readonly change = output<ReuseItem>();
   readonly close = output<ReuseItem | null>();
 
