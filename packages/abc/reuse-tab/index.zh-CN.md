@@ -197,6 +197,7 @@ export class DemoComponent implements OnReuseInit, OnReuseDestroy {
 | `[titleRender]` | 自定义标题渲染 | `TemplateRef<{ $implicit: ReuseItem }>` | - |
 | `[storageState]` | 是否存储状态，保持最后一次浏览器的状态 | `boolean` | `false` |
 | `[canClose]` | 关闭时二次校验 | `(options: { item: ReuseItem; includeNonCloseable: boolean }) => Observable<boolean>` | - |
+| `[trackByFn]` | `nz-tabs` 的 `track` 函数 | `(item: ReuseItem) => item.url` | - |
 | `(close)` | 关闭回调 | `EventEmitter` | - |
 | `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | - |
 
