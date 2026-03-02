@@ -116,7 +116,7 @@ export class ReuseTabComponent implements OnInit, OnChanges {
   private readonly tabset = viewChild.required(NzTabsComponent);
   private destroy$ = inject(DestroyRef);
   protected dir = inject(Directionality).valueSignal;
-  protected list = signal<ReuseItem[]>([]);
+  readonly list = signal<ReuseItem[]>([]);
   protected item?: ReuseItem;
   protected pos = signal(0);
 
