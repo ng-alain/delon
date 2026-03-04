@@ -30,7 +30,6 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       `typescript@DEP-0.0.0-PLACEHOLDER`,
       `typescript-eslint@DEP-0.0.0-PLACEHOLDER`,
       `prettier@DEP-0.0.0-PLACEHOLDER`,
-      `prettier-eslint@DEP-0.0.0-PLACEHOLDER`,
       `husky@DEP-0.0.0-PLACEHOLDER`,
       `ng-alain@${version}`,
       `ng-alain-plugin-theme@DEP-0.0.0-PLACEHOLDER`,
