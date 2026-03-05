@@ -31,6 +31,7 @@
     "lint:fix": "eslint --cache --fix",
     "lint:style": "npx stylelint 'packages/**/*.less'",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
+    "test:vi": "ng test vi --coverage --watch false",
     "test:cli": "bash scripts/ci/build-schematics.sh -t -clone",
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
