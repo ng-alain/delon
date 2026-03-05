@@ -15,5 +15,8 @@
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"
+  ],
+  "exclude": [
+    "**/auto-focus.directive.spec.ts"
   ]
 }

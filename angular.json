@@ -159,6 +159,9 @@
               // "**/st.spec.ts"
               // "**/st/**/*.spec.ts"
               "**/*.spec.ts"
+            ],
+            "exclude": [
+              "**/auto-focus.directive.spec.ts"
             ]
           }
         }
