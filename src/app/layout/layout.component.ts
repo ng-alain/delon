@@ -10,7 +10,8 @@ import { NzFloatButtonTopComponent } from 'ng-zorro-antd/float-button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
-import { AppService, SiteTheme } from '../core/app.service';
+import { SITE_THEME, SiteTheme } from '@core';
+
 import { HeaderComponent } from './header/header.component';
 
 @Component({
@@ -23,7 +24,7 @@ import { HeaderComponent } from './header/header.component';
       }
       <router-outlet />
       <nz-float-button-top />
-      <theme-btn (themeChange)="themeChange($event)" />
+      <theme-btn (themeChange)="themeChange($any($event))" />
     }
   `,
   host: {
@@ -40,7 +41,6 @@ export class LayoutComponent {
   private readonly settingsSrv = inject(SettingsService);
   private readonly location = inject(Location);
   private readonly rtl = inject(RTLService);
-  private readonly appSrv = inject(AppService);
 
   constructor() {
     this.rtl.change.subscribe(() => this.fixDirection());
@@ -83,7 +83,7 @@ export class LayoutComponent {
     this.location.replaceState(path, (direction === RTL ? `?direction=${RTL}` : '') + fragment);
   }
 
-  themeChange(theme: string): void {
-    this.appSrv.setTheme(theme as SiteTheme);
+  themeChange(theme: SiteTheme): void {
+    SITE_THEME.set(theme);
   }
 }

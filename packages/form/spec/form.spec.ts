@@ -2,7 +2,6 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { ACLService, DelonACLModule } from '@delon/acl';
@@ -33,7 +32,6 @@ describe('form: component', () => {
     }
     TestBed.configureTestingModule({
       imports,
-      providers: [provideNoopAnimations()],
       declarations: [TestFormComponent, TestModeComponent]
     });
   }
@@ -452,10 +450,17 @@ describe('form: component', () => {
         expect(context.formChange).toHaveBeenCalled();
       });
 
-      it('#formValueChange', () => {
-        page.setValue('/name', 'cipchk');
-        expect(context.formValueChange).toHaveBeenCalled();
-        expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+      describe('#formValueChange', () => {
+        it('should be working', () => {
+          page.setValue('/name', 'cipchk');
+          expect(context.formValueChange).toHaveBeenCalled();
+          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+        });
+        it('when value is null', () => {
+          page.setValue('/name', null);
+          expect(context.formValueChange).toHaveBeenCalled();
+          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].pathValue).toBe(null);
+        });
       });
 
       it('#formSubmit', () => {

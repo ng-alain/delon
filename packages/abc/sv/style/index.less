@@ -3,7 +3,7 @@
 @{sv-prefix} {
   display: block;
 
-  +@{sv-prefix} {
+  + @{sv-prefix} {
     margin-top: @sv-bottom;
   }
 
@@ -33,7 +33,7 @@
       }
     }
 
-    +.@{ant-prefix}-divider {
+    + .@{ant-prefix}-divider {
       margin: 0 0 @sv-bottom;
     }
   }
@@ -73,13 +73,15 @@
         margin-left: 0;
       }
 
-      >.anticon {
+      > .anticon {
         margin-left: @sv-optional-margin;
       }
     }
   }
 
   &__detail {
+    overflow: hidden;
+
     /** contents 对 ie, edge 不支持，但对于子组件的支持会更友好 */
     display: table-cell;
     width: 100%;
@@ -113,7 +115,7 @@
       content: @sv-default-text;
     }
 
-    ~@{sv-prefix}__unit {
+    ~ @{sv-prefix}__unit {
       display: none !important;
     }
   }
@@ -125,7 +127,6 @@
   }
 
   &__small {
-
     // offset the padding-bottom of last row
     .@{ant-prefix}-row {
       margin-bottom: -8px;
@@ -250,7 +251,6 @@
     }
 
     &@{sv-prefix}__large {
-
       @{sv-prefix}__label,
       @{sv-prefix}__detail {
         padding: @descriptions-default-padding;
@@ -258,7 +258,6 @@
     }
 
     &@{sv-prefix}__small {
-
       @{sv-prefix}__label,
       @{sv-prefix}__detail {
         padding: @descriptions-small-padding;

@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} của {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Đặt lại'
+    filterReset: 'Đặt lại',
+    more: 'Thêm'
   },
   sf: {
     submit: 'Gửi',
@@ -91,5 +92,11 @@ export default {
     thisMonth: 'Tháng này',
     lastMonth: 'Tháng trước',
     thisYear: 'Năm nay'
+  },
+  loading: {
+    text: 'Đang tải...'
+  },
+  pageHeader: {
+    home: 'Trang chủ'
   }
 } as FullLocaleData;

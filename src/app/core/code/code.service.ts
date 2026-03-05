@@ -7,8 +7,7 @@ import { getParameters } from 'codesandbox/lib/api/define';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import pkg from '../../../../package.json';
-import { AppService } from '../app.service';
+import { SITE_THEME } from '../global.config';
 import angularJSON from './files/angular.json';
 import appConfigTS from './files/app.config';
 import mainTS from './files/main';
@@ -18,14 +17,14 @@ import readme from './files/readme-cli';
 import sandboxConfigJSON from './files/sandbox';
 import startupServiceTS from './files/startup.service';
 import tsconfigJSON from './files/tsconfig.json';
+import pkg from '../../../../package.json';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
-  private appSrv = inject(AppService);
   private document = inject(DOCUMENT);
 
   private get themePath(): string {
-    return `node_modules/@delon/theme/${this.appSrv.theme}.css`;
+    return `node_modules/@delon/theme/${SITE_THEME()}.css`;
   }
 
   private genPackage({ includeCli = false }: { includeCli: boolean }): Record<string, string | Record<string, string>> {
@@ -34,11 +33,11 @@ export class CodeService {
     const res = packageJSON as Record<string, NzSafeAny>;
     if (includeCli) {
       res.devDependencies = {
-        '@angular/cli': '^20.0.0',
-        '@angular/compiler-cli': '^20.0.0',
-        '@types/node': '^20.19.1',
+        '@angular/cli': '^21.0.0',
+        '@angular/compiler-cli': '^21.0.0',
+        '@types/node': '^21.19.1',
         typescript: '~5.8.2',
-        'ng-alain': '^20.0.0'
+        'ng-alain': '^21.0.0'
       };
     }
 
@@ -104,10 +103,9 @@ export class CodeService {
       'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
       'src/index.html': res.html,
       'src/main.ts': mainTS(res.componentName),
-      'src/app/app.component.ts': appComponentCode,
+      'src/app/app.ts': appComponentCode,
       'src/app/app.config.ts': appConfigTS,
       'src/app/startup.service.ts': this.genStartupService,
-      'src/styles.css': ``,
       ...this.genMock
     };
     if (includeCli) {

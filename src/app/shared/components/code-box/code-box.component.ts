@@ -18,7 +18,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { AppService, CodeService } from '@core';
+import { CodeService, SITE_THEME } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
 
@@ -33,7 +33,6 @@ import { EditButtonComponent } from '../edit-button/edit-button.component';
   imports: [I18nPipe, NzTooltipModule, NzIconModule, EditButtonComponent]
 })
 export class CodeBoxComponent implements OnInit {
-  private readonly appService = inject(AppService);
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly msg = inject(NzMessageService);
   private readonly codeSrv = inject(CodeService);
@@ -44,7 +43,7 @@ export class CodeBoxComponent implements OnInit {
   private _orgItem: any;
   private destroy$ = inject(DestroyRef);
   copied = false;
-  theme = 'default';
+  protected theme = SITE_THEME;
 
   @Input()
   set item(value: any) {
@@ -69,10 +68,6 @@ export class CodeBoxComponent implements OnInit {
   @Input() expand: boolean = false;
 
   ngOnInit(): void {
-    this.appService.theme$.pipe(takeUntilDestroyed(this.destroy$)).subscribe(data => {
-      this.theme = data;
-      this.check();
-    });
     this.i18n.change
       .pipe(
         filter(() => !!this._orgItem),

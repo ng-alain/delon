@@ -2,13 +2,12 @@ import {
   AfterViewInit,
   ComponentRef,
   Directive,
-  EventEmitter,
-  Input,
   OnDestroy,
-  Output,
   TemplateRef,
   ViewContainerRef,
-  inject
+  inject,
+  input,
+  model
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -17,6 +16,7 @@ import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerS
 import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { toBoolean } from 'ng-zorro-antd/core/util';
 import { NzDatePickerComponent, NzRangePickerComponent, type ɵDatePickerService } from 'ng-zorro-antd/date-picker';
 
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
@@ -26,8 +26,6 @@ import { RangePickerShortcutTplComponent } from './range-shortcut.component';
   exportAs: 'extendRangePicker'
 })
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
-  static ngAcceptInputType_shortcut: AlainDateRangePickerShortcut | string | null;
-
   private readonly dom = inject(DomSanitizer);
   private readonly vcr = inject(ViewContainerRef);
   private readonly nativeComp = inject(NzRangePickerComponent, { host: true, optional: true });
@@ -40,25 +38,23 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   end: Date | null = null;
   private locale = inject(DelonLocaleService).getData('datePicker');
 
-  @Input()
-  set shortcut(val: AlainDateRangePickerShortcut | null) {
-    const cog = deepMergeKey(
-      { list: [] },
-      true,
-      this.defaultShortcuts,
-      val == null ? {} : val
-    ) as AlainDateRangePickerShortcut;
-    if (typeof val !== 'object') {
-      cog.enabled = val !== false;
+  readonly shortcut = input(null, {
+    transform: (v: AlainDateRangePickerShortcut | string | null) => {
+      const cog = deepMergeKey(
+        { list: [] },
+        true,
+        this.defaultShortcuts,
+        v == null ? {} : v
+      ) as AlainDateRangePickerShortcut;
+      if (typeof v !== 'object') {
+        cog.enabled = toBoolean(v) !== false;
+      }
+      this._shortcut = cog;
+      this.refreshShortcut();
+      return cog;
     }
-    this._shortcut = cog;
-    this.refreshShortcut();
-  }
-  get shortcut(): AlainDateRangePickerShortcut | null {
-    return this._shortcut;
-  }
-  @Input({ required: true }) ngModelEnd: NzSafeAny;
-  @Output() readonly ngModelEndChange = new EventEmitter<NzSafeAny>();
+  });
+  readonly ngModelEnd = model.required<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
     return this.nativeComp!.datePicker;
@@ -98,7 +94,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   private overrideNative(): void {
     const dp = this.dp;
     dp.writeValue = (value: Date) => {
-      const dates = (value && this.ngModelEnd ? [value, this.ngModelEnd] : []).filter(w => !!w);
+      const dates = (value && this.ngModelEnd() ? [value, this.ngModelEnd()] : []).filter(w => !!w);
       this.srv.setValue(this.srv.makeValue(dates));
       this.start = dates.length > 0 ? dates[0] : null;
       this.end = dates.length > 0 ? dates[1] : null;
@@ -115,8 +111,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       this.start = start;
       this.end = end;
       oldOnChangeFn(start);
-      this.ngModelEnd = end;
-      this.ngModelEndChange.emit(end);
+      this.ngModelEnd.set(end);
     };
   }
 
@@ -186,7 +181,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       if (!this.shortcutFactory) {
         this.shortcutFactory = this.vcr.createComponent(RangePickerShortcutTplComponent);
       }
-      const { instance } = this.shortcutFactory;
+      const instance = this.shortcutFactory.instance;
       instance.list = list;
       instance.click = (item: AlainDateRangePickerShortcutItem) => {
         const res = item.fn([this.start, this.end]);
@@ -194,7 +189,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
         this.dp.onChangeFn(res);
         this.dp.close();
       };
-      extraFooter = instance.tpl;
+      extraFooter = instance.tpl();
     }
     this.nativeComp!.datePicker.extraFooter = extraFooter;
     Promise.resolve().then(() => this.cd());
@@ -205,13 +200,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
     this.refreshShortcut();
   }
 
-  private destoryShortcut(): void {
-    if (this.shortcutFactory != null) {
-      this.shortcutFactory.destroy();
-    }
-  }
-
   ngOnDestroy(): void {
-    this.destoryShortcut();
+    this.shortcutFactory?.destroy();
   }
 }

@@ -14,41 +14,56 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
-## <small>20.1.1 (2025-12-25)</small>
-
-* fix(form:widget:number): 修复精度不准确 (#1939) ([79cf1cf](https://github.com/ng-alain/delon/commit/79cf1cf)), closes [#1939](https://github.com/ng-alain/delon/issues/1939)
-* fix(cli): 使用 `listr2` 替代 `ansi-colors` (#1938) ([cbb9f3c](https://github.com/ng-alain/delon/commit/cbb9f3c)), closes [#1938](https://github.com/ng-alain/delon/issues/1938)
-
-## 20.1.0 (2025-10-19)
-
-* feat(theme): 增加若干语言 (#1932) ([4ed8e5f](https://github.com/ng-alain/delon/commit/4ed8e5f)), closes [#1932](https://github.com/ng-alain/delon/issues/1932)
-
-
-## <small>20.0.2 (2025-09-17)</small>
-
-* fix(abc:exception): 修复无法覆盖 `img`, `title`, `desc` (#1928) ([727018b](https://github.com/ng-alain/delon/commit/727018b)), closes [#1928](https://github.com/ng-alain/delon/issues/1928)
-* fix(schematics): 修复新项目包含过期模块 (#1924) ([15c26e0](https://github.com/ng-alain/delon/commit/15c26e0)), closes [#1924](https://github.com/ng-alain/delon/issues/1924)
-
-
-## <small>20.0.1 (2025-07-22)</small>
-
-* build: bump ng-zorro-antd to 20.1.0 (#1922) ([04b4306](https://github.com/ng-alain/delon/commit/04b4306)), closes [#1922](https://github.com/ng-alain/delon/issues/1922)
-
-
-## 20.0.0 (2025-07-07)
-
-### Features
-
-* feat(abc:notice-icon): 新增 `event` 事件 (#1904) ([7a59856](https://github.com/ng-alain/delon/commit/7a59856)), closes [#1904](https://github.com/ng-alain/delon/issues/1904)
-* feat(abc:st): 新增 `delay` 属性 (#1854) ([b5d61a9](https://github.com/ng-alain/delon/commit/b5d61a9)), closes [#1854](https://github.com/ng-alain/delon/issues/1854)
-* feat(theme:menu): 新增 `render_type` 菜单项，支持分隔符 (#1908) ([a00b4c9](https://github.com/ng-alain/delon/commit/a00b4c9)), closes [#1908](https://github.com/ng-alain/delon/issues/1908)
-* feat(theme:modalhelper): 参数支持 signal (#1917) ([5168ba3](https://github.com/ng-alain/delon/commit/5168ba3)), closes [#1917](https://github.com/ng-alain/delon/issues/1917)
-* feat(form:widget:date): 支持 `placeholder` 参数字符串数组 (#1902) ([cc85c2b](https://github.com/ng-alain/delon/commit/cc85c2b)), closes [#1902](https://github.com/ng-alain/delon/issues/1902)
+## [21.0.5](https://github.com/ng-alain/delon/compare/21.0.4...21.0.5) (2026-02-01)
 
 ### Bug Fixes
 
-* fix(form:checkbox): 标记 `span` 属性为过期状态 (#1916) ([7619ca2](https://github.com/ng-alain/delon/commit/7619ca2)), closes [#1916](https://github.com/ng-alain/delon/issues/1916)
-* fix(form): 修复 strict 模式 (#1901) ([b83c677](https://github.com/ng-alain/delon/commit/b83c677)), closes [#1901](https://github.com/ng-alain/delon/issues/1901)
+* **abc:se,sg,sv:** fix global config not working ([#1983](https://github.com/ng-alain/delon/issues/1983)) ([1e28fdf](https://github.com/ng-alain/delon/commit/1e28fdf562b9ad810554f8c6c3680f499a2c6e43))
+* **theme:ModalHelper:** 修复当 `nzNoAnimation` 为 `ture` 时 `focus` 无法工作 ([#1984](https://github.com/ng-alain/delon/issues/1984)) ([55731fd](https://github.com/ng-alain/delon/commit/55731fdc831b2326a5684543ae515609bbe1a661))
+
+
+## <small>21.0.4 (2026-01-28)</small>
+
+* fix(abc:se,sg,sv): 修复全局配置无法工作 (#1980) ([be765b4](https://github.com/ng-alain/delon/commit/be765b4)), closes [#1980](https://github.com/ng-alain/delon/issues/1980)
+
+## <small>21.0.3 (2026-01-25)</small>
+
+* fix(cli): 修复 `ng add` 生成的依赖版本号不准确 (#1978) ([e5b5e02](https://github.com/ng-alain/delon/commit/e5b5e02)), closes [#1978](https://github.com/ng-alain/delon/issues/1978)
+
+## <small>21.0.2 (2026-01-18)</small>
+
+* fix(acl:if): 修复 NG0950 错误 (#1974) ([2cdef54](https://github.com/ng-alain/delon/commit/2cdef54)), closes [#1974](https://github.com/ng-alain/delon/issues/1974)
+* fix(cli): 修复 `ng add ng-alain` 缺少 vitest 配置 (#1973) ([f708066](https://github.com/ng-alain/delon/commit/f708066)), closes [#1973](https://github.com/ng-alain/delon/issues/1973)
+
+
+## <small>21.0.1 (2026-01-17)</small>
+
+* fix(cli): 修复缺少 `ReuseTabComponent` 导入 (#1970) ([3fbafb1](https://github.com/ng-alain/delon/commit/3fbafb1)), closes [#1970](https://github.com/ng-alain/delon/issues/1970)
+* fix(cli): 修复移除 `provideAnimations` (#1971) ([4c92bca](https://github.com/ng-alain/delon/commit/4c92bca)), closes [#1971](https://github.com/ng-alain/delon/issues/1971)
+
+
+## 21.0.0 (2026-01-17)
+
+### Code Refactoring
+
+* refactor(*): 使用 `nzVariant` 替代 `nzBorderless` (#1944) ([6e61fec](https://github.com/ng-alain/delon/commit/6e61fec)), closes [#1944](https://github.com/ng-alain/delon/issues/1944)
+
+### Features
+
+* feat(abc:date-picker): 新增使用字符串标识来替代快捷输入 (#1954) ([4cbac18](https://github.com/ng-alain/delon/commit/4cbac18)), closes [#1954](https://github.com/ng-alain/delon/issues/1954)
+* feat(abc:loading): 新增 `text` 国际化 (#1959) ([31fac3f](https://github.com/ng-alain/delon/commit/31fac3f)), closes [#1959](https://github.com/ng-alain/delon/issues/1959)
+* feat(abc:reuse-tab): 新增 `routeParamMatchMode` 支持自定义模式 (#1952) ([f3505e2](https://github.com/ng-alain/delon/commit/f3505e2)), closes [#1952](https://github.com/ng-alain/delon/issues/1952)
+* feat(abc:st): 新增重置 `filter` 时 `change` 事件的 `filter` 为 `null` (#1950) ([891ff48](https://github.com/ng-alain/delon/commit/891ff48)), closes [#1950](https://github.com/ng-alain/delon/issues/1950)
+* feat(abc:st): 新增 `page.checkboxIdMap` 用于缓存选择项数据 (#1951) ([4144847](https://github.com/ng-alain/delon/commit/4144847)), closes [#1951](https://github.com/ng-alain/delon/issues/1951)
+* feat(module:i18n): 新增若干丢失翻译 (#1955) ([3cb28c5](https://github.com/ng-alain/delon/commit/3cb28c5)), closes [#1955](https://github.com/ng-alain/delon/issues/1955)
+* feat(theme:i18n): 新增 `mergeData` 方法 (#1945) ([4f1a351](https://github.com/ng-alain/delon/commit/4f1a351)), closes [#1945](https://github.com/ng-alain/delon/issues/1945)
+* feat(cli): `ng add` 新增 `reuseTab` 选项 (#1961) ([478f009](https://github.com/ng-alain/delon/commit/478f009)), closes [#1961](https://github.com/ng-alain/delon/issues/1961)
+
+### Bug Fixes
+
+* fix(abc:st): 修复当 `children` 为空数组时不应该显示按钮 (#1947) ([a4be8d1](https://github.com/ng-alain/delon/commit/a4be8d1)), closes [#1947](https://github.com/ng-alain/delon/issues/1947)
+* fix(form): 修复 `formValueChange.path` 参数没有返回值 (#1953) ([86a9b4e](https://github.com/ng-alain/delon/commit/86a9b4e)), closes [#1953](https://github.com/ng-alain/delon/issues/1953)
+* fix(theme:setting-drawer): 修复样式 (#1968) ([f82dc34](https://github.com/ng-alain/delon/commit/f82dc34)), closes [#1968](https://github.com/ng-alain/delon/issues/1968)
 
 
 ## Old Versions

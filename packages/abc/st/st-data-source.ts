@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of, map } from 'rxjs';
 
 import type { CellOptions } from '@delon/abc/cell';
-import { DatePipe, YNPipe, _HttpClient } from '@delon/theme';
+import { DatePipe, STLocaleData, YNPipe, _HttpClient } from '@delon/theme';
 import type { AlainSTConfig } from '@delon/util/config';
 import { CurrencyService } from '@delon/util/format';
 import { deepCopy, deepGet } from '@delon/util/other';
@@ -53,6 +53,7 @@ export interface STDataSourceOptions {
   multiSort?: STMultiSort;
   rowClassName?: STRowClassName | null;
   customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
+  locale: STLocaleData;
 }
 
 export interface STDataSourceResult {
@@ -91,7 +92,7 @@ export class STDataSource {
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
     let data$: Observable<STData[]>;
     let isRemote = false;
-    const { data, res, total, page, pi, ps, paginator, columns, headers } = options;
+    const { data, res, total, page, pi, ps, paginator, columns, headers, locale } = options;
     let retTotal: number;
     let retPs: number;
     let retList: STData[];
@@ -188,7 +189,9 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    data$ = data$.pipe(map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })));
+    data$ = data$.pipe(
+      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName, locale }))
+    );
 
     return data$.pipe(
       map(result => {
@@ -346,14 +349,19 @@ export class STDataSource {
     } as STOnCellResult;
   }
 
-  optimizeData(options: { columns: _STColumn[]; result: STData[]; rowClassName?: STRowClassName | null }): STData[] {
-    const { result, columns, rowClassName } = options;
+  optimizeData(options: {
+    columns: _STColumn[];
+    result: STData[];
+    rowClassName?: STRowClassName | null;
+    locale: STLocaleData;
+  }): STData[] {
+    const { result, columns, rowClassName, locale } = options;
     for (let i = 0, len = result.length; i < len; i++) {
       result[i]._values = columns.map(c => {
         const props = this.getCell(c, result[i], i);
 
         if (Array.isArray(c.buttons) && c.buttons.length > 0) {
-          return { buttons: this.genButtons(c.buttons as _STColumnButton[], result[i], c), _text: '', props };
+          return { buttons: this.genButtons(c.buttons as _STColumnButton[], result[i], c, locale), _text: '', props };
         }
 
         let cell: CellOptions | undefined;
@@ -373,7 +381,7 @@ export class STDataSource {
     return typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex! + idx;
   }
 
-  private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn): _STColumnButton[] {
+  private genButtons(_btns: _STColumnButton[], item: STData, col: STColumn, locale: STLocaleData): _STColumnButton[] {
     const fn = (btns: _STColumnButton[]): _STColumnButton[] => {
       return deepCopy(btns).filter(btn => {
         const result = typeof btn.iif === 'function' ? btn.iif(item, btn, col) : true;
@@ -405,10 +413,10 @@ export class STDataSource {
       return btns;
     };
 
-    return this.fixMaxMultiple(fnText(res), col);
+    return this.fixMaxMultiple(fnText(res), col, locale);
   }
 
-  private fixMaxMultiple(btns: _STColumnButton[], col: STColumn): _STColumnButton[] {
+  private fixMaxMultiple(btns: _STColumnButton[], col: STColumn, locale: STLocaleData): _STColumnButton[] {
     const curCog = col.maxMultipleButton;
     const btnSize = btns.length;
     if (curCog == null || btnSize <= 0) return btns;
@@ -421,7 +429,7 @@ export class STDataSource {
     if (cog.count! >= btnSize) return btns;
 
     const newBtns: _STColumnButton[] = btns.slice(0, cog.count);
-    newBtns.push({ _text: cog.text, children: btns.slice(cog.count) });
+    newBtns.push({ _text: cog.text ?? locale.more, children: btns.slice(cog.count) });
     return newBtns;
   }
 

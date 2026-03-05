@@ -1,13 +1,19 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { default as ngLang } from '@angular/common/locales/zh';
-import { ApplicationConfig, EnvironmentProviders, Provider } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  ApplicationConfig,
+  EnvironmentProviders,
+  provideBrowserGlobalErrorListeners,
+  Provider,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { provideRouter, withComponentInputBinding, withViewTransitions, withInMemoryScrolling, withHashLocation, RouterFeatures } from '@angular/router';
 import { <% if (i18n) { %>I18NService, <% } %>defaultInterceptor, provideStartup } from '@core';
 import { provideCellWidgets } from '@delon/abc/cell';
 import { provideSTWidgets } from '@delon/abc/st';
 import { authSimpleInterceptor, provideAuth } from '@delon/auth';<% if (form) { %>
-import { provideSFConfig } from '@delon/form';<% } %>
+import { provideSFConfig } from '@delon/form';<% } %><% if (reuseTab) { %>
+import { provideReuseTabConfig } from '@delon/abc/reuse-tab';<% } %>
 import { AlainProvideLang, provideAlain, zh_CN as delonLang } from '@delon/theme';
 import { AlainConfig } from '@delon/util/config';
 import { environment } from '@env/environment';
@@ -43,9 +49,11 @@ const routerFeatures: RouterFeatures[] = [
 if (environment.useHash) routerFeatures.push(withHashLocation());
 
 const providers: Array<Provider | EnvironmentProviders> = [
+  provideBrowserGlobalErrorListeners(),
+  provideZonelessChangeDetection(),
   provideHttpClient(withInterceptors([...(environment.interceptorFns ?? []), authSimpleInterceptor, defaultInterceptor])),
-  provideAnimations(),
-  provideRouter(routes, ...routerFeatures),
+  provideRouter(routes, ...routerFeatures),<% if (reuseTab) { %>
+  provideReuseTabConfig(),<% } %>
   provideAlain({ config: alainConfig, defaultLang<% if (i18n) { %>, i18nClass: I18NService<% } %>, icons: [...ICONS_AUTO, ...ICONS] }),
   provideNzConfig(ngZorroConfig),
   provideAuth(),

@@ -1,42 +1,39 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN, DrawerHelper, TitleService, VERSION as VERSION_ALAIN, stepPreloader } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 
-import { I18NService, MetaService, MobileService } from '@core';
+import { I18NService, MetaService, MOBILE } from '@core';
 
 @Component({
   selector: 'app-root',
   template: `<router-outlet />`,
-  imports: [RouterOutlet]
+  imports: [RouterOutlet],
+  host: {
+    '[class.mobile]': `mobile()`,
+    '[attr.ng-alain-version]': `alainVersion`,
+    '[attr.ng-zorro-version]': `zorroVersion`
+  }
 })
-export class AppComponent {
-  @HostBinding('class.mobile')
-  isMobile = false;
-
-  private query = 'only screen and (max-width: 1200px)';
+export class App {
+  protected readonly alainVersion = VERSION_ALAIN.full;
+  protected readonly zorroVersion = VERSION_ZORRO.full;
+  protected mobile = MOBILE;
   private prevUrl = '';
 
   constructor(
-    el: ElementRef,
-    renderer: Renderer2,
     @Inject(ALAIN_I18N_TOKEN) i18n: I18NService,
     meta: MetaService,
     title: TitleService,
     router: Router,
-    mobileSrv: MobileService,
     breakpointObserver: BreakpointObserver,
     dh: DrawerHelper
   ) {
-    renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
-    renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
-
-    breakpointObserver.observe(this.query).subscribe(res => {
-      this.isMobile = res.matches;
-      mobileSrv.next(this.isMobile);
+    breakpointObserver.observe('only screen and (max-width: 1200px)').subscribe(res => {
+      MOBILE.set(res.matches);
     });
 
     const done = stepPreloader();

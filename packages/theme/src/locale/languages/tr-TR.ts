@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} ile {{range[1]}} arasında {{total}}',
     filterConfirm: 'Tamam',
-    filterReset: 'Sıfırla'
+    filterReset: 'Sıfırla',
+    more: 'Daha fazla'
   },
   sf: {
     submit: 'Gönder',
@@ -91,5 +92,11 @@ export default {
     thisMonth: 'Bu Ay',
     lastMonth: 'Geçen Ay',
     thisYear: 'Bu Yıl'
+  },
+  loading: {
+    text: 'Yükleniyor...'
+  },
+  pageHeader: {
+    home: 'Ana Sayfa'
   }
 } as FullLocaleData;

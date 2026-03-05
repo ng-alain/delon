@@ -15,7 +15,7 @@ export default {
     experimentalDecorators: true,
     moduleResolution: 'node',
     importHelpers: true,
-    target: 'ES2015',
+    target: 'ES2022',
     module: 'ES2022',
     useDefineForClassFields: false,
     lib: ['ES2022', 'dom']

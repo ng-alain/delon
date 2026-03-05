@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AlainThemeModule, Layout, SettingsService } from '@delon/theme';
+import { AlainThemeModule, SettingsService } from '@delon/theme';
 
 import { LayoutDefaultService } from './layout.service';
 
@@ -16,25 +16,25 @@ describe('theme: #LayoutDefaultService', () => {
 
   it('should be working', () => {
     srv.setOptions({ hideAside: true });
-    expect(srv.options.hideAside).toBe(true);
+    expect(srv.options().hideAside).toBe(true);
   });
 
   it('#toggleCollapsed', () => {
     const settings = TestBed.inject(SettingsService);
-    (settings.layout as Layout).direction = 'ltr';
+    settings.setLayout('direction', 'ltr');
     srv.toggleCollapsed(true);
-    expect(srv.collapsedIcon).toBe('menu-unfold');
+    expect(srv.collapsedIcon()).toBe('menu-unfold');
     srv.toggleCollapsed(false);
-    expect(srv.collapsedIcon).toBe('menu-fold');
+    expect(srv.collapsedIcon()).toBe('menu-fold');
     srv.toggleCollapsed();
-    expect(srv.collapsedIcon).toBe('menu-unfold');
+    expect(srv.collapsedIcon()).toBe('menu-unfold');
     srv.toggleCollapsed();
-    expect(srv.collapsedIcon).toBe('menu-fold');
+    expect(srv.collapsedIcon()).toBe('menu-fold');
     // when is direction
-    (settings.layout as Layout).direction = 'rtl';
+    settings.setLayout('direction', 'rtl');
     srv.toggleCollapsed(true);
-    expect(srv.collapsedIcon).toBe('menu-fold');
+    expect(srv.collapsedIcon()).toBe('menu-fold');
     srv.toggleCollapsed(false);
-    expect(srv.collapsedIcon).toBe('menu-unfold');
+    expect(srv.collapsedIcon()).toBe('menu-unfold');
   });
 });

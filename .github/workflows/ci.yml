@@ -22,12 +22,8 @@ jobs:
           ACCESS_REPO: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
-      - uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
@@ -73,12 +69,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Test
         run: yarn run test
       - uses: codecov/codecov-action@v5
@@ -97,12 +89,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Test
         run: yarn run test:cli
 
@@ -119,6 +107,6 @@ jobs:
           path: ./node_modules
           key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
       - name: Install node modules
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Check code lint
         run: yarn run lint

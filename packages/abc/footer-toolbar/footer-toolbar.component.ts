@@ -40,8 +40,8 @@ const CLSBODY = 'footer-toolbar__body';
 export class FooterToolbarComponent implements OnDestroy {
   private readonly bodyCls = inject(DOCUMENT).querySelector('body')?.classList;
 
-  errorCollect = input(false, { transform: booleanAttribute });
-  extra = input<string | TemplateRef<void>>();
+  readonly errorCollect = input(false, { transform: booleanAttribute });
+  readonly extra = input<string | TemplateRef<void>>();
 
   constructor() {
     afterNextRender(() => this.bodyCls?.add(CLSBODY));

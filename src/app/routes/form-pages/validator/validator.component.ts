@@ -3,10 +3,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   inject,
   ViewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
@@ -25,7 +25,7 @@ import { NzSpaceCompactComponent } from 'ng-zorro-antd/space';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { AppService, CodeService } from '@core';
+import { CodeService, SITE_THEME } from '@core';
 
 const stackBlitzTpl = `import { Component, inject } from '@angular/core';
 import { DelonFormModule, SFLayout, SFSchema, SFUISchema } from '@delon/form';
@@ -85,7 +85,6 @@ export class FormValidatorComponent {
   private readonly codeSrv = inject(CodeService);
   private readonly http = inject(_HttpClient);
   private readonly msg = inject(NzMessageService);
-  private readonly appService = inject(AppService);
   private readonly cdr = inject(ChangeDetectorRef);
 
   @ViewChild('schemaEditor') private schemaEditor!: NuMonacoEditorComponent;
@@ -109,15 +108,14 @@ export class FormValidatorComponent {
   uiCode!: string;
   uiSchema!: SFUISchema;
   expand = true;
-  editorOptions = { language: 'json', theme: 'vs' };
+  protected editorOptions = computed(() => {
+    return { language: 'json', theme: SITE_THEME() === 'dark' ? 'vs-dark' : 'vs' };
+  });
 
   constructor() {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
-    this.appService.theme$.pipe(takeUntilDestroyed()).subscribe(data => {
-      this.editorOptions = { language: 'json', theme: data === 'dark' ? 'vs-dark' : 'vs' };
-    });
 
     afterNextRender(() => this.getSchema());
   }

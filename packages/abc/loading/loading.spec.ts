@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { cleanCdkOverlayHtml } from '@delon/testing';
+import { DelonLocaleModule } from '@delon/theme';
 
 import { LoadingService } from './loading.service';
 
@@ -10,6 +11,9 @@ describe('abc: loading', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [DelonLocaleModule]
+    });
     srv = TestBed.inject(LoadingService);
     fixture = TestBed.createComponent(TestComponent);
   });

@@ -16,8 +16,8 @@ import { take, timer } from 'rxjs';
 })
 export class AutoFocusDirective {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  enabled = input(true, { transform: booleanAttribute });
-  delay = input(25, { transform: numberAttribute });
+  readonly enabled = input(true, { transform: booleanAttribute });
+  readonly delay = input(25, { transform: numberAttribute });
   readonly focus = output();
 
   constructor() {

@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFValue, getData } from '@delon/form';
-import { NzSegmentedComponent, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { NzSegmentedComponent, type NzSegmentedOption } from 'ng-zorro-antd/segmented';
 
 import type { SFSegmentedWidgetSchema } from './schema';
 
@@ -31,21 +31,23 @@ import type { SFSegmentedWidgetSchema } from './schema';
 })
 export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   static readonly KEY = 'segmented';
-  private _list?: NzSegmentedOptions;
-  get list(): NzSegmentedOptions {
+  private _list?: NzSegmentedOption[];
+  get list(): NzSegmentedOption[] {
     return this._list ?? [];
   }
 
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
-      this._list = list as NzSegmentedOptions;
+      this._list = list as NzSegmentedOption[];
       this.detectChanges();
     });
   }
 
-  valueChange(index: string | number): void {
-    if (this.ui.valueChange) {
-      this.ui.valueChange({ index, item: typeof index === 'number' ? (this.list[index] as SFValue) : null });
-    }
+  valueChange(v: string | number): void {
+    const list = this.list;
+    this.ui.valueChange?.({
+      index: v,
+      item: typeof v === 'number' ? (list[v] as SFValue) : list.find(w => w.value === v)
+    });
   }
 }

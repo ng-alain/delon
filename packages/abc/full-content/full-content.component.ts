@@ -1,20 +1,18 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
-  OnChanges,
   OnDestroy,
-  OnInit,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  effect,
   inject,
   input,
   model,
-  numberAttribute
+  numberAttribute,
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
@@ -31,29 +29,67 @@ const hideTitleCls = `full-content__hidden-title`;
   exportAs: 'fullContent',
   template: `<ng-content />`,
   host: {
-    '[class.full-content]': 'true',
-    '[style.height.px]': '_height'
+    class: 'full-content',
+    '[style.height.px]': '_height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
-  private readonly destroy$ = inject(DestroyRef);
+export class FullContentComponent implements OnDestroy {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly srv = inject(FullContentService);
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);
 
   private bodyEl = this.doc.querySelector('body')!;
-  private inited = false;
   private id = `_full-content-${Math.random().toString(36).substring(2)}`;
 
-  _height = 0;
+  _height = signal(0);
 
-  hideTitle = input(true, { transform: booleanAttribute });
-  padding = input(24, { transform: numberAttribute });
-  fullscreen = model<boolean>();
+  readonly hideTitle = input(true, { transform: booleanAttribute });
+  readonly padding = input(24, { transform: numberAttribute });
+  readonly fullscreen = model<boolean>();
+
+  constructor() {
+    // when window resize
+    fromEvent(window, 'resize')
+      .pipe(takeUntilDestroyed(), debounceTime(200))
+      .subscribe(() => this.updateHeight());
+
+    // when servier changed
+    this.srv.change
+      .pipe(
+        takeUntilDestroyed(),
+        filter(res => res !== null)
+      )
+      .subscribe(() => this.toggle());
+
+    // when router changed
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
+        debounceTime(200)
+      )
+      .subscribe(() => {
+        if (this.doc.querySelector(`#${this.id}`)) {
+          this.bodyEl.classList.add(wrapCls);
+          this.updateCls();
+        } else {
+          this.removeInBody();
+        }
+      });
+
+    afterNextRender(() => {
+      this.bodyEl.classList.add(wrapCls);
+      this.el.id = this.id;
+
+      this.updateCls();
+      this.updateHeight();
+    });
+
+    effect(() => this.update());
+  }
 
   private updateCls(): void {
     const clss = this.bodyEl.classList;
@@ -77,63 +113,17 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   private updateHeight(): void {
-    this._height = this.bodyEl.getBoundingClientRect().height - this.el.getBoundingClientRect().top - this.padding();
-    this.cdr.detectChanges();
+    this._height.set(this.bodyEl.getBoundingClientRect().height - this.el.getBoundingClientRect().top - this.padding());
   }
 
   private removeInBody(): void {
     this.bodyEl.classList.remove(wrapCls, openedCls, hideTitleCls);
   }
 
-  ngOnInit(): void {
-    this.inited = true;
-    this.bodyEl.classList.add(wrapCls);
-    this.el.id = this.id;
-
-    this.updateCls();
-
-    // when window resize
-    fromEvent(window, 'resize')
-      .pipe(takeUntilDestroyed(this.destroy$), debounceTime(200))
-      .subscribe(() => this.updateHeight());
-
-    // when servier changed
-    this.srv.change
-      .pipe(
-        takeUntilDestroyed(this.destroy$),
-        filter(res => res !== null)
-      )
-      .subscribe(() => this.toggle());
-
-    // when router changed
-    this.router.events
-      .pipe(
-        takeUntilDestroyed(this.destroy$),
-        filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
-        debounceTime(200)
-      )
-      .subscribe(() => {
-        if (this.doc.querySelector(`#${this.id}`)) {
-          this.bodyEl.classList.add(wrapCls);
-          this.updateCls();
-        } else {
-          this.removeInBody();
-        }
-      });
-  }
-
   toggle(): void {
     this.fullscreen.set(!this.fullscreen());
     this.update();
     this.updateHeight();
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => this.updateHeight());
-  }
-
-  ngOnChanges(): void {
-    if (this.inited) this.update();
   }
 
   ngOnDestroy(): void {

@@ -49,7 +49,7 @@ export type ExceptionType = 403 | 404 | 500;
     </div>
   `,
   host: {
-    '[class.exception]': 'true',
+    class: 'exception',
     '[class.exception-rtl]': `dir() === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,28 +61,27 @@ export class ExceptionComponent {
   private readonly cogSrv = inject(AlainConfigService);
 
   private readonly conTpl = viewChild.required<ElementRef<HTMLElement>>('conTpl');
-  locale = inject(DelonLocaleService).valueSignal('exception');
-  dir = inject(Directionality).valueSignal;
+  protected locale = inject(DelonLocaleService).valueSignal('exception');
+  protected dir = inject(Directionality).valueSignal;
 
-  hasCon = signal(false);
+  protected hasCon = signal(false);
   private typeDict!: NonNullable<AlainExceptionType['typeDict']>;
-  typeItem = signal<NonNullable<AlainExceptionType['typeDict']>[ExceptionType] | null>(null);
+  protected typeItem = signal<NonNullable<AlainExceptionType['typeDict']>[ExceptionType] | null>(null);
 
-  type = input<ExceptionType>(404);
-  img = input<string>();
-  title = input<string>();
-  desc = input<string>();
-  backRouterLink = input<string | NzSafeAny[]>('/');
-
-  _img = computed(() => {
+  readonly type = input<ExceptionType>(404);
+  readonly img = input<string>();
+  readonly title = input<string>();
+  readonly desc = input<string>();
+  readonly backRouterLink = input<string | NzSafeAny[]>('/');
+  protected readonly _img = computed(() => {
     const v = this.img() ?? this.typeItem()?.img;
     return v == null ? null : this.dom.bypassSecurityTrustStyle(`url('${v}')`);
   });
-  _title = computed(() => {
+  protected readonly _title = computed(() => {
     const v = this.title() ?? this.typeItem()?.title;
     return v == null ? null : this.dom.bypassSecurityTrustHtml(v);
   });
-  _desc = computed(() => {
+  protected readonly _desc = computed(() => {
     const v = this.desc() ?? this.typeItem()?.desc ?? this.locale()[this.type()];
     return v == null ? null : this.dom.bypassSecurityTrustHtml(v);
   });
@@ -115,7 +114,7 @@ export class ExceptionComponent {
     });
   }
 
-  checkContent(): void {
+  protected checkContent(): void {
     this.hasCon.set(!isEmpty(this.conTpl().nativeElement));
   }
 }

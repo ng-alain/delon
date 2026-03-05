@@ -14,7 +14,7 @@ The newly opened is always the current page, and the route reuse means that when
 ## Usage
 
 1. Provide `provideReuseTabConfig()` configuration in `app.config.ts` file
-2. Add `<reuse-tab>` in the `src/app/layout/basic/basic.component.ts` file, like this:
+2. Add `<reuse-tab>` in the `src/app/layout/basic/basic.ts` file, like this:
 
 ```html
 - <router-outlet />
@@ -197,6 +197,7 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[titleRender]` | Custom rendering of the title | `TemplateRef<{ $implicit: ReuseItem }>` | - |
 | `[storageState]` | Whether to store the state, keep the last browser state | `boolean` | `false` |
 | `[canClose]` | A function to determine what should be closed | `(options: { item: ReuseItem; includeNonCloseable: boolean }) => Observable<boolean>` | - |
+| `[trackByFn]` | `track` function for `nz-tabs` | `(item: ReuseItem) => item.url` | - |
 | `(close)` | Close callback event | `EventEmitter` | - |
 | `(change)` | Callback when switching | `EventEmitter` | - |
 

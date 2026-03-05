@@ -26,6 +26,12 @@ describe('NgAlainSchematic: application', () => {
       const angualrJson = tree.readContent('angular.json');
       expect(angualrJson).toContain(`"src/assets"`);
     });
+    it('should be add vitest config', () => {
+      const angualrJson = tree.readContent('angular.json');
+      expect(angualrJson).toContain(`"runnerConfig": "vitest.config.ts"`);
+      const packageJson = tree.readContent('package.json');
+      expect(packageJson).toContain(`"@playwright/test":`);
+    });
   });
 
   describe('#i18n', () => {
@@ -108,6 +114,16 @@ describe('NgAlainSchematic: application', () => {
       ({ tree } = await createAlainApp({ form: false }));
       const content = tree.readContent('/projects/foo/src/app/shared/index.ts');
       expect(content).not.toContain(`json-schema`);
+    });
+  });
+
+  describe('#reuse-tab', () => {
+    it(`should be working`, async () => {
+      ({ tree } = await createAlainApp({ reuseTab: true }));
+      const appConfig = tree.readContent('/projects/foo/src/app/app.config.ts');
+      expect(appConfig).toContain(`provideReuseTabConfig(),`);
+      const baseComp = tree.readContent('/projects/foo/src/app/layout/basic/basic.ts');
+      expect(baseComp).toContain(`<reuse-tab #reuseTab />`);
     });
   });
 

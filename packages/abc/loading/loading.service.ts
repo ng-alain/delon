@@ -4,6 +4,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy, inject } from '@angular/core';
 import { Subject, Subscription, timer, debounce } from 'rxjs';
 
+import { DelonLocaleService } from '@delon/theme';
 import { AlainConfigService, AlainLoadingConfig } from '@delon/util/config';
 
 import { LoadingDefaultComponent } from './loading.component';
@@ -14,6 +15,7 @@ export class LoadingService implements OnDestroy {
   private readonly overlay = inject(Overlay);
   private readonly configSrv = inject(AlainConfigService);
   private readonly directionality = inject(Directionality);
+  private locale = inject(DelonLocaleService).getData('loading');
 
   private _overlayRef?: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
@@ -29,7 +31,7 @@ export class LoadingService implements OnDestroy {
   constructor() {
     this.cog = this.configSrv.merge('loading', {
       type: 'spin',
-      text: '加载中...',
+      text: this.locale.text,
       icon: {
         type: 'loading',
         theme: 'outline',

@@ -16,12 +16,7 @@
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
         <nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}" />
       </button>
-      <button
-        nz-tooltip
-        [nzTooltipTitle]="'app.demo.stackblitz' | i18n"
-        nz-button
-        (click)="openOnStackBlitz()"
-      >
+      <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | i18n" nz-button (click)="openOnStackBlitz()">
         <nz-icon nzType="form" />
       </button>
       <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()">
@@ -38,7 +33,7 @@
           #schemaEditor
           [(ngModel)]="schema"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>
@@ -47,7 +42,7 @@
           #formCodeEditor
           [(ngModel)]="formCode"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>
@@ -56,7 +51,7 @@
           #uiEditor
           [(ngModel)]="uiCode"
           (ngModelChange)="run()"
-          [options]="editorOptions"
+          [options]="editorOptions()"
           height="500px"
         />
       </nz-tab>

@@ -18,7 +18,7 @@ title: 默认布局
 
 ### 2、使用 `layout-default` 组件
 
-在 `src/app/layout/basic/basic.component.ts` 创建一个新的布局：
+在 `src/app/layout/basic/basic.ts` 创建一个新的布局：
 
 ```ts
 import { Component } from '@angular/core';
@@ -75,18 +75,14 @@ import { environment } from '@env/environment';
     <theme-btn />
   `,
 })
-export class LayoutBasicComponent {
-  options: LayoutDefaultOptions = {
+export class LayoutBasic {
+  readonly user = inject(SettingsService).user;
+  protected options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`,
+    logoCollapsed: `./assets/logo.svg`
   };
-  searchToggleStatus = false;
-  showSettingDrawer = !environment.production;
-  get user(): User {
-    return this.settings.user;
-  }
-
-  constructor(private settings: SettingsService) {}
+  protected searchToggleStatus = signal(false);
+  protected showSettingDrawer = !environment.production;
 }
 ```
 

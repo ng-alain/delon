@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';

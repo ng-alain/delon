@@ -54,6 +54,6 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 })
 export class DemoComponent {
   bordered = true;
-  size?: 'small' | 'large' | 'default' = 'default';
+  size: 'small' | 'large' | 'default' = 'default';
 }
 ```

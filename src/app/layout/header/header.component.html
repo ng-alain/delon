@@ -1,3 +1,4 @@
+@let isMobile = mobile();
 <ng-template #menu>
   <ul nz-menu [nzMode]="isMobile ? 'inline' : 'horizontal'" class="menu-site" id="nav">
     <li nz-menu-item routerLink="/docs/getting-started/{{ i18n.zone }}" [matchRouter]="regexs.docs">

@@ -28,7 +28,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} daripada {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Set Semula'
+    filterReset: 'Set Semula',
+    more: 'Lagi'
   },
   sf: {
     submit: 'Hantar',
@@ -91,5 +92,11 @@ export default {
     thisMonth: 'Bulan Ini',
     lastMonth: 'Bulan Lalu',
     thisYear: 'Tahun Ini'
+  },
+  loading: {
+    text: 'Memuat...'
+  },
+  pageHeader: {
+    home: 'Laman Utama'
   }
 } as FullLocaleData;

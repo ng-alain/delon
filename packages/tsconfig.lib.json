@@ -11,10 +11,6 @@
   "exclude": ["*.spec.ts"],
   "angularCompilerOptions": {
     "strictInputAccessModifiers": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true,
-    "fullTemplateTypeCheck": true,
     "strictTemplates": true,
     "strictInjectionParameters": true
   }

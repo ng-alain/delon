@@ -526,6 +526,7 @@ export class STComponent implements AfterViewInit, OnChanges {
         rowClassName,
         paginator: true,
         customRequest: this.customRequest ?? this.cog.customRequest,
+        locale: this.locale(),
         ...options
       })
       .pipe(takeUntilDestroyed(this.destroy$));
@@ -945,7 +946,7 @@ export class STComponent implements AfterViewInit, OnChanges {
    */
   export(newData?: STData[] | true, opt?: STExportOptions): void {
     const data = Array.isArray(newData)
-      ? this.dataSource.optimizeData({ columns: this._columns, result: newData })
+      ? this.dataSource.optimizeData({ columns: this._columns, result: newData, locale: this.locale() })
       : this._data;
     (newData === true ? this.filteredData : of(data)).subscribe((res: STData[]) =>
       this.exportSrv.export({
@@ -1061,7 +1062,8 @@ export class STComponent implements AfterViewInit, OnChanges {
     this._data = this.dataSource.optimizeData({
       columns: this._columns,
       result: this._data,
-      rowClassName: this.rowClassName
+      rowClassName: this.rowClassName,
+      locale: this.locale()
     });
     return this;
   }

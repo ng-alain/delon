@@ -35,8 +35,8 @@ describe('form: widget: segmented', () => {
         }
       }
     };
-    page.newSchema(s).typeEvent('click', '.ant-segmented-item:nth-child(2) .ant-segmented-item-label');
-    expect(page.getValue('/a')).toBe('Daily');
+    page.newSchema(s).typeEvent('click', '.ant-segmented-item:nth-child(2)');
+    expect(page.getValue('/a')).toBe('Weekly');
     expect(valueChange).toHaveBeenCalled();
   }));
 });

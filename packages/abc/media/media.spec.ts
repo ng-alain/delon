@@ -59,6 +59,7 @@ describe('abc: media', () => {
       page.cd();
       expect(page.player.source.type).toBe('video');
       context.source = { type: 'audio', sources: [] };
+      console.log('change', context.source);
       page.cd();
       expect(page.player.source.type).toBe('audio');
     }));

@@ -21,6 +21,7 @@ DEPENDENCIES=$(node -p "
     'stylelint-config-standard',
     'stylelint-declaration-block-no-ignored-properties',
     'stylelint-config-clean-order',
+    'stylelint-order',
     'stylelint',
     '@antv/data-set',
     '@antv/g2',
@@ -53,7 +54,13 @@ DEPENDENCIES=$(node -p "
     '@github/hotkey',
     'ng-alain-sts',
     'ng-alain-plugin-theme',
-    '@ng-util/monaco-editor'
+    '@ng-util/monaco-editor',
+    '@playwright/test',
+    '@vitest/browser-playwright',
+    '@vitest/coverage-v8',
+    'vitest',
+    'jsdom',
+    'typescript'
   ].map(key => key.replace(/\@/g, '\\\\@').replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 VERSION=$(node -p "require('./package.json').version")

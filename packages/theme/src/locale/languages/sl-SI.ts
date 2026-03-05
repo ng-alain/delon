@@ -27,7 +27,8 @@ export default {
   st: {
     total: '{{range[0]}} - {{range[1]}} of {{total}}',
     filterConfirm: 'OK',
-    filterReset: 'Reset'
+    filterReset: 'Reset',
+    more: 'Več'
   },
   sf: {
     submit: 'Pošlji',
@@ -90,5 +91,11 @@ export default {
     thisMonth: 'Ta mesec',
     lastMonth: 'Prejšnji mesec',
     thisYear: 'Letos'
+  },
+  loading: {
+    text: 'Nalaganje...'
+  },
+  pageHeader: {
+    home: 'Domov'
   }
 } as FullLocaleData;

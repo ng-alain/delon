@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, input, TemplateRef, viewChild } from '@angular/core';
 
 import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from './types';
 
@@ -8,13 +8,11 @@ import { LayoutDefaultHeaderItemDirection, LayoutDefaultHeaderItemHidden } from 
     <ng-template #host>
       <ng-content />
     </ng-template>
-  `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  `
 })
 export class LayoutDefaultHeaderItemComponent {
-  @ViewChild('host', { static: true }) host!: TemplateRef<void>;
+  readonly host = viewChild<TemplateRef<void>>('host');
 
-  @Input() hidden: LayoutDefaultHeaderItemHidden = 'none';
-  @Input() direction: LayoutDefaultHeaderItemDirection = 'right';
+  readonly hidden = input<LayoutDefaultHeaderItemHidden>('none');
+  readonly direction = input<LayoutDefaultHeaderItemDirection>('right');
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
@@ -20,7 +19,7 @@ describe('abc: onboarding', () => {
   function genModule(): void {
     TestBed.configureTestingModule({
       imports: [DelonLocaleModule],
-      providers: [provideRouter([]), provideNoopAnimations()]
+      providers: [provideRouter([])]
     });
     ({ fixture } = createTestContext(TestComponent));
     srv = TestBed.inject<OnboardingService>(OnboardingService);

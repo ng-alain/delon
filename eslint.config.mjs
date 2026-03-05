@@ -1,4 +1,5 @@
 // @ts-check
+import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
@@ -8,7 +9,7 @@ import prettier from 'eslint-plugin-prettier';
 import * as importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: [
       '.*/',
@@ -44,34 +45,7 @@ export default tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      'prettier/prettier': ['error', {}],
-      '@angular-eslint/component-selector': [
-        'off',
-        {
-          type: ['element', 'attribute'],
-          prefix: ['nz', 'test'],
-          style: 'kebab-case'
-        }
-      ],
-      '@angular-eslint/component-class-suffix': [
-        'off',
-        {
-          suffixes: ['Directive', 'Component', 'Base', 'Widget', 'Property', 'HarnessTest']
-        }
-      ],
-      '@angular-eslint/directive-class-suffix': [
-        'off',
-        {
-          suffixes: ['Directive', 'Component', 'Base', 'Widget']
-        }
-      ],
-      '@angular-eslint/directive-selector': [
-        'off',
-        {
-          type: 'attribute',
-          prefix: ['nz']
-        }
-      ],
+      'prettier/prettier': ['error'],
       '@angular-eslint/no-attribute-decorator': 'error',
       '@angular-eslint/no-conflicting-lifecycle': 'off',
       '@angular-eslint/no-forward-ref': 'off',
@@ -193,18 +167,38 @@ export default tseslint.config(
       'max-len': 'off',
       'no-empty': 'off',
       '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-deprecated': 'warn'
+      '@typescript-eslint/no-deprecated': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ]
     }
   },
   {
     files: ['**/*.html'],
+    plugins: {
+      prettier,
+    },
     extends: [
       ...angular.configs.templateRecommended
       // todo(a11y)
       // ...angular.configs.templateAccessibility,
     ],
     rules: {
-      "@angular-eslint/template/eqeqeq": "off"
+      'prettier/prettier': [
+        'error',
+        {
+          parser: 'angular'
+        },
+        {
+          usePrettierrc: true
+        }
+      ],
+      "@angular-eslint/template/eqeqeq": "off",
+      "@angular-eslint/template/prefer-self-closing-tags": "error"
     }
   }
 );

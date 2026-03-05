@@ -1,28 +1,24 @@
 import { Platform } from '@angular/cdk/platform';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   ElementRef,
-  EventEmitter,
-  Input,
   NgZone,
-  OnChanges,
   OnDestroy,
-  Output,
   Renderer2,
-  SimpleChange,
   ViewEncapsulation,
+  afterNextRender,
+  effect,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  output
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { timer, take } from 'rxjs';
+import { take, delay } from 'rxjs';
 
 import type * as Plyr from 'plyr';
 
-import { ZoneOutside } from '@delon/util/decorator';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MediaService } from './media.service';
@@ -39,9 +35,8 @@ export type MediaType = 'html5' | 'youtube' | 'video' | 'audio';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
-  private readonly destroy$ = inject(DestroyRef);
-  private readonly el: HTMLElement = inject(ElementRef).nativeElement;
+export class MediaComponent implements OnDestroy {
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly renderer = inject(Renderer2);
   private readonly ngZone = inject(NgZone);
   private readonly srv = inject(MediaService);
@@ -50,21 +45,34 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _p?: Plyr | null;
   private videoEl?: HTMLElement;
 
-  @Input() type: MediaType = 'video';
-  @Input() source?: string | Plyr.SourceInfo;
-  @Input() options?: Plyr.Options;
-  @Input({ transform: numberAttribute }) delay = 0;
-  @Output() readonly ready = new EventEmitter<Plyr>();
+  readonly type = input<MediaType>('video');
+  readonly source = input<string | Plyr.SourceInfo>();
+  readonly options = input<Plyr.Options>();
+  readonly delay = input(0, { transform: numberAttribute });
+  readonly ready = output<Plyr>();
 
   get player(): Plyr | undefined | null {
     return this._p;
   }
 
-  @ZoneOutside()
-  private initDelay(): void {
-    timer(this.delay)
-      .pipe(takeUntilDestroyed(this.destroy$))
+  constructor() {
+    this.srv
+      .notify()
+      .pipe(takeUntilDestroyed(), take(1), delay(this.delay()))
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.init()));
+
+    afterNextRender(() => {
+      if (!this.platform.isBrowser) {
+        return;
+      }
+
+      this.srv.load();
+    });
+
+    effect(() => {
+      this.srv.cog = { options: this.options };
+      this.uploadSource();
+    });
   }
 
   private init(): void {
@@ -83,13 +91,13 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
       ...this.srv.cog.options
     }));
 
-    player.on('ready', () => this.ngZone.run(() => this.ready.next(player)));
+    player.on('ready', () => this.ngZone.run(() => this.ready.emit(player)));
 
     this.uploadSource();
   }
 
   private ensureElement(): void {
-    const { type } = this;
+    const type = this.type();
     let el = this.el.querySelector(type) as HTMLElement;
     if (!el) {
       el = this.renderer.createElement(type);
@@ -100,39 +108,18 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private destroy(): void {
-    if (this._p) {
-      this._p.destroy();
-    }
+    this._p?.destroy();
   }
 
   private uploadSource(): void {
+    const source = this.source();
+    const type = this.type();
+
     if (this._p == null) return;
-
-    const { source, type } = this;
     this._p.source = (typeof source === 'string' ? { type, sources: [{ src: source }] } : source) as Plyr.SourceInfo;
-  }
-
-  ngAfterViewInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.srv
-      .notify()
-      .pipe(takeUntilDestroyed(this.destroy$), take(1))
-      .subscribe(() => this.initDelay());
-
-    this.srv.load();
-  }
-
-  ngOnChanges(changes: { [p in keyof MediaComponent]?: SimpleChange }): void {
-    this.srv.cog = { options: this.options };
-    if (changes.source) {
-      this.uploadSource();
-    }
   }
 
   ngOnDestroy(): void {
     this.destroy();
-    this._p = null;
   }
 }

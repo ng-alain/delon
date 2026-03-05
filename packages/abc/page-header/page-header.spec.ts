@@ -402,7 +402,6 @@ describe('abc: page-header', () => {
       it('should be auto sync title of document and result-tab', () => {
         const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
         fixture.detectChanges();
-        context.comp.inited = false;
         context.comp.refresh();
         expect(titleSrv.setTitle).toHaveBeenCalled();
         expect(spyReuseTitle).toHaveBeenCalled();

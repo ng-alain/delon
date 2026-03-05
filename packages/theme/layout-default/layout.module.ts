@@ -25,8 +25,16 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NzTooltipModule, NzIconModule, NzAvatarModule, NzDropdownModule, NzBadgeModule],
-  declarations: COMPONENTS,
+  imports: [
+    CommonModule,
+    RouterModule,
+    NzTooltipModule,
+    NzIconModule,
+    NzAvatarModule,
+    NzDropdownModule,
+    NzBadgeModule,
+    ...COMPONENTS
+  ],
   exports: COMPONENTS
 })
 export class LayoutDefaultModule {}
