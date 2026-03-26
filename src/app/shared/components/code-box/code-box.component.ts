@@ -89,12 +89,12 @@ export class CodeBoxComponent implements OnInit {
     this.check();
   }
 
-  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz', includeCli: boolean = false): void {
+  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
     if (ide === 'StackBlitz') {
-      this.codeSrv.openOnStackBlitz(this.item.title, this.item.code, includeCli);
+      this.codeSrv.openOnStackBlitz(this.item.title, this.item.code);
     } else {
       // this.msg.warning(`CodeSandbox does not support Angular 13, pls use StackBlitz!`);
-      this.codeSrv.openOnCodeSandbox(this.item.title, this.item.code, includeCli);
+      this.codeSrv.openOnCodeSandbox(this.item.title, this.item.code);
     }
   }
 

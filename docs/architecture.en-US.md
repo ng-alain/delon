@@ -79,7 +79,7 @@ Schematic diagram of directory structure：
 │   │   ├── shared                              # Shared module
 │   │   │   ├── shared-imports.ts               # A collection of frequently shared components
 │   │   │   └── index.ts                        # Shared index.ts
-│   │   ├── app.component.ts                    # Root component
+│   │   ├── app.ts                              # Root component
 │   │   └── app.config.ts                       # Global config
 │   ├── assets                                  # Local static resource
 │   ├── environments                            # Environment variable configuration

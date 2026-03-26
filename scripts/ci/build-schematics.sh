@@ -107,23 +107,23 @@ copyFiles() {
     "${1}src/app/shared/st-widget/*|${2}application/files/src/app/shared/st-widget/"
     "${1}src/app/shared/shared-imports.ts|${2}application/files/src/app/shared/"
     "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
-    # app.component
-    "${1}src/app/app.component.ts|${2}application/files/src/app/"
+    # app.ts
+    "${1}src/app/app.ts|${2}application/files/src/app/"
     # layout
     "${1}src/app/layout/index.ts|${2}application/files/src/app/layout/"
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"
-    "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
+    "${1}src/app/layout/passport/passport.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/basic/README.md|${2}application/files/src/app/layout/basic/"
-    "${1}src/app/layout/basic/widgets/i18n.component.ts|${2}application/files/src/app/layout/basic/widgets/"
-    "${1}src/app/layout/basic/widgets/search.component.ts|${2}application/files/src/app/layout/basic/widgets/"
-    "${1}src/app/layout/basic/widgets/user.component.ts|${2}application/files/src/app/layout/basic/widgets/"
-    "${1}src/app/layout/basic/widgets/clear-storage.component.ts|${2}application/files/src/app/layout/basic/widgets/"
-    "${1}src/app/layout/basic/widgets/fullscreen.component.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/i18n.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/search.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/user.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/clear-storage.ts|${2}application/files/src/app/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/fullscreen.ts|${2}application/files/src/app/layout/basic/widgets/"
     # router
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
     "${1}src/app/routes/passport|${2}application/files/src/app/routes/"
     # plugin
-    "${1}src/app/layout/basic/widgets/rtl.component.ts|${2}plugin/files/rtl/layout/basic/widgets/"
+    "${1}src/app/layout/basic/widgets/rtl.ts|${2}plugin/files/rtl/layout/basic/widgets/"
   )
   local from to
   for fields in ${paths[@]}

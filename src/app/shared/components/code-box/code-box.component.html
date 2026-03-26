@@ -14,37 +14,7 @@
     <div class="code-box-description" [innerHTML]="item.summary"></div>
   }
   <div class="code-box-actions">
-    @if (false) {
-      <nz-icon
-        nz-tooltip
-        [nzTooltipTitle]="codeSandboxTpl"
-        (click)="openOnlineIDE('CodeSandbox', true)"
-        nzType="code-sandbox"
-        class="code-box-code-icon"
-      />
-      <ng-template #codeSandboxTpl>
-        {{ 'app.demo.code-sandbox' | i18n }}
-        @if (false) {
-          (
-          <a (click)="openOnlineIDE('CodeSandbox', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
-          )
-        }
-      </ng-template>
-    }
-    <nz-icon
-      nz-tooltip
-      [nzTooltipTitle]="stackblitzTpl"
-      (click)="openOnlineIDE()"
-      nzType="thunderbolt"
-      nzTheme="fill"
-      class="code-box-code-icon"
-    />
-    <ng-template #stackblitzTpl>
-      {{ 'app.demo.stackblitz' | i18n }}
-      (
-      <a (click)="openOnlineIDE('StackBlitz', true)">{{ 'app.demo.code-sandbox-cli' | i18n }}</a>
-      )
-    </ng-template>
+    <nz-icon nz-tooltip (click)="openOnlineIDE()" nzType="thunderbolt" nzTheme="fill" class="code-box-code-icon" />
     <nz-icon
       nz-tooltip
       [nzTooltipTitle]="'app.demo.copy' | i18n"

@@ -27,7 +27,7 @@ export default {
           },
           options: {
             browser: 'src/main.ts',
-            polyfills: ['zone.js'],
+            polyfills: [],
             assets: [],
             index: 'src/index.html',
             outputPath: 'dist/demo',
