@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 
-import sdk from '@stackblitz/sdk';
+import sdk, { Project } from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
 
 import { deepCopy } from '@delon/util/other';
@@ -27,19 +27,18 @@ export class CodeService {
     return `node_modules/@delon/theme/${SITE_THEME()}.css`;
   }
 
-  private genPackage({ includeCli = false }: { includeCli: boolean }): Record<string, string | Record<string, string>> {
+  private genPackage(): Record<string, string | Record<string, string>> {
     const ngCoreVersion = pkg.dependencies['@angular/core'];
     // const mainVersion = ngCoreVersion.substring(1).split('.').shift();
     const res = packageJSON as Record<string, NzSafeAny>;
-    if (includeCli) {
-      res.devDependencies = {
-        '@angular/cli': '^21.0.0',
-        '@angular/compiler-cli': '^21.0.0',
-        '@types/node': '^21.19.1',
-        typescript: '~5.8.2',
-        'ng-alain': '^21.0.0'
-      };
-    }
+    res.devDependencies = {
+      '@angular/build': '^21.0.0',
+      '@angular/cli': '^21.0.0',
+      '@angular/compiler-cli': '^21.0.0',
+      '@types/node': '^21.19.1',
+      typescript: '~5.8.2',
+      'ng-alain': '^21.0.0'
+    };
 
     const fullLibs: Record<string, string> = { ...pkg.dependencies, ...pkg.devDependencies };
     ['dependencies', 'devDependencies'].forEach(type => {
@@ -48,8 +47,6 @@ export class CodeService {
       });
     });
     res.dependencies['@angular/core'] = ngCoreVersion;
-
-    console.log(res);
 
     return res;
   }
@@ -91,12 +88,12 @@ export class CodeService {
     return code;
   }
 
-  async openOnStackBlitz(title: string, appComponentCode: string, includeCli: boolean = false): Promise<void> {
+  async openOnStackBlitz(title: string, appComponentCode: string): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ includeCli });
+    const packageJson = this.genPackage();
     packageJson.description = title;
     const files: Record<string, string> = {
       'angular.json': `${JSON.stringify(json, null, 2)}`,
@@ -106,47 +103,30 @@ export class CodeService {
       'src/app/app.ts': appComponentCode,
       'src/app/app.config.ts': appConfigTS,
       'src/app/startup.service.ts': this.genStartupService,
+      'src/styles.css': ``,
       ...this.genMock
     };
-    if (includeCli) {
-      files['.stackblitzrc'] = JSON.stringify(
-        {
-          installDependencies: true,
-          startCommand: 'yarn start',
-          env: {
-            ENABLE_CJS_IMPORTS: true
-          }
-        },
-        null,
-        2
-      );
-      files['package.json'] = `${JSON.stringify(packageJson, null, 2)}`;
-    }
-    sdk.openProject(
-      {
-        title: 'NG-ALAIN',
-        description: 'NG-ZORRO  admin panel front-end framework',
-        tags: ['ng-alain', '@delon', 'NG-ZORRO', 'ng-zorro-antd', 'Ant Design', 'Angular', 'ng'],
-        dependencies: {
-          ...(packageJson.dependencies as Record<string, string>),
-          ...(packageJson.devDependencies as Record<string, string>)
-        },
-        files: files,
-        template: includeCli ? 'node' : 'angular-cli'
-      },
-      {
-        openFile: `src/app/app.config.ts,src/app/app.component.ts`
-      }
-    );
+    files['package.json'] = `${JSON.stringify(packageJson, null, 2)}`;
+    const project: Project = {
+      title: 'NG-ALAIN',
+      description: 'NG-ZORRO  admin panel front-end framework',
+      tags: ['ng-alain', '@delon', 'NG-ZORRO', 'ng-zorro-antd', 'Ant Design', 'Angular', 'ng'],
+      files: files,
+      template: 'node'
+    };
+    console.log(project);
+    sdk.openProject(project, {
+      openFile: `src/app/app.config.ts,src/app/app.ts`
+    });
   }
 
-  async openOnCodeSandbox(title: string, appComponentCode: string, includeCli: boolean = false): Promise<void> {
+  async openOnCodeSandbox(title: string, appComponentCode: string): Promise<void> {
     appComponentCode = this.attachStandalone(appComponentCode);
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
     const json = deepCopy(angularJSON);
     json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
-    const packageJson = this.genPackage({ includeCli });
+    const packageJson = this.genPackage();
     // packageJson.name = 'NG-ALAIN';
     packageJson.description = title;
     const files: Record<
@@ -201,12 +181,10 @@ export class CodeService {
         isBinary: false
       }
     };
-    if (includeCli) {
-      files['README.md'] = {
-        content: readme,
-        isBinary: false
-      };
-    }
+    files['README.md'] = {
+      content: readme,
+      isBinary: false
+    };
     Object.keys(sandboxConfigJSON).forEach(key => {
       files[key] = {
         content: (sandboxConfigJSON as NzSafeAny)[key],
