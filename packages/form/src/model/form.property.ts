@@ -1,4 +1,4 @@
-import { Injector, NgZone } from '@angular/core';
+import { afterNextRender, Injector, NgZone, ɵNoopNgZone } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map, take } from 'rxjs';
 
 import { AlainSFConfig } from '@delon/util/config';
@@ -315,12 +315,19 @@ export abstract class FormProperty {
     this._visibilityChanges.next(visible);
     // 渲染时需要重新触发 reset
     if (visible) {
-      this.injector
-        .get(NgZone)
-        .onStable.pipe(take(1))
-        .subscribe(() => {
+      const ngZone = this.injector.get(NgZone, null);
+      if (ngZone instanceof ɵNoopNgZone) {
+        afterNextRender(
+          () => {
+            this.resetValue(this.value, true);
+          },
+          { injector: this.injector }
+        );
+      } else {
+        ngZone?.onStable.pipe(take(1)).subscribe(() => {
           this.resetValue(this.value, true);
         });
+      }
     }
     return this;
   }
