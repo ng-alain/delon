@@ -1,3 +1,20 @@
+# [21.1.0](https://github.com/ng-alain/delon/compare/21.0.5...21.1.0) (2026-03-26)
+
+
+### Bug Fixes
+
+* **abc:reuse-tab:** fix `NG0956` error ([#1996](https://github.com/ng-alain/delon/issues/1996)) ([27e4d42](https://github.com/ng-alain/delon/commit/27e4d424260eb94ecc55401cba503fe07021f06f))
+* **abc:se:** missing label element id attribute ([#1993](https://github.com/ng-alain/delon/issues/1993)) ([61cbe73](https://github.com/ng-alain/delon/commit/61cbe7303887bd968f5e43ff49da3e27e93ee4c2))
+* **cli:** update stylelint-order dependency version and remove placeholder for prettier-eslint ([#1998](https://github.com/ng-alain/delon/issues/1998)) ([d43bb89](https://github.com/ng-alain/delon/commit/d43bb896558893b666b7ee181bd5add449904ae2))
+* **form:** reset visible behavior in less zone ([#2007](https://github.com/ng-alain/delon/issues/2007)) ([87d5df1](https://github.com/ng-alain/delon/commit/87d5df1692db9b2ff86836471329bf870e170777))
+* **from:** fix incorrect `pathValue` returned by `formValueChange` ([#1997](https://github.com/ng-alain/delon/issues/1997)) ([b610a96](https://github.com/ng-alain/delon/commit/b610a963eba856e51a5757988bbb0f12c32597bd))
+
+
+### Features
+
+* support less zone ([#1976](https://github.com/ng-alain/delon/issues/1976)) ([d2fd43a](https://github.com/ng-alain/delon/commit/d2fd43a08cbb9bfcee01efeaf01820321dd49884))
+
+
 ## [21.0.5](https://github.com/ng-alain/delon/compare/21.0.4...21.0.5) (2026-02-01)
 
 
