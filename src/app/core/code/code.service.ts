@@ -160,7 +160,7 @@ export class CodeService {
         content: appConfigTS,
         isBinary: false
       },
-      'src/app/app.component.ts': {
+      'src/app/app.ts': {
         content: appComponentCode,
         isBinary: false
       },

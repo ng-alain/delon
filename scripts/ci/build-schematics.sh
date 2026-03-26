@@ -108,7 +108,7 @@ copyFiles() {
     "${1}src/app/shared/shared-imports.ts|${2}application/files/src/app/shared/"
     "${1}src/app/shared/index.ts|${2}application/files/src/app/shared/"
     # app.component
-    "${1}src/app/app.component.ts|${2}application/files/src/app/"
+    "${1}src/app/app.ts|${2}application/files/src/app/"
     # layout
     "${1}src/app/layout/index.ts|${2}application/files/src/app/layout/"
     "${1}src/app/layout/blank|${2}application/files/src/app/layout/"

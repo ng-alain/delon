@@ -89,7 +89,7 @@ NG-ALAIN is a standard Angular CLI project that includes common routes for admin
 │   │   │   ├── shared-delon.module.ts          # @Delon/* import of secondary shared modules
 │   │   │   ├── shared-zorro.module.ts          # NG-ZORRO import of secondary shared modules
 │   │   │   └── shared-imports.ts               # Shared module file
-│   │   ├── app.component.ts                    # Root component
+│   │   ├── app.ts                              # Root component
 │   │   └── app.module.ts                       # Root module
 │   │   └── global-config.module.ts             # @delon & ng-zorro global config
 │   ├── assets                                  # Local static resource
