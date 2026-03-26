@@ -1,0 +1,67 @@
+import{a as Ye}from"./chunk-KGBKS2EZ.js";import{a as Qe,d as qe}from"./chunk-FL4TOGL2.js";import{a as Ke,b as We}from"./chunk-SDASDUUO.js";import{a as Y,b as Xe}from"./chunk-ZZ7ISDYC.js";import{Ab as A,Ag as je,Bc as p,Ca as fe,Cb as L,Cc as ie,Eb as F,Ed as Oe,F as de,Gb as r,Gg as Q,H as z,Hb as b,Hg as q,Ib as v,Ic as Ne,Ja as ge,Jc as g,Kc as Me,Ld as Ee,Ma as a,Nd as y,Oa as xe,Ob as ye,Pb as Te,Qb as h,Qc as $,Qd as Ie,Ra as Ce,Sb as Z,Sd as He,Sh as Ve,T as ce,Ta as E,Td as ke,Vb as n,Ve as Le,Wa as C,Wb as S,Wd as we,Xa as I,Xb as N,Xc as De,Yd as G,aa as pe,ab as s,ac as ee,bc as te,ca as P,cc as j,ee as Ae,fa as c,fi as Ge,gb as be,ic as ze,jc as ne,ka as B,la as O,lb as _,ld as Re,nb as f,nd as V,oa as ue,ob as ve,qa as se,qb as H,rb as k,sb as u,sd as Pe,sh as Ue,tb as l,tc as U,th as $e,ub as m,vb as he,wa as J,wd as M,xd as Be,ya as _e,yc as Se,zb as w,zg as Fe}from"./chunk-UENMMWRA.js";var oe=["*"];function tt(e,i){}function nt(e,i){if(e&1&&(l(0,"span",1),s(1,tt,0,0,"ng-template",2),he(2,"nz-icon",3),m()),e&2){let t=r(),o=h(4);u("nzDropdownMenu",t.nzOverlay),a(),u("ngTemplateOutlet",o)}}function it(e,i){}function ot(e,i){if(e&1&&s(0,it,0,0,"ng-template",2),e&2){r();let t=h(4);u("ngTemplateOutlet",t)}}function at(e,i){if(e&1&&(w(0),n(1),A()),e&2){let t=r(2);a(),N(" ",t.nzBreadCrumbComponent.nzSeparator," ")}}function rt(e,i){if(e&1&&(l(0,"nz-breadcrumb-separator"),s(1,at,2,1,"ng-container",4),m()),e&2){let t=r();a(),u("nzStringTemplateOutlet",t.nzBreadCrumbComponent.nzSeparator)}}function lt(e,i){e&1&&(l(0,"span",5),v(1),m())}var mt=(e,i)=>i.url;function dt(e,i){if(e&1){let t=L();l(0,"nz-breadcrumb-item")(1,"a",0),F("click",function(d){let R=B(t).$implicit,x=r(2);return O(x.navigate(R.url,d))}),n(2),m()()}if(e&2){let t=i.$implicit;a(),be("href",t.url,ge),a(),S(t.label)}}function ct(e,i){if(e&1&&H(0,dt,3,2,"nz-breadcrumb-item",null,mt),e&2){let t=r();k(t.breadcrumbs)}}var K=class{},pt=(()=>{class e{static \u0275fac=function(o){return new(o||e)};static \u0275cmp=C({type:e,selectors:[["nz-breadcrumb-separator"]],hostAttrs:[1,"ant-breadcrumb-separator"],exportAs:["nzBreadcrumbSeparator"],ngContentSelectors:oe,decls:1,vars:0,template:function(o,d){o&1&&(b(),v(0))},encapsulation:2})}return e})(),W=(()=>{class e{nzBreadCrumbComponent=c(K);nzOverlay;static \u0275fac=function(o){return new(o||e)};static \u0275cmp=C({type:e,selectors:[["nz-breadcrumb-item"]],inputs:{nzOverlay:"nzOverlay"},exportAs:["nzBreadcrumbItem"],ngContentSelectors:oe,decls:5,vars:2,consts:[["noMenuTpl",""],["nz-dropdown","",1,"ant-breadcrumb-overlay-link",3,"nzDropdownMenu"],[3,"ngTemplateOutlet"],["nzType","down"],[4,"nzStringTemplateOutlet"],[1,"ant-breadcrumb-link"]],template:function(o,d){o&1&&(b(),_(0,nt,3,2,"span",1)(1,ot,1,1,null,2),_(2,rt,2,1,"nz-breadcrumb-separator"),s(3,lt,2,0,"ng-template",null,0,U)),o&2&&(f(d.nzOverlay?0:1),a(2),f(d.nzBreadCrumbComponent.nzSeparator?2:-1))},dependencies:[$,pt,qe,Qe,je,Fe,q,Q],encapsulation:2,changeDetection:0})}return e})(),ae=(()=>{class e{injector=c(ue);cdr=c(Ne);elementRef=c(fe);renderer=c(E);directionality=c(G);destroyRef=c(se);nzAutoGenerate=!1;nzSeparator="/";nzRouteLabel="breadcrumb";nzRouteLabelFn=t=>t;nzRouteFn=t=>t;breadcrumbs=[];dir="ltr";ngOnInit(){this.nzAutoGenerate&&this.registerRouterChange(),this.directionality.change?.pipe(y(this.destroyRef)).subscribe(t=>{this.dir=t,this.prepareComponentForRtl(),this.cdr.detectChanges()}),this.dir=this.directionality.value,this.prepareComponentForRtl()}navigate(t,o){o.preventDefault(),this.injector.get(M).navigateByUrl(t)}registerRouterChange(){try{let t=this.injector.get(M),o=this.injector.get(Pe);t.events.pipe(z(d=>d instanceof V),y(this.destroyRef),ce(!0)).subscribe(()=>{this.breadcrumbs=this.getBreadcrumbs(o.root),this.cdr.markForCheck()})}catch{throw new Error(`${Ae} You should import RouterModule if you want to use 'NzAutoGenerate'.`)}}getBreadcrumbs(t,o="",d=[]){let R=t.children;if(R.length===0)return d;for(let x of R)if(x.outlet===Re){let X=x.snapshot.url.map(T=>T.path).filter(T=>T).join("/"),le=X?`${o}/${X}`:o,me=this.nzRouteLabelFn(x.snapshot.data[this.nzRouteLabel]),et=this.nzRouteFn(le);if(X&&me){let T={label:me,params:x.snapshot.params,url:et};d.push(T)}return this.getBreadcrumbs(x,le,d)}return d}prepareComponentForRtl(){this.dir==="rtl"?this.renderer.addClass(this.elementRef.nativeElement,"ant-breadcrumb-rtl"):this.renderer.removeClass(this.elementRef.nativeElement,"ant-breadcrumb-rtl")}static \u0275fac=function(o){return new(o||e)};static \u0275cmp=C({type:e,selectors:[["nz-breadcrumb"]],hostAttrs:[1,"ant-breadcrumb"],inputs:{nzAutoGenerate:[2,"nzAutoGenerate","nzAutoGenerate",g],nzSeparator:"nzSeparator",nzRouteLabel:"nzRouteLabel",nzRouteLabelFn:"nzRouteLabelFn",nzRouteFn:"nzRouteFn"},exportAs:["nzBreadcrumb"],features:[ze([{provide:K,useExisting:pe(()=>e)}])],ngContentSelectors:oe,decls:2,vars:1,consts:[[3,"click"]],template:function(o,d){o&1&&(b(),v(0),_(1,ct,2,0)),o&2&&(a(),f(d.nzAutoGenerate&&d.breadcrumbs.length?1:-1))},dependencies:[W],encapsulation:2,changeDetection:0})}return e})(),Ze=(()=>{class e{static \u0275fac=function(o){return new(o||e)};static \u0275mod=I({type:e});static \u0275inj=P({imports:[ae,W]})}return e})();var ut=["conTpl"],st=["*"],_t=()=>({rows:3}),ft=()=>({size:"large",shape:"circle"});function gt(e,i){}function xt(e,i){if(e&1&&(n(0,`
+      `),l(1,"nz-affix",3,1),n(3,`
+        `),s(4,gt,0,0,"ng-template",4),n(5,`
+      `),m(),n(6,`
+    `)),e&2){let t=r(),o=h(4);a(),u("nzOffsetTop",t.fixedOffsetTop()),a(3),u("ngTemplateOutlet",o)}}function Ct(e,i){}function bt(e,i){if(e&1&&(n(0,`
+      `),s(1,Ct,0,0,"ng-template",4),n(2,`
+    `)),e&2){r();let t=h(4);a(),u("ngTemplateOutlet",t)}}function vt(e,i){}function ht(e,i){if(e&1&&(n(0,`
+              `),s(1,vt,0,0,"ng-template",4),n(2,`
+            `)),e&2){let t=r(2);a(),u("ngTemplateOutlet",t.breadcrumb())}}function yt(e,i){if(e&1&&(n(0,`
+                        `),l(1,"a",11),n(2),m(),n(3,`
+                      `)),e&2){let t=r().$implicit;a(),u("routerLink",t.link),a(),S(t.title)}}function Tt(e,i){if(e&1&&n(0),e&2){let t=r().$implicit;N(`
+                        `,t.title,`
+                      `)}}function zt(e,i){if(e&1&&(n(0,`
+                    `),l(1,"nz-breadcrumb-item"),n(2,`
+                      `),_(3,yt,4,2)(4,Tt,1,1),m(),n(5,`
+                  `)),e&2){let t=i.$implicit;a(3),f(t.link?3:4)}}function St(e,i){if(e&1&&(n(0,`
+                `),l(1,"nz-breadcrumb"),n(2,`
+                  `),H(3,zt,6,1,null,null,ve),m(),n(5,`
+              `)),e&2){r();let t=j(1);a(3),k(t)}}function Nt(e,i){if(e&1&&(n(0,`
+              `),ee(1),n(2,`
+              `),_(3,St,6,0)),e&2){a();let t=te(r(2).paths());a(2),f(t&&t.length>0?3:-1)}}function Mt(e,i){}function Dt(e,i){if(e&1&&(n(0,`
+                `),l(1,"div",12),n(2,`
+                  `),s(3,Mt,0,0,"ng-template",4),n(4,`
+                `),m(),n(5,`
+              `)),e&2){let t=r(2);a(3),u("ngTemplateOutlet",t.logo())}}function Rt(e,i){}function Pt(e,i){if(e&1&&(n(0,`
+                        `),s(1,Rt,0,0,"ng-template",4),n(2,`
+                      `)),e&2){let t=r(3);a(),u("ngTemplateOutlet",t.title())}}function Bt(e,i){if(e&1&&(w(0),n(1),A()),e&2){r(2);let t=j(1);a(),S(t)}}function Ot(e,i){if(e&1&&(n(0,`
+                          `),l(1,"small"),n(2,`
+                            `),s(3,Bt,2,1,"ng-container",14),n(4,`
+                          `),m(),n(5,`
+                        `)),e&2){r();let t=j(1);a(3),u("nzStringTemplateOutlet",t)}}function Et(e,i){if(e&1&&(n(0),ee(1),n(2,`
+                        `),_(3,Ot,6,1)),e&2){let t=r(3);N(`
+                        `,t.titleText(),`
+                        `),a();let o=te(t.titleSub());a(2),f(o?3:-1)}}function It(e,i){if(e&1&&(n(0,`
+                    `),l(1,"h1",13),n(2,`
+                      `),_(3,Pt,3,1)(4,Et,4,3),m(),n(5,`
+                  `)),e&2){let t=r(2);a(3),f(t.titleIsTpl()?3:4)}}function Ht(e,i){}function kt(e,i){if(e&1&&(n(0,`
+                    `),l(1,"div",15),n(2,`
+                      `),s(3,Ht,0,0,"ng-template",4),n(4,`
+                    `),m(),n(5,`
+                  `)),e&2){let t=r(2);a(3),u("ngTemplateOutlet",t.action())}}function wt(e,i){}function At(e,i){}function Lt(e,i){if(e&1&&(n(0,`
+                    `),l(1,"div",16),n(2,`
+                      `),s(3,At,0,0,"ng-template",4),n(4,`
+                    `),m(),n(5,`
+                  `)),e&2){let t=r(2);a(3),u("ngTemplateOutlet",t.extra())}}function Ft(e,i){}function jt(e,i){if(e&1){let t=L();n(0,`
+      `),l(1,"div",5),n(2,`
+        `),l(3,"div"),n(4,`
+          `),l(5,"nz-skeleton",6),n(6,`
+            `),_(7,ht,3,1)(8,Nt,4,2),l(9,"div",7),n(10,`
+              `),_(11,Dt,6,1),l(12,"div",8),n(13,`
+                `),l(14,"div",9),n(15,`
+                  `),_(16,It,6,1),_(17,kt,6,1),m(),n(18,`
+                `),l(19,"div",9),n(20,`
+                  `),l(21,"div",10,2),F("cdkObserveContent",function(){B(t);let d=r();return O(d.checkContent())}),n(23,`
+                    `),v(24),n(25,`
+                    `),s(26,wt,0,0,"ng-template",4),n(27,`
+                  `),m(),n(28,`
+                  `),_(29,Lt,6,1),m(),n(30,`
+              `),m(),n(31,`
+            `),m(),n(32,`
+            `),s(33,Ft,0,0,"ng-template",4),n(34,`
+          `),m(),n(35,`
+        `),m(),n(36,`
+      `),m(),n(37,`
+    `)}if(e&2){let t=r();a(),Z("page-header-rtl",t.dir()==="rtl"),a(2),Z("page-header__wide",t.wide()),a(2),u("nzLoading",t.loading())("nzTitle",!1)("nzActive",!0)("nzParagraph",ne(16,_t))("nzAvatar",ne(17,ft)),a(2),f(t.breadcrumb()?7:8),a(4),f(t.logo()?11:-1),a(5),f(t.title()||t.titleText()?16:-1),a(),f(t.action()?17:-1),a(9),u("ngTemplateOutlet",t.content()),a(3),f(t.extra()?29:-1),a(4),u("ngTemplateOutlet",t.tab())}}var D=class e{renderer=c(E);router=c(M);menuSrv=c(He);i18nSrv=c(Ie);titleSrv=c(Le);reuseSrv=c(Ye,{optional:!0});settings=c(we);cogSrv=c(Ee);conTpl=ie.required("conTpl");affix=ie(Y);isBrowser=c(ke).isBrowser;dir=c(G).valueSignal;get menus(){return this.menuSrv.getPathByUrl(this.router.url,this.recursiveBreadcrumb())}paths=J([]);titleIsTpl=Se(()=>this.title()instanceof Ce);titleText=J(null);titleSub=p();title=p();loading=p(!1,{transform:g});wide=p(!1,{transform:g});home=p();homeLink=p("/");homeI18n=p();autoBreadcrumb=p(!0,{transform:g});autoTitle=p(!0,{transform:g});syncTitle=p(!0,{transform:g});fixed=p(!1,{transform:g});fixedOffsetTop=p(64,{transform:Me});breadcrumb=p(null);recursiveBreadcrumb=p(!1,{transform:g});logo=p(null);action=p(null);content=p(null);extra=p(null);tab=p(null);locale=c(Ve).getData("pageHeader");constructor(){this.cogSrv.attach(this,"pageHeader",{home:this.locale.home}),this.settings.notify.pipe(y(),z(t=>this.affix()!=null&&t.type==="layout"&&t.name==="collapsed")).subscribe(()=>this.affix()?.updatePosition({}));let i=[this.router.events.pipe(z(t=>t instanceof V))];this.menuSrv!=null&&i.push(this.menuSrv.change),i.push(this.i18nSrv.change),de(...i).pipe(y()).subscribe(()=>this.refresh()),_e(()=>this.refresh()),xe(()=>this.checkContent())}refresh(){let i;if(this.title()==null&&this.autoTitle()&&this.menus.length>0){let t=this.menus[this.menus.length-1];i=t.text,t.i18n&&(i=this.i18nSrv.fanyi(t.i18n))}else i=this.titleIsTpl()?"":this.title();this.titleText.set(i),i&&this.syncTitle()&&(this.titleSrv.setTitle(i),this.reuseSrv&&(this.reuseSrv.title=i)),this.genBreadcrumb()}genBreadcrumb(){if(this.breadcrumb()||!this.autoBreadcrumb()||this.menus.length<=0){this.paths.set([]);return}let i=[];this.menus.forEach(o=>{if(typeof o.hideInBreadcrumb<"u"&&o.hideInBreadcrumb)return;let d=o.text;o.i18n&&(d=this.i18nSrv.fanyi(o.i18n)),i.push({title:d,link:o.link&&[o.link]})});let t=this.home();if(t){let o=this.homeI18n();i.splice(0,0,{title:(o&&this.i18nSrv.fanyi(o))??t,link:[this.homeLink()]})}this.paths.set(i)}checkContent(){let i=this.conTpl().nativeElement;Ge(i)?this.renderer.setAttribute(i,"hidden",""):this.renderer.removeAttribute(i,"hidden")}static \u0275fac=function(t){return new(t||e)};static \u0275cmp=C({type:e,selectors:[["page-header"]],viewQuery:function(t,o){t&1&&ye(o.conTpl,ut,5)(o.affix,Y,5),t&2&&Te(2)},inputs:{titleSub:[1,"titleSub"],title:[1,"title"],loading:[1,"loading"],wide:[1,"wide"],home:[1,"home"],homeLink:[1,"homeLink"],homeI18n:[1,"homeI18n"],autoBreadcrumb:[1,"autoBreadcrumb"],autoTitle:[1,"autoTitle"],syncTitle:[1,"syncTitle"],fixed:[1,"fixed"],fixedOffsetTop:[1,"fixedOffsetTop"],breadcrumb:[1,"breadcrumb"],recursiveBreadcrumb:[1,"recursiveBreadcrumb"],logo:[1,"logo"],action:[1,"action"],content:[1,"content"],extra:[1,"extra"],tab:[1,"tab"]},exportAs:["pageHeader"],ngContentSelectors:st,decls:6,vars:1,consts:[["phTpl",""],["affix",""],["conTpl",""],[3,"nzOffsetTop"],[3,"ngTemplateOutlet"],[1,"page-header"],[1,"d-block",3,"nzLoading","nzTitle","nzActive","nzParagraph","nzAvatar"],[1,"page-header__detail"],[1,"page-header__main"],[1,"page-header__row"],[1,"page-header__desc",3,"cdkObserveContent"],[3,"routerLink"],[1,"page-header__logo"],[1,"page-header__title"],[4,"nzStringTemplateOutlet"],[1,"page-header__action"],[1,"page-header__extra"]],template:function(t,o){t&1&&(b(),n(0,`
+    `),_(1,xt,7,2)(2,bt,3,1),s(3,jt,38,18,"ng-template",null,0,U),n(5,`
+  `)),t&2&&(a(),f(o.isBrowser&&o.fixed()?1:2))},dependencies:[Y,$,Ke,ae,W,Be,Q,Ue],encapsulation:2,changeDetection:0})};var Ut=[D],re=class e{static \u0275fac=function(t){return new(t||e)};static \u0275mod=I({type:e});static \u0275inj=P({imports:[De,Oe,$e,Xe,We,Ze,q,Ut]})};export{W as a,ae as b,Ze as c,D as d,re as e};
