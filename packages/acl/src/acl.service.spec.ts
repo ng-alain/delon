@@ -100,9 +100,7 @@ describe('acl: service', () => {
       expect(srv.can(ABILITY_NUMBER)).toBe(true);
       expect(srv.can([ABILITY_NUMBER])).toBe(true);
       expect(srv.can([ADMIN])).toBe(true);
-      expect(srv.can({ role: [ADMIN] } as ACLType))
-        
-        .toBe(true);
+      expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true);
       expect(srv.can(`${ADMIN}1`)).toBe(false);
       expect(srv.can(null)).toBe(true);
       expect(srv.can({})).toBe(false);
@@ -129,8 +127,7 @@ describe('acl: service', () => {
   it(`#canAbility()`, () => {
     srv.attachAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true);
-    expect(srv.canAbility([ABILITY]))
-      .toBe(true);
+    expect(srv.canAbility([ABILITY])).toBe(true);
     expect(srv.canAbility(`${ADMIN}1`)).toBe(false);
   });
 

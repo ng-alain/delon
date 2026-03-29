@@ -329,7 +329,6 @@ export class PageObject<T extends TestComponent> {
     const el = document.querySelector(cls);
     if (content == null) {
       expect(el).toBeNull();
-        .toBeNull();
     } else {
       expect(el!.textContent!.trim()).toBe(content);
     }
