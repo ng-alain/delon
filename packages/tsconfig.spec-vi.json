@@ -15,6 +15,6 @@
   },
   "include": [
     "**/*.d.ts",
-    "**/*.spec.ts"
+    "abc/auto-focus/auto-focus.directive.spec.ts"
   ]
 }
