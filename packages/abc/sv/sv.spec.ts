@@ -244,7 +244,9 @@ describe('abc: view', () => {
     }
     expect(cls: string, count: number = 1, message?: string): this {
       let e = expect(this.getEls(cls).length);
-      if (message) e = e;
+      if (message) {
+        // message is for future use
+      }
       e.toBe(count);
       return this;
     }

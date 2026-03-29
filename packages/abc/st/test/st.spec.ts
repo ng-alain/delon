@@ -1632,9 +1632,7 @@ describe('abc: st', () => {
       })!;
       page.updateColumn([{ title: '', render: 'id' }]).cd();
       const jIdEl = page.getCell().querySelector('.j-id');
-      expect(jIdEl != null)
-        
-        .toBe(true);
+      expect(jIdEl != null).toBe(true);
       expect(jIdEl?.textContent).toBe('id1');
       page.asyncEnd();
     }));

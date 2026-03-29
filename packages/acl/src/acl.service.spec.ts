@@ -98,12 +98,8 @@ describe('acl: service', () => {
       srv.attachAbility([ABILITY_NUMBER]);
       expect(srv.can(ADMIN)).toBe(true);
       expect(srv.can(ABILITY_NUMBER)).toBe(true);
-      expect(srv.can([ABILITY_NUMBER]))
-        
-        .toBe(true);
-      expect(srv.can([ADMIN]))
-        
-        .toBe(true);
+      expect(srv.can([ABILITY_NUMBER])).toBe(true);
+      expect(srv.can([ADMIN])).toBe(true);
       expect(srv.can({ role: [ADMIN] } as ACLType))
         
         .toBe(true);
@@ -134,11 +130,8 @@ describe('acl: service', () => {
     srv.attachAbility([ABILITY]);
     expect(srv.canAbility(ABILITY)).toBe(true);
     expect(srv.canAbility([ABILITY]))
-      
       .toBe(true);
-    expect(srv.canAbility(`${ADMIN}1`))
-      
-      .toBe(false);
+    expect(srv.canAbility(`${ADMIN}1`)).toBe(false);
   });
 
   it('should be valid when all of for is array roles', () => {

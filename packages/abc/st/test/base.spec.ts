@@ -163,9 +163,9 @@ export class PageObject<T extends TestComponent> {
     }
 
     vi.spyOn(this.context as NzSafeAny, 'error').mockImplementation((res: STError) => (this.spyErrorData = res));
-    this.changeSpy = vi.spyOn(this.context as NzSafeAny, 'change').mockImplementation(
-      ((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny
-    );
+    this.changeSpy = vi
+      .spyOn(this.context as NzSafeAny, 'change')
+      .mockImplementation(((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny);
     this.comp = this.context.comp;
   }
   get(cls: string): DebugElement {
@@ -320,23 +320,18 @@ export class PageObject<T extends TestComponent> {
     expect(deepGet(this.comp, 'pi')).toBe(value);
     return this;
   }
-  expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
+  expectElCount(cls: string, count: number, _expectationFailOutput?: string): this {
     const els = document.querySelectorAll(cls);
-    expect(els.length)
-      
-      .toBe(count);
+    expect(els.length).toBe(count);
     return this;
   }
-  expectElContent(cls: string, content: string, expectationFailOutput?: string): this {
+  expectElContent(cls: string, content: string, _expectationFailOutput?: string): this {
     const el = document.querySelector(cls);
     if (content == null) {
-      expect(el)
-        
+      expect(el).toBeNull();
         .toBeNull();
     } else {
-      expect(el!.textContent!.trim())
-        
-        .toBe(content);
+      expect(el!.textContent!.trim()).toBe(content);
     }
     return this;
   }
