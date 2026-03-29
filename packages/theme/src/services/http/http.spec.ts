@@ -81,8 +81,7 @@ describe('theme: http.client', () => {
         http.get(URL, PARAMS).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -121,8 +120,7 @@ describe('theme: http.client', () => {
         http.get(URL, PARAMS, { responseType: 'text' }).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -132,8 +130,7 @@ describe('theme: http.client', () => {
         http.get(URL, PARAMS, { observe: 'response' }).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);
@@ -224,8 +221,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -235,8 +231,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -276,8 +271,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);
@@ -296,8 +290,7 @@ describe('theme: http.client', () => {
         http.delete(URL, PARAMS).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -306,8 +299,7 @@ describe('theme: http.client', () => {
         http.delete(URL, PARAMS, { responseType: 'text' }).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -317,8 +309,7 @@ describe('theme: http.client', () => {
         http.delete(URL, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(_ => (res = _));
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);
@@ -416,8 +407,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -427,8 +417,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -460,8 +449,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);
@@ -490,8 +478,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -501,8 +488,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -534,8 +520,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);
@@ -564,8 +549,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res).toBe(OK);
       }));
@@ -575,8 +559,7 @@ describe('theme: http.client', () => {
         tick();
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(typeof res).toBe('string');
         expect(res).toBe(OK);
@@ -617,8 +600,7 @@ describe('theme: http.client', () => {
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         expect(ret.request.headers.get('content-type')).toBe(`application/x-www-form-urlencoded`);
-        for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(PARAMS[key]);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key]);
         ret.flush(OK);
         expect(res.status).toBe(200);
         expect(res.body).toBe(OK);

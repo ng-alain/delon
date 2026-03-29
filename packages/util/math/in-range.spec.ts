@@ -21,9 +21,7 @@ describe('util.inRange', () => {
           inRange(value, start, end);
         }).toThrow();
       } else {
-        expect(inRange(value, start, end))
-          
-          .toBe(item.v);
+        expect(inRange(value, start, end)).toBe(item.v);
       }
     }
   });

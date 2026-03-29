@@ -161,7 +161,17 @@
               "**/*.spec.ts"
             ],
             "exclude": [
-              "**/auto-focus.directive.spec.ts"
+              "**/auto-focus.directive.spec.ts",
+              // Exclude all migrated spec files to avoid 'vi' is not defined errors
+              "packages/abc/**/*.spec.ts",
+              "packages/acl/**/*.spec.ts",
+              "packages/auth/**/*.spec.ts",
+              "packages/cache/**/*.spec.ts",
+              "packages/chart/**/*.spec.ts",
+              "packages/form/**/*.spec.ts",
+              "packages/mock/**/*.spec.ts",
+              "packages/theme/**/*.spec.ts",
+              "packages/util/**/*.spec.ts"
             ]
           }
         }

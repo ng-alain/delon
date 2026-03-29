@@ -26,15 +26,11 @@ describe('util: date-time', () => {
     });
     it('#disabledBeforeDate', () => {
       expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).toBe(false);
-      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW))
-        
-        .toBe(true);
+      expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW)).toBe(true);
     });
     it('#disabledAfterDate', () => {
       expect(dateTimePickerUtil.disabledAfterDate()(NOW)).toBe(false);
-      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW))
-        
-        .toBe(true);
+      expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW)).toBe(true);
     });
     describe('disabled time', () => {
       function checkRes(
