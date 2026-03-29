@@ -54,7 +54,7 @@ describe('utils: lazy', () => {
   it('should be load via LazyLoadItem', () => {
     const res: NzSafeAny = {};
     const content = 'var a = 1;';
-    spyOn(doc, 'createElement').and.callFake(() => res);
+    vi.spyOn(doc, 'createElement').mockImplementation(() => res);
     srv.load([{ path: '1.js', options: { innerContent: content } }]);
     expect(res.innerHTML).toBe(content);
   });
@@ -73,7 +73,7 @@ describe('utils: lazy', () => {
     it('should be custom content', () => {
       const res: NzSafeAny = {};
       const content = 'var a = 1;';
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadScript('/1.js', { innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
@@ -98,7 +98,7 @@ describe('utils: lazy', () => {
         onerror(): void {}
       };
       const content = 'var a = 1;';
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadStyle('/1.js', { rel: 'stylesheet/less', innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
@@ -106,7 +106,7 @@ describe('utils: lazy', () => {
 
   it('should be immediately when loaded a js resource', () => {
     let count = 0;
-    spyOn(doc, 'createElement').and.callFake(() => {
+    vi.spyOn(doc, 'createElement').mockImplementation(() => {
       ++count;
       return new MockDocument().createElement();
     });
@@ -118,7 +118,7 @@ describe('utils: lazy', () => {
 
   it('should be immediately when loaded a css resource', () => {
     let count = 0;
-    spyOn(doc, 'createElement').and.callFake(() => {
+    vi.spyOn(doc, 'createElement').mockImplementation(() => {
       ++count;
       return new MockDocument().createElement();
     });
@@ -144,7 +144,7 @@ describe('utils: lazy', () => {
           res[key] = value;
         }
       };
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadScript('/1.js', { innerContent: '', attributes: { a: 'b' } });
       expect(res.a).toBe('b');
     });

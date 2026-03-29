@@ -271,7 +271,7 @@ describe('abc: table: data-souce', () => {
       it('should be default method to GET', done => {
         options.req.method = undefined;
         let resMethod = '';
-        spyOn(http, 'request').and.callFake((method: string) => {
+        vi.spyOn(http, 'request').mockImplementation((method: string) => {
           resMethod = method;
           return of([]);
         });
@@ -283,7 +283,7 @@ describe('abc: table: data-souce', () => {
       it('should be re-name pi & ps', done => {
         options.req.reName = { pi: 'PI', ps: 'PS' };
         let resParams: HttpParams;
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
@@ -296,7 +296,7 @@ describe('abc: table: data-souce', () => {
       it('should be zero indexed of start index', done => {
         options.page.zeroIndexed = true;
         let resParams: HttpParams;
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
@@ -309,7 +309,7 @@ describe('abc: table: data-souce', () => {
         options.req.allInBody = true;
         options.req.method = 'post';
         let resBody: any = {};
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resBody = opt.body;
           return of([]);
         });
@@ -324,7 +324,7 @@ describe('abc: table: data-souce', () => {
           return a;
         };
         let resParams!: HttpParams;
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
@@ -338,7 +338,7 @@ describe('abc: table: data-souce', () => {
         it('should be re-name skip & limit', done => {
           options.req.reName = { skip: 'SKIP', limit: 'LIMIT' };
           let resParams: HttpParams;
-          spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+          vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
             resParams = opt.params;
             return of([]);
           });
@@ -351,7 +351,7 @@ describe('abc: table: data-souce', () => {
         it('should be changed next page', done => {
           options.pi = 2;
           let resParams: HttpParams;
-          spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+          vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
             resParams = opt.params;
             return of([]);
           });
@@ -380,7 +380,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be re-name total & list', done => {
         options.res.reName = { total: 'T', list: 'L' };
-        spyOn(http, 'request').and.callFake(() => {
+        vi.spyOn(http, 'request').mockImplementation(() => {
           return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
         });
         srv.process(options).subscribe(res => {
@@ -391,7 +391,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be invalid re-name config', done => {
         options.res.reName = { total: 'T', list: 'L1' };
-        spyOn(http, 'request').and.callFake(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
+        vi.spyOn(http, 'request').mockImplementation(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
@@ -400,7 +400,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be function re-name config', done => {
         options.res.reName = () => ({ total: 1, list: [{ a: 'L1' }] });
-        spyOn(http, 'request').and.callFake(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
+        vi.spyOn(http, 'request').mockImplementation(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(1);
           expect(res.list.length).toBe(1);
@@ -410,7 +410,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be return empty when result is not array', done => {
         options.res.reName = { total: 'T', list: 'L' };
-        spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
+        vi.spyOn(http, 'request').mockImplementation(() => of({ L: 1, T: DEFAULT.ps }));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
@@ -420,7 +420,7 @@ describe('abc: table: data-souce', () => {
       it('should be keep total when total invalid config', done => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = 4;
-        spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
+        vi.spyOn(http, 'request').mockImplementation(() => of({ L: 1, T: DEFAULT.ps }));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(options.total);
           expect(res.list.length).toBe(0);
@@ -430,7 +430,7 @@ describe('abc: table: data-souce', () => {
       it('should be return 0 when total invalid config and unspecified total', done => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = undefined!;
-        spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
+        vi.spyOn(http, 'request').mockImplementation(() => of({ L: 1, T: DEFAULT.ps }));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(0);
           expect(res.list.length).toBe(0);
@@ -438,7 +438,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it('should be catch response error', done => {
-        spyOn(http, 'request').and.callFake(() => throwError(() => new Error('aa')));
+        vi.spyOn(http, 'request').mockImplementation(() => throwError(() => new Error('aa')));
         srv.process(options).subscribe({
           next: () => {
             expect(false).toBe(true);
@@ -451,7 +451,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it('should be support array data', done => {
-        spyOn(http, 'request').and.callFake(() => of(genData(DEFAULT.ps)));
+        vi.spyOn(http, 'request').mockImplementation(() => of(genData(DEFAULT.ps)));
         srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(DEFAULT.ps);
@@ -469,7 +469,7 @@ describe('abc: table: data-souce', () => {
           enabled: true,
           key: 'id'
         };
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
@@ -634,7 +634,7 @@ describe('abc: table: data-souce', () => {
             { text: '', value: 'b', checked: true }
           ]
         };
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           resParams = opt.params;
           return of([]);
         });
@@ -670,7 +670,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be include [pi] & [ps] request params`, done => {
         let params: any;
-        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+        vi.spyOn(http, 'request').mockImplementation((_method: string, _url: string, opt: any) => {
           params = opt.params;
           return of([]);
         });
@@ -687,7 +687,7 @@ describe('abc: table: data-souce', () => {
     beforeEach(() => genModule());
     describe('#pre-process', () => {
       it('should run', done => {
-        options.res.process = jasmine.createSpy().and.returnValue([]);
+        options.res.process = vi.fn().mockReturnValue([]);
         srv.process(options).subscribe(() => {
           expect(options.res.process).toHaveBeenCalled();
           done();
@@ -698,14 +698,14 @@ describe('abc: table: data-souce', () => {
       beforeEach(() => (options.data = genData()));
       describe('via format', () => {
         it('should be working', done => {
-          options.columns[0].format = jasmine.createSpy().and.returnValue('');
+          options.columns[0].format = vi.fn().mockReturnValue('');
           srv.process(options).subscribe(() => {
             expect(options.columns[0].format).toHaveBeenCalled();
             done();
           });
         });
         it('should be return empty string when is null or undefined', done => {
-          options.columns[0].format = jasmine.createSpy().and.returnValue(null);
+          options.columns[0].format = vi.fn().mockReturnValue(null);
           srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(``);
             done();
@@ -764,7 +764,7 @@ describe('abc: table: data-souce', () => {
       });
       it('via number', done => {
         options.columns[0].type = 'number';
-        spyOn(decimalPipe, 'transform');
+        vi.spyOn(decimalPipe, 'transform');
         srv.process(options).subscribe(() => {
           expect(decimalPipe.transform).toHaveBeenCalled();
           done();
@@ -772,7 +772,7 @@ describe('abc: table: data-souce', () => {
       });
       it('via currency', done => {
         options.columns[0].type = 'currency';
-        spyOn(currencySrv, 'format');
+        vi.spyOn(currencySrv, 'format');
         srv.process(options).subscribe(() => {
           expect(currencySrv.format).toHaveBeenCalled();
           done();
@@ -781,7 +781,7 @@ describe('abc: table: data-souce', () => {
       describe('via date', () => {
         it('should be working', done => {
           options.columns[0].type = 'date';
-          spyOn(datePipe, 'transform');
+          vi.spyOn(datePipe, 'transform');
           srv.process(options).subscribe(() => {
             expect(datePipe.transform).toHaveBeenCalled();
             done();
@@ -807,7 +807,7 @@ describe('abc: table: data-souce', () => {
       it('via yn', done => {
         options.columns[0].type = 'yn';
         options.columns[0].yn = {};
-        spyOn(ynPipe, 'transform');
+        vi.spyOn(ynPipe, 'transform');
         srv.process(options).subscribe(() => {
           expect(ynPipe.transform).toHaveBeenCalled();
           done();
@@ -848,7 +848,7 @@ describe('abc: table: data-souce', () => {
       });
       describe('#safeType', () => {
         beforeEach(() => {
-          spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
+          vi.spyOn(mockDomSanitizer, 'bypassSecurityTrustHtml');
         });
         it('with safeHtml', done => {
           options.columns[0].safeType = 'safeHtml';
@@ -900,7 +900,7 @@ describe('abc: table: data-souce', () => {
     it('should be throw error when is invalid data', done => {
       options.data = [{ age: 'invalid-number' }];
       options.columns = [{ title: '', index: 'age', type: 'number' }] as _STColumn[];
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       srv.process(options).subscribe(res => {
         expect(console.error).toHaveBeenCalled();
         expect(res.list[0]._values[0].text).toBe('INVALID DATA');
@@ -1052,7 +1052,7 @@ describe('abc: table: data-souce', () => {
       genModule();
       options.pi = 1;
       options.ps = 100;
-      spyOn(currencySrv, 'format');
+      vi.spyOn(currencySrv, 'format');
     });
 
     it('should be use key instead of index as result key', done => {

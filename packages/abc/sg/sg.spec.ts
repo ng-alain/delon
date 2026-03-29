@@ -114,7 +114,7 @@ describe('abc: sg', () => {
       fixture2.detectChanges();
       page = new PageObject();
       expect(page.getEl('.ant-row').style.marginLeft).toBe(`-5px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 

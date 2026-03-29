@@ -44,8 +44,8 @@ describe('auth: simple.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const mockRouter = {
-    navigate: jasmine.createSpy('navigate'),
-    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
+    navigate: vi.fn(),
+    parseUrl: vi.fn().mockImplementation((value: any) => {
       return new DefaultUrlSerializer().parse(value);
     })
   };

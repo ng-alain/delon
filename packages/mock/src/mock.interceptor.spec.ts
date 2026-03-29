@@ -53,7 +53,7 @@ describe('mock: interceptor', () => {
         provideRouter([
           {
             path: 'lazy',
-            loadChildren: jasmine.createSpy('expected')
+            loadChildren: vi.fn()
           }
         ]),
         provideAlainConfig({ mock: options }),
@@ -64,8 +64,8 @@ describe('mock: interceptor', () => {
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     if (spyConsole) {
-      spyOn(console, 'log');
-      spyOn(console, 'warn');
+      vi.spyOn(console, 'log');
+      vi.spyOn(console, 'warn');
     }
   }
 

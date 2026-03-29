@@ -20,17 +20,17 @@ describe('chart: water-wave', () => {
     }));
 
     it('should be scale scaling when height is gt; container width', fakeAsync(() => {
-      const styleSpy = spyOn(page.comp.renderer, 'setStyle');
+      const styleSpy = vi.spyOn(page.comp.renderer, 'setStyle');
       page.context.animate = false;
       page.context.height = 100;
-      spyOnProperty(page.comp.el.parentNode, 'offsetWidth').and.returnValue(50);
+      vi.spyOn(page.comp.el.parentNode, 'offsetWidth', 'get').mockReturnValue(50);
       page.dcFirst();
-      expect(styleSpy.calls.mostRecent().args[2]).toBe('scale(0.5)');
+      expect(styleSpy.mock.calls.at(-1)![2]).toBe('scale(0.5)');
     }));
 
     it('should be update radio when window resize', fakeAsync(() => {
       page.dcFirst();
-      spyOn(page.comp.renderer, 'setStyle');
+      vi.spyOn(page.comp.renderer, 'setStyle');
       window.dispatchEvent(new Event('resize'));
       page.end();
       expect(page.comp.renderer.setStyle).toHaveBeenCalled();

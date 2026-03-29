@@ -96,23 +96,23 @@ describe('acl: service', () => {
   describe('#can()', () => {
     it('should working', () => {
       srv.attachAbility([ABILITY_NUMBER]);
-      expect(srv.can(ADMIN)).withContext(`can ${ADMIN}`).toBe(true);
-      expect(srv.can(ABILITY_NUMBER)).withContext('ability muse be true').toBe(true);
+      expect(srv.can(ADMIN)).toBe(true);
+      expect(srv.can(ABILITY_NUMBER)).toBe(true);
       expect(srv.can([ABILITY_NUMBER]))
-        .withContext('ability array muse be true')
+        
         .toBe(true);
       expect(srv.can([ADMIN]))
-        .withContext('role array muse be true')
+        
         .toBe(true);
       expect(srv.can({ role: [ADMIN] } as ACLType))
-        .withContext('ACLType item muse be true')
+        
         .toBe(true);
       expect(srv.can(`${ADMIN}1`)).toBe(false);
       expect(srv.can(null)).toBe(true);
       expect(srv.can({})).toBe(false);
     });
     it('should be allow ability is string in can method by preCan', () => {
-      const preCanSpy = jasmine.createSpy();
+      const preCanSpy = vi.fn();
       (srv as any).options.preCan = preCanSpy;
       srv.attachAbility([ABILITY_CREATE]);
       srv.can(ABILITY_CREATE);
@@ -132,12 +132,12 @@ describe('acl: service', () => {
 
   it(`#canAbility()`, () => {
     srv.attachAbility([ABILITY]);
-    expect(srv.canAbility(ABILITY)).withContext('should be support number or string type').toBe(true);
+    expect(srv.canAbility(ABILITY)).toBe(true);
     expect(srv.canAbility([ABILITY]))
-      .withContext('should be support array type')
+      
       .toBe(true);
     expect(srv.canAbility(`${ADMIN}1`))
-      .withContext('should be invalid ability')
+      
       .toBe(false);
   });
 

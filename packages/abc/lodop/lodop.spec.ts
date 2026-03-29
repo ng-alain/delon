@@ -49,9 +49,9 @@ describe('abc: lodop', () => {
     loadCount = 0;
     isNullLodop = false;
     mockLodop = {
-      SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      GET_PRINTER_COUNT: jasmine.createSpy('GET_PRINTER_COUNT').and.returnValue(1),
-      GET_PRINTER_NAME: jasmine.createSpy('GET_PRINTER_NAME').and.returnValue('1'),
+      SET_LICENSES: vi.fn(),
+      GET_PRINTER_COUNT: vi.fn().mockReturnValue(1),
+      GET_PRINTER_NAME: vi.fn().mockReturnValue('1'),
       webskt: {
         readyState: 1
       }
@@ -78,7 +78,7 @@ describe('abc: lodop', () => {
     it('should wait for websocket completed', (done: () => void) => {
       genModule();
       mockLodop = {
-        SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
+        SET_LICENSES: vi.fn(),
         webskt: {
           readyState: 0
         }
@@ -111,7 +111,7 @@ describe('abc: lodop', () => {
       cog.lodop!.checkMaxCount = 2;
       genModule();
       mockLodop = {
-        SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
+        SET_LICENSES: vi.fn(),
         webskt: {
           readyState: 0
         }
@@ -168,10 +168,10 @@ describe('abc: lodop', () => {
       cog.lodop!.url = url;
       genModule();
       const scriptSrv = (srv as NzSafeAny).scriptSrv;
-      spyOn(scriptSrv, 'loadScript').and.callFake(() => Promise.resolve({ status: 'ok' }));
+      vi.spyOn(scriptSrv, 'loadScript').mockImplementation(() => Promise.resolve({ status: 'ok' }));
       srv.reset();
       expect(scriptSrv.loadScript).toHaveBeenCalled();
-      expect(scriptSrv.loadScript.calls.first().args[0]).toBe(`${url}&name=LODOP`);
+      expect(scriptSrv.loadScript.mock.calls[0][0]).toBe(`${url}&name=LODOP`);
     });
   });
 
@@ -184,8 +184,8 @@ describe('abc: lodop', () => {
             LODOP.xxx(10, 10, 762, 533, 'title');
             `;
       mockLodop = {
-        SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
+        SET_LICENSES: vi.fn(),
+        PRINT_INITA: vi.fn(),
         webskt: {
           readyState: 1
         }
@@ -209,9 +209,9 @@ describe('abc: lodop', () => {
       let mockRes = '';
       const contextData = { title: 'aaa' };
       mockLodop = {
-        SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-        SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function (): void {
+        SET_LICENSES: vi.fn(),
+        SET_PRINT_STYLEA: vi.fn(),
+        PRINT_INITA: vi.fn().mockImplementation(function (): void {
           // eslint-disable-next-line prefer-rest-params
           mockRes = arguments[4];
         }),
@@ -237,8 +237,8 @@ describe('abc: lodop', () => {
         LODOP.xxx(10, 10, 762, 533, '{{title2}}');
         `;
     mockLodop = {
-      SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function (): number {
+      SET_LICENSES: vi.fn(),
+      PRINT_DESIGN: vi.fn().mockImplementation(function (): number {
         setTimeout(() => mockLodop.On_Return(0, code), 30);
         setTimeout(() => mockLodop.On_Return(1, code), 31);
         return 1;
@@ -265,9 +265,9 @@ describe('abc: lodop', () => {
       isPrintError = false;
       genModule();
       mockLodop = {
-        SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
-        PRINT: jasmine.createSpy('PRINT').and.callFake(function (): number {
+        SET_LICENSES: vi.fn(),
+        PRINT_INITA: vi.fn(),
+        PRINT: vi.fn().mockImplementation(function (): number {
           if (isPrintError) {
             setTimeout(() => mockLodop.On_Return(0, '缺纸'), 10);
           } else {

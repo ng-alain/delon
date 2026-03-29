@@ -56,7 +56,7 @@ describe('chart: bar', () => {
     it('should be update label when window resize and autoLabel is true', fakeAsync(() => {
       page.context.autoLabel = true;
       page.dc();
-      spyOn(page.chart, 'render');
+      vi.spyOn(page.chart, 'render');
       window.dispatchEvent(new Event('resize'));
       page.end();
       expect(page.chart.render).toHaveBeenCalled();

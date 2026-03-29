@@ -22,7 +22,7 @@ describe('util.inRange', () => {
         }).toThrow();
       } else {
         expect(inRange(value, start, end))
-          .withContext(`${item.k} must be ${item.v}`)
+          
           .toBe(item.v);
       }
     }

@@ -71,7 +71,7 @@ describe('auth: base.interceptor', () => {
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
     router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigate');
+    vi.spyOn(router, 'navigate');
     http = TestBed.inject<HttpClient>(HttpClient);
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }

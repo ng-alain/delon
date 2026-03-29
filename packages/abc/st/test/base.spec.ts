@@ -139,7 +139,7 @@ export function genModule<T extends TestComponent>(
 
 export class PageObject<T extends TestComponent> {
   _changeData!: STChange;
-  changeSpy: jasmine.Spy;
+  changeSpy: any;
   readonly fixture: ComponentFixture<T>;
   readonly context: T;
   readonly dl: DebugElement;
@@ -162,8 +162,8 @@ export class PageObject<T extends TestComponent> {
       this.context.columns = [{ title: '', index: 'id' }];
     }
 
-    spyOn(this.context as NzSafeAny, 'error').and.callFake((res: STError) => (this.spyErrorData = res));
-    this.changeSpy = spyOn(this.context as NzSafeAny, 'change').and.callFake(
+    vi.spyOn(this.context as NzSafeAny, 'error').mockImplementation((res: STError) => (this.spyErrorData = res));
+    this.changeSpy = vi.spyOn(this.context as NzSafeAny, 'change').mockImplementation(
       ((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny
     );
     this.comp = this.context.comp;
@@ -272,7 +272,7 @@ export class PageObject<T extends TestComponent> {
   expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
     const ret = deepGet(this.comp._data[row - 1], path);
     if (options?.message != null) {
-      expect(ret).withContext(options.message).toBe(valule);
+      expect(ret).toBe(valule);
     } else {
       expect(ret).toBe(valule);
     }
@@ -323,7 +323,7 @@ export class PageObject<T extends TestComponent> {
   expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
     const els = document.querySelectorAll(cls);
     expect(els.length)
-      .withContext(expectationFailOutput ?? `HtmlElement length muse be: ${count}`)
+      
       .toBe(count);
     return this;
   }
@@ -331,17 +331,17 @@ export class PageObject<T extends TestComponent> {
     const el = document.querySelector(cls);
     if (content == null) {
       expect(el)
-        .withContext(expectationFailOutput ?? ``)
+        
         .toBeNull();
     } else {
       expect(el!.textContent!.trim())
-        .withContext(expectationFailOutput ?? ``)
+        
         .toBe(content);
     }
     return this;
   }
   expectChangeType(type: STChangeType, called: boolean = true): this {
-    const callAll = this.changeSpy.calls.all();
+    const callAll = this.changeSpy.mock.calls;
     const args = callAll[callAll.length - 1].args[0];
     if (called) {
       expect(args.type).toBe(type);
@@ -368,21 +368,21 @@ export class PageObject<T extends TestComponent> {
       el = (this.dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
     }
     if (!el) {
-      expect(false).withContext(`not found col: ${col}, row: ${row} element`).toBe(true);
+      expect(false).toBe(true);
       return this;
     }
 
     this.context.comp.onContextmenu({
       target: el,
-      preventDefault: jasmine.createSpy(),
-      stopPropagation: jasmine.createSpy(),
+      preventDefault: vi.fn(),
+      stopPropagation: vi.fn(),
       ...event
     } as NzSafeAny);
     return this.cd();
   }
   clickContentMenu(idx: number): this {
     const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
-    expect(el).withContext(`the index: ${idx} is invalid element of content menu container`).not.toBeNull();
+    expect(el).not.toBeNull();
     const fn = this.context.comp.contextmenuList[idx - 1].fn;
     expect(fn).not.toHaveBeenCalled();
     (el as HTMLElement).click();
@@ -466,8 +466,8 @@ export class TestComponent {
   showHeader = true;
   customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
   contextmenu: STContextmenuFn | null = () => [
-    { text: 'a', fn: jasmine.createSpy() },
-    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
+    { text: 'a', fn: vi.fn() },
+    { text: 'b', children: [{ text: 'c', fn: vi.fn() }] }
   ];
 
   drag?: STDragOptions | boolean = false;

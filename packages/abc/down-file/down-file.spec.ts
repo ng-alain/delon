@@ -43,7 +43,7 @@ describe('abc: down-file', () => {
     });
     ['xlsx', 'docx', 'pptx', 'pdf'].forEach(ext => {
       it(`should be down ${ext}`, fakeAsync(() => {
-        spyOn(fs, 'saveAs');
+        vi.spyOn(fs, 'saveAs');
         if (ext === 'docx') context.data = null;
         fixture.detectChanges();
         (dl.query(By.css(`#down-${ext}`)).nativeElement as HTMLButtonElement).click();
@@ -57,7 +57,7 @@ describe('abc: down-file', () => {
     it('should be used custom filename', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
+      vi.spyOn(fs, 'saveAs').mockImplementation(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = rep => rep.headers.get('a')!;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -72,7 +72,7 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
+      vi.spyOn(fs, 'saveAs').mockImplementation(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -87,7 +87,7 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [x-filename]', fakeAsync(() => {
       let fn: string;
       const filename = 'x-newfile.docx';
-      spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
+      vi.spyOn(fs, 'saveAs').mockImplementation(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -100,7 +100,7 @@ describe('abc: down-file', () => {
     }));
 
     it('should be throw error when a bad request', fakeAsync(() => {
-      spyOn(context, 'error');
+      vi.spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
@@ -110,7 +110,7 @@ describe('abc: down-file', () => {
     }));
 
     it('should be throw error when a empty file', fakeAsync(() => {
-      spyOn(context, 'error');
+      vi.spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
@@ -120,8 +120,8 @@ describe('abc: down-file', () => {
     }));
 
     it('should be throw error when http status is not 200', fakeAsync(() => {
-      spyOn(fs, 'saveAs');
-      spyOn(context, 'error');
+      vi.spyOn(fs, 'saveAs');
+      vi.spyOn(context, 'error');
       expect(context.error).not.toHaveBeenCalled();
       expect(fs.saveAs).not.toHaveBeenCalled();
       const el = dl.query(By.css('#down-docx')).nativeElement as HTMLElement;
@@ -136,7 +136,7 @@ describe('abc: down-file', () => {
     }));
 
     it('should be request via post', fakeAsync(() => {
-      spyOn(fs, 'saveAs');
+      vi.spyOn(fs, 'saveAs');
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
@@ -168,7 +168,7 @@ describe('abc: down-file', () => {
     fixture.detectChanges();
     let fn: string;
     const filename = 'newfile.docx';
-    spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
+    vi.spyOn(fs, 'saveAs').mockImplementation(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
     context.fileName = null;
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -188,7 +188,7 @@ describe('abc: down-file', () => {
         throw new Error('');
       }
     }
-    spyOn(window, 'Blob').and.callFake(() => new MockBlob() as NzSafeAny);
+    vi.spyOn(window, 'Blob').mockImplementation(() => new MockBlob() as NzSafeAny);
     createComp();
     fixture.detectChanges();
     const el = dl.query(By.css('#down-xlsx')).nativeElement as HTMLButtonElement;

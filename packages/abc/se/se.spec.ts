@@ -67,7 +67,7 @@ describe('abc: edit', () => {
           context.val = '';
           context.parent_size = 'default';
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'invalid').and.returnValue(true);
+          vi.spyOn(ngModel, 'invalid', 'get').mockReturnValue(true);
         });
         it('with true', fakeAsync(() => {
           context.parent_firstVisual = true;
@@ -95,9 +95,9 @@ describe('abc: edit', () => {
           context.parent_firstVisual = false;
           context.val = '';
           const ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'invalid').and.returnValue(true);
+          vi.spyOn(ngModel, 'invalid', 'get').mockReturnValue(true);
           changes = ngModel.statusChanges as EventEmitter<string>;
-          spyOnProperty(ngModel, 'dirty').and.returnValue(false);
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(false);
         });
         it('with true', fakeAsync(() => {
           context.parent_ingoreDirty = true;
@@ -195,8 +195,8 @@ describe('abc: edit', () => {
             let changes: EventEmitter<string>;
             beforeEach(() => {
               ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-              spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+              vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+              vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
               changes = ngModel.statusChanges as EventEmitter<string>;
               changes.emit('INVALID');
               fixture.detectChanges();
@@ -290,8 +290,8 @@ describe('abc: edit', () => {
         let ngModel: NgModel;
         it('should be show error', () => {
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
@@ -305,8 +305,8 @@ describe('abc: edit', () => {
           context.error = { required: 'A', other: 'O' };
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ other: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ other: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('INVALID');
@@ -317,8 +317,8 @@ describe('abc: edit', () => {
           context.error = '';
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
@@ -368,7 +368,7 @@ describe('abc: edit', () => {
       page = new PageObject();
       const formControlName = dl.query(By.directive(FormControlName)).injector.get<FormControlName>(FormControlName);
       const changes = formControlName.statusChanges as EventEmitter<string>;
-      spyOnProperty(formControlName, 'dirty').and.returnValue(true);
+      vi.spyOn(formControlName, 'dirty', 'get').mockReturnValue(true);
       // mock statusChanges
       changes.emit('VALID');
       fixture2.detectChanges();
@@ -507,7 +507,7 @@ describe('abc: edit', () => {
       fixture2.detectChanges();
       page = new PageObject();
       expect(page.getEl('.ant-form-item-label').style.width).toBe(`10px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 

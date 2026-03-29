@@ -17,7 +17,7 @@ describe('abc: count-down', () => {
   });
 
   it('should be create an instance via [config]', fakeAsync(() => {
-    spyOn(context, 'handleEvent');
+    vi.spyOn(context, 'handleEvent');
     context.config = {
       leftTime: 2,
       notify: [1.5]
@@ -28,7 +28,7 @@ describe('abc: count-down', () => {
   }));
 
   it('should be create an instance via [target]', fakeAsync(() => {
-    spyOn(context, 'handleEvent');
+    vi.spyOn(context, 'handleEvent');
     context.target = 1;
     fixture.detectChanges();
     tick(1001);
@@ -36,7 +36,7 @@ describe('abc: count-down', () => {
   }));
 
   it('should be create an instance when target is date', fakeAsync(() => {
-    spyOn(context, 'handleEvent');
+    vi.spyOn(context, 'handleEvent');
     context.target = addSeconds(new Date(), 1);
     fixture.detectChanges();
     tick(1001);

@@ -37,9 +37,9 @@ describe('form: widget: textarea', () => {
           ui: {
             widget,
             autosize: {},
-            change: jasmine.createSpy('change'),
-            focus: jasmine.createSpy('focus'),
-            blur: jasmine.createSpy('blur')
+            change: vi.fn(),
+            focus: vi.fn(),
+            blur: vi.fn()
           } as SFTextareaWidgetSchema
         }
       }

@@ -53,7 +53,7 @@ describe('form: widget: autocomplete', () => {
           default: 'aaa',
           ui: {
             widget,
-            change: jasmine.createSpy()
+            change: vi.fn()
           } as SFAutoCompleteWidgetSchema
         }
       }
@@ -117,7 +117,7 @@ describe('form: widget: autocomplete', () => {
       expect(selectWidget.typing).toBe(`label1`);
       page.asyncEnd();
     }));
-    xit('with email of format', fakeAsync(() => {
+    it.skip('with email of format', fakeAsync(() => {
       const config = mergeConfig(TestBed.inject(AlainConfigService));
       const typeValue = 'a';
       page

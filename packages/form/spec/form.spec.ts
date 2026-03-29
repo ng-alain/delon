@@ -88,7 +88,7 @@ describe('form: component', () => {
       });
 
       it('should be used default widget when is invalid schema type', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
           type: 'string',
@@ -102,7 +102,7 @@ describe('form: component', () => {
       });
 
       it('should be console debug informations', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
           properties: {
@@ -120,7 +120,7 @@ describe('form: component', () => {
       });
 
       it('should be console debug informations when ajv throw error', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
           properties: {
@@ -454,12 +454,12 @@ describe('form: component', () => {
         it('should be working', () => {
           page.setValue('/name', 'cipchk');
           expect(context.formValueChange).toHaveBeenCalled();
-          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+          expect((context.formValueChange as any).mock.calls.at(-1)![0].path).toBe('/name');
         });
         it('when value is null', () => {
           page.setValue('/name', null);
           expect(context.formValueChange).toHaveBeenCalled();
-          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].pathValue).toBe(null);
+          expect((context.formValueChange as any).mock.calls.at(-1)![0].pathValue).toBe(null);
         });
       });
 
@@ -567,7 +567,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }])
+                validator: vi.fn().mockReturnValue([{ keyword: 'required', message: 'a' }])
               }
             }
           }
@@ -581,7 +581,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([])
+                validator: vi.fn().mockReturnValue([])
               }
             }
           }
@@ -595,7 +595,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }]))
+                validator: vi.fn().mockReturnValue(of([{ keyword: 'required', message: 'a' }]))
               }
             }
           }
@@ -610,7 +610,7 @@ describe('form: component', () => {
               a: {
                 type: 'string',
                 ui: {
-                  validator: jasmine.createSpy().and.returnValue([{ keyword: 'required' }])
+                  validator: vi.fn().mockReturnValue([{ keyword: 'required' }])
                 }
               }
             }
@@ -668,7 +668,7 @@ describe('form: component', () => {
               type: 'string',
               ui: {
                 errors: {
-                  required: jasmine.createSpy().and.returnValue('A')
+                  required: vi.fn().mockReturnValue('A')
                 }
               }
             }
@@ -682,7 +682,7 @@ describe('form: component', () => {
 
       it('should be i18n', () => {
         const iconSrv = TestBed.inject(NzIconService);
-        spyOn(iconSrv, 'getRenderedContent').and.returnValue(of());
+        vi.spyOn(iconSrv, 'getRenderedContent').mockReturnValue(of());
         const s: SFSchema = {
           properties: {
             a: {
@@ -765,7 +765,7 @@ describe('form: component', () => {
     genModule();
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
     context.delay = true;
-    spyOn(context.comp, 'refreshSchema');
+    vi.spyOn(context.comp, 'refreshSchema');
     fixture.detectChanges();
     expect(context.comp.refreshSchema).not.toHaveBeenCalled();
   });
@@ -857,7 +857,7 @@ describe('form: component', () => {
       createComp();
       const i18n = TestBed.inject(ALAIN_I18N_TOKEN) as AlainI18NService;
       let lang = 'en';
-      spyOn(i18n, 'fanyi').and.callFake(((key: string) => {
+      vi.spyOn(i18n, 'fanyi').mockImplementation(((key: string) => {
         if (key === 'null') return null;
         return lang === 'en' ? key : `zh-${key}`;
       }) as NzSafeAny);

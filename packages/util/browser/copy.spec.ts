@@ -16,7 +16,7 @@ describe('abc: utils', () => {
         });
     });
     it('[[boundary]]', (done: () => void) => {
-      spyOn(document, 'createElement').and.returnValue({ parentNode: null } as NzSafeAny);
+      vi.spyOn(document, 'createElement').mockReturnValue({ parentNode: null } as NzSafeAny);
       copy('test')
         .then(() => {
           expect(false).toBe(true);

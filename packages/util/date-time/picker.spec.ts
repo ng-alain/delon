@@ -12,7 +12,7 @@ describe('util: date-time', () => {
   describe('#dateTimePickerUtil', () => {
     beforeEach(() => {
       mockNOW = NOW;
-      spyOnProperty(dateTimePickerUtil, 'now').and.callFake(() => mockNOW);
+      vi.spyOn(dateTimePickerUtil, 'now', 'get').mockImplementation(() => mockNOW);
     });
     it('#now', () => {
       expect(dateTimePickerUtil.now instanceof Date).toBe(true);
@@ -25,15 +25,15 @@ describe('util: date-time', () => {
       expect(dateTimePickerUtil.format(NOW, 'yyyy')).toBe('2000');
     });
     it('#disabledBeforeDate', () => {
-      expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).withContext(`Shoule be not include today`).toBe(false);
+      expect(dateTimePickerUtil.disabledBeforeDate()(NOW)).toBe(false);
       expect(dateTimePickerUtil.disabledBeforeDate({ offsetDays: 1 })(NOW))
-        .withContext(`Shoule be not today, because of offset`)
+        
         .toBe(true);
     });
     it('#disabledAfterDate', () => {
-      expect(dateTimePickerUtil.disabledAfterDate()(NOW)).withContext(`Shoule be not include today`).toBe(false);
+      expect(dateTimePickerUtil.disabledAfterDate()(NOW)).toBe(false);
       expect(dateTimePickerUtil.disabledAfterDate({ offsetDays: -1 })(NOW))
-        .withContext(`Shoule be not today, because of offset`)
+        
         .toBe(true);
     });
     describe('disabled time', () => {

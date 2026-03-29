@@ -43,7 +43,7 @@ export class PageG2<T> {
     discardPeriodicTasks();
     // FIX: `Error during cleanup of component`
     if (this.comp && typeof this.comp.chart !== 'undefined') {
-      spyOn(this.comp.chart, 'destroy');
+      vi.spyOn(this.comp.chart, 'destroy');
     }
     return this;
   }

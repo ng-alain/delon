@@ -56,10 +56,10 @@ describe('form: widget: string', () => {
         a: {
           type: 'string',
           ui: {
-            change: jasmine.createSpy('change'),
-            focus: jasmine.createSpy('focus'),
-            blur: jasmine.createSpy('blur'),
-            enter: jasmine.createSpy('enter')
+            change: vi.fn(),
+            focus: vi.fn(),
+            blur: vi.fn(),
+            enter: vi.fn()
           } as SFStringWidgetSchema
         }
       }
@@ -91,7 +91,7 @@ describe('form: widget: string', () => {
             ui: {
               changeDebounceTime: 1,
               changeMap: val => of(val),
-              change: jasmine.createSpy('change')
+              change: vi.fn()
             } as SFStringWidgetSchema
           }
         }
@@ -102,7 +102,7 @@ describe('form: widget: string', () => {
       page.typeChar('a');
       page.dc(100);
       expect(ui.change).toHaveBeenCalled();
-      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+      expect((ui.change as any).mock.calls[0][0]).toBe('a');
     }));
 
     it(`should be changeMap can't be set`, fakeAsync(() => {
@@ -113,7 +113,7 @@ describe('form: widget: string', () => {
             default: 'a',
             ui: {
               changeDebounceTime: 1,
-              change: jasmine.createSpy('change')
+              change: vi.fn()
             } as SFStringWidgetSchema
           }
         }
@@ -124,7 +124,7 @@ describe('form: widget: string', () => {
       page.typeChar('a');
       page.dc(100);
       expect(ui.change).toHaveBeenCalled();
-      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
+      expect((ui.change as any).mock.calls[0][0]).toBe('a');
     }));
   });
 
@@ -135,14 +135,14 @@ describe('form: widget: string', () => {
           type: 'string',
           ui: {
             autofocus: true,
-            focus: jasmine.createSpy('focus')
+            focus: vi.fn()
           } as SFStringWidgetSchema
         }
       }
     };
     page.newSchema(schema);
     const el = page.getEl('.ant-input') as HTMLInputElement;
-    spyOn(el, 'focus');
+    vi.spyOn(el, 'focus');
     tick(21);
     fixture.detectChanges();
     expect(el.focus).toHaveBeenCalled();

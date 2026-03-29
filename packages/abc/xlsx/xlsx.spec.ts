@@ -62,7 +62,7 @@ describe('abc: xlsx', () => {
           }
         };
       },
-      writeFile: jasmine.createSpy('writeFile')
+      writeFile: vi.fn()
     };
     (window as NzSafeAny).cptable = {
       utils: {
@@ -84,7 +84,7 @@ describe('abc: xlsx', () => {
       delete (window as NzSafeAny).XLSX;
       genModule();
       const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
-      spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
+      vi.spyOn(lazySrv, 'load').mockImplementation(() => Promise.reject());
       expect(lazySrv.load).not.toHaveBeenCalled();
       srv.import('/1.xlsx').catch(() => {});
       expect(lazySrv.load).toHaveBeenCalled();
@@ -136,7 +136,7 @@ describe('abc: xlsx', () => {
     it(`should be can't load xlsx when file is error`, (done: () => void) => {
       genModule();
 
-      spyOn(FileReader.prototype, 'readAsArrayBuffer').and.callFake(function (this: NzSafeAny) {
+      vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementation(function (this: NzSafeAny) {
         this.onerror();
       });
       srv.import(null as NzSafeAny).then(
@@ -232,7 +232,7 @@ describe('abc: xlsx', () => {
       fixture.detectChanges();
     });
     it('should be export via click', () => {
-      spyOn(srv, 'export');
+      vi.spyOn(srv, 'export');
       expect(srv.export).not.toHaveBeenCalled();
       (dl.query(By.css('button')).nativeElement as HTMLButtonElement).click();
       expect(srv.export).toHaveBeenCalled();

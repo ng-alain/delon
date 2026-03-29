@@ -77,7 +77,7 @@ describe('abc: global-footer', () => {
   it('should be open new window when blankTarget is true', () => {
     createComp();
     const win = TestBed.inject(WINDOW);
-    spyOn(win, 'open');
+    vi.spyOn(win, 'open');
     context.links = [
       {
         title: '',
@@ -107,7 +107,7 @@ describe('abc: global-footer', () => {
   it('should be navigate router', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     context.links = [
       {
         title: '',
@@ -122,7 +122,7 @@ describe('abc: global-footer', () => {
   it('should be ingore navigate when href is empty', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     context.links = [
       {
         title: '',

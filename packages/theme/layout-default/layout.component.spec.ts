@@ -148,25 +148,25 @@ describe('theme: layout-default', () => {
 
     describe('when error', () => {
       it('should be invalid module', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
+        const spy = vi.spyOn(msgSrv, 'error');
         lazyError();
         expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
-        expect(spy.calls.first().args[0]).toContain('Could not load ');
+        expect(spy.mock.calls[0][0]).toContain('Could not load ');
         lazyEnd();
       }));
       it('should be custom error', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
+        const spy = vi.spyOn(msgSrv, 'error');
         context.customError = 'test';
         fixture.detectChanges();
         lazyError();
         expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
-        expect(spy.calls.first().args[0]).toBe('test');
+        expect(spy.mock.calls[0][0]).toBe('test');
         lazyEnd();
       }));
       it('should be custom error is null', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
+        const spy = vi.spyOn(msgSrv, 'error');
         context.customError = null;
         fixture.detectChanges();
         lazyError();

@@ -78,10 +78,10 @@ describe('form: widget: select', () => {
             default: 'WAIT_BUYER_PAY',
             ui: {
               widget,
-              change: jasmine.createSpy(),
-              openChange: jasmine.createSpy(),
-              onSearch: jasmine.createSpy().and.returnValue(Promise.resolve()),
-              scrollToBottom: jasmine.createSpy()
+              change: vi.fn(),
+              openChange: vi.fn(),
+              onSearch: vi.fn().mockReturnValue(Promise.resolve()),
+              scrollToBottom: vi.fn()
             }
           }
         }
@@ -117,7 +117,7 @@ describe('form: widget: select', () => {
             ],
             ui: {
               widget,
-              change: jasmine.createSpy()
+              change: vi.fn()
             }
           }
         }
@@ -158,7 +158,7 @@ describe('form: widget: select', () => {
 
   describe('#onSearch', () => {
     it('should be first load when have value', fakeAsync(() => {
-      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+      const onSearch = vi.fn().mockReturnValue(Promise.resolve());
       const s: SFSchema = {
         properties: {
           a: {
@@ -179,7 +179,7 @@ describe('form: widget: select', () => {
     }));
 
     it('should be first load when value is empty', fakeAsync(() => {
-      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+      const onSearch = vi.fn().mockReturnValue(Promise.resolve());
       const s: SFSchema = {
         properties: {
           a: {

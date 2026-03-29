@@ -45,7 +45,7 @@ describe('abc: error-collect', () => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
         const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
         expect(el.scrollIntoView).toHaveBeenCalled();
@@ -69,7 +69,7 @@ describe('abc: error-collect', () => {
     );
     getPropertiesAndCreate();
     const safeComp = context.comp as NzSafeAny;
-    spyOn(safeComp, 'findParent');
+    vi.spyOn(safeComp, 'findParent');
     (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
     expect(safeComp.findParent).not.toHaveBeenCalled();
   });

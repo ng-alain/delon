@@ -231,7 +231,7 @@ describe('abc: view', () => {
       });
       genModule(`<div sv-container><sv label="a" /></div>`);
       expect(page.getEl('.sv__label').style.width).toBe(`10px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 
@@ -244,7 +244,7 @@ describe('abc: view', () => {
     }
     expect(cls: string, count: number = 1, message?: string): this {
       let e = expect(this.getEls(cls).length);
-      if (message) e = e.withContext(message);
+      if (message) e = e;
       e.toBe(count);
       return this;
     }

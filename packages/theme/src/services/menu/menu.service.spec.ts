@@ -334,7 +334,7 @@ describe('Service: Menu', () => {
         expect(srv.find({ key: 'v1' }) != null).toBe(true);
       });
       it('via url', () => {
-        const cb = jasmine.createSpy('callback_via_key');
+        const cb = vi.fn();
         expect(srv.find({ url: `/dashboard/v1`, cb: cb }) != null).toBe(true);
         expect(cb).toHaveBeenCalled();
       });
@@ -408,7 +408,7 @@ describe('Service: Menu', () => {
         ]
       });
       srv = TestBed.inject<MenuService>(MenuService);
-      spyOn(srv, 'resume');
+      vi.spyOn(srv, 'resume');
       expect(srv.resume).not.toHaveBeenCalled();
       TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       expect(srv.resume).toHaveBeenCalled();

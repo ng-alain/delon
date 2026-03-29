@@ -47,7 +47,7 @@ describe('abc: notice-icon', () => {
 
     describe('should be show dropdown', () => {
       it('via popoverVisible property', () => {
-        spyOn(context, 'popupVisibleChange');
+        vi.spyOn(context, 'popupVisibleChange');
         expect(context.comp.popoverVisible()).toBe(false);
         context.popoverVisible = true;
         fixture.detectChanges();
@@ -74,7 +74,7 @@ describe('abc: notice-icon', () => {
       }, CLICKTIME);
     });
     it('should be select item', done => {
-      spyOn(context, 'select');
+      vi.spyOn(context, 'select');
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
@@ -86,7 +86,7 @@ describe('abc: notice-icon', () => {
       }, CLICKTIME);
     });
     it('should be clear', done => {
-      spyOn(context, 'clear');
+      vi.spyOn(context, 'clear');
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {

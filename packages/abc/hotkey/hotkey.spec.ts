@@ -13,7 +13,7 @@ describe('abc: hotkey', () => {
       providers: [{ provide: Platform, useValue: { isBrowser } }]
     });
     ({ context } = createTestContext(TestComponent));
-    spyOn(context, 'focus');
+    vi.spyOn(context, 'focus');
   }
 
   afterEach(() => {

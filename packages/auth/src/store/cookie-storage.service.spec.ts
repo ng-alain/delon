@@ -7,7 +7,7 @@ import { ITokenModel } from '../token/interface';
 
 describe('auth: cookie-storage', () => {
   let data: Record<string, any> = {};
-  let putSpy: jasmine.Spy;
+  let putSpy: any;
   let store: CookieStorageStore;
   const KEY = 'token';
   const VALUE: ITokenModel = {
@@ -16,15 +16,15 @@ describe('auth: cookie-storage', () => {
 
   beforeEach(() => {
     data = {};
-    putSpy = jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value));
+    putSpy = vi.fn().mockImplementation((key: string, value: string) => (data[key] = value));
     TestBed.configureTestingModule({
       providers: [
         {
           provide: CookieService,
           useValue: {
             put: putSpy,
-            get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
-            remove: jasmine.createSpy('remove').and.callFake((key: string) => {
+            get: vi.fn().mockImplementation((key: string) => data[key]),
+            remove: vi.fn().mockImplementation((key: string) => {
               delete data[key];
             })
           }
@@ -73,7 +73,7 @@ describe('auth: cookie-storage', () => {
     });
     it('should be set expired', () => {
       store.set(KEY, { ...VALUE, expired: 1000 * 3 });
-      const args = putSpy.calls.first().args;
+      const args = putSpy.mock.calls[0];
       expect(args.length).toBe(3);
       const options = args[2] as CookieOptions;
       expect(typeof options.expires === 'number' && options.expires > 0).toBe(true);

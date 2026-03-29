@@ -44,10 +44,10 @@ describe('abc: onboarding', () => {
   it('#key', fakeAsync(() => {
     const storeSrv = TestBed.inject(ONBOARDING_STORE_TOKEN);
     let storeKeyVersion: unknown = '';
-    spyOn(storeSrv, 'get').and.callFake(() => {
+    vi.spyOn(storeSrv, 'get').mockImplementation(() => {
       return storeKeyVersion;
     });
-    spyOn(storeSrv, 'set').and.callFake((_, value) => {
+    vi.spyOn(storeSrv, 'set').mockImplementation((_, value) => {
       storeKeyVersion = value;
     });
     page.start({ key: 'a', keyVersion: '1' }).checkActive().click('next').checkDone(false).click('done').checkDone();
@@ -98,7 +98,7 @@ describe('abc: onboarding', () => {
   });
 
   it('should be hide panel when selector is invalid', fakeAsync(() => {
-    spyOn(console, 'warn');
+    vi.spyOn(console, 'warn');
     page.start({ items: [{ selectors: 'invalid-el' }] });
     expect(console.warn).toHaveBeenCalled();
   }));
@@ -110,7 +110,7 @@ describe('abc: onboarding', () => {
 
   it('should navigate first', fakeAsync(() => {
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     page.start({ items: [{ url: '/', selectors: '#a' }] });
     expect(router.navigateByUrl).toHaveBeenCalled();
   }));
@@ -120,16 +120,16 @@ describe('abc: onboarding', () => {
   }));
 
   it('should be done when before is throw error', fakeAsync(() => {
-    spyOn(srv, 'done');
+    vi.spyOn(srv, 'done');
     page.start({ items: [{ before: throwError(() => Error('')), selectors: '#a' }] });
     expect(srv.done).toHaveBeenCalled();
   }));
 
   it('should ingore start when current is running', fakeAsync(() => {
     page.start();
-    spyOnProperty(srv, 'running').and.returnValue(true);
+    vi.spyOn(srv, 'running', 'get').mockReturnValue(true);
     const srvAny = srv as NzSafeAny;
-    spyOn(srvAny as NzSafeAny, 'attach');
+    vi.spyOn(srvAny as NzSafeAny, 'attach');
     page.start();
     expect(srvAny.attach).not.toHaveBeenCalled();
   }));

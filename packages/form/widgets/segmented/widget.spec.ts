@@ -22,7 +22,7 @@ describe('form: widget: segmented', () => {
   });
 
   it('should be working', fakeAsync(() => {
-    const valueChange = jasmine.createSpy();
+    const valueChange = vi.fn();
     const s: SFSchema = {
       properties: {
         a: {

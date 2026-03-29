@@ -59,7 +59,7 @@ describe('auth: SimpleGuard', () => {
     srv.set({ token: `` });
     router.navigateByUrl('/home').then(res => {
       expect(res).toBe(false);
-      spyOn(router, 'navigateByUrl');
+      vi.spyOn(router, 'navigateByUrl');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       setTimeout(() => {
         expect(router.navigateByUrl).toHaveBeenCalled();

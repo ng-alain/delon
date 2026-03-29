@@ -45,7 +45,7 @@ describe('form: widget: transfer', () => {
           ui: {
             widget,
             titles: ['未拥有', '已拥有'],
-            selectChange: jasmine.createSpy()
+            selectChange: vi.fn()
           },
           default: 10
         }
@@ -108,7 +108,7 @@ describe('form: widget: transfer', () => {
             ui: {
               widget,
               titles: ['未拥有', '已拥有'],
-              change: jasmine.createSpy()
+              change: vi.fn()
             },
             default: 10
           }
@@ -139,7 +139,7 @@ describe('form: widget: transfer', () => {
             ui: {
               widget,
               titles: ['未拥有', '已拥有'],
-              canMove: jasmine.createSpy().and.returnValue(of([]))
+              canMove: vi.fn().mockReturnValue(of([]))
             },
             default: 10
           }
@@ -199,7 +199,7 @@ describe('form: widget: transfer', () => {
                 widget,
                 titles: ['未拥有', '已拥有'],
                 showSearch: true,
-                searchChange: jasmine.createSpy()
+                searchChange: vi.fn()
               },
               default: 10
             }

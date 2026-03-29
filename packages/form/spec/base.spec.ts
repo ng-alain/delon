@@ -59,11 +59,11 @@ export function builder(options?: {
   fixture = TestBed.createComponent(TestFormComponent);
   dl = fixture.debugElement;
   context = fixture.componentInstance;
-  spyOn(context, 'formChange');
-  spyOn(context, 'formValueChange');
-  spyOn(context, 'formSubmit');
-  spyOn(context, 'formReset');
-  spyOn(context, 'formError');
+  vi.spyOn(context, 'formChange');
+  vi.spyOn(context, 'formValueChange');
+  vi.spyOn(context, 'formSubmit');
+  vi.spyOn(context, 'formReset');
+  vi.spyOn(context, 'formError');
   if (options.detectChanges !== false) {
     fixture.detectChanges();
   }
@@ -103,11 +103,11 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
-    spyOn(context, 'formValueChange');
-    spyOn(context, 'formChange');
-    spyOn(context, 'formSubmit');
-    spyOn(context, 'formReset');
-    spyOn(context, 'formError');
+    vi.spyOn(context, 'formValueChange');
+    vi.spyOn(context, 'formChange');
+    vi.spyOn(context, 'formSubmit');
+    vi.spyOn(context, 'formReset');
+    vi.spyOn(context, 'formError');
     this.cleanOverlay();
   }
 
@@ -335,7 +335,7 @@ export class SFPage {
   typeEvent(eventName: string | Event, cls: string = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {
-      expect(true).withContext(`won't found '${cls}' class element`).toBe(false);
+      expect(true).toBe(false);
       return this;
     }
     dispatchFakeEvent(node, eventName);

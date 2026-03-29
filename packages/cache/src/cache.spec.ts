@@ -20,16 +20,16 @@ describe('cache: service', () => {
   beforeEach(() => {
     let data: any = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+    vi.spyOn(localStorage, 'removeItem').mockImplementation((key: string): void => {
       delete data[key];
     });
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+    vi.spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string): string => {
       return (data[key] = value as string);
     });
-    spyOn(localStorage, 'clear').and.callFake(() => {
+    vi.spyOn(localStorage, 'clear').mockImplementation(() => {
       data = {};
     });
   });
@@ -48,9 +48,9 @@ describe('cache: service', () => {
 
   it('should be specify a global config', () => {
     genModule({ expire: 100, type: 'm' });
-    const saveSpy = spyOn(srv as any, 'save');
+    const saveSpy = vi.spyOn(srv as any, 'save');
     srv.set(KEY, 'a');
-    const args = saveSpy.calls.first().args;
+    const args = saveSpy.mock.calls[0];
     expect(args[0]).toBe('m');
   });
 
@@ -162,9 +162,9 @@ describe('cache: service', () => {
       });
       it('should be specify sotre type via promise mode', (done: () => void) => {
         const k = '/data/1';
-        const setSpy = spyOn(srv, 'set');
+        const setSpy = vi.spyOn(srv, 'set');
         srv.get(k, { mode: 'promise', type: 'm' }).subscribe(() => {
-          const data = setSpy.calls.mostRecent().args[2];
+          const data = setSpy.mock.calls.at(-1)![2];
           expect(data.type).toBe('m');
           done();
         });
@@ -346,7 +346,7 @@ describe('cache: service', () => {
 
   it('should be custom request', async () => {
     const returnValue = 11;
-    const request = jasmine.createSpy('request').and.callFake(() => of(returnValue));
+    const request = vi.fn().mockImplementation(() => of(returnValue));
     genModule({ request });
     expect(request).not.toHaveBeenCalled();
     const res = await firstValueFrom(srv.get('/data/1', { mode: 'promise', type: 'm' }));

@@ -112,7 +112,7 @@ describe('abc: zip', () => {
     it('should be error', () => {
       genModule();
       const lazySrv = TestBed.inject<LazyService>(LazyService);
-      spyOn(lazySrv, 'load').and.returnValue(Promise.reject());
+      vi.spyOn(lazySrv, 'load').mockReturnValue(Promise.reject());
       srv.create().then(res => expect(res == null).toBe(true));
     });
   });
@@ -165,7 +165,7 @@ describe('abc: zip', () => {
       });
     });
     it('should be save zip file', (done: () => void) => {
-      spyOn(fs, 'saveAs');
+      vi.spyOn(fs, 'saveAs');
       srv.save(zip, { filename: '123.zip' }).then(
         () => {
           expect(fs.saveAs).toHaveBeenCalled();
@@ -179,7 +179,7 @@ describe('abc: zip', () => {
       );
     });
     it('should be call callback', (done: () => void) => {
-      spyOn(fs, 'saveAs');
+      vi.spyOn(fs, 'saveAs');
       let count = 0;
       srv
         .save(zip, {
@@ -199,7 +199,7 @@ describe('abc: zip', () => {
     });
     it('should be reject when generateAsync return error', (done: () => void) => {
       isErrorGenZip = true;
-      spyOn(fs, 'saveAs');
+      vi.spyOn(fs, 'saveAs');
       srv.save(zip).then(
         () => {
           expect(false).toBe(true);

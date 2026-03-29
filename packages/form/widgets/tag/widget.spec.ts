@@ -40,7 +40,7 @@ describe('form: widget: tag', () => {
           ],
           ui: {
             widget: 'tag',
-            checkedChange: jasmine.createSpy()
+            checkedChange: vi.fn()
           },
           default: [1, 2]
         }
@@ -152,7 +152,7 @@ describe('form: widget: tag', () => {
               ui: {
                 widget: 'tag',
                 mode: 'closeable',
-                onClose: jasmine.createSpy()
+                onClose: vi.fn()
               },
               default: [1, 2]
             }

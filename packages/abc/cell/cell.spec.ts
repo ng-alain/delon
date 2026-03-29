@@ -144,28 +144,28 @@ describe('abc: cell', () => {
         describe('with link', () => {
           it('navgation router', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl');
             page.update('to', { link: { url: '/router' } }).click('a');
             expect(router.navigateByUrl).toHaveBeenCalled();
           });
           it('navgation window.open', () => {
             const win = TestBed.inject(WINDOW);
-            spyOn(win, 'open');
+            vi.spyOn(win, 'open');
             page.update('to', { link: { url: 'https://a.com' } }).click('a');
             expect(win.open).toHaveBeenCalled();
           });
           it('should be disabled', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl');
             const win = TestBed.inject(WINDOW);
-            spyOn(win, 'open');
+            vi.spyOn(win, 'open');
             page.update('to', { link: {} }).click('a');
             expect(router.navigateByUrl).not.toHaveBeenCalled();
             expect(win.open).not.toHaveBeenCalled();
           });
           it('should be abort when url is null', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl');
             page.update('to', { link: { url: undefined } }).click('a');
             expect(router.navigateByUrl).not.toHaveBeenCalled();
           });
@@ -201,7 +201,7 @@ describe('abc: cell', () => {
             page.update('1', { widget: { key: TestWidget.KEY, data: 'new data2' } }).check('1-new data2');
           });
           it('when key is invalid', () => {
-            spyOn(console, 'warn');
+            vi.spyOn(console, 'warn');
             page.update('1', { widget: { key: 'invalid', data: 'new data' } });
             expect(console.warn).toHaveBeenCalled();
           });
@@ -220,7 +220,7 @@ describe('abc: cell', () => {
       });
 
       it('#valueChange', () => {
-        spyOn(context, 'valueChange');
+        vi.spyOn(context, 'valueChange');
         context.value = false;
         context.options = { type: 'checkbox' };
         fixture.detectChanges();

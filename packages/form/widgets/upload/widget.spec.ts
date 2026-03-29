@@ -44,7 +44,7 @@ describe('form: widget: upload', () => {
       properties: { a: { type: 'string', ui: { widget } } }
     });
     const comp = getComp();
-    spyOn(comp.formProperty, 'setValue');
+    vi.spyOn(comp.formProperty, 'setValue');
     comp.change({ type: 'error', fileList: [] } as NzSafeAny);
     expect(comp.formProperty.setValue).not.toHaveBeenCalled();
   });
@@ -108,7 +108,7 @@ describe('form: widget: upload', () => {
         properties: {
           a: {
             type: 'string',
-            ui: { widget, fileSize: 100, multiple: true, change: jasmine.createSpy() }
+            ui: { widget, fileSize: 100, multiple: true, change: vi.fn() }
           }
         }
       });
@@ -161,7 +161,7 @@ describe('form: widget: upload', () => {
           properties: {
             a: {
               type: 'string',
-              ui: { widget, preview: jasmine.createSpy() }
+              ui: { widget, preview: vi.fn() }
             }
           }
         });
@@ -180,7 +180,7 @@ describe('form: widget: upload', () => {
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
         const imgSrv = TestBed.inject(NzImageService);
-        spyOn(imgSrv, 'preview');
+        vi.spyOn(imgSrv, 'preview');
         comp.handlePreview({ url: 'a' } as NzSafeAny);
         expect(imgSrv.preview).toHaveBeenCalled();
       });
@@ -195,7 +195,7 @@ describe('form: widget: upload', () => {
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
         const imgSrv = TestBed.inject(NzImageService);
-        spyOn(imgSrv, 'preview');
+        vi.spyOn(imgSrv, 'preview');
         comp.handlePreview({} as NzSafeAny);
         expect(imgSrv.preview).not.toHaveBeenCalled();
       });

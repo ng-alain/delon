@@ -31,7 +31,7 @@ describe('form: widget: radio', () => {
             ui: {
               widget,
               styleType: 'button',
-              change: jasmine.createSpy()
+              change: vi.fn()
             },
             default: '未知'
           }

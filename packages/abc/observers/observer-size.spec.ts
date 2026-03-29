@@ -16,7 +16,7 @@ describe('abc: observers', () => {
   it('should be working', cb => {
     fixture.detectChanges();
 
-    spyOn(context, 'event');
+    vi.spyOn(context, 'event');
     context.width = 150;
     fixture.detectChanges();
     // wait for MutationObserver

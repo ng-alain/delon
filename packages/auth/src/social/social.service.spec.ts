@@ -10,9 +10,9 @@ import { SimpleTokenModel } from '../token/simple/simple.model';
 
 const mockRouter = {
   url: '',
-  navigate: jasmine.createSpy('navigate'),
-  navigateByUrl: jasmine.createSpy('navigateByUrl'),
-  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
+  navigate: vi.fn(),
+  navigateByUrl: vi.fn(),
+  parseUrl: vi.fn().mockImplementation((value: any) => {
     return new DefaultUrlSerializer().parse(value);
   })
 };
@@ -77,7 +77,7 @@ describe('auth: social.service', () => {
         const ret = TestBed.inject(DOCUMENT).location.href;
         Object.keys(item.be).forEach(key => {
           const expected = `${key}=${item.be[key]}`;
-          expect(ret).withContext(`muse contain "${expected}"`).toContain(expected);
+          expect(ret).toContain(expected);
         });
       });
 
@@ -86,7 +86,7 @@ describe('auth: social.service', () => {
           TestBed.inject(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         };
-        spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+        vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
         srv.login(item.url).subscribe(() => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
@@ -103,7 +103,7 @@ describe('auth: social.service', () => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+      vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
@@ -111,12 +111,12 @@ describe('auth: social.service', () => {
     }));
 
     it(`can't get model until closed`, fakeAsync(() => {
-      spyOn(srv, 'ngOnDestroy');
+      vi.spyOn(srv, 'ngOnDestroy');
       const mockWindowOpen = (): { closed: boolean } => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+      vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();

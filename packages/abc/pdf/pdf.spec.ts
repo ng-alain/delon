@@ -15,7 +15,7 @@ describe('abc: pdf', () => {
     ({ fixture } = createTestContext(TestComponent));
     page = new PageObject();
     lazySrv = TestBed.inject(LazyService);
-    spyOn(lazySrv, 'load').and.returnValue(Promise.resolve([]));
+    vi.spyOn(lazySrv, 'load').mockReturnValue(Promise.resolve([]));
   });
 
   it('should be throw error when not found pdfjsViewer in window', fakeAsync(() => {

@@ -26,7 +26,7 @@ describe('form: schema', () => {
   });
 
   describe('[cover schema]', () => {
-    beforeEach(() => spyOn(console, 'warn'));
+    beforeEach(() => vi.spyOn(console, 'warn'));
     it('should be using select widget when not ui and enum exists', () => {
       page
         .newSchema({
@@ -606,7 +606,7 @@ describe('form: schema', () => {
     });
 
     describe('should be throw error', () => {
-      beforeEach(() => spyOn(console, 'error'));
+      beforeEach(() => vi.spyOn(console, 'error'));
       it('when has extraneous key', () => {
         expect(() => {
           page.newSchema({

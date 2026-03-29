@@ -237,7 +237,7 @@ describe('form: widget: date', () => {
     });
     it('should be trigger onOpenChange', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOpenChange: jasmine.createSpy() } } }
+        properties: { a: { type: 'string', ui: { widget, onOpenChange: vi.fn() } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -248,7 +248,7 @@ describe('form: widget: date', () => {
     });
     it('should be trigger onOk', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOk: jasmine.createSpy() } } }
+        properties: { a: { type: 'string', ui: { widget, onOk: vi.fn() } } }
       };
       page.newSchema(s);
       const comp = getComp();

@@ -61,7 +61,7 @@ describe('abc: reuse-tab', () => {
                 { path: 'c', component: CComponent },
                 { path: 'd', component: DComponent },
                 { path: 'e', component: EComponent, data: { titleI18n: 'i18n' } },
-                { path: 'lazy', loadChildren: jasmine.createSpy('lazy') },
+                { path: 'lazy', loadChildren: vi.fn() },
                 {
                   path: 'leave',
                   component: DComponent,
@@ -108,8 +108,8 @@ describe('abc: reuse-tab', () => {
     page = new PageObject();
     layoutComp = dl.query(By.directive(LayoutComponent)).injector.get<LayoutComponent>(LayoutComponent);
     rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get<ReuseTabComponent>(ReuseTabComponent);
-    spyOn(layoutComp, 'change');
-    spyOn(layoutComp, 'close');
+    vi.spyOn(layoutComp, 'change');
+    vi.spyOn(layoutComp, 'close');
 
     flush();
     discardPeriodicTasks();
@@ -469,13 +469,13 @@ describe('abc: reuse-tab', () => {
             {
               id: 'custom1',
               title: '自定义1',
-              fn: jasmine.createSpy('custom.menu.1')
+              fn: vi.fn()
             },
             {
               id: 'custom2',
               title: '自定义2',
               disabled: () => true,
-              fn: jasmine.createSpy('custom.menu.2')
+              fn: vi.fn()
             }
           ];
           fixture.detectChanges();
@@ -532,11 +532,11 @@ describe('abc: reuse-tab', () => {
     describe('#keepingScroll', () => {
       const KSTIME = 2;
       let ss: ScrollService;
-      let getScrollPositionSpy: jasmine.Spy;
+      let getScrollPositionSpy: any;
       beforeEach(() => {
         ss = TestBed.inject(ScrollService) as ScrollService;
-        getScrollPositionSpy = spyOn(ss, 'getScrollPosition').and.returnValue([0, 666]);
-        spyOn(ss, 'scrollToPosition');
+        getScrollPositionSpy = vi.spyOn(ss, 'getScrollPosition').mockReturnValue([0, 666]);
+        vi.spyOn(ss, 'scrollToPosition');
       });
       it('with true', fakeAsync(() => {
         srv.keepingScroll = true;
@@ -633,7 +633,7 @@ describe('abc: reuse-tab', () => {
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
-              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(window);
+              expect(getScrollPositionSpy.mock.calls.at(-1)![0]).toBe(window);
             })
             .end();
         }));
@@ -648,7 +648,7 @@ describe('abc: reuse-tab', () => {
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
-              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(el);
+              expect(getScrollPositionSpy.mock.calls.at(-1)![0]).toBe(el);
             })
             .end();
         }));
@@ -662,7 +662,7 @@ describe('abc: reuse-tab', () => {
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
-              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(document.querySelector('#children'));
+              expect(getScrollPositionSpy.mock.calls.at(-1)![0]).toBe(document.querySelector('#children'));
             })
             .end();
         }));
@@ -673,7 +673,7 @@ describe('abc: reuse-tab', () => {
       layoutComp.storageState = true;
       page.cd();
       const stateSrv = TestBed.inject(REUSE_TAB_STORAGE_STATE);
-      spyOn(stateSrv, 'update');
+      vi.spyOn(stateSrv, 'update');
       page.to('#b');
       expect(stateSrv.update).toHaveBeenCalled();
       page.end();
@@ -697,7 +697,7 @@ describe('abc: reuse-tab', () => {
         `<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`
       );
       page.to('#a').openContextMenu(0);
-      spyOn(srv.componentRef!.instance, '_onReuseInit');
+      vi.spyOn(srv.componentRef!.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
       expect(srv.componentRef!.instance._onReuseInit).toHaveBeenCalled();
     }));
@@ -707,7 +707,7 @@ describe('abc: reuse-tab', () => {
       );
       page.to('#a').to('#b').openContextMenu(0);
       expect(page.getContentMenu('refresh') == null).toBe(true);
-      // spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
+      // vi.spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
       // page.clickContentMenu('refresh');
       // expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
@@ -715,7 +715,7 @@ describe('abc: reuse-tab', () => {
       createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet></router-outlet>`);
       page.to('#a').to('#b').openContextMenu(0);
       expect(page.getContentMenu('refresh') == null).toBe(true);
-      // spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
+      // vi.spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
       // page.clickContentMenu('refresh');
       // expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
@@ -798,10 +798,10 @@ describe('abc: reuse-tab', () => {
     close(pos: number): this {
       const ls = document.querySelectorAll('.anticon-close');
       if (pos > ls.length) {
-        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
+        expect(false).toBe(true);
         return this;
       } else if (ls.length === 0) {
-        expect(false).withContext(`invalid close element`).toBe(true);
+        expect(false).toBe(true);
         return this;
       }
       (ls[pos] as HTMLElement).click();
@@ -810,10 +810,10 @@ describe('abc: reuse-tab', () => {
     go(pos: number): this {
       const ls = document.querySelectorAll('.ant-tabs-tab');
       if (pos > ls.length) {
-        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
+        expect(false).toBe(true);
         return this;
       } else if (ls.length === 0) {
-        expect(false).withContext(`invalid item element`).toBe(true);
+        expect(false).toBe(true);
         return this;
       }
       rtComp._to(pos);
@@ -823,7 +823,7 @@ describe('abc: reuse-tab', () => {
     openContextMenu(pos: number, eventArgs?: MouseEventInit): this {
       const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
-        expect(false).withContext(`the pos muse be 0-${ls.length}`).toBe(true);
+        expect(false).toBe(true);
         return this;
       }
       (ls[pos] as HTMLElement).dispatchEvent(new MouseEvent('contextmenu', eventArgs));
@@ -835,7 +835,7 @@ describe('abc: reuse-tab', () => {
     }
     clickContentMenu(type: string): this {
       const el = this.getContentMenu(type);
-      expect(el).withContext(`the ${type} is invalid element of content menu container`).not.toBeNull();
+      expect(el).not.toBeNull();
       (el as HTMLElement).click();
       return this.cd();
     }

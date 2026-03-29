@@ -11,7 +11,7 @@ describe('acl: guard', () => {
   let srv: ACLGuardService;
   let acl: ACLService;
   let router: Router;
-  let routerSpy: jasmine.Spy;
+  let routerSpy: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,7 +49,7 @@ describe('acl: guard', () => {
   });
 
   describe('', () => {
-    beforeEach(() => (routerSpy = spyOn(router, 'navigateByUrl')));
+    beforeEach(() => (routerSpy = vi.spyOn(router, 'navigateByUrl')));
 
     it(`should load route when no-specify permission`, (done: () => void) => {
       srv.process({}).subscribe(res => {
@@ -131,7 +131,7 @@ describe('acl: guard', () => {
             guard: 'admin'
           })
           .subscribe(() => {
-            expect(routerSpy.calls.first().args[0]).toBe(`/403`);
+            expect(routerSpy.mock.calls[0][0]).toBe(`/403`);
             done();
           });
       });
@@ -142,7 +142,7 @@ describe('acl: guard', () => {
             guard_url: '/no'
           })
           .subscribe(() => {
-            expect(routerSpy.calls.first().args[0]).toBe(`/no`);
+            expect(routerSpy.mock.calls[0][0]).toBe(`/no`);
             done();
           });
       });

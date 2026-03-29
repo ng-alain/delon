@@ -57,7 +57,7 @@ describe('abc: quick-menu', () => {
   });
 
   it('#expand', () => {
-    spyOn(context, 'expandChange');
+    vi.spyOn(context, 'expandChange');
     context.expand = true;
     fixture.detectChanges();
     getEl().click();

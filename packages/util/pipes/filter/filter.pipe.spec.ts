@@ -15,9 +15,9 @@ describe('Pipe: filter', () => {
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('2,3');
   });
   it('should be other args', () => {
-    const matcherSpy = spyOn(fixture.componentInstance, 'matcher');
+    const matcherSpy = vi.spyOn(fixture.componentInstance, 'matcher');
     fixture.detectChanges();
-    expect((matcherSpy.calls.first().args as unknown[]).length).toBe(2);
+    expect((matcherSpy.mock.calls[0] as unknown[]).length).toBe(2);
   });
 });
 

@@ -26,10 +26,10 @@ describe('cache: interceptor', () => {
   beforeEach(genModule);
 
   it('should be working', () => {
-    const logSpy = spyOn(console, 'log');
+    const logSpy = vi.spyOn(console, 'log');
     http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key: 'a' }) }).subscribe();
     expect(logSpy).toHaveBeenCalled();
-    expect(logSpy.calls.first().args[0]).toBe(`%c👽GET->/test->from cache(onle in development)`);
+    expect(logSpy.mock.calls[0][0]).toBe(`%c👽GET->/test->from cache(onle in development)`);
   });
 
   it('should be truth request and cache data of response when is not cache', done => {
