@@ -17,6 +17,15 @@
     "**/*.d.ts"
   ],
   "exclude": [
-    "**/auto-focus.directive.spec.ts"
+    // Exclude all migrated spec files to avoid 'vi' is not defined errors in Karma
+    "abc/**/*.spec.ts",
+    "acl/**/*.spec.ts",
+    "auth/**/*.spec.ts",
+    "cache/**/*.spec.ts",
+    "chart/**/*.spec.ts",
+    "form/**/*.spec.ts",
+    "mock/**/*.spec.ts",
+    "theme/**/*.spec.ts",
+    "util/**/*.spec.ts"
   ]
 }
