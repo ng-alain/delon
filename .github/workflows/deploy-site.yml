@@ -6,7 +6,6 @@ jobs:
   website:
     if: "startsWith(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
