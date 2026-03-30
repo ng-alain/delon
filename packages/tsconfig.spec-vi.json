@@ -4,19 +4,18 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "../out-tsc/spec",
-    "types": ["jasmine"],
+    "types": [
+      "vitest/globals"
+    ],
     "paths": {
       "@delon/*": ["./*"]
     },
     "esModuleInterop": true,
     "noImplicitThis": false
   },
-  "files": ["test.ts"],
   "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ],
-  "exclude": [
-    "**/auto-focus.directive.spec.ts"
+    "**/*.d.ts",
+    "**/auto-focus.directive.spec.ts",
+    // "**/*.spec.ts"
   ]
 }
