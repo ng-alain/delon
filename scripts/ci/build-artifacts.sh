@@ -2,9 +2,9 @@
 
 set -e
 
-if [ -z ${CI_TOKEN} ]; then
+if [ -z ${CI_BUILD_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
-       "Please set the environment variable 'CI_TOKEN'."
+       "Please set the environment variable 'CI_BUILD_TOKEN'."
   exit 0
 fi
 
@@ -84,11 +84,9 @@ fi
 echo "Updated the build version in every file to include the SHA of the latest commit."
 
 # Prepare Git for pushing the artifacts to the repository.
-git config user.name "cipchk"
-git config user.email "helper@ng-alain.com"
-git config credential.helper "store --file=.git/credentials"
-
-echo "https://cipchk:${CI_TOKEN}@github.com" > .git/credentials
+git config user.name "Github Actions"
+git config user.email "github-actions@github.com"
+git remote set-url --push origin "https://x-access-token:${CI_BUILD_TOKEN}@github.com/ng-alain/delon-builds.git"
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
