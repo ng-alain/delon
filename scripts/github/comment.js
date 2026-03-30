@@ -1,61 +1,47 @@
-const REPO = process.env.ACCESS_REPO;
-const TOKEN = process.env.ACCESS_TOKEN;
-const PR = process.env.PR_NUMBER;
-const REPLACE_MARK = '<!-- GHA_UPDATE_COMMENT -->';
+const { ACCESS_REPO: REPO, ACCESS_TOKEN: TOKEN, PR_NUMBER: PR } = process.env;
+const comment = process.argv.at(-1);
+const REPLACE_MARK = `<!-- GHA_UPDATE_COMMENT -->`;
+const ISSUE_API = `https://api.github.com/repos/${REPO}/issues`;
 
-const argv = process.argv;
+const wrappedComment = `${REPLACE_MARK}\n${comment}`;
 
-const comment = argv[argv.length - 1];
-
-const wrappedComment = `
-  ${REPLACE_MARK}
-  ${comment}
-`.trim();
-
-async function withGithub(url, json, method) {
-  const res = await fetch(url, {
-    method: method || (json ? 'POST' : 'GET'),
+async function withGithub(path, options = {}) {
+  const { method = 'GET', body } = options;
+  const res = await fetch(`${ISSUE_API}${path}`, {
+    method,
     headers: {
-      Accept: 'application/json',
+      Accept: 'application/vnd.github+json',
       'Content-Type': 'application/json',
-      Authorization: `Basic ${Buffer.from(TOKEN).toString('base64')}`,
+      Authorization: TOKEN.startsWith('ghp_') ? `Basic ${Buffer.from(TOKEN).toString('base64')}` : `Bearer ${TOKEN}`,
     },
-    body: json ? JSON.stringify(json) : undefined,
+    body: body ? JSON.stringify(body) : undefined,
   });
 
-  return res.json();
+  if (!res.ok) {
+    const error = await res.text();
+    throw new Error(`GitHub API ${method} ${path} failed: ${res.status} ${error}`);
+  }
+
+  return res.status === 204 ? null : res.json();
 }
 
-(async function run() {
-  if (PR == null) {
-    console.log('未获取到PR，忽略处理')
-    return;
-  }
+async function run() {
+  const comments = await withGithub(`/${PR}/comments`);
+  const existing = comments.find(({ body }) => typeof body === 'string' && body.includes(REPLACE_MARK));
 
-  const commentUrl = `https://api.github.com/repos/${REPO}/issues/${PR}/comments`;
-  console.log(`commentUrl`, commentUrl);
-  const comments = await withGithub(commentUrl);
-  console.log(`comments data`, comments);
+  console.log('Origin comment:', existing ?? null);
 
-  // Find my comment
-  const updateComment = comments.find(({ body }) => body.includes(REPLACE_MARK));
-  console.log('Origin comment:', updateComment);
+  const path = existing ? `/comments/${existing.id}` : `/${PR}/comments`;
+  const method = existing ? 'PATCH' : 'POST';
+  const result = await withGithub(path, {
+    method,
+    body: { body: wrappedComment },
+  });
 
-  // Update
-  let res;
-  if (!updateComment) {
-    res = await withGithub(commentUrl, {
-      body: wrappedComment,
-    });
-  } else {
-    res = await withGithub(
-      `https://api.github.com/repos/${REPO}/issues/comments/${updateComment.id}`,
-      {
-        body: wrappedComment,
-      },
-      'PATCH',
-    );
-  }
+  console.log('Comment completed:', result);
+}
 
-  console.log(res);
-})();
+run().catch(error => {
+  console.error('Comment script failed:', error.message);
+  process.exit(1);
+});

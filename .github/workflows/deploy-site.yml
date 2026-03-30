@@ -6,10 +6,9 @@ jobs:
   website:
     if: "startsWith(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
-    environment: prod
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
       - run: yarn install
@@ -24,11 +23,6 @@ jobs:
 
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v4
-        # env:
-        #   # PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-        #   # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   PUBLISH_BRANCH: gh-pages
-        #   PUBLISH_DIR: ./src/dist/browser
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages

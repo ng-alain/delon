@@ -6,28 +6,37 @@ on:
   push:
     branches: [main, master]
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+env:
+  ACCESS_REPO: ${{ github.repository }}
+  ACCESS_TOKEN: ${{ github.token }}
+  PR_NUMBER: ${{ github.event.number }}
+  SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+  SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+  CI_BUILD_NAME: ${{ secrets.CI_BUILD_NAME }}
+  CI_BUILD_TOKEN: ${{ secrets.CI_BUILD_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Comment on github
         run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         if: github.event.number
-        env:
-          ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ github.event.number }}
       - name: Install node modules
         run: yarn install --immutable
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
-          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
           MESSAGE: ${{ github.event.pull_request.title || github.event.head_commit.message }}
       - name: Build site
         run: yarn run site:build
@@ -39,33 +48,20 @@ jobs:
           cp ./src/dist/browser/index.csr.html ./src/dist/browser/index.html
           cp ./src/dist/browser/index.csr.html ./src/dist/browser/404.html
           npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
-        env:
-          ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: 'Update comment on github'
         if: github.event.number
         run: |
           export DEPLOY_DOMAIN=https://preview-${{ github.event.number }}-ng-alain-delon.surge.sh
           node ./scripts/github/comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
-        env:
-          ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ github.event.number }}
       - name: 'When failed'
         if: github.event.number && failure()
         run: node ./scripts/github/comment.js "[Preview Build Failed!](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
-        env:
-          ACCESS_REPO: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
-          PR_NUMBER: ${{ github.event.number }}
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -73,7 +69,7 @@ jobs:
         run: yarn install --immutable
       - name: Test
         run: yarn run test
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/
@@ -84,8 +80,8 @@ jobs:
   test-cli:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -97,8 +93,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
