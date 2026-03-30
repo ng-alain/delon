@@ -18,7 +18,6 @@ env:
   SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
   SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
   CI_TOKEN: ${{ secrets.CI_TOKEN }}
-  CI_BUILD_TOKEN: ${{ secrets.CI_BUILD_TOKEN }}
 
 jobs:
   build:
