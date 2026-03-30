@@ -4,9 +4,7 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "../out-tsc/spec",
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"],
     "paths": {
       "@delon/*": ["./*"]
     },
@@ -15,6 +13,14 @@
   },
   "include": [
     "**/*.d.ts",
-    "abc/auto-focus/auto-focus.directive.spec.ts"
+    "abc/**/*.spec.ts",
+    "acl/**/*.spec.ts",
+    "auth/**/*.spec.ts",
+    "cache/**/*.spec.ts",
+    "chart/**/*.spec.ts",
+    "form/**/*.spec.ts",
+    "mock/**/*.spec.ts",
+    "theme/**/*.spec.ts",
+    "util/**/*.spec.ts"
   ]
 }

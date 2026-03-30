@@ -192,7 +192,7 @@
           "options": {
             "tsConfig": "packages/tsconfig.spec-vi.json",
             "include": [
-              "**/auto-focus.directive.spec.ts"
+              "**/*.spec.ts"
             ]
           }
         }
