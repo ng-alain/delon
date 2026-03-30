@@ -13,7 +13,8 @@ async function requestGithub(url, { method = 'GET', body } = {}) {
     headers: {
       Accept: 'application/vnd.github+json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${TOKEN}`,
+      // authorization: `Bearer ${TOKEN}`,
+      authorization: `Basic ${Buffer.from(TOKEN).toString('base64')}`,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
