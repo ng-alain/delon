@@ -17,6 +17,7 @@ env:
   PR_NUMBER: ${{ github.event.number }}
   SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
   SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+  CI_TOKEN: ${{ secrets.CI_TOKEN }}
 
 jobs:
   build:

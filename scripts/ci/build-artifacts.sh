@@ -2,9 +2,9 @@
 
 set -e
 
-if [ -z ${ACCESS_TOKEN} ]; then
+if [ -z ${CI_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
-       "Please set the environment variable 'ACCESS_TOKEN'."
+       "Please set the environment variable 'CI_TOKEN'."
   exit 0
 fi
 
@@ -88,7 +88,7 @@ git config user.name "${commitAuthorName}"
 git config user.email "${commitAuthorEmail}"
 git config credential.helper "store --file=.git/credentials"
 
-echo "https://${ACCESS_TOKEN}:@github.com" > .git/credentials
+echo "https://${CI_TOKEN}:@github.com" > .git/credentials
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
