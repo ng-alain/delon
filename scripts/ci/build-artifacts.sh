@@ -84,11 +84,11 @@ fi
 echo "Updated the build version in every file to include the SHA of the latest commit."
 
 # Prepare Git for pushing the artifacts to the repository.
-git config user.name "${commitAuthorName}"
-git config user.email "${commitAuthorEmail}"
+git config user.name "cipchk"
+git config user.email "helper@ng-alain.com"
 git config credential.helper "store --file=.git/credentials"
 
-echo "https://${CI_TOKEN}:@github.com" > .git/credentials
+echo "https://cipchk:${CI_TOKEN}@github.com" > .git/credentials
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
