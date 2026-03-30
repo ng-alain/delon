@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: prod
     permissions:
       contents: read
       issues: write
