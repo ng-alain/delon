@@ -28,9 +28,9 @@ echo "Current commit author name: ${commitAuthorName}"
 #   exit 0
 # fi
 
-if [ -z ${ACCESS_TOKEN} ]; then
+if [ -z ${CI_BUILD_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
-       "Please set the environment variable 'ACCESS_TOKEN'."
+       "Please set the environment variable 'CI_BUILD_TOKEN'."
   exit 0
 fi
 
@@ -96,7 +96,7 @@ echo "Updated the build version in every file to include the SHA of the latest c
 # Prepare Git for pushing the artifacts to the repository.
 git config user.name "${commitAuthorName}"
 git config user.email "${commitAuthorEmail}"
-git remote set-url --push origin "https://x-access-token:${ACCESS_TOKEN}@github.com/ng-alain/delon-builds.git"
+git remote set-url --push origin "https://x-access-token:${CI_BUILD_TOKEN}@github.com/ng-alain/delon-builds.git"
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
