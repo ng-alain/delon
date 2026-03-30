@@ -1,56 +1,45 @@
-const REPO = process.env.ACCESS_REPO;
-const TOKEN = process.env.ACCESS_TOKEN;
-const PR = process.env.PR_NUMBER;
-
-const API_BASE = 'https://api.github.com';
-const REPLACE_MARK = '<!-- GHA_UPDATE_COMMENT -->';
+const { ACCESS_REPO: REPO, ACCESS_TOKEN: TOKEN, PR_NUMBER: PR } = process.env;
+const tag = process.argv.at(-2);
 const comment = process.argv.at(-1);
+const REPLACE_MARK = `<!-- GHA_UPDATE_COMMENT -->`;
+const ISSUE_API = `https://api.github.com/repos/${REPO}/issues`;
+
 const wrappedComment = `${REPLACE_MARK}\n${comment}`;
 
-async function requestGithub(url, { method = 'GET', body } = {}) {
-  const res = await fetch(url, {
+async function withGithub(path, options = {}) {
+  const { method = 'GET', body } = options;
+  const res = await fetch(`${ISSUE_API}${path}`, {
     method,
     headers: {
       Accept: 'application/vnd.github+json',
       'Content-Type': 'application/json',
-      // authorization: `Bearer ${TOKEN}`,
-      authorization: `Basic ${Buffer.from(TOKEN).toString('base64')}`,
+      Authorization: TOKEN.startsWith('ghp_') ? `Basic ${Buffer.from(TOKEN).toString('base64')}` : `Bearer ${TOKEN}`,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  const text = await res.text();
-  const data = text ? JSON.parse(text) : {};
-
   if (!res.ok) {
-    const message = data.message || 'Unknown GitHub API error';
-    throw new Error(`GitHub API ${res.status} ${res.statusText}: ${message}`);
+    const error = await res.text();
+    throw new Error(`GitHub API ${method} ${path} failed: ${res.status} ${error}`);
   }
 
-  return data;
+  return res.status === 204 ? null : res.json();
 }
 
 async function run() {
-  const commentUrl = `${API_BASE}/repos/${REPO}/issues/${PR}/comments`;
-  console.log('Fetch comments:', commentUrl);
-
-  const comments = await requestGithub(commentUrl);
+  const comments = await withGithub(`/${PR}/comments`);
   const existing = comments.find(({ body }) => typeof body === 'string' && body.includes(REPLACE_MARK));
 
-  const isCreate = !existing;
-  const targetUrl = isCreate ? commentUrl : `${API_BASE}/repos/${REPO}/issues/comments/${existing.id}`;
-  const method = isCreate ? 'POST' : 'PATCH';
+  console.log('Origin comment:', existing ?? null);
 
-  console.log(`${isCreate ? 'Create' : 'Update'} comment on PR #${PR}`);
-  const result = await requestGithub(targetUrl, {
+  const path = existing ? `/comments/${existing.id}` : `/${PR}/comments`;
+  const method = existing ? 'PATCH' : 'POST';
+  const result = await withGithub(path, {
     method,
     body: { body: wrappedComment },
   });
 
-  console.log('Comment completed:', {
-    id: result.id,
-    html_url: result.html_url,
-  });
+  console.log('Comment completed:', result);
 }
 
 run().catch(error => {
