@@ -42,6 +42,7 @@ buildCommitMessage="${branchName} - ${MESSAGE}"
 
 repoUrl="https://github.com/ng-alain/${packageRepo}.git"
 repoDir="${DIST}/${packageRepo}"
+repoCloneUrl="https://${CI_BUILD_NAME}:${CI_BUILD_TOKEN}@github.com/ng-alain/${packageRepo}.git"
 
 echo "Starting publish process ${buildVersionName} into ${branchName}(tag:${buildTagName}).."
 
@@ -52,7 +53,7 @@ echo "Starting cloning process of ${repoUrl} into ${repoDir}.."
 
 if [[ $(git ls-remote --heads ${repoUrl} ${branchName}) ]]; then
   echo "Branch ${branchName} already exists. Cloning that branch."
-  git clone ${repoUrl} ${repoDir} --depth 1 --branch ${branchName}
+  git clone ${repoCloneUrl} ${repoDir} --depth 1 --branch ${branchName}
 
   cd ${repoDir}
   echo "Cloned repository and switched into the repository directory (${repoDir})."
@@ -60,7 +61,7 @@ else
   echo "Branch ${branchName} does not exist on ${packageRepo} yet."
   echo "Cloning default branch and creating branch '${branchName}' on top of it."
 
-  git clone ${repoUrl} ${repoDir} --depth 1
+  git clone ${repoCloneUrl} ${repoDir} --depth 1
   cd ${repoDir}
 
   echo "Cloned repository and switched into directory. Creating new branch now.."
