@@ -71,13 +71,11 @@ describe('cache: service', () => {
         expect(ret[0]).toBe(1);
         expect(ret[1]).toBe(2);
       });
-      it('should be set Observable', () => new Promise<void>(done => {
-        srv.set(KEY, of(10)).subscribe(res => {
-          expect(res).toBe(10);
-          expect(srv.getNone(KEY)).toBe(10);
-          done();
-        });
-      }));
+      it('should be set Observable', async () => {
+        const res = await firstValueFrom(srv.set(KEY, of(10)));
+        expect(res).toBe(10);
+        expect(srv.getNone(KEY)).toBe(10);
+      });
       it('should be set string vis memory', () => {
         srv.set(KEY, 'a', { type: 'm' });
         expect(localStorage.setItem).not.toHaveBeenCalled();
@@ -151,25 +149,23 @@ describe('cache: service', () => {
         );
         expect(srv.getNone(KEY)).toBeNull();
       });
-      it('should be return number via promise mode', () => new Promise<void>(done => {
+      it('should be return number via promise mode', async () => {
         const k = '/data/1';
-        srv.get(k).subscribe(res => {
-          expect(res).toBe('ok!');
-          expect(srv.getNone(k)).toBe('ok!');
-          done();
-        });
+        const promise = firstValueFrom(srv.get(k));
         getHTC().expectOne(k).flush('ok!');
-      }));
-      it('should be specify sotre type via promise mode', () => new Promise<void>(done => {
+        const res = await promise;
+        expect(res).toBe('ok!');
+        expect(srv.getNone(k)).toBe('ok!');
+      });
+      it('should be specify sotre type via promise mode', async () => {
         const k = '/data/1';
         const setSpy = vi.spyOn(srv, 'set');
-        srv.get(k, { mode: 'promise', type: 'm' }).subscribe(() => {
-          const data = setSpy.mock.calls.at(-1)![2];
-          expect(data.type).toBe('m');
-          done();
-        });
+        const promise = firstValueFrom(srv.get(k, { mode: 'promise', type: 'm' }));
         getHTC().expectOne(k).flush('ok!');
-      }));
+        await promise;
+        const data = setSpy.mock.calls.at(-1)![2];
+        expect(data.type).toBe('m');
+      });
       it('reproduce-issues-40', () => {
         const url = `/test`;
         const firstGet = srv.get(url);
@@ -186,35 +182,28 @@ describe('cache: service', () => {
         const ret = srv.tryGet(KEY, 1);
         expect(ret).toBe(1);
       });
-      it('should be return number via Observable if not exists KEY', () => new Promise<void>(done => {
-        srv.tryGet(KEY, of(10)).subscribe(ret => {
-          expect(ret).toBe(10);
-          done();
-        });
-      }));
-      it('should be return Observable when valid key', () => new Promise<void>(done => {
+      it('should be return number via Observable if not exists KEY', async () => {
+        const ret = await firstValueFrom(srv.tryGet(KEY, of(10)));
+        expect(ret).toBe(10);
+      });
+      it('should be return Observable when valid key', async () => {
         srv.set(KEY, 10);
-        srv.tryGet(KEY, of(10)).subscribe(ret => {
-          expect(ret).toBe(10);
-          done();
-        });
-      }));
-      it('should be return value via memory', () => new Promise<void>(done => {
-        srv.tryGet(KEY, of(10), { type: 'm' }).subscribe((ret: any) => {
-          expect(ret).toBe(10);
-          done();
-        });
-      }));
-      it('should be return value via http request', () => new Promise<void>(done => {
+        const ret = await firstValueFrom(srv.tryGet(KEY, of(10)));
+        expect(ret).toBe(10);
+      });
+      it('should be return value via memory', async () => {
+        const ret = await firstValueFrom(srv.tryGet(KEY, of(10), { type: 'm' }));
+        expect(ret).toBe(10);
+      });
+      it('should be return value via http request', async () => {
         const http = TestBed.inject(HttpClient);
-        srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
-          expect(ret.a).toBe(1);
-          done();
-        });
+        const promise = firstValueFrom(srv.tryGet(KEY, http.get('/')));
         TestBed.inject(HttpTestingController as Type<HttpTestingController>)
           .expectOne(() => true)
           .flush({ a: 1 });
-      }));
+        const ret = await promise;
+        expect((ret as any).a).toBe(1);
+      });
     });
 
     describe('#has', () => {
@@ -258,54 +247,45 @@ describe('cache: service', () => {
         expect(srv.getNone(KEY)).toBeNull();
         expect(srv.getNone(`${KEY}1`)).toBeNull();
       });
-      it('should be notify a remove event', () => new Promise<void>(done => {
-        srv
-          .notify(KEY)
-          .pipe(filter(w => w !== null && w.type === 'remove'))
-          .subscribe(res => {
-            expect(res.type).toBe('remove');
-            done();
-          });
+      it('should be notify a remove event', async () => {
         srv.freq = 10;
         srv.set(KEY, 1, { expire: 1 });
+        const promise = firstValueFrom(
+          srv.notify(KEY).pipe(filter(w => w !== null && w.type === 'remove'))
+        );
         srv.clear();
-      }));
+        const res = await promise;
+        expect(res!.type).toBe('remove');
+      });
     });
 
     describe('#notify', () => {
-      it('should notify set', () => new Promise<void>(done => {
-        srv
-          .notify(KEY)
-          .pipe(filter(w => w !== null))
-          .subscribe(res => {
-            expect(res.type).toBe('set');
-            expect(res.value).toBe(1);
-            done();
-          });
+      it('should notify set', async () => {
         srv.notify(KEY).subscribe();
+        const promise = firstValueFrom(
+          srv.notify(KEY).pipe(filter(w => w !== null))
+        );
         srv.set(KEY, 1);
-      }));
-      it('should notify remove', () => new Promise<void>(done => {
-        srv
-          .notify(KEY)
-          .pipe(filter(w => w !== null))
-          .subscribe(res => {
-            expect(res.type).toBe('remove');
-            done();
-          });
+        const res = await promise;
+        expect(res!.type).toBe('set');
+        expect(res!.value).toBe(1);
+      });
+      it('should notify remove', async () => {
+        const promise = firstValueFrom(
+          srv.notify(KEY).pipe(filter(w => w !== null))
+        );
         srv.remove(KEY);
-      }));
-      it('should notify expired', () => new Promise<void>(done => {
-        srv
-          .notify(KEY)
-          .pipe(filter(w => w !== null && w.type === 'expire'))
-          .subscribe(res => {
-            expect(res.type).toBe('expire');
-            done();
-          });
+        const res = await promise;
+        expect(res!.type).toBe('remove');
+      });
+      it('should notify expired', async () => {
         srv.freq = 10;
         srv.set(KEY, 1, { expire: 1 });
-      }));
+        const res = await firstValueFrom(
+          srv.notify(KEY).pipe(filter(w => w !== null && w.type === 'expire'))
+        );
+        expect(res!.type).toBe('expire');
+      });
       it('should be cancel notify', () => {
         expect(srv.hasNotify(KEY)).toBe(false);
         srv.notify(KEY).subscribe();
