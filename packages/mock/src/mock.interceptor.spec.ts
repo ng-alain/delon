@@ -71,14 +71,14 @@ describe('mock: interceptor', () => {
 
   describe('[default]', () => {
     beforeEach(() => genModule(DATA, { delay: 1 }));
-    it('should be init', done => {
+    it('should be init', () => new Promise<void>(done => {
       http.get('/users').subscribe((res: any) => {
         expect(res).not.toBeNull();
         expect(res.users).not.toBeNull();
         expect(res.users.length).toBe(DATA.USERS['GET /users'].users.length);
         done();
       });
-    });
+    }));
     it('should response array', (done: () => void) => {
       http.get('/array').subscribe((res: any) => {
         expect(res).not.toBeNull();

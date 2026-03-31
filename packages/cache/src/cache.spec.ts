@@ -205,7 +205,7 @@ describe('cache: service', () => {
           done();
         });
       });
-      it('should be return value via http request', done => {
+      it('should be return value via http request', () => new Promise<void>(done => {
         const http = TestBed.inject(HttpClient);
         srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
           expect(ret.a).toBe(1);
@@ -214,7 +214,7 @@ describe('cache: service', () => {
         TestBed.inject(HttpTestingController as Type<HttpTestingController>)
           .expectOne(() => true)
           .flush({ a: 1 });
-      });
+      }));
     });
 
     describe('#has', () => {

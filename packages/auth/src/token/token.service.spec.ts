@@ -97,7 +97,7 @@ describe('auth: token.service', () => {
 
     afterEach(() => (service as any).ngOnDestroy());
 
-    it('should be working', done => {
+    it('should be working', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(true);
@@ -105,9 +105,9 @@ describe('auth: token.service', () => {
       });
       const expired = +new Date() + 20;
       service.set({ token: 'a', expired });
-    });
+    }));
 
-    it('should be working of jwt', done => {
+    it('should be working of jwt', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(true);
@@ -115,9 +115,9 @@ describe('auth: token.service', () => {
       });
       const exp = +new Date() + 20;
       service.set({ token: 'a', exp } as JWTTokenModel);
-    });
+    }));
 
-    it('should be can not trigger refresh when expired is not present', done => {
+    it('should be can not trigger refresh when expired is not present', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(false);
@@ -128,6 +128,6 @@ describe('auth: token.service', () => {
         expect(true).toBe(true);
         done();
       });
-    });
+    }));
   });
 });

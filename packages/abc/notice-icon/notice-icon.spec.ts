@@ -53,7 +53,7 @@ describe('abc: notice-icon', () => {
         fixture.detectChanges();
         expect(context.comp.popoverVisible()).toBe(true);
       });
-      it('via click', done => {
+      it('via click', () => new Promise<void>(done => {
         expect(context.popoverVisible).toBeUndefined();
         (dl.query(By.css('.ant-badge')).nativeElement as HTMLElement).click();
         fixture.detectChanges();
@@ -61,9 +61,9 @@ describe('abc: notice-icon', () => {
           expect(context.popoverVisible).toBe(true);
           done();
         }, CLICKTIME);
-      });
+      }));
     });
-    it('should be control loading in visible popover', done => {
+    it('should be control loading in visible popover', () => new Promise<void>(done => {
       context.loading = true;
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
@@ -72,8 +72,8 @@ describe('abc: notice-icon', () => {
         expect(el.style.display).toBe('');
         done();
       }, CLICKTIME);
-    });
-    it('should be select item', done => {
+    }));
+    it('should be select item', () => new Promise<void>(done => {
       vi.spyOn(context, 'select');
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
@@ -84,8 +84,8 @@ describe('abc: notice-icon', () => {
         expect(context.select).toHaveBeenCalled();
         done();
       }, CLICKTIME);
-    });
-    it('should be clear', done => {
+    }));
+    it('should be clear', () => new Promise<void>(done => {
       vi.spyOn(context, 'clear');
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
@@ -96,8 +96,8 @@ describe('abc: notice-icon', () => {
         expect(context.clear).toHaveBeenCalled();
         done();
       }, CLICKTIME);
-    });
-    it('#centered', done => {
+    }));
+    it('#centered', () => new Promise<void>(done => {
       context.centered = true;
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
@@ -105,10 +105,10 @@ describe('abc: notice-icon', () => {
         expect(document.querySelectorAll('.notice-icon__tab-left').length).toBe(0);
         done();
       }, CLICKTIME);
-    });
+    }));
   });
 
-  it('#i18n', done => {
+  it('#i18n', () => new Promise<void>(done => {
     context.comp.onVisibleChange(true);
     context.data = [{ title: 'a1', list: [] }];
     fixture.detectChanges();
@@ -121,7 +121,7 @@ describe('abc: notice-icon', () => {
       expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
       done();
     }, CLICKTIME);
-  });
+  }));
 });
 
 @Component({

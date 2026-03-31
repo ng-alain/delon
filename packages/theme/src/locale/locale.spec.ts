@@ -35,11 +35,11 @@ describe('theme: locale', () => {
     expect(Object.keys(locale.getData('invalid-key' as NzSafeAny)).length).toBe(0);
   });
 
-  it('#change', done => {
+  it('#change', () => new Promise<void>(done => {
     locale.change.pipe(filter(l => l.abbr === enUS.abbr)).subscribe(() => {
       expect(true).toBe(true);
       done();
     });
     locale.setLocale(enUS);
-  });
+  }));
 });

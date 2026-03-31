@@ -42,12 +42,12 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#create', () => {
-    it('should be open', cb => {
+    it('should be open', () => new Promise<void>(done => {
       modal.create(TestModalComponent, { ret: 'true' }, { modalOptions: { nzNoAnimation: true } }).subscribe(() => {
         expect(true).toBeTruthy();
-        cb();
+        done();
       });
-    });
+    }));
     it('should be open a tabset', fakeAsync(() => {
       modal
         .create(TestModalComponent, { ret: 'true' }, { includeTabs: true, modalOptions: { nzNoAnimation: true } })
@@ -207,7 +207,7 @@ describe('theme: ModalHelper', () => {
 @Component({
   template: `
     <div id="modal{{ id }}" class="handle noNzData">{{ ret }}</div>
-    <div class="nzData">{{ data.ret }}</div>
+    <div class="nzData">{{ data?.ret }}</div>
     <div class="input_value">{{ input_value() }}</div>
   `
 })

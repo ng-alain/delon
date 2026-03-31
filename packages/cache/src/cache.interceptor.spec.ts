@@ -32,7 +32,7 @@ describe('cache: interceptor', () => {
     expect(logSpy.mock.calls[0][0]).toBe(`%c👽GET->/test->from cache(onle in development)`);
   });
 
-  it('should be truth request and cache data of response when is not cache', done => {
+  it('should be truth request and cache data of response when is not cache', () => new Promise<void>(done => {
     const key = 'b';
     const res = 'ok';
     http
@@ -43,9 +43,9 @@ describe('cache: interceptor', () => {
         done();
       });
     httpBed.expectOne('/test').flush(res);
-  });
+  }));
 
-  it('should be support cache-control', done => {
+  it('should be support cache-control', () => new Promise<void>(done => {
     const key = 'b';
     const res = 'ok';
     http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key }) }).subscribe(res => {
@@ -54,9 +54,9 @@ describe('cache: interceptor', () => {
       done();
     });
     httpBed.expectOne('/test').flush(res, { headers: { 'cache-control': 'max-age=60' } });
-  });
+  }));
 
-  it('should be support POST data', done => {
+  it('should be support POST data', () => new Promise<void>(done => {
     const key = 'b';
     const res = 'ok';
     http.post(key, { responseType: 'text', context: new HttpContext().set(CACHE, { key }) }).subscribe(() => {
@@ -64,10 +64,10 @@ describe('cache: interceptor', () => {
       done();
     });
     httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
-  });
+  }));
 
   describe('Ignore cache', () => {
-    it('when response cache-control', done => {
+    it('when response cache-control', () => new Promise<void>(done => {
       const key = 'b';
       const res = 'ok';
       http.get(key, { responseType: 'text' }).subscribe(res => {
@@ -76,9 +76,9 @@ describe('cache: interceptor', () => {
         done();
       });
       httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
-    });
+    }));
 
-    it('when is not set CACHE', done => {
+    it('when is not set CACHE', () => new Promise<void>(done => {
       const key = 'b';
       const res = 'ok';
       http.get('/test', { responseType: 'text' }).subscribe(res => {
@@ -87,9 +87,9 @@ describe('cache: interceptor', () => {
         done();
       });
       httpBed.expectOne('/test').flush(res);
-    });
+    }));
 
-    it('when enabled is false', done => {
+    it('when enabled is false', () => new Promise<void>(done => {
       const key = 'b';
       const res = 'ok';
       http
@@ -100,9 +100,9 @@ describe('cache: interceptor', () => {
           done();
         });
       httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
-    });
+    }));
 
-    it('when expire is 0', done => {
+    it('when expire is 0', () => new Promise<void>(done => {
       const key = 'b';
       const res = 'ok';
       http
@@ -113,6 +113,6 @@ describe('cache: interceptor', () => {
           done();
         });
       httpBed.expectOne('/test').flush(res);
-    });
+    }));
   });
 });

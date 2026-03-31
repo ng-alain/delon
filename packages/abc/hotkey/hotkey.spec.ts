@@ -20,23 +20,23 @@ describe('abc: hotkey', () => {
     context.comp.ngOnDestroy();
   });
 
-  it('should be working', done => {
+  it('should be working', () => new Promise<void>(done => {
     genModule(true);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
     setTimeout(() => {
       expect(context.focus).toHaveBeenCalled();
       done();
     }, 60);
-  });
+  }));
 
-  it('when in ssr', done => {
+  it('when in ssr', () => new Promise<void>(done => {
     genModule(false);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
     setTimeout(() => {
       expect(context.focus).not.toHaveBeenCalled();
       done();
     }, 60);
-  });
+  }));
 });
 
 @Component({

@@ -192,7 +192,7 @@ describe('abc: xlsx', () => {
           done();
         });
     });
-    it('should catch error when XLSX process error', done => {
+    it('should catch error when XLSX process error', () => new Promise<void>(done => {
       (window as NzSafeAny).XLSX.utils.book_new = null;
       srv
         .export({
@@ -208,7 +208,7 @@ describe('abc: xlsx', () => {
           expect(true).toBe(true);
           done();
         });
-    });
+    }));
     it('should be export csv', (done: () => void) => {
       srv
         .export({

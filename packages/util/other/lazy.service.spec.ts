@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import { take } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -60,15 +60,11 @@ describe('utils: lazy', () => {
   });
 
   describe('Scripts', () => {
-    it('should be load a js resource', done => {
-      srv.change
-        .pipe(take(1))
-        .pipe(take(1))
-        .subscribe(res => {
-          expect(res[0].status).toBe('ok');
-          done();
-        });
+    it('should be load a js resource', async () => {
+      const resPromise = firstValueFrom(srv.change.pipe(take(1)));
       srv.load('/1.js');
+      const res = await resPromise;
+      expect(res[0].status).toBe('ok');
     });
     it('should be custom content', () => {
       const res: NzSafeAny = {};
@@ -80,18 +76,15 @@ describe('utils: lazy', () => {
   });
 
   describe('Styles', () => {
-    it('should be load a css resource', done => {
-      srv.change.pipe(take(1)).subscribe(res => {
-        expect(res[0].status).toBe('ok');
-        done();
-      });
+    it('should be load a css resource', async () => {
+      const resPromise = firstValueFrom(srv.change.pipe(take(1)));
       srv.load('/1.css');
+      const res = await resPromise;
+      expect(res[0].status).toBe('ok');
     });
-    it('should be load a less resource', done => {
-      srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then(res => {
-        expect(res.status).toBe('ok');
-        done();
-      });
+    it('should be load a less resource', async () => {
+      const res = await srv.loadStyle('/1.less', { rel: 'stylesheet/less' });
+      expect(res.status).toBe('ok');
     });
     it('should be custom content', () => {
       const res: NzSafeAny = {
@@ -128,13 +121,12 @@ describe('utils: lazy', () => {
     expect(count).toBe(1);
   });
 
-  it('should be bad resource', done => {
+  it('should be bad resource', async () => {
     testStatus = 'bad';
-    srv.change.pipe(take(1)).subscribe(res => {
-      expect(res[0].status).toBe('error');
-      done();
-    });
+    const resPromise = firstValueFrom(srv.change.pipe(take(1)));
     srv.load('/3.js');
+    const res = await resPromise;
+    expect(res[0].status).toBe('error');
   });
 
   describe('#attributes', () => {

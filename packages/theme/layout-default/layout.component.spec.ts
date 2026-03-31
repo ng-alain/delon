@@ -1,4 +1,4 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -15,6 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
+import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultService } from './layout.service';
 import { LayoutDefaultOptions } from './types';
 import { SettingsService } from '../src/services/settings/settings.service';
@@ -29,8 +30,9 @@ describe('theme: layout-default', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideRouter([])],
-      imports: [LayoutDefaultModule, AlainThemeModule],
-      declarations: [TestComponent]
+      imports: [LayoutDefaultModule, AlainThemeModule, LayoutDefaultHeaderItemComponent],
+      declarations: [TestComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -217,13 +219,7 @@ describe('theme: layout-default', () => {
       [fetchingStrictly]="fetchingStrictly"
       [fetching]="fetching"
     >
-      <layout-default-header-item direction="left">
-        <span class="header-left">left</span>
-      </layout-default-header-item>
       test
-      <layout-default-header-item direction="right">
-        <span class="header-right">right</span>
-      </layout-default-header-item>
     </layout-default>
     <ng-template #asideUserTpl>
       <span class="custom-aside-user">custom-aside-user</span>

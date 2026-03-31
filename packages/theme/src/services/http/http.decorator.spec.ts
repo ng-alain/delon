@@ -322,7 +322,7 @@ describe('theme: http.decorator', () => {
       expect(request.mock.calls.at(-1)![1]).toBe('/user');
     });
 
-    it('should be throw 401 when user not authorize', done => {
+    it('should be throw 401 when user not authorize', () => new Promise<void>(done => {
       tokens.ACLService = {
         can: () => false
       };
@@ -336,6 +336,6 @@ describe('theme: http.decorator', () => {
           done();
         }
       });
-    });
+    }));
   });
 });

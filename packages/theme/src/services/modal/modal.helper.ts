@@ -159,10 +159,10 @@ export class ModalHelper {
         )
         .subscribe(() => {
           if (focus == null) return;
-          const btns = modalRef
+          const btns = (modalRef
             .getElement()
-            .querySelector<HTMLDivElement>('.ant-modal-confirm-btns, .modal-footer')
-            ?.querySelectorAll<HTMLButtonElement>('.ant-btn');
+            .querySelector('.ant-modal-confirm-btns, .modal-footer') as HTMLDivElement | null)
+            ?.querySelectorAll('.ant-btn') as NodeListOf<HTMLButtonElement> | undefined;
           const btnSize = btns?.length ?? 0;
           let el: HTMLButtonElement | null = null;
           if (btnSize === 1) {

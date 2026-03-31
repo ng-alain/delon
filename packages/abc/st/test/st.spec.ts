@@ -813,7 +813,7 @@ describe('abc: st', () => {
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
-      it('should be automatically cancel paging when the returned body value is an array type', done => {
+      it('should be automatically cancel paging when the returned body value is an array type', () => new Promise<void>(done => {
         vi.spyOn(_http, 'request').mockReturnValue(of([{}, {}, {}]));
         context.pi = 1;
         context.ps = 2;
@@ -825,7 +825,7 @@ describe('abc: st', () => {
           expect(comp._isPagination).toBe(false);
           done();
         });
-      });
+      }));
       describe('Http Request', () => {
         it('when error request', () => {
           vi.spyOn(_http, 'request').mockReturnValue(throwError(() => 'cancel'));

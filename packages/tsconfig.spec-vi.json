@@ -11,10 +11,31 @@
       "@delon/*": ["./*"]
     },
     "esModuleInterop": true,
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strict": false,
+    "strictTemplates": false,
+    "strictInjectionParameters": false,
+    "skipLibCheck": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noStrictGenericChecks": true
   },
   "include": [
+    "**/*.spec.ts",
     "**/*.d.ts",
-    "abc/auto-focus/auto-focus.directive.spec.ts"
-  ]
+    "vitest-shim.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "strictInjectionParameters": false,
+    "enableIvy": true,
+    "typeCheckHost": false,
+    "fullTemplateTypeCheck": false
+  }
 }

@@ -49,7 +49,7 @@ describe('Service: Settings', () => {
       expect(srv.layout.lang).toBe('zh-cn');
     });
 
-    it('should be notify', done => {
+    it('should be notify', () => new Promise<void>(done => {
       srv.notify.subscribe(res => {
         expect(res.type).toBe('layout');
         expect(res.name).toBe('collapsed');
@@ -57,7 +57,7 @@ describe('Service: Settings', () => {
         done();
       });
       srv.setLayout('collapsed', 1);
-    });
+    }));
 
     it('#layoutSignal', () => {
       const v = srv.layoutSignal;
@@ -80,14 +80,14 @@ describe('Service: Settings', () => {
     it(`can get`, () => {
       expect(srv.app).not.toBeNull();
     });
-    it('should be notify', done => {
+    it('should be notify', () => new Promise<void>(done => {
       srv.notify.subscribe(res => {
         expect(res.type).toBe('app');
         expect(res.value.name).toBe('a');
         done();
       });
       srv.setApp({ name: 'a' });
-    });
+    }));
 
     it('#appSignal', () => {
       const v = srv.appSignal;
@@ -110,14 +110,14 @@ describe('Service: Settings', () => {
     it(`can get`, () => {
       expect(srv.user).not.toBeNull();
     });
-    it('should be notify', done => {
+    it('should be notify', () => new Promise<void>(done => {
       srv.notify.subscribe(res => {
         expect(res.type).toBe('user');
         expect(res.value.name).toBe('a');
         done();
       });
       srv.setUser({ name: 'a' });
-    });
+    }));
 
     it('#userSignal', () => {
       const v = srv.userSignal;

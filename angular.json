@@ -190,10 +190,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "packages/tsconfig.spec-vi.json",
-            "include": [
-              "**/*.spec.ts"
-            ]
+            "tsConfig": "packages/tsconfig.spec-vi.json"
           }
         }
       }
