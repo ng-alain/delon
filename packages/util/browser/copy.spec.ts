@@ -4,7 +4,7 @@ import { copy } from './copy';
 
 describe('abc: utils', () => {
   describe('#copy', () => {
-    it('should be copy a string', (done: () => void) => {
+    it('should be copy a string', () => new Promise<void>(done => {
       copy('test')
         .then(() => {
           expect(true).toBe(true);
@@ -14,8 +14,8 @@ describe('abc: utils', () => {
           expect(false).toBe(true);
           done();
         });
-    });
-    it('[[boundary]]', (done: () => void) => {
+    }));
+    it('[[boundary]]', () => new Promise<void>(done => {
       vi.spyOn(document, 'createElement').mockReturnValue({ parentNode: null } as NzSafeAny);
       copy('test')
         .then(() => {
@@ -26,6 +26,6 @@ describe('abc: utils', () => {
           expect(true).toBe(true);
           done();
         });
-    });
+    }));
   });
 });

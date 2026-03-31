@@ -60,6 +60,8 @@ describe('Service: Settings', () => {
     }));
 
     it('#layoutSignal', () => {
+      // Reset layout state first
+      srv.setLayout({ collapsed: false } as NzSafeAny);
       const v = srv.layoutSignal;
       expect(v().collapsed).toBe(false);
       srv.setLayout('collapsed', true);
@@ -90,6 +92,8 @@ describe('Service: Settings', () => {
     }));
 
     it('#appSignal', () => {
+      // Reset app state first
+      srv.setApp({});
       const v = srv.appSignal;
       expect(v().name).toBeUndefined();
       srv.setApp({ name: 'a' });
@@ -120,6 +124,8 @@ describe('Service: Settings', () => {
     }));
 
     it('#userSignal', () => {
+      // Reset user state first
+      srv.setUser({});
       const v = srv.userSignal;
       expect(v().name).toBeUndefined();
       srv.setUser({ name: 'a' });

@@ -15,8 +15,8 @@ let isClassZIP = false;
 let isErrorGenZip = false;
 class JSZip {
   file(): void {}
-  generateAsync(): Promise<void> {
-    return isErrorGenZip ? Promise.reject('') : Promise.resolve();
+  generateAsync(): Promise<Blob> {
+    return isErrorGenZip ? Promise.reject('') : Promise.resolve(new Blob(['test'], { type: 'application/zip' }));
   }
 }
 class MockLazyService {
@@ -58,159 +58,86 @@ describe('abc: zip', () => {
   });
 
   describe('#read', () => {
-    it('should be load zip via url', (done: () => void) => {
+    it('should be load zip via url', async () => {
       genModule();
-      srv.read('/1.zip').then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read('/1.zip')).resolves.toBeUndefined();
     });
 
-    it('should be reject when request error via url', (done: () => void) => {
+    it('should be reject when request error via url', async () => {
       isErrorRequest = true;
       genModule();
-      srv.read('/1.zip').then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read('/1.zip')).rejects.toBeTruthy();
     });
 
-    it('should be load zip via file object', (done: () => void) => {
+    it('should be load zip via file object', async () => {
       genModule();
-      srv.read(new File([], '1.zip')).then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read(new File([], '1.zip'))).resolves.toBeUndefined();
     });
   });
 
   describe('#create', () => {
-    it('should be working', () => {
+    it('should be working', async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => expect(res == null).toBe(false));
+      const res = await srv.create();
+      expect(res).not.toBeNull();
     });
 
-    it('should be error', () => {
+    it('should be error', async () => {
       genModule();
       const lazySrv = TestBed.inject<LazyService>(LazyService);
       vi.spyOn(lazySrv, 'load').mockReturnValue(Promise.reject());
-      srv.create().then(res => expect(res == null).toBe(true));
+      const res = await srv.create();
+      expect(res).toBeNull();
     });
   });
 
   describe('#pushUrl', () => {
     let zip: NzSafeAny;
-    beforeEach((done: () => void) => {
+    beforeEach(async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => {
-        zip = res;
-        done();
-      });
+      zip = await srv.create();
     });
-    it('should be save zip file', (done: () => void) => {
-      srv.pushUrl(zip, '1.zip', '1.zip').then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+    it('should be save zip file', async () => {
+      await expect(srv.pushUrl(zip, '1.zip', '1.zip')).resolves.toBeUndefined();
     });
-    it('should be reject when bad request', (done: () => void) => {
+    it('should be reject when bad request', async () => {
       isErrorRequest = true;
-      srv.pushUrl(zip, '1.zip', '1.zip').then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.pushUrl(zip, '1.zip', '1.zip')).rejects.toBeTruthy();
     });
   });
 
   describe('#save', () => {
     let zip: NzSafeAny;
-    beforeEach((done: () => void) => {
+    let saveAsSpy: NzSafeAny;
+    beforeEach(async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => {
-        zip = res;
-        done();
-      });
+      zip = await srv.create();
+      // Mock file-saver properly
+      saveAsSpy = vi.fn().mockImplementation(() => {});
+      vi.spyOn(fs, 'saveAs').mockImplementation(saveAsSpy);
     });
-    it('should be save zip file', (done: () => void) => {
-      vi.spyOn(fs, 'saveAs');
-      srv.save(zip, { filename: '123.zip' }).then(
-        () => {
-          expect(fs.saveAs).toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+
+    afterEach(() => {
+      vi.restoreAllMocks();
     });
-    it('should be call callback', (done: () => void) => {
-      vi.spyOn(fs, 'saveAs');
+
+    it('should be save zip file', async () => {
+      await srv.save(zip, { filename: '123.zip' });
+      expect(saveAsSpy).toHaveBeenCalled();
+    });
+    it('should be call callback', async () => {
       let count = 0;
-      srv
-        .save(zip, {
-          callback: () => ++count
-        })
-        .then(
-          () => {
-            expect(count).toBe(1);
-            expect(fs.saveAs).toHaveBeenCalled();
-            done();
-          },
-          () => {
-            expect(false).toBe(true);
-            done();
-          }
-        );
+      await srv.save(zip, { callback: () => ++count });
+      expect(count).toBe(1);
+      expect(saveAsSpy).toHaveBeenCalled();
     });
-    it('should be reject when generateAsync return error', (done: () => void) => {
+    it('should be reject when generateAsync return error', async () => {
       isErrorGenZip = true;
-      vi.spyOn(fs, 'saveAs');
-      srv.save(zip).then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(fs.saveAs).not.toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.save(zip)).rejects.toBeTruthy();
+      expect(saveAsSpy).not.toHaveBeenCalled();
     });
     it('should be throw error when invalid zip', () => {
       zip = null;

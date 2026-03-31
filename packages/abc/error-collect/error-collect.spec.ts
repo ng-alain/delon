@@ -32,15 +32,15 @@ describe('abc: error-collect', () => {
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
-    it('should be collect error', (done: () => void) => {
+    it('should be collect error', () => new Promise<void>(done => {
       setTimeout(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
         done();
       }, 21);
-    });
+    }));
 
-    it('should be click go to first error element', (done: () => void) => {
+    it('should be click go to first error element', () => new Promise<void>(done => {
       setTimeout(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
@@ -51,7 +51,7 @@ describe('abc: error-collect', () => {
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
       }, 21);
-    });
+    }));
 
     it('#rtl', () => {
       expect(dl.query(By.css('.error-collect-rtl'))).toBeNull();

@@ -71,13 +71,13 @@ describe('cache: service', () => {
         expect(ret[0]).toBe(1);
         expect(ret[1]).toBe(2);
       });
-      it('should be set Observable', (done: () => void) => {
+      it('should be set Observable', () => new Promise<void>(done => {
         srv.set(KEY, of(10)).subscribe(res => {
           expect(res).toBe(10);
           expect(srv.getNone(KEY)).toBe(10);
           done();
         });
-      });
+      }));
       it('should be set string vis memory', () => {
         srv.set(KEY, 'a', { type: 'm' });
         expect(localStorage.setItem).not.toHaveBeenCalled();
@@ -151,7 +151,7 @@ describe('cache: service', () => {
         );
         expect(srv.getNone(KEY)).toBeNull();
       });
-      it('should be return number via promise mode', (done: () => void) => {
+      it('should be return number via promise mode', () => new Promise<void>(done => {
         const k = '/data/1';
         srv.get(k).subscribe(res => {
           expect(res).toBe('ok!');
@@ -159,8 +159,8 @@ describe('cache: service', () => {
           done();
         });
         getHTC().expectOne(k).flush('ok!');
-      });
-      it('should be specify sotre type via promise mode', (done: () => void) => {
+      }));
+      it('should be specify sotre type via promise mode', () => new Promise<void>(done => {
         const k = '/data/1';
         const setSpy = vi.spyOn(srv, 'set');
         srv.get(k, { mode: 'promise', type: 'm' }).subscribe(() => {
@@ -169,7 +169,7 @@ describe('cache: service', () => {
           done();
         });
         getHTC().expectOne(k).flush('ok!');
-      });
+      }));
       it('reproduce-issues-40', () => {
         const url = `/test`;
         const firstGet = srv.get(url);
@@ -186,25 +186,25 @@ describe('cache: service', () => {
         const ret = srv.tryGet(KEY, 1);
         expect(ret).toBe(1);
       });
-      it('should be return number via Observable if not exists KEY', (done: () => void) => {
+      it('should be return number via Observable if not exists KEY', () => new Promise<void>(done => {
         srv.tryGet(KEY, of(10)).subscribe(ret => {
           expect(ret).toBe(10);
           done();
         });
-      });
-      it('should be return Observable when valid key', (done: () => void) => {
+      }));
+      it('should be return Observable when valid key', () => new Promise<void>(done => {
         srv.set(KEY, 10);
         srv.tryGet(KEY, of(10)).subscribe(ret => {
           expect(ret).toBe(10);
           done();
         });
-      });
-      it('should be return value via memory', (done: () => void) => {
+      }));
+      it('should be return value via memory', () => new Promise<void>(done => {
         srv.tryGet(KEY, of(10), { type: 'm' }).subscribe((ret: any) => {
           expect(ret).toBe(10);
           done();
         });
-      });
+      }));
       it('should be return value via http request', () => new Promise<void>(done => {
         const http = TestBed.inject(HttpClient);
         srv.tryGet(KEY, http.get('/')).subscribe((ret: any) => {
@@ -258,7 +258,7 @@ describe('cache: service', () => {
         expect(srv.getNone(KEY)).toBeNull();
         expect(srv.getNone(`${KEY}1`)).toBeNull();
       });
-      it('should be notify a remove event', (done: () => void) => {
+      it('should be notify a remove event', () => new Promise<void>(done => {
         srv
           .notify(KEY)
           .pipe(filter(w => w !== null && w.type === 'remove'))
@@ -269,11 +269,11 @@ describe('cache: service', () => {
         srv.freq = 10;
         srv.set(KEY, 1, { expire: 1 });
         srv.clear();
-      });
+      }));
     });
 
     describe('#notify', () => {
-      it('should notify set', (done: () => void) => {
+      it('should notify set', () => new Promise<void>(done => {
         srv
           .notify(KEY)
           .pipe(filter(w => w !== null))
@@ -284,8 +284,8 @@ describe('cache: service', () => {
           });
         srv.notify(KEY).subscribe();
         srv.set(KEY, 1);
-      });
-      it('should notify remove', (done: () => void) => {
+      }));
+      it('should notify remove', () => new Promise<void>(done => {
         srv
           .notify(KEY)
           .pipe(filter(w => w !== null))
@@ -294,8 +294,8 @@ describe('cache: service', () => {
             done();
           });
         srv.remove(KEY);
-      });
-      it('should notify expired', (done: () => void) => {
+      }));
+      it('should notify expired', () => new Promise<void>(done => {
         srv
           .notify(KEY)
           .pipe(filter(w => w !== null && w.type === 'expire'))
@@ -305,7 +305,7 @@ describe('cache: service', () => {
           });
         srv.freq = 10;
         srv.set(KEY, 1, { expire: 1 });
-      });
+      }));
       it('should be cancel notify', () => {
         expect(srv.hasNotify(KEY)).toBe(false);
         srv.notify(KEY).subscribe();

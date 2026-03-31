@@ -194,7 +194,7 @@ describe('Service: Menu', () => {
       expect((srv.menus[1] as MenuInner)._aclResult).toBe(false);
     });
 
-    it('#change', (done: () => void) => {
+    it('#change', () => new Promise<void>(done => {
       const newMenus = [{ text: 'new menu' }];
       srv.change.pipe(filter(ls => ls.length > 0)).subscribe(res => {
         expect(res.length).toBe(1);
@@ -202,7 +202,7 @@ describe('Service: Menu', () => {
         done();
       });
       srv.add(newMenus);
-    });
+    }));
 
     it('#getItem', () => {
       const newMenus = [{ text: 'new menu', key: 'a' }, { text: 'new menu' }];

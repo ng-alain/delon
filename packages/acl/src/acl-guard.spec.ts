@@ -51,14 +51,14 @@ describe('acl: guard', () => {
   describe('', () => {
     beforeEach(() => (routerSpy = vi.spyOn(router, 'navigateByUrl')));
 
-    it(`should load route when no-specify permission`, (done: () => void) => {
+    it(`should load route when no-specify permission`, () => new Promise<void>(done => {
       srv.process({}).subscribe(res => {
         expect(res).toBeTruthy();
         done();
       });
-    });
+    }));
 
-    it(`should load route when specify permission`, (done: () => void) => {
+    it(`should load route when specify permission`, () => new Promise<void>(done => {
       srv
         .process({
           guard: 'user'
@@ -67,9 +67,9 @@ describe('acl: guard', () => {
           expect(res).toBeTruthy();
           done();
         });
-    });
+    }));
 
-    it(`should unable load route if no-permission`, (done: () => void) => {
+    it(`should unable load route if no-permission`, () => new Promise<void>(done => {
       srv
         .process({
           guard: 'admin'
@@ -78,9 +78,9 @@ describe('acl: guard', () => {
           expect(res).toBeFalsy();
           done();
         });
-    });
+    }));
 
-    it(`should load route via function`, (done: () => void) => {
+    it(`should load route via function`, () => new Promise<void>(done => {
       srv
         .process({
           guard: () => of('user')
@@ -89,9 +89,9 @@ describe('acl: guard', () => {
           expect(res).toBeTruthy();
           done();
         });
-    });
+    }));
 
-    it(`should load route via Observable`, (done: () => void) => {
+    it(`should load route via Observable`, () => new Promise<void>(done => {
       srv
         .process({
           guard: of('user')
@@ -100,9 +100,9 @@ describe('acl: guard', () => {
           expect(res).toBeTruthy();
           done();
         });
-    });
+    }));
 
-    it(`should load route using ability`, (done: () => void) => {
+    it(`should load route using ability`, () => new Promise<void>(done => {
       srv
         .process({
           guard: of(1)
@@ -111,9 +111,9 @@ describe('acl: guard', () => {
           expect(res).toBeTruthy();
           done();
         });
-    });
+    }));
 
-    it(`should unable load route using ability`, (done: () => void) => {
+    it(`should unable load route using ability`, () => new Promise<void>(done => {
       srv
         .process({
           guard: of(10)
@@ -122,10 +122,10 @@ describe('acl: guard', () => {
           expect(res).toBeFalsy();
           done();
         });
-    });
+    }));
 
     describe('#guard_url', () => {
-      it(`should be rediect to default url: /403`, (done: () => void) => {
+      it(`should be rediect to default url: /403`, () => new Promise<void>(done => {
         srv
           .process({
             guard: 'admin'
@@ -134,8 +134,8 @@ describe('acl: guard', () => {
             expect(routerSpy.mock.calls[0][0]).toBe(`/403`);
             done();
           });
-      });
-      it(`should be specify rediect url`, (done: () => void) => {
+      }));
+      it(`should be specify rediect url`, () => new Promise<void>(done => {
         srv
           .process({
             guard: 'admin',
@@ -145,7 +145,7 @@ describe('acl: guard', () => {
             expect(routerSpy.mock.calls[0][0]).toBe(`/no`);
             done();
           });
-      });
+      }));
     });
   });
 

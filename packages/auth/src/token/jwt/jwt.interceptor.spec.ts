@@ -47,7 +47,7 @@ describe('auth: jwt.interceptor', () => {
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
-  it('should be add token', (done: () => void) => {
+  it('should be add token', () => new Promise<void>(done => {
     const basicModel = genModel();
     genModule({}, basicModel);
     http.get('/test', { responseType: 'text' }).subscribe(() => {
@@ -56,9 +56,9 @@ describe('auth: jwt.interceptor', () => {
     const req = httpBed.expectOne('/test') as TestRequest;
     expect(req.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
     req.flush('ok!');
-  });
+  }));
 
-  it('should be invalid token', (done: () => void) => {
+  it('should be invalid token', () => new Promise<void>(done => {
     genModule({}, genModel(null));
     http
       .get('/test')
@@ -70,7 +70,7 @@ describe('auth: jwt.interceptor', () => {
         })
       )
       .subscribe();
-  });
+  }));
 });
 
 @Component({

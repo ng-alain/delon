@@ -69,7 +69,7 @@ describe('auth: simple.interceptor', () => {
   }
 
   describe('[token position]', () => {
-    it(`in headers`, (done: () => void) => {
+    it(`in headers`, () => new Promise<void>(done => {
       const basicModel = genModel();
       genModule({}, basicModel);
       http.get('/test', { responseType: 'text' }).subscribe(() => {
@@ -78,8 +78,8 @@ describe('auth: simple.interceptor', () => {
       const req = httpBed.expectOne('/test') as TestRequest;
       expect(req.request.headers.get('token')).toBe(basicModel.token!);
       req.flush('ok!');
-    });
-    it(`in body`, (done: () => void) => {
+    }));
+    it(`in body`, () => new Promise<void>(done => {
       genModule(
         {
           token_send_place: 'body'
@@ -92,8 +92,8 @@ describe('auth: simple.interceptor', () => {
       const req = httpBed.expectOne('/test') as TestRequest;
       expect(req.request.body.token).toBe('123');
       req.flush('ok!');
-    });
-    it(`in url`, (done: () => void) => {
+    }));
+    it(`in url`, () => new Promise<void>(done => {
       genModule(
         {
           token_send_place: 'url'
@@ -107,8 +107,8 @@ describe('auth: simple.interceptor', () => {
       expect(req.request.params.has('token')).toBe(true);
       expect(req.request.params.get('token')).toBe('123');
       req.flush('ok!');
-    });
-    it(`in url via full-domain`, (done: () => void) => {
+    }));
+    it(`in url via full-domain`, () => new Promise<void>(done => {
       genModule(
         {
           token_send_place: 'url'
@@ -122,13 +122,13 @@ describe('auth: simple.interceptor', () => {
       expect(req.request.params.has('token')).toBe(true);
       expect(req.request.params.get('token')).toBe('123');
       req.flush('ok!');
-    });
+    }));
   });
 
   describe('[token template]', () => {
     const basicModel = genModel();
 
-    it('should be [Bearer ${token}]', (done: () => void) => {
+    it('should be [Bearer ${token}]', () => new Promise<void>(done => {
       genModule(
         {
           token_send_place: 'header',
@@ -144,9 +144,9 @@ describe('auth: simple.interceptor', () => {
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;
       expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
       ret.flush('ok!');
-    });
+    }));
 
-    it('should be [Bearer ${uid}-${token}]', (done: () => void) => {
+    it('should be [Bearer ${uid}-${token}]', () => new Promise<void>(done => {
       genModule(
         {
           token_send_place: 'header',
@@ -162,6 +162,6 @@ describe('auth: simple.interceptor', () => {
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;
       expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.uid}-${basicModel.token}`);
       ret.flush('ok!');
-    });
+    }));
   });
 });

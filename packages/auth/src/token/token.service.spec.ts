@@ -76,7 +76,7 @@ describe('auth: token.service', () => {
     });
   });
 
-  it('#change', (done: () => void) => {
+  it('#change', () => new Promise<void>(done => {
     service.change().subscribe(res => {
       if (!res) return;
       expect(res).not.toBeNull();
@@ -85,7 +85,7 @@ describe('auth: token.service', () => {
       done();
     });
     service.set(VALUE);
-  });
+  }));
 
   describe('#refresh', () => {
     function updateConfig(config?: AlainAuthConfig): void {

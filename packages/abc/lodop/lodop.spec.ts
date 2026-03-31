@@ -59,23 +59,23 @@ describe('abc: lodop', () => {
   }
 
   describe('[default]', () => {
-    it('should get lodop instance', (done: () => void) => {
+    it('should get lodop instance', () => new Promise<void>(done => {
       genModule();
       srv.lodop.subscribe(res => {
         expect(res).not.toBeNull();
         expect(true).toBe(true);
         done();
       });
-    });
-    it('should throw err when can not get variable name', (done: () => void) => {
+    }));
+    it('should throw err when can not get variable name', () => new Promise<void>(done => {
       genModule();
       isNullLodop = true;
       srv.lodop.subscribe(res => {
         expect(res.status).toBe('load-variable-name-error');
         done();
       });
-    });
-    it('should wait for websocket completed', (done: () => void) => {
+    }));
+    it('should wait for websocket completed', () => new Promise<void>(done => {
       genModule();
       mockLodop = {
         SET_LICENSES: vi.fn(),
@@ -92,8 +92,8 @@ describe('abc: lodop', () => {
         expect(true).toBe(true);
         done();
       });
-    });
-    it('should be multi get', (done: () => void) => {
+    }));
+    it('should be multi get', () => new Promise<void>(done => {
       genModule();
       concat(srv.lodop, srv.lodop).subscribe({
         next: () => {
@@ -106,8 +106,8 @@ describe('abc: lodop', () => {
           done();
         }
       });
-    });
-    it('#checkMaxCount', (done: () => void) => {
+    }));
+    it('#checkMaxCount', () => new Promise<void>(done => {
       cog.lodop!.checkMaxCount = 2;
       genModule();
       mockLodop = {
@@ -120,8 +120,8 @@ describe('abc: lodop', () => {
         expect(res.status).toBe('check-limit');
         done();
       });
-    });
-    it('should get exists lodop', (done: () => void) => {
+    }));
+    it('should get exists lodop', () => new Promise<void>(done => {
       genModule();
       srv.lodop.subscribe(() => {
         srv.lodop.subscribe(res => {
@@ -130,15 +130,15 @@ describe('abc: lodop', () => {
           done();
         });
       });
-    });
-    it('should get printer list', (done: () => void) => {
+    }));
+    it('should get printer list', () => new Promise<void>(done => {
       genModule();
       srv.lodop.subscribe(() => {
         expect(srv.printer.length).toBe(1);
         srv.ngOnDestroy();
         done();
       });
-    });
+    }));
     it('should throw error when lodop is null', () => {
       expect(() => {
         genModule();
@@ -146,15 +146,15 @@ describe('abc: lodop', () => {
         console.log(ls);
       }).toThrowError('请务必先调用 lodop 获取对象');
     });
-    it('should throw error when http request error', (done: () => void) => {
+    it('should throw error when http request error', () => new Promise<void>(done => {
       genModule();
       isErrRequest = true;
       srv.lodop.subscribe(res => {
         expect(res.status).toBe('script-load-error');
         done();
       });
-    });
-    it('#reset', (done: () => void) => {
+    }));
+    it('#reset', () => new Promise<void>(done => {
       genModule();
       srv.lodop.pipe(take(1)).subscribe(res => {
         expect(res).not.toBeNull();
@@ -162,7 +162,7 @@ describe('abc: lodop', () => {
         done();
       });
       srv.reset();
-    });
+    }));
     it('should be custom url', () => {
       const url = 'http://a.com/lodop.js?aa=1';
       cog.lodop!.url = url;
@@ -176,7 +176,7 @@ describe('abc: lodop', () => {
   });
 
   describe('#attachCode', () => {
-    it('should be attach to lodop', (done: () => void) => {
+    it('should be attach to lodop', () => new Promise<void>(done => {
       genModule();
       const code = `
             LODOP.PRINT_INITA(10, 10, 762, 533, 'title');
@@ -197,8 +197,8 @@ describe('abc: lodop', () => {
         expect(mockLodop.PRINT_INITA).toHaveBeenCalled();
         done();
       });
-    });
-    it('should be custom parser', (done: () => void) => {
+    }));
+    it('should be custom parser', () => new Promise<void>(done => {
       genModule();
       const code = `
             LODOP.PRINT_INITA(10, 10, 762, 533, '{{title}}');
@@ -227,10 +227,10 @@ describe('abc: lodop', () => {
         expect(mockRes).toBe(contextData.title);
         done();
       });
-    });
+    }));
   });
 
-  it('#design', (done: () => void) => {
+  it('#design', () => new Promise<void>(done => {
     genModule();
     const code = `
         LODOP.PRINT_INITA(10, 10, 762, 533, '{{title}}');
@@ -256,7 +256,7 @@ describe('abc: lodop', () => {
       });
       expect(mockLodop.PRINT_DESIGN).toHaveBeenCalled();
     });
-  });
+  }));
 
   describe('#print', () => {
     const code = `LODOP.PRINT_INITA(0, 0, 100, 100, 'test');`;
@@ -281,7 +281,7 @@ describe('abc: lodop', () => {
         }
       };
     });
-    it('should be print', (done: () => void) => {
+    it('should be print', () => new Promise<void>(done => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -293,8 +293,8 @@ describe('abc: lodop', () => {
           expect(mockLodop.PRINT).toHaveBeenCalled();
           done();
         });
-    });
-    it('should be betch printes', (done: () => void) => {
+    }));
+    it('should be betch printes', () => new Promise<void>(done => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -306,8 +306,8 @@ describe('abc: lodop', () => {
           expect(mockLodop.PRINT).toHaveBeenCalled();
           done();
         });
-    });
-    it('should be call bat not data', (done: () => void) => {
+    }));
+    it('should be call bat not data', () => new Promise<void>(done => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -317,8 +317,8 @@ describe('abc: lodop', () => {
           expect(mockLodop.PRINT).not.toHaveBeenCalled();
           done();
         });
-    });
-    it('should report error when lodp throw 缺纸', (done: () => void) => {
+    }));
+    it('should report error when lodp throw 缺纸', () => new Promise<void>(done => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
@@ -333,6 +333,6 @@ describe('abc: lodop', () => {
           expect(res.error).toBe('缺纸');
           done();
         });
-    });
+    }));
   });
 });

@@ -50,8 +50,7 @@ export function builder(options?: {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
     providers: [provideNzNoAnimation()],
-    imports: [AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
-    declarations: [TestFormComponent],
+    imports: [AlainThemeModule, DelonFormModule.forRoot(), TestFormComponent].concat(options.imports ?? []),
     schemas: [NO_ERRORS_SCHEMA]
   });
   if (options.template) {
@@ -84,8 +83,7 @@ export function configureSFTestSuite(options?: {
 }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
-      declarations: [TestFormComponent],
+      imports: [AlainThemeModule, DelonFormModule, TestFormComponent, ...(options?.imports ?? [])],
       providers: [
         provideNzNoAnimation(),
         provideHttpClient(),
