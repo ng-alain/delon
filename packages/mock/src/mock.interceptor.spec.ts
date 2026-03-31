@@ -71,117 +71,78 @@ describe('mock: interceptor', () => {
 
   describe('[default]', () => {
     beforeEach(() => genModule(DATA, { delay: 1 }));
-    it('should be init', () => new Promise<void>(done => {
-      http.get('/users').subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.users).not.toBeNull();
-        expect(res.users.length).toBe(DATA.USERS['GET /users'].users.length);
-        done();
-      });
-    }));
-    it('should response array', () => new Promise<void>(done => {
-      http.get('/array').subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(Array.isArray(res)).toBe(true);
-        done();
-      });
-    }));
-    it('should response via callback', () => new Promise<void>(done => {
+    it('should be init', async () => {
+      const res = await lastValueFrom(http.get('/users'));
+      expect(res).not.toBeNull();
+      expect((res as any).users).not.toBeNull();
+      expect((res as any).users.length).toBe(DATA.USERS['GET /users'].users.length);
+    });
+    it('should response array', async () => {
+      const res = await lastValueFrom(http.get('/array'));
+      expect(res).not.toBeNull();
+      expect(Array.isArray(res)).toBe(true);
+    });
+    it('should response via callback', async () => {
       const key = '/fn/queryString';
-      http.get(key, { params: { pi: '1' } }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.pi).toBe('1');
-        done();
-      });
-    }));
-    it('should be get the default querystring', () => new Promise<void>(done => {
+      const res = await lastValueFrom(http.get(key, { params: { pi: '1' } }));
+      expect(res).not.toBeNull();
+      expect((res as any).pi).toBe('1');
+    });
+    it('should be get the default querystring', async () => {
       const key = '/fn/queryString?a=1';
-      http.get(key).subscribe((res: any) => {
-        expect(res.a).toBe('1');
-        done();
-      });
-    }));
-    it('should return route params', () => new Promise<void>(done => {
+      const res = await lastValueFrom(http.get(key));
+      expect((res as any).a).toBe('1');
+    });
+    it('should return route params', async () => {
       const key = '/users/2';
-      http.get(key).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.id).toBe('2');
-        done();
-      });
-    }));
-    it('should return body', () => new Promise<void>(done => {
+      const res = await lastValueFrom(http.get(key));
+      expect(res).not.toBeNull();
+      expect((res as any).id).toBe('2');
+    });
+    it('should return body', async () => {
       const key = '/fn/body';
-      http.post(key, { token: 'asdf' }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.token).toBe('asdf');
-        done();
-      });
-    }));
-    it('should return header', () => new Promise<void>(done => {
+      const res = await lastValueFrom(http.post(key, { token: 'asdf' }));
+      expect(res).not.toBeNull();
+      expect((res as any).token).toBe('asdf');
+    });
+    it('should return header', async () => {
       const key = '/fn/header';
-      http.get(key, { headers: { token: 'asdf' } }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.token).toBe('asdf');
-        done();
-      });
-    }));
-    it('should return HttpResponse', () => new Promise<void>(done => {
+      const res = await lastValueFrom(http.get(key, { headers: { token: 'asdf' } }));
+      expect(res).not.toBeNull();
+      expect((res as any).token).toBe('asdf');
+    });
+    it('should return HttpResponse', async () => {
       const key = '/HttpResponse';
-      http.get(key, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
-        expect(res).not.toBeNull();
-        expect(res.body).toBe('Body');
-        expect(res.headers.get('token')).toBe('1');
-        done();
-      });
-    }));
-    it('should response HttpStatus: 404', () => new Promise<void>(done => {
-      http.get('/404').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(true).toBe(true);
-          done();
-        }
-      });
-    }));
-    it('muse be use MockStatusError to throw status error', () => new Promise<void>(done => {
-      http.get('/500').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(true).toBe(true);
-          done();
-        }
-      });
-    }));
-    it('should request POST', () => new Promise<void>(done => {
-      http.post('/users/1', { data: true }, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
-        expect(res.body).not.toBeNull();
-        expect(res.body.uid).toBe(1);
-        expect(res.body.action).toBe('add');
-        done();
-      });
-    }));
-    it('should normal request if non-mock url', () => new Promise<void>(done => {
-      http.get('/non-mock', { responseType: 'text' }).subscribe(value => {
-        expect(value).toBe('ok!');
-        done();
-      });
+      const res = await lastValueFrom(http.get(key, { observe: 'response' }));
+      expect(res).not.toBeNull();
+      expect((res as HttpResponse<any>).body).toBe('Body');
+      expect((res as HttpResponse<any>).headers.get('token')).toBe('1');
+    });
+    it('should response HttpStatus: 404', async () => {
+      await expect(lastValueFrom(http.get('/404'))).rejects.toBeTruthy();
+    });
+    it('muse be use MockStatusError to throw status error', async () => {
+      await expect(lastValueFrom(http.get('/500'))).rejects.toBeTruthy();
+    });
+    it('should request POST', async () => {
+      const res = await lastValueFrom(http.post('/users/1', { data: true }, { observe: 'response' }));
+      expect((res as HttpResponse<any>).body).not.toBeNull();
+      expect((res as HttpResponse<any>).body.uid).toBe(1);
+      expect((res as HttpResponse<any>).body.action).toBe('add');
+    });
+    it('should normal request if non-mock url', async () => {
+      const promise = lastValueFrom(http.get('/non-mock', { responseType: 'text' }));
       httpMock.expectOne('/non-mock').flush('ok!');
-    }));
-    it('should be array of queryString', () => new Promise<void>(done => {
+      const value = await promise;
+      expect(value).toBe('ok!');
+    });
+    it('should be array of queryString', async () => {
       const key = '/fn/queryString?a=1&b=1&b=2&b=3';
-      http.get(key).subscribe((res: any) => {
-        expect(Array.isArray(res.b)).toBe(true);
-        expect(+res.b[0]).toBe(1);
-        expect(+res.b[1]).toBe(2);
-        done();
-      });
-    }));
+      const res = await lastValueFrom(http.get(key));
+      expect(Array.isArray((res as any).b)).toBe(true);
+      expect(+(res as any).b[0]).toBe(1);
+      expect(+(res as any).b[1]).toBe(2);
+    });
     it('should be return a observable', () => {
       http.get('/obs').subscribe(res => {
         expect(res).toBe(1);
@@ -194,27 +155,16 @@ describe('mock: interceptor', () => {
   });
 
   describe('[disabled log]', () => {
-    it('with request', () => new Promise<void>(done => {
+    it('with request', async () => {
       genModule(DATA, { delay: 1, log: false });
-      http.get('/users').subscribe(() => {
-        expect(console.log).not.toHaveBeenCalled();
-        done();
-      });
-    }));
-    it('with error request', () => new Promise<void>(done => {
+      await lastValueFrom(http.get('/users'));
+      expect(console.log).not.toHaveBeenCalled();
+    });
+    it('with error request', async () => {
       genModule(DATA, { delay: 1, log: false });
-      http.get('/404').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(console.log).not.toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        }
-      });
-    }));
+      await expect(lastValueFrom(http.get('/404'))).rejects.toBeTruthy();
+      expect(console.log).not.toHaveBeenCalled();
+    });
   });
 });
 
