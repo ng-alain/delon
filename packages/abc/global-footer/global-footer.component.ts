@@ -57,10 +57,11 @@ export class GlobalFooterComponent {
 
   protected linkHtmls = computed(() => {
     return this.links().map(item => {
-      if (typeof item.title === 'string') {
-        item.title = this.dom.bypassSecurityTrustHtml(item.title);
+      const newItem = { ...item };
+      if (typeof newItem.title === 'string') {
+        newItem.title = this.dom.bypassSecurityTrustHtml(newItem.title);
       }
-      return item;
+      return newItem;
     });
   });
 

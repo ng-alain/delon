@@ -6,8 +6,8 @@ import { provideRouter, Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
 
-import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterComponent } from './global-footer.component';
+import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
 
 class MockWindow {
@@ -164,7 +164,7 @@ describe('abc: global-footer', () => {
       <div id="copyright">copyright</div>
     </global-footer>
   `,
-  imports: [GlobalFooterComponent]
+  imports: [GlobalFooterComponent, GlobalFooterItemComponent]
 })
 class TestComponent {
   links: GlobalFooterLink[] = [];
