@@ -47,7 +47,7 @@ describe('Pipe: keys', () => {
       }
     </ul>
   `,
-  imports: [KeysPipe, JsonPipe]
+  imports: [KeysPipe]
 })
 class TestComponent {
   data: NzSafeAny = {

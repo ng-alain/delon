@@ -164,7 +164,7 @@ describe('abc: global-footer', () => {
       <div id="copyright">copyright</div>
     </global-footer>
   `,
-  imports: [GlobalFooterComponent, GlobalFooterItemComponent]
+  imports: [GlobalFooterComponent]
 })
 class TestComponent {
   links: GlobalFooterLink[] = [];
