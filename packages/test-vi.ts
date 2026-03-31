@@ -4,6 +4,7 @@
 
 // Vitest setup
 import '@analogjs/vitest-angular/setup-zone';
+import 'zone.js/testing';
 
 // Register locale data for tests
 import { registerLocaleData } from '@angular/common';

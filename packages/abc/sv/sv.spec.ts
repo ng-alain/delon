@@ -18,6 +18,9 @@ describe('abc: view', () => {
   let page: PageObject;
 
   function genModule(template?: string): void {
+    TestBed.configureTestingModule({
+      imports: [SVModule]
+    });
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
     }
@@ -227,6 +230,7 @@ describe('abc: view', () => {
     });
     it('should be support global config', () => {
       TestBed.configureTestingModule({
+        imports: [SVModule],
         providers: [provideAlain({ config: { sv: { labelWidth: 10, col: 2 } } })]
       });
       genModule(`<div sv-container><sv label="a" /></div>`);
