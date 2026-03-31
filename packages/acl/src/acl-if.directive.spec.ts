@@ -14,9 +14,6 @@ describe('acl-if: directive', () => {
   let dl: DebugElement;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = dl.componentInstance;

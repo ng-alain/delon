@@ -8,9 +8,6 @@ describe('Pipe: url', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
   });
 

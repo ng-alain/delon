@@ -8,9 +8,6 @@ describe('Pipe: mask', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    });
     fixture = TestBed.createComponent(TestComponent);
   });
   it('should working', fakeAsync(() => {

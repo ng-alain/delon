@@ -11,9 +11,6 @@ describe('Pipe: mega', () => {
 
   describe('default', () => {
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [TestComponent]
-      });
       fixture = TestBed.createComponent(TestComponent);
     });
     it('should working', fakeAsync(() => {
@@ -36,7 +33,6 @@ describe('Pipe: mega', () => {
   describe('CN', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestComponent],
         providers: [{ provide: LOCALE_ID, useValue: 'zh' }]
       });
       fixture = TestBed.createComponent(TestComponent);
