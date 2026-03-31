@@ -107,7 +107,7 @@ describe('cache: service', () => {
       });
       it('should be can not notify when emitNotify is false', async () => {
         let result = true;
-        const notificationPromise = firstValueFrom(
+        const _notificationPromise = firstValueFrom(
           srv.notify(KEY).pipe(filter(v => v != null))
         ).then(() => {
           result = false;
