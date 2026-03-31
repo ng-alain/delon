@@ -18,6 +18,9 @@ describe('abc: view', () => {
   let page: PageObject;
 
   function genModule(template?: string): void {
+    TestBed.configureTestingModule({
+      imports: [SVModule]
+    });
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
     }
@@ -227,11 +230,12 @@ describe('abc: view', () => {
     });
     it('should be support global config', () => {
       TestBed.configureTestingModule({
+        imports: [SVModule],
         providers: [provideAlain({ config: { sv: { labelWidth: 10, col: 2 } } })]
       });
       genModule(`<div sv-container><sv label="a" /></div>`);
       expect(page.getEl('.sv__label').style.width).toBe(`10px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 
@@ -244,7 +248,9 @@ describe('abc: view', () => {
     }
     expect(cls: string, count: number = 1, message?: string): this {
       let e = expect(this.getEls(cls).length);
-      if (message) e = e.withContext(message);
+      if (message) {
+        // message is for future use
+      }
       e.toBe(count);
       return this;
     }

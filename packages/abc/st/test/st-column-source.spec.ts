@@ -177,7 +177,7 @@ describe('st: column-source', () => {
       });
       describe(`with widget`, () => {
         it('should be working', () => {
-          spyOn(stWidgetRegistry, 'has').and.returnValue(true);
+          vi.spyOn(stWidgetRegistry, 'has').mockReturnValue(true);
           const res = srv.process([{ title: '', index: 'id', type: 'widget', widget: { type: 'test' } }], options)
             .columns[0];
           expect(res.type).toBe('widget');
@@ -187,7 +187,7 @@ describe('st: column-source', () => {
           expect(res.type).toBeUndefined();
         });
         it('should be remove type when widget is not found', () => {
-          spyOn(stWidgetRegistry, 'has').and.returnValue(false);
+          vi.spyOn(stWidgetRegistry, 'has').mockReturnValue(false);
           const res = srv.process([{ title: '', index: 'id', type: 'widget', widget: { type: 'test' } }], options)
             .columns[0];
           expect(res.type).toBeUndefined();
@@ -529,7 +529,7 @@ describe('st: column-source', () => {
       describe('#type', () => {
         describe('with modal', () => {
           it('should specify modal parameter', () => {
-            spyOn(console, 'warn');
+            vi.spyOn(console, 'warn');
             const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: {} }] }], options)
               .columns[0].buttons![0];
             expect(console.warn).toHaveBeenCalled();
@@ -545,7 +545,7 @@ describe('st: column-source', () => {
         });
         describe('with drawer', () => {
           it('should specify drawer parameter', () => {
-            spyOn(console, 'warn');
+            vi.spyOn(console, 'warn');
             const res = srv.process([{ title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] }], options)
               .columns[0].buttons![0];
             expect(console.warn).toHaveBeenCalled();
@@ -563,8 +563,8 @@ describe('st: column-source', () => {
     });
     describe('[render]', () => {
       beforeEach(() => {
-        spyOn(rowSrv, 'getTitle');
-        spyOn(rowSrv, 'getRow');
+        vi.spyOn(rowSrv, 'getTitle');
+        vi.spyOn(rowSrv, 'getRow');
       });
       it('should be restore render row elementref', () => {
         expect(rowSrv.getRow).not.toHaveBeenCalled();
@@ -734,7 +734,7 @@ describe('st: column-source', () => {
     const curLang = 'en';
     beforeEach(() => {
       genModule({ i18n: true });
-      spyOn(i18nSrv!, 'fanyi').and.callFake(() => curLang);
+      vi.spyOn(i18nSrv!, 'fanyi').mockImplementation(() => curLang);
     });
 
     it('in title', () => {

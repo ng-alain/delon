@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, provideRouter } from '@angular/router';
@@ -124,7 +124,7 @@ describe('theme: layout-default-nav', () => {
     doc = TestBed.inject(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
-    if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
+    if (needMockNavigateByUrl) vi.spyOn(router, 'navigateByUrl');
     if (callback) callback();
   }
 
@@ -134,7 +134,7 @@ describe('theme: layout-default-nav', () => {
     describe('[default]', () => {
       it('should be navigate url', () => {
         createComp();
-        spyOn(context, 'select');
+        vi.spyOn(context, 'select');
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
         fixture.detectChanges();
@@ -152,7 +152,7 @@ describe('theme: layout-default-nav', () => {
           createComp();
           fixture.detectChanges();
           const win = TestBed.inject(WINDOW);
-          spyOn(win, 'open');
+          vi.spyOn(win, 'open');
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="6"]');
           itemEl!.click();
           expect(win.open).toHaveBeenCalled();
@@ -203,7 +203,7 @@ describe('theme: layout-default-nav', () => {
 
       it('should be block click menu when is disabled', () => {
         createComp();
-        spyOn(context, 'select');
+        vi.spyOn(context, 'select');
         const newMenus = [
           {
             text: '',
@@ -349,8 +349,8 @@ describe('theme: layout-default-nav', () => {
           page.showSubMenu();
         });
         it('should be displayed full submenu', () => {
-          const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(0);
-          spyOnProperty(doc.querySelector('body')!, 'clientHeight').and.returnValue(0);
+          const clientHeight = vi.spyOn(doc.documentElement, 'clientHeight', 'get').mockReturnValue(0);
+          vi.spyOn(doc.querySelector('body')!, 'clientHeight', 'get').mockReturnValue(0);
           expect(clientHeight).not.toHaveBeenCalled();
           page.showSubMenu();
           expect(clientHeight).toHaveBeenCalled();
@@ -373,7 +373,7 @@ describe('theme: layout-default-nav', () => {
           expect(page.getEl<HTMLElement>('.ant-badge-count')!.childNodes.item(1).nodeValue == ' 99+ ').toBe(true);
         });
         it('should be ingore children title trigger event', () => {
-          spyOn(context, 'select');
+          vi.spyOn(context, 'select');
           expect(context.select).not.toHaveBeenCalled();
           const mockMenu = deepCopy(MOCKMENUS) as Nav[];
           mockMenu[0].children![0].children = [{ text: 'a', children: [{ text: 'b' }] }];
@@ -449,7 +449,7 @@ describe('theme: layout-default-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        spyOn(context.comp['floatingEl'], 'remove');
+        vi.spyOn(context.comp['floatingEl'], 'remove');
         page.hideSubMenu();
         expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
@@ -544,7 +544,7 @@ describe('theme: layout-default-nav', () => {
       );
       const defaultCollapsed = false;
       createComp(false, () => {
-        spyOnProperty(window, 'innerWidth').and.returnValue(767);
+        vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
         setSrv.layout.collapsed = defaultCollapsed;
         fixture.detectChanges();
       });
@@ -561,7 +561,7 @@ describe('theme: layout-default-nav', () => {
       );
       const defaultCollapsed = false;
       createComp(false, () => {
-        spyOnProperty(window, 'innerWidth').and.returnValue(769);
+        vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(769);
         setSrv.layout.collapsed = defaultCollapsed;
         fixture.detectChanges();
       });
@@ -579,7 +579,7 @@ describe('theme: layout-default-nav', () => {
       createComp();
       setSrv.layout.collapsed = true;
       fixture.detectChanges();
-      spyOnProperty(window, 'innerWidth').and.returnValue(767);
+      vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
       expect(setSrv.layout.collapsed).toBe(true);
       page.getEl<HTMLElement>('.sidebar-nav')!.click();
       fixture.detectChanges();
@@ -716,8 +716,8 @@ describe('theme: layout-default-nav', () => {
       (select)="select()"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [LayoutDefaultModule],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -732,7 +732,6 @@ class TestComponent {
 
 @Component({
   template: ``,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [RouterModule]
 })
 class TestRouteComponent {}

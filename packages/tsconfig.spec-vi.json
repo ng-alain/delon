@@ -11,11 +11,20 @@
       "@delon/*": ["./*"]
     },
     "esModuleInterop": true,
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strict": false,
+    "skipLibCheck": true
   },
+  "files": ["test-vi.ts"],
   "include": [
-    "**/*.d.ts",
-    "**/auto-focus.directive.spec.ts",
-    // "**/*.spec.ts"
-  ]
+    "**/*.spec.ts",
+    "**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": true
+  }
 }

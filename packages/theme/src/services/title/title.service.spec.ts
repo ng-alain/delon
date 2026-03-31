@@ -15,7 +15,7 @@ import { MenuService } from '../menu/menu.service';
 describe('Service: Title', () => {
   let getPathByUrlData: NzSafeAny;
   class TestTitleService {
-    setTitle = jasmine.createSpy('reset');
+    setTitle = vi.fn();
   }
 
   class TestMenuService {
@@ -174,7 +174,7 @@ describe('Service: Title', () => {
             }
           }
         ]);
-        spyOn(i18n, 'fanyi');
+        vi.spyOn(i18n, 'fanyi');
         srv.setTitle();
         tick(srv.DELAY_TIME + 1);
         expect(i18n.fanyi).toHaveBeenCalled();
@@ -281,7 +281,7 @@ describe('Service: Title', () => {
     }));
     it('should be reset title when i18n has changed', () => {
       genModule();
-      spyOn(srv, 'setTitle');
+      vi.spyOn(srv, 'setTitle');
       i18n.use('en', {});
       expect(srv.setTitle).toHaveBeenCalled();
     });

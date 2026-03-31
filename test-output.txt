@@ -1,0 +1,634 @@
+﻿[33m>[39m Building...
+[32m鈭?[39m Building...
+Application bundle generation failed. [9.906 seconds] - 2026-03-31T01:35:54.416Z
+
+[1m[33m[33m鈻?[43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: GlobalFooterItemComponent is not used within the template of TestComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/global-footer/global-footer.spec.ts:167:35:
+[37m      167 鈹?  imports: [GlobalFooterComponent, [32mGlobalFooterItemComponent[37m]
+          鈺?                                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m鈻?[43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: STRowDirective is not used within the template of TestComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/st/test/base.spec.ts:432:25:
+[37m      432 鈹?  imports: [STComponent, [32mSTRowDirective[37m]
+          鈺?                         [32m~~~~~~~~~~~~~~[0m
+
+
+[33m鈻?[43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: JsonPipe is not used within the template of TestComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/theme/src/pipes/keys/keys.pipe.spec.ts:50:22:
+[37m      50 鈹?  imports: [KeysPipe, [32mJsonPipe[37m]
+         鈺?                      [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/error-collect/error-collect.spec.ts:41:6:
+[37m      41 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/error-collect/error-collect.spec.ts:54:6:
+[37m      54 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:69:6:
+[37m      69 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:77:6:
+[37m      77 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:95:6:
+[37m      95 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:109:6:
+[37m      109 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:123:6:
+[37m      123 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:133:6:
+[37m      133 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:141:6:
+[37m      141 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:156:6:
+[37m      156 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:165:6:
+[37m      165 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:200:6:
+[37m      200 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:230:6:
+[37m      230 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:259:4:
+[37m      259 鈹?  })[32m;[37m
+          鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:296:6:
+[37m      296 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:309:6:
+[37m      309 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:320:6:
+[37m      320 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/lodop/lodop.spec.ts:336:6:
+[37m      336 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:105:6:
+[37m      105 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:120:6:
+[37m      120 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:134:6:
+[37m      134 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:152:6:
+[37m      152 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:166:6:
+[37m      166 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:178:6:
+[37m      178 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:194:6:
+[37m      194 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/xlsx/xlsx.spec.ts:222:6:
+[37m      222 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:73:6:
+[37m      73 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:88:6:
+[37m      88 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:102:6:
+[37m      102 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:129:6:
+[37m      129 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:141:6:
+[37m      141 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:154:6:
+[37m      154 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:166:6:
+[37m      166 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:180:6:
+[37m      180 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:199:6:
+[37m      199 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/abc/zip/zip.spec.ts:214:6:
+[37m      214 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:59:6:
+[37m      59 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:70:6:
+[37m      70 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:81:6:
+[37m      81 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:92:6:
+[37m      92 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:103:6:
+[37m      103 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:114:6:
+[37m      114 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:125:6:
+[37m      125 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:137:8:
+[37m      137 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/acl/src/acl-guard.spec.ts:148:8:
+[37m      148 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.guard.spec.ts:50:4:
+[37m      50 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.guard.spec.ts:58:4:
+[37m      58 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.guard.spec.ts:71:4:
+[37m      71 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.guard.spec.ts:78:4:
+[37m      78 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.interceptor.spec.ts:59:4:
+[37m      59 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/jwt/jwt.interceptor.spec.ts:73:4:
+[37m      73 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.guard.spec.ts:48:4:
+[37m      48 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.guard.spec.ts:56:4:
+[37m      56 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.guard.spec.ts:69:4:
+[37m      69 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.guard.spec.ts:76:4:
+[37m      76 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:81:6:
+[37m      81 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:95:6:
+[37m      95 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:110:6:
+[37m      110 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:125:6:
+[37m      125 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:147:6:
+[37m      147 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/simple/simple.interceptor.spec.ts:165:6:
+[37m      165 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/auth/src/token/token.service.spec.ts:88:4:
+[37m      88 鈹?  })[32m;[37m
+         鈺?    [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:80:8:
+[37m      80 鈹?      })[32m;[37m
+         鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:162:8:
+[37m      162 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:172:8:
+[37m      172 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:194:8:
+[37m      194 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:201:8:
+[37m      201 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:207:8:
+[37m      207 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:272:8:
+[37m      272 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:287:8:
+[37m      287 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:297:8:
+[37m      297 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/cache/src/cache.spec.ts:308:8:
+[37m      308 鈹?      })[32m;[37m
+          鈺?        [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:88:6:
+[37m      88 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:96:6:
+[37m      96 鈹?    })[32m;[37m
+         鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:103:6:
+[37m      103 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:111:6:
+[37m      111 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:119:6:
+[37m      119 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:127:6:
+[37m      127 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:136:6:
+[37m      136 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:148:6:
+[37m      148 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:160:6:
+[37m      160 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:168:6:
+[37m      168 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:175:6:
+[37m      175 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:184:6:
+[37m      184 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:203:6:
+[37m      203 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/mock/src/mock.interceptor.spec.ts:217:6:
+[37m      217 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ')' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    packages/theme/src/services/menu/menu.service.spec.ts:205:6:
+[37m      205 鈹?    })[32m;[37m
+          鈺?      [32m^[0m
+
+[39m[22m

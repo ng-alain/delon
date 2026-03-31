@@ -105,7 +105,7 @@ describe('abc: full-content', () => {
     it('should be recalculate height when trigger resize', fakeAsync(() => {
       createComp();
       const bodyHeight = 10;
-      spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
+      vi.spyOn(bodyEl, 'getBoundingClientRect').mockReturnValue({
         height: bodyHeight
       } as NzSafeAny);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();

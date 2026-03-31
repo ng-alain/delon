@@ -90,7 +90,7 @@ describe('form: widget: tree-select', () => {
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            change: jasmine.createSpy()
+            change: vi.fn()
           }
         }
       }
@@ -118,7 +118,7 @@ describe('form: widget: tree-select', () => {
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            expandChange: jasmine.createSpy().and.returnValue(of([]))
+            expandChange: vi.fn().mockReturnValue(of([]))
           }
         }
       }

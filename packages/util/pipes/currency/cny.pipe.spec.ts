@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CurrencyCNYOptions } from '@delon/util/format';
@@ -12,22 +12,27 @@ describe('Pipe: cny', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
   });
-  it('should working', () => {
+  it('should working', fakeAsync(() => {
     fixture.componentInstance.value = 10000;
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('壹万元整');
-  });
-  it('should be return inWords', () => {
+  }));
+  it('should be return inWords', fakeAsync(() => {
     fixture.componentInstance.value = 10000;
     fixture.componentInstance.options = { inWords: false };
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('一万');
-  });
+  }));
 });
 
 @Component({
   template: ` <p id="result">{{ value | cny: options }}</p> `,
-  imports: [CurrencyCNYPipe]
+  imports: [CurrencyCNYPipe],
+  standalone: true
 })
 class TestComponent {
   value?: number;

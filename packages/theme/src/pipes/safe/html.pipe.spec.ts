@@ -9,7 +9,6 @@ describe('Pipe: html', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
-    fixture.detectChanges();
   });
 
   [

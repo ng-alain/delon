@@ -78,7 +78,7 @@ describe('abc: ellipsis', () => {
       });
       describe('when not support line clamp', () => {
         beforeEach(fakeAsync(() => {
-          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as NzSafeAny);
+          vi.spyOn(window, 'getComputedStyle').mockReturnValue({ lineHeight: 20 } as NzSafeAny);
           page.comp['isSupportLineClamp'] = false;
           context.lines = 1;
           page.tick();
@@ -90,14 +90,14 @@ describe('abc: ellipsis', () => {
         }));
         it('should be not innerText', fakeAsync(() => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el!, 'innerText').and.returnValue(null as NzSafeAny);
+          vi.spyOn(el!, 'innerText', 'get').mockReturnValue(null as NzSafeAny);
           context.lines = 2;
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
         }));
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el!, 'offsetHeight').and.returnValue(1);
+          vi.spyOn(el!, 'offsetHeight', 'get').mockReturnValue(1);
           page.comp['gen']();
           expect(page.getText()).not.toBe('There');
         });
@@ -162,6 +162,7 @@ describe('abc: ellipsis', () => {
   }
 });
 
+@Component({ template: '' })
 class TestBaseComponent {
   @ViewChild('comp', { static: true }) comp!: EllipsisComponent;
   tooltip = false;

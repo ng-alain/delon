@@ -127,7 +127,7 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use');
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
       tick();
@@ -142,7 +142,7 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use');
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
       tick();
@@ -158,7 +158,7 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use');
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
       tick();

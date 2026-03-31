@@ -11,16 +11,16 @@ describe('auth: local-storage', () => {
   beforeEach(() => {
     let data: Record<string, any> = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+    vi.spyOn(localStorage, 'removeItem').mockImplementation((key: string): void => {
       delete data[key];
     });
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+    vi.spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string): string => {
       return (data[key] = value as string);
     });
-    spyOn(localStorage, 'clear').and.callFake(() => {
+    vi.spyOn(localStorage, 'clear').mockImplementation(() => {
       data = {};
     });
   });

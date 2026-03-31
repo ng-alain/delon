@@ -33,7 +33,7 @@ describe('abc: tag-select', () => {
     });
   });
   it('should be switch states via click trigger', () => {
-    spyOn(context, 'change');
+    vi.spyOn(context, 'change');
     const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML.trim()).toContain('展开');

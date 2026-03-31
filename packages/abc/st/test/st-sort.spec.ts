@@ -36,7 +36,7 @@ describe('abc: st-sort', () => {
     describe('single-sort', () => {
       beforeEach(() => (context.multiSort = false));
       it('muse provide the compare function', fakeAsync(() => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn');
         page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as NzSafeAny }]);
         comp.sort(comp._columns[0], 'descend');
         page.cd();

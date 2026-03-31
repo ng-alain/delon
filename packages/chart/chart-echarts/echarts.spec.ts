@@ -16,10 +16,10 @@ class MockLazyService {
     (window as NzSafeAny).echarts = {
       init: () => {
         return {
-          setOption: jasmine.createSpy('setOption'),
-          dispose: jasmine.createSpy('dispose'),
-          on: jasmine.createSpy('on'),
-          off: jasmine.createSpy('off')
+          setOption: vi.fn(),
+          dispose: vi.fn(),
+          on: vi.fn(),
+          off: vi.fn()
         };
       }
     };
@@ -37,7 +37,7 @@ describe('chart: chart-echarts', () => {
       providers: [{ provide: LazyService, useClass: MockLazyService }]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
-    spyOn(context, 'handleEvents');
+    vi.spyOn(context, 'handleEvents');
     fixture.detectChanges();
     tick(100);
     fixture.detectChanges();
@@ -61,21 +61,21 @@ describe('chart: chart-echarts', () => {
   });
 
   it('should be update option', () => {
-    spyOn(context.cmp, 'setOption');
+    vi.spyOn(context.cmp, 'setOption');
     context.option = {};
     fixture.detectChanges();
     expect(context.cmp.setOption).toHaveBeenCalled();
   });
 
   it('should be update theme', () => {
-    spyOn(context.cmp, 'install');
+    vi.spyOn(context.cmp, 'install');
     context.theme = 'dark';
     fixture.detectChanges();
     expect(context.cmp.install).toHaveBeenCalled();
   });
 
   it('should be update initOpt', () => {
-    spyOn(context.cmp, 'install');
+    vi.spyOn(context.cmp, 'install');
     context.initOpt = {};
     fixture.detectChanges();
     expect(context.cmp.install).toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe('chart: chart-echarts', () => {
       [theme]="theme"
       [initOpt]="initOpt"
       [on]="on"
-      (events)="handleEvents($event)"
+      (events)="handleEvents($any($event))"
     />
   `,
   imports: [ChartEChartsComponent]
@@ -115,5 +115,5 @@ class TestComponent {
       handler: console.log
     }
   ];
-  handleEvents(): void {}
+  handleEvents(_e: any): void {}
 }

@@ -17,6 +17,6 @@
     "**/*.d.ts"
   ],
   "exclude": [
-    "**/auto-focus.directive.spec.ts"
+    "node_modules"
   ]
 }

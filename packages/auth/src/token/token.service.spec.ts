@@ -17,16 +17,16 @@ describe('auth: token.service', () => {
   beforeEach(() => {
     let data: Record<string, any> = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+    vi.spyOn(localStorage, 'removeItem').mockImplementation((key: string): void => {
       delete data[key];
     });
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+    vi.spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string): string => {
       return (data[key] = value as string);
     });
-    spyOn(localStorage, 'clear').and.callFake(() => {
+    vi.spyOn(localStorage, 'clear').mockImplementation(() => {
       data = {};
     });
 
@@ -76,7 +76,7 @@ describe('auth: token.service', () => {
     });
   });
 
-  it('#change', (done: () => void) => {
+  it('#change', () => new Promise<void>(done => {
     service.change().subscribe(res => {
       if (!res) return;
       expect(res).not.toBeNull();
@@ -85,7 +85,7 @@ describe('auth: token.service', () => {
       done();
     });
     service.set(VALUE);
-  });
+  }));
 
   describe('#refresh', () => {
     function updateConfig(config?: AlainAuthConfig): void {
@@ -97,7 +97,7 @@ describe('auth: token.service', () => {
 
     afterEach(() => (service as any).ngOnDestroy());
 
-    it('should be working', done => {
+    it('should be working', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(true);
@@ -105,9 +105,9 @@ describe('auth: token.service', () => {
       });
       const expired = +new Date() + 20;
       service.set({ token: 'a', expired });
-    });
+    }));
 
-    it('should be working of jwt', done => {
+    it('should be working of jwt', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(true);
@@ -115,9 +115,9 @@ describe('auth: token.service', () => {
       });
       const exp = +new Date() + 20;
       service.set({ token: 'a', exp } as JWTTokenModel);
-    });
+    }));
 
-    it('should be can not trigger refresh when expired is not present', done => {
+    it('should be can not trigger refresh when expired is not present', () => new Promise<void>(done => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
       service.refresh.subscribe(() => {
         expect(true).toBe(false);
@@ -128,6 +128,6 @@ describe('auth: token.service', () => {
         expect(true).toBe(true);
         done();
       });
-    });
+    }));
   });
 });

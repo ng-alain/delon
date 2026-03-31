@@ -28,8 +28,8 @@ describe('form: widget: array', () => {
           }
         },
         ui: {
-          add: jasmine.createSpy('add') as NzSafeAny,
-          remove: jasmine.createSpy('remove') as NzSafeAny
+          add: vi.fn() as NzSafeAny,
+          remove: vi.fn() as NzSafeAny
         }
       }
     }
@@ -102,7 +102,7 @@ describe('form: widget: array', () => {
       const s = deepCopy(schema) as SFSchema;
       s.properties!.arr.ui = {
         removable: true,
-        remove: jasmine.createSpy('remove') as NzSafeAny
+        remove: vi.fn() as NzSafeAny
       } as SFArrayWidgetSchema;
       page
         .newSchema(s)

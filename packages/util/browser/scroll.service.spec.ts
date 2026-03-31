@@ -14,15 +14,15 @@ describe('Util: ScrollService', () => {
   let srv: ScrollService;
 
   class MockElement {
-    getBoundingClientRect = jasmine.createSpy('Element getBoundingClientRect').and.returnValue({ top: 0 });
-    scrollIntoView = jasmine.createSpy('Element scrollIntoView');
-    scrollTo = jasmine.createSpy('Element scrollTo');
+    getBoundingClientRect = vi.fn().mockReturnValue({ top: 0 });
+    scrollIntoView = vi.fn();
+    scrollTo = vi.fn();
   }
 
   class MockDocument {
     body = new MockElement();
-    getElementById = jasmine.createSpy('Document getElementById').and.returnValue(topOfPageElem);
-    querySelector = jasmine.createSpy('Document querySelector');
+    getElementById = vi.fn().mockReturnValue(topOfPageElem);
+    querySelector = vi.fn();
     defaultView: NzSafeAny = null;
   }
 
@@ -43,8 +43,8 @@ describe('Util: ScrollService', () => {
       window = doc.defaultView;
       srv = injector.get(ScrollService);
 
-      spyOn(window, 'scrollBy');
-      spyOn(window, 'scrollTo');
+      vi.spyOn(window, 'scrollBy');
+      vi.spyOn(window, 'scrollTo');
     });
 
     describe('#getScrollPosition', () => {
@@ -87,15 +87,15 @@ describe('Util: ScrollService', () => {
 
       it('should not scroll more than necessary (e.g. for elements close to the bottom)', () => {
         const element: Element = new MockElement() as NzSafeAny;
-        const getBoundingClientRect = element.getBoundingClientRect as jasmine.Spy;
+        const getBoundingClientRect = element.getBoundingClientRect as any;
         const topOffset = 0;
 
-        getBoundingClientRect.and.returnValue({ top: topOffset + 100 });
+        getBoundingClientRect.mockReturnValue({ top: topOffset + 100 });
         srv.scrollToElement(element);
         expect(element.scrollIntoView).toHaveBeenCalledTimes(1);
         expect(window.scrollBy).toHaveBeenCalledWith(0, 100);
 
-        getBoundingClientRect.and.returnValue({ top: topOffset - 10 });
+        getBoundingClientRect.mockReturnValue({ top: topOffset - 10 });
         srv.scrollToElement(element);
         expect(element.scrollIntoView).toHaveBeenCalledTimes(2);
         expect(window.scrollBy).toHaveBeenCalledWith(0, -10);
@@ -109,7 +109,7 @@ describe('Util: ScrollService', () => {
 
         expect(element.scrollIntoView).toHaveBeenCalled();
         expect(window.scrollBy).toHaveBeenCalledWith(0, 0);
-        (window.scrollBy as jasmine.Spy).calls.reset();
+        (window.scrollBy as any).mockClear();
 
         (window as NzSafeAny).scrollY = 15;
         srv.scrollToElement(element);

@@ -124,7 +124,7 @@ describe('form: widget: checkbox', () => {
       properties: {
         a: {
           type: 'string',
-          ui: { widget, span: 8, change: jasmine.createSpy() },
+          ui: { widget, span: 8, change: vi.fn() },
           enum: ['item1', 'item2']
         }
       }

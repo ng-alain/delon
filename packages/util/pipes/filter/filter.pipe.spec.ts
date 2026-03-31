@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { FilterPipe } from './filter.pipe';
@@ -10,20 +10,25 @@ describe('Pipe: filter', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
   });
-  it('should working', () => {
+  it('should working', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('2,3');
-  });
-  it('should be other args', () => {
-    const matcherSpy = spyOn(fixture.componentInstance, 'matcher');
+  }));
+  it('should be other args', fakeAsync(() => {
+    const matcherSpy = vi.spyOn(fixture.componentInstance, 'matcher');
     fixture.detectChanges();
-    expect((matcherSpy.calls.first().args as unknown[]).length).toBe(2);
-  });
+    tick();
+    fixture.detectChanges();
+    expect((matcherSpy.mock.calls[0] as unknown[]).length).toBe(2);
+  }));
 });
 
 @Component({
   template: ` <p id="result">{{ list | filter: matcher : other }}</p> `,
-  imports: [FilterPipe]
+  imports: [FilterPipe],
+  standalone: true
 })
 class TestComponent {
   list = [1, 2, 3];

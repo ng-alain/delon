@@ -153,15 +153,20 @@
             ],
             "tsConfig": "packages/tsconfig.spec.json",
             "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
-            "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
             "include": [
               "./test.ts",
-              // "**/st.spec.ts"
-              // "**/st/**/*.spec.ts"
               "**/*.spec.ts"
             ],
             "exclude": [
-              "**/auto-focus.directive.spec.ts"
+              "packages/abc/**/*.spec.ts",
+              "packages/acl/**/*.spec.ts",
+              "packages/auth/**/*.spec.ts",
+              "packages/cache/**/*.spec.ts",
+              "packages/chart/**/*.spec.ts",
+              "packages/form/**/*.spec.ts",
+              "packages/mock/**/*.spec.ts",
+              "packages/theme/**/*.spec.ts",
+              "packages/util/**/*.spec.ts"
             ]
           }
         }
@@ -185,10 +190,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "packages/tsconfig.spec-vi.json",
-            "include": [
-              "**/auto-focus.directive.spec.ts"
-            ]
+            "tsConfig": "packages/tsconfig.spec-vi.json"
           }
         }
       }

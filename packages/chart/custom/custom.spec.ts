@@ -14,8 +14,8 @@ describe('chart: custom', () => {
   beforeEach(() => {
     ({ fixture, context } = createTestContext(TestComponent));
 
-    spyOn(context, 'render');
-    spyOn(context, 'resize');
+    vi.spyOn(context, 'render');
+    vi.spyOn(context, 'resize');
   });
 
   it('should be working', fakeAsync(() => {
@@ -38,8 +38,8 @@ describe('chart: custom', () => {
 
   it('should be load scripts by cdn', () => {
     const srv = TestBed.inject(G2Service);
-    spyOn(srv, 'libLoad');
-    spyOnProperty(context.comp, 'winG2').and.returnValue(null as NzSafeAny);
+    vi.spyOn(srv, 'libLoad');
+    vi.spyOn(context.comp, 'winG2', 'get').mockReturnValue(null as NzSafeAny);
     fixture.detectChanges();
     expect(srv.libLoad).toHaveBeenCalled();
   });

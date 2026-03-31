@@ -23,7 +23,7 @@ describe('theme: DrawerHelper', () => {
     if (a) a.remove();
   });
 
-  it('should be subscribing return value', done => {
+  it('should be subscribing return value', () => new Promise<void>(done => {
     drawer
       .create('', TestDrawerComponent, {
         ret: 'true'
@@ -33,9 +33,9 @@ describe('theme: DrawerHelper', () => {
         done();
       });
     fixture.detectChanges();
-  });
+  }));
 
-  it('should be only close', done => {
+  it('should be only close', () => new Promise<void>(done => {
     drawer
       .create('', TestDrawerComponent, {
         ret: 'destroy'
@@ -52,7 +52,7 @@ describe('theme: DrawerHelper', () => {
         }
       });
     fixture.detectChanges();
-  });
+  }));
 
   it('should be closeAll', fakeAsync(() => {
     expect(drawer.openDrawers.length).toBe(0);
@@ -65,7 +65,7 @@ describe('theme: DrawerHelper', () => {
     expect(drawer.openDrawers.length).toBe(0);
   }));
 
-  it('#static', done => {
+  it('#static', () => new Promise<void>(done => {
     drawer
       .static('', TestDrawerComponent, {
         ret: 'true'
@@ -75,7 +75,7 @@ describe('theme: DrawerHelper', () => {
         done();
       });
     fixture.detectChanges();
-  });
+  }));
 
   describe('#size', () => {
     it('with sm', () => {
@@ -224,7 +224,7 @@ describe('theme: DrawerHelper', () => {
   });
 
   describe('#exact', () => {
-    it('width true, should be only truth subscript', done => {
+    it('width true, should be only truth subscript', () => new Promise<void>(done => {
       drawer
         .create(
           '',
@@ -249,8 +249,8 @@ describe('theme: DrawerHelper', () => {
           }
         });
       fixture.detectChanges();
-    });
-    it('width false, should be always subscript', done => {
+    }));
+    it('width false, should be always subscript', () => new Promise<void>(done => {
       drawer
         .create(
           '',
@@ -273,7 +273,7 @@ describe('theme: DrawerHelper', () => {
           }
         });
       fixture.detectChanges();
-    });
+    }));
   });
 });
 

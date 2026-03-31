@@ -22,8 +22,8 @@ describe('form: widget: color', () => {
   });
 
   it('should be working', fakeAsync(() => {
-    const change = jasmine.createSpy();
-    const formatChange = jasmine.createSpy();
+    const change = vi.fn();
+    const formatChange = vi.fn();
     const s: SFSchema = {
       properties: {
         a: {

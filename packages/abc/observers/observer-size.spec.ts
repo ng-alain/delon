@@ -13,18 +13,18 @@ describe('abc: observers', () => {
     ({ fixture, context } = createTestContext(TestComponent));
   });
 
-  it('should be working', cb => {
+  it('should be working', () => new Promise<void>(done => {
     fixture.detectChanges();
 
-    spyOn(context, 'event');
+    vi.spyOn(context, 'event');
     context.width = 150;
     fixture.detectChanges();
     // wait for MutationObserver
     setTimeout(() => {
       expect(context.event).toHaveBeenCalled();
-      cb();
+      done();
     }, 25);
-  });
+  }));
 });
 
 @Component({

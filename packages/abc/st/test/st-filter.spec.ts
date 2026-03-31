@@ -48,7 +48,7 @@ describe('abc: st-filter', () => {
   });
 
   it('muse provide the fn function', fakeAsync(() => {
-    spyOn(console, 'warn');
+    vi.spyOn(console, 'warn');
     page.context.columns[0].filter!.fn = null;
     page.cd();
     const firstCol = page.comp._columns[0];
@@ -102,7 +102,7 @@ describe('abc: st-filter', () => {
       filterComp.reset();
       const res = filter.menus!.filter(w => w.checked);
       expect(res.length).toBe(0);
-      expect(page.changeSpy.calls.mostRecent().args[0].filter).toBe(undefined);
+      expect(page.changeSpy.mock.calls.at(-1)![0].filter).toBe(undefined);
     });
   });
   describe('when type is keyword', () => {

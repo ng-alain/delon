@@ -42,40 +42,40 @@ describe('auth: JWTGuard', () => {
     });
   });
 
-  it(`should be activated when token valid`, (done: () => void) => {
+  it(`should be activated when token valid`, () => new Promise<void>(done => {
     router.navigateByUrl('/home').then(res => {
       expect(res).toBe(true);
       done();
     });
-  });
+  }));
 
-  it(`should be activated when not guard route`, (done: () => void) => {
+  it(`should be activated when not guard route`, () => new Promise<void>(done => {
     srv.set({ token: `` });
     router.navigateByUrl('/login').then(res => {
       expect(res).toBe(true);
       done();
     });
-  });
+  }));
 
-  it(`should be go to login when token invalid`, (done: () => void) => {
+  it(`should be go to login when token invalid`, () => new Promise<void>(done => {
     srv.set({ token: `` });
     router.navigateByUrl('/home').then(res => {
       expect(res).toBe(false);
-      spyOn(router, 'navigateByUrl');
+      vi.spyOn(router, 'navigateByUrl');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       setTimeout(() => {
         expect(router.navigateByUrl).toHaveBeenCalled();
         done();
       }, 2);
     });
-  });
+  }));
 
-  it(`should be support children route`, (done: () => void) => {
+  it(`should be support children route`, () => new Promise<void>(done => {
     router.navigateByUrl('/my/profile').then(res => {
       expect(res).toBe(true);
       done();
     });
-  });
+  }));
 
   it(`should be support lazy module route`, fakeAsync(() => {
     router.navigateByUrl('/lazy').then(res => {

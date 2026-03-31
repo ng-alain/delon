@@ -62,7 +62,7 @@ describe('abc: xlsx', () => {
           }
         };
       },
-      writeFile: jasmine.createSpy('writeFile')
+      writeFile: vi.fn()
     };
     (window as NzSafeAny).cptable = {
       utils: {
@@ -84,13 +84,13 @@ describe('abc: xlsx', () => {
       delete (window as NzSafeAny).XLSX;
       genModule();
       const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
-      spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
+      vi.spyOn(lazySrv, 'load').mockImplementation(() => Promise.reject());
       expect(lazySrv.load).not.toHaveBeenCalled();
       srv.import('/1.xlsx').catch(() => {});
       expect(lazySrv.load).toHaveBeenCalled();
     });
 
-    it('should be load xlsx via url', (done: () => void) => {
+    it('should be load xlsx via url', () => new Promise<void>(done => {
       genModule();
       srv.import('/1.xlsx').then(
         () => {
@@ -102,9 +102,9 @@ describe('abc: xlsx', () => {
           done();
         }
       );
-    });
+    }));
 
-    it('should be throw error when request error via url', (done: () => void) => {
+    it('should be throw error when request error via url', () => new Promise<void>(done => {
       isErrorRequest = true;
       genModule();
       srv.import('/1.xlsx').then(
@@ -117,9 +117,9 @@ describe('abc: xlsx', () => {
           done();
         }
       );
-    });
+    }));
 
-    it('should be load xlsx via file object', (done: () => void) => {
+    it('should be load xlsx via file object', () => new Promise<void>(done => {
       genModule();
       srv.import(new File([], '1.xlsx')).then(
         () => {
@@ -131,12 +131,12 @@ describe('abc: xlsx', () => {
           done();
         }
       );
-    });
+    }));
 
-    it(`should be can't load xlsx when file is error`, (done: () => void) => {
+    it(`should be can't load xlsx when file is error`, () => new Promise<void>(done => {
       genModule();
 
-      spyOn(FileReader.prototype, 'readAsArrayBuffer').and.callFake(function (this: NzSafeAny) {
+      vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementation(function (this: NzSafeAny) {
         this.onerror();
       });
       srv.import(null as NzSafeAny).then(
@@ -149,12 +149,12 @@ describe('abc: xlsx', () => {
           done();
         }
       );
-    });
+    }));
   });
 
   describe('[#export]', () => {
     beforeEach(() => genModule());
-    it('should be export xlsx via array', (done: () => void) => {
+    it('should be export xlsx via array', () => new Promise<void>(done => {
       srv
         .export({
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }]
@@ -163,8 +163,8 @@ describe('abc: xlsx', () => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
           done();
         });
-    });
-    it('should be export xlsx via object', (done: () => void) => {
+    }));
+    it('should be export xlsx via object', () => new Promise<void>(done => {
       srv
         .export({
           sheets: {
@@ -175,8 +175,8 @@ describe('abc: xlsx', () => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
           done();
         });
-    });
-    it('should be call callback', (done: () => void) => {
+    }));
+    it('should be call callback', () => new Promise<void>(done => {
       let count = 0;
       srv
         .export({
@@ -191,8 +191,8 @@ describe('abc: xlsx', () => {
           expect(count).toBe(1);
           done();
         });
-    });
-    it('should catch error when XLSX process error', done => {
+    }));
+    it('should catch error when XLSX process error', () => new Promise<void>(done => {
       (window as NzSafeAny).XLSX.utils.book_new = null;
       srv
         .export({
@@ -208,8 +208,8 @@ describe('abc: xlsx', () => {
           expect(true).toBe(true);
           done();
         });
-    });
-    it('should be export csv', (done: () => void) => {
+    }));
+    it('should be export csv', () => new Promise<void>(done => {
       srv
         .export({
           sheets: [{ data: null, name: 'asdf.csv' }, { data: null }],
@@ -219,7 +219,7 @@ describe('abc: xlsx', () => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
           done();
         });
-    });
+    }));
   });
 
   describe('[directive]', () => {
@@ -232,7 +232,7 @@ describe('abc: xlsx', () => {
       fixture.detectChanges();
     });
     it('should be export via click', () => {
-      spyOn(srv, 'export');
+      vi.spyOn(srv, 'export');
       expect(srv.export).not.toHaveBeenCalled();
       (dl.query(By.css('button')).nativeElement as HTMLButtonElement).click();
       expect(srv.export).toHaveBeenCalled();

@@ -165,7 +165,7 @@ describe('abc: st', () => {
                 title: '',
                 index: 'id',
                 type: 'link',
-                click: jasmine.createSpy()
+                click: vi.fn() as any
               }
             ];
             page
@@ -181,7 +181,7 @@ describe('abc: st', () => {
           }));
           it('should be navigate url when click is string value', fakeAsync(() => {
             const router = TestBed.inject<Router>(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
             page
               .updateColumn([
@@ -402,7 +402,7 @@ describe('abc: st', () => {
             .expectElCount('.ant-checkbox', 1);
         }));
         it('can be click', fakeAsync(() => {
-          const columns: STColumn[] = [{ index: 'id', cell: { type: 'boolean' }, click: jasmine.createSpy() }];
+          const columns: STColumn[] = [{ index: 'id', cell: { type: 'boolean' }, click: vi.fn() as any }];
           page.updateColumn(columns).clickCell('.cell');
           expect(columns[0].click).toHaveBeenCalled();
         }));
@@ -448,7 +448,7 @@ describe('abc: st', () => {
           const columns: STColumn[] = [
             {
               title: '',
-              buttons: [{ text: 'del', type: 'del', click: jasmine.createSpy() }]
+              buttons: [{ text: 'del', type: 'del', click: vi.fn() as any }]
             }
           ];
           page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]').click('.st__btn-text').cd();
@@ -502,7 +502,7 @@ describe('abc: st', () => {
                 buttons: [{ text: 'a', click: 'reload' }]
               }
             ];
-            spyOn(comp, 'reload');
+            vi.spyOn(comp, 'reload');
             page.updateColumn(columns);
             expect(comp.reload).not.toHaveBeenCalled();
             page.clickCell('a');
@@ -516,7 +516,7 @@ describe('abc: st', () => {
                 buttons: [{ text: 'a', click: 'load' }]
               }
             ];
-            spyOn(comp, 'load');
+            vi.spyOn(comp, 'load');
             page.updateColumn(columns);
             expect(comp.load).not.toHaveBeenCalled();
             page.clickCell('a');
@@ -532,7 +532,7 @@ describe('abc: st', () => {
                     {
                       text: 'a',
                       type: 'modal',
-                      click: jasmine.createSpy(),
+                      click: vi.fn() as any,
                       modal: {
                         component: {},
                         params: () => ({ aa: 1 })
@@ -543,7 +543,7 @@ describe('abc: st', () => {
               ];
               const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
-              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              vi.spyOn(modalHelp, 'create').mockImplementation(() => mock$);
               page.updateColumn(columns);
               expect(modalHelp.create).not.toHaveBeenCalled();
               page.clickCell('a');
@@ -562,7 +562,7 @@ describe('abc: st', () => {
                     {
                       text: 'a',
                       type: 'static',
-                      click: jasmine.createSpy(),
+                      click: vi.fn() as any,
                       modal: {
                         component: {},
                         params: () => ({ aa: 1 })
@@ -573,7 +573,7 @@ describe('abc: st', () => {
               ];
               const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
-              spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
+              vi.spyOn(modalHelp, 'createStatic').mockImplementation(() => mock$);
               page.updateColumn(columns);
               expect(modalHelp.createStatic).not.toHaveBeenCalled();
               page.clickCell('a');
@@ -592,7 +592,7 @@ describe('abc: st', () => {
                     {
                       text: 'a',
                       type: 'static',
-                      click: jasmine.createSpy(),
+                      click: vi.fn() as any,
                       modal: {
                         component: {}
                       }
@@ -603,10 +603,10 @@ describe('abc: st', () => {
               context.comp.cog.modal!.pureRecoard = true;
               const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
-              const spy = spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
+              const spy = vi.spyOn(modalHelp, 'createStatic').mockImplementation(() => mock$);
               page.updateColumn(columns);
               page.clickCell('a');
-              expect(spy.calls.first().args[1].record._values).not.toBeDefined();
+              expect(spy.mock.calls[0][1].record._values).not.toBeDefined();
               page.asyncEnd();
             }));
           });
@@ -619,7 +619,7 @@ describe('abc: st', () => {
                     {
                       text: 'a',
                       type: 'drawer',
-                      click: jasmine.createSpy(),
+                      click: vi.fn() as any,
                       drawer: {
                         component: {},
                         params: () => ({ aa: 1 })
@@ -630,7 +630,7 @@ describe('abc: st', () => {
               ];
               const drawerHelp = TestBed.inject<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
-              spyOn(drawerHelp, 'create').and.callFake(() => mock$);
+              vi.spyOn(drawerHelp, 'create').mockImplementation(() => mock$);
               page.updateColumn(columns);
               expect(drawerHelp.create).not.toHaveBeenCalled();
               page.clickCell('a');
@@ -649,7 +649,7 @@ describe('abc: st', () => {
                     {
                       text: 'a',
                       type: 'drawer',
-                      click: jasmine.createSpy(),
+                      click: vi.fn() as any,
                       drawer: {
                         component: {}
                       }
@@ -660,10 +660,10 @@ describe('abc: st', () => {
               context.comp.cog.drawer!.pureRecoard = true;
               const drawerHelp = TestBed.inject<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
-              const spy = spyOn(drawerHelp, 'create').and.callFake(() => mock$);
+              const spy = vi.spyOn(drawerHelp, 'create').mockImplementation(() => mock$);
               page.updateColumn(columns);
               page.clickCell('a');
-              expect(spy.calls.first().args[2].record._values).not.toBeDefined();
+              expect(spy.mock.calls[0][2].record._values).not.toBeDefined();
               page.asyncEnd();
             }));
           });
@@ -676,7 +676,7 @@ describe('abc: st', () => {
                 }
               ];
               const router = TestBed.inject<Router>(Router);
-              spyOn(router, 'navigateByUrl');
+              vi.spyOn(router, 'navigateByUrl');
               page.updateColumn(columns);
               expect(router.navigateByUrl).not.toHaveBeenCalled();
               page.clickCell('a');
@@ -691,7 +691,7 @@ describe('abc: st', () => {
                 }
               ];
               const router = TestBed.inject<Router>(Router);
-              spyOn(router, 'navigateByUrl');
+              vi.spyOn(router, 'navigateByUrl');
               page.updateColumn(columns);
               expect(router.navigateByUrl).not.toHaveBeenCalled();
               page.clickCell('a');
@@ -706,9 +706,9 @@ describe('abc: st', () => {
                 }
               ];
               const router = TestBed.inject<Router>(Router);
-              const spy = spyOn(router, 'navigateByUrl');
+              const spy = vi.spyOn(router, 'navigateByUrl');
               page.updateColumn(columns).clickCell('a');
-              const arg = spy.calls.mostRecent().args[1] as any;
+              const arg = spy.mock.calls.at(-1)![1] as any;
               expect(arg.state.pi).toBe(1);
               page.asyncEnd();
             }));
@@ -809,12 +809,12 @@ describe('abc: st', () => {
       }));
       it('should only restore data', () => {
         const dataSource: STDataSource = comp['dataSource'];
-        spyOn(dataSource, 'process').and.callFake(() => of({} as any));
+        vi.spyOn(dataSource, 'process').mockImplementation(() => of({} as any));
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
-      it('should be automatically cancel paging when the returned body value is an array type', done => {
-        spyOn(_http, 'request').and.returnValue(of([{}, {}, {}]));
+      it('should be automatically cancel paging when the returned body value is an array type', () => new Promise<void>(done => {
+        vi.spyOn(_http, 'request').mockReturnValue(of([{}, {}, {}]));
         context.pi = 1;
         context.ps = 2;
         context.data = '/mock';
@@ -825,10 +825,10 @@ describe('abc: st', () => {
           expect(comp._isPagination).toBe(false);
           done();
         });
-      });
+      }));
       describe('Http Request', () => {
         it('when error request', () => {
-          spyOn(_http, 'request').and.returnValue(throwError(() => 'cancel'));
+          vi.spyOn(_http, 'request').mockReturnValue(throwError(() => 'cancel'));
           context.data = '/mock';
           fixture.detectChanges();
           expect(page.spyErrorData?.error).toBe('cancel');
@@ -836,7 +836,7 @@ describe('abc: st', () => {
         });
         it('should be ingored incomplete request when has new request', fakeAsync(() => {
           let mockData = [{}];
-          spyOn(_http, 'request').and.callFake(() => of(mockData) as any);
+          vi.spyOn(_http, 'request').mockImplementation(() => of(mockData) as any);
           context.data = '/mock1';
           fixture.detectChanges();
           tick(1000);
@@ -849,7 +849,7 @@ describe('abc: st', () => {
           expect(comp._data.length).toBe(mockData.length);
         }));
         it('#customRequest', fakeAsync(() => {
-          context.customRequest = jasmine.createSpy('customRequest').and.callFake(() => of([]));
+          context.customRequest = vi.fn().mockImplementation(() => of([]));
           context.data = '/invalid-url';
           fixture.detectChanges();
           tick(1000);
@@ -868,7 +868,7 @@ describe('abc: st', () => {
       });
       it('should be ingore request when lazyLoad is true', () => {
         const anyComp = comp as any;
-        spyOn(anyComp, 'loadPageData');
+        vi.spyOn(anyComp, 'loadPageData');
         context.req = { lazyLoad: true };
         fixture.detectChanges();
         expect(anyComp.loadPageData).not.toHaveBeenCalled();
@@ -909,7 +909,7 @@ describe('abc: st', () => {
         context.page = { showSize: true, pageSizes: [10, 20] };
         page.cd().go(2);
         let load = 0;
-        spyOn(context.comp as any, 'loadData').and.callFake(() => {
+        vi.spyOn(context.comp as any, 'loadData').mockImplementation(() => {
           ++load;
           return of({});
         });
@@ -993,7 +993,7 @@ describe('abc: st', () => {
         context.page.toTop = true;
         page.cd();
         const el = page.getEl('st');
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         page.cd().go(2);
         expect(el.scrollIntoView).toHaveBeenCalled();
         page.asyncEnd();
@@ -1002,7 +1002,7 @@ describe('abc: st', () => {
         context.page.toTop = false;
         page.cd();
         const el = page.getEl('st');
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         page.cd().go(2);
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         page.asyncEnd();
@@ -1012,7 +1012,7 @@ describe('abc: st', () => {
         context.page.toTop = true;
         page.cd();
         const el = page.getEl('st');
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         page.go(2);
         expect(el.scrollIntoView).toHaveBeenCalled();
         page.asyncEnd();
@@ -1021,7 +1021,7 @@ describe('abc: st', () => {
         context.page.toTop = false;
         page.cd();
         const el = page.getEl('st');
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         comp.reload({}, { toTop: true });
         page.cd();
         expect(el.scrollIntoView).toHaveBeenCalled();
@@ -1031,7 +1031,7 @@ describe('abc: st', () => {
         context.page.toTop = true;
         page.cd();
         const el = page.getEl('st');
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         comp.reload({}, { toTop: false });
         page.cd();
         expect(el.scrollIntoView).not.toHaveBeenCalled();
@@ -1043,7 +1043,7 @@ describe('abc: st', () => {
         context.scroll = { x: '100px', y: '100px' };
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-        spyOn(context.comp.cdkVirtualScrollViewport!, 'checkViewportSize');
+        vi.spyOn(context.comp.cdkVirtualScrollViewport!, 'checkViewportSize');
         page.cd().go(2);
         expect(context.comp.cdkVirtualScrollViewport!.checkViewportSize).toHaveBeenCalled();
         page.asyncEnd();
@@ -1054,7 +1054,7 @@ describe('abc: st', () => {
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport == null).toBe(true);
         const bodyEl = page.getEl('.ant-table-body, .ant-table-content');
-        spyOn(bodyEl, 'scrollTo');
+        vi.spyOn(bodyEl, 'scrollTo');
         page.cd().go(2);
         expect(bodyEl.scrollTo).toHaveBeenCalled();
         page.asyncEnd();
@@ -1077,7 +1077,7 @@ describe('abc: st', () => {
       it('should be ingore input', fakeAsync(() => {
         const el = page.getCell() as HTMLElement;
         // mock input nodeName
-        spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
+        vi.spyOn(el, 'nodeName', 'get').mockReturnValue('INPUT');
         el.click();
         page.cd().expectChangeType('click', false);
       }));
@@ -1241,10 +1241,10 @@ describe('abc: st', () => {
           expect(comp.req.params.b).toBe(2);
         });
         it('should be clean check, radio, filter, sort', fakeAsync(() => {
-          spyOn(comp, 'clearCheck').and.returnValue(comp);
-          spyOn(comp, 'clearRadio').and.returnValue(comp);
-          spyOn(comp, 'clearFilter').and.returnValue(comp);
-          spyOn(comp, 'clearSort').and.returnValue(comp);
+          vi.spyOn(comp, 'clearCheck').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearRadio').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearFilter').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearSort').mockReturnValue(comp);
           comp.reset();
           page.cd();
           expect(comp.clearCheck).toHaveBeenCalled();
@@ -1291,7 +1291,7 @@ describe('abc: st', () => {
         it('should be working', fakeAsync(() => {
           page.cd();
           page.expectData(1, 'name', `name 1`);
-          spyOn(comp, 'resetColumns');
+          vi.spyOn(comp, 'resetColumns');
           comp.setRow(0, { name: 'new name' });
           expect(comp.resetColumns).not.toHaveBeenCalled();
           page.expectData(1, 'name', `new name`);
@@ -1302,7 +1302,7 @@ describe('abc: st', () => {
         it('should be support data of index', fakeAsync(() => {
           page.cd();
           page.expectData(1, 'name', `name 1`);
-          spyOn(comp, 'resetColumns');
+          vi.spyOn(comp, 'resetColumns');
           comp.setRow(comp.list[0], { name: 'new name' });
           expect(comp.resetColumns).not.toHaveBeenCalled();
           page.expectData(1, 'name', `new name`);
@@ -1311,10 +1311,10 @@ describe('abc: st', () => {
       });
       describe('#clean', () => {
         beforeEach(fakeAsync(() => {
-          spyOn(comp, 'clearCheck').and.returnValue(comp);
-          spyOn(comp, 'clearRadio').and.returnValue(comp);
-          spyOn(comp, 'clearFilter').and.returnValue(comp);
-          spyOn(comp, 'clearSort').and.returnValue(comp);
+          vi.spyOn(comp, 'clearCheck').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearRadio').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearFilter').mockReturnValue(comp);
+          vi.spyOn(comp, 'clearSort').mockReturnValue(comp);
           page.cd();
         }));
         it('#clear', () => {
@@ -1369,7 +1369,7 @@ describe('abc: st', () => {
           page.updateColumn([{ title: '1', index: 'name' }]);
           expect(comp.ps).toBe(PS);
           const compAny = comp as any;
-          spyOn(compAny, 'loadPageData');
+          vi.spyOn(compAny, 'loadPageData');
           comp.resetColumns({ emitReload: false });
           page.cd();
           expect(compAny.loadPageData).not.toHaveBeenCalled();
@@ -1426,7 +1426,7 @@ describe('abc: st', () => {
       let exportSrv: STExport;
       beforeEach(() => {
         exportSrv = (comp as any)['exportSrv'] = {
-          export: jasmine.createSpy('export')
+          export: vi.fn()
         } as any;
       });
       describe('without specified data', () => {
@@ -1440,7 +1440,7 @@ describe('abc: st', () => {
         it('when data is true', fakeAsync(() => {
           context.data = genData(1);
           page.cd();
-          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(of([]));
+          vi.spyOn(comp, 'filteredData', 'get').mockReturnValue(of([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export(true);
           page.cd();
@@ -1577,7 +1577,7 @@ describe('abc: st', () => {
           .asyncEnd();
       }));
       it('should be support return a observable value', fakeAsync(() => {
-        context.contextmenu = () => of([{ text: 'a', fn: jasmine.createSpy() }] as STContextmenuItem[]);
+        context.contextmenu = () => of([{ text: 'a', fn: vi.fn() }] as STContextmenuItem[]);
         page
           .updateColumn([{ title: 'a', index: 'id' }])
           .openContextMenu(1, 1)
@@ -1585,14 +1585,14 @@ describe('abc: st', () => {
           .asyncEnd();
       }));
       it('should be ingore invalid target', fakeAsync(() => {
-        context.contextmenu = jasmine.createSpy();
+        context.contextmenu = vi.fn();
         page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, { target: { closest: () => null } });
         expect(context.contextmenu).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be ingore unspecified contextmenu property', fakeAsync(() => {
         context.contextmenu = null;
-        const event = { preventDefault: jasmine.createSpy() };
+        const event = { preventDefault: vi.fn() };
         page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, event);
         expect(event.preventDefault).not.toHaveBeenCalled();
         page.asyncEnd();
@@ -1632,9 +1632,7 @@ describe('abc: st', () => {
       })!;
       page.updateColumn([{ title: '', render: 'id' }]).cd();
       const jIdEl = page.getCell().querySelector('.j-id');
-      expect(jIdEl != null)
-        .withContext('expect found j-id')
-        .toBe(true);
+      expect(jIdEl != null).toBe(true);
       expect(jIdEl?.textContent).toBe('id1');
       page.asyncEnd();
     }));
@@ -1654,7 +1652,7 @@ describe('abc: st', () => {
     beforeEach(() => {
       page = genModule(TestComponent, { i18n: true })!;
       refAssign();
-      spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
+      vi.spyOn(i18nSrv, 'fanyi').mockImplementation(() => curLang);
     });
     it('should working', fakeAsync(() => {
       page.updateColumn([{ title: { i18n: curLang }, index: 'id' }]);

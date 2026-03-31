@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { YNMode, YNPipe } from './yn.pipe';
@@ -29,30 +29,38 @@ describe('Pipe: yn', () => {
         no: '坏'
       }
     ].forEach((item: { value: boolean; result: string; yes?: string; no?: string }) => {
-      it(`${item.value.toString()} muse be ${item.result}`, () => {
+      it(`${item.value.toString()} muse be ${item.result}`, fakeAsync(() => {
         fixture.componentInstance.value = item.value;
         fixture.componentInstance.yes = item.yes;
         fixture.componentInstance.no = item.no;
         fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
         expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toContain(
           item.result
         );
-      });
+      }));
     });
 
     describe('#mode', () => {
-      it('with text', () => {
+      it('with text', fakeAsync(() => {
         fixture.componentInstance.mode = 'text';
         fixture.componentInstance.value = true;
+        fixture.detectChanges();
+        tick();
         fixture.detectChanges();
         expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
         fixture.componentInstance.value = false;
         fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
         expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
-      });
-      it('with full', () => {
+      }));
+      it('with full', fakeAsync(() => {
         fixture.componentInstance.mode = 'full';
         fixture.componentInstance.value = true;
+        fixture.detectChanges();
+        tick();
         fixture.detectChanges();
         let html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
         expect(html).toContain('<svg');
@@ -60,20 +68,24 @@ describe('Pipe: yn', () => {
         // when false
         fixture.componentInstance.value = false;
         fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
         html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
         expect(html).toContain('<svg');
         expect(html).not.toContain(`title="`);
-      });
+      }));
     });
   });
 
-  it('should be used default config', () => {
+  it('should be used default config', fakeAsync(() => {
     TestBed.overrideTemplate(TestComponent, `<div id="result" [innerHTML]="value | yn"></div>`);
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
 
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toContain(`是`);
-  });
+  }));
 });
 
 @Component({

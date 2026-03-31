@@ -27,7 +27,7 @@ describe('form: widget: custom', () => {
   });
 
   it('should be warn when duplicate definition', () => {
-    spyOn(console, 'warn');
+    vi.spyOn(console, 'warn');
     ({ fixture, context, page } = builder({
       detectChanges: false,
       template: `<sf [schema]="schema" #comp>

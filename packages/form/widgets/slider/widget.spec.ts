@@ -49,7 +49,7 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s);
     const comp = getWidget();
-    spyOn(comp, '_formatter');
+    vi.spyOn(comp, '_formatter');
     page.time();
     getWidget()._afterChange(1);
     expect(comp._formatter).toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            formatter: jasmine.createSpy()
+            formatter: vi.fn()
           },
           default: 10
         }
@@ -91,7 +91,7 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s);
     const comp = getWidget();
-    spyOn(comp, '_formatter');
+    vi.spyOn(comp, '_formatter');
     page.time();
     expect(comp._formatter).toHaveBeenCalled();
     expect((s.properties!.a.ui as NzSafeAny).formatter).toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            afterChange: jasmine.createSpy()
+            afterChange: vi.fn()
           },
           default: 10
         }

@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -50,8 +50,8 @@ export function builder(options?: {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
     providers: [provideNzNoAnimation()],
-    imports: [AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
-    declarations: [TestFormComponent]
+    imports: [AlainThemeModule, DelonFormModule.forRoot(), TestFormComponent].concat(options.imports ?? []),
+    schemas: [NO_ERRORS_SCHEMA]
   });
   if (options.template) {
     TestBed.overrideTemplate(TestFormComponent, options.template);
@@ -59,11 +59,11 @@ export function builder(options?: {
   fixture = TestBed.createComponent(TestFormComponent);
   dl = fixture.debugElement;
   context = fixture.componentInstance;
-  spyOn(context, 'formChange');
-  spyOn(context, 'formValueChange');
-  spyOn(context, 'formSubmit');
-  spyOn(context, 'formReset');
-  spyOn(context, 'formError');
+  vi.spyOn(context, 'formChange');
+  vi.spyOn(context, 'formValueChange');
+  vi.spyOn(context, 'formSubmit');
+  vi.spyOn(context, 'formReset');
+  vi.spyOn(context, 'formError');
   if (options.detectChanges !== false) {
     fixture.detectChanges();
   }
@@ -83,15 +83,15 @@ export function configureSFTestSuite(options?: {
 }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
-      declarations: [TestFormComponent],
+      imports: [AlainThemeModule, DelonFormModule, TestFormComponent, ...(options?.imports ?? [])],
       providers: [
         provideNzNoAnimation(),
         provideHttpClient(),
         provideHttpClientTesting(),
         provideSFConfig({ widgets: options?.widgets }),
         ...(options?.providers ?? [])
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
 }
@@ -103,11 +103,11 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
-    spyOn(context, 'formValueChange');
-    spyOn(context, 'formChange');
-    spyOn(context, 'formSubmit');
-    spyOn(context, 'formReset');
-    spyOn(context, 'formError');
+    vi.spyOn(context, 'formValueChange');
+    vi.spyOn(context, 'formChange');
+    vi.spyOn(context, 'formSubmit');
+    vi.spyOn(context, 'formReset');
+    vi.spyOn(context, 'formError');
     this.cleanOverlay();
   }
 
@@ -335,7 +335,7 @@ export class SFPage {
   typeEvent(eventName: string | Event, cls: string = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {
-      expect(true).withContext(`won't found '${cls}' class element`).toBe(false);
+      expect(true).toBe(false);
       return this;
     }
     dispatchFakeEvent(node, eventName);
@@ -389,8 +389,8 @@ export class SFPage {
       (formError)="formError($event)"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [DelonFormModule],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp!: SFComponent;
@@ -410,9 +410,9 @@ export class TestFormComponent {
   cleanValue = false;
   delay = false;
 
-  formChange(): void {}
-  formValueChange(): void {}
-  formSubmit(): void {}
-  formReset(): void {}
-  formError(): void {}
+  formChange(_val: NzSafeAny): void {}
+  formValueChange(_val: NzSafeAny): void {}
+  formSubmit(_val: NzSafeAny): void {}
+  formReset(_val: NzSafeAny): void {}
+  formError(_val: NzSafeAny): void {}
 }

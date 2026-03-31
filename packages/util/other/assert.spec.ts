@@ -18,7 +18,7 @@ describe('util.#assert', () => {
       expect(() => assert(true)).not.toThrow();
     });
     it('should be throw specify error message', () => {
-      expect(() => assert(false, 'ABC')).toThrowMatching((err: Error) => err.message.includes(`ABC`));
+      expect(() => assert(false, 'ABC')).toThrow(/ABC/);
     });
   });
   describe('#assertEmpty', () => {

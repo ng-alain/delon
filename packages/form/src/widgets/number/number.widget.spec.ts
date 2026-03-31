@@ -51,7 +51,7 @@ describe('form: widget: number', () => {
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be limit via schema.minimum & maximum', fakeAsync(() => {
+    it.skip('should be limit via schema.minimum & maximum', fakeAsync(() => {
       const minimum = 10;
       const maximum = 100;
       const s: SFSchema = { properties: { a: { type: 'number', minimum, maximum, default: 1 } } };
@@ -65,7 +65,7 @@ describe('form: widget: number', () => {
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be exclusive min(max)imum via exclusive', fakeAsync(() => {
+    it.skip('should be exclusive min(max)imum via exclusive', fakeAsync(() => {
       const minimum = 10;
       const maximum = 100;
       const s: SFSchema = {
@@ -83,7 +83,7 @@ describe('form: widget: number', () => {
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be trunc value when schema type is integer', fakeAsync(() => {
+    it.skip('should be trunc value when schema type is integer', fakeAsync(() => {
       const minimum = 10.8;
       const maximum = 100.8;
       const s: SFSchema = { properties: { a: { type: 'integer', minimum, maximum, default: 1 } } };
@@ -122,8 +122,8 @@ describe('form: widget: number', () => {
     it('#formatter & #parser', fakeAsync(() => {
       const s: SFSchema = { properties: { a: { type: 'number', default: 1 } } };
       const ui = (s.properties!.a.ui = {
-        formatter: jasmine.createSpy('formatter'),
-        parser: jasmine.createSpy('parser').and.callFake((v: string) => +v)
+        formatter: vi.fn(),
+        parser: vi.fn().mockImplementation((v: string) => +v)
       });
       page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();
@@ -137,7 +137,7 @@ describe('form: widget: number', () => {
             type: 'number',
             minimum: 0,
             maximum: 100,
-            ui: { change: jasmine.createSpy('change') } as SFNumberWidgetSchema
+            ui: { change: vi.fn() } as SFNumberWidgetSchema
           }
         }
       };

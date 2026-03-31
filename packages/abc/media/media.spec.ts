@@ -29,7 +29,7 @@ describe('abc: media', () => {
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
     lazySrv = TestBed.inject(LazyService);
-    spyOn(lazySrv, 'load').and.returnValue(Promise.resolve([]));
+    vi.spyOn(lazySrv, 'load').mockReturnValue(Promise.resolve([]));
   });
 
   it('should be throw error when not found Plyr in window', fakeAsync(() => {
@@ -65,7 +65,7 @@ describe('abc: media', () => {
     }));
 
     it('#ready', fakeAsync(() => {
-      spyOn(context, 'ready');
+      vi.spyOn(context, 'ready');
       page.cd();
       expect(context.ready).toHaveBeenCalled();
     }));

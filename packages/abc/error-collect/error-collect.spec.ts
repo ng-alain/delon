@@ -32,26 +32,26 @@ describe('abc: error-collect', () => {
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
-    it('should be collect error', (done: () => void) => {
+    it('should be collect error', () => new Promise<void>(done => {
       setTimeout(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
         done();
       }, 21);
-    });
+    }));
 
-    it('should be click go to first error element', (done: () => void) => {
+    it('should be click go to first error element', () => new Promise<void>(done => {
       setTimeout(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
         const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
-        spyOn(el, 'scrollIntoView');
+        vi.spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
       }, 21);
-    });
+    }));
 
     it('#rtl', () => {
       expect(dl.query(By.css('.error-collect-rtl'))).toBeNull();
@@ -69,7 +69,7 @@ describe('abc: error-collect', () => {
     );
     getPropertiesAndCreate();
     const safeComp = context.comp as NzSafeAny;
-    spyOn(safeComp, 'findParent');
+    vi.spyOn(safeComp, 'findParent');
     (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
     expect(safeComp.findParent).not.toHaveBeenCalled();
   });

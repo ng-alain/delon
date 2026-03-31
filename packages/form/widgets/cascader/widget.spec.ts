@@ -85,7 +85,7 @@ describe('form: widget: cascader', () => {
               title: 'RealTime',
               ui: {
                 widget: 'cascader',
-                asyncData: jasmine.createSpy().and.returnValue(Promise.resolve())
+                asyncData: vi.fn().mockReturnValue(Promise.resolve())
               },
               default: [110000]
             }
@@ -107,11 +107,11 @@ describe('form: widget: cascader', () => {
             enum: [],
             ui: {
               widget,
-              visibleChange: jasmine.createSpy(),
-              change: jasmine.createSpy(),
-              selectionChange: jasmine.createSpy(),
-              select: jasmine.createSpy(),
-              clear: jasmine.createSpy()
+              visibleChange: vi.fn(),
+              change: vi.fn(),
+              selectionChange: vi.fn(),
+              select: vi.fn(),
+              clear: vi.fn()
             }
           }
         }

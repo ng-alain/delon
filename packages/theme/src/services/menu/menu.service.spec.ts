@@ -194,7 +194,7 @@ describe('Service: Menu', () => {
       expect((srv.menus[1] as MenuInner)._aclResult).toBe(false);
     });
 
-    it('#change', (done: () => void) => {
+    it('#change', () => new Promise<void>(done => {
       const newMenus = [{ text: 'new menu' }];
       srv.change.pipe(filter(ls => ls.length > 0)).subscribe(res => {
         expect(res.length).toBe(1);
@@ -202,7 +202,7 @@ describe('Service: Menu', () => {
         done();
       });
       srv.add(newMenus);
-    });
+    }));
 
     it('#getItem', () => {
       const newMenus = [{ text: 'new menu', key: 'a' }, { text: 'new menu' }];
@@ -334,7 +334,7 @@ describe('Service: Menu', () => {
         expect(srv.find({ key: 'v1' }) != null).toBe(true);
       });
       it('via url', () => {
-        const cb = jasmine.createSpy('callback_via_key');
+        const cb = vi.fn();
         expect(srv.find({ url: `/dashboard/v1`, cb: cb }) != null).toBe(true);
         expect(cb).toHaveBeenCalled();
       });
@@ -408,7 +408,7 @@ describe('Service: Menu', () => {
         ]
       });
       srv = TestBed.inject<MenuService>(MenuService);
-      spyOn(srv, 'resume');
+      vi.spyOn(srv, 'resume');
       expect(srv.resume).not.toHaveBeenCalled();
       TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       expect(srv.resume).toHaveBeenCalled();

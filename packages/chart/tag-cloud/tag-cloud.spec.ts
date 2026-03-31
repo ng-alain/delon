@@ -15,14 +15,14 @@ describe('chart: tag-cloud', () => {
 
     it('should be repaint when window resize', fakeAsync(() => {
       page.dcFirst();
-      spyOn(page.chart, 'changeData');
+      vi.spyOn(page.chart, 'changeData');
       window.dispatchEvent(new Event('resize'));
       tick(201);
       expect(page.chart.changeData).toHaveBeenCalled();
     }));
 
     it('shuld be not rotate when random is 2', fakeAsync(() => {
-      spyOn(Math, 'random').and.returnValue(0.6);
+      vi.spyOn(Math, 'random').mockReturnValue(0.6);
       page.dcFirst();
       expect(page.chart.getData()[0].rotate).toBe(0);
     }));

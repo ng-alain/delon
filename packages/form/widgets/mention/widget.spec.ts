@@ -34,7 +34,7 @@ describe('form: widget: mention', () => {
   it('should be working', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', enum: DATA, ui: { widget, select: jasmine.createSpy() } }
+        a: { type: 'string', enum: DATA, ui: { widget, select: vi.fn() } }
       }
     };
     page
@@ -55,7 +55,7 @@ describe('form: widget: mention', () => {
     };
     page.newSchema(s).dc(1).typeChar('@').checkError(`最少提及 1 次`);
 
-    spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
+    vi.spyOn(getWidget()['mentionChild'], 'getMentions').mockReturnValue(['', '', '', '']);
     page.dc(1).typeChar('@').checkError(`最多提及 2 次`);
   }));
 

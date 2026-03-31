@@ -138,7 +138,7 @@ class MockEmptyService extends BaseApi {
 }
 
 describe('theme: http.decorator', () => {
-  let request: jasmine.Spy;
+  let request: any;
   let srv: MockService;
   let tokens: any;
 
@@ -156,11 +156,11 @@ describe('theme: http.decorator', () => {
   }
 
   beforeEach(() => {
-    request = jasmine.createSpy('request').and.returnValue({});
+    request = vi.fn().mockReturnValue({});
     tokens = {
       _HttpClient: { request }
     };
-    jasmine.createSpyObj('http', {
+    ({
       request
     });
     TestBed.configureTestingModule({
@@ -173,8 +173,8 @@ describe('theme: http.decorator', () => {
     srv.GET(1);
 
     expect(request).toHaveBeenCalled();
-    expect(request.calls.mostRecent().args[0]).toBe('GET');
-    expect(request.calls.mostRecent().args[1]).toBe('/user/1');
+    expect(request.mock.calls.at(-1)![0]).toBe('GET');
+    expect(request.mock.calls.at(-1)![1]).toBe('/user/1');
   });
 
   it('should be throw error when not import AlainThemeModule', () => {
@@ -190,7 +190,7 @@ describe('theme: http.decorator', () => {
 
       expect(request).toHaveBeenCalled();
       const res = new HttpParams({
-        fromObject: request.calls.mostRecent().args[2].params
+        fromObject: request.mock.calls.at(-1)![2].params
       });
       expect(res.toString()).toBe('ids=1&ids=2&ids=3');
     });
@@ -200,14 +200,14 @@ describe('theme: http.decorator', () => {
       srvEmpty.GET();
 
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[1]).toBe('/');
+      expect(request.mock.calls.at(-1)![1]).toBe('/');
     });
 
     it('should be mulit path values', () => {
       srv.MulitPath(2);
 
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[1]).toBe('/user/2/2');
+      expect(request.mock.calls.at(-1)![1]).toBe('/user/2/2');
     });
 
     describe('should be join baseUrl & url of method', () => {
@@ -216,14 +216,14 @@ describe('theme: http.decorator', () => {
         srv2.A();
 
         expect(request).toHaveBeenCalled();
-        expect(request.calls.mostRecent().args[1]).toBe('/a');
+        expect(request.mock.calls.at(-1)![1]).toBe('/a');
       });
 
       it('when without url of method', () => {
         srv.query(1, 1, '');
 
         expect(request).toHaveBeenCalled();
-        expect(request.calls.mostRecent().args[1]).toBe('/user');
+        expect(request.mock.calls.at(-1)![1]).toBe('/user');
       });
     });
 
@@ -231,42 +231,42 @@ describe('theme: http.decorator', () => {
       srv.escapePath(10);
 
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[1]).toContain(`:id/10/:id`);
+      expect(request.mock.calls.at(-1)![1]).toContain(`:id/10/:id`);
     });
 
     it('should be ingore replace param when is invalid value', () => {
       srv.escapePath(undefined);
 
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[1]).toContain(`:id/:id/:id`);
+      expect(request.mock.calls.at(-1)![1]).toContain(`:id/:id/:id`);
     });
   });
 
   it('should construct a POST request', () => {
     srv.save(1, { name: 'cipchk' });
     expect(request).toHaveBeenCalled();
-    expect(request.calls.mostRecent().args[2].body.name).toBe('cipchk');
+    expect(request.mock.calls.at(-1)![2].body.name).toBe('cipchk');
   });
 
   it('should construct a POST request via array body', () => {
     srv.saveByArray(1, ['a', 'b']);
     expect(request).toHaveBeenCalled();
-    expect(request.calls.mostRecent().args[2].body[0]).toBe('a');
-    expect(request.calls.mostRecent().args[2].body[1]).toBe('b');
+    expect(request.mock.calls.at(-1)![2].body[0]).toBe('a');
+    expect(request.mock.calls.at(-1)![2].body[1]).toBe('b');
   });
 
   [`DELETE`, `OPTIONS`, `PUT`, `HEAD`, `PATCH`, `JSONP`].forEach(type => {
     it(`should construct a ${type} request`, () => {
       (srv as NzSafeAny)[type]();
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[0]).toBe(type);
+      expect(request.mock.calls.at(-1)![0]).toBe(type);
     });
   });
 
   it(`should be include content-type is application/x-www-form-urlencoded via FORM`, () => {
     srv.FORM();
     expect(request).toHaveBeenCalled();
-    const arg = request.calls.mostRecent().args[2];
+    const arg = request.mock.calls.at(-1)![2];
     expect(arg.headers['content-type']).toBe(`application/x-www-form-urlencoded`);
   });
 
@@ -274,14 +274,14 @@ describe('theme: http.decorator', () => {
     it('should be get', () => {
       srv.payloadGet({ pi: 1, ps: 10 });
       expect(request).toHaveBeenCalled();
-      const arg = request.calls.mostRecent().args[2];
+      const arg = request.mock.calls.at(-1)![2];
       expect(arg.params.pi).toBe(1);
       expect(arg.params.ps).toBe(10);
     });
     it('should be merge Query & Payload when method is get', () => {
       srv.payloadGet({ pi: 13, ps: 14 }, 520);
       expect(request).toHaveBeenCalled();
-      const arg = request.calls.mostRecent().args[2];
+      const arg = request.mock.calls.at(-1)![2];
       expect(arg.params.pi).toBe(13);
       expect(arg.params.ps).toBe(14);
       expect(arg.params.status).toBe(520);
@@ -289,21 +289,21 @@ describe('theme: http.decorator', () => {
     it('should be post', () => {
       srv.payloadPost({ pi: 1, ps: 10 });
       expect(request).toHaveBeenCalled();
-      const arg = request.calls.mostRecent().args[2];
+      const arg = request.mock.calls.at(-1)![2];
       expect(arg.body.pi).toBe(1);
       expect(arg.body.ps).toBe(10);
     });
     it('should be post via array body', () => {
       srv.payloadPostByArray(['a', 'b']);
       expect(request).toHaveBeenCalled();
-      const arg = request.calls.mostRecent().args[2];
+      const arg = request.mock.calls.at(-1)![2];
       expect(arg.body[0]).toBe('a');
       expect(arg.body[1]).toBe('b');
     });
     it('should be merge Body & Payload when method is post', () => {
       srv.payloadPost({ pi: 13, ps: 14 }, { woc: 520 });
       expect(request).toHaveBeenCalled();
-      const arg = request.calls.mostRecent().args[2];
+      const arg = request.mock.calls.at(-1)![2];
       expect(arg.body.pi).toBe(13);
       expect(arg.body.ps).toBe(14);
       expect(arg.body.woc).toBe(520);
@@ -318,11 +318,11 @@ describe('theme: http.decorator', () => {
       srv.ACL_Admin();
 
       expect(request).toHaveBeenCalled();
-      expect(request.calls.mostRecent().args[0]).toBe('GET');
-      expect(request.calls.mostRecent().args[1]).toBe('/user');
+      expect(request.mock.calls.at(-1)![0]).toBe('GET');
+      expect(request.mock.calls.at(-1)![1]).toBe('/user');
     });
 
-    it('should be throw 401 when user not authorize', done => {
+    it('should be throw 401 when user not authorize', () => new Promise<void>(done => {
       tokens.ACLService = {
         can: () => false
       };
@@ -336,6 +336,6 @@ describe('theme: http.decorator', () => {
           done();
         }
       });
-    });
+    }));
   });
 });
