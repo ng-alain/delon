@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, provideRouter } from '@angular/router';
@@ -716,8 +716,8 @@ describe('theme: layout-default-nav', () => {
       (select)="select()"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [LayoutDefaultModule],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -732,7 +732,6 @@ class TestComponent {
 
 @Component({
   template: ``,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [RouterModule]
 })
 class TestRouteComponent {}

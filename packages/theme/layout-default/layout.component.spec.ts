@@ -1,4 +1,4 @@
-import { Component, DebugElement, NO_ERRORS_SCHEMA, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -141,8 +141,8 @@ describe('theme: layout-default', () => {
       test
     </layout-default>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [LayoutDefaultModule],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;

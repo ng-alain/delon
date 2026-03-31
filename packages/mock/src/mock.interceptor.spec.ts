@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse, provideHttpClient, withIntercept
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, RouterModule } from '@angular/router';
 import { lastValueFrom, of } from 'rxjs';
 
 import * as Mock from 'mockjs';
@@ -220,6 +220,7 @@ describe('mock: interceptor', () => {
 
 @Component({
   selector: 'root-cmp',
-  template: ` <router-outlet />`
+  template: ` <router-outlet />`,
+  imports: [RouterModule]
 })
 class RootComponent {}
