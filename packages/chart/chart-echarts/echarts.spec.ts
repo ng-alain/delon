@@ -92,7 +92,7 @@ describe('chart: chart-echarts', () => {
       [theme]="theme"
       [initOpt]="initOpt"
       [on]="on"
-      (events)="handleEvents($event)"
+      (events)="handleEvents($any($event))"
     />
   `,
   imports: [ChartEChartsComponent]
@@ -115,5 +115,5 @@ class TestComponent {
       handler: console.log
     }
   ];
-  handleEvents(): void {}
+  handleEvents(_e: any): void {}
 }

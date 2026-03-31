@@ -162,6 +162,7 @@ describe('abc: ellipsis', () => {
   }
 });
 
+@Component({ template: '' })
 class TestBaseComponent {
   @ViewChild('comp', { static: true }) comp!: EllipsisComponent;
   tooltip = false;

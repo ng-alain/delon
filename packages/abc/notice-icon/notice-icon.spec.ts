@@ -190,7 +190,7 @@ class TestComponent {
   loading = false;
   centered = false;
   popoverVisible?: boolean;
-  select(): void {}
-  clear(): void {}
-  popupVisibleChange(): void {}
+  select(_item: NoticeItem): void {}
+  clear(_type: string): void {}
+  popupVisibleChange(_visible: boolean): void {}
 }

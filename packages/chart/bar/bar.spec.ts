@@ -80,7 +80,7 @@ describe('chart: bar', () => {
       [padding]="padding"
       [data]="data"
       [autoLabel]="autoLabel"
-      (clickItem)="clickItem($event)"
+      (clickItem)="clickItem($any($event))"
     />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
   `,
@@ -96,7 +96,7 @@ class TestComponent implements OnInit {
   padding?: number[];
   autoLabel = false;
   color = 'rgba(24, 144, 255, 0.85)';
-  clickItem(): void {}
+  clickItem(_e: any): void {}
   ngOnInit(): void {
     for (let i = 0; i < PageG2DataCount; i += 1) {
       this.data.push({

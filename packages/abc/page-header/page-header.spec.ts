@@ -410,6 +410,7 @@ describe('abc: page-header', () => {
   });
 });
 
+@Component({ template: '' })
 class TestBaseComponent {
   @ViewChild('comp', { static: true })
   comp!: PageHeaderComponent;

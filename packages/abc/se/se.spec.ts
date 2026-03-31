@@ -634,4 +634,5 @@ class TestReactiveComponent {
       dis: { value: '', disabled: true }
     });
   }
+  submitForm(): void {}
 }

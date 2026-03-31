@@ -137,8 +137,8 @@ class TestComponent {
 }
 
 @Component({
-  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `,
-  imports: [FormsModule, RangePickerDirective]
+  template: ` <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></nz-range-picker> `,
+  imports: [FormsModule, RangePickerDirective, NzRangePickerComponent]
 })
 class TestThrowComponent {
   i: { start?: Date; end?: Date } = {};

@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -51,7 +51,8 @@ export function builder(options?: {
   TestBed.configureTestingModule({
     providers: [provideNzNoAnimation()],
     imports: [AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
-    declarations: [TestFormComponent]
+    declarations: [TestFormComponent],
+    schemas: [NO_ERRORS_SCHEMA]
   });
   if (options.template) {
     TestBed.overrideTemplate(TestFormComponent, options.template);
@@ -91,7 +92,8 @@ export function configureSFTestSuite(options?: {
         provideHttpClientTesting(),
         provideSFConfig({ widgets: options?.widgets }),
         ...(options?.providers ?? [])
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
 }
@@ -389,8 +391,8 @@ export class SFPage {
       (formError)="formError($event)"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [DelonFormModule],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp!: SFComponent;
@@ -410,9 +412,9 @@ export class TestFormComponent {
   cleanValue = false;
   delay = false;
 
-  formChange(): void {}
-  formValueChange(): void {}
-  formSubmit(): void {}
-  formReset(): void {}
-  formError(): void {}
+  formChange(_val: NzSafeAny): void {}
+  formValueChange(_val: NzSafeAny): void {}
+  formSubmit(_val: NzSafeAny): void {}
+  formReset(_val: NzSafeAny): void {}
+  formError(_val: NzSafeAny): void {}
 }

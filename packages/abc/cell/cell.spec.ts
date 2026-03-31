@@ -344,7 +344,7 @@ describe('abc: cell', () => {
 });
 
 @Component({
-  template: `{{ data.result.text }}-{{ data.options.widget.data }}`
+  template: `{{ data.result?.text }}-{{ data.options?.widget?.data }}`
 })
 class TestWidget {
   static readonly KEY = 'test';
@@ -367,7 +367,7 @@ class TestWidget {
 })
 class TestComponent {
   value?: unknown;
-  valueChange(): void {}
+  valueChange(_val: unknown): void {}
   options?: CellOptions;
   loading = false;
   disabled = false;

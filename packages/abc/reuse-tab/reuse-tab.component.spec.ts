@@ -883,8 +883,8 @@ class AppComponent {}
       [titleRender]="titleRender"
       [storageState]="storageState"
       [canClose]="canClose"
-      (change)="change($event)"
-      (close)="close($event)"
+      (change)="change($any($event))"
+      (close)="close($any($event))"
     />
     <div id="children"><router-outlet /></div>
     <ng-template #titleRender let-i>{{ i.url }}</ng-template>
@@ -910,8 +910,8 @@ class LayoutComponent {
   titleRender?: TemplateRef<{ $implicit: ReuseItem }>;
   storageState = false;
   canClose?: ReuseCanClose;
-  change(): void {}
-  close(): void {}
+  change(_item: any): void {}
+  close(_item: any): void {}
 }
 
 @Component({

@@ -162,7 +162,7 @@ export class PageObject<T extends TestComponent> {
       this.context.columns = [{ title: '', index: 'id' }];
     }
 
-    vi.spyOn(this.context as NzSafeAny, 'error').mockImplementation((res: STError) => (this.spyErrorData = res));
+    vi.spyOn(this.context as NzSafeAny, 'error').mockImplementation((res: NzSafeAny) => (this.spyErrorData = res));
     this.changeSpy = vi
       .spyOn(this.context as NzSafeAny, 'change')
       .mockImplementation(((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny);

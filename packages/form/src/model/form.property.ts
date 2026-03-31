@@ -164,14 +164,14 @@ export abstract class FormProperty {
     let prop: FormProperty = this;
     let base: PropertyGroup | null = null;
 
-    let result = null;
+    let result: FormProperty | null = null;
     if (path[0] === SF_SEQ) {
       base = this.findRoot();
-      result = base.getProperty(path.substring(1));
+      result = base.getProperty(path.substring(1)) ?? null;
     } else {
       while (result === null && prop.parent !== null) {
         prop = base = prop.parent;
-        result = base.getProperty(path);
+        result = base.getProperty(path) ?? null;
       }
     }
     return result!;
