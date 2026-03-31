@@ -8,7 +8,13 @@ import '@analogjs/vitest-angular/setup-zone';
 // Register locale data for tests
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import zhHans from '@angular/common/locales/zh-Hans';
+import zhHant from '@angular/common/locales/zh-Hant';
+import zhCN from '@angular/common/locales/zh-CN';
 registerLocaleData(zh);
+registerLocaleData(zhHans);
+registerLocaleData(zhHant);
+registerLocaleData(zhCN);
 
 // Global test configuration
 beforeEach(() => {
