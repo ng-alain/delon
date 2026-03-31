@@ -14,28 +14,17 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strict": false,
-    "strictTemplates": false,
-    "strictInjectionParameters": false,
-    "skipLibCheck": true,
-    "noImplicitReturns": false,
-    "noFallthroughCasesInSwitch": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noStrictGenericChecks": true
+    "skipLibCheck": true
   },
+  "files": ["test-vi.ts"],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts",
-    "vitest-shim.d.ts"
+    "**/*.d.ts"
   ],
   "exclude": [
     "node_modules"
   ],
   "angularCompilerOptions": {
-    "strictTemplates": false,
-    "strictInjectionParameters": false,
-    "enableIvy": true,
-    "typeCheckHost": false,
-    "fullTemplateTypeCheck": false
+    "enableIvy": true
   }
 }

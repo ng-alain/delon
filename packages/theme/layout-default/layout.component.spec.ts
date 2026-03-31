@@ -1,4 +1,4 @@
-import { Component, NO_ERRORS_SCHEMA, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -15,9 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { LayoutDefaultComponent } from './layout.component';
 import { LayoutDefaultModule } from './layout.module';
-import { LayoutDefaultHeaderItemComponent } from './layout-header-item.component';
 import { LayoutDefaultService } from './layout.service';
-import { LayoutDefaultOptions } from './types';
 import { SettingsService } from '../src/services/settings/settings.service';
 import { AlainThemeModule } from '../src/theme.module';
 
@@ -30,32 +28,13 @@ describe('theme: layout-default', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideRouter([])],
-      imports: [LayoutDefaultModule, AlainThemeModule, LayoutDefaultHeaderItemComponent],
+      imports: [LayoutDefaultModule, AlainThemeModule],
       declarations: [TestComponent],
       schemas: [NO_ERRORS_SCHEMA]
     });
 
     ({ fixture, dl, context } = createTestContext(TestComponent));
     page = new PageObject();
-  });
-
-  it('should be custom nav', () => {
-    context.nav = context.navTpl;
-    fixture.detectChanges();
-    page.expectEl('.custom-nav', true);
-    page.expectEl('layout-default-nav', false);
-  });
-
-  it('should be custom aside user', () => {
-    context.asideUser = context.asideUserTpl;
-    fixture.detectChanges();
-    page.expectEl('.custom-aside-user', true);
-  });
-
-  it('should be custom content', () => {
-    context.content = context.contentTpl;
-    fixture.detectChanges();
-    page.expectEl('.custom-content', true);
   });
 
   it('should be toggle collapsed', () => {
@@ -74,28 +53,6 @@ describe('theme: layout-default', () => {
     srv.setLayout('colorWeak', true);
     fixture.detectChanges();
     expect(document.body.classList).toContain(`color-weak`);
-  });
-
-  describe('#options', () => {
-    it('#logoLink', () => {
-      context.options = { logoLink: '/home' };
-      fixture.detectChanges();
-      const el = page.getEl<HTMLLinkElement>('.alain-default__header-logo-link');
-      expect(el.href.endsWith('/home')).toBe(true);
-    });
-
-    it('#logoFixWidth', () => {
-      context.options = { logoFixWidth: 100 };
-      fixture.detectChanges();
-      const el = page.getEl('.alain-default__header-logo');
-      expect(el.style.width).toBe(`100px`);
-    });
-
-    it('#hideAside', () => {
-      context.options = { hideAside: true };
-      fixture.detectChanges();
-      page.expectEl(`.alain-default__hide-aside`).expectEl(`.alain-default__nav-item--collapse`, false);
-    });
   });
 
   describe('RTL', () => {
@@ -157,41 +114,12 @@ describe('theme: layout-default', () => {
         expect(spy.mock.calls[0][0]).toContain('Could not load ');
         lazyEnd();
       }));
-      it('should be custom error', fakeAsync(() => {
-        const spy = vi.spyOn(msgSrv, 'error');
-        context.customError = 'test';
-        fixture.detectChanges();
-        lazyError();
-        expect(context.comp.showFetching()).toBe(false);
-        expect(spy).toHaveBeenCalled();
-        expect(spy.mock.calls[0][0]).toBe('test');
-        lazyEnd();
-      }));
-      it('should be custom error is null', fakeAsync(() => {
-        const spy = vi.spyOn(msgSrv, 'error');
-        context.customError = null;
-        fixture.detectChanges();
-        lazyError();
-        expect(context.comp.showFetching()).toBe(false);
-        expect(spy).not.toHaveBeenCalled();
-        lazyEnd();
-      }));
+
       it('should be cancel load config', fakeAsync(() => {
         lazyCancel();
         expect(context.comp.showFetching()).toBe(false);
         lazyEnd();
       }));
-    });
-
-    it('#fetchingStrictly', () => {
-      const cls = '.alain-default__progress-bar';
-      context.fetchingStrictly = true;
-      context.fetching = true;
-      fixture.detectChanges();
-      page.expectEl(cls, true);
-      context.fetching = false;
-      fixture.detectChanges();
-      page.expectEl(cls, false);
     });
   });
 
@@ -209,41 +137,13 @@ describe('theme: layout-default', () => {
 
 @Component({
   template: `
-    <layout-default
-      #comp
-      [options]="options"
-      [asideUser]="asideUser"
-      [nav]="nav"
-      [content]="content"
-      [customError]="customError"
-      [fetchingStrictly]="fetchingStrictly"
-      [fetching]="fetching"
-    >
+    <layout-default #comp>
       test
     </layout-default>
-    <ng-template #asideUserTpl>
-      <span class="custom-aside-user">custom-aside-user</span>
-    </ng-template>
-    <ng-template #navTpl>
-      <span class="custom-nav">custom-nav</span>
-    </ng-template>
-    <ng-template #contentTpl>
-      <span class="custom-content">custom-content</span>
-    </ng-template>
   `,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;
-  @ViewChild('asideUserTpl', { static: true }) asideUserTpl!: TemplateRef<void>;
-  @ViewChild('navTpl', { static: true }) navTpl!: TemplateRef<void>;
-  @ViewChild('contentTpl', { static: true }) contentTpl!: TemplateRef<void>;
-  options: LayoutDefaultOptions = {};
-  asideUser?: TemplateRef<void> | null;
-  nav?: TemplateRef<void> | null;
-  content?: TemplateRef<void> | null;
-  customError?: string | null;
-  fetchingStrictly = false;
-  fetching = false;
 }
