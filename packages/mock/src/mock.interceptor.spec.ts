@@ -143,10 +143,9 @@ describe('mock: interceptor', () => {
       expect(+(res as any).b[0]).toBe(1);
       expect(+(res as any).b[1]).toBe(2);
     });
-    it('should be return a observable', () => {
-      http.get('/obs').subscribe(res => {
-        expect(res).toBe(1);
-      });
+    it('should be return a observable', async () => {
+      const res = await lastValueFrom(http.get('/obs'));
+      expect(res).toBe(1);
     });
     it('should be return a promise', async () => {
       const res = await lastValueFrom(http.get('/promise'));
@@ -156,12 +155,18 @@ describe('mock: interceptor', () => {
 
   describe('[disabled log]', () => {
     it('with request', async () => {
-      genModule(DATA, { delay: 1, log: false });
+      // Setup spy first
+      vi.spyOn(console, 'log');
+      vi.spyOn(console, 'warn');
+      genModule(DATA, { delay: 1, log: false }, false);
       await lastValueFrom(http.get('/users'));
       expect(console.log).not.toHaveBeenCalled();
     });
     it('with error request', async () => {
-      genModule(DATA, { delay: 1, log: false });
+      // Setup spy first
+      vi.spyOn(console, 'log');
+      vi.spyOn(console, 'warn');
+      genModule(DATA, { delay: 1, log: false }, false);
       await expect(lastValueFrom(http.get('/404'))).rejects.toBeTruthy();
       expect(console.log).not.toHaveBeenCalled();
     });
