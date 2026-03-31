@@ -10,11 +10,9 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import zhHans from '@angular/common/locales/zh-Hans';
 import zhHant from '@angular/common/locales/zh-Hant';
-import zhCn from '@angular/common/locales/zh-CN';
 registerLocaleData(zh);
 registerLocaleData(zhHans);
 registerLocaleData(zhHant);
-registerLocaleData(zhCn);
 
 // Global test configuration
 beforeEach(() => {
