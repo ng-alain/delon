@@ -1,5 +1,5 @@
 import { Component, LOCALE_ID } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CurrencyMegaOptions } from '@delon/util/format';
@@ -11,39 +11,50 @@ describe('Pipe: mega', () => {
 
   describe('default', () => {
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [TestComponent]
+      });
       fixture = TestBed.createComponent(TestComponent);
     });
-    it('should working', () => {
+    it('should working', fakeAsync(() => {
       fixture.componentInstance.value = 10000;
       fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10K');
-    });
-    it('should be precision', () => {
+    }));
+    it('should be precision', fakeAsync(() => {
       fixture.componentInstance.value = 10100;
       fixture.componentInstance.options.precision = 1;
       fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10.1K');
-    });
+    }));
   });
 
   describe('CN', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
+        imports: [TestComponent],
         providers: [{ provide: LOCALE_ID, useValue: 'zh' }]
       });
       fixture = TestBed.createComponent(TestComponent);
     });
-    it('should working', () => {
+    it('should working', fakeAsync(() => {
       fixture.componentInstance.value = 10000;
       fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('10千');
-    });
+    }));
   });
 });
 
 @Component({
   template: ` <p id="result">{{ value | mega: options }}</p> `,
-  imports: [CurrencyMegaPipe]
+  imports: [CurrencyMegaPipe],
+  standalone: true
 })
 class TestComponent {
   value?: number;

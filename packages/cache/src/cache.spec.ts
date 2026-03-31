@@ -12,14 +12,15 @@ import { ICache } from './interface';
 describe('cache: service', () => {
   let srv: CacheService;
   const KEY = 'a';
+  let data: any = {};
 
   function getHTC(): HttpTestingController {
     return TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
   beforeEach(() => {
-    let data: any = {};
-
+    data = {};
+    vi.restoreAllMocks();
     vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
@@ -85,7 +86,7 @@ describe('cache: service', () => {
         expect(localStorage.setItem).toHaveBeenCalled();
         expect(srv.has(KEY)).toBe(true);
         const meta = JSON.parse(localStorage.getItem('__cache_meta')!) as ICache;
-        expect(meta).not.toBeNaN();
+        expect(meta).toBeTruthy();
         expect(meta.v.indexOf(KEY)).not.toBe(-1);
       });
       it('should be set string and expires vis memory', () => {
@@ -104,22 +105,26 @@ describe('cache: service', () => {
         srv.set(KEY, 2);
         expect(srv.getNone(KEY)).toBe(2);
       });
-      it('should be can not notify when emitNotify is false', () => {
+      it('should be can not notify when emitNotify is false', async () => {
         let result = true;
-        srv
-          .notify(KEY)
-          .pipe(filter(v => v != null))
-          .subscribe(() => (result = false));
+        const promise = firstValueFrom(
+          srv.notify(KEY).pipe(filter(v => v != null))
+        ).then(() => {
+          result = false;
+        });
         srv.set(KEY, 1, { emitNotify: false });
+        // Wait a bit for any potential notification
+        await new Promise(resolve => setTimeout(resolve, 10));
         expect(result).toBe(true);
       });
-      it('should be notify when emitNotify is true', () => {
+      it('should be notify when emitNotify is true', async () => {
         let result = true;
-        srv
-          .notify(KEY)
-          .pipe(filter(v => v != null))
-          .subscribe(() => (result = false));
+        const promise = firstValueFrom(
+          srv.notify(KEY).pipe(filter(v => v != null))
+        );
         srv.set(KEY, 1, { emitNotify: true });
+        await promise;
+        result = false;
         expect(result).toBe(false);
       });
     });
