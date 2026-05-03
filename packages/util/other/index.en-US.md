@@ -61,7 +61,7 @@ export class AppComponent {
   constructor(private lazy: LazyService) {}
 
   ngOnInit() {
-    this.lazy.load([ `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js` ]).then(() => {
+    this.lazy.load([ `https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js` ]).then(() => {
       // do something
     });
   }

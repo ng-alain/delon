@@ -1,12 +1,12 @@
 export interface AlainXlsxConfig {
   /**
-   * Xlsx library path, default: `//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js`
+   * Xlsx library path, default: `https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js`
    */
   url?: string;
   /**
    * Defines which Xlsx optional modules should get loaded, e.g:
    *
-   * `[ '//cdn.bootcss.com/xlsx/0.15.6/cpexcel.js' ]`
+   * `[ 'https://cdn.jsdelivr.net/npm/xlsx/dist/cpexcel.js' ]`
    */
   modules?: string[];
 }

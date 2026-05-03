@@ -37,11 +37,6 @@
               "src/manifest.json",
               "src/robots.txt",
               {
-                "glob": "**/{xlsx.full.min,cpexcel}.js",
-                "input": "./node_modules/xlsx/dist",
-                "output": "assets/xlsx/"
-              },
-              {
                 "glob": "**/jszip.min.js",
                 "input": "./node_modules/jszip/dist",
                 "output": "assets/jszip/"

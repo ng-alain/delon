@@ -77,10 +77,6 @@ const alainConfig: AlainConfig = {
   themeI18n: {
     paramNameOfUrlGuard: 'lang'
   },
-  xlsx: {
-    url: '/assets/xlsx/xlsx.full.min.js',
-    modules: [`/assets/xlsx/cpexcel.js`]
-  },
   zip: {
     url: '/assets/jszip/jszip.min.js'
   },
