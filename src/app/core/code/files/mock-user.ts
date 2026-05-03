@@ -1,6 +1,6 @@
 export default `import { MockStatusError, MockRequest, r } from '@delon/mock';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-// import * as Mock from 'mockjs';
+// import { faker } from '@faker-js/faker';
 
 export const USERS = {
   // 支持值为 Object 和 Array

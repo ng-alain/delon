@@ -5,8 +5,6 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { lastValueFrom, of } from 'rxjs';
 
-import * as Mock from 'mockjs';
-
 import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockRequest } from './interface';
@@ -19,7 +17,7 @@ const USER_LIST = { users: [1, 2], a: 0 };
 const DATA = {
   USERS: {
     'GET /users': USER_LIST,
-    '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
+    '/users/1': { id: 1, action: 'get' },
     '/users/:id': (req: MockRequest) => req.params,
     '/array': [1, 2],
     '/fn/queryString': (req: MockRequest) => req.queryString,

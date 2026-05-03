@@ -1911,6 +1911,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^10.4.0":
+  version: 10.4.0
+  resolution: "@faker-js/faker@npm:10.4.0"
+  checksum: 10c0/29f15e46f91757d654f6f42ac8313ac4aebb6591e2ebae7fdd8d36d5017490327ea67be37cff06d18303db54abf468524bcc7e4b1de53be4eb884c1f71d571c1
+  languageName: node
+  linkType: hard
+
 "@gar/promise-retry@npm:^1.0.0, @gar/promise-retry@npm:^1.0.2":
   version: 1.0.3
   resolution: "@gar/promise-retry@npm:1.0.3"
@@ -3868,13 +3875,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mockjs@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "@types/mockjs@npm:1.0.10"
-  checksum: 10c0/080e7d7e572fbc04892c60846f767049676976f562b7ce22568b6cc6d81eff7e9b0727ec48f02a57bb108d6dfdf8bf622374e0f0b1fad2c9417d0976c3c5aef9
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:>=10.0.0":
   version: 25.5.0
   resolution: "@types/node@npm:25.5.0"
@@ -5573,13 +5573,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:*, commander@npm:^14.0.0, commander@npm:^14.0.3":
-  version: 14.0.3
-  resolution: "commander@npm:14.0.3"
-  checksum: 10c0/755652564bbf56ff2ff083313912b326450d3f8d8c85f4b71416539c9a05c3c67dbd206821ca72635bf6b160e2afdefcb458e86b317827d5cb333b69ce7f1a24
-  languageName: node
-  linkType: hard
-
 "commander@npm:2, commander@npm:^2.20.0, commander@npm:^2.9.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -5591,6 +5584,13 @@ __metadata:
   version: 10.0.1
   resolution: "commander@npm:10.0.1"
   checksum: 10c0/53f33d8927758a911094adadda4b2cbac111a5b377d8706700587650fd8f45b0bbe336de4b5c3fe47fd61f420a3d9bd452b6e0e6e5600a7e74d7bf0174f6efe3
+  languageName: node
+  linkType: hard
+
+"commander@npm:^14.0.0, commander@npm:^14.0.3":
+  version: 14.0.3
+  resolution: "commander@npm:14.0.3"
+  checksum: 10c0/755652564bbf56ff2ff083313912b326450d3f8d8c85f4b71416539c9a05c3c67dbd206821ca72635bf6b160e2afdefcb458e86b317827d5cb333b69ce7f1a24
   languageName: node
   linkType: hard
 
@@ -6523,6 +6523,7 @@ __metadata:
     "@antv/g2": "npm:^4.2.12"
     "@commitlint/cli": "npm:^20.5.0"
     "@commitlint/config-angular": "npm:^20.5.0"
+    "@faker-js/faker": "npm:^10.4.0"
     "@github/hotkey": "npm:^3.1.4"
     "@ng-util/monaco-editor": "npm:^21.1.0"
     "@stackblitz/sdk": "npm:^1.11.0"
@@ -6534,7 +6535,6 @@ __metadata:
     "@types/fs-extra": "npm:^11.0.4"
     "@types/jasmine": "npm:~5.1.13"
     "@types/jasminewd2": "npm:~2.0.13"
-    "@types/mockjs": "npm:^1.0.10"
     "@types/node": "npm:^22.19.3"
     "@types/parse5": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.57.2"
@@ -6587,7 +6587,6 @@ __metadata:
     less-vars-to-js: "npm:^1.3.0"
     lint-staged: "npm:^16.3.2"
     mark-twain: "npm:^2.0.3"
-    mockjs: "npm:^1.1.0"
     mustache: "npm:^4.2.0"
     ng-alain-plugin-theme: "npm:^18.0.0"
     ng-alain-sts: "npm:^0.0.2"
@@ -11602,17 +11601,6 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 10c0/e2e2be789218807b58abced04e7b49851d9e46e88a2f9539242cc8a92c9b5c3a0b9bab360bd3014e02a140fc4fbc58e31176c408b493f8a2a6f4986bd7527b01
-  languageName: node
-  linkType: hard
-
-"mockjs@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "mockjs@npm:1.1.0"
-  dependencies:
-    commander: "npm:*"
-  bin:
-    random: bin/random
-  checksum: 10c0/b96f7f2845da5dd0c8305e2931da6bde00bf13314bc48d1c0ee1a56346da187be678acc0f657c9a5bde15d85ee3e6c9337562c8e43016689bc7a53d4d2500c10
   languageName: node
   linkType: hard
 
