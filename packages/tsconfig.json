@@ -2,18 +2,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "rootDir": ".",
     "paths": {
       "@delon/*": ["./*"]
     },
     "alwaysStrict": true,
     "strictFunctionTypes": true
-  },
-  "angularCompilerOptions": {
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "strictInjectionParameters": true
   },
   "include": [
     "./**/*.ts"

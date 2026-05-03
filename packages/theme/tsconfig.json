@@ -2,8 +2,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "..",
-    "baseUrl": ".",
+    "rootDir": ".",
     "paths": {
       "@delon/theme/*": ["./*"],
       "@delon/*": ["../*"]
