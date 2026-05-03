@@ -14,6 +14,17 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [21.2.0](https://github.com/ng-alain/delon/compare/21.1.0...21.2.0) (2026-05-03)
+
+### Bug Fixes
+
+* **form:** 字符串值应支持使用 `null` 和 `undefined` 值 ([#2024](https://github.com/ng-alain/delon/issues/2024)) ([d99ad55](https://github.com/ng-alain/delon/commit/d99ad550a14848e335132f60827fb68ed9c61994))
+
+### Features
+
+* **mock:** 使用 `@faker-js/faker` 替代 `mockjs` ([#2021](https://github.com/ng-alain/delon/issues/2021)) ([af1b212](https://github.com/ng-alain/delon/commit/af1b2124c82b9f948ea265c21976f06e5688eefa))
+
+
 # [21.1.0](https://github.com/ng-alain/delon/compare/21.0.5...21.1.0) (2026-03-26)
 
 ### Bug Fixes

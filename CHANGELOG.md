@@ -1,3 +1,17 @@
+# [21.2.0](https://github.com/ng-alain/delon/compare/21.1.0...21.2.0) (2026-05-03)
+
+
+### Bug Fixes
+
+* **abc:xlsx:** remove `xlsx` in `devDependencies` ([#2022](https://github.com/ng-alain/delon/issues/2022)) ([03875c5](https://github.com/ng-alain/delon/commit/03875c5ff4aa102cdb12bff9b81610a3b107eb88))
+* **form:** string values ​​should support the use of null and undefined ([#2024](https://github.com/ng-alain/delon/issues/2024)) ([d99ad55](https://github.com/ng-alain/delon/commit/d99ad550a14848e335132f60827fb68ed9c61994))
+
+
+### Features
+
+* **mock:** use @faker-js/faker instead of mockjs ([#2021](https://github.com/ng-alain/delon/issues/2021)) ([af1b212](https://github.com/ng-alain/delon/commit/af1b2124c82b9f948ea265c21976f06e5688eefa))
+
+
 # [21.1.0](https://github.com/ng-alain/delon/compare/21.0.5...21.1.0) (2026-03-26)
 
 
