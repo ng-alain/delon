@@ -165,8 +165,7 @@
     "terser": "^5.46.2",
     "tsx": "^4.21.0",
     "typescript": "~5.9.2",
-    "typescript-eslint": "^8.59.1",
-    "xlsx": "^0.18.5"
+    "typescript-eslint": "^8.59.1"
   },
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [

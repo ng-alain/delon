@@ -17,6 +17,10 @@ module: import { XlsxModule } from '@delon/abc/xlsx';
 
 **使用本地路径**
 
+```bash
+yarn add -D xlsx
+```
+
 ```json
 // angular.json
 {

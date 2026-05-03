@@ -17,6 +17,10 @@ The sheetjs script file takes the form of lazy loading，you can change the defa
 
 **Use local path**
 
+```bash
+yarn add -D xlsx
+```
+
 ```json
 // angular.json
 {
