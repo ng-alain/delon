@@ -27,7 +27,7 @@
             "outputPath": "src/dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "tsConfig": "src/tsconfig.site.json",
+            "tsConfig": "src/tsconfig.json",
             "polyfills": [
               "@webcomponents/custom-elements",
               "@webcomponents/custom-elements/src/native-shim"

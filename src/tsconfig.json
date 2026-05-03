@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "rootDir": "..",
+    "types": [],
+    "paths": {
+      "@delon/*": [
+        "../packages/*"
+      ],
+      "@shared": [
+        "./app/shared"
+      ],
+      "@core": [
+        "./app/core/index"
+      ]
+    }
+  },
+  "include": ["**/*.ts", "../packages/dev-mode-types.d.ts"],
+  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"]
+}

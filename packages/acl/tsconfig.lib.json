@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.lib.prod.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "rootDir": ".",
     "paths": {
       "@delon/util/*": ["../../dist/@delon/util/*"],
