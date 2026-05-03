@@ -97,7 +97,7 @@ describe('form: widget: time', () => {
         .setValue('a', null);
       const comp = getComp();
       comp._change(null);
-      expect(page.getValue('a').length === 0).toBe(true);
+      expect(page.getValue('a') == null).toBe(true);
     });
 
     it('should be return UTC value when utcEpoch is true', () => {
