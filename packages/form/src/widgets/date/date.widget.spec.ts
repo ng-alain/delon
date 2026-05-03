@@ -188,7 +188,7 @@ describe('form: widget: date', () => {
         .checkValue('/start', format(time, comp['startFormat']))
         .checkValue('/end', format(time, comp['startFormat']));
       comp._change(null);
-      page.checkValue('/start', '').checkValue('/end', '');
+      page.checkValue('/start', null).checkValue('/end', null);
     });
     it('should be default', () => {
       const copyS = deepCopy(s);
