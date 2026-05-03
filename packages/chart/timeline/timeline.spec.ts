@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { checkDelay, PageG2 } from '@delon/testing';
-
 import { G2TimelineComponent, G2TimelineData, G2TimelineMap } from './timeline.component';
+import { checkDelay, PageG2 } from '../core/page.spec';
 
 describe('chart: timeline', () => {
   describe('', () => {

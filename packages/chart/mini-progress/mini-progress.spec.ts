@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { createTestContext, PageG2 } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { DelonLocaleModule } from '@delon/theme';
 
 import { G2MiniProgressComponent } from './mini-progress.component';
+import { PageG2 } from '../core/page.spec';
 
 describe('chart: mini-progress', () => {
   let fixture: ComponentFixture<TestComponent>;

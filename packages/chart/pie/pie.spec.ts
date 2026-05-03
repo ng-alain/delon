@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { checkDelay, PageG2 } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2PieComponent } from './pie.component';
+import { checkDelay, PageG2 } from '../core/page.spec';
 
 describe('chart: pie', () => {
   let page: PageG2<TestMiniComponent | TestFullComponent>;

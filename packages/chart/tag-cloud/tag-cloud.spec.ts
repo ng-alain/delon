@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
-import { checkDelay, PageG2 } from '@delon/testing';
-
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
+import { checkDelay, PageG2 } from '../core/page.spec';
 
 describe('chart: tag-cloud', () => {
   describe('', () => {

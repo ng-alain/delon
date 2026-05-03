@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { checkDelay, PageG2 } from '@delon/testing';
-
 import { G2GaugeComponent } from './gauge.component';
+import { checkDelay, PageG2 } from '../core/page.spec';
 
 describe('chart: gauge', () => {
   let page: PageG2<TestComponent>;

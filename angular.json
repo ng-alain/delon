@@ -159,6 +159,35 @@
               // "**/st.spec.ts"
               // "**/st/**/*.spec.ts"
               "**/*.spec.ts"
+            ],
+            "exclude": [
+              "**/auto-focus.directive.spec.ts"
+            ]
+          }
+        }
+      }
+    },
+    "vi": {
+      "sourceRoot": "packages",
+      "root": "packages",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "configurations": {
+            "development": {
+              "tsConfig": "packages/tsconfig.lib.prod.json"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/tsconfig.spec-vi.json",
+            "include": [
+              "**/auto-focus.directive.spec.ts"
             ]
           }
         }

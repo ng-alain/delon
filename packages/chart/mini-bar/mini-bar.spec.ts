@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
-import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniBarComponent } from './mini-bar.component';
+import { checkDelay, PageG2, PageG2Height } from '../core/page.spec';
 
 describe('chart: mini-bar', () => {
   let page: PageG2<TestComponent>;
