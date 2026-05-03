@@ -1907,6 +1907,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^10.4.0":
+  version: 10.4.0
+  resolution: "@faker-js/faker@npm:10.4.0"
+  checksum: 10c0/29f15e46f91757d654f6f42ac8313ac4aebb6591e2ebae7fdd8d36d5017490327ea67be37cff06d18303db54abf468524bcc7e4b1de53be4eb884c1f71d571c1
+  languageName: node
+  linkType: hard
+
 "@gar/promise-retry@npm:^1.0.0, @gar/promise-retry@npm:^1.0.2":
   version: 1.0.3
   resolution: "@gar/promise-retry@npm:1.0.3"
@@ -6524,6 +6531,7 @@ __metadata:
     "@antv/g2": "npm:^4.2.12"
     "@commitlint/cli": "npm:^20.5.3"
     "@commitlint/config-angular": "npm:^20.5.3"
+    "@faker-js/faker": "npm:^10.4.0"
     "@github/hotkey": "npm:^3.1.4"
     "@ng-util/monaco-editor": "npm:^21.2.0"
     "@stackblitz/sdk": "npm:^1.11.0"
