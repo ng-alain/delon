@@ -13,7 +13,7 @@ Mock 是指通过生成模拟数据让前端开发人员独立于后端进行开
 - 任意 Angular 项目
 - 开发无侵入
 - 超简单用法
-- 支持 [mock.js](http://mockjs.com/)
+- 支持 [@faker-js/faker](https://github.com/faker-js/faker)
 
 ## 如何使用
 

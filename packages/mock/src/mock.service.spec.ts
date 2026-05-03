@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import * as Mock from 'mockjs';
-
 import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
 import { MockOptions, MockRequest, MockRule } from './interface';
@@ -13,7 +11,7 @@ const DATA = {
     // 支持值为 Object 和 Array
     'GET /users': { users: [1, 2] },
     // GET 可省略
-    '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
+    '/users/1': { id: 1, action: 'get' },
     '/users/:id': (req: MockRequest) => {
       return { id: req.params.id, s: 'detail' };
     },
@@ -94,7 +92,7 @@ describe('mock: service', () => {
       const editRes = editRule.callback(editRule as any);
       expect(editRes.s).toBe('edit');
       const detailRule = srv.getRule('GET', '/users/1') as MockRule;
-      expect((detailRule.callback as any).rank).not.toBeUndefined();
+      expect((detailRule.callback as any).action).not.toBeUndefined();
     });
 
     it('should be exact match priority', () => {

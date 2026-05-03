@@ -6,5 +6,5 @@
     "flatModuleFile": "mock",
     "entryFile": "public_api.ts"
   },
-  "allowedNonPeerDependencies": ["mockjs", "@delon/util"]
+  "allowedNonPeerDependencies": ["@faker-js/faker", "@delon/util"]
 }

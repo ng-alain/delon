@@ -13,7 +13,7 @@ type: Documents
 - All of the Angular projects
 - Unobtrusive
 - Simple usage
-- Support [mock.js](http://mockjs.com/)
+- Support [@faker-js/faker](https://github.com/faker-js/faker)
 
 ## Usage
 

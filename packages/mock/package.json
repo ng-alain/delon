@@ -16,7 +16,6 @@
     "ng-alain",
     "alain",
     "mock",
-    "mockjs",
     "angular-mock",
     "ng mock",
     "ngx-mock",
@@ -26,8 +25,7 @@
     "component"
   ],
   "dependencies": {
-    "mockjs": "@LIB-PLACEHOLDER",
-    "@types/mockjs": "@LIB-PLACEHOLDER",
+    "@faker-js/faker": "@LIB-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER"
   }
 }
