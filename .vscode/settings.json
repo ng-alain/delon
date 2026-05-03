@@ -1,34 +1,31 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/dist/*/**": true,
-    "**/coverage/*/**": true,
-    "**/.yarn/**": true
-  },
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/dist/*/**": true,
-    "**/ng-alain": true,
-    "**/.yarn": true,
-    "**/src/app/routes/gen/": true
-  },
+  "js/ts.tsdk.path": "./node_modules/typescript/lib",
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "explicit"
   },
+  "eslint.useFlatConfig": true,
+  "eslint.format.enable": true,
   "eslint.validate": ["typescript", "html"],
   "[html]": {
     "editor.formatOnSave": false,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[typescript]": {
-    "editor.formatOnSave": false,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
   },
   "css.validate": false,
   "less.validate": false,
@@ -39,20 +36,24 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascript]": {
-    "editor.formatOnSave": true
+  "files.watcherExclude": {
+    "**/.git/*/**": true,
+    "**/node_modules/*/**": true,
+    "**/dist/*/**": true,
+    "**/coverage/*/**": true,
+    "**/.angular/*/**": true,
+    "**/.yarn/*/**": true
   },
-  "[jsonc]": {
-    "editor.formatOnSave": false
-  },
-  "[yaml]": {
-    "editor.formatOnSave": false
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.angular": true,
+    "**/.github": true,
+    "**/.yarn": true,
+    "**/*.css": true
   },
   "files.associations": {
-    "package.json": "json",
     "*.json": "jsonc",
-    ".prettierrc": "json"
+    ".prettierrc": "jsonc"
   },
-  "typescript.referencesCodeLens.enabled": true,
-  "angular.enable-strict-mode-prompt": false
+  "js/ts.referencesCodeLens.enabled": true
 }
