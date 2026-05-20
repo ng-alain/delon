@@ -6,7 +6,7 @@
 - Each template must be defined in the component `*.ts` file using the `template` property of the `@Component` decorator.
 - Each official style must be defined in the component's `index.less` file.
 - Support Server Side Rendering (SSR).
-- All imports of `@delon/*` and `ng-zorro-antd` packages must use absolute paths. Example:
+- All imports of @delon/* and ng-zorro-antd packages must use package imports. Example:
 
 ```typescript
 import { STComponent } from '@delon/abc/st';
