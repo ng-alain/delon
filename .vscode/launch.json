@@ -25,6 +25,18 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "site generate v2",
+      "program": "${workspaceFolder}/scripts/site/generate-v2.ts",
+      "args": ["packages/abc/auto-focus/"],
+      // "args": ["docs/getting-started.en-US.md"],
+      "runtimeExecutable": "tsx",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": []
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "schematics test",
       "program": "${workspaceFolder}/schematics/test.ts",
       "runtimeExecutable": "tsx",

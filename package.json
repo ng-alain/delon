@@ -152,6 +152,10 @@
     "plyr": "^3.8.4",
     "prettier": "^3.8.3",
     "readline-sync": "^1.4.10",
+    "remark": "^15.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.0",
     "screenfull": "^6.0.2",
     "sitemap": "^9.0.1",
     "source-map-explorer": "^2.5.3",
@@ -165,7 +169,8 @@
     "terser": "^5.46.2",
     "tsx": "^4.21.0",
     "typescript": "~5.9.2",
-    "typescript-eslint": "^8.59.1"
+    "typescript-eslint": "^8.59.1",
+    "yaml": "^2.9.0"
   },
   "lint-staged": {
     "(schematics|scripts|packages)/**/!(tslint-rules|testing)/!(polyfills).{html,ts}": [
