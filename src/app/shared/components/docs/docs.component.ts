@@ -1,12 +1,19 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  Injector,
+  input
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
 
-import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, HTMLPipe, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { deepCopy } from '@delon/util/other';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
@@ -15,7 +22,7 @@ import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaService } from '@core';
+import { DemoDataItem, MetaItem, MetaItemContent, MetaService } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
 import { RouteTransferDirective } from '../route-transfer/route-transfer.directive';
@@ -24,7 +31,68 @@ declare const hljs: any;
 
 @Component({
   selector: 'app-docs',
-  templateUrl: './docs.component.html',
+  template: `
+    @let con = data().con;
+    @if (isBrowser && con.toc && con.toc.length) {
+      <nz-affix class="toc-affix" nzOffsetTop="16">
+        <nz-anchor nzShowInkInFixed nzAffix="false" (nzClick)="goLink($event)">
+          @for (t of con.toc; track $index) {
+            <nz-link [nzHref]="'#' + t.id" [nzTitle]="t.title">
+              @if (t.children && t.children.length > 0) {
+                @for (t2 of t.children; track $index) {
+                  <nz-link [nzHref]="'#' + t2.id" [nzTitle]="t2.title" />
+                }
+              }
+            </nz-link>
+          }
+        </nz-anchor>
+      </nz-affix>
+    }
+    @let c = meta.cfg();
+    @if (c) {
+      @if (!c.i18n || con.meta.i18n === 'need-update') {
+        <nz-alert [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
+          <ng-template #message>
+            {{
+              con.meta.i18n === 'need-update'
+                ? 'This article need re-translated, hope that your can PR to translated it.'
+                : 'This article has not been translated, hope that your can PR to translated it.'
+            }}
+            <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
+          </ng-template>
+        </nz-alert>
+      }
+      <div class="markdown">
+        <h1 class="flex-center">
+          <strong>{{ title() }}</strong>
+          @if (con.module) {
+            <div class="ml-sm">
+              <span
+                class="copy-import-module"
+                (click)="copyModule()"
+                nz-tooltip
+                [nzTooltipTitle]="('app.content.copy-import-module' | i18n) + con.module"
+              >
+                IMPORT MODULE
+              </span>
+            </div>
+          }
+          <edit-button [item]="item()" />
+        </h1>
+      </div>
+      @if (con.content) {
+        <div class="markdown" [innerHTML]="con.content | html" routeTransfer></div>
+      }
+      @if (data().demo) {
+        <h2 [attr.id]="demoStr()" style="margin: 32px 0 24px 0" [innerHTML]="demoContent() | html" routeTransfer></h2>
+        <ng-content />
+      }
+      @if (con.api) {
+        <div class="markdown api-container" [innerHTML]="con.api | html" routeTransfer></div>
+      }
+    }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     I18nPipe,
     RouteTransferDirective,
@@ -32,49 +100,50 @@ declare const hljs: any;
     NzAnchorModule,
     NzAlertModule,
     NzTooltipModule,
-    EditButtonComponent
+    EditButtonComponent,
+    HTMLPipe
   ]
 })
-export class DocsComponent implements OnInit, OnDestroy {
-  readonly meta = inject(MetaService);
+export class DocsComponent {
+  protected readonly meta = inject(MetaService);
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly msg = inject(NzMessageService);
   private readonly router = inject(Router);
-  private readonly sanitizer = inject(DomSanitizer);
   private readonly doc = inject(DOCUMENT);
+  protected readonly isBrowser = inject(Platform).isBrowser;
+  private readonly i18nChange = toSignal(this.i18n.change);
+  private readonly injector = inject(Injector);
 
-  private i18NChange$: Subscription;
-  demoStr!: string;
-  demoContent!: SafeHtml;
-  data: any = {};
-  isBrowser = inject(Platform).isBrowser;
+  readonly codes = input.required<DemoDataItem[]>();
+  readonly item = input.required<MetaItem>();
 
-  @Input() codes!: any[];
-  @Input() item: any;
+  protected readonly title = computed(() => {
+    this.i18nChange();
+    const c = this.meta.cfg();
+    return c ? (this.i18n.currentLang === 'zh-CN' ? (c.subtitle ?? c.title) : c.title) : '';
+  });
+  protected readonly demoStr = computed(() => {
+    this.i18nChange();
+    return this.i18n.fanyi('app.component.examples');
+  });
+  protected readonly demoContent = computed(() => {
+    const demoText = this.demoStr();
+    return `<a class="lake-link"><i data-anchor="${demoText}"></i></a>${demoText}`;
+  });
+  protected readonly data = computed(() => {
+    this.i18nChange();
 
-  constructor() {
-    this.i18NChange$ = this.i18n.change
-      .pipe(
-        takeUntilDestroyed(),
-        filter(() => !!this.item)
-      )
-      .subscribe(() => {
-        this.init();
-      });
-  }
-
-  private genData(): void {
-    const item = deepCopy(this.item);
-    const ret: any = {
+    const item = deepCopy(this.item());
+    const ret: { demo: boolean; urls: Record<string, string>; con: MetaItemContent } = {
       demo: item.demo,
       urls: item.urls,
-      con: item.content[this.i18n.currentLang] || item.content[this.i18n.defaultLang]
+      con: item.content[this.i18n.currentLang] ?? item.content[this.i18n.defaultLang]
     };
 
-    if (ret.demo && this.codes && this.codes.length) {
-      this.genDemoTitle();
-      ret.con.toc = this.codes
-        .map((a: any) => {
+    const codes = this.codes();
+    if (ret.demo && codes && codes.length) {
+      ret.con.toc = codes
+        .map(a => {
           return {
             h: 3,
             id: a.id,
@@ -84,64 +153,55 @@ export class DocsComponent implements OnInit, OnDestroy {
         .concat({ id: 'API', title: 'API', h: 2 });
     }
 
-    if (ret.con.content) ret.con.content = this.sanitizer.bypassSecurityTrustHtml(ret.con.content);
-    if (ret.con.api) ret.con.api = this.sanitizer.bypassSecurityTrustHtml(ret.con.api);
     if (ret.con.meta.module) {
       ret.con.module = ret.con.meta.module;
     }
 
-    this.data = ret;
+    return ret;
+  });
 
-    // goTo
-    setTimeout(() => {
-      const toc = this.router.parseUrl(this.router.url).fragment || '';
-      if (toc) {
-        const tocEl = this.doc.querySelector(`#${toc}`)!;
-        if (tocEl) {
-          tocEl.scrollIntoView();
-        }
+  constructor() {
+    effect(() => {
+      const data = this.data();
+      if (!this.isBrowser) {
+        return;
       }
-    }, 200);
-  }
 
-  goLink(link: string): void {
-    if (window) {
-      window.location.hash = link;
-    }
-  }
+      afterNextRender(
+        () => {
+          const toc = this.router.parseUrl(this.router.url).fragment;
+          if (toc) {
+            const tocEl = this.doc.querySelector(`#${toc}`);
+            tocEl?.scrollIntoView();
+          }
 
-  private genDemoTitle(): void {
-    this.demoStr = this.i18n.fanyi('app.component.examples');
-    this.demoContent = this.sanitizer.bypassSecurityTrustHtml(
-      `<a class="lake-link"><i data-anchor="${this.demoStr}"></i></a>${this.demoStr}`
-    );
-  }
-
-  private init(): void {
-    this.genData();
-    this.genDemoTitle();
-    if (!this.isBrowser) {
-      return;
-    }
-    setTimeout(() => {
-      const elements = this.doc.querySelectorAll('[class*="language-"], [class*="lang-"]');
-      elements.forEach(element => {
-        hljs.highlightBlock(element);
-      });
-    }, 250);
-  }
-
-  copyModule(): void {
-    copy(this.data.con.module).then(() => {
-      this.msg.success(this.i18n.fanyi('app.demo.copied'));
+          const hasCode = !!data.con.content || !!data.con.api;
+          if (hasCode) {
+            const elements = this.doc.querySelectorAll('[class*="language-"], [class*="lang-"]');
+            elements.forEach(element => {
+              hljs.highlightBlock(element);
+            });
+          }
+        },
+        { injector: this.injector }
+      );
     });
   }
 
-  ngOnInit(): void {
-    this.init();
+  goLink(link: string): void {
+    if (!this.isBrowser) {
+      return;
+    }
+    const view = this.doc.defaultView;
+    if (view) {
+      view.location.hash = link;
+    }
   }
 
-  ngOnDestroy(): void {
-    this.i18NChange$.unsubscribe();
+  copyModule(): void {
+    const module = this.data().con.module;
+    if (!module) return;
+    copy(module);
+    this.msg.success(this.i18n.fanyi('app.demo.copied'));
   }
 }

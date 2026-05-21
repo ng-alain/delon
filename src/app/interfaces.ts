@@ -1,10 +1,10 @@
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface Meta {
-  name?: string;
+  name: string;
   github?: string;
-  types?: Array<{ 'zh-CN': string; 'en-US': string; [key: string]: NzSafeAny }>;
-  list?: MetaList[];
+  types: Array<Record<string, string>>;
+  list: MetaList[];
   module?: string;
 }
 
@@ -29,14 +29,19 @@ export interface MetaItem {
   order?: number;
 }
 
-export interface MetaSearchGroup {
+export interface MenuGroup {
+  index: number;
   title?: string;
-  type?: string;
-  children?: MetaSearchGroupItem[];
+  subtitle?: string;
+  list: MenuGroupItem[];
 }
 
-export interface MetaSearchGroupItem {
-  title?: string;
-  name?: string;
-  url?: string;
+export interface MenuGroupItem {
+  url: string;
+  title: string;
+  subtitle: Record<string, string>;
+  order: number;
+  lib: boolean;
+  deprecated?: boolean;
+  tag?: string;
 }

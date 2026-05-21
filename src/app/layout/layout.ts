@@ -12,7 +12,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import { SITE_THEME, SiteTheme } from '@core';
 
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './header';
 
 @Component({
   selector: 'app-layout',

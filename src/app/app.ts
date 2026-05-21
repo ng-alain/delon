@@ -75,10 +75,12 @@ export class App {
         router.navigateByUrl('/404');
         return;
       }
-      const item = meta.getPathByUrl(url);
-      title.setTitle(item ? item.title || item.subtitle : '');
-    });
 
-    i18n.change.subscribe(() => meta.clearMenu());
+      const item = meta.getPathByUrl(url);
+      title.setTitle(item?.title ?? item?.subtitle ?? '');
+    });
+    i18n.change.subscribe(() => {
+      meta.menus.set(undefined);
+    });
   }
 }

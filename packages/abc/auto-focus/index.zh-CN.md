@@ -2,6 +2,7 @@
 type: Other
 title: auto-focus
 subtitle: 自动获得焦点
+description：组件渲染后自动获得焦点
 cols: 1
 module: import { AutoFocusModule } from '@delon/abc/auto-focus';
 ---

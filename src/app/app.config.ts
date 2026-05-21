@@ -8,14 +8,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import {
-  provideRouter,
-  RouterFeatures,
-  withComponentInputBinding,
-  withHashLocation,
-  withInMemoryScrolling,
-  withViewTransitions
-} from '@angular/router';
+import { provideRouter, RouterFeatures, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { provideNuMonacoEditorConfig } from '@ng-util/monaco-editor';
@@ -94,12 +87,7 @@ const alainConfig: AlainConfig = {
 
 const ngZorroConfig: NzConfig = {};
 
-const routerFeatures: RouterFeatures[] = [
-  withComponentInputBinding(),
-  withViewTransitions(),
-  withInMemoryScrolling({ scrollPositionRestoration: 'top' })
-];
-if (!environment.production) routerFeatures.push(withHashLocation());
+const routerFeatures: RouterFeatures[] = [withComponentInputBinding(), withViewTransitions()];
 
 export const appConfig: ApplicationConfig = {
   providers: [

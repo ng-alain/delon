@@ -8,7 +8,7 @@ import { ModuleConfig } from '../interfaces';
 const JsonML = require('jsonml.js/lib/utils');
 const mustache = require('mustache');
 
-export function isHeading(node: any): any {
+export function isHeading(node: any): boolean {
   return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
 }
 
@@ -72,7 +72,7 @@ export function generateSluggedId(children: any): {
 }
 
 export function genAttr(attr: any): string {
-  const ret: any[] = [];
+  const ret: string[] = [];
   if (attr) {
     for (const key in attr) {
       ret.push(`${key}="${attr[key]}"`);

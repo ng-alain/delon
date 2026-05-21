@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { ContentComponent } from '@shared';
 
-import { FormValidatorComponent } from './validator/validator.component';
+import { FormValidatorComponent } from './validator';
 
 export const routes: Routes = [
   {

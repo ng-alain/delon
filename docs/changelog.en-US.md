@@ -1,7 +1,8 @@
 ---
 order: 100
 title: Change Log
-type: Other
+type: Basic
+tag: '{{version}}'
 ---
 
 NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/).

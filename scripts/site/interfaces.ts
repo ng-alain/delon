@@ -58,8 +58,6 @@ export interface ModuleDirConfig {
   reName?: string;
 }
 
-export type Langs = Record<string, any>;
-
 export interface MetaOriginal {
   /** 示例顺序 */
   order: number;
@@ -82,6 +80,7 @@ export interface Meta {
   order: number;
   /** 示例栏数 */
   cols: number;
+  tag?: string;
   /** 原始元数据 */
   meta: MetaOriginal;
 }
@@ -137,13 +136,16 @@ export interface MTData {
 
 export interface DemoDataItem {
   id: string;
-  meta: any;
-  summary: string | any;
+  meta: {
+    title: Record<string, string>;
+    order: number;
+  };
+  summary: Record<string, string>;
   code: string;
   lang: string;
   componentName: string;
+  point: number;
   name: string;
   urls: string;
   type: 'demo' | 'example';
-  point: number;
 }

@@ -158,8 +158,8 @@ function generateModule(config: ModuleConfig): void {
       const meta: Meta = {
         name: handleExploreStr(item.key, '-'),
         i18n,
-        order: content[defaultLang].meta.order || 100,
-        cols: content[defaultLang].meta.cols || 1,
+        order: content[defaultLang].meta.order ?? 100,
+        cols: content[defaultLang].meta.cols ?? 1,
         meta: contentMetas
       };
       metas.push(meta);
@@ -185,7 +185,7 @@ function generateModule(config: ModuleConfig): void {
         componentName: genComponentName(config.name, meta.name),
         selector: genSelector(config.name, meta.name),
         item: {
-          cols: meta.cols,
+          cols: meta.cols ?? 1,
           urls,
           content,
           demo: isDemo

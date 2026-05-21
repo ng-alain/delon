@@ -1,8 +1,12 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, effect, inject, signal, untracked } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
-import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
+import type { Meta, MenuGroupItem, MenuGroup } from '../interfaces';
+import type { MetaCfg } from './types';
+import pkg from '../../../package.json';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
 import { META as CacheMeta } from '../routes/gen/cache/meta';
@@ -32,22 +36,34 @@ const FULLMETAS = [
 @Injectable({ providedIn: 'root' })
 export class MetaService {
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
-  private _platMenus!: any[];
-  private _menus: any[] | null = null;
-  private _type!: string;
+  private readonly router = inject(Router);
+  private readonly i18nChange = toSignal(this.i18n.change);
+  private _platMenus: MenuGroupItem[] = [];
+  private _type?: string;
   private _data: any;
-  private _isPages = false;
-  next: any;
-  prev: any;
+  readonly menus = signal<MenuGroup[] | undefined>(undefined);
+  readonly next = signal<MenuGroupItem | null>(null);
+  readonly prev = signal<MenuGroupItem | null>(null);
+
+  readonly isPages = signal(false);
+  readonly cfg = signal<MetaCfg | null>(null);
 
   constructor() {
-    // plat titles
+    this.platTitles();
+
+    effect(() => {
+      this.i18nChange();
+      untracked(() => this.refMenu(this.router.url));
+    });
+  }
+
+  private platTitles(): void {
     for (const g of FULLMETAS) {
-      for (const item of g.list!) {
-        const curTitle = item.meta![this.i18n.defaultLang].title;
+      for (const item of g.list ?? []) {
+        const curTitle = (item.meta ?? {})[this.i18n.defaultLang].title ?? {};
         item._t =
           typeof curTitle !== 'string'
-            ? Object.values(curTitle!)
+            ? Object.values(curTitle)
                 .map(v => v)
                 .join('-')
             : curTitle;
@@ -57,6 +73,7 @@ export class MetaService {
 
   /** `true` 表示需要跳转404 */
   set(url: string): boolean {
+    this.cfg.set(null);
     const category = this.getCatgory(url);
     if (!category) return false;
     const name = this.getPageName(url);
@@ -78,35 +95,9 @@ export class MetaService {
 
     this.refPage(url);
 
+    this.cfg.set({ ...this._data });
+
     return false;
-  }
-
-  get item(): any {
-    return this._data || null;
-  }
-
-  get github(): string {
-    return this._data.github;
-  }
-
-  get data(): MetaList[] {
-    return this._data.list;
-  }
-
-  get isPages(): boolean {
-    return this._isPages;
-  }
-
-  get menus(): any {
-    return this._menus;
-  }
-
-  get type(): string {
-    return this._type;
-  }
-
-  clearMenu(): void {
-    this._menus = null;
   }
 
   private getCatgory(url: string): Meta | undefined {
@@ -118,9 +109,9 @@ export class MetaService {
     if (~categoryName.indexOf('-')) {
       categoryName = categoryName.split('-')[0];
       category = FULLMETAS.find(w => w.name === categoryName);
-      this._isPages = !!category;
+      this.isPages.set(!!category);
     } else {
-      this._isPages = false;
+      this.isPages.set(false);
     }
     return category;
   }
@@ -135,7 +126,7 @@ export class MetaService {
   }
 
   refMenu(url: string): void {
-    if (!this.menus) {
+    if (!this.menus()) {
       this.genMenus(url);
       return;
     }
@@ -146,23 +137,21 @@ export class MetaService {
     }
   }
 
-  genMenus(url: string): void {
+  private genMenus(url: string): void {
     const category = this.getCatgory(url);
     if (!category) return;
 
     // todo: support level 2
-    const group: any[] = category.types!.map((item, index: number) => {
+    const group = category.types.map((item, index: number) => {
       return {
         index,
-        title: item[this.i18n.currentLang] || item[this.i18n.defaultLang],
-        list: []
+        title: item[this.i18n.currentLang] ?? item[this.i18n.defaultLang],
+        list: [] as MenuGroupItem[]
       };
     });
     category.list!.forEach(item => {
       const meta = item.meta![this.i18n.currentLang] || item.meta![this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex(
-        (w: Record<string, string>) => w['zh-CN'] === meta.type || w['en-US'] === meta.type
-      );
+      let typeIdx = category.types!.findIndex(w => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
@@ -173,78 +162,54 @@ export class MetaService {
         };
         group.push(groupItem);
       }
-      const entry: any = {
+      const entry: MenuGroupItem = {
         url: `${meta.url || item.route || `/${category.name}/${item.name}`}/${this.i18n.zone}`,
         title: this.i18n.get(meta.title!),
         subtitle: meta.subtitle,
-        order: item.order,
-        hot: typeof meta.hot === 'boolean' ? meta.hot : false,
+        order: item.order ?? 1,
         lib: typeof item.lib === 'boolean' ? item.lib : false,
+        tag: meta.tag?.replace('{{version}}', pkg.version),
         deprecated: meta.deprecated
       };
       groupItem.list.push(entry);
     });
 
     this._platMenus = [];
-    this._menus = group
-      .filter((item: any) => Array.isArray(item.list) && item.list.length > 0)
-      .map((item: any) => {
+    const menus = group
+      .filter(item => Array.isArray(item.list) && item.list.length > 0)
+      .map(item => {
         if (item.list[0].order === -1) {
-          item.list.sort((a: any, b: any) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+          item.list.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
         } else {
-          item.list.sort((a: any, b: any) => a.order - b.order);
+          item.list.sort((a, b) => a.order - b.order);
         }
         this._platMenus = this._platMenus.concat(item.list);
         return item;
       })
-      .filter((item: any) => item.list.length);
+      .filter(item => item.list.length);
+    this.menus.set(menus);
   }
 
-  getPathByUrl(url: string): any {
+  getPathByUrl(url: string): MenuGroup | undefined | null {
     url = url
       .split('=')[0]
       .split('?')[0]
       .replace(/\/(en|zh)$/, '/');
-    let ret: any;
-    (this._menus || []).forEach((cat: any) => {
+    let ret: MenuGroupItem | undefined | null = null;
+    (this.menus() ?? []).forEach(cat => {
       if (ret) return;
-      ret = cat.list.find((i: { url: string }) => i.url.startsWith(url));
+      ret = cat.list.find(i => i.url.startsWith(url));
     });
     return ret;
   }
 
   private refPage(url: string): void {
-    this.next = null;
-    this.prev = null;
-    if (!this._menus) this.genMenus(url);
+    this.next.set(null);
+    this.prev.set(null);
+    if (!this.menus()) this.genMenus(url);
     const idx = this._platMenus.findIndex(w => w.url === url);
     if (idx === -1) return;
-    if (idx > 0) this.prev = this._platMenus[idx - 1];
-    if (idx + 1 <= this._platMenus.length) this.next = this._platMenus[idx + 1];
-  }
-
-  search(q: string, childrenMax: number = 5): MetaSearchGroup[] {
-    const zone = this.i18n.zone;
-    const res: MetaSearchGroup[] = [];
-    for (const g of FULLMETAS) {
-      const type = g.name!.toLowerCase();
-      const children: MetaSearchGroupItem[] = g
-        .list!.filter(w => w._t.includes(q))
-        .map(item => {
-          return {
-            title: item._t,
-            name: item.name,
-            url: `${item.route || `/${type}/${item.name}`}/${zone}`
-          };
-        });
-      if (children != null && children.length) {
-        res.push({
-          title: g.name,
-          type,
-          children: children.slice(0, childrenMax)
-        });
-      }
-    }
-    return res;
+    if (idx > 0) this.prev.set(this._platMenus[idx - 1]);
+    if (idx + 1 <= this._platMenus.length) this.next.set(this._platMenus[idx + 1]);
   }
 }

@@ -2,7 +2,6 @@
 order: 1000
 type: Basic
 title: Upgrade to version 21.0
-hot: true
 ---
 
 > This guide applies to the current version ng-alain >= `20`;
