@@ -1,264 +1,213 @@
-import { existsSync, readdirSync, readFileSync } from 'fs';
-import type { Heading, Literal, Parent } from 'mdast';
-import { dirname, join, relative, resolve, sep } from 'path';
-import { remark } from 'remark';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkGFM from 'remark-gfm';
-import remarkHtml from 'remark-html';
-import { parse as yamlParse } from 'yaml';
+import { readFileSync, mkdirSync, writeFileSync } from 'fs';
+import { dirname, join, resolve } from 'path';
 
-import type { ModuleConfig, ModuleDirConfig, SiteConfig } from './interfaces';
-import type { DocDemoItem, DocItem, DocMeta, DocToc } from './types';
-import { genComponentName } from './utils/utils';
+import { ast } from './ast';
+import type { SiteConfig } from './interfaces';
+import type { ModuleDoc, ModuleDocItem, ModuleResMeta, ModuleResMetaItem } from './types';
+import { genComponentName, handleExploreStr } from './utils/utils';
 
 const target = process.argv[2] ?? 'init';
 const rootDir = resolve(__dirname, '../../');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const siteConfig = require(join(rootDir, 'src/site.config.js')) as SiteConfig;
+const templateDir = './src/templates-v2/';
+const templateCache = {
+  content: readFileSync(join(rootDir, templateDir, 'content.ts'), { encoding: 'utf-8' }),
+  routes: readFileSync(join(rootDir, templateDir, 'routes.ts'), { encoding: 'utf-8' }),
+  meta: readFileSync(join(rootDir, templateDir, 'meta.ts'), { encoding: 'utf-8' }),
+  examples: readFileSync(join(rootDir, templateDir, 'examples.ts'), { encoding: 'utf-8' }),
+  examples_index: readFileSync(join(rootDir, templateDir, 'examples_index.ts'), { encoding: 'utf-8' })
+};
 const defaultLang = siteConfig.defaultLang;
 
-function genDocs(config: ModuleConfig): DocItem[] {
-  config.standalone = config.standalone ?? false;
+function saveToFile(path: string, template: string, data?: unknown): void {
+  const dirPath = dirname(path);
+  mkdirSync(dirPath, { recursive: true });
+  const res = data
+    ? template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
+        return String((data as Record<string, unknown>)[key] ?? '');
+      })
+    : template;
+  // console.log(res);
+  writeFileSync(path, res, { flag: 'w+' });
+}
 
-  function getDemos(dir: string): DocDemoItem[] {
-    const fullDir = `${dir}/demo`;
-    const res: DocDemoItem[] = [];
-    if (!existsSync(fullDir)) return res;
-    const files = readdirSync(fullDir).filter(w => w.endsWith('.md'));
-    for (const name of files) {
-      const item = {} as unknown as DocDemoItem;
-      item.name = name.replace('.md', '');
-      const fullPath = join(fullDir, name);
-      const content = readFileSync(fullPath, { encoding: 'utf-8' });
-      const data = extractDemoParts(content);
-      item.code = data.code ?? '';
-      item.componentName = genComponentName(
-        fullPath
-          .replace('packages', '')
-          .replace('demo', '')
-          .replace('.md', '')
-          .split('/')
-          .filter(w => w.length > 0)
-          .join('/')
+function getOrFirst<T>(record: Record<string, T>, key: string): T | undefined {
+  if (key in record) return record[key];
+  const firstKey = Object.keys(record)[0];
+  return firstKey ? record[firstKey] : undefined;
+}
+
+function generateDemoCode(item: ModuleDocItem): string {
+  if (item.demos == null || item.demos.length <= 0) return '';
+  const isTwo = (getOrFirst(item.content, defaultLang)?.meta.cols ?? 1) > 1;
+  const left: string[] = [];
+  const right: string[] = [];
+  for (const [index, i] of item.demos.filter(w => w.type !== 'example').entries()) {
+    const code = `<code-box [item]="codes[${index}]" [attr.id]="codes[${index}].id"><${i.id} /></code-box>`;
+    (isTwo ? (index % 2 === 0 ? left : right) : left).push(code);
+  }
+  if (left.length <= 0 && right.length <= 0) return '';
+
+  const html: string[] = [`<div nz-row [nzGutter]="16">`];
+  if (left.length > 0 && right.length > 0) {
+    html.push(`<div nz-col nzSpan="12">${left.join('')}</div>`);
+    html.push(`<div nz-col nzSpan="12">${right.join('')}</div>`);
+  } else {
+    html.push(`<div nz-col nzSpan="24">${left.join('')}${right.join('')}</div>`);
+  }
+  html.push('</div>');
+  return html.join('');
+}
+
+function generateComponent(doc: ModuleDoc): void {
+  for (const item of doc.docs) {
+    const { id, name, demos, content, langs } = item;
+    const distPath = join(siteConfig.dist, doc.name);
+    const demoList = demos.filter(w => w.type !== 'example');
+    const ngContent = generateDemoCode(item);
+    const imports = demoList.map(v => `import { ${genComponentName(v.id)} } from './${v.name}';`);
+    const standaloneImports = demoList.map(v => genComponentName(v.id));
+    if (demoList.length > 0) {
+      imports.push(
+        `import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';`,
+        `import { CodeBoxComponent } from '@shared';`
       );
-      if (typeof data.yaml === 'string' && data.yaml.length > 0) {
-        const res = yamlParse(data.yaml);
-        item.title = typeof res.title === 'object' ? res.title : { [defaultLang]: res.title };
-        item.order = res.order ?? 0;
-        item.type = res.type ?? 'demo';
-      }
-      if (typeof data.summary === 'object') {
-        item.summary = data.summary;
+      standaloneImports.push('NzColDirective', 'NzRowDirective', `CodeBoxComponent`);
+    }
+    // 生成 document 文件
+    saveToFile(join(distPath, name, 'index.ts'), templateCache.content, {
+      componentName: genComponentName(id),
+      selector: id,
+      ngContent,
+      imports: imports.join('\n'),
+      standaloneImports: `,${standaloneImports.join(', ')}`,
+      item: JSON.stringify({ name, langs, content }),
+      codes: JSON.stringify(demoList)
+    });
+    // 生成 demo 文件
+    for (const i of demoList) {
+      saveToFile(join(distPath, name, `${i.name}.ts`), i.code);
+    }
+    // 生成 example 文件
+    const examples = demos.filter(w => w.type === 'example');
+    if (examples.length > 0) {
+      for (const example of examples) {
+        // 示例组件
+        saveToFile(join(siteConfig.dist, 'examples', `${example.name}.ts`), example.code);
+        // 示例调用组件
+        const exampleComponentName = genComponentName(example.id);
+        const exampleCallData = {
+          componentName: genComponentName(example.id, 'index'),
+          selector: `${example.id}-index`,
+          ngContent: `<code-box [item]="item" type="simple"><${example.id} /></code-box>`,
+          imports: `import { ${exampleComponentName} } from './${example.name}';`,
+          standaloneImports: `,${exampleComponentName}`,
+          item: JSON.stringify(example)
+        };
+        saveToFile(
+          join(siteConfig.dist, 'examples', `${example.name}_index.ts`),
+          templateCache.examples_index,
+          exampleCallData
+        );
       }
     }
-    return res;
   }
+}
 
-  /**
-   * 提取 markdown 中的 YAML front matter、summary、首个代码块 code
-   * - yaml: 仅识别文档开头的 --- ... ---
-   * - code: 提取第一个 fenced code block（```...```）
-   * - summary:
-   *   - 若存在 `## 标题`，按每个 `##` 分段，返回 { 标题: 内容 }
-   *   - 若不存在 `##`，返回 { "defaultLang": 全部内容 }
-   */
-  function extractDemoParts(markdown: string): {
-    yaml: string;
-    summary: Record<string, string>;
-    code: string;
-  } {
-    const content = markdown.replace(/\r\n/g, '\n');
-
-    let yaml = '';
-    let body = content;
-
-    // 1) 提取开头 YAML front matter
-    const yamlMatch = body.match(/^---\n([\s\S]*?)\n---\n?/);
-    if (yamlMatch) {
-      yaml = yamlMatch[1].trim();
-      body = body.slice(yamlMatch[0].length);
-    }
-
-    // 2) 提取第一个代码块，并从正文中移除
-    let code = '';
-    const codeBlockRegex = /(^|\n)```[^\n]*\n([\s\S]*?)\n```(?=\n|$)/m;
-    const codeMatch = body.match(codeBlockRegex);
-
-    if (codeMatch) {
-      code = codeMatch[2].trim();
-      const fullBlock = codeMatch[0].startsWith('\n') ? codeMatch[0].slice(1) : codeMatch[0];
-      const idx = body.indexOf(fullBlock);
-      if (idx >= 0) {
-        body = (body.slice(0, idx) + body.slice(idx + fullBlock.length)).trim();
-      } else {
-        body = body.trim();
-      }
-    } else {
-      body = body.trim();
-    }
-
-    // 3) 按 `##` 分段提取 summary
-    const summary: Record<string, string> = {};
-    const headingRegex = /^##\s+(.+?)\s*$/gm;
-    const headings: Array<{ key: string; start: number; lineEnd: number }> = [];
-
-    let m: RegExpExecArray | null;
-    while ((m = headingRegex.exec(body)) !== null) {
-      const headingStart = m.index;
-      const lineEnd = headingRegex.lastIndex; // 到标题行末尾（不含换行）
-      headings.push({
-        key: m[1].trim(),
-        start: headingStart,
-        lineEnd
-      });
-    }
-
-    if (headings.length === 0) {
-      summary[defaultLang] = remark().use(remarkHtml).processSync(body.trim()).toString();
-    } else {
-      for (let i = 0; i < headings.length; i++) {
-        const cur = headings[i];
-        const next = headings[i + 1];
-
-        let sectionStart = cur.lineEnd;
-        if (body[sectionStart] === '\n') sectionStart += 1; // 跳过标题行后的首个换行
-        const sectionEnd = next ? next.start : body.length;
-
-        const sectionText = body.slice(sectionStart, sectionEnd).trim();
-        if (cur.key in summary) {
-          summary[cur.key] = remark()
-            .use(remarkHtml)
-            .processSync(summary[cur.key] ? `${summary[cur.key]}\n\n${sectionText}` : sectionText)
-            .toString();
-        } else {
-          summary[cur.key] = remark().use(remarkHtml).processSync(sectionText).toString();
-        }
-      }
-    }
-
-    return { yaml, summary, code };
-  }
-
-  function headingToDocToc(headings: Array<Heading & { value: string }>): DocToc[] {
-    const toc: DocToc[] = [];
-    let lastDepth2: DocToc | undefined;
-
-    for (const heading of headings.filter(w => w.children && w.children.length > 0)) {
-      const title = (heading.children[0] as Literal).value;
-      if (title.length === 0) continue;
-
-      if (heading.depth === 2) {
-        lastDepth2 = { title };
-        toc.push(lastDepth2);
-        continue;
-      }
-
-      if (heading.depth === 3 && lastDepth2) {
-        lastDepth2.children = lastDepth2.children ?? [];
-        lastDepth2.children.push({ title });
-      }
-    }
-
-    return toc;
-  }
-
-  function yamlToMeta(content: string): DocMeta {
-    let res = yamlParse(content) as any;
-    if (res == null) res = {};
-    if (typeof res.type === 'string' && res.type.length > 0) {
-      res.group = res.type;
-      delete res.type;
-    }
-    if (typeof res.order !== 'number' || isNaN(res.order)) {
-      res.order = 100;
-    }
-    return res as DocMeta;
-  }
-
-  function getFiles(dirCfg: ModuleDirConfig): Array<{ key: string; basePath: string; data: Record<string, string> }> {
-    const ret: Array<{ key: string; basePath: string; data: Record<string, string> }> = [];
-    const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
-    for (const dir of dirCfg.src) {
-      const files = readdirSync(dir, {
-        recursive: true,
-        withFileTypes: true
-      }).filter(w => w.name.endsWith('.md'));
-
-      for (const entry of files) {
-        const fullPath = join((entry as { parentPath?: string }).parentPath ?? dir, entry.name);
-        if (target !== 'init' && !fullPath.includes(target)) continue;
-        // 过滤所有 demo
-        if (fullPath.includes(`${sep}demo${sep}`)) continue;
-
-        const key = dirCfg.reName
-          ? dirCfg.reName
-          : relative(dir, dirCfg.hasSubDir ? dirname(fullPath) : fullPath.split('.')[0])
-              .split('/')
-              .join('-')
-              .trim();
-        if (key.length <= 0) continue;
-        if (dirCfg.ignores && ~dirCfg.ignores.indexOf(key)) continue;
-
-        let item = ret.find(w => w.key === key);
-        if (!item) {
-          item = {
-            key,
-            basePath: dirname(fullPath),
-            data: {}
-          };
-          ret.push(item);
-        }
-        const langMatch = fullPath.match(langRe);
-        item.data[langMatch ? langMatch[1] : siteConfig.defaultLang] = fullPath;
-      }
-    }
-    return ret;
-  }
-
-  const docList: DocItem[] = [];
-  for (const dirConfig of config.dir) {
-    const files = getFiles(dirConfig);
-
-    for (const item of files) {
-      const docItem: DocItem = {
-        langs: Object.keys(item.data),
-        meta: {},
-        content: {},
-        toc: {},
-        demos: getDemos(item.basePath)
+function generateMeta(doc: ModuleDoc): void {
+  const { name, groups, docs, github } = doc;
+  // groups = [{"zh-CN":"CURD","en-US":"CURD"},{"zh-CN":"基础","en-US":"Basic"},{"zh-CN":"表单","en-US":"Form"},{"zh-CN":"布局","en-US":"Layout"},{"zh-CN":"业务","en-US":"Business"},{"zh-CN":"其它","en-US":"Other"}]
+  const data: ModuleResMeta = {
+    name,
+    github,
+    groups,
+    list: docs.map(i => {
+      const meta = getOrFirst(i.content, defaultLang)?.meta;
+      const data: ModuleResMetaItem = {
+        groupIndex: groups.findIndex(w => w['zh-CN'] == meta?.group || w['en-US'] == meta?.group),
+        name: i.name,
+        order: meta?.order ?? 0,
+        redirect: meta?.url,
+        meta: {}
       };
-      for (const lang of docItem.langs) {
-        const filePath = item.data[lang];
-        const mdContent = readFileSync(filePath, { encoding: 'utf-8' });
-        const md = remark()
-          .use(remarkFrontmatter, ['yaml'])
-          .use(remarkGFM)
-          .use(remarkHtml)
-          .use(() => {
-            return (tree: Parent) => {
-              const yaml = (tree.children.find(w => w.type === 'yaml') as Literal)?.value;
-              docItem.meta[lang] = yamlToMeta(typeof yaml === 'string' && yaml.length > 0 ? yaml : '');
-              const headings = tree.children.filter(
-                (w): w is Heading => w.type === 'heading' && (w.depth === 2 || w.depth === 3)
-              );
-              docItem.toc[lang] = headingToDocToc(headings as Array<Heading & { value: string }>);
-            };
-          })
-          .processSync(mdContent);
-        docItem.content[lang] = String(md);
+      Object.keys(i.content).forEach(lang => {
+        const { title, subtitle, tag, deprecated } = i.content[lang].meta;
+        (data.meta as Record<string, unknown>)[lang] = {
+          title,
+          subtitle,
+          tag,
+          deprecated
+        };
+      });
+      return data;
+    })
+  };
+  saveToFile(join(siteConfig.dist, name, 'meta.ts'), templateCache.meta, {
+    data: JSON.stringify(data)
+  });
+}
+
+function generateRouters(doc: ModuleDoc): void {
+  const { docs } = doc;
+  const imports: string[] = [];
+  const routes: string[] = [];
+  const routerPaths: string[] = ['/'];
+  for (const item of docs) {
+    const componentName = genComponentName(item.id);
+    imports.push(`import { ${componentName} } from './${item.name}';`);
+
+    const path_name = handleExploreStr(item.name, '-');
+    routes.push(`{ path: '${path_name}', redirectTo: '${path_name}/zh', pathMatch: 'full' }`);
+    routes.push(`{ path: '${path_name}/:lang', component: ${componentName} }`);
+
+    routerPaths.push(`/${doc.name.toLowerCase()}/${path_name}/en`);
+    routerPaths.push(`/${doc.name.toLowerCase()}/${path_name}/zh`);
+  }
+  saveToFile(join(siteConfig.dist, doc.name, 'routes.ts'), templateCache.routes, {
+    imports: imports.join('\n'),
+    routes: routes.join(',\n')
+  });
+}
+
+function generateExamplesIndex(docs: ModuleDoc[]): void {
+  const imports: string[] = [];
+  const metadata: string[] = [];
+  for (const doc of docs) {
+    for (const ei of doc.docs) {
+      const examples = ei.demos.filter(w => w.type === 'example');
+      if (examples.length <= 0) continue;
+
+      for (const example of examples) {
+        const componentName = genComponentName(example.id, 'index');
+        imports.push(`import { ${componentName} } from './${example.name}_index';`);
+        metadata.push(
+          `'example-${example.name}-index': { title: ${JSON.stringify(example.title)}, component: ${componentName} }`
+        );
       }
-      docList.push(docItem);
     }
   }
-  return docList;
+  saveToFile(join(siteConfig.dist, 'examples', `index.ts`), templateCache.examples, {
+    imports: imports.join('\n'),
+    metadata: metadata.join(',\n')
+  });
 }
 
 function main(): void {
-  const docs: DocItem[] = [];
-  for (const m of siteConfig.modules) {
-    docs.push(...genDocs(m));
+  const docs = ast(target);
+  for (const item of docs) {
+    generateComponent(item);
+    // 生成 meta
+    generateMeta(item);
+    // 生成 router
+    generateRouters(item);
   }
-  console.log(`✅ Site generated ${docs.length} successfully`);
+
+  // 生成 Example index.ts
+  generateExamplesIndex(docs);
+
+  const length = docs.reduce((pre, cur) => pre + cur.docs.length, 0);
+  console.log(`✅ Site generated ${length} successfully`);
 }
 
 main();

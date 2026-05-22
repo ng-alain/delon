@@ -2,9 +2,11 @@ import { Injectable, effect, inject, signal, untracked } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
+import type { ModuleResMeta } from '@script-type';
+
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 
-import type { Meta, MenuGroupItem, MenuGroup } from '../interfaces';
+import type { MenuGroupItem, MenuGroup } from '../interfaces';
 import type { MetaCfg } from './types';
 import pkg from '../../../package.json';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
@@ -31,15 +33,14 @@ const FULLMETAS = [
   FormMeta,
   CliMeta,
   ThemeMeta
-] as Meta[];
+] as ModuleResMeta[];
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly router = inject(Router);
   private readonly i18nChange = toSignal(this.i18n.change);
-  private _platMenus: MenuGroupItem[] = [];
-  private _type?: string;
+  private groupName?: string;
   private _data: any;
   readonly menus = signal<MenuGroup[] | undefined>(undefined);
   readonly next = signal<MenuGroupItem | null>(null);
@@ -49,50 +50,35 @@ export class MetaService {
   readonly cfg = signal<MetaCfg | null>(null);
 
   constructor() {
-    this.platTitles();
-
     effect(() => {
       this.i18nChange();
       untracked(() => this.refMenu(this.router.url));
     });
   }
 
-  private platTitles(): void {
-    for (const g of FULLMETAS) {
-      for (const item of g.list ?? []) {
-        const curTitle = (item.meta ?? {})[this.i18n.defaultLang].title ?? {};
-        item._t =
-          typeof curTitle !== 'string'
-            ? Object.values(curTitle)
-                .map(v => v)
-                .join('-')
-            : curTitle;
-      }
-    }
-  }
-
   /** `true` 表示需要跳转404 */
   set(url: string): boolean {
     this.cfg.set(null);
-    const category = this.getCatgory(url);
-    if (!category) return false;
-    const name = this.getPageName(url);
-    const data = category.list!.find(w => w.name === name) || null;
+    const meta = this.getMeta(url) as any;
+    if (!meta) return false;
+    const name = this.getDocNameViaUrl(url);
+    const data = meta.list.find((w: any) => w.name === name) as any;
     if (!data) return true;
     this._data = {
       ...data.meta![this.i18n.defaultLang],
       ...data.meta![this.i18n.currentLang],
       i18n: data.i18n,
       name: data.name,
-      module_name: category.module || '',
-      github: category.github,
-      list: category.list
+      module_name: meta.module || '',
+      github: meta.github,
+      list: meta.list
     };
     // fix title
     if (typeof this._data.title === 'object') {
       this._data.title = this._data.title[this.i18n.currentLang] || this._data.title[this.i18n.defaultLang];
     }
 
+    console.log('meta', meta, data);
     this.refPage(url);
 
     this.cfg.set({ ...this._data });
@@ -100,29 +86,28 @@ export class MetaService {
     return false;
   }
 
-  private getCatgory(url: string): Meta | undefined {
+  private getMeta(url: string): ModuleResMeta | undefined {
     const arr = url.split('?')[0].split('/');
     if (arr.length <= 2) return;
 
-    let categoryName = arr[1].toLowerCase().trim();
-    let category = FULLMETAS.find(w => w.name === categoryName);
-    if (~categoryName.indexOf('-')) {
-      categoryName = categoryName.split('-')[0];
-      category = FULLMETAS.find(w => w.name === categoryName);
-      this.isPages.set(!!category);
+    let groupName = arr[1].toLowerCase().trim();
+    let ret = FULLMETAS.find(w => w.name === groupName);
+    if (~groupName.indexOf('-')) {
+      groupName = groupName.split('-')[0];
+      ret = FULLMETAS.find(w => w.name === groupName);
+      this.isPages.set(!!ret);
     } else {
       this.isPages.set(false);
     }
-    return category;
+    return ret;
   }
 
-  private getPageName(url: string): string {
+  private getGroupNameViaUrl(url: string): string {
+    return this.getMeta(url) ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
+  }
+
+  private getDocNameViaUrl(url: string): string {
     return url.split('?')[0].split('/')[2].toLowerCase().trim();
-  }
-
-  private getType(url: string): string {
-    const category = this.getCatgory(url);
-    return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
   }
 
   refMenu(url: string): void {
@@ -130,63 +115,31 @@ export class MetaService {
       this.genMenus(url);
       return;
     }
-    const curType = this.getType(url);
-    if (curType && this._type !== curType) {
+    const groupName = this.getGroupNameViaUrl(url);
+    if (groupName && this.groupName !== groupName) {
       this.genMenus(url);
       return;
     }
   }
 
   private genMenus(url: string): void {
-    const category = this.getCatgory(url);
-    if (!category) return;
+    const meta = this.getMeta(url);
+    if (!meta) return;
 
-    // todo: support level 2
-    const group = category.types.map((item, index: number) => {
+    const menus = meta.groups.map((item, index) => {
       return {
-        index,
         title: item[this.i18n.currentLang] ?? item[this.i18n.defaultLang],
-        list: [] as MenuGroupItem[]
-      };
+        list: meta.list
+          .filter(w => w.groupIndex === index)
+          .map(v => {
+            const meta = v.meta[this.i18n.currentLang] ?? v.meta[this.i18n.defaultLang];
+            return {
+              ...meta,
+              tag: meta.tag?.replace('{{version}}', pkg.version)
+            } as MenuGroupItem;
+          })
+      } as MenuGroup;
     });
-    category.list!.forEach(item => {
-      const meta = item.meta![this.i18n.currentLang] || item.meta![this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex(w => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
-      if (typeIdx === -1) typeIdx = 0;
-      let groupItem = group.find(w => w.index === typeIdx);
-      if (!groupItem) {
-        groupItem = {
-          index: typeIdx,
-          title: category.types![typeIdx][this.i18n.currentLang] || category.types![typeIdx][this.i18n.defaultLang],
-          list: []
-        };
-        group.push(groupItem);
-      }
-      const entry: MenuGroupItem = {
-        url: `${meta.url || item.route || `/${category.name}/${item.name}`}/${this.i18n.zone}`,
-        title: this.i18n.get(meta.title!),
-        subtitle: meta.subtitle,
-        order: item.order ?? 1,
-        lib: typeof item.lib === 'boolean' ? item.lib : false,
-        tag: meta.tag?.replace('{{version}}', pkg.version),
-        deprecated: meta.deprecated
-      };
-      groupItem.list.push(entry);
-    });
-
-    this._platMenus = [];
-    const menus = group
-      .filter(item => Array.isArray(item.list) && item.list.length > 0)
-      .map(item => {
-        if (item.list[0].order === -1) {
-          item.list.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
-        } else {
-          item.list.sort((a, b) => a.order - b.order);
-        }
-        this._platMenus = this._platMenus.concat(item.list);
-        return item;
-      })
-      .filter(item => item.list.length);
     this.menus.set(menus);
   }
 
@@ -196,10 +149,11 @@ export class MetaService {
       .split('?')[0]
       .replace(/\/(en|zh)$/, '/');
     let ret: MenuGroupItem | undefined | null = null;
-    (this.menus() ?? []).forEach(cat => {
-      if (ret) return;
-      ret = cat.list.find(i => i.url.startsWith(url));
-    });
+    // (this.menus() ?? []).forEach(cat => {
+    //   if (ret) return;
+    //   ret = cat.list.find(i => i.url.startsWith(url));
+    // });
+    console.log(url);
     return ret;
   }
 
@@ -207,9 +161,11 @@ export class MetaService {
     this.next.set(null);
     this.prev.set(null);
     if (!this.menus()) this.genMenus(url);
-    const idx = this._platMenus.findIndex(w => w.url === url);
+    const plat = this.menus()?.reduce((p, c) => [...p, ...c.list], [] as MenuGroupItem[]) ?? [];
+    const idx = plat.findIndex(w => w.url === url);
     if (idx === -1) return;
-    if (idx > 0) this.prev.set(this._platMenus[idx - 1]);
-    if (idx + 1 <= this._platMenus.length) this.next.set(this._platMenus[idx + 1]);
+    if (idx > 0) this.prev.set(plat[idx - 1]);
+    if (idx + 1 <= plat.length) this.next.set(plat[idx + 1]);
+    console.log(this.prev(), this.next(), plat);
   }
 }

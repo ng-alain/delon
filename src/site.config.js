@@ -2,6 +2,7 @@ module.exports = {
   defaultLang: 'zh-CN',
   langs: ['zh-CN', 'en-US'],
   tocMaxDepth: 3, // toc max depth
+  dist: './src/app/routes/gen',
   template: {
     examples: './src/templates/examples.ts',
     examples_index: './src/templates/examples_index.ts'

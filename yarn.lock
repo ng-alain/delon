@@ -6695,6 +6695,7 @@ __metadata:
     tsx: "npm:^4.21.0"
     typescript: "npm:~5.9.2"
     typescript-eslint: "npm:^8.59.1"
+    unist-util-visit: "npm:^5.1.0"
     yaml: "npm:^2.9.0"
     zone.js: "npm:~0.15.0"
   languageName: unknown
@@ -16918,7 +16919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit@npm:^5.0.0":
+"unist-util-visit@npm:^5.0.0, unist-util-visit@npm:^5.1.0":
   version: 5.1.0
   resolution: "unist-util-visit@npm:5.1.0"
   dependencies:

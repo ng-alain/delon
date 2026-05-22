@@ -5,6 +5,9 @@
     "rootDir": "..",
     "types": [],
     "paths": {
+      "@script-type": [
+        "../scripts/site/types.ts"
+      ],
       "@delon/*": [
         "../packages/*"
       ],
@@ -17,5 +20,5 @@
     }
   },
   "include": ["**/*.ts", "../packages/dev-mode-types.d.ts"],
-  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"]
+  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts", "templates-v2/*.ts"]
 }

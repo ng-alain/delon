@@ -13,6 +13,8 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
+import type { ModuleDocDemoItem, ModuleResDoc } from '@script-type';
+
 import { ALAIN_I18N_TOKEN, HTMLPipe, I18nPipe } from '@delon/theme';
 import { copy } from '@delon/util/browser';
 import { deepCopy } from '@delon/util/other';
@@ -22,7 +24,7 @@ import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { DemoDataItem, MetaItem, MetaItemContent, MetaService } from '@core';
+import { MetaItemContent, MetaService } from '@core';
 
 import { EditButtonComponent } from '../edit-button/edit-button.component';
 import { RouteTransferDirective } from '../route-transfer/route-transfer.directive';
@@ -114,8 +116,8 @@ export class DocsComponent {
   private readonly i18nChange = toSignal(this.i18n.change);
   private readonly injector = inject(Injector);
 
-  readonly codes = input.required<DemoDataItem[]>();
-  readonly item = input.required<MetaItem>();
+  readonly codes = input.required<ModuleDocDemoItem[]>();
+  readonly item = input.required<ModuleResDoc>();
 
   protected readonly title = computed(() => {
     this.i18nChange();
@@ -133,7 +135,7 @@ export class DocsComponent {
   protected readonly data = computed(() => {
     this.i18nChange();
 
-    const item = deepCopy(this.item());
+    const item = deepCopy(this.item()) as any;
     const ret: { demo: boolean; urls: Record<string, string>; con: MetaItemContent } = {
       demo: item.demo,
       urls: item.urls,
@@ -147,7 +149,7 @@ export class DocsComponent {
           return {
             h: 3,
             id: a.id,
-            title: this.i18n.get(a.meta.title)
+            title: this.i18n.get(a.title)
           };
         })
         .concat({ id: 'API', title: 'API', h: 2 });

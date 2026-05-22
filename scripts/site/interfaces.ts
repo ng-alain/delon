@@ -7,6 +7,7 @@ export interface SiteConfig {
   langs: string[];
   /** 生成目录最大深度 */
   tocMaxDepth: number;
+  dist: string;
   template: {
     examples: string;
     examples_index: string;
@@ -52,7 +53,7 @@ export interface ModuleDirConfig {
   /** 忽略项 */
   ignores: string[];
   /** 模板路径 */
-  template: TemplateConfig;
+  template?: TemplateConfig;
   /** 是否包含子目录 */
   hasSubDir: boolean;
   reName?: string;

@@ -1,10 +1,12 @@
 import { Component, computed, inject, input } from '@angular/core';
 
+import { ModuleResDoc } from '@script-type';
+
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaItem, MetaService } from '@core';
+import { MetaService } from '@core';
 
 @Component({
   selector: 'edit-button',
@@ -25,9 +27,9 @@ export class EditButtonComponent {
   private readonly meta = inject(MetaService);
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
 
-  readonly item = input.required<MetaItem>();
+  readonly item = input.required<ModuleResDoc>();
 
   protected readonly full = computed(() => {
-    return `${this.meta.cfg()?.github}/edit/master/${this.i18n.get(this.item().urls)}`;
+    return `${this.meta.cfg()?.github}/edit/master/${this.i18n.get(this.item())}`;
   });
 }

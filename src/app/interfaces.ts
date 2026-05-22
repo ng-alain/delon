@@ -30,7 +30,6 @@ export interface MetaItem {
 }
 
 export interface MenuGroup {
-  index: number;
   title?: string;
   subtitle?: string;
   list: MenuGroupItem[];
@@ -39,7 +38,7 @@ export interface MenuGroup {
 export interface MenuGroupItem {
   url: string;
   title: string;
-  subtitle: Record<string, string>;
+  subtitle?: string;
   order: number;
   lib: boolean;
   deprecated?: boolean;

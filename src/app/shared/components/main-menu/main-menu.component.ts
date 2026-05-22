@@ -15,26 +15,29 @@ import { MetaService } from '@core';
         <li nz-menu-group nzOpen [nzTitle]="group.title">
           <ul>
             @for (item of group.list; track $index) {
+              @let meta = item;
               <li
                 nz-menu-item
-                (click)="to.emit(item.url)"
+                (click)="to.emit(meta.url)"
                 [routerLink]="item.url"
                 [routerLinkActive]="['ant-menu-item-selected']"
                 style="padding-left: 54px"
-                [class.menu-deprecated]="item.deprecated"
+                [class.menu-deprecated]="meta.deprecated"
                 nz-tooltip
-                [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
+                [nzTooltipTitle]="meta.deprecated ? 'Deprecated in ' + meta.deprecated : null"
               >
                 <div class="flex-center-between">
                   <div>
-                    <span class="name">{{ item.title }}</span>
-                    <span class="chinese">{{ item.subtitle }}</span>
-                    @if (item.lib) {
+                    <span class="name">{{ meta.title }}</span>
+                    @if (meta.subtitle) {
+                      <span class="chinese">{{ meta.subtitle }}</span>
+                    }
+                    @if (meta.lib) {
                       <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
                     }
                   </div>
-                  @if (item.tag) {
-                    <nz-tag nzColor="success">{{ item.tag }}</nz-tag>
+                  @if (meta.tag) {
+                    <nz-tag nzColor="success">{{ meta.tag }}</nz-tag>
                   }
                 </div>
               </li>
