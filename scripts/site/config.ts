@@ -14,6 +14,10 @@ export const CONFIG: SiteConfig = {
           'en-US': 'Basic'
         },
         {
+          'zh-CN': 'AI',
+          'en-US': 'AI'
+        },
+        {
           'zh-CN': '开发',
           'en-US': 'Dev'
         },

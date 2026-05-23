@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { readFileSync, mkdirSync, writeFileSync } from 'fs';
-import { dirname, join, resolve } from 'path';
+import { readFileSync } from 'fs';
+import { join, resolve } from 'path';
 
 import { ast } from './ast/index';
-import { genComponentName, getOrFirst, handleExploreStr } from './ast/util';
+import { genComponentName, getOrFirst, handleExploreStr, saveToFile } from './ast/util';
 import { CONFIG } from './config';
+import { generateLLMs } from './llms';
 import type { ModuleDoc, ModuleDocItem, ModuleMenu, ModuleMenuGroup, ModuleMenuGroupItem, ModuleResDoc } from './types';
 
 const target = process.argv[2] ?? 'init';
@@ -20,18 +21,6 @@ const templateCache = {
 };
 const defaultLang = CONFIG.defaultLang;
 const routerPaths: string[] = ['/'];
-
-function saveToFile(path: string, template: string, data?: unknown): void {
-  const dirPath = dirname(path);
-  mkdirSync(dirPath, { recursive: true });
-  const res = data
-    ? template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
-        return String((data as Record<string, unknown>)[key] ?? '');
-      })
-    : template;
-  // console.log(res);
-  writeFileSync(path, res, { flag: 'w+' });
-}
 
 function generateDemoCode(item: ModuleDocItem): string {
   if (item.demos == null || item.demos.length <= 0) return '';
@@ -217,9 +206,12 @@ function main(): void {
   generateExamplesIndex(docs);
   // 生成 route-paths.txt
   saveToFile(join(__dirname, `route-paths.txt`), Array.from(new Set(routerPaths)).sort().join('\n'));
+  // 生成 LLMs 数据
+  generateLLMs(docs);
 
-  const length = docs.reduce((pre, cur) => pre + cur.docs.length, 0);
-  console.log(`✅ Site generated ${length} successfully`);
+  const docLength = docs.reduce((pre, cur) => pre + cur.docs.filter(w => w.type === 'doc').length, 0);
+  const componentLength = docs.reduce((pre, cur) => pre + cur.docs.filter(w => w.type === 'component').length, 0);
+  console.log(`✅ Site generated doc ${docLength}, component ${componentLength} successfully`);
 }
 
 main();

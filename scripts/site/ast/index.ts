@@ -3,7 +3,7 @@ import { dirname, join, relative, sep } from 'path';
 
 import type { ModuleConfig, ModuleDirConfig, ModuleDoc, ModuleDocDemoItem, ModuleDocItem } from '../types';
 import { parseDemo, parseDoc } from './pase';
-import { genComponentName, handleExploreStr } from './util';
+import { genComponentName, getOrFirst, handleExploreStr } from './util';
 import { CONFIG } from '../config';
 
 const defaultLang = CONFIG.defaultLang;
@@ -96,15 +96,23 @@ function generatePackage(target: string, config: ModuleConfig): ModuleDoc {
 
     for (const item of files) {
       const name = handleExploreStr(item.key, '-');
+      const langs = Object.keys(item.data);
+      const firstPath = getOrFirst(item.data, 'zh-CN', defaultLang) ?? '';
       const docItem: ModuleDocItem = {
         id: [config.name, name].join('-'),
+        type:
+          firstPath.endsWith('/index.en-US.md') ||
+          firstPath.endsWith('/index.zh-CN.md') ||
+          firstPath.endsWith('/index.md')
+            ? 'component'
+            : 'doc',
         name,
-        langs: Object.keys(item.data),
+        langs,
         content: {},
         demos: []
       };
       docItem.demos = generateDemo(config, item.basePath, docItem);
-      for (const lang of docItem.langs) {
+      for (const lang of langs) {
         const path = item.data[lang];
         const mdContent = readFileSync(path, { encoding: 'utf-8' });
         const content = (docItem.content[lang] = parseDoc(lang, mdContent));

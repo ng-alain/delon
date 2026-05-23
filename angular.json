@@ -36,6 +36,9 @@
               "src/assets",
               "src/manifest.json",
               "src/robots.txt",
+              "src/llms.txt",
+              "src/llms-full.txt",
+              "src/llms-full-cn.txt",
               {
                 "glob": "**/jszip.min.js",
                 "input": "./node_modules/jszip/dist",

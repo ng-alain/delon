@@ -52,6 +52,7 @@ export interface ModuleDoc {
 }
 
 export interface ModuleDocItem {
+  type?: 'doc' | 'component';
   id: string;
   name: string;
   /** 支持语言列表，例如：`zh-CN`,`en-US` */

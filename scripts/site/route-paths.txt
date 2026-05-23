@@ -177,6 +177,8 @@
 /docs/i18n/zh
 /docs/import/en
 /docs/import/zh
+/docs/llms/en
+/docs/llms/zh
 /docs/mock/en
 /docs/mock/zh
 /docs/module/en

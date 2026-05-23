@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from 'fs';
+import { dirname } from 'path';
 import slugify from 'slugify';
 
 export function handleExploreStr(str: string, cr: string = '/'): string {
@@ -10,6 +12,7 @@ export function genUpperName(name: string): string {
     .map(v => v.charAt(0).toUpperCase() + v.slice(1))
     .join('');
 }
+
 export function genComponentName(...names: string[]): string {
   return `${names
     .map(key =>
@@ -19,10 +22,6 @@ export function genComponentName(...names: string[]): string {
         .join('')
     )
     .join('')}`;
-}
-
-export function genSelector(...names: string[]): string {
-  return `${names.map(vv => vv.replace(/-|\//g, '-')).join('-')}`;
 }
 
 /**
@@ -46,4 +45,16 @@ export function idSlug(title: string): string {
     replacement: '_',
     lower: true
   });
+}
+
+export function saveToFile(path: string, template: string, data?: unknown): void {
+  const dirPath = dirname(path);
+  mkdirSync(dirPath, { recursive: true });
+  const res = data
+    ? template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
+        return String((data as Record<string, unknown>)[key] ?? '');
+      })
+    : template;
+  // console.log(res);
+  writeFileSync(path, res, { flag: 'w+' });
 }
