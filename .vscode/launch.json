@@ -18,7 +18,7 @@
       "name": "site generate",
       "program": "${workspaceFolder}/scripts/site/index.ts",
       // "args": ["packages/abc/auto-focus/"],
-      "args": ["packages/abc/sv/index.zh-CN.md"],
+      "args": ["packages/util/browser/index.en-US.md"],
       "runtimeExecutable": "tsx",
       "console": "integratedTerminal",
       "internalConsoleOptions": "openOnSessionStart",

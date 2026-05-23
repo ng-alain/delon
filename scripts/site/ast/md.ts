@@ -58,6 +58,13 @@ function getRenderer(marked: Marked): RendererObject {
       }
 
       return head + anchor;
+    },
+    def({ href }) {
+      const match = href.match(/^demo\((.+?)\)$/);
+      if (!match) {
+        return '';
+      }
+      return `<example-${match[1]}-index />`;
     }
   };
 }

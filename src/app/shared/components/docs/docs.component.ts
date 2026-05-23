@@ -130,7 +130,7 @@ export class DocsComponent {
   });
   protected readonly tocs = computed<ModuleDocToc[]>(() => {
     const content = this.content();
-    const ret = content.toc;
+    const ret = content?.toc ?? [];
     const codes = this.codes();
     if (codes && codes.length) {
       const codeToc: ModuleDocToc = { id: this.demoStr(), title: this.demoStr(), children: [] };

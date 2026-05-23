@@ -18,14 +18,14 @@ function generateDemo(config: ModuleConfig, dir: string, docItem: ModuleDocItem)
   const files = readdirSync(fullDir).filter(w => w.endsWith('.md'));
   for (const fileName of files) {
     const name = fileName.replace('.md', '');
-    if (processedExampleNames.includes(name)) {
-      continue;
-    }
-    processedExampleNames.push(name);
-
     const fullPath = join(fullDir, fileName);
     const content = readFileSync(fullPath, { encoding: 'utf-8' });
     const meta = parseDemo(content, defaultLang);
+    if (meta.type === 'example' && processedExampleNames.includes(name)) {
+      // console.warn(`demo name ${name} has been processed, please check it in ${fullDir}`);
+      continue;
+    }
+    processedExampleNames.push(name);
     const id = [config.name, docItem.name, name].join('-');
     // 修正 selector & component name
     meta.code = meta.code
