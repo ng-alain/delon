@@ -18,7 +18,7 @@ import { MenuService } from '@core';
               <li
                 nz-menu-item
                 (click)="to.emit(item.url ?? '')"
-                [routerLink]="item.url"
+                [routerLink]="item.redirect ?? item.url"
                 [routerLinkActive]="['ant-menu-item-selected']"
                 style="padding-left: 54px"
                 [class.menu-deprecated]="item.deprecated"

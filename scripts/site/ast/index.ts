@@ -110,6 +110,7 @@ function generatePackage(target: string, config: ModuleConfig): ModuleDoc {
         const path = item.data[lang];
         const mdContent = readFileSync(path, { encoding: 'utf-8' });
         const content = (docItem.content[lang] = parseDoc(lang, mdContent));
+        if (typeof content.meta.lib !== 'boolean') delete content.meta.lib;
         content.meta.path = path;
         content.meta.url = `/${config.name.toLowerCase()}/${name}/${lang === 'zh-CN' ? 'zh' : 'en'}`;
       }

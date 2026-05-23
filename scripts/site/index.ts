@@ -147,6 +147,7 @@ function generateMenus(doc: ModuleDoc[]): void {
             tag: meta.tag?.replace('{{version}}', pkg.version) ?? '',
             deprecated: meta.deprecated,
             redirect: meta.redirect,
+            lib: meta.lib,
             url: meta.url
           } as ModuleMenuGroupItem;
         });
