@@ -1,14 +1,12 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
-import { dirname, join, relative, resolve, sep } from 'path';
+import { dirname, join, relative, sep } from 'path';
 
-import type { ModuleConfig, ModuleDirConfig, SiteConfig, ModuleDoc, ModuleDocDemoItem, ModuleDocItem } from '../types';
+import type { ModuleConfig, ModuleDirConfig, ModuleDoc, ModuleDocDemoItem, ModuleDocItem } from '../types';
 import { parseDemo, parseDoc } from './pase';
 import { genComponentName, handleExploreStr } from './util';
+import { CONFIG } from '../config';
 
-const rootDir = resolve(__dirname, '../../../');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const siteConfig = require(join(rootDir, 'src/site.config.js')) as SiteConfig;
-const defaultLang = siteConfig.defaultLang;
+const defaultLang = CONFIG.defaultLang;
 const processedExampleNames: string[] = [];
 
 function generateDemo(config: ModuleConfig, dir: string, docItem: ModuleDocItem): ModuleDocDemoItem[] {
@@ -47,7 +45,7 @@ function getFiles(
   dirCfg: ModuleDirConfig
 ): Array<{ key: string; basePath: string; data: Record<string, string> }> {
   const ret: Array<{ key: string; basePath: string; data: Record<string, string> }> = [];
-  const langRe = new RegExp(`.(${siteConfig.langs.join('|')}){1}`, 'i');
+  const langRe = new RegExp(`.(${CONFIG.langs.join('|')}){1}`, 'i');
   for (const dir of dirCfg.src) {
     const files = readdirSync(dir, {
       recursive: true,
@@ -79,7 +77,7 @@ function getFiles(
         ret.push(item);
       }
       const langMatch = fullPath.match(langRe);
-      item.data[langMatch ? langMatch[1] : siteConfig.defaultLang] = fullPath;
+      item.data[langMatch ? langMatch[1] : defaultLang] = fullPath;
     }
   }
   return ret;
@@ -88,10 +86,10 @@ function getFiles(
 function generatePackage(target: string, config: ModuleConfig): ModuleDoc {
   const ret: ModuleDoc = {
     name: config.name,
-    github: config.github,
+    github: CONFIG.github,
     defaultRoute: config.defaultRoute,
-    groups: config.types ?? [],
-    docs: []
+    groups: config.groups ?? [],
+    docs: [...(config.extraDocs ?? [])]
   };
   for (const dirConfig of config.dir) {
     const files = getFiles(target, dirConfig);
@@ -122,7 +120,7 @@ function generatePackage(target: string, config: ModuleConfig): ModuleDoc {
 
 export function ast(target: string): ModuleDoc[] {
   const ret: ModuleDoc[] = [];
-  for (const m of siteConfig.modules) {
+  for (const m of CONFIG.modules) {
     const item = generatePackage(target, m);
     if (item == null) continue;
 

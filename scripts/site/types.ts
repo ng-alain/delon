@@ -5,13 +5,7 @@ export interface SiteConfig {
   defaultLang: string;
   /** 语言清单 */
   langs: string[];
-  /** 生成目录最大深度 */
-  tocMaxDepth: number;
   dist: string;
-  template: {
-    examples: string;
-    examples_index: string;
-  };
   modules: ModuleConfig[];
 }
 
@@ -27,23 +21,12 @@ export interface TemplateConfig {
 export interface ModuleConfig {
   /** 模块名称 */
   name: string;
-  github: string;
-  /** 生成目标位置 */
-  dist: string;
-  /** 分类数据 */
-  types: Array<Record<string, string>>;
+  /** 组别数据 */
+  groups: Array<Record<string, string>>;
   /** 默认路由 */
   defaultRoute: string;
-  /** 额外路由元数据 */
-  extraRouteMeta?: any[];
-  /** 模块名称，例如：`@delon/abc` */
-  module: string;
-  /** 元数据包含属性 */
-  metaIncludeAttributes: string[];
-  /** 模板路径 */
-  template?: TemplateConfig;
-  /** 是否按 standalone 生成 */
-  standalone?: boolean;
+  /** 额外文档数据 */
+  extraDocs?: ModuleDocItem[];
   dir: ModuleDirConfig[];
 }
 
@@ -51,11 +34,11 @@ export interface ModuleDirConfig {
   /** 源码位置 */
   src: string[];
   /** 忽略项 */
-  ignores: string[];
+  ignores?: string[];
   /** 模板路径 */
   template?: TemplateConfig;
   /** 是否包含子目录 */
-  hasSubDir: boolean;
+  hasSubDir?: boolean;
   reName?: string;
 }
 
@@ -99,7 +82,7 @@ export interface ModuleDocMeta {
   /** 是否已经包含国际化 */
   i18n?: string;
   /** 顺序 */
-  order: number;
+  order?: number;
   /** 示例栏数 */
   cols?: number;
   /** 标签 */

@@ -4,19 +4,11 @@ import { dirname, join, resolve } from 'path';
 
 import { ast } from './ast/index';
 import { genComponentName, getOrFirst, handleExploreStr } from './ast/util';
-import type {
-  SiteConfig,
-  ModuleDoc,
-  ModuleDocItem,
-  ModuleMenu,
-  ModuleMenuGroup,
-  ModuleMenuGroupItem,
-  ModuleResDoc
-} from './types';
+import { CONFIG } from './config';
+import type { ModuleDoc, ModuleDocItem, ModuleMenu, ModuleMenuGroup, ModuleMenuGroupItem, ModuleResDoc } from './types';
 
 const target = process.argv[2] ?? 'init';
 const rootDir = resolve(__dirname, '../../');
-const siteConfig = require(join(rootDir, 'src/site.config.js')) as SiteConfig;
 const pkg = require(join(rootDir, 'package.json')) as { version: string };
 const templateDir = './src/templates/';
 const templateCache = {
@@ -26,7 +18,7 @@ const templateCache = {
   examples: readFileSync(join(rootDir, templateDir, 'examples.ts'), { encoding: 'utf-8' }),
   examples_index: readFileSync(join(rootDir, templateDir, 'examples_index.ts'), { encoding: 'utf-8' })
 };
-const defaultLang = siteConfig.defaultLang;
+const defaultLang = CONFIG.defaultLang;
 const routerPaths: string[] = ['/'];
 
 function saveToFile(path: string, template: string, data?: unknown): void {
@@ -66,7 +58,7 @@ function generateDemoCode(item: ModuleDocItem): string {
 function generateComponent(doc: ModuleDoc): void {
   for (const item of doc.docs) {
     const { id, name, demos, content, langs } = item;
-    const distPath = join(siteConfig.dist, doc.name);
+    const distPath = join(CONFIG.dist, doc.name);
     const demoList = demos.filter(w => w.type !== 'example');
     const ngContent = generateDemoCode(item);
     const imports = demoList.map(v => `import { ${genComponentName(v.id)} } from './${v.name}';`);
@@ -102,7 +94,7 @@ function generateComponent(doc: ModuleDoc): void {
     if (examples.length > 0) {
       for (const example of examples) {
         // 示例组件
-        saveToFile(join(siteConfig.dist, 'examples', `${example.name}.ts`), example.code);
+        saveToFile(join(CONFIG.dist, 'examples', `${example.name}.ts`), example.code);
         // 示例调用组件
         const exampleComponentName = genComponentName(example.id);
         const exampleCallData = {
@@ -114,7 +106,7 @@ function generateComponent(doc: ModuleDoc): void {
           item: JSON.stringify(example)
         };
         saveToFile(
-          join(siteConfig.dist, 'examples', `${example.name}_index.ts`),
+          join(CONFIG.dist, 'examples', `${example.name}_index.ts`),
           templateCache.examples_index,
           exampleCallData
         );
@@ -162,7 +154,7 @@ function generateMenus(doc: ModuleDoc[]): void {
       menu: { zh: genMenu(item, 'zh-CN'), en: genMenu(item, 'en-US') }
     });
   }
-  saveToFile(join(siteConfig.dist, 'menus.ts'), templateCache.menus, {
+  saveToFile(join(CONFIG.dist, 'menus.ts'), templateCache.menus, {
     data: JSON.stringify(data)
   });
 }
@@ -182,7 +174,7 @@ function generateRouters(doc: ModuleDoc): void {
     routerPaths.push(`/${doc.name.toLowerCase()}/${path_name}/en`);
     routerPaths.push(`/${doc.name.toLowerCase()}/${path_name}/zh`);
   }
-  saveToFile(join(siteConfig.dist, doc.name, 'routes.ts'), templateCache.routes, {
+  saveToFile(join(CONFIG.dist, doc.name, 'routes.ts'), templateCache.routes, {
     imports: imports.join('\n'),
     routes: routes.join(',\n')
   });
@@ -205,7 +197,7 @@ function generateExamplesIndex(docs: ModuleDoc[]): void {
       }
     }
   }
-  saveToFile(join(siteConfig.dist, 'examples', `index.ts`), templateCache.examples, {
+  saveToFile(join(CONFIG.dist, 'examples', `index.ts`), templateCache.examples, {
     imports: imports.join('\n'),
     metadata: metadata.join(',\n')
   });

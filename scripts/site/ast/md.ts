@@ -1,10 +1,26 @@
-import { Marked, Renderer, RendererObject } from 'marked';
+import { Marked, Renderer, RendererObject, TokenizerAndRendererExtension, Tokens } from 'marked';
 import { parseFragment, serialize } from 'parse5';
 
 import { idSlug } from './util';
 
 const DIRECTIVE_REGEX = /^\[[a-zA-Z-]+]/;
 const SERVICE_REGEX = /^[a-zA-Z]+Service$/;
+const IMAGE_WITH_WIDTH_REGEX = /^!\\?\[([^\]]*)]\s*\\?\((.+?)\s*\|\s*width=(\d+)\s*\\?\)/;
+
+type ImageWithWidthToken = Tokens.Generic & {
+  type: 'imageWithWidth';
+  text: string;
+  href: string;
+  width: string;
+};
+
+function escapeHtmlAttr(value: string): string {
+  return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+function unescapeMarkdown(value: string): string {
+  return value.replace(/\\([\\`*_{}\\[\]()#+\-.!|])/g, '$1');
+}
 
 function createLabel(label: 'component' | 'directive' | 'service'): string {
   return `<label class="api-type-label ${label}">${label}</label>`;
@@ -46,7 +62,6 @@ function getRenderer(marked: Marked): RendererObject {
       const isService = SERVICE_REGEX.test(title);
 
       let head = `<h${depth} id="${id}"><a class="lake-link"><i data-anchor="${id}"></i></a>${title}`;
-      // <h3 id="创建NG-ALAIN项目"><a class="lake-link"><i data-anchor="创建NG-ALAIN项目"></i></a>创建NG-ALAIN项目</h3>
       const anchor = `</h${depth}>`;
 
       if (isComponent) {
@@ -69,8 +84,50 @@ function getRenderer(marked: Marked): RendererObject {
   };
 }
 
+function getExtensions(): TokenizerAndRendererExtension[] {
+  return [
+    {
+      name: 'imageWithWidth',
+      level: 'inline',
+      start(src) {
+        const plainIndex = src.indexOf('![');
+        const escapedIndex = src.indexOf('!\\[');
+        if (plainIndex === -1) {
+          return escapedIndex > -1 ? escapedIndex : undefined;
+        }
+        if (escapedIndex === -1) {
+          return plainIndex;
+        }
+        return Math.min(plainIndex, escapedIndex);
+      },
+      tokenizer(src) {
+        const match = IMAGE_WITH_WIDTH_REGEX.exec(src);
+        if (!match) {
+          return undefined;
+        }
+        const [, text, href, width] = match;
+        const token: ImageWithWidthToken = {
+          type: 'imageWithWidth',
+          raw: match[0],
+          text: unescapeMarkdown(text),
+          href: unescapeMarkdown(href),
+          width
+        };
+        return token;
+      },
+      renderer(token) {
+        const imageToken = token as ImageWithWidthToken;
+        return `<img src="${escapeHtmlAttr(imageToken.href)}" alt="${escapeHtmlAttr(imageToken.text)}" width="${imageToken.width}" loading="lazy">`;
+      }
+    }
+  ];
+}
+
 const marked = new Marked();
 
-marked.use({ renderer: getRenderer(marked) });
+marked.use({
+  extensions: getExtensions(),
+  renderer: getRenderer(marked)
+});
 
 export default marked;

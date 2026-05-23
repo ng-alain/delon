@@ -1,18 +1,14 @@
-module.exports = {
+import type { SiteConfig } from './types';
+
+export const CONFIG: SiteConfig = {
+  github: 'https://github.com/ng-alain/delon',
   defaultLang: 'zh-CN',
   langs: ['zh-CN', 'en-US'],
-  tocMaxDepth: 3, // toc max depth
   dist: './src/app/routes/gen',
-  template: {
-    examples: './src/templates/examples.ts',
-    examples_index: './src/templates/examples_index.ts'
-  },
   modules: [
     {
       name: 'docs',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/docs',
-      types: [
+      groups: [
         {
           'zh-CN': '入门',
           'en-US': 'Basic'
@@ -31,7 +27,6 @@ module.exports = {
         }
       ],
       defaultRoute: 'getting-started',
-      metaIncludeAttributes: ['name', 'types', 'github'],
       dir: [
         {
           src: ['./docs'],
@@ -41,9 +36,7 @@ module.exports = {
     },
     {
       name: 'components',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/components',
-      types: [
+      groups: [
         {
           'zh-CN': 'CURD',
           'en-US': 'CURD'
@@ -69,174 +62,270 @@ module.exports = {
           'en-US': 'Other'
         }
       ],
-      extraRouteMeta: [
+      extraDocs: [
         {
+          id: 'components-form',
           name: 'form',
-          route: '/form/getting-started',
-          order: 10,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'CURD',
-              title: 'sf',
-              subtitle: '动态表单'
+              meta: {
+                group: 'CURD',
+                title: 'sf',
+                subtitle: '动态表单',
+                redirect: '/form/getting-started',
+                order: 10,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'CURD',
-              title: 'sf',
-              subtitle: 'Dynamic Form'
+              meta: {
+                group: 'CURD',
+                title: 'sf',
+                subtitle: 'Dynamic Form',
+                redirect: '/form/getting-started',
+                order: 10,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-chart',
           name: 'chart',
-          route: '/chart/getting-started',
-          order: 100,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Basic',
-              title: '图表',
-              subtitle: 'G2'
+              meta: {
+                group: '基础',
+                title: '图表',
+                subtitle: 'G2',
+                redirect: '/chart/getting-started',
+                order: 100,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Basic',
-              title: 'Chart',
-              subtitle: 'G2'
+              meta: {
+                group: 'Basic',
+                title: 'Chart',
+                subtitle: 'G2',
+                redirect: '/chart/getting-started',
+                order: 100,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-auth',
           name: 'auth',
-          route: '/auth/getting-started',
-          order: 100,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Business',
-              title: '用户认证'
+              meta: {
+                group: '业务',
+                title: '用户认证',
+                redirect: '/auth/getting-started',
+                order: 100,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Business',
-              title: 'Authentication'
+              meta: {
+                group: 'Business',
+                title: 'Authentication',
+                redirect: '/auth/getting-started',
+                order: 100,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-acl',
           name: 'acl',
-          route: '/acl/getting-started',
-          order: 110,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Business',
-              title: '访问控制列表'
+              meta: {
+                group: '业务',
+                title: '访问控制列表',
+                redirect: '/acl/getting-started',
+                order: 110,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Business',
-              title: 'Access Control List'
+              meta: {
+                group: 'Business',
+                title: 'Access Control List',
+                redirect: '/acl/getting-started',
+                order: 110,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-cache',
           name: 'cache',
-          route: '/cache/getting-started',
-          order: 120,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Business',
-              title: '缓存'
+              meta: {
+                group: '业务',
+                title: '缓存',
+                redirect: '/cache/getting-started',
+                order: 120,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Business',
-              title: 'Cache'
+              meta: {
+                group: 'Business',
+                title: 'Cache',
+                redirect: '/cache/getting-started',
+                order: 120,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-mock',
           name: 'mock',
-          route: '/mock/getting-started',
-          order: 130,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Business',
-              title: 'Mock模拟数据'
+              meta: {
+                group: '业务',
+                title: 'Mock模拟数据',
+                redirect: '/mock/getting-started',
+                order: 130,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Business',
-              title: 'Mock'
+              meta: {
+                group: 'Business',
+                title: 'Mock',
+                redirect: '/mock/getting-started',
+                order: 130,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-util',
           name: 'util',
-          route: '/util/getting-started',
-          order: 120,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Basic',
-              title: '工具集'
+              meta: {
+                group: '基础',
+                title: '工具集',
+                redirect: '/util/getting-started',
+                order: 120,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Basic',
-              title: 'Utils'
+              meta: {
+                group: 'Basic',
+                title: 'Utils',
+                redirect: '/util/getting-started',
+                order: 120,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         },
         {
+          id: 'components-theme',
           name: 'theme',
-          route: '/theme/getting-started',
-          order: 110,
-          i18n: true,
-          lib: true,
-          meta: {
+          langs: ['zh-CN', 'en-US'],
+          content: {
             'zh-CN': {
-              type: 'Basic',
-              title: '主题系统'
+              meta: {
+                group: '基础',
+                title: '主题系统',
+                redirect: '/theme/getting-started',
+                order: 110,
+                lib: true
+              },
+              text: '',
+              toc: []
             },
             'en-US': {
-              type: 'Basic',
-              title: 'Theme System'
+              meta: {
+                group: 'Basic',
+                title: 'Theme System',
+                redirect: '/theme/getting-started',
+                order: 110,
+                lib: true
+              },
+              text: '',
+              toc: []
             }
-          }
+          },
+          demos: []
         }
       ],
-      module: '@delon/abc',
       defaultRoute: 'sv',
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/abc'],
           ignores: ['README.md'],
-
           hasSubDir: true
         }
       ]
     },
     {
       name: 'auth',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/auth',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
         }
       ],
-      module: '@delon/auth',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/auth/docs'],
@@ -246,18 +335,13 @@ module.exports = {
     },
     {
       name: 'acl',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/acl',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
         }
       ],
-      module: '@delon/acl',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/acl/docs'],
@@ -267,18 +351,13 @@ module.exports = {
     },
     {
       name: 'cache',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/cache',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
         }
       ],
-      module: '@delon/cache',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/cache/docs'],
@@ -288,18 +367,13 @@ module.exports = {
     },
     {
       name: 'mock',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/mock',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
         }
       ],
-      module: '@delon/mock',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/mock/docs'],
@@ -309,9 +383,7 @@ module.exports = {
     },
     {
       name: 'util',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/util',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
@@ -325,10 +397,7 @@ module.exports = {
           'en-US': 'Pipes'
         }
       ],
-      module: '@delon/util',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/util/docs'],
@@ -343,9 +412,7 @@ module.exports = {
     },
     {
       name: 'form',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/form',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
@@ -367,50 +434,61 @@ module.exports = {
           'en-US': 'Third Widgets'
         }
       ],
-      module: '@delon/form',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [
+      extraDocs: [
         {
+          id: 'validator',
           name: 'validator',
-          route: '/form-pages/validator',
-          i18n: false,
-          meta: { 'zh-CN': { type: 'Examples', title: '在线校验器' } }
+          langs: ['zh-CN', 'en-US'],
+          content: {
+            'zh-CN': {
+              meta: {
+                title: '在线校验器',
+                group: 'Examples',
+                redirect: '/form-pages/validator/zh'
+              },
+              text: '',
+              toc: []
+            },
+            'en-US': {
+              meta: {
+                title: 'Online Validator',
+                group: 'Examples',
+                redirect: '/form-pages/validator/en'
+              },
+              text: '',
+              toc: []
+            }
+          },
+          demos: []
         }
       ],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/form/docs'],
-
           hasSubDir: false
         },
         {
           src: ['./packages/form/examples'],
-
           hasSubDir: true
         },
         {
           src: ['./packages/form/src/widgets'],
-
           hasSubDir: true
         },
         {
           src: ['./packages/form/widgets'],
-
           hasSubDir: true
         },
         {
           src: ['./packages/form/widgets-third'],
-
           hasSubDir: true
         }
       ]
     },
     {
       name: 'chart',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/chart',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
@@ -424,10 +502,7 @@ module.exports = {
           'en-US': 'ECharts'
         }
       ],
-      module: '@delon/chart',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/chart/docs'],
@@ -442,18 +517,13 @@ module.exports = {
     },
     {
       name: 'cli',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/cli',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
         }
       ],
-      module: 'ng-alain',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./schematics/docs'],
@@ -463,9 +533,7 @@ module.exports = {
     },
     {
       name: 'theme',
-      github: 'https://github.com/ng-alain/delon',
-      dist: './src/app/routes/gen/theme',
-      types: [
+      groups: [
         {
           'zh-CN': '文档',
           'en-US': 'Documents'
@@ -487,10 +555,7 @@ module.exports = {
           'en-US': 'Pipe'
         }
       ],
-      module: 'ng-alain',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [],
-      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       dir: [
         {
           src: ['./packages/theme/docs'],
