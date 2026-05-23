@@ -5,39 +5,38 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaService } from '@core';
+import { MenuService } from '@core';
 
 @Component({
   selector: 'main-menu',
   template: `
     <ul nz-menu nzMode="inline" class="aside-container">
-      @for (group of meta.menus(); track $index) {
-        <li nz-menu-group nzOpen [nzTitle]="group.title">
+      @for (m of menus(); track $index) {
+        <li nz-menu-group nzOpen [nzTitle]="m.name">
           <ul>
-            @for (item of group.list; track $index) {
-              @let meta = item;
+            @for (item of m.items; track $index) {
               <li
                 nz-menu-item
-                (click)="to.emit(meta.url)"
+                (click)="to.emit(item.url ?? '')"
                 [routerLink]="item.url"
                 [routerLinkActive]="['ant-menu-item-selected']"
                 style="padding-left: 54px"
-                [class.menu-deprecated]="meta.deprecated"
+                [class.menu-deprecated]="item.deprecated"
                 nz-tooltip
-                [nzTooltipTitle]="meta.deprecated ? 'Deprecated in ' + meta.deprecated : null"
+                [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
               >
                 <div class="flex-center-between">
                   <div>
-                    <span class="name">{{ meta.title }}</span>
-                    @if (meta.subtitle) {
-                      <span class="chinese">{{ meta.subtitle }}</span>
+                    <span class="name">{{ item.title }}</span>
+                    @if (item.subtitle) {
+                      <span class="chinese">{{ item.subtitle }}</span>
                     }
-                    @if (meta.lib) {
+                    @if (item.lib) {
                       <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
                     }
                   </div>
-                  @if (meta.tag) {
-                    <nz-tag nzColor="success">{{ meta.tag }}</nz-tag>
+                  @if (item.tag) {
+                    <nz-tag nzColor="success">{{ item.tag }}</nz-tag>
                   }
                 </div>
               </li>
@@ -51,7 +50,6 @@ import { MetaService } from '@core';
   imports: [RouterLink, RouterLinkActive, NzTooltipModule, NzTagModule, NzMenuModule]
 })
 export class MainMenuComponent {
-  protected readonly meta = inject(MetaService);
-
+  protected readonly menus = inject(MenuService).menus;
   readonly to = output<string>();
 }

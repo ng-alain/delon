@@ -1,10 +1,9 @@
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { FooterComponent } from '@shared';
-import AOS from 'aos';
 import { GithubButtonComponent } from 'ng-github-button';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
@@ -183,7 +182,7 @@ interface ThemeItem {
     FooterComponent
   ]
 })
-export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HomeComponent implements OnInit, OnDestroy {
   readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly doc = inject(DOCUMENT);
   private readonly platform = inject(Platform);
@@ -204,11 +203,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private get body(): HTMLElement {
     return this.doc.querySelector('body') as HTMLElement;
-  }
-
-  ngAfterViewInit(): void {
-    if (!this.isBrowser) return;
-    AOS.init();
   }
 
   ngOnInit(): void {

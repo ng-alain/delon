@@ -1,3 +1,64 @@
+export interface SiteConfig {
+  /** github 项目地址 */
+  github: string;
+  /** 默认语言 */
+  defaultLang: string;
+  /** 语言清单 */
+  langs: string[];
+  /** 生成目录最大深度 */
+  tocMaxDepth: number;
+  dist: string;
+  template: {
+    examples: string;
+    examples_index: string;
+  };
+  modules: ModuleConfig[];
+}
+
+export interface TemplateConfig {
+  /** 元数据模板 */
+  meta?: string;
+  /** 内容模板 */
+  content?: string;
+  /** 模板模板 */
+  module?: string;
+}
+
+export interface ModuleConfig {
+  /** 模块名称 */
+  name: string;
+  github: string;
+  /** 生成目标位置 */
+  dist: string;
+  /** 分类数据 */
+  types: Array<Record<string, string>>;
+  /** 默认路由 */
+  defaultRoute: string;
+  /** 额外路由元数据 */
+  extraRouteMeta?: any[];
+  /** 模块名称，例如：`@delon/abc` */
+  module: string;
+  /** 元数据包含属性 */
+  metaIncludeAttributes: string[];
+  /** 模板路径 */
+  template?: TemplateConfig;
+  /** 是否按 standalone 生成 */
+  standalone?: boolean;
+  dir: ModuleDirConfig[];
+}
+
+export interface ModuleDirConfig {
+  /** 源码位置 */
+  src: string[];
+  /** 忽略项 */
+  ignores: string[];
+  /** 模板路径 */
+  template?: TemplateConfig;
+  /** 是否包含子目录 */
+  hasSubDir: boolean;
+  reName?: string;
+}
+
 export interface ModuleDoc {
   name: string;
   github: string;
@@ -20,6 +81,7 @@ export interface ModuleDocItem {
 export interface ModuleDocContent {
   meta: ModuleDocMeta;
   text: string;
+  api?: string;
   toc: ModuleDocToc[];
 }
 
@@ -30,8 +92,10 @@ export interface ModuleDocMeta {
   subtitle?: string;
   /** 描述 */
   description?: string;
+  rawDescription?: string;
   /** 组别，指向元数据中的 `Type` */
   group?: string;
+  type?: string;
   /** 是否已经包含国际化 */
   i18n?: string;
   /** 顺序 */
@@ -45,12 +109,11 @@ export interface ModuleDocMeta {
   /** 是否过期 */
   deprecated?: boolean;
   /** 跳转 URL */
+  redirect?: string;
+  lib?: boolean;
+  path?: string;
   url?: string;
-}
-
-export interface ModuleDocToc {
-  title: string;
-  children?: ModuleDocToc[];
+  __content?: string;
 }
 
 export interface ModuleDocDemoItem {
@@ -63,7 +126,32 @@ export interface ModuleDocDemoItem {
   /** 示例代码 */
   code: string;
   order: number;
+  path: string;
+  browser?: boolean;
+  bg?: string;
   type: 'demo' | 'example';
+}
+
+export interface ModuleDocToc {
+  id: string;
+  title: string;
+  children?: ModuleDocToc[];
+}
+
+export interface ModuleMenu {
+  name: string;
+  github: string;
+  menu: { zh: ModuleMenuGroup[]; en: ModuleMenuGroup[] };
+}
+
+export type ModuleMenuGroupItem = Pick<
+  ModuleDocMeta,
+  'title' | 'subtitle' | 'tag' | 'deprecated' | 'redirect' | 'lib' | 'url'
+>;
+
+export interface ModuleMenuGroup {
+  name: string;
+  items: ModuleMenuGroupItem[];
 }
 
 export interface ModuleResMeta {

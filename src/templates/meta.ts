@@ -1,1 +1,3 @@
-export const META = {{{data}}};
+import type { ModuleResMeta } from '@script-type';
+
+export const META: ModuleResMeta = {{data}};

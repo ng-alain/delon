@@ -5,7 +5,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
-import { MetaService, MOBILE } from '@core';
+import { MenuService, MOBILE } from '@core';
 
 import { FooterComponent } from '../footer/footer.component';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
@@ -22,11 +22,12 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
         </div>
       }
       <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="19" nzXXl="20">
-        <div class="main-container" [class.pages-container]="meta.isPages()">
+        <div class="main-container">
           <router-outlet />
         </div>
-        @let next = meta.next();
-        @let prev = meta.prev();
+        @let np = prevNext();
+        @let next = np.next;
+        @let prev = np.prev;
         @if (next || prev) {
           <div class="prev-next-nav">
             @if (prev) {
@@ -69,7 +70,7 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
   imports: [RouterOutlet, RouterLink, FooterComponent, NzAffixModule, NzIconModule, MainMenuComponent, NzGridModule]
 })
 export class ContentComponent {
-  readonly meta = inject(MetaService);
+  readonly prevNext = inject(MenuService).prevNext;
   protected mobile = MOBILE;
   protected opened = signal(false);
 }

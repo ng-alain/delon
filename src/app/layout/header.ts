@@ -225,7 +225,8 @@ export class HeaderComponent {
 
   langChange(language: 'en' | 'zh'): void {
     this.i18n.use(language as LangType, {}, true);
-    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`);
+    const url = `${this.i18n.getRealUrl(this.router.url)}/${language}`;
+    this.router.navigateByUrl(url, { replaceUrl: true });
   }
 
   onCopy(value: string): void {

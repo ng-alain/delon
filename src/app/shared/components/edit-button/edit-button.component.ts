@@ -1,12 +1,10 @@
 import { Component, computed, inject, input } from '@angular/core';
 
-import { ModuleResDoc } from '@script-type';
-
-import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
+import { I18nPipe } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaService } from '@core';
+import { MenuService } from '@core';
 
 @Component({
   selector: 'edit-button',
@@ -24,12 +22,12 @@ import { MetaService } from '@core';
   imports: [I18nPipe, NzIconModule, NzTooltipModule]
 })
 export class EditButtonComponent {
-  private readonly meta = inject(MetaService);
-  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly menu = inject(MenuService);
 
-  readonly item = input.required<ModuleResDoc>();
+  readonly path = input.required<string>();
 
   protected readonly full = computed(() => {
-    return `${this.meta.cfg()?.github}/edit/master/${this.i18n.get(this.item())}`;
+    const group = this.menu.group();
+    return `${group?.github}/edit/master/${this.path()}`;
   });
 }

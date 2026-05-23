@@ -59,7 +59,6 @@
               }
             ],
             "styles": [
-              "node_modules/aos/dist/aos.css",
               "src/styles.less"
             ],
             "inlineStyleLanguage": "less",
@@ -67,7 +66,6 @@
               "includePaths": ["node_modules/"]
             },
             "scripts": [
-              "node_modules/aos/dist/aos.js"
             ],
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
@@ -76,8 +74,7 @@
               "file-saver",
               "ajv-formats",
               "date-fns",
-              "extend",
-              "aos"
+              "extend"
             ]
           },
           "configurations": {

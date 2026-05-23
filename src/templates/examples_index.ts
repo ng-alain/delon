@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { CodeBoxComponent } from '@shared';
-{{{imports}}}
+import type { ModuleDocDemoItem } from '@script-type';
+
+{{imports}}
 
 @Component({
-    selector: `{{selector}}`,
-    template: `{{{demos}}}`,
-    host: { '[class.d-block]': `'true'` },
-    imports: [CodeBoxComponent{{standaloneImports}}]
+  selector: `{{selector}}`,
+  template: `{{ngContent}}`,
+  host: { class: `d-block` },
+  imports: [CodeBoxComponent{{standaloneImports}}]
 })
 export class {{componentName}} {
-    item: any = {{{item}}};
+  item: ModuleDocDemoItem = {{item}};
 }
