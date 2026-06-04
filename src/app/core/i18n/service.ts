@@ -25,7 +25,7 @@ export class I18NService extends AlainI18nBaseService {
     super();
     // from browser
     const lang = (this.getBrowserLang() || this.defaultLang) as LangType;
-    this.use(lang, {}, false);
+    this.use(lang, {});
   }
 
   private getBrowserLang(): string | undefined {
@@ -63,7 +63,9 @@ export class I18NService extends AlainI18nBaseService {
     this.zorroI18n.setLocale(isEn ? en_US : zh_CN);
     this.delonI18n.setLocale(isEn ? delonEnUS : delonZhCn);
 
-    if (emit !== false) this._change$.next(lang);
+    if (emit !== false) {
+      this._change$.next(lang);
+    }
   }
 
   getLangs(): Array<{ code: string; text: string }> {

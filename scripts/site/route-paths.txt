@@ -73,10 +73,18 @@
 /cli/plugin/zh
 /cli/sta/en
 /cli/sta/zh
+/components/acl/en
+/components/acl/zh
+/components/auth/en
+/components/auth/zh
 /components/auto-focus/en
 /components/auto-focus/zh
+/components/cache/en
+/components/cache/zh
 /components/cell/en
 /components/cell/zh
+/components/chart/en
+/components/chart/zh
 /components/count-down/en
 /components/count-down/zh
 /components/date-picker/en
@@ -91,6 +99,8 @@
 /components/exception/zh
 /components/footer-toolbar/en
 /components/footer-toolbar/zh
+/components/form/en
+/components/form/zh
 /components/full-content/en
 /components/full-content/zh
 /components/global-footer/en
@@ -103,6 +113,8 @@
 /components/lodop/zh
 /components/media/en
 /components/media/zh
+/components/mock/en
+/components/mock/zh
 /components/notice-icon/en
 /components/notice-icon/zh
 /components/observers/en
@@ -127,6 +139,10 @@
 /components/sv/zh
 /components/tag-select/en
 /components/tag-select/zh
+/components/theme/en
+/components/theme/zh
+/components/util/en
+/components/util/zh
 /components/xlsx/en
 /components/xlsx/zh
 /components/zip/en
@@ -161,6 +177,8 @@
 /docs/i18n/zh
 /docs/import/en
 /docs/import/zh
+/docs/llms/en
+/docs/llms/zh
 /docs/mock/en
 /docs/mock/zh
 /docs/module/en
@@ -259,6 +277,8 @@
 /form/tree-select/zh
 /form/upload/en
 /form/upload/zh
+/form/validator/en
+/form/validator/zh
 /mock/getting-started/en
 /mock/getting-started/zh
 /mock/rule/en

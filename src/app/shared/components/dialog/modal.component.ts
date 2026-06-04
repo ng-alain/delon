@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Input, inject, input, model } from '@angular/core';
+import { Component, inject, input, model } from '@angular/core';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -11,7 +11,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     <div class="modal-header">
       <div class="modal-title">Custom component</div>
     </div>
-    <p>参数：{{ record | json }}</p>
+    <p>参数：{{ record() | json }}</p>
     <p>input_value: {{ input_value() }}</p>
     <p>model_value: {{ model_value() }}</p>
     <div class="modal-footer">
@@ -24,7 +24,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 export class DemoModalComponent {
   private readonly modal = inject(NzModalRef);
 
-  @Input() record: NzSafeAny;
+  readonly record = input<NzSafeAny>();
+
   input_value = input<string>('');
   model_value = model<string>('');
 

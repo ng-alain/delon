@@ -1,8 +1,6 @@
 ---
 order: 80
-title:
-  en-US: Upgrade scaffold
-  zh-CN: 升级脚手架
+title: 升级脚手架
 type: Dev
 ---
 

@@ -1,4 +1,4 @@
-{{{imports}}}
+{{imports}}
 
 export interface LiveExample {
   title: any;
@@ -8,6 +8,6 @@ export interface LiveExample {
 }
 
 export const EXAMPLE_COMPONENTS: {[key: string]: LiveExample} = {
-  {{{metadata}}}
+  {{metadata}}
 };
 

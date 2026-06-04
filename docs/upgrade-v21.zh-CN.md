@@ -2,7 +2,6 @@
 order: 1000
 type: Basic
 title: 升级到 21.0 版本
-hot: true
 ---
 
 > 本指南适用于当前版本 ng-alain >= `20` ;

@@ -2,7 +2,6 @@
 order: 10
 title: 介绍
 type: Basic
-i18n: need-update
 ---
 
 ## 什么是NG-ALAIN

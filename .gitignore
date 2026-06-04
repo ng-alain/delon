@@ -25,6 +25,7 @@ src/app/routes/gen
 src/assets/color.less
 src/assets/style.compact.css
 src/assets/style.dark.css
+src/llms*
 /scaffold
 /_scaffold
 /ng-alain
