@@ -49,7 +49,9 @@
     "**/.angular": true,
     "**/.github": true,
     "**/.yarn": true,
-    "**/*.css": true
+    "**/*.css": true,
+    "src/dist/**/*": true,
+    "src/app/routes/gen/**/*": true
   },
   "files.associations": {
     "*.json": "jsonc",

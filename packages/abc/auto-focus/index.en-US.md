@@ -2,6 +2,7 @@
 type: Other
 title: auto-focus
 subtitle: Auto focus
+description: Automatically focuses after the component is rendered
 cols: 1
 module: import { AutoFocusModule } from '@delon/abc/auto-focus';
 ---

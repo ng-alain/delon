@@ -2,7 +2,6 @@
 order: 10
 title: Getting Started
 type: Basic
-i18n: need-update
 ---
 
 ## Foreword

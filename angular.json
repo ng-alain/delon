@@ -36,6 +36,14 @@
               "src/assets",
               "src/manifest.json",
               "src/robots.txt",
+              "src/llms.txt",
+              "src/llms-full.txt",
+              "src/llms-full-cn.txt",
+              {
+                "glob": "**/*.md",
+                "input": "src/llms",
+                "output": "/llms/"
+              },
               {
                 "glob": "**/jszip.min.js",
                 "input": "./node_modules/jszip/dist",
@@ -59,7 +67,6 @@
               }
             ],
             "styles": [
-              "node_modules/aos/dist/aos.css",
               "src/styles.less"
             ],
             "inlineStyleLanguage": "less",
@@ -67,7 +74,6 @@
               "includePaths": ["node_modules/"]
             },
             "scripts": [
-              "node_modules/aos/dist/aos.js"
             ],
             "allowedCommonJsDependencies": [
               "codesandbox/lib/api/define",
@@ -76,8 +82,7 @@
               "file-saver",
               "ajv-formats",
               "date-fns",
-              "extend",
-              "aos"
+              "extend"
             ]
           },
           "configurations": {

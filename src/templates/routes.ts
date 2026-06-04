@@ -1,16 +1,14 @@
 import { Routes } from '@angular/router';
 import { ContentComponent } from '@shared';
 
-// #region components
-{{{imports}}}
+{{imports}}
 
 export const routes: Routes = [
   {
     path: '',
     component: ContentComponent,
     children: [
-      {{{routes}}}
+      {{routes}}
     ]
   }
 ];
-// #endregion

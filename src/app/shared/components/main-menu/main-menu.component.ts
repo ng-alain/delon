@@ -1,46 +1,55 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaService } from '@core';
+import { MenuService } from '@core';
 
 @Component({
-  selector: 'main-menu, [main-menu]',
-  templateUrl: './main-menu.component.html',
+  selector: 'main-menu',
+  template: `
+    <ul nz-menu nzMode="inline" class="aside-container">
+      @for (m of menus(); track $index) {
+        <li nz-menu-group nzOpen [nzTitle]="m.name">
+          <ul>
+            @for (item of m.items; track $index) {
+              <li
+                nz-menu-item
+                (click)="to.emit(item.url ?? '')"
+                [routerLink]="item.redirect ?? item.url"
+                [routerLinkActive]="['ant-menu-item-selected']"
+                style="padding-left: 54px"
+                [class.menu-deprecated]="item.deprecated"
+                nz-tooltip
+                [nzTooltipTitle]="item.deprecated ? 'Deprecated in ' + item.deprecated : null"
+              >
+                <div class="flex-center-between">
+                  <div>
+                    <span class="name">{{ item.title }}</span>
+                    @if (item.subtitle) {
+                      <span class="chinese">{{ item.subtitle }}</span>
+                    }
+                    @if (item.lib) {
+                      <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
+                    }
+                  </div>
+                  @if (item.tag) {
+                    <nz-tag nzColor="success">{{ item.tag }}</nz-tag>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, NzTooltipModule, NzBadgeModule, NzTagModule, NzMenuModule]
+  imports: [RouterLink, RouterLinkActive, NzTooltipModule, NzTagModule, NzMenuModule]
 })
-export class MainMenuComponent implements OnInit {
-  private readonly meta = inject(MetaService);
-  private readonly i18n = inject(ALAIN_I18N_TOKEN);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroy$ = inject(DestroyRef);
-  count = 0;
-
-  @Output() readonly to = new EventEmitter<string>();
-
-  get menus(): NzSafeAny[] {
-    return this.meta.menus!;
-  }
-
-  ngOnInit(): void {
-    this.i18n.change.pipe(takeUntilDestroyed(this.destroy$)).subscribe(() => this.cdr.markForCheck());
-    this.count = this.meta.menus?.reduce((p: number, c: NzSafeAny) => (p += c.list.length), 0);
-  }
+export class MainMenuComponent {
+  protected readonly menus = inject(MenuService).menus;
+  readonly to = output<string>();
 }

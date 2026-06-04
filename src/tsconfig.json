@@ -5,6 +5,9 @@
     "rootDir": "..",
     "types": [],
     "paths": {
+      "@script-type": [
+        "../scripts/site/types.ts"
+      ],
       "@delon/*": [
         "../packages/*"
       ],

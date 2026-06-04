@@ -26,7 +26,8 @@ export class DemoSfComponent {
   private readonly modal = inject(NzModalRef);
 
   i: NzSafeAny;
-  schema: SFSchema = {
+
+  protected readonly schema: SFSchema = {
     properties: {
       name: { title: 'Name', type: 'string' }
     },
@@ -48,11 +49,11 @@ export class DemoSfComponent {
   //   },
   // };
 
-  save(value: NzSafeAny): void {
+  protected save(value: NzSafeAny): void {
     this.modal.destroy(value);
   }
 
-  close(): void {
+  protected close(): void {
     this.modal.destroy();
   }
 }

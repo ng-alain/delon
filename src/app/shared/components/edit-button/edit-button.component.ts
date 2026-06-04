@@ -1,20 +1,20 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
-import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
+import { I18nPipe } from '@delon/theme';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { MetaService } from '@core';
+import { MenuService } from '@core';
 
 @Component({
   selector: 'edit-button',
   template: `
     <a
-      href="{{ _full }}"
+      [attr.href]="full()"
       target="_blank"
       class="edit-button"
       nz-tooltip
-      nzTooltipTitle="{{ 'app.content.edit-page' | i18n }}"
+      [nzTooltipTitle]="'app.content.edit-page' | i18n"
     >
       <nz-icon nzType="edit" />
     </a>
@@ -22,13 +22,12 @@ import { MetaService } from '@core';
   imports: [I18nPipe, NzIconModule, NzTooltipModule]
 })
 export class EditButtonComponent {
-  private readonly meta = inject(MetaService);
-  private readonly i18n = inject(ALAIN_I18N_TOKEN);
+  private readonly menu = inject(MenuService);
 
-  _full!: string;
+  readonly path = input.required<string>();
 
-  @Input()
-  set item(data: { urls: string }) {
-    this._full = `${this.meta.github}/edit/master/${this.i18n.get(data.urls)}`;
-  }
+  protected readonly full = computed(() => {
+    const group = this.menu.group();
+    return `${group?.github}/edit/master/${this.path()}`;
+  });
 }

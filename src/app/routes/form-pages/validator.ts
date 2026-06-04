@@ -63,7 +63,82 @@ export class DemoComponent {
 
 @Component({
   selector: 'form-validator',
-  templateUrl: './validator.component.html',
+  template: `
+    <div nz-row class="border-bottom-1 pb-sm mb-md">
+      <div nz-col [nzSpan]="18">
+        <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
+          @for (i of files; track $index) {
+            <nz-option [nzValue]="i.name" [nzLabel]="i.title" />
+          }
+        </nz-select>
+        <nz-radio-group [(ngModel)]="layout" class="ml-sm">
+          <label nz-radio-button nzValue="horizontal">水平</label>
+          <label nz-radio-button nzValue="vertical">垂直</label>
+          <label nz-radio-button nzValue="inline">行内</label>
+        </nz-radio-group>
+      </div>
+      <div nz-col [nzSpan]="6" class="text-right">
+        <nz-space-compact>
+          <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
+            <nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}" />
+          </button>
+          <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | i18n" nz-button (click)="openOnStackBlitz()">
+            <nz-icon nzType="form" />
+          </button>
+          <button nz-tooltip [nzTooltipTitle]="'app.demo.copy' | i18n" nz-button (click)="onCopy()">
+            <nz-icon nzType="copy" />
+          </button>
+        </nz-space-compact>
+      </div>
+    </div>
+    <div nz-row class="border-bottom-1 pb-sm mb-md" [nzGutter]="24">
+      <div nz-col [nzSpan]="12" [hidden]="!expand">
+        <nz-tabs>
+          <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
+            <nu-monaco-editor
+              #schemaEditor
+              [(ngModel)]="schema"
+              (ngModelChange)="run()"
+              [options]="editorOptions()"
+              height="500px"
+            />
+          </nz-tab>
+          <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
+            <nu-monaco-editor
+              #formCodeEditor
+              [(ngModel)]="formCode"
+              (ngModelChange)="run()"
+              [options]="editorOptions()"
+              height="500px"
+            />
+          </nz-tab>
+          <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
+            <nu-monaco-editor
+              #uiEditor
+              [(ngModel)]="uiCode"
+              (ngModelChange)="run()"
+              [options]="editorOptions()"
+              height="500px"
+            />
+          </nz-tab>
+        </nz-tabs>
+      </div>
+      @if (schemaData) {
+        <div nz-col [nzSpan]="expand ? 12 : 24">
+          <sf
+            [schema]="schemaData"
+            [formData]="formData"
+            [ui]="uiSchema"
+            [layout]="layout"
+            (formSubmit)="submit($event)"
+            (formChange)="change($event)"
+            (formValueChange)="valueChange($event)"
+            (formError)="error($event)"
+          />
+        </div>
+      }
+    </div>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
