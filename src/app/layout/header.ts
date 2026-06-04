@@ -1,5 +1,6 @@
 import { DOCUMENT, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
-import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
@@ -52,6 +53,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
         } @else {
           <li nz-menu-item [matchRouter]="regexs.delon">
             <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">
+              @let delonType = this.delonType();
               {{ (delonType ? 'app.header.menu.' + delonType : 'app.header.menu.delon') | i18n }}
               <nz-icon nzType="down" />
             </div>
@@ -158,11 +160,10 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
   ]
 })
 export class HeaderComponent {
-  private inited = false;
-  protected mobile = MOBILE;
-  oldVersionList = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
-  currentVersion = pkg.version;
-  delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
+  protected readonly mobile = MOBILE;
+  protected readonly oldVersionList = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
+  protected readonly currentVersion = pkg.version;
+  protected readonly delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
     { name: 'auth' },
     { name: 'acl' },
@@ -173,14 +174,14 @@ export class HeaderComponent {
     { name: 'util' },
     { name: 'cli' }
   ];
-  menuVisible = false;
-  regexs = {
+  protected readonly menuVisible = signal(false);
+  protected readonly regexs = {
     docs: { regex: /^\/docs/ },
     components: { regex: /^\/components/ },
     cli: { regex: /^\/cli/ },
     delon: { regex: /^\/(theme|auth|acl|form|cache|chart|mock|util)/ }
   };
-  delonType?: string;
+  protected readonly delonType = signal<string | undefined>(undefined);
 
   private get win(): Window {
     return (this.doc as Document).defaultView || window;
@@ -191,30 +192,29 @@ export class HeaderComponent {
   private readonly router = inject(Router);
   private readonly msg = inject(NzMessageService);
   private readonly doc = inject(DOCUMENT);
-  private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    this.router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => {
-      this.menuVisible = false;
-      this.genDelonType();
-    });
+    this.router.events
+      .pipe(
+        filter(evt => evt instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
+      .subscribe(() => {
+        this.menuVisible.set(false);
+        this.genDelonType();
+      });
 
     afterNextRender(() => {
-      this.inited = true;
       this.genDelonType();
     });
   }
 
   private genDelonType(): void {
-    if (!this.inited) return;
-
-    // delonType
     const match = this.router.url.match(this.regexs.delon.regex);
-    this.delonType = match == null ? undefined : match[1];
-    this.cdr.detectChanges();
+    this.delonType.set(match == null ? undefined : match[1]);
   }
 
-  toVersion(version: number): void {
+  protected toVersion(version: number): void {
     if (version == this.currentVersion) return;
     if (version >= minimumVersion) {
       this.win.location.href = `https://ng-alain.com/version/${version}.x/`;
@@ -223,13 +223,13 @@ export class HeaderComponent {
     this.win.open(`https://github.com/ng-alain/archive-docs/blob/full/README.md`);
   }
 
-  langChange(language: 'en' | 'zh'): void {
+  protected langChange(language: 'en' | 'zh'): void {
     this.i18n.use(language as LangType, {}, true);
     const url = `${this.i18n.getRealUrl(this.router.url)}/${language}`;
     this.router.navigateByUrl(url, { replaceUrl: true });
   }
 
-  onCopy(value: string): void {
+  protected onCopy(value: string): void {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 }

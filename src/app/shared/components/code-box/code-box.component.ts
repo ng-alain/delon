@@ -106,11 +106,11 @@ export class CodeBoxComponent {
     return this.i18n.get(this.item().summary);
   });
 
-  handle(): void {
+  protected handle(): void {
     this.expand.set(!this.expand());
   }
 
-  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
+  protected openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
     if (ide === 'StackBlitz') {
       this.codeSrv.openOnStackBlitz(this.title(), this.item().code);
     } else {
@@ -119,7 +119,7 @@ export class CodeBoxComponent {
     }
   }
 
-  onCopy(value: string): void {
+  protected onCopy(value: string): void {
     copy(value).then(() => {
       this.msg.success(this.i18n.fanyi('app.demo.copied'));
       this.copied.set(true);

@@ -1,5 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ALAIN_I18N_TOKEN, I18nPipe } from '@delon/theme';
@@ -22,17 +22,14 @@ declare const docsearch: NzSafeAny;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NzIconModule, NzInputModule, I18nPipe]
 })
-export class HeaderSearchComponent implements AfterViewInit {
+export class HeaderSearchComponent {
   private readonly i18n = inject(ALAIN_I18N_TOKEN);
   private readonly platform = inject(Platform);
   private readonly router = inject(Router);
   private readonly lazySrv = inject(LazyService);
 
-  @ViewChild('searchInput', { static: false })
-  searchInput!: ElementRef<HTMLInputElement>;
-
-  ngAfterViewInit(): void {
-    this.initDocSearch();
+  constructor() {
+    afterNextRender(() => this.initDocSearch());
   }
 
   private initDocSearch(): void {

@@ -170,7 +170,7 @@ export class DocsComponent {
     });
   }
 
-  goLink(link: string): void {
+  protected goLink(link: string): void {
     if (!this.isBrowser) {
       return;
     }
@@ -180,7 +180,7 @@ export class DocsComponent {
     }
   }
 
-  copyModule(): void {
+  protected copyModule(): void {
     const module = `this.data().con.module`;
     if (!module) return;
     copy(module);
