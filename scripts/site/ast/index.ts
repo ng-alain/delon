@@ -114,9 +114,10 @@ function generatePackage(target: string, config: ModuleConfig): ModuleDoc {
       docItem.demos = generateDemo(config, item.basePath, docItem);
       for (const lang of langs) {
         const path = item.data[lang];
-        const mdContent = readFileSync(path, { encoding: 'utf-8' });
+        const mdContent = readFileSync(path, { encoding: 'utf-8' }).trim();
         const content = (docItem.content[lang] = parseDoc(lang, mdContent));
         if (typeof content.meta.lib !== 'boolean') delete content.meta.lib;
+        content.raw = mdContent;
         content.meta.path = path;
         content.meta.url = `/${config.name.toLowerCase()}/${name}/${lang === 'zh-CN' ? 'zh' : 'en'}`;
       }

@@ -67,6 +67,8 @@ export interface ModuleDocContent {
   text: string;
   api?: string;
   toc: ModuleDocToc[];
+  /** 原文 */
+  raw?: string;
 }
 
 export interface ModuleDocMeta {
@@ -107,6 +109,7 @@ export interface ModuleDocDemoItem {
   title: Record<string, string>;
   /** 描述，`key` 表示语言 */
   summary: Record<string, string>;
+  summary_raw?: Record<string, string>;
   /** 示例代码 */
   code: string;
   order: number;
@@ -136,21 +139,6 @@ export type ModuleMenuGroupItem = Pick<
 export interface ModuleMenuGroup {
   name: string;
   items: ModuleMenuGroupItem[];
-}
-
-export interface ModuleResMeta {
-  name: string;
-  github: string;
-  groups: Array<Record<string, string>>;
-  list: ModuleResMetaItem[];
-}
-
-export interface ModuleResMetaItem {
-  groupIndex: number;
-  name: string;
-  order: number;
-  redirect?: string;
-  meta: Record<string, Partial<ModuleDocMeta>>;
 }
 
 export interface ModuleResDoc {

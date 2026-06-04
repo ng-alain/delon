@@ -40,6 +40,11 @@
               "src/llms-full.txt",
               "src/llms-full-cn.txt",
               {
+                "glob": "**/*.md",
+                "input": "src/llms",
+                "output": "/llms/"
+              },
+              {
                 "glob": "**/jszip.min.js",
                 "input": "./node_modules/jszip/dist",
                 "output": "assets/jszip/"

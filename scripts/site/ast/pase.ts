@@ -71,7 +71,7 @@ export function parseDoc(lang: string, file: string): ModuleDocContent {
 export function parseDemo(
   file: string,
   defaultLang: string
-): Pick<ModuleDocDemoItem, 'code' | 'summary' | 'title' | 'order' | 'type'> {
+): Pick<ModuleDocDemoItem, 'code' | 'summary' | 'summary_raw' | 'title' | 'order' | 'type'> {
   const meta = loadFront(file) as Partial<ModuleDocDemoItem> & { __content?: string };
   const content = meta.__content;
   delete meta.__content;
@@ -80,7 +80,9 @@ export function parseDemo(
   // 分离中英文
   let isAfterENHeading = false;
   let zhSummaryPart = '';
+  let zhSummaryPartRaw = '';
   let enSummaryPart = '';
+  let enSummaryPartRaw = '';
   let code = '';
 
   ast.children.forEach(child => {
@@ -93,8 +95,10 @@ export function parseDemo(
       code = child.value;
     } else if (!isAfterENHeading) {
       zhSummaryPart += md.parse(stringifyInlineCode(child));
+      zhSummaryPartRaw += stringifyInlineCode(child);
     } else {
       enSummaryPart += md.parse(stringifyInlineCode(child));
+      enSummaryPartRaw += stringifyInlineCode(child);
     }
   });
   const title = (typeof meta.title === 'object' ? meta.title : { [defaultLang]: meta.title }) as Record<string, string>;
@@ -109,6 +113,10 @@ export function parseDemo(
     summary: {
       'en-US': angularNonBindAble(enSummaryPart),
       'zh-CN': angularNonBindAble(zhSummaryPart)
+    },
+    summary_raw: {
+      'en-US': enSummaryPartRaw,
+      'zh-CN': zhSummaryPartRaw
     }
   };
 }

@@ -12,13 +12,14 @@ const target = process.argv[2] ?? 'init';
 const rootDir = resolve(__dirname, '../../');
 const pkg = require(join(rootDir, 'package.json')) as { version: string };
 const templateDir = './src/templates/';
-const templateCache = {
-  content: readFileSync(join(rootDir, templateDir, 'content.ts'), { encoding: 'utf-8' }),
-  routes: readFileSync(join(rootDir, templateDir, 'routes.ts'), { encoding: 'utf-8' }),
-  menus: readFileSync(join(rootDir, templateDir, 'menus.ts'), { encoding: 'utf-8' }),
-  examples: readFileSync(join(rootDir, templateDir, 'examples.ts'), { encoding: 'utf-8' }),
-  examples_index: readFileSync(join(rootDir, templateDir, 'examples_index.ts'), { encoding: 'utf-8' })
-};
+const fileNames = ['content', 'routes', 'menus', 'examples', 'examples_index'] as const;
+const templateCache: Record<(typeof fileNames)[number], string> = fileNames.reduce(
+  (pre, cur) => {
+    pre[cur] = readFileSync(join(rootDir, templateDir, `${cur}.ts`), { encoding: 'utf-8' });
+    return pre;
+  },
+  {} as Record<(typeof fileNames)[number], string>
+);
 const defaultLang = CONFIG.defaultLang;
 const routerPaths: string[] = ['/'];
 
@@ -192,7 +193,7 @@ function generateExamplesIndex(docs: ModuleDoc[]): void {
   });
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const docs = ast(target);
   for (const item of docs) {
     generateComponent(item);
@@ -200,14 +201,14 @@ function main(): void {
     generateRouters(item);
   }
 
-  // 生成 meta
+  // 生成 menus
   generateMenus(docs);
   // 生成 Example index.ts
   generateExamplesIndex(docs);
   // 生成 route-paths.txt
   saveToFile(join(__dirname, `route-paths.txt`), Array.from(new Set(routerPaths)).sort().join('\n'));
   // 生成 LLMs 数据
-  generateLLMs(docs);
+  await generateLLMs(docs);
 
   const docLength = docs.reduce((pre, cur) => pre + cur.docs.filter(w => w.type === 'doc').length, 0);
   const componentLength = docs.reduce((pre, cur) => pre + cur.docs.filter(w => w.type === 'component').length, 0);
