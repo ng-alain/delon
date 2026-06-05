@@ -105,11 +105,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn!: SFButton;
   _schema!: SFSchema;
   _ui!: SFUISchema;
-  expandable = input(false);
-  expanded = model(false);
+  readonly expandable = input(false, { transform: booleanAttribute });
+  readonly expanded = model(false);
 
   /** @internal 是否存在 collapse: true 的字段 */
-  _hasCollapse = signal(false);
+  protected _hasCollapse = signal(false);
   get btnGrid(): NzSafeAny {
     return this._btn.render!.grid;
   }
