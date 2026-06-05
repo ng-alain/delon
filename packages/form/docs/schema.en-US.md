@@ -320,6 +320,7 @@ Is visible with conditions, for example:
 | `[grid]` | Property for responsive | `SFGridSchema` | - |
 | `[optional]` | Optional | `string` | - |
 | `[optionalHelp]` | Optional help | `string, SFOptionalHelp` | - |
+| `[collapse]` | Mark this field as collapsible when form is collapsed | `boolean` | - |
 
 ### Responsive Property SFGridSchema
 

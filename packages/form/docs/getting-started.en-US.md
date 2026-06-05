@@ -120,6 +120,8 @@ export class HomeComponent {
 | `[loading]` | Whether to load status，when `true` reset button is disabled status, submit button is loading status | `boolean` | `false` |
 | `[noColon]` | Whether to not display `:` after label text. | `boolean` | `false` |
 | `[compact]` | Whether compact style | `boolean` | `false` |
+| `[expandable]` | Whether to enable expand/collapse | `boolean` | `false` |
+| `[expanded]` | Expand/Collapse state, support two-way binding | `boolean` | `false` |
 | `[cleanValue]` | Whether to clean up data for undefined Schema | `boolean` | `false` |
 | `[delay]` | Whether to delay rendering, should be manually call `refreshSchema()` | `boolean` | `false` |
 | `(formChange)` | Callback when data changes | `EventEmitter<{}>` | - |

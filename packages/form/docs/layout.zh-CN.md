@@ -100,3 +100,46 @@ type: Documents
   <button (click)="sf.reset()" type="button" nz-button>重置</button>
 </sf>
 ```
+
+## 展开与收缩
+
+当表单表单项过多时，可以将不重要的字段标记为可折叠，并配合展开/收缩按钮来切换显隐。
+
+**使用方法**
+
+在需要折叠的字段上设置 `ui.collapse = true`：
+
+```json
+{
+  "properties": {
+    "name": { "type": "string", "title": "姓名" },
+    "email": { "type": "string", "title": "邮箱" },
+    "nickname": {
+      "type": "string",
+      "title": "昵称",
+      "ui": { "collapse": true }
+    },
+    "bio": {
+      "type": "string",
+      "title": "个人简介",
+      "ui": { "collapse": true }
+    }
+  }
+}
+```
+
+在 `sf` 组件上启用 `expandable` 即可：
+
+```html
+<sf [schema]="schema" [expandable]="true"></sf>
+```
+
+展开/收缩按钮会自动出现在提交、重置按钮旁，只有当 **表单中存在 `collapse` 字段** 时按钮才会显示。
+
+按钮文本支持国际化，默认值为 `展开` / `收起`。同时支持通过 `[(expanded)]` 双向绑定外部控制状态：
+
+```html
+<sf [schema]="schema" [expandable]="true" [(expanded)]="isExpanded"></sf>
+```
+
+**注意：** `expandable` 和 `collapse` 属于 UI 层面的控制，与字段的 `required` 逻辑无关。
