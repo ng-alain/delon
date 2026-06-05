@@ -39,6 +39,8 @@ export default {
     addText: '追加',
     removeText: '削除',
     checkAllText: '全選択',
+    expand: 'Expand',
+    collapse: 'Collapse',
     error: {
       'false schema': `真偽値スキーマが不正です`,
       $ref: `参照を解決できません: {ref}`,

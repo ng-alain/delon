@@ -39,6 +39,8 @@ export default {
     addText: 'Thêm',
     removeText: 'Xóa',
     checkAllText: 'Chọn tất cả',
+    expand: 'Expand',
+    collapse: 'Collapse',
     error: {
       'false schema': `Mô hình Boolean sai`,
       $ref: `Không thể giải quyết tham chiếu {ref}`,

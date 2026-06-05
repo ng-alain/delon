@@ -26,7 +26,10 @@ let nextUniqueId = 0;
 @Component({
   selector: 'sf-item',
   exportAs: 'sfItem',
-  host: { '[class.sf__item]': 'true' },
+  host: {
+    '[class.sf__item]': 'true',
+    '[class.sf__collapse-item]': 'formProperty.ui.collapse'
+  },
   template: `
     <ng-template #target />
     <ng-container *ngTemplateOutlet="footer" />

@@ -232,6 +232,9 @@ export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema
    * ACL 配置
    */
   acl?: ACLCanType | null;
+
+  /** 标记该字段在表单折叠状态下隐藏 */
+  collapse?: boolean;
 }
 
 /**

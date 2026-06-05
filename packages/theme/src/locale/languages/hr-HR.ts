@@ -38,7 +38,9 @@ export default {
     edit: 'Spremi',
     addText: 'Dodaj',
     removeText: 'Ukloni',
-    checkAllText: 'Označi sve'
+    checkAllText: 'Označi sve',
+    expand: 'Expand',
+    collapse: 'Collapse'
   },
   onboarding: {
     skip: `Preskočiti`,

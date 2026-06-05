@@ -15,7 +15,10 @@ import {
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  inject
+  inject,
+  input,
+  model,
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -70,7 +73,8 @@ export function useFactory(
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
     '[class.sf__no-colon]': `noColon`,
-    '[class.sf__compact]': `compact`
+    '[class.sf__compact]': `compact`,
+    '[class.sf__collapse]': `expandable() && !expanded()`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -101,6 +105,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn!: SFButton;
   _schema!: SFSchema;
   _ui!: SFUISchema;
+  expandable = input(false);
+  expanded = model(false);
+
+  /** @internal 是否存在 collapse: true 的字段 */
+  _hasCollapse = signal(false);
   get btnGrid(): NzSafeAny {
     return this._btn.render!.grid;
   }
@@ -340,6 +349,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     const _schema = deepCopy(this.schema);
     const { definitions } = _schema;
 
+    // 重置折叠检测状态
+    this._hasCollapse.set(false);
+
     const inFn = (
       schema: SFSchema,
       _parentSchema: SFSchema,
@@ -457,6 +469,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         if (ui.hidden === false && ui.acl && this.aclSrv && !this.aclSrv.can(ui.acl)) {
           ui.hidden = true;
         }
+
+        if (ui.collapse) this._hasCollapse.set(true);
 
         uiRes[uiKey] = ui;
         delete property.ui;

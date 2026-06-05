@@ -62,6 +62,18 @@
                     {{ _btn.reset }}
                   </button>
                 }
+                @if (expandable() && _hasCollapse()) {
+                  <button
+                    type="button"
+                    nz-button
+                    nzType="text"
+                    data-type="expand"
+                    [attr.aria-expanded]="expanded()"
+                    (click)="expanded.update(v => !v)"
+                  >
+                    {{ expanded() ? locale.collapse : locale.expand }}
+                  </button>
+                }
               } @else {
                 <ng-template [ngTemplateOutlet]="con" />
               }
