@@ -13,7 +13,6 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use signals for state management
 - Use `input()` and `output()` functions instead of `@Input()` / `@Output()` decorators for new code
 - Use `signal()` for internal state, `model()` for two-way binding state
-- 模板需要访问的内部属性使用 `protected` 而非 `private` 或 `_` 前缀
 - Implement lazy loading for feature routes
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
 - Use `NgOptimizedImage` for all static images.
