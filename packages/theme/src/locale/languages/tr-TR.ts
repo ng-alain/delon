@@ -39,8 +39,8 @@ export default {
     addText: 'Ekle',
     removeText: 'Kaldır',
     checkAllText: 'Tümünü kontrol et',
-    expand: 'Expand',
-    collapse: 'Collapse',
+    expand: 'Genişlet',
+    collapse: 'Daralt',
     error: {
       'false schema': `Boolean schema is false`,
       $ref: `Can't resolve reference {ref}`,

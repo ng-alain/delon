@@ -39,8 +39,8 @@ export default {
     addText: 'Añadir',
     removeText: 'Eliminar',
     checkAllText: 'Comprobar todo',
-    expand: 'Expand',
-    collapse: 'Collapse',
+    expand: 'Expandir',
+    collapse: 'Contraer',
     error: {
       'false schema': `Boolean schema is false`,
       $ref: `Can't resolve reference {ref}`,

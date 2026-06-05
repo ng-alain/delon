@@ -28,7 +28,7 @@ let nextUniqueId = 0;
   exportAs: 'sfItem',
   host: {
     '[class.sf__item]': 'true',
-    '[class.sf__collapse-item]': 'formProperty.ui.collapse'
+    '[class.sf__collapse-item]': 'formProperty?.ui?.collapse'
   },
   template: `
     <ng-template #target />

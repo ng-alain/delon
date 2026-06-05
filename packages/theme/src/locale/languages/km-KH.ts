@@ -39,8 +39,8 @@ export default {
     addText: 'បន្ថែម',
     removeText: 'លុបចេញ',
     checkAllText: 'ពិនិត្យទាំងអស់',
-    expand: 'Expand',
-    collapse: 'Collapse',
+    expand: 'ពង្រីក',
+    collapse: 'បង្រួម',
     error: {
       'false schema': `ស្កីម៉ាមិនត្រឹមត្រូវទេ`,
       $ref: `មិនអាចដោះស្រាយយោង {ref} បានទេ`,
