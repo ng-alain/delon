@@ -39,6 +39,8 @@ export default {
     addText: 'เพิ่ม',
     removeText: 'ลบ',
     checkAllText: 'เลือกทั้งหมด',
+    expand: 'ขยาย',
+    collapse: 'ยุบ',
     error: {
       'false schema': `สคีมาแบบบูลีนเป็นเท็จ`,
       $ref: `ไม่สามารถแก้ไขการอ้างอิง {ref} ได้`,

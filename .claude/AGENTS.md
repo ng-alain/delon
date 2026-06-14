@@ -48,8 +48,9 @@
 - [ ] **文档同步确认**：确认中英文文档、demo 与代码同步更新
 
 ### 7. PR
-- 分支命名：`<type>-<package>-<desc>`，关联 Issue 时追加 `-#<id>`，如 `feat-abc-st-xxx`、`fix-abc-st-#123`、`chore-xxx`
-- 首次提交整理为 feat、test、docs、chore 各一个（`--fixup` + `--autosquash`）
-- 后续微调直接追加，不再合并
+- 分支：有 Issue URL 用 `fix-<id>`，否则 `<type>-<package>-<desc>`
+- 标题：遵循 CONTRIBUTING.md 中的 commit 规范
+- body 末尾加 `close <issues url>`
+- 首次提交整理为 feat、test、docs、chore（`--fixup` + `--autosquash`），后续追加不合并
 - `docs/superpowers/`、`.superpowers/` 不纳入版本控制
 - 合入在 GitHub 网站操作

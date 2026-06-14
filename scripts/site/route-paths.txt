@@ -195,6 +195,10 @@
 /docs/ssr/zh
 /docs/style-guide/en
 /docs/style-guide/zh
+/docs/superpowers-plans-2026-06-05-sf-expand-collapse-plan/en
+/docs/superpowers-plans-2026-06-05-sf-expand-collapse-plan/zh
+/docs/superpowers-specs-2026-06-05-sf-expand-collapse-design/en
+/docs/superpowers-specs-2026-06-05-sf-expand-collapse-design/zh
 /docs/theme/en
 /docs/theme/zh
 /docs/upgrade-v21/en
@@ -253,6 +257,8 @@
 /form/rate/zh
 /form/schema/en
 /form/schema/zh
+/form/search/en
+/form/search/zh
 /form/segmented/en
 /form/segmented/zh
 /form/select/en

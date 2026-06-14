@@ -39,6 +39,8 @@ export default {
     addText: 'Προσθήκη',
     removeText: 'Αφαίρεση',
     checkAllText: 'Επιλογή όλων',
+    expand: 'Επέκταση',
+    collapse: 'Σύμπτυξη',
     error: {
       'false schema': `Η δυαδική δομή είναι ψευδής`,
       $ref: `Δεν είναι δυνατή η επίλυση της αναφοράς {ref}`,

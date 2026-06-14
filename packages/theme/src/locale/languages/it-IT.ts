@@ -39,6 +39,8 @@ export default {
     addText: 'Aggiungi',
     removeText: 'Rimuovi',
     checkAllText: 'Seleziona tutto',
+    expand: 'Espandi',
+    collapse: 'Riduci',
     error: {
       'false schema': `Lo schema booleano è falso`,
       $ref: `Impossibile risolvere il riferimento {ref}`,

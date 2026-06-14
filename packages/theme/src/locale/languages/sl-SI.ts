@@ -38,6 +38,8 @@ export default {
     addText: 'Dodaj',
     removeText: 'Odstrani',
     checkAllText: 'Preveri vse',
+    expand: 'Razširi',
+    collapse: 'Zloži',
     error: {
       'false schema': `Boolova shema je napačna`,
       $ref: `Referenc ni mogoče razrešiti {ref}`,
