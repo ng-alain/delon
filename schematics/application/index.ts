@@ -385,6 +385,65 @@ function fixNgAlainJson(): Rule {
   };
 }
 
+function addTailwindcss(options: ApplicationOptions): Rule {
+  if (!options.tailwindcss) return noop();
+
+  const sourceRoot = project.sourceRoot!;
+  const prefix = mulitProject ? `projects/${projectName}/` : '';
+
+  return chain([
+    (tree: Tree) => {
+      // Add devDependencies
+      addPackage(
+        tree,
+        [
+          'tailwindcss@DEP-0.0.0-PLACEHOLDER',
+          '@tailwindcss/postcss@DEP-0.0.0-PLACEHOLDER',
+          'postcss@DEP-0.0.0-PLACEHOLDER',
+          'postcss-less@DEP-0.0.0-PLACEHOLDER'
+        ],
+        'devDependencies'
+      );
+
+      // Create .postcssrc.json
+      tree.create('.postcssrc.json', `${JSON.stringify({ plugins: { '@tailwindcss/postcss': {} } }, null, 2)}\n`);
+
+      // Create src/tailwind.css
+      tree.create(`${sourceRoot}/tailwind.css`, `@layer theme, base, ng-alain, utilities;\n\n@import 'tailwindcss';\n`);
+
+      // Wrap styles.less in @layer ng-alain
+      const stylesLessPath = `${sourceRoot}/styles.less`;
+      if (tree.exists(stylesLessPath)) {
+        const content = tree.read(stylesLessPath)!.toString('utf8');
+        const wrappedContent = `/* stylelint-disable no-invalid-position-at-import-rule */\n@layer ng-alain {\n${content}}\n`;
+        tree.overwrite(stylesLessPath, wrappedContent);
+      }
+
+      // Create/update .vscode/extensions.json with tailwindcss recommendation
+      const extPath = '.vscode/extensions.json';
+      const extId = 'bradlc.vscode-tailwindcss';
+      if (tree.exists(extPath)) {
+        const json = readJSON(tree, extPath);
+        if (!json.recommendations) json.recommendations = [];
+        if (!json.recommendations.includes(extId)) json.recommendations.push(extId);
+        writeJSON(tree, extPath, json);
+      } else {
+        tree.create(extPath, `${JSON.stringify({ recommendations: [extId] }, null, 2)}\n`);
+      }
+
+      return tree;
+    },
+    // Add src/tailwind.css to angular.json styles
+    addAssetsToTarget(
+      [{ type: 'style', value: `${prefix}src/tailwind.css` }],
+      'add',
+      [BUILD_TARGET_BUILD],
+      projectName,
+      false
+    )
+  ]);
+}
+
 export default function (options: ApplicationOptions): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     const res = await getProject(tree, options.project);
@@ -411,6 +470,7 @@ export default function (options: ApplicationOptions): Rule {
       addFilesToRoot(options),
       forceLess(),
       addStyle(),
+      addTailwindcss(options),
       fixLang(options),
       fixAngularJson(),
       fixBrowserBuilderBudgets(),

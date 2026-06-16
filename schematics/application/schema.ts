@@ -3,6 +3,7 @@ export interface Schema {
   mock?: boolean;
   reuseTab?: boolean;
   i18n?: boolean;
+  tailwindcss?: boolean;
   codeStyle?: boolean;
   project?: string;
   defaultLanguage?: string;

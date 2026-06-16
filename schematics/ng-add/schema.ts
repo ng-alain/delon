@@ -5,5 +5,6 @@ export interface Schema {
   reuseTab?: boolean;
   defaultLanguage?: string;
   i18n?: boolean;
+  tailwindcss?: boolean;
   codeStyle?: boolean;
 }

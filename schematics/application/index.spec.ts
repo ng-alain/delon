@@ -127,6 +127,93 @@ describe('NgAlainSchematic: application', () => {
     });
   });
 
+  describe('#tailwindcss', () => {
+    describe('with false', () => {
+      beforeEach(async () => ({ tree } = await createAlainApp()));
+      it(`should not add tailwind related files`, () => {
+        expect(tree.exists('.postcssrc.json')).toBe(false);
+        expect(tree.exists(`/projects/${APPNAME}/src/tailwind.css`)).toBe(false);
+        const angularJson = JSON.parse(tree.readContent('angular.json'));
+        const styles = angularJson.projects[APPNAME].architect.build.options.styles;
+        expect(styles.some((s: string) => s.includes('tailwind.css'))).toBe(false);
+        const packageJson = JSON.parse(tree.readContent('package.json'));
+        expect(packageJson.devDependencies['tailwindcss']).toBeUndefined();
+      });
+    });
+    describe('with true', () => {
+      beforeEach(async () => {
+        const baseRunner = createNgRunner();
+        const workspaceTree = await baseRunner.runSchematic('workspace', {
+          name: 'workspace',
+          newProjectRoot: 'projects',
+          version: '6.0.0'
+        });
+        const appTree = await baseRunner.runSchematic(
+          'application',
+          {
+            name: APPNAME,
+            inlineStyle: false,
+            inlineTemplate: false,
+            routing: false,
+            style: 'css',
+            skipTests: false,
+            skipPackageJson: false
+          },
+          workspaceTree
+        );
+        const alainRunner = createAlainRunner();
+        tree = await alainRunner.runSchematic(
+          'ng-add',
+          {
+            skipPackageJson: false,
+            tailwindcss: true
+          },
+          appTree
+        );
+      });
+
+      it(`should add tailwindcss as devDependencies`, () => {
+        const packageJson = JSON.parse(tree.readContent('package.json'));
+        expect(packageJson.devDependencies['tailwindcss']).toBeDefined();
+        expect(packageJson.devDependencies['@tailwindcss/postcss']).toBeDefined();
+        expect(packageJson.devDependencies['postcss']).toBeDefined();
+        expect(packageJson.devDependencies['postcss-less']).toBeDefined();
+      });
+
+      it(`should generate .postcssrc.json`, () => {
+        expect(tree.exists('.postcssrc.json')).toBe(true);
+        const postcssrc = JSON.parse(tree.readContent('.postcssrc.json'));
+        expect(postcssrc.plugins['@tailwindcss/postcss']).toEqual({});
+      });
+
+      it(`should generate src/tailwind.css`, () => {
+        expect(tree.exists(`/projects/${APPNAME}/src/tailwind.css`)).toBe(true);
+        const content = tree.readContent(`/projects/${APPNAME}/src/tailwind.css`);
+        expect(content).toContain(`@layer theme, base, ng-alain, utilities;`);
+        expect(content).toContain(`@import 'tailwindcss'`);
+      });
+
+      it(`should handle styles.less gracefully when file does not exist (no crash)`, () => {
+        // removeOrginalFiles deletes styles.less before addTailwindcss
+        // In test env (--style css), styles.less never existed
+        // The function should handle missing styles.less gracefully
+        expect(tree.exists(`/projects/${APPNAME}/src/styles.less`)).toBe(false);
+      });
+
+      it(`should add src/tailwind.css to angular.json styles`, () => {
+        const angularJson = JSON.parse(tree.readContent('angular.json'));
+        const styles = angularJson.projects[APPNAME].architect.build.options.styles;
+        expect(styles.some((s: string) => s.includes('tailwind.css'))).toBe(true);
+      });
+
+      it(`should update .vscode/extensions.json with tailwindcss recommendation`, () => {
+        expect(tree.exists('.vscode/extensions.json')).toBe(true);
+        const ext = JSON.parse(tree.readContent('.vscode/extensions.json'));
+        expect(ext.recommendations).toContain('bradlc.vscode-tailwindcss');
+      });
+    });
+  });
+
   describe('#multiple-projects', () => {
     let runner: SchematicTestRunner;
     let tree: UnitTestTree;
