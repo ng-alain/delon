@@ -150,6 +150,7 @@
     "parse5": "^8.0.1",
     "plyr": "^3.8.4",
     "postcss": "^8.5.3",
+    "postcss-less": "^6.0.0",
     "prettier": "^3.8.3",
     "readline-sync": "^1.4.10",
     "remark": "^15.0.1",
