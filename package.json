@@ -36,7 +36,7 @@
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "analyze": "npm run ng build -- --source-map",
     "analyze:view": "source-map-explorer src/dist/browser/*.js",
-    "site:gen": "tsx scripts/site/index.ts init && ng-alain-plugin-theme -t=themeCss",
+    "site:gen": "tsx scripts/site/index.ts init && ln -sf ../dist/@delon node_modules/@delon && ng-alain-plugin-theme -t=themeCss",
     "site:build": "npm run site:gen && ng b site && npm run site:ngsw && npm run site:minify && npm run site:sitemap && npm run site:helper",
     "site:helper": "bash scripts/ci/helper.sh",
     "site:minify": "node scripts/build/minify.js",
