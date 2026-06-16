@@ -6775,6 +6775,7 @@ __metadata:
     parse5: "npm:^8.0.1"
     plyr: "npm:^3.8.4"
     postcss: "npm:^8.5.3"
+    postcss-less: "npm:^6.0.0"
     prettier: "npm:^3.8.3"
     qrious: "npm:^4.0.2"
     readline-sync: "npm:^1.4.10"
