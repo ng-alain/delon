@@ -177,6 +177,7 @@ describe('NgAlainSchematic: application', () => {
         expect(packageJson.devDependencies['tailwindcss']).toBeDefined();
         expect(packageJson.devDependencies['@tailwindcss/postcss']).toBeDefined();
         expect(packageJson.devDependencies['postcss']).toBeDefined();
+        expect(packageJson.devDependencies['postcss-less']).toBeDefined();
       });
 
       it(`should generate .postcssrc.json`, () => {

@@ -198,8 +198,7 @@ function addCodeStylesToPackageJson(): Rule {
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-clean-order@DEP-0.0.0-PLACEHOLDER`,
-        `stylelint-order@DEP-0.0.0-PLACEHOLDER`,
-        `postcss-less@DEP-0.0.0-PLACEHOLDER`
+        `stylelint-order@DEP-0.0.0-PLACEHOLDER`
       ],
       'devDependencies'
     );
@@ -400,7 +399,8 @@ function addTailwindcss(options: ApplicationOptions): Rule {
         [
           'tailwindcss@DEP-0.0.0-PLACEHOLDER',
           '@tailwindcss/postcss@DEP-0.0.0-PLACEHOLDER',
-          'postcss@DEP-0.0.0-PLACEHOLDER'
+          'postcss@DEP-0.0.0-PLACEHOLDER',
+          'postcss-less@DEP-0.0.0-PLACEHOLDER'
         ],
         'devDependencies'
       );
