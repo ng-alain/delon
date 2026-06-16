@@ -65,6 +65,10 @@ export interface SFLocaleData extends LocaleData {
   addText: string;
   removeText: string;
   checkAllText: string;
+  /** 展开 */
+  expand: string;
+  /** 收起 */
+  collapse: string;
   error: SFErrorLocaleData;
 }
 

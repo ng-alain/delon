@@ -39,6 +39,8 @@ export default {
     addText: '添加',
     removeText: '移除',
     checkAllText: '全选',
+    expand: '展开',
+    collapse: '收起',
     error: {
       'false schema': `布尔模式出错`,
       $ref: `无法找到引用{ref}`,

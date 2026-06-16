@@ -15,5 +15,5 @@
 ```bash
 yarn test                                         # Run all tests
 yarn test -- --watch                              # Watch mode
-yarn test -- --include="**/st.spec.ts"            # Run tests for a specific spec file
+npx ng test --watch=false --browsers=ChromeHeadless --include="**/<spec-file>.spec.ts"  # Run a specific spec file
 ```

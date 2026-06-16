@@ -100,3 +100,46 @@ You must set value of `button` to `null` when you want to customize buttons.
   <button (click)="sf.reset()" type="button" nz-button>Reset</button>
 </sf>
 ```
+
+## Expand & Collapse
+
+When the form has too many fields, you can mark less important fields as collapsible and use the expand/collapse button to toggle visibility.
+
+**Usage**
+
+Mark fields with `ui.collapse = true`:
+
+```json
+{
+  "properties": {
+    "name": { "type": "string", "title": "Name" },
+    "email": { "type": "string", "title": "Email" },
+    "nickname": {
+      "type": "string",
+      "title": "Nickname",
+      "ui": { "collapse": true }
+    },
+    "bio": {
+      "type": "string",
+      "title": "Bio",
+      "ui": { "collapse": true }
+    }
+  }
+}
+```
+
+Enable `expandable` on the `sf` component:
+
+```html
+<sf [schema]="schema" [expandable]="true"></sf>
+```
+
+The expand/collapse button will automatically appear alongside the submit/reset buttons. It is only visible when the form has at least one `collapse` field.
+
+Button text supports i18n with default values `Expand` / `Collapse`. You can also control the state externally via `[(expanded)]` two-way binding:
+
+```html
+<sf [schema]="schema" [expandable]="true" [(expanded)]="isExpanded"></sf>
+```
+
+**Note:** `expandable` and `collapse` are UI-level controls, independent of the field's `required` logic.

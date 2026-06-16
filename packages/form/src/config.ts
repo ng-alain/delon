@@ -34,7 +34,8 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
   uiTimeStringFormat: 'HH:mm:ss',
   uiTimeNumberFormat: 'T',
   uiEmailSuffixes: ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com'],
-  delay: false
+  delay: false,
+  expandable: false
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainSFConfig {

@@ -39,6 +39,8 @@ export default {
     addText: '추가',
     removeText: '제거',
     checkAllText: '모두 확인',
+    expand: '펼치기',
+    collapse: '접기',
     error: {
       'false schema': `Boolean schema is false`,
       $ref: `Can't resolve reference {ref}`,

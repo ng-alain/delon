@@ -39,6 +39,8 @@ export default {
     addText: 'إضافة',
     removeText: 'حذف',
     checkAllText: 'تحديد الكل',
+    expand: 'توسيع',
+    collapse: 'طي',
     error: {
       'false schema': `القيمة المنطقية خاطئة`,
       $ref: `المرجع "{{ref}}" غير موجود`,

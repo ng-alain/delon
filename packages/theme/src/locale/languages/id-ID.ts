@@ -39,6 +39,8 @@ export default {
     addText: 'Tambah',
     removeText: 'Hapus',
     checkAllText: 'Pilih semua',
+    expand: 'Bentangkan',
+    collapse: 'Ciutkan',
     error: {
       'false schema': `Skema boolean salah`,
       $ref: `Tidak dapat menyelesaikan referensi {ref}`,
