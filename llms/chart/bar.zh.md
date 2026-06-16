@@ -1,0 +1,82 @@
+﻿---
+title: g2-bar
+subtitle: 柱状图
+cols: 1
+type: G2
+module: import { G2BarModule } from '@delon/chart/bar';
+---
+
+使用垂直的柱子显示类别之间的数值比较。其中一个轴表示需要对比的分类维度，另一个轴代表相应的数值。
+
+## API
+
+### g2-bar
+
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
+| `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
+| `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
+| `[padding]` | 图表内部间距 | `Array<number | string> | string` | `[32, 0, 32, 40]` |
+| `[height]` | 图表高度 | `number` | - |
+| `[data]` | 数据 | `G2BarData[]` | `[]` |
+| `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
+| `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `EventEmitter<G2BarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+
+### G2BarData
+
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[x]` | x轴 | `any` | - |
+| `[y]` | y轴 | `any` | - |
+| `[color]` | 轴颜色 | `string` | - |
+
+---
+
+## 代码示例
+
+### 基本
+
+通过设置 `x`，`y` 属性，可以快速的构建出一个漂亮的柱状图，各种纬度的关系则是通过自定义的数据展现。
+
+```typescript
+import { Component, inject } from '@angular/core';
+
+import { G2BarClickItem, G2BarData, G2BarModule } from '@delon/chart/bar';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+@Component({
+  selector: 'chart-bar-basic',
+  template: `
+    <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
+    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)" />
+  `,
+  imports: [NzButtonModule, G2BarModule]
+})
+export class ChartBarBasic {
+  private readonly msg = inject(NzMessageService);
+
+  salesData = this.genData();
+
+  private genData(): G2BarData[] {
+    return new Array(12).fill({}).map((_i, idx) => ({
+      x: `${idx + 1}月`,
+      y: Math.floor(Math.random() * 1000) + 200,
+      color: idx > 5 ? '#f50' : undefined
+    }));
+  }
+
+  refresh(): void {
+    this.salesData = this.genData();
+  }
+
+  handleClick(data: G2BarClickItem): void {
+    this.msg.info(`${data.item.x} - ${data.item.y}`);
+  }
+}
+```

@@ -1,0 +1,92 @@
+﻿---
+type: Basic
+order: 1
+title: hotkey
+subtitle: 热键
+cols: 2
+module: import { HotkeyModule } from '@delon/abc/hotkey';
+---
+
+基于 [@github/hotke](https://github.com/github/hotkey) 热键库。
+
+> 如果不清楚热键值，可通过[热键代码](https://github.github.com/hotkey/hotkey_mapper.html)来获取。
+
+## API
+
+### [hotkey]
+
+| 成员 | 说明 | 类型 | 默认值 | 
+|----|----|----|-----|
+| `hotkey` | 指定[热键格式](https://github.com/github/hotkey#hotkey-string-format) | `string` | - |
+
+---
+
+## 代码示例
+
+### 基础
+
+最简单的用法。
+
+```typescript
+import { Component, inject } from '@angular/core';
+
+import { HotkeyDirective } from '@delon/abc/hotkey';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+
+@Component({
+  selector: 'components-hotkey-basic',
+  template: `
+    <button
+      nz-button
+      nzType="primary"
+      (click)="show('clicked button 1!')"
+      hotkey="Control+d,Meta+d"
+      data-hotkey-scope="text-area-1"
+    >
+      press meta+d or ctrl+d in text area 1 to click button 1
+    </button>
+    <br />
+    <textarea nz-input id="text-area-1" rows="4" cols="40" hotkey="q" #textArea1 (focus)="selectText(textArea1)">
+text area 1, press q to focus this textarea and select all text</textarea
+    >
+    <br />
+    <button
+      nz-button
+      nzType="primary"
+      (click)="show('clicked button 2!')"
+      hotkey="Control+d,Meta+d"
+      data-hotkey-scope="text-area-2"
+    >
+      press meta+d or ctrl+d in text area 2 to click button 2
+    </button>
+    <br />
+    <textarea nz-input nzType="primary" id="text-area-2" rows="4" cols="40">text area 2</textarea><br />
+    <label><input nz-input hotkey="t" type="text" />Press <kbd>t</kbd> to focus this field</label><br />
+    <label><nz-switch hotkey="r" />Press <kbd>r</kbd> to check/uncheck this checkbox</label><br />
+    <a (click)="show('click link')" nz-button nzType="link" hotkey="o k"> Press <kbd>o k</kbd> click this link </a>
+  `,
+  styles: [
+    `
+      :host kbd {
+        color: #f50;
+        padding: 0 8px;
+      }
+    `
+  ],
+  imports: [NzButtonModule, HotkeyDirective, NzInputModule, NzSwitchModule]
+})
+export class ComponentsHotkeyBasic {
+  private readonly msg = inject(NzMessageService);
+
+  show(msg: string): void {
+    this.msg.info(msg);
+  }
+
+  selectText(el: HTMLTextAreaElement): void {
+    el.select();
+  }
+}
+```

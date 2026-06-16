@@ -1,0 +1,32 @@
+﻿---
+order: 4
+title: TitleService
+subtitle: Title Service
+type: Service
+---
+
+Used to set page title, generally listen for route changed and refresh title, for example: [app.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.ts#L54); The default data from `MenuService`.
+
+**Suggest:** Set the `prefix` or `suffix` value via Angular startup service ([startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)).
+
+## Orders
+
+Get the `title` value according to the following order:
+
+1. Routing configuration `{ data: { title: 'page name', titleI18n: 'page-name' } }
+2. Parse the menu data based on the current URL
+3. Get `h1` content in page `alain-default__content-title` or `page-header__title`
+4. Default title
+
+## API
+
+| Name                                           | Type       | Description                     |
+| ---------------------------------------------- | ---------- | ------------------------------- |
+| `default`                                      | `property` | Default title of document title |
+| `selector`                                      | `property` | Set the default CSS selector string |
+| `separator`                                    | `property` | Separator                       |
+| `prefix`                                       | `property` | Prefix of document title        |
+| `suffix`                                       | `property` | Suffix of document title        |
+| `reverse`                                      | `property` | Whether to reverse              |
+| `setTitle(title?: string | string[])`          | `method`   | Set the document title, will be delay `25ms`, pls refer to [#1261](https://github.com/ng-alain/ng-alain/issues/1261)              |
+| `setTitleByI18n(key: string, params?: Object)` | `method`   | Set i18n key of the document title |
