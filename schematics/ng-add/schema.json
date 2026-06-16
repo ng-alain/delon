@@ -56,6 +56,12 @@
         ]
       }
     },
+    "tailwindcss": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate Tailwind CSS plugin",
+      "x-prompt": "Would you like to add Tailwind CSS? (default: N)"
+    },
     "codeStyle": {
       "type": "boolean",
       "default": true,

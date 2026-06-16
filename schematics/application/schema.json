@@ -4,6 +4,11 @@
   "title": "NG-ALAIN Shell Options Schema",
   "type": "object",
   "properties": {
+    "tailwindcss": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate Tailwind CSS plugin"
+    },
     "codeStyle": {
       "type": "boolean",
       "default": true,
