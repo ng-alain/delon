@@ -15,6 +15,18 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [21.3.0](https://github.com/ng-alain/delon/compare/21.2.0...21.3.0) (2026-06-16)
+
+### Bug Fixes
+
+* **theme:** preserve sidebar collapsed state on page refresh ([#2037](https://github.com/ng-alain/delon/issues/2037)) ([571b0b1](https://github.com/ng-alain/delon/commit/571b0b10565126c46d504069ce3f7f847c81840a))
+* **theme:** replace cross-package relative style imports with package… ([#2039](https://github.com/ng-alain/delon/issues/2039)) ([3e599e1](https://github.com/ng-alain/delon/commit/3e599e19181fbeed0f40b8388b6441c370330c74))
+
+### Features
+
+* integrate Tailwind CSS ([#2029](https://github.com/ng-alain/delon/issues/2029)) ([281d8dd](https://github.com/ng-alain/delon/commit/281d8dd2be692476fd4c66ce003574c9ef92450f))
+* **sf:** add expand/collapse ([#2034](https://github.com/ng-alain/delon/issues/2034)) ([569e8ac](https://github.com/ng-alain/delon/commit/569e8ace582aebe1a59d85543e8404cdd9d0e00e))
+
 # [21.2.0](https://github.com/ng-alain/delon/compare/21.1.0...21.2.0) (2026-05-03)
 
 ### Bug Fixes
