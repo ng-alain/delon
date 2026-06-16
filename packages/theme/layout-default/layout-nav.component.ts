@@ -67,7 +67,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
       }
     </ng-template>
     <ng-template #tree let-ls>
-      @for (i of ls; track $index) {
+      @for (i of ls; track i._id) {
         @if (i._hidden !== true) {
           @if (i.render_type === 'divider') {
             <li class="sidebar-nav__divider"></li>
@@ -126,7 +126,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
       }
     </ng-template>
     <ul class="sidebar-nav">
-      @for (group of list(); track $index) {
+      @for (group of list(); track group._id) {
         @if (group.group) {
           <li class="sidebar-nav__item sidebar-nav__group-title">
             <span [innerHTML]="group._text"></span>
