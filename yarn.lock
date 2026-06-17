@@ -559,19 +559,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-server@npm:^21.2.11":
-  version: 21.2.11
-  resolution: "@angular/platform-server@npm:21.2.11"
+"@angular/platform-server@npm:^21.2.13":
+  version: 21.2.13
+  resolution: "@angular/platform-server@npm:21.2.13"
   dependencies:
     tslib: "npm:^2.3.0"
     xhr2: "npm:^0.2.0"
   peerDependencies:
-    "@angular/common": 21.2.11
-    "@angular/compiler": 21.2.11
-    "@angular/core": 21.2.11
-    "@angular/platform-browser": 21.2.11
+    "@angular/common": 21.2.13
+    "@angular/compiler": 21.2.13
+    "@angular/core": 21.2.13
+    "@angular/platform-browser": 21.2.13
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/269b7cb9feb7118c658104bcca7c3d7fb26c11b63e64292cb6fd66be78efb5b40b1d0c9059ff7203133d90f83e912c247b9cbe17ac0996579e471279e8b07f67
+  checksum: 10c0/8df6ffdf027e4f8b0e5ed7b0551623a27c29148ce5b2a6264a3b4ab2caf48bc4129c00d8d8bbc6746910c1e120b753b8c2231a2079154fb5c93d639678df9753
   languageName: node
   linkType: hard
 
@@ -6692,7 +6692,7 @@ __metadata:
     "@angular/elements": "npm:^21.2.11"
     "@angular/forms": "npm:^21.2.11"
     "@angular/platform-browser": "npm:^21.2.11"
-    "@angular/platform-server": "npm:^21.2.11"
+    "@angular/platform-server": "npm:^21.2.13"
     "@angular/router": "npm:^21.2.11"
     "@angular/service-worker": "npm:^21.2.11"
     "@angular/ssr": "npm:^21.2.9"
