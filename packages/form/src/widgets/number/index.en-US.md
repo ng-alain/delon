@@ -31,6 +31,7 @@ Enter a number within certain range with the mouse or keyboard.
 | `[precision]` | precision of input value | - | - |
 | `[widgetWidth]` | Specify `nz-number` width | `number, string` | `90` |
 | `[hideStep]` | Hide step icon | `boolean` | `false` |
+| `[changeOnWheel]` | Change on mouse wheel | `boolean` | `true` |
 
 ## QA
 

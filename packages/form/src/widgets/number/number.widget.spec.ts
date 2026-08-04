@@ -147,6 +147,61 @@ describe('form: widget: number', () => {
       expect(ui.change).toHaveBeenCalled();
     }));
 
+    describe('[changeOnWheel]', () => {
+      const wheelUpEvent = new WheelEvent('wheel', {
+        deltaY: -10,
+        deltaMode: 0,
+        bubbles: true,
+        cancelable: true
+      });
+      const wheelDownEvent = new WheelEvent('wheel', {
+        deltaY: 10,
+        deltaMode: 0,
+        bubbles: true,
+        cancelable: true
+      });
+
+      it('#enabled', fakeAsync(() => {
+        page
+          .newSchema({
+            properties: {
+              count: {
+                type: 'number',
+                ui: {
+                  changeOnWheel: true
+                }
+              }
+            }
+          })
+          .typeCharOnly(0)
+          .checkValue('count', 0)
+          .typeEvent(wheelUpEvent)
+          .checkValue('count', 1)
+          .typeEvent(wheelDownEvent)
+          .checkValue('count', -1);
+      }));
+
+      it('#disabled', fakeAsync(() => {
+        page
+          .newSchema({
+            properties: {
+              count: {
+                type: 'number',
+                ui: {
+                  changeOnWheel: false
+                }
+              }
+            }
+          })
+          .typeCharOnly(0)
+          .checkValue('count', 0)
+          .typeEvent(wheelUpEvent)
+          .checkValue('count', 0)
+          .typeEvent(wheelDownEvent)
+          .checkValue('count', 0);
+      }));
+    });
+
     describe('#widgetWidth', () => {
       it('width number', fakeAsync(() => {
         const s: SFSchema = { properties: { a: { type: 'number', ui: { widgetWidth: 10 } as SFNumberWidgetSchema } } };

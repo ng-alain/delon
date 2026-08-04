@@ -26,6 +26,7 @@ import { ControlUIWidget } from '../../widget';
       [nzParser]="parser"
       [nzPrecision]="ui.precision ?? null"
       [nzPlaceHolder]="ui.placeholder ?? ''"
+      [nzChangeOnWheel]="ui.changeOnWheel ?? true"
       [style.width]="width"
       [class.ant-input-number__hide-step]="ui.hideStep"
     />
