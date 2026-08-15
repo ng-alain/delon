@@ -38,7 +38,8 @@ export class DemoComponent {
       integer: { type: 'integer', default: 10, ui: { widgetWidth: '100%' } as SFNumberWidgetSchema },
       unit: { type: 'number', default: 10, ui: { unit: '%' } as SFNumberWidgetSchema },
       prefix: { type: 'number', default: 10, ui: { prefix: '$' } as SFNumberWidgetSchema },
-      hideStep: { type: 'number', default: 10, ui: { hideStep: true } as SFNumberWidgetSchema }
+      hideStep: { type: 'number', default: 10, ui: { hideStep: true } as SFNumberWidgetSchema },
+      changeOnWheel: { type: 'number', default: 10, ui: { changeOnWheel: false } as SFNumberWidgetSchema }
     }
   };
 

@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 import { SFNumberWidgetSchema } from './schema';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -146,6 +147,23 @@ describe('form: widget: number', () => {
       page.typeChar(1, 'input');
       expect(ui.change).toHaveBeenCalled();
     }));
+
+    describe('#changeOnWheel', () => {
+      it('default should be true', fakeAsync(() => {
+        const s: SFSchema = { properties: { a: { type: 'number' } } };
+        page.newSchema(s);
+        const comp = page.getWidget<NzInputNumberComponent>('nz-input-number');
+        expect(comp.nzChangeOnWheel()).toBe(true);
+      }));
+      it('should be false when set ui.changeOnWheel', fakeAsync(() => {
+        const s: SFSchema = {
+          properties: { a: { type: 'number', ui: { changeOnWheel: false } as SFNumberWidgetSchema } }
+        };
+        page.newSchema(s);
+        const comp = page.getWidget<NzInputNumberComponent>('nz-input-number');
+        expect(comp.nzChangeOnWheel()).toBe(false);
+      }));
+    });
 
     describe('#widgetWidth', () => {
       it('width number', fakeAsync(() => {
