@@ -46,4 +46,12 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
    * 变更事件
    */
   change?: (val?: number) => void;
+
+  /**
+   * Change on mouse wheel. Default is true
+   *
+   * 启用鼠标滚轮控制。默认启用
+   *
+   */
+  changeOnWheel?: boolean;
 }
