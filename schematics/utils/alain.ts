@@ -1,5 +1,4 @@
 import { strings, normalize } from '@angular-devkit/core';
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import {
   apply,
   applyTemplates,
@@ -20,6 +19,7 @@ import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions, ModuleOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import { validateHtmlSelector } from '@schematics/angular/utility/validation';
+import { ProjectDefinition } from '@schematics/angular/utility/workspace';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';

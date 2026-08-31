@@ -1,6 +1,6 @@
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { InsertChange } from '@schematics/angular/utility/change';
+import { ProjectDefinition } from '@schematics/angular/utility/workspace';
 import * as parse5 from 'parse5';
 
 import { BUILD_TARGET_BUILD, getProjectTarget } from './workspace';

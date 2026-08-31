@@ -1,8 +1,8 @@
 import { isStandaloneSchematic } from '@angular/cdk/schematics';
 
 import { normalize } from '@angular-devkit/core';
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { apply, chain, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
+import { ProjectDefinition } from '@schematics/angular/utility/workspace';
 
 import {
   addImportToModule,

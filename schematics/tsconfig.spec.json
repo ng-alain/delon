@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
     "lib": ["es2017", "dom"],
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "outDir": "../dist/schematics-test",
     "noEmitOnError": false,
     "skipDefaultLibCheck": true,

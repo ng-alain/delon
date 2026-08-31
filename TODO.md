@@ -1,4 +1,3 @@
-- [ ] 移除 ignoreDeprecations
 - [ ] @ViewChild 也要 signalr 化
 - [ ] 已经 signalr 化以后，是否还需要 fixture.detectChanges(); 呢？
 1、先查资料
