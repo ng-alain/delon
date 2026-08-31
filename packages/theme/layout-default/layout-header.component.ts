@@ -12,7 +12,7 @@ import { LayoutDefaultService } from './layout.service';
   selector: 'layout-default-header',
   template: `
     <ng-template #render let-ls>
-      @for (i of ls; track $index) {
+      @for (i of ls; track i) {
         <li [class.hidden-mobile]="i.hidden() === 'mobile'" [class.hidden-pc]="i.hidden() === 'pc'">
           <ng-container *ngTemplateOutlet="i.host()" />
         </li>
