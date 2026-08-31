@@ -457,6 +457,41 @@ describe('abc: st', () => {
           expect(columns[0].buttons![0].click).toHaveBeenCalled();
           page.asyncEnd();
         }));
+        it(`should be pop confirm title via pop function`, fakeAsync(() => {
+          const columns: STColumn[] = [
+            {
+              title: '',
+              buttons: [
+                {
+                  text: 'del',
+                  pop: { title: ({ item }) => `确定删除 ${item.name} 吗？` },
+                  click: jasmine.createSpy()
+                }
+              ]
+            }
+          ];
+          page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]').cd();
+          page.clickCell(1, 1, '.st__btn-text').cd();
+          expect(document.querySelector('.ant-popover .ant-popover-message-title')!.textContent!.trim()).toBe(
+            `确定删除 ${USERS[0].name} 吗？`
+          );
+          page.click('.ant-popover-buttons .ant-btn-primary').cd();
+          expect(columns[0].buttons![0].click).toHaveBeenCalled();
+          page.asyncEnd();
+        }));
+        it(`should be normal button when pop function return null`, fakeAsync(() => {
+          const clickSpy = jasmine.createSpy();
+          const columns: STColumn[] = [
+            {
+              title: '',
+              buttons: [{ text: 'del', pop: { title: () => null }, click: clickSpy }]
+            }
+          ];
+          page.updateColumn(columns).expectCell('del', 1, 1, '.st__btn-text').cd();
+          page.clickCell(1, 1, '.st__btn-text').cd();
+          expect(clickSpy).toHaveBeenCalled();
+          page.asyncEnd();
+        }));
         it('should custom render text via format', fakeAsync(() => {
           const columns: STColumn[] = [
             {

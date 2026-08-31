@@ -61,6 +61,7 @@ import type {
   STClickRowClassNameType,
   STColumn,
   STColumnButton,
+  STColumnButtonPop,
   STColumnSafeType,
   STColumnSelection,
   STContextmenuFn,
@@ -155,6 +156,20 @@ export class STTdComponent {
   _stopPropagation(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
+  }
+
+  /**
+   * 解析气泡确认框标题
+   * - `title` 为函数时：以返回值为标题，`null`/`undefined` 表示不显示气泡确认框
+   */
+  _popTitle(btn: STColumnButton): string | null {
+    const pop = btn.pop;
+    if (pop == null || pop === false) return null;
+    const title = (pop as STColumnButtonPop).title;
+    if (typeof title === 'function') {
+      return title({ item: this.i, btn, column: this.c }) ?? null;
+    }
+    return title ?? null;
   }
 
   _btn(btn: STColumnButton, ev?: Event): void {
