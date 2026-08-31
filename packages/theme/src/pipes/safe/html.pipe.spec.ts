@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -17,7 +17,7 @@ describe('Pipe: html', () => {
     { value: '<i>asdf</i>', result: `asdf` }
   ].forEach((item: { value: string; result: string }) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
-      fixture.componentInstance.value = item.value;
+      fixture.componentInstance.value.set(item.value);
       fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).textContent).toBe(
         item.result
@@ -27,9 +27,9 @@ describe('Pipe: html', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | html"></div> `,
+  template: ` <div id="result" [innerHTML]="value() | html"></div> `,
   imports: [HTMLPipe]
 })
 class TestComponent {
-  value = '';
+  readonly value = signal('');
 }

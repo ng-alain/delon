@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -16,14 +16,14 @@ describe('chart: water-wave', () => {
 
     it('should be working', fakeAsync(() => {
       page.dcFirst().isCanvas().isText('.g2-water-wave__desc-title', page.context.title);
-      page.context.percent = 30;
+      page.context.percent.set(30);
       page.dc().isText('.g2-water-wave__desc-percent', '30%');
     }));
 
     it('should be scale scaling when height is gt; container width', fakeAsync(() => {
       const styleSpy = spyOn(page.comp.renderer, 'setStyle');
-      page.context.animate = false;
-      page.context.height = 100;
+      page.context.animate.set(false);
+      page.context.height.set(100);
       spyOnProperty(page.comp.el.parentNode, 'offsetWidth').and.returnValue(50);
       page.dcFirst();
       expect(styleSpy.calls.mostRecent().args[2]).toBe('scale(0.5)');
@@ -47,10 +47,10 @@ describe('chart: water-wave', () => {
       #comp
       [title]="title"
       [color]="color"
-      [height]="height"
-      [percent]="percent"
-      [delay]="delay"
-      [animate]="animate"
+      [height]="height()"
+      [percent]="percent()"
+      [delay]="delay()"
+      [animate]="animate()"
     />
   `,
   imports: [G2WaterWaveComponent]
@@ -59,8 +59,8 @@ class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2WaterWaveComponent;
   title = 'title';
   color = '#1890FF';
-  height = 100;
-  percent = 10;
-  delay = 0;
-  animate = true;
+  readonly height = signal(100);
+  readonly percent = signal(10);
+  readonly delay = signal(0);
+  readonly animate = signal(true);
 }

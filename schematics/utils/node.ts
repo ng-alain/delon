@@ -1,3 +1,3 @@
 export function getNodeMajorVersion(): number {
-  return +process.version.match(/^v(\d+)/)[1];
+  return +process.version.match(/^v(\d+)/)![1];
 }

@@ -46,7 +46,7 @@ npm run analyze
 npm run analyze:view
 ```
 
-![](./assets/screenshot/bundle-size.png)
+![Bundle Size](./assets/screenshot/bundle-size.png)
 
 ## 发布
 
@@ -130,7 +130,7 @@ NG-ALAIN 提供的 Dockerfile 文件相对于比较简单，而实际项目中�
 
 最后，增加 `docker-compose.yml` 的 `ports` 节点：
 
-```
+```yaml
 - 443:443
 ```
 

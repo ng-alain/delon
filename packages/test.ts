@@ -2,9 +2,11 @@ import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { getTestBed } from '@angular/core/testing';
 import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
 
+import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
+
 
 @NgModule({
-  providers: [provideZoneChangeDetection()],
+  providers: [provideZoneChangeDetection(), provideNzDateFnsAdapter()],
 })
 class AppTestingModule {}
 

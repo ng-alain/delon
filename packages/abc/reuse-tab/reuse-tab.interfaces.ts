@@ -38,9 +38,7 @@ export enum ReuseTabMatchMode {
 }
 
 export type ReuseTabRouteParamMatchMode =
-  | 'strict'
-  | 'loose'
-  | ((future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot) => boolean);
+  'strict' | 'loose' | ((future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot) => boolean);
 
 export interface ReuseTitle {
   text?: string;
@@ -66,16 +64,7 @@ export interface ReuseTabCached {
 export interface ReuseTabNotify {
   /** 事件类型 */
   active:
-    | 'add'
-    | 'override'
-    | 'title'
-    | 'clear'
-    | 'closable'
-    | 'close'
-    | 'closeRight'
-    | 'move'
-    | 'refresh'
-    | 'loadState';
+    'add' | 'override' | 'title' | 'clear' | 'closable' | 'close' | 'closeRight' | 'move' | 'refresh' | 'loadState';
   url?: string;
   title?: ReuseTitle;
   item?: ReuseTabCached;

@@ -3,10 +3,10 @@ import { filter } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { provideAlain } from '../provide';
 import enUS from './languages/en-US';
 import zhCN from './languages/zh-CN';
 import { DelonLocaleService } from './locale.service';
-import { provideAlain } from '../provide';
 import { DELON_LOCALE } from './locale.tokens';
 
 describe('theme: locale', () => {

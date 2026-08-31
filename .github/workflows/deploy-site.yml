@@ -7,15 +7,17 @@ jobs:
     if: "startsWith(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-      - run: yarn install
+          cache: 'pnpm'
+      - run: pnpm install
 
       - name: build
         run: |
-          yarn run site:build
+          pnpm run site:build
           cp ./src/dist/browser/index.csr.html ./src/dist/browser/index.html
           cp ./src/dist/browser/index.csr.html ./src/dist/browser/404.html
           cp ./Dockerfile.docs ./src/dist/browser/Dockerfile.docs

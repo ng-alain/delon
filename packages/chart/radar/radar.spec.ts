@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -16,7 +16,7 @@ describe('chart: radar', () => {
 
     it('should be working', () => {
       page.isCanvas().isExists('.g2-radar__legend');
-      page.context.hasLegend = false;
+      page.context.hasLegend.set(false);
       page.dc().isExists('.g2-radar__legend', false);
     });
 
@@ -33,21 +33,28 @@ describe('chart: radar', () => {
 
 @Component({
   template: `
-    <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay" />
+    <g2-radar
+      #comp
+      [hasLegend]="hasLegend()"
+      [title]="title"
+      [tickCount]="tickCount"
+      [data]="data()"
+      [delay]="delay()"
+    />
   `,
   imports: [G2RadarComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2RadarComponent;
   title = 'title';
-  hasLegend = true;
+  readonly hasLegend = signal(true);
   tickCount = 4;
-  data: G2RadarData[] = [
+  readonly data = signal<G2RadarData[]>([
     {
       name: 'n',
       label: 'l',
       value: 10
     }
-  ];
-  delay = 0;
+  ]);
+  readonly delay = signal(0);
 }

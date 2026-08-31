@@ -40,10 +40,10 @@ export const LANGS_CONFIG: LangConfig[] = [
 ];
 
 export function getLangConfig(lang: string): LangConfig {
-  return LANGS_CONFIG.find(w => w.langs.includes(lang));
+  return LANGS_CONFIG.find(w => w.langs.includes(lang))!;
 }
 
-export function getLangData(lang: string): Record<string, unknown> | null {
+export function getLangData(lang: string): Record<string, string> | null {
   let langCog = getLangConfig(lang);
   if (!langCog || !langCog.fileName) {
     langCog = getLangConfig('zh');

@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -31,15 +31,15 @@ describe('abc: quick-menu', () => {
       style('width', '200px');
     });
     it('with 300', () => {
-      context.width = 300;
+      context.width.set(300);
       fixture.detectChanges();
       style('width', '300px');
     });
   });
 
   it('#color', () => {
-    context.bgColor = '#000000';
-    context.borderColor = '#f60';
+    context.bgColor.set('#000000');
+    context.borderColor.set('#f60');
     fixture.detectChanges();
     style('backgroundColor', 'rgb(0, 0, 0)');
     style('borderColor', 'rgb(255, 102, 0)');
@@ -58,7 +58,7 @@ describe('abc: quick-menu', () => {
 
   it('#expand', () => {
     spyOn(context, 'expandChange');
-    context.expand = true;
+    context.expand.set(true);
     fixture.detectChanges();
     getEl().click();
     fixture.detectChanges();
@@ -70,10 +70,10 @@ describe('abc: quick-menu', () => {
   template: `
     <quick-menu
       #comp
-      [width]="width"
-      [bgColor]="bgColor"
-      [borderColor]="borderColor"
-      [expand]="expand"
+      [width]="width()"
+      [bgColor]="bgColor()"
+      [borderColor]="borderColor()"
+      [expand]="expand()"
       (expandChange)="expandChange()"
     />
   `,
@@ -82,9 +82,9 @@ describe('abc: quick-menu', () => {
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: QuickMenuComponent;
-  width = 200;
-  bgColor?: string;
-  borderColor?: string;
-  expand = false;
+  readonly width = signal(200);
+  readonly bgColor = signal<string | undefined>(undefined);
+  readonly borderColor = signal<string | undefined>(undefined);
+  readonly expand = signal(false);
   expandChange(): void {}
 }

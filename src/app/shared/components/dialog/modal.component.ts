@@ -15,8 +15,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     <p>input_value: {{ input_value() }}</p>
     <p>model_value: {{ model_value() }}</p>
     <div class="modal-footer">
-      <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="cancel()"> Cancel </button>
-      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="ok()"> OK </button>
+      <button nz-button nzType="default" nzSize="large" (click)="cancel()"> Cancel </button>
+      <button nz-button nzType="primary" nzSize="large" (click)="ok()"> OK </button>
     </div>
   `,
   imports: [NzButtonModule, JsonPipe]

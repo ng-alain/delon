@@ -259,7 +259,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       throw new Error(`Invalid path: ${path}`);
     }
     property.schema.readOnly = status;
-    property.widget.detectChanges();
+    property.widget.cd.markForCheck();
     return this;
   }
 

@@ -1,10 +1,8 @@
-# ng-alain [![CI](https://github.com/ng-alain/delon/actions/workflows/ci.yml/badge.svg)](https://github.com/ng-alain/delon/actions/workflows/ci.yml) [![Codecov](https://img.shields.io/codecov/c/github/ng-alain/delon.svg?style=flat-square)](https://codecov.io/gh/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
+# NG-ALAIN
 
-Angular CLI Schematics of ng-alain.
+[![CI](https://github.com/ng-alain/delon/actions/workflows/ci.yml/badge.svg)](https://github.com/ng-alain/delon/actions/workflows/ci.yml) [![Codecov](https://img.shields.io/codecov/c/github/ng-alain/delon.svg?style=flat-square)](https://codecov.io/gh/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
 
-# ng-alain
-
-[NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd) admin panel front-end framework.
+Angular CLI Schematics of ng-alain, [NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd) admin panel front-end framework.
 
 ## Links
 

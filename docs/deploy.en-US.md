@@ -46,7 +46,7 @@ View the analyze page:
 npm run analyze:view
 ```
 
-![](./assets/screenshot/bundle-size.png)
+![Bundle Size](./assets/screenshot/bundle-size.png)
 
 ## Release
 
@@ -130,7 +130,7 @@ Therefore, by default you can place the certificate in the `_nginx/ssl` director
 
 Finally, add the `ports` node of `docker-compose.yml`:
 
-```
+```yaml
 - 443:443
 ```
 

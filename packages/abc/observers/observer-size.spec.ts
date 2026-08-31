@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
@@ -17,7 +17,7 @@ describe('abc: observers', () => {
     fixture.detectChanges();
 
     spyOn(context, 'event');
-    context.width = 150;
+    context.width.set(150);
     fixture.detectChanges();
     // wait for MutationObserver
     setTimeout(() => {
@@ -28,10 +28,10 @@ describe('abc: observers', () => {
 });
 
 @Component({
-  template: `<div style="height:100px;" [style.width.px]="width" (observeSize)="event($event)"></div>`,
+  template: `<div style="height:100px;" [style.width.px]="width()" (observeSize)="event($event)"></div>`,
   imports: [ObserverSize]
 })
 class TestComponent {
-  width = 100;
+  readonly width = signal(100);
   event(_: MutationRecord[]): void {}
 }

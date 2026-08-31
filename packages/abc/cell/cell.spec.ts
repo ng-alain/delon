@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -221,8 +221,8 @@ describe('abc: cell', () => {
 
       it('#valueChange', () => {
         spyOn(context, 'valueChange');
-        context.value = false;
-        context.options = { type: 'checkbox' };
+        context.value.set(false);
+        context.options.set({ type: 'checkbox' });
         fixture.detectChanges();
         expect(context.valueChange).not.toHaveBeenCalled();
         page.getEl('.ant-checkbox').click();
@@ -231,54 +231,54 @@ describe('abc: cell', () => {
       });
 
       it('#type', () => {
-        context.options = { renderType: 'primary' };
+        context.options.set({ renderType: 'primary' });
         fixture.detectChanges();
         page.count('.cell__primary', 1);
-        context.options = { renderType: 'success' };
+        context.options.set({ renderType: 'success' });
         fixture.detectChanges();
         page.count('.cell__success', 1);
       });
 
       it('#size', () => {
-        context.options = { size: 'large' };
+        context.options.set({ size: 'large' });
         fixture.detectChanges();
         page.count('.cell__large', 1);
-        context.options = { size: 'small' };
+        context.options.set({ size: 'small' });
         fixture.detectChanges();
         page.count('.cell__small', 1);
       });
 
       it('#loading', () => {
-        context.loading = true;
+        context.loading.set(true);
         fixture.detectChanges();
         page.count('.anticon-loading', 1);
-        context.loading = false;
+        context.loading.set(false);
         fixture.detectChanges();
         page.count('.anticon-loading', 0);
       });
 
       it('#disabled', () => {
-        context.disabled = true;
+        context.disabled.set(true);
         fixture.detectChanges();
         page.count('.cell__disabled', 1);
-        context.disabled = false;
+        context.disabled.set(false);
         fixture.detectChanges();
         page.count('.cell__disabled', 0);
       });
 
       it('#default', () => {
-        context.options = { default: { text: '*', condition: '1' } };
-        context.value = '1';
+        context.options.set({ default: { text: '*', condition: '1' } });
+        context.value.set('1');
         fixture.detectChanges();
         page.count('.cell__has-default', 1);
-        context.value = '2';
+        context.value.set('2');
         fixture.detectChanges();
         page.count('.cell__has-default', 0);
       });
 
       it('#unit', () => {
-        context.options = { unit: '*' };
-        context.value = 1;
+        context.options.set({ unit: '*' });
+        context.value.set(1);
         fixture.detectChanges();
         page.check('*', '.unit');
       });
@@ -298,8 +298,8 @@ describe('abc: cell', () => {
 
   class PageObject {
     update(value: unknown, options?: CellOptions): this {
-      context.value = value;
-      if (options != null) context.options = options;
+      context.value.set(value);
+      if (options != null) context.options.set(options);
       fixture.detectChanges();
       return this;
     }
@@ -356,19 +356,19 @@ class TestWidget {
   template: `
     <cell
       #comp
-      [value]="value"
+      [value]="value()"
       (valueChange)="valueChange($event)"
-      [options]="options"
-      [loading]="loading"
-      [disabled]="disabled"
+      [options]="options()"
+      [loading]="loading()"
+      [disabled]="disabled()"
     />
   `,
   imports: [CellComponent]
 })
 class TestComponent {
-  value?: unknown;
+  readonly value = signal<unknown>(undefined);
   valueChange(): void {}
-  options?: CellOptions;
-  loading = false;
-  disabled = false;
+  readonly options = signal<CellOptions | undefined>(undefined);
+  readonly loading = signal(false);
+  readonly disabled = signal(false);
 }

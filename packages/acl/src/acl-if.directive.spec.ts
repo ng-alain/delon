@@ -1,4 +1,4 @@
-import { Component, DebugElement, inject } from '@angular/core';
+import { Component, DebugElement, inject, signal } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -24,14 +24,14 @@ describe('acl-if: directive', () => {
 
   it('should show element when full', () => {
     context.srv.setFull(true);
-    context.role = 'user';
+    context.role.set('user');
     fixture.detectChanges();
     expect(dl.queryAll(By.css(CLS)).length).toBe(1);
   });
 
   it('should remove when not full', () => {
     context.srv.setFull(false);
-    context.role = 'user';
+    context.role.set('user');
     fixture.detectChanges();
     expect(dl.queryAll(By.css(CLS)).length).toBe(0);
   });
@@ -51,7 +51,7 @@ describe('acl-if: directive', () => {
   it('should be support complex acl value', () => {
     context.srv.setFull(false);
     context.srv.setRole(['user']);
-    context.role = { role: ['user', 'manage'], mode: 'allOf' };
+    context.role.set({ role: ['user', 'manage'], mode: 'allOf' });
     fixture.detectChanges();
     expect(dl.queryAll(By.css(CLS)).length).toBe(0);
     context.srv.setRole(['user', 'manage']);
@@ -62,11 +62,11 @@ describe('acl-if: directive', () => {
   it('should be show else when unauthorized', () => {
     context.srv.setFull(false);
     context.srv.setRole(['user']);
-    context.role = 'admin';
+    context.role.set('admin');
     fixture.detectChanges();
     expect(dl.queryAll(By.css(CLS)).length).toBe(0);
     expect(dl.queryAll(By.css(CLS_NOT)).length).toBe(1);
-    context.role = 'user';
+    context.role.set('user');
     fixture.detectChanges();
     expect(dl.queryAll(By.css(CLS)).length).toBe(1);
     expect(dl.queryAll(By.css(CLS_NOT)).length).toBe(0);
@@ -75,11 +75,11 @@ describe('acl-if: directive', () => {
   it('should be specify then & else tempatel', () => {
     context.srv.setFull(false);
     context.srv.setRole(['user']);
-    context.role = 'admin';
+    context.role.set('admin');
     fixture.detectChanges();
     expect(dl.queryAll(By.css('.thenBlock')).length).toBe(0);
     expect(dl.queryAll(By.css('.elseBlock')).length).toBe(1);
-    context.role = 'user';
+    context.role.set('user');
     fixture.detectChanges();
     expect(dl.queryAll(By.css('.thenBlock')).length).toBe(1);
     expect(dl.queryAll(By.css('.elseBlock')).length).toBe(0);
@@ -88,17 +88,17 @@ describe('acl-if: directive', () => {
   describe('#except', () => {
     beforeEach(() => {
       context.srv.setFull(false);
-      context.role = 'admin';
+      context.role.set('admin');
     });
     describe('with true', () => {
       it('should be show when user does not a user role', () => {
-        context.except = true;
+        context.except.set(true);
         fixture.detectChanges();
         context.srv.setRole(['user']);
         expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(1);
       });
       it('should be hide when user has a admin role', () => {
-        context.except = true;
+        context.except.set(true);
         fixture.detectChanges();
         context.srv.setRole(['admin']);
         expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(0);
@@ -106,13 +106,13 @@ describe('acl-if: directive', () => {
     });
     describe('with false', () => {
       it('should be hide when user does not a user role', () => {
-        context.except = false;
+        context.except.set(false);
         fixture.detectChanges();
         context.srv.setRole(['user']);
         expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(0);
       });
       it('should be show when user has a admin role', () => {
-        context.except = false;
+        context.except.set(false);
         fixture.detectChanges();
         context.srv.setRole(['admin']);
         expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(1);
@@ -123,25 +123,25 @@ describe('acl-if: directive', () => {
 
 @Component({
   template: `
-    <button class="acl-ph" *aclIf="role; else unauthorized"></button>
+    <button class="acl-ph" *aclIf="role(); else unauthorized"></button>
     <ng-template #unauthorized>
       <span class="unauthorized-acl-ph"></span>
     </ng-template>
     <h3>ng-template</h3>
-    <div *aclIf="role; then thenBlock; else elseBlock"></div>
+    <div *aclIf="role(); then thenBlock; else elseBlock"></div>
     <ng-template #thenBlock><span class="thenBlock"></span></ng-template>
     <ng-template #elseBlock><span class="elseBlock"></span></ng-template>
     <h3>except</h3>
-    <ng-template [aclIf]="role" [except]="except">
+    <ng-template [aclIf]="role()" [except]="except()">
       <span class="exceptBlock"></span>
     </ng-template>
-    <div *aclIf="role; then null; else nullThenElseBlock"></div>
+    <div *aclIf="role(); then null; else nullThenElseBlock"></div>
     <ng-template #nullThenElseBlock><span class="nullThenElseBlock"></span></ng-template>
   `,
   imports: [ACLIfDirective]
 })
 class TestComponent {
   readonly srv = inject(ACLService);
-  role: ACLCanType = 'admin';
-  except = false;
+  readonly role = signal<ACLCanType>('admin');
+  readonly except = signal(false);
 }

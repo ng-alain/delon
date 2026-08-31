@@ -1,7 +1,11 @@
 import { JsonValue } from '@angular-devkit/core';
-import { ProjectDefinition, WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
+import {
+  ProjectDefinition,
+  WorkspaceDefinition,
+  getWorkspace,
+  updateWorkspace
+} from '@schematics/angular/utility/workspace';
 
 import { modifyJSON, readJSON, writeJSON } from './json';
 
@@ -47,7 +51,7 @@ export async function getProject(
   projectName?: string
 ): Promise<{ project: ProjectDefinition; name: string; alainProject: NgAlainProjectDefinition }> {
   const workspace = await getWorkspace(tree);
-  projectName = getProjectName(workspace, projectName);
+  projectName = getProjectName(workspace, projectName) ?? undefined;
   if (!projectName || !workspace.projects.has(projectName)) {
     throw new SchematicsException(`No project named "${projectName}" exists.`);
   }
@@ -133,9 +137,9 @@ export function addAllowSyntheticDefaultImports(value: boolean = true): Rule {
   };
 }
 
-export function getProjectFromWorkspace(workspace: WorkspaceDefinition, projectName: string): ProjectDefinition {
+export function getProjectFromWorkspace(workspace: WorkspaceDefinition, projectName?: string): ProjectDefinition {
   if (!projectName) {
-    projectName = Array.from(workspace.projects.keys()).pop() ?? null;
+    projectName = Array.from(workspace.projects.keys()).pop() ?? '';
   }
   const project = workspace.projects.get(projectName);
 
@@ -151,7 +155,7 @@ export function getProjectTarget(
   buildTarget: string,
   type: 'options' | 'configurations' = 'options'
 ): Record<string, JsonValue | undefined> {
-  const options = project.targets?.get(buildTarget)?.[type];
+  const options = project.targets?.get(buildTarget)?.[type] as Record<string, JsonValue | undefined>;
 
   if (!options) {
     throw new SchematicsException(`Cannot determine project target configuration for: ${buildTarget}.${type}.`);
@@ -166,14 +170,14 @@ export function addStylePreprocessorOptions(workspace: WorkspaceDefinition, proj
 
   const build = project.targets.get(BUILD_TARGET_BUILD);
   if (build == null || build.options == null) return;
-  if (build.options.stylePreprocessorOptions == null) {
-    build.options.stylePreprocessorOptions = {};
-  }
-  let includePaths: string[] = build.options.stylePreprocessorOptions['includePaths'] ?? [];
+  const stylePreprocessorOptions = (build.options.stylePreprocessorOptions ??= {}) as {
+    includePaths?: string[];
+  };
+  let includePaths: string[] = stylePreprocessorOptions.includePaths ?? [];
   if (!Array.isArray(includePaths)) includePaths = [];
   if (includePaths.includes(`node_modules/`)) return;
   includePaths.push(`node_modules/`);
-  build.options.stylePreprocessorOptions['includePaths'] = includePaths;
+  stylePreprocessorOptions.includePaths = includePaths;
 }
 
 export function addStyleResources(workspace: WorkspaceDefinition, projectName: string): void {
@@ -188,14 +192,12 @@ export function addStyleResources(workspace: WorkspaceDefinition, projectName: s
 }
 
 export function addSchematicCollections(workspace: WorkspaceDefinition): void {
-  const cli = workspace.extensions.cli as Record<string, unknown>;
-  if (cli && cli.schematicCollections) return;
-  if (cli == null) workspace.extensions.cli = {};
-  let schematicCollections = workspace.extensions.cli['schematicCollections'] as string[];
-  if (!Array.isArray(schematicCollections)) schematicCollections = [];
+  const cli = (workspace.extensions.cli ??= {}) as { schematicCollections?: string[] };
+  if (cli.schematicCollections) return;
+  const schematicCollections: string[] = cli.schematicCollections ?? [];
   if (!schematicCollections.includes(`@schematics/angular`)) schematicCollections.push(`@schematics/angular`);
   if (!schematicCollections.includes(`ng-alain`)) schematicCollections.push(`ng-alain`);
-  workspace.extensions.cli['schematicCollections'] = schematicCollections;
+  cli.schematicCollections = schematicCollections;
 }
 
 export function addFileReplacements(workspace: WorkspaceDefinition, projectName: string): void {
@@ -203,11 +205,11 @@ export function addFileReplacements(workspace: WorkspaceDefinition, projectName:
   if (project == null) return;
   const build = project.targets.get(BUILD_TARGET_BUILD);
   if (build == null || build.options == null) return;
-  if (build.configurations == null) build.configurations = {};
-  if (build.configurations.production == null) build.configurations.production = {};
-  if (!Array.isArray(build.configurations.production.fileReplacements))
-    build.configurations.production.fileReplacements = [];
-  build.configurations.production.fileReplacements.push({
+  const production = ((build.configurations ??= {}).production ??= {}) as {
+    fileReplacements?: Array<{ replace: string; with: string }>;
+  };
+  if (!Array.isArray(production.fileReplacements)) production.fileReplacements = [];
+  production.fileReplacements.push({
     replace: 'src/environments/environment.ts',
     with: 'src/environments/environment.prod.ts'
   });

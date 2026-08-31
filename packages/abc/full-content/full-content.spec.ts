@@ -1,5 +1,5 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
@@ -39,12 +39,12 @@ describe('abc: full-content', () => {
   describe('#fullscreen', () => {
     beforeEach(() => createComp());
     it('with true', () => {
-      context.fullscreen = true;
+      context.fullscreen.set(true);
       fixture.detectChanges();
       expect(doc.body.classList.contains('full-content__opened')).toBe(true);
     });
     it('with false', () => {
-      context.fullscreen = false;
+      context.fullscreen.set(false);
       fixture.detectChanges();
       expect(doc.body.classList.contains('full-content__opened')).toBe(false);
     });
@@ -53,27 +53,27 @@ describe('abc: full-content', () => {
   describe('#hideTitle', () => {
     beforeEach(() => createComp());
     describe('#with [true]', () => {
-      beforeEach(() => (context.hideTitle = true));
+      beforeEach(() => context.hideTitle.set(true));
       it('when fullscreen', () => {
-        context.fullscreen = true;
+        context.fullscreen.set(true);
         fixture.detectChanges();
         expect(doc.body.classList.contains('full-content__hidden-title')).toBe(true);
       });
       it('when not fullscreen', () => {
-        context.fullscreen = false;
+        context.fullscreen.set(false);
         fixture.detectChanges();
         expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
     });
     describe('#with [false]', () => {
-      beforeEach(() => (context.hideTitle = false));
+      beforeEach(() => context.hideTitle.set(false));
       it('when fullscreen', () => {
-        context.fullscreen = true;
+        context.fullscreen.set(true);
         fixture.detectChanges();
         expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
       it('when not fullscreen', () => {
-        context.fullscreen = false;
+        context.fullscreen.set(false);
         fixture.detectChanges();
         expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
@@ -83,24 +83,24 @@ describe('abc: full-content', () => {
   describe('logic', () => {
     it('should be switch fullscreen via directive', () => {
       createComp();
-      expect(context.fullscreen).toBe(false);
+      expect(context.fullscreen()).toBe(false);
       (dl.query(By.css('button')).nativeElement as HTMLButtonElement).click();
       fixture.detectChanges();
-      expect(context.fullscreen).toBe(true);
+      expect(context.fullscreen()).toBe(true);
       (dl.query(By.css('button')).nativeElement as HTMLButtonElement).click();
       fixture.detectChanges();
-      expect(context.fullscreen).toBe(false);
+      expect(context.fullscreen()).toBe(false);
     });
     it('should be switch fullscreen via service', () => {
       createComp();
       const srv = TestBed.inject(FullContentService);
-      expect(context.fullscreen).toBe(false);
+      expect(context.fullscreen()).toBe(false);
       srv.toggle();
       fixture.detectChanges();
-      expect(context.fullscreen).toBe(true);
+      expect(context.fullscreen()).toBe(true);
       srv.toggle();
       fixture.detectChanges();
-      expect(context.fullscreen).toBe(false);
+      expect(context.fullscreen()).toBe(false);
     });
     it('should be recalculate height when trigger resize', fakeAsync(() => {
       createComp();
@@ -162,7 +162,7 @@ describe('abc: full-content', () => {
     <full-content
       #comp
       [(fullscreen)]="fullscreen"
-      [hideTitle]="hideTitle"
+      [hideTitle]="hideTitle()"
       [padding]="padding"
       (fullscreenChange)="change()"
     >
@@ -173,8 +173,8 @@ describe('abc: full-content', () => {
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: FullContentComponent;
-  fullscreen: boolean = false;
-  hideTitle?: boolean;
+  readonly fullscreen = signal<boolean>(false);
+  readonly hideTitle = signal<boolean | undefined>(undefined);
   padding = 24;
   change(): void {}
 }

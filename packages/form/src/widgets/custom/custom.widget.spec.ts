@@ -20,7 +20,7 @@ describe('form: widget: custom', () => {
   it('should be auto fix path when not start with /', () => {
     ({ fixture, context, page } = builder({
       detectChanges: false,
-      template: `<sf [schema]="schema" #comp><ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`
+      template: `<sf [schema]="schema()" #comp><ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`
     }));
     page.newSchema(schema);
     detectChanges().checkCount('.custom-el', 1);
@@ -30,7 +30,7 @@ describe('form: widget: custom', () => {
     spyOn(console, 'warn');
     ({ fixture, context, page } = builder({
       detectChanges: false,
-      template: `<sf [schema]="schema" #comp>
+      template: `<sf [schema]="schema()" #comp>
       <ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template>
       <ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template>
       </sf>`
@@ -42,7 +42,7 @@ describe('form: widget: custom', () => {
   it('should be re-attach custom template when refresh schema', () => {
     ({ fixture, context, page } = builder({
       detectChanges: false,
-      template: `<sf [schema]="schema" [formData]="formData" #comp>
+      template: `<sf [schema]="schema()" [formData]="formData()" #comp>
       <ng-template sf-template="/a">custom:<div class="custom-el">{{ id }}</div></ng-template>
       </sf>`
     }));

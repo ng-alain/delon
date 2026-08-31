@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable import/no-unassigned-import */
+/* eslint-disable import-x/no-unassigned-import */
 // Configuration for vscode-debug only.
 import * as glob from 'glob';
 import 'jasmine';

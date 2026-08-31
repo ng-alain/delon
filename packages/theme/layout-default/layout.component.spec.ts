@@ -1,4 +1,4 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -38,20 +38,20 @@ describe('theme: layout-default', () => {
   });
 
   it('should be custom nav', () => {
-    context.nav = context.navTpl;
+    context.nav.set(context.navTpl);
     fixture.detectChanges();
     page.expectEl('.custom-nav', true);
     page.expectEl('layout-default-nav', false);
   });
 
   it('should be custom aside user', () => {
-    context.asideUser = context.asideUserTpl;
+    context.asideUser.set(context.asideUserTpl);
     fixture.detectChanges();
     page.expectEl('.custom-aside-user', true);
   });
 
   it('should be custom content', () => {
-    context.content = context.contentTpl;
+    context.content.set(context.contentTpl);
     fixture.detectChanges();
     page.expectEl('.custom-content', true);
   });
@@ -76,21 +76,21 @@ describe('theme: layout-default', () => {
 
   describe('#options', () => {
     it('#logoLink', () => {
-      context.options = { logoLink: '/home' };
+      context.options.set({ logoLink: '/home' });
       fixture.detectChanges();
       const el = page.getEl<HTMLLinkElement>('.alain-default__header-logo-link');
       expect(el.href.endsWith('/home')).toBe(true);
     });
 
     it('#logoFixWidth', () => {
-      context.options = { logoFixWidth: 100 };
+      context.options.set({ logoFixWidth: 100 });
       fixture.detectChanges();
       const el = page.getEl('.alain-default__header-logo');
       expect(el.style.width).toBe(`100px`);
     });
 
     it('#hideAside', () => {
-      context.options = { hideAside: true };
+      context.options.set({ hideAside: true });
       fixture.detectChanges();
       page.expectEl(`.alain-default__hide-aside`).expectEl(`.alain-default__nav-item--collapse`, false);
     });
@@ -157,7 +157,7 @@ describe('theme: layout-default', () => {
       }));
       it('should be custom error', fakeAsync(() => {
         const spy = spyOn(msgSrv, 'error');
-        context.customError = 'test';
+        context.customError.set('test');
         fixture.detectChanges();
         lazyError();
         expect(context.comp.showFetching()).toBe(false);
@@ -167,7 +167,7 @@ describe('theme: layout-default', () => {
       }));
       it('should be custom error is null', fakeAsync(() => {
         const spy = spyOn(msgSrv, 'error');
-        context.customError = null;
+        context.customError.set(null);
         fixture.detectChanges();
         lazyError();
         expect(context.comp.showFetching()).toBe(false);
@@ -183,11 +183,11 @@ describe('theme: layout-default', () => {
 
     it('#fetchingStrictly', () => {
       const cls = '.alain-default__progress-bar';
-      context.fetchingStrictly = true;
-      context.fetching = true;
+      context.fetchingStrictly.set(true);
+      context.fetching.set(true);
       fixture.detectChanges();
       page.expectEl(cls, true);
-      context.fetching = false;
+      context.fetching.set(false);
       fixture.detectChanges();
       page.expectEl(cls, false);
     });
@@ -209,13 +209,13 @@ describe('theme: layout-default', () => {
   template: `
     <layout-default
       #comp
-      [options]="options"
-      [asideUser]="asideUser"
-      [nav]="nav"
-      [content]="content"
-      [customError]="customError"
-      [fetchingStrictly]="fetchingStrictly"
-      [fetching]="fetching"
+      [options]="options()"
+      [asideUser]="asideUser()"
+      [nav]="nav()"
+      [content]="content()"
+      [customError]="customError()"
+      [fetchingStrictly]="fetchingStrictly()"
+      [fetching]="fetching()"
     >
       <layout-default-header-item direction="left">
         <span class="header-left">left</span>
@@ -243,11 +243,11 @@ class TestComponent {
   @ViewChild('asideUserTpl', { static: true }) asideUserTpl!: TemplateRef<void>;
   @ViewChild('navTpl', { static: true }) navTpl!: TemplateRef<void>;
   @ViewChild('contentTpl', { static: true }) contentTpl!: TemplateRef<void>;
-  options: LayoutDefaultOptions = {};
-  asideUser?: TemplateRef<void> | null;
-  nav?: TemplateRef<void> | null;
-  content?: TemplateRef<void> | null;
-  customError?: string | null;
-  fetchingStrictly = false;
-  fetching = false;
+  readonly options = signal<LayoutDefaultOptions>({});
+  readonly asideUser = signal<TemplateRef<void> | null | undefined>(undefined);
+  readonly nav = signal<TemplateRef<void> | null | undefined>(undefined);
+  readonly content = signal<TemplateRef<void> | null | undefined>(undefined);
+  readonly customError = signal<string | null | undefined>(undefined);
+  readonly fetchingStrictly = signal(false);
+  readonly fetching = signal(false);
 }

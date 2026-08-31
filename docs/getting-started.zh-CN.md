@@ -76,7 +76,7 @@ npm start
 
 启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。
 
-![](./assets/screenshot/start.png | width=700)
+![Start](./assets/screenshot/start.png | width=700)
 
 恭喜你，你已经成功部署一个 NG-ALAIN 项目。
 
@@ -109,10 +109,10 @@ npm start
 2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
 3. 加入 NG-ALAIN 自助服务群（中文）
 
-![](./assets/qq-group.png)
+![QQ](./assets/qq-group.png)
 
 ## 捐助
 
 如果你觉得 NG-ALAIN 不错，可以考虑自愿为本站打赏或捐助。
 
-![](./assets/donate.png)
+![Donate](./assets/donate.png)

@@ -27,7 +27,7 @@ interface ThemeItem {
         <p data-aos="fade-up" data-aos-delay="150" data-aos-once="true">{{ 'app.home.slogan' | i18n }}</p>
         <div class="page-banner__slogan-btn">
           <a routerLink="/docs/getting-started/{{ i18n.zone }}">
-            <button nz-button [nzType]="'primary'" [nzSize]="'large'">{{ 'app.home.start' | i18n }}</button>
+            <button nz-button nzType="primary" nzSize="large">{{ 'app.home.start' | i18n }}</button>
           </a>
           <a
             href="https://ng-alain.surge.sh/"
@@ -36,7 +36,7 @@ interface ThemeItem {
             nz-tooltip
             [nzTooltipTitle]="previewTpl"
           >
-            <button nz-button [nzSize]="'large'">{{ 'app.home.preview' | i18n }}</button>
+            <button nz-button nzSize="large">{{ 'app.home.preview' | i18n }}</button>
             <ng-template #previewTpl>
               国内镜像：<a href="https://ng-alain.gitee.io" target="_blank">ng-alain.gitee.io</a>
             </ng-template>

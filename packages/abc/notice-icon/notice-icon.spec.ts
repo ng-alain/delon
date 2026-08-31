@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -30,14 +30,14 @@ describe('abc: notice-icon', () => {
   });
 
   describe('when not data', () => {
-    beforeEach(() => (context.data = []));
+    beforeEach(() => context.data.set([]));
     it('should be count', fakeAsync(() => {
-      context.count = 5;
+      context.count.set(5);
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
       const cur = dl.query(By.css('.ant-scroll-number-only .current')).nativeElement as HTMLElement;
-      expect(+cur.textContent!.trim()).toBe(context.count);
+      expect(+cur.textContent!.trim()).toBe(context.count());
       discardPeriodicTasks();
     }));
   });
@@ -49,22 +49,22 @@ describe('abc: notice-icon', () => {
       it('via popoverVisible property', () => {
         spyOn(context, 'popupVisibleChange');
         expect(context.comp.popoverVisible()).toBe(false);
-        context.popoverVisible = true;
+        context.popoverVisible.set(true);
         fixture.detectChanges();
         expect(context.comp.popoverVisible()).toBe(true);
       });
       it('via click', done => {
-        expect(context.popoverVisible).toBeUndefined();
+        expect(context.popoverVisible()).toBeUndefined();
         (dl.query(By.css('.ant-badge')).nativeElement as HTMLElement).click();
         fixture.detectChanges();
         setTimeout(() => {
-          expect(context.popoverVisible).toBe(true);
+          expect(context.popoverVisible()).toBe(true);
           done();
         }, CLICKTIME);
       });
     });
     it('should be control loading in visible popover', done => {
-      context.loading = true;
+      context.loading.set(true);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
@@ -98,7 +98,7 @@ describe('abc: notice-icon', () => {
       }, CLICKTIME);
     });
     it('#centered', done => {
-      context.centered = true;
+      context.centered.set(true);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
       setTimeout(() => {
@@ -110,7 +110,7 @@ describe('abc: notice-icon', () => {
 
   it('#i18n', done => {
     context.comp.onVisibleChange(true);
-    context.data = [{ title: 'a1', list: [] }];
+    context.data.set([{ title: 'a1', list: [] }]);
     fixture.detectChanges();
     setTimeout(() => {
       const a = document.querySelector('.notice-icon__notfound')! as HTMLElement;
@@ -128,10 +128,10 @@ describe('abc: notice-icon', () => {
   template: `
     <notice-icon
       #comp
-      [data]="data"
-      [count]="count"
-      [loading]="loading"
-      [centered]="centered"
+      [data]="data()"
+      [count]="count()"
+      [loading]="loading()"
+      [centered]="centered()"
       (select)="select($event)"
       (clear)="clear($event)"
       [(popoverVisible)]="popoverVisible"
@@ -143,7 +143,7 @@ describe('abc: notice-icon', () => {
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: NoticeIconComponent;
-  data: NoticeItem[] = [
+  readonly data = signal<NoticeItem[]>([
     {
       title: 'test',
       list: [
@@ -185,11 +185,11 @@ class TestComponent {
         }
       ]
     }
-  ];
-  count = 10;
-  loading = false;
-  centered = false;
-  popoverVisible?: boolean;
+  ]);
+  readonly count = signal(10);
+  readonly loading = signal(false);
+  readonly centered = signal(false);
+  readonly popoverVisible = signal<boolean | undefined>(undefined);
   select(): void {}
   clear(): void {}
   popupVisibleChange(): void {}

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import type * as Plyr from 'plyr';
@@ -58,8 +58,8 @@ describe('abc: media', () => {
     it('should be used full source argument', fakeAsync(() => {
       page.cd();
       expect(page.player.source.type).toBe('video');
-      context.source = { type: 'audio', sources: [] };
-      console.log('change', context.source);
+      context.source.set({ type: 'audio', sources: [] });
+      console.log('change', context.source());
       page.cd();
       expect(page.player.source.type).toBe('audio');
     }));
@@ -100,7 +100,7 @@ describe('abc: media', () => {
 
 // NOTE: <span></span> 当前不管是否有禁用eslint标签都会导致强制自关闭
 @Component({
-  template: ` <media #comp [type]="type" [source]="source" [options]="options" [delay]="delay" (ready)="ready()">
+  template: ` <media #comp [type]="type" [source]="source()" [options]="options" [delay]="delay" (ready)="ready()">
     <span></span>
   </media>`,
   imports: [MediaComponent]
@@ -108,13 +108,13 @@ describe('abc: media', () => {
 class TestComponent {
   @ViewChild('comp') comp!: MediaComponent;
   type: MediaType = 'video';
-  source: string | Plyr.SourceInfo = '1.mp4';
+  readonly source = signal<string | Plyr.SourceInfo>('1.mp4');
   options: NzSafeAny;
   delay = 0;
   ready(): void {}
 }
 @Component({
-  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`,
+  template: `<media #comp [source]="source()"><video data-type="custom"></video></media>`,
   imports: [MediaComponent]
 })
 class TestCustomVideoComponent extends TestComponent {}

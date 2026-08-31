@@ -1,12 +1,13 @@
 // @ts-check
 import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
+import markdown from '@eslint/markdown';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
 
 import jsdoc from 'eslint-plugin-jsdoc';
 import prettier from 'eslint-plugin-prettier';
-import * as importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import unusedImports from 'eslint-plugin-unused-imports';
 
 export default defineConfig(
@@ -18,9 +19,16 @@ export default defineConfig(
       'junit/',
       'ng-alain/',
       'schematics/**/files/**/*',
+      'packages/monaco-editor/monaco.d.ts',
       'src/dist/**/*',
       'src/templates/**/*',
-      'src/app/routes/gen/**/*'
+      'src/app/routes/gen/**/*',
+      'src/llms/**',
+      'docs/changelog.*.md',
+      'CHANGELOG.md',
+      'CONTRIBUTING.md',
+      'LICENSE',
+      'README.md'
     ]
   },
   {
@@ -33,15 +41,15 @@ export default defineConfig(
     },
     plugins: {
       jsdoc,
-      import: importPlugin,
+      'import-x': importPlugin,
       prettier,
-      'unused-imports': unusedImports,
+      'unused-imports': unusedImports
     },
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
+      ...angular.configs.tsRecommended
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -117,10 +125,9 @@ export default defineConfig(
         }
       ],
       'prefer-arrow/prefer-arrow-functions': 'off',
-      'import/no-duplicates': 'error',
-      'import/no-unused-modules': 'error',
-      'import/no-unassigned-import': 'error',
-      'import/order': [
+      'import-x/no-duplicates': 'error',
+      'import-x/no-unassigned-import': 'error',
+      'import-x/order': [
         'error',
         {
           alphabetize: { order: 'asc', caseInsensitive: false },
@@ -143,7 +150,7 @@ export default defineConfig(
               position: 'before'
             }
           ],
-          "pathGroupsExcludedImportTypes": []
+          pathGroupsExcludedImportTypes: []
         }
       ],
       'no-bitwise': 'off',
@@ -180,7 +187,7 @@ export default defineConfig(
   {
     files: ['**/*.html'],
     plugins: {
-      prettier,
+      prettier
     },
     extends: [
       ...angular.configs.templateRecommended
@@ -197,8 +204,25 @@ export default defineConfig(
           usePrettierrc: true
         }
       ],
-      "@angular-eslint/template/eqeqeq": "off",
-      "@angular-eslint/template/prefer-self-closing-tags": "error"
+      '@angular-eslint/template/prefer-self-closing-tags': 'error',
+      '@angular-eslint/template/prefer-at-empty': 'error',
+      '@angular-eslint/template/prefer-static-string-properties': 'error',
+      '@angular-eslint/template/prefer-contextual-for-variables': 'error',
+      '@angular-eslint/template/eqeqeq': 'off'
+    }
+  },
+  {
+    files: ['**/*.md'],
+    plugins: {
+      prettier,
+      markdown
+    },
+    extends: [markdown.configs.recommended],
+    rules: {
+      'prettier/prettier': 'error',
+      'markdown/no-missing-label-refs': 'off',
+      'markdown/no-unused-definitions': 'off',
+      'markdown/no-duplicate-definitions': 'off'
     }
   }
 );

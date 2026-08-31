@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -22,12 +22,12 @@ describe('abc: tag-select', () => {
 
   describe('#expandable', () => {
     it('with true', () => {
-      context.expandable = true;
+      context.expandable.set(true);
       fixture.detectChanges();
       expect(dl.query(By.css('.tag-select__has-expand'))).not.toBeNull();
     });
     it('with false', () => {
-      context.expandable = false;
+      context.expandable.set(false);
       fixture.detectChanges();
       expect(dl.query(By.css('.tag-select__has-expand'))).toBeNull();
     });
@@ -57,7 +57,7 @@ describe('abc: tag-select', () => {
 
 @Component({
   template: `
-    <tag-select #comp [expandable]="expandable" (change)="change()">
+    <tag-select #comp [expandable]="expandable()" (change)="change()">
       @for (i of categories; track $index) {
         <li style="width: 30%">{{ i.text }}</li>
       }
@@ -83,6 +83,6 @@ class TestComponent {
     { id: 11, text: '类目十一', value: false },
     { id: 12, text: '类目十二', value: false }
   ];
-  expandable = true;
+  expandable = signal(true);
   change(): void {}
 }

@@ -25,9 +25,9 @@ export default function (options: PluginSchema): Rule {
     const pluginOptions: PluginOptions = {
       type: options.type,
       name: res.name,
-      projectPrefix: project.prefix,
+      projectPrefix: project.prefix ?? '',
       root: project.root,
-      sourceRoot: project.sourceRoot,
+      sourceRoot: project.sourceRoot ?? 'src',
       project: options.project
     };
 

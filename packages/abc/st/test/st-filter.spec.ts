@@ -28,7 +28,7 @@ describe('abc: st-filter', () => {
     dl = page.dl;
     comp = page.comp;
 
-    page.context.columns = [
+    page.context.columns.set([
       {
         title: 'a',
         index: 'i',
@@ -44,12 +44,12 @@ describe('abc: st-filter', () => {
           fn: () => true
         }
       }
-    ];
+    ]);
   });
 
   it('muse provide the fn function', fakeAsync(() => {
     spyOn(console, 'warn');
-    page.context.columns[0].filter!.fn = null;
+    page.context.columns()![0].filter!.fn = null;
     page.cd();
     const firstCol = page.comp._columns[0];
     const filter = firstCol.filter as STColumnFilter;
@@ -63,7 +63,7 @@ describe('abc: st-filter', () => {
   }));
   describe('when is single', () => {
     beforeEach(() => {
-      context.columns[0].filter!.multiple = false;
+      context.columns()![0].filter!.multiple = false;
       fixture.detectChanges();
       firstCol = comp._columns[0];
       filter = firstCol.filter as STColumnFilter;
@@ -84,7 +84,7 @@ describe('abc: st-filter', () => {
   });
   describe('when is multiple', () => {
     beforeEach(() => {
-      context.columns[0].filter!.multiple = true;
+      context.columns()![0].filter!.multiple = true;
       fixture.detectChanges();
       firstCol = comp._columns[0];
       filter = firstCol.filter as STColumnFilter;
@@ -107,9 +107,9 @@ describe('abc: st-filter', () => {
   });
   describe('when type is keyword', () => {
     beforeEach(() => {
-      context.columns[0].filter!.type = 'keyword';
-      context.columns[0].filter!.default = true;
-      context.columns[0].filter!.menus![0].value = 'a';
+      context.columns()![0].filter!.type = 'keyword';
+      context.columns()![0].filter!.default = true;
+      context.columns()![0].filter!.menus![0].value = 'a';
       fixture.detectChanges();
       firstCol = comp._columns[0];
       filter = firstCol.filter!;
@@ -127,7 +127,7 @@ describe('abc: st-filter', () => {
     });
   });
   it('when type is number', fakeAsync(() => {
-    const f = page.context.columns[0].filter!;
+    const f = page.context.columns()![0].filter!;
     f.type = 'number';
     f.number = {};
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-number', 1).asyncEnd();
@@ -146,13 +146,13 @@ describe('abc: st-filter', () => {
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-date', 1).asyncEnd();
   }));
   it('when type is custom', fakeAsync(() => {
-    const f = page.context.columns[0].filter!;
+    const f = page.context.columns()![0].filter!;
     f.type = 'custom';
     f.custom = page.context.tpl;
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-custom', 1).asyncEnd();
   }));
   it('#showOPArea', fakeAsync(() => {
-    const f = page.context.columns[0].filter!;
+    const f = page.context.columns()![0].filter!;
     f.type = 'custom';
     f.custom = page.context.tpl;
     f.showOPArea = false;

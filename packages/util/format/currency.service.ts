@@ -199,6 +199,7 @@ export class CurrencyService {
       dec: ['角', '分', '厘', '毫']
     };
     if (inWords) {
+      // eslint-disable-next-line no-useless-assignment
       value = (+value).toFixed(5).toString();
     }
     let integerRes = '';

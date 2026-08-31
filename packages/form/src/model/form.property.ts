@@ -162,7 +162,7 @@ export abstract class FormProperty {
   searchProperty(path: string): FormProperty | null {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     let prop: FormProperty = this;
-    let base: PropertyGroup | null = null;
+    let base: PropertyGroup;
 
     let result = null;
     if (path[0] === SF_SEQ) {

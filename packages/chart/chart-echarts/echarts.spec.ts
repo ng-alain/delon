@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -45,38 +45,38 @@ describe('chart: chart-echarts', () => {
 
   it('should working', () => {
     const container = dl.query(By.css('div')).nativeElement as HTMLDivElement;
-    expect(container.style.height).toBe(`${context.height}px`);
-    expect(container.style.width).toBe(`${context.width}px`);
+    expect(container.style.height).toBe(`${context.height()}px`);
+    expect(container.style.width).toBe(`${context.width()}px`);
     expect(context.handleEvents).toHaveBeenCalled();
   });
 
   it('should be support percentage of width or height input', () => {
-    context.height = '50%';
-    context.width = '50%';
+    context.height.set('50%');
+    context.width.set('50%');
     fixture.detectChanges();
     const container = dl.query(By.css('div')).nativeElement as HTMLDivElement;
-    expect(container.style.height).toBe(`${context.height}`);
-    expect(container.style.width).toBe(`${context.width}`);
+    expect(container.style.height).toBe(`${context.height()}`);
+    expect(container.style.width).toBe(`${context.width()}`);
     expect(context.handleEvents).toHaveBeenCalled();
   });
 
   it('should be update option', () => {
     spyOn(context.cmp, 'setOption');
-    context.option = {};
+    context.option.set({});
     fixture.detectChanges();
     expect(context.cmp.setOption).toHaveBeenCalled();
   });
 
   it('should be update theme', () => {
     spyOn(context.cmp, 'install');
-    context.theme = 'dark';
+    context.theme.set('dark');
     fixture.detectChanges();
     expect(context.cmp.install).toHaveBeenCalled();
   });
 
   it('should be update initOpt', () => {
     spyOn(context.cmp, 'install');
-    context.initOpt = {};
+    context.initOpt.set({});
     fixture.detectChanges();
     expect(context.cmp.install).toHaveBeenCalled();
   });
@@ -86,11 +86,11 @@ describe('chart: chart-echarts', () => {
   template: `
     <chart-echarts
       #cmp
-      [width]="width"
-      [height]="height"
-      [option]="option"
-      [theme]="theme"
-      [initOpt]="initOpt"
+      [width]="width()"
+      [height]="height()"
+      [option]="option()"
+      [theme]="theme()"
+      [initOpt]="initOpt()"
       [on]="on"
       (events)="handleEvents($event)"
     />
@@ -99,11 +99,11 @@ describe('chart: chart-echarts', () => {
 })
 class TestComponent {
   @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;
-  width: string | number = 600;
-  height: string | number = 400;
-  theme?: string | Record<string, unknown> | null = null;
-  option: ChartEChartsOption = {};
-  initOpt: NzSafeAny;
+  readonly width = signal<string | number>(600);
+  readonly height = signal<string | number>(400);
+  readonly theme = signal<string | Record<string, unknown> | null>(null);
+  readonly option = signal<ChartEChartsOption>({});
+  readonly initOpt = signal<NzSafeAny>(undefined);
   on: ChartEChartsOn[] = [
     {
       eventName: 'click',

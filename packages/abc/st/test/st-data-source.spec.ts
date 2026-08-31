@@ -41,12 +41,11 @@ describe('abc: table: data-souce', () => {
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
   let currencySrv: CurrencyService;
-  let httpResponse: any;
   let mockDomSanitizer: MockDomSanitizer;
 
   class MockHttpClient {
     request(_method: string, _url: string, _opt: any): any {
-      return of(httpResponse);
+      return of([]);
     }
   }
 

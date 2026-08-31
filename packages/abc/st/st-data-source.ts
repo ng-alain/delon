@@ -611,6 +611,7 @@ export class STDataSource {
   }
 
   private getSum(index: number, list: STData[]): number {
+    // eslint-disable-next-line no-useless-assignment
     return this.getValues(index, list).reduce((p, i) => (p += parseFloat(String(i))), 0);
   }
 

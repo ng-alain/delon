@@ -358,7 +358,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       return 1;
     }
 
-    let ratio = 1;
+    let ratio;
     switch (this.zoomScale) {
       case 'page-fit':
         ratio = Math.min(containerHeight / viewportHeight, containerWidth / viewportWidth);

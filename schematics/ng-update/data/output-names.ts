@@ -1,5 +1,5 @@
 import { OutputNameUpgradeData, TargetVersion, VersionChanges } from '@angular/cdk/schematics';
 
 export const outputNames: VersionChanges<OutputNameUpgradeData> = {
-  [TargetVersion.V21]: []
+  [TargetVersion.V22]: []
 };

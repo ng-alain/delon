@@ -1,4 +1,4 @@
-import { Component, DebugElement, EventEmitter, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, inject, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   UntypedFormBuilder,
@@ -62,15 +62,15 @@ describe('abc: edit', () => {
         let ngModel: NgModel;
         beforeEach(() => {
           ({ fixture, dl, context } = createTestContext(TestComponent));
-          context.required = true;
-          context.label = 'fv';
-          context.val = '';
-          context.parent_size = 'default';
+          context.required.set(true);
+          context.label.set('fv');
+          context.val.set('');
+          context.parent_size.set('default');
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'invalid').and.returnValue(true);
         });
         it('with true', fakeAsync(() => {
-          context.parent_firstVisual = true;
+          context.parent_firstVisual.set(true);
           fixture.detectChanges();
           tick();
           fixture.detectChanges();
@@ -78,7 +78,7 @@ describe('abc: edit', () => {
           page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
         }));
         it('with false', fakeAsync(() => {
-          context.parent_firstVisual = false;
+          context.parent_firstVisual.set(false);
           fixture.detectChanges();
           tick();
           fixture.detectChanges();
@@ -91,23 +91,23 @@ describe('abc: edit', () => {
         beforeEach(() => {
           ({ fixture, dl, context } = createTestContext(TestComponent));
           page = new PageObject();
-          context.required = true;
-          context.parent_firstVisual = false;
-          context.val = '';
+          context.required.set(true);
+          context.parent_firstVisual.set(false);
+          context.val.set('');
           const ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'invalid').and.returnValue(true);
           changes = ngModel.statusChanges as EventEmitter<string>;
           spyOnProperty(ngModel, 'dirty').and.returnValue(false);
         });
         it('with true', fakeAsync(() => {
-          context.parent_ingoreDirty = true;
+          context.parent_ingoreDirty.set(true);
           fixture.detectChanges();
           changes.emit('INVALID');
           fixture.detectChanges();
           page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
         }));
         it('with false', fakeAsync(() => {
-          context.parent_ingoreDirty = false;
+          context.parent_ingoreDirty.set(false);
           fixture.detectChanges();
           changes.emit('INVALID');
           fixture.detectChanges();
@@ -117,7 +117,7 @@ describe('abc: edit', () => {
       describe('[property]', () => {
         describe('#wrap', () => {
           it('#title', () => {
-            context.parent_title = `parent_title`;
+            context.parent_title.set(`parent_title`);
             fixture.detectChanges();
             expect(page.getEl(`${prefixCls}title`).textContent).toContain(`parent_title`);
           });
@@ -125,7 +125,7 @@ describe('abc: edit', () => {
             it('shoule gutter number working', () => {
               const gutter = 24;
               const halfGutter = gutter / 2;
-              context.parent_gutter = gutter;
+              context.parent_gutter.set(gutter);
               fixture.detectChanges();
               expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
               expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
@@ -136,7 +136,7 @@ describe('abc: edit', () => {
             it('shoule gutter string working', () => {
               const gutter = '24';
               const halfGutter = Number(gutter) / 2;
-              context.parent_gutter = gutter;
+              context.parent_gutter.set(gutter);
               fixture.detectChanges();
               expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
               expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
@@ -147,46 +147,46 @@ describe('abc: edit', () => {
           });
           describe('#labelWidth', () => {
             it('should working', () => {
-              context.parent_layout = 'horizontal';
-              context.labelWidth = 20;
-              context.label = 'aa';
+              context.parent_layout.set('horizontal');
+              context.labelWidth.set(20);
+              context.label.set('aa');
               fixture.detectChanges();
-              expect(page.getEl('.ant-form-item-label').style.width).toBe(`${context.labelWidth}px`);
+              expect(page.getEl('.ant-form-item-label').style.width).toBe(`${context.labelWidth()}px`);
             });
             it('should be inherit parent labelWidth value', () => {
-              context.parent_layout = 'horizontal';
-              context.parent_labelWidth = 20;
-              context.label = 'aa';
+              context.parent_layout.set('horizontal');
+              context.parent_labelWidth.set(20);
+              context.label.set('aa');
               fixture.detectChanges();
-              expect(page.getEl('.ant-form-item-label').style.width).toBe(`${context.parent_labelWidth}px`);
+              expect(page.getEl('.ant-form-item-label').style.width).toBe(`${context.parent_labelWidth()}px`);
             });
             it('should be ingore width when layout not horizontal', () => {
-              context.parent_layout = 'inline';
-              context.parent_labelWidth = 20;
-              context.label = 'aa';
+              context.parent_layout.set('inline');
+              context.parent_labelWidth.set(20);
+              context.label.set('aa');
               fixture.detectChanges();
               expect(page.getEl('.ant-form-item-label').style.width).toBe(``);
             });
           });
           it('#layout', () => {
-            context.parent_layout = 'horizontal';
+            context.parent_layout.set('horizontal');
             fixture.detectChanges();
             page.expect(`${prefixCls}horizontal`);
-            context.parent_layout = 'vertical';
+            context.parent_layout.set('vertical');
             fixture.detectChanges();
             page.expect(`${prefixCls}vertical`);
-            context.parent_layout = 'inline';
+            context.parent_layout.set('inline');
             fixture.detectChanges();
             page.expect(`${prefixCls}inline`);
             page.expect(`${prefixCls}compact`);
           });
           it('#size', () => {
-            context.parent_size = 'compact';
+            context.parent_size.set('compact');
             fixture.detectChanges();
             page.expect(`${prefixCls}compact`);
           });
           it('should be ingroed less than 0', () => {
-            context.parent_col = 0;
+            context.parent_col.set(0);
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
           });
@@ -203,9 +203,9 @@ describe('abc: edit', () => {
             });
 
             it('should be working', () => {
-              page.expectText('.ant-form-item-explain', context.error as string);
+              page.expectText('.ant-form-item-explain', context.error() as string);
               const NEW_ERROR = 'new request';
-              context.parent_errors = [{ name: 'val', error: NEW_ERROR }];
+              context.parent_errors.set([{ name: 'val', error: NEW_ERROR }]);
               fixture.detectChanges();
               changes.emit('INVALID');
               fixture.detectChanges();
@@ -214,21 +214,21 @@ describe('abc: edit', () => {
           });
           describe('#noColon', () => {
             it('should working', () => {
-              context.noColon = true;
-              context.label = 'aa';
+              context.noColon.set(true);
+              context.label.set('aa');
               fixture.detectChanges();
               expect(page.getEls('.se__no-colon').length).toBe(1);
             });
             it('should be inherit parent noColon value', () => {
-              context.parent_noColon = true;
-              context.noColon = undefined;
-              context.label = 'aa';
+              context.parent_noColon.set(true);
+              context.noColon.set(undefined);
+              context.label.set('aa');
               fixture.detectChanges();
               expect(page.getEls('.se__no-colon').length).toBe(1);
             });
           });
           it('#hideLabel', () => {
-            context.hideLabel = true;
+            context.hideLabel.set(true);
             fixture.detectChanges();
             expect(page.getEls('.se__hide-label').length).toBe(1);
             expect(page.getEls('.se__nolabel').length).toBe(1);
@@ -237,28 +237,28 @@ describe('abc: edit', () => {
         describe('#item', () => {
           describe('#col', () => {
             it('should working', () => {
-              context.col = 1;
+              context.col.set(1);
               fixture.detectChanges();
               page.expect('.ant-col-xs-24');
               page.expect('.ant-col-sm-12', 0);
-              context.col = REP_MAX;
+              context.col.set(REP_MAX);
               fixture.detectChanges();
               page.expect('.ant-col-xs-24');
               page.expect('.ant-col-sm-12');
             });
             it('should be inherit parent col value', () => {
-              context.parent_colInCon = null;
-              context.parent_col = 2;
-              context.col = null;
+              context.parent_colInCon.set(null);
+              context.parent_col.set(2);
+              context.col.set(null);
               fixture.detectChanges();
               page.expect('.ant-col-xs-24');
               page.expect('.ant-col-sm-12');
               page.expect('.ant-col-md-8', 0);
             });
             it('should be inherit parent col value via container', () => {
-              context.parent_colInCon = 4;
-              context.parent_col = null;
-              context.col = null;
+              context.parent_colInCon.set(4);
+              context.parent_col.set(null);
+              context.col.set(null);
               fixture.detectChanges();
               page.expect('.ant-col-xs-24');
               page.expect('.ant-col-sm-12');
@@ -267,20 +267,20 @@ describe('abc: edit', () => {
             });
           });
           it('#label', () => {
-            context.label = 'test-label';
+            context.label.set('test-label');
             fixture.detectChanges();
             expect(page.getEl(`${prefixCls}label`).textContent).toContain('test-label');
           });
           it('should be only horizontal will increase the responsive', () => {
-            context.parent_layout = 'inline';
-            context.label = 'aa';
+            context.parent_layout.set('inline');
+            context.label.set('aa');
             fixture.detectChanges();
             page.expect(`${prefixCls}inline`);
             page.expect('.ant-col-xs-24', 0);
           });
           it('#line', () => {
-            context.parent_line = true;
-            context.line = null;
+            context.parent_line.set(true);
+            context.line.set(null);
             fixture.detectChanges();
             page.expect(`${prefixCls}line`);
           });
@@ -302,7 +302,7 @@ describe('abc: edit', () => {
           page.expect(ANT_FORM_HAS_ERROR_CLS);
         });
         it('should be mulit error', () => {
-          context.error = { required: 'A', other: 'O' };
+          context.error.set({ required: 'A', other: 'O' });
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'dirty').and.returnValue(true);
@@ -314,7 +314,7 @@ describe('abc: edit', () => {
           expect(page.getEl(ANT_FORM_HAS_ERROR_CLS).textContent!.trim()).toBe('O');
         });
         it('should be only control vision when error is null', () => {
-          context.error = '';
+          context.error.set('');
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'dirty').and.returnValue(true);
@@ -338,16 +338,16 @@ describe('abc: edit', () => {
       genModule(`
       <form nz-form se-container>
         <se #viewComp id="1">
-        @if (showModel) {
+        @if (showModel()) {
           <input id="ipt" type="text" [(ngModel)]="val" name="val" required>
         }
         </se>
       </form>`);
       page.expect('#ipt');
-      context.showModel = false;
+      context.showModel.set(false);
       fixture.detectChanges();
       page.expect('#ipt', 0);
-      context.showModel = true;
+      context.showModel.set(true);
       fixture.detectChanges();
       page.expect('#ipt');
     });
@@ -381,7 +381,7 @@ describe('abc: edit', () => {
     describe('should be ingore error visual when is disabled', () => {
       it('in ngModel', () => {
         genModule();
-        context.disabled = true;
+        context.disabled.set(true);
         fixture.detectChanges();
         ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
         const changes = ngModel.statusChanges as EventEmitter<string>;
@@ -539,37 +539,37 @@ describe('abc: edit', () => {
   template: `
     <form
       nz-form
-      [se-container]="parent_colInCon"
+      [se-container]="parent_colInCon()"
       #seComp="seContainer"
-      [col]="parent_col"
-      [title]="parent_title"
-      [firstVisual]="parent_firstVisual"
-      [ingoreDirty]="parent_ingoreDirty"
-      [line]="parent_line"
-      [size]="parent_size"
-      [nzLayout]="parent_layout"
-      [labelWidth]="parent_labelWidth"
-      [gutter]="parent_gutter"
-      [errors]="parent_errors"
-      [noColon]="parent_noColon"
+      [col]="parent_col()"
+      [title]="parent_title()"
+      [firstVisual]="parent_firstVisual()"
+      [ingoreDirty]="parent_ingoreDirty()"
+      [line]="parent_line()"
+      [size]="parent_size()"
+      [nzLayout]="parent_layout()"
+      [labelWidth]="parent_labelWidth()"
+      [gutter]="parent_gutter()"
+      [errors]="parent_errors()"
+      [noColon]="parent_noColon()"
     >
       <se-title>title</se-title>
       <se
         #viewComp
         [optional]="optional"
         [optionalHelp]="optionalHelp"
-        [error]="error"
+        [error]="error()"
         [extra]="extra"
         [controlClass]="controlClass"
-        [label]="label"
-        [col]="col"
-        [required]="required"
-        [line]="line"
-        [labelWidth]="labelWidth"
-        [noColon]="noColon"
-        [hideLabel]="hideLabel"
+        [label]="label()"
+        [col]="col()"
+        [required]="required()"
+        [line]="line()"
+        [labelWidth]="labelWidth()"
+        [noColon]="noColon()"
+        [hideLabel]="hideLabel()"
       >
-        <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
+        <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled()" />
       </se>
     </form>
   `,
@@ -581,35 +581,35 @@ class TestComponent {
   @ViewChild('viewComp', { static: true })
   viewComp!: SEComponent;
 
-  parent_gutter: string | number | null = 32;
-  parent_colInCon?: number | null;
-  parent_col: number | null = 3;
-  parent_labelWidth: number | null = null;
-  parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
-  parent_size: 'default' | 'compact' = 'default';
-  parent_firstVisual = true;
-  parent_ingoreDirty = false;
-  parent_line = false;
-  parent_noColon = false;
-  parent_title = 'title';
-  parent_errors: SEErrorRefresh[] = [];
+  readonly parent_gutter = signal<string | number | null>(32);
+  readonly parent_colInCon = signal<number | null | undefined>(undefined);
+  readonly parent_col = signal<number | null>(3);
+  readonly parent_labelWidth = signal<number | null>(null);
+  readonly parent_layout = signal<'horizontal' | 'vertical' | 'inline'>('horizontal');
+  readonly parent_size = signal<'default' | 'compact'>('default');
+  readonly parent_firstVisual = signal(true);
+  readonly parent_ingoreDirty = signal(false);
+  readonly parent_line = signal(false);
+  readonly parent_noColon = signal(false);
+  readonly parent_title = signal('title');
+  readonly parent_errors = signal<SEErrorRefresh[]>([]);
 
   optional?: string;
   optionalHelp?: string;
-  error: string | TemplateRef<void> | Record<string, string | TemplateRef<void>> = 'required';
+  readonly error = signal<string | TemplateRef<void> | Record<string, string | TemplateRef<void>>>('required');
   extra?: string;
-  label?: string;
-  required?: boolean | null;
-  line?: boolean | null;
-  col?: number | null;
+  readonly label = signal<string | undefined>(undefined);
+  readonly required = signal<boolean | null | undefined>(undefined);
+  readonly line = signal<boolean | null | undefined>(undefined);
+  readonly col = signal<number | null | undefined>(undefined);
   controlClass = '';
-  labelWidth: number | null = null;
-  noColon?: boolean | null = undefined;
-  hideLabel: boolean = false;
+  readonly labelWidth = signal<number | null>(null);
+  readonly noColon = signal<boolean | null | undefined>(undefined);
+  readonly hideLabel = signal(false);
 
-  val = '';
-  showModel = true;
-  disabled = false;
+  readonly val = signal('');
+  readonly showModel = signal(true);
+  readonly disabled = signal(false);
 }
 
 @Component({

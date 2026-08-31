@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, Injectable, TemplateRef, Type, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injectable, signal, TemplateRef, Type, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -157,9 +157,9 @@ export class PageObject<T extends TestComponent> {
     this.fixture = TestBed.createComponent(type);
     this.dl = this.fixture.debugElement;
     this.context = this.dl.componentInstance;
-    this.context.data = deepCopy(USERS);
+    this.context.data.set(deepCopy(USERS));
     if (minColumn) {
-      this.context.columns = [{ title: '', index: 'id' }];
+      this.context.columns.set([{ title: '', index: 'id' }]);
     }
 
     spyOn(this.context as NzSafeAny, 'error').and.callFake((res: STError) => (this.spyErrorData = res));
@@ -290,13 +290,13 @@ export class PageObject<T extends TestComponent> {
     return this;
   }
   updateData(data: NzSafeAny): this {
-    this.context.data = data;
+    this.context.data.set(data);
     return this.cd();
   }
   updateColumn(columns: STColumn[], pi: number = 1, ps: number = PS): this {
-    this.context.columns = columns;
-    this.context.pi = pi;
-    this.context.ps = ps;
+    this.context.columns.set(columns);
+    this.context.pi.set(pi);
+    this.context.ps.set(ps);
     return this.cd();
   }
   expectCompData(path: string, value: NzSafeAny): this {
@@ -401,32 +401,32 @@ export class PageObject<T extends TestComponent> {
   template: `
     <st
       #st
-      [data]="data"
-      [req]="req"
-      [res]="res"
-      [columns]="columns"
-      [ps]="ps"
-      [pi]="pi"
+      [data]="data()"
+      [req]="req()"
+      [res]="res()"
+      [columns]="columns()"
+      [ps]="ps()"
+      [pi]="pi()"
       [total]="total"
-      [page]="page"
-      [responsive]="responsive"
-      [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
-      [widthMode]="widthMode"
-      [loading]="loading"
+      [page]="page()"
+      [responsive]="responsive()"
+      [responsiveHideHeaderFooter]="responsiveHideHeaderFooter()"
+      [widthMode]="widthMode()"
+      [loading]="loading()"
       [loadingDelay]="loadingDelay"
-      [virtualScroll]="virtualScroll"
+      [virtualScroll]="virtualScroll()"
       [bordered]="bordered"
       [size]="size"
-      [scroll]="scroll"
-      [multiSort]="multiSort"
+      [scroll]="scroll()"
+      [multiSort]="multiSort()"
       [noResult]="noResult"
       [widthConfig]="widthConfig"
-      [clickRowClassName]="clickRowClassName"
-      [showHeader]="showHeader"
-      [contextmenu]="contextmenu"
-      [customRequest]="customRequest"
-      [drag]="drag"
-      [delay]="delay"
+      [clickRowClassName]="clickRowClassName()"
+      [showHeader]="showHeader()"
+      [contextmenu]="contextmenu()"
+      [customRequest]="customRequest()"
+      [drag]="drag()"
+      [delay]="delay()"
       (change)="change($event)"
       (error)="error($event)"
     />
@@ -440,39 +440,39 @@ export class PageObject<T extends TestComponent> {
 export class TestComponent {
   @ViewChild('st', { static: true }) readonly comp!: STComponent;
   @ViewChild('tpl', { static: true }) readonly tpl!: TemplateRef<NzSafeAny>;
-  data: string | NzSafeAny[] | Observable<NzSafeAny[]> | null = deepCopy(USERS);
-  res: STRes = {};
-  req: STReq = {};
-  columns!: STColumn[];
-  ps = PS;
-  pi?: number;
+  readonly data = signal<string | NzSafeAny[] | Observable<NzSafeAny[]> | null>(deepCopy(USERS));
+  readonly res = signal<STRes>({});
+  readonly req = signal<STReq>({});
+  readonly columns = signal<STColumn[] | undefined>(undefined);
+  readonly ps = signal(PS);
+  readonly pi = signal<number | undefined>(undefined);
   total?: number;
-  page: STPage = {};
-  loading: boolean | null = null;
+  readonly page = signal<STPage>({});
+  readonly loading = signal<boolean | null>(null);
   loadingDelay?: number;
   bordered?: boolean;
   size?: 'small' | 'middle' | 'default';
-  scroll?: { y?: string; x?: string };
-  multiSort?: boolean | STMultiSort;
+  readonly scroll = signal<{ y?: string; x?: string } | undefined>(undefined);
+  readonly multiSort = signal<boolean | STMultiSort | undefined>(undefined);
   noResult = 'noResult';
   widthConfig: string[] = [];
-  clickRowClassName?: STClickRowClassName | null = 'text-error';
-  responsive = false;
-  responsiveHideHeaderFooter = false;
-  expandRowByClick = false;
-  expandAccordion = false;
-  widthMode: STWidthMode = {};
-  virtualScroll = false;
-  showHeader = true;
-  customRequest?: (options: STCustomRequestOptions) => Observable<NzSafeAny>;
-  contextmenu: STContextmenuFn | null = () => [
+  readonly clickRowClassName = signal<STClickRowClassName | null | undefined>('text-error');
+  readonly responsive = signal(false);
+  readonly responsiveHideHeaderFooter = signal(false);
+  readonly expandRowByClick = signal(false);
+  readonly expandAccordion = signal(false);
+  readonly widthMode = signal<STWidthMode>({});
+  readonly virtualScroll = signal(false);
+  readonly showHeader = signal(true);
+  readonly customRequest = signal<((options: STCustomRequestOptions) => Observable<NzSafeAny>) | undefined>(undefined);
+  readonly contextmenu = signal<STContextmenuFn | null>(() => [
     { text: 'a', fn: jasmine.createSpy() },
     { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
-  ];
+  ]);
 
-  drag?: STDragOptions | boolean = false;
+  readonly drag = signal<STDragOptions | boolean | undefined>(false);
 
-  delay = false;
+  readonly delay = signal(false);
 
   error(_: any): void {}
   change(_: any): void {}
@@ -482,11 +482,11 @@ export class TestComponent {
   template: `
     <st
       #st
-      [data]="data"
-      [columns]="columns"
+      [data]="data()"
+      [columns]="columns()"
       [expand]="expand"
-      [expandRowByClick]="expandRowByClick"
-      [expandAccordion]="expandAccordion"
+      [expandRowByClick]="expandRowByClick()"
+      [expandAccordion]="expandAccordion()"
       (change)="change($event)"
     >
       <ng-template #expand let-item let-index="index" let-column="column">

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
@@ -29,30 +29,30 @@ describe('chart: mini-area', () => {
 
     describe('#Axis', () => {
       it('shoule be close axis', fakeAsync(() => {
-        page.context.yAxis = null;
-        page.context.xAxis = null;
+        page.context.yAxis.set(null);
+        page.context.xAxis.set(null);
         page.dcFirst();
         const opt = page.getController('axis').option;
         expect(opt.x).toBe(false);
         expect(opt.y).toBe(false);
       }));
       it('shoule be close x-axis', fakeAsync(() => {
-        page.context.xAxis = {
+        page.context.xAxis.set({
           line: {
             stroke: '#ff8800'
           }
-        };
+        });
         page.dcFirst();
         const opt = page.getController('axis').option;
         expect(opt.x).not.toBe(false);
         expect(opt.y).toBe(false);
       }));
       it('shoule be close y-axis', fakeAsync(() => {
-        page.context.yAxis = {
+        page.context.yAxis.set({
           line: {
             stroke: '#ff8800'
           }
-        };
+        });
         page.dcFirst();
         const opt = page.getController('axis').option;
         expect(opt.x).toBe(false);
@@ -61,7 +61,7 @@ describe('chart: mini-area', () => {
     });
 
     it('#line', fakeAsync(() => {
-      page.context.line = true;
+      page.context.line.set(true);
       page.dcFirst();
       expect(page.chart.geometries.length).toBe(2);
     }));
@@ -70,7 +70,7 @@ describe('chart: mini-area', () => {
       it('with default', fakeAsync(() => page.dcFirst().checkTooltip('10')));
 
       it('with mini', fakeAsync(() => {
-        page.context.tooltipType = 'mini';
+        page.context.tooltipType.set('mini');
         page.dcFirst().checkTooltip(null);
       }));
     });
@@ -84,28 +84,28 @@ describe('chart: mini-area', () => {
     <g2-mini-area
       style="display: block;"
       #comp
-      [line]="line"
+      [line]="line()"
       color="#cceafe"
       [height]="height"
-      [data]="data"
-      [delay]="delay"
-      [tooltipType]="tooltipType"
-      [xAxis]="xAxis"
-      [yAxis]="yAxis"
+      [data]="data()"
+      [delay]="delay()"
+      [tooltipType]="tooltipType()"
+      [xAxis]="xAxis()"
+      [yAxis]="yAxis()"
     />
   `,
   imports: [G2MiniAreaComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniAreaComponent;
-  line = false;
+  readonly line = signal(false);
   height = PageG2Height;
-  xAxis: NzSafeAny;
-  yAxis: NzSafeAny;
-  data: NzSafeAny[] = [
+  readonly xAxis = signal<NzSafeAny>(undefined);
+  readonly yAxis = signal<NzSafeAny>(undefined);
+  readonly data = signal<NzSafeAny[]>([
     { x: 1, y: 10 },
     { x: 2, y: 20 }
-  ];
-  tooltipType = 'default';
-  delay = 0;
+  ]);
+  readonly tooltipType = signal('default');
+  readonly delay = signal(0);
 }

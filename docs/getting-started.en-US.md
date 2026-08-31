@@ -68,7 +68,7 @@ npm start
 
 NG-ALAIN is a standard Angular CLI project that includes common routes for admins and demonstrates our component library. The project layout is as follows:
 
-```
+```txt
 ├── _mock                                       # Mock Data rule
 ├── src
 │   ├── app
@@ -103,7 +103,7 @@ npm start
 
 This will automatically open [http://localhost:4200](http://localhost:4200). If you see the following page then you have succeeded.
 
-![](./assets/screenshot/desktop.png | width=700)
+![Desktop](./assets/screenshot/desktop.png | width=700)
 
 ## Environment Support
 

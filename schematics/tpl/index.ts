@@ -23,7 +23,7 @@ function genFiles(options: Schema): void {
 }
 
 function parseExtraArgs(options: Schema): void {
-  const org = options['--'] as string[];
+  const org = (options as { '--'?: string[] })['--'];
   if (!org || !Array.isArray(org)) {
     return;
   }

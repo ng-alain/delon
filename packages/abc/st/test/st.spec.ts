@@ -119,7 +119,7 @@ describe('abc: st', () => {
             page.expectData(1, 'checked', false).asyncEnd();
           }));
           it('#checkboxIdMap', fakeAsync(() => {
-            page.context.page = { checkboxIdMap: 'id' };
+            page.context.page.set({ checkboxIdMap: 'id' });
             page.updateColumn([{ title: '', index: 'id', type: 'checkbox' }]).click('.st__body .ant-checkbox-wrapper');
             expect(page.context.comp.checkList.length).toEqual(1);
             page.go(2).click('.st__body .ant-checkbox-wrapper');
@@ -182,7 +182,7 @@ describe('abc: st', () => {
           it('should be navigate url when click is string value', fakeAsync(() => {
             const router = TestBed.inject<Router>(Router);
             spyOn(router, 'navigateByUrl');
-            context.data = [{ link: '/a' }];
+            context.data.set([{ link: '/a' }]);
             page
               .updateColumn([
                 {
@@ -207,7 +207,7 @@ describe('abc: st', () => {
           }));
           it('should not render img when is empty data', fakeAsync(() => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
-            context.data = [{ img: MOCKIMG }, { img: '' }];
+            context.data.set([{ img: MOCKIMG }, { img: '' }]);
             page
               .updateColumn(columns as any)
               .expectCell('', 1, 1, 'img')
@@ -815,9 +815,9 @@ describe('abc: st', () => {
       });
       it('should be automatically cancel paging when the returned body value is an array type', done => {
         spyOn(_http, 'request').and.returnValue(of([{}, {}, {}]));
-        context.pi = 1;
-        context.ps = 2;
-        context.data = '/mock';
+        context.pi.set(1);
+        context.ps.set(2);
+        context.data.set('/mock');
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           expect(comp.pi).toBe(1);
@@ -829,7 +829,7 @@ describe('abc: st', () => {
       describe('Http Request', () => {
         it('when error request', () => {
           spyOn(_http, 'request').and.returnValue(throwError(() => 'cancel'));
-          context.data = '/mock';
+          context.data.set('/mock');
           fixture.detectChanges();
           expect(page.spyErrorData?.error).toBe('cancel');
           TestBed.resetTestingModule();
@@ -837,30 +837,30 @@ describe('abc: st', () => {
         it('should be ingored incomplete request when has new request', fakeAsync(() => {
           let mockData = [{}];
           spyOn(_http, 'request').and.callFake(() => of(mockData) as any);
-          context.data = '/mock1';
+          context.data.set('/mock1');
           fixture.detectChanges();
           tick(1000);
           fixture.detectChanges();
           mockData = [{}, {}];
-          context.data = '/mock2';
+          context.data.set('/mock2');
           fixture.detectChanges();
           tick(1000);
           fixture.detectChanges();
           expect(comp._data.length).toBe(mockData.length);
         }));
         it('#customRequest', fakeAsync(() => {
-          context.customRequest = jasmine.createSpy('customRequest').and.callFake(() => of([]));
-          context.data = '/invalid-url';
+          context.customRequest.set(jasmine.createSpy('customRequest').and.callFake(() => of([])));
+          context.data.set('/invalid-url');
           fixture.detectChanges();
           tick(1000);
           fixture.detectChanges();
-          expect(context.customRequest).toHaveBeenCalled();
+          expect(context.customRequest()).toHaveBeenCalled();
         }));
       });
     });
     describe('#req', () => {
       it('should fix all paraments when only part parament', () => {
-        context.req = { reName: { pi: 'PI' } };
+        context.req.set({ reName: { pi: 'PI' } });
         fixture.detectChanges();
         expect(comp.req.reName).not.toBeNull();
         expect(comp.req.reName!.pi).toBe('PI');
@@ -869,14 +869,14 @@ describe('abc: st', () => {
       it('should be ingore request when lazyLoad is true', () => {
         const anyComp = comp as any;
         spyOn(anyComp, 'loadPageData');
-        context.req = { lazyLoad: true };
+        context.req.set({ lazyLoad: true });
         fixture.detectChanges();
         expect(anyComp.loadPageData).not.toHaveBeenCalled();
       });
     });
     describe('#res', () => {
       it('should fix all paraments when only part parament', () => {
-        context.res = { reName: { total: 'a.b' } };
+        context.res.set({ reName: { total: 'a.b' } });
         fixture.detectChanges();
         const reName = comp.res.reName as STResReNameType;
         expect(reName).not.toBeNull();
@@ -886,7 +886,7 @@ describe('abc: st', () => {
         expect(reName.list![0]).toBe('list');
       });
       it('support a.b', () => {
-        context.res = { reName: { total: 'a.b', list: 'c.d' } };
+        context.res.set({ reName: { total: 'a.b', list: 'c.d' } });
         fixture.detectChanges();
         const reName = comp.res.reName as STResReNameType;
         expect(reName).not.toBeNull();
@@ -900,13 +900,13 @@ describe('abc: st', () => {
     });
     describe('#page', () => {
       it('should fix all paraments when only part parament', () => {
-        context.page = { total: `TO:{{total}}` };
+        context.page.set({ total: `TO:{{total}}` });
         fixture.detectChanges();
         expect(comp.page.placement).toBe(`right`);
         expect(comp.page.total).toBe(`TO:{{total}}`);
       });
       it('should be ingore pi event trigger when change size in last page', fakeAsync(() => {
-        context.page = { showSize: true, pageSizes: [10, 20] };
+        context.page.set({ showSize: true, pageSizes: [10, 20] });
         page.cd().go(2);
         let load = 0;
         spyOn(context.comp as any, 'loadData').and.callFake(() => {
@@ -925,72 +925,72 @@ describe('abc: st', () => {
     });
     describe('#showTotal', () => {
       it('with true', fakeAsync(() => {
-        context.page.total = true;
+        context.page.update(p => ({ ...p, total: true }));
         page.cd();
         fixture.detectChanges();
         page.expectElContent('.ant-pagination-total-text', `共 ${DEFAULTCOUNT} 条`).asyncEnd();
       }));
       it('with false', fakeAsync(() => {
-        context.page.total = false;
+        context.page.update(p => ({ ...p, total: false }));
         page.cd().expectElContent('.ant-pagination-total-text', '').asyncEnd();
       }));
       it('should be custom template', fakeAsync(() => {
-        context.pi = 1;
-        context.ps = 3;
-        context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
+        context.pi.set(1);
+        context.ps.set(3);
+        context.page.update(p => ({ ...p, total: `{{total}}/{{range[0]}}/{{range[1]}}` }));
         page.cd().expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`).asyncEnd();
       }));
     });
     describe('#showPagination', () => {
       describe('with undefined', () => {
         beforeEach(() => {
-          context.ps = 2;
-          context.page.show = undefined;
+          context.ps.set(2);
+          context.page.update(p => ({ ...p, show: undefined }));
         });
         it('should auto hide when total less than ps', fakeAsync(() => {
-          context.data = deepCopy(USERS).slice(0, 1);
+          context.data.set(deepCopy(USERS).slice(0, 1));
           page.cd().expectElCount('nz-pagination', 0).asyncEnd();
         }));
         it('should auto show when ps less than total', fakeAsync(() => {
-          context.data = deepCopy(USERS).slice(0, 3);
+          context.data.set(deepCopy(USERS).slice(0, 3));
           page.cd().expectElCount('nz-pagination', 1).asyncEnd();
         }));
       });
       it('should always show when with true', fakeAsync(() => {
-        context.page.show = true;
+        context.page.update(p => ({ ...p, show: true }));
         page.cd().expectElCount('nz-pagination', 1).asyncEnd();
       }));
     });
     describe('#pagePlacement', () => {
       ['left', 'center'].forEach(pos => {
         it(`with ${pos}`, fakeAsync(() => {
-          context.page.placement = pos as any;
+          context.page.update(p => ({ ...p, placement: pos as any }));
           page.cd().expectElCount(`.st__p-${pos}`, 1).asyncEnd();
         }));
       });
     });
     describe('#responsive', () => {
       it('with true', fakeAsync(() => {
-        context.responsive = true;
+        context.responsive.set(true);
         page.cd().expectElCount(`.ant-table-rep`, 1).asyncEnd();
       }));
       it('with false', fakeAsync(() => {
-        context.responsive = false;
+        context.responsive.set(false);
         page.cd().expectElCount(`.ant-table-rep`, 0).expectElCount(`.ant-table-rep__title`, 0).asyncEnd();
       }));
     });
     describe('#responsiveHideHeaderFooter', () => {
       it('should working', fakeAsync(() => {
-        context.responsiveHideHeaderFooter = true;
+        context.responsiveHideHeaderFooter.set(true);
         page.cd().expectElCount(`.ant-table-rep__hide-header-footer`, 1).asyncEnd();
       }));
     });
     describe('#toTop', () => {
       beforeEach(() => {
-        context.page.toTopOffset = 10;
+        context.page.update(p => ({ ...p, toTopOffset: 10 }));
       });
       it('with true', fakeAsync(() => {
-        context.page.toTop = true;
+        context.page.update(p => ({ ...p, toTop: true }));
         page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
@@ -999,7 +999,7 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('with false', fakeAsync(() => {
-        context.page.toTop = false;
+        context.page.update(p => ({ ...p, toTop: false }));
         page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
@@ -1008,8 +1008,8 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should scroll to .ant-table-content when used scroll', fakeAsync(() => {
-        context.scroll = { x: '1300px' };
-        context.page.toTop = true;
+        context.scroll.set({ x: '1300px' });
+        context.page.update(p => ({ ...p, toTop: true }));
         page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
@@ -1018,7 +1018,7 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should be enforce to the top via load', fakeAsync(() => {
-        context.page.toTop = false;
+        context.page.update(p => ({ ...p, toTop: false }));
         page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
@@ -1028,7 +1028,7 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should be cancelled to the top via load', fakeAsync(() => {
-        context.page.toTop = true;
+        context.page.update(p => ({ ...p, toTop: true }));
         page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
@@ -1038,9 +1038,9 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should be working in virtual scroll', fakeAsync(() => {
-        context.page.toTop = true;
-        context.virtualScroll = true;
-        context.scroll = { x: '100px', y: '100px' };
+        context.page.update(p => ({ ...p, toTop: true }));
+        context.virtualScroll.set(true);
+        context.scroll.set({ x: '100px', y: '100px' });
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
         spyOn(context.comp.cdkVirtualScrollViewport!, 'checkViewportSize');
@@ -1049,8 +1049,8 @@ describe('abc: st', () => {
         page.asyncEnd();
       }));
       it('should be working in only x is set', fakeAsync(() => {
-        context.page.toTop = true;
-        context.scroll = { x: '100px' };
+        context.page.update(p => ({ ...p, toTop: true }));
+        context.scroll.set({ x: '100px' });
         page.cd();
         expect(context.comp.cdkVirtualScrollViewport == null).toBe(true);
         const bodyEl = page.getEl('.ant-table-body, .ant-table-content');
@@ -1083,7 +1083,7 @@ describe('abc: st', () => {
       }));
       describe('clickRowClassName', () => {
         it('should be null', fakeAsync(() => {
-          context.clickRowClassName = null;
+          context.clickRowClassName.set(null);
           page.cd();
           const trEl = (page.getCell() as HTMLElement).closest('tr') as HTMLElement;
           const oldClassName = trEl.classList.value;
@@ -1092,7 +1092,7 @@ describe('abc: st', () => {
           expect(trEl.classList.value).toBe(oldClassName);
         }));
         it('should be string', fakeAsync(() => {
-          context.clickRowClassName = 'aa';
+          context.clickRowClassName.set('aa');
           page.cd();
           const trEl = (page.getCell() as HTMLElement).closest('tr') as HTMLElement;
           expect(trEl.classList).not.toContain('aa');
@@ -1104,7 +1104,7 @@ describe('abc: st', () => {
           expect(trEl.classList).not.toContain('aa');
         }));
         it('should be exclusive with false', fakeAsync(() => {
-          context.clickRowClassName = { exclusive: false, fn: () => 'bb' } as STClickRowClassNameType;
+          context.clickRowClassName.set({ exclusive: false, fn: () => 'bb' } as STClickRowClassNameType);
           page.cd();
           [1, 2].forEach(idx => {
             const trEl = (page.getCell(idx) as HTMLElement).closest('tr') as HTMLElement;
@@ -1119,7 +1119,7 @@ describe('abc: st', () => {
           expect(len).toBe(2);
         }));
         it('should be exclusive with true', fakeAsync(() => {
-          context.clickRowClassName = { exclusive: true, fn: () => 'bb' } as STClickRowClassNameType;
+          context.clickRowClassName.set({ exclusive: true, fn: () => 'bb' } as STClickRowClassNameType);
           page.cd();
           [1, 2].forEach(idx => {
             const trEl = (page.getCell(idx) as HTMLElement).closest('tr') as HTMLElement;
@@ -1171,7 +1171,7 @@ describe('abc: st', () => {
         });
         it(`can't contaminate raw data`, () => {
           const params: any = { a: 1 };
-          context.req = { params };
+          context.req.set({ params });
           fixture.detectChanges();
           comp.load(1, { b: 2 }, { merge: true });
           expect(comp.req.params.a).toBe(1);
@@ -1431,14 +1431,14 @@ describe('abc: st', () => {
       });
       describe('without specified data', () => {
         it('when data is array data', () => {
-          context.data = genData(1);
+          context.data.set(genData(1));
           fixture.detectChanges();
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export();
           expect(exportSrv.export).toHaveBeenCalled();
         });
         it('when data is true', fakeAsync(() => {
-          context.data = genData(1);
+          context.data.set(genData(1));
           page.cd();
           spyOnProperty(comp, 'filteredData', 'get').and.returnValue(of([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
@@ -1448,7 +1448,7 @@ describe('abc: st', () => {
           page.asyncEnd();
         }));
         it('when data is observable data', () => {
-          context.data = of(genData(1));
+          context.data.set(of(genData(1)));
           fixture.detectChanges();
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export();
@@ -1466,7 +1466,7 @@ describe('abc: st', () => {
     describe('#widthMode', () => {
       describe('with type is strict', () => {
         it('shoule be add text-truncate class when className is empty and behavior is truncate', fakeAsync(() => {
-          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          context.widthMode.set({ type: 'strict', strictBehavior: 'truncate' });
           page
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50 }])
@@ -1475,7 +1475,7 @@ describe('abc: st', () => {
             .asyncEnd();
         }));
         it('should be ingore add text-truncate class when className is non-empty', fakeAsync(() => {
-          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          context.widthMode.set({ type: 'strict', strictBehavior: 'truncate' });
           page
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
@@ -1485,7 +1485,7 @@ describe('abc: st', () => {
             .asyncEnd();
         }));
         it('should be ingore add text-truncate class when type is img', fakeAsync(() => {
-          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          context.widthMode.set({ type: 'strict', strictBehavior: 'truncate' });
           page
             .cd()
             .updateColumn([{ index: 'img', type: 'img', width: 50 }])
@@ -1497,9 +1497,9 @@ describe('abc: st', () => {
     });
     describe('#loading', () => {
       it('should be control loading property', fakeAsync(() => {
-        context.loading = true;
+        context.loading.set(true);
         page.cd().expectElCount(`.ant-spin-spinning`, 1);
-        context.loading = false;
+        context.loading.set(false);
         page.cd().expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
       }));
     });
@@ -1561,7 +1561,7 @@ describe('abc: st', () => {
       }));
     });
     it('#showHeader', () => {
-      context.showHeader = false;
+      context.showHeader.set(false);
       fixture.detectChanges();
       page.expectElCount('.ant-table-thead', 0);
       page.expectElCount('.st__body', 1);
@@ -1577,7 +1577,7 @@ describe('abc: st', () => {
           .asyncEnd();
       }));
       it('should be support return a observable value', fakeAsync(() => {
-        context.contextmenu = () => of([{ text: 'a', fn: jasmine.createSpy() }] as STContextmenuItem[]);
+        context.contextmenu.set(() => of([{ text: 'a', fn: jasmine.createSpy() }] as STContextmenuItem[]));
         page
           .updateColumn([{ title: 'a', index: 'id' }])
           .openContextMenu(1, 1)
@@ -1585,13 +1585,13 @@ describe('abc: st', () => {
           .asyncEnd();
       }));
       it('should be ingore invalid target', fakeAsync(() => {
-        context.contextmenu = jasmine.createSpy();
+        context.contextmenu.set(jasmine.createSpy());
         page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, { target: { closest: () => null } });
-        expect(context.contextmenu).not.toHaveBeenCalled();
+        expect(context.contextmenu()).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
       it('should be ingore unspecified contextmenu property', fakeAsync(() => {
-        context.contextmenu = null;
+        context.contextmenu.set(null);
         const event = { preventDefault: jasmine.createSpy() };
         page.updateColumn([{ title: 'a', index: 'id' }]).openContextMenu(1, 1, event);
         expect(event.preventDefault).not.toHaveBeenCalled();
@@ -1601,14 +1601,14 @@ describe('abc: st', () => {
     describe('#drag', () => {
       it('should be working', fakeAsync(() => {
         page.updateColumn([{ title: 'a', index: 'id' }]).expectElCount('.cdk-drop-list-disabled', 1);
-        context.drag = {};
+        context.drag.set({});
         fixture.detectChanges();
         page.updateColumn([{ title: 'a', index: 'id' }]).expectElCount('.cdk-drop-list-disabled', 0);
       }));
     });
     it('#delay', () => {
-      context.columns = [{ title: 'test', index: 'id' }];
-      context.delay = true;
+      context.columns.set([{ title: 'test', index: 'id' }]);
+      context.delay.set(true);
       fixture.detectChanges();
       page.expectElCount('.ant-table-thead tr th', 0);
     });
@@ -1616,7 +1616,7 @@ describe('abc: st', () => {
   describe('[custom render template]', () => {
     it('with column title', fakeAsync(() => {
       page = genModule(TestComponent, {
-        template: `<st #st [data]="data" [columns]="columns">
+        template: `<st #st [data]="data()" [columns]="columns()">
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
           </st>`
       })!;
@@ -1626,7 +1626,7 @@ describe('abc: st', () => {
     }));
     it('should be custom row', fakeAsync(() => {
       page = genModule(TestComponent, {
-        template: `<st #st [data]="data" [columns]="columns">
+        template: `<st #st [data]="data()" [columns]="columns()">
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
       })!;
@@ -1640,7 +1640,7 @@ describe('abc: st', () => {
     }));
     it('allow invalid id', fakeAsync(() => {
       page = genModule(TestComponent, {
-        template: `<st #st [data]="data" [columns]="columns">
+        template: `<st #st [data]="data()" [columns]="columns()">
             <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`
       })!;

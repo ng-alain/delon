@@ -79,8 +79,10 @@ function fixAngularJson(): Rule {
     const p = getProjectFromWorkspace(workspace, projectName);
     // Add proxy.conf.js
     const serveTarget = p.targets?.get(BUILD_TARGET_SERVE);
-    if (serveTarget.options == null) serveTarget.options = {};
-    serveTarget.options.proxyConfig = 'proxy.conf.js';
+    if (serveTarget != null) {
+      if (serveTarget.options == null) serveTarget.options = {};
+      serveTarget.options.proxyConfig = 'proxy.conf.js';
+    }
 
     addStyleResources(workspace, projectName);
     addStylePreprocessorOptions(workspace, projectName);
@@ -209,7 +211,7 @@ function addCodeStylesToPackageJson(): Rule {
 function addSchematics(options: ApplicationOptions): Rule {
   return updateWorkspace(async workspace => {
     const p = getProjectFromWorkspace(workspace, options.project);
-    const schematics = p.extensions.schematics;
+    const schematics = (p.extensions.schematics ??= {}) as Record<string, object>;
     schematics['ng-alain:module'] = {
       routing: true
     };
@@ -290,7 +292,7 @@ function addFilesToRoot(options: ApplicationOptions): Rule {
           VERSION,
           ZORROVERSION
         }),
-        move(project.sourceRoot)
+        move(project.sourceRoot!)
       ]),
       MergeStrategy.Overwrite
     ),
@@ -328,7 +330,7 @@ function fixLang(options: ApplicationOptions): Rule {
   };
 }
 
-function fixLangInHtml(tree: Tree, p: string, langs: unknown): void {
+function fixLangInHtml(tree: Tree, p: string, langs: Record<string, string>): void {
   let html = tree.get(p)!.content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | i18n }}

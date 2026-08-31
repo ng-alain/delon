@@ -54,7 +54,7 @@ function tagsMapping(res: GenerateApiOutput, config: STAConfig): void {
   if (config.tagsMapping != null && Object.keys(config.tagsMapping).length <= 0) return;
 
   res.configuration.routes.combined?.forEach(v => {
-    const newModuleName = config.tagsMapping[v.moduleName];
+    const newModuleName = config.tagsMapping?.[v.moduleName];
     if (newModuleName != null) {
       v.moduleName = newModuleName;
       v.routes.forEach(route => {
@@ -82,7 +82,7 @@ function fix(output: string, res: GenerateApiOutput, tree: Tree, context: Schema
     // Tag Service
     const dtoTypeTpl = res.getTemplate({ name: 'dto-type', fileName: 'dto-type.eta' });
     const serviceTpl = res.getTemplate({ name: 'service', fileName: 'service.eta' });
-    res.configuration.routes.combined.forEach(route => {
+    res.configuration.routes.combined?.forEach(route => {
       const routeIndex: string[] = [];
       // dto
       const dtoContent = res.formatTSContent(
@@ -155,7 +155,7 @@ function genProxy(config: STAConfig): Rule {
         typePrefix: config.modelTypePrefix,
         hooks: {
           onInit: (c: { httpClientType: string }) => {
-            c.httpClientType = config.httpClientType;
+            c.httpClientType = config.httpClientType ?? '';
             return c;
           },
           onPrepareConfig: c => {
@@ -179,7 +179,7 @@ function genProxy(config: STAConfig): Rule {
                   const ref = routeInfo.responseBodySchema.content[responseBodyContentFirstType].schema.$ref;
                   const resDataType = getDeepDataType(ref);
                   if (!resDataType) return;
-                  const fieldProperty = resDataType.properties?.[config.responseDataField];
+                  const fieldProperty = resDataType.properties?.[config.responseDataField!];
                   if (!fieldProperty) return;
                   routeInfo.response.type = fieldProperty.$parsed.content ?? 'any';
                 } catch (ex) {
@@ -231,6 +231,7 @@ function tryLoadConfig(context: SchematicContext, configPath?: string): STAConfi
   } catch (err) {
     throw new SchematicsException(`Invalid config file ${err}`);
   }
+  return null;
 }
 
 export default function (options: Schema): Rule {
@@ -251,6 +252,6 @@ export default function (options: Schema): Rule {
       }
     }
 
-    return chain([addPathInTsConfig(config.name), genProxy(config), finished()]);
+    return chain([addPathInTsConfig(config.name!), genProxy(config), finished()]);
   };
 }

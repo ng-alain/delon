@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -30,9 +30,9 @@ describe('Pipe: yn', () => {
       }
     ].forEach((item: { value: boolean; result: string; yes?: string; no?: string }) => {
       it(`${item.value.toString()} muse be ${item.result}`, () => {
-        fixture.componentInstance.value = item.value;
-        fixture.componentInstance.yes = item.yes;
-        fixture.componentInstance.no = item.no;
+        fixture.componentInstance.value.set(item.value);
+        fixture.componentInstance.yes.set(item.yes);
+        fixture.componentInstance.no.set(item.no);
         fixture.detectChanges();
         expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toContain(
           item.result
@@ -42,23 +42,23 @@ describe('Pipe: yn', () => {
 
     describe('#mode', () => {
       it('with text', () => {
-        fixture.componentInstance.mode = 'text';
-        fixture.componentInstance.value = true;
+        fixture.componentInstance.mode.set('text');
+        fixture.componentInstance.value.set(true);
         fixture.detectChanges();
         expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
-        fixture.componentInstance.value = false;
+        fixture.componentInstance.value.set(false);
         fixture.detectChanges();
         expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
       });
       it('with full', () => {
-        fixture.componentInstance.mode = 'full';
-        fixture.componentInstance.value = true;
+        fixture.componentInstance.mode.set('full');
+        fixture.componentInstance.value.set(true);
         fixture.detectChanges();
         let html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
         expect(html).toContain('<svg');
         expect(html).not.toContain(`title="`);
         // when false
-        fixture.componentInstance.value = false;
+        fixture.componentInstance.value.set(false);
         fixture.detectChanges();
         html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
         expect(html).toContain('<svg');
@@ -68,7 +68,7 @@ describe('Pipe: yn', () => {
   });
 
   it('should be used default config', () => {
-    TestBed.overrideTemplate(TestComponent, `<div id="result" [innerHTML]="value | yn"></div>`);
+    TestBed.overrideTemplate(TestComponent, `<div id="result" [innerHTML]="value() | yn"></div>`);
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
 
@@ -77,12 +77,12 @@ describe('Pipe: yn', () => {
 });
 
 @Component({
-  template: ` <div id="result" [innerHTML]="value | yn: yes : no : mode"></div> `,
+  template: ` <div id="result" [innerHTML]="value() | yn: yes() : no() : mode()"></div> `,
   imports: [YNPipe]
 })
 class TestComponent {
-  value = true;
-  yes?: string;
-  no?: string;
-  mode?: YNMode;
+  readonly value = signal(true);
+  readonly yes = signal<string | undefined>(undefined);
+  readonly no = signal<string | undefined>(undefined);
+  readonly mode = signal<YNMode | undefined>(undefined);
 }

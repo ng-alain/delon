@@ -30,7 +30,7 @@ ng update ng-alain
 
 修改 `package.json` 所有 `@delon/` 开头的类库版本号为最新版本号：
 
-```
+```json
 "@delon/theme": "^12.0.0"
 ```
 

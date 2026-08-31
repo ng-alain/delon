@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
@@ -51,7 +51,7 @@ describe('abc: global-footer', () => {
 
   it('should be create', () => {
     createComp();
-    context.links = [
+    context.links.set([
       {
         title: '帮助',
         href: ''
@@ -64,9 +64,9 @@ describe('abc: global-footer', () => {
         title: '条款',
         href: ''
       }
-    ];
+    ]);
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links.length);
+    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links().length);
   });
 
   it('should be custom copyright template', () => {
@@ -78,13 +78,13 @@ describe('abc: global-footer', () => {
     createComp();
     const win = TestBed.inject(WINDOW);
     spyOn(win, 'open');
-    context.links = [
+    context.links.set([
       {
         title: '',
         href: 'https://www.youtube.com',
         blankTarget: true
       }
-    ];
+    ]);
     fixture.detectChanges();
     page.getFirst().click();
     expect(win.open).toHaveBeenCalled();
@@ -93,27 +93,27 @@ describe('abc: global-footer', () => {
   it('should be open extral link', () => {
     createComp();
     const win = TestBed.inject(WINDOW);
-    context.links = [
+    context.links.set([
       {
         title: '',
         href: 'https://www.youtube.com'
       }
-    ];
+    ]);
     fixture.detectChanges();
     page.getFirst().click();
-    expect(win.location.href).toBe(context.links[0].href);
+    expect(win.location.href).toBe(context.links()[0].href);
   });
 
   it('should be navigate router', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
     spyOn(router, 'navigateByUrl');
-    context.links = [
+    context.links.set([
       {
         title: '',
         href: '/'
       }
-    ];
+    ]);
     fixture.detectChanges();
     page.getFirst().click();
     expect(router.navigateByUrl).toHaveBeenCalled();
@@ -123,12 +123,12 @@ describe('abc: global-footer', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
     spyOn(router, 'navigateByUrl');
-    context.links = [
+    context.links.set([
       {
         title: '',
         href: ''
       }
-    ];
+    ]);
     fixture.detectChanges();
     page.getFirst().click();
     expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -160,12 +160,12 @@ describe('abc: global-footer', () => {
 
 @Component({
   template: `
-    <global-footer [links]="links">
+    <global-footer [links]="links()">
       <div id="copyright">copyright</div>
     </global-footer>
   `,
   imports: [GlobalFooterComponent, GlobalFooterItemComponent]
 })
 class TestComponent {
-  links: GlobalFooterLink[] = [];
+  readonly links = signal<GlobalFooterLink[]>([]);
 }

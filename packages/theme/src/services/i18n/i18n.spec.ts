@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
@@ -36,33 +36,33 @@ describe('theme: i18n', () => {
 
     describe('#param', () => {
       it('with object', () => {
-        fixture.componentInstance.key = 'param';
-        fixture.componentInstance.params = { value: '1' };
+        fixture.componentInstance.key.set('param');
+        fixture.componentInstance.params.set({ value: '1' });
         fixture.detectChanges();
         check('a-1', 'param');
       });
       it('with base type', () => {
-        fixture.componentInstance.key = 'paramArr';
-        fixture.componentInstance.params = 'A';
+        fixture.componentInstance.key.set('paramArr');
+        fixture.componentInstance.params.set('A');
         fixture.detectChanges();
         check('a-A,{ 1 }', 'param');
       });
       it('with base type', () => {
-        fixture.componentInstance.key = 'paramArr';
-        fixture.componentInstance.params = 100;
+        fixture.componentInstance.key.set('paramArr');
+        fixture.componentInstance.params.set(100);
         fixture.detectChanges();
         check('a-100,{ 1 }', 'param');
       });
       it('with array', () => {
-        fixture.componentInstance.key = 'paramArr';
-        fixture.componentInstance.params = [1, 2];
+        fixture.componentInstance.key.set('paramArr');
+        fixture.componentInstance.params.set([1, 2]);
         fixture.detectChanges();
         check('a-1,2', 'param');
       });
     });
 
     it('should be return path when is invalid', () => {
-      fixture.componentInstance.key = 'invalid';
+      fixture.componentInstance.key.set('invalid');
       fixture.detectChanges();
       check('invalid');
     });
@@ -105,8 +105,8 @@ describe('theme: i18n', () => {
       simple: 'a',
       param: 'a-#value#'
     });
-    fixture.componentInstance.key = 'param';
-    fixture.componentInstance.params = { value: '1' };
+    fixture.componentInstance.key.set('param');
+    fixture.componentInstance.params.set({ value: '1' });
     fixture.detectChanges();
     check('a-1', 'param');
   });
@@ -169,12 +169,12 @@ describe('theme: i18n', () => {
 
 @Component({
   template: `
-    <div id="simple">{{ key | i18n }}</div>
-    <div id="param">{{ key | i18n: params }}</div>
+    <div id="simple">{{ key() | i18n }}</div>
+    <div id="param">{{ key() | i18n: params() }}</div>
   `,
   imports: [I18nPipe]
 })
 class TestComponent {
-  key = 'simple';
-  params = {};
+  readonly key = signal('simple');
+  readonly params = signal<unknown>({});
 }

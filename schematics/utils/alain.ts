@@ -107,7 +107,7 @@ function resolveSchema(
 
   schema.path += `/${schema.module}`;
 
-  const parsedPath = parseName(schema.path, schema.name!);
+  const parsedPath = parseName(schema.path!, schema.name!);
   schema.name = parsedPath.name;
   schema.path = parsedPath.path;
   const rootPath = path.resolve(__dirname, '../../..');
@@ -149,7 +149,7 @@ function resolveSchema(
   }
 
   // html selector
-  schema.selector = schema.selector || buildSelector(schema, project.prefix);
+  schema.selector = schema.selector || buildSelector(schema, project.prefix ?? '');
 
   validateHtmlSelector(schema.selector);
 }
@@ -238,7 +238,7 @@ function addDeclaration(schema: CommonSchema): Rule {
     if (schema.service === 'none') {
       addServiceToModuleOrStandalone(
         tree,
-        schema.standalone,
+        !!schema.standalone,
         schema.importModulePath!,
         schema.serviceName!,
         getRelativePath(schema.importModulePath!, schema, 'service')
@@ -258,7 +258,7 @@ export function buildAlain(schema: CommonSchema): Rule {
     const project = res.project;
 
     // standalone
-    schema.standalone = await isStandalone(tree, schema.standalone, res.name);
+    schema.standalone = await isStandalone(tree, schema.standalone ?? false, res.name);
 
     resolveSchema(tree, project, schema, res.alainProject);
 

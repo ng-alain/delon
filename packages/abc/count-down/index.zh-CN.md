@@ -10,7 +10,7 @@ module: import { CountDownModule } from '@delon/abc/count-down';
 
 ## 依赖
 
-```
+```bash
 npm i -S ngx-countdown
 ```
 

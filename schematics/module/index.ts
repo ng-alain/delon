@@ -72,7 +72,7 @@ function addRoutingModuleToTop(options: ModuleSchema): Rule {
     if (!tree.exists(modulePath)) {
       return tree;
     }
-    const sourceText = tree.read(modulePath).toString('utf-8');
+    const sourceText = tree.read(modulePath)!.toString('utf-8');
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
     const routesNode = findNode(source, ts.SyntaxKind.Identifier, 'routes');
     if (routesNode == null || routesNode.parent == null) {
@@ -125,7 +125,13 @@ function addServiceToNgModule(options: ModuleSchema): Rule {
         : `${basePath}${strings.dasherize(options.name)}.module`
     );
     const importServicePath = buildRelativePath(importModulePath, servicePath);
-    addServiceToModuleOrStandalone(tree, options.standalone, `${importModulePath}.ts`, serviceName, importServicePath);
+    addServiceToModuleOrStandalone(
+      tree,
+      !!options.standalone,
+      `${importModulePath}.ts`,
+      serviceName,
+      importServicePath
+    );
     return tree;
   };
 }
@@ -140,7 +146,7 @@ export default function (schema: ModuleSchema): Rule {
       schema.module = findModuleFromOptions(tree, schema);
     }
 
-    const parsedPath = parseName(schema.path, schema.name);
+    const parsedPath = parseName(schema.path!, schema.name!);
     schema.name = parsedPath.name;
     schema.path = parsedPath.path;
 
@@ -148,7 +154,7 @@ export default function (schema: ModuleSchema): Rule {
     schema.flat = false;
 
     // standalone
-    schema.standalone = await isStandalone(tree, schema.standalone, proj.name);
+    schema.standalone = await isStandalone(tree, schema.standalone ?? false, proj.name);
 
     const templateSource = apply(url('./files'), [
       schema.service === 'ignore' ? filter(filePath => !filePath.endsWith('.service.ts.template')) : noop(),

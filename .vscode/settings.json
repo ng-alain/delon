@@ -1,6 +1,6 @@
 {
   "js/ts.tsdk.path": "./node_modules/typescript/lib",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "explicit"
@@ -9,23 +9,10 @@
   "eslint.format.enable": true,
   "eslint.validate": ["typescript", "html"],
   "[html]": {
-    "editor.formatOnSave": false,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[markdown]": {
-    "editor.formatOnSave": false
-  },
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[json]": {
-    "editor.formatOnSave": false
-  },
-  "[jsonc]": {
-    "editor.formatOnSave": false
   },
   "css.validate": false,
   "less.validate": false,
@@ -33,7 +20,6 @@
   "stylelint.validate": ["css", "less", "scss"],
   "stylelint.customSyntax": "postcss-less",
   "[less]": {
-    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.watcherExclude": {
