@@ -34,14 +34,14 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 
 可复用：
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: true }
 ```
 
 不可复用：
 
-```
+```ts
 { text:'Dashboard', reuse: false }
 ```
 
@@ -51,14 +51,14 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 
 可复用：
 
-```
+```ts
 { text:'Dashboard', reuse: true }
 ```
 
 不可复用：
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: false }
 ```
 

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "lib": ["es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",

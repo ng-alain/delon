@@ -23,7 +23,7 @@ describe('abc: st-expand', () => {
   }));
   describe('should be expanded when click row if expandRowByClick', () => {
     it('with true', fakeAsync(() => {
-      context.expandRowByClick = true;
+      context.expandRowByClick.set(true);
       page.cd();
       const el = page.getCell(1, 2);
       page.expectData(1, 'expand', undefined);
@@ -31,7 +31,7 @@ describe('abc: st-expand', () => {
       page.expectData(1, 'expand', true).expectChangeType('expand').asyncEnd();
     }));
     it('with false', fakeAsync(() => {
-      context.expandRowByClick = false;
+      context.expandRowByClick.set(false);
       page.cd();
       const el = page.getCell(1, 2);
       page.expectData(1, 'expand', undefined);
@@ -39,7 +39,7 @@ describe('abc: st-expand', () => {
       page.expectData(1, 'expand', undefined).asyncEnd();
     }));
     it('should be click icon when with true', fakeAsync(() => {
-      context.expandRowByClick = true;
+      context.expandRowByClick.set(true);
       page
         .cd()
         .expectData(1, 'expand', undefined)
@@ -51,18 +51,18 @@ describe('abc: st-expand', () => {
   });
   describe('expandRowByClick', () => {
     it('should be close other expaned', fakeAsync(() => {
-      context.expandAccordion = true;
-      context.expandRowByClick = true;
+      context.expandAccordion.set(true);
+      context.expandRowByClick.set(true);
       page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', false).expectData(2, 'expand', true).asyncEnd();
     }));
     it('should be keeping expaned', fakeAsync(() => {
-      context.expandAccordion = false;
-      context.expandRowByClick = true;
+      context.expandAccordion.set(false);
+      context.expandRowByClick.set(true);
       page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', true).expectData(2, 'expand', true).asyncEnd();
     }));
     it('should be stop propagation in button event', fakeAsync(() => {
-      context.expandRowByClick = true;
-      context.columns = [
+      context.expandRowByClick.set(true);
+      context.columns.set([
         {
           title: '',
           buttons: [
@@ -71,15 +71,15 @@ describe('abc: st-expand', () => {
             }
           ]
         }
-      ];
+      ]);
       page.cd().clickEl('.st__btn-text').expectData(1, 'expand', undefined).asyncEnd();
     }));
   });
   describe('should be set showExpand in row data', () => {
     it(`muse be hide expand icon`, fakeAsync(() => {
-      context.expandRowByClick = false;
-      context.data = deepCopy(USERS).slice(0, 1) as NzSafeAny[];
-      context.data[0].showExpand = false;
+      context.expandRowByClick.set(false);
+      context.data.set(deepCopy(USERS).slice(0, 1) as NzSafeAny[]);
+      (context.data() as NzSafeAny[])[0].showExpand = false;
       page
         .cd()
         .expectElCount('.ant-table-row-expand-icon', 0)

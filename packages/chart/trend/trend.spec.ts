@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -26,14 +26,14 @@ describe('abc: trend', () => {
 
   describe('#flag', () => {
     it('width up', () => {
-      context.flag = 'up';
+      context.flag.set('up');
       fixture.detectChanges();
       isExists('.anticon-caret-up');
       const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
       expect(el.dataset.flag).toBe('up');
     });
     it('width down', () => {
-      context.flag = 'down';
+      context.flag.set('down');
       fixture.detectChanges();
       isExists('.anticon-caret-down');
       const el = dl.query(By.css('trend')).nativeElement as HTMLElement;
@@ -43,12 +43,12 @@ describe('abc: trend', () => {
 
   describe('#colorful', () => {
     it('width true', () => {
-      context.colorful = true;
+      context.colorful.set(true);
       fixture.detectChanges();
       isExists('.trend__grey', false);
     });
     it('width false', () => {
-      context.colorful = false;
+      context.colorful.set(false);
       fixture.detectChanges();
       isExists('.trend__grey', true);
     });
@@ -56,19 +56,19 @@ describe('abc: trend', () => {
 
   describe('#reverseColor', () => {
     it('width true', () => {
-      context.colorful = true;
-      context.reverseColor = true;
+      context.colorful.set(true);
+      context.reverseColor.set(true);
       fixture.detectChanges();
       isExists('.trend__reverse', true);
     });
     it('width false', () => {
-      context.colorful = true;
-      context.reverseColor = false;
+      context.colorful.set(true);
+      context.reverseColor.set(false);
       fixture.detectChanges();
       isExists('.trend__reverse', false);
     });
     it('should be muse is colorful: true', () => {
-      context.reverseColor = true;
+      context.reverseColor.set(true);
       fixture.detectChanges();
       isExists('.trend__reverse', false);
     });
@@ -76,12 +76,12 @@ describe('abc: trend', () => {
 });
 
 @Component({
-  template: ` <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor" />`,
+  template: ` <trend #comp [flag]="flag()" [colorful]="colorful()" [reverseColor]="reverseColor()" />`,
   imports: [TrendComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: TrendComponent;
-  flag?: 'up' | 'down';
-  colorful?: boolean;
-  reverseColor?: boolean;
+  readonly flag = signal<'up' | 'down' | undefined>(undefined);
+  readonly colorful = signal<boolean | undefined>(undefined);
+  readonly reverseColor = signal<boolean | undefined>(undefined);
 }

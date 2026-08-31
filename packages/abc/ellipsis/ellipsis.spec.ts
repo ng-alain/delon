@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,8 +18,8 @@ describe('abc: ellipsis', () => {
       fixture = TestBed.createComponent(TestLengthComponent);
       dl = fixture.debugElement;
       context = fixture.componentInstance;
-      context.lines = null;
-      context.length = null;
+      context.lines.set(null);
+      context.length.set(null);
       fixture.detectChanges();
       page = new PageObject();
       fixture.detectChanges();
@@ -39,22 +39,22 @@ describe('abc: ellipsis', () => {
       }));
 
       it('should be tooltip', fakeAsync(() => {
-        context.tooltip = true;
+        context.tooltip.set(true);
         page.tick().hasTooltip().check('There were...');
       }));
 
       it('should be auto hide tail', fakeAsync(() => {
-        context.length = 4;
-        context.text = 'asdf';
+        context.length.set(4);
+        context.text.set('asdf');
         page.tick().check('asdf');
-        context.length = 1;
-        context.text = 'as';
+        context.length.set(1);
+        context.text.set('as');
         page.tick().check('...');
       }));
 
       it('#fullWidthRecognition', fakeAsync(() => {
-        context.fullWidthRecognition = true;
-        context.text = 'cipchk,你好吗';
+        context.fullWidthRecognition.set(true);
+        context.text.set('cipchk,你好吗');
         page.tick().check('cipchk,你...');
       }));
     });
@@ -69,29 +69,29 @@ describe('abc: ellipsis', () => {
       describe('when support line clamp', () => {
         beforeEach(fakeAsync(() => {
           page.comp['isSupportLineClamp'] = true;
-          context.lines = 1;
+          context.lines.set(1);
           page.tick();
         }));
         it('should working', () => {
-          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines as number);
+          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines() as number);
         });
       });
       describe('when not support line clamp', () => {
         beforeEach(fakeAsync(() => {
           spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as NzSafeAny);
           page.comp['isSupportLineClamp'] = false;
-          context.lines = 1;
+          context.lines.set(1);
           page.tick();
         }));
         it('should working', fakeAsync(() => {
-          context.lines = 2;
+          context.lines.set(2);
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
         }));
         it('should be not innerText', fakeAsync(() => {
           const el = page.getEl('.ellipsis__shadow');
           spyOnProperty(el!, 'innerText').and.returnValue(null as NzSafeAny);
-          context.lines = 2;
+          context.lines.set(2);
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
         }));
@@ -164,20 +164,27 @@ describe('abc: ellipsis', () => {
 
 class TestBaseComponent {
   @ViewChild('comp', { static: true }) comp!: EllipsisComponent;
-  tooltip = false;
-  length: number | null = 10;
-  lines: number | null = 3;
-  fullWidthRecognition = false;
+  readonly tooltip = signal(false);
+  readonly length = signal<number | null>(10);
+  readonly lines = signal<number | null>(3);
+  readonly fullWidthRecognition = signal(false);
   tail = '...';
-  text = `There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.`;
+  readonly text = signal(
+    `There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.`
+  );
   html = `<p>There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.</p>`;
 }
 
 @Component({
   template: `
-    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{
-      text
-    }}</ellipsis>
+    <ellipsis
+      #comp
+      [tooltip]="tooltip()"
+      [length]="length()"
+      [fullWidthRecognition]="fullWidthRecognition()"
+      [tail]="tail"
+      >{{ text() }}</ellipsis
+    >
   `,
   imports: [EllipsisComponent]
 })
@@ -187,9 +194,9 @@ class TestLengthComponent extends TestBaseComponent {}
   template: `
     <ellipsis
       #comp
-      [tooltip]="tooltip"
-      [lines]="lines"
-      [fullWidthRecognition]="fullWidthRecognition"
+      [tooltip]="tooltip()"
+      [lines]="lines()"
+      [fullWidthRecognition]="fullWidthRecognition()"
       [tail]="tail"
       style="width: 1px; display: block;"
       ><div [innerHTML]="html"></div

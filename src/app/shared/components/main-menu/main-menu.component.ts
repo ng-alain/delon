@@ -32,7 +32,7 @@ import { MenuService } from '@core';
                       <span class="chinese">{{ item.subtitle }}</span>
                     }
                     @if (item.lib) {
-                      <nz-tag [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
+                      <nz-tag nzColor="blue" title="Full Library" class="ml-sm">LIB</nz-tag>
                     }
                   </div>
                   @if (item.tag) {

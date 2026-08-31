@@ -15,11 +15,11 @@ export function tryAddFile(tree: Tree, filePath: string, content: string): void 
 
 export function readContent(tree: Tree, filePath: string): string {
   if (!tree.exists(filePath)) return '';
-  return tree.read(filePath).toString('utf-8');
+  return tree.read(filePath)!.toString('utf-8');
 }
 
 export function findFile(tree: Tree, fileName: string): string | undefined {
-  let res: string = undefined;
+  let res: string | undefined;
   tree.visit(path => {
     if (res == null && path.endsWith(fileName)) {
       res = path;
@@ -58,9 +58,9 @@ export function overwriteFile(options: OverWriteFileOptions): Tree {
     try {
       let content = '';
       if (options.contentIsString) {
-        content = options.content;
+        content = options.content ?? '';
       } else {
-        const buffer = fs.readFileSync(options.content);
+        const buffer = fs.readFileSync(options.content!);
         content = buffer ? buffer.toString('utf-8') : '';
       }
       if (options.overwrite) {

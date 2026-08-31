@@ -6,7 +6,7 @@ export default function (options: CURDOptions): Rule {
   const rules: Rule[] = [];
 
   const name = options.name || 'list';
-  delete options.name;
+  delete (options as { name?: string }).name;
 
   [
     { name: 'list', options: { name, modal: false, service: options.service } },

@@ -32,7 +32,7 @@ export class FormPropertyFactory {
     parent: PropertyGroup | null = null,
     propertyId?: string
   ): FormProperty {
-    let newProperty: FormProperty | null = null;
+    let newProperty: FormProperty;
     let path = '';
     if (parent) {
       path += parent.path;

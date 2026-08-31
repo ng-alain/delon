@@ -111,7 +111,7 @@ export class SocialService implements OnDestroy {
       throw new Error(`url muse contain a ?`);
     }
     // parse
-    let data: ITokenModel = { token: `` };
+    let data: ITokenModel;
     if (typeof rawData === 'string') {
       const rightUrl = rawData.split('?')[1].split('#')[0];
       data = this.router.parseUrl(`./?${rightUrl}`).queryParams as ITokenModel;

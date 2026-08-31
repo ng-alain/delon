@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { createTestContext, PageG2 } from '@delon/testing';
@@ -22,19 +22,19 @@ describe('chart: mini-progress', () => {
 
   it('should be working', () => {
     const el = page.getEl('.g2-mini-progress__value');
-    expect(el.style.width).toBe(`${context.percent}%`);
-    expect(el.style.height).toBe(`${context.strokeWidth}px`);
+    expect(el.style.width).toBe(`${context.percent()}%`);
+    expect(el.style.height).toBe(`${context.strokeWidth()}px`);
   });
 
   it('should be percent minimum value is 0', () => {
-    context.percent = -1;
+    context.percent.set(-1);
     page.dc();
     const el = page.getEl('.g2-mini-progress__value');
     expect(el.style.width).toBe(`0%`);
   });
 
   it('should be percent maximum value is 100', () => {
-    context.percent = 101;
+    context.percent.set(101);
     page.dc();
     const el = page.getEl('.g2-mini-progress__value');
     expect(el.style.width).toBe(`100%`);
@@ -43,7 +43,7 @@ describe('chart: mini-progress', () => {
 
 @Component({
   template: `
-    <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent" [strokeWidth]="strokeWidth" />
+    <g2-mini-progress #comp [color]="color" [target]="target" [percent]="percent()" [strokeWidth]="strokeWidth()" />
   `,
   imports: [G2MiniProgressComponent]
 })
@@ -51,6 +51,6 @@ class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniProgressComponent;
   color = '#1890FF';
   target: number = 1;
-  percent: number = 10;
-  strokeWidth: number = 1;
+  readonly percent = signal<number>(10);
+  readonly strokeWidth = signal<number>(1);
 }

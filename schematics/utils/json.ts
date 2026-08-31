@@ -2,7 +2,7 @@ import { Tree } from '@angular-devkit/schematics';
 import { parse, modify, applyEdits, JSONPath, ModificationOptions } from 'jsonc-parser';
 
 export function readJSON<T = any>(tree: Tree, jsonFile: string, type?: string): T {
-  if (!tree.exists(jsonFile)) return null;
+  if (!tree.exists(jsonFile)) return null as T;
 
   const sourceText = tree.read(jsonFile)!.toString('utf-8');
   try {
@@ -34,7 +34,7 @@ export function modifyJSON(
   modifies: ModifyJSONParam | ModifyJSONParam[],
   options?: ModificationOptions
 ): void {
-  if (!tree.exists(jsonPath)) return null;
+  if (!tree.exists(jsonPath)) return;
   let sourceText = tree.read(jsonPath)!.toString('utf-8');
   (Array.isArray(modifies) ? modifies : [modifies])
     .map(item =>

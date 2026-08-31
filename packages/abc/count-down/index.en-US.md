@@ -10,7 +10,7 @@ The countdown component depends on [ngx-countdown](https://github.com/cipchk/ngx
 
 ## Dependencies
 
-```
+```bash
 npm i -S ngx-countdown
 ```
 

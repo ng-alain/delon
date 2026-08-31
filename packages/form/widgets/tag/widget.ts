@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData } from '@delon/form';
@@ -28,7 +28,7 @@ import type { SFTagWidgetSchema } from './schema';
         [nzSpin]="i.spin"
       />
     </ng-template>
-    @for (i of data; track $index) {
+    @for (i of data(); track $index) {
       <nz-tag
         [nzMode]="ui.mode ?? 'checkable'"
         [nzChecked]="i.checked"
@@ -51,12 +51,11 @@ import type { SFTagWidgetSchema } from './schema';
 export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   static readonly KEY = 'tag';
 
-  data: SFSchemaEnum[] = [];
+  protected readonly data = signal<SFSchemaEnum[]>([]);
 
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
-      this.data = list;
-      this.detectChanges();
+      this.data.set(list);
     });
   }
 
@@ -74,7 +73,9 @@ export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
 
   private updateValue(): void {
     this.formProperty.setValue(
-      this.data.filter(w => w.checked).map(i => i.value),
+      this.data()
+        .filter(w => w.checked)
+        .map(i => i.value),
       false
     );
   }

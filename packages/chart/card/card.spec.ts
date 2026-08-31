@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
@@ -21,7 +21,7 @@ describe('chart: card', () => {
   });
 
   it('should be string content height', () => {
-    context.contentHeight = '10%';
+    context.contentHeight.set('10%');
     fixture.detectChanges();
     const el = (dl.nativeElement as HTMLElement).querySelector('.g2-card__desc') as HTMLElement;
     expect(el.style.height).toBe('10%');
@@ -31,15 +31,15 @@ describe('chart: card', () => {
 @Component({
   template: `
     <g2-card
-      [title]="'销售额'"
+      title="销售额"
       [bordered]="true"
-      [total]="126560"
+      total="126560"
       footer="日访问量 12,423"
-      [contentHeight]="contentHeight"
+      [contentHeight]="contentHeight()"
     />
   `,
   imports: [G2CardComponent]
 })
 class TestComponent {
-  contentHeight: number | string = 46;
+  readonly contentHeight = signal<number | string>(46);
 }

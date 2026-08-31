@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -17,7 +17,7 @@ describe('Pipe: url', () => {
     { value: 'https://ng-alain.com', result: `https://ng-alain.com` }
   ].forEach((item: { value: string; result: string }) => {
     it(`${item.value.toString()} muse be ${item.result}`, () => {
-      fixture.componentInstance.value = item.value;
+      fixture.componentInstance.value.set(item.value);
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement;
       expect(el.attributes.getNamedItem('href')!.textContent).toBe(item.result);
@@ -26,9 +26,9 @@ describe('Pipe: url', () => {
 });
 
 @Component({
-  template: ` <a id="result" [href]="value | url"></a> `,
+  template: ` <a id="result" [href]="value() | url"></a> `,
   imports: [URLPipe]
 })
 class TestComponent {
-  value = '';
+  readonly value = signal('');
 }

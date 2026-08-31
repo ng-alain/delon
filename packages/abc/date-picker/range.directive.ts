@@ -17,7 +17,7 @@ import { fixEndTimeOfRange, getTimeDistance } from '@delon/util/date-time';
 import { assert, deepMergeKey } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { toBoolean } from 'ng-zorro-antd/core/util';
-import { NzDatePickerComponent, NzRangePickerComponent, type ɵDatePickerService } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent, type ɵDatePickerService } from 'ng-zorro-antd/date-picker';
 
 import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 
@@ -28,7 +28,7 @@ import { RangePickerShortcutTplComponent } from './range-shortcut.component';
 export class RangePickerDirective implements OnDestroy, AfterViewInit {
   private readonly dom = inject(DomSanitizer);
   private readonly vcr = inject(ViewContainerRef);
-  private readonly nativeComp = inject(NzRangePickerComponent, { host: true, optional: true });
+  private readonly nativeComp = inject(NzDatePickerComponent, { host: true, optional: true });
   private readonly cogSrv = inject(AlainConfigService);
 
   private defaultShortcuts: AlainDateRangePickerShortcut;
@@ -57,7 +57,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
   readonly ngModelEnd = model.required<NzSafeAny>();
 
   private get dp(): NzDatePickerComponent {
-    return this.nativeComp!.datePicker;
+    return this.nativeComp!;
   }
 
   private get srv(): ɵDatePickerService {
@@ -191,7 +191,7 @@ export class RangePickerDirective implements OnDestroy, AfterViewInit {
       };
       extraFooter = instance.tpl();
     }
-    this.nativeComp!.datePicker.extraFooter = extraFooter;
+    this.nativeComp!.extraFooter = extraFooter;
     Promise.resolve().then(() => this.cd());
   }
 

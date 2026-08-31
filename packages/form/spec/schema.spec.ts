@@ -82,7 +82,7 @@ describe('form: schema', () => {
         .checkUI('/name', 'widget', 'string');
     });
     it('should be null spanLabel when not horizontal layout', () => {
-      context.layout = 'inline';
+      context.layout.set('inline');
       fixture.detectChanges();
       page.checkUI('/name', 'spanLabel', null);
     });
@@ -108,7 +108,7 @@ describe('form: schema', () => {
     }));
     it('support ui is null', () => {
       expect(() => {
-        context.ui = null;
+        context.ui.set(null);
         fixture.detectChanges();
       }).not.toThrow();
     });

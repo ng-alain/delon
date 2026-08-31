@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -40,10 +40,10 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
     describe('#ngModel', () => {
       it('should be working', fakeAsync(() => {
         const NOW = new Date();
-        context.i = {
+        context.i.set({
           start: NOW,
           end: NOW
-        };
+        });
         cd();
         expect(context.comp.start).not.toBeNull();
         expect(context.comp.end).not.toBeNull();
@@ -51,10 +51,10 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       }));
 
       it('should be invalid value when start & end include null value', fakeAsync(() => {
-        context.i = {
+        context.i.set({
           start: new Date(),
           end: undefined
-        };
+        });
         cd();
         expect(context.comp.start).toBeNull();
         expect(context.comp.end).toBeNull();
@@ -63,21 +63,21 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 
     describe('#shortcat', () => {
       it('with true', fakeAsync(() => {
-        context.shortcut = true;
+        context.shortcut.set(true);
         fixture.detectChanges();
         openPicker();
         getPickerFooterExtra().querySelectorAll('a')[0].click();
         cd();
-        expect(differenceInDays(context.i.end!, context.i.start!)).toBe(0);
+        expect(differenceInDays(context.i().end!, context.i().start!)).toBe(0);
       }));
       it('with false', fakeAsync(() => {
-        context.shortcut = false;
+        context.shortcut.set(false);
         fixture.detectChanges();
         openPicker();
         expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
       }));
       it('with null', fakeAsync(() => {
-        context.shortcut = null;
+        context.shortcut.set(null);
         fixture.detectChanges();
         openPicker();
         expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
@@ -85,17 +85,17 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
       it('with custom function', fakeAsync(() => {
         const start = new Date(2025, 12, 30);
         const end = new Date(2025, 12, 31);
-        context.shortcut = {
+        context.shortcut.set({
           enabled: true,
           list: ['today', { text: 'test', fn: () => [start, end] }]
-        };
+        });
         fixture.detectChanges();
         openPicker();
         console.log(getPickerFooterExtra().querySelectorAll('a'));
         getPickerFooterExtra().querySelectorAll('a')[1].click();
         cd();
-        expect(context.i.start?.toLocaleDateString()).toBe(start.toLocaleDateString());
-        expect(context.i.end?.toLocaleDateString()).toBe(end.toLocaleDateString());
+        expect(context.i().start?.toLocaleDateString()).toBe(start.toLocaleDateString());
+        expect(context.i().end?.toLocaleDateString()).toBe(end.toLocaleDateString());
       }));
     });
   });
@@ -122,18 +122,18 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
   template: `
     <nz-range-picker
       #comp="extendRangePicker"
-      [(ngModel)]="i.start"
+      [(ngModel)]="i().start"
       extend
-      [(ngModelEnd)]="i.end"
-      [shortcut]="shortcut"
+      [(ngModelEnd)]="i().end"
+      [shortcut]="shortcut()"
     />
   `,
   imports: [FormsModule, NzRangePickerComponent, NzDatePickerComponent, RangePickerDirective]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: RangePickerDirective;
-  i: { start?: Date; end?: Date } = {};
-  shortcut: boolean | AlainDateRangePickerShortcut | null = false;
+  readonly i = signal<{ start?: Date; end?: Date }>({});
+  readonly shortcut = signal<boolean | AlainDateRangePickerShortcut | null>(false);
 }
 
 @Component({

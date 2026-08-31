@@ -71,7 +71,7 @@ const ATTRIBUTES = {
   'quick-menu': ['icon']
 };
 
-const ATTRIBUTE_NAMES = Object.keys(ATTRIBUTES);
+const ATTRIBUTE_NAMES = Object.keys(ATTRIBUTES) as Array<keyof typeof ATTRIBUTES>;
 // fix parse5 auto ingore lower case all properies
 ATTRIBUTE_NAMES.forEach(key => {
   const res: string[] = [];
@@ -127,13 +127,13 @@ function genByComp(node: Element): string[] | null {
   const themes = getNgValue(theme!);
   if (themes == null || themes.length === 0) return types;
 
-  return [].concat(...types.map(a => themes.map(b => `${a}#${b}`)));
+  return types.flatMap(a => themes.map(b => `${a}#${b}`));
 }
 
 function genByAttribute(node: Element): string[] | null {
-  if (!ATTRIBUTE_NAMES.includes(node.nodeName)) return null;
+  if (!ATTRIBUTE_NAMES.includes(node.nodeName as keyof typeof ATTRIBUTES)) return null;
 
-  const attributes = ATTRIBUTES[node.nodeName];
+  const attributes = ATTRIBUTES[node.nodeName as keyof typeof ATTRIBUTES];
   const type = node.attrs.find(attr => attributes.includes(attr.name));
   if (!type) return null;
 
@@ -174,7 +174,7 @@ function getNgValue(attr: Attribute): string[] | null {
   return fixValue(str, '');
 }
 
-function fixValue(str: string, prefix: string): string[] {
+function fixValue(str: string, prefix: string): string[] | null {
   // value ? 'icon' : 'icon'
   // focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'
   // 'icon'
@@ -278,8 +278,8 @@ export const ICONS = [ ];
   const source = getSourceFile(tree, path);
 
   const allImports = findNodes(source as any, ts.SyntaxKind.ImportDeclaration);
-  const iconImport = allImports.find((w: ts.ImportDeclaration) =>
-    w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons')
+  const iconImport = allImports.find(w =>
+    (w as ts.ImportDeclaration).moduleSpecifier.getText().includes('@ant-design/icons-angular/icons')
   ) as ts.ImportDeclaration;
   if (!iconImport) return;
   (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v =>

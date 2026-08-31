@@ -90,7 +90,7 @@ ng g ng-alain:list list -m=trade
 
 In general, a module might includes the same type of business page, and its file structure might like this:
 
-```
+```txt
 sys
   log
     view
@@ -129,7 +129,7 @@ In addition to the default, you can also customize the project-level business pa
 
 For example, to create a custom edit page template, you only need to create the following directory structure in the project's root directory (You can get it via [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl)):
 
-```
+```txt
 └── _cli-tpl
 │   └── edit                                                       // Your template name
 │       └── __path__                                               // (name fixed value)
@@ -178,7 +178,7 @@ These variables or methods can be used in templates, for example: `<%=componentN
 
 The `tpl` command allows you to process the data further before generating the file, The command will check the `_cli-tpl/_fix.js` file during execution and call the `fix` method, which must return a `Promise` object, for example:
 
-> **Note: ** CLI is a Node JS program, so the syntax is based on Node JS.
+> **Note:** CLI is a Node JS program, so the syntax is based on Node JS.
 
 ```js
 function fix(options) {

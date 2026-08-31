@@ -214,7 +214,7 @@ export class SEComponent {
         .subscribe(res => this.updateStatus(res === 'INVALID'));
 
       // set unique id
-      const controlAccessor = this.ngControl()?.valueAccessor as NzSafeAny;
+      const controlAccessor = ((control as NzSafeAny)?.selectedValueAccessor ?? control?.valueAccessor) as NzSafeAny;
       const controlEl = (controlAccessor?.elementRef ?? controlAccessor?._elementRef)?.nativeElement as HTMLElement;
       if (controlEl) {
         if (controlEl.id) {

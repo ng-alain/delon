@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
@@ -20,13 +20,13 @@ describe('chart: bar', () => {
 
     describe('#title', () => {
       it('with null', () => {
-        page.context.title = null;
-        page.context.height = 100;
+        page.context.title.set(null);
+        page.context.height.set(100);
         page.dc();
         page.checkOptions('height', 59);
       });
       it('with string', () => {
-        page.context.height = 100;
+        page.context.height.set(100);
         page
           .dc()
           .isText('h4', page.context.comp.title as string)
@@ -34,27 +34,27 @@ describe('chart: bar', () => {
           .checkOptions('height', 100 - 41);
       });
       it('with template', () => {
-        page.context.title = page.context.titleTpl;
+        page.context.title.set(page.context.titleTpl);
         page.dc().isExists('#titleTpl');
       });
     });
 
     it('#color', () => {
       const color = '#f50';
-      page.context.color = color;
+      page.context.color.set(color);
       page.dc();
       expect((page.chart.geometries[0] as NzSafeAny).attributeOption.color.callback(1, 1)).toBe(color);
     });
 
     it('#padding', () => {
       const padding = [15];
-      page.context.padding = padding;
+      page.context.padding.set(padding);
       page.dc();
       page.checkOptions('padding', padding);
     });
 
     it('should be update label when window resize and autoLabel is true', fakeAsync(() => {
-      page.context.autoLabel = true;
+      page.context.autoLabel.set(true);
       page.dc();
       spyOn(page.chart, 'render');
       window.dispatchEvent(new Event('resize'));
@@ -73,13 +73,13 @@ describe('chart: bar', () => {
     <g2-bar
       style="display: block;"
       #comp
-      [delay]="delay"
-      [height]="height"
-      [title]="title"
-      [color]="color"
-      [padding]="padding"
-      [data]="data"
-      [autoLabel]="autoLabel"
+      [delay]="delay()"
+      [height]="height()"
+      [title]="title()"
+      [color]="color()"
+      [padding]="padding()"
+      [data]="data()"
+      [autoLabel]="autoLabel()"
       (clickItem)="clickItem($event)"
     />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
@@ -88,21 +88,24 @@ describe('chart: bar', () => {
 })
 class TestComponent implements OnInit {
   @ViewChild('comp', { static: true }) comp!: G2BarComponent;
-  data: G2BarData[] = [];
-  delay = 0;
+  readonly data = signal<G2BarData[]>([]);
+  readonly delay = signal(0);
   @ViewChild('titleTpl', { static: true }) titleTpl!: TemplateRef<void>;
-  title: string | TemplateRef<void> | null = 'title';
-  height = PageG2Height;
-  padding?: number[];
-  autoLabel = false;
-  color = 'rgba(24, 144, 255, 0.85)';
+  readonly title = signal<string | TemplateRef<void> | null>('title');
+  readonly height = signal(PageG2Height);
+  readonly padding = signal<number[] | undefined>(undefined);
+  readonly autoLabel = signal(false);
+  readonly color = signal('rgba(24, 144, 255, 0.85)');
   clickItem(): void {}
   ngOnInit(): void {
     for (let i = 0; i < PageG2DataCount; i += 1) {
-      this.data.push({
-        x: `${i + 1}月`,
-        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
-      });
+      this.data.update(d => [
+        ...d,
+        {
+          x: `${i + 1}月`,
+          y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
+        }
+      ]);
     }
   }
 }

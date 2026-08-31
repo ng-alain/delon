@@ -1,7 +1,7 @@
 node_modules
 npm-debug.log
 # package-lock.json
-pnpm-lock.yaml
+# pnpm-lock.yaml
 /coverage
 /coverage-report
 /junit

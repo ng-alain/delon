@@ -16,10 +16,10 @@ ng-alain 认为这些工具类只会运用在内容区域，且秉承 Ant Design
 | ---- | --- | --- | --- |
 | `xs` | $gutter / 2 | `4px` | 超小号 |
 | `sm` | $gutter | `8px` | 小号 |
-| `md` | $gutter * 2 | `16px` | 中号 |
-| `lg` | $gutter * 3 | `24px` | 大号 |
-| `xl` | $gutter * 4 | `32px` | 特大号 |
-| `xxl` | $gutter * 6 | `48px` | 超大号 |
+| `md` | $gutter *2 | `16px` | 中号 |
+| `lg` | $gutter* 3 | `24px` | 大号 |
+| `xl` | $gutter *4 | `32px` | 特大号 |
+| `xxl` | $gutter* 6 | `48px` | 超大号 |
 
 依这些规则，衍生出 `margin`、`padding`，其命名规则如下：
 
@@ -306,7 +306,7 @@ Ant Design 是以 `14px` 为基准字号。
 
 ## 旋转
 
-```
+```css
 .rotate-[360 / 15]
 ```
 

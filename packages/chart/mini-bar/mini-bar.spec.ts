@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
@@ -30,11 +30,11 @@ describe('chart: mini-bar', () => {
         page = new PageG2<TestComponent>().genComp(TestComponent, false);
       });
       it('with default', fakeAsync(() => {
-        page.context.tooltipType = 'default';
+        page.context.tooltipType.set('default');
         page.dcFirst().checkTooltip('10');
       }));
       it('with mini', fakeAsync(() => {
-        page.context.tooltipType = 'mini';
+        page.context.tooltipType.set('mini');
         page.dcFirst().checkTooltip(null);
       }));
     });
@@ -50,20 +50,20 @@ describe('chart: mini-bar', () => {
       #comp
       color="#cceafe"
       [height]="height"
-      [tooltipType]="tooltipType"
-      [data]="data"
-      [delay]="delay"
+      [tooltipType]="tooltipType()"
+      [data]="data()"
+      [delay]="delay()"
     />
   `,
   imports: [G2MiniBarComponent]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2MiniBarComponent;
-  data: NzSafeAny[] = [
+  readonly data = signal<NzSafeAny[]>([
     { x: 1, y: 10 },
     { x: 2, y: 20 }
-  ];
+  ]);
   height = PageG2Height;
-  tooltipType = 'default';
-  delay = 0;
+  readonly tooltipType = signal('default');
+  readonly delay = signal(0);
 }

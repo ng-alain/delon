@@ -59,30 +59,30 @@ describe('form: component', () => {
 
       it('should throw error when type is invalid', () => {
         expect(() => {
-          context.schema = {
+          context.schema.set({
             properties: {
               a: {
                 type: 'aa' as NzSafeAny
               }
             }
-          };
+          });
           fixture.detectChanges();
         }).toThrowError(`Undefined type aa`);
       });
 
       it('should throw error when is invalid schema', () => {
         expect(() => {
-          context.schema = null;
+          context.schema.set(null);
           fixture.detectChanges();
         }).toThrowError('Invalid Schema');
       });
 
       it(`Don't support string with root ui property`, () => {
         expect(() => {
-          context.schema = {
+          context.schema.set({
             ui: 'string',
             properties: {}
-          };
+          });
           fixture.detectChanges();
         }).toThrowError(`Don't support string with root ui property`);
       });
@@ -90,13 +90,13 @@ describe('form: component', () => {
       it('should be used default widget when is invalid schema type', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
-        context.schema = {
+        context.schema.set({
           type: 'string',
           properties: {},
           ui: {
             widget: 'asdf'
           }
-        };
+        });
         fixture.detectChanges();
         expect(console.warn).toHaveBeenCalled();
       });
@@ -104,7 +104,7 @@ describe('form: component', () => {
       it('should be console debug informations', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
-        context.schema = {
+        context.schema.set({
           properties: {
             name: { type: 'string' },
             age: { type: 'number' }
@@ -113,7 +113,7 @@ describe('form: component', () => {
           ui: {
             debug: true
           }
-        };
+        });
         fixture.detectChanges();
         page.setValue('/name', 'a');
         expect(console.warn).toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('form: component', () => {
       it('should be console debug informations when ajv throw error', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
-        context.schema = {
+        context.schema.set({
           properties: {
             time: {
               type: 'string',
@@ -134,7 +134,7 @@ describe('form: component', () => {
           ui: {
             debug: true
           }
-        };
+        });
         fixture.detectChanges();
         expect(console.warn).toHaveBeenCalled();
       });
@@ -171,29 +171,29 @@ describe('form: component', () => {
         page.checkCount('.sf-btns', 1).checkCount('.ant-btn-primary', 1);
       });
       it('should be null', () => {
-        context.button = null;
+        context.button.set(null);
         fixture.detectChanges();
         page.checkCount('.sf-btns', 1).checkCount('button', 0);
       });
       it('should be undefined', () => {
-        context.button = undefined;
+        context.button.set(undefined);
         fixture.detectChanges();
         page.checkCount('.sf-btns', 1).checkCount('button', 0);
       });
       it('should be none', () => {
-        context.button = 'none';
+        context.button.set('none');
         fixture.detectChanges();
         page.checkCount('.sf-btns', 0);
       });
       it('should be icon', () => {
-        context.button = {
+        context.button.set({
           submit_icon: {
             type: 'search'
           },
           reset_icon: {
             type: 'file'
           }
-        };
+        });
         fixture.detectChanges();
         page.checkCount('[type="submit"] .anticon', 1);
         page.checkCount('[type="button"] .anticon', 1);
@@ -215,33 +215,33 @@ describe('form: component', () => {
         });
         it('should be specified grid', () => {
           const span = 11;
-          context.button = {
+          context.button.set({
             render: {
               grid: { span }
             }
-          };
+          });
           fixture.detectChanges();
           page.checkCls('.sf-btns .ant-form-item-control', `ant-col-${span}`);
         });
         it('should be fixed label', () => {
           const spanLabelFixed = 56;
-          context.button = {
+          context.button.set({
             render: {
               spanLabelFixed
             }
-          };
+          });
           fixture.detectChanges();
           page.checkStyle('.sf-btns .ant-form-item-control', 'margin-left', `${spanLabelFixed}px`);
         });
       });
       describe('#size', () => {
         it('with small', () => {
-          context.button = { render: { size: 'small' } };
+          context.button.set({ render: { size: 'small' } });
           fixture.detectChanges();
           page.checkCount('.ant-btn-sm', 2);
         });
         it('with large', () => {
-          context.button = { render: { size: 'large' } };
+          context.button.set({ render: { size: 'large' } });
           fixture.detectChanges();
           page.checkCount('.ant-btn-lg', 2);
         });
@@ -260,7 +260,7 @@ describe('form: component', () => {
         it('should be validate when submitted and not liveValidate', () => {
           page.submit(false);
           expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
-          context.liveValidate = false;
+          context.liveValidate.set(false);
           fixture.detectChanges();
           page.submit(false).setValue('/name', 'cipchk').setValue('/pwd', '1111').submit(true);
         });
@@ -286,7 +286,7 @@ describe('form: component', () => {
       describe('#layout', () => {
         ['horizontal', 'vertical', 'inline'].forEach(type => {
           it(`with ${type}`, () => {
-            context.layout = type;
+            context.layout.set(type);
             fixture.detectChanges();
             page.checkCls('form', `ant-form-${type}`);
           });
@@ -329,7 +329,7 @@ describe('form: component', () => {
       describe('#autocomplete', () => {
         [null, 'on', 'off'].forEach((type: NzSafeAny) => {
           it(`with [${type}]`, () => {
-            context.autocomplete = type;
+            context.autocomplete.set(type);
             fixture.detectChanges();
             page.checkAttr('form', 'autocomplete', type, !!type);
           });
@@ -338,20 +338,20 @@ describe('form: component', () => {
 
       describe('#onlyVisual', () => {
         it('with false', () => {
-          context.onlyVisual = false;
+          context.onlyVisual.set(false);
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 0);
           page.checkCount('.ant-form-item-explain', 2);
         });
         it('with true', () => {
-          context.onlyVisual = true;
+          context.onlyVisual.set(true);
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 1);
           page.checkCount('.ant-form-item-explain', 0);
         });
       });
 
-      it('#disabled', () => {
+      it('#disabled', fakeAsync(() => {
         const CLS: Record<string, string | NzSafeAny[]> = {
           input: '.ant-input[disabled]',
           number: '.ant-input-number-disabled',
@@ -365,7 +365,7 @@ describe('form: component', () => {
             select: { type: 'string', enum: ['A'] }
           }
         });
-        context.disabled = false;
+        context.disabled.set(false);
         fixture.detectChanges();
         Object.keys(CLS).forEach(key => {
           if (Array.isArray(CLS[key])) {
@@ -374,7 +374,9 @@ describe('form: component', () => {
             page.checkCount(CLS[key] as string, 0);
           }
         });
-        context.disabled = true;
+        context.disabled.set(true);
+        fixture.detectChanges();
+        tick(1000);
         fixture.detectChanges();
         Object.keys(CLS).forEach(key => {
           if (Array.isArray(CLS[key])) {
@@ -383,10 +385,10 @@ describe('form: component', () => {
             page.checkCount(CLS[key] as string, 1);
           }
         });
-      });
+      }));
 
       it('#loading', () => {
-        context.loading = false;
+        context.loading.set(false);
         fixture.detectChanges();
         const CLS = {
           loading: '[data-type="submit"].ant-btn-loading',
@@ -394,25 +396,25 @@ describe('form: component', () => {
         };
         page.checkCount(CLS.loading, 0);
         page.checkCount(CLS.disabled, 0);
-        context.loading = true;
+        context.loading.set(true);
         fixture.detectChanges();
         page.checkCount(CLS.loading, 1);
         page.checkCount(CLS.disabled, 1);
       });
 
       it('#noColon', () => {
-        context.noColon = true;
+        context.noColon.set(true);
         fixture.detectChanges();
         const CLS = `.sf__no-colon`;
         page.checkCount(CLS, 1);
-        context.noColon = false;
+        context.noColon.set(false);
         fixture.detectChanges();
         page.checkCount(CLS, 0);
       });
 
       describe('#cleanValue', () => {
         it('with true', () => {
-          context.cleanValue = true;
+          context.cleanValue.set(true);
           fixture.detectChanges();
           page.newSchema(
             {
@@ -428,7 +430,7 @@ describe('form: component', () => {
           expect(context.comp.value.arr[0].y == null).toBe(true);
         });
         it('with false', () => {
-          context.cleanValue = false;
+          context.cleanValue.set(false);
           fixture.detectChanges();
           page.newSchema(
             {
@@ -551,12 +553,12 @@ describe('form: component', () => {
       it('#updateFeedback', () => {
         const namePath = '/name';
         context.comp.updateFeedback(namePath, 'error');
-        page.dc().checkCount('.ant-form-item-has-error', 1).checkCount('.ant-form-item-has-feedback', 1);
+        page.dc().checkCount('.ant-form-item-feedback-icon-error', 1).checkCount('.ant-input-has-feedback', 1);
         context.comp.updateFeedback(namePath, 'success');
-        page.dc().checkCount('.ant-form-item-has-success', 1).checkCount('.ant-form-item-has-feedback', 1);
+        page.dc().checkCount('.ant-form-item-feedback-icon-success', 1).checkCount('.ant-input-has-feedback', 1);
         context.comp.updateFeedback(namePath);
 
-        page.dc().checkCount('.ant-form-item-has-feedback', 0);
+        page.dc().checkCount('.ant-input-has-feedback', 0);
       });
     });
 
@@ -764,7 +766,7 @@ describe('form: component', () => {
   it('#delay', () => {
     genModule();
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
-    context.delay = true;
+    context.delay.set(true);
     spyOn(context.comp, 'refreshSchema');
     fixture.detectChanges();
     expect(context.comp.refreshSchema).not.toHaveBeenCalled();
@@ -776,12 +778,12 @@ describe('form: component', () => {
       ({ fixture, dl, context } = createTestContext(TestFormComponent));
     });
     it('with false', () => {
-      context.firstVisual = false;
+      context.firstVisual.set(false);
       createComp();
       page.checkCount('.ant-form-item-explain', 0);
     });
     it('with true', () => {
-      context.firstVisual = true;
+      context.firstVisual.set(true);
       createComp();
       page.checkCount('.ant-form-item-explain', 2);
     });
@@ -793,28 +795,28 @@ describe('form: component', () => {
       ({ fixture, dl, context } = createTestContext(TestModeComponent));
     });
     it('should be auto 搜索 in submit', () => {
-      context.mode = 'search';
+      context.mode.set('search');
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('搜索');
     });
     it('should be auto 保存 in submit', () => {
-      context.mode = 'edit';
+      context.mode.set('edit');
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('保存');
     });
     it('should be custom text of search', () => {
-      context.mode = 'search';
-      context.button = {
+      context.mode.set('search');
+      context.button.set({
         search: 'SEARCH'
-      };
+      });
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SEARCH');
     });
     it('should be custom text of edit', () => {
-      context.mode = 'edit';
-      context.button = {
+      context.mode.set('edit');
+      context.button.set({
         edit: 'SAVE'
-      };
+      });
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SAVE');
     });
@@ -902,7 +904,15 @@ describe('form: component', () => {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading" />
+    <sf
+      [layout]="layout()"
+      #comp
+      [schema]="schema()"
+      [ui]="ui()"
+      [button]="button()"
+      [mode]="mode()"
+      [loading]="loading()"
+    />
   `,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false

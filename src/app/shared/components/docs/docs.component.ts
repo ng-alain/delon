@@ -50,7 +50,7 @@ declare const hljs: any;
     @let cc = content();
     @if (cc) {
       @if (cc.meta.i18n === 'need-update') {
-        <nz-alert [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
+        <nz-alert nzType="warning" nzCloseable="true" nzBanner [nzMessage]="message" class="my-md">
           <ng-template #message>
             {{
               cc.meta.i18n === 'need-update'

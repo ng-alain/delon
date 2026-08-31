@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -15,7 +15,7 @@ describe('chart: timeline', () => {
     }));
 
     it('should be working', fakeAsync(() => {
-      page.context.position = 'left';
+      page.context.position.set('left');
       page.dcFirst();
       expect(page.chart.getOptions().slider).not.toBeUndefined();
       expect(page.getController('legend').option.position).toBe('left');
@@ -23,7 +23,7 @@ describe('chart: timeline', () => {
     }));
 
     it('should be disabled slider', fakeAsync(() => {
-      page.context.slider = false;
+      page.context.slider.set(false);
       page.dcFirst();
       expect(page.chart.getOptions().slider).toBeUndefined();
       page.end();
@@ -31,15 +31,15 @@ describe('chart: timeline', () => {
 
     it('should be change title count', fakeAsync(() => {
       page.dcFirst();
-      page.context.titleMap = { y1: '客流量', y2: '支付笔数', y3: 'Y3' };
-      page.context.colorMap = { y1: '#1890FF', y2: '#2FC25B', y3: '#f50' };
-      page.context.data = [
+      page.context.titleMap.set({ y1: '客流量', y2: '支付笔数', y3: 'Y3' });
+      page.context.colorMap.set({ y1: '#1890FF', y2: '#2FC25B', y3: '#f50' });
+      page.context.data.set([
         { y1: 1, y2: 2, y3: 3 },
         { y1: 10, y2: 20, y3: 30 }
-      ];
-      page.context.maxAxis = 3;
+      ]);
+      page.context.maxAxis.set(3);
       page.dc();
-      expect(page.chart.geometries.length).toBe(page.context.maxAxis);
+      expect(page.chart.geometries.length).toBe(page.context.maxAxis());
       page.end();
     }));
   });
@@ -52,16 +52,16 @@ describe('chart: timeline', () => {
     <g2-timeline
       #comp
       [title]="title"
-      [titleMap]="titleMap"
-      [colorMap]="colorMap"
+      [titleMap]="titleMap()"
+      [colorMap]="colorMap()"
       [mask]="mask"
       [maskSlider]="maskSlider"
-      [maxAxis]="maxAxis"
-      [position]="position"
+      [maxAxis]="maxAxis()"
+      [position]="position()"
       [borderWidth]="borderWidth"
-      [data]="data"
-      [slider]="slider"
-      [delay]="delay"
+      [data]="data()"
+      [slider]="slider()"
+      [delay]="delay()"
     />
   `,
   imports: [G2TimelineComponent]
@@ -69,18 +69,20 @@ describe('chart: timeline', () => {
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: G2TimelineComponent;
   title = 'title';
-  titleMap: G2TimelineMap = { y1: '客流量', y2: '支付笔数' };
-  colorMap: G2TimelineMap = { y1: '#1890FF', y2: '#2FC25B' };
+  readonly titleMap = signal<G2TimelineMap>({ y1: '客流量', y2: '支付笔数' });
+  readonly colorMap = signal<G2TimelineMap>({ y1: '#1890FF', y2: '#2FC25B' });
   mask: string = 'HH:mm';
   maskSlider: string = 'HH:mm';
-  maxAxis = 2;
-  position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  readonly maxAxis = signal(2);
+  readonly position = signal<'top' | 'right' | 'bottom' | 'left'>('top');
   borderWidth = 2;
-  slider = true;
-  data: G2TimelineData[] = new Array(9).fill({}).map((_v, i) => ({
-    time: new Date().getTime() + 1000 * 60 * 30 * i,
-    y1: Math.floor(Math.random() * 100) + 1000,
-    y2: Math.floor(Math.random() * 100) + 10
-  }));
-  delay = 0;
+  readonly slider = signal(true);
+  readonly data = signal<G2TimelineData[]>(
+    new Array(9).fill({}).map((_v, i) => ({
+      time: new Date().getTime() + 1000 * 60 * 30 * i,
+      y1: Math.floor(Math.random() * 100) + 1000,
+      y2: Math.floor(Math.random() * 100) + 10
+    }))
+  );
+  readonly delay = signal(0);
 }

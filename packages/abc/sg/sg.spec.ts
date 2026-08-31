@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -46,7 +46,7 @@ describe('abc: sg', () => {
         it('#gutter', () => {
           const gutter = 24;
           const halfGutter = gutter / 2;
-          context.parent_gutter = gutter;
+          context.parent_gutter.set(gutter);
           fixture.detectChanges();
           expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
           expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
@@ -55,7 +55,7 @@ describe('abc: sg', () => {
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
         });
         it('should be ingroed less than 0', () => {
-          context.parent_col = 0;
+          context.parent_col.set(0);
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
         });
@@ -63,28 +63,28 @@ describe('abc: sg', () => {
       describe('#item', () => {
         describe('#col', () => {
           it('should working', () => {
-            context.col = 1;
+            context.col.set(1);
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12', 0);
-            context.col = REP_MAX;
+            context.col.set(REP_MAX);
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12');
           });
           it('should be inherit parent col value', () => {
-            context.parent_colInCon = null;
-            context.parent_col = 2;
-            context.col = null;
+            context.parent_colInCon.set(null);
+            context.parent_col.set(2);
+            context.col.set(null);
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12');
             page.expect('.ant-col-md-8', 0);
           });
           it('should be inherit parent col value via container', () => {
-            context.parent_colInCon = 4;
-            context.parent_col = null;
-            context.col = null;
+            context.parent_colInCon.set(4);
+            context.parent_col.set(null);
+            context.col.set(null);
             fixture.detectChanges();
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12');
@@ -134,8 +134,8 @@ describe('abc: sg', () => {
 
 @Component({
   template: `
-    <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
-      <sg #viewComp [col]="col" />
+    <div [sg-container]="parent_colInCon()" #sgComp="sgContainer" [col]="parent_col()" [gutter]="parent_gutter()">
+      <sg #viewComp [col]="col()" />
     </div>
   `,
   imports: [SGContainerComponent, SGComponent]
@@ -146,9 +146,9 @@ class TestComponent {
   @ViewChild('viewComp', { static: true })
   viewComp!: SGComponent;
 
-  parent_gutter: number | null = 32;
-  parent_colInCon!: number | null;
-  parent_col: number | null = 3;
+  readonly parent_gutter = signal<number | null>(32);
+  readonly parent_colInCon = signal<number | null | undefined>(undefined);
+  readonly parent_col = signal<number | null>(3);
 
-  col!: number | null;
+  readonly col = signal<number | null | undefined>(undefined);
 }

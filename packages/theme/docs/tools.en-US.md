@@ -16,10 +16,10 @@ ng-alain believes that these styles tool only using in the content area. Built o
 | ---- | --- | --- | --- |
 | `xs` | $gutter / 2 | `4px` | Smaller |
 | `sm` | $gutter | `8px` | Small |
-| `md` | $gutter * 2 | `16px` | Medium |
-| `lg` | $gutter * 3 | `24px` | Large |
-| `xl` | $gutter * 4 | `32px` | Extra Large |
-| `xxl` | $gutter * 6 | `48px` | Oversized |
+| `md` | $gutter *2 | `16px` | Medium |
+| `lg` | $gutter* 3 | `24px` | Large |
+| `xl` | $gutter *4 | `32px` | Extra Large |
+| `xxl` | $gutter* 6 | `48px` | Oversized |
 
 According these rules, derived from `margin`，`padding`, and naming rules as follows:
 
@@ -306,7 +306,7 @@ Like Bootstrap responsive rules, all apply `hidden-xs` classes are hidden when s
 
 ## Rotate
 
-```
+```css
 .rotate-[360 / 15]
 ```
 

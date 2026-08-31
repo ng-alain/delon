@@ -17,7 +17,7 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
     if (!tree.exists(appConfigPath)) {
       throw new SchematicsException(`App config file (${appConfigPath}) not found`);
     }
-    let content = tree.read(appConfigPath).toString('utf-8');
+    let content = tree.read(appConfigPath)!.toString('utf-8');
     const oldMatch = content.match(/@angular\/common\/locales\/([^']+)/);
     const oldLang = oldMatch != null ? oldMatch[1] : 'zh-Hans';
     if (oldLang === options.defaultLanguage) {

@@ -30,7 +30,7 @@ ng update ng-alain
 
 Modify `package.json` All class libraries starting with `@delon/` are the latest version number:
 
-```
+```json
 "@delon/theme": "^12.0.0"
 ```
 

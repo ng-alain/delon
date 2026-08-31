@@ -58,7 +58,7 @@
       @for (row of _headers; track row) {
         <tr>
           @if ($first && expand) {
-            <th nzWidth="50px" [rowSpan]="_headers.length" [nzLeft]="row[0].column._left ? true : false"></th>
+            <th nzWidth="50px" [rowSpan]="$count" [nzLeft]="row[0].column._left ? true : false"></th>
           }
           @for (h of row; track h; let index = $index; let last = $last) {
             @let _c = h.column;
@@ -185,13 +185,13 @@
             </span>
           </ng-template>
         }
-        @for (c of _columns; track cIdx; let cIdx = $index) {
-          @let props = i._values[cIdx].props;
+        @for (c of _columns; track $index) {
+          @let props = i._values[$index].props;
           @if (props?.colSpan > 0 && props?.rowSpan > 0) {
             <td
               [nzLeft]="c._left"
               [nzRight]="c._right"
-              [attr.data-col-index]="cIdx"
+              [attr.data-col-index]="$index"
               [class]="c._className"
               [attr.colspan]="props?.colSpan === 1 ? null : props?.colSpan"
               [attr.rowspan]="props?.rowSpan === 1 ? null : props?.rowSpan"
@@ -201,7 +201,7 @@
                   <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{ $implicit: c.title }" />
                 </span>
               }
-              <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="cIdx" (n)="_handleTd($event)" />
+              <st-td [data]="_data" [i]="i" [index]="index" [c]="c" [cIdx]="$index" (n)="_handleTd($event)" />
             </td>
           }
         }

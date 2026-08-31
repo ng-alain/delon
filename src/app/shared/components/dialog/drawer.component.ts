@@ -11,8 +11,8 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
     <p style="height: 1000px">参数：{{ record() | json }},<a routerLink="/">Change Router</a></p>
     The end!
     <div class="drawer-footer">
-      <button nz-button [nzType]="'default'" (click)="cancel()"> Cancel </button>
-      <button nz-button [nzType]="'primary'" (click)="ok()"> OK </button>
+      <button nz-button nzType="default" (click)="cancel()"> Cancel </button>
+      <button nz-button nzType="primary" (click)="ok()"> OK </button>
     </div>
   `,
   imports: [NzButtonModule, JsonPipe]

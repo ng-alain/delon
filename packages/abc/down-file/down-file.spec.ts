@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { HttpHeaders, HttpResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -44,7 +44,7 @@ describe('abc: down-file', () => {
     ['xlsx', 'docx', 'pptx', 'pdf'].forEach(ext => {
       it(`should be down ${ext}`, fakeAsync(() => {
         spyOn(fs, 'saveAs');
-        if (ext === 'docx') context.data = null;
+        if (ext === 'docx') context.data.set(null);
         fixture.detectChanges();
         (dl.query(By.css(`#down-${ext}`)).nativeElement as HTMLButtonElement).click();
         tick();
@@ -58,7 +58,7 @@ describe('abc: down-file', () => {
       let fn: string;
       const filename = 'newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
-      context.fileName = rep => rep.headers.get('a')!;
+      context.fileName.set(rep => rep.headers.get('a')!);
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
@@ -73,7 +73,7 @@ describe('abc: down-file', () => {
       let fn: string;
       const filename = 'newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
-      context.fileName = null;
+      context.fileName.set(null);
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
@@ -88,7 +88,7 @@ describe('abc: down-file', () => {
       let fn: string;
       const filename = 'x-newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
-      context.fileName = null;
+      context.fileName.set(null);
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       tick();
@@ -146,7 +146,7 @@ describe('abc: down-file', () => {
     describe('#pre', () => {
       it('should be download when return true', fakeAsync(() => {
         const btn = dl.query(By.css('#down-xlsx')).nativeElement as HTMLButtonElement;
-        context.pre = () => Promise.resolve(true);
+        context.pre.set(() => Promise.resolve(true));
         fixture.detectChanges();
         btn.click();
         tick();
@@ -155,7 +155,7 @@ describe('abc: down-file', () => {
       }));
       it('should be cannot download when return false', () => {
         const btn = dl.query(By.css('#down-xlsx')).nativeElement as HTMLButtonElement;
-        context.pre = () => Promise.resolve(false);
+        context.pre.set(() => Promise.resolve(false));
         fixture.detectChanges();
         btn.click();
         expect(btn.classList).not.toContain(`down-file__disabled`);
@@ -169,7 +169,7 @@ describe('abc: down-file', () => {
     let fn: string;
     const filename = 'newfile.docx';
     spyOn(fs, 'saveAs').and.callFake(((_body: NzSafeAny, fileName: string) => (fn = fileName)) as NzSafeAny);
-    context.fileName = null;
+    context.fileName.set(null);
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
     tick();
@@ -203,12 +203,12 @@ describe('abc: down-file', () => {
       <button
         id="down-{{ i }}"
         down-file
-        [http-data]="data"
+        [http-data]="data()"
         [http-body]="body"
         [http-method]="method"
         http-url="/demo.{{ i }}"
-        [file-name]="fileName"
-        [pre]="pre"
+        [file-name]="fileName()"
+        [pre]="pre()"
         (success)="success()"
         (error)="error()"
       >
@@ -221,10 +221,10 @@ describe('abc: down-file', () => {
 class TestComponent {
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
-  data: NzSafeAny = {
+  readonly data = signal<NzSafeAny>({
     otherdata: 1,
     time: new Date()
-  };
+  });
 
   body = {
     a: 1
@@ -232,9 +232,9 @@ class TestComponent {
 
   method = 'get';
 
-  fileName: string | ((rep: HttpResponse<Blob>) => string) | null = 'demo中文';
+  readonly fileName = signal<string | ((rep: HttpResponse<Blob>) => string) | null>('demo中文');
 
-  pre?: (ev: MouseEvent) => Promise<boolean>;
+  readonly pre = signal<((ev: MouseEvent) => Promise<boolean>) | undefined>(undefined);
 
   success(): void {}
 

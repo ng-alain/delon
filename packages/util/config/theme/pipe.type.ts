@@ -1,3 +1,5 @@
+import type { Locale } from 'date-fns/locale';
+
 export interface AlainThemePipeConfig {
   dateFormat?: string;
   dateFormatCustom?: AlainThemePipeDateFormatCustom;

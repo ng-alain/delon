@@ -147,7 +147,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
         this.fileList = list as NzUploadFile[];
         this.formProperty._value = this.pureValue(list);
         this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: false });
-        this.detectChanges();
+        this.cd.markForCheck();
       }
     );
   }

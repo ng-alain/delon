@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, provideRouter } from '@angular/router';
@@ -93,13 +93,13 @@ describe('abc: page-header', () => {
           isExists('.page-header__title');
         });
         it('with null', () => {
-          context.title = null;
+          context.title.set(null);
           fixture.detectChanges();
           isExists('.page-header__title', false);
         });
       });
       it('#titleSub', () => {
-        context.titleSub = 'sub';
+        context.titleSub.set('sub');
         fixture.detectChanges();
         isExists('.page-header__title small');
       });
@@ -110,7 +110,7 @@ describe('abc: page-header', () => {
 
       describe('#fixed', () => {
         beforeEach(() => {
-          context.fixed = true;
+          context.fixed.set(true);
           fixture.detectChanges();
         });
         it('should working', () => {
@@ -128,13 +128,13 @@ describe('abc: page-header', () => {
       });
 
       it('#wide', () => {
-        context.wide = true;
+        context.wide.set(true);
         fixture.detectChanges();
         isExists('.page-header__wide');
       });
 
       it('#loading', () => {
-        context.loading = true;
+        context.loading.set(true);
         fixture.detectChanges();
         isExists('.ant-skeleton');
       });
@@ -166,15 +166,15 @@ describe('abc: page-header', () => {
 
       it('should be', () => {
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
-        context.home = '';
-        context.autoBreadcrumb = true;
+        context.home.set('');
+        context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
       });
 
       it('should be no breadcrumb when invalid url', () => {
         spyOnProperty(router, 'url').and.returnValue('/1-1/a-1-1-2');
-        context.autoBreadcrumb = true;
+        context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(0);
       });
@@ -197,7 +197,7 @@ describe('abc: page-header', () => {
           }
         ]);
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
-        context.autoBreadcrumb = true;
+        context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(2);
       });
@@ -205,16 +205,16 @@ describe('abc: page-header', () => {
       describe('#home', () => {
         it('shoule be hide home', () => {
           spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
-          context.home = '';
-          context.autoBreadcrumb = true;
+          context.home.set('');
+          context.autoBreadcrumb.set(true);
           fixture.detectChanges();
           expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
         });
       });
 
       xit('shoule be different breadcrumb by paths', fakeAsync(() => {
-        context.home = '';
-        context.autoBreadcrumb = true;
+        context.home.set('');
+        context.autoBreadcrumb.set(true);
         const urlSpy = spyOnProperty(router, 'url');
         urlSpy.and.returnValue('/1-1/1-1-2');
         fixture.detectChanges();
@@ -270,16 +270,16 @@ describe('abc: page-header', () => {
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
         spyOn(i18n, 'fanyi');
         expect(i18n.fanyi).not.toHaveBeenCalled();
-        context.autoBreadcrumb = true;
+        context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(i18n.fanyi).toHaveBeenCalled();
       });
       it('in title', () => {
         const text = 'asdf';
         const i18n = 'i18n';
-        context.title = null;
-        context.autoTitle = true;
-        context.autoBreadcrumb = true;
+        context.title.set(null);
+        context.autoTitle.set(true);
+        context.autoBreadcrumb.set(true);
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
         fixture.detectChanges();
         checkValue('.page-header__title', i18n);
@@ -300,12 +300,12 @@ describe('abc: page-header', () => {
             ]
           }
         ]);
-        context.autoBreadcrumb = true;
+        context.autoBreadcrumb.set(true);
         spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
         spyOn(i18n, 'fanyi');
-        context.home = 'home';
-        context.homeI18n = 'homeI18n';
-        context.autoBreadcrumb = true;
+        context.home.set('home');
+        context.homeI18n.set('homeI18n');
+        context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(i18n.fanyi).toHaveBeenCalled();
       });
@@ -326,8 +326,8 @@ describe('abc: page-header', () => {
 
     it('should be refresh title when route changed of auto generate title', fakeAsync(() => {
       genModule({ created: false });
-      context.title = null;
-      context.autoTitle = true;
+      context.title.set(null);
+      context.autoTitle.set(true);
       menuSrv.add([
         { text: '1', link: '/1-1/p1' },
         { text: '2', link: '/1-1/p2' }
@@ -356,9 +356,9 @@ describe('abc: page-header', () => {
           ]
         });
 
-        context.title = null;
-        context.autoTitle = true;
-        context.syncTitle = true;
+        context.title.set(null);
+        context.autoTitle.set(true);
+        context.syncTitle.set(true);
       });
 
       it('should be auto generate title via menu data', () => {
@@ -396,7 +396,7 @@ describe('abc: page-header', () => {
         });
         titleSrv = TestBed.inject<TitleService>(TitleService);
         reuseSrv = TestBed.inject<ReuseTabService>(ReuseTabService);
-        context.syncTitle = true;
+        context.syncTitle.set(true);
       });
 
       it('should be auto sync title of document and result-tab', () => {
@@ -413,34 +413,34 @@ describe('abc: page-header', () => {
 class TestBaseComponent {
   @ViewChild('comp', { static: true })
   comp!: PageHeaderComponent;
-  title: string | null = '所属类目';
-  titleSub?: string | null;
-  autoBreadcrumb?: boolean;
-  autoTitle?: boolean;
-  syncTitle?: boolean;
-  home?: string;
+  readonly title = signal<string | null>('所属类目');
+  readonly titleSub = signal<string | null | undefined>(undefined);
+  readonly autoBreadcrumb = signal<boolean | undefined>(undefined);
+  readonly autoTitle = signal<boolean | undefined>(undefined);
+  readonly syncTitle = signal<boolean | undefined>(undefined);
+  readonly home = signal<string | undefined>(undefined);
   homeLink?: string;
-  homeI18n?: string;
-  fixed?: boolean;
-  loading = false;
-  wide = false;
+  readonly homeI18n = signal<string | undefined>(undefined);
+  readonly fixed = signal<boolean | undefined>(undefined);
+  readonly loading = signal(false);
+  readonly wide = signal(false);
 }
 
 @Component({
   template: `
     <page-header
       #comp
-      [title]="title"
-      [titleSub]="titleSub"
-      [autoTitle]="autoTitle"
-      [syncTitle]="syncTitle"
-      [autoBreadcrumb]="autoBreadcrumb"
-      [home]="home"
-      [homeI18n]="homeI18n"
+      [title]="title()"
+      [titleSub]="titleSub()"
+      [autoTitle]="autoTitle()"
+      [syncTitle]="syncTitle()"
+      [autoBreadcrumb]="autoBreadcrumb()"
+      [home]="home()"
+      [homeI18n]="homeI18n()"
       [homeLink]="homeLink"
-      [fixed]="fixed"
-      [loading]="loading"
-      [wide]="wide"
+      [fixed]="fixed()"
+      [loading]="loading()"
+      [wide]="wide()"
       [breadcrumb]="breadcrumb"
       [logo]="logo"
       [action]="action"
@@ -462,7 +462,7 @@ class TestComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-    <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb" />
+    <page-header #comp [title]="title()" [home]="home()" [homeI18n]="homeI18n()" [autoBreadcrumb]="autoBreadcrumb()" />
   `,
   imports: [PageHeaderComponent]
 })
@@ -472,11 +472,11 @@ class TestAutoBreadcrumbComponent extends TestBaseComponent {}
   template: `
     <page-header
       #comp
-      [title]="title"
-      [home]="home"
-      [homeI18n]="homeI18n"
+      [title]="title()"
+      [home]="home()"
+      [homeI18n]="homeI18n()"
       [homeLink]="homeLink"
-      [autoBreadcrumb]="autoBreadcrumb"
+      [autoBreadcrumb]="autoBreadcrumb()"
     />
   `,
   imports: [PageHeaderComponent]

@@ -143,7 +143,7 @@ export function findRoutesPath(tree: Tree, path: string): string {
     if (found.length > 0) {
       return normalize(`${dir.path}/${ROUTINS_FILENAME}`);
     }
-    dir = dir.parent;
+    dir = dir.parent!;
   }
   return '';
 }

@@ -24,22 +24,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Comment on github
         run: node ./scripts/github/comment.js "[Preview Preparing...](https://github.com/ng-alain/delon/actions/runs/${{ github.run_id }})"
         if: github.event.number
       - name: Install node modules
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
       - name: Build artifacts
         run: ./scripts/ci/build-artifacts.sh
         env:
           MESSAGE: ${{ github.event.pull_request.title || github.event.head_commit.message }}
       - name: Build site
-        run: yarn run site:build
+        run: pnpm run site:build
       - name: 'Deploy Site'
         if: github.event.number
         run: |
@@ -60,16 +60,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install node modules
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
       - name: Test
-        run: yarn run test
-      - uses: codecov/codecov-action@v6
+        run: pnpm run test
+      - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/
@@ -80,29 +80,25 @@ jobs:
   test-cli:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install node modules
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
       - name: Test
-        run: yarn run test:cli
+        run: pnpm run test:cli
 
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
-      - uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key:  ${{ runner.os }}-${{ hashFiles('**/yarn.lock', '**/*.patch') }}
+          cache: 'pnpm'
       - name: Install node modules
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
       - name: Check code lint
-        run: yarn run lint
+        run: pnpm run lint

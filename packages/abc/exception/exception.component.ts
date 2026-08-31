@@ -41,7 +41,7 @@ export type ExceptionType = 403 | 404 | 500;
           <ng-content />
         </div>
         @if (!hasCon()) {
-          <button nz-button [routerLink]="backRouterLink()" [nzType]="'primary'">
+          <button nz-button [routerLink]="backRouterLink()" nzType="primary">
             {{ locale().backToHome }}
           </button>
         }

@@ -63,7 +63,7 @@ export function getTagInV4(_host: Tree, src: string, tagName: string): { startOf
     locationInfo: true
   } as any);
 
-  let resNode;
+  let resNode: any;
   const visit = (nodes: any[]): void => {
     nodes.forEach(node => {
       const element: any = node;

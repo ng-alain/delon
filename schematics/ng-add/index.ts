@@ -7,7 +7,7 @@ import { DEFAULT_WORKSPACE_PATH, readJSON, readPackage } from '../utils';
 import { Schema as NgAddOptions } from './schema';
 import { getNodeMajorVersion } from '../utils/node';
 
-const V = 21;
+const V = 22;
 
 function genRules(options: NgAddOptions): Rule {
   return () => {
@@ -63,7 +63,7 @@ export default function (options: NgAddOptions): Rule {
     // }
 
     const nodeVersion = getNodeMajorVersion();
-    const allowNodeVersions = [18, 20, 22];
+    const allowNodeVersions = [22, 24, 26];
     if (!allowNodeVersions.some(v => nodeVersion === v)) {
       const versions = allowNodeVersions.join(', ');
       throw new SchematicsException(

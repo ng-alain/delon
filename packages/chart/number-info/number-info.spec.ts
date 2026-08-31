@@ -1,4 +1,4 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -31,10 +31,10 @@ describe('abc: number-info', () => {
 
   describe('#title', () => {
     it('with string', () => {
-      isText('.number-info__title', context.title as string);
+      isText('.number-info__title', context.title() as string);
     });
     it('with template', () => {
-      context.title = context.titleTpl;
+      context.title.set(context.titleTpl);
       fixture.detectChanges();
       isExists('#titleTpl');
     });
@@ -42,10 +42,10 @@ describe('abc: number-info', () => {
 
   describe('#subTitle', () => {
     it('with string', () => {
-      isText('.number-info__title-sub', context.subTitle as string);
+      isText('.number-info__title-sub', context.subTitle() as string);
     });
     it('with template', () => {
-      context.subTitle = context.subTitleTpl;
+      context.subTitle.set(context.subTitleTpl);
       fixture.detectChanges();
       isExists('#subTitleTpl');
     });
@@ -53,10 +53,10 @@ describe('abc: number-info', () => {
 
   describe('#total', () => {
     it('with string', () => {
-      expect(context.total).toBe(context.comp.total!);
+      expect(context.total()).toBe(context.comp.total!);
     });
     it('with template', () => {
-      context.total = context.totalTpl;
+      context.total.set(context.totalTpl);
       fixture.detectChanges();
       isExists('#totalTpl');
     });
@@ -67,7 +67,7 @@ describe('abc: number-info', () => {
       isExists('.number-info__value-sub');
     });
     it('with template', () => {
-      context.subTotal = context.subTotalTpl;
+      context.subTotal.set(context.subTotalTpl);
       fixture.detectChanges();
       isExists('#subTotalTpl');
     });
@@ -75,13 +75,13 @@ describe('abc: number-info', () => {
 
   it('should be change theme', () => {
     isExists('.number-info__light');
-    context.theme = '';
+    context.theme.set('');
     fixture.detectChanges();
     isExists('.number-info__light', false);
   });
 
   it('should be change gap', () => {
-    context.gap = 10;
+    context.gap.set(10);
     fixture.detectChanges();
     const el = dl.query(By.css('.number-info__value')).nativeElement as HTMLElement;
     expect(+el.style.marginTop!.replace('px', '')).toBe(10);
@@ -92,14 +92,14 @@ describe('abc: number-info', () => {
   template: `
     <number-info
       #ni
-      [title]="title"
-      [subTitle]="subTitle"
-      [total]="total"
-      [subTotal]="subTotal"
+      [title]="title()"
+      [subTitle]="subTitle()"
+      [total]="total()"
+      [subTotal]="subTotal()"
       suffix="suffix"
       [status]="status"
-      [theme]="theme"
-      [gap]="gap"
+      [theme]="theme()"
+      [gap]="gap()"
     />
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
@@ -114,11 +114,11 @@ class TestComponent {
   @ViewChild('subTitleTpl', { static: true }) subTitleTpl!: TemplateRef<void>;
   @ViewChild('totalTpl', { static: true }) totalTpl!: TemplateRef<void>;
   @ViewChild('subTotalTpl', { static: true }) subTotalTpl!: TemplateRef<void>;
-  title: string | TemplateRef<void> = 'title';
-  subTitle: string | TemplateRef<void> = 'subTitle';
-  total: string | number | TemplateRef<void> = 'total';
-  subTotal: string | number | TemplateRef<void> = 'subTotal';
+  readonly title = signal<string | TemplateRef<void>>('title');
+  readonly subTitle = signal<string | TemplateRef<void>>('subTitle');
+  readonly total = signal<string | number | TemplateRef<void>>('total');
+  readonly subTotal = signal<string | number | TemplateRef<void>>('subTotal');
   status = 'up';
-  theme = 'light';
-  gap = 8;
+  readonly theme = signal('light');
+  readonly gap = signal(8);
 }

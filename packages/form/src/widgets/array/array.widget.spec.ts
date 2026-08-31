@@ -142,7 +142,7 @@ describe('form: widget: array', () => {
       const data = {
         arr: [{ a: 'a1' }, { a: 'a2' }]
       };
-      context.formData = data;
+      context.formData.set(data);
       page.newSchema(schema).checkCount('.sf__array-item', data.arr.length);
     });
     it('via default in schema', () => {

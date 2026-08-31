@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -190,18 +190,18 @@ export class SFPage {
   }
 
   newSchema(schema: SFSchema, ui?: SFUISchema, formData?: NzSafeAny): this {
-    context.schema = schema;
-    if (typeof ui !== 'undefined') context.ui = ui;
-    if (typeof formData !== 'undefined') context.formData = formData;
+    context.schema.set(schema);
+    if (typeof ui !== 'undefined') context.ui.set(ui);
+    if (typeof formData !== 'undefined') context.formData.set(formData);
     return this.dc();
   }
 
   /** 强制指定 `a` 节点 */
   chainSchema(schema: SFSchema, overObject: SFSchema): this {
-    context.schema = {
+    context.schema.set({
       ...deepCopy(schema),
       properties: { a: overObject }
-    };
+    });
     return this.dc();
   }
 
@@ -332,8 +332,26 @@ export class SFPage {
     return this.dc();
   }
 
-  typeEvent(eventName: string | Event, cls: string = 'input'): this {
-    const node = document.querySelector(cls) as HTMLInputElement;
+  /**
+   * 根据 CSS 选择器和文本内容查找匹配的 DOM 元素
+   * @param {string} selector - CSS 选择器（如 '.ant-tag'）
+   * @param {string} text - 需要匹配的文本内容（如 'item1'）
+   * @param {boolean} [exact=true] - 是否精确匹配（true: 完全一致, false: 包含即可）
+   * @returns {Element|null} - 返回找到的第一个匹配元素，未找到返回 null
+   */
+  getElementByText(selector: string, text: string, exact = true): HTMLElement | null {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
+
+    return (
+      elements.find(el => {
+        const content = el.textContent.trim();
+        return exact ? content === text : content.includes(text);
+      }) || null
+    );
+  }
+
+  typeEvent(eventName: string | Event, cls: string | HTMLElement = 'input'): this {
+    const node = typeof cls === 'string' ? (document.querySelector(cls) as HTMLInputElement) : cls;
     if (node == null) {
       expect(true).withContext(`won't found '${cls}' class element`).toBe(false);
       return this;
@@ -367,21 +385,21 @@ export class SFPage {
 @Component({
   template: `
     <sf
-      [layout]="layout"
+      [layout]="layout()"
       #comp
-      [schema]="schema"
-      [ui]="ui"
-      [formData]="formData"
-      [button]="button"
-      [liveValidate]="liveValidate"
-      [autocomplete]="autocomplete"
-      [firstVisual]="firstVisual"
-      [onlyVisual]="onlyVisual"
-      [disabled]="disabled"
-      [loading]="loading"
-      [noColon]="noColon"
-      [cleanValue]="cleanValue"
-      [delay]="delay"
+      [schema]="schema()"
+      [ui]="ui()"
+      [formData]="formData()"
+      [button]="button()"
+      [liveValidate]="liveValidate()"
+      [autocomplete]="autocomplete()"
+      [firstVisual]="firstVisual()"
+      [onlyVisual]="onlyVisual()"
+      [disabled]="disabled()"
+      [loading]="loading()"
+      [noColon]="noColon()"
+      [cleanValue]="cleanValue()"
+      [delay]="delay()"
       (formChange)="formChange($event)"
       (formValueChange)="formValueChange($event)"
       (formSubmit)="formSubmit($event)"
@@ -394,21 +412,21 @@ export class SFPage {
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp!: SFComponent;
-  mode: 'default' | 'search' | 'edit' = 'default';
-  layout = 'horizontal';
-  schema: SFSchema | null = SCHEMA.user;
-  ui: SFUISchema | null = {};
-  formData: NzSafeAny;
-  button: SFButton | 'none' | null | undefined = {};
-  liveValidate = true;
-  autocomplete?: 'on' | 'off';
-  firstVisual = true;
-  onlyVisual = false;
-  disabled = false;
-  loading = false;
-  noColon = false;
-  cleanValue = false;
-  delay = false;
+  readonly mode = signal<'default' | 'search' | 'edit'>('default');
+  readonly layout = signal('horizontal');
+  readonly schema = signal<SFSchema | null>(SCHEMA.user);
+  readonly ui = signal<SFUISchema | null>({});
+  readonly formData = signal<NzSafeAny>(undefined);
+  readonly button = signal<SFButton | 'none' | null | undefined>({});
+  readonly liveValidate = signal(true);
+  readonly autocomplete = signal<'on' | 'off' | undefined>(undefined);
+  readonly firstVisual = signal(true);
+  readonly onlyVisual = signal(false);
+  readonly disabled = signal(false);
+  readonly loading = signal(false);
+  readonly noColon = signal(false);
+  readonly cleanValue = signal(false);
+  readonly delay = signal(false);
 
   formChange(): void {}
   formValueChange(): void {}

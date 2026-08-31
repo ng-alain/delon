@@ -61,7 +61,7 @@ Commonly used testing suite.
 
 Schematic diagram of directory structure：
 
-```
+```txt
 ├── _mock                                       # Mock Data rule
 ├── src
 │   ├── app

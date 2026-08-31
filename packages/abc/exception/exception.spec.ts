@@ -1,5 +1,5 @@
 import { Directionality } from '@angular/cdk/bidi';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -25,7 +25,7 @@ describe('abc: exception', () => {
 
   [403, 404, 500].forEach(type => {
     it(`#type=${type}`, () => {
-      context.type = type as ExceptionType;
+      context.type.set(type as ExceptionType);
       fixture.detectChanges();
       expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe(`${type}`);
     });
@@ -36,21 +36,22 @@ describe('abc: exception', () => {
   });
 
   it('should be custom img&title&desc', () => {
-    context.img =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-    context.title = 'custom title';
-    context.desc = 'custom desc';
+    context.img.set(
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
+    );
+    context.title.set('custom title');
+    context.desc.set('custom desc');
     fixture.detectChanges();
     expect((dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style.backgroundImage).toContain(
-      context.img
+      context.img()!
     );
-    expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe(context.title);
-    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(context.desc);
+    expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe(context.title()!);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(context.desc()!);
   });
 
   it('#i18n', () => {
     TestBed.inject<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
-    context.type = 403;
+    context.type.set(403);
     fixture.detectChanges();
     expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
       en_US.exception['403']
@@ -68,7 +69,7 @@ describe('abc: exception', () => {
 
 @Component({
   template: `
-    <exception #comp [type]="type" [img]="img" [title]="title" [desc]="desc" backRouterLink="/">
+    <exception #comp [type]="type()" [img]="img()" [title]="title()" [desc]="desc()" backRouterLink="/">
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
     </exception>
@@ -78,8 +79,8 @@ describe('abc: exception', () => {
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: ExceptionComponent;
-  type?: 403 | 404 | 500;
-  img?: string;
-  title?: string;
-  desc?: string;
+  readonly type = signal<403 | 404 | 500 | undefined>(undefined);
+  readonly img = signal<string | undefined>(undefined);
+  readonly title = signal<string | undefined>(undefined);
+  readonly desc = signal<string | undefined>(undefined);
 }

@@ -29,7 +29,7 @@ const data = { 1: '正常', 2: '删除' };
 
 若希望保持键名为 `number` 数字型：
 
-```
+```ts
 @for (item of data | keys: true; track $index) {
   <div >{{item.key}} {{item.value | json}}</div>
 }

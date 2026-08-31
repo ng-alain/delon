@@ -20,7 +20,7 @@ describe('abc: st-sort', () => {
       context = page.context;
       comp = page.comp;
 
-      context.columns = [
+      context.columns.set([
         {
           title: '',
           index: 'i',
@@ -31,10 +31,10 @@ describe('abc: st-sort', () => {
           index: 'i',
           sort: { default: 'descend', compare: () => 1 }
         }
-      ];
+      ]);
     });
     describe('single-sort', () => {
-      beforeEach(() => (context.multiSort = false));
+      beforeEach(() => context.multiSort.set(false));
       it('muse provide the compare function', fakeAsync(() => {
         spyOn(console, 'warn');
         page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as NzSafeAny }]);
@@ -44,7 +44,7 @@ describe('abc: st-sort', () => {
         page.asyncEnd();
       }));
       it('should be auto generate compose when sort is true', fakeAsync(() => {
-        context.data = [{ i: 1 }, { i: 2 }];
+        context.data.set([{ i: 1 }, { i: 2 }]);
         page.updateColumn([{ title: '', index: 'i', sort: true }]);
         comp.sort(comp._columns[0], 'descend');
         page.cd();
@@ -63,7 +63,7 @@ describe('abc: st-sort', () => {
       }));
     });
     describe('multi-sort', () => {
-      beforeEach(() => (context.multiSort = true));
+      beforeEach(() => context.multiSort.set(true));
       it('should be sorting', fakeAsync(() => {
         page.cd();
         comp.sort(comp._columns[0], 'descend');
@@ -77,17 +77,17 @@ describe('abc: st-sort', () => {
         page.asyncEnd();
       }));
       it('with true', () => {
-        context.multiSort = true;
+        context.multiSort.set(true);
         fixture.detectChanges();
         expect(typeof comp.multiSort).toBe('object');
       });
       it('with false', () => {
-        context.multiSort = false;
+        context.multiSort.set(false);
         fixture.detectChanges();
         expect(comp.multiSort).toBeUndefined();
       });
       it('with object', () => {
-        context.multiSort = { key: 'aa' };
+        context.multiSort.set({ key: 'aa' });
         fixture.detectChanges();
         const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');

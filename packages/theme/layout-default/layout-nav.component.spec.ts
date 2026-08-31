@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, provideRouter } from '@angular/router';
@@ -257,7 +257,7 @@ describe('theme: layout-default-nav', () => {
         });
         it('with false', () => {
           createComp();
-          context.hideEmptyChildren = false;
+          context.hideEmptyChildren.set(false);
           fixture.detectChanges();
           menuSrv.add([
             {
@@ -467,7 +467,7 @@ describe('theme: layout-default-nav', () => {
       ];
       beforeEach(() => createComp());
       it('should be disabled item when with true', () => {
-        context.disabledAcl = true;
+        context.disabledAcl.set(true);
         fixture.detectChanges();
         menuSrv.add(newMenus);
         fixture.detectChanges();
@@ -475,7 +475,7 @@ describe('theme: layout-default-nav', () => {
         expect(itemEl!.classList).toContain('sidebar-nav__item-disabled');
       });
       it('should be hidden item when with false', () => {
-        context.disabledAcl = false;
+        context.disabledAcl.set(false);
         fixture.detectChanges();
         menuSrv.add(newMenus);
         fixture.detectChanges();
@@ -487,7 +487,7 @@ describe('theme: layout-default-nav', () => {
     describe('#openStrictly', () => {
       beforeEach(() => {
         createComp();
-        context.openStrictly = true;
+        context.openStrictly.set(true);
         fixture.detectChanges();
         menuSrv.add(deepCopy(MOCKOPENSTRICTLY));
         fixture.detectChanges();
@@ -622,7 +622,7 @@ describe('theme: layout-default-nav', () => {
       fixture.detectChanges();
     }));
     it('with true', fakeAsync(() => {
-      context.recursivePath = true;
+      context.recursivePath.set(true);
       fixture.detectChanges();
       router.navigateByUrl('/user2');
       tick();
@@ -634,7 +634,7 @@ describe('theme: layout-default-nav', () => {
       page.checkCount('.sidebar-nav__selected', 1);
     }));
     it('with false', fakeAsync(() => {
-      context.recursivePath = false;
+      context.recursivePath.set(false);
       fixture.detectChanges();
       router.navigateByUrl('/user2');
       tick();
@@ -646,7 +646,7 @@ describe('theme: layout-default-nav', () => {
       page.checkCount('.sidebar-nav__selected', 0);
     }));
     it('should be ingore _open when enabled openStrictly', fakeAsync(() => {
-      context.openStrictly = true;
+      context.openStrictly.set(true);
       fixture.detectChanges();
       menuSrv.add(deepCopy(MOCKOPENSTRICTLY));
       fixture.detectChanges();
@@ -708,11 +708,11 @@ describe('theme: layout-default-nav', () => {
   template: `
     <layout-default-nav
       #comp
-      [disabledAcl]="disabledAcl"
+      [disabledAcl]="disabledAcl()"
       [autoCloseUnderPad]="autoCloseUnderPad"
-      [recursivePath]="recursivePath"
-      [hideEmptyChildren]="hideEmptyChildren"
-      [openStrictly]="openStrictly"
+      [recursivePath]="recursivePath()"
+      [hideEmptyChildren]="hideEmptyChildren()"
+      [openStrictly]="openStrictly()"
       (select)="select()"
     />
   `,
@@ -722,11 +722,11 @@ describe('theme: layout-default-nav', () => {
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: LayoutDefaultNavComponent;
-  disabledAcl = false;
+  readonly disabledAcl = signal(false);
   autoCloseUnderPad = false;
-  recursivePath = false;
-  hideEmptyChildren = true;
-  openStrictly = false;
+  readonly recursivePath = signal(false);
+  readonly hideEmptyChildren = signal(true);
+  readonly openStrictly = signal(false);
   select(): void {}
 }
 

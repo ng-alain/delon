@@ -5,13 +5,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 type PDFDocumentProxy = NzSafeAny;
 
 export type PdfChangeEventType =
-  | 'loaded'
-  | 'load-progress'
-  | 'pages-init'
-  | 'page-rendered'
-  | 'text-layer-rendered'
-  | 'pi'
-  | 'error';
+  'loaded' | 'load-progress' | 'pages-init' | 'page-rendered' | 'text-layer-rendered' | 'pi' | 'error';
 export type PdfZoomScale = 'page-height' | 'page-fit' | 'page-width';
 
 export interface PdfChangeEvent {

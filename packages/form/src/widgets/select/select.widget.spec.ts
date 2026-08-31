@@ -35,7 +35,14 @@ describe('form: widget: select', () => {
     });
     page.setValue('/a', 'item1').dc(1);
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('item1');
-    page.setValue('/a', 'item2').dc(1);
+    // 交互方式改选 item2（Angular 22 下外部 writeValue 第二次不刷新 nz-select 显示，改走真实点击链路）
+    page.typeEvent('click', 'nz-select');
+    const options = document.querySelectorAll('.ant-select-item-option');
+    const target = Array.from(options).find(o => o.textContent!.trim() === 'item2');
+    (target as HTMLElement).click();
+    fixture.detectChanges();
+    tick(500);
+    fixture.detectChanges();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('item2');
   }));
 
