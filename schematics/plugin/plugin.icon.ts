@@ -1,9 +1,7 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, Tree } from '@angular-devkit/schematics';
 import { findNodes, getDecoratorMetadata } from '@schematics/angular/utility/ast-utils';
-import { parseFragment } from 'parse5';
-import type { Attribute } from 'parse5/dist/common/token';
-import type { Element } from 'parse5/dist/tree-adapters/default';
+import { parseFragment, DefaultTreeAdapterTypes } from 'parse5';
 import * as ts from 'typescript';
 
 import { getSourceFile } from '../utils';
@@ -85,7 +83,7 @@ ATTRIBUTE_NAMES.forEach(key => {
 function findIcons(html: string): string[] {
   const res: string[] = [];
   const doc = parseFragment(html);
-  const visitNodes = (nodes: Element[]): void => {
+  const visitNodes = (nodes: DefaultTreeAdapterTypes.Element[]): void => {
     nodes.forEach(node => {
       if (node.attrs) {
         const classIcon = genByClass(node);
@@ -97,16 +95,16 @@ function findIcons(html: string): string[] {
       }
 
       if (node.childNodes) {
-        visitNodes(node.childNodes as Element[]);
+        visitNodes(node.childNodes as DefaultTreeAdapterTypes.Element[]);
       }
     });
   };
 
-  visitNodes(doc.childNodes as Element[]);
+  visitNodes(doc.childNodes as DefaultTreeAdapterTypes.Element[]);
   return res;
 }
 
-function genByClass(node: Element): string | null {
+function genByClass(node: DefaultTreeAdapterTypes.Element): string | null {
   const attr = node.attrs.find(a => a.name === 'class');
   if (!attr || !attr.value) return null;
   const match = attr.value.match(/anticon(-\w+)+/g);
@@ -114,7 +112,7 @@ function genByClass(node: Element): string | null {
   return match[0];
 }
 
-function genByComp(node: Element): string[] | null {
+function genByComp(node: DefaultTreeAdapterTypes.Element): string[] | null {
   if (node.nodeName != 'nz-icon' && !node.attrs.find(attr => attr.name === 'nz-icon')) return null;
 
   const type = node.attrs.find(attr => ['type', '[type]', 'nztype', '[nztype]'].includes(attr.name));
@@ -130,7 +128,7 @@ function genByComp(node: Element): string[] | null {
   return types.flatMap(a => themes.map(b => `${a}#${b}`));
 }
 
-function genByAttribute(node: Element): string[] | null {
+function genByAttribute(node: DefaultTreeAdapterTypes.Element): string[] | null {
   if (!ATTRIBUTE_NAMES.includes(node.nodeName as keyof typeof ATTRIBUTES)) return null;
 
   const attributes = ATTRIBUTES[node.nodeName as keyof typeof ATTRIBUTES];
@@ -143,7 +141,7 @@ function genByAttribute(node: Element): string[] | null {
   return types;
 }
 
-function getNgValue(attr: Attribute): string[] | null {
+function getNgValue(attr: any): string[] | null {
   if (!attr) return null;
 
   const str = attr.value.trim();

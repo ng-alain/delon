@@ -1,6 +1,6 @@
 import { normalize } from '@angular-devkit/core';
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { Rule, SchematicsException, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
+import { ProjectDefinition } from '@schematics/angular/utility/workspace';
 import { rmSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { parse } from 'jsonc-parser';
 import { color } from 'listr2';
