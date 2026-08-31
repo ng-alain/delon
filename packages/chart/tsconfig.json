@@ -2,7 +2,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
+    "rootDir": "..",
     "paths": {
       "@delon/chart/*": ["./*"],
       "@delon/*": ["../*"]
