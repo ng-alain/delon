@@ -784,7 +784,7 @@ export interface STColumnButton<T extends STData = any> {
   /**
    * 气泡确认框参数，若 `string` 类型表示标题
    */
-  pop?: boolean | string | STColumnButtonPop;
+  pop?: boolean | string | STColumnButtonPop<T>;
   /**
    * 对话框参数
    */
@@ -919,8 +919,9 @@ export interface STColumnButtonDrawerConfig {
 export interface STColumnButtonPop<T extends STData = any> {
   /**
    * Title of the popover, default: `确认删除吗？`
+   * - 函数：以返回值为标题，`null`/`undefined` 表示不显示气泡确认框
    */
-  title?: string;
+  title?: string | STColumnButtonPopFn<T>;
 
   titleI18n?: string;
 
@@ -985,6 +986,15 @@ export interface STColumnButtonPop<T extends STData = any> {
    */
   condition?: (item: T) => boolean;
 }
+
+/**
+ * 气泡确认框标题函数，返回 `null`/`undefined` 表示不显示气泡确认框
+ */
+export type STColumnButtonPopFn<T extends STData = any> = (data: {
+  item: T;
+  btn: STColumnButton<T>;
+  column: STColumn;
+}) => string | null | undefined;
 
 export interface STReqReNameType {
   pi?: string;

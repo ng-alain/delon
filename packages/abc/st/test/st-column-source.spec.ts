@@ -10,7 +10,7 @@ import { STColumnSource, STColumnSourceProcessOptions } from '../st-column-sourc
 import { STRowSource } from '../st-row.directive';
 import { STWidgetRegistry } from '../st-widget';
 import { ST_DEFAULT_CONFIG } from '../st.config';
-import { STColumn, STColumnButtonPop, STIcon, STResizable, STWidthMode } from '../st.interfaces';
+import { STColumn, STColumnButtonPop, STColumnButtonPopFn, STIcon, STResizable, STWidthMode } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 
 const i18nResult = 'zh';
@@ -462,6 +462,12 @@ describe('st: column-source', () => {
           const pop = newColumns[0].buttons![0].pop as STColumnButtonPop;
           expect(pop != null).toBe(true);
           expect(pop.condition!(null!)).toBe(true);
+        });
+        it('should be keep title function', () => {
+          const fn: STColumnButtonPopFn = () => 'aaa';
+          const newColumns = srv.process([{ title: '', buttons: [{ text: '', pop: { title: fn } }] }], options).columns;
+          const pop = newColumns[0].buttons![0].pop as STColumnButtonPop;
+          expect(typeof pop.title).toBe('function');
         });
       });
       describe('#icon', () => {

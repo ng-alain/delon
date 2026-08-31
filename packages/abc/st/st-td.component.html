@@ -8,16 +8,16 @@
   }
 </ng-template>
 <ng-template #btnItemTpl let-i>
-  @if (i.pop) {
+  @if (i.pop && _popTitle(i); as title) {
     @let pop = i.pop;
     <a
       nz-popconfirm
-      [nzPopconfirmTitle]="pop.title"
+      [nzPopconfirmTitle]="title"
       [nzIcon]="pop.icon"
       [nzCondition]="pop.condition(i)"
-      [nzCancelText]="pop.cancelText"
-      [nzOkText]="pop.okText"
-      [nzOkType]="pop.okType"
+      [nzCancelText]="pop.cancelText ?? null"
+      [nzOkText]="pop.okText ?? null"
+      [nzOkType]="pop.okType ?? 'primary'"
       (nzOnConfirm)="_btn(i)"
       class="st__btn-text"
       [class]="i._className"
