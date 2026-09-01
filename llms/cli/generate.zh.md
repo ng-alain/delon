@@ -91,7 +91,7 @@ ng g ng-alain:list list -m=trade
 
 一般而言，一个模块可能会包含相同类型的业务页，而我们产生的文件结构可能希望是：
 
-```
+```txt
 sys
   log
     view
@@ -126,7 +126,7 @@ ng g ng-alain:edit [page name] --modal=false
 
 除上述默认业务页以外，也可以自定义属于项目级别业务页，例如我们创建一个自己的编辑页模板，则只需要在项目的根目录创建以下目录结构（你可以通过 [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl) 上来获取）：
 
-```
+```txt
 └── _cli-tpl
 │   └── edit                                                       // 模板名称
 │       └── __path__                                               // （名称固定值）

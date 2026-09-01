@@ -135,7 +135,7 @@ export class FormDateSimple {
 
 ### Data Range
 
-A simple start & end date range, \*\*Note: \*\* `end` still needs define in schema, but will forced to be hidden.
+A simple start & end date range, **Note:** `end` still needs define in schema, but will forced to be hidden.
 
 ```typescript
 import { Component, inject } from '@angular/core';

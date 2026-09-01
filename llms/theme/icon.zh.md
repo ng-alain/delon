@@ -81,7 +81,7 @@ export class StartupService {
 
 > **注意：** 在项目编辑里加上 `anticon anticon-` 前缀才能同之前的类名保持一致。
 
-```
+```json
 // angular.json
 "styles": [
   "src/iconfont.css"

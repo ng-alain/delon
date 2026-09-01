@@ -191,7 +191,7 @@ export class StartupService {
 
 > **注意：** 在项目编辑里加上 `anticon anticon-` 前缀才能同之前的类名保持一致。
 
-```
+```json
 // angular.json
 "styles": [
   "src/iconfont.css"
@@ -259,7 +259,7 @@ title: Interceptor
 type: Documents
 ---
 
-# 写在前面
+## 写在前面
 
 搭配 `httpCacheInterceptor` Http 拦截器，可以将缓存应用到 Http 请求当中。它只有几个特征：
 
@@ -268,7 +268,7 @@ type: Documents
 - 支持任何 Http 请求、任何数据格式
 - 符合 Http 缓存响应标准 `Cache-Control`
 
-# 如何使用
+## 如何使用
 
 在 `withInterceptors` 中引入 `httpCacheInterceptor`：
 
@@ -454,7 +454,7 @@ ng g ng-alain:list list -m=trade
 
 一般而言，一个模块可能会包含相同类型的业务页，而我们产生的文件结构可能希望是：
 
-```
+```txt
 sys
   log
     view
@@ -489,7 +489,7 @@ ng g ng-alain:edit [page name] --modal=false
 
 除上述默认业务页以外，也可以自定义属于项目级别业务页，例如我们创建一个自己的编辑页模板，则只需要在项目的根目录创建以下目录结构（你可以通过 [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl) 上来获取）：
 
-```
+```txt
 └── _cli-tpl
 │   └── edit                                                       // 模板名称
 │       └── __path__                                               // （名称固定值）
@@ -656,7 +656,7 @@ ui 本身也是一个 JSON 结构，为了区分 JSON Schema 属性名的对应�
 
 一个完整的表单元素我们认为应该包含以下若干元素：
 
-![](./assets/img/form-input.png)
+![From Input](./assets/img/form-input.png)
 
 从左至向各元素描述：
 
@@ -1172,7 +1172,7 @@ npm start
 
 启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。
 
-![](./assets/screenshot/start.png | width=700)
+![Start](./assets/screenshot/start.png | width=700)
 
 恭喜你，你已经成功部署一个 NG-ALAIN 项目。
 
@@ -1205,13 +1205,13 @@ npm start
 2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
 3. 加入 NG-ALAIN 自助服务群（中文）
 
-![](./assets/qq-group.png)
+![QQ](./assets/qq-group.png)
 
 ## 捐助
 
 如果你觉得 NG-ALAIN 不错，可以考虑自愿为本站打赏或捐助。
 
-![](./assets/donate.png)
+![Donate](./assets/donate.png)
 
 ---
 
@@ -1290,7 +1290,7 @@ NG-ALAIN 目标是提供更多通用性业务模块，让开发者更加专注�
 
 当使用 `ng add ng-alain` 生成后的 NG-ALAIN 脚手架，它的基本目录结构概略图如下：
 
-```
+```txt
 ├── _mock                                       # Mock 数据规则目录
 ├── angular.json                                # Angular 项目配置文件
 ├── src
@@ -1811,7 +1811,7 @@ http.get(`http://192.168.1.100/api/app`).subscribe();
 
 直接返回以下错误：
 
-```
+```txt
 Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
 
@@ -2512,11 +2512,11 @@ type: Documents
 
 Ant Design 设计规范上支持一定程度的样式定制，以满足业务和品牌上多样化的视觉需求，包括但不限于主色、圆角、边框和部分组件的视觉定制。
 
-![](https://zos.alipayobjects.com/rmsportal/zTFoszBtDODhXfLAazfSpYbSLSEeytoG.png)
+![Example](https://zos.alipayobjects.com/rmsportal/zTFoszBtDODhXfLAazfSpYbSLSEeytoG.png)
 
 ## 定制方式
 
-Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整，默认样式变量：[NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less)、[NG-ALAIN]() 两部分。
+Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整，默认样式变量：[NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less)、[NG-ALAIN](https://github.com/ng-alain/delon/blob/master/packages/theme/theme-default.less) 两部分。
 
 ### 初始化项目时定制主题
 
@@ -2653,7 +2653,7 @@ export class DashboardAnalysisComponent {}
 ```less
 // analysis.component.less
 @import '@delon/theme/index';
-:host ::ng-deep { 
+:host ::ng-deep {
   color: @text-color;
 }
 ```
@@ -2970,7 +2970,7 @@ schema: SFSchema = {
 
 由于这里的 `format: 'month'` 并不是 Json Schema 标准，因此，你可以在 Console 面板得到错误：
 
-```
+```txt
 Error: unknown format "month" ignored in schema at path "#/properties/month"
 ```
 
@@ -4222,7 +4222,7 @@ npm run analyze
 npm run analyze:view
 ```
 
-![](./assets/screenshot/bundle-size.png)
+![Bundle Size](./assets/screenshot/bundle-size.png)
 
 ## 发布
 
@@ -4306,7 +4306,7 @@ NG-ALAIN 提供的 Dockerfile 文件相对于比较简单，而实际项目中�
 
 最后，增加 `docker-compose.yml` 的 `ports` 节点：
 
-```
+```yaml
 - 443:443
 ```
 
@@ -4475,7 +4475,7 @@ JSON Schema 对格式有严格的要求，例如日期格式必须遵守 [RFC333
 
 其中 `format` 是一个错误时间格式，当指定 `debug: true` 时，会在控制台接收到详细的校验错误描述：
 
-```
+```txt
 Error: unknown format "yyyy-MM-dd HH:mm:ss" is used in schema at path "#/properties/time"
 ```
 
@@ -4499,10 +4499,10 @@ ng-alain 认为这些工具类只会运用在内容区域，且秉承 Ant Design
 | ---- | --- | --- | --- |
 | `xs` | $gutter / 2 | `4px` | 超小号 |
 | `sm` | $gutter | `8px` | 小号 |
-| `md` | $gutter * 2 | `16px` | 中号 |
-| `lg` | $gutter * 3 | `24px` | 大号 |
-| `xl` | $gutter * 4 | `32px` | 特大号 |
-| `xxl` | $gutter * 6 | `48px` | 超大号 |
+| `md` | $gutter *2 | `16px` | 中号 |
+| `lg` | $gutter* 3 | `24px` | 大号 |
+| `xl` | $gutter *4 | `32px` | 特大号 |
+| `xxl` | $gutter* 6 | `48px` | 超大号 |
 
 依这些规则，衍生出 `margin`、`padding`，其命名规则如下：
 
@@ -4789,7 +4789,7 @@ Ant Design 是以 `14px` 为基准字号。
 
 ## 旋转
 
-```
+```css
 .rotate-[360 / 15]
 ```
 
@@ -5849,7 +5849,7 @@ type: Pipe
 
 输出：
 
-```
+```txt
 2017年08月24日
 ```
 
@@ -6681,7 +6681,7 @@ module: import { CountDownModule } from '@delon/abc/count-down';
 
 ## 依赖
 
-```
+```bash
 npm i -S ngx-countdown
 ```
 
@@ -7936,7 +7936,7 @@ const data = { 1: '正常', 2: '删除' };
 
 若希望保持键名为 `number` 数字型：
 
-```
+```ts
 @for (item of data | keys: true; track $index) {
   <div >{{item.key}} {{item.value | json}}</div>
 }
@@ -8509,6 +8509,7 @@ order: 5
 | `[widgetWidth]` | 指定 `nz-number` 宽度 | `number, string` | `90` |
 | `[hideStep]` | 隐藏步数操作区 | `boolean` | `false` |
 | `[change]` | 变更事件 | `(val?: number) => void` | - |
+| `[changeOnWheel]` | 是否启用鼠标滚轮控制 | `boolean` | `true` |
 
 ## QA
 
@@ -9149,14 +9150,14 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 
 可复用：
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: true }
 ```
 
 不可复用：
 
-```
+```ts
 { text:'Dashboard', reuse: false }
 ```
 
@@ -9166,14 +9167,14 @@ module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 
 可复用：
 
-```
+```ts
 { text:'Dashboard', reuse: true }
 ```
 
 不可复用：
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: false }
 ```
 

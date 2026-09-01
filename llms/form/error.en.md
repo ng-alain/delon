@@ -157,6 +157,6 @@ JSON Schema has strong requirement on format, for example, date must follow the 
 
 `format` is an invalid format of date, detailed validation error information will be shown in console when `debug: true` is set.
 
-```
+```txt
 Error: unknown format "yyyy-MM-dd HH:mm:ss" is used in schema at path "#/properties/time"
 ```

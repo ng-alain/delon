@@ -52,7 +52,7 @@ ui 本身也是一个 JSON 结构，为了区分 JSON Schema 属性名的对应�
 
 一个完整的表单元素我们认为应该包含以下若干元素：
 
-![](./assets/img/form-input.png)
+![From Input](./assets/img/form-input.png)
 
 从左至向各元素描述：
 

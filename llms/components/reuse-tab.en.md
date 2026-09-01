@@ -34,14 +34,14 @@ Press the ([Menu](/theme/menu#Menu)) to configure.
 
 Reusable:
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: true }
 ```
 
 Not reusable:
 
-```
+```ts
 { text:'Dashboard', reuse: false }
 ```
 
@@ -51,14 +51,14 @@ Press the ([Menu](/theme/menu#Menu)) to force the configure.
 
 Reusable:
 
-```
+```ts
 { text:'Dashboard', reuse: true }
 ```
 
 Not reusable:
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: false }
 ```
 

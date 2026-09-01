@@ -29,7 +29,7 @@ NG-ALAIN 目标是提供更多通用性业务模块，让开发者更加专注�
 
 当使用 `ng add ng-alain` 生成后的 NG-ALAIN 脚手架，它的基本目录结构概略图如下：
 
-```
+```txt
 ├── _mock                                       # Mock 数据规则目录
 ├── angular.json                                # Angular 项目配置文件
 ├── src

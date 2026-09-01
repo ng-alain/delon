@@ -69,7 +69,7 @@ Commonly used testing suite.
 
 Schematic diagram of directory structure：
 
-```
+```txt
 ├── _mock                                       # Mock Data rule
 ├── src
 │   ├── app
@@ -193,7 +193,7 @@ View the analyze page:
 npm run analyze:view
 ```
 
-![](./assets/screenshot/bundle-size.png)
+![Bundle Size](./assets/screenshot/bundle-size.png)
 
 ## Release
 
@@ -277,7 +277,7 @@ Therefore, by default you can place the certificate in the `_nginx/ssl` director
 
 Finally, add the `ports` node of `docker-compose.yml`:
 
-```
+```yaml
 - 443:443
 ```
 
@@ -366,7 +366,7 @@ type: Documents
 
 Ant Design allows you to customize some basic design aspects in order to meet the needs of UI diversity from business and brand, including primary color, border radius, border color, etc.
 
-![](https://zos.alipayobjects.com/rmsportal/zTFoszBtDODhXfLAazfSpYbSLSEeytoG.png)
+![Example](https://zos.alipayobjects.com/rmsportal/zTFoszBtDODhXfLAazfSpYbSLSEeytoG.png)
 
 ## Less variables
 
@@ -507,7 +507,7 @@ export class DashboardAnalysisComponent {}
 ```less
 // analysis.component.less
 @import '@delon/theme/index';
-:host ::ng-deep { 
+:host ::ng-deep {
   color: @text-color;
 }
 ```
@@ -960,7 +960,7 @@ schema: SFSchema = {
 
 Since the `format:'month'` here is not a Json Schema standard, you can get an error in the Console panel:
 
-```
+```txt
 Error: unknown format "month" ignored in schema at path "#/properties/month"
 ```
 
@@ -1145,7 +1145,7 @@ npm start
 
 NG-ALAIN is a standard Angular CLI project that includes common routes for admins and demonstrates our component library. The project layout is as follows:
 
-```
+```txt
 ├── _mock                                       # Mock Data rule
 ├── src
 │   ├── app
@@ -1180,7 +1180,7 @@ npm start
 
 This will automatically open [http://localhost:4200](http://localhost:4200). If you see the following page then you have succeeded.
 
-![](./assets/screenshot/desktop.png | width=700)
+![Desktop](./assets/screenshot/desktop.png | width=700)
 
 ## Environment Support
 
@@ -3302,7 +3302,7 @@ ng g ng-alain:list list -m=trade
 
 In general, a module might includes the same type of business page, and its file structure might like this:
 
-```
+```txt
 sys
   log
     view
@@ -3341,7 +3341,7 @@ In addition to the default, you can also customize the project-level business pa
 
 For example, to create a custom edit page template, you only need to create the following directory structure in the project's root directory (You can get it via [Github](https://github.com/ng-alain/ng-alain/tree/master/_cli-tpl)):
 
-```
+```txt
 └── _cli-tpl
 │   └── edit                                                       // Your template name
 │       └── __path__                                               // (name fixed value)
@@ -3390,7 +3390,7 @@ These variables or methods can be used in templates, for example: `<%=componentN
 
 The `tpl` command allows you to process the data further before generating the file, The command will check the `_cli-tpl/_fix.js` file during execution and call the `fix` method, which must return a `Promise` object, for example:
 
-> **Note: ** CLI is a Node JS program, so the syntax is based on Node JS.
+> **Note:** CLI is a Node JS program, so the syntax is based on Node JS.
 
 ```js
 function fix(options) {
@@ -3933,7 +3933,7 @@ ui = {
 
 We think a complete form should include some of following elements:
 
-![](./assets/img/form-input.png)
+![From Input](./assets/img/form-input.png)
 
 Description from left to right:
 
@@ -4543,10 +4543,10 @@ ng-alain believes that these styles tool only using in the content area. Built o
 | ---- | --- | --- | --- |
 | `xs` | $gutter / 2 | `4px` | Smaller |
 | `sm` | $gutter | `8px` | Small |
-| `md` | $gutter * 2 | `16px` | Medium |
-| `lg` | $gutter * 3 | `24px` | Large |
-| `xl` | $gutter * 4 | `32px` | Extra Large |
-| `xxl` | $gutter * 6 | `48px` | Oversized |
+| `md` | $gutter *2 | `16px` | Medium |
+| `lg` | $gutter* 3 | `24px` | Large |
+| `xl` | $gutter *4 | `32px` | Extra Large |
+| `xxl` | $gutter* 6 | `48px` | Oversized |
 
 According these rules, derived from `margin`，`padding`, and naming rules as follows:
 
@@ -4833,7 +4833,7 @@ Like Bootstrap responsive rules, all apply `hidden-xs` classes are hidden when s
 
 ## Rotate
 
-```
+```css
 .rotate-[360 / 15]
 ```
 
@@ -5240,7 +5240,7 @@ JSON Schema has strong requirement on format, for example, date must follow the 
 
 `format` is an invalid format of date, detailed validation error information will be shown in console when `debug: true` is set.
 
-```
+```txt
 Error: unknown format "yyyy-MM-dd HH:mm:ss" is used in schema at path "#/properties/time"
 ```
 
@@ -5317,7 +5317,7 @@ http.get(`http://192.168.1.100/api/app`).subscribe();
 
 The following error is returned directly:
 
-```
+```txt
 Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
 
@@ -5381,7 +5381,7 @@ date-fns supports different kinds of time formats, such as:
 
 Output:
 
-```
+```txt
 2017年08月24日
 ```
 
@@ -6223,7 +6223,7 @@ The countdown component depends on [ngx-countdown](https://github.com/cipchk/ngx
 
 ## Dependencies
 
-```
+```bash
 npm i -S ngx-countdown
 ```
 
@@ -7298,7 +7298,7 @@ const data = { 1: 'Normal', 2: 'Deleted' };
 
 If you want to keep the key name `number` numeric:
 
-```
+```ts
 @for (item of data | keys: true; track $index) {
   <div >{{item.key}} {{item.value | json}}</div>
 }
@@ -7868,6 +7868,7 @@ Enter a number within certain range with the mouse or keyboard.
 | `[precision]` | precision of input value | - | - |
 | `[widgetWidth]` | Specify `nz-number` width | `number, string` | `90` |
 | `[hideStep]` | Hide step icon | `boolean` | `false` |
+| `[changeOnWheel]` | Change on mouse wheel | `boolean` | `true` |
 
 ## QA
 
@@ -8506,14 +8507,14 @@ Press the ([Menu](/theme/menu#Menu)) to configure.
 
 Reusable:
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: true }
 ```
 
 Not reusable:
 
-```
+```ts
 { text:'Dashboard', reuse: false }
 ```
 
@@ -8523,14 +8524,14 @@ Press the ([Menu](/theme/menu#Menu)) to force the configure.
 
 Reusable:
 
-```
+```ts
 { text:'Dashboard', reuse: true }
 ```
 
 Not reusable:
 
-```
-{ text:'Dashboard' }
+```ts
+{ text:'Dashboard' },
 { text:'Dashboard', reuse: false }
 ```
 

@@ -29,7 +29,7 @@ const data = { 1: 'Normal', 2: 'Deleted' };
 
 If you want to keep the key name `number` numeric:
 
-```
+```ts
 @for (item of data | keys: true; track $index) {
   <div >{{item.key}} {{item.value | json}}</div>
 }

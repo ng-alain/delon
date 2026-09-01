@@ -70,7 +70,7 @@ http.get(`http://192.168.1.100/api/app`).subscribe();
 
 直接返回以下错误：
 
-```
+```txt
 Access to XMLHttpRequest at 'http://192.168.1.100/api/app' from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
 

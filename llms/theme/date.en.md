@@ -20,6 +20,6 @@ date-fns supports different kinds of time formats, such as:
 
 Output:
 
-```
+```txt
 2017年08月24日
 ```

@@ -133,7 +133,7 @@ schema: SFSchema = {
 
 Since the `format:'month'` here is not a Json Schema standard, you can get an error in the Console panel:
 
-```
+```txt
 Error: unknown format "month" ignored in schema at path "#/properties/month"
 ```
 

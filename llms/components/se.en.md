@@ -139,7 +139,7 @@ export class ComponentsSeBasic {
 ### Reactive Form
 
 Support for reactive forms.
-> \*\*Note: \*\*
+> **Note:**
 >
 > * Reactive form can't auto obtain `Validators.required` to determine whether a required item identifier is required, so it is necessary to manually identify the `required` attribute.
 > * When you need to use `patchValue` to assign values, because `dirty` remains a factor of `false`, you need to set `markAsDirty()` on all form elements or use the `ingoreDirty` attribute to force the `dirty` check to be ignored.

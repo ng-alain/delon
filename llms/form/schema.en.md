@@ -52,7 +52,7 @@ ui = {
 
 We think a complete form should include some of following elements:
 
-![](./assets/img/form-input.png)
+![From Input](./assets/img/form-input.png)
 
 Description from left to right:
 

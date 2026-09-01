@@ -157,6 +157,6 @@ JSON Schema 对格式有严格的要求，例如日期格式必须遵守 [RFC333
 
 其中 `format` 是一个错误时间格式，当指定 `debug: true` 时，会在控制台接收到详细的校验错误描述：
 
-```
+```txt
 Error: unknown format "yyyy-MM-dd HH:mm:ss" is used in schema at path "#/properties/time"
 ```
