@@ -21,9 +21,10 @@ import {
 } from '@ant-design/icons-angular/icons';
 
 import { ALAIN_CONFIG, AlainConfig } from '@delon/util/config';
+import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NZ_DATE_LOCALE, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { provideNzI18n } from 'ng-zorro-antd/i18n';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
@@ -63,10 +64,11 @@ export function provideAlain(options: AlainProvideOptions): EnvironmentProviders
   ];
   if (lang) {
     registerLocaleData(lang.ng, lang.abbr);
-    provides.push({ provide: LOCALE_ID, useValue: lang.abbr }, provideNzI18n(lang.zorro), {
-      provide: NZ_DATE_LOCALE,
-      useValue: lang.date
-    });
+    provides.push(
+      { provide: LOCALE_ID, useValue: lang.abbr },
+      provideNzI18n(lang.zorro),
+      provideNzDateFnsAdapter(lang.date)
+    );
   }
 
   const i18nCls = options?.i18nClass;
