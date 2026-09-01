@@ -35,25 +35,23 @@ export function modifyJSON(
   options?: ModificationOptions
 ): void {
   if (!tree.exists(jsonPath)) return;
-  let sourceText = tree.read(jsonPath)!.toString('utf-8');
-  (Array.isArray(modifies) ? modifies : [modifies])
-    .map(item =>
-      modify(
-        sourceText,
-        item.path,
-        item.value,
-        options ?? {
-          formattingOptions: {
-            insertSpaces: true,
-            tabSize: 2,
-            eol: '\n',
-            keepLines: false
-          }
+  const sourceText = tree.read(jsonPath)!.toString('utf-8');
+  const edits = (Array.isArray(modifies) ? modifies : [modifies]).flatMap(item =>
+    modify(
+      sourceText,
+      item.path,
+      item.value,
+      options ?? {
+        formattingOptions: {
+          insertSpaces: true,
+          tabSize: 2,
+          eol: '\n',
+          keepLines: false
         }
-      )
+      }
     )
-    .forEach(edit => {
-      sourceText = applyEdits(sourceText, edit);
-    });
-  tree.overwrite(jsonPath, sourceText);
+  );
+  // `applyEdits` sorts all edits by offset and applies them back-to-front,
+  // so multiple non-overlapping edits are applied in a single pass.
+  tree.overwrite(jsonPath, applyEdits(sourceText, edits));
 }

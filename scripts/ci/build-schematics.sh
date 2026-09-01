@@ -54,7 +54,7 @@ tsconfigFile=${SOURCE}/tsconfig.json
 
 copyFiles() {
   mkdir -p ${2}
-  readonly paths=(
+  local paths=(
     "${1}.gitignore|${2}application/files/root/.gitignore"
     # i18n data
     "${1}src/assets/tmp/i18n|${2}application/files/i18n"
@@ -129,9 +129,7 @@ copyFiles() {
   for fields in ${paths[@]}
   do
     IFS=$'|' read -r from to <<< "$fields"
-    if [[ ${to:(-1):1} == '/' ]]; then
-      mkdir -p $to
-    fi
+    mkdir -p "${to%/*}"
     local fromLen=${#from}-2
     if [[ ${from:(-2):2} == '/*' ]]; then
       if [[ ! -d "${from:0:fromLen}" ]]; then
