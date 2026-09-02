@@ -129,4 +129,32 @@ describe('form: widget: cascader', () => {
       page.asyncEnd();
     }));
   });
+
+  describe('[accessibility]', () => {
+    // The sf-item-wrap renders `<label for="_sf-N">`, but the inner `<input>` of
+    // nz-cascader must carry that same id so the label resolves.
+    it('should set id on inner input so <label for> resolves', fakeAsync(() => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'number',
+              title: 'Location',
+              ui: { widget },
+              enum: [{ value: 1, label: 'Zhejiang', parent: 0 }]
+            }
+          }
+        })
+        .dc(1);
+
+      const labelEl = page.getEl('label[for]');
+      const forId = labelEl.getAttribute('for')!;
+      expect(forId).toMatch(/^_sf-\d+$/);
+
+      const inputEl = document.querySelector('nz-cascader input') as HTMLInputElement;
+      expect(inputEl).not.toBeNull();
+      expect(inputEl.id).toBe(forId);
+      page.asyncEnd();
+    }));
+  });
 });

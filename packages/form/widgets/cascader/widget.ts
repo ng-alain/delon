@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
@@ -52,6 +52,8 @@ import type { SFCascaderWidgetSchema } from './schema';
 export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   static readonly KEY = 'cascader';
 
+  private readonly host = inject(ElementRef<HTMLElement>);
+
   clearText!: string;
   showArrow!: boolean;
   showInput!: boolean;
@@ -71,11 +73,27 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     }
   }
 
-  reset(value: SFValue): void {
+  override afterViewInit(): void {
+    // nz-cascader renders its inner <input> asynchronously; defer one microtask
+    // so we can set the id that sf-item-wrap's <label for> points to.
+    Promise.resolve().then(() => this.syncInputId());
+  }
+
+  override reset(value: SFValue): void {
     getData(this.schema, {}, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
+      // The input element may be recreated after data loads; re-sync its id.
+      Promise.resolve().then(() => this.syncInputId());
     });
+  }
+
+  private syncInputId(): void {
+    if (!this.id) return;
+    const input = (this.host.nativeElement as HTMLElement).querySelector('input');
+    if (input) {
+      input.id = this.id;
+    }
   }
 
   _visibleChange(status: boolean): void {
