@@ -49,8 +49,12 @@ import type { SFTreeSelectWidgetSchema } from './schema';
       [nzVirtualItemSize]="ui.virtualItemSize ?? 28"
       [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx ?? 500"
       [nzVirtualMinBufferPx]="ui.virtualMinBufferPx ?? 28"
+      [nzPlacement]="ui.placement ?? 'bottomLeft'"
+      [nzVariant]="ui.variant ?? 'outlined'"
+      [nzSuffixIcon]="ui.suffixIcon!"
       (ngModelChange)="change($event)"
       (nzExpandChange)="expandChange($event)"
+      (nzOpenChange)="openChange($event)"
     />
   </sf-item-wrap>`,
   encapsulation: ViewEncapsulation.None,
@@ -92,6 +96,10 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
   change(value: NzSafeAny[] | NzSafeAny): void {
     if (this.ui.change) this.ui.change(value);
     this.setValue(value == null ? this.ui.clearValue : value);
+  }
+
+  openChange(status: boolean): void {
+    if (this.ui.openChange) this.ui.openChange(status);
   }
 
   expandChange(e: NzFormatEmitEvent): void {

@@ -23,6 +23,7 @@ Textarea.
 | `[placeholder]` | placeholder of the input | `string` | - |
 | `[autosize]` | height autosize feature, can be set object `{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
 | `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | Allow clicking the clear icon to delete the content; mutually exclusive with `maxCharacterCount` (`maxCharacterCount` takes precedence when both are set) | `boolean` | `false` |
 | `[maxCharacterCount]` | `textarea` maximum character count displayed | `number` | - |
 | `[computeCharacterCount]` | customized `characterCount` computation function | `(v: string) => number` | `v => v.length` |
 | `[change]` | The content event for the Input. | `(val: string) => void` | - |

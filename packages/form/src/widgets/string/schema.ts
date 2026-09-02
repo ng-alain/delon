@@ -46,6 +46,11 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
   suffix?: string;
 
   /**
+   * 可以点击清除图标删除内容，默认：`false`
+   */
+  allowClear?: boolean;
+
+  /**
    * 变体
    */
   variant?: NzVariant;

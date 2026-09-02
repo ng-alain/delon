@@ -26,6 +26,7 @@ import type { SFTransferWidgetSchema } from './schema';
     [showTitle]="schema.title"
   >
     <nz-transfer
+      [nzDisabled]="disabled"
       [nzDataSource]="$any(list)"
       [nzTitles]="i.titles"
       [nzOperations]="i.operations"
@@ -33,6 +34,7 @@ import type { SFTransferWidgetSchema } from './schema';
       [nzItemUnit]="i.itemUnit"
       [nzItemsUnit]="i.itemsUnit"
       [nzShowSearch]="ui.showSearch"
+      [nzShowSelectAll]="ui.showSelectAll!"
       [nzFilterOption]="ui.filterOption"
       [nzSearchPlaceholder]="ui.searchPlaceholder"
       [nzNotFoundContent]="ui.notFoundContent"

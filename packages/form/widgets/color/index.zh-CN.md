@@ -20,9 +20,12 @@ type: Non-built-in widgets
 | `[format]`       | 颜色格式       | `rgb`｜`hex`｜`hsb`                 | `hex`    |
 | `[defaultValue]` | 颜色默认的值     | `string`｜`NzColor`                  | -        |
 | `[allowClear]`   | 允许清除选择的颜色  | `boolean`                         | `false`  |
+| `[disabledAlpha]` | 禁用透明度选择 | `boolean`                         | `false`  |
+| `[presets]`      | 预设颜色列表 | `NzPresetColor[]` | - |
 | `[trigger]`      | 颜色选择器的触发模式 | `hover`｜`click`                   | `click`  |
 | `[showText]`      | 显示颜色文本     | `boolean`                         | `false`  |
 | `[title]`      | 设置颜色选择器的标题 | `TemplateRef<void>`｜`string`      | -        |
 | `(change)`     | 颜色变化的回调    | `EventEmitter<{ color: NzColor; format: string }>` | -        |
 | `(formatChange)`      | 颜色格式变化的回调  | `EventEmitter<'rgb'｜'hex'｜'hsb'>` | -        |
+| `(onClear)`      | 清除按钮点击回调  | `() => void` | -        |
 | `[block]`   | 是否颜色块  | `boolean`                         | `false`  |

@@ -39,6 +39,8 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous static data source | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | - |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[autoFocus]` | Auto focus | `boolean` | `false` |
 | `[placeholder]` | Placeholder | `string` | - |
 | `[showSearch]` | Whether support search | `bool` | `false` |
 | `[allowClear]` | Whether show clear button | `bool` | `true` |
@@ -51,7 +53,6 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 | `[columnClassName]` | Custom style of data column in popup menu | `string` | - |
 | `[notFoundContent]` | Content when dropdown list is empty | `string` | - |
 | `[data]` | Initial data, is used in first column data, sub column is loaded by `children` option, or loaded by `load` asynchronous event | `Array` | - |
-| `[enableCache]` | Whether cache asynchronous loaded data, should set it to false if data is changed in every asynchronous load | `bool` | `true` |
 | `[expandTrigger]` | How is sub menu expanded, options: 'click' or 'hover' | `string` | `click` |
 | `[changeOnSelect]` | When it is set to true, the value is changed when each level of menu option is selected, see details from above demo | `bool` | `false` |
 | `[changeOn]` | Custom function to determine if it should have a change when a menu option is selected, will have a change when return value is true | `(option: NzCascaderOption, level: number) => boolean` | - |
@@ -59,7 +60,8 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 | `[valueProperty]` | Property of `value` | `string` | `value` |
 | `[labelProperty]` | Property of `label` | `string` | `label` |
 | `[multiple]` | Support multiple | `boolean` | `false` |
-| `(visibleChange)` | Asynchronous load event | `(value: boolean) => void` | - |
+| `[suffixIcon]` | Custom select box suffix icon | `TemplateRef<any>, string` | - |
+| `(openChange)` | Dropdown menu open/close callback | `(status: boolean) => void` | - |
 | `(change)` | Selected value changed event | `(values: any[]) => void` | - |
 | `(selectionChange)` | Select option changed event | `(values: NzCascaderOption[]) => void` | - |
 | `(clear)` | Content clear event | `() => void` | - |

@@ -19,9 +19,12 @@ Non-built-in modules need to additionally register `withColorWidget` in [json-sc
 | `[format]`       | Format of color       | `rgb`｜`hex`｜`hsb`                 | `hex`     |
 | `[defaultValue]` | Default value of color     | `string`｜`NzColor`                  | `false`   |
 | `[allowClear]`   | Allow clearing color selected  | `boolean`                         | `false`   |
+| `[disabledAlpha]` | Disable alpha selector | `boolean` | `false` |
+| `[presets]`      | Preset color list | `NzPresetColor[]` | - |
 | `[trigger]`      | ColorPicker trigger mode | `hover`｜`click`                   | `click`   |
 | `[showText]`      | Show color text     | `boolean`                         | `false`   |
 | `[title]`      | Setting the title of the color picker | `TemplateRef<void>`｜`string`      | -         |
 | `(change)`     | Callback when value is changed    | `EventEmitter<{ color: NzColor; format: string }>`            | -         |
 | `(formatChange)`      | Callback when `format` is changed      | `EventEmitter<'rgb'｜'hex'｜'hsb'>` | -         |
+| `(onClear)`      | Callback when the clear button is clicked | `() => void` | - |
 | `[block]`   | Color Block  | `boolean`                         | `false`  |

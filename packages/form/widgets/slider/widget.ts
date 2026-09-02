@@ -28,6 +28,9 @@ import type { SFSliderWidgetSchema } from './schema';
       [nzDots]="ui.dots"
       [nzIncluded]="included"
       [nzVertical]="ui.vertical"
+      [nzReverse]="ui.reverse"
+      [nzTooltipVisible]="ui.tooltipVisible!"
+      [nzTooltipPlacement]="ui.tooltipPlacement!"
       [nzTipFormatter]="_formatter"
       (nzOnAfterChange)="_afterChange($event)"
     />
@@ -40,7 +43,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
 
   min!: number;
   max!: number;
-  step!: number;
+  step!: number | null;
   marks: NzMarks | null = null;
   included!: boolean;
 
@@ -48,7 +51,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
     const { minimum, maximum, multipleOf } = this.schema;
     this.min = minimum ?? 0;
     this.max = maximum ?? 100;
-    this.step = multipleOf ?? 1;
+    this.step = this.ui.step === undefined ? (multipleOf ?? 1) : this.ui.step;
 
     const { marks, included } = this.ui;
     this.marks = marks ?? null;

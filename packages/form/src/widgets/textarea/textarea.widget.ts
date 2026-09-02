@@ -61,7 +61,13 @@ import { ControlUIWidget } from '../../widget';
         </textarea>
       </nz-textarea-count>
     } @else {
-      <ng-template [ngTemplateOutlet]="ipt" />
+      @if (ui.allowClear) {
+        <nz-input-wrapper [nzAllowClear]="true">
+          <ng-template [ngTemplateOutlet]="ipt" />
+        </nz-input-wrapper>
+      } @else {
+        <ng-template [ngTemplateOutlet]="ipt" />
+      }
     }
   </sf-item-wrap>`,
   encapsulation: ViewEncapsulation.None,

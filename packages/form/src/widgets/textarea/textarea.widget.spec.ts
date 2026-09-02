@@ -29,6 +29,22 @@ describe('form: widget: textarea', () => {
     page.newSchema(s).checkCount('textarea', 1);
   });
 
+  it('should be wrapped by nz-input-wrapper when allowClear is true', () => {
+    const s: SFSchema = {
+      properties: { a: { type: 'string', ui: { widget, allowClear: true } as SFTextareaWidgetSchema } }
+    };
+    page.newSchema(s).checkCount('nz-input-wrapper', 1).checkCount('textarea', 1);
+  });
+
+  it('should be keep nz-textarea-count when maxCharacterCount and allowClear both are set', () => {
+    const s: SFSchema = {
+      properties: {
+        a: { type: 'string', ui: { widget, allowClear: true, maxCharacterCount: 10 } as SFTextareaWidgetSchema }
+      }
+    };
+    page.newSchema(s).checkCount('nz-textarea-count', 1).checkCount('nz-input-wrapper', 0);
+  });
+
   it('#event', fakeAsync(() => {
     const schema: SFSchema = {
       properties: {

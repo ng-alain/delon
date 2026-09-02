@@ -14,7 +14,7 @@ type: Non-built-in widgets
 
 - **务必** 指定 `resReName` 来获取正确数据
 - `multiple` 决定返回数组或者单体数据
-- 若指定 `enum` 或 `asyncData` 将被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
+- 初始文件请使用 `fileList` 属性；`enum` 与 `asyncData` 仅作为通用数据源存在，其结构（`{ label, value }`）与文件对象（`NzUploadFile`）不符，不会作为初始文件生效
 - 图像预览：默认使用 `nzModal` 来显示包含文件对象的 `url` 或 `thumbUrl` 值
 
 ## API
@@ -38,6 +38,7 @@ type: Non-built-in widgets
 | `[action]` | 必选参数, 上传的地址 | `string, ((file: UploadFile) => string, Observable<string>)` | - |
 | `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string, string[]` | - |
 | `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限 | `number` | `0` |
+| `[maxCount]` | 限制上传数量；当为 `1` 时，始终用最新上传的文件代替当前文件 | `number` | - |
 | `[filter]` | 自定义过滤器 | `UploadFilter[]` | - |
 | `[fileList]` | 文件列表 | `UploadFile[]` | - |
 | `[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限 | `number` | `0` |

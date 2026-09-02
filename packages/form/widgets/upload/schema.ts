@@ -56,6 +56,11 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   limit?: number;
 
   /**
+   * 限制上传文件数量，当为 `1` 时始终用最新上传的文件代替当前文件
+   */
+  maxCount?: number;
+
+  /**
    * 限制上传文件数量，超过数量隐藏上传按钮
    */
   limitFileCount?: number;

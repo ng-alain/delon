@@ -24,6 +24,10 @@ Enter a number within certain range with the mouse or keyboard.
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[addOnBefore]` | Set the pre label | `string` | - |
+| `[addOnAfter]` | Set the post label | `string` | - |
+| `[autofocus]` | Auto focus | `boolean` | `false` |
 | `[prefix]` | Prefix, simplifying the use of `nzFormatter`, `nzParser` | - | - |
 | `[unit]` | Unit, simplifying the use of `nzFormatter`, `nzParser` | - | - |
 | `[formatter]` | Specifies the format of the value presented | - | - |
@@ -32,6 +36,8 @@ Enter a number within certain range with the mouse or keyboard.
 | `[widgetWidth]` | Specify `nz-number` width | `number, string` | `90` |
 | `[hideStep]` | Hide step icon | `boolean` | `false` |
 | `[changeOnWheel]` | Change on mouse wheel | `boolean` | `true` |
+| `(focus)` | Callback when getting focus | `() => void` | - |
+| `(blur)` | Callback when losing focus | `() => void` | - |
 
 ## QA
 

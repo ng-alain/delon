@@ -13,6 +13,14 @@ export interface SFSegmentedWidgetSchema extends SFUISchemaItem {
    */
   block?: boolean;
   /**
+   * Whether to enable vertical mode, default: `false`
+   */
+  vertical?: boolean;
+  /**
+   * Shape of the segmented, default: `default`
+   */
+  shape?: 'default' | 'round';
+  /**
    * Emits when index of the currently selected option changes
    */
   valueChange?: (data: { index: string | number; item: SFValue }) => void;

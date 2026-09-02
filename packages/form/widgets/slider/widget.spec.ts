@@ -115,4 +115,45 @@ describe('form: widget: slider', () => {
     getWidget()._afterChange(1);
     expect((s.properties!.a.ui as NzSafeAny).afterChange).toHaveBeenCalled();
   }));
+
+  it('#step should be from multipleOf by default', () => {
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'number',
+          title: '数量',
+          multipleOf: 2,
+          ui: {
+            widget
+          },
+          default: 10
+        }
+      }
+    };
+    page.newSchema(s);
+    expect(getWidget().step).toBe(2);
+  });
+
+  it('#step should be null when ui.step is null', () => {
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'number',
+          title: '数量',
+          multipleOf: 2,
+          ui: {
+            widget,
+            step: null,
+            marks: {
+              0: '0',
+              100: '100'
+            }
+          },
+          default: 10
+        }
+      }
+    };
+    page.newSchema(s);
+    expect(getWidget().step).toBeNull();
+  });
 });

@@ -15,6 +15,7 @@ import { ControlUIWidget } from '../../widget';
           nz-checkbox
           class="sf__checkbox-all mr-sm"
           [(ngModel)]="allChecked"
+          [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="onAllChecked()"
           [nzIndeterminate]="indeterminate"
         >
@@ -33,7 +34,13 @@ import { ControlUIWidget } from '../../widget';
     >
       @if (inited) {
         @if (data.length === 0) {
-          <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="_setValue($event)">
+          <label
+            nz-checkbox
+            [nzDisabled]="disabled"
+            [ngModel]="value"
+            (ngModelChange)="_setValue($event)"
+            [ngModelOptions]="{ standalone: true }"
+          >
             {{ schema.title }}
             <span class="sf__optional">
               {{ ui.optional }}
@@ -55,9 +62,20 @@ import { ControlUIWidget } from '../../widget';
         } @else {
           @if (grid_span === 0) {
             <ng-template [ngTemplateOutlet]="all" />
-            <nz-checkbox-group [ngModel]="value" [nzOptions]="$any(data)" (ngModelChange)="groupInGridChange($event)" />
+            <nz-checkbox-group
+              [nzDisabled]="disabled"
+              [ngModel]="value"
+              [ngModelOptions]="{ standalone: true }"
+              [nzOptions]="$any(data)"
+              (ngModelChange)="groupInGridChange($event)"
+            />
           } @else {
-            <nz-checkbox-group class="sf__checkbox-list" [ngModel]="value" (ngModelChange)="groupInGridChange($event)">
+            <nz-checkbox-group
+              class="sf__checkbox-list"
+              [ngModel]="value"
+              (ngModelChange)="groupInGridChange($event)"
+              [ngModelOptions]="{ standalone: true }"
+            >
               <div nz-row>
                 @if (ui.checkAll) {
                   <div nz-col [nzSpan]="grid_span">
@@ -66,7 +84,13 @@ import { ControlUIWidget } from '../../widget';
                 }
                 @for (i of data; track $index) {
                   <div nz-col [nzSpan]="grid_span">
-                    <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">
+                    <label
+                      nz-checkbox
+                      [nzValue]="i.value"
+                      [ngModel]="i.checked"
+                      [ngModelOptions]="{ standalone: true }"
+                      [nzDisabled]="disabled || i.disabled"
+                    >
                       {{ i.label }}
                     </label>
                   </div>
@@ -102,7 +126,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
 
       this.updateAllChecked();
       this.inited = true;
-      this.detectChanges();
+      this.cd.markForCheck();
     });
   }
 
