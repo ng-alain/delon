@@ -218,12 +218,21 @@ function addCodeStylesToPackageJson(): Rule {
  * https://github.com/ng-alain/ng-alain/pull/2636
  */
 const PNPM_PUBLIC_HOIST_PATTERN = [
+  `@ant-design/icons-angular`,
+  `@antv/data-set`,
   `@antv/g2`,
+  `@faker-js/faker`,
+  `@github/hotkey`,
+  `ajv`,
+  `ajv-formats`,
+  `date-fns`,
+  `echarts`,
+  `extend`,
+  `file-saver`,
+  `isutf8`,
   `jszip`,
   `ngx-countdown`,
-  `@faker-js/faker`,
-  `date-fns`,
-  `@ant-design/icons-angular`
+  `plyr`
 ];
 
 function isUsePnpm(tree: Tree): boolean {
