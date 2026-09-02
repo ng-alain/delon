@@ -1,6 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
 import * as LANG from '../core/lang.config';
+import { readJSON } from '../utils';
 import { APPNAME, createAlainApp, createAlainRunner, createNgRunner } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {
@@ -280,6 +281,99 @@ describe('NgAlainSchematic: application', () => {
       } catch (ex) {
         expect((ex as { message: string }).message).toContain(`Not found under the projects node of angular.json`);
       }
+    });
+  });
+
+  describe('#tsconfig', () => {
+    beforeEach(async () => ({ tree } = await createAlainApp()));
+
+    it(`should remove baseUrl and add ./ prefix to paths`, () => {
+      const tsconfig = readJSON(tree, 'tsconfig.json');
+      expect(tsconfig.compilerOptions.baseUrl).toBeUndefined();
+      expect(tsconfig.compilerOptions.paths['@shared']).toEqual(['./projects/foo/src/app/shared/index']);
+      expect(tsconfig.compilerOptions.paths['@core']).toEqual(['./projects/foo/src/app/core/index']);
+      expect(tsconfig.compilerOptions.paths['@env/*']).toEqual(['./projects/foo/src/environments/*']);
+      expect(tsconfig.compilerOptions.paths['@_mock']).toEqual(['./_mock/index']);
+    });
+  });
+
+  describe('#pnpm-workspace', () => {
+    const PNPM_WORKSPACE = 'pnpm-workspace.yaml';
+    const userAgent = process.env.npm_config_user_agent;
+
+    beforeEach(() => {
+      delete process.env.npm_config_user_agent;
+    });
+
+    afterEach(() => {
+      if (userAgent) {
+        process.env.npm_config_user_agent = userAgent;
+      } else {
+        delete process.env.npm_config_user_agent;
+      }
+    });
+
+    it(`should create pnpm-workspace.yaml when cli.packageManager is pnpm`, async () => {
+      ({ tree } = await createAlainApp(undefined, t => {
+        const angularJson = JSON.parse(t.readContent('angular.json'));
+        angularJson.cli = { packageManager: 'pnpm' };
+        t.overwrite('angular.json', JSON.stringify(angularJson, null, 2));
+      }));
+      expect(tree.exists(PNPM_WORKSPACE)).toBe(true);
+    });
+
+    it(`should create pnpm-workspace.yaml when pnpm-lock.yaml exists`, async () => {
+      ({ tree } = await createAlainApp(undefined, t => t.create('/pnpm-lock.yaml', '')));
+      expect(tree.exists(PNPM_WORKSPACE)).toBe(true);
+    });
+
+    it(`should create pnpm-workspace.yaml when package.json packageManager is pnpm`, async () => {
+      ({ tree } = await createAlainApp(undefined, t => {
+        const pkg = JSON.parse(t.readContent('package.json'));
+        pkg.packageManager = 'pnpm@11.0.0';
+        t.overwrite('package.json', JSON.stringify(pkg, null, 2));
+      }));
+      expect(tree.exists(PNPM_WORKSPACE)).toBe(true);
+    });
+
+    it(`should create pnpm-workspace.yaml when using pnpm via npm_config_user_agent`, async () => {
+      process.env.npm_config_user_agent = 'pnpm/11.0.0 npm/? node/v24.0.0 darwin arm64';
+      ({ tree } = await createAlainApp());
+      expect(tree.exists(PNPM_WORKSPACE)).toBe(true);
+    });
+
+    it(`should not create pnpm-workspace.yaml for npm`, async () => {
+      process.env.npm_config_user_agent = 'npm/11.0.0 node/v24.0.0 darwin arm64';
+      ({ tree } = await createAlainApp());
+      expect(tree.exists(PNPM_WORKSPACE)).toBe(false);
+    });
+
+    it(`should not overwrite an existing pnpm-workspace.yaml`, async () => {
+      ({ tree } = await createAlainApp(undefined, t => {
+        const angularJson = JSON.parse(t.readContent('angular.json'));
+        angularJson.cli = { packageManager: 'pnpm' };
+        t.overwrite('angular.json', JSON.stringify(angularJson, null, 2));
+        t.create('/pnpm-workspace.yaml', `custom: true\n`);
+      }));
+      expect(tree.readContent(PNPM_WORKSPACE)).toBe(`custom: true\n`);
+    });
+
+    it(`should contain publicHoistPattern packages only`, async () => {
+      ({ tree } = await createAlainApp(undefined, t => {
+        const angularJson = JSON.parse(t.readContent('angular.json'));
+        angularJson.cli = { packageManager: 'pnpm' };
+        t.overwrite('angular.json', JSON.stringify(angularJson, null, 2));
+      }));
+      const content = tree.readContent(PNPM_WORKSPACE);
+      expect(content).toContain(`publicHoistPattern`);
+      expect(content).toContain(`@antv/g2`);
+      expect(content).toContain(`jszip`);
+      expect(content).toContain(`ngx-countdown`);
+      expect(content).toContain(`@faker-js/faker`);
+      expect(content).toContain(`date-fns`);
+      expect(content).toContain(`@ant-design/icons-angular`);
+      expect(content).not.toContain(`allowBuilds`);
+      expect(content).not.toContain(`minimumReleaseAgeExclude`);
     });
   });
 });

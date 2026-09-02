@@ -25,7 +25,10 @@ export function createAlainRunner(): SchematicTestRunner {
   return new SchematicTestRunner('schematics', collectionPath);
 }
 
-export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppResult> {
+export async function createAlainApp(
+  ngAddOptions?: NgAddSchema,
+  modify?: (t: UnitTestTree) => void
+): Promise<AppResult> {
   const baseRunner = createNgRunner();
   const workspaceTree = await baseRunner.runSchematic('workspace', {
     name: 'workspace',
@@ -45,6 +48,7 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
     },
     workspaceTree
   );
+  modify?.(appTree);
   const alainRunner = createAlainRunner();
   const tree = await alainRunner.runSchematic(
     'ng-add',

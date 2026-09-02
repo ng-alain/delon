@@ -16,15 +16,12 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
   addPackage(
     tree,
     [
+      `@eslint/js@DEP-0.0.0-PLACEHOLDER`,
+      `@eslint/markdown@DEP-0.0.0-PLACEHOLDER`,
       `angular-eslint@DEP-0.0.0-PLACEHOLDER`,
-      `@typescript-eslint/eslint-plugin@DEP-0.0.0-PLACEHOLDER`,
-      `@typescript-eslint/parser@DEP-0.0.0-PLACEHOLDER`,
-      `@typescript-eslint/utils@DEP-0.0.0-PLACEHOLDER`,
       `eslint@DEP-0.0.0-PLACEHOLDER`,
-      `eslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
-      `eslint-plugin-import@DEP-0.0.0-PLACEHOLDER`,
+      `eslint-plugin-import-x@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-jsdoc@DEP-0.0.0-PLACEHOLDER`,
-      `eslint-plugin-prefer-arrow@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-prettier@DEP-0.0.0-PLACEHOLDER`,
       `eslint-plugin-unused-imports@DEP-0.0.0-PLACEHOLDER`,
       `typescript@DEP-0.0.0-PLACEHOLDER`,
@@ -44,11 +41,11 @@ export function UpgradeMainVersions(tree: Tree, version: string = VERSION): void
       // `vitest@DEP-0.0.0-PLACEHOLDER`,
       // `jsdom@DEP-0.0.0-PLACEHOLDER`,
       // When use vitest
-      `@playwright/test@^1.57.0`,
-      `@vitest/browser-playwright@^4.0.17`,
-      `@vitest/coverage-v8@^4.0.16`,
-      `vitest@^4.0.16`,
-      `jsdom@^27.4.0`
+      `@playwright/test@^1.62.1`,
+      `@vitest/browser-playwright@^4.1.11`,
+      `@vitest/coverage-v8@^4.1.11`,
+      `vitest@^4.1.11`,
+      `jsdom@^30.0.1`
     ],
     'devDependencies'
   );
