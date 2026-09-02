@@ -49,17 +49,37 @@ const ZORROVERSION = opt('--zorro') ?? rootPkg.dependencies?.['ng-zorro-antd'];
 const FIX_VERSION = VERSION === 'latest' ? 'latest' : `^${VERSION}`;
 
 // Packages whose placeholders must be resolved from the root package.json.
-// Keep in sync with what the schematics write (e.g. `x@DEP-0.0.0-PLACEHOLDER` /
-// `"x": "@LIB-PLACEHOLDER"`). Reconciled with the Angular 22 upgrade
-// (ng-alain/delon#2045): the explicit `@typescript-eslint/*` deps were dropped in
-// favor of the `typescript-eslint` umbrella package.
+// This list is shared by BOTH build paths (`build-schematics.sh` -> dist/ng-alain
+// and `build-delon.sh` -> dist/@delon), so it must cover every placeholder the
+// schematics AND the delon packages write:
+//   - `"x": "@LIB-PLACEHOLDER"` in schematics/package.json
+//   - `"x": "@LIB-PLACEHOLDER"` in packages/*/package.json (delon runtime deps)
+//   - `x@DEP-0.0.0-PLACEHOLDER` in schematics (versions.ts / application / plugin)
+// Reconciled with the Angular 22 upgrade (ng-alain/delon#2045): the explicit
+// `@typescript-eslint/*` deps were dropped in favor of the `typescript-eslint`
+// umbrella package.
 const DEPENDENCIES = [
-  // `"x": "@LIB-PLACEHOLDER"` in schematics/package.json
+  // schematics/package.json (`@LIB-PLACEHOLDER`)
   '@angular/cdk',
   'swagger-typescript-api',
   'ng-alain-sts',
   'ng-alain-plugin-theme',
-  // `x@DEP-0.0.0-PLACEHOLDER` in schematics (versions.ts / application / plugin)
+  // packages/*/package.json — delon runtime deps (`@LIB-PLACEHOLDER`)
+  'extend',
+  'isutf8',
+  'file-saver',
+  'jszip',
+  'plyr',
+  '@github/hotkey',
+  'ngx-countdown',
+  '@antv/data-set',
+  '@antv/g2',
+  'echarts',
+  'ajv',
+  'ajv-formats',
+  '@faker-js/faker',
+  'ng-zorro-antd',
+  // schematics `x@DEP-0.0.0-PLACEHOLDER` (versions.ts / application / plugin)
   '@eslint/js',
   '@eslint/markdown',
   '@ng-util/monaco-editor',
@@ -72,7 +92,6 @@ const DEPENDENCIES = [
   'eslint-plugin-unused-imports',
   'husky',
   'lint-staged',
-  'ng-zorro-antd',
   'ngx-tinymce',
   'postcss',
   'postcss-less',
@@ -128,8 +147,6 @@ const isCommentLine = (line) => {
   const t = line.trimStart();
   return t.startsWith('//') || t.startsWith('*');
 };
-const hasActivePlaceholder = (content) =>
-  content.split('\n').some((line) => !isCommentLine(line) && line.includes('PLACEHOLDER'));
 const tokensUsedInActiveCode = (content, tokens) =>
   content.split('\n').some((line) => !isCommentLine(line) && tokens.some((t) => line.includes(t)));
 
@@ -190,8 +207,12 @@ for (const { file, content } of placeholderFiles) {
     writeFileSync(file, newContent);
     changed++;
   }
-  if (hasActivePlaceholder(newContent)) {
-    leftoverFiles.push(relative(targetDir, file));
+  // Report the exact placeholder tokens that survived, so a future drift in the
+  // DEPENDENCIES list is instantly actionable instead of a blind file list.
+  const activeLines = newContent.split('\n').filter((line) => !isCommentLine(line));
+  const tokens = [...new Set(activeLines.flatMap((line) => line.match(/[^\s"',]*PLACEHOLDER/g) ?? []))];
+  if (tokens.length > 0) {
+    leftoverFiles.push({ file: relative(targetDir, file), tokens });
   }
 }
 
@@ -220,7 +241,12 @@ if (usedMissing.length > 0) {
 if (leftoverFiles.length > 0) {
   failed = true;
   console.error('[update-version-references] ERROR: unresolved placeholders remain in:');
-  for (const f of leftoverFiles) console.error(`  - ${f}`);
+  for (const { file, tokens } of leftoverFiles) {
+    console.error(`  - ${file}: ${tokens.join(', ')}`);
+  }
+  console.error(
+    '  Add the packages above to the DEPENDENCIES list (and to package.json) or remove their placeholders.',
+  );
 }
 
 console.log(
