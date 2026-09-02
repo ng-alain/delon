@@ -89,13 +89,21 @@ describe('Schematic: ng-update: v22Rule', () => {
     pkg.devDependencies['eslint-plugin-import'] = '~2.32.0';
     pkg.devDependencies['eslint-config-prettier'] = '^10.1.8';
     pkg.devDependencies['eslint-plugin-prefer-arrow'] = '~1.2.3';
+    // v21 projects may carry the explicit @typescript-eslint deps; v22 uses the umbrella only
+    pkg.devDependencies['@typescript-eslint/eslint-plugin'] = '^8.59.1';
+    pkg.devDependencies['@typescript-eslint/parser'] = '^8.59.1';
+    pkg.devDependencies['@typescript-eslint/utils'] = '^8.59.1';
     tree.overwrite('package.json', JSON.stringify(pkg, null, 2));
     await runMigration();
     const res = JSON.parse(tree.readContent('package.json'));
     expect(res.devDependencies['eslint-plugin-import']).toBeUndefined();
     expect(res.devDependencies['eslint-config-prettier']).toBeUndefined();
     expect(res.devDependencies['eslint-plugin-prefer-arrow']).toBeUndefined();
+    expect(res.devDependencies['@typescript-eslint/eslint-plugin']).toBeUndefined();
+    expect(res.devDependencies['@typescript-eslint/parser']).toBeUndefined();
+    expect(res.devDependencies['@typescript-eslint/utils']).toBeUndefined();
     expect(res.devDependencies['eslint-plugin-import-x']).toBeDefined();
+    expect(res.devDependencies['typescript-eslint']).toBeDefined();
   });
 
   it(`should delete eslint.config.js`, async () => {

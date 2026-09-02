@@ -97,7 +97,16 @@ export function v22Rule(): Rule {
     // https://github.com/ng-alain/ng-alain/pull/2636
     removePackage(
       tree,
-      ['eslint-config-prettier', 'eslint-plugin-import', 'eslint-plugin-prefer-arrow'],
+      [
+        'eslint-config-prettier',
+        'eslint-plugin-import',
+        'eslint-plugin-prefer-arrow',
+        // Angular 22 drops the explicit `@typescript-eslint/*` deps in favor of the
+        // `typescript-eslint` umbrella package (see ng-alain/delon#2045)
+        '@typescript-eslint/eslint-plugin',
+        '@typescript-eslint/parser',
+        '@typescript-eslint/utils'
+      ],
       'devDependencies'
     );
     logInfo(context, `Upgrade dependency version number`);

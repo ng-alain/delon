@@ -57,7 +57,12 @@ export function removePackage(
   if (json == null) return tree;
 
   if (!Array.isArray(pkg)) pkg = [pkg];
-  pkg.forEach(p => delete json[type][p.indexOf('@') !== -1 ? p.substring(0, p.lastIndexOf('@')) : p]);
+  pkg.forEach(p => {
+    // Strip a trailing `@version`, but keep the leading `@` of scoped names
+    // (e.g. `@typescript-eslint/eslint-plugin`), where lastIndexOf('@') === 0.
+    const pos = p.lastIndexOf('@');
+    delete json[type][pos > 0 ? p.substring(0, pos) : p];
+  });
 
   writePackage(tree, json);
   return tree;
