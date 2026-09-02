@@ -19,6 +19,7 @@ import { ControlUIWidget } from '../../widget';
       (ngModelChange)="_setValue($event)"
       [nzDisabled]="disabled"
       [nzSize]="ui.size!"
+      [nzVariant]="ui.variant ?? 'outlined'"
       [nzMin]="min"
       [nzMax]="max"
       [nzStep]="step"
@@ -27,6 +28,11 @@ import { ControlUIWidget } from '../../widget';
       [nzPrecision]="ui.precision ?? null"
       [nzPlaceHolder]="ui.placeholder ?? ''"
       [nzChangeOnWheel]="ui.changeOnWheel ?? true"
+      [nzAutoFocus]="ui.autofocus"
+      [nzAddonBefore]="ui.addOnBefore!"
+      [nzAddonAfter]="ui.addOnAfter!"
+      (nzFocus)="focus()"
+      (nzBlur)="blur()"
       [style.width]="width"
       [class.ant-input-number__hide-step]="ui.hideStep"
     />
@@ -75,5 +81,13 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
   _setValue(val: number): void {
     this.setValue(this.schema.type === 'integer' ? Math.floor(val) : val);
     this.ui.change?.(this.value);
+  }
+
+  focus(): void {
+    this.ui.focus?.();
+  }
+
+  blur(): void {
+    this.ui.blur?.();
   }
 }

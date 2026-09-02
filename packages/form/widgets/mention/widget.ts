@@ -28,8 +28,11 @@ import type { SFMentionWidgetSchema } from './schema';
       [nzNotFoundContent]="i.notFoundContent"
       [nzPlacement]="i.placement"
       [nzPrefix]="i.prefix"
+      [nzAllowClear]="ui.allowClear!"
+      [nzVariant]="ui.variant ?? 'outlined'"
       (nzOnSelect)="_select($event)"
       (nzOnSearchChange)="_search($event)"
+      (nzOnClear)="_clear()"
     >
       @if (ui.inputStyle === 'textarea') {
         <textarea
@@ -129,5 +132,10 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
         this.data = res;
         this.detectChanges(true);
       });
+  }
+
+  _clear(): void {
+    this.setValue('');
+    if (this.ui.onClear) this.ui.onClear();
   }
 }

@@ -1,7 +1,12 @@
 import type { TemplateRef } from '@angular/core';
 
 import type { SFUISchemaItem } from '@delon/form';
-import type { NzColor, NzColorPickerFormatType, NzColorPickerTriggerType } from 'ng-zorro-antd/color-picker';
+import type {
+  NzColor,
+  NzColorPickerFormatType,
+  NzColorPickerTriggerType,
+  NzPresetColor
+} from 'ng-zorro-antd/color-picker';
 
 export interface SFColorWidgetSchema extends SFUISchemaItem {
   /**
@@ -33,9 +38,21 @@ export interface SFColorWidgetSchema extends SFUISchemaItem {
    */
   allowClear?: boolean;
   /**
+   * Disable alpha selector
+   */
+  disabledAlpha?: boolean;
+  /**
+   * Preset color list
+   */
+  presets?: NzPresetColor[];
+  /**
    * Callback when value is changed
    */
   change?: (ev: { color: NzColor; format: string }) => void;
+  /**
+   * Callback when the clear button is clicked
+   */
+  onClear?: () => void;
   /**
    * Callback when `format` is changed
    */

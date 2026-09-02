@@ -1,11 +1,14 @@
+import { TemplateRef } from '@angular/core';
+
 import { SFUISchemaItem } from '@delon/form';
 import type {
   NzCascaderExpandTrigger,
   NzCascaderOption,
   NzCascaderPlacement,
+  NzCascaderSize,
   NzShowSearchOptions
 } from 'ng-zorro-antd/cascader';
-import type { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NgStyleInterface, NzSafeAny, NzVariant } from 'ng-zorro-antd/core/types';
 
 import type { CascaderWidget } from './widget';
 
@@ -20,6 +23,26 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   placeholder?: string;
 
   placement?: NzCascaderPlacement;
+
+  /**
+   * 输入框大小，默认：`default`
+   */
+  size?: NzCascaderSize;
+
+  /**
+   * 变体，默认：`outlined`
+   */
+  variant?: NzVariant;
+
+  /**
+   * 默认获取焦点，默认：`false`
+   */
+  autoFocus?: boolean;
+
+  /**
+   * 自定义的选择框后缀图标
+   */
+  suffixIcon?: TemplateRef<NzSafeAny> | string;
 
   /**
    * 是否支持搜索，默认：`false`
@@ -72,11 +95,6 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   columnClassName?: string;
 
   /**
-   * 是否缓存异步加载的数据，若每次异步加载的数据都是变化的，需将该值设置为 `false`，默认：`true`
-   */
-  enableCache?: boolean;
-
-  /**
    * 次级菜单的展开方式，默认：`click`
    */
   expandTrigger?: NzCascaderExpandTrigger;
@@ -112,9 +130,9 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   multiple?: boolean;
 
   /**
-   * 异步加载事件
+   * 下拉菜单打开关闭回调函数
    */
-  visibleChange?: (value: boolean) => void;
+  openChange?: (status: boolean) => void;
 
   /**
    * 选项值变更事件

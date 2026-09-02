@@ -69,6 +69,11 @@ export interface SFTransferWidgetSchema extends SFUISchemaItem {
   oneWay?: boolean;
 
   /**
+   * 是否显示底部全选勾选框，默认：`true`
+   */
+  showSelectAll?: boolean;
+
+  /**
    * 穿梭时二次校验
    */
   canMove?: (arg: TransferCanMove) => Observable<TransferItem[]>;

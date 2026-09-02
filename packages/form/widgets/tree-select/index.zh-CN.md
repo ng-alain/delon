@@ -29,7 +29,10 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | `default` |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[showSearch]` | 支持搜索 | `boolean` | `false` |
+| `[placement]` | 浮层位置 | `bottomLeft,bottomRight,topLeft,topRight` | `bottomLeft` |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[allowClear]` | 支持清除 | `boolean` | `false` |
 | `[clearValue]` | 清空时默认值 | `any` | `undefined` |
@@ -50,6 +53,8 @@ type: Non-built-in widgets
 | `[maxTagPlaceholder]` | 隐藏 tag 时显示的内容 | `TemplateRef<{ $implicit: NzTreeNode[] }>` | - |
 | `[treeTemplate]` | 自定义节点 | `TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>` | - |
 | `[expandChange]` | 点击展开树节点图标调用 | `(e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>` | - |
+| `[openChange]` | 下拉菜单打开关闭回调函数 | `(status: boolean) => void` | - |
+| `[suffixIcon]` | 自定义的选择框后缀图标 | `TemplateRef<any>, string` | - |
 | `[virtualHeight]` | 虚拟滚动的总高度 | `string` | `-` |
 | `[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `28` |
 | `[virtualMaxBufferPx]` | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `500` |

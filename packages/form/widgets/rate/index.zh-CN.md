@@ -25,5 +25,7 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[allowClear]` | 是否允许再次点击后清除 | `boolean` | `true` |
 | `[autoFocus]` | 自动获取焦点 | `boolean` | `false` |
+| `[character]` | 自定义字符 | `TemplateRef<{ $implicit: number }>` | - |
 | `[text]` | 提醒文本模板，`{{value}}` 表示当前值（注意无任何空格） | `string` | - |
 | `[tooltips]` | 自定义每项的提示信息 | `string[]` | `[]` |
+| `(hoverChange)` | 鼠标经过时数值变化的回调 | `(value: number) => void` | - |

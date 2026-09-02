@@ -24,9 +24,11 @@ import type { SFQrCodeWidgetSchema } from './schema';
       [nzSize]="ui.qrSize ?? 160"
       [nzIcon]="ui.icon ?? ''"
       [nzIconSize]="ui.iconSize ?? 40"
-      [nzBordered]="ui.bordered ?? false"
+      [nzBordered]="ui.bordered ?? true"
+      [nzType]="ui.type ?? 'canvas'"
       [nzStatus]="ui.status ?? 'active'"
       [nzLevel]="ui.level ?? 'M'"
+      [nzBoostLevel]="ui.boostLevel ?? true"
       (nzRefresh)="refresh($event)"
     />
   </sf-item-wrap>`,

@@ -73,4 +73,17 @@ describe('form: widget: mention', () => {
     };
     page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mentions-dropdown-menu-item', '1', true);
   }));
+
+  it('should be clear value when trigger onClear', fakeAsync(() => {
+    const s: SFSchema = {
+      properties: {
+        a: { type: 'string', default: 'text', ui: { widget, onClear: jasmine.createSpy() } }
+      }
+    };
+    page.newSchema(s);
+    getWidget()._clear();
+    page.dc(1).checkValue('a', '');
+
+    expect((s.properties!.a.ui as NzSafeAny).onClear).toHaveBeenCalled();
+  }));
 });

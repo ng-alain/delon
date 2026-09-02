@@ -23,6 +23,8 @@ Non-built-in modules need to additionally register `withQrCodeWidget` in [json-s
 | `[icon]`            | Icon address in QR code             | `string`                        | -         |
 | `[iconSize]`        | The size of the icon in the QR code | `number`                        | `40`      |
 | `[bordered]`        | Whether has border style            | `boolean`                       | `true`    |
-| `[status]`          | QR code status                      | `'active'｜'expired' ｜'loading'` | `active`  |
+| `[type]`            | Rendering type                      | `canvas,svg`                     | `canvas`  |
+| `[status]`          | QR code status                      | `'active'｜'expired' ｜'loading' ｜'scanned'` | `active`  |
 | `[level]`           | Error Code Level                    | `'L'｜'M'｜'Q'｜'H'`               | `M`       |
+| `[boostLevel]`      | Automatically raises the error correction level | `boolean`             | `true`    |
 | `(refresh)`         | callback                            | `EventEmitter<string>`          | -         |

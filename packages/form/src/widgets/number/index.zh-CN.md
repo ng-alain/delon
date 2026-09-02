@@ -27,6 +27,10 @@ order: 5
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[addOnBefore]` | 带标签的 input，设置前置标签 | `string` | - |
+| `[addOnAfter]` | 带标签的 input，设置后置标签 | `string` | - |
+| `[autofocus]` | 自动获取焦点 | `boolean` | `false` |
 | `[prefix]` | 前缀，简化 `nzFormatter`、`nzParser` 的使用 | - | - |
 | `[unit]` | 单位，简化 `nzFormatter`、`nzParser` 的使用 | - | - |
 | `[formatter]` | 等同 `nzFormatter` | - | - |
@@ -35,6 +39,8 @@ order: 5
 | `[widgetWidth]` | 指定 `nz-number` 宽度 | `number, string` | `90` |
 | `[hideStep]` | 隐藏步数操作区 | `boolean` | `false` |
 | `[change]` | 变更事件 | `(val?: number) => void` | - |
+| `(focus)` | 获得焦点时回调 | `() => void` | - |
+| `(blur)` | 失去焦点时回调 | `() => void` | - |
 | `[changeOnWheel]` | 是否启用鼠标滚轮控制 | `boolean` | `true` |
 
 ## QA

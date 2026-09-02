@@ -5,6 +5,7 @@ import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
 import { SFColorWidgetSchema, withColorWidget } from './index';
+import type { ColorWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: color', () => {
@@ -45,5 +46,26 @@ describe('form: widget: color', () => {
     expect(page.getValue('/a')).toBe('hsb(20, 100%, 100%)');
     expect(change).toHaveBeenCalled();
     expect(formatChange).toHaveBeenCalled();
+  }));
+
+  it('should be clear value when trigger onClear', fakeAsync(() => {
+    const onClear = jasmine.createSpy();
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          default: '#f50',
+          ui: {
+            widget: 'color',
+            allowClear: true,
+            onClear
+          } as SFColorWidgetSchema
+        }
+      }
+    };
+    page.newSchema(s);
+    page.getWidget<ColorWidget>('sf-color')._clear();
+    page.dc(1);
+    expect(onClear).toHaveBeenCalled();
   }));
 });

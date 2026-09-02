@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 
 import type { SFSchemaEnum, SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import type { NgStyleInterface, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NgStyleInterface, NzSafeAny, NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
+import type { NzPlacementType } from 'ng-zorro-antd/tree-select';
 
 export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   /**
@@ -13,7 +14,22 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
 
   size?: NzSizeLDSType;
 
+  /**
+   * 变体，默认：`outlined`
+   */
+  variant?: NzVariant;
+
   placeholder?: string;
+
+  /**
+   * 支持搜索，默认：`false`
+   */
+  showSearch?: boolean;
+
+  /**
+   * 浮层位置，默认：`bottomLeft`
+   */
+  placement?: NzPlacementType;
 
   /**
    * 支持清除，默认：`false`
@@ -134,6 +150,16 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
    * 点击展开树节点图标调用
    */
   expandChange?: (e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>;
+
+  /**
+   * 下拉菜单打开关闭回调函数
+   */
+  openChange?: (status: boolean) => void;
+
+  /**
+   * 自定义的选择框后缀图标
+   */
+  suffixIcon?: TemplateRef<NzSafeAny> | string;
 
   change?: (value: NzSafeAny[] | NzSafeAny) => void;
 }

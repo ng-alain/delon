@@ -41,12 +41,15 @@ Every select triggers a HTTP request, data source is from `asyncData`.
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous static data source | `(input: string) => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | - |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | Placeholder | `string` | - |
+| `[allowClear]` | Whether show clear button | `boolean` | `false` |
 | `[loadData]` | Realtime data | `(option: MentionOnSearchTypes) => Observable<SFSchemaEnumType[]>` | - |
 | `[notFoundContent]` | Content when nothing found | `string` | `无匹配结果，轻敲空格完成输入` |
-| `[placement]` | Position of suggestion box | `button,top` | `button` |
+| `[placement]` | Position of suggestion box | `bottom,top` | `bottom` |
 | `[prefix]` | Character to trigger to popup dropdown list | `'string'` `'string[]'` | `@` |
 | `[valueWith]` | Function that maps a suggestion value | `(value: any) => string` | - |
 | `[select]` | Callback when option in dropdown list is selected | `(value: any) => void` | - |
+| `(onClear)` | Callback when content is cleared | `() => void` | - |
 | `[inputStyle]` | Input type | `text, textarea` | `text` |
 | `[autosize]` | Adaptive content height, can be set object:`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |

@@ -14,7 +14,7 @@ Non-built-in modules need to additionally register `withUploadWidget` in [json-s
 
 - **Must** set `resReName` to get correct data
 - `multiple` determine return array or one element
-- If `enum` or `asyncData` is set, it will be converted to `fileList` (`nzFileList`), and **must** initially guarantee a `response` property to indicate remote data and make sure `resReName` can be obtained correctly
+- Use `fileList` to provide initial files; `enum` and `asyncData` act only as generic data sources, and their shape (`{ label, value }`) does not match the file object (`NzUploadFile`), so they are not applied as initial files
 - Image preview: by default, it uses `nzModal` to show `url` or `thumbUrl` of file object
 
 ## API
@@ -38,6 +38,7 @@ Non-built-in modules need to additionally register `withUploadWidget` in [json-s
 | `[action]` | Required attribute, upload URL | `string, ((file: UploadFile) => string, Observable<string>)` | - |
 | `[accept]` | File types that can be accepted, see details from [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string, string[]` | - |
 | `[limit]` | limit number of single upload when `multiple` is set, 0 means unlimited | `number` | `0` |
+| `[maxCount]` | Limit the number of uploaded files; when set to `1`, the latest uploaded file always replaces the current file | `number` | - |
 | `[filter]` | Custom filter when choosed file | `UploadFilter[]` | - |
 | `[fileList]` | File list | `UploadFile[]` | - |
 | `[fileSize]` | Limit file size, unit: KB; `0` means unlimited | `number` | `0` |

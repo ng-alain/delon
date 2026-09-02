@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { NzCascaderModule, type NzCascaderOption, type NzCascaderTriggerType } from 'ng-zorro-antd/cascader';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import type { SFCascaderWidgetSchema } from './schema';
@@ -41,8 +41,11 @@ import type { SFCascaderWidgetSchema } from './schema';
       [nzShowInput]="showInput"
       [nzShowSearch]="ui.showSearch!"
       [nzMultiple]="ui.multiple"
+      [nzTriggerAction]="triggerAction"
+      [nzVariant]="ui.variant ?? 'outlined'"
+      [nzSuffixIcon]="ui.suffixIcon!"
       (nzClear)="_clear()"
-      (nzVisibleChange)="_visibleChange($event)"
+      (nzOpenChange)="_openChange($event)"
       (nzSelectionChange)="_selectionChange($event)"
     />
   </sf-item-wrap>`,
@@ -55,7 +58,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
   clearText!: string;
   showArrow!: boolean;
   showInput!: boolean;
-  triggerAction!: string[];
+  triggerAction: NzCascaderTriggerType[] = ['click'];
   data: SFSchemaEnum[] = [];
   loadData?: (node: NzCascaderOption, index: number) => PromiseLike<NzSafeAny>;
 
@@ -78,8 +81,8 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     });
   }
 
-  _visibleChange(status: boolean): void {
-    if (this.ui.visibleChange) this.ui.visibleChange(status);
+  _openChange(status: boolean): void {
+    if (this.ui.openChange) this.ui.openChange(status);
   }
 
   _change(value: NzSafeAny[] | null): void {

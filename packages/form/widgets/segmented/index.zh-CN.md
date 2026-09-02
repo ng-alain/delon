@@ -18,5 +18,7 @@ type: Non-built-in widgets
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[block]` | 将宽度调整为父元素宽度的选项 | `boolean` | false |  |
+| `[vertical]` | 是否启用垂直模式 | `boolean` | `false` |  |
+| `[shape]` | 分段形状 | `default,round` | `default` |  |
 | `[asyncData]` | 异步数据 | `() => Observable<NzSegmentedOptions>` | - |  |
 | `(valueChange)` | 当前选中项目变化时触发回调 | `(data: { index: number; item: SFValue }) => void` | - |  |

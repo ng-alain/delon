@@ -25,5 +25,7 @@ Non-built-in modules need to additionally register `withRateWidget` in [json-sch
 |----------|-------------|------|---------|
 | `[allowClear]` | whether to allow clear when click again | `boolean` | `true` |
 | `[autoFocus]` | get focus when component mounted | `boolean` | `false` |
+| `[character]` | Custom character | `TemplateRef<{ $implicit: number }>` | - |
 | `[text]` | Reminder text template, `{{value}}` indicates the current value | `string` | - |
 | `[tooltips]` | Customize tooltip by each character | `string[]` | `[]` |
+| `(hoverChange)` | Callback when the value changes under the cursor | `(value: number) => void` | - |

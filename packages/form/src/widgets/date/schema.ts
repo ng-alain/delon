@@ -118,6 +118,16 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   showWeekNumber?: boolean;
 
   /**
+   * Preset ranges for quick selection, only valid in `range` mode
+   */
+  ranges?: Record<string, Date[] | (() => Date[])>;
+
+  /**
+   * get focus when component mounted, default: `false`
+   */
+  autoFocus?: boolean;
+
+  /**
    * Callback when click ok button
    */
   onOk?: (data: Date | Date[]) => void;

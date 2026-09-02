@@ -29,7 +29,10 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous data source | `() => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | `default` |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | Placeholder | `string` | - |
+| `[showSearch]` | Support search | `boolean` | `false` |
+| `[placement]` | Dropdown placement | `bottomLeft,bottomRight,topLeft,topRight` | `bottomLeft` |
 | `[notFoundContent]` | Text to display when a column is empty | `string` | - |
 | `[allowClear]` | Whether show clear button | `boolean` | `false` |
 | `[clearValue]` | Default value when cleared | `any` | `undefined` |
@@ -50,6 +53,8 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 | `[maxTagPlaceholder]` | Placeholder for not showing tags | `TemplateRef<{ $implicit: NzTreeNode[] }>` | - |
 | `[treeTemplate]` | Custom Nodes | `TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>` | - |
 | `[expandChange]` | Callback function for when a treeNode is expanded or collapsed | `(e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>` | - |
+| `[openChange]` | Dropdown menu open/close callback | `(status: boolean) => void` | - |
+| `[suffixIcon]` | Custom select box suffix icon | `TemplateRef<any>, string` | - |
 | `[virtualHeight]` | The height of virtual scroll | `string` | `-` |
 | `[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `28` |
 | `[virtualMaxBufferPx]` | The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `500` |

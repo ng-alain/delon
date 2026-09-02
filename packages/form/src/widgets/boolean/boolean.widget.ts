@@ -14,6 +14,7 @@ import { ControlUIWidget } from '../../widget';
     [showTitle]="schema.title"
   >
     <nz-switch
+      [nzId]="id"
       [ngModel]="value"
       (ngModelChange)="setValue($event)"
       [nzDisabled]="disabled"

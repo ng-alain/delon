@@ -25,6 +25,8 @@ import type { SFRateWidgetSchema } from './schema';
       [nzTooltips]="ui.tooltips ?? []"
       [nzAutoFocus]="autoFocus"
       [nzCount]="$any(count)"
+      [nzCharacter]="ui.character!"
+      (nzOnHoverChange)="hoverChange($event)"
     />
     @if (hasText && formProperty.value) {
       <span class="ant-rate-text">{{ text }}</span>
@@ -44,6 +46,10 @@ export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements O
 
   get text(): string {
     return (this.ui.text as string).replace('{{value}}', this.formProperty.value);
+  }
+
+  hoverChange(value: number): void {
+    if (this.ui.hoverChange) this.ui.hoverChange(value);
   }
 
   ngOnInit(): void {

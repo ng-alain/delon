@@ -22,6 +22,8 @@ import type { SFSegmentedWidgetSchema } from './schema';
       [nzDisabled]="disabled"
       [nzSize]="$any(ui.size)"
       [nzBlock]="ui.block ?? false"
+      [nzVertical]="ui.vertical"
+      [nzShape]="ui.shape ?? 'default'"
       [nzOptions]="list"
       (nzValueChange)="valueChange($event)"
     />
