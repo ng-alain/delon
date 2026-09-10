@@ -24,7 +24,7 @@
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "start": "npm run site:gen && ng s -o --hmr",
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "eslint --cache",
