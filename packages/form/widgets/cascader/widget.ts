@@ -70,14 +70,14 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.triggerAction = triggerAction ?? ['click'];
     if (asyncData) {
       this.loadData = (node: NzCascaderOption, index: number) =>
-        asyncData(node, index, this).then(() => this.detectChanges());
+        asyncData(node, index, this).then(() => this.detectChanges(true));
     }
   }
 
   reset(value: SFValue): void {
     getData(this.schema, {}, value).subscribe(list => {
       this.data = list;
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 

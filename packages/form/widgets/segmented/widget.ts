@@ -41,7 +41,7 @@ export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this._list = list as NzSegmentedOption[];
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 

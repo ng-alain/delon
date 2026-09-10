@@ -50,7 +50,7 @@ export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
     this.styleType = (this.ui.styleType ?? 'default') === 'default';
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
-      this.detectChanges();
+      this.cd.markForCheck();
     });
   }
 

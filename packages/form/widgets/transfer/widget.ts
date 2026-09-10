@@ -79,7 +79,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
       this.list = list;
       this._data = list.filter(w => w.direction === 'right');
       this.notify();
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 
@@ -106,11 +106,11 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
 
   _searchChange(options: TransferSearchChange): void {
     if (this.ui.searchChange) this.ui.searchChange(options);
-    this.detectChanges();
+    this.detectChanges(true);
   }
 
   _selectChange(options: TransferSelectChange): void {
     if (this.ui.selectChange) this.ui.selectChange(options);
-    this.detectChanges();
+    this.detectChanges(true);
   }
 }

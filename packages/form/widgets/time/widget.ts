@@ -77,7 +77,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
   reset(value: SFValue): void {
     if (value instanceof Date) {
       this.displayValue = value;
-      this.detectChanges();
+      this.detectChanges(true);
       return;
     }
     let v = value != null && value.toString().length ? new Date(value) : null;
@@ -90,7 +90,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       v = new Date(`1970-1-1 ${value}`);
     }
     this.displayValue = v;
-    this.detectChanges();
+    this.detectChanges(true);
   }
 
   _change(value: Date | null): void {

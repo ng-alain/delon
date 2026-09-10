@@ -132,7 +132,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
 
   _setValue(value: SFValue): void {
     this.setValue(value);
-    this.detectChanges();
+    this.detectChanges(true);
     this.notifyChange(value);
   }
 
@@ -162,7 +162,7 @@ export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
     } else {
       this.indeterminate = true;
     }
-    this.detectChanges();
+    this.detectChanges(true);
     return this;
   }
 

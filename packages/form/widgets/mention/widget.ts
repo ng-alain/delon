@@ -110,7 +110,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
   reset(): void {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 

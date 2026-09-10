@@ -89,7 +89,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 
@@ -108,7 +108,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
     ui.expandChange(e).subscribe(res => {
       e.node!.clearChildren();
       e.node!.addChildren(res);
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 }
