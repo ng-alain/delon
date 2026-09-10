@@ -5,42 +5,61 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-textarea',
-  template: ` <sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    @let minRows = autosize?.minRows ?? 1;
-    @let maxRows = autosize?.maxRows ?? 0;
-    <ng-template #ipt>
-      <textarea
-        nz-input
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size!"
-        [ngModel]="value"
-        (ngModelChange)="change($event)"
-        [attr.maxLength]="schema.maxLength ?? null"
-        [attr.placeholder]="ui.placeholder"
-        cdkTextareaAutosize
-        [cdkAutosizeMinRows]="minRows"
-        [cdkAutosizeMaxRows]="maxRows"
-        [nzVariant]="ui.variant ?? 'outlined'"
-        (focus)="focus($event)"
-        (blur)="blur($event)"
-      >
-      </textarea>
-    </ng-template>
-
-    @if (ui.maxCharacterCount) {
-      <nz-textarea-count
-        [nzMaxCharacterCount]="ui.maxCharacterCount"
-        [nzComputeCharacterCount]="ui.computeCharacterCount!"
-      >
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      @let minRows = autosize?.minRows ?? 1;
+      @let maxRows = autosize?.maxRows ?? 0;
+      @let variant = ui.variant ?? 'outlined';
+      @if (ui.maxCharacterCount) {
+        <nz-textarea-count
+          [nzMaxCharacterCount]="ui.maxCharacterCount"
+          [nzComputeCharacterCount]="ui.computeCharacterCount!"
+        >
+          <textarea
+            nz-input
+            [attr.id]="id"
+            [disabled]="disabled"
+            [attr.disabled]="disabled"
+            [nzSize]="ui.size!"
+            [ngModel]="value"
+            (ngModelChange)="change($event)"
+            [attr.maxLength]="schema.maxLength"
+            [attr.placeholder]="ui.placeholder"
+            cdkTextareaAutosize
+            [cdkAutosizeMinRows]="minRows"
+            [cdkAutosizeMaxRows]="maxRows"
+            [nzVariant]="variant"
+            (focus)="focus($event)"
+            (blur)="blur($event)"
+          >
+          </textarea>
+        </nz-textarea-count>
+      } @else if (ui.allowClear) {
+        <nz-input-wrapper [nzAllowClear]="ui.allowClear">
+          <textarea
+            nz-input
+            [attr.id]="id"
+            [disabled]="disabled"
+            [attr.disabled]="disabled"
+            [nzSize]="ui.size!"
+            [ngModel]="value"
+            (ngModelChange)="change($event)"
+            [attr.maxLength]="schema.maxLength"
+            [attr.placeholder]="ui.placeholder"
+            [nzVariant]="variant"
+            (focus)="focus($event)"
+            (blur)="blur($event)"
+          >
+          </textarea>
+        </nz-input-wrapper>
+      } @else {
         <textarea
           nz-input
           [attr.id]="id"
@@ -49,27 +68,19 @@ import { ControlUIWidget } from '../../widget';
           [nzSize]="ui.size!"
           [ngModel]="value"
           (ngModelChange)="change($event)"
-          [attr.maxLength]="schema.maxLength ?? null"
+          [attr.maxLength]="schema.maxLength"
           [attr.placeholder]="ui.placeholder"
           cdkTextareaAutosize
           [cdkAutosizeMinRows]="minRows"
           [cdkAutosizeMaxRows]="maxRows"
-          [nzVariant]="ui.variant ?? 'outlined'"
+          [nzVariant]="variant"
           (focus)="focus($event)"
           (blur)="blur($event)"
         >
         </textarea>
-      </nz-textarea-count>
-    } @else {
-      @if (ui.allowClear) {
-        <nz-input-wrapper [nzAllowClear]="true">
-          <ng-template [ngTemplateOutlet]="ipt" />
-        </nz-input-wrapper>
-      } @else {
-        <ng-template [ngTemplateOutlet]="ipt" />
       }
-    }
-  </sf-item-wrap>`,
+    </sf-item-wrap>
+  `,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
