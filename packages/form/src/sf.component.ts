@@ -608,7 +608,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         return;
       }
       property.ui._render = tpl;
-      property.widget.cd.markForCheck();
+      property.widget?.cd.markForCheck();
     });
   }
 
