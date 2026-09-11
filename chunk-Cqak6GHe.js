@@ -1,4 +1,4 @@
-import{Yi as _e,cs as lt,lc as re}from"./chunk-Ck3uNPg7.js";import"./chunk-BxW0cKlI.js";import"./chunk-DbRMD1wS.js";import"./main-KKDWNE5C.js";import"./chunk-DMIPOHxK.js";import"./chunk-9CMSnx9_.js";import{t as rt}from"./chunk-iKWmTyxA.js";import{t as ee}from"./chunk-Bd7cbkwh.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
+import{Yi as _e,cs as lt,lc as re}from"./chunk-Ck3uNPg7.js";import"./chunk-BxW0cKlI.js";import"./chunk-97hMq_LG.js";import"./main-DB63YYUQ.js";import"./chunk-DMIPOHxK.js";import"./chunk-9CMSnx9_.js";import{t as rt}from"./chunk-DwcZ0enP.js";import{t as ee}from"./chunk-BiGw9Nae.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
 order: 50
 title: ACL
 type: Advance
@@ -5609,124 +5609,143 @@ title:
   zh-CN: \u4E3B\u9898\u7CFB\u7EDF
 type: Advance
 redirect: /theme/getting-started
----`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-theme`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var q=class n{item={name:`upgrade-v21`,langs:[`en-US`,`zh-CN`],content:{"en-US":{meta:{order:1e3,title:`Upgrade to version 21.0`,description:`This guide applies to the current version ng-alain >= 20;
-If you encounter problems during the upgrade process, feel free to comment here.
-If you find...`,group:`Basic`,path:`docs/upgrade-v21.en-US.md`,url:`/docs/upgrade-v21/en`},text:`<blockquote>
-<p>This guide applies to the current version ng-alain &gt;= <code>20</code>;
-If you encounter problems during the upgrade process, feel free to comment here.
-If you find any errors in this guide, please point out
-Or you have encountered a new problem and solved it, welcome to comment here.</p>
+---`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-theme`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var q=class n{item={name:`upgrade-v22`,langs:[`en-US`,`zh-CN`],content:{"en-US":{meta:{order:1e3,title:`Upgrade to version 22.0`,description:`This guide applies to the current version of NG-ALAIN >= 21;
+If you encounter any problems during the upgrade, feel free to ask. Before asking questio...`,group:`Basic`,path:`docs/upgrade-v22.en-US.md`,url:`/docs/upgrade-v22/en`},text:`<blockquote>
+<p>This guide applies to the current version of NG-ALAIN &gt;= <code>21</code>;
+If you encounter any problems during the upgrade, feel free to ask. Before asking questions, please read <a href="https://github.com/seajs/seajs/issues/545" target="_blank" rel="noopener">How to Ask Questions in the Open Source Community</a>
+If you find any omissions or errors in this guide, please point them out!
+Or, if you encounter a new problem and have found a solution, feel free to contribute!</p>
 </blockquote>
-<h2 id="before_upgrade"><a class="lake-link"><i data-anchor="before_upgrade"></i></a>Before upgrade</h2><ol>
-<li>Make sure <code>Node.js</code> &gt;= <code>22.21.1</code>.</li>
-<li>Create a new branch, or use other methods to back up the current project.</li>
-<li>Delete the <code>package-lock.json</code> or <code>yarn.lock</code> file.</li>
+<h2 id="before_you_start"><a class="lake-link"><i data-anchor="before_you_start"></i></a>Before You Start</h2><ol>
+<li>First, make sure your <code>Node.js</code> version is compatible with the <a href="https://angular.dev/reference/versions" target="_blank" rel="noopener">Angular version compatibility</a></li>
+<li>Create a new branch, or back up your current project in another way</li>
+<li>Delete the <code>package-lock.json</code>, <code>yarn.lock</code>, or <code>pnpm-lock.yaml</code> file from the project</li>
 </ol>
-<h3 id="1upgrade_dependencies"><a class="lake-link"><i data-anchor="1upgrade_dependencies"></i></a>1.Upgrade dependencies</h3><ul>
-<li>Upgrade Angular to 21.x version, Run <code>ng update &#64;angular/core&#64;21 &#64;angular/cli&#64;21 angular-eslint&#64;21 ng-zorro-antd&#64;21 ng-alain&#64;21</code>.</li>
-<li><em>Run <code>ng update &#64;angular/cdk&#64;21</code>, if you have used <code>&#64;angular/cdk</code>.</em></li>
+<h2 id="upgrade_steps"><a class="lake-link"><i data-anchor="upgrade_steps"></i></a>Upgrade Steps</h2><h3 id="upgrade_related_dependencies"><a class="lake-link"><i data-anchor="upgrade_related_dependencies"></i></a>Upgrade Related Dependencies</h3><ul>
+<li>To upgrade the project to Angular 22, run <code>ng update &#64;angular/core&#64;22 &#64;angular/cli&#64;22 angular-eslint&#64;22 ng-zorro-antd&#64;22 ng-alain&#64;22</code>.</li>
+<li><em>If you are using <code>&#64;angular/cdk</code> separately, run <code>ng update &#64;angular/cdk&#64;22</code></em></li>
 </ul>
 <blockquote>
-<p>NG-ALAIN scaffolding upgrade all change files, please refer to: <a href="https://github.com/ng-alain/ng-alain/pull/2593/files" target="_blank" rel="noopener">#2593</a>.</p>
+<blockquote>
+<p>For all changed files related to the NG-ALAIN starter project upgrade, please refer to <a href="https://github.com/ng-alain/ng-alain/pull/2593/files" target="_blank" rel="noopener">#2593</a>.</p>
 </blockquote>
-<h3 id="2_ng-zorro-antd_breaking_changes"><a class="lake-link"><i data-anchor="2_ng-zorro-antd_breaking_changes"></i></a>2. ng-zorro-antd BREAKING CHANGES</h3><p>Please note that NG-ZORRO has BREAKING CHANGES; please refer to
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0" target="_blank" rel="noopener">https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0</a> for details.</p>
-<h3 id="3_reference"><a class="lake-link"><i data-anchor="3_reference"></i></a>3. Reference</h3><ul>
-<li>Code style configuration change <a href="https://github.com/ng-alain/ng-alain/pull/2594/files" target="_blank" rel="noopener">#2594</a></li>
+</blockquote>
+<h3 id="2_ng-zorro_breaking_changes"><a class="lake-link"><i data-anchor="2_ng-zorro_breaking_changes"></i></a>2. NG-ZORRO BREAKING CHANGES</h3><p>Please note that NG-ZORRO contains BREAKING CHANGES; for details, please refer to <a href="https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/22.0.0" target="_blank" rel="noopener">22.0.0</a>.</p>
+<h3 id="3_optional"><a class="lake-link"><i data-anchor="3_optional"></i></a>3. Optional</h3><ul>
+<li>Set <code>pnpm</code> as the project&#39;s <code>packageManager</code></li>
+<li>Remove the <code>baseUrl</code> configuration from <code>tsconfig.json</code></li>
 </ul>
-`,api:``,toc:[{id:`before_upgrade`,title:`Before upgrade`,children:[{id:`1upgrade_dependencies`,title:`1.Upgrade dependencies`},{id:`2_ng-zorro-antd_breaking_changes`,title:`2. ng-zorro-antd BREAKING CHANGES`},{id:`3_reference`,title:`3. Reference`}]}],raw:`---
+<h3 id="4_references"><a class="lake-link"><i data-anchor="4_references"></i></a>4. References</h3><ul>
+<li>Code style configuration changes <a href="https://github.com/ng-alain/ng-alain/pull/2636/files" target="_blank" rel="noopener">#2636</a></li>
+</ul>
+`,api:``,toc:[{id:`before_you_start`,title:`Before You Start`},{id:`upgrade_steps`,title:`Upgrade Steps`,children:[{id:`upgrade_related_dependencies`,title:`Upgrade Related Dependencies`},{id:`2_ng-zorro_breaking_changes`,title:`2. NG-ZORRO BREAKING CHANGES`},{id:`3_optional`,title:`3. Optional`},{id:`4_references`,title:`4. References`}]}],raw:`---
 order: 1000
 type: Basic
-title: Upgrade to version 21.0
+title: Upgrade to version 22.0
 ---
 
-> This guide applies to the current version ng-alain >= \`20\`;
-> If you encounter problems during the upgrade process, feel free to comment here.
-> If you find any errors in this guide, please point out
-> Or you have encountered a new problem and solved it, welcome to comment here.
+> This guide applies to the current version of NG-ALAIN >= \`21\`;
+> If you encounter any problems during the upgrade, feel free to ask. Before asking questions, please read [How to Ask Questions in the Open Source Community](https://github.com/seajs/seajs/issues/545)
+> If you find any omissions or errors in this guide, please point them out!
+> Or, if you encounter a new problem and have found a solution, feel free to contribute!
 
-## Before upgrade
+## Before You Start
 
-1. Make sure \`Node.js\` >= \`22.21.1\`.
-2. Create a new branch, or use other methods to back up the current project.
-3. Delete the \`package-lock.json\` or \`yarn.lock\` file.
+1. First, make sure your \`Node.js\` version is compatible with the [Angular version compatibility](https://angular.dev/reference/versions)
+2. Create a new branch, or back up your current project in another way
+3. Delete the \`package-lock.json\`, \`yarn.lock\`, or \`pnpm-lock.yaml\` file from the project
 
-### 1.Upgrade dependencies
+## Upgrade Steps
 
-- Upgrade Angular to 21.x version, Run \`ng update @angular/core@21 @angular/cli@21 angular-eslint@21 ng-zorro-antd@21 ng-alain@21\`.
-- _Run \`ng update @angular/cdk@21\`, if you have used \`@angular/cdk\`._
+### Upgrade Related Dependencies
 
-> NG-ALAIN scaffolding upgrade all change files, please refer to: [#2593](https://github.com/ng-alain/ng-alain/pull/2593/files).
+- To upgrade the project to Angular 22, run \`ng update @angular/core@22 @angular/cli@22 angular-eslint@22 ng-zorro-antd@22 ng-alain@22\`.
+- _If you are using \`@angular/cdk\` separately, run \`ng update @angular/cdk@22\`_
 
-### 2. ng-zorro-antd BREAKING CHANGES
+> > For all changed files related to the NG-ALAIN starter project upgrade, please refer to [#2593](https://github.com/ng-alain/ng-alain/pull/2593/files).
 
-Please note that NG-ZORRO has BREAKING CHANGES; please refer to
-https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0 for details.
+### 2. NG-ZORRO BREAKING CHANGES
 
-### 3. Reference
+Please note that NG-ZORRO contains BREAKING CHANGES; for details, please refer to [22.0.0](
+https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/22.0.0).
 
-- Code style configuration change [#2594](https://github.com/ng-alain/ng-alain/pull/2594/files)`},"zh-CN":{meta:{order:1e3,title:`升级到 21.0 版本`,description:`\u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C ng-alain >= 20 ;
+### 3. Optional
+
+- Set \`pnpm\` as the project's \`packageManager\`
+- Remove the \`baseUrl\` configuration from \`tsconfig.json\`
+
+### 4. References
+
+- Code style configuration changes [#2636](https://github.com/ng-alain/ng-alain/pull/2636/files)`},"zh-CN":{meta:{order:1e3,title:`升级到 22.0 版本`,description:`\u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C NG-ALAIN >= 21 ;
 \u5982\u679C\u5728\u5347\u7EA7\u8FC7\u7A0B\u4E2D\u9047\u5230\u95EE\u9898\uFF0C\u6B22\u8FCE\u63D0\u51FA\u3002\u63D0\u95EE\u524D\u8BF7\u9605\u8BFB \u5982\u4F55\u5411\u5F00\u6E90\u793E\u533A\u63D0\u95EE\u9898
 \u5982\u679C\u53D1\u73B0\u672C\u6307\u5357\u5B58\u5728\u9057\u6F0F/\u9519\u8BEF\uFF0C\u8BF7\u6307\u51FA!
-\u6216\u8005\u4F60\u9047\u5230\u4E86\u65B0\u7684\u95EE\u9898\u5E76\u89E3\u51B3\u4E86\uFF0C\u6B22\u8FCE\u8865\u5145!\u9996\u5148\u786E\u4FDD\u4F60 Node.js >= 22.21.1\u521B\u5EFA\u65B0\u7684\u5206\u652F\uFF0C\u6216\u8005\u4F7F\u7528\u5176\u4ED6\u65B9\u5F0F\u5907\u4EFD\u5F53\u524D\u9879\u76EE\u5220...`,group:`Basic`,path:`docs/upgrade-v21.zh-CN.md`,url:`/docs/upgrade-v21/zh`},text:`<blockquote>
-<p>\u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C ng-alain &gt;= <code>20</code> ;
+\u6216\u8005\u4F60\u9047\u5230\u4E86\u65B0\u7684\u95EE\u9898\u5E76\u89E3\u51B3\u4E86\uFF0C\u6B22\u8FCE\u8865\u5145!\u9996\u5148\u786E\u4FDD\u4F60 Node.js \u7B26\u53F7 Angular \u7248\u672C\u517C\u5BB9\u6027\u521B\u5EFA\u65B0\u7684\u5206\u652F\uFF0C\u6216\u8005\u4F7F\u7528\u5176\u4ED6\u65B9\u5F0F\u5907...`,group:`Basic`,path:`docs/upgrade-v22.zh-CN.md`,url:`/docs/upgrade-v22/zh`},text:`<blockquote>
+<p>\u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C NG-ALAIN &gt;= <code>21</code> ;
 \u5982\u679C\u5728\u5347\u7EA7\u8FC7\u7A0B\u4E2D\u9047\u5230\u95EE\u9898\uFF0C\u6B22\u8FCE\u63D0\u51FA\u3002\u63D0\u95EE\u524D\u8BF7\u9605\u8BFB <a href="https://github.com/seajs/seajs/issues/545" target="_blank" rel="noopener">\u5982\u4F55\u5411\u5F00\u6E90\u793E\u533A\u63D0\u95EE\u9898</a>
 \u5982\u679C\u53D1\u73B0\u672C\u6307\u5357\u5B58\u5728\u9057\u6F0F/\u9519\u8BEF\uFF0C\u8BF7\u6307\u51FA!
 \u6216\u8005\u4F60\u9047\u5230\u4E86\u65B0\u7684\u95EE\u9898\u5E76\u89E3\u51B3\u4E86\uFF0C\u6B22\u8FCE\u8865\u5145!</p>
 </blockquote>
 <h2 id="\u5F00\u59CB\u4E4B\u524D"><a class="lake-link"><i data-anchor="\u5F00\u59CB\u4E4B\u524D"></i></a>\u5F00\u59CB\u4E4B\u524D</h2><ol>
-<li>\u9996\u5148\u786E\u4FDD\u4F60 <code>Node.js</code> &gt;= <code>22.21.1</code></li>
+<li>\u9996\u5148\u786E\u4FDD\u4F60 <code>Node.js</code> \u7B26\u53F7 <a href="https://angular.cn/reference/versions" target="_blank" rel="noopener">Angular \u7248\u672C\u517C\u5BB9\u6027</a></li>
 <li>\u521B\u5EFA\u65B0\u7684\u5206\u652F\uFF0C\u6216\u8005\u4F7F\u7528\u5176\u4ED6\u65B9\u5F0F\u5907\u4EFD\u5F53\u524D\u9879\u76EE</li>
-<li>\u5220\u9664\u9879\u76EE\u4E0B <code>package-lock.json</code> \u6216 <code>yarn.lock</code> \u6587\u4EF6</li>
+<li>\u5220\u9664\u9879\u76EE\u4E0B <code>package-lock.json</code> \u6216 <code>yarn.lock</code> \u6216 <code>pnpm-lock.yaml</code> \u6587\u4EF6</li>
 </ol>
 <h2 id="\u5347\u7EA7\u6B65\u9AA4"><a class="lake-link"><i data-anchor="\u5347\u7EA7\u6B65\u9AA4"></i></a>\u5347\u7EA7\u6B65\u9AA4</h2><h3 id="\u5347\u7EA7\u76F8\u5173\u4F9D\u8D56"><a class="lake-link"><i data-anchor="\u5347\u7EA7\u76F8\u5173\u4F9D\u8D56"></i></a>\u5347\u7EA7\u76F8\u5173\u4F9D\u8D56</h3><ul>
-<li>\u5C06\u9879\u76EE\u5347\u7EA7\u5230 Angular 21 \u8FD0\u884C <code>ng update &#64;angular/core&#64;21 &#64;angular/cli&#64;21 angular-eslint&#64;21 ng-zorro-antd&#64;21 ng-alain&#64;21</code>\u3002</li>
-<li><em>\u5982\u679C\u4F60\u6709\u5355\u72EC\u4F7F\u7528 <code>&#64;angular/cdk</code> \u8BF7\u6267\u884C <code>ng update &#64;angular/cdk&#64;21</code></em></li>
+<li>\u5C06\u9879\u76EE\u5347\u7EA7\u5230 Angular 22 \u8FD0\u884C <code>ng update &#64;angular/core&#64;22 &#64;angular/cli&#64;22 angular-eslint&#64;22 ng-zorro-antd&#64;22 ng-alain&#64;22</code>\u3002</li>
+<li><em>\u5982\u679C\u4F60\u6709\u5355\u72EC\u4F7F\u7528 <code>&#64;angular/cdk</code> \u8BF7\u6267\u884C <code>ng update &#64;angular/cdk&#64;22</code></em></li>
 </ul>
 <blockquote>
 <blockquote>
 <p>NG-ALAIN\u811A\u624B\u67B6\u5347\u7EA7\u5168\u90E8\u53D8\u66F4\u6587\u4EF6\uFF0C\u8BF7\u53C2\u8003\uFF1A<a href="https://github.com/ng-alain/ng-alain/pull/2593/files" target="_blank" rel="noopener">#2593</a>\u3002</p>
 </blockquote>
 </blockquote>
-<h3 id="2_ng-zorro-antd_breaking_changes"><a class="lake-link"><i data-anchor="2_ng-zorro-antd_breaking_changes"></i></a>2. ng-zorro-antd BREAKING CHANGES</h3><p>\u9700\u8981\u6CE8\u610F NG-ZORRO \u6709\u5B58\u5728 BREAKING CHANGES\uFF1B\u7EC6\u8282\u8BF7\u53C2\u8003
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0" target="_blank" rel="noopener">https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0</a></p>
-<h3 id="3_\u53C2\u8003"><a class="lake-link"><i data-anchor="3_\u53C2\u8003"></i></a>3. \u53C2\u8003</h3><ul>
-<li>\u4EE3\u7801\u98CE\u683C\u914D\u7F6E\u53D8\u66F4 <a href="https://github.com/ng-alain/ng-alain/pull/2594/files" target="_blank" rel="noopener">#2594</a></li>
+<h3 id="2_ng-zorro_breaking_changes"><a class="lake-link"><i data-anchor="2_ng-zorro_breaking_changes"></i></a>2. NG-ZORRO BREAKING CHANGES</h3><p>\u9700\u8981\u6CE8\u610F NG-ZORRO \u6709\u5B58\u5728 BREAKING CHANGES\uFF1B\u7EC6\u8282\u8BF7\u53C2\u8003<a href="https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/22.0.0" target="_blank" rel="noopener">22.0.0</a>\u3002</p>
+<h3 id="3_\u53EF\u9009\u90E8\u5206"><a class="lake-link"><i data-anchor="3_\u53EF\u9009\u90E8\u5206"></i></a>3. \u53EF\u9009\u90E8\u5206</h3><ul>
+<li>\u5C06\u9879\u76EE\u7684 <code>packageManager</code> \u5207\u6362\u4E3A <code>pnpm</code></li>
+<li>\u4ECE <code>tsconfig.json</code> \u4E2D\u79FB\u9664 <code>baseUrl</code> \u914D\u7F6E</li>
 </ul>
-`,api:``,toc:[{id:`开始之前`,title:`开始之前`},{id:`升级步骤`,title:`升级步骤`,children:[{id:`升级相关依赖`,title:`升级相关依赖`},{id:`2_ng-zorro-antd_breaking_changes`,title:`2. ng-zorro-antd BREAKING CHANGES`},{id:`3_参考`,title:`3. 参考`}]}],raw:`---
+<h3 id="4_\u53C2\u8003"><a class="lake-link"><i data-anchor="4_\u53C2\u8003"></i></a>4. \u53C2\u8003</h3><ul>
+<li>\u4EE3\u7801\u98CE\u683C\u914D\u7F6E\u53D8\u66F4 <a href="https://github.com/ng-alain/ng-alain/pull/2636/files" target="_blank" rel="noopener">#2636</a></li>
+</ul>
+`,api:``,toc:[{id:`开始之前`,title:`开始之前`},{id:`升级步骤`,title:`升级步骤`,children:[{id:`升级相关依赖`,title:`升级相关依赖`},{id:`2_ng-zorro_breaking_changes`,title:`2. NG-ZORRO BREAKING CHANGES`},{id:`3_可选部分`,title:`3. 可选部分`},{id:`4_参考`,title:`4. 参考`}]}],raw:`---
 order: 1000
 type: Basic
-title: \u5347\u7EA7\u5230 21.0 \u7248\u672C
+title: \u5347\u7EA7\u5230 22.0 \u7248\u672C
 ---
 
-> \u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C ng-alain >= \`20\` ;
+> \u672C\u6307\u5357\u9002\u7528\u4E8E\u5F53\u524D\u7248\u672C NG-ALAIN >= \`21\` ;
 > \u5982\u679C\u5728\u5347\u7EA7\u8FC7\u7A0B\u4E2D\u9047\u5230\u95EE\u9898\uFF0C\u6B22\u8FCE\u63D0\u51FA\u3002\u63D0\u95EE\u524D\u8BF7\u9605\u8BFB [\u5982\u4F55\u5411\u5F00\u6E90\u793E\u533A\u63D0\u95EE\u9898](https://github.com/seajs/seajs/issues/545)
 > \u5982\u679C\u53D1\u73B0\u672C\u6307\u5357\u5B58\u5728\u9057\u6F0F/\u9519\u8BEF\uFF0C\u8BF7\u6307\u51FA!
 > \u6216\u8005\u4F60\u9047\u5230\u4E86\u65B0\u7684\u95EE\u9898\u5E76\u89E3\u51B3\u4E86\uFF0C\u6B22\u8FCE\u8865\u5145!
 
 ## \u5F00\u59CB\u4E4B\u524D
 
-1. \u9996\u5148\u786E\u4FDD\u4F60 \`Node.js\` >= \`22.21.1\`
+1. \u9996\u5148\u786E\u4FDD\u4F60 \`Node.js\` \u7B26\u53F7 [Angular \u7248\u672C\u517C\u5BB9\u6027](https://angular.cn/reference/versions)
 2. \u521B\u5EFA\u65B0\u7684\u5206\u652F\uFF0C\u6216\u8005\u4F7F\u7528\u5176\u4ED6\u65B9\u5F0F\u5907\u4EFD\u5F53\u524D\u9879\u76EE
-3. \u5220\u9664\u9879\u76EE\u4E0B \`package-lock.json\` \u6216 \`yarn.lock\` \u6587\u4EF6
+3. \u5220\u9664\u9879\u76EE\u4E0B \`package-lock.json\` \u6216 \`yarn.lock\` \u6216 \`pnpm-lock.yaml\` \u6587\u4EF6
 
 ## \u5347\u7EA7\u6B65\u9AA4
 
 ### \u5347\u7EA7\u76F8\u5173\u4F9D\u8D56
 
-- \u5C06\u9879\u76EE\u5347\u7EA7\u5230 Angular 21 \u8FD0\u884C \`ng update @angular/core@21 @angular/cli@21 angular-eslint@21 ng-zorro-antd@21 ng-alain@21\`\u3002
-- _\u5982\u679C\u4F60\u6709\u5355\u72EC\u4F7F\u7528 \`@angular/cdk\` \u8BF7\u6267\u884C \`ng update @angular/cdk@21\`_
+- \u5C06\u9879\u76EE\u5347\u7EA7\u5230 Angular 22 \u8FD0\u884C \`ng update @angular/core@22 @angular/cli@22 angular-eslint@22 ng-zorro-antd@22 ng-alain@22\`\u3002
+- _\u5982\u679C\u4F60\u6709\u5355\u72EC\u4F7F\u7528 \`@angular/cdk\` \u8BF7\u6267\u884C \`ng update @angular/cdk@22\`_
 
 > > NG-ALAIN\u811A\u624B\u67B6\u5347\u7EA7\u5168\u90E8\u53D8\u66F4\u6587\u4EF6\uFF0C\u8BF7\u53C2\u8003\uFF1A[#2593](https://github.com/ng-alain/ng-alain/pull/2593/files)\u3002
 
-### 2. ng-zorro-antd BREAKING CHANGES
+### 2. NG-ZORRO BREAKING CHANGES
 
-\u9700\u8981\u6CE8\u610F NG-ZORRO \u6709\u5B58\u5728 BREAKING CHANGES\uFF1B\u7EC6\u8282\u8BF7\u53C2\u8003
-https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0
+\u9700\u8981\u6CE8\u610F NG-ZORRO \u6709\u5B58\u5728 BREAKING CHANGES\uFF1B\u7EC6\u8282\u8BF7\u53C2\u8003[22.0.0](
+https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/22.0.0)\u3002
 
-### 3. \u53C2\u8003
+### 3. \u53EF\u9009\u90E8\u5206
 
-- \u4EE3\u7801\u98CE\u683C\u914D\u7F6E\u53D8\u66F4 [#2594](https://github.com/ng-alain/ng-alain/pull/2594/files)`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-upgrade-v21`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var G=class n{item={name:`upgrade`,langs:[`en-US`,`zh-CN`],content:{"en-US":{meta:{order:80,title:`Upgrade scaffold`,description:`In Architecture we have described the overall composition of the NG-ALAIN scaffolding. We spent a lot of time developing some infrastructure and publi...`,group:`Dev`,path:`docs/upgrade.en-US.md`,url:`/docs/upgrade/en`},text:`<p>In <a href="/docs/architecture">Architecture</a> we have described the overall composition of the NG-ALAIN scaffolding. We spent a lot of time developing some infrastructure and publishing these to the <code>&#64;delon/*</code> series to Npm. , making the upgrade very easy.</p>
+- \u5C06\u9879\u76EE\u7684 \`packageManager\` \u5207\u6362\u4E3A \`pnpm\`
+- \u4ECE \`tsconfig.json\` \u4E2D\u79FB\u9664 \`baseUrl\` \u914D\u7F6E
+
+### 4. \u53C2\u8003
+
+- \u4EE3\u7801\u98CE\u683C\u914D\u7F6E\u53D8\u66F4 [#2636](https://github.com/ng-alain/ng-alain/pull/2636/files)`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-upgrade-v22`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var G=class n{item={name:`upgrade`,langs:[`en-US`,`zh-CN`],content:{"en-US":{meta:{order:80,title:`Upgrade scaffold`,description:`In Architecture we have described the overall composition of the NG-ALAIN scaffolding. We spent a lot of time developing some infrastructure and publi...`,group:`Dev`,path:`docs/upgrade.en-US.md`,url:`/docs/upgrade/en`},text:`<p>In <a href="/docs/architecture">Architecture</a> we have described the overall composition of the NG-ALAIN scaffolding. We spent a lot of time developing some infrastructure and publishing these to the <code>&#64;delon/*</code> series to Npm. , making the upgrade very easy.</p>
 <h2 id="publishing_rule"><a class="lake-link"><i data-anchor="publishing_rule"></i></a>Publishing rule</h2><p>Similar to <code>&#64;angular/*</code>, the version number of the <code>&#64;delon/*</code> class library will be a version number (<a href="https://www.npmjs.com/package/&#64;delon/theme" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/&#64;delon/theme.svg" alt="NPM version"></a>) at each iteration, regardless of whether a class library has been modified.</p>
 <p>At the same time, please follow the following publishing rules and update version number:</p>
 <ul>
@@ -5898,4 +5917,4 @@ yarn
 - \u79FB\u9664 \`node_modules\` \u6587\u4EF6\u5939\u53CA \`yarn.lock\` \u6587\u4EF6
 - \u6267\u884C \`yarn\`
 
-**\u6CE8\u610F\uFF1A** \u8FD9\u79CD\u65B9\u5F0F\u4F1A\u5BF9\u6240\u6709\u7C7B\u5E93\u6309\u6BD4\u8F83\u65B0\u7684\u7248\u672C\u5B89\u88C5\uFF0C\u4F46\u6709\u53EF\u80FD\u4F1A\u5BFC\u81F4\u7531\u4E8E\u7B2C\u4E09\u65B9\u7C7B\u578B\u7684\u7834\u574F\u6027\u53D8\u66F4\u4F1A\u5BFC\u81F4\u4E00\u4E9B\u4E0D\u5FC5\u8981\u7684\u9EBB\u70E6\u3002`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-upgrade`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var hn=[{path:``,component:ee,children:[{path:`acl`,redirectTo:`acl/zh`,pathMatch:`full`},{path:`acl/:lang`,component:c},{path:`architecture`,redirectTo:`architecture/zh`,pathMatch:`full`},{path:`architecture/:lang`,component:p},{path:`auth`,redirectTo:`auth/zh`,pathMatch:`full`},{path:`auth/:lang`,component:u},{path:`cache`,redirectTo:`cache/zh`,pathMatch:`full`},{path:`cache/:lang`,component:h},{path:`changelog`,redirectTo:`changelog/zh`,pathMatch:`full`},{path:`changelog/:lang`,component:g},{path:`cli`,redirectTo:`cli/zh`,pathMatch:`full`},{path:`cli/:lang`,component:m},{path:`contributing`,redirectTo:`contributing/zh`,pathMatch:`full`},{path:`contributing/:lang`,component:f},{path:`deploy`,redirectTo:`deploy/zh`,pathMatch:`full`},{path:`deploy/:lang`,component:b},{path:`faq`,redirectTo:`faq/zh`,pathMatch:`full`},{path:`faq/:lang`,component:y},{path:`getting-started`,redirectTo:`getting-started/zh`,pathMatch:`full`},{path:`getting-started/:lang`,component:k},{path:`global-config`,redirectTo:`global-config/zh`,pathMatch:`full`},{path:`global-config/:lang`,component:v},{path:`graph`,redirectTo:`graph/zh`,pathMatch:`full`},{path:`graph/:lang`,component:A},{path:`how-to-start`,redirectTo:`how-to-start/zh`,pathMatch:`full`},{path:`how-to-start/:lang`,component:w},{path:`i18n`,redirectTo:`i18n/zh`,pathMatch:`full`},{path:`i18n/:lang`,component:_},{path:`import`,redirectTo:`import/zh`,pathMatch:`full`},{path:`import/:lang`,component:N},{path:`llms`,redirectTo:`llms/zh`,pathMatch:`full`},{path:`llms/:lang`,component:I},{path:`mock`,redirectTo:`mock/zh`,pathMatch:`full`},{path:`mock/:lang`,component:C},{path:`module`,redirectTo:`module/zh`,pathMatch:`full`},{path:`module/:lang`,component:x},{path:`new-component`,redirectTo:`new-component/zh`,pathMatch:`full`},{path:`new-component/:lang`,component:S},{path:`new-page`,redirectTo:`new-page/zh`,pathMatch:`full`},{path:`new-page/:lang`,component:L},{path:`performance`,redirectTo:`performance/zh`,pathMatch:`full`},{path:`performance/:lang`,component:D},{path:`server`,redirectTo:`server/zh`,pathMatch:`full`},{path:`server/:lang`,component:z},{path:`ssr`,redirectTo:`ssr/zh`,pathMatch:`full`},{path:`ssr/:lang`,component:M},{path:`style-guide`,redirectTo:`style-guide/zh`,pathMatch:`full`},{path:`style-guide/:lang`,component:R},{path:`theme`,redirectTo:`theme/zh`,pathMatch:`full`},{path:`theme/:lang`,component:T},{path:`upgrade-v21`,redirectTo:`upgrade-v21/zh`,pathMatch:`full`},{path:`upgrade-v21/:lang`,component:q},{path:`upgrade`,redirectTo:`upgrade/zh`,pathMatch:`full`},{path:`upgrade/:lang`,component:G}]}];export{hn as routes};
+**\u6CE8\u610F\uFF1A** \u8FD9\u79CD\u65B9\u5F0F\u4F1A\u5BF9\u6240\u6709\u7C7B\u5E93\u6309\u6BD4\u8F83\u65B0\u7684\u7248\u672C\u5B89\u88C5\uFF0C\u4F46\u6709\u53EF\u80FD\u4F1A\u5BFC\u81F4\u7531\u4E8E\u7B2C\u4E09\u65B9\u7C7B\u578B\u7684\u7834\u574F\u6027\u53D8\u66F4\u4F1A\u5BFC\u81F4\u4E00\u4E9B\u4E0D\u5FC5\u8981\u7684\u9EBB\u70E6\u3002`}}};codes=[];static ɵfac=function(e){return new(e||n)};static ɵcmp=_e({type:n,selectors:[[`docs-upgrade`]],hostAttrs:[1,`d-block`],decls:1,vars:2,consts:[[3,`codes`,`item`]],template:function(e,t){e&1&&lt(0,`app-docs`,0),e&2&&re(`codes`,t.codes)(`item`,t.item)},dependencies:[rt],encapsulation:2})};var hn=[{path:``,component:ee,children:[{path:`acl`,redirectTo:`acl/zh`,pathMatch:`full`},{path:`acl/:lang`,component:c},{path:`architecture`,redirectTo:`architecture/zh`,pathMatch:`full`},{path:`architecture/:lang`,component:p},{path:`auth`,redirectTo:`auth/zh`,pathMatch:`full`},{path:`auth/:lang`,component:u},{path:`cache`,redirectTo:`cache/zh`,pathMatch:`full`},{path:`cache/:lang`,component:h},{path:`changelog`,redirectTo:`changelog/zh`,pathMatch:`full`},{path:`changelog/:lang`,component:g},{path:`cli`,redirectTo:`cli/zh`,pathMatch:`full`},{path:`cli/:lang`,component:m},{path:`contributing`,redirectTo:`contributing/zh`,pathMatch:`full`},{path:`contributing/:lang`,component:f},{path:`deploy`,redirectTo:`deploy/zh`,pathMatch:`full`},{path:`deploy/:lang`,component:b},{path:`faq`,redirectTo:`faq/zh`,pathMatch:`full`},{path:`faq/:lang`,component:y},{path:`getting-started`,redirectTo:`getting-started/zh`,pathMatch:`full`},{path:`getting-started/:lang`,component:k},{path:`global-config`,redirectTo:`global-config/zh`,pathMatch:`full`},{path:`global-config/:lang`,component:v},{path:`graph`,redirectTo:`graph/zh`,pathMatch:`full`},{path:`graph/:lang`,component:A},{path:`how-to-start`,redirectTo:`how-to-start/zh`,pathMatch:`full`},{path:`how-to-start/:lang`,component:w},{path:`i18n`,redirectTo:`i18n/zh`,pathMatch:`full`},{path:`i18n/:lang`,component:_},{path:`import`,redirectTo:`import/zh`,pathMatch:`full`},{path:`import/:lang`,component:N},{path:`llms`,redirectTo:`llms/zh`,pathMatch:`full`},{path:`llms/:lang`,component:I},{path:`mock`,redirectTo:`mock/zh`,pathMatch:`full`},{path:`mock/:lang`,component:C},{path:`module`,redirectTo:`module/zh`,pathMatch:`full`},{path:`module/:lang`,component:x},{path:`new-component`,redirectTo:`new-component/zh`,pathMatch:`full`},{path:`new-component/:lang`,component:S},{path:`new-page`,redirectTo:`new-page/zh`,pathMatch:`full`},{path:`new-page/:lang`,component:L},{path:`performance`,redirectTo:`performance/zh`,pathMatch:`full`},{path:`performance/:lang`,component:D},{path:`server`,redirectTo:`server/zh`,pathMatch:`full`},{path:`server/:lang`,component:z},{path:`ssr`,redirectTo:`ssr/zh`,pathMatch:`full`},{path:`ssr/:lang`,component:M},{path:`style-guide`,redirectTo:`style-guide/zh`,pathMatch:`full`},{path:`style-guide/:lang`,component:R},{path:`theme`,redirectTo:`theme/zh`,pathMatch:`full`},{path:`theme/:lang`,component:T},{path:`upgrade-v22`,redirectTo:`upgrade-v22/zh`,pathMatch:`full`},{path:`upgrade-v22/:lang`,component:q},{path:`upgrade`,redirectTo:`upgrade/zh`,pathMatch:`full`},{path:`upgrade/:lang`,component:G}]}];export{hn as routes};

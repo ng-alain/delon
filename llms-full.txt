@@ -4952,35 +4952,42 @@ After subscribing to `refresh`, the token will be automatically triggered when i
 ---
 order: 1000
 type: Basic
-title: Upgrade to version 21.0
+title: Upgrade to version 22.0
 ---
 
-> This guide applies to the current version ng-alain >= `20`;
-> If you encounter problems during the upgrade process, feel free to comment here.
-> If you find any errors in this guide, please point out
-> Or you have encountered a new problem and solved it, welcome to comment here.
+> This guide applies to the current version of NG-ALAIN >= `21`;
+> If you encounter any problems during the upgrade, feel free to ask. Before asking questions, please read [How to Ask Questions in the Open Source Community](https://github.com/seajs/seajs/issues/545)
+> If you find any omissions or errors in this guide, please point them out!
+> Or, if you encounter a new problem and have found a solution, feel free to contribute!
 
-## Before upgrade
+## Before You Start
 
-1. Make sure `Node.js` >= `22.21.1`.
-2. Create a new branch, or use other methods to back up the current project.
-3. Delete the `package-lock.json` or `yarn.lock` file.
+1. First, make sure your `Node.js` version is compatible with the [Angular version compatibility](https://angular.dev/reference/versions)
+2. Create a new branch, or back up your current project in another way
+3. Delete the `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml` file from the project
 
-### 1.Upgrade dependencies
+## Upgrade Steps
 
-- Upgrade Angular to 21.x version, Run `ng update @angular/core@21 @angular/cli@21 angular-eslint@21 ng-zorro-antd@21 ng-alain@21`.
-- _Run `ng update @angular/cdk@21`, if you have used `@angular/cdk`._
+### Upgrade Related Dependencies
 
-> NG-ALAIN scaffolding upgrade all change files, please refer to: [#2593](https://github.com/ng-alain/ng-alain/pull/2593/files).
+- To upgrade the project to Angular 22, run `ng update @angular/core@22 @angular/cli@22 angular-eslint@22 ng-zorro-antd@22 ng-alain@22`.
+- _If you are using `@angular/cdk` separately, run `ng update @angular/cdk@22`_
 
-### 2. ng-zorro-antd BREAKING CHANGES
+> > For all changed files related to the NG-ALAIN starter project upgrade, please refer to [#2593](https://github.com/ng-alain/ng-alain/pull/2593/files).
 
-Please note that NG-ZORRO has BREAKING CHANGES; please refer to
-https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/21.0.0 for details.
+### 2. NG-ZORRO BREAKING CHANGES
 
-### 3. Reference
+Please note that NG-ZORRO contains BREAKING CHANGES; for details, please refer to [22.0.0](
+https://github.com/NG-ZORRO/ng-zorro-antd/releases/tag/22.0.0).
 
-- Code style configuration change [#2594](https://github.com/ng-alain/ng-alain/pull/2594/files)
+### 3. Optional
+
+- Set `pnpm` as the project's `packageManager`
+- Remove the `baseUrl` configuration from `tsconfig.json`
+
+### 4. References
+
+- Code style configuration changes [#2636](https://github.com/ng-alain/ng-alain/pull/2636/files)
 
 ---
 
