@@ -58,7 +58,6 @@
     "@angular/router": "^22.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "@angular/animations": "^22.1.4",
     "@angular/cdk": "^22.1.4",
     "@angular/elements": "^22.1.4",
     "@angular/platform-server": "^22.1.4",
