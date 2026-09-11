@@ -161,7 +161,7 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
 })
 export class HeaderComponent {
   protected readonly mobile = MOBILE;
-  protected readonly oldVersionList = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
+  protected readonly oldVersionList = [21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 1];
   protected readonly currentVersion = pkg.version;
   protected readonly delonLibs: Array<{ name: string; default?: string; selected?: boolean }> = [
     { name: 'theme' },
