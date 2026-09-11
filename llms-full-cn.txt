@@ -6442,6 +6442,8 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步静态数据源 | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[autoFocus]` | 默认获取焦点 | `boolean` | `false` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[showSearch]` | 是否支持搜索 | `bool` | `false` |
 | `[allowClear]` | 是否显示清除按钮 | `bool` | `true` |
@@ -6454,7 +6456,6 @@ type: Non-built-in widgets
 | `[columnClassName]` | 弹出菜单中数据列的自定义样式 | `string` | - |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[data]` | 初始化列数据，用于第一列的数据，子列通过选项的 `children` 加载，或者通过 `load` 事件异步加载。 | `Array` | - |
-| `[enableCache]` | 是否缓存异步加载的数据，若每次异步加载的数据都是变化的，需将该值设置为 false | `bool` | `true` |
 | `[expandTrigger]` | 次级菜单的展开方式，可选 'click' 和 'hover' | `string` | `click` |
 | `[changeOnSelect]` | 当此项为 true 时，点选每级菜单选项值都会发生变化，具体见上面的演示 | `bool` | `false` |
 | `[changeOn]` | 可通过自定义的函数来判断点击菜单选项是否应该发生变化，当函数返回 true 时，将发生变化 | `(option: NzCascaderOption, level: number) => boolean` | - |
@@ -6462,7 +6463,8 @@ type: Non-built-in widgets
 | `[valueProperty]` | 值 `value` 的属性名称 | `string` | `value` |
 | `[labelProperty]` | 值 `label` 的属性名称 | `string` | `label` |
 | `[multiple]` | 是否多选 | `boolean` | `false` |
-| `(visibleChange)` | 异步加载事件 | `(value: boolean) => void` | - |
+| `[suffixIcon]` | 自定义的选择框后缀图标 | `TemplateRef<any>, string` | - |
+| `(openChange)` | 下拉菜单打开关闭回调函数 | `(status: boolean) => void` | - |
 | `(change)` | 选项值变更事件 | `(values: any[]) => void` | - |
 | `(selectionChange)` | 选项变更事件 | `(values: NzCascaderOption[]) => void` | - |
 | `(clear)` | 内容被清空事件 | `() => void` | - |
@@ -6618,23 +6620,23 @@ type: Widgets
 
 ### schema 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[enum]` | 数据源，当数据源存在于表示一组多选框 | `SFSchemaEnumType[]` | -
-`[readOnly]` | 禁用状态  | `boolean` | -
-`[title]` | 无 `enum` 时表示多选框文本内容  | `string` | -
-`[description]` | 无 `enum` 时表示多选框后帮助信息  | `string` | -
+| 成员            | 说明                                 | 类型                 | 默认值 |
+| --------------- | ------------------------------------ | -------------------- | ------ |
+| `[enum]`        | 数据源，当数据源存在于表示一组多选框 | `SFSchemaEnumType[]` | -      |
+| `[readOnly]`    | 禁用状态                             | `boolean`            | -      |
+| `[title]`       | 无 `enum` 时表示多选框文本内容       | `string`             | -      |
+| `[description]` | 无 `enum` 时表示多选框后帮助信息     | `string`             | -      |
 
 ### ui 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[asyncData]` | 异步数据源  | `() => Observable<SFSchemaEnumType[]>` | -
-`[span]` | 指定每个选框单元格数量 | `number` | -
-`[styleType]` | radio的样式  | `default, button` | `default`
-`[checkAll]` | 是否需要全选  | `boolean` | -
-`[checkAllText]` | 全选按钮文本  | `string` | `全选`
-`[change]` | 值变更事件，参数：单个多选框为 `boolean`，否则为 `SFSchemaEnum[]` | `(res: boolean | SFSchemaEnum[]) => void` | -
+| 成员             | 说明                                                              | 类型                                       | 默认值    |
+| ---------------- | ----------------------------------------------------------------- | ------------------------------------------ | --------- |
+| `[asyncData]`    | 异步数据源                                                        | `() => Observable<SFSchemaEnumType[]>`     | -         |
+| `[span]`         | 指定每个选框单元格数量                                            | `number`                                   | -         |
+| `[styleType]`    | radio的样式                                                       | `default, button`                          | `default` |
+| `[checkAll]`     | 是否需要全选                                                      | `boolean`                                  | -         |
+| `[checkAllText]` | 全选按钮文本                                                      | `string`                                   | `全选`    |
+| `[change]`       | 值变更事件，参数：单个多选框为 `boolean`，否则为 `SFSchemaEnum[]` | `(res: boolean \| SFSchemaEnum[]) => void` | -         |
 
 ---
 
@@ -6660,11 +6662,14 @@ type: Non-built-in widgets
 | `[format]`       | 颜色格式       | `rgb`｜`hex`｜`hsb`                 | `hex`    |
 | `[defaultValue]` | 颜色默认的值     | `string`｜`NzColor`                  | -        |
 | `[allowClear]`   | 允许清除选择的颜色  | `boolean`                         | `false`  |
+| `[disabledAlpha]` | 禁用透明度选择 | `boolean`                         | `false`  |
+| `[presets]`      | 预设颜色列表 | `NzPresetColor[]` | - |
 | `[trigger]`      | 颜色选择器的触发模式 | `hover`｜`click`                   | `click`  |
 | `[showText]`      | 显示颜色文本     | `boolean`                         | `false`  |
 | `[title]`      | 设置颜色选择器的标题 | `TemplateRef<void>`｜`string`      | -        |
 | `(change)`     | 颜色变化的回调    | `EventEmitter<{ color: NzColor; format: string }>` | -        |
 | `(formatChange)`      | 颜色格式变化的回调  | `EventEmitter<'rgb'｜'hex'｜'hsb'>` | -        |
+| `(onClear)`      | 清除按钮点击回调  | `() => void` | -        |
 | `[block]`   | 是否颜色块  | `boolean`                         | `false`  |
 
 ---
@@ -6816,6 +6821,8 @@ type: Widgets
 | `[inline]` | 内联模式 | `boolean` | `false` |
 | `[separator]` | 分隔符 | `string, TemplateRef` | `'~'` |
 | `[showWeekNumber]` | 是否在每一行显示周数（仅日期选择器支持。周选择器始终显示周数） | `boolean` | `false` |
+| `[ranges]` | 预设时间范围快捷选择（仅 `range` 模式有效） | `{ [key: string]: Date[] \| (() => Date[]) }` | - |
+| `[autoFocus]` | 自动获取焦点 | `boolean` | `false` |
 | `[onOk]` | 点击确定按钮的回调 | `(data: Date | Date[]) => void` | - |
 | `[change]` | 时间发生变化的回调 | `(data: Date | Date[]) => void` | - |
 
@@ -8198,13 +8205,16 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步静态数据源 | `(input: string) => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[allowClear]` | 允许清除 | `boolean` | `false` |
 | `[loadData]` | 实时数据 | `(option: MentionOnSearchTypes) => Observable<SFSchemaEnumType[]>` | - |
 | `[notFoundContent]` | 未找到时的内容 | `string` | `无匹配结果，轻敲空格完成输入` |
-| `[placement]` | 建议框位置 | `button,top` | `button` |
+| `[placement]` | 建议框位置 | `bottom,top` | `bottom` |
 | `[prefix]` | 触发弹出下拉框的字符 | `'string'` `'string[]'` | `@` |
 | `[valueWith]` | 建议选项的取值方法 | `(value: any) => string` | - |
 | `[select]` | 下拉框选择建议时回调 | `(value: any) => void` | - |
+| `(onClear)` | 内容被清除时回调 | `() => void` | - |
 | `[inputStyle]` | 文本框类型 | `text, textarea` | `text` |
 | `[autosize]` | 自适应内容高度，可设置对象：`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
 
@@ -8501,6 +8511,10 @@ order: 5
 
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[addOnBefore]` | 带标签的 input，设置前置标签 | `string` | - |
+| `[addOnAfter]` | 带标签的 input，设置后置标签 | `string` | - |
+| `[autofocus]` | 自动获取焦点 | `boolean` | `false` |
 | `[prefix]` | 前缀，简化 `nzFormatter`、`nzParser` 的使用 | - | - |
 | `[unit]` | 单位，简化 `nzFormatter`、`nzParser` 的使用 | - | - |
 | `[formatter]` | 等同 `nzFormatter` | - | - |
@@ -8509,6 +8523,8 @@ order: 5
 | `[widgetWidth]` | 指定 `nz-number` 宽度 | `number, string` | `90` |
 | `[hideStep]` | 隐藏步数操作区 | `boolean` | `false` |
 | `[change]` | 变更事件 | `(val?: number) => void` | - |
+| `(focus)` | 获得焦点时回调 | `() => void` | - |
+| `(blur)` | 失去焦点时回调 | `() => void` | - |
 | `[changeOnWheel]` | 是否启用鼠标滚轮控制 | `boolean` | `true` |
 
 ## QA
@@ -8930,8 +8946,10 @@ type: Non-built-in widgets
 | `[icon]`     | 二维码中 icon 地址 | `string`                          | -         |
 | `[iconSize]` | 二维码中 icon 大小 | `number`                          | `40`      |
 | `[bordered]` | 是否有边框        | `boolean`                         | `true`    |
-| `[status]`   | 二维码状态        | `'active'｜'expired' ｜'loading'`   | `active`  |
+| `[type]`     | 渲染类型          | `canvas,svg`                      | `canvas`  |
+| `[status]`   | 二维码状态        | `'active'｜'expired' ｜'loading' ｜'scanned'` | `active`  |
 | `[level]`    | 二维码容错等级      | `'L'｜'M'｜'Q'｜'H'`                 | `M`       |
+| `[boostLevel]` | 是否自动提升纠错等级 | `boolean` | `true` |
 | `(refresh)`  | 点击"点击刷新"的回调  | `EventEmitter<string>`            | -         |
 
 ---
@@ -9053,8 +9071,10 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[allowClear]` | 是否允许再次点击后清除 | `boolean` | `true` |
 | `[autoFocus]` | 自动获取焦点 | `boolean` | `false` |
+| `[character]` | 自定义字符 | `TemplateRef<{ $implicit: number }>` | - |
 | `[text]` | 提醒文本模板，`{{value}}` 表示当前值（注意无任何空格） | `string` | - |
 | `[tooltips]` | 自定义每项的提示信息 | `string[]` | `[]` |
+| `(hoverChange)` | 鼠标经过时数值变化的回调 | `(value: number) => void` | - |
 
 ---
 
@@ -9562,6 +9582,8 @@ type: Non-built-in widgets
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[block]` | 将宽度调整为父元素宽度的选项 | `boolean` | false |  |
+| `[vertical]` | 是否启用垂直模式 | `boolean` | `false` |  |
+| `[shape]` | 分段形状 | `default,round` | `default` |  |
 | `[asyncData]` | 异步数据 | `() => Observable<NzSegmentedOptions>` | - |  |
 | `(valueChange)` | 当前选中项目变化时触发回调 | `(data: { index: number; item: SFValue }) => void` | - |  |
 
@@ -9776,10 +9798,14 @@ type: Non-built-in widgets
 成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[range]` | 当添加该属性时，启动双滑块模式 | `Boolean` | -
+`[step]` | 步长；`marks` 不为空对象时可设为 `null`，此时可选值仅有 `marks` 标出的部分；未设置时以 `multipleOf` 为准 | `number, null` | `multipleOf` |
 `[marks]` | 刻度标记 | `NzMarks` | -
 `[dots]` | 是否只能拖拽到刻度上 | `Boolean` | `false`
 `[included]` | 是否包含。`marks` 不为空对象时有效，值为 `true` 时表示值为包含关系，`false` 表示并列 | `Boolean` | `true`
 `[vertical]` | 竖直显示。添加该属性时，Slider 为垂直方向。 | `boolean` | `false`
+`[reverse]` | 反向坐标轴 | `boolean` | `false`
+`[tooltipVisible]` | 值为 `always` 时总是显示，值为 `never` 时在任何情况下都不显示 | `default,always,never` | `default`
+`[tooltipPlacement]` | 设置 Tooltip 的默认位置 | `string` | -
 `[afterChange]` | 与 `onmouseup` 触发时机一致，把当前值作为参数传入。 | `(value: NzSliderValue) => void` | -
 `[formatter]` | Slider 会把当前值传给 `nzTipFormatter`，并在 Tooltip 中显示 `nzTipFormatter` 的返回值，若为 null，则隐藏 Tooltip | `(value: number) => string` | -
 
@@ -10319,6 +10345,7 @@ order: 3
 | `[type]` | 等同 input 的 `type` 值，例如：`password` | `string` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | 可以点击清除图标删除内容 | `boolean` | `false` |
 | `[autocomplete]` | 自动完成功能的表单 | `HTML Attribute` | - |
 | `[autofocus]` | 当页面加载时获得焦点 | `HTML Attribute` | - |
 | `[addOnBefore]` | 前置标签，等同 `nzAddOnBefore` | `string` | - |
@@ -10499,6 +10526,7 @@ type: Widgets
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[autosize]` | 自适应内容高度，可设置对象：`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
 | `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | 允许点击清除图标删除内容；与 `maxCharacterCount` 互斥（同时设置时以 `maxCharacterCount` 优先） | `boolean` | `false` |
 | `[maxCharacterCount]` | `textarea` 数字提示显示的最大值 | `number` | - |
 | `[computeCharacterCount]` | 自定义计算 `characterCount` 的函数 | `(v: string) => number` | `v => v.length` |
 | `[change]` | 内容变更事件 | `(val: string) => void` | - |
@@ -10716,6 +10744,7 @@ type: Non-built-in widgets
 | `[notFoundContent]` | 当列表为空时显示的内容 | `string` | - |
 | `[canMove]` | 穿梭时二次校验。 | `function` | - |
 | `[oneWay]` | 展示为单向样式 | `boolean` | `false` |
+| `[showSelectAll]` | 是否显示底部全选勾选框 | `boolean` | `true` |
 | `(change)` | 选项在两栏之间转移时的回调函数 | `(options: TransferChange) => void` | - |
 | `(searchChange)` | 搜索框内容时改变时的回调函数 | `(options: TransferSearchChange) => void` | - |
 | `(selectChange)` | 选中项发生改变时的回调函数 | `(options: TransferSelectChange) => void` | - |
@@ -10753,7 +10782,10 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | `default` |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[showSearch]` | 支持搜索 | `boolean` | `false` |
+| `[placement]` | 浮层位置 | `bottomLeft,bottomRight,topLeft,topRight` | `bottomLeft` |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[allowClear]` | 支持清除 | `boolean` | `false` |
 | `[clearValue]` | 清空时默认值 | `any` | `undefined` |
@@ -10774,6 +10806,8 @@ type: Non-built-in widgets
 | `[maxTagPlaceholder]` | 隐藏 tag 时显示的内容 | `TemplateRef<{ $implicit: NzTreeNode[] }>` | - |
 | `[treeTemplate]` | 自定义节点 | `TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>` | - |
 | `[expandChange]` | 点击展开树节点图标调用 | `(e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>` | - |
+| `[openChange]` | 下拉菜单打开关闭回调函数 | `(status: boolean) => void` | - |
+| `[suffixIcon]` | 自定义的选择框后缀图标 | `TemplateRef<any>, string` | - |
 | `[virtualHeight]` | 虚拟滚动的总高度 | `string` | `-` |
 | `[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `28` |
 | `[virtualMaxBufferPx]` | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `500` |
@@ -10821,7 +10855,7 @@ type: Non-built-in widgets
 
 - **务必** 指定 `resReName` 来获取正确数据
 - `multiple` 决定返回数组或者单体数据
-- 若指定 `enum` 或 `asyncData` 将被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
+- 初始文件请使用 `fileList` 属性；`enum` 与 `asyncData` 仅作为通用数据源存在，其结构（`{ label, value }`）与文件对象（`NzUploadFile`）不符，不会作为初始文件生效
 - 图像预览：默认使用 `nzModal` 来显示包含文件对象的 `url` 或 `thumbUrl` 值
 
 ## API
@@ -10845,6 +10879,7 @@ type: Non-built-in widgets
 | `[action]` | 必选参数, 上传的地址 | `string, ((file: UploadFile) => string, Observable<string>)` | - |
 | `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string, string[]` | - |
 | `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限 | `number` | `0` |
+| `[maxCount]` | 限制上传数量；当为 `1` 时，始终用最新上传的文件代替当前文件 | `number` | - |
 | `[filter]` | 自定义过滤器 | `UploadFilter[]` | - |
 | `[fileList]` | 文件列表 | `UploadFile[]` | - |
 | `[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限 | `number` | `0` |

@@ -5999,6 +5999,8 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous static data source | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | - |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[autoFocus]` | Auto focus | `boolean` | `false` |
 | `[placeholder]` | Placeholder | `string` | - |
 | `[showSearch]` | Whether support search | `bool` | `false` |
 | `[allowClear]` | Whether show clear button | `bool` | `true` |
@@ -6011,7 +6013,6 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 | `[columnClassName]` | Custom style of data column in popup menu | `string` | - |
 | `[notFoundContent]` | Content when dropdown list is empty | `string` | - |
 | `[data]` | Initial data, is used in first column data, sub column is loaded by `children` option, or loaded by `load` asynchronous event | `Array` | - |
-| `[enableCache]` | Whether cache asynchronous loaded data, should set it to false if data is changed in every asynchronous load | `bool` | `true` |
 | `[expandTrigger]` | How is sub menu expanded, options: 'click' or 'hover' | `string` | `click` |
 | `[changeOnSelect]` | When it is set to true, the value is changed when each level of menu option is selected, see details from above demo | `bool` | `false` |
 | `[changeOn]` | Custom function to determine if it should have a change when a menu option is selected, will have a change when return value is true | `(option: NzCascaderOption, level: number) => boolean` | - |
@@ -6019,7 +6020,8 @@ Every select triggers a HTTP request, data source is from `asyncData`; includes 
 | `[valueProperty]` | Property of `value` | `string` | `value` |
 | `[labelProperty]` | Property of `label` | `string` | `label` |
 | `[multiple]` | Support multiple | `boolean` | `false` |
-| `(visibleChange)` | Asynchronous load event | `(value: boolean) => void` | - |
+| `[suffixIcon]` | Custom select box suffix icon | `TemplateRef<any>, string` | - |
+| `(openChange)` | Dropdown menu open/close callback | `(status: boolean) => void` | - |
 | `(change)` | Selected value changed event | `(values: any[]) => void` | - |
 | `(selectionChange)` | Select option changed event | `(values: NzCascaderOption[]) => void` | - |
 | `(clear)` | Content clear event | `() => void` | - |
@@ -6150,23 +6152,23 @@ Checkbox.
 
 ### schema
 
-Property        | Description                                 | Type                 | Default
-----------------|---------------------------------------------|----------------------|--------
-`[readOnly]`    | Whether to disable the state                | `boolean`            | -
-`[enum]`        | Render checkbox group when the value exists | `SFSchemaEnumType[]` | -
-`[title]`       | Text of the single checkbox                 | `string`             | -
-`[description]` | Help text of the single checkbox            | `string`             | -
+| Property        | Description                                 | Type                 | Default |
+| --------------- | ------------------------------------------- | -------------------- | ------- |
+| `[readOnly]`    | Whether to disable the state                | `boolean`            | -       |
+| `[enum]`        | Render checkbox group when the value exists | `SFSchemaEnumType[]` | -       |
+| `[title]`       | Text of the single checkbox                 | `string`             | -       |
+| `[description]` | Help text of the single checkbox            | `string`             | -       |
 
 ### ui
 
-Property | Description | Type | Default
--------- | ----------- | ---- | -------
-`[asyncData]` | Async data source, render checkbox group when the value exists  | `() => Observable<SFSchemaEnumType[]>` | -
-`[span]` | Raster number of cells to occupy | `number` | -
-`[styleType]` | Style of the `nz-checkbox` | `default, button` | `default`
-`[checkAll]` | Whether to select all  | `boolean` | -
-`[checkAllText]` | Select all button text  | `string` | `全选`
-`[change]` | Changed event, Parameter: single checkbox is `boolean`, otherwise `SFSchemaEnum[]` | `(res: boolean | SFSchemaEnum[]) => void` | -
+| Property         | Description                                                                        | Type                                       | Default   |
+| ---------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ | --------- |
+| `[asyncData]`    | Async data source, render checkbox group when the value exists                     | `() => Observable<SFSchemaEnumType[]>`     | -         |
+| `[span]`         | Raster number of cells to occupy                                                   | `number`                                   | -         |
+| `[styleType]`    | Style of the `nz-checkbox`                                                         | `default, button`                          | `default` |
+| `[checkAll]`     | Whether to select all                                                              | `boolean`                                  | -         |
+| `[checkAllText]` | Select all button text                                                             | `string`                                   | `全选`    |
+| `[change]`       | Changed event, Parameter: single checkbox is `boolean`, otherwise `SFSchemaEnum[]` | `(res: boolean \| SFSchemaEnum[]) => void` | -         |
 
 ---
 
@@ -6191,11 +6193,14 @@ Non-built-in modules need to additionally register `withColorWidget` in [json-sc
 | `[format]`       | Format of color       | `rgb`｜`hex`｜`hsb`                 | `hex`     |
 | `[defaultValue]` | Default value of color     | `string`｜`NzColor`                  | `false`   |
 | `[allowClear]`   | Allow clearing color selected  | `boolean`                         | `false`   |
+| `[disabledAlpha]` | Disable alpha selector | `boolean` | `false` |
+| `[presets]`      | Preset color list | `NzPresetColor[]` | - |
 | `[trigger]`      | ColorPicker trigger mode | `hover`｜`click`                   | `click`   |
 | `[showText]`      | Show color text     | `boolean`                         | `false`   |
 | `[title]`      | Setting the title of the color picker | `TemplateRef<void>`｜`string`      | -         |
 | `(change)`     | Callback when value is changed    | `EventEmitter<{ color: NzColor; format: string }>`            | -         |
 | `(formatChange)`      | Callback when `format` is changed      | `EventEmitter<'rgb'｜'hex'｜'hsb'>` | -         |
+| `(onClear)`      | Callback when the clear button is clicked | `() => void` | - |
 | `[block]`   | Color Block  | `boolean`                         | `false`  |
 
 ---
@@ -6357,6 +6362,8 @@ To select or input a date.
 | `[inline]` | Inline mode of the date picker | `boolean` | `false` |
 | `[separator]` | separator | `string, TemplateRef` | `'~'` |
 | `[showWeekNumber]` | whether to show the week number on each row (Only supported by date picker. Week picker always shows week numbers) | `boolean` | `false` |
+| `[ranges]` | Preset ranges for quick selection, only valid in `range` mode | `{ [key: string]: Date[] \| (() => Date[]) }` | - |
+| `[autoFocus]` | get focus when component mounted | `boolean` | `false` |
 | `[onOk]` | callback when click ok button | `(data: Date | Date[]) => void` | - |
 | `[change]` | Date change callback | `(data: Date | Date[]) => void` | - |
 
@@ -7560,13 +7567,16 @@ Every select triggers a HTTP request, data source is from `asyncData`.
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous static data source | `(input: string) => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | - |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | Placeholder | `string` | - |
+| `[allowClear]` | Whether show clear button | `boolean` | `false` |
 | `[loadData]` | Realtime data | `(option: MentionOnSearchTypes) => Observable<SFSchemaEnumType[]>` | - |
 | `[notFoundContent]` | Content when nothing found | `string` | `无匹配结果，轻敲空格完成输入` |
-| `[placement]` | Position of suggestion box | `button,top` | `button` |
+| `[placement]` | Position of suggestion box | `bottom,top` | `bottom` |
 | `[prefix]` | Character to trigger to popup dropdown list | `'string'` `'string[]'` | `@` |
 | `[valueWith]` | Function that maps a suggestion value | `(value: any) => string` | - |
 | `[select]` | Callback when option in dropdown list is selected | `(value: any) => void` | - |
+| `(onClear)` | Callback when content is cleared | `() => void` | - |
 | `[inputStyle]` | Input type | `text, textarea` | `text` |
 | `[autosize]` | Adaptive content height, can be set object:`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
 
@@ -7861,6 +7871,10 @@ Enter a number within certain range with the mouse or keyboard.
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[addOnBefore]` | Set the pre label | `string` | - |
+| `[addOnAfter]` | Set the post label | `string` | - |
+| `[autofocus]` | Auto focus | `boolean` | `false` |
 | `[prefix]` | Prefix, simplifying the use of `nzFormatter`, `nzParser` | - | - |
 | `[unit]` | Unit, simplifying the use of `nzFormatter`, `nzParser` | - | - |
 | `[formatter]` | Specifies the format of the value presented | - | - |
@@ -7869,6 +7883,8 @@ Enter a number within certain range with the mouse or keyboard.
 | `[widgetWidth]` | Specify `nz-number` width | `number, string` | `90` |
 | `[hideStep]` | Hide step icon | `boolean` | `false` |
 | `[changeOnWheel]` | Change on mouse wheel | `boolean` | `true` |
+| `(focus)` | Callback when getting focus | `() => void` | - |
+| `(blur)` | Callback when losing focus | `() => void` | - |
 
 ## QA
 
@@ -8289,8 +8305,10 @@ Non-built-in modules need to additionally register `withQrCodeWidget` in [json-s
 | `[icon]`            | Icon address in QR code             | `string`                        | -         |
 | `[iconSize]`        | The size of the icon in the QR code | `number`                        | `40`      |
 | `[bordered]`        | Whether has border style            | `boolean`                       | `true`    |
-| `[status]`          | QR code status                      | `'active'｜'expired' ｜'loading'` | `active`  |
+| `[type]`            | Rendering type                      | `canvas,svg`                     | `canvas`  |
+| `[status]`          | QR code status                      | `'active'｜'expired' ｜'loading' ｜'scanned'` | `active`  |
 | `[level]`           | Error Code Level                    | `'L'｜'M'｜'Q'｜'H'`               | `M`       |
+| `[boostLevel]`      | Automatically raises the error correction level | `boolean`             | `true`    |
 | `(refresh)`         | callback                            | `EventEmitter<string>`          | -         |
 
 ---
@@ -8412,8 +8430,10 @@ Non-built-in modules need to additionally register `withRateWidget` in [json-sch
 |----------|-------------|------|---------|
 | `[allowClear]` | whether to allow clear when click again | `boolean` | `true` |
 | `[autoFocus]` | get focus when component mounted | `boolean` | `false` |
+| `[character]` | Custom character | `TemplateRef<{ $implicit: number }>` | - |
 | `[text]` | Reminder text template, `{{value}}` indicates the current value | `string` | - |
 | `[tooltips]` | Customize tooltip by each character | `string[]` | `[]` |
+| `(hoverChange)` | Callback when the value changes under the cursor | `(value: number) => void` | - |
 
 ---
 
@@ -8920,6 +8940,8 @@ Non-built-in modules need to additionally register `withSegmentedWidget` in [jso
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[block]` | Option to fit width to its parent\'s width | `boolean` | false |  |
+| `[vertical]` | Whether to enable vertical mode | `boolean` | `false` |  |
+| `[shape]` | Shape of the segmented | `default,round` | `default` |  |
 | `[asyncData]` |  Set children optional | `() => Observable<NzSegmentedOptions>` | - |  |
 | `(valueChange)` | Emits when index of the currently selected option changes | `(data: { index: number; item: SFValue }) => void` | - |  |
 
@@ -9126,10 +9148,14 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[range]` | dual thumb mode | `Boolean` | -
+`[step]` | The granularity the slider can step through values; when `marks` is not null, `null` means only the marks are selectable; default to `multipleOf` | `number, null` | `multipleOf` |
 `[marks]` | Tick mark of Slider, type of key must be `number`, and must in closed interval `[min, max]` ，each mark can declare its own style. | `NzMarks` | -
 `[dots]` | Whether the thumb can drag over tick only | `Boolean` | `false`
 `[included]` | Make effect when `marks` not null，`true` means containment and `false` means coordinative | `Boolean` | `true`
 `[vertical]` | If true, the slider will be vertical | `boolean` | `false`
+`[reverse]` | Reverse axis coordinate | `boolean` | `false`
+`[tooltipVisible]` | When always show tooltip with value `always`, never show with `never` | `default,always,never` | `default`
+`[tooltipPlacement]` | Set default placement of Tooltip | `string` | -
 `[afterChange]` | Fire when `onmouseup` is fired. | `(value: NzSliderValue) => void` | -
 `[formatter]` | Slider will pass its value to `nzTipFormatter`, and display its value in Tooltip, and hide Tooltip when return value is null | `(value: number) => string` | -
 
@@ -9669,6 +9695,7 @@ Default widget, A basic widget for getting the user input is a text field.
 | `[type]` | type of the input, e.g: `password` | `string` | - |
 | `[placeholder]` | placeholder of the input | `string` | - |
 | `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | Allow clicking the clear icon to delete the content | `boolean` | `false` |
 | `[autocomplete]` | autocomplete of the input | `HTML Attribute` | - |
 | `[autofocus]` | autofocus of the input | `HTML Attribute` | - |
 | `[addOnBefore]` | The label text displayed before (on the left side of) the input field. | `string` | - |
@@ -9849,6 +9876,7 @@ Textarea.
 | `[placeholder]` | placeholder of the input | `string` | - |
 | `[autosize]` | height autosize feature, can be set object `{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |
 | `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | Allow clicking the clear icon to delete the content; mutually exclusive with `maxCharacterCount` (`maxCharacterCount` takes precedence when both are set) | `boolean` | `false` |
 | `[maxCharacterCount]` | `textarea` maximum character count displayed | `number` | - |
 | `[computeCharacterCount]` | customized `characterCount` computation function | `(v: string) => number` | `v => v.length` |
 | `[change]` | The content event for the Input. | `(val: string) => void` | - |
@@ -10067,6 +10095,7 @@ Non-built-in modules need to additionally register `withTransferWidget` in [json
 | `[notFoundContent]` | Text to display when a column is empty | `string` | - |
 | `[canMove]` | Second verification when transfer choice box | `function` | - |
 | `[oneWay]` | Display as single direction | `boolean` | `false` |
+| `[showSelectAll]` | Whether show select all checkbox at bottom | `boolean` | `true` |
 | `(change)` | Callback function when the transfer between columns is complete | `(options: TransferChange) => void` | - |
 | `(searchChange)` | Callback function when search field is changed | `(options: TransferSearchChange) => void` | - |
 | `(selectChange)` | Callback function when selected items are changed | `(options: TransferSelectChange) => void` | - |
@@ -10104,7 +10133,10 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 |----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous data source | `() => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | `default` |
+| `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | Placeholder | `string` | - |
+| `[showSearch]` | Support search | `boolean` | `false` |
+| `[placement]` | Dropdown placement | `bottomLeft,bottomRight,topLeft,topRight` | `bottomLeft` |
 | `[notFoundContent]` | Text to display when a column is empty | `string` | - |
 | `[allowClear]` | Whether show clear button | `boolean` | `false` |
 | `[clearValue]` | Default value when cleared | `any` | `undefined` |
@@ -10125,6 +10157,8 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 | `[maxTagPlaceholder]` | Placeholder for not showing tags | `TemplateRef<{ $implicit: NzTreeNode[] }>` | - |
 | `[treeTemplate]` | Custom Nodes | `TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>` | - |
 | `[expandChange]` | Callback function for when a treeNode is expanded or collapsed | `(e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>` | - |
+| `[openChange]` | Dropdown menu open/close callback | `(status: boolean) => void` | - |
+| `[suffixIcon]` | Custom select box suffix icon | `TemplateRef<any>, string` | - |
 | `[virtualHeight]` | The height of virtual scroll | `string` | `-` |
 | `[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `28` |
 | `[virtualMaxBufferPx]` | The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `500` |
@@ -10150,7 +10184,7 @@ Non-built-in modules need to additionally register `withUploadWidget` in [json-s
 
 - **Must** set `resReName` to get correct data
 - `multiple` determine return array or one element
-- If `enum` or `asyncData` is set, it will be converted to `fileList` (`nzFileList`), and **must** initially guarantee a `response` property to indicate remote data and make sure `resReName` can be obtained correctly
+- Use `fileList` to provide initial files; `enum` and `asyncData` act only as generic data sources, and their shape (`{ label, value }`) does not match the file object (`NzUploadFile`), so they are not applied as initial files
 - Image preview: by default, it uses `nzModal` to show `url` or `thumbUrl` of file object
 
 ## API
@@ -10174,6 +10208,7 @@ Non-built-in modules need to additionally register `withUploadWidget` in [json-s
 | `[action]` | Required attribute, upload URL | `string, ((file: UploadFile) => string, Observable<string>)` | - |
 | `[accept]` | File types that can be accepted, see details from [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string, string[]` | - |
 | `[limit]` | limit number of single upload when `multiple` is set, 0 means unlimited | `number` | `0` |
+| `[maxCount]` | Limit the number of uploaded files; when set to `1`, the latest uploaded file always replaces the current file | `number` | - |
 | `[filter]` | Custom filter when choosed file | `UploadFilter[]` | - |
 | `[fileList]` | File list | `UploadFile[]` | - |
 | `[fileSize]` | Limit file size, unit: KB; `0` means unlimited | `number` | `0` |

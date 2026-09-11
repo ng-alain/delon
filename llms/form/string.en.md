@@ -24,6 +24,7 @@ Default widget, A basic widget for getting the user input is a text field.
 | `[type]` | type of the input, e.g: `password` | `string` | - |
 | `[placeholder]` | placeholder of the input | `string` | - |
 | `[variant]` | Variant | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | Allow clicking the clear icon to delete the content | `boolean` | `false` |
 | `[autocomplete]` | autocomplete of the input | `HTML Attribute` | - |
 | `[autofocus]` | autofocus of the input | `HTML Attribute` | - |
 | `[addOnBefore]` | The label text displayed before (on the left side of) the input field. | `string` | - |
