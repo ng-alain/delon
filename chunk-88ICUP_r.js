@@ -1,4 +1,4 @@
-import{Yi as _e,cs as lt,lc as re}from"./chunk-Ck3uNPg7.js";import"./chunk-BxW0cKlI.js";import"./chunk-DbRMD1wS.js";import"./main-YYMINSSB.js";import"./chunk-DMIPOHxK.js";import"./chunk-9CMSnx9_.js";import{t as rt}from"./chunk-DHlBOwDG.js";import{t as ee}from"./chunk-Bd7cbkwh.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
+import{Yi as _e,cs as lt,lc as re}from"./chunk-Ck3uNPg7.js";import"./chunk-BxW0cKlI.js";import"./chunk-DbRMD1wS.js";import"./main-KKDWNE5C.js";import"./chunk-DMIPOHxK.js";import"./chunk-9CMSnx9_.js";import{t as rt}from"./chunk-iKWmTyxA.js";import{t as ee}from"./chunk-Bd7cbkwh.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
 order: 50
 title: ACL
 type: Advance
