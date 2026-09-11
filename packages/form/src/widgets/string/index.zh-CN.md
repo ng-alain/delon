@@ -23,6 +23,7 @@ order: 3
 | `[type]` | 等同 input 的 `type` 值，例如：`password` | `string` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[allowClear]` | 可以点击清除图标删除内容 | `boolean` | `false` |
 | `[autocomplete]` | 自动完成功能的表单 | `HTML Attribute` | - |
 | `[autofocus]` | 当页面加载时获得焦点 | `HTML Attribute` | - |
 | `[addOnBefore]` | 前置标签，等同 `nzAddOnBefore` | `string` | - |

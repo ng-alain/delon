@@ -140,7 +140,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
           this.data = list;
           this.checkGroup(list);
           this.loading = false;
-          this.detectChanges();
+          this.detectChanges(true);
         });
     }
   }
@@ -151,7 +151,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       this._value = value;
       if (onSearch == null) this.data = list;
       this.checkGroup(list);
-      this.detectChanges();
+      this.detectChanges(true);
     });
     if (value && onSearch != null) this.search$.next(value);
   }

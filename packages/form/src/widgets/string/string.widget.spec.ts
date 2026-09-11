@@ -37,6 +37,21 @@ describe('form: widget: string', () => {
       .checkCount('nz-input-wrapper', 1);
   });
 
+  it('should be render input wrapper when allowClear is true', () => {
+    page
+      .newSchema({
+        properties: {
+          a: {
+            type: 'string',
+            ui: {
+              allowClear: true
+            }
+          }
+        }
+      })
+      .checkCount('nz-input-wrapper', 1);
+  });
+
   it('should be default color #000000 when format is color and default is null', () => {
     page.newSchema({
       properties: {

@@ -1,3 +1,5 @@
+import type { TemplateRef } from '@angular/core';
+
 import type { SFUISchemaItem } from '@delon/form';
 
 export interface SFRateWidgetSchema extends SFUISchemaItem {
@@ -12,6 +14,11 @@ export interface SFRateWidgetSchema extends SFUISchemaItem {
   autoFocus?: boolean;
 
   /**
+   * 自定义字符
+   */
+  character?: TemplateRef<{ $implicit: number }>;
+
+  /**
    * 提醒文本模板，`{{value}}` 表示当前值（注意无任何空格）
    */
   text?: string;
@@ -20,4 +27,9 @@ export interface SFRateWidgetSchema extends SFUISchemaItem {
    * 自定义每项的提示信息
    */
   tooltips?: string[];
+
+  /**
+   * 鼠标经过时数值变化的回调
+   */
+  hoverChange?: (value: number) => void;
 }

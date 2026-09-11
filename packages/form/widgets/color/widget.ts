@@ -31,8 +31,11 @@ import type { SFColorWidgetSchema } from './schema';
         [nzFlipFlop]="$any(ui.flipFlop)"
         [nzShowText]="ui.showText"
         [nzAllowClear]="ui.allowClear"
+        [nzDisabledAlpha]="ui.disabledAlpha"
+        [nzPresets]="ui.presets ?? null"
         (nzOnChange)="_change($event)"
         (nzOnFormatChange)="_formatChange($event)"
+        (nzOnClear)="_clear()"
       />
     }
   </sf-item-wrap>`,
@@ -48,5 +51,10 @@ export class ColorWidget extends ControlUIWidget<SFColorWidgetSchema> {
 
   _formatChange(ev: NzColorPickerFormatType): void {
     if (this.ui.formatChange) this.ui.formatChange(ev);
+  }
+
+  _clear(): void {
+    this.setValue('');
+    if (this.ui.onClear) this.ui.onClear();
   }
 }

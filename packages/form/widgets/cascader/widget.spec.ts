@@ -107,7 +107,7 @@ describe('form: widget: cascader', () => {
             enum: [],
             ui: {
               widget,
-              visibleChange: jasmine.createSpy(),
+              openChange: jasmine.createSpy(),
               change: jasmine.createSpy(),
               selectionChange: jasmine.createSpy(),
               select: jasmine.createSpy(),
@@ -118,8 +118,8 @@ describe('form: widget: cascader', () => {
       });
       const comp = page.getWidget<CascaderWidget>('sf-cascader');
       const ui = page.getProperty('a').ui;
-      comp._visibleChange(null!);
-      expect(ui.visibleChange).toHaveBeenCalled();
+      comp._openChange(null!);
+      expect(ui.openChange).toHaveBeenCalled();
       comp._change(null!);
       expect(ui.change).toHaveBeenCalled();
       comp._selectionChange(null!);

@@ -31,6 +31,7 @@ import type { SFUploadWidgetSchema } from './schema';
       [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
       [nzAccept]="i.accept"
       [nzLimit]="i.limit"
+      [nzMaxCount]="i.maxCount"
       [nzFilter]="i.filter"
       [nzSize]="i.size"
       [nzFileType]="i.fileType"
@@ -84,6 +85,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       action,
       accept,
       limit,
+      maxCount,
       filter,
       fileSize,
       fileType,
@@ -108,6 +110,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       directory: toBool(directory, false),
       openFileDialogOnClick: toBool(openFileDialogOnClick, true),
       limit: limit == null ? 0 : +limit,
+      maxCount: maxCount,
       filter: filter == null ? [] : filter,
       size: fileSize == null ? 0 : +fileSize,
       fileType: fileType ?? '',

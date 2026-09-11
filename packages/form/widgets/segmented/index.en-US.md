@@ -18,5 +18,7 @@ Non-built-in modules need to additionally register `withSegmentedWidget` in [jso
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[block]` | Option to fit width to its parent\'s width | `boolean` | false |  |
+| `[vertical]` | Whether to enable vertical mode | `boolean` | `false` |  |
+| `[shape]` | Shape of the segmented | `default,round` | `default` |  |
 | `[asyncData]` |  Set children optional | `() => Observable<NzSegmentedOptions>` | - |  |
 | `(valueChange)` | Emits when index of the currently selected option changes | `(data: { index: number; item: SFValue }) => void` | - |  |

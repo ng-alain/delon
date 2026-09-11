@@ -7,6 +7,7 @@ import { createTestContext } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withTreeSelectWidget } from './index';
+import type { TreeSelectWidget } from './widget';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
 
 describe('form: widget: tree-select', () => {
@@ -132,4 +133,24 @@ describe('form: widget: tree-select', () => {
       .asyncEnd(1000);
     expect((s.properties!.a.ui as NzSafeAny).expandChange).toHaveBeenCalled();
   }));
+
+  it('#openChange', () => {
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          enum: [{ title: '待支付', key: 'WAIT_BUYER_PAY' }],
+          ui: {
+            widget,
+            openChange: jasmine.createSpy()
+          }
+        }
+      }
+    };
+    page.newSchema(s);
+    const comp = page.getWidget<TreeSelectWidget>('sf-tree-select');
+    const ui = page.getProperty('a').ui as { openChange: jasmine.Spy };
+    comp.openChange(true);
+    expect(ui.openChange).toHaveBeenCalledWith(true);
+  });
 });

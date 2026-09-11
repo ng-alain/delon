@@ -24,6 +24,13 @@ export interface SFTextareaWidgetSchema extends SFUISchemaItem {
   variant?: NzVariant;
 
   /**
+   * 允许清除，默认：`false`
+   *
+   * @note 与 `maxCharacterCount` 互斥（结构限制），同时设置时以 `maxCharacterCount` 优先
+   */
+  allowClear?: boolean;
+
+  /**
    * `textarea` maximum character count displayed
    */
   maxCharacterCount?: number;

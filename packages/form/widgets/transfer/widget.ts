@@ -26,6 +26,7 @@ import type { SFTransferWidgetSchema } from './schema';
     [showTitle]="schema.title"
   >
     <nz-transfer
+      [nzDisabled]="disabled"
       [nzDataSource]="$any(list)"
       [nzTitles]="i.titles"
       [nzOperations]="i.operations"
@@ -33,6 +34,7 @@ import type { SFTransferWidgetSchema } from './schema';
       [nzItemUnit]="i.itemUnit"
       [nzItemsUnit]="i.itemsUnit"
       [nzShowSearch]="ui.showSearch"
+      [nzShowSelectAll]="ui.showSelectAll!"
       [nzFilterOption]="ui.filterOption"
       [nzSearchPlaceholder]="ui.searchPlaceholder"
       [nzNotFoundContent]="ui.notFoundContent"
@@ -77,7 +79,7 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
       this.list = list;
       this._data = list.filter(w => w.direction === 'right');
       this.notify();
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 
@@ -104,11 +106,11 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
 
   _searchChange(options: TransferSearchChange): void {
     if (this.ui.searchChange) this.ui.searchChange(options);
-    this.detectChanges();
+    this.detectChanges(true);
   }
 
   _selectChange(options: TransferSelectChange): void {
     if (this.ui.selectChange) this.ui.selectChange(options);
-    this.detectChanges();
+    this.detectChanges(true);
   }
 }

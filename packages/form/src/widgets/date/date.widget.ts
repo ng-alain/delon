@@ -27,6 +27,7 @@ import { ControlUIWidget } from '../../widget';
           [nzId]="id"
           [nzDisabled]="disabled"
           [nzSize]="ui.size!"
+          [nzAutoFocus]="ui.autoFocus"
           [nzFormat]="displayFormat"
           [(ngModel)]="displayValue"
           (ngModelChange)="_change($event)"
@@ -48,6 +49,7 @@ import { ControlUIWidget } from '../../widget';
           [nzId]="id"
           [nzDisabled]="disabled"
           [nzSize]="ui.size!"
+          [nzAutoFocus]="ui.autoFocus"
           [nzFormat]="displayFormat"
           [(ngModel)]="displayValue"
           (ngModelChange)="_change($event)"
@@ -69,6 +71,7 @@ import { ControlUIWidget } from '../../widget';
           [nzId]="id"
           [nzDisabled]="disabled"
           [nzSize]="ui.size!"
+          [nzAutoFocus]="ui.autoFocus"
           [nzFormat]="displayFormat"
           [(ngModel)]="displayValue"
           (ngModelChange)="_change($event)"
@@ -89,6 +92,7 @@ import { ControlUIWidget } from '../../widget';
           [nzId]="id"
           [nzDisabled]="disabled"
           [nzSize]="ui.size!"
+          [nzAutoFocus]="ui.autoFocus"
           [nzFormat]="displayFormat"
           [(ngModel)]="displayValue"
           (ngModelChange)="_change($event)"
@@ -117,6 +121,7 @@ import { ControlUIWidget } from '../../widget';
           [nzId]="id"
           [nzDisabled]="disabled"
           [nzSize]="ui.size!"
+          [nzAutoFocus]="ui.autoFocus"
           [nzFormat]="displayFormat"
           [(ngModel)]="displayValue"
           (ngModelChange)="_change($event)"
@@ -202,7 +207,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     } else {
       this.displayValue = value;
     }
-    this.detectChanges();
+    this.detectChanges(true);
     // TODO: Need to wait for the rendering to complete, otherwise it will be overwritten of end widget
     if (this.displayValue) {
       setTimeout(() => this._change(this.displayValue, false));

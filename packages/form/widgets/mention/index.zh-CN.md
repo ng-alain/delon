@@ -41,12 +41,15 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步静态数据源 | `(input: string) => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[allowClear]` | 允许清除 | `boolean` | `false` |
 | `[loadData]` | 实时数据 | `(option: MentionOnSearchTypes) => Observable<SFSchemaEnumType[]>` | - |
 | `[notFoundContent]` | 未找到时的内容 | `string` | `无匹配结果，轻敲空格完成输入` |
-| `[placement]` | 建议框位置 | `button,top` | `button` |
+| `[placement]` | 建议框位置 | `bottom,top` | `bottom` |
 | `[prefix]` | 触发弹出下拉框的字符 | `'string'` `'string[]'` | `@` |
 | `[valueWith]` | 建议选项的取值方法 | `(value: any) => string` | - |
 | `[select]` | 下拉框选择建议时回调 | `(value: any) => void` | - |
+| `(onClear)` | 内容被清除时回调 | `() => void` | - |
 | `[inputStyle]` | 文本框类型 | `text, textarea` | `text` |
 | `[autosize]` | 自适应内容高度，可设置对象：`{ minRows: 2, maxRows: 6 }` | `{ minRows?: number; maxRows?: number }` | `{ minRows: 1, maxRows: 0 }` |

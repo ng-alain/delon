@@ -22,6 +22,8 @@ import type { SFSegmentedWidgetSchema } from './schema';
       [nzDisabled]="disabled"
       [nzSize]="$any(ui.size)"
       [nzBlock]="ui.block ?? false"
+      [nzVertical]="ui.vertical"
+      [nzShape]="ui.shape ?? 'default'"
       [nzOptions]="list"
       (nzValueChange)="valueChange($event)"
     />
@@ -39,7 +41,7 @@ export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
       this._list = list as NzSegmentedOption[];
-      this.detectChanges();
+      this.detectChanges(true);
     });
   }
 

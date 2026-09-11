@@ -22,6 +22,7 @@ import { ControlUIWidget } from '../../widget';
           [nzAddonAfter]="ui.addOnAfter"
           [nzPrefix]="ui.prefix"
           [nzSuffix]="ui.suffix"
+          [nzAllowClear]="ui.allowClear"
         >
           <input
             nz-input
@@ -82,12 +83,16 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
       prefixIcon,
       suffix,
       suffixIcon,
+      allowClear,
       autofocus
     } = this.ui;
     this.type =
       addOnAfter || addOnBefore || addOnAfterIcon || addOnBeforeIcon || prefix || prefixIcon || suffix || suffixIcon
         ? 'addon'
         : '';
+    if (allowClear === true && this.type === '') {
+      this.type = 'addon';
+    }
     if (autofocus === true) {
       setTimeout(() => {
         (

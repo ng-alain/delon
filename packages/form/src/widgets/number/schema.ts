@@ -1,9 +1,29 @@
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
 
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFNumberWidgetSchema extends SFUISchemaItem {
   size?: NzSizeLDSType;
+
+  /**
+   * 变体，默认：`outlined`
+   */
+  variant?: NzVariant;
+
+  /**
+   * 带标签的 input，设置前置标签
+   */
+  addOnBefore?: string;
+
+  /**
+   * 带标签的 input，设置后置标签
+   */
+  addOnAfter?: string;
+
+  /**
+   * 自动获取焦点，默认：`false`
+   */
+  autofocus?: boolean;
 
   /**
    * 前缀，简化 `nzFormatter`、`nzParser` 的使用
@@ -46,6 +66,16 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
    * 变更事件
    */
   change?: (val?: number) => void;
+
+  /**
+   * 获得焦点时回调
+   */
+  focus?: () => void;
+
+  /**
+   * 失去焦点时回调
+   */
+  blur?: () => void;
 
   /**
    * Change on mouse wheel. Default is true

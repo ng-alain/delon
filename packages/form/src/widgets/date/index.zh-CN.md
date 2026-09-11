@@ -55,5 +55,7 @@ type: Widgets
 | `[inline]` | 内联模式 | `boolean` | `false` |
 | `[separator]` | 分隔符 | `string, TemplateRef` | `'~'` |
 | `[showWeekNumber]` | 是否在每一行显示周数（仅日期选择器支持。周选择器始终显示周数） | `boolean` | `false` |
+| `[ranges]` | 预设时间范围快捷选择（仅 `range` 模式有效） | `{ [key: string]: Date[] \| (() => Date[]) }` | - |
+| `[autoFocus]` | 自动获取焦点 | `boolean` | `false` |
 | `[onOk]` | 点击确定按钮的回调 | `(data: Date | Date[]) => void` | - |
 | `[change]` | 时间发生变化的回调 | `(data: Date | Date[]) => void` | - |

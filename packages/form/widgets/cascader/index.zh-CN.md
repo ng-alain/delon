@@ -39,6 +39,8 @@ type: Non-built-in widgets
 |----|----|----|-----|
 | `[asyncData]` | 异步静态数据源 | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | - |
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
+| `[variant]` | 变体 | `outlined,borderless,filled,underlined` | `outlined` |
+| `[autoFocus]` | 默认获取焦点 | `boolean` | `false` |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[showSearch]` | 是否支持搜索 | `bool` | `false` |
 | `[allowClear]` | 是否显示清除按钮 | `bool` | `true` |
@@ -51,7 +53,6 @@ type: Non-built-in widgets
 | `[columnClassName]` | 弹出菜单中数据列的自定义样式 | `string` | - |
 | `[notFoundContent]` | 当下拉列表为空时显示的内容 | `string` | - |
 | `[data]` | 初始化列数据，用于第一列的数据，子列通过选项的 `children` 加载，或者通过 `load` 事件异步加载。 | `Array` | - |
-| `[enableCache]` | 是否缓存异步加载的数据，若每次异步加载的数据都是变化的，需将该值设置为 false | `bool` | `true` |
 | `[expandTrigger]` | 次级菜单的展开方式，可选 'click' 和 'hover' | `string` | `click` |
 | `[changeOnSelect]` | 当此项为 true 时，点选每级菜单选项值都会发生变化，具体见上面的演示 | `bool` | `false` |
 | `[changeOn]` | 可通过自定义的函数来判断点击菜单选项是否应该发生变化，当函数返回 true 时，将发生变化 | `(option: NzCascaderOption, level: number) => boolean` | - |
@@ -59,7 +60,8 @@ type: Non-built-in widgets
 | `[valueProperty]` | 值 `value` 的属性名称 | `string` | `value` |
 | `[labelProperty]` | 值 `label` 的属性名称 | `string` | `label` |
 | `[multiple]` | 是否多选 | `boolean` | `false` |
-| `(visibleChange)` | 异步加载事件 | `(value: boolean) => void` | - |
+| `[suffixIcon]` | 自定义的选择框后缀图标 | `TemplateRef<any>, string` | - |
+| `(openChange)` | 下拉菜单打开关闭回调函数 | `(status: boolean) => void` | - |
 | `(change)` | 选项值变更事件 | `(values: any[]) => void` | - |
 | `(selectionChange)` | 选项变更事件 | `(values: NzCascaderOption[]) => void` | - |
 | `(clear)` | 内容被清空事件 | `() => void` | - |

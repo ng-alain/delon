@@ -1,7 +1,7 @@
 import type { Observable } from 'rxjs';
 
 import type { SFSchemaEnumType, SFUISchemaItem } from '@delon/form';
-import type { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { NzSafeAny, NzSizeLDSType, NzVariant } from 'ng-zorro-antd/core/types';
 import type { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
 
 export interface SFMentionWidgetSchema extends SFUISchemaItem {
@@ -13,9 +13,19 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
   size?: NzSizeLDSType;
 
   /**
+   * 变体，默认：`outlined`
+   */
+  variant?: NzVariant;
+
+  /**
    * 在文字框中显示提示讯息
    */
   placeholder?: string;
+
+  /**
+   * 允许清除，默认：`false`
+   */
+  allowClear?: boolean;
 
   /**
    * 实时数据
@@ -28,9 +38,9 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
   notFoundContent?: string;
 
   /**
-   * 建议框位置，默认：`button`
+   * 建议框位置，默认：`bottom`
    */
-  placement?: 'button' | 'top';
+  placement?: 'bottom' | 'top';
 
   /**
    * 触发弹出下拉框的字符，默认：`@`
@@ -46,6 +56,11 @@ export interface SFMentionWidgetSchema extends SFUISchemaItem {
    * 下拉框选择建议时回调
    */
   select?: (value: NzSafeAny) => void;
+
+  /**
+   * 内容被清除时的回调函数
+   */
+  onClear?: () => void;
 
   /**
    * 文本框类型，默认：`text`
