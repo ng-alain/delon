@@ -20,6 +20,7 @@ import type { MonacoEditorWidgetSchema } from './schema';
     >
       <nu-monaco-editor
         [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
         (ngModelChange)="_change($event)"
         [options]="ui.options ?? {}"
         [disabled]="disabled"

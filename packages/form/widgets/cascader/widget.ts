@@ -21,6 +21,7 @@ import type { SFCascaderWidgetSchema } from './schema';
       [nzDisabled]="disabled"
       [nzSize]="ui.size!"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="_change($event)"
       [nzOptions]="data"
       [nzAllowClear]="ui.allowClear"

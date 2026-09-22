@@ -19,6 +19,7 @@ import type { SFRateWidgetSchema } from './schema';
     <nz-rate
       [nzDisabled]="disabled"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="setValue($event)"
       [nzAllowClear]="allowClear"
       [nzAllowHalf]="allowHalf"

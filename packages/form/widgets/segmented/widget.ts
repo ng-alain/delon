@@ -18,6 +18,7 @@ import type { SFSegmentedWidgetSchema } from './schema';
   >
     <nz-segmented
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="setValue($event)"
       [nzDisabled]="disabled"
       [nzSize]="$any(ui.size)"

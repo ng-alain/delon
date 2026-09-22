@@ -86,7 +86,7 @@
     <ng-template [ngTemplateOutlet]="con" />
   }
 </ng-template>
-<form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
+<form nz-form ngNoForm novalidate [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
   @if (rootProperty) {
     <sf-item [formProperty]="rootProperty" [footer]="btnTpl" />
   }

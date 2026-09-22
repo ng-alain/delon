@@ -28,6 +28,7 @@ import type { SFAutoCompleteWidgetSchema } from './schema';
       [attr.disabled]="disabled"
       [nzSize]="ui.size!"
       [ngModel]="typing"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="_setValue($event)"
       [attr.maxLength]="schema.maxLength ?? null"
       [attr.placeholder]="ui.placeholder"

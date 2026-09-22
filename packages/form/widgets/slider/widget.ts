@@ -18,6 +18,7 @@ import type { SFSliderWidgetSchema } from './schema';
   >
     <nz-slider
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="setValue($event)"
       [nzDisabled]="disabled"
       [nzRange]="ui.range"

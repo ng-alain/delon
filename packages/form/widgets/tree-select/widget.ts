@@ -45,6 +45,7 @@ import type { SFTreeSelectWidgetSchema } from './schema';
       [nzDefaultExpandAll]="i.defaultExpandAll"
       [nzDisplayWith]="i.displayWith!"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       [nzVirtualHeight]="ui.virtualHeight!"
       [nzVirtualItemSize]="ui.virtualItemSize ?? 28"
       [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx ?? 500"
