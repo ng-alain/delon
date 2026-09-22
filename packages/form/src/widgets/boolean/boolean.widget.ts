@@ -16,6 +16,7 @@ import { ControlUIWidget } from '../../widget';
     <nz-switch
       [nzId]="id"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="setValue($event)"
       [nzDisabled]="disabled"
       [nzSize]="ui.size!"

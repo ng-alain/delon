@@ -20,6 +20,7 @@ import { ControlUIWidget } from '../../widget';
       [nzSize]="ui.size!"
       [nzName]="id"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="_setValue($event)"
       [nzButtonStyle]="ui.buttonStyle ?? 'outline'"
     >

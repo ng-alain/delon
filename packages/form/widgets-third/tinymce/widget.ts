@@ -21,6 +21,7 @@ import type { TinymceWidgetSchema } from './schema';
     >
       <tinymce
         [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
         (ngModelChange)="change($event)"
         [config]="ui.config"
         [inline]="ui.inline ?? false"

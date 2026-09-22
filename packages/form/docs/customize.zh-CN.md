@@ -37,6 +37,7 @@ export function withTestWidget(): SFWidgetProvideConfig {
     <!-- 开始自定义控件区域 -->
     <tinymce
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [config]="config"
       [loading]="loading">
@@ -70,6 +71,10 @@ class TestWidget extends ControlWidget implements OnInit {
   }
 }
 ```
+
+**ngModel 与表单注册**
+
+小部件模板里的 `ngModel` 只是与 `FormProperty` 同步的局部绑定，不需要也不应该注册到任何表单，因此必须声明为 `standalone`；否则 Angular v22 会在控制台给出 `NG01354` 警告（细节见[常见问题](/form/qa)）。
 
 **sf-item-wrap**
 

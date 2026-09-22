@@ -21,6 +21,7 @@ import type { SFColorWidgetSchema } from './schema';
     } @else {
       <nz-color-picker
         [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
         (ngModelChange)="setValue($event)"
         [nzDisabled]="disabled"
         [nzSize]="$any(ui.size)"

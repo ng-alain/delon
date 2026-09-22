@@ -22,6 +22,7 @@ import type { SFTimeWidgetSchema } from './schema';
     <nz-time-picker
       [nzId]="id"
       [(ngModel)]="displayValue"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="_change($event)"
       [nzDisabled]="disabled"
       [nzSize]="$any(ui.size)"

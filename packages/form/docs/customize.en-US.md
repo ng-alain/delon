@@ -37,6 +37,7 @@ export function withTestWidget(): SFWidgetProvideConfig {
     <!-- Start area -->
     <tinymce
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [config]="config"
       [loading]="loading">
@@ -70,6 +71,10 @@ class TestWidget extends ControlWidget implements OnInit {
   }
 }
 ```
+
+**ngModel and form registration**
+
+The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console (see [FAQ](/form/qa) for details).
 
 **sf-item-wrap**
 

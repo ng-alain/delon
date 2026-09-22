@@ -24,6 +24,7 @@ import { ControlUIWidget } from '../../widget';
       [nzId]="id"
       [nzDisabled]="disabled"
       [(ngModel)]="_value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [nzSize]="ui.size!"
       [nzPlaceHolder]="ui.placeholder!"
