@@ -49,7 +49,8 @@ describe('auth: base.interceptor', () => {
   let router: Router;
   const MockDoc = {
     location: {
-      href: ''
+      href: '',
+      search: ''
     },
     querySelectorAll(): any {
       return {};
@@ -57,6 +58,8 @@ describe('auth: base.interceptor', () => {
   };
 
   function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
+    MockDoc.location.href = '';
+    MockDoc.location.search = '';
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
@@ -71,7 +74,7 @@ describe('auth: base.interceptor', () => {
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
     router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigate');
+    spyOn(router, 'navigateByUrl');
     http = TestBed.inject<HttpClient>(HttpClient);
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
@@ -126,7 +129,7 @@ describe('auth: base.interceptor', () => {
 
   describe('[invalid token]', () => {
     describe('should be navigate to login', () => {
-      it('with navigate', done => {
+      it('with navigateByUrl', done => {
         genModule({}, genModel(SimpleTokenModel, null));
         http.get('/test', { responseType: 'text' }).subscribe({
           next: () => {
@@ -136,7 +139,7 @@ describe('auth: base.interceptor', () => {
           error: (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
+              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login');
               done();
             }, 20);
           }
@@ -154,6 +157,76 @@ describe('auth: base.interceptor', () => {
             expect(err.status).toBe(401);
             setTimeout(() => {
               expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
+              done();
+            }, 20);
+          }
+        });
+      });
+      it('with navigateByUrl should be carry search', done => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        MockDoc.location.search = '?a=1&b=2';
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
+            expect(false).toBe(true);
+            done();
+          },
+          error: (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login?a=1&b=2');
+              done();
+            }, 20);
+          }
+        });
+      });
+      it('with navigateByUrl should be append search when login_url has query', done => {
+        genModule({ login_url: '/login?from=app' }, genModel(SimpleTokenModel, null));
+        MockDoc.location.search = '?a=1';
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
+            expect(false).toBe(true);
+            done();
+          },
+          error: (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login?from=app&a=1');
+              done();
+            }, 20);
+          }
+        });
+      });
+      it('with location should be carry search', done => {
+        const login_url = 'https://ng-alain.com/login';
+        genModule({ login_url }, genModel(SimpleTokenModel, null));
+        MockDoc.location.search = '?a=1&b=2';
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
+            expect(false).toBe(true);
+            done();
+          },
+          error: (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}?a=1&b=2`);
+              done();
+            }, 20);
+          }
+        });
+      });
+      it('with location should be append search when login_url has query', done => {
+        const login_url = 'https://ng-alain.com/login?from=app';
+        genModule({ login_url }, genModel(SimpleTokenModel, null));
+        MockDoc.location.search = '?a=1';
+        http.get('/test', { responseType: 'text' }).subscribe({
+          next: () => {
+            expect(false).toBe(true);
+            done();
+          },
+          error: (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}&a=1`);
               done();
             }, 20);
           }

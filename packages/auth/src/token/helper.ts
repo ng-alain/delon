@@ -30,10 +30,15 @@ export function ToLogin(options: AlainAuthConfig, url?: string): void {
   token.referrer!.url = url ?? router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
-      if (/^https?:\/\//g.test(options.login_url!)) {
-        doc.location.href = options.login_url as string;
+      const loginUrl = options.login_url as string;
+      // 跳转时携带当前页查询串，便于登录页或登录成功后恢复原始参数
+      const search = doc.location.search ?? '';
+      const target =
+        search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search.slice(1)}`;
+      if (/^https?:\/\//.test(loginUrl)) {
+        doc.location.href = target;
       } else {
-        router.navigate([options.login_url]);
+        router.navigateByUrl(target);
       }
     });
   }
